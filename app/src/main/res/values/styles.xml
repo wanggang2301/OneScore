@@ -1017,6 +1017,14 @@
         <item name="android:textSize">10sp</item>
         <item name="android:text">@string/number_info_default</item>
     </style>
+    <!--红球详情条目-->
+    <style name="lottery_info_red">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">2dp</item>
+        <item name="android:text">@string/number_info_default</item>
+        <item name="android:textSize">@dimen/number_title</item>
+    </style>
 
     <!--彩票详情页 end -->
 

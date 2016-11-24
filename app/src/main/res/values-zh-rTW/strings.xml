@@ -547,6 +547,26 @@
     <string name="number_info_pl3_count3">組六</string>
     <string name="number_info_pl5_count">排列五直選</string>
 
+    <string name="number_info_front">前</string>
+    <string name="number_info_center">中</string>
+    <string name="number_info_after">後</string>
+
+    <string name="number_info_wx_j">金</string>
+    <string name="number_info_wx_m">木</string>
+    <string name="number_info_wx_s">水</string>
+    <string name="number_info_wx_h">火</string>
+    <string name="number_info_wx_t">土</string>
+    <string name="number_info_fw_E">東</string>
+    <string name="number_info_fw_S">南</string>
+    <string name="number_info_fw_W">西</string>
+    <string name="number_info_fw_N">北</string>
+    <string name="number_info_fw_Z">中</string>
+    <string name="number_info_wx">五行</string>
+    <string name="number_info_fw">方位</string>
+    <string name="number_info_boll_blue">藍球</string>
+    <string name="number_info_region_front">前區</string>
+    <string name="number_info_region_after">後區</string>
+
     <!-- 彩票End -->
 
     <string name="number_xq7">週日</string>

@@ -728,7 +728,7 @@ public class NumberDataUtils {
      * @param mNumberInfo
      * @param isGravity
      * @param isOpenNumberStartHistory
-     * @param serverTime 服务器时间戳
+     * @param serverTime               服务器时间戳
      */
     public void numberHistoryShow(Context context, View mView, NumberCurrentInfo mNumberInfo, int isGravity, boolean isOpenNumberStartHistory, boolean isNextNumber, String index, String serverTime) {
         tv_number_title = (TextView) mView.findViewById(R.id.tv_Currentnumber_title);
@@ -1285,8 +1285,8 @@ public class NumberDataUtils {
         TextView lottery_pl3_count3 = (TextView) mView.findViewById(R.id.lottery_pl3_count3);
         TextView lottery_pl3_sales_volume = (TextView) mView.findViewById(R.id.lottery_pl3_sales_volume);
 
-        lottery_pl3_bonus1.setText(mNumberInfo.getDirBonus() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getDirBonus());
-        lottery_pl3_count1.setText(mNumberInfo.getDirCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getDirCount());
+        lottery_pl3_bonus1.setText(mNumberInfo.getDirBonus() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getDirBonus())));
+        lottery_pl3_count1.setText(mNumberInfo.getDirCount() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getDirCount())));
         lottery_pl3_sales_volume.setText(mNumberInfo.getSales() == null ? context.getResources().getString(R.string.number_info_default) : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getSales())));
         boolean isEquals = false;
         if (numbers != null) {
@@ -1298,11 +1298,11 @@ public class NumberDataUtils {
             }
         }
         if (isEquals) {
-            lottery_pl3_bonus2.setText(mNumberInfo.getGroupBonus() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getGroupBonus());
-            lottery_pl3_count2.setText(mNumberInfo.getGroupCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getGroupCount());
+            lottery_pl3_bonus2.setText(mNumberInfo.getGroupBonus() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getGroupBonus())));
+            lottery_pl3_count2.setText(mNumberInfo.getGroupCount() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getGroupCount())));
         } else {
-            lottery_pl3_bonus3.setText(mNumberInfo.getGroupBonus() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getGroupBonus());
-            lottery_pl3_count3.setText(mNumberInfo.getGroupCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getGroupCount());
+            lottery_pl3_bonus3.setText(mNumberInfo.getGroupBonus() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getGroupBonus())));
+            lottery_pl3_count3.setText(mNumberInfo.getGroupCount() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getGroupCount())));
         }
     }
 
@@ -1317,8 +1317,8 @@ public class NumberDataUtils {
         TextView lottery_pl5_sales_volume = (TextView) mView.findViewById(R.id.lottery_pl5_sales_volume);
         TextView lottery_pl5_bonus_sum = (TextView) mView.findViewById(R.id.lottery_pl5_bonus_sum);
 
-        lottery_pl5_bonus.setText(mNumberInfo.getDirBonus() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getDirBonus());
-        lottery_pl5_count.setText(mNumberInfo.getDirCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getDirCount());
+        lottery_pl5_bonus.setText(mNumberInfo.getDirBonus() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getDirBonus())));
+        lottery_pl5_count.setText(mNumberInfo.getDirCount() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getDirCount())));
         lottery_pl5_sales_volume.setText(mNumberInfo.getSales() == null ? context.getResources().getString(R.string.number_info_default) : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getSales())));
         lottery_pl5_bonus_sum.setText(mNumberInfo.getJackpot() == null ? context.getResources().getString(R.string.number_info_default) : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getJackpot())));
     }
@@ -1489,10 +1489,10 @@ public class NumberDataUtils {
         for (int i = 0, len = mNumberInfo.getFootballLotteryIssueResultData().size(); i < len; i++) {
             // 判断是否开赛时间
             try {
-                if(Long.parseLong(mServerTime) > DateUtil.getCurrentTime(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime())){
+                if (Long.parseLong(mServerTime) > DateUtil.getCurrentTime(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime())) {
                     sfc_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.number_red));
                     sfc_vs_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore());
-                }else{
+                } else {
                     sfc_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
                     sfc_vs_list.get(i).setText("VS");
                 }
@@ -1501,24 +1501,20 @@ public class NumberDataUtils {
                 sfc_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
                 sfc_vs_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
             }
-            sfc_home_name_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getHomeName());
-            sfc_guest_name_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getGuestName());
-
-            System.out.println("xxxxx 日期转换前： " + mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime());
-            System.out.println("xxxxx 日期转换后： " + DateUtil.getLotteryInfoDate(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime(), "MM-dd HH:mm"));
-
+            sfc_home_name_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getHomeName() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getHomeName());
+            sfc_guest_name_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getGuestName() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getGuestName());
             sfc_time_list.get(i).setText(DateUtil.getLotteryInfoDate(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime(), "MM-dd HH:mm"));
             sfc_result_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullDrawcode() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullDrawcode());
         }
         lottery_sfssc_sales_volume.setText(mNumberInfo.getFootballFirlottery().getSales() == null ? context.getResources().getString(R.string.number_info_default) : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getFootballFirlottery().getSales())));
         lottery_sfc_bonus_sum.setText(mNumberInfo.getFootballFirlottery().getJackpot() == null ? context.getResources().getString(R.string.number_info_default) : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getFootballFirlottery().getJackpot())));
-        lottery_sfssc_count1.setText(mNumberInfo.getFootballFirlottery().getFirCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballFirlottery().getFirCount());
-        lottery_sfssc_bouns1.setText(mNumberInfo.getFootballFirlottery().getFirSinBon() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballFirlottery().getFirSinBon());
-        lottery_sfssc_count2.setText(mNumberInfo.getFootballFirlottery().getSecCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballFirlottery().getSecCount());
-        lottery_sfssc_bouns2.setText(mNumberInfo.getFootballFirlottery().getSecSinBon() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballFirlottery().getSecSinBon());
-        lottery_rxjc_sales_volume.setText(mNumberInfo.getFootballSecLottery().getRsales() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballSecLottery().getRsales());
-        lottery_rxjc_count.setText(mNumberInfo.getFootballSecLottery().getRfirCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballSecLottery().getRfirCount());
-        lottery_rxjc_bouns.setText(mNumberInfo.getFootballSecLottery().getRfirSinBon() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballSecLottery().getRfirSinBon());
+        lottery_sfssc_count1.setText(mNumberInfo.getFootballFirlottery().getFirCount() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFootballFirlottery().getFirCount())));
+        lottery_sfssc_bouns1.setText(mNumberInfo.getFootballFirlottery().getFirSinBon() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFootballFirlottery().getFirSinBon())));
+        lottery_sfssc_count2.setText(mNumberInfo.getFootballFirlottery().getSecCount() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFootballFirlottery().getSecCount())));
+        lottery_sfssc_bouns2.setText(mNumberInfo.getFootballFirlottery().getSecSinBon() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFootballFirlottery().getSecSinBon())));
+        lottery_rxjc_sales_volume.setText(mNumberInfo.getFootballSecLottery().getRsales() == null ? context.getResources().getString(R.string.number_info_default) : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getFootballSecLottery().getRsales())));
+        lottery_rxjc_count.setText(mNumberInfo.getFootballSecLottery().getRfirCount() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFootballSecLottery().getRfirCount())));
+        lottery_rxjc_bouns.setText(mNumberInfo.getFootballSecLottery().getRfirSinBon() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFootballSecLottery().getRfirSinBon())));
     }
 
     /**
@@ -1526,12 +1522,24 @@ public class NumberDataUtils {
      */
     private void processingMethodLCBQC() {
         TextView lottery_lcbqc_issue = (TextView) mView.findViewById(R.id.lottery_lcbqc_issue);
+        TextView lottery_lcbqc_home_name1 = (TextView) mView.findViewById(R.id.lottery_lcbqc_home_name1);
+        TextView lottery_lcbqc_home_name2 = (TextView) mView.findViewById(R.id.lottery_lcbqc_home_name2);
+        TextView lottery_lcbqc_home_name3 = (TextView) mView.findViewById(R.id.lottery_lcbqc_home_name3);
+        TextView lottery_lcbqc_home_name4 = (TextView) mView.findViewById(R.id.lottery_lcbqc_home_name4);
+        TextView lottery_lcbqc_home_name5 = (TextView) mView.findViewById(R.id.lottery_lcbqc_home_name5);
+        TextView lottery_lcbqc_home_name6 = (TextView) mView.findViewById(R.id.lottery_lcbqc_home_name6);
         TextView lottery_lcbqc_vs1 = (TextView) mView.findViewById(R.id.lottery_lcbqc_vs1);
         TextView lottery_lcbqc_vs2 = (TextView) mView.findViewById(R.id.lottery_lcbqc_vs2);
         TextView lottery_lcbqc_vs3 = (TextView) mView.findViewById(R.id.lottery_lcbqc_vs3);
         TextView lottery_lcbqc_vs4 = (TextView) mView.findViewById(R.id.lottery_lcbqc_vs4);
         TextView lottery_lcbqc_vs5 = (TextView) mView.findViewById(R.id.lottery_lcbqc_vs5);
         TextView lottery_lcbqc_vs6 = (TextView) mView.findViewById(R.id.lottery_lcbqc_vs6);
+        TextView lottery_lcbqc_guest_name1 = (TextView) mView.findViewById(R.id.lottery_lcbqc_guest_name1);
+        TextView lottery_lcbqc_guest_name2 = (TextView) mView.findViewById(R.id.lottery_lcbqc_guest_name2);
+        TextView lottery_lcbqc_guest_name3 = (TextView) mView.findViewById(R.id.lottery_lcbqc_guest_name3);
+        TextView lottery_lcbqc_guest_name4 = (TextView) mView.findViewById(R.id.lottery_lcbqc_guest_name4);
+        TextView lottery_lcbqc_guest_name5 = (TextView) mView.findViewById(R.id.lottery_lcbqc_guest_name5);
+        TextView lottery_lcbqc_guest_name6 = (TextView) mView.findViewById(R.id.lottery_lcbqc_guest_name6);
         TextView lottery_lcbqc_time1 = (TextView) mView.findViewById(R.id.lottery_lcbqc_time1);
         TextView lottery_lcbqc_time2 = (TextView) mView.findViewById(R.id.lottery_lcbqc_time2);
         TextView lottery_lcbqc_time3 = (TextView) mView.findViewById(R.id.lottery_lcbqc_time3);
@@ -1555,6 +1563,13 @@ public class NumberDataUtils {
         TextView lottery_lcbqc_count = (TextView) mView.findViewById(R.id.lottery_lcbqc_count);
         TextView lottery_lcbqc_bonus = (TextView) mView.findViewById(R.id.lottery_lcbqc_bonus);
 
+        List<TextView> lcbqc_home_list = new ArrayList<>();
+        lcbqc_home_list.add(lottery_lcbqc_home_name1);
+        lcbqc_home_list.add(lottery_lcbqc_home_name2);
+        lcbqc_home_list.add(lottery_lcbqc_home_name3);
+        lcbqc_home_list.add(lottery_lcbqc_home_name4);
+        lcbqc_home_list.add(lottery_lcbqc_home_name5);
+        lcbqc_home_list.add(lottery_lcbqc_home_name6);
         List<TextView> lcbqc_vs_list = new ArrayList<>();
         lcbqc_vs_list.add(lottery_lcbqc_vs1);
         lcbqc_vs_list.add(lottery_lcbqc_vs2);
@@ -1562,6 +1577,13 @@ public class NumberDataUtils {
         lcbqc_vs_list.add(lottery_lcbqc_vs4);
         lcbqc_vs_list.add(lottery_lcbqc_vs5);
         lcbqc_vs_list.add(lottery_lcbqc_vs6);
+        List<TextView> lcbqc_guest_list = new ArrayList<>();
+        lcbqc_guest_list.add(lottery_lcbqc_guest_name1);
+        lcbqc_guest_list.add(lottery_lcbqc_guest_name2);
+        lcbqc_guest_list.add(lottery_lcbqc_guest_name3);
+        lcbqc_guest_list.add(lottery_lcbqc_guest_name4);
+        lcbqc_guest_list.add(lottery_lcbqc_guest_name5);
+        lcbqc_guest_list.add(lottery_lcbqc_guest_name6);
         List<TextView> lcbqc_time_list = new ArrayList<>();
         lcbqc_time_list.add(lottery_lcbqc_time1);
         lcbqc_time_list.add(lottery_lcbqc_time2);
@@ -1587,15 +1609,30 @@ public class NumberDataUtils {
         lottery_lcbqc_issue.setText(context.getResources().getString(R.string.number_code_di) + (mNumberInfo.getIssue() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getIssue()) + context.getResources().getString(R.string.number_code_qi));
 
         for (int i = 0, len = mNumberInfo.getFootballLotteryIssueResultData().size(); i < len; i++) {
-            lcbqc_vs_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getHomeName() + " VS " + mNumberInfo.getFootballLotteryIssueResultData().get(i).getGuestName());
+            // 判断是否开赛时间
+            try {
+                if (Long.parseLong(mServerTime) > DateUtil.getCurrentTime(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime())) {
+                    lcbqc_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.number_red));
+                    lcbqc_vs_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore());
+                } else {
+                    lcbqc_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
+                    lcbqc_vs_list.get(i).setText("VS");
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+                lcbqc_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
+                lcbqc_vs_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
+            }
+            lcbqc_home_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getHomeName() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getHomeName());
+            lcbqc_guest_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getGuestName() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getGuestName());
             lcbqc_time_list.get(i).setText(DateUtil.getLotteryInfoDate(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime(), "MM-dd HH:mm"));
             lcbqc_half_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getHalfScore() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getHalfScore());
             lcbqc_full_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore());
         }
         lottery_lcbqc_sales_volume.setText(mNumberInfo.getFootballFirlottery().getSales() == null ? context.getResources().getString(R.string.number_info_default) : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getFootballFirlottery().getSales())));
         lottery_lcbqc_bonus_sum.setText(mNumberInfo.getFootballFirlottery().getJackpot() == null ? context.getResources().getString(R.string.number_info_default) : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getFootballFirlottery().getJackpot())));
-        lottery_lcbqc_count.setText(mNumberInfo.getFootballFirlottery().getFirCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballFirlottery().getFirCount());
-        lottery_lcbqc_bonus.setText(mNumberInfo.getFootballFirlottery().getFirSinBon() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballFirlottery().getFirSinBon());
+        lottery_lcbqc_count.setText(mNumberInfo.getFootballFirlottery().getFirCount() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFootballFirlottery().getFirCount())));
+        lottery_lcbqc_bonus.setText(mNumberInfo.getFootballFirlottery().getFirSinBon() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFootballFirlottery().getFirSinBon())));
     }
 
     /**
@@ -1603,10 +1640,18 @@ public class NumberDataUtils {
      */
     private void processingMethodSCJQ() {
         TextView lottery_scjq_issue = (TextView) mView.findViewById(R.id.lottery_scjq_issue);
+        TextView lottery_scjq_home_name1 = (TextView) mView.findViewById(R.id.lottery_scjq_home_name1);
+        TextView lottery_scjq_home_name2 = (TextView) mView.findViewById(R.id.lottery_scjq_home_name2);
+        TextView lottery_scjq_home_name3 = (TextView) mView.findViewById(R.id.lottery_scjq_home_name3);
+        TextView lottery_scjq_home_name4 = (TextView) mView.findViewById(R.id.lottery_scjq_home_name4);
         TextView lottery_scjq_vs1 = (TextView) mView.findViewById(R.id.lottery_scjq_vs1);
         TextView lottery_scjq_vs2 = (TextView) mView.findViewById(R.id.lottery_scjq_vs2);
         TextView lottery_scjq_vs3 = (TextView) mView.findViewById(R.id.lottery_scjq_vs3);
         TextView lottery_scjq_vs4 = (TextView) mView.findViewById(R.id.lottery_scjq_vs4);
+        TextView lottery_scjq_guest_name1 = (TextView) mView.findViewById(R.id.lottery_scjq_guest_name1);
+        TextView lottery_scjq_guest_name2 = (TextView) mView.findViewById(R.id.lottery_scjq_guest_name2);
+        TextView lottery_scjq_guest_name3 = (TextView) mView.findViewById(R.id.lottery_scjq_guest_name3);
+        TextView lottery_scjq_guest_name4 = (TextView) mView.findViewById(R.id.lottery_scjq_guest_name4);
         TextView lottery_scjq_time1 = (TextView) mView.findViewById(R.id.lottery_scjq_time1);
         TextView lottery_scjq_time2 = (TextView) mView.findViewById(R.id.lottery_scjq_time2);
         TextView lottery_scjq_time3 = (TextView) mView.findViewById(R.id.lottery_scjq_time3);
@@ -1616,11 +1661,21 @@ public class NumberDataUtils {
         TextView lottery_scjq_count = (TextView) mView.findViewById(R.id.lottery_scjq_count);
         TextView lottery_scjq_bonus = (TextView) mView.findViewById(R.id.lottery_scjq_bonus);
 
+        List<TextView> scjq_home_list = new ArrayList<>();
+        scjq_home_list.add(lottery_scjq_home_name1);
+        scjq_home_list.add(lottery_scjq_home_name2);
+        scjq_home_list.add(lottery_scjq_home_name3);
+        scjq_home_list.add(lottery_scjq_home_name4);
         List<TextView> scjq_vs_list = new ArrayList<>();
         scjq_vs_list.add(lottery_scjq_vs1);
         scjq_vs_list.add(lottery_scjq_vs2);
         scjq_vs_list.add(lottery_scjq_vs3);
         scjq_vs_list.add(lottery_scjq_vs4);
+        List<TextView> scjq_guest_list = new ArrayList<>();
+        scjq_guest_list.add(lottery_scjq_guest_name1);
+        scjq_guest_list.add(lottery_scjq_guest_name2);
+        scjq_guest_list.add(lottery_scjq_guest_name3);
+        scjq_guest_list.add(lottery_scjq_guest_name4);
         List<TextView> scjq_time_list = new ArrayList<>();
         scjq_time_list.add(lottery_scjq_time1);
         scjq_time_list.add(lottery_scjq_time2);
@@ -1630,13 +1685,28 @@ public class NumberDataUtils {
         lottery_scjq_issue.setText(context.getResources().getString(R.string.number_code_di) + (mNumberInfo.getIssue() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getIssue()) + context.getResources().getString(R.string.number_code_qi));
         // 设置对阵和开赛时间
         for (int i = 0, len = mNumberInfo.getFootballLotteryIssueResultData().size(); i < len; i++) {
-            scjq_vs_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getHomeName() + " VS " + mNumberInfo.getFootballLotteryIssueResultData().get(i).getGuestName());
+            // 判断是否开赛时间
+            try {
+                if (Long.parseLong(mServerTime) > DateUtil.getCurrentTime(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime())) {
+                    scjq_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.number_red));
+                    scjq_vs_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore());
+                } else {
+                    scjq_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
+                    scjq_vs_list.get(i).setText("VS");
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+                scjq_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
+                scjq_vs_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
+            }
+            scjq_home_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getHomeName() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getHomeName());
+            scjq_guest_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getGuestName() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getGuestName());
             scjq_time_list.get(i).setText(DateUtil.getLotteryInfoDate(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime(), "MM-dd HH:mm"));
         }
         lottery_scjq_sales_volume.setText(mNumberInfo.getFootballFirlottery().getSales() == null ? context.getResources().getString(R.string.number_info_default) : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getFootballFirlottery().getSales())));
         lottery_scjq_bonus_sum.setText(mNumberInfo.getFootballFirlottery().getJackpot() == null ? context.getResources().getString(R.string.number_info_default) : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getFootballFirlottery().getJackpot())));
-        lottery_scjq_count.setText(mNumberInfo.getFootballFirlottery().getFirCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballFirlottery().getFirCount());
-        lottery_scjq_bonus.setText(mNumberInfo.getFootballFirlottery().getFirSinBon() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballFirlottery().getFirSinBon());
+        lottery_scjq_count.setText(mNumberInfo.getFootballFirlottery().getFirCount() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFootballFirlottery().getFirCount())));
+        lottery_scjq_bonus.setText(mNumberInfo.getFootballFirlottery().getFirSinBon() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFootballFirlottery().getFirSinBon())));
     }
 
     /**
@@ -1734,30 +1804,71 @@ public class NumberDataUtils {
         TextView lottery_dlt_add_bonus5 = (TextView) mView.findViewById(R.id.lottery_dlt_add_bonus5);
         TextView lottery_dlt_sales_volume = (TextView) mView.findViewById(R.id.lottery_dlt_sales_volume);
         TextView lottery_dlt_bonus_sum = (TextView) mView.findViewById(R.id.lottery_dlt_bonus_sum);
-        TextView lottery_dlt_hz = (TextView) mView.findViewById(R.id.lottery_dlt_hz);
-        TextView lottery_dlt_dx1 = (TextView) mView.findViewById(R.id.lottery_dlt_dx1);
-        TextView lottery_dlt_dx2 = (TextView) mView.findViewById(R.id.lottery_dlt_dx2);
-        TextView lottery_dlt_dx3 = (TextView) mView.findViewById(R.id.lottery_dlt_dx3);
-        TextView lottery_dlt_dx4 = (TextView) mView.findViewById(R.id.lottery_dlt_dx4);
-        TextView lottery_dlt_dx5 = (TextView) mView.findViewById(R.id.lottery_dlt_dx5);
-        TextView lottery_dlt_jo1 = (TextView) mView.findViewById(R.id.lottery_dlt_jo1);
-        TextView lottery_dlt_jo2 = (TextView) mView.findViewById(R.id.lottery_dlt_jo2);
-        TextView lottery_dlt_jo3 = (TextView) mView.findViewById(R.id.lottery_dlt_jo3);
-        TextView lottery_dlt_jo4 = (TextView) mView.findViewById(R.id.lottery_dlt_jo4);
-        TextView lottery_dlt_jo5 = (TextView) mView.findViewById(R.id.lottery_dlt_jo5);
+        TextView lottery_dlt_front_hz = (TextView) mView.findViewById(R.id.lottery_dlt_front_hz);
+        TextView lottery_dlt_front_dx1 = (TextView) mView.findViewById(R.id.lottery_dlt_front_dx1);
+        TextView lottery_dlt_front_dx2 = (TextView) mView.findViewById(R.id.lottery_dlt_front_dx2);
+        TextView lottery_dlt_front_dx3 = (TextView) mView.findViewById(R.id.lottery_dlt_front_dx3);
+        TextView lottery_dlt_front_dx4 = (TextView) mView.findViewById(R.id.lottery_dlt_front_dx4);
+        TextView lottery_dlt_front_dx5 = (TextView) mView.findViewById(R.id.lottery_dlt_front_dx5);
+        TextView lottery_dlt_front_jo1 = (TextView) mView.findViewById(R.id.lottery_dlt_front_jo1);
+        TextView lottery_dlt_front_jo2 = (TextView) mView.findViewById(R.id.lottery_dlt_front_jo2);
+        TextView lottery_dlt_front_jo3 = (TextView) mView.findViewById(R.id.lottery_dlt_front_jo3);
+        TextView lottery_dlt_front_jo4 = (TextView) mView.findViewById(R.id.lottery_dlt_front_jo4);
+        TextView lottery_dlt_front_jo5 = (TextView) mView.findViewById(R.id.lottery_dlt_front_jo5);
+        TextView lottery_dlt_front_wx1 = (TextView) mView.findViewById(R.id.lottery_dlt_front_wx1);
+        TextView lottery_dlt_front_wx2 = (TextView) mView.findViewById(R.id.lottery_dlt_front_wx2);
+        TextView lottery_dlt_front_wx3 = (TextView) mView.findViewById(R.id.lottery_dlt_front_wx3);
+        TextView lottery_dlt_front_wx4 = (TextView) mView.findViewById(R.id.lottery_dlt_front_wx4);
+        TextView lottery_dlt_front_wx5 = (TextView) mView.findViewById(R.id.lottery_dlt_front_wx5);
+        TextView lottery_dlt_front_fw1 = (TextView) mView.findViewById(R.id.lottery_dlt_front_fw1);
+        TextView lottery_dlt_front_fw2 = (TextView) mView.findViewById(R.id.lottery_dlt_front_fw2);
+        TextView lottery_dlt_front_fw3 = (TextView) mView.findViewById(R.id.lottery_dlt_front_fw3);
+        TextView lottery_dlt_front_fw4 = (TextView) mView.findViewById(R.id.lottery_dlt_front_fw4);
+        TextView lottery_dlt_front_fw5 = (TextView) mView.findViewById(R.id.lottery_dlt_front_fw5);
+        TextView lottery_dlt_front_qj1 = (TextView) mView.findViewById(R.id.lottery_dlt_front_qj1);
+        TextView lottery_dlt_front_qj2 = (TextView) mView.findViewById(R.id.lottery_dlt_front_qj2);
+        TextView lottery_dlt_front_qj3 = (TextView) mView.findViewById(R.id.lottery_dlt_front_qj3);
+        TextView lottery_dlt_front_qj4 = (TextView) mView.findViewById(R.id.lottery_dlt_front_qj4);
+        TextView lottery_dlt_front_qj5 = (TextView) mView.findViewById(R.id.lottery_dlt_front_qj5);
+        TextView lottery_dlt_later_hz1 = (TextView) mView.findViewById(R.id.lottery_dlt_later_hz1);
+        TextView lottery_dlt_later_hz2 = (TextView) mView.findViewById(R.id.lottery_dlt_later_hz2);
+        TextView lottery_dlt_later_jo1 = (TextView) mView.findViewById(R.id.lottery_dlt_later_jo1);
+        TextView lottery_dlt_later_jo2 = (TextView) mView.findViewById(R.id.lottery_dlt_later_jo2);
+        TextView lottery_dlt_later_wx1 = (TextView) mView.findViewById(R.id.lottery_dlt_later_wx1);
+        TextView lottery_dlt_later_wx2 = (TextView) mView.findViewById(R.id.lottery_dlt_later_wx2);
+        TextView lottery_dlt_later_fw1 = (TextView) mView.findViewById(R.id.lottery_dlt_later_fw1);
+        TextView lottery_dlt_later_fw2 = (TextView) mView.findViewById(R.id.lottery_dlt_later_fw2);
 
-        List<TextView> dlt_dx_list = new ArrayList<>();
-        dlt_dx_list.add(lottery_dlt_dx1);
-        dlt_dx_list.add(lottery_dlt_dx2);
-        dlt_dx_list.add(lottery_dlt_dx3);
-        dlt_dx_list.add(lottery_dlt_dx4);
-        dlt_dx_list.add(lottery_dlt_dx5);
-        List<TextView> dlt_jo_list = new ArrayList<>();
-        dlt_jo_list.add(lottery_dlt_jo1);
-        dlt_jo_list.add(lottery_dlt_jo2);
-        dlt_jo_list.add(lottery_dlt_jo3);
-        dlt_jo_list.add(lottery_dlt_jo4);
-        dlt_jo_list.add(lottery_dlt_jo5);
+        List<TextView> dlt_front_dx_list = new ArrayList<>();
+        dlt_front_dx_list.add(lottery_dlt_front_dx1);
+        dlt_front_dx_list.add(lottery_dlt_front_dx2);
+        dlt_front_dx_list.add(lottery_dlt_front_dx3);
+        dlt_front_dx_list.add(lottery_dlt_front_dx4);
+        dlt_front_dx_list.add(lottery_dlt_front_dx5);
+        List<TextView> dlt_front_jo_list = new ArrayList<>();
+        dlt_front_jo_list.add(lottery_dlt_front_jo1);
+        dlt_front_jo_list.add(lottery_dlt_front_jo2);
+        dlt_front_jo_list.add(lottery_dlt_front_jo3);
+        dlt_front_jo_list.add(lottery_dlt_front_jo4);
+        dlt_front_jo_list.add(lottery_dlt_front_jo5);
+        List<TextView> dlt_front_wx_list = new ArrayList<>();
+        dlt_front_wx_list.add(lottery_dlt_front_wx1);
+        dlt_front_wx_list.add(lottery_dlt_front_wx2);
+        dlt_front_wx_list.add(lottery_dlt_front_wx3);
+        dlt_front_wx_list.add(lottery_dlt_front_wx4);
+        dlt_front_wx_list.add(lottery_dlt_front_wx5);
+        List<TextView> dlt_front_fw_list = new ArrayList<>();
+        dlt_front_fw_list.add(lottery_dlt_front_fw1);
+        dlt_front_fw_list.add(lottery_dlt_front_fw2);
+        dlt_front_fw_list.add(lottery_dlt_front_fw3);
+        dlt_front_fw_list.add(lottery_dlt_front_fw4);
+        dlt_front_fw_list.add(lottery_dlt_front_fw5);
+        List<TextView> dlt_front_qj_list = new ArrayList<>();
+        dlt_front_qj_list.add(lottery_dlt_front_qj1);
+        dlt_front_qj_list.add(lottery_dlt_front_qj2);
+        dlt_front_qj_list.add(lottery_dlt_front_qj3);
+        dlt_front_qj_list.add(lottery_dlt_front_qj4);
+        dlt_front_qj_list.add(lottery_dlt_front_qj5);
 
         if (null == numbers) {
             lottery_dlt_count1.setText(context.getResources().getString(R.string.number_info_default));
@@ -1784,41 +1895,64 @@ public class NumberDataUtils {
             lottery_dlt_add_bonus5.setText(context.getResources().getString(R.string.number_info_default));
             lottery_dlt_sales_volume.setText(context.getResources().getString(R.string.number_info_default));
             lottery_dlt_bonus_sum.setText(context.getResources().getString(R.string.number_info_default));
-            lottery_dlt_hz.setText(context.getResources().getString(R.string.number_info_default));
-            lottery_dlt_dx1.setText(context.getResources().getString(R.string.number_info_default));
-            lottery_dlt_dx2.setText(context.getResources().getString(R.string.number_info_default));
-            lottery_dlt_dx3.setText(context.getResources().getString(R.string.number_info_default));
-            lottery_dlt_dx4.setText(context.getResources().getString(R.string.number_info_default));
-            lottery_dlt_dx5.setText(context.getResources().getString(R.string.number_info_default));
-            lottery_dlt_jo1.setText(context.getResources().getString(R.string.number_info_default));
-            lottery_dlt_jo2.setText(context.getResources().getString(R.string.number_info_default));
-            lottery_dlt_jo3.setText(context.getResources().getString(R.string.number_info_default));
-            lottery_dlt_jo4.setText(context.getResources().getString(R.string.number_info_default));
-            lottery_dlt_jo5.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_hz.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_dx1.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_dx2.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_dx3.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_dx4.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_dx5.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_jo1.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_jo2.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_jo3.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_jo4.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_jo5.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_wx1.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_wx2.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_wx3.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_wx4.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_wx5.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_fw1.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_fw2.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_fw3.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_fw4.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_fw5.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_qj1.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_qj2.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_qj3.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_qj4.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_front_qj5.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_later_hz1.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_later_hz2.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_later_jo1.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_later_jo2.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_later_wx1.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_later_wx2.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_later_fw1.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_dlt_later_fw2.setText(context.getResources().getString(R.string.number_info_default));
         } else {
 
-            lottery_dlt_count1.setText(mNumberInfo.getFifthCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFifthCount());
-            lottery_dlt_bonus1.setText(mNumberInfo.getFifthBonus() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFifthBonus());
-            lottery_dlt_add_count1.setText(mNumberInfo.getFifthAddCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFifthAddCount());
-            lottery_dlt_add_bonus1.setText(mNumberInfo.getFifthAddBonus() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFifthAddBonus());
-            lottery_dlt_count2.setText(mNumberInfo.getSecondCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getSecondCount());
-            lottery_dlt_bonus2.setText(mNumberInfo.getSecondBonus() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getSecondBonus());
-            lottery_dlt_add_count2.setText(mNumberInfo.getSecondAddCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getSecondAddCount());
-            lottery_dlt_add_bonus2.setText(mNumberInfo.getSecondAddBonus() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getSecondAddBonus());
-            lottery_dlt_count3.setText(mNumberInfo.getThirdCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getThirdCount());
-            lottery_dlt_bonus3.setText(mNumberInfo.getThirdBonus() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getThirdBonus());
-            lottery_dlt_add_count3.setText(mNumberInfo.getThirdAddCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getThirdAddCount());
-            lottery_dlt_add_bonus3.setText(mNumberInfo.getThirdAddBonus() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getThirdAddBonus());
-            lottery_dlt_count4.setText(mNumberInfo.getFourthCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFourthCount());
-            lottery_dlt_bonus4.setText(mNumberInfo.getFourthBonus() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFourthBonus());
-            lottery_dlt_add_count4.setText(mNumberInfo.getFourthAddCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFourthAddCount());
-            lottery_dlt_add_bonus4.setText(mNumberInfo.getFourthAddBonus() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFourthAddBonus());
-            lottery_dlt_count5.setText(mNumberInfo.getFifthCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFifthCount());
-            lottery_dlt_bonus5.setText(mNumberInfo.getFifthBonus() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFifthBonus());
-            lottery_dlt_add_count5.setText(mNumberInfo.getFifthAddCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFifthAddCount());
-            lottery_dlt_add_bonus5.setText(mNumberInfo.getFifthAddBonus() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFifthAddBonus());
-            lottery_dlt_count6.setText(mNumberInfo.getSixthCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getSixthCount());
-            lottery_dlt_bonus6.setText(mNumberInfo.getSixthBonus() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getSixthBonus());
+            lottery_dlt_count1.setText(mNumberInfo.getFifthCount() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFifthCount())));
+            lottery_dlt_bonus1.setText(mNumberInfo.getFifthBonus() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFifthBonus())));
+            lottery_dlt_add_count1.setText(mNumberInfo.getFifthAddCount() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFifthAddCount())));
+            lottery_dlt_add_bonus1.setText(mNumberInfo.getFifthAddBonus() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFifthAddBonus())));
+            lottery_dlt_count2.setText(mNumberInfo.getSecondCount() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getSecondCount())));
+            lottery_dlt_bonus2.setText(mNumberInfo.getSecondBonus() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getSecondBonus())));
+            lottery_dlt_add_count2.setText(mNumberInfo.getSecondAddCount() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getSecondAddCount())));
+            lottery_dlt_add_bonus2.setText(mNumberInfo.getSecondAddBonus() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getSecondAddBonus())));
+            lottery_dlt_count3.setText(mNumberInfo.getThirdCount() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getThirdCount())));
+            lottery_dlt_bonus3.setText(mNumberInfo.getThirdBonus() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getThirdBonus())));
+            lottery_dlt_add_count3.setText(mNumberInfo.getThirdAddCount() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getThirdAddCount())));
+            lottery_dlt_add_bonus3.setText(mNumberInfo.getThirdAddBonus() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getThirdAddBonus())));
+            lottery_dlt_count4.setText(mNumberInfo.getFourthCount() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFourthCount())));
+            lottery_dlt_bonus4.setText(mNumberInfo.getFourthBonus() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFourthBonus())));
+            lottery_dlt_add_count4.setText(mNumberInfo.getFourthAddCount() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFourthAddCount())));
+            lottery_dlt_add_bonus4.setText(mNumberInfo.getFourthAddBonus() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFourthAddBonus())));
+            lottery_dlt_count5.setText(mNumberInfo.getFifthCount() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFifthCount())));
+            lottery_dlt_bonus5.setText(mNumberInfo.getFifthBonus() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFifthBonus())));
+            lottery_dlt_add_count5.setText(mNumberInfo.getFifthAddCount() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFifthAddCount())));
+            lottery_dlt_add_bonus5.setText(mNumberInfo.getFifthAddBonus() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFifthAddBonus())));
+            lottery_dlt_count6.setText(mNumberInfo.getSixthCount() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getSixthCount())));
+            lottery_dlt_bonus6.setText(mNumberInfo.getSixthBonus() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getSixthBonus())));
             lottery_dlt_sales_volume.setText(mNumberInfo.getSales() == null ? context.getResources().getString(R.string.number_info_default) : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getSales())));
             lottery_dlt_bonus_sum.setText(mNumberInfo.getJackpot() == null ? context.getResources().getString(R.string.number_info_default) : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getJackpot())));
 
@@ -1828,116 +1962,70 @@ public class NumberDataUtils {
                     continue;
                 }
                 int num = Integer.parseInt(numbers.get(i));
-                sum += num;
-
+                String lastNum;
+                if (numbers.get(i).length() > 1) {
+                    lastNum = numbers.get(i).substring(numbers.get(i).length() - 1, numbers.get(i).length());
+                } else {
+                    lastNum = numbers.get(i);
+                }
                 if (i < 5 && num > 0) {
-                    if (num > 17) { // 大
-                        dlt_dx_list.get(i).setText(context.getResources().getString(R.string.number_bjsc_da));
-                    } else { // 小
-                        dlt_dx_list.get(i).setText(context.getResources().getString(R.string.number_bjsc_xiao));
+                    sum += num;// 和
+                    // 大小
+                    if (num > 17) {
+                        dlt_front_dx_list.get(i).setText(context.getResources().getString(R.string.number_bjsc_da));
+                    } else {
+                        dlt_front_dx_list.get(i).setText(context.getResources().getString(R.string.number_bjsc_xiao));
                     }
-
-                    if (num % 2 == 0) { // 偶
-                        dlt_jo_list.get(i).setText(context.getResources().getString(R.string.number_bjsc_suang));
-                    } else { // 奇
-                        dlt_jo_list.get(i).setText(context.getResources().getString(R.string.number_bjsc_dan));
+                    // 奇偶
+                    if (num % 2 == 0) {
+                        dlt_front_jo_list.get(i).setText(context.getResources().getString(R.string.number_bjsc_suang));
+                    } else {
+                        dlt_front_jo_list.get(i).setText(context.getResources().getString(R.string.number_bjsc_dan));
                     }
+                    // 区间
+                    if (num <= 12) {
+                        dlt_front_qj_list.get(i).setText(context.getResources().getString(R.string.number_info_front));
+                    } else if (num <= 24) {
+                        dlt_front_qj_list.get(i).setText(context.getResources().getString(R.string.number_info_center));
+                    } else {
+                        dlt_front_qj_list.get(i).setText(context.getResources().getString(R.string.number_info_after));
+                    }
+                    // 五行和方位
+                    setTextValue(lastNum, dlt_front_wx_list.get(i), dlt_front_fw_list.get(i));
+                } else if (i == 6 && num > 0) {
+                    // 大小
+                    if (num < 7) {
+                        lottery_dlt_later_hz1.setText(context.getResources().getString(R.string.number_bjsc_xiao));
+                    } else {
+                        lottery_dlt_later_hz1.setText(context.getResources().getString(R.string.number_bjsc_da));
+                    }
+                    // 奇偶
+                    if (num % 2 == 0) {
+                        lottery_dlt_later_jo1.setText(context.getResources().getString(R.string.number_bjsc_suang));
+                    } else {
+                        lottery_dlt_later_jo1.setText(context.getResources().getString(R.string.number_bjsc_dan));
+                    }
+                    // 五行和方位
+                    setTextValue(lastNum, lottery_dlt_later_wx1, lottery_dlt_later_fw1);
+                } else if (i == 7 && num > 0) {
+                    // 大小
+                    if (num < 7) {
+                        lottery_dlt_later_hz2.setText(context.getResources().getString(R.string.number_bjsc_xiao));
+                    } else {
+                        lottery_dlt_later_hz2.setText(context.getResources().getString(R.string.number_bjsc_da));
+                    }
+                    // 奇偶
+                    if (num % 2 == 0) {
+                        lottery_dlt_later_jo2.setText(context.getResources().getString(R.string.number_bjsc_suang));
+                    } else {
+                        lottery_dlt_later_jo2.setText(context.getResources().getString(R.string.number_bjsc_dan));
+                    }
+                    // 五行和方位
+                    setTextValue(lastNum, lottery_dlt_later_wx2, lottery_dlt_later_fw2);
                 }
             }
-            lottery_dlt_hz.setText(String.valueOf(sum));
+            lottery_dlt_front_hz.setText(String.valueOf(sum));
         }
-//            int sum = 0; // 和
-//            int odd_r = 0; // 奇
-//            int odd_b = 0; // 奇
-//            int even_r = 0;// 偶
-//            int even_b = 0;// 偶
-//            int max_r = 0;// 大
-//            int max_b = 0;// 大
-//            int min_r = 0;// 小
-//            int min_b = 0;// 小
-//            int zhi_r = 0;// 质
-//            int zhi_b = 0;// 质
-//            int he_r = 0;// 合
-//            int he_b = 0;// 合
-//            int one_r = 0;// 1区
-//            int one_b = 0;// 1区
-//            int two_r = 0;// 2区
-//            int two_b = 0;// 2区
-//            int three_r = 0;// 3区
-//            int three_b = 0;// 3区
-//            for (int i = 0; i < numbers.size(); i++) {
-//                if (i == 5) {
-//                    continue;
-//                }
-//                int num = Integer.parseInt(numbers.get(i));
-//                sum += num;
-//                if (i < numbers.size() - 2 && num > 0) {
-//                    if (num % 2 == 0) {
-//                        even_r++;
-//                    } else {
-//                        odd_r++;
-//                    }
-//                    if (num > 17) {
-//                        max_r++;
-//                    } else {
-//                        min_r++;
-//                    }
-//                    if (Arrays.binarySearch(zhis, num) < 0) {
-//                        he_r++;
-//                    } else {
-//                        zhi_r++;
-//                    }
-//                    if (num <= 12) {
-//                        one_r++;
-//                    } else if (num <= 24) {
-//                        two_r++;
-//                    } else {
-//                        three_r++;
-//                    }
-//                } else {
-//                    if (num % 2 == 0) {
-//                        even_b++;
-//                    } else {
-//                        odd_b++;
-//                    }
-//                    if (num > 6) {
-//                        max_b++;
-//                    } else {
-//                        min_b++;
-//                    }
-//                    if (Arrays.binarySearch(zhis, num) < 0) {
-//                        he_b++;
-//                    } else {
-//                        zhi_b++;
-//                    }
-//                    if (num <= 4) {
-//                        one_b++;
-//                    } else if (num <= 8) {
-//                        two_b++;
-//                    } else {
-//                        three_b++;
-//                    }
-//                }
-//            }
-//            number_dlt_fz.setText(String.valueOf(sum));
-//            if (sum % 2 == 0) {
-//                number_dlt_ds.setText(context.getResources().getString(R.string.number_bjsc_suang));
-//            } else {
-//                number_dlt_ds.setText(context.getResources().getString(R.string.number_bjsc_dan));
-//            }
-//            int kd_r = Integer.parseInt(numbers.get(numbers.size() - 3)) - Integer.parseInt(numbers.get(0));
-//            int kd_b = Integer.parseInt(numbers.get(numbers.size() - 1)) - Integer.parseInt(numbers.get(numbers.size() - 2));
-//            number_dlt_kd_r.setText(String.valueOf(kd_r));
-//            number_dlt_kd_b.setText(String.valueOf(kd_b));
-//            number_dlt_job_r.setText(odd_r + ":" + even_r);
-//            number_dlt_job_b.setText(odd_b + ":" + even_b);
-//            number_dlt_dxb_r.setText(max_r + ":" + min_r);
-//            number_dlt_dxb_b.setText(max_b + ":" + min_b);
-//            number_dlt_zhb_r.setText(zhi_r + ":" + he_r);
-//            number_dlt_zhb_b.setText(zhi_b + ":" + he_b);
-//            number_dlt_qjb_r.setText(one_r + ":" + two_r + ":" + three_r);
-//            number_dlt_qjb_b.setText(one_b + ":" + two_b + ":" + three_b);
-//        }
     }
 
     /**
@@ -2031,7 +2119,6 @@ public class NumberDataUtils {
         TextView lottery_ssq_count5 = (TextView) mView.findViewById(R.id.lottery_ssq_count5);
         TextView lottery_ssq_count6 = (TextView) mView.findViewById(R.id.lottery_ssq_count6);
         TextView lottery_ssq_count6_1 = (TextView) mView.findViewById(R.id.lottery_ssq_count6_1);
-
         TextView lottery_ssq_bonus1 = (TextView) mView.findViewById(R.id.lottery_ssq_bonus1);
         TextView lottery_ssq_bonus1_1 = (TextView) mView.findViewById(R.id.lottery_ssq_bonus1_1);
         TextView lottery_ssq_bonus2 = (TextView) mView.findViewById(R.id.lottery_ssq_bonus2);
@@ -2040,10 +2127,8 @@ public class NumberDataUtils {
         TextView lottery_ssq_bonus5 = (TextView) mView.findViewById(R.id.lottery_ssq_bonus5);
         TextView lottery_ssq_bonus6 = (TextView) mView.findViewById(R.id.lottery_ssq_bonus6);
         TextView lottery_ssq_bonus6_1 = (TextView) mView.findViewById(R.id.lottery_ssq_bonus6_1);
-
         TextView lottery_ssq_sales_volume = (TextView) mView.findViewById(R.id.lottery_ssq_sales_volume);
         TextView lottery_ssq_bonus_sum = (TextView) mView.findViewById(R.id.lottery_ssq_bonus_sum);
-
         TextView lottery_ssq_hz = (TextView) mView.findViewById(R.id.lottery_ssq_hz);
         TextView lottery_ssq_dx1 = (TextView) mView.findViewById(R.id.lottery_ssq_dx1);
         TextView lottery_ssq_dx2 = (TextView) mView.findViewById(R.id.lottery_ssq_dx2);
@@ -2063,7 +2148,22 @@ public class NumberDataUtils {
         TextView lottery_ssq_qj4 = (TextView) mView.findViewById(R.id.lottery_ssq_qj4);
         TextView lottery_ssq_qj5 = (TextView) mView.findViewById(R.id.lottery_ssq_qj5);
         TextView lottery_ssq_qj6 = (TextView) mView.findViewById(R.id.lottery_ssq_qj6);
-
+        TextView lottery_ssq_wx1 = (TextView) mView.findViewById(R.id.lottery_ssq_wx1);
+        TextView lottery_ssq_wx2 = (TextView) mView.findViewById(R.id.lottery_ssq_wx2);
+        TextView lottery_ssq_wx3 = (TextView) mView.findViewById(R.id.lottery_ssq_wx3);
+        TextView lottery_ssq_wx4 = (TextView) mView.findViewById(R.id.lottery_ssq_wx4);
+        TextView lottery_ssq_wx5 = (TextView) mView.findViewById(R.id.lottery_ssq_wx5);
+        TextView lottery_ssq_wx6 = (TextView) mView.findViewById(R.id.lottery_ssq_wx6);
+        TextView lottery_ssq_fw1 = (TextView) mView.findViewById(R.id.lottery_ssq_fw1);
+        TextView lottery_ssq_fw2 = (TextView) mView.findViewById(R.id.lottery_ssq_fw2);
+        TextView lottery_ssq_fw3 = (TextView) mView.findViewById(R.id.lottery_ssq_fw3);
+        TextView lottery_ssq_fw4 = (TextView) mView.findViewById(R.id.lottery_ssq_fw4);
+        TextView lottery_ssq_fw5 = (TextView) mView.findViewById(R.id.lottery_ssq_fw5);
+        TextView lottery_ssq_fw6 = (TextView) mView.findViewById(R.id.lottery_ssq_fw6);
+        TextView lottery_ssq_b_dx = (TextView) mView.findViewById(R.id.lottery_ssq_b_dx);
+        TextView lottery_ssq_b_jo = (TextView) mView.findViewById(R.id.lottery_ssq_b_jo);
+        TextView lottery_ssq_b_wx = (TextView) mView.findViewById(R.id.lottery_ssq_b_wx);
+        TextView lottery_ssq_b_fw = (TextView) mView.findViewById(R.id.lottery_ssq_b_fw);
         List<TextView> ssq_dx_list = new ArrayList<>();
         ssq_dx_list.add(lottery_ssq_dx1);
         ssq_dx_list.add(lottery_ssq_dx2);
@@ -2085,6 +2185,20 @@ public class NumberDataUtils {
         ssq_qj_list.add(lottery_ssq_qj4);
         ssq_qj_list.add(lottery_ssq_qj5);
         ssq_qj_list.add(lottery_ssq_qj6);
+        List<TextView> ssq_wx_list = new ArrayList<>();
+        ssq_wx_list.add(lottery_ssq_wx1);
+        ssq_wx_list.add(lottery_ssq_wx2);
+        ssq_wx_list.add(lottery_ssq_wx3);
+        ssq_wx_list.add(lottery_ssq_wx4);
+        ssq_wx_list.add(lottery_ssq_wx5);
+        ssq_wx_list.add(lottery_ssq_wx6);
+        List<TextView> ssq_fw_list = new ArrayList<>();
+        ssq_fw_list.add(lottery_ssq_fw1);
+        ssq_fw_list.add(lottery_ssq_fw2);
+        ssq_fw_list.add(lottery_ssq_fw3);
+        ssq_fw_list.add(lottery_ssq_fw4);
+        ssq_fw_list.add(lottery_ssq_fw5);
+        ssq_fw_list.add(lottery_ssq_fw6);
 
         if (null == numbers) {
             lottery_ssq_count1.setText(context.getResources().getString(R.string.number_info_default));
@@ -2124,23 +2238,39 @@ public class NumberDataUtils {
             lottery_ssq_qj4.setText(context.getResources().getString(R.string.number_info_default));
             lottery_ssq_qj5.setText(context.getResources().getString(R.string.number_info_default));
             lottery_ssq_qj6.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_ssq_wx1.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_ssq_wx2.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_ssq_wx3.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_ssq_wx4.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_ssq_wx5.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_ssq_wx6.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_ssq_fw1.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_ssq_fw2.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_ssq_fw3.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_ssq_fw4.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_ssq_fw5.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_ssq_fw6.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_ssq_b_dx.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_ssq_b_jo.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_ssq_b_wx.setText(context.getResources().getString(R.string.number_info_default));
+            lottery_ssq_b_fw.setText(context.getResources().getString(R.string.number_info_default));
         } else {
-            lottery_ssq_count1.setText(mNumberInfo.getFirstCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFirstCount());
-            lottery_ssq_bonus1.setText(mNumberInfo.getFirstBonus() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFirstBonus());
-            lottery_ssq_count1_1.setText(mNumberInfo.getFirstAddCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFirstAddCount());
-            lottery_ssq_bonus1_1.setText(mNumberInfo.getFirstAddBonus() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFirstAddBonus());
-            lottery_ssq_count2.setText(mNumberInfo.getSecondCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getSecondCount());
-            lottery_ssq_bonus2.setText(mNumberInfo.getSecondBonus() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getSecondBonus());
-            lottery_ssq_count3.setText(mNumberInfo.getThirdCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getThirdCount());
-            lottery_ssq_bonus3.setText(mNumberInfo.getThirdBonus() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getThirdBonus());
-            lottery_ssq_count4.setText(mNumberInfo.getFourthCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFourthCount());
-            lottery_ssq_bonus4.setText(mNumberInfo.getFourthBonus() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFourthBonus());
-            lottery_ssq_count5.setText(mNumberInfo.getFifthCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFifthCount());
-            lottery_ssq_bonus5.setText(mNumberInfo.getFifthBonus() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFifthBonus());
-            lottery_ssq_count6.setText(mNumberInfo.getSixthCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getSixthCount());
-            lottery_ssq_bonus6.setText(mNumberInfo.getSixthBonus() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getSixthBonus());
-            lottery_ssq_count6_1.setText(mNumberInfo.getSixthAddCount() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getSixthAddCount());
-            lottery_ssq_bonus6_1.setText(mNumberInfo.getSixthAddBonus() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getSixthAddBonus());
+            lottery_ssq_count1.setText(mNumberInfo.getFirstCount() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFirstCount())));
+            lottery_ssq_bonus1.setText(mNumberInfo.getFirstBonus() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFirstBonus())));
+            lottery_ssq_count1_1.setText(mNumberInfo.getFirstAddCount() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFirstAddCount())));
+            lottery_ssq_bonus1_1.setText(mNumberInfo.getFirstAddBonus() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFirstAddBonus())));
+            lottery_ssq_count2.setText(mNumberInfo.getSecondCount() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getSecondCount())));
+            lottery_ssq_bonus2.setText(mNumberInfo.getSecondBonus() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getSecondBonus())));
+            lottery_ssq_count3.setText(mNumberInfo.getThirdCount() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getThirdCount())));
+            lottery_ssq_bonus3.setText(mNumberInfo.getThirdBonus() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getThirdBonus())));
+            lottery_ssq_count4.setText(mNumberInfo.getFourthCount() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFourthCount())));
+            lottery_ssq_bonus4.setText(mNumberInfo.getFourthBonus() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFourthBonus())));
+            lottery_ssq_count5.setText(mNumberInfo.getFifthCount() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFifthCount())));
+            lottery_ssq_bonus5.setText(mNumberInfo.getFifthBonus() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFifthBonus())));
+            lottery_ssq_count6.setText(mNumberInfo.getSixthCount() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getSixthCount())));
+            lottery_ssq_bonus6.setText(mNumberInfo.getSixthBonus() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getSixthBonus())));
+            lottery_ssq_count6_1.setText(mNumberInfo.getSixthAddCount() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getSixthAddCount())));
+            lottery_ssq_bonus6_1.setText(mNumberInfo.getSixthAddBonus() == null ? context.getResources().getString(R.string.number_info_default) :  NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getSixthAddBonus())));
             lottery_ssq_sales_volume.setText(mNumberInfo.getSales() == null ? context.getResources().getString(R.string.number_info_default) : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getSales())));
             lottery_ssq_bonus_sum.setText(mNumberInfo.getJackpot() == null ? context.getResources().getString(R.string.number_info_default) : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getJackpot())));
 
@@ -2150,87 +2280,55 @@ public class NumberDataUtils {
                     continue;
                 }
                 int num = Integer.parseInt(numbers.get(i));
-                sum += num;
-
+                String lastNum;
+                if (numbers.get(i).length() > 1) {
+                    lastNum = numbers.get(i).substring(numbers.get(i).length() - 1, numbers.get(i).length());
+                } else {
+                    lastNum = numbers.get(i);
+                }
                 if (i < 6 && num > 0) {
+                    sum += num;// 和
+                    // 大小
                     if (num > 16) {
                         ssq_dx_list.get(i).setText(context.getResources().getString(R.string.number_bjsc_da));
                     } else {
                         ssq_dx_list.get(i).setText(context.getResources().getString(R.string.number_bjsc_xiao));
                     }
-
-                    if (num % 2 == 0) { // 偶
+                    // 奇偶
+                    if (num % 2 == 0) {
                         ssq_jo_list.get(i).setText(context.getResources().getString(R.string.number_bjsc_suang));
-                    } else { // 奇
+                    } else {
                         ssq_jo_list.get(i).setText(context.getResources().getString(R.string.number_bjsc_dan));
                     }
-
-                    if (num <= 11) { // 前
+                    // 区位
+                    if (num <= 11) {
                         ssq_qj_list.get(i).setText(context.getResources().getString(R.string.number_info_front));
-                    } else if (num <= 22) { // 中
+                    } else if (num <= 22) {
                         ssq_qj_list.get(i).setText(context.getResources().getString(R.string.number_info_center));
-                    } else { // 后
+                    } else {
                         ssq_qj_list.get(i).setText(context.getResources().getString(R.string.number_info_after));
                     }
+                    // 五行和方位
+                    setTextValue(lastNum,ssq_wx_list.get(i),ssq_fw_list.get(i));
+                }else if(i == 7 && num > 0){
+                    // 大小
+                    if (num > 8) {
+                        lottery_ssq_b_dx.setText(context.getResources().getString(R.string.number_bjsc_da));
+                    } else {
+                        lottery_ssq_b_dx.setText(context.getResources().getString(R.string.number_bjsc_xiao));
+                    }
+                    // 奇偶
+                    if (num % 2 == 0) {
+                        lottery_ssq_b_jo.setText(context.getResources().getString(R.string.number_bjsc_suang));
+                    } else {
+                        lottery_ssq_b_jo.setText(context.getResources().getString(R.string.number_bjsc_dan));
+                    }
+                    // 五行和方位
+                    setTextValue(lastNum,lottery_ssq_b_wx,lottery_ssq_b_fw);
                 }
             }
             lottery_ssq_hz.setText(String.valueOf(sum));
         }
-//        else {
-//            int sum = 0; // 和
-//            int odd = 0; // 奇
-//            int even = 0;// 偶
-//            int max = 0;// 大
-//            int min = 0;// 小
-//            int zhi = 0;// 质
-//            int he = 0;// 合
-//            int one = 0;// 1区
-//            int two = 0;// 2区
-//            int three = 0;// 3区
-//            for (int i = 0; i < numbers.size(); i++) {
-//                if (i == 6) {
-//                    continue;
-//                }
-//                int num = Integer.parseInt(numbers.get(i));
-//                sum += num;
-//                if (i < numbers.size() - 1 && num > 0) {
-//                    if (num % 2 == 0) {
-//                        even++;
-//                    } else {
-//                        odd++;
-//                    }
-//                    if (num > 16) {
-//                        max++;
-//                    } else {
-//                        min++;
-//                    }
-//                    if (Arrays.binarySearch(zhis, num) < 0) {
-//                        he++;
-//                    } else {
-//                        zhi++;
-//                    }
-//                    if (num <= 11) {
-//                        one++;
-//                    } else if (num <= 22) {
-//                        two++;
-//                    } else {
-//                        three++;
-//                    }
-//                }
-//            }
-//            number_ssq_fz.setText(String.valueOf(sum));
-//            if (sum % 2 == 0) {
-//                number_ssq_ds.setText(context.getResources().getString(R.string.number_bjsc_suang));
-//            } else {
-//                number_ssq_ds.setText(context.getResources().getString(R.string.number_bjsc_dan));
-//            }
-//            int kd = Integer.parseInt(numbers.get(numbers.size() - 2)) - Integer.parseInt(numbers.get(0));
-//            number_ssq_kd.setText(String.valueOf(kd));
-//            number_ssq_job.setText(odd + ":" + even);
-//            number_ssq_dxb.setText(max + ":" + min);
-//            number_ssq_zhb.setText(zhi + ":" + he);
-//            number_ssq_qjb.setText(one + ":" + two + ":" + three);
-//        }
     }
 
     /**
@@ -2861,6 +2959,39 @@ public class NumberDataUtils {
                     number_hk_tm.setTextColor(context.getResources().getColor(R.color.number_green));
                     break;
             }
+        }
+    }
+
+    /**
+     * 设置五行和方位方法
+     */
+    private void setTextValue(String lastNum, TextView tv_wx, TextView tv_fw) {
+        switch (lastNum) {
+            case "1":// 水
+            case "6":// 北
+                tv_wx.setText(context.getResources().getString(R.string.number_info_wx_s));
+                tv_fw.setText(context.getResources().getString(R.string.number_info_fw_N));
+                break;
+            case "2":// 火
+            case "7":// 南
+                tv_wx.setText(context.getResources().getString(R.string.number_info_wx_h));
+                tv_fw.setText(context.getResources().getString(R.string.number_info_fw_S));
+                break;
+            case "3":// 木
+            case "8":// 东
+                tv_wx.setText(context.getResources().getString(R.string.number_info_wx_m));
+                tv_fw.setText(context.getResources().getString(R.string.number_info_fw_E));
+                break;
+            case "4":// 金
+            case "9":// 西
+                tv_wx.setText(context.getResources().getString(R.string.number_info_wx_j));
+                tv_fw.setText(context.getResources().getString(R.string.number_info_fw_W));
+                break;
+            case "0":// 土
+            case "5":// 中
+                tv_wx.setText(context.getResources().getString(R.string.number_info_wx_t));
+                tv_fw.setText(context.getResources().getString(R.string.number_info_fw_Z));
+                break;
         }
     }
 

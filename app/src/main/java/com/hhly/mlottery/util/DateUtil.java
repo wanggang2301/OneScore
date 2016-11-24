@@ -148,9 +148,16 @@ public class DateUtil {
      * @param strdate
      * @return
      */
-    public static String getLotteryInfoDate(String strdate,String format) {
-        Date date = parseDate(strdate);
-        return format(date, format);
+    public static String getLotteryInfoDate(String strdate , String style) {
+        DateFormat d1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        DateFormat d2 = new SimpleDateFormat(style);
+        try {
+            strdate = d2.format(d1.parse(strdate));
+            System.out.println(strdate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return strdate;
     }
 
     /**
