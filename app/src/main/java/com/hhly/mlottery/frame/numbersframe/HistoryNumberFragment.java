@@ -1231,7 +1231,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
             }
 
             NumberDataUtils utils = new NumberDataUtils();
-            utils.numberHistoryShow(mContext, view, mNumber, 2, false, false, null);
+            utils.numberHistoryShow(mContext, view, mNumber, 2, false, false, null, serverTime);
         }
     }
 

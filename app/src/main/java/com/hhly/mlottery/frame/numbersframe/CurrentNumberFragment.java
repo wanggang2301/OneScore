@@ -559,7 +559,7 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
                 L.d("开奖动画异常： " + e.getMessage());
             }
         } else {
-            utils.numberHistoryShow(mContext, mView, mNumberInfoCopy, 1, isOpenNumberStartHistory, isNextNumber, null);
+            utils.numberHistoryShow(mContext, mView, mNumberInfoCopy, 1, isOpenNumberStartHistory, isNextNumber, null, serverTime);
         }
     }
 
@@ -628,7 +628,7 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {// 显示最新开奖号码
-                                utils.numberHistoryShow(mContext, mView, mNumberInfo, 1, isOpenNumberStartHistory, isNextNumber, null);
+                                utils.numberHistoryShow(mContext, mView, mNumberInfo, 1, isOpenNumberStartHistory, isNextNumber, null, serverTime);
                                 if (!isOpenNumberStartHistory) {
                                     isOpenNumberOrCountDown();// 没有开奖了隐藏开奖显示
                                 }
@@ -690,9 +690,8 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
     private void obtainNewStart() {
         getCurrentBean();// 获取当前对象
         if ("30".equals(mNumberName) || "31".equals(mNumberName) || "32".equals(mNumberName)) {
-//TODO
             // 直接显示详情页
-            utils.numberHistoryShow(mContext, mView, mNumberInfo, 1, false, isNextNumber, null);
+            utils.numberHistoryShow(mContext, mView, mNumberInfo, 1, false, isNextNumber, null, serverTime);
         } else {
             initIsHKOpenNumberStart();// 判断开奖状态
             animationPlay();
@@ -757,7 +756,7 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
                 if (allNumbers == null || !allNumbers.equals(sb.toString())) {
                     allNumbers = sb.toString();
                     isOpenNumberOrCountDown();// 显示倒计时或正在开奖中
-                    utils.numberHistoryShow(mContext, mView, mNumberInfo, 1, isOpenNumberStartHistory, isNextNumber, null);
+                    utils.numberHistoryShow(mContext, mView, mNumberInfo, 1, isOpenNumberStartHistory, isNextNumber, null, serverTime);
                 }
                 if (cruuentIssue < mIssue) {
                     cruuentIssue = mIssue;

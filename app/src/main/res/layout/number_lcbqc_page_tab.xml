@@ -68,29 +68,95 @@
                 style="@style/lottery_info_title"
                 android:text="@string/number_info_vs" />
 
-            <TextView
-                android:id="@+id/lottery_lcbqc_vs1"
-                style="@style/lottery_info_content_right" />
+            <LinearLayout style="@style/lottery_info_vs_content">
 
-            <TextView
-                android:id="@+id/lottery_lcbqc_vs2"
-                style="@style/lottery_info_content_right"/>
+                <TextView
+                    android:id="@+id/lottery_lcbqc_home_name1"
+                    style="@style/lottery_info_vs_left" />
 
-            <TextView
-                android:id="@+id/lottery_lcbqc_vs3"
-                style="@style/lottery_info_content_right" />
+                <TextView
+                    android:id="@+id/lottery_lcbqc_vs1"
+                    style="@style/lottery_info_vs_center" />
 
-            <TextView
-                android:id="@+id/lottery_lcbqc_vs4"
-                style="@style/lottery_info_content_right" />
+                <TextView
+                    android:id="@+id/lottery_lcbqc_guest_name1"
+                    style="@style/lottery_info_vs_right" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/lottery_lcbqc_vs5"
-                style="@style/lottery_info_content_right"/>
+            <LinearLayout style="@style/lottery_info_vs_content">
 
-            <TextView
-                android:id="@+id/lottery_lcbqc_vs6"
-                style="@style/lottery_info_content_right" />
+                <TextView
+                    android:id="@+id/lottery_lcbqc_home_name2"
+                    style="@style/lottery_info_vs_left" />
+
+                <TextView
+                    android:id="@+id/lottery_lcbqc_vs2"
+                    style="@style/lottery_info_vs_center" />
+
+                <TextView
+                    android:id="@+id/lottery_lcbqc_guest_name2"
+                    style="@style/lottery_info_vs_right" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/lottery_info_vs_content">
+
+                <TextView
+                    android:id="@+id/lottery_lcbqc_home_name3"
+                    style="@style/lottery_info_vs_left" />
+
+                <TextView
+                    android:id="@+id/lottery_lcbqc_vs3"
+                    style="@style/lottery_info_vs_center" />
+
+                <TextView
+                    android:id="@+id/lottery_lcbqc_guest_name3"
+                    style="@style/lottery_info_vs_right" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/lottery_info_vs_content">
+
+                <TextView
+                    android:id="@+id/lottery_lcbqc_home_name4"
+                    style="@style/lottery_info_vs_left" />
+
+                <TextView
+                    android:id="@+id/lottery_lcbqc_vs4"
+                    style="@style/lottery_info_vs_center" />
+
+                <TextView
+                    android:id="@+id/lottery_lcbqc_guest_name4"
+                    style="@style/lottery_info_vs_right" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/lottery_info_vs_content">
+
+                <TextView
+                    android:id="@+id/lottery_lcbqc_home_name5"
+                    style="@style/lottery_info_vs_left" />
+
+                <TextView
+                    android:id="@+id/lottery_lcbqc_vs5"
+                    style="@style/lottery_info_vs_center" />
+
+                <TextView
+                    android:id="@+id/lottery_lcbqc_guest_name5"
+                    style="@style/lottery_info_vs_right" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/lottery_info_vs_content">
+
+                <TextView
+                    android:id="@+id/lottery_lcbqc_home_name6"
+                    style="@style/lottery_info_vs_left" />
+
+                <TextView
+                    android:id="@+id/lottery_lcbqc_vs6"
+                    style="@style/lottery_info_vs_center" />
+
+                <TextView
+                    android:id="@+id/lottery_lcbqc_guest_name6"
+                    style="@style/lottery_info_vs_right" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -537,7 +603,7 @@
 
             <TextView
                 android:id="@+id/lottery_lcbqc_count"
-                style="@style/lottery_info_content_right"/>
+                style="@style/lottery_info_content_right" />
 
         </LinearLayout>
 

@@ -64,6 +64,7 @@ public class NumberDataUtils {
     private Context context;
     private View mView;
     private NumberCurrentInfo mNumberInfo;
+    private String mServerTime;
 
     private List<String> numbers = new ArrayList<String>();// 存放开奖号码
     private List<String> zodiacs = new ArrayList<String>();// 存放六合彩生肖
@@ -727,8 +728,9 @@ public class NumberDataUtils {
      * @param mNumberInfo
      * @param isGravity
      * @param isOpenNumberStartHistory
+     * @param serverTime 服务器时间戳
      */
-    public void numberHistoryShow(Context context, View mView, NumberCurrentInfo mNumberInfo, int isGravity, boolean isOpenNumberStartHistory, boolean isNextNumber, String index) {
+    public void numberHistoryShow(Context context, View mView, NumberCurrentInfo mNumberInfo, int isGravity, boolean isOpenNumberStartHistory, boolean isNextNumber, String index, String serverTime) {
         tv_number_title = (TextView) mView.findViewById(R.id.tv_Currentnumber_title);
         tv_Currentnumber_time = (TextView) mView.findViewById(R.id.tv_Currentnumber_time);// 时间
         ll_Currentnumber_numbers = (LinearLayout) mView.findViewById(R.id.ll_Currentnumber_numbers);// 显示开奖号码容器
@@ -759,6 +761,7 @@ public class NumberDataUtils {
         this.context = context;
         this.mView = mView;
         this.mNumberInfo = mNumberInfo;
+        this.mServerTime = serverTime;
 
         if (isGravity == 2) {
             mSwipeRefreshLayout.setEnabled(false);// 禁下拉刷新
@@ -1325,6 +1328,20 @@ public class NumberDataUtils {
      */
     private void processingMethodSFC() {
         TextView lottery_sfc_issue = (TextView) mView.findViewById(R.id.lottery_sfc_issue);
+        TextView lottery_sfc_home_name1 = (TextView) mView.findViewById(R.id.lottery_sfc_home_name1);
+        TextView lottery_sfc_home_name2 = (TextView) mView.findViewById(R.id.lottery_sfc_home_name2);
+        TextView lottery_sfc_home_name3 = (TextView) mView.findViewById(R.id.lottery_sfc_home_name3);
+        TextView lottery_sfc_home_name4 = (TextView) mView.findViewById(R.id.lottery_sfc_home_name4);
+        TextView lottery_sfc_home_name5 = (TextView) mView.findViewById(R.id.lottery_sfc_home_name5);
+        TextView lottery_sfc_home_name6 = (TextView) mView.findViewById(R.id.lottery_sfc_home_name6);
+        TextView lottery_sfc_home_name7 = (TextView) mView.findViewById(R.id.lottery_sfc_home_name7);
+        TextView lottery_sfc_home_name8 = (TextView) mView.findViewById(R.id.lottery_sfc_home_name8);
+        TextView lottery_sfc_home_name9 = (TextView) mView.findViewById(R.id.lottery_sfc_home_name9);
+        TextView lottery_sfc_home_name10 = (TextView) mView.findViewById(R.id.lottery_sfc_home_name10);
+        TextView lottery_sfc_home_name11 = (TextView) mView.findViewById(R.id.lottery_sfc_home_name11);
+        TextView lottery_sfc_home_name12 = (TextView) mView.findViewById(R.id.lottery_sfc_home_name12);
+        TextView lottery_sfc_home_name13 = (TextView) mView.findViewById(R.id.lottery_sfc_home_name13);
+        TextView lottery_sfc_home_name14 = (TextView) mView.findViewById(R.id.lottery_sfc_home_name14);
         TextView lottery_sfc_vs1 = (TextView) mView.findViewById(R.id.lottery_sfc_vs1);
         TextView lottery_sfc_vs2 = (TextView) mView.findViewById(R.id.lottery_sfc_vs2);
         TextView lottery_sfc_vs3 = (TextView) mView.findViewById(R.id.lottery_sfc_vs3);
@@ -1339,6 +1356,20 @@ public class NumberDataUtils {
         TextView lottery_sfc_vs12 = (TextView) mView.findViewById(R.id.lottery_sfc_vs12);
         TextView lottery_sfc_vs13 = (TextView) mView.findViewById(R.id.lottery_sfc_vs13);
         TextView lottery_sfc_vs14 = (TextView) mView.findViewById(R.id.lottery_sfc_vs14);
+        TextView lottery_sfc_guest_name1 = (TextView) mView.findViewById(R.id.lottery_sfc_guest_name1);
+        TextView lottery_sfc_guest_name2 = (TextView) mView.findViewById(R.id.lottery_sfc_guest_name2);
+        TextView lottery_sfc_guest_name3 = (TextView) mView.findViewById(R.id.lottery_sfc_guest_name3);
+        TextView lottery_sfc_guest_name4 = (TextView) mView.findViewById(R.id.lottery_sfc_guest_name4);
+        TextView lottery_sfc_guest_name5 = (TextView) mView.findViewById(R.id.lottery_sfc_guest_name5);
+        TextView lottery_sfc_guest_name6 = (TextView) mView.findViewById(R.id.lottery_sfc_guest_name6);
+        TextView lottery_sfc_guest_name7 = (TextView) mView.findViewById(R.id.lottery_sfc_guest_name7);
+        TextView lottery_sfc_guest_name8 = (TextView) mView.findViewById(R.id.lottery_sfc_guest_name8);
+        TextView lottery_sfc_guest_name9 = (TextView) mView.findViewById(R.id.lottery_sfc_guest_name9);
+        TextView lottery_sfc_guest_name10 = (TextView) mView.findViewById(R.id.lottery_sfc_guest_name10);
+        TextView lottery_sfc_guest_name11 = (TextView) mView.findViewById(R.id.lottery_sfc_guest_name11);
+        TextView lottery_sfc_guest_name12 = (TextView) mView.findViewById(R.id.lottery_sfc_guest_name12);
+        TextView lottery_sfc_guest_name13 = (TextView) mView.findViewById(R.id.lottery_sfc_guest_name13);
+        TextView lottery_sfc_guest_name14 = (TextView) mView.findViewById(R.id.lottery_sfc_guest_name14);
         TextView lottery_sfc_time1 = (TextView) mView.findViewById(R.id.lottery_sfc_time1);
         TextView lottery_sfc_time2 = (TextView) mView.findViewById(R.id.lottery_sfc_time2);
         TextView lottery_sfc_time3 = (TextView) mView.findViewById(R.id.lottery_sfc_time3);
@@ -1377,6 +1408,21 @@ public class NumberDataUtils {
         TextView lottery_rxjc_count = (TextView) mView.findViewById(R.id.lottery_rxjc_count);
         TextView lottery_rxjc_bouns = (TextView) mView.findViewById(R.id.lottery_rxjc_bouns);
 
+        List<TextView> sfc_home_name_list = new ArrayList<>();
+        sfc_home_name_list.add(lottery_sfc_home_name1);
+        sfc_home_name_list.add(lottery_sfc_home_name2);
+        sfc_home_name_list.add(lottery_sfc_home_name3);
+        sfc_home_name_list.add(lottery_sfc_home_name4);
+        sfc_home_name_list.add(lottery_sfc_home_name5);
+        sfc_home_name_list.add(lottery_sfc_home_name6);
+        sfc_home_name_list.add(lottery_sfc_home_name7);
+        sfc_home_name_list.add(lottery_sfc_home_name8);
+        sfc_home_name_list.add(lottery_sfc_home_name9);
+        sfc_home_name_list.add(lottery_sfc_home_name10);
+        sfc_home_name_list.add(lottery_sfc_home_name11);
+        sfc_home_name_list.add(lottery_sfc_home_name12);
+        sfc_home_name_list.add(lottery_sfc_home_name13);
+        sfc_home_name_list.add(lottery_sfc_home_name14);
         List<TextView> sfc_vs_list = new ArrayList<>();
         sfc_vs_list.add(lottery_sfc_vs1);
         sfc_vs_list.add(lottery_sfc_vs2);
@@ -1392,6 +1438,21 @@ public class NumberDataUtils {
         sfc_vs_list.add(lottery_sfc_vs12);
         sfc_vs_list.add(lottery_sfc_vs13);
         sfc_vs_list.add(lottery_sfc_vs14);
+        List<TextView> sfc_guest_name_list = new ArrayList<>();
+        sfc_guest_name_list.add(lottery_sfc_guest_name1);
+        sfc_guest_name_list.add(lottery_sfc_guest_name2);
+        sfc_guest_name_list.add(lottery_sfc_guest_name3);
+        sfc_guest_name_list.add(lottery_sfc_guest_name4);
+        sfc_guest_name_list.add(lottery_sfc_guest_name5);
+        sfc_guest_name_list.add(lottery_sfc_guest_name6);
+        sfc_guest_name_list.add(lottery_sfc_guest_name7);
+        sfc_guest_name_list.add(lottery_sfc_guest_name8);
+        sfc_guest_name_list.add(lottery_sfc_guest_name9);
+        sfc_guest_name_list.add(lottery_sfc_guest_name10);
+        sfc_guest_name_list.add(lottery_sfc_guest_name11);
+        sfc_guest_name_list.add(lottery_sfc_guest_name12);
+        sfc_guest_name_list.add(lottery_sfc_guest_name13);
+        sfc_guest_name_list.add(lottery_sfc_guest_name14);
         List<TextView> sfc_time_list = new ArrayList<>();
         sfc_time_list.add(lottery_sfc_time1);
         sfc_time_list.add(lottery_sfc_time2);
@@ -1426,7 +1487,26 @@ public class NumberDataUtils {
         lottery_sfc_issue.setText(context.getResources().getString(R.string.number_code_di) + (mNumberInfo.getIssue() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getIssue()) + context.getResources().getString(R.string.number_code_qi));
 
         for (int i = 0, len = mNumberInfo.getFootballLotteryIssueResultData().size(); i < len; i++) {
-            sfc_vs_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getHomeName() + " VS " + mNumberInfo.getFootballLotteryIssueResultData().get(i).getGuestName());
+            // 判断是否开赛时间
+            try {
+                if(Long.parseLong(mServerTime) > DateUtil.getCurrentTime(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime())){
+                    sfc_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.number_red));
+                    sfc_vs_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore());
+                }else{
+                    sfc_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
+                    sfc_vs_list.get(i).setText("VS");
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+                sfc_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
+                sfc_vs_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
+            }
+            sfc_home_name_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getHomeName());
+            sfc_guest_name_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getGuestName());
+
+            System.out.println("xxxxx 日期转换前： " + mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime());
+            System.out.println("xxxxx 日期转换后： " + DateUtil.getLotteryInfoDate(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime(), "MM-dd HH:mm"));
+
             sfc_time_list.get(i).setText(DateUtil.getLotteryInfoDate(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime(), "MM-dd HH:mm"));
             sfc_result_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullDrawcode() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullDrawcode());
         }

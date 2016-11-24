@@ -975,6 +975,49 @@
         <item name="android:background">@drawable/number_tab_solid_all_r_b</item>
         <item name="android:text">@string/number_info_default</item>
     </style>
+
+    <!--对战条目-->
+    <style name="lottery_info_vs_content">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:background">@drawable/number_tab_solid_all_r_b</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+    <!--左-->
+    <style name="lottery_info_vs_left">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">2</item>
+        <item name="android:gravity">end</item>
+        <item name="android:lines">1</item>
+        <item name="android:textColor">@color/content_txt_dark_grad</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:text">@string/number_info_default</item>
+    </style>
+    <!--中-->
+    <style name="lottery_info_vs_center">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">0.6</item>
+        <item name="android:gravity">center</item>
+        <item name="android:lines">1</item>
+        <item name="android:textColor">@color/content_txt_dark_grad</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:text">@string/number_info_default</item>
+    </style>
+    <!--右-->
+    <style name="lottery_info_vs_right">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">2</item>
+        <item name="android:gravity">start</item>
+        <item name="android:lines">1</item>
+        <item name="android:textColor">@color/content_txt_dark_grad</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:text">@string/number_info_default</item>
+    </style>
+
     <!--彩票详情页 end -->
 
 </resources>
