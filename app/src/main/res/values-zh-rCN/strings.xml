@@ -1059,6 +1059,7 @@
     <string name="only_chose_start_text">还有一比分。</string>
     <string name="star_style">球星风采</string>
     <string name="football_baby">足球宝贝</string>
+    <string name="account_cannot_be_empty">账号或手机号不能为空</string>
 
     <!--模糊搜索-->
     <string name="fuzzy_search">请输入联赛名</string>
@@ -1107,7 +1108,7 @@
     <string name="nickname_sensitive">昵称包含敏感词语</string>
     <string name="man_sex">汉子</string>
     <string name="woman_sex">妹子</string>
-    <string name="noon_sex">不告诉你</string>
+    <string name="noon_sex">保密</string>
     <string name="chose_head_phot">选择头像</string>
     <string name="complete">完成</string>
     <!--1.1.2 end-->

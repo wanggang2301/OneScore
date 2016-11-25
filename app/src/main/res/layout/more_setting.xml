@@ -46,9 +46,10 @@
              android:orientation="vertical">
 
              <View
+                 android:id="@+id/hui_img"
                  android:layout_width="match_parent"
                  android:layout_height="15dp"
-                 android:background="@color/linecolor"/>
+                 android:background="@color/home_item_bg"/>
          </LinearLayout>
 
 <!--
