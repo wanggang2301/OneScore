@@ -279,13 +279,12 @@ public class BasketTextLiveFragment extends Fragment {
 //                    if (mBasketDetailsLiveCallBack != null) {
 //                        mBasketDetailsLiveCallBack.onClick("1");
 //                    }
-                    return;
-                }
+//                    return;
                 } else {
-                    if (mBasketDetailsLiveCallBack != null) {
-                        //切换到直播界面
-                        mBasketDetailsLiveCallBack.onClick("1");
-                    }
+//                    if (mBasketDetailsLiveCallBack != null) {
+//                        //切换到直播界面
+//                        mBasketDetailsLiveCallBack.onClick("1");
+//                    }
 
                     basketEachTextLiveBeanList = basketTextLiveBean.getData();
 
