@@ -182,11 +182,11 @@ public class BasketLiveFragment extends Fragment {
             L.d("zxcvbn", "球队统计");
 
         } else if (currentFrag == 2) {
+
             EventBus.getDefault().post(new BasketDetailPlayersStatisticsRefresh(""));
             L.d("zxcvbn", "球员统计");
         }
     }
-
 
 
     @Override
@@ -198,6 +198,7 @@ public class BasketLiveFragment extends Fragment {
     @OnClick(R.id.network_exception_reload_btn)
     public void onClick() {
         flPb.setVisibility(View.VISIBLE);
+
         EventBus.getDefault().post(new BasketDetailLiveTextRefresh("network_exception_reload_btn"));
     }
 }

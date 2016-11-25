@@ -311,53 +311,60 @@ public class BasketTextLiveFragment extends Fragment {
         VolleyContentFast.requestJsonByGet(BaseURLs.BASKET_DETAIL_TEXTLIVE, params, new VolleyContentFast.ResponseSuccessListener<BasketTextLiveBean>() {
             @Override
             public void onResponse(BasketTextLiveBean basketTextLiveBean) {
-                if (basketTextLiveBean == null || 200 != basketTextLiveBean.getResult() || basketTextLiveBean.getData() == null) {
-                    //1分钟刷新一次知道有文字直播时，切换到直播界面
-
-                    if (!isFirstPolling) {
-                        EventBus.getDefault().post(new BsaketDeatilMatchPreEventBus("0"));
-                    }
-
-                    startTimePolling();
-                    isFirstPolling = true;
+                if (basketTextLiveBean == null || 200 != basketTextLiveBean.getResult()) {  //请求接口出错不是200
+                    requestError();
                 } else {
+                    if (200 == basketTextLiveBean.getResult() && basketTextLiveBean.getData() == null) {  //赛程请求成功 没有文字直播数据
+                        //1分钟刷新一次知道有文字直播时，切换到直播界面
 
-
-                    closeTimePolling();
-                    EventBus.getDefault().post(new BsaketDeatilMatchPreEventBus("1"));
-
-                    mProgressBarRefresh.setVisibility(View.GONE);
-                    fl_comment.setVisibility(View.VISIBLE);
-
-                    basketEachTextLiveBeanList = new ArrayList<BasketEachTextLiveBean>();
-
-                    basketEachTextLiveBeanList = basketTextLiveBean.getData();
-
-                    mLoadMore.setText(R.string.foot_loadmore);   //加载更多
-
-                    if (basketEachTextLiveBeanList != null && basketEachTextLiveBeanList.size() > 4) {
-                        listfooter_more.setVisibility(View.VISIBLE);
+                        if (!isFirstPolling) {
+                            EventBus.getDefault().post(new BsaketDeatilMatchPreEventBus("0"));
+                        }
+                        startTimePolling();  //轮询赛程
+                        isFirstPolling = true;
                     } else {
-                        listfooter_more.setVisibility(View.GONE);
-                    }
-                    if (basketEachTextLiveBeanList.size() == 0) {//，没请求到数据 mNoData显示
-                        mBasketBallTextLiveAdapter.setEmptyView(emptyView);
-                    } else {
-                        lastId = basketTextLiveBean.getData().get(basketTextLiveBean.getData().size() - 1).getId();
-                        mBasketBallTextLiveAdapter.getData().clear();
-                        mBasketBallTextLiveAdapter.addData(basketEachTextLiveBeanList);
-                        mBasketBallTextLiveAdapter.notifyDataSetChanged();
-                        mRecyclerView.smoothScrollToPosition(0);
+
+
+                        closeTimePolling();
+                        EventBus.getDefault().post(new BsaketDeatilMatchPreEventBus("1"));
+
+                        mProgressBarRefresh.setVisibility(View.GONE);
+                        fl_comment.setVisibility(View.VISIBLE);
+
+                        basketEachTextLiveBeanList = new ArrayList<BasketEachTextLiveBean>();
+
+                        basketEachTextLiveBeanList = basketTextLiveBean.getData();
+
+                        mLoadMore.setText(R.string.foot_loadmore);   //加载更多
+
+                        if (basketEachTextLiveBeanList != null && basketEachTextLiveBeanList.size() > 4) {
+                            listfooter_more.setVisibility(View.VISIBLE);
+                        } else {
+                            listfooter_more.setVisibility(View.GONE);
+                        }
+                        if (basketEachTextLiveBeanList.size() == 0) {//，没请求到数据 mNoData显示
+                            mBasketBallTextLiveAdapter.setEmptyView(emptyView);
+                        } else {
+                            lastId = basketTextLiveBean.getData().get(basketTextLiveBean.getData().size() - 1).getId();
+                            mBasketBallTextLiveAdapter.getData().clear();
+                            mBasketBallTextLiveAdapter.addData(basketEachTextLiveBeanList);
+                            mBasketBallTextLiveAdapter.notifyDataSetChanged();
+                            mRecyclerView.smoothScrollToPosition(0);
+                        }
                     }
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                EventBus.getDefault().post(new BsaketDeatilMatchPreEventBus("2"));
-                mProgressBarRefresh.setVisibility(View.GONE);
+                requestError();
             }
         }, BasketTextLiveBean.class);
+    }
+
+    private void requestError() {
+        EventBus.getDefault().post(new BsaketDeatilMatchPreEventBus("2"));
+        mProgressBarRefresh.setVisibility(View.GONE);
     }
 
     Handler pushHandler = new Handler() {
@@ -390,6 +397,7 @@ public class BasketTextLiveFragment extends Fragment {
      */
     public void onEventMainThread(BasketDetailLiveTextRefresh basketDetailLiveTextRefreshEventBus) {
         isRequestFinish = true;
+        isFirstPolling = false;
         loadData();
     }
 
