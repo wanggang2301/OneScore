@@ -270,15 +270,15 @@ public class BasketTextLiveFragment extends Fragment {
                 } else {
                     listfooter_more.setVisibility(View.GONE);
                 }
-                if (basketEachTextLiveBeanList.size() == 0) {//，没请求到数据 mNoData显示
-                    mBasketBallTextLiveAdapter.setEmptyView(emptyView);
-                } else {
-                    lastId = basketTextLiveBean.getData().get(basketTextLiveBean.getData().size() - 1).getId();
-                    mBasketBallTextLiveAdapter.getData().clear();
-                    mBasketBallTextLiveAdapter.addData(basketEachTextLiveBeanList);
-                    mBasketBallTextLiveAdapter.notifyDataSetChanged();
-                    mRecyclerView.smoothScrollToPosition(0);
-                }
+//                if (basketEachTextLiveBeanList.size() == 0) {//，没请求到数据 mNoData显示
+//                    mBasketBallTextLiveAdapter.setEmptyView(emptyView);
+//                } else {
+//                    lastId = basketTextLiveBean.getData().get(basketTextLiveBean.getData().size() - 1).getId();
+//                    mBasketBallTextLiveAdapter.getData().clear();
+//                    mBasketBallTextLiveAdapter.addData(basketEachTextLiveBeanList);
+//                    mBasketBallTextLiveAdapter.notifyDataSetChanged();
+//                    mRecyclerView.smoothScrollToPosition(0);
+//                }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override

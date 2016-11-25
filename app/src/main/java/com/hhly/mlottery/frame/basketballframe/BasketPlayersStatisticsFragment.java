@@ -234,6 +234,11 @@ public class BasketPlayersStatisticsFragment extends Fragment implements View.On
         list.clear();
 
         list.addAll(mData.getData().getGuestPlayerStats());
+        if(list.size()==0){
+            mNodataLayout.setVisibility(View.VISIBLE);
+        }else{
+            mNodataLayout.setVisibility(View.GONE);
+        }
         mAdapter.notifyDataSetChanged();
         mNames.clear();
         for(BasketPlayerStatisticsBean.PlayerStatsEntity entity:list){
@@ -253,6 +258,12 @@ public class BasketPlayersStatisticsFragment extends Fragment implements View.On
                     mHomeName.setTextColor(MyApp.getContext().getResources().getColor(R.color.black_details_textcolor));
                     list.clear();
                     list.addAll(mData.getData().getGuestPlayerStats());
+                    if(list.size()==0){
+                        mNodataLayout.setVisibility(View.VISIBLE);
+                        mNodataLayout.setBackgroundColor(MyApp.getContext().getResources().getColor(R.color.black_grounding));
+                    }else{
+                        mNodataLayout.setVisibility(View.GONE);
+                    }
                     mAdapter.notifyDataSetChanged();
                     mNames.clear();
                     for(BasketPlayerStatisticsBean.PlayerStatsEntity entity:list){
@@ -269,6 +280,11 @@ public class BasketPlayersStatisticsFragment extends Fragment implements View.On
                     mHomeName.setTextColor(MyApp.getContext().getResources().getColor(R.color.tabtitle));
                     list.clear();
                     list.addAll( mData.getData().getHomePlayerStats());
+                    if(list.size()==0){
+                        mNodataLayout.setVisibility(View.VISIBLE);
+                    }else{
+                        mNodataLayout.setVisibility(View.GONE);
+                    }
                     mAdapter.notifyDataSetChanged();
                     mNames.clear();
                     for(BasketPlayerStatisticsBean.PlayerStatsEntity entity:list){
