@@ -434,48 +434,56 @@ public class HomeMuenFragment extends Fragment {
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.TWENTY_FOUR));
                                             mContext.startActivity(intent);
                                         }
+                                        break;
                                         case "325":// 大乐透
                                         {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.TWENTY_NINE));
                                             mContext.startActivity(intent);
                                         }
+                                        break;
                                         case "326":// 排列三
                                         {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.TWENTY_FINE));
                                             mContext.startActivity(intent);
                                         }
+                                        break;
                                         case "327":// 排列五
                                         {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.TWENTY_SIX));
                                             mContext.startActivity(intent);
                                         }
+                                        break;
                                         case "328":// 胜负彩
                                         {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.THIRTY));
                                             mContext.startActivity(intent);
                                         }
+                                        break;
                                         case "329":// 六场半全场
                                         {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.THIRTY_ONE));
                                             mContext.startActivity(intent);
                                         }
+                                        break;
                                         case "330":// 四场进球彩
                                         {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.THIRTY_TWO));
                                             mContext.startActivity(intent);
                                         }
+                                        break;
                                         case "331":// 福彩3D
                                         {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.TWENTY_SEVEN));
                                             mContext.startActivity(intent);
                                         }
+                                        break;
                                         case "332":// 七乐彩
                                         {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
