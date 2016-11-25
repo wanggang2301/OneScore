@@ -22,6 +22,7 @@ import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.adapter.basketball.BasketBallTextLiveAdapter;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketTextLiveBean;
+import com.hhly.mlottery.callback.BasketDetailsLiveCallBack;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
@@ -66,6 +67,12 @@ public class BasketTextLiveFragment extends Fragment {
     private TextView network_exception_reload_btn;
 
     private FrameLayout fl_comment;
+
+    private BasketDetailsLiveCallBack mBasketDetailsLiveCallBack;
+
+    public void setmBasketDetailsLiveCallBack(BasketDetailsLiveCallBack mBasketDetailsLiveCallBack) {
+        this.mBasketDetailsLiveCallBack = mBasketDetailsLiveCallBack;
+    }
 
     public static BasketTextLiveFragment newInstance() {
         BasketTextLiveFragment basketTextLiveFragment = new BasketTextLiveFragment();
@@ -254,7 +261,11 @@ public class BasketTextLiveFragment extends Fragment {
         VolleyContentFast.requestJsonByGet(BaseURLs.BASKET_DETAIL_TEXTLIVE, params, new VolleyContentFast.ResponseSuccessListener<BasketTextLiveBean>() {
             @Override
             public void onResponse(BasketTextLiveBean basketTextLiveBean) {
-                if (basketTextLiveBean == null || 200 != basketTextLiveBean.getResult()) {
+                if (basketTextLiveBean == null || 200 != basketTextLiveBean.getResult() || basketTextLiveBean.getData() == null) {
+
+                    if (mBasketDetailsLiveCallBack != null) {
+                        mBasketDetailsLiveCallBack.onClick("1");
+                    }
                     return;
                 }
 
