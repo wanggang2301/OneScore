@@ -498,14 +498,17 @@ public class BasketDetailsHeadFragment extends Fragment {
         }
 
         //图标
-        ImageLoader.load(mContext, mMatch.getHomeLogoUrl(), R.mipmap.basket_default).into(mHomeIcon);
+        if(mContext!=null){
+            ImageLoader.load(mContext, mMatch.getHomeLogoUrl(), R.mipmap.basket_default).into(mHomeIcon);
 //    mImageLoader.displayImage(mMatch.getHomeLogoUrl(), mHomeIcon, mOptions);
 
-        ImageLoader.load(mContext, mMatch.getGuestLogoUrl(), R.mipmap.basket_default).into(mGuestIcon);
+            ImageLoader.load(mContext, mMatch.getGuestLogoUrl(), R.mipmap.basket_default).into(mGuestIcon);
 //        mImageLoader.displayImage(mMatch.getGuestLogoUrl(), mGuestIcon, mOptions);
 
-        ImageLoader.load(mContext, bean.getBgUrl(), R.color.black).into(mHeadImage);
+            ImageLoader.load(mContext, bean.getBgUrl(), R.color.black).into(mHeadImage);
 //        mImageLoader.displayImage(bean.getBgUrl(), mHeadImage, mOptionsHead);
+        }
+
 
 
         if (mMatch.getSection() == 2) { //只有上下半场
