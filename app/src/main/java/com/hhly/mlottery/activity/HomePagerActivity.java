@@ -392,14 +392,14 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         home_page_list = (ListView) findViewById(R.id.home_page_list);// 首页列表
 
         // TODO
-        View lotteryItemView = View.inflate(mContext, R.layout.home_page_item_lottery, null);
-        lotteryItemView.findViewById(R.id.rl_lottery_item_title).setOnClickListener(this);
-        lotteryItemView.findViewById(R.id.rl_lottery_item_sfc).setOnClickListener(this);
-        lotteryItemView.findViewById(R.id.ll_lottery_item_ssq).setOnClickListener(this);
-        lotteryItemView.findViewById(R.id.ll_lottery_item_dlt).setOnClickListener(this);
-        lotteryItemView.findViewById(R.id.ll_lottery_item_pl3).setOnClickListener(this);
-        lotteryItemView.findViewById(R.id.ll_lottery_item_pl5).setOnClickListener(this);
-        home_page_list.addFooterView(lotteryItemView);
+//        View lotteryItemView = View.inflate(mContext, R.layout.home_page_item_lottery, null);
+//        lotteryItemView.findViewById(R.id.rl_lottery_item_title).setOnClickListener(this);
+//        lotteryItemView.findViewById(R.id.rl_lottery_item_sfc).setOnClickListener(this);
+//        lotteryItemView.findViewById(R.id.ll_lottery_item_ssq).setOnClickListener(this);
+//        lotteryItemView.findViewById(R.id.ll_lottery_item_dlt).setOnClickListener(this);
+//        lotteryItemView.findViewById(R.id.ll_lottery_item_pl3).setOnClickListener(this);
+//        lotteryItemView.findViewById(R.id.ll_lottery_item_pl5).setOnClickListener(this);
+//        home_page_list.addFooterView(lotteryItemView);
     }
 
     /**
