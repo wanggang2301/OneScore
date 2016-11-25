@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -22,10 +21,11 @@ import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.adapter.basketball.BasketBallTextLiveAdapter;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketTextLiveBean;
-import com.hhly.mlottery.callback.BasketDetailsLiveCallBack;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +33,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import de.greenrobot.event.EventBus;
+
 
 /**
  * @author wangg
@@ -65,16 +66,11 @@ public class BasketTextLiveFragment extends Fragment {
 
     private String lastId;
 
-    private LinearLayout ll_error;
+    /*private LinearLayout ll_error;
     private TextView network_exception_reload_btn;
-
+*/
     private FrameLayout fl_comment;
 
-    private BasketDetailsLiveCallBack mBasketDetailsLiveCallBack;
-
-    public void setmBasketDetailsLiveCallBack(BasketDetailsLiveCallBack mBasketDetailsLiveCallBack) {
-        this.mBasketDetailsLiveCallBack = mBasketDetailsLiveCallBack;
-    }
 
     public static BasketTextLiveFragment newInstance() {
         BasketTextLiveFragment basketTextLiveFragment = new BasketTextLiveFragment();
@@ -117,9 +113,9 @@ public class BasketTextLiveFragment extends Fragment {
         mProgressBar = (ProgressBar) listfooter_more.findViewById(R.id.pull_to_refresh_progress);
 
 
-        ll_error = (LinearLayout) mView.findViewById(R.id.ll_error);
-        network_exception_reload_btn = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
-        ll_error.setVisibility(View.GONE);
+       /* ll_error = (LinearLayout) mView.findViewById(ll_error);
+        network_exception_reload_btn = (TextView) mView.findViewById(network_exception_reload_btn);
+        ll_error.setVisibility(View.GONE);*/
 
         TextView bottomline = (TextView) listfooter_more.findViewById(R.id.bottomline);
         bottomline.setVisibility(View.GONE);
@@ -140,6 +136,7 @@ public class BasketTextLiveFragment extends Fragment {
             mBasketBallTextLiveAdapter.setPullUpLoading(new BasketBallTextLiveAdapter.PullUpLoading() {
                 @Override
                 public void onPullUpLoading() {
+                    L.d("zxcvbn", "下拉");
                     pullUpLoadMore();
                 }
             });
@@ -156,7 +153,7 @@ public class BasketTextLiveFragment extends Fragment {
             }
         });
 
-
+/*
         //出错加载
         network_exception_reload_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,7 +162,7 @@ public class BasketTextLiveFragment extends Fragment {
                 loadData();
 
             }
-        });
+        });*/
 
         mBasketBallTextLiveAdapter.addFooterView(listfooter_more);
     }
@@ -174,9 +171,19 @@ public class BasketTextLiveFragment extends Fragment {
      * 上拉加载更多文字直播数据
      */
     public void pullUpLoadMore() {
+
+        L.d("zxcvbn", "isRequestFinish====" + isRequestFinish);
+
+
         if (isRequestFinish) {//上一个请求完成才执行这个 不然一直往上拉，会连续发多个请求
             //请求下一页数据
+
+            L.d("zxcvbn", "pullUpLoadMore");
+
+
             if (!mLoadMore.getText().equals(getResources().getString(R.string.foot_nomoredata))) {//没有更多数据的时候，上拉不再发起请求
+
+                L.d("zxcvbn", "getRequestTextLiveData");
                 getRequestTextLiveData();
             }
         }
@@ -206,8 +213,13 @@ public class BasketTextLiveFragment extends Fragment {
         mProgressBar.setVisibility(View.VISIBLE);
         isRequestFinish = false;
         mLoadMore.setText(R.string.foot_loadingmore);  //正在加载更多...
+        L.d("zxcvbn", "正在加载更多");
 
-        if (isFirstRequestData) {
+        if (true) {
+
+            L.d("zxcvbn", "请求");
+
+
             Map<String, String> params = new HashMap<>();
             params.put("thirdId", BasketDetailsActivityTest.mThirdId);
             // L.d("ccvvbb", "lastId=" + lastId);
@@ -221,6 +233,8 @@ public class BasketTextLiveFragment extends Fragment {
                     }
                     mProgressBar.setVisibility(View.GONE);
                     mLoadMore.setText(R.string.foot_loadmore);
+                    L.d("zxcvbn", "加载更多");
+
 
                     if (basketTextLiveBean.getData().size() == 0) {
                         mLoadMore.setText(R.string.foot_nomoredata);
@@ -234,6 +248,7 @@ public class BasketTextLiveFragment extends Fragment {
             }, new VolleyContentFast.ResponseErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                    L.d("zxcvbn", "网络异常");
                     isFirstRequestData = true;
                     isRequestFinish = true;
                     mProgressBar.setVisibility(View.GONE);
@@ -245,27 +260,50 @@ public class BasketTextLiveFragment extends Fragment {
             isFirstRequestData = true;
             isRequestFinish = true;
             mProgressBar.setVisibility(View.GONE);
-            mLoadMore.setText(R.string.foot_neterror);
+            mLoadMore.setText(R.string.foot_loadmore);
         }
 
     }
 
 
+    private boolean isStartTimer = true;
+    private boolean isFirstPolling = false;
+
     Timer timer = new Timer();
 
-    TimerTask timerTask = new TimerTask() {
-        @Override
-        public void run() {
-            loadData();
-        }
-    };
 
+    private void startTimePolling() {
+
+        if (isStartTimer) {
+            TimerTask timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    isStartTimer = false;
+                    loadData();
+                }
+            };
+
+
+            timer.schedule(timerTask, 10000, 15000);
+        }
+    }
+
+
+    private void closeTimePolling() {
+        if (isFirstPolling) {
+            if (timer != null) {
+                timer.cancel();
+                timer.purge();
+            }
+        }
+    }
 
     /**
      * 首次进入请求文字直播
      */
     public void loadData() {
-        mProgressBarRefresh.setVisibility(View.VISIBLE);  //请求转圈圈正在请求数据
+        mProgressBarRefresh.setVisibility(View.VISIBLE);
+
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", BasketDetailsActivityTest.mThirdId);
         params.put("id", "0"); //首次请求id=0
@@ -275,18 +313,25 @@ public class BasketTextLiveFragment extends Fragment {
             public void onResponse(BasketTextLiveBean basketTextLiveBean) {
                 if (basketTextLiveBean == null || 200 != basketTextLiveBean.getResult() || basketTextLiveBean.getData() == null) {
                     //1分钟刷新一次知道有文字直播时，切换到直播界面
-                    timer.schedule(timerTask, 30000);
 
-                } else {
-                    if (mBasketDetailsLiveCallBack != null) {
-                        //切换到直播界面
-                        mBasketDetailsLiveCallBack.onClick("1");
+                    if (!isFirstPolling) {
+                        EventBus.getDefault().post(new BsaketDeatilMatchPreEventBus("0"));
                     }
 
-                    basketEachTextLiveBeanList = basketTextLiveBean.getData();
+                    startTimePolling();
+                    isFirstPolling = true;
+                } else {
+
+
+                    closeTimePolling();
+                    EventBus.getDefault().post(new BsaketDeatilMatchPreEventBus("1"));
 
                     mProgressBarRefresh.setVisibility(View.GONE);
                     fl_comment.setVisibility(View.VISIBLE);
+
+                    basketEachTextLiveBeanList = new ArrayList<BasketEachTextLiveBean>();
+
+                    basketEachTextLiveBeanList = basketTextLiveBean.getData();
 
                     mLoadMore.setText(R.string.foot_loadmore);   //加载更多
 
@@ -309,9 +354,8 @@ public class BasketTextLiveFragment extends Fragment {
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                EventBus.getDefault().post(new BsaketDeatilMatchPreEventBus("2"));
                 mProgressBarRefresh.setVisibility(View.GONE);
-                ll_error.setVisibility(View.VISIBLE);
-                fl_comment.setVisibility(View.GONE);
             }
         }, BasketTextLiveBean.class);
     }
@@ -345,7 +389,17 @@ public class BasketTextLiveFragment extends Fragment {
      * @param basketDetailLiveTextRefreshEventBus
      */
     public void onEventMainThread(BasketDetailLiveTextRefresh basketDetailLiveTextRefreshEventBus) {
+        isRequestFinish = true;
         loadData();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (timer != null) {
+            timer.cancel();
+            timer.purge();
+        }
     }
 
     @Override

@@ -9,11 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
-import com.hhly.mlottery.callback.BasketDetailsLiveCallBack;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
 
@@ -22,6 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -38,6 +40,17 @@ public class BasketLiveFragment extends Fragment {
     RadioGroup radioGroup;
     @BindView(R.id.fl_content)
     FrameLayout flContent;
+    @BindView(R.id.textlive_notext)
+    FrameLayout textliveNotext;
+    @BindView(R.id.pb_progress)
+    ProgressBar pbProgress;
+    @BindView(R.id.fl_pb)
+    FrameLayout flPb;
+    @BindView(R.id.network_exception_reload_btn)
+    TextView networkExceptionReloadBtn;
+
+    @BindView(R.id.fl_error)
+    FrameLayout flError;
 
     private View mView;
     private Context mContext;
@@ -57,8 +70,6 @@ public class BasketLiveFragment extends Fragment {
 
     private int currentFrag = 0;
 
-    private BasketDetailsLiveCallBack mBasketDetailsLiveCallBack;
-
 
     public static BasketLiveFragment newInstance() {
         BasketLiveFragment basketLiveFragment = new BasketLiveFragment();
@@ -69,6 +80,7 @@ public class BasketLiveFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -94,6 +106,9 @@ public class BasketLiveFragment extends Fragment {
         fragments.add(mBasketTextLiveFragment);
         fragments.add(mBasketTeamStatisticsFragment);
         fragments.add(mBasketPlayersStatisticsFragment);
+
+
+        flError.setVisibility(View.GONE);
 
         switchFragment(0);
 
@@ -127,13 +142,31 @@ public class BasketLiveFragment extends Fragment {
             }
         });
 
-        mBasketDetailsLiveCallBack = new BasketDetailsLiveCallBack() {
-            @Override
-            public void onClick(String status) {
+    }
 
-            }
-        };
 
+    public void onEventMainThread(BsaketDeatilMatchPreEventBus b) {
+        if ("0".equals(b.getMsg())) {
+            flContent.setVisibility(View.GONE);
+            radioGroup.setVisibility(View.GONE);
+            textliveNotext.setVisibility(View.VISIBLE);
+            flPb.setVisibility(View.GONE);
+            flError.setVisibility(View.GONE);
+
+        } else if ("1".equals(b.getMsg())) {
+            flContent.setVisibility(View.VISIBLE);
+            radioGroup.setVisibility(View.VISIBLE);
+            textliveNotext.setVisibility(View.GONE);
+            flPb.setVisibility(View.GONE);
+            flError.setVisibility(View.GONE);
+
+        } else if ("2".equals(b.getMsg())) {
+            flContent.setVisibility(View.GONE);
+            radioGroup.setVisibility(View.GONE);
+            textliveNotext.setVisibility(View.GONE);
+            flPb.setVisibility(View.GONE);
+            flError.setVisibility(View.VISIBLE);
+        }
     }
 
     public void switchFragment(int position) {
@@ -152,5 +185,19 @@ public class BasketLiveFragment extends Fragment {
             EventBus.getDefault().post(new BasketDetailPlayersStatisticsRefresh(""));
             L.d("zxcvbn", "球员统计");
         }
+    }
+
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @OnClick(R.id.network_exception_reload_btn)
+    public void onClick() {
+        flPb.setVisibility(View.VISIBLE);
+        EventBus.getDefault().post(new BasketDetailLiveTextRefresh("network_exception_reload_btn"));
     }
 }

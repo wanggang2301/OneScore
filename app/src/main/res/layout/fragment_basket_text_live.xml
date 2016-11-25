@@ -27,8 +27,4 @@
         android:gravity="center_horizontal"
         android:indeterminate="true"
         android:layout_marginTop="90dp" />
-
-    <include layout="@layout/basket_odds_new_error" />
-
-
 </FrameLayout>
