@@ -253,7 +253,6 @@ public class BasketTextLiveFragment extends Fragment {
 
     Timer timer = new Timer();
 
-
     TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
