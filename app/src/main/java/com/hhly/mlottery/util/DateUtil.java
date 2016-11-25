@@ -144,6 +144,23 @@ public class DateUtil {
     }
 
     /**
+     * 转换为指日格式日期字符串
+     * @param strdate
+     * @return
+     */
+    public static String getLotteryInfoDate(String strdate , String style) {
+        DateFormat d1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        DateFormat d2 = new SimpleDateFormat(style);
+        try {
+            strdate = d2.format(d1.parse(strdate));
+            System.out.println(strdate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return strdate;
+    }
+
+    /**
      * 功能描述：常用的格式化日期
      *
      * @param date Date 日期
@@ -343,6 +360,7 @@ public class DateUtil {
      * 彩票专用，获取周几
      */
     public static String getLotteryWeekOfDate(Date dt) {
+        if(dt == null){return null;}
         String[] weekDays = {MyApp.getContext().getResources().getString(R.string.number_7), MyApp.getContext().getResources().getString(R.string.number_1),
                 MyApp.getContext().getResources().getString(R.string.number_2), MyApp.getContext().getResources().getString(R.string.number_3),
                 MyApp.getContext().getResources().getString(R.string.number_4), MyApp.getContext().getResources().getString(R.string.number_5),

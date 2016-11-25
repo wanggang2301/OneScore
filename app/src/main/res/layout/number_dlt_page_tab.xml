@@ -1,0 +1,738 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <!-- 大乐透 -->
+
+    <!--中奖注数-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/lottery_info_title"
+                android:background="@drawable/number_tab_solid_all2"
+                android:text="@string/number_info_prize" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:background="@drawable/number_tab_solid_all_l_b_r"
+                    android:gravity="center"
+                    android:text="@string/number_info_bonus_1"
+                    android:textColor="@color/content_txt_dark_grad"
+                    android:textSize="10sp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/lottery_info_content_add"
+                        android:text="@string/number_info_basic" />
+
+                    <TextView
+                        style="@style/lottery_info_content_add"
+                        android:text="@string/number_info_basic_add" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:background="@drawable/number_tab_solid_all_l_b_r"
+                    android:gravity="center"
+                    android:text="@string/number_info_bonus_2"
+                    android:textColor="@color/content_txt_dark_grad"
+                    android:textSize="10sp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/lottery_info_content_add"
+                        android:text="@string/number_info_basic" />
+
+                    <TextView
+                        style="@style/lottery_info_content_add"
+                        android:text="@string/number_info_basic_add" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:background="@drawable/number_tab_solid_all_l_b_r"
+                    android:gravity="center"
+                    android:text="@string/number_info_bonus_3"
+                    android:textColor="@color/content_txt_dark_grad"
+                    android:textSize="10sp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/lottery_info_content_add"
+                        android:text="@string/number_info_basic" />
+
+                    <TextView
+                        style="@style/lottery_info_content_add"
+                        android:text="@string/number_info_basic_add" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:background="@drawable/number_tab_solid_all_l_b_r"
+                    android:gravity="center"
+                    android:text="@string/number_info_bonus_4"
+                    android:textColor="@color/content_txt_dark_grad"
+                    android:textSize="10sp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/lottery_info_content_add"
+                        android:text="@string/number_info_basic" />
+
+                    <TextView
+                        style="@style/lottery_info_content_add"
+                        android:text="@string/number_info_basic_add" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:background="@drawable/number_tab_solid_all_l_b_r"
+                    android:gravity="center"
+                    android:text="@string/number_info_bonus_5"
+                    android:textColor="@color/content_txt_dark_grad"
+                    android:textSize="10sp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/lottery_info_content_add"
+                        android:text="@string/number_info_basic" />
+
+                    <TextView
+                        style="@style/lottery_info_content_add"
+                        android:text="@string/number_info_basic_add" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:layout_height="20dp"
+                android:text="@string/number_info_bonus_6" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/lottery_info_title"
+                android:text="@string/number_info_count" />
+
+            <TextView
+                android:id="@+id/lottery_dlt_count1"
+                style="@style/lottery_info_content_right"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/lottery_dlt_add_count1"
+                style="@style/lottery_info_content_right"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/lottery_dlt_count2"
+                style="@style/lottery_info_content_right"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/lottery_dlt_add_count2"
+                style="@style/lottery_info_content_right"
+                android:layout_height="20dp"/>
+
+            <TextView
+                android:id="@+id/lottery_dlt_count3"
+                style="@style/lottery_info_content_right"
+                android:layout_height="20dp"/>
+
+            <TextView
+                android:id="@+id/lottery_dlt_add_count3"
+                style="@style/lottery_info_content_right"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/lottery_dlt_count4"
+                style="@style/lottery_info_content_right"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/lottery_dlt_add_count4"
+                style="@style/lottery_info_content_right"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/lottery_dlt_count5"
+                style="@style/lottery_info_content_right"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/lottery_dlt_add_count5"
+                style="@style/lottery_info_content_right"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/lottery_dlt_count6"
+                style="@style/lottery_info_content_right"
+                android:layout_height="20dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/lottery_info_title"
+                android:text="@string/number_info_bonus"
+                android:id="@+id/textView" />
+
+            <TextView
+                android:id="@+id/lottery_dlt_bonus1"
+                style="@style/lottery_info_content_right"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/lottery_dlt_add_bonus1"
+                style="@style/lottery_info_content_right"
+                android:layout_height="20dp"/>
+
+            <TextView
+                android:id="@+id/lottery_dlt_bonus2"
+                style="@style/lottery_info_content_right"
+                android:layout_height="20dp"/>
+
+            <TextView
+                android:id="@+id/lottery_dlt_add_bonus2"
+                style="@style/lottery_info_content_right"
+                android:layout_height="20dp"/>
+
+            <TextView
+                android:id="@+id/lottery_dlt_bonus3"
+                style="@style/lottery_info_content_right"
+                android:layout_height="20dp"/>
+
+            <TextView
+                android:id="@+id/lottery_dlt_add_bonus3"
+                style="@style/lottery_info_content_right"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/lottery_dlt_bonus4"
+                style="@style/lottery_info_content_right"
+                android:layout_height="20dp"/>
+
+            <TextView
+                android:id="@+id/lottery_dlt_add_bonus4"
+                style="@style/lottery_info_content_right"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/lottery_dlt_bonus5"
+                style="@style/lottery_info_content_right"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/lottery_dlt_add_bonus5"
+                style="@style/lottery_info_content_right"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/lottery_dlt_bonus6"
+                style="@style/lottery_info_content_right"
+                android:layout_height="20dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--本期销售额-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/number_info_sale" />
+
+        <TextView
+            android:id="@+id/lottery_dlt_sales_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/number_red" />
+
+    </LinearLayout>
+
+    <!--奖金滚池-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/number_info_bonus_sum" />
+
+        <TextView
+            android:id="@+id/lottery_dlt_bonus_sum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/number_red" />
+
+    </LinearLayout>
+
+    <!--详情统计-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/number_tab_solid_all"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/number_info_region_front"
+                    android:textColor="@color/title"
+                    android:textSize="@dimen/number_title" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/number_text_style4"
+                    android:text="@string/number_info_value_sum"
+                    android:textColor="@color/title" />
+                <TextView
+                    style="@style/number_text_style5"
+                    android:text="@string/number_info_dx"
+                    android:textColor="@color/title" />
+
+                <TextView
+                    style="@style/number_text_style5"
+                    android:text="@string/number_info_jo"
+                    android:textColor="@color/title" />
+
+                <TextView
+                    style="@style/number_text_style5"
+                    android:text="@string/number_info_wx"
+                    android:textColor="@color/title" />
+
+                <TextView
+                    style="@style/number_text_style5"
+                    android:text="@string/number_info_fw"
+                    android:textColor="@color/title" />
+
+                <TextView
+                    style="@style/number_text_style5"
+                    android:text="@string/number_info_qj"
+                    android:textColor="@color/title" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/lottery_dlt_front_hz"
+                    style="@style/number_text_style3" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/number_tab_solid_all_r_b"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_dx1"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_dx2"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_dx3"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_dx4"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_dx5"
+                        style="@style/lottery_info_red"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/number_tab_solid_all_r_b"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_jo1"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_jo2"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_jo3"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_jo4"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_jo5"
+                        style="@style/lottery_info_red"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/number_tab_solid_all_r_b"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_wx1"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_wx2"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_wx3"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_wx4"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_wx5"
+                        style="@style/lottery_info_red"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/number_tab_solid_all_r_b"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_fw1"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_fw2"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_fw3"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_fw4"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_fw5"
+                        style="@style/lottery_info_red"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/number_tab_solid_all_r_b"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_qj1"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_qj2"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_qj3"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_qj4"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_front_qj5"
+                        style="@style/lottery_info_red"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/number_tab_solid_all_l_b_r"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/number_info_region_after"
+                    android:textColor="@color/title"
+                    android:textSize="@dimen/number_title" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/number_text_style5"
+                    android:text="@string/number_info_value_sum"
+                    android:textColor="@color/title" />
+
+                <TextView
+                    style="@style/number_text_style5"
+                    android:text="@string/number_info_jo"
+                    android:textColor="@color/title" />
+
+                <TextView
+                    style="@style/number_text_style5"
+                    android:text="@string/number_info_wx"
+                    android:textColor="@color/title" />
+
+                <TextView
+                    style="@style/number_text_style5"
+                    android:text="@string/number_info_fw"
+                    android:textColor="@color/title" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/number_tab_solid_all_r_b"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_later_hz1"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_later_hz2"
+                        style="@style/lottery_info_red"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/number_tab_solid_all_r_b"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_later_jo1"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_later_jo2"
+                        style="@style/lottery_info_red"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/number_tab_solid_all_r_b"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_later_wx1"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_later_wx2"
+                        style="@style/lottery_info_red"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/number_tab_solid_all_r_b"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_later_fw1"
+                        style="@style/lottery_info_red"/>
+
+                    <TextView
+                        android:id="@+id/lottery_dlt_later_fw2"
+                        style="@style/lottery_info_red"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

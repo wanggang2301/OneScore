@@ -132,6 +132,10 @@
     <string name="odd_dish_txt">盤口</string>
     <string name="odd_guest_txt">客隊</string>
     <string name="odd_time_txt">时间</string>
+    <string name="symbol_times" translatable="false">×</string>
+    <string name="symbol_plus" translatable="false">+</string>
+    <string name="symbol_equal" translatable="false">=</string>
+    <string name="label_line" translatable="false">-</string>
     <!--欧赔-->
     <string name="odd_home_op_txt">主勝</string>
     <string name="odd_dish_op_txt">平局</string>
@@ -412,6 +416,12 @@
     <string name="number_hk_hint2"></string>
     <string name="number_qxc_hint">七星彩開獎倒計時：</string>
     <string name="number_qxc_hint2"></string>
+    <string name="number_ssq_hint">雙色球開獎倒計時：</string>
+    <string name="number_ssq_hint2"></string>
+    <string name="number_qlc_hint">七樂彩開獎倒計時：</string>
+    <string name="number_qlc_hint2"></string>
+    <string name="number_dlt_hint">大樂透開獎倒計時：</string>
+    <string name="number_dlt_hint2"></string>
     <string name="number_hk_dd">天</string>
     <string name="number_hk_hh">時</string>
     <string name="number_hk_mm">分</string>
@@ -442,6 +452,17 @@
     <string name="number_cz_jx_syxw">江西十一選五</string>
     <string name="number_cz_sd_syxw">山東十一選五</string>
     <string name="number_cz_tj_ssc">天津時時彩</string>
+    <string name="number_cz_ssq">雙色球</string>
+    <string name="number_cz_pl3">排列3</string>
+    <string name="number_cz_pl5">排列5</string>
+    <string name="number_cz_f3d">福彩3D</string>
+    <string name="number_cz_qlc">七樂彩</string>
+    <string name="number_cz_dlt">大樂透</string>
+    <string name="number_cz_sfc">勝負彩</string>
+    <string name="number_cz_lcbqc">六場半全場</string>
+    <string name="number_cz_scjq">4場進球</string>
+    <string name="number_item_name">壹鍵查詢開獎結果</string>
+    <string name="number_item_name_desc">快速 便捷 準確</string>
     <!-- 描述信息 -->
     <string name="number_code_desc_qxc">每週二、五、日晚20:30開獎</string>
     <string name="number_code_desc_bj_sc">每天179期，5分鐘一期，9:00-0:00</string>
@@ -459,6 +480,12 @@
     <string name="number_code_desc_ah_ks">每天80期，10分鐘一期，8:30-22:00</string>
     <string name="number_code_desc_js_ks">每天82期，10分鐘一期，8:30-22:00</string>
     <string name="number_code_desc_gx_ks">每天78期，10分鐘一期，9:30-22:30</string>
+    <string name="number_code_desc_ssq">每周二、四、日21:15開獎</string>
+    <string name="number_code_desc_dlt">每周一、三、六20:30開獎</string>
+    <string name="number_code_desc_qlc">每周一、三、五21:15開獎</string>
+    <string name="number_code_desc_f3d">每日20:30開獎</string>
+    <string name="number_code_desc_pl3">每日20:30開獎</string>
+    <string name="number_code_desc_pl5">每日20:30開獎</string>
 
     <string name="number_7">週日</string>
     <string name="number_1">週一</string>
@@ -474,6 +501,79 @@
     <string name="number_exp_net_status_txt">您當前的網絡不給力</string>
     <string name="number_exp__check_txt">請檢查后</string>
     <string name="number_exp_refresh_txt">刷新</string>
+
+    <string name="number_ssq_hqtj">紅球統計</string>
+    <string name="number_ssq_lqtj">藍球統計</string>
+    <string name="number_ssq_kd">跨度</string>
+    <string name="number_ssq_job">奇偶比</string>
+    <string name="number_ssq_dxb">大小比</string>
+    <string name="number_ssq_zhb">質合比</string>
+    <string name="number_ssq_qjb">區間比</string>
+    <string name="number_bonus_type">¥</string>
+
+    <string name="number_info_sc_round">場次</string>
+    <string name="number_info_vs">對陣</string>
+    <string name="number_info_start_time">開賽時間</string>
+    <string name="number_info_sale">本期全國銷量：</string>
+    <string name="number_info_bonus_sum">獎金滾存：</string>
+    <string name="number_info_prize">獎項</string>
+    <string name="number_info_bonus_1">壹等獎</string>
+    <string name="number_info_bonus_1_1">其中：壹等獎複式投注</string>
+    <string name="number_info_bonus_2">二等獎</string>
+    <string name="number_info_bonus_3">三等獎</string>
+    <string name="number_info_bonus_4">四等獎</string>
+    <string name="number_info_bonus_5">五等獎</string>
+    <string name="number_info_bonus_6">六等獎</string>
+    <string name="number_info_bonus_6_1">其中：六等獎複式投注</string>
+    <string name="number_info_count">中獎注數(注)</string>
+    <string name="number_info_bonus">單注獎金(元)</string>
+    <string name="number_info_condition">中獎條件</string>
+    <string name="number_info_full_6">6半全全對</string>
+    <string name="number_info_full_8">8隊全對</string>
+    <string name="number_info_full_9">9場全對</string>
+    <string name="number_info_full_14">14場全對</string>
+    <string name="number_info_full_wrong1">錯1場</string>
+    <string name="number_info_full">全</string>
+    <string name="number_info_half">半</string>
+    <string name="number_info_result">彩果</string>
+    <string name="number_info_qj">區間</string>
+    <string name="number_info_jo">奇偶</string>
+    <string name="number_info_dx">大小</string>
+    <string name="number_info_boll_red">紅球</string>
+    <string name="number_info_comprehensive">綜合</string>
+    <string name="number_info_value_sum">和值</string>
+    <string name="number_info_name_sfssc">勝負十四場</string>
+    <string name="number_info_name_rxjc">任選九場</string>
+    <string name="number_info_basic">基本</string>
+    <string name="number_info_basic_add">追加</string>
+
+    <string name="number_info_pl3_desc1">直選：所選號碼與開獎號碼按位數全部相同</string>
+    <string name="number_info_pl3_desc2">組三：開獎號碼中有[對子]，且包含任選號中</string>
+    <string name="number_info_pl3_desc3">組六：三個開獎號碼[均不相同]，且包含任選號中</string>
+    <string name="number_info_pl3_count1">直選</string>
+    <string name="number_info_pl3_count2">組三</string>
+    <string name="number_info_pl3_count3">組六</string>
+    <string name="number_info_pl5_count">排列五直選</string>
+
+    <string name="number_info_front">前</string>
+    <string name="number_info_center">中</string>
+    <string name="number_info_after">後</string>
+
+    <string name="number_info_wx_j">金</string>
+    <string name="number_info_wx_m">木</string>
+    <string name="number_info_wx_s">水</string>
+    <string name="number_info_wx_h">火</string>
+    <string name="number_info_wx_t">土</string>
+    <string name="number_info_fw_E">東</string>
+    <string name="number_info_fw_S">南</string>
+    <string name="number_info_fw_W">西</string>
+    <string name="number_info_fw_N">北</string>
+    <string name="number_info_fw_Z">中</string>
+    <string name="number_info_wx">五行</string>
+    <string name="number_info_fw">方位</string>
+    <string name="number_info_boll_blue">藍球</string>
+    <string name="number_info_region_front">前區</string>
+    <string name="number_info_region_after">後區</string>
 
     <!-- 彩票End -->
 

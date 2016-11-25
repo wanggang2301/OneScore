@@ -116,32 +116,6 @@ public class AppConstants {
     public static final int FORTY_EIGHT = 48;
     public static final int FORTY_NINE = 49;
 
-    // 彩票种类名称
-    /*public static String[] numberNames = { MyApp.getContext().getResources().getString(R.string.number_cz_hk), // "香港彩"
-            MyApp.getContext().getResources().getString(R.string.number_cz_cq_ssc), // "重庆时时彩"
-			MyApp.getContext().getResources().getString(R.string.number_cz_jx_ssc), // "江西时时彩"
-			MyApp.getContext().getResources().getString(R.string.number_cz_xj_ssc),// "新疆时时彩"
-			MyApp.getContext().getResources().getString(R.string.number_cz_yn_ssc), // "云南时时彩"
-			MyApp.getContext().getResources().getString(R.string.number_cz_qxc),// "七星彩"
-			MyApp.getContext().getResources().getString(R.string.number_cz_gd_syxw), // "广东十一选五"
-			MyApp.getContext().getResources().getString(R.string.number_cz_gd_klsf), // "广东快乐十分"
-			MyApp.getContext().getResources().getString(R.string.number_cz_hb_syxw), // "湖北十一选五"
-			MyApp.getContext().getResources().getString(R.string.number_cz_ah_ks), // "安徽快三"
-			MyApp.getContext().getResources().getString(R.string.number_cz_hn_klsf),// "湖南快乐十分"
-			MyApp.getContext().getResources().getString(R.string.number_cz_kl8),// "快乐8奖"
-			MyApp.getContext().getResources().getString(R.string.number_cz_jl_ks),// "吉林快三"
-			MyApp.getContext().getResources().getString(R.string.number_cz_ln_xyxw),// "辽宁十一选五"
-			MyApp.getContext().getResources().getString(R.string.number_cz_bj_sc),// "北京赛车"
-			MyApp.getContext().getResources().getString(R.string.number_cz_js_ks),// "江苏快三"
-			MyApp.getContext().getResources().getString(R.string.number_cz_ssl),// "时时乐"
-			MyApp.getContext().getResources().getString(R.string.number_cz_gx_ks),// "广西快三"
-			MyApp.getContext().getResources().getString(R.string.number_cz_xylc),// "幸运农场"
-			MyApp.getContext().getResources().getString(R.string.number_cz_js_syxw),// "江苏十一选五"
-			MyApp.getContext().getResources().getString(R.string.number_cz_jx_syxw),// "江西十一选五"
-			MyApp.getContext().getResources().getString(R.string.number_cz_sd_syxw),// "山东十一选五"
-			MyApp.getContext().getResources().getString(R.string.number_cz_tj_ssc) // "天津时时彩"
-	};*/
-
     // 北京赛车开奖号码
     public static int[] numberCarNos = {R.mipmap.car_no1, R.mipmap.car_no2, R.mipmap.car_no3, R.mipmap.car_no4, R.mipmap.car_no5, R.mipmap.car_no6, R.mipmap.car_no7,
             R.mipmap.car_no8, R.mipmap.car_no9, R.mipmap.car_no10};
@@ -180,7 +154,16 @@ public class AppConstants {
             BaseURLs.URL_JS11X5DetailedResults,// 20江苏11选5
             BaseURLs.URL_JX11X5DetailedResults,// 21江西11选5
             BaseURLs.URL_SD11X5DetailedResults,// 22山东11选5
-            BaseURLs.URL_TJSSCDetailedResults // 23天津时时彩
+            BaseURLs.URL_TJSSCDetailedResults,// 23天津时时彩
+            BaseURLs.URL_SSQDetailedResults,// 24双色球
+            BaseURLs.URL_PL3DetailedResults,// 25排列3
+            BaseURLs.URL_PL5DetailedResults,// 26排列5
+            BaseURLs.URL_F3DDetailedResults,// 27福彩3D
+            BaseURLs.URL_QLCDetailedResults,// 28七乐彩
+            BaseURLs.URL_DLTDetailedResults, // 29大乐透
+            BaseURLs.URL_SFCDetailedResults, // 30胜负彩
+            BaseURLs.URL_LCBQCDetailedResults, // 31 六场半全场
+            BaseURLs.URL_SCJQDetailedResults // 32 4场进球
     };
 
     // 香港彩和七星彩的下一期开奖URL
@@ -278,5 +261,40 @@ public class AppConstants {
 
     /**-当前手机的终端ID-*/
     public static final String TERID = "terid";
+
+    /**
+     * 临时测试数据
+     *
+     * @return
+     */
+    public static String getTestData() {
+        return  "{\"serverTime\":\"1479809998940\",\"numLotteryResults\":[" +
+                "{\"name\":\"1\",\"issue\":\"2016134\",\"nextIssue\":\"2016135\",\"nextTime\":\"2016-11-22 21:30:00\",\"time\":\"2016-11-19 21:30:00\",\"numbers\":\"42,06,37,02,24,23#32\",\"zodiac\":\"兔,兔,猴,羊,鸡,狗#牛\"}," +
+                "{\"name\":\"24\",\"issue\":\"2016136\",\"nextIssue\":\"2016137\",\"nextTime\":\"2016-11-22 21:15:00\",\"time\":\"2016-11-20 21:15:00\",\"numbers\":\"02,07,10,20,27,29#03\",\"jackpot\":\"989371808\",\"sales\":\"396457052\",\"firstCount\":\"8\",\"firstBonus\":\"7561764\",\"secondCount\":\"117\",\"secondBonus\":\"218954\",\"thirdCount\":\"1877\",\"thirdBonus\":\"3000\",\"fourthCount\":\"81173\",\"fourthBonus\":\"200\",\"fifthCount\":\"1494578\",\"fifthBonus\":\"10\",\"sixthCount\":\"10996400\",\"sixthBonus\":\"5\"}," +
+                "{\"name\":\"29\",\"issue\":\"2016137\",\"nextIssue\":\"2016138\",\"nextTime\":\"2016-11-23 20:30:00\",\"time\":\"2016-11-21 20:30:00\",\"numbers\":\"07,20,23,29,34#02,10\",\"jackpot\":\"3807220000\",\"sales\":\"181006344\",\"firstCount\":\"2\",\"firstBonus\":\"10000000\",\"firstAddCount\":\"0\",\"firstAddBonus\":\"0\",\"secondCount\":\"63\",\"secondBonus\":\"119261\",\"secondAddCount\":\"14\",\"secondAddBonus\":\"71556\",\"thirdCount\":\"766\",\"thirdBonus\":\"3582\",\"thirdAddCount\":\"264\",\"thirdAddBonus\":\"2149\",\"fourthCount\":\"34941\",\"fourthBonus\":\"200\",\"fourthAddCount\":\"10590\",\"fourthAddBonus\":\"100\",\"fifthCount\":\"604177\",\"fifthBonus\":\"10\",\"fifthAddCount\":\"203195\",\"fifthAddBonus\":\"5\",\"sixthCount\":\"5256234\",\"sixthBonus\":\"5\"}," +
+                "{\"name\":\"25\",\"issue\":\"2016318\",\"nextIssue\":\"2016319\",\"nextTime\":\"2016-11-22 20:30:00\",\"time\":\"2016-11-20 20:30:00\",\"numbers\":\"1,4,2\",\"jackpot\":null,\"sales\":\"14213084\",\"dirCount\":\"1976\",\"dirBonus\":\"1040\",\"groupCount\":\"3229\",\"groupBonus\":\"173\"}," +
+                "{\"name\":\"26\",\"issue\":\"2016318\",\"nextIssue\":\"2016319\",\"nextTime\":\"2016-11-22 20:30:00\",\"time\":\"2016-11-20 20:30:00\",\"numbers\":\"1,4,2,0,2\",\"jackpot\":null,\"sales\":\"8821464\",\"dirCount\":\"18\",\"dirBonus\":\"200000\"}," +
+                "{\"name\":\"30\",\"issue\":\"2016172\",\"nextIssue\":null,\"nextTime\":null,\"time\":null,\"numbers\":\"1,3,0,3,3,3,3,0,3,0,3,0,3,3\",\"footballLotteryIssueResultData\":[{\"homeName\":\"哥伦比\",\"guestName\":\"智 利\",\"kickOffTime\":\"2016-12-11 04:30:00\",\"fullScore\":null,\"halfScore\":null,\"fullDrawcode\":\"1\",\"halfDrawcode\":null,\"sc_round\":\"1\"},{\"homeName\":\"乌拉圭\",\"guestName\":\"厄瓜多\",\"kickOffTime\":\"2016-11-11 07:00:00\",\"fullScore\":null,\"halfScore\":null,\"fullDrawcode\":\"3\",\"halfDrawcode\":null,\"sc_round\":\"2\"},{\"homeName\":\"巴拉圭\",\"guestName\":\"秘 鲁\",\"kickOffTime\":\"2016-11-11 07:30:00\",\"fullScore\":null,\"halfScore\":null,\"fullDrawcode\":\"0\",\"halfDrawcode\":null,\"sc_round\":\"3\"},{\"homeName\":\"委内瑞\",\"guestName\":\"玻利维\",\"kickOffTime\":\"2016-11-11 07:30:00\",\"fullScore\":null,\"halfScore\":null,\"fullDrawcode\":\"3\",\"halfDrawcode\":null,\"sc_round\":\"4\"},{\"homeName\":\"巴 西\",\"guestName\":\"阿根廷\",\"kickOffTime\":\"2016-11-11 07:45:00\",\"fullScore\":null,\"halfScore\":null,\"fullDrawcode\":\"3\",\"halfDrawcode\":null,\"sc_round\":\"5\"},{\"homeName\":\"捷 克\",\"guestName\":\"挪 威\",\"kickOffTime\":\"2016-11-12 03:45:00\",\"fullScore\":null,\"halfScore\":null,\"fullDrawcode\":\"3\",\"halfDrawcode\":null,\"sc_round\":\"6\"},{\"homeName\":\"北 爱\",\"guestName\":\"阿塞拜\",\"kickOffTime\":\"2016-11-12 03:45:00\",\"fullScore\":null,\"halfScore\":null,\"fullDrawcode\":\"3\",\"halfDrawcode\":null,\"sc_round\":\"7\"},{\"homeName\":\"圣马力\",\"guestName\":\"德 国\",\"kickOffTime\":\"2016-11-12 03:45:00\",\"fullScore\":null,\"halfScore\":null,\"fullDrawcode\":\"0\",\"halfDrawcode\":null,\"sc_round\":\"8\"},{\"homeName\":\"丹 麦\",\"guestName\":\"哈萨克\",\"kickOffTime\":\"2016-11-12 03:45:00\",\"fullScore\":null,\"halfScore\":null,\"fullDrawcode\":\"3\",\"halfDrawcode\":null,\"sc_round\":\"9\"},{\"homeName\":\"罗马尼\",\"guestName\":\"波 兰\",\"kickOffTime\":\"2016-11-12 03:45:00\",\"fullScore\":null,\"halfScore\":null,\"fullDrawcode\":\"0\",\"halfDrawcode\":null,\"sc_round\":\"10\"},{\"homeName\":\"英格兰\",\"guestName\":\"苏格兰\",\"kickOffTime\":\"2016-11-12 03:45:00\",\"fullScore\":null,\"halfScore\":null,\"fullDrawcode\":\"3\",\"halfDrawcode\":null,\"sc_round\":\"11\"},{\"homeName\":\"马耳他\",\"guestName\":\"斯洛文\",\"kickOffTime\":\"2016-11-12 03:45:00\",\"fullScore\":null,\"halfScore\":null,\"fullDrawcode\":\"0\",\"halfDrawcode\":null,\"sc_round\":\"12\"},{\"homeName\":\"斯洛伐\",\"guestName\":\"立陶宛\",\"kickOffTime\":\"2016-11-12 03:45:00\",\"fullScore\":null,\"halfScore\":null,\"fullDrawcode\":\"3\",\"halfDrawcode\":null,\"sc_round\":\"13\"},{\"homeName\":\"法 国\",\"guestName\":\"瑞 典\",\"kickOffTime\":\"2016-11-12 03:45:00\",\"fullScore\":null,\"halfScore\":null,\"fullDrawcode\":\"3\",\"halfDrawcode\":null,\"sc_round\":\"14\"}],\"prizeTime\":\"--\",\"saleTime\":\"--\",\"stopTime\":\"--\",\"lotteryTime\":\"--\",\"footballSecLottery\":{\"rsales\":null,\"rfirCount\":null,\"rfirSinBon\":null},\"footballFirlottery\":{\"jackpot\":null,\"sales\":null,\"firCount\":null,\"firSinBon\":null,\"secCount\":null,\"secSinBon\":null}}," +
+                "{\"name\":\"31\",\"issue\":\"2016176\",\"nextIssue\":null,\"nextTime\":null,\"time\":null,\"numbers\":\"--,--,--,--,--,--,--,--,--,--,--,--\",\"footballLotteryIssueResultData\":[{\"homeName\":\"哥伦比\",\"guestName\":\"智 利\",\"kickOffTime\":\"2016-12-11 04:30:00\",\"fullScore\":null,\"halfScore\":null,\"fullDrawcode\":null,\"halfDrawcode\":null,\"sc_round\":\"1\"},{\"homeName\":\"巴拉圭\",\"guestName\":\"秘 鲁\",\"kickOffTime\":\"2016-11-11 07:30:00\",\"fullScore\":null,\"halfScore\":null,\"fullDrawcode\":null,\"halfDrawcode\":null,\"sc_round\":\"2\"},{\"homeName\":\"巴 西\",\"guestName\":\"阿根廷\",\"kickOffTime\":\"2016-11-11 07:45:00\",\"fullScore\":null,\"halfScore\":null,\"fullDrawcode\":null,\"halfDrawcode\":null,\"sc_round\":\"3\"},{\"homeName\":\"捷 克\",\"guestName\":\"挪 威\",\"kickOffTime\":\"2016-11-12 03:45:00\",\"fullScore\":null,\"halfScore\":null,\"fullDrawcode\":null,\"halfDrawcode\":null,\"sc_round\":\"4\"},{\"homeName\":\"英格兰\",\"guestName\":\"苏格兰\",\"kickOffTime\":\"2016-11-12 03:45:00\",\"fullScore\":null,\"halfScore\":null,\"fullDrawcode\":null,\"halfDrawcode\":null,\"sc_round\":\"5\"},{\"homeName\":\"法 国\",\"guestName\":\"瑞 典\",\"kickOffTime\":\"2016-11-12 03:45:00\",\"fullScore\":null,\"halfScore\":null,\"fullDrawcode\":null,\"halfDrawcode\":null,\"sc_round\":\"6\"}],\"prizeTime\":\"--\",\"saleTime\":\"--\",\"stopTime\":\"--\",\"lotteryTime\":\"--\",\"footballFirlottery\":{\"jackpot\":null,\"sales\":null,\"firCount\":null,\"firSinBon\":null,\"secCount\":null,\"secSinBon\":null}}," +
+                "{\"name\":\"32\",\"issue\":\"2016176\",\"nextIssue\":null,\"nextTime\":\"2016-11-22 20:30:00\",\"time\":null,\"numbers\":\"0,0,2,1,3+,0,2,1\",\"footballLotteryIssueResultData\":[{\"homeName\":\"哥伦比\",\"guestName\":\"智 利\",\"kickOffTime\":\"2016-12-11 04:30:00\",\"fullScore\":\"0-0\",\"halfScore\":null,\"fullDrawcode\":null,\"halfDrawcode\":null,\"sc_round\":\"1\"},{\"homeName\":\"捷 克\",\"guestName\":\"挪 威\",\"kickOffTime\":\"2016-11-12 03:45:00\",\"fullScore\":\"2-1\",\"halfScore\":null,\"fullDrawcode\":null,\"halfDrawcode\":null,\"sc_round\":\"2\"},{\"homeName\":\"英格兰\",\"guestName\":\"苏格兰\",\"kickOffTime\":\"2016-11-12 03:45:00\",\"fullScore\":\"3-0\",\"halfScore\":null,\"fullDrawcode\":null,\"halfDrawcode\":null,\"sc_round\":\"3\"},{\"homeName\":\"法 国\",\"guestName\":\"瑞 典\",\"kickOffTime\":\"2016-11-12 03:45:00\",\"fullScore\":\"2-1\",\"halfScore\":null,\"fullDrawcode\":null,\"halfDrawcode\":null,\"sc_round\":\"4\"}],\"prizeTime\":\"--\",\"saleTime\":\"--\",\"stopTime\":\"--\",\"lotteryTime\":\"--\",\"footballFirlottery\":{\"jackpot\":null,\"sales\":null,\"firCount\":null,\"firSinBon\":null,\"secCount\":null,\"secSinBon\":null}}," +
+                "{\"name\":\"2\",\"issue\":\"20161122072\",\"nextIssue\":\"20161122073\",\"nextTime\":\"2016-11-22 18:10:40\",\"time\":\"2016-11-22 18:00:54\",\"numbers\":\"4,6,6,2,2\"}," +
+                "{\"name\":\"3\",\"issue\":\"20160516100\",\"nextIssue\":\"20160317039\",\"nextTime\":\"2016-03-17 15:36:22\",\"time\":\"2016-05-16 20:22:41\",\"numbers\":\"9,2,3,3,0\"}," +
+                "{\"name\":\"4\",\"issue\":\"2016112250\",\"nextIssue\":\"2016112251\",\"nextTime\":\"2016-11-22 18:30:11\",\"time\":\"2016-11-22 18:20:23\",\"numbers\":\"8,0,1,6,0\"}," +
+                "{\"name\":\"5\",\"issue\":\"20161122051\",\"nextIssue\":\"20161122052\",\"nextTime\":\"2016-11-22 18:29:06\",\"time\":\"2016-11-22 18:19:12\",\"numbers\":\"6,6,6,7,8\"}," +
+                "{\"name\":\"6\",\"issue\":\"2016137\",\"nextIssue\":\"2016138\",\"nextTime\":\"2016-11-22 20:30:00\",\"time\":\"2016-11-20 20:30:00\",\"numbers\":\"7,6,9,4,0,4,3\",\"jackpot\":\"20061940\"}," +
+                "{\"name\":\"7\",\"issue\":\"2016112255\",\"nextIssue\":\"2016112256\",\"nextTime\":\"2016-11-22 18:21:00\",\"time\":\"2016-11-22 18:11:02\",\"numbers\":\"05,03,11,08,06\"}," +
+                "{\"name\":\"8\",\"issue\":\"2016112255\",\"nextIssue\":\"2016112256\",\"nextTime\":\"2016-11-22 18:22:10\",\"time\":\"2016-11-22 18:12:22\",\"numbers\":\"03,07,18,14,02,01,13,12\"}," +
+                "{\"name\":\"20\",\"issue\":\"2016112259\",\"nextIssue\":\"2016112260\",\"nextTime\":\"2016-11-22 18:26:47\",\"time\":\"2016-11-22 18:17:17\",\"numbers\":\"02,09,10,07,06\"}," +
+                "{\"name\":\"10\",\"issue\":\"20161122057\",\"nextIssue\":\"20161122058\",\"nextTime\":\"2016-11-22 18:21:58\",\"time\":\"2016-11-22 18:12:10\",\"numbers\":\"1,4,4\"}," +
+                "{\"name\":\"11\",\"issue\":\"20161122056\",\"nextIssue\":\"20161122057\",\"nextTime\":\"2016-11-22 18:30:18\",\"time\":\"2016-11-22 18:20:30\",\"numbers\":\"11,17,13,03,19,02,05,18\"}," +
+                "{\"name\":\"14\",\"issue\":\"160611081\",\"nextIssue\":\"160611082\",\"nextTime\":\"2016-06-11 22:19:45\",\"time\":\"2016-06-11 22:09:55\",\"numbers\":\"5,10,11,1,4\"}," +
+                "{\"name\":\"15\",\"issue\":\"588112\",\"nextIssue\":\"588113\",\"nextTime\":\"2016-11-22 18:22:42\",\"time\":\"2016-11-22 18:17:47\",\"numbers\":\"10,06,05,04,01,03,02,08,09,07\"}," +
+                "{\"name\":\"16\",\"issue\":\"20161122057\",\"nextIssue\":\"20161122058\",\"nextTime\":\"2016-11-22 18:10:49\",\"time\":\"2016-11-22 18:01:01\",\"numbers\":\"3,4,6\"}," +
+                "{\"name\":\"17\",\"issue\":\"2016112216\",\"nextIssue\":\"2016112217\",\"nextTime\":\"2016-11-22 18:30:30\",\"time\":\"2016-11-22 18:00:33\",\"numbers\":\"2,9,6\"}," +
+                "{\"name\":\"18\",\"issue\":\"20161122053\",\"nextIssue\":\"20161122054\",\"nextTime\":\"2016-11-22 18:27:14\",\"time\":\"2016-11-22 18:17:26\",\"numbers\":\"5,5,5\"}," +
+                "{\"name\":\"19\",\"issue\":\"20161122063\",\"nextIssue\":\"20161122064\",\"nextTime\":\"2016-11-22 18:23:49\",\"time\":\"2016-11-22 18:14:01\",\"numbers\":\"19,18,15,12,10,05,20,06\"}," +
+                "{\"name\":\"22\",\"issue\":\"2016112256\",\"nextIssue\":\"2016112257\",\"nextTime\":\"2016-11-22 18:26:00\",\"time\":\"2016-11-22 18:15:57\",\"numbers\":\"09,08,07,05,06\"}," +
+                "{\"name\":\"23\",\"issue\":\"20161122056\",\"nextIssue\":\"20161122057\",\"nextTime\":\"2016-11-22 18:30:28\",\"time\":\"2016-11-22 18:20:40\",\"numbers\":\"5,6,7,2,9\"}]}";
+    }
 
 }

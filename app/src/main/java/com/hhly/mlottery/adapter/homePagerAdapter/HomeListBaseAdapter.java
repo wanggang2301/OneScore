@@ -1060,6 +1060,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
 
                     mPagerAdapter = new HomePagerAdapter(mContext, mHomePagerEntity, mViewHolder);
                     mViewHolder.mViewPager.setAdapter(mPagerAdapter);// 轮播图适配数据
+
                     try {
                         if (mHomePagerEntity == null || mHomePagerEntity.getBanners() == null || mHomePagerEntity.getBanners().getContent() == null || mHomePagerEntity.getBanners().getContent().size() == 0) {
 

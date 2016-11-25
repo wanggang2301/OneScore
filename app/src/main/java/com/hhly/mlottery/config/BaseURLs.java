@@ -41,7 +41,7 @@ public class BaseURLs {
             }
         }
 
-        //return "m.1332255.com";测试环境。
+//        return "m.1332255.com:81";//测试环境。
         return "m.13322.com";//发布版本
 
     }
@@ -165,7 +165,8 @@ public class BaseURLs {
 
 
     // 所有彩票最后一期开奖结果
-    private final static String URL_LASTLOTTERY = "lastLotteryResults.findLastLotteryResults.do";
+//    private final static String URL_LASTLOTTERY = "lastLotteryResults.findLastLotteryResults.do";
+    private final static String URL_LASTLOTTERY = "lastLotteryResults.findNewAndroidLastLotteryResults.do";// 新增了6个彩种
 
     // 香港开奖
     private final static String URL_LHCDetailed = "detailedLotteryResults.findLhcDetailedResults.do";
@@ -183,7 +184,8 @@ public class BaseURLs {
     private final static String URL_YNSSCDetailed = "detailedLotteryResults.findYNSSCDetailedResults.do";
 
     // 七星彩
-    private final static String URL_QXCDetailed = "detailedLotteryResults.findQXCDetailedResults.do";
+//    private final static String URL_QXCDetailed = "detailedLotteryResults.findQXCDetailedResults.do";
+    private final static String URL_QXCDetailed = "detailedLotteryResults.findNewQXCAndroidDetailedResults.do";// 此接口新增了奖金池
 
     // 广东11选5
     private final static String URL_D11X5Detailed = "detailedLotteryResults.findD11X5DetailedResults.do";
@@ -235,6 +237,37 @@ public class BaseURLs {
 
     // 天津时时彩
     private final static String URL_TJSSCDetailed = "detailedLotteryResults.findTJSSCDetailedResults.do";
+
+    // 双色球
+//    private final static String URL_SSQDetailed = "detailedLotteryResults.findSSQAndroidDetailedResults.do";
+    private final static String URL_SSQDetailed = "detailedLotteryResults.findSSQIOSDetailedResults.do";
+
+    // 排列3
+//    private final static String URL_PL3Detailed = "detailedLotteryResults.findPL3AndroidDetailedResults.do";
+    private final static String URL_PL3Detailed = "detailedLotteryResults.findPL3IOSDetailedResults.do";
+
+    // 排列5
+//    private final static String URL_PL5Detailed = "detailedLotteryResults.findPL5AndroidDetailedResults.do";
+    private final static String URL_PL5Detailed = "detailedLotteryResults.findPL5IOSDetailedResults.do";
+
+    // 福彩3D
+    private final static String URL_F3DDetailed = "detailedLotteryResults.findF3DAndroidDetailedResults.do";
+
+    // 七乐彩
+    private final static String URL_QLCDetailed = "detailedLotteryResults.findQLCAndroidDetailedResults.do";
+
+    // 大乐透
+//    private final static String URL_DLTDetailed = "detailedLotteryResults.findDLTAndroidDetailedResults.do";
+    private final static String URL_DLTDetailed = "detailedLotteryResults.findDLTIOSDetailedResults.do";
+
+    // 胜负彩
+    private final static String URL_SFCDetailed = "detailedLotteryResults.findSFCIOSDetailedResults.do";
+
+    // 6场半全场
+    private final static String URL_LCBQCDetailed = "detailedLotteryResults.findZC6IOSDetailedResults.do";
+
+    // 4场进球
+    private final static String URL_SCJQDetailed = "detailedLotteryResults.findJQ4IOSDetailedResults.do";
 
     /*
      *
@@ -441,6 +474,33 @@ public class BaseURLs {
 
     // 天津时时彩
     public final static String URL_TJSSCDetailedResults = URL_API_HOST + URL_TJSSCDetailed;
+
+    // 双色球
+    public final static String URL_SSQDetailedResults = URL_API_HOST + URL_SSQDetailed;
+
+    // 排列3
+    public final static String URL_PL3DetailedResults = URL_API_HOST + URL_PL3Detailed;
+
+    // 排列5
+    public final static String URL_PL5DetailedResults = URL_API_HOST + URL_PL5Detailed;
+
+    // 福彩3D
+    public final static String URL_F3DDetailedResults = URL_API_HOST + URL_F3DDetailed;
+
+    // 七乐彩
+    public final static String URL_QLCDetailedResults = URL_API_HOST + URL_QLCDetailed;
+
+    // 大乐透
+    public final static String URL_DLTDetailedResults = URL_API_HOST + URL_DLTDetailed;
+
+    // 胜负彩
+    public final static String URL_SFCDetailedResults = URL_API_HOST + URL_SFCDetailed;
+
+    // 6场半全场
+    public final static String URL_LCBQCDetailedResults = URL_API_HOST + URL_LCBQCDetailed;
+
+    // 4场进球
+    public final static String URL_SCJQDetailedResults = URL_API_HOST + URL_SCJQDetailed;
 
     /*
      *
