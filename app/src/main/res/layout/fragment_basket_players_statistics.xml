@@ -202,7 +202,8 @@
                 android:layout_gravity="center" />
         </FrameLayout>
 
-        <include layout="@layout/basket_odds_nodata" />
+        <include layout="@layout/basket_player_nodata"
+            />
 
         <include layout="@layout/basket_odds_new_error" />
 
