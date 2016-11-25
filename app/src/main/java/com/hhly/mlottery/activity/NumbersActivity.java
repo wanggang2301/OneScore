@@ -1039,31 +1039,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
             mHandler.sendEmptyMessage(STARTLOADING);
         }
 
-//        if (numberlist != null) {
-//            numberlist.clear();
-//            numberlist = null;
-//        }
-//        NumbersOpenBean jsonObject = JSON.parseObject(AppConstants.getTestData(), NumbersOpenBean.class);
-//        numberlist = jsonObject.getNumLotteryResults();
-//
-//        serverTime = null;
-//        serverTime = jsonObject.getServerTime();
-//
-//        L.d("xxx", "请求后台数据。。。");
-//        if (num == 1) {
-//            // 发送自动刷新和手动刷新加载数据成功消息
-//            mHandler.sendEmptyMessage(AUTOREFRESH);
-//        } else if (num == 5) {
-//            // 界面重新显示时,刷新界面数据
-//            mHandler.sendEmptyMessage(RENOTIFY);
-//        } else {
-//            // 发送加载数据成功消息
-//            mHandler.sendEmptyMessage(SUCCESSLOADING);
-//        }
-
-        String url = "http://m.1332255.com:81/mlottery/core/lastLotteryResults.findNewIOSLastLotteryResults.do";
-//        AppConstants.numberHistoryURLs[0]
-        VolleyContentFast.requestJsonByGet(url, new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
+        VolleyContentFast.requestJsonByGet(AppConstants.numberHistoryURLs[0], new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
             @Override
             public synchronized void onResponse(final NumbersOpenBean jsonObject) {
                 if (null != jsonObject) {// 判断数据是否为空
@@ -1331,6 +1307,10 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                 // 显示正在开奖中
                 showTheLottery(holder, mNumberInfo);
             }
+        } else if("25".equals(mNumberInfo.getName()) || "26".equals(mNumberInfo.getName())){
+            // 排3和排5显示日期
+            holder.tv_numbers_time.setText(Dates[0] + " " + weekDate);// 设置日期
+            holder.ll_numbers_time.setVisibility(View.GONE);
         } else {
             String mTime = Dates[1] == null ? "" : Dates[1].substring(0, Dates[1].lastIndexOf(":"));
 

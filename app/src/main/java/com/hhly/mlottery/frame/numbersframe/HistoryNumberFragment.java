@@ -74,7 +74,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
     private ScrollView mScrollView;
 
     private List<NumberCurrentInfo> mNumberHistoryList;// 往期开奖集合
-//    private List<NumberHistoryHKInfo> mNumberHKList;// 往期六合 彩开奖集合
+    //    private List<NumberHistoryHKInfo> mNumberHKList;// 往期六合 彩开奖集合
     private List<NumberCurrentInfo> numberlist = new ArrayList<>();// 各种彩票开奖对象
 
     private int count = 0;// item数据
@@ -183,14 +183,13 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
             // 发送消息，开始加载数据
             mHandler.sendEmptyMessage(STARTLOADING);
         }
-        String url = "http://m.1332255.com:81/mlottery/core/lastLotteryResults.findNewIOSLastLotteryResults.do";
-//        AppConstants.numberHistoryURLs[0]
-        VolleyContentFast.requestJsonByGet(url, new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
+
+        VolleyContentFast.requestJsonByGet(AppConstants.numberHistoryURLs[0], new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
             @Override
             public synchronized void onResponse(final NumbersOpenBean json) {
                 if (null != json) {// 判断数据是否为空
 
-                    if(numberlist != null){
+                    if (numberlist != null) {
                         numberlist.clear();
                     }
 
@@ -456,55 +455,29 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
      * 访问网络数据
      */
     private void loadingNetData() {
-        // 发送消息，开始加载数据
-        // mHandler.sendEmptyMessage(STARTLOADING);
         if (null != mNumberInfo) {
-//            if ("1".equals(mNumberInfo.getName())) {
-                VolleyContentFast.requestJsonByGet(AppConstants.numberHistoryURLs[Integer.parseInt(mNumberInfo.getName())], new VolleyContentFast.ResponseSuccessListener<NumbersHistoryBean>() {
-                    @Override
-                    public synchronized void onResponse(final NumbersHistoryBean json) {
-                        if(mNumberHistoryList != null){
-                            mNumberHistoryList.clear();
-                        }
-                        mNumberHistoryList = json.getHistoryLotteryResults();
-
-                        count = mNumberHistoryList.size();
-
-                        // 发送加载数据成功消息
-                        mHandler.sendEmptyMessage(SUCCESS);
-
-                        mAdapter = new numbersListViewAdapter();
-                        mListView.setAdapter(mAdapter);
+            VolleyContentFast.requestJsonByGet(AppConstants.numberHistoryURLs[Integer.parseInt(mNumberInfo.getName())], new VolleyContentFast.ResponseSuccessListener<NumbersHistoryBean>() {
+                @Override
+                public synchronized void onResponse(final NumbersHistoryBean json) {
+                    if (mNumberHistoryList != null) {
+                        mNumberHistoryList.clear();
                     }
-                }, new VolleyContentFast.ResponseErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                        mHandler.sendEmptyMessage(ERRORLOADING);
-                    }
-                }, NumbersHistoryBean.class);
-//            } else {
-//                VolleyContentFast.requestJsonByGet(AppConstants.numberHistoryURLs[Integer.parseInt(mNumberInfo.getName())], new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
-//                    @Override
-//                    public synchronized void onResponse(final NumbersOpenBean json) {
-//                        mNumberHistoryList = json.getHistoryLotteryResults();
-//                        count = mNumberHistoryList.size();
-//
-//                        for (NumberHistoryInfo numberHistoryInfo : mNumberHistoryList) {
-//                            System.out.println("xxxxx  号码：" + numberHistoryInfo.getNumbers());
-//                        }
-//
-//                        // 发送加载数据成功消息
-//                        mHandler.sendEmptyMessage(SUCCESS);
-//
-//                        mListView.setAdapter(new numbersListViewAdapter());
-//                    }
-//                }, new VolleyContentFast.ResponseErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-//                        mHandler.sendEmptyMessage(ERRORLOADING);
-//                    }
-//                }, NumbersOpenBean.class);
-//            }
+                    mNumberHistoryList = json.getHistoryLotteryResults();
+
+                    count = mNumberHistoryList.size();
+
+                    // 发送加载数据成功消息
+                    mHandler.sendEmptyMessage(SUCCESS);
+
+                    mAdapter = new numbersListViewAdapter();
+                    mListView.setAdapter(mAdapter);
+                }
+            }, new VolleyContentFast.ResponseErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                    mHandler.sendEmptyMessage(ERRORLOADING);
+                }
+            }, NumbersHistoryBean.class);
         }
     }
 
@@ -631,7 +604,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
 
                 String weekDate = DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(hkInfo.getTime()));// 根据日期获取星期
                 String[] Dates = {null, null};
-                if(hkInfo.getTime() != null){
+                if (hkInfo.getTime() != null) {
                     Dates = hkInfo.getTime().split(" ");
                 }
 
@@ -716,7 +689,8 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
                     Dates = historyInfo.getTime().split(" ");
                 }
 
-                if ("6".equals(mNumberInfo.getName())) {
+                if ("6".equals(mNumberInfo.getName()) || "24".equals(mNumberInfo.getName()) || "28".equals(mNumberInfo.getName()) ||
+                        "29".equals(mNumberInfo.getName()) || "25".equals(mNumberInfo.getName()) || "26".equals(mNumberInfo.getName())) {
 
                     holder.tv_time.setText(Dates[0] + " " + weekDate);// 设置日期
                 } else {

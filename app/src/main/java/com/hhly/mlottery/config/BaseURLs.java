@@ -166,7 +166,8 @@ public class BaseURLs {
 
     // 所有彩票最后一期开奖结果
 //    private final static String URL_LASTLOTTERY = "lastLotteryResults.findLastLotteryResults.do";
-    private final static String URL_LASTLOTTERY = "lastLotteryResults.findNewAndroidLastLotteryResults.do";// 新增了6个彩种
+//    private final static String URL_LASTLOTTERY = "lastLotteryResults.findNewAndroidSecLastLotteryResults.do";// 新增了6个彩种
+    private final static String URL_LASTLOTTERY = "lastLotteryResults.findAndroidSecLastLotteryResults.do";// 新增了8个彩种
 
     // 香港开奖
     private final static String URL_LHCDetailed = "detailedLotteryResults.findLhcDetailedResults.do";
@@ -240,15 +241,15 @@ public class BaseURLs {
 
     // 双色球
 //    private final static String URL_SSQDetailed = "detailedLotteryResults.findSSQAndroidDetailedResults.do";
-    private final static String URL_SSQDetailed = "detailedLotteryResults.findSSQIOSDetailedResults.do";
+    private final static String URL_SSQDetailed = "detailedLotteryResults.findSSQAndroidSecDetailedResults.do";
 
     // 排列3
 //    private final static String URL_PL3Detailed = "detailedLotteryResults.findPL3AndroidDetailedResults.do";
-    private final static String URL_PL3Detailed = "detailedLotteryResults.findPL3IOSDetailedResults.do";
+    private final static String URL_PL3Detailed = "detailedLotteryResults.findPL3AndroidSecDetailedResults.do";
 
     // 排列5
 //    private final static String URL_PL5Detailed = "detailedLotteryResults.findPL5AndroidDetailedResults.do";
-    private final static String URL_PL5Detailed = "detailedLotteryResults.findPL5IOSDetailedResults.do";
+    private final static String URL_PL5Detailed = "detailedLotteryResults.findPL5AndroidSecDetailedResults.do";
 
     // 福彩3D
     private final static String URL_F3DDetailed = "detailedLotteryResults.findF3DAndroidDetailedResults.do";
@@ -258,16 +259,16 @@ public class BaseURLs {
 
     // 大乐透
 //    private final static String URL_DLTDetailed = "detailedLotteryResults.findDLTAndroidDetailedResults.do";
-    private final static String URL_DLTDetailed = "detailedLotteryResults.findDLTIOSDetailedResults.do";
+    private final static String URL_DLTDetailed = "detailedLotteryResults.findDLTAndroidSecDetailedResults.do";
 
     // 胜负彩
-    private final static String URL_SFCDetailed = "detailedLotteryResults.findSFCIOSDetailedResults.do";
+    private final static String URL_SFCDetailed = "detailedLotteryResults.findSFCAndroidSecDetailedResults.do";
 
     // 6场半全场
-    private final static String URL_LCBQCDetailed = "detailedLotteryResults.findZC6IOSDetailedResults.do";
+    private final static String URL_LCBQCDetailed = "detailedLotteryResults.findZC6AndroidSecDetailedResults.do";
 
     // 4场进球
-    private final static String URL_SCJQDetailed = "detailedLotteryResults.findJQ4IOSDetailedResults.do";
+    private final static String URL_SCJQDetailed = "detailedLotteryResults.findJQ4AndroidSecDetailedResults.do";
 
     /*
      *

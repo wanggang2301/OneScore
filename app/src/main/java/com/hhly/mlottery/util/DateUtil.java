@@ -149,12 +149,13 @@ public class DateUtil {
      * @return
      */
     public static String getLotteryInfoDate(String strdate , String style) {
+        if(strdate == null){return null;}
         DateFormat d1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         DateFormat d2 = new SimpleDateFormat(style);
         try {
             strdate = d2.format(d1.parse(strdate));
             System.out.println(strdate);
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return strdate;
