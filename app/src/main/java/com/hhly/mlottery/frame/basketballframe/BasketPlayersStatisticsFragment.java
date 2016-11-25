@@ -28,6 +28,7 @@ import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.adapter.basketball.BasketPlayerNameAdapter;
 import com.hhly.mlottery.adapter.basketball.BasketPlayerStatisticsAdapter;
 import com.hhly.mlottery.bean.basket.basketstatistics.BasketPlayerStatisticsBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
@@ -198,8 +199,7 @@ public class BasketPlayersStatisticsFragment extends Fragment implements View.On
 
         Map<String,String> params=new HashMap<>();
         params.put("thirdId", BasketDetailsActivityTest.mThirdId);
-        String url="http://m.13322.com/mlottery/core/IOSBasketballDetail.findPlayerStats.do";
-        VolleyContentFast.requestJsonByGet(url,params, new VolleyContentFast.ResponseSuccessListener<BasketPlayerStatisticsBean>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.BASKET_DETAIL_PLAYER,params, new VolleyContentFast.ResponseSuccessListener<BasketPlayerStatisticsBean>() {
             @Override
             public void onResponse(BasketPlayerStatisticsBean jsonObject) {
 
