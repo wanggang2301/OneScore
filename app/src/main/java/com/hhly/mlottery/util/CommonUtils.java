@@ -42,7 +42,6 @@ public class CommonUtils {
      * @param register
      */
     public static void saveRegisterInfo(Register register) {
-android.util.Log.i("smsdas","register>>>>>>>"+register.getData().getUser().getSex());
 
         if (register == null) {
             PreferenceUtil.commitString(AppConstants.SPKEY_USERID, "");

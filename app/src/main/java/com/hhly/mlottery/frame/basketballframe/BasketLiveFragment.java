@@ -13,6 +13,7 @@ import android.widget.RadioGroup;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
+import com.hhly.mlottery.callback.BasketDetailsLiveCallBack;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
 
@@ -55,6 +56,8 @@ public class BasketLiveFragment extends Fragment {
     private List<Fragment> fragments = new ArrayList<>();
 
     private int currentFrag = 0;
+
+    private BasketDetailsLiveCallBack mBasketDetailsLiveCallBack;
 
 
     public static BasketLiveFragment newInstance() {
@@ -123,6 +126,14 @@ public class BasketLiveFragment extends Fragment {
                 }
             }
         });
+
+        mBasketDetailsLiveCallBack = new BasketDetailsLiveCallBack() {
+            @Override
+            public void onClick(String status) {
+
+            }
+        };
+
     }
 
     public void switchFragment(int position) {

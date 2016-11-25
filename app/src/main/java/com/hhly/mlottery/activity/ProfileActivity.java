@@ -137,6 +137,8 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     private ImageView woman_sex;
     private ImageView man_sex;
     private ImageView noon_sex;
+    private WindowManager.LayoutParams lp;
+    private WindowManager.LayoutParams lp1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -253,7 +255,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
 //                 startActivity(intent2);
                 break;*/
             case R.id.modify_avatar: //修改头像
-
+                backgroundAlpha(0.5f);
               setHeadView(v);
                 break;
         /*    case R.id.tv_photograph:  //拍照
@@ -273,6 +275,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
             case R.id.tv_chose_start_photo:
                 Intent intent3 = new Intent(ProfileActivity.this, AvatarSelectionActivity.class);
                 startActivityForResult(intent3,REQUESTCODE_CHOSE);
+                mPopupWindow.dismiss();
                 break;
             case R.id.tv_cancel:  //取消
 
@@ -412,10 +415,11 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
         // 设置一个透明的背景，不然无法实现点击弹框外，弹框消失
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
         // 设置背景颜色变暗
-        WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.alpha = 0.5f;
+        lp1 = getWindow().getAttributes();
+        lp1.alpha = 0.5f;
         // 设置点击弹框外部，弹框消失
         mPopupWindow.setOutsideTouchable(true);
+        mPopupWindow.setOnDismissListener(new poponDismissListener());
         // 设置焦点
         mPopupWindow.setFocusable(true);
         // 设置所在布局
@@ -427,12 +431,32 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
         layout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
+               // UiUtils.toast(getApplicationContext(),":我被点击了");
                 return true;
             }
         });
 
     }
+    class poponDismissListener implements PopupWindow.OnDismissListener{
+        @Override
+        public void onDismiss() {
+            // TODO Auto-generated method stub
+            //Log.v("List_noteTypeActivity:", "我是关闭事件");
+            backgroundAlpha(1f);
+        }
+    }
+
+    /**
+     * 设置添加屏幕的背景透明度
+     * @param bgAlpha
+     */
+    public void backgroundAlpha(float bgAlpha)
+    {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+         lp.alpha = bgAlpha; //0.0-1.0
+        getWindow().setAttributes(lp);
+    }
+
 
     File outFile = null;
     Bitmap bitmap = null;

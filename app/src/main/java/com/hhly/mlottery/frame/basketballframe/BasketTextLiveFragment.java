@@ -22,12 +22,15 @@ import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.adapter.basketball.BasketBallTextLiveAdapter;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketTextLiveBean;
+import com.hhly.mlottery.callback.BasketDetailsLiveCallBack;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.greenrobot.event.EventBus;
 
@@ -66,6 +69,12 @@ public class BasketTextLiveFragment extends Fragment {
     private TextView network_exception_reload_btn;
 
     private FrameLayout fl_comment;
+
+    private BasketDetailsLiveCallBack mBasketDetailsLiveCallBack;
+
+    public void setmBasketDetailsLiveCallBack(BasketDetailsLiveCallBack mBasketDetailsLiveCallBack) {
+        this.mBasketDetailsLiveCallBack = mBasketDetailsLiveCallBack;
+    }
 
     public static BasketTextLiveFragment newInstance() {
         BasketTextLiveFragment basketTextLiveFragment = new BasketTextLiveFragment();
@@ -242,6 +251,16 @@ public class BasketTextLiveFragment extends Fragment {
     }
 
 
+    Timer timer = new Timer();
+
+    TimerTask timerTask = new TimerTask() {
+        @Override
+        public void run() {
+            loadData();
+        }
+    };
+
+
     /**
      * 首次进入请求文字直播
      */
@@ -254,31 +273,38 @@ public class BasketTextLiveFragment extends Fragment {
         VolleyContentFast.requestJsonByGet(BaseURLs.BASKET_DETAIL_TEXTLIVE, params, new VolleyContentFast.ResponseSuccessListener<BasketTextLiveBean>() {
             @Override
             public void onResponse(BasketTextLiveBean basketTextLiveBean) {
-                if (basketTextLiveBean == null || 200 != basketTextLiveBean.getResult()) {
-                    return;
-                }
+                if (basketTextLiveBean == null || 200 != basketTextLiveBean.getResult() || basketTextLiveBean.getData() == null) {
+                    //1分钟刷新一次知道有文字直播时，切换到直播界面
+                    timer.schedule(timerTask, 30000);
 
-                basketEachTextLiveBeanList = basketTextLiveBean.getData();
-
-                mProgressBarRefresh.setVisibility(View.GONE);
-                fl_comment.setVisibility(View.VISIBLE);
-
-                mLoadMore.setText(R.string.foot_loadmore);   //加载更多
-
-                if (basketEachTextLiveBeanList != null && basketEachTextLiveBeanList.size() > 4) {
-                    listfooter_more.setVisibility(View.VISIBLE);
                 } else {
-                    listfooter_more.setVisibility(View.GONE);
+                    if (mBasketDetailsLiveCallBack != null) {
+                        //切换到直播界面
+                        mBasketDetailsLiveCallBack.onClick("1");
+                    }
+
+                    basketEachTextLiveBeanList = basketTextLiveBean.getData();
+
+                    mProgressBarRefresh.setVisibility(View.GONE);
+                    fl_comment.setVisibility(View.VISIBLE);
+
+                    mLoadMore.setText(R.string.foot_loadmore);   //加载更多
+
+                    if (basketEachTextLiveBeanList != null && basketEachTextLiveBeanList.size() > 4) {
+                        listfooter_more.setVisibility(View.VISIBLE);
+                    } else {
+                        listfooter_more.setVisibility(View.GONE);
+                    }
+                    if (basketEachTextLiveBeanList.size() == 0) {//，没请求到数据 mNoData显示
+                        mBasketBallTextLiveAdapter.setEmptyView(emptyView);
+                    } else {
+                        lastId = basketTextLiveBean.getData().get(basketTextLiveBean.getData().size() - 1).getId();
+                        mBasketBallTextLiveAdapter.getData().clear();
+                        mBasketBallTextLiveAdapter.addData(basketEachTextLiveBeanList);
+                        mBasketBallTextLiveAdapter.notifyDataSetChanged();
+                        mRecyclerView.smoothScrollToPosition(0);
+                    }
                 }
-//                if (basketEachTextLiveBeanList.size() == 0) {//，没请求到数据 mNoData显示
-//                    mBasketBallTextLiveAdapter.setEmptyView(emptyView);
-//                } else {
-//                    lastId = basketTextLiveBean.getData().get(basketTextLiveBean.getData().size() - 1).getId();
-//                    mBasketBallTextLiveAdapter.getData().clear();
-//                    mBasketBallTextLiveAdapter.addData(basketEachTextLiveBeanList);
-//                    mBasketBallTextLiveAdapter.notifyDataSetChanged();
-//                    mRecyclerView.smoothScrollToPosition(0);
-//                }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
