@@ -325,8 +325,11 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
             currentFragmentId = getIntent().getExtras().getInt("currentFragmentId");
             infoCenter = getIntent().getExtras().getInt("info_center");
         }
+
+
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.liveEvent." + mThirdId + "." + appendLanguage());
+
 
         super.onCreate(savedInstanceState);
 
@@ -502,7 +505,6 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
         iv_setting.setOnClickListener(this);
 
         setScroller();
-
     }
 
     @Override
