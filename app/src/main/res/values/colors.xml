@@ -112,9 +112,9 @@
     <color name="numberinfo_notselect">#88000000</color>
     <color name="numberinfo_bg">#33ff0000</color>
     <color name="numberinfo_text_color">#ffffff</color>
-    <color name="number_red">#ff0000</color>
-    <color name="number_green">#00ff00</color>
-    <color name="number_blue">#0000ff</color>
+    <color name="number_red">#db150b</color>
+    <color name="number_green">#29ad00</color>
+    <color name="number_blue">#287de6</color>
     <!-- 比分字体颜色 -->
     <color name="score_red">#ff3200</color>
 
