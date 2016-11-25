@@ -43,6 +43,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * 注册界面
  */
@@ -286,7 +288,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     if (register != null && register.getResult() == AccountResultCode.SUCC) {
                         CommonUtils.saveRegisterInfo(register);
                         UiUtils.toast(MyApp.getInstance(), R.string.register_succ);
-
+                        EventBus.getDefault().post(register);
                         //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
                         sendUserInfoToServer(register);
 

@@ -233,7 +233,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 }else{
                     modifyGender();
                 }
-
+                 finish();
                 break;
             case R.id.rl_nickname: // 昵称栏
                 MobclickAgent.onEvent(ProfileActivity.this, "ModifyNicknameActivity_Start");
