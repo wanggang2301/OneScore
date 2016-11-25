@@ -985,10 +985,10 @@ public class BaseURLs {
     public final static String  FINDHEADICONS=URL_API_HOST+"systemSettings.findHeadIcons.do";
 
     //篮球内页文字直播
-    public final static String BASKET_DETAIL_TEXTLIVE = URL_API_HOST + "IOSBasketballDetail.findTextLive.do";
+    public final static String BASKET_DETAIL_TEXTLIVE = URL_API_HOST + "basketballDetail.findTextLive.do";
     //篮球内页球队统计
-    public final static String BASKET_DETAIL_TEAM=URL_API_HOST+"IOSBasketballDetail.findTeamStats.do";
+    public final static String BASKET_DETAIL_TEAM=URL_API_HOST+"basketballDetail.findTeamStats.do";
     //篮球内页球员统计
-    public final static String BASKET_DETAIL_PLAYER=URL_API_HOST+"IOSBasketballDetail.findPlayerStats.do";
+    public final static String BASKET_DETAIL_PLAYER=URL_API_HOST+"basketballDetail.findPlayerStats.do";
 
 }
