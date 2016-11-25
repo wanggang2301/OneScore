@@ -22,7 +22,6 @@ import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.adapter.basketball.BasketBallTextLiveAdapter;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketTextLiveBean;
-import com.hhly.mlottery.callback.BasketDetailsLiveCallBack;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
@@ -68,11 +67,11 @@ public class BasketTextLiveFragment extends Fragment {
 
     private FrameLayout fl_comment;
 
-    private BasketDetailsLiveCallBack mBasketDetailsLiveCallBack;
+//    private BasketDetailsLiveCallBack mBasketDetailsLiveCallBack;
 
-    public void setmBasketDetailsLiveCallBack(BasketDetailsLiveCallBack mBasketDetailsLiveCallBack) {
-        this.mBasketDetailsLiveCallBack = mBasketDetailsLiveCallBack;
-    }
+//    public void setmBasketDetailsLiveCallBack(BasketDetailsLiveCallBack mBasketDetailsLiveCallBack) {
+//        this.mBasketDetailsLiveCallBack = mBasketDetailsLiveCallBack;
+//    }
 
     public static BasketTextLiveFragment newInstance() {
         BasketTextLiveFragment basketTextLiveFragment = new BasketTextLiveFragment();
@@ -263,9 +262,9 @@ public class BasketTextLiveFragment extends Fragment {
             public void onResponse(BasketTextLiveBean basketTextLiveBean) {
                 if (basketTextLiveBean == null || 200 != basketTextLiveBean.getResult() || basketTextLiveBean.getData() == null) {
 
-                    if (mBasketDetailsLiveCallBack != null) {
-                        mBasketDetailsLiveCallBack.onClick("1");
-                    }
+//                    if (mBasketDetailsLiveCallBack != null) {
+//                        mBasketDetailsLiveCallBack.onClick("1");
+//                    }
                     return;
                 }
 
