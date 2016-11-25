@@ -41,7 +41,7 @@ public class BaseURLs {
             }
         }
 
-        //return "m.1332255.com";测试环境。
+//        return "m.1332255.com:81";//测试环境。
         return "m.13322.com";//发布版本
 
     }
@@ -239,13 +239,16 @@ public class BaseURLs {
     private final static String URL_TJSSCDetailed = "detailedLotteryResults.findTJSSCDetailedResults.do";
 
     // 双色球
-    private final static String URL_SSQDetailed = "detailedLotteryResults.findSSQAndroidDetailedResults.do";
+//    private final static String URL_SSQDetailed = "detailedLotteryResults.findSSQAndroidDetailedResults.do";
+    private final static String URL_SSQDetailed = "detailedLotteryResults.findSSQIOSDetailedResults.do";
 
     // 排列3
-    private final static String URL_PL3Detailed = "detailedLotteryResults.findPL3AndroidDetailedResults.do";
+//    private final static String URL_PL3Detailed = "detailedLotteryResults.findPL3AndroidDetailedResults.do";
+    private final static String URL_PL3Detailed = "detailedLotteryResults.findPL3IOSDetailedResults.do";
 
     // 排列5
-    private final static String URL_PL5Detailed = "detailedLotteryResults.findPL5AndroidDetailedResults.do";
+//    private final static String URL_PL5Detailed = "detailedLotteryResults.findPL5AndroidDetailedResults.do";
+    private final static String URL_PL5Detailed = "detailedLotteryResults.findPL5IOSDetailedResults.do";
 
     // 福彩3D
     private final static String URL_F3DDetailed = "detailedLotteryResults.findF3DAndroidDetailedResults.do";
@@ -254,7 +257,17 @@ public class BaseURLs {
     private final static String URL_QLCDetailed = "detailedLotteryResults.findQLCAndroidDetailedResults.do";
 
     // 大乐透
-    private final static String URL_DLTDetailed = "detailedLotteryResults.findDLTAndroidDetailedResults.do";
+//    private final static String URL_DLTDetailed = "detailedLotteryResults.findDLTAndroidDetailedResults.do";
+    private final static String URL_DLTDetailed = "detailedLotteryResults.findDLTIOSDetailedResults.do";
+
+    // 胜负彩
+    private final static String URL_SFCDetailed = "detailedLotteryResults.findSFCIOSDetailedResults.do";
+
+    // 6场半全场
+    private final static String URL_LCBQCDetailed = "detailedLotteryResults.findZC6IOSDetailedResults.do";
+
+    // 4场进球
+    private final static String URL_SCJQDetailed = "detailedLotteryResults.findJQ4IOSDetailedResults.do";
 
     /*
      *
@@ -479,6 +492,15 @@ public class BaseURLs {
 
     // 大乐透
     public final static String URL_DLTDetailedResults = URL_API_HOST + URL_DLTDetailed;
+
+    // 胜负彩
+    public final static String URL_SFCDetailedResults = URL_API_HOST + URL_SFCDetailed;
+
+    // 6场半全场
+    public final static String URL_LCBQCDetailedResults = URL_API_HOST + URL_LCBQCDetailed;
+
+    // 4场进球
+    public final static String URL_SCJQDetailedResults = URL_API_HOST + URL_SCJQDetailed;
 
     /*
      *

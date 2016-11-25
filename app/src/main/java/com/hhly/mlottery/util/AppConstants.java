@@ -160,7 +160,10 @@ public class AppConstants {
             BaseURLs.URL_PL5DetailedResults,// 26排列5
             BaseURLs.URL_F3DDetailedResults,// 27福彩3D
             BaseURLs.URL_QLCDetailedResults,// 28七乐彩
-            BaseURLs.URL_DLTDetailedResults // 29大乐透
+            BaseURLs.URL_DLTDetailedResults, // 29大乐透
+            BaseURLs.URL_SFCDetailedResults, // 30胜负彩
+            BaseURLs.URL_LCBQCDetailedResults, // 31 六场半全场
+            BaseURLs.URL_SCJQDetailedResults // 32 4场进球
     };
 
     // 香港彩和七星彩的下一期开奖URL

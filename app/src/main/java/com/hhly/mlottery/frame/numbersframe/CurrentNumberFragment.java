@@ -200,65 +200,65 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
             mHandler.sendEmptyMessage(STARTLOADING);
         }
 
-        numberlist = new ArrayList<NumberCurrentInfo>();
-
-        NumbersOpenBean jsonObject = JSON.parseObject(AppConstants.getTestData(), NumbersOpenBean.class);
-        serverTime = jsonObject.getServerTime();
-        numberlist = jsonObject.getNumLotteryResults();
-
-        if (num == 1) {
-            // 发送自动刷新和手动刷新加载数据成功消息
-            mHandler.sendEmptyMessage(AUTOREFRESH);
-        } else if (num == 2) {
-            // 开奖时间到了，再次请求下后台数据
-            mHandler.sendEmptyMessage(OPENSTART);
-
-        } else if (num == 6) {
-            // 开完奖了，重新请求下后台数据
-            mHandler.sendEmptyMessage(OPENNUMBEROVER);
-
-        } else {
-            // 发送加载数据成功消息
-            mHandler.sendEmptyMessage(SUCCESSLOADING);
-        }
-
-//        String url = "http://m.1332255.com:81/mlottery/core/lastLotteryResults.findNewIOSLastLotteryResults.do";
-////        AppConstants.numberHistoryURLs[0]
-//        VolleyContentFast.requestJsonByGet(url, new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
-//            @Override
-//            public synchronized void onResponse(final NumbersOpenBean jsonObject) {
-//                if (null != jsonObject) {// 判断数据是否为空
+//        numberlist = new ArrayList<NumberCurrentInfo>();
 //
-//                    numberlist = new ArrayList<NumberCurrentInfo>();
+//        NumbersOpenBean jsonObject = JSON.parseObject(AppConstants.getTestData(), NumbersOpenBean.class);
+//        serverTime = jsonObject.getServerTime();
+//        numberlist = jsonObject.getNumLotteryResults();
 //
-//                    serverTime = jsonObject.getServerTime();
-//                    numberlist = jsonObject.getNumLotteryResults();
+//        if (num == 1) {
+//            // 发送自动刷新和手动刷新加载数据成功消息
+//            mHandler.sendEmptyMessage(AUTOREFRESH);
+//        } else if (num == 2) {
+//            // 开奖时间到了，再次请求下后台数据
+//            mHandler.sendEmptyMessage(OPENSTART);
 //
-//                    if (num == 1) {
-//                        // 发送自动刷新和手动刷新加载数据成功消息
-//                        mHandler.sendEmptyMessage(AUTOREFRESH);
-//                    } else if (num == 2) {
-//                        // 开奖时间到了，再次请求下后台数据
-//                        mHandler.sendEmptyMessage(OPENSTART);
+//        } else if (num == 6) {
+//            // 开完奖了，重新请求下后台数据
+//            mHandler.sendEmptyMessage(OPENNUMBEROVER);
 //
-//                    } else if (num == 6) {
-//                        // 开完奖了，重新请求下后台数据
-//                        mHandler.sendEmptyMessage(OPENNUMBEROVER);
-//
-//                    } else {
-//                        // 发送加载数据成功消息
-//                        mHandler.sendEmptyMessage(SUCCESSLOADING);
-//                    }
-//                } else {
-//                    mHandler.sendEmptyMessage(ERRORLOADING);
-//                }
-//            }
-//        }, new VolleyContentFast.ResponseErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-//                mHandler.sendEmptyMessage(ERRORLOADING);
-//            }
-//        }, NumbersOpenBean.class);
+//        } else {
+//            // 发送加载数据成功消息
+//            mHandler.sendEmptyMessage(SUCCESSLOADING);
+//        }
+
+        String url = "http://m.1332255.com:81/mlottery/core/lastLotteryResults.findNewIOSLastLotteryResults.do";
+//        AppConstants.numberHistoryURLs[0]
+        VolleyContentFast.requestJsonByGet(url, new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
+            @Override
+            public synchronized void onResponse(final NumbersOpenBean jsonObject) {
+                if (null != jsonObject) {// 判断数据是否为空
+
+                    numberlist = new ArrayList<NumberCurrentInfo>();
+
+                    serverTime = jsonObject.getServerTime();
+                    numberlist = jsonObject.getNumLotteryResults();
+
+                    if (num == 1) {
+                        // 发送自动刷新和手动刷新加载数据成功消息
+                        mHandler.sendEmptyMessage(AUTOREFRESH);
+                    } else if (num == 2) {
+                        // 开奖时间到了，再次请求下后台数据
+                        mHandler.sendEmptyMessage(OPENSTART);
+
+                    } else if (num == 6) {
+                        // 开完奖了，重新请求下后台数据
+                        mHandler.sendEmptyMessage(OPENNUMBEROVER);
+
+                    } else {
+                        // 发送加载数据成功消息
+                        mHandler.sendEmptyMessage(SUCCESSLOADING);
+                    }
+                } else {
+                    mHandler.sendEmptyMessage(ERRORLOADING);
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                mHandler.sendEmptyMessage(ERRORLOADING);
+            }
+        }, NumbersOpenBean.class);
     }
 
     /**
@@ -313,48 +313,50 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
         } else {
             // 判断是否截止销售状态
             try {
-                mNumberTime = DateUtil.getCurrentTime(mNumberInfo.getNextTime()) - Long.parseLong(serverTime);// 获取下一期开奖时间
-                long mm = (mNumberTime / 1000 / 60);// 获取相差分
-                switch (mNumberName) {
-                    case "1":
-                    case "6":
-                    case "24":
-                    case "28":
-                    case "29":
-                        ll_info_lastTime.setVisibility(View.VISIBLE);
-                        ll_info_startOpenNumber.setVisibility(View.GONE);
-                        ll_Currentnumber_numbers_copy.setVisibility(View.GONE);
-                        break;
-                    case "25":
-                    case "26":
-                    case "27":
-                        if (mm > 1440) {// 判断截止销售时间(超过1天)
-                            // 显示截止销售字样
-                            ll_info_lastTime.setVisibility(View.GONE);
-                            ll_info_startOpenNumber.setVisibility(View.VISIBLE);
-                            ll_Currentnumber_numbers_copy.setVisibility(View.GONE);
-                            tv_info_numberStart_desc.setText(mContext.getResources().getString(R.string.number_info_stopSell));
-                        } else {
-                            // 显示开奖倒计时
+                if (mNumberInfo.getNextTime() != null) {
+                    mNumberTime = DateUtil.getCurrentTime(mNumberInfo.getNextTime()) - Long.parseLong(serverTime);// 获取下一期开奖时间
+                    long mm = (mNumberTime / 1000 / 60);// 获取相差分
+                    switch (mNumberName) {
+                        case "1":
+                        case "6":
+                        case "24":
+                        case "28":
+                        case "29":
                             ll_info_lastTime.setVisibility(View.VISIBLE);
                             ll_info_startOpenNumber.setVisibility(View.GONE);
                             ll_Currentnumber_numbers_copy.setVisibility(View.GONE);
-                        }
-                        break;
-                    default:
-                        if (mm > 10 || ("15".equals(mNumberName) && mm > 5)) {// 判断截止销售时间
-                            // 显示截止销售字样
-                            ll_info_lastTime.setVisibility(View.GONE);
-                            ll_info_startOpenNumber.setVisibility(View.VISIBLE);
-                            ll_Currentnumber_numbers_copy.setVisibility(View.GONE);
-                            tv_info_numberStart_desc.setText(mContext.getResources().getString(R.string.number_info_stopSell));
-                        } else {
-                            // 显示开奖倒计时
-                            ll_info_lastTime.setVisibility(View.VISIBLE);
-                            ll_info_startOpenNumber.setVisibility(View.GONE);
-                            ll_Currentnumber_numbers_copy.setVisibility(View.GONE);
-                        }
-                        break;
+                            break;
+                        case "25":
+                        case "26":
+                        case "27":
+                            if (mm > 1440) {// 判断截止销售时间(超过1天)
+                                // 显示截止销售字样
+                                ll_info_lastTime.setVisibility(View.GONE);
+                                ll_info_startOpenNumber.setVisibility(View.VISIBLE);
+                                ll_Currentnumber_numbers_copy.setVisibility(View.GONE);
+                                tv_info_numberStart_desc.setText(mContext.getResources().getString(R.string.number_info_stopSell));
+                            } else {
+                                // 显示开奖倒计时
+                                ll_info_lastTime.setVisibility(View.VISIBLE);
+                                ll_info_startOpenNumber.setVisibility(View.GONE);
+                                ll_Currentnumber_numbers_copy.setVisibility(View.GONE);
+                            }
+                            break;
+                        default:
+                            if (mm > 10 || ("15".equals(mNumberName) && mm > 5)) {// 判断截止销售时间
+                                // 显示截止销售字样
+                                ll_info_lastTime.setVisibility(View.GONE);
+                                ll_info_startOpenNumber.setVisibility(View.VISIBLE);
+                                ll_Currentnumber_numbers_copy.setVisibility(View.GONE);
+                                tv_info_numberStart_desc.setText(mContext.getResources().getString(R.string.number_info_stopSell));
+                            } else {
+                                // 显示开奖倒计时
+                                ll_info_lastTime.setVisibility(View.VISIBLE);
+                                ll_info_startOpenNumber.setVisibility(View.GONE);
+                                ll_Currentnumber_numbers_copy.setVisibility(View.GONE);
+                            }
+                            break;
+                    }
                 }
             } catch (Exception e) {
                 L.d("时间转换异常: " + e.getMessage());

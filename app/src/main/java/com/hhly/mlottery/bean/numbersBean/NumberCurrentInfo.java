@@ -426,6 +426,6 @@ public class NumberCurrentInfo implements Serializable {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "彩种：" + getName() + "-号码 ：" + getNumbers() + "-奖金池：" + getJackpot();
+		return "彩种：" + getName() + "-号码 ：" + getNumbers();
 	}
 }

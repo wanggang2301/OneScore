@@ -148,8 +148,8 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
 
         sortDef1.add(24);
         sortDef1.add(29);
-        sortDef1.add(28);
-        sortDef1.add(27);
+//        sortDef1.add(28);
+//        sortDef1.add(27);
         sortDef1.add(25);
         sortDef1.add(26);
 
@@ -188,13 +188,15 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
         try {
             for (int i = 0, len = numberSortList.size(); i < len; i++) {
                 String nextTime = numberSortList.get(i).getNextTime();// 获取下一期开奖时间
-                long num = DateUtil.getCurrentTime(nextTime) - Long.parseLong(serverTime);// 获取每个彩种下一期开奖时间
-                if (num > 0) {
-                    if (i == 0) {
-                        updateTime = num;
-                    } else {
-                        if (updateTime > num) {
-                            updateTime = num;// 获取最小开奖时间
+                if (nextTime != null) {
+                    long num = DateUtil.getCurrentTime(nextTime) - Long.parseLong(serverTime);// 获取每个彩种下一期开奖时间
+                    if (num > 0) {
+                        if (i == 0) {
+                            updateTime = num;
+                        } else {
+                            if (updateTime > num) {
+                                updateTime = num;// 获取最小开奖时间
+                            }
                         }
                     }
                 }
@@ -933,6 +935,9 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                     // 大乐透正在开奖中...
                     isDLTOpenNumberStartNF = numTime <= 0;
 
+                } else if("30".equals(numberSortList.get(i).getName()) || "31".equals(numberSortList.get(i).getName()) || "32".equals(numberSortList.get(i).getName())){
+                    // 此三个彩种没有开奖状态
+                    isOtherOpenNumberStartNF = false;
                 } else {// 其它彩种是否正在开奖中
                     long numTime = DateUtil.getCurrentTime(numberSortList.get(i).getNextTime()) - Long.parseLong(serverTime);
                     if (numTime <= 0) {
@@ -1034,65 +1039,65 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
             mHandler.sendEmptyMessage(STARTLOADING);
         }
 
-        if (numberlist != null) {
-            numberlist.clear();
-            numberlist = null;
-        }
-        NumbersOpenBean jsonObject = JSON.parseObject(AppConstants.getTestData(), NumbersOpenBean.class);
-        numberlist = jsonObject.getNumLotteryResults();
-
-        serverTime = null;
-        serverTime = jsonObject.getServerTime();
-
-        L.d("xxx", "请求后台数据。。。");
-        if (num == 1) {
-            // 发送自动刷新和手动刷新加载数据成功消息
-            mHandler.sendEmptyMessage(AUTOREFRESH);
-        } else if (num == 5) {
-            // 界面重新显示时,刷新界面数据
-            mHandler.sendEmptyMessage(RENOTIFY);
-        } else {
-            // 发送加载数据成功消息
-            mHandler.sendEmptyMessage(SUCCESSLOADING);
-        }
+//        if (numberlist != null) {
+//            numberlist.clear();
+//            numberlist = null;
+//        }
+//        NumbersOpenBean jsonObject = JSON.parseObject(AppConstants.getTestData(), NumbersOpenBean.class);
+//        numberlist = jsonObject.getNumLotteryResults();
+//
+//        serverTime = null;
+//        serverTime = jsonObject.getServerTime();
+//
+//        L.d("xxx", "请求后台数据。。。");
+//        if (num == 1) {
+//            // 发送自动刷新和手动刷新加载数据成功消息
+//            mHandler.sendEmptyMessage(AUTOREFRESH);
+//        } else if (num == 5) {
+//            // 界面重新显示时,刷新界面数据
+//            mHandler.sendEmptyMessage(RENOTIFY);
+//        } else {
+//            // 发送加载数据成功消息
+//            mHandler.sendEmptyMessage(SUCCESSLOADING);
+//        }
 
         String url = "http://m.1332255.com:81/mlottery/core/lastLotteryResults.findNewIOSLastLotteryResults.do";
 //        AppConstants.numberHistoryURLs[0]
-//        VolleyContentFast.requestJsonByGet(url, new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
-//            @Override
-//            public synchronized void onResponse(final NumbersOpenBean jsonObject) {
-//                if (null != jsonObject) {// 判断数据是否为空
-//
-//                    if (numberlist != null) {
-//                        numberlist.clear();
-//                        numberlist = null;
-//                    }
-//                    numberlist = jsonObject.getNumLotteryResults();
-//
-//                    serverTime = null;
-//                    serverTime = jsonObject.getServerTime();
-//
-//                    L.d("xxx", "请求后台数据。。。");
-//                    if (num == 1) {
-//                        // 发送自动刷新和手动刷新加载数据成功消息
-//                        mHandler.sendEmptyMessage(AUTOREFRESH);
-//                    } else if (num == 5) {
-//                        // 界面重新显示时,刷新界面数据
-//                        mHandler.sendEmptyMessage(RENOTIFY);
-//                    } else {
-//                        // 发送加载数据成功消息
-//                        mHandler.sendEmptyMessage(SUCCESSLOADING);
-//                    }
-//                } else {
-//                    mHandler.sendEmptyMessage(ERRORLOADING);
-//                }
-//            }
-//        }, new VolleyContentFast.ResponseErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-//                mHandler.sendEmptyMessage(ERRORLOADING);
-//            }
-//        }, NumbersOpenBean.class);
+        VolleyContentFast.requestJsonByGet(url, new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
+            @Override
+            public synchronized void onResponse(final NumbersOpenBean jsonObject) {
+                if (null != jsonObject) {// 判断数据是否为空
+
+                    if (numberlist != null) {
+                        numberlist.clear();
+                        numberlist = null;
+                    }
+                    numberlist = jsonObject.getNumLotteryResults();
+
+                    serverTime = null;
+                    serverTime = jsonObject.getServerTime();
+
+                    L.d("xxx", "请求后台数据。。。");
+                    if (num == 1) {
+                        // 发送自动刷新和手动刷新加载数据成功消息
+                        mHandler.sendEmptyMessage(AUTOREFRESH);
+                    } else if (num == 5) {
+                        // 界面重新显示时,刷新界面数据
+                        mHandler.sendEmptyMessage(RENOTIFY);
+                    } else {
+                        // 发送加载数据成功消息
+                        mHandler.sendEmptyMessage(SUCCESSLOADING);
+                    }
+                } else {
+                    mHandler.sendEmptyMessage(ERRORLOADING);
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                mHandler.sendEmptyMessage(ERRORLOADING);
+            }
+        }, NumbersOpenBean.class);
     }
 
     /**
