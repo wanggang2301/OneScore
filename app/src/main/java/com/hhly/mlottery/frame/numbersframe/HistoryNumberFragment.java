@@ -35,6 +35,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.NumbersInfoBaseActivity;
 import com.hhly.mlottery.bean.numbersBean.NumberCurrentInfo;
 import com.hhly.mlottery.bean.numbersBean.NumbersHistoryBean;
 import com.hhly.mlottery.bean.numbersBean.NumbersOpenBean;
@@ -330,7 +331,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
                 } else {
                     left.setAlpha(1.0f);
                 }
-
+                ((NumbersInfoBaseActivity)mContext).isHistoryPager = true;
                 numberHistorySelect(arg2);// 显示指定期数号码开奖明细
 
             }
@@ -1254,7 +1255,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
             fl_number_history_list.setVisibility(View.VISIBLE);
             fl_numbner_history_info.setVisibility(View.GONE);
 
-            numbersDataShow(1);
+//            numbersDataShow(1);
         }
     }
 

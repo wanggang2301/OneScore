@@ -45,9 +45,11 @@ public class NumbersInfoBaseActivity extends BaseActivity implements
     private static CurrentNumberFragment currentFragment;
     private TextView public_txt_title;
 
-    public static CurrentNumberFragment getCurrentNumberFragment() {
-        return currentFragment;
-    }
+    public boolean isHistoryPager;
+
+//    public static CurrentNumberFragment getCurrentNumberFragment() {
+//        return currentFragment;
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,7 @@ public class NumbersInfoBaseActivity extends BaseActivity implements
     }
 
     private void initFragment() {
+        isHistoryPager = false;
         currentFragment = new CurrentNumberFragment();
         Bundle bundle = new Bundle();
         bundle.putString("mNumberName", mNumberName);
@@ -134,10 +137,23 @@ public class NumbersInfoBaseActivity extends BaseActivity implements
         switch (v.getId()) {
             case R.id.public_img_back:// 关闭
                 MobclickAgent.onEvent(mContext, "Lottery_Info_Exit");
-                finish();
+
+                if(isHistoryPager){// 如果当前为历史详情，则返回到历史列表
+                    historyhFragment.setValue(true);
+                    current.setVisibility(View.GONE);
+                    historyh.setVisibility(View.VISIBLE);
+                    isHistoryPager = false;
+                }else{
+                    if(current.getVisibility() == View.GONE){
+                        current.setVisibility(View.VISIBLE);
+                        historyh.setVisibility(View.GONE);
+                    }else{
+                        finish();
+                    }
+                }
                 break;
             case R.id.public_btn_set:// 历史开奖
-
+                isHistoryPager = true;
                 current.setVisibility(View.GONE);
                 historyh.setVisibility(View.VISIBLE);
 
