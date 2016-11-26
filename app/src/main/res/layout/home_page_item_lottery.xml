@@ -6,10 +6,6 @@
     android:orientation="vertical">
 
     <!--开奖查询条目-->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/number_info_two_bg" />
 
     <RelativeLayout
         android:id="@+id/rl_lottery_item_title"
@@ -20,7 +16,7 @@
 
         <ImageView
             android:layout_width="90dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
@@ -72,7 +68,7 @@
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:id="@+id/rl_lottery_item_sfc"
+            android:id="@+id/rl_lottery_item1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -80,16 +76,18 @@
             android:focusable="true">
 
             <ImageView
+                android:id="@+id/home_lottery_item_icon1"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@mipmap/home_item_lottery_icon_sfc" />
+                tools:src="@mipmap/home_item_lottery_icon_sfc" />
 
             <TextView
+                android:id="@+id/home_lottery_item_name1"
                 style="@style/home_item_lottery_name"
                 android:paddingLeft="5dp"
                 android:paddingTop="5dp"
-                android:text="@string/number_cz_sfc" />
+                tools:text="@string/number_cz_sfc" />
         </RelativeLayout>
 
         <View
@@ -109,7 +107,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/ll_lottery_item_ssq"
+                    android:id="@+id/ll_lottery_item2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -125,18 +123,20 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/home_lottery_item_name2"
                             style="@style/home_item_lottery_name"
-                            android:text="@string/number_cz_ssq"/>
+                            tools:text="@string/number_cz_ssq"/>
 
                         <TextView
+                            android:id="@+id/home_lottery_item_desc2"
                             style="@style/home_item_lottery_name_desc"
                             tools:text="滚动奖池0.15亿" />
                     </LinearLayout>
 
                     <ImageView
-                        android:id="@+id/imageView4"
+                        android:id="@+id/home_lottery_item_icon2"
                         style="@style/home_item_lottery_icon"
-                        android:src="@mipmap/home_item_lottery_icon_ssq" />
+                        tools:src="@mipmap/home_item_lottery_icon_ssq" />
 
                 </LinearLayout>
 
@@ -146,7 +146,7 @@
                     android:background="@color/linecolor" />
 
                 <LinearLayout
-                    android:id="@+id/ll_lottery_item_dlt"
+                    android:id="@+id/ll_lottery_item3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -162,17 +162,20 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/home_lottery_item_name3"
                             style="@style/home_item_lottery_name"
-                            android:text="@string/number_cz_dlt"/>
+                            tools:text="@string/number_cz_dlt"/>
 
                         <TextView
+                            android:id="@+id/home_lottery_item_desc3"
                             style="@style/home_item_lottery_name_desc"
                             tools:text="滚动奖池0.15亿" />
                     </LinearLayout>
 
                     <ImageView
+                        android:id="@+id/home_lottery_item_icon3"
                         style="@style/home_item_lottery_icon"
-                        android:src="@mipmap/home_item_lottery_icon_dlt" />
+                        tools:src="@mipmap/home_item_lottery_icon_dlt" />
 
                 </LinearLayout>
 
@@ -190,7 +193,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/ll_lottery_item_pl3"
+                    android:id="@+id/ll_lottery_item4"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -206,17 +209,20 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/home_lottery_item_name4"
                             style="@style/home_item_lottery_name"
-                            android:text="@string/number_cz_pl3"/>
+                            tools:text="@string/number_cz_pl3"/>
 
                         <TextView
+                            android:id="@+id/home_lottery_item_desc4"
                             style="@style/home_item_lottery_name_desc"
-                            android:text="@string/number_code_desc_pl3"/>
+                            tools:text="@string/number_code_desc_pl3"/>
                     </LinearLayout>
 
                     <ImageView
+                        android:id="@+id/home_lottery_item_icon4"
                         style="@style/home_item_lottery_icon"
-                        android:src="@mipmap/home_item_lottery_icon_pl3" />
+                        tools:src="@mipmap/home_item_lottery_icon_pl3" />
 
                 </LinearLayout>
 
@@ -226,7 +232,7 @@
                     android:background="@color/linecolor" />
 
                 <LinearLayout
-                    android:id="@+id/ll_lottery_item_pl5"
+                    android:id="@+id/ll_lottery_item5"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -242,17 +248,20 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/home_lottery_item_name5"
                             style="@style/home_item_lottery_name"
-                            android:text="@string/number_cz_pl5"/>
+                            tools:text="@string/number_cz_pl5"/>
 
                         <TextView
+                            android:id="@+id/home_lottery_item_desc5"
                             style="@style/home_item_lottery_name_desc"
-                            android:text="@string/number_code_desc_pl5"/>
+                            tools:text="@string/number_code_desc_pl5"/>
                     </LinearLayout>
 
                     <ImageView
+                        android:id="@+id/home_lottery_item_icon5"
                         style="@style/home_item_lottery_icon"
-                        android:src="@mipmap/home_item_lottery_icon_pl5" />
+                        tools:src="@mipmap/home_item_lottery_icon_pl5" />
 
                 </LinearLayout>
 
