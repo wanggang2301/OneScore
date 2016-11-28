@@ -472,7 +472,7 @@
     <string name="number_cz_dlt">大乐透</string>
     <string name="number_cz_sfc">胜负彩</string>
     <string name="number_cz_lcbqc">六场半全场</string>
-    <string name="number_cz_scjq">4场进球</string>
+    <string name="number_cz_scjq">四场进球</string>
     <string name="number_item_name">一键查询开奖结果</string>
     <string name="number_item_name_desc">快速 便捷 准确</string>
     <!-- 描述信息 -->
@@ -586,6 +586,10 @@
     <string name="number_info_boll_blue">蓝球</string>
     <string name="number_info_region_front">前区</string>
     <string name="number_info_region_after">后区</string>
+    <string name="home_number_desc_bonus">滚动奖池</string>
+    <string name="home_number_desc_yi">亿</string>
+    <string name="home_number_desc_wan">万</string>
+
 
     <!-- 彩票 End-->
 

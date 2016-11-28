@@ -460,7 +460,7 @@
     <string name="number_cz_dlt">大樂透</string>
     <string name="number_cz_sfc">勝負彩</string>
     <string name="number_cz_lcbqc">六場半全場</string>
-    <string name="number_cz_scjq">4場進球</string>
+    <string name="number_cz_scjq">四場進球</string>
     <string name="number_item_name">壹鍵查詢開獎結果</string>
     <string name="number_item_name_desc">快速 便捷 準確</string>
     <!-- 描述信息 -->
@@ -574,6 +574,9 @@
     <string name="number_info_boll_blue">藍球</string>
     <string name="number_info_region_front">前區</string>
     <string name="number_info_region_after">後區</string>
+    <string name="home_number_desc_bonus">滾動獎池</string>
+    <string name="home_number_desc_yi">億</string>
+    <string name="home_number_desc_wan">萬</string>
 
     <!-- 彩票End -->
 

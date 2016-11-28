@@ -33,17 +33,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/number_item_name"
                 android:textColor="@color/home_item_lottery_title"
-                android:textSize="14sp"
-                android:text="@string/number_item_name" />
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="3dp"
+                android:text="@string/number_item_name_desc"
                 android:textColor="@color/home_item_lottery_title_des"
-                android:textSize="12sp"
-                android:text="@string/number_item_name_desc"/>
+                android:textSize="12sp" />
 
         </LinearLayout>
 
@@ -77,9 +77,10 @@
 
             <ImageView
                 android:id="@+id/home_lottery_item_icon1"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_centerInParent="true"
+                android:layout_margin="20dp"
                 tools:src="@mipmap/home_item_lottery_icon_sfc" />
 
             <TextView
@@ -125,7 +126,7 @@
                         <TextView
                             android:id="@+id/home_lottery_item_name2"
                             style="@style/home_item_lottery_name"
-                            tools:text="@string/number_cz_ssq"/>
+                            tools:text="@string/number_cz_ssq" />
 
                         <TextView
                             android:id="@+id/home_lottery_item_desc2"
@@ -164,7 +165,7 @@
                         <TextView
                             android:id="@+id/home_lottery_item_name3"
                             style="@style/home_item_lottery_name"
-                            tools:text="@string/number_cz_dlt"/>
+                            tools:text="@string/number_cz_dlt" />
 
                         <TextView
                             android:id="@+id/home_lottery_item_desc3"
@@ -211,12 +212,12 @@
                         <TextView
                             android:id="@+id/home_lottery_item_name4"
                             style="@style/home_item_lottery_name"
-                            tools:text="@string/number_cz_pl3"/>
+                            tools:text="@string/number_cz_pl3" />
 
                         <TextView
                             android:id="@+id/home_lottery_item_desc4"
                             style="@style/home_item_lottery_name_desc"
-                            tools:text="@string/number_code_desc_pl3"/>
+                            tools:text="@string/number_code_desc_pl3" />
                     </LinearLayout>
 
                     <ImageView
@@ -250,12 +251,12 @@
                         <TextView
                             android:id="@+id/home_lottery_item_name5"
                             style="@style/home_item_lottery_name"
-                            tools:text="@string/number_cz_pl5"/>
+                            tools:text="@string/number_cz_pl5" />
 
                         <TextView
                             android:id="@+id/home_lottery_item_desc5"
                             style="@style/home_item_lottery_name_desc"
-                            tools:text="@string/number_code_desc_pl5"/>
+                            tools:text="@string/number_code_desc_pl5" />
                     </LinearLayout>
 
                     <ImageView

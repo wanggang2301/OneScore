@@ -836,9 +836,9 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
             case R.id.iv_account:
                 goToUserOptionsActivity();
                 break;
-            case R.id.rl_lottery_item_title:
-                UiUtils.toast(this,"一健查询开奖信息");
-                break;
+//            case R.id.rl_lottery_item_title:
+//                UiUtils.toast(this,"一健查询开奖信息");
+//                break;
             default:
                 break;
         }

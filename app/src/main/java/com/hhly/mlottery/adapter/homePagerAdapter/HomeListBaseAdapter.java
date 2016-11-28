@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.gif.GifDrawableLoadProvider;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
@@ -38,9 +39,11 @@ import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.HomeNumbersSplit;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.NumberDataUtils;
 import com.hhly.mlottery.widget.WrapContentHeightViewPager;
 import com.umeng.analytics.MobclickAgent;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -258,7 +261,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 });
                                 break;
                             case 7:// 1.2.0版新增彩票入口条目
-                                // TODO
                                 rl_lottery_item_title.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
@@ -270,57 +272,28 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                     lottery_item_list.get(m).setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
-                                                HomeBodysLottery lottery = lotteryList.get(index);
-                                                switch (lottery.getJumpType()) {
-                                                    case 0:// 无
-                                                        break;
-                                                    case 1:// 页面
-                                                    {
-                                                        Intent intent = new Intent(mContext, WebActivity.class);
-                                                        intent.putExtra("key", lottery.getJumpAddr());
-                                                        mContext.startActivity(intent);
-                                                        break;
-                                                    }
-                                                    case 2:// 内页
-                                                    {
-                                                        Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
-                                                        intent.putExtra("numberName", lottery.getName());
-                                                        mContext.startActivity(intent);
-                                                        break;
-                                                    }
+                                            HomeBodysLottery lottery = lotteryList.get(index);
+                                            switch (lottery.getJumpType()) {
+                                                case 0:// 无
+                                                    break;
+                                                case 1:// 页面
+                                                {
+                                                    Intent intent = new Intent(mContext, WebActivity.class);
+                                                    intent.putExtra("key", lottery.getJumpAddr());
+                                                    mContext.startActivity(intent);
+                                                    break;
                                                 }
+                                                case 2:// 内页
+                                                {
+                                                    Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
+                                                    intent.putExtra("numberName", lottery.getName());
+                                                    mContext.startActivity(intent);
+                                                    break;
+                                                }
+                                            }
                                         }
                                     });
                                 }
-
-//                                for (View view : lottery_item_list) {
-//                                    view.setOnClickListener(new View.OnClickListener() {
-//                                        @Override
-//                                        public void onClick(View view) {
-//                                            for (int k = 0, lens = lotteryList.size(); k < lens; k++) {
-//                                                HomeBodysLottery lottery = lotteryList.get(k);
-//                                                switch (lottery.getJumpType()) {
-//                                                    case 0:// 无
-//                                                        break;
-//                                                    case 1:// 页面
-//                                                    {
-//                                                        Intent intent = new Intent(mContext, WebActivity.class);
-//                                                        intent.putExtra("key", lottery.getJumpAddr());
-//                                                        mContext.startActivity(intent);
-//                                                        break;
-//                                                    }
-//                                                    case 2:// 内页
-//                                                    {
-//                                                        Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
-//                                                        intent.putExtra("numberName", lottery.getName());
-//                                                        mContext.startActivity(intent);
-//                                                        break;
-//                                                    }
-//                                                }
-//                                            }
-//                                        }
-//                                    });
-//                                }
                                 break;
                         }
                     }
@@ -830,19 +803,53 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         }
                         break;
                         case 7:// 1.2.0版新彩票条目入口
-                            // TODO
                             // 初始化控件
                             lotteryItemView = getLotteryItemView();
 
                             // 设置控件数据
                             for (int k = 0, lens = bodys.get(j).getLottery().size(); k < lens; k++) {
                                 HomeBodysLottery mLottery = bodys.get(j).getLottery().get(k);
-                                lottery_item_name_list.get(k).setText(mLottery.getName());// 需要匹配中文彩名
-                                ImageLoader.load(mContext, mLottery.getPicUrl()).into(lottery_item_icon_list.get(k));
-                                System.out.println("xxxxx picUrl :  " + mLottery.getPicUrl());
-                                System.out.println("xxxxx item_icon :  " + lottery_item_icon_list.get(k));
+                                NumberDataUtils.setTextTitle(mContext, lottery_item_name_list.get(k), mLottery.getName());
+                                ImageLoader.loadFitCenter(mContext, mLottery.getPicUrl(), R.mipmap.home_number_item_icon_def).into(lottery_item_icon_list.get(k));
                                 if (k != 0) {
-                                    lottery_item_desc_list.get(k).setText("每天12：00开奖");
+                                    switch (mLottery.getName()) {
+                                        case "24":// 双色球
+                                        case "29":// 大乐透
+                                            // 显示奖金池 用亿做单位保留两们小数
+                                            String bonus = mContext.getResources().getString(R.string.number_info_default);
+                                            if (mLottery.getJackpot() != null) {
+                                                if (mLottery.getJackpot().length() >= 9) {
+                                                    Double str = Double.parseDouble(mLottery.getJackpot()) / 100000000;
+                                                    DecimalFormat df = new DecimalFormat("#.00");
+                                                    bonus = df.format(str);
+                                                    lottery_item_desc_list.get(k).setText(mContext.getResources().getString(R.string.home_number_desc_bonus) + bonus + mContext.getResources().getString(R.string.home_number_desc_yi));
+                                                } else {
+                                                    Double str = Double.parseDouble(mLottery.getJackpot()) / 10000;
+                                                    DecimalFormat df = new DecimalFormat("#.00");
+                                                    bonus = df.format(str);
+                                                    lottery_item_desc_list.get(k).setText(mContext.getResources().getString(R.string.home_number_desc_bonus) + bonus + mContext.getResources().getString(R.string.home_number_desc_wan));
+                                                }
+                                            }
+                                            break;
+                                        case "6":// 七星彩
+                                        case "28":// 七乐彩
+                                        case "30":
+                                        case "31":
+                                        case "32":
+                                            // 显示奖金池 用万做单位保留两们小数
+                                            String bonus1 = mContext.getResources().getString(R.string.number_info_default);
+                                            if (mLottery.getJackpot() != null) {
+                                                Double str = Double.parseDouble(mLottery.getJackpot()) / 10000;
+                                                DecimalFormat df = new DecimalFormat("#.00");
+                                                bonus1 = df.format(str);
+                                            }
+                                            lottery_item_desc_list.get(k).setText(mContext.getResources().getString(R.string.home_number_desc_bonus) + bonus1 + mContext.getResources().getString(R.string.home_number_desc_wan));
+                                            break;
+                                        default:
+                                            // 其它没有奖金池 显示描述信息
+                                            NumberDataUtils.numberAddDesc(mContext, lottery_item_desc_list.get(k), mLottery.getName());
+                                            break;
+                                    }
                                 }
                             }
                             break;
@@ -1331,7 +1338,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         case 7:
                             mViewHolderOther.tv_title.setVisibility(View.GONE);
                             mViewHolderOther.ll_content.addView(lotteryItemView);
-                            // TODO
                             break;
                     }
                 }
