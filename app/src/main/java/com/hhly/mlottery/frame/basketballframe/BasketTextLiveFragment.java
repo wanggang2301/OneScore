@@ -271,18 +271,24 @@ public class BasketTextLiveFragment extends Fragment {
 
     Timer timer = new Timer();
 
+    TimerTask timerTask;
+
 
     private void startTimePolling() {
 
         if (isStartTimer) {
-            TimerTask timerTask = new TimerTask() {
+
+            if (timerTask != null) {
+                timerTask.cancel();
+            }
+
+            timerTask = new TimerTask() {
                 @Override
                 public void run() {
                     isStartTimer = false;
                     loadData();
                 }
             };
-
 
             timer.schedule(timerTask, 10000, 15000);
         }
@@ -291,6 +297,11 @@ public class BasketTextLiveFragment extends Fragment {
 
     private void closeTimePolling() {
         if (isFirstPolling) {
+
+            if (timerTask != null) {
+                timerTask.cancel();
+            }
+
             if (timer != null) {
                 timer.cancel();
                 timer.purge();
@@ -323,8 +334,6 @@ public class BasketTextLiveFragment extends Fragment {
                         startTimePolling();  //轮询赛程
                         isFirstPolling = true;
                     } else {
-
-
                         closeTimePolling();
                         EventBus.getDefault().post(new BsaketDeatilMatchPreEventBus("1"));
 
@@ -404,6 +413,10 @@ public class BasketTextLiveFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (timerTask != null) {
+            timerTask.cancel();
+        }
+
         if (timer != null) {
             timer.cancel();
             timer.purge();
