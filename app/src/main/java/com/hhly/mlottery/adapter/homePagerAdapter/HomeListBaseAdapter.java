@@ -818,18 +818,18 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                         case "24":// 双色球
                                         case "29":// 大乐透
                                             // 显示奖金池 用亿做单位保留两们小数
-                                            String bonus = mContext.getResources().getString(R.string.number_info_default);
+                                            String bonus = "";
                                             if (mLottery.getJackpot() != null) {
                                                 if (mLottery.getJackpot().length() >= 9) {
                                                     Double str = Double.parseDouble(mLottery.getJackpot()) / 100000000;
                                                     DecimalFormat df = new DecimalFormat("#.00");
                                                     bonus = df.format(str);
-                                                    lottery_item_desc_list.get(k).setText(mContext.getResources().getString(R.string.home_number_desc_bonus) + bonus + mContext.getResources().getString(R.string.home_number_desc_yi));
+                                                    lottery_item_desc_list.get(k).setText(TextUtils.isEmpty(bonus) ? mContext.getResources().getString(R.string.home_number_desc_bonus) : mContext.getResources().getString(R.string.home_number_desc_bonus) + bonus + mContext.getResources().getString(R.string.home_number_desc_yi));
                                                 } else {
                                                     Double str = Double.parseDouble(mLottery.getJackpot()) / 10000;
                                                     DecimalFormat df = new DecimalFormat("#.00");
                                                     bonus = df.format(str);
-                                                    lottery_item_desc_list.get(k).setText(mContext.getResources().getString(R.string.home_number_desc_bonus) + bonus + mContext.getResources().getString(R.string.home_number_desc_wan));
+                                                    lottery_item_desc_list.get(k).setText(TextUtils.isEmpty(bonus) ? mContext.getResources().getString(R.string.home_number_desc_bonus) : mContext.getResources().getString(R.string.home_number_desc_bonus) + bonus + mContext.getResources().getString(R.string.home_number_desc_wan));
                                                 }
                                             }
                                             break;
@@ -845,7 +845,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                                 DecimalFormat df = new DecimalFormat("#.00");
                                                 bonus1 = df.format(str);
                                             }
-                                            lottery_item_desc_list.get(k).setText(mContext.getResources().getString(R.string.home_number_desc_bonus) + bonus1 + mContext.getResources().getString(R.string.home_number_desc_wan));
+                                            lottery_item_desc_list.get(k).setText(TextUtils.isEmpty(bonus1) ? mContext.getResources().getString(R.string.home_number_desc_bonus) : mContext.getResources().getString(R.string.home_number_desc_bonus) + bonus1 + mContext.getResources().getString(R.string.home_number_desc_wan));
                                             break;
                                         default:
                                             // 其它没有奖金池 显示描述信息

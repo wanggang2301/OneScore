@@ -74,9 +74,28 @@
                     android:id="@+id/lottery_lcbqc_home_name1"
                     style="@style/lottery_info_vs_left" />
 
-                <TextView
-                    android:id="@+id/lottery_lcbqc_vs1"
-                    style="@style/lottery_info_vs_center" />
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.8">
+
+                    <TextView
+                        android:id="@+id/lottery_lcbqc_full_vs1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/number_info_default"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/lottery_lcbqc_half_vs1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/lottery_lcbqc_full_vs1"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="8sp" />
+
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/lottery_lcbqc_guest_name1"
@@ -89,9 +108,28 @@
                     android:id="@+id/lottery_lcbqc_home_name2"
                     style="@style/lottery_info_vs_left" />
 
-                <TextView
-                    android:id="@+id/lottery_lcbqc_vs2"
-                    style="@style/lottery_info_vs_center" />
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.8">
+
+                    <TextView
+                        android:id="@+id/lottery_lcbqc_full_vs2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/number_info_default"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/lottery_lcbqc_half_vs2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/lottery_lcbqc_full_vs2"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="8sp" />
+
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/lottery_lcbqc_guest_name2"
@@ -104,9 +142,28 @@
                     android:id="@+id/lottery_lcbqc_home_name3"
                     style="@style/lottery_info_vs_left" />
 
-                <TextView
-                    android:id="@+id/lottery_lcbqc_vs3"
-                    style="@style/lottery_info_vs_center" />
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.8">
+
+                    <TextView
+                        android:id="@+id/lottery_lcbqc_full_vs3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/number_info_default"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/lottery_lcbqc_half_vs3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/lottery_lcbqc_full_vs3"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="8sp" />
+
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/lottery_lcbqc_guest_name3"
@@ -119,9 +176,28 @@
                     android:id="@+id/lottery_lcbqc_home_name4"
                     style="@style/lottery_info_vs_left" />
 
-                <TextView
-                    android:id="@+id/lottery_lcbqc_vs4"
-                    style="@style/lottery_info_vs_center" />
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.8">
+
+                    <TextView
+                        android:id="@+id/lottery_lcbqc_full_vs4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/number_info_default"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/lottery_lcbqc_half_vs4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/lottery_lcbqc_full_vs4"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="8sp" />
+
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/lottery_lcbqc_guest_name4"
@@ -134,9 +210,28 @@
                     android:id="@+id/lottery_lcbqc_home_name5"
                     style="@style/lottery_info_vs_left" />
 
-                <TextView
-                    android:id="@+id/lottery_lcbqc_vs5"
-                    style="@style/lottery_info_vs_center" />
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.8">
+
+                    <TextView
+                        android:id="@+id/lottery_lcbqc_full_vs5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/number_info_default"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/lottery_lcbqc_half_vs5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/lottery_lcbqc_full_vs5"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="8sp" />
+
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/lottery_lcbqc_guest_name5"
@@ -149,9 +244,28 @@
                     android:id="@+id/lottery_lcbqc_home_name6"
                     style="@style/lottery_info_vs_left" />
 
-                <TextView
-                    android:id="@+id/lottery_lcbqc_vs6"
-                    style="@style/lottery_info_vs_center" />
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.8">
+
+                    <TextView
+                        android:id="@+id/lottery_lcbqc_full_vs6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/number_info_default"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/lottery_lcbqc_half_vs6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/lottery_lcbqc_full_vs6"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="8sp" />
+
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/lottery_lcbqc_guest_name6"
@@ -199,7 +313,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="210dp"
+            android:layout_height="wrap_content"
             android:layout_weight="2.5"
             android:gravity="center"
             android:orientation="vertical">
@@ -210,8 +324,7 @@
 
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
+                style="@style/lottery_info_content_right"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -262,8 +375,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
+                style="@style/lottery_info_content_right"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -314,8 +426,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
+                style="@style/lottery_info_content_right"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -366,8 +477,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
+                style="@style/lottery_info_content_right"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -418,8 +528,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
+                style="@style/lottery_info_content_right"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -470,8 +579,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
+                style="@style/lottery_info_content_right"
                 android:orientation="vertical">
 
                 <LinearLayout

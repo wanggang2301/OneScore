@@ -465,14 +465,14 @@
     <string name="number_cz_sd_syxw">山东十一选五</string>
     <string name="number_cz_tj_ssc">天津时时彩</string>
     <string name="number_cz_ssq">双色球</string>
-    <string name="number_cz_pl3">排列3</string>
-    <string name="number_cz_pl5">排列5</string>
+    <string name="number_cz_pl3">排列三</string>
+    <string name="number_cz_pl5">排列五</string>
     <string name="number_cz_f3d">福彩3D</string>
     <string name="number_cz_qlc">七乐彩</string>
     <string name="number_cz_dlt">大乐透</string>
     <string name="number_cz_sfc">胜负彩</string>
     <string name="number_cz_lcbqc">六场半全场</string>
-    <string name="number_cz_scjq">四场进球</string>
+    <string name="number_cz_scjq">4场进球</string>
     <string name="number_item_name">一键查询开奖结果</string>
     <string name="number_item_name_desc">快速 便捷 准确</string>
     <!-- 描述信息 -->
@@ -540,7 +540,7 @@
     <string name="number_info_count">中奖注数(注)</string>
     <string name="number_info_bonus">单注奖金(元)</string>
     <string name="number_info_condition">中奖条件</string>
-    <string name="number_info_full_6">6半全全对</string>
+    <string name="number_info_full_6">全对</string>
     <string name="number_info_full_8">8队全对</string>
     <string name="number_info_full_9">9场全对</string>
     <string name="number_info_full_14">14场全对</string>
@@ -555,7 +555,7 @@
     <string name="number_info_comprehensive">综合</string>
     <string name="number_info_value_sum">和值</string>
     <string name="number_info_name_sfssc">胜负十四场</string>
-    <string name="number_info_name_rxjc">任选九场</string>
+    <string name="number_info_name_rxjc">任选9场</string>
     <string name="number_info_basic">基本</string>
     <string name="number_info_basic_add">追加</string>
 

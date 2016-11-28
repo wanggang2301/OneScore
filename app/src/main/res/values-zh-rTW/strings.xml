@@ -453,14 +453,14 @@
     <string name="number_cz_sd_syxw">山東十一選五</string>
     <string name="number_cz_tj_ssc">天津時時彩</string>
     <string name="number_cz_ssq">雙色球</string>
-    <string name="number_cz_pl3">排列3</string>
-    <string name="number_cz_pl5">排列5</string>
+    <string name="number_cz_pl3">排列三</string>
+    <string name="number_cz_pl5">排列五</string>
     <string name="number_cz_f3d">福彩3D</string>
     <string name="number_cz_qlc">七樂彩</string>
     <string name="number_cz_dlt">大樂透</string>
     <string name="number_cz_sfc">勝負彩</string>
     <string name="number_cz_lcbqc">六場半全場</string>
-    <string name="number_cz_scjq">四場進球</string>
+    <string name="number_cz_scjq">4場進球</string>
     <string name="number_item_name">壹鍵查詢開獎結果</string>
     <string name="number_item_name_desc">快速 便捷 準確</string>
     <!-- 描述信息 -->
@@ -528,7 +528,7 @@
     <string name="number_info_count">中獎注數(注)</string>
     <string name="number_info_bonus">單注獎金(元)</string>
     <string name="number_info_condition">中獎條件</string>
-    <string name="number_info_full_6">6半全全對</string>
+    <string name="number_info_full_6">全對</string>
     <string name="number_info_full_8">8隊全對</string>
     <string name="number_info_full_9">9場全對</string>
     <string name="number_info_full_14">14場全對</string>
@@ -543,7 +543,7 @@
     <string name="number_info_comprehensive">綜合</string>
     <string name="number_info_value_sum">和值</string>
     <string name="number_info_name_sfssc">勝負十四場</string>
-    <string name="number_info_name_rxjc">任選九場</string>
+    <string name="number_info_name_rxjc">任選9場</string>
     <string name="number_info_basic">基本</string>
     <string name="number_info_basic_add">追加</string>
 

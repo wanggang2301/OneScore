@@ -1554,12 +1554,18 @@ public class NumberDataUtils {
         TextView lottery_lcbqc_home_name4 = (TextView) mView.findViewById(R.id.lottery_lcbqc_home_name4);
         TextView lottery_lcbqc_home_name5 = (TextView) mView.findViewById(R.id.lottery_lcbqc_home_name5);
         TextView lottery_lcbqc_home_name6 = (TextView) mView.findViewById(R.id.lottery_lcbqc_home_name6);
-        TextView lottery_lcbqc_vs1 = (TextView) mView.findViewById(R.id.lottery_lcbqc_vs1);
-        TextView lottery_lcbqc_vs2 = (TextView) mView.findViewById(R.id.lottery_lcbqc_vs2);
-        TextView lottery_lcbqc_vs3 = (TextView) mView.findViewById(R.id.lottery_lcbqc_vs3);
-        TextView lottery_lcbqc_vs4 = (TextView) mView.findViewById(R.id.lottery_lcbqc_vs4);
-        TextView lottery_lcbqc_vs5 = (TextView) mView.findViewById(R.id.lottery_lcbqc_vs5);
-        TextView lottery_lcbqc_vs6 = (TextView) mView.findViewById(R.id.lottery_lcbqc_vs6);
+        TextView lottery_lcbqc_half_vs1 = (TextView) mView.findViewById(R.id.lottery_lcbqc_half_vs1);
+        TextView lottery_lcbqc_half_vs2 = (TextView) mView.findViewById(R.id.lottery_lcbqc_half_vs2);
+        TextView lottery_lcbqc_half_vs3 = (TextView) mView.findViewById(R.id.lottery_lcbqc_half_vs3);
+        TextView lottery_lcbqc_half_vs4 = (TextView) mView.findViewById(R.id.lottery_lcbqc_half_vs4);
+        TextView lottery_lcbqc_half_vs5 = (TextView) mView.findViewById(R.id.lottery_lcbqc_half_vs5);
+        TextView lottery_lcbqc_half_vs6 = (TextView) mView.findViewById(R.id.lottery_lcbqc_half_vs6);
+        TextView lottery_lcbqc_full_vs1 = (TextView) mView.findViewById(R.id.lottery_lcbqc_full_vs1);
+        TextView lottery_lcbqc_full_vs2 = (TextView) mView.findViewById(R.id.lottery_lcbqc_full_vs2);
+        TextView lottery_lcbqc_full_vs3 = (TextView) mView.findViewById(R.id.lottery_lcbqc_full_vs3);
+        TextView lottery_lcbqc_full_vs4 = (TextView) mView.findViewById(R.id.lottery_lcbqc_full_vs4);
+        TextView lottery_lcbqc_full_vs5 = (TextView) mView.findViewById(R.id.lottery_lcbqc_full_vs5);
+        TextView lottery_lcbqc_full_vs6 = (TextView) mView.findViewById(R.id.lottery_lcbqc_full_vs6);
         TextView lottery_lcbqc_guest_name1 = (TextView) mView.findViewById(R.id.lottery_lcbqc_guest_name1);
         TextView lottery_lcbqc_guest_name2 = (TextView) mView.findViewById(R.id.lottery_lcbqc_guest_name2);
         TextView lottery_lcbqc_guest_name3 = (TextView) mView.findViewById(R.id.lottery_lcbqc_guest_name3);
@@ -1596,13 +1602,20 @@ public class NumberDataUtils {
         lcbqc_home_list.add(lottery_lcbqc_home_name4);
         lcbqc_home_list.add(lottery_lcbqc_home_name5);
         lcbqc_home_list.add(lottery_lcbqc_home_name6);
-        List<TextView> lcbqc_vs_list = new ArrayList<>();
-        lcbqc_vs_list.add(lottery_lcbqc_vs1);
-        lcbqc_vs_list.add(lottery_lcbqc_vs2);
-        lcbqc_vs_list.add(lottery_lcbqc_vs3);
-        lcbqc_vs_list.add(lottery_lcbqc_vs4);
-        lcbqc_vs_list.add(lottery_lcbqc_vs5);
-        lcbqc_vs_list.add(lottery_lcbqc_vs6);
+        List<TextView> lcbqc_half_vs_list = new ArrayList<>();
+        lcbqc_half_vs_list.add(lottery_lcbqc_half_vs1);
+        lcbqc_half_vs_list.add(lottery_lcbqc_half_vs2);
+        lcbqc_half_vs_list.add(lottery_lcbqc_half_vs3);
+        lcbqc_half_vs_list.add(lottery_lcbqc_half_vs4);
+        lcbqc_half_vs_list.add(lottery_lcbqc_half_vs5);
+        lcbqc_half_vs_list.add(lottery_lcbqc_half_vs6);
+        List<TextView> lcbqc_full_vs_list = new ArrayList<>();
+        lcbqc_full_vs_list.add(lottery_lcbqc_full_vs1);
+        lcbqc_full_vs_list.add(lottery_lcbqc_full_vs2);
+        lcbqc_full_vs_list.add(lottery_lcbqc_full_vs3);
+        lcbqc_full_vs_list.add(lottery_lcbqc_full_vs4);
+        lcbqc_full_vs_list.add(lottery_lcbqc_full_vs5);
+        lcbqc_full_vs_list.add(lottery_lcbqc_full_vs6);
         List<TextView> lcbqc_guest_list = new ArrayList<>();
         lcbqc_guest_list.add(lottery_lcbqc_guest_name1);
         lcbqc_guest_list.add(lottery_lcbqc_guest_name2);
@@ -1638,19 +1651,23 @@ public class NumberDataUtils {
             // 判断是否开赛时间
             try {
                 if(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime() == null){
-                    lcbqc_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
-                    lcbqc_vs_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
+                    lcbqc_full_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
+                    lcbqc_full_vs_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
                 }else if (Long.parseLong(mServerTime) > DateUtil.getCurrentTime(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime())) {
-                    lcbqc_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.number_red));
-                    lcbqc_vs_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore());
+                    lcbqc_half_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.number_red));
+                    lcbqc_half_vs_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getHalfScore() == null ? "(--)" : "(" + mNumberInfo.getFootballLotteryIssueResultData().get(i).getHalfScore() + ")");
+                    lcbqc_full_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.number_red));
+                    lcbqc_full_vs_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore());
                 } else {
-                    lcbqc_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
-                    lcbqc_vs_list.get(i).setText("VS");
+                    lcbqc_half_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
+                    lcbqc_full_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
+                    lcbqc_half_vs_list.get(i).setText("");
+                    lcbqc_full_vs_list.get(i).setText("VS");
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
-                lcbqc_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
-                lcbqc_vs_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
+                lcbqc_full_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
+                lcbqc_full_vs_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
             }
             lcbqc_home_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getHomeName() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getHomeName());
             lcbqc_guest_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getGuestName() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getGuestName());
@@ -1677,6 +1694,10 @@ public class NumberDataUtils {
         TextView lottery_scjq_vs2 = (TextView) mView.findViewById(R.id.lottery_scjq_vs2);
         TextView lottery_scjq_vs3 = (TextView) mView.findViewById(R.id.lottery_scjq_vs3);
         TextView lottery_scjq_vs4 = (TextView) mView.findViewById(R.id.lottery_scjq_vs4);
+        TextView lottery_scjq_result1 = (TextView) mView.findViewById(R.id.lottery_scjq_result1);
+        TextView lottery_scjq_result2 = (TextView) mView.findViewById(R.id.lottery_scjq_result2);
+        TextView lottery_scjq_result3 = (TextView) mView.findViewById(R.id.lottery_scjq_result3);
+        TextView lottery_scjq_result4 = (TextView) mView.findViewById(R.id.lottery_scjq_result4);
         TextView lottery_scjq_guest_name1 = (TextView) mView.findViewById(R.id.lottery_scjq_guest_name1);
         TextView lottery_scjq_guest_name2 = (TextView) mView.findViewById(R.id.lottery_scjq_guest_name2);
         TextView lottery_scjq_guest_name3 = (TextView) mView.findViewById(R.id.lottery_scjq_guest_name3);
@@ -1710,6 +1731,11 @@ public class NumberDataUtils {
         scjq_time_list.add(lottery_scjq_time2);
         scjq_time_list.add(lottery_scjq_time3);
         scjq_time_list.add(lottery_scjq_time4);
+        List<TextView> scjq_result_list = new ArrayList<>();
+        scjq_result_list.add(lottery_scjq_result1);
+        scjq_result_list.add(lottery_scjq_result2);
+        scjq_result_list.add(lottery_scjq_result3);
+        scjq_result_list.add(lottery_scjq_result4);
 
         lottery_scjq_issue.setText(context.getResources().getString(R.string.number_code_di) + (mNumberInfo.getIssue() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getIssue()) + context.getResources().getString(R.string.number_code_qi));
         // 设置对阵和开赛时间
@@ -1734,6 +1760,7 @@ public class NumberDataUtils {
             scjq_home_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getHomeName() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getHomeName());
             scjq_guest_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getGuestName() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getGuestName());
             scjq_time_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime() == null ? context.getResources().getString(R.string.number_info_default) : DateUtil.getLotteryInfoDate(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime(), "MM-dd HH:mm"));
+            scjq_result_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullDrawcode() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullDrawcode());
         }
         lottery_scjq_sales_volume.setText(mNumberInfo.getFootballFirlottery().getSales() == null ? context.getResources().getString(R.string.number_info_default) : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getFootballFirlottery().getSales())));
         lottery_scjq_bonus_sum.setText(mNumberInfo.getFootballFirlottery().getJackpot() == null ? context.getResources().getString(R.string.number_info_default) : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getFootballFirlottery().getJackpot())));
