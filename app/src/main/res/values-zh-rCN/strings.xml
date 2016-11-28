@@ -861,6 +861,7 @@
     <string name="foot_loadingmore">正在加载更多...</string>
     <string name="foot_nomoredata">没有更多数据了</string>
     <string name="foot_neterror">网络异常，请重试</string>
+    <string name="foot_neterror_post_photo">网络异常,修改失败,请重试</string>
     <string name="foot_datadetail">查看详细数据</string>
     <string name="foot_detailtitle">资讯详情</string>
     <string name="foot_erroraddress">无效地址</string>

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/home_item_bg"
+    >
 
     <include layout="@layout/layout_header" />
 
@@ -37,8 +39,20 @@
             android:layout_centerVertical="true"
             android:paddingRight="15dp"
             android:src="@mipmap/unconection_next"/>
+
     </RelativeLayout>
          <!--分割线-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/channel_title_front"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/linecolor"/>
+    </LinearLayout>
          <LinearLayout
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
@@ -52,25 +66,28 @@
                  android:background="@color/home_item_bg"/>
          </LinearLayout>
 
-<!--
-    <View
+ <!--   <View
 
         android:visibility="gone"
         android:id="@+id/view_top"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_marginTop="30dp"
-        android:background="@color/linecolor"/>
--->
+        android:background="@color/linecolor"/>-->
+
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/tv_logout"
-        style="@style/login_textview_logout"
+        android:gravity="center"
+        android:layout_width="150dp"
         android:layout_gravity="center"
         android:textSize="@dimen/home_pager_user_title"
         android:text="@string/logout"
-        android:textColor="@color/indianred"/>
+        android:textColor="@color/res_pl_color"
+        android:background="@color/white"
+        android:layout_height="45dp" />
+
+
 
     <View
         android:visibility="gone"
