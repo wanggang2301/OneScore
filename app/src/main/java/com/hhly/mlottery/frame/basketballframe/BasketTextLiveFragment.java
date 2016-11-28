@@ -269,7 +269,7 @@ public class BasketTextLiveFragment extends Fragment {
     private boolean isStartTimer = true;
     private boolean isFirstPolling = false;
 
-    Timer timer = new Timer();
+    Timer timer;
 
     TimerTask timerTask;
 
@@ -277,36 +277,38 @@ public class BasketTextLiveFragment extends Fragment {
     private void startTimePolling() {
 
         if (isStartTimer) {
-
-            if (timerTask != null) {
-                timerTask.cancel();
-            }
-
+            timer = new Timer();
             timerTask = new TimerTask() {
                 @Override
                 public void run() {
-                    isStartTimer = false;
+                    isStartTimer = false;   //socket已经启动
+                    L.d("zxcvbn", "开启轮训");
+
                     loadData();
                 }
             };
 
             timer.schedule(timerTask, 10000, 15000);
+
+            isFirstPolling = true;  //socket启动没有文字直播不发送eventbus post
         }
     }
 
 
     private void closeTimePolling() {
-        if (isFirstPolling) {
-
-            if (timerTask != null) {
-                timerTask.cancel();
-            }
-
-            if (timer != null) {
-                timer.cancel();
-                timer.purge();
-            }
+        if (timerTask != null) {
+            timerTask.cancel();
         }
+
+        if (timer != null) {
+            timer.cancel();
+            timer.purge();
+        }
+        L.d("zxcvbn", "下拉刷新关闭轮训重新启动");
+        isFirstPolling = false;
+        isStartTimer = true;  //下拉刷新从新开启轮训
+
+
     }
 
     /**
@@ -332,7 +334,6 @@ public class BasketTextLiveFragment extends Fragment {
                             EventBus.getDefault().post(new BsaketDeatilMatchPreEventBus("0"));
                         }
                         startTimePolling();  //轮询赛程
-                        isFirstPolling = true;
                     } else {
                         closeTimePolling();
                         EventBus.getDefault().post(new BsaketDeatilMatchPreEventBus("1"));
@@ -406,21 +407,20 @@ public class BasketTextLiveFragment extends Fragment {
      */
     public void onEventMainThread(BasketDetailLiveTextRefresh basketDetailLiveTextRefreshEventBus) {
         isRequestFinish = true;
-        isFirstPolling = false;
+
+        closeTimePolling();
+
+
         loadData();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (timerTask != null) {
-            timerTask.cancel();
-        }
+        closeTimePolling();
 
-        if (timer != null) {
-            timer.cancel();
-            timer.purge();
-        }
+        L.d("zxcvbn", "onDestroyView关闭轮训");
+
     }
 
     @Override
