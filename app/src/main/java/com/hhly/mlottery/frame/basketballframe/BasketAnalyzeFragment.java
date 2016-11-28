@@ -156,20 +156,6 @@ public class BasketAnalyzeFragment extends Fragment  {
     };
 
     private void initView() {
-        TextView mLishi = (TextView) mView.findViewById(R.id.lishijiaofeng);
-        mLishi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent mIntent = new Intent(getActivity(), SnookerListActivity.class);
-//                Bundle bundleset = new Bundle();
-//                bundleset.putInt("currentfragment", mBasketballType);
-//                mIntent.putExtras(bundleset);
-                startActivity(mIntent);
-                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
-            }
-        });
-
-
         mProgressBar = (ProgressBar) mView.findViewById(R.id.basket_progressbar);
         mBasketProgressbarGuest = (TextView) mView.findViewById(R.id.basket_progressbar_guest);
 
