@@ -1321,5 +1321,6 @@
     <string name="basket_text_live">文字直播</string>
     <string name="basket_team_statictics">球队统计</string>
     <string name="basket_players_statictics">球员统计</string>
+    <string name="basket_no_text_live">暂无直播数据</string>
 
 </resources>
