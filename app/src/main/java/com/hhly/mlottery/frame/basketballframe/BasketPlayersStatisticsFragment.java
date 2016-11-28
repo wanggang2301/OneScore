@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.MyApp;
@@ -74,7 +75,7 @@ public class BasketPlayersStatisticsFragment extends Fragment implements View.On
      * 无数据的界面
      */
     @BindView(R.id.odds_nodata_container)
-     LinearLayout mNodataLayout;
+    RelativeLayout mNodataLayout;
     /**
      * 点击刷新
      */
@@ -102,6 +103,7 @@ public class BasketPlayersStatisticsFragment extends Fragment implements View.On
     private final static int VIEW_STATUS_LOADING = 1;
     private final static int VIEW_STATUS_SUCCESS = 2;
     private final static int VIEW_STATUS_NET_ERROR = 3;
+    private final static int VIEW_STATUS_NO_DATA=4;
 
     /**队名数据*/
     List<String> mNames=new ArrayList<>();
@@ -151,7 +153,11 @@ public class BasketPlayersStatisticsFragment extends Fragment implements View.On
                     mNodataLayout.setVisibility(View.GONE);
                     mExceptionLayout.setVisibility(View.VISIBLE);
                     mDataLayout.setVisibility(View.GONE);
-                    // 展示错误界面
+                    break;
+                    // 无数据界面
+                case VIEW_STATUS_NO_DATA:
+                    mNodataLayout.setVisibility(View.VISIBLE);
+                    mDataLayout.setVisibility(View.GONE);
                     break;
             }
         }
@@ -235,9 +241,7 @@ public class BasketPlayersStatisticsFragment extends Fragment implements View.On
 
         list.addAll(mData.getData().getGuestPlayerStats());
         if(list.size()==0){
-            mNodataLayout.setVisibility(View.VISIBLE);
-        }else{
-            mNodataLayout.setVisibility(View.GONE);
+            handler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
         }
         mAdapter.notifyDataSetChanged();
         mNames.clear();
