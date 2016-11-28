@@ -42,6 +42,9 @@ import de.greenrobot.event.EventBus;
  */
 public class BasketTextLiveFragment extends Fragment {
 
+    private final static long PERIOD = 60000;
+    private final static long DELAY = 10000;
+
     private RecyclerView mRecyclerView;
 
     private View mView;
@@ -136,7 +139,6 @@ public class BasketTextLiveFragment extends Fragment {
             mBasketBallTextLiveAdapter.setPullUpLoading(new BasketBallTextLiveAdapter.PullUpLoading() {
                 @Override
                 public void onPullUpLoading() {
-                    L.d("zxcvbn", "下拉");
                     pullUpLoadMore();
                 }
             });
@@ -172,18 +174,10 @@ public class BasketTextLiveFragment extends Fragment {
      */
     public void pullUpLoadMore() {
 
-        L.d("zxcvbn", "isRequestFinish====" + isRequestFinish);
-
-
         if (isRequestFinish) {//上一个请求完成才执行这个 不然一直往上拉，会连续发多个请求
             //请求下一页数据
 
-            L.d("zxcvbn", "pullUpLoadMore");
-
-
             if (!mLoadMore.getText().equals(getResources().getString(R.string.foot_nomoredata))) {//没有更多数据的时候，上拉不再发起请求
-
-                L.d("zxcvbn", "getRequestTextLiveData");
                 getRequestTextLiveData();
             }
         }
@@ -288,7 +282,7 @@ public class BasketTextLiveFragment extends Fragment {
                 }
             };
 
-            timer.schedule(timerTask, 10000, 15000);
+            timer.schedule(timerTask, DELAY, PERIOD);
 
             isFirstPolling = true;  //socket启动没有文字直播不发送eventbus post
         }
@@ -304,11 +298,8 @@ public class BasketTextLiveFragment extends Fragment {
             timer.cancel();
             timer.purge();
         }
-        L.d("zxcvbn", "下拉刷新关闭轮训重新启动");
         isFirstPolling = false;
         isStartTimer = true;  //下拉刷新从新开启轮训
-
-
     }
 
     /**

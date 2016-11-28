@@ -188,7 +188,6 @@ public class BasketLiveFragment extends Fragment {
         }
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -198,7 +197,6 @@ public class BasketLiveFragment extends Fragment {
     @OnClick(R.id.network_exception_reload_btn)
     public void onClick() {
         flPb.setVisibility(View.VISIBLE);
-
         EventBus.getDefault().post(new BasketDetailLiveTextRefresh("network_exception_reload_btn"));
     }
 }

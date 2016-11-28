@@ -769,9 +769,6 @@ public class BaseURLs {
     public final static String URL_FOOTBALL_DATABASE_STATISTIC_DETAILS = URL_API_HOST + "androidLeagueData.findAndroidStatics.do"; // "http://192.168.33.32:8080/mlottery/core/androidLeagueData.findAndroidStatics.do";
 
 
-
-
-
     //足球赛事提点
     public final static String URL_LEAGUESTATISTICSTODAY = URL_API_HOST + "toDayMatchStatistics.findTodayMatchStatistics.do";
 
@@ -917,11 +914,11 @@ public class BaseURLs {
     public final static String BASKET_FIND_MATCH = URL_API_HOST + "androidBasketballMatch.findConcernVsThirdIds.do";
 
     //用户注销
-    public final static String EXIT_PUSH_ONLINE=URL_API_HOST+"pushSetting.exitUpdateOnlile.do";
+    public final static String EXIT_PUSH_ONLINE = URL_API_HOST + "pushSetting.exitUpdateOnlile.do";
     //上传性别的公用接口
-    public final static String UPDATEUSERINFO=URL_API_HOST+"androidUserCenter.updateUserInfo.do";
+    public final static String UPDATEUSERINFO = URL_API_HOST + "androidUserCenter.updateUserInfo.do";
     //明星头像
-    public final static String  FINDHEADICONS=URL_API_HOST+"systemSettings.findHeadIcons.do";
+    public final static String FINDHEADICONS = URL_API_HOST + "systemSettings.findHeadIcons.do";
 
     //篮球内页文字直播
     public final static String BASKET_DETAIL_TEXTLIVE = URL_API_HOST + "basketballDetail.findTextLive.do";  //basketballDetail  改接口
