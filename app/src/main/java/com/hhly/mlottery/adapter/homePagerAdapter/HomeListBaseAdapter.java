@@ -272,23 +272,25 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                     lottery_item_list.get(m).setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
-                                            HomeBodysLottery lottery = lotteryList.get(index);
-                                            switch (lottery.getJumpType()) {
-                                                case 0:// 无
-                                                    break;
-                                                case 1:// 页面
-                                                {
-                                                    Intent intent = new Intent(mContext, WebActivity.class);
-                                                    intent.putExtra("key", lottery.getJumpAddr());
-                                                    mContext.startActivity(intent);
-                                                    break;
-                                                }
-                                                case 2:// 内页
-                                                {
-                                                    Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
-                                                    intent.putExtra("numberName", lottery.getName());
-                                                    mContext.startActivity(intent);
-                                                    break;
+                                            if (index < lotteryList.size()) {
+                                                HomeBodysLottery lottery = lotteryList.get(index);
+                                                switch (lottery.getJumpType()) {
+                                                    case 0:// 无
+                                                        break;
+                                                    case 1:// 页面
+                                                    {
+                                                        Intent intent = new Intent(mContext, WebActivity.class);
+                                                        intent.putExtra("key", lottery.getJumpAddr());
+                                                        mContext.startActivity(intent);
+                                                        break;
+                                                    }
+                                                    case 2:// 内页
+                                                    {
+                                                        Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
+                                                        intent.putExtra("numberName", lottery.getName());
+                                                        mContext.startActivity(intent);
+                                                        break;
+                                                    }
                                                 }
                                             }
                                         }

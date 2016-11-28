@@ -390,7 +390,8 @@ public class BaseURLs {
     //视频直播
     public final static String URL_FOOTBALL_DETAIL_URL_MATCHVIDEO_DATA = URL_API_HOST + URL_MATCHVIDEO_DATA;
     // 二期改版首页接口
-    private final static String URL_HOME_PAGER_DATA = "mainPage.findAndroidMainRsts.do";
+//    private final static String URL_HOME_PAGER_DATA = "mainPage.findAndroidMainRsts.do";
+    private final static String URL_HOME_PAGER_DATA = "mainPage.findAndroidLotteryMainRsts.do";// 1.2.0版本首页新接口
 
 
     //足球内页改版滚球赔率接口和详情接口
