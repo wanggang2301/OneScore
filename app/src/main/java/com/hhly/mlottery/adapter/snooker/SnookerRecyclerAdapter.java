@@ -82,9 +82,9 @@ public class SnookerRecyclerAdapter extends BaseQuickAdapter<SnookerMatchesBean>
         if (mData == null) {
             return;
         }
-        
+
         SnookerMatchesBean DetailsData = mData.get(position);
-        
+
         switch(getItemViewType(position)){
             case 0:
                 //日期
@@ -113,8 +113,25 @@ public class SnookerRecyclerAdapter extends BaseQuickAdapter<SnookerMatchesBean>
                  0 暂停
                  1 未开始
                  2 结束
+                 两种情况  ① MatchScore为null时，即 没有比分数据时，比赛状态去外层Status，
+                          ② MatchScore不为为null时，即 有比分数据(进行中 或 完场)，比赛状态取MatchScore里面的 Status状态
+                        （ps：由于推送时，更新的是MatchScore里面的状态，未开赛==>开赛MatchScore为null，会出现状态无法更新情况）
+
                  */
-                switch(DetailsData.getStatus()){
+                String currentStatus = "";
+                if (DetailsData.getMatchScore() == null){
+                    /**
+                      情况①
+                     */
+                    currentStatus = DetailsData.getStatus();
+                }else{
+                    /**
+                      情况②
+                     */
+                    currentStatus = DetailsData.getMatchScore().getStatus();
+                }
+
+                switch(currentStatus){
                     case "0":
 //                        viewHolderList.mSnookerStatus.setText("暂停");
                         viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_pause));
@@ -127,6 +144,9 @@ public class SnookerRecyclerAdapter extends BaseQuickAdapter<SnookerMatchesBean>
                         break;
                     case "3":
                         viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_have_ing));
+                        break;
+                    case "4":
+                        viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_resting));
                         break;
                     default:
                         viewHolderList.mSnookerStatus.setText("待定 :" + DetailsData.getStatus()); // TODO********
@@ -236,6 +256,160 @@ public class SnookerRecyclerAdapter extends BaseQuickAdapter<SnookerMatchesBean>
 
     @Override
     protected void convert(BaseViewHolder baseViewHolder, SnookerMatchesBean snookerMatchesBean) {
+//        if (mData == null) {
+//            return;
+//        }
+//
+//        SnookerMatchesBean DetailsData = mData.get(baseViewHolder.getPosition());
+//
+//        switch(getItemViewType(baseViewHolder.getPosition())){
+//            case 0:
+//                //日期
+//                ViewHolderDate viewHolderDate = (ViewHolderDate) baseViewHolder;
+////                viewHolderDate.mSnookerDate.setText("2016-11-16 星期三" + position);
+//                viewHolderDate.mSnookerDate.setText(DetailsData.getItemDate());
+//                break;
+//            case 1:
+//                //赛事
+//                ViewHolderTitle viewHolderTitle = (ViewHolderTitle)baseViewHolder;
+////                viewHolderTitle.mSnookerTitle.setText("2016年世界斯洛克英格兰公开赛 " + position);
+//                viewHolderTitle.mSnookerTitle.setText(DetailsData.getItemLeaguesName());
+//                break;
+//            case 2:
+//                //比赛
+//                ViewHolderList viewHolderList = (ViewHolderList) baseViewHolder;
+//
+//                viewHolderList.mSnookerRound.setText(DetailsData.getSubLgName());
+//                viewHolderList.mSnookerTime.setText(DetailsData.getTime());
+//                viewHolderList.mSnookerNameLeft.setText(DetailsData.getHomeTeam());
+//                viewHolderList.mSnookerNameRight.setText(DetailsData.getGuestTeam());
+//                viewHolderList.mSnookerInning.setText("(" + DetailsData.getMatchStyle() + ")");
+//                /**
+//                 * 比赛状态
+//                 3 进行中
+//                 0 暂停
+//                 1 未开始
+//                 2 结束
+//                 */
+//                switch(DetailsData.getStatus()){
+//                    case "0":
+////                        viewHolderList.mSnookerStatus.setText("暂停");
+//                        viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_pause));
+//                        break;
+//                    case "1":
+//                        viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_no_start));
+//                        break;
+//                    case "2":
+//                        viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_over_game));
+//                        break;
+//                    case "3":
+//                        viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_have_ing));
+//                        break;
+//                    default:
+//                        viewHolderList.mSnookerStatus.setText("待定 :" + DetailsData.getStatus()); // TODO********
+//                        break;
+//
+//                }
+//
+//                if (DetailsData.getMatchScore() == null) {
+//                    viewHolderList.mSnookerScoreLeft.setText("--");
+//                    viewHolderList.mSnookerScoreRight.setText("--");
+//                }else{
+//                    viewHolderList.mSnookerScoreLeft.setText(DetailsData.getMatchScore().getPlayerOnewin());
+//                    viewHolderList.mSnookerScoreRight.setText(DetailsData.getMatchScore().getPlayerTwowin());
+//                }
+//
+//                /**
+//                 *  设置赔率初始化值
+//                 */
+//                boolean alet = PreferenceUtil.getBoolean(MyConstants.SNOOKER_ALET, true); //亚盘 \ 标准盘
+//                boolean eur = PreferenceUtil.getBoolean(MyConstants.SNOOKER_EURO, false);//欧赔 \ 独赢
+//                boolean asize = PreferenceUtil.getBoolean(MyConstants.SNOOKER_ASIZE, false); //大小盘
+//                boolean singleTwins = PreferenceUtil.getBoolean(MyConstants.SNOOKER_SINGLETWIN , false);//单双
+//                boolean noshow = PreferenceUtil.getBoolean(MyConstants.SNOOKER_NOTSHOW, false);//不显示
+//
+//                SnookerMatchOddsBean mOdds = DetailsData.getMatchOdds();
+//                if (mOdds == null) {
+//                    setOddsNull(viewHolderList.mSnookerOddsLeft , viewHolderList.mSnookerOddsMiddle , viewHolderList.mSnookerOddsRight);
+//                }else{
+//                    /**
+//                     * 亚盘 -- 浩博
+//                     */
+//                    if (alet) {
+//                        if (mOdds.getStandard() == null) {
+//                            setOddsNull(viewHolderList.mSnookerOddsLeft , viewHolderList.mSnookerOddsMiddle , viewHolderList.mSnookerOddsRight);
+//                        }else if(mOdds.getStandard().getHb() == null){
+//                            setOddsNull(viewHolderList.mSnookerOddsLeft , viewHolderList.mSnookerOddsMiddle , viewHolderList.mSnookerOddsRight);
+//                        }else{
+//                            SnookerMatchOddsBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean aletOdds = mOdds.getStandard().getHb();
+//                            viewHolderList.mSnookerOddsLeft.setText(aletOdds.getLeftOdds());
+//                            viewHolderList.mSnookerOddsMiddle.setText(aletOdds.getHandicapValue());
+//                            viewHolderList.mSnookerOddsRight.setText(aletOdds.getRightOdds());
+//                        }
+//                    }
+//                    /**
+//                     * 欧赔 -- 浩博
+//                     */
+//                    if (eur) {
+//                        if (mOdds.getOnlywin() == null) {
+//                            setOddsNull(viewHolderList.mSnookerOddsLeft , viewHolderList.mSnookerOddsMiddle , viewHolderList.mSnookerOddsRight);
+//                        }else if(mOdds.getOnlywin().getHb() == null){
+//                            setOddsNull(viewHolderList.mSnookerOddsLeft , viewHolderList.mSnookerOddsMiddle , viewHolderList.mSnookerOddsRight);
+//                        }else{
+//                            SnookerMatchOddsBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean eurOdds = mOdds.getOnlywin().getHb();
+//                            viewHolderList.mSnookerOddsLeft.setText(eurOdds.getLeftOdds());
+//                            viewHolderList.mSnookerOddsMiddle.setText(mContext.getString(R.string.snooker_state_victory_defeat));
+//                            viewHolderList.mSnookerOddsRight.setText(eurOdds.getRightOdds());
+//                        }
+////                        SnookerMatchOddsBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean eurOdds = mOdds.getOnlywin().getHb();
+////                        viewHolderList.mSnookerOddsLeft.setText("a" + position);
+////                        viewHolderList.mSnookerOddsMiddle.setText("欧赔" + position);
+////                        viewHolderList.mSnookerOddsRight.setText("c" + position);
+//                    }
+//                    /**
+//                     * 大小盘 -- 浩博
+//                     */
+//                    if (asize) {
+//                        if (mOdds.getBigsmall() == null) {
+//                            setOddsNull(viewHolderList.mSnookerOddsLeft , viewHolderList.mSnookerOddsMiddle , viewHolderList.mSnookerOddsRight);
+//                        }else if(mOdds.getBigsmall().getHb() == null){
+//                            setOddsNull(viewHolderList.mSnookerOddsLeft , viewHolderList.mSnookerOddsMiddle , viewHolderList.mSnookerOddsRight);
+//                        }else{
+//                            SnookerMatchOddsBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean asizeOdds = mOdds.getBigsmall().getHb();
+//                            viewHolderList.mSnookerOddsLeft.setText(asizeOdds.getLeftOdds());
+//                            viewHolderList.mSnookerOddsMiddle.setText(mContext.getString(R.string.snooker_state_zong) + asizeOdds.getHandicapValue());
+//                            viewHolderList.mSnookerOddsRight.setText(asizeOdds.getRightOdds());
+//                        }
+//                    }
+//                    /**
+//                     * 单双 -- 浩博--> 利记
+//                     */
+//                    if (singleTwins) {
+//                        if (mOdds.getOnetwo() == null) {
+//                            setOddsNull(viewHolderList.mSnookerOddsLeft , viewHolderList.mSnookerOddsMiddle , viewHolderList.mSnookerOddsRight);
+//                        }else if(mOdds.getOnetwo().getHb() == null){
+//                            if (mOdds.getOnetwo().getLj() == null) {
+//                                setOddsNull(viewHolderList.mSnookerOddsLeft , viewHolderList.mSnookerOddsMiddle , viewHolderList.mSnookerOddsRight);
+//                            }else{
+//                                SnookerMatchOddsBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean onetwoLj = mOdds.getOnetwo().getLj();
+//                                viewHolderList.mSnookerOddsLeft.setText(onetwoLj.getLeftOdds());
+//                                viewHolderList.mSnookerOddsMiddle.setText(mContext.getString(R.string.snooker_state_single_double));
+//                                viewHolderList.mSnookerOddsRight.setText(onetwoLj.getRightOdds());
+//                            }
+//                        }else{
+//                            SnookerMatchOddsBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean singleTwinsOdds = mOdds.getOnetwo().getHb();
+//                            viewHolderList.mSnookerOddsLeft.setText(singleTwinsOdds.getLeftOdds());
+//                            viewHolderList.mSnookerOddsMiddle.setText(singleTwinsOdds.getHandicapValue());
+//                            viewHolderList.mSnookerOddsRight.setText(singleTwinsOdds.getRightOdds());
+//                        }
+//                    }
+//                    if (noshow) {
+//                        setOddsNull(viewHolderList.mSnookerOddsLeft , viewHolderList.mSnookerOddsMiddle , viewHolderList.mSnookerOddsRight);
+//                    }
+//                }
+//                break;
+//        }
+
     }
 
     /**

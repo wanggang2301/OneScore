@@ -63,7 +63,7 @@ public class SnookerMatchOddsBean {
         this.onlywin = onlywin;
     }
 
-    public class SnookerMatchOddsDetailsBean{
+    public static class SnookerMatchOddsDetailsBean{
 
 //        lj 利记
 //        hb 浩博
@@ -109,7 +109,7 @@ public class SnookerMatchOddsBean {
             this.hb = hb;
         }
 
-        public class SnookerMatchOddsDataBean{
+        public static class SnookerMatchOddsDataBean{
 
 //            "mainDisk": 0,
 //            "handicapValue": "2.5",

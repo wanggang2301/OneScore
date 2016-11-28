@@ -1264,6 +1264,7 @@
     <string name="foreign_pic">已保存图片到SD卡文件夹下</string>
 
     <!--斯洛克-->
+    <string name="snooker_title">斯洛克</string>
     <string name="snooker_setting_title">斯洛克设置</string>
     <string name="snooker_setting_alet">亚盘</string>
     <string name="snooker_setting_eur">欧赔</string>
@@ -1275,6 +1276,7 @@
     <string name="snooker_state_no_start">未开赛</string>
     <string name="snooker_state_over_game">结束</string>
     <string name="snooker_state_have_ing">进行中</string>
+    <string name="snooker_state_resting">休息中</string>
     <string name="snooker_state_victory_defeat">胜负</string>
     <string name="snooker_state_zong">总</string>
     <string name="snooker_state_single_double">单双</string>

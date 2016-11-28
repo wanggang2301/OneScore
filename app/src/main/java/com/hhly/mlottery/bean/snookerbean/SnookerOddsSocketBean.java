@@ -40,7 +40,7 @@ public class SnookerOddsSocketBean {
         this.type = type;
     }
 
-    public class SnookerOddsDataBean{
+    public static class SnookerOddsDataBean{
 //        dataType	1
 //        date	2016-11-15
 //        delps

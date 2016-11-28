@@ -18,12 +18,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
+            <com.hhly.mlottery.view.LoadMoreRecyclerView
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            </android.support.v7.widget.RecyclerView>
+            </com.hhly.mlottery.view.LoadMoreRecyclerView>
 
         </com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
 

@@ -332,6 +332,7 @@
         <activity
             android:name=".activity.SnookerSettingActivity"
             android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

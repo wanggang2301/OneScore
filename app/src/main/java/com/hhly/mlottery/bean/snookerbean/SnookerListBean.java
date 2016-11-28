@@ -26,7 +26,7 @@ public class SnookerListBean {
      */
 //    result: 200,
 //    data: {}
-    private int result;
+    private String result;
 
     public SnookerDataBean getData() {
         return data;
@@ -36,11 +36,11 @@ public class SnookerListBean {
         this.data = data;
     }
 
-    public int getResult() {
+    public String getResult() {
         return result;
     }
 
-    public void setResult(int result) {
+    public void setResult(String result) {
         this.result = result;
     }
 

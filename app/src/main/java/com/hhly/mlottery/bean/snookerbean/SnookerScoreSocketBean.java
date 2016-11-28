@@ -1,5 +1,7 @@
 package com.hhly.mlottery.bean.snookerbean;
 
+import com.hhly.mlottery.config.StaticValues;
+
 /**
  * Created by yixq on 2016/11/23.
  * mail：yixq@13322.com
@@ -39,7 +41,7 @@ public class SnookerScoreSocketBean {
         this.data = data;
     }
 
-    public class SnookerScoreDataBean{
+    public static class SnookerScoreDataBean{
 
 //                "ball": "2",
 //                "leagueId": "1253587",
