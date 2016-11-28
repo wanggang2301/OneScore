@@ -961,7 +961,7 @@
 
     <style name="home_item_lottery_icon">
         <item name="android:layout_width">30dp</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">30dp</item>
         <item name="android:layout_margin">5dp</item>
     </style>
     <!--首页彩票入口条目样式 end -->

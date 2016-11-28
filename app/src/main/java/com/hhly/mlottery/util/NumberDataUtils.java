@@ -1963,10 +1963,10 @@ public class NumberDataUtils {
             lottery_dlt_later_fw2.setText(context.getResources().getString(R.string.number_info_default));
         } else {
 
-            lottery_dlt_count1.setText(mNumberInfo.getFifthCount() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFifthCount())));
-            lottery_dlt_bonus1.setText(mNumberInfo.getFifthBonus() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFifthBonus())));
-            lottery_dlt_add_count1.setText(mNumberInfo.getFifthAddCount() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFifthAddCount())));
-            lottery_dlt_add_bonus1.setText(mNumberInfo.getFifthAddBonus() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFifthAddBonus())));
+            lottery_dlt_count1.setText(mNumberInfo.getFifthCount() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFirstCount())));
+            lottery_dlt_bonus1.setText(mNumberInfo.getFifthBonus() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFirstBonus())));
+            lottery_dlt_add_count1.setText(mNumberInfo.getFifthAddCount() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFirstAddCount())));
+            lottery_dlt_add_bonus1.setText(mNumberInfo.getFifthAddBonus() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFirstAddBonus())));
             lottery_dlt_count2.setText(mNumberInfo.getSecondCount() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getSecondCount())));
             lottery_dlt_bonus2.setText(mNumberInfo.getSecondBonus() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getSecondBonus())));
             lottery_dlt_add_count2.setText(mNumberInfo.getSecondAddCount() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getSecondAddCount())));
@@ -3140,6 +3140,86 @@ public class NumberDataUtils {
                 break;
             default:
                 tv.setText("-");
+                break;
+        }
+    }
+
+    /**
+     * 添加彩种开奖描述信息
+     */
+    public static void numberAddDesc(Context mContext, TextView tv, String numberName) {
+        switch (numberName) {
+            case "1":// 六合彩
+                tv.setVisibility(View.GONE);
+                break;
+            case "6":// 七星彩
+                tv.setText(mContext.getResources().getString(R.string.number_code_desc_qxc));
+                break;
+            case "15":// 北京赛车
+                tv.setText(mContext.getResources().getString(R.string.number_code_desc_bj_sc));
+                break;
+            case "8":// 广东快乐10分
+                tv.setText(mContext.getResources().getString(R.string.number_code_desc_gd_klsf));
+                break;
+            case "11":// 湖南快乐10分
+                tv.setText(mContext.getResources().getString(R.string.number_code_desc_hn_klsf));
+                break;
+            case "19":// 幸运农场
+                tv.setText(mContext.getResources().getString(R.string.number_code_desc_xylc));
+                break;
+            case "2":// 重庆时时彩
+                tv.setText(mContext.getResources().getString(R.string.number_code_desc_cq_ssc));
+                break;
+            case "4":// 新疆时时彩
+                tv.setText(mContext.getResources().getString(R.string.number_code_desc_xj_ssc));
+                break;
+            case "5":// 云南时时彩
+                tv.setText(mContext.getResources().getString(R.string.number_code_desc_yn_ssc));
+                break;
+            case "23":// 天津时时彩
+                tv.setText(mContext.getResources().getString(R.string.number_code_desc_tj_ssc));
+                break;
+            case "3":// 江西时时彩
+                tv.setText(mContext.getResources().getString(R.string.number_code_desc_jx_ssc));
+                break;
+            case "7":// 广东11选5
+                tv.setText(mContext.getResources().getString(R.string.number_code_desc_gd_syxw));
+                break;
+            case "20":// 江苏11选5
+                tv.setText(mContext.getResources().getString(R.string.number_code_desc_js_syxw));
+                break;
+            case "22":// 山东11选5
+                tv.setText(mContext.getResources().getString(R.string.number_code_desc_sd_syxw));
+                break;
+            case "10":// 安徽快三
+                tv.setText(mContext.getResources().getString(R.string.number_code_desc_ah_ks));
+                break;
+            case "16":// 江苏快三
+                tv.setText(mContext.getResources().getString(R.string.number_code_desc_js_ks));
+                break;
+            case "18":// 广西快三
+                tv.setText(mContext.getResources().getString(R.string.number_code_desc_gx_ks));
+                break;
+            case "24":// 双色球
+                tv.setText(mContext.getResources().getString(R.string.number_code_desc_ssq));
+                break;
+            case "25":// 排列3
+                tv.setText(mContext.getResources().getString(R.string.number_code_desc_pl3));
+                break;
+            case "26":// 排列5
+                tv.setText(mContext.getResources().getString(R.string.number_code_desc_pl5));
+                break;
+            case "27":// 福彩3D
+                tv.setText(mContext.getResources().getString(R.string.number_code_desc_f3d));
+                break;
+            case "28":// 七乐彩
+                tv.setText(mContext.getResources().getString(R.string.number_code_desc_qlc));
+                break;
+            case "29":// 大乐透
+                tv.setText(mContext.getResources().getString(R.string.number_code_desc_dlt));
+                break;
+            default:
+                tv.setText(" ");
                 break;
         }
     }

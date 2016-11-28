@@ -1134,6 +1134,13 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                 holder.ll_item.setBackgroundColor(Color.WHITE);
             }
 
+            // 显示开奖描述
+            if("1".equals(mNumberInfo.getName())){
+                holder.tv_number_desc.setVisibility(View.GONE);
+            }else{
+                holder.tv_number_desc.setVisibility(View.VISIBLE);
+            }
+
 //            holder.tv_numbers_name.setText(AppConstants.numberNames[Integer.parseInt(mNumberInfo.getName()) - 1]);
             NumberDataUtils.setTextTitle(mContext, holder.tv_numbers_name, mNumberInfo.getName());// 设置彩票名称
             holder.tv_numbers_issue.setText(mContext.getResources().getString(R.string.number_code_di) + mNumberInfo.getIssue() + mContext.getResources().getString(R.string.number_code_qi));
@@ -1150,7 +1157,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
             NumberDataUtils.numberAddInfo(mContext, mNumberInfo, holder.ll_numbers_container, numbers, zodiacs, isHKOpenNumberStartNF, isQXCOpenNumberStartNF, isSSQOpenNumberStartNF, isQLCOpenNumberStartNF, isDLTOpenNumberStartNF, isNextNumber, 0, null);
 
             /** ----------------------------设置显示开奖描述信息-------------------------- */
-            numberAddDesc(holder, mNumberInfo);
+            NumberDataUtils.numberAddDesc(mContext,holder.tv_number_desc,mNumberInfo.getName());
 
             /** ----------------------------显示隐藏倒时计Item------------------------- */
             isCountdown(holder, mNumberInfo);
@@ -1414,114 +1421,6 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                 numbersDataShow(0);
                 break;
             default:
-                break;
-        }
-    }
-
-    /**
-     * 添加彩种开奖描述信息
-     *
-     * @param holder
-     * @param mNumberInfo
-     */
-    private void numberAddDesc(ViewHolder holder, NumberCurrentInfo mNumberInfo) {
-        int numNo = Integer.parseInt(mNumberInfo.getName());// 获取采种名称
-
-        switch (numNo) {
-            case 1:// 六合彩
-                holder.tv_number_desc.setVisibility(View.GONE);
-                break;
-            case 6:// 七星彩
-                holder.tv_number_desc.setVisibility(View.VISIBLE);
-                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_qxc));
-                break;
-            case 15:// 北京赛车
-                holder.tv_number_desc.setVisibility(View.VISIBLE);
-                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_bj_sc));
-                break;
-            case 8:// 广东快乐10分
-                holder.tv_number_desc.setVisibility(View.VISIBLE);
-                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_gd_klsf));
-                break;
-            case 11:// 湖南快乐10分
-                holder.tv_number_desc.setVisibility(View.VISIBLE);
-                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_hn_klsf));
-                break;
-            case 19:// 幸运农场
-                holder.tv_number_desc.setVisibility(View.VISIBLE);
-                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_xylc));
-                break;
-            case 2:// 重庆时时彩
-                holder.tv_number_desc.setVisibility(View.VISIBLE);
-                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_cq_ssc));
-                break;
-            case 4:// 新疆时时彩
-                holder.tv_number_desc.setVisibility(View.VISIBLE);
-                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_xj_ssc));
-                break;
-            case 5:// 云南时时彩
-                holder.tv_number_desc.setVisibility(View.VISIBLE);
-                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_yn_ssc));
-                break;
-            case 23:// 天津时时彩
-                holder.tv_number_desc.setVisibility(View.VISIBLE);
-                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_tj_ssc));
-                break;
-            case 3:// 江西时时彩
-                holder.tv_number_desc.setVisibility(View.VISIBLE);
-                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_jx_ssc));
-                break;
-            case 7:// 广东11选5
-                holder.tv_number_desc.setVisibility(View.VISIBLE);
-                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_gd_syxw));
-                break;
-            case 20:// 江苏11选5
-                holder.tv_number_desc.setVisibility(View.VISIBLE);
-                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_js_syxw));
-                break;
-            case 22:// 山东11选5
-                holder.tv_number_desc.setVisibility(View.VISIBLE);
-                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_sd_syxw));
-                break;
-            case 10:// 安徽快三
-                holder.tv_number_desc.setVisibility(View.VISIBLE);
-                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_ah_ks));
-                break;
-            case 16:// 江苏快三
-                holder.tv_number_desc.setVisibility(View.VISIBLE);
-                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_js_ks));
-                break;
-            case 18:// 广西快三
-                holder.tv_number_desc.setVisibility(View.VISIBLE);
-                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_gx_ks));
-                break;
-            case 24:// 双色球
-                holder.tv_number_desc.setVisibility(View.VISIBLE);
-                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_ssq));
-                break;
-            case 25:// 排列3
-                holder.tv_number_desc.setVisibility(View.VISIBLE);
-                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_pl3));
-                break;
-            case 26:// 排列5
-                holder.tv_number_desc.setVisibility(View.VISIBLE);
-                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_pl5));
-                break;
-            case 27:// 福彩3D
-                holder.tv_number_desc.setVisibility(View.VISIBLE);
-                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_f3d));
-                break;
-            case 28:// 七乐彩
-                holder.tv_number_desc.setVisibility(View.VISIBLE);
-                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_qlc));
-                break;
-            case 29:// 大乐透
-                holder.tv_number_desc.setVisibility(View.VISIBLE);
-                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_dlt));
-                break;
-            default:
-                holder.tv_number_desc.setVisibility(View.VISIBLE);
-                holder.tv_number_desc.setText(" ");
                 break;
         }
     }
