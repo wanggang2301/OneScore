@@ -953,6 +953,7 @@
     <string name="foot_loadingmore">正在加載更多...</string>
     <string name="foot_nomoredata">沒有更多數據了</string>
     <string name="foot_neterror">網絡異常，請重試</string>
+    <string name="foot_neterror_post_photo">網絡异常，修改失敗，請重試</string>
     <string name="foot_datadetail">查看詳細數據</string>
     <string name="foot_detailtitle">資訊詳情</string>
     <string name="foot_erroraddress">無效地址</string>

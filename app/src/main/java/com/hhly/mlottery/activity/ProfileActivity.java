@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.ChoseHeadStartBean;
@@ -176,7 +177,11 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
         mHead_portrait.setOnClickListener(this);
         findViewById(R.id.modify_avatar).setOnClickListener(this);
        if (CommonUtils.isLogin()){
-            ImageLoader.load(ProfileActivity.this,AppConstants.register.getData().getUser().getHeadIcon()).into(mHead_portrait);
+            //ImageLoader.load(ProfileActivity.this,AppConstants.register.getData().getUser().getHeadIcon(),R.mipmap.center_head).into(mHead_portrait);
+           Glide.with(ProfileActivity.this)
+                   .load(AppConstants.register.getData().getUser().getHeadIcon())
+                   .error(R.mipmap.center_head)
+                   .into(mHead_portrait);
         }
         //universalImageLoader.displayImage(AppConstants.register.getData().getUser().getHeadIcon(), mHead_portrait, options);
 
@@ -331,7 +336,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                         L.e(TAG, "上传性别失败");
-                      //UiUtils.toast(ProfileActivity.this, R.string.foot_neterror);
+                     UiUtils.toast(ProfileActivity.this, R.string.foot_neterror_post_photo);
                         finish();
                     }
                 }, Register.class);

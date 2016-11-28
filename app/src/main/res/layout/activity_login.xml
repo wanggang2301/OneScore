@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             android:padding="10dp"
             android:src="@mipmap/back"/>
 
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:src="@mipmap/logo"/>
 
     </LinearLayout>
