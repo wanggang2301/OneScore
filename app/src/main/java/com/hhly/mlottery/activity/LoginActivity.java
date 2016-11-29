@@ -552,6 +552,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 if (register.getResult() == AccountResultCode.SUCC) {
                     UiUtils.toast(MyApp.getInstance(), R.string.login_succ);
                     CommonUtils.saveRegisterInfo(register);
+                    EventBus.getDefault().post(register);
                     setResult(RESULT_OK);
                     //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
                     sendUserInfoToServer(register);
@@ -583,63 +584,70 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private void login() {
         String userName = et_username.getText().toString();
         String passWord = et_password.getText().toString();
+        Log.i("dasdasdas","userName==="+userName);
+         if(userName.isEmpty()) {
+             UiUtils.toast(LoginActivity.this, R.string.account_cannot_be_empty);
+             return;
+         }else{
+             if (UiUtils.checkPassword_JustLength(this, passWord)) {
+                 // 登录
+                 progressBar.show();
+                 final String url = BaseURLs.URL_LOGIN;
+                 Map<String, String> param = new HashMap<>();
+                 param.put("account", userName);
+                 param.put("password", MD5Util.getMD5(passWord));
 
-            if (UiUtils.checkPassword_JustLength(this, passWord)) {
-                // 登录
-                progressBar.show();
-                final String url = BaseURLs.URL_LOGIN;
-                Map<String, String> param = new HashMap<>();
-                param.put("account", userName);
-                param.put("password", MD5Util.getMD5(passWord));
+                 Log.d(TAG, AppConstants.deviceToken);
+                 param.put("deviceToken", AppConstants.deviceToken);
 
-                Log.d(TAG, AppConstants.deviceToken);
-                param.put("deviceToken", AppConstants.deviceToken);
+                 //防止用户恶意注册后先添加的字段，versioncode和versionname;
+                 int versionCode = CommonUtils.getVersionCode();
+                 param.put("versionCode", String.valueOf(versionCode));
 
-                //防止用户恶意注册后先添加的字段，versioncode和versionname;
-                int versionCode = CommonUtils.getVersionCode();
-                param.put("versionCode", String.valueOf(versionCode));
+                 Log.d(TAG, versionCode + "");
 
-                Log.d(TAG, versionCode + "");
+                 String versionName = CommonUtils.getVersionName();
+                 param.put("versionName", versionName);
+                 Log.d(TAG, versionName);
 
-                String versionName = CommonUtils.getVersionName();
-                param.put("versionName", versionName);
-                Log.d(TAG, versionName);
+                 VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
+                     @Override
+                     public void onResponse(Register register) {
 
-                VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
-                    @Override
-                    public void onResponse(Register register) {
+                         progressBar.dismiss();
 
-                        progressBar.dismiss();
+                         if (register.getResult() == AccountResultCode.SUCC) {
+                             UiUtils.toast(MyApp.getInstance(), R.string.login_succ);
+                             CommonUtils.saveRegisterInfo(register);
+                             PreferenceUtil.commitBoolean("three_login", false);
+                             EventBus.getDefault().post(register);
+                             setResult(RESULT_OK);
+                             //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
+                             sendUserInfoToServer(register);
+                             finish();
+                             RongYunUtils.initRongIMConnect(mContext);// 登录成功后初始化融云
+                             //TODO:发送请求，从后台获取该用户的关注信息
+                             getFootballUserFocus(register.getData().getUser().getUserId());
+                             getBasketballUserConcern(register.getData().getUser().getUserId());
 
-                        if (register.getResult() == AccountResultCode.SUCC) {
-                            UiUtils.toast(MyApp.getInstance(), R.string.login_succ);
-                            CommonUtils.saveRegisterInfo(register);
-                            PreferenceUtil.commitBoolean("three_login", false);
-                            EventBus.getDefault().post(register);
-                            setResult(RESULT_OK);
-                            //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
-                            sendUserInfoToServer(register);
-                            finish();
-                            RongYunUtils.initRongIMConnect(mContext);// 登录成功后初始化融云
-                            //TODO:发送请求，从后台获取该用户的关注信息
-                            getFootballUserFocus(register.getData().getUser().getUserId());
-                            getBasketballUserConcern(register.getData().getUser().getUserId());
+                         } else {
+                             CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
+                         }
+                     }
+                 }, new VolleyContentFast.ResponseErrorListener() {
+                     @Override
+                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
 
-                        } else {
-                            CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
-                        }
-                    }
-                }, new VolleyContentFast.ResponseErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                         progressBar.dismiss();
 
-                        progressBar.dismiss();
+                         L.e(TAG, " 登录失败");
+                         UiUtils.toast(LoginActivity.this, R.string.foot_neterror);
+                     }
+                 }, Register.class);
+             }
 
-                        L.e(TAG, " 登录失败");
-                        UiUtils.toast(LoginActivity.this, R.string.immediate_unconection);
-                    }
-                }, Register.class);
-            }
+         }
+
     }
 
     /**

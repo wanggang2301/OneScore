@@ -112,9 +112,9 @@
     <color name="numberinfo_notselect">#88000000</color>
     <color name="numberinfo_bg">#33ff0000</color>
     <color name="numberinfo_text_color">#ffffff</color>
-    <color name="number_red">#ff0000</color>
-    <color name="number_green">#00ff00</color>
-    <color name="number_blue">#0000ff</color>
+    <color name="number_red">#db150b</color>
+    <color name="number_green">#29ad00</color>
+    <color name="number_blue">#287de6</color>
     <!-- 比分字体颜色 -->
     <color name="score_red">#ff3200</color>
 
@@ -138,6 +138,8 @@
     <color name="home_dividing_line_blue">#00aaee</color>
     <color name="home_item_bg">#f5f5f5</color>
     <color name="home_user_options_bg">#f3f3f3</color>
+    <color name="home_item_lottery_title">#4a4a4a</color>
+    <color name="home_item_lottery_title_des">#9b9b9b</color>
 
     <color name="home_default_icon_coloer">#f5f5f5</color>
 

@@ -654,8 +654,7 @@
     <!--退出登录的 TextView-->
     <style name="login_textview_logout">
         <item name="android:textSize">15sp</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">53dp</item>
+        <item name="android:layout_height">45dp</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:background">@color/white</item>
@@ -943,4 +942,127 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
+    <!--首页彩票入口条目样式 start -->
+    <style name="home_item_lottery_name">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/content_txt_black</item>
+        <item name="android:paddingLeft">5dp</item>
+    </style>
+
+    <style name="home_item_lottery_name_desc">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/home_item_lottery_title_des</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingTop">5dp</item>
+    </style>
+
+    <style name="home_item_lottery_icon">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
+    <!--首页彩票入口条目样式 end -->
+
+    <!--彩票详情页 start -->
+    <style name="lottery_info_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:background">@drawable/number_tab_s_y_x2</item>
+        <item name="android:gravity">center</item>
+        <item name="android:lines">1</item>
+        <item name="android:textColor">@color/content_txt_black</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:text">@string/number_info_default</item>
+    </style>
+
+    <style name="lottery_info_content_left">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:background">@drawable/number_tab_solid_all_l_b_r</item>
+        <item name="android:gravity">center</item>
+        <item name="android:lines">1</item>
+        <item name="android:textColor">@color/content_txt_dark_grad</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:text">@string/number_info_default</item>
+    </style>
+
+    <style name="lottery_info_content_right">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:background">@drawable/number_tab_solid_all_r_b</item>
+        <item name="android:gravity">center</item>
+        <item name="android:lines">1</item>
+        <item name="android:textColor">@color/content_txt_dark_grad</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:text">@string/number_info_default</item>
+    </style>
+
+    <style name="lottery_info_content_add">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/content_txt_dark_grad</item>
+        <item name="android:background">@drawable/number_tab_solid_all_r_b</item>
+        <item name="android:text">@string/number_info_default</item>
+    </style>
+
+    <!--对战条目-->
+    <style name="lottery_info_vs_content">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:background">@drawable/number_tab_solid_all_r_b</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+    <!--左-->
+    <style name="lottery_info_vs_left">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">2</item>
+        <item name="android:gravity">end</item>
+        <item name="android:lines">1</item>
+        <item name="android:textColor">@color/content_txt_dark_grad</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:text">@string/number_info_default</item>
+    </style>
+    <!--中-->
+    <style name="lottery_info_vs_center">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">0.6</item>
+        <item name="android:gravity">center</item>
+        <item name="android:lines">1</item>
+        <item name="android:textColor">@color/content_txt_dark_grad</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:text">@string/number_info_default</item>
+    </style>
+    <!--右-->
+    <style name="lottery_info_vs_right">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">2</item>
+        <item name="android:gravity">start</item>
+        <item name="android:lines">1</item>
+        <item name="android:textColor">@color/content_txt_dark_grad</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:text">@string/number_info_default</item>
+    </style>
+    <!--红球详情条目-->
+    <style name="lottery_info_red">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">2dp</item>
+        <item name="android:text">@string/number_info_default</item>
+        <item name="android:textSize">@dimen/number_title</item>
+    </style>
+
+    <!--彩票详情页 end -->
+
 </resources>

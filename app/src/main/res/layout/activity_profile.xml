@@ -110,6 +110,7 @@
         android:layout_height="1px"
         android:background="@color/line_football_footer"
         />
+
     <RelativeLayout
         android:id="@+id/account_sex"
         android:layout_width="match_parent"
@@ -129,7 +130,7 @@
             android:textSize="15sp"
             />
         <ImageView
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="30dp"
             android:layout_toRightOf="@+id/tv_sex"
             android:id="@+id/man_sex"
             style="@style/login_textview_account_center_margin"
@@ -244,7 +245,7 @@
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/image_login"
             android:src="@mipmap/person"
-            android:text="@string/nickname"
+            android:text=""
             android:textSize="15sp"
             />
 
