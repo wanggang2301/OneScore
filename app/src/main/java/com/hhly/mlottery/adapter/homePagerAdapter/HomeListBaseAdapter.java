@@ -87,7 +87,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
     private List<TextView> lottery_item_desc_list;// 新彩票入口描述
     private List<ImageView> lottery_item_icon_list;// 新彩票入口图标
     private View lotteryItemView;// 新彩票条目
-    private RelativeLayout rl_lottery_item_title;
+    private LinearLayout ll_lottery_item_title;
 
     /**
      * 构造
@@ -261,7 +261,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 });
                                 break;
                             case 7:// 1.2.0版新增彩票入口条目
-                                rl_lottery_item_title.setOnClickListener(new View.OnClickListener() {
+                                ll_lottery_item_title.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
                                         mContext.startActivity(new Intent(mContext, NumbersActivity.class));
@@ -346,7 +346,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
      */
     private View getLotteryItemView() {
         View view = View.inflate(mContext, R.layout.home_page_item_lottery, null);
-        rl_lottery_item_title = (RelativeLayout) view.findViewById(R.id.rl_lottery_item_title);
+        ll_lottery_item_title = (LinearLayout) view.findViewById(R.id.ll_lottery_item_title);
         TextView home_lottery_item_name1 = (TextView) view.findViewById(R.id.home_lottery_item_name1);
         TextView home_lottery_item_name2 = (TextView) view.findViewById(R.id.home_lottery_item_name2);
         TextView home_lottery_item_name3 = (TextView) view.findViewById(R.id.home_lottery_item_name3);
@@ -818,8 +818,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                         case "24":// 双色球
                                         case "29":// 大乐透
                                             // 显示奖金池 用亿做单位保留两们小数
-                                            String bonus = "";
-                                            if (mLottery.getJackpot() != null) {
+                                            String bonus;
+                                            if (!TextUtils.isEmpty(mLottery.getJackpot())) {
                                                 if (mLottery.getJackpot().length() >= 9) {
                                                     Double str = Double.parseDouble(mLottery.getJackpot()) / 100000000;
                                                     DecimalFormat df = new DecimalFormat("#.00");
@@ -831,6 +831,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                                     bonus = df.format(str);
                                                     lottery_item_desc_list.get(k).setText(TextUtils.isEmpty(bonus) ? mContext.getResources().getString(R.string.home_number_desc_bonus) : mContext.getResources().getString(R.string.home_number_desc_bonus) + bonus + mContext.getResources().getString(R.string.home_number_desc_wan));
                                                 }
+                                            }else{
+                                                lottery_item_desc_list.get(k).setText(mContext.getResources().getString(R.string.home_number_desc_bonus));
                                             }
                                             break;
                                         case "6":// 七星彩
@@ -839,8 +841,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                         case "31":
                                         case "32":
                                             // 显示奖金池 用万做单位保留两们小数
-                                            String bonus1 = mContext.getResources().getString(R.string.number_info_default);
-                                            if (mLottery.getJackpot() != null) {
+                                            String bonus1 = null;
+                                            if (!TextUtils.isEmpty(mLottery.getJackpot())) {
                                                 Double str = Double.parseDouble(mLottery.getJackpot()) / 10000;
                                                 DecimalFormat df = new DecimalFormat("#.00");
                                                 bonus1 = df.format(str);

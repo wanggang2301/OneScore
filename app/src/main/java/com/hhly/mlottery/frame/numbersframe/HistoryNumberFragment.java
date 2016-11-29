@@ -95,6 +95,8 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
 
     private ImageView left;// 上一期
     private ImageView right;// 下一期
+    private ImageView iv_lottery_left;
+    private ImageView iv_lottery_right;
 
     private LinearLayout ll_scan_animation;// 动画布局
     private ImageView iv_number_copy;// 整个布局图片
@@ -316,6 +318,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
 
                 if (arg2 == 0) {
                     right.setAlpha(0f);
+                    iv_lottery_right.setAlpha(0f);
                     if (!isOpenNumberStartHistory) {
                         number_new_icon.setVisibility(View.VISIBLE);
                     } else {
@@ -323,13 +326,16 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
                     }
                 } else {
                     right.setAlpha(1.0f);
+                    iv_lottery_right.setAlpha(1.0f);
                     number_new_icon.setVisibility(View.GONE);
                 }
 
                 if (arg2 == count - 1) {
                     left.setAlpha(0f);
+                    iv_lottery_left.setAlpha(0f);
                 } else {
                     left.setAlpha(1.0f);
+                    iv_lottery_left.setAlpha(1.0f);
                 }
                 ((NumbersInfoBaseActivity)mContext).isHistoryPager = true;
                 numberHistorySelect(arg2);// 显示指定期数号码开奖明细
@@ -581,6 +587,10 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
         left.setOnClickListener(this);
         right.setVisibility(View.VISIBLE);
         right.setOnClickListener(this);
+        iv_lottery_left = (ImageView) view.findViewById(R.id.iv_lottery_left);
+        iv_lottery_right = (ImageView) view.findViewById(R.id.iv_lottery_right);
+        iv_lottery_left.setOnClickListener(this);
+        iv_lottery_right.setOnClickListener(this);
 
         ll_scan_animation = (LinearLayout) view.findViewById(R.id.ll_number_animation);// 动画布局
         iv_number_copy = (ImageView) view.findViewById(R.id.iv_number_copy);// 当前布局的图片容器
@@ -1136,6 +1146,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
 
         switch (v.getId()) {
             case R.id.iv_numbers_right:// 上一期
+            case R.id.iv_lottery_right:// 上一期
 
                 if (!isAnimationStart) {
                     if (viewPagerIndex > 0) {
@@ -1144,6 +1155,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
                 }
                 break;
             case R.id.iv_numbers_left:// 下一期
+            case R.id.iv_lottery_left:// 下一期
                 if (!isAnimationStart) {
                     getNext();
                 }
@@ -1161,18 +1173,22 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
         if (viewPagerIndex >= count - 1) {
             numberHistorySelect(count - 1);
             left.setAlpha(0f);
+            iv_lottery_left.setAlpha(0f);
         } else {
 
             rightAnimation();
             numberHistorySelect(++viewPagerIndex);
             if (viewPagerIndex == count - 1) {
                 left.setAlpha(0f);
+                iv_lottery_left.setAlpha(0f);
             } else {
                 left.setAlpha(1.0f);
+                iv_lottery_left.setAlpha(1.0f);
             }
         }
         if (viewPagerIndex <= 0) {
             right.setAlpha(0f);
+            iv_lottery_right.setAlpha(0f);
             if (!isOpenNumberStartHistory) {
                 number_new_icon.setVisibility(View.VISIBLE);
             } else {
@@ -1180,6 +1196,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
             }
         } else {
             right.setAlpha(1.0f);
+            iv_lottery_right.setAlpha(1.0f);
             number_new_icon.setVisibility(View.GONE);
         }
     }
@@ -1192,6 +1209,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
         if (viewPagerIndex <= 0) {
             numberHistorySelect(0);
             right.setAlpha(0f);
+            iv_lottery_right.setAlpha(0f);
             if (!isOpenNumberStartHistory) {
                 number_new_icon.setVisibility(View.VISIBLE);
             } else {
@@ -1201,6 +1219,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
             numberHistorySelect(--viewPagerIndex);
             if (viewPagerIndex == 0) {
                 right.setAlpha(0f);
+                iv_lottery_right.setAlpha(0f);
                 if (!isOpenNumberStartHistory) {
                     number_new_icon.setVisibility(View.VISIBLE);
                 } else {
@@ -1208,13 +1227,16 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
                 }
             } else {
                 right.setAlpha(1.0f);
+                iv_lottery_right.setAlpha(1.0f);
                 number_new_icon.setVisibility(View.GONE);
             }
         }
         if (viewPagerIndex >= count) {
             left.setAlpha(0f);
+            iv_lottery_left.setAlpha(0f);
         } else {
             left.setAlpha(1.0f);
+            iv_lottery_left.setAlpha(1.0f);
         }
     }
 
@@ -1347,6 +1369,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
      */
     private void leftAnimation() {
         getObtianDraw1();
+        getPrevious();
         AnimatorSet leftSet = new AnimatorSet();
         iv_number_copy.measure(0, 0);
         ObjectAnimator transright = ObjectAnimator.ofFloat(iv_number_copy, "translationX", 0, -iv_number_copy.getMeasuredWidth());
@@ -1370,7 +1393,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                getPrevious();
+//                getPrevious();
                 isAnimationStart = false;
             }
 

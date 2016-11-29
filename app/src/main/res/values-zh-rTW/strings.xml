@@ -480,9 +480,9 @@
     <string name="number_code_desc_ah_ks">每天80期，10分鐘一期，8:30-22:00</string>
     <string name="number_code_desc_js_ks">每天82期，10分鐘一期，8:30-22:00</string>
     <string name="number_code_desc_gx_ks">每天78期，10分鐘一期，9:30-22:30</string>
-    <string name="number_code_desc_ssq">每周二、四、日21:15開獎</string>
-    <string name="number_code_desc_dlt">每周一、三、六20:30開獎</string>
-    <string name="number_code_desc_qlc">每周一、三、五21:15開獎</string>
+    <string name="number_code_desc_ssq">每週二、四、日21:15開獎</string>
+    <string name="number_code_desc_dlt">每週一、三、六20:30開獎</string>
+    <string name="number_code_desc_qlc">每週一、三、五21:15開獎</string>
     <string name="number_code_desc_f3d">每日20:30開獎</string>
     <string name="number_code_desc_pl3">每日20:30開獎</string>
     <string name="number_code_desc_pl5">每日20:30開獎</string>
@@ -514,11 +514,11 @@
     <string name="number_info_sc_round">場次</string>
     <string name="number_info_vs">對陣</string>
     <string name="number_info_start_time">開賽時間</string>
-    <string name="number_info_sale">本期全國銷量：</string>
+    <string name="number_info_sale">本期銷量：</string>
     <string name="number_info_bonus_sum">獎金滾存：</string>
     <string name="number_info_prize">獎項</string>
-    <string name="number_info_bonus_1">壹等獎</string>
-    <string name="number_info_bonus_1_1">其中：壹等獎複式投注</string>
+    <string name="number_info_bonus_1">一等獎</string>
+    <string name="number_info_bonus_1_1">其中：一等獎複式投注</string>
     <string name="number_info_bonus_2">二等獎</string>
     <string name="number_info_bonus_3">三等獎</string>
     <string name="number_info_bonus_4">四等獎</string>

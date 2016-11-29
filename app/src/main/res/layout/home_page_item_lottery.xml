@@ -7,32 +7,42 @@
 
     <!--开奖查询条目-->
 
-    <RelativeLayout
-        android:id="@+id/rl_lottery_item_title"
+    <LinearLayout
+        android:id="@+id/ll_lottery_item_title"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="90dp"
-            android:layout_height="40dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:src="@mipmap/home_item_lottery_icon_title" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:src="@mipmap/home_item_lottery_icon_title" />
+
+        </LinearLayout>
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:gravity="center"
+            android:layout_weight="2"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="@string/number_item_name"
                 android:textColor="@color/home_item_lottery_title"
                 android:textSize="14sp" />
@@ -40,6 +50,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:paddingTop="3dp"
                 android:text="@string/number_item_name_desc"
                 android:textColor="@color/home_item_lottery_title_des"
@@ -47,15 +58,23 @@
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:text=">>" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-    </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:text=">>" />
+        </LinearLayout>
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"

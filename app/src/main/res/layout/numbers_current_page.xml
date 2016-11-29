@@ -243,10 +243,10 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_centerVertical="true"
-                                            android:paddingLeft="8dp"
-                                            android:paddingTop="15dp"
                                             android:paddingBottom="15dp"
+                                            android:paddingLeft="8dp"
                                             android:paddingRight="15dp"
+                                            android:paddingTop="15dp"
                                             android:src="@mipmap/number_left_icon"
                                             android:visibility="gone" />
 
@@ -275,10 +275,10 @@
                                             android:layout_height="wrap_content"
                                             android:layout_alignParentRight="true"
                                             android:layout_centerVertical="true"
-                                            android:paddingLeft="15dp"
-                                            android:paddingTop="15dp"
                                             android:paddingBottom="15dp"
+                                            android:paddingLeft="15dp"
                                             android:paddingRight="8dp"
+                                            android:paddingTop="15dp"
                                             android:src="@mipmap/number_right_icon"
                                             android:visibility="gone" />
 
@@ -313,6 +313,51 @@
                                     android:layout_height="1dp"
                                     android:background="@color/linecolor" />
                             </LinearLayout>
+
+                            <!--体育彩种的左右滑动-->
+
+                            <RelativeLayout
+                                android:id="@+id/rl_lottery_switch"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="10dp"
+                                android:visibility="gone">
+
+                                <!-- 左 -->
+                                <ImageView
+                                    android:id="@+id/iv_lottery_left"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:paddingBottom="10dp"
+                                    android:paddingLeft="8dp"
+                                    android:paddingRight="10dp"
+                                    android:paddingTop="10dp"
+                                    android:src="@mipmap/number_left_icon" />
+
+                                <TextView
+                                    android:id="@+id/tv_lottery_issue"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:textColor="@color/content_txt_black" />
+
+                                <!-- 右 -->
+                                <ImageView
+                                    android:id="@+id/iv_lottery_right"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:paddingBottom="10dp"
+                                    android:paddingLeft="10dp"
+                                    android:paddingRight="8dp"
+                                    android:paddingTop="10dp"
+                                    android:src="@mipmap/number_right_icon" />
+
+                            </RelativeLayout>
 
                             <!-- 统计数据显示 -->
 

@@ -43,6 +43,7 @@ public class NumberDataUtils {
     private LinearLayout ll_gravity_center;
     private LinearLayout ll_number_info_countDown;// 倒计时控件
     private LinearLayout ll_number_info_content;// 头部详情控件
+    private RelativeLayout rl_lottery_switch;// 体育彩种头部左右滑动和期号
     private ImageView number_new_icon;// new 字样图片
     // private TextView number_info_isOpenNumber;// 正在开奖...中字样
     private FrameLayout fl_number_hk;
@@ -737,6 +738,10 @@ public class NumberDataUtils {
         number_new_icon = (ImageView) mView.findViewById(R.id.number_new_icon);// new字样图片
         ll_number_info_countDown = (LinearLayout) mView.findViewById(R.id.ll_number_info_countDown);// 倒计时
         ll_number_info_content = (LinearLayout) mView.findViewById(R.id.ll_number_info_content);// 头部详情容器
+        rl_lottery_switch = (RelativeLayout) mView.findViewById(R.id.rl_lottery_switch);// 体育彩种头部左右滑动和期号
+        TextView tv_lottery_issue = (TextView) mView.findViewById(R.id.tv_lottery_issue);// 体育彩种头部左右滑动和期号
+        ImageView iv_lottery_left = (ImageView) mView.findViewById(R.id.iv_lottery_left);// 体育彩种头部左右滑动和期号
+        ImageView iv_lottery_right = (ImageView) mView.findViewById(R.id.iv_lottery_right);// 体育彩种头部左右滑动和期号
 
         ll_gravity_center = (LinearLayout) mView.findViewById(R.id.ll_gravity_center);
         fl_number_hk = (FrameLayout) mView.findViewById(R.id.fl_number_hk);
@@ -777,8 +782,18 @@ public class NumberDataUtils {
         if ("30".equals(mNumberInfo.getName()) || "31".equals(mNumberInfo.getName()) || "32".equals(mNumberInfo.getName())) {
             // 胜负彩、六场半全场、4场进球  不显示头部信息
             ll_number_info_content.setVisibility(View.GONE);
+            rl_lottery_switch.setVisibility(View.VISIBLE);
+            tv_lottery_issue.setText(context.getResources().getString(R.string.number_code_di) + (mNumberInfo.getIssue() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getIssue()) + context.getResources().getString(R.string.number_code_qi));
+            if(isGravity == 2){// 历史详情显示左右按钮
+                iv_lottery_left.setVisibility(View.VISIBLE);
+                iv_lottery_right.setVisibility(View.VISIBLE);
+            }else{
+                iv_lottery_left.setVisibility(View.GONE);
+                iv_lottery_right.setVisibility(View.GONE);
+            }
         } else {
             ll_number_info_content.setVisibility(View.VISIBLE);
+            rl_lottery_switch.setVisibility(View.GONE);
 
             disposeSubNumbers(mNumberInfo, numbers, zodiacs);// 拆分开奖号码
             isOpenNumberStartShow(context, mNumberInfo, isOpenNumberStartHistory, isOpenNumberStartHistory, isGravity);// 按开奖状态显示对应的标题
@@ -1350,7 +1365,7 @@ public class NumberDataUtils {
      * 胜负彩
      */
     private void processingMethodSFC() {
-        TextView lottery_sfc_issue = (TextView) mView.findViewById(R.id.lottery_sfc_issue);
+//        TextView lottery_sfc_issue = (TextView) mView.findViewById(R.id.lottery_sfc_issue);
         TextView lottery_sfc_home_name1 = (TextView) mView.findViewById(R.id.lottery_sfc_home_name1);
         TextView lottery_sfc_home_name2 = (TextView) mView.findViewById(R.id.lottery_sfc_home_name2);
         TextView lottery_sfc_home_name3 = (TextView) mView.findViewById(R.id.lottery_sfc_home_name3);
@@ -1507,7 +1522,7 @@ public class NumberDataUtils {
         sfc_result_list.add(lottery_sfc_result13);
         sfc_result_list.add(lottery_sfc_result14);
 
-        lottery_sfc_issue.setText(context.getResources().getString(R.string.number_code_di) + (mNumberInfo.getIssue() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getIssue()) + context.getResources().getString(R.string.number_code_qi));
+//        lottery_sfc_issue.setText(context.getResources().getString(R.string.number_code_di) + (mNumberInfo.getIssue() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getIssue()) + context.getResources().getString(R.string.number_code_qi));
 
         for (int i = 0, len = mNumberInfo.getFootballLotteryIssueResultData().size(); i < len; i++) {
             // 判断是否开赛时间
@@ -1547,7 +1562,7 @@ public class NumberDataUtils {
      * 六场半全场
      */
     private void processingMethodLCBQC() {
-        TextView lottery_lcbqc_issue = (TextView) mView.findViewById(R.id.lottery_lcbqc_issue);
+//        TextView lottery_lcbqc_issue = (TextView) mView.findViewById(R.id.lottery_lcbqc_issue);
         TextView lottery_lcbqc_home_name1 = (TextView) mView.findViewById(R.id.lottery_lcbqc_home_name1);
         TextView lottery_lcbqc_home_name2 = (TextView) mView.findViewById(R.id.lottery_lcbqc_home_name2);
         TextView lottery_lcbqc_home_name3 = (TextView) mView.findViewById(R.id.lottery_lcbqc_home_name3);
@@ -1645,7 +1660,7 @@ public class NumberDataUtils {
         lcbqc_full_list.add(lottery_lcbqc_full5);
         lcbqc_full_list.add(lottery_lcbqc_full6);
 
-        lottery_lcbqc_issue.setText(context.getResources().getString(R.string.number_code_di) + (mNumberInfo.getIssue() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getIssue()) + context.getResources().getString(R.string.number_code_qi));
+//        lottery_lcbqc_issue.setText(context.getResources().getString(R.string.number_code_di) + (mNumberInfo.getIssue() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getIssue()) + context.getResources().getString(R.string.number_code_qi));
 
         for (int i = 0, len = mNumberInfo.getFootballLotteryIssueResultData().size(); i < len; i++) {
             // 判断是否开赛时间
@@ -1685,7 +1700,7 @@ public class NumberDataUtils {
      * 4场进球
      */
     private void processingMethodSCJQ() {
-        TextView lottery_scjq_issue = (TextView) mView.findViewById(R.id.lottery_scjq_issue);
+//        TextView lottery_scjq_issue = (TextView) mView.findViewById(R.id.lottery_scjq_issue);
         TextView lottery_scjq_home_name1 = (TextView) mView.findViewById(R.id.lottery_scjq_home_name1);
         TextView lottery_scjq_home_name2 = (TextView) mView.findViewById(R.id.lottery_scjq_home_name2);
         TextView lottery_scjq_home_name3 = (TextView) mView.findViewById(R.id.lottery_scjq_home_name3);
@@ -1737,7 +1752,7 @@ public class NumberDataUtils {
         scjq_result_list.add(lottery_scjq_result3);
         scjq_result_list.add(lottery_scjq_result4);
 
-        lottery_scjq_issue.setText(context.getResources().getString(R.string.number_code_di) + (mNumberInfo.getIssue() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getIssue()) + context.getResources().getString(R.string.number_code_qi));
+//        lottery_scjq_issue.setText(context.getResources().getString(R.string.number_code_di) + (mNumberInfo.getIssue() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getIssue()) + context.getResources().getString(R.string.number_code_qi));
         // 设置对阵和开赛时间
         for (int i = 0, len = mNumberInfo.getFootballLotteryIssueResultData().size(); i < len; i++) {
             // 判断是否开赛时间

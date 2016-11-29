@@ -526,7 +526,7 @@
     <string name="number_info_sc_round">场次</string>
     <string name="number_info_vs">对阵</string>
     <string name="number_info_start_time">开赛时间</string>
-    <string name="number_info_sale">本期全国销量：</string>
+    <string name="number_info_sale">本期销量：</string>
     <string name="number_info_bonus_sum">奖金滚存：</string>
     <string name="number_info_prize">奖项</string>
     <string name="number_info_bonus_1">一等奖</string>
