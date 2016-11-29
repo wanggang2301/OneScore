@@ -5,7 +5,6 @@ import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -24,9 +23,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -39,9 +35,8 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.NumbersInfoBaseActivity;
 import com.hhly.mlottery.bean.numbersBean.NumberCurrentInfo;
-import com.hhly.mlottery.bean.numbersBean.NumberHistoryHKInfo;
-import com.hhly.mlottery.bean.numbersBean.NumberHistoryInfo;
 import com.hhly.mlottery.bean.numbersBean.NumbersHistoryBean;
 import com.hhly.mlottery.bean.numbersBean.NumbersOpenBean;
 import com.hhly.mlottery.config.StaticValues;
@@ -79,9 +74,9 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
 
     private ScrollView mScrollView;
 
-    private List<NumberHistoryInfo> mNumberList;// 往期开奖集合
-    private List<NumberHistoryHKInfo> mNumberHKList;// 往期六合 彩开奖集合
-    private List<NumberCurrentInfo> numberlist;// 各种彩票开奖对象
+    private List<NumberCurrentInfo> mNumberHistoryList;// 往期开奖集合
+    //    private List<NumberHistoryHKInfo> mNumberHKList;// 往期六合 彩开奖集合
+    private List<NumberCurrentInfo> numberlist = new ArrayList<>();// 各种彩票开奖对象
 
     private int count = 0;// item数据
 
@@ -100,6 +95,8 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
 
     private ImageView left;// 上一期
     private ImageView right;// 下一期
+    private ImageView iv_lottery_left;
+    private ImageView iv_lottery_right;
 
     private LinearLayout ll_scan_animation;// 动画布局
     private ImageView iv_number_copy;// 整个布局图片
@@ -108,9 +105,6 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
     private List<String> zodiacs = new ArrayList<String>();// 存放六合彩生肖
 
     private boolean isAnimationStart = false;// 是否正在播放动画
-
-    private Animation animation;// 加载数据动画
-    private ImageView iv_loading_img;
 
     private String serverTime;// 服务器时间戳
     private long mNumberTime;// 获取开奖时间
@@ -154,6 +148,9 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
 
                         // 正在开奖中...
                         isOpenNumberStartHistory = numTime <= 0 || !numberlist.get(i).getNumbers().contains("#");
+                    } else if ("30".equals(mNumberName) || "31".equals(mNumberName) || "32".equals(mNumberName)) {
+                        // 此彩种没有开奖状态
+                        isOpenNumberStartHistory = false;
                     } else if (mNumberName.equals(numberlist.get(i).getName())) {
                         long numTime = DateUtil.getCurrentTime(numberlist.get(i).getNextTime()) - Long.parseLong(serverTime);
                         // 正在开奖中...
@@ -189,12 +186,15 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
             // 发送消息，开始加载数据
             mHandler.sendEmptyMessage(STARTLOADING);
         }
+
         VolleyContentFast.requestJsonByGet(AppConstants.numberHistoryURLs[0], new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
             @Override
             public synchronized void onResponse(final NumbersOpenBean json) {
                 if (null != json) {// 判断数据是否为空
 
-                    numberlist = new ArrayList<NumberCurrentInfo>();
+                    if (numberlist != null) {
+                        numberlist.clear();
+                    }
 
                     serverTime = json.getServerTime();// 获取服务器当前时间
                     numberlist = json.getNumLotteryResults();
@@ -232,29 +232,31 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
     private void getStartCountDown() {
 
         try {
-            mNumberTime = DateUtil.getCurrentTime(mNumberInfo.getNextTime()) - Long.parseLong(serverTime);// 获取下一期开奖时间
-            if (!isCountDown && isExit) {
-                new Thread() {
-                    public void run() {
-                        try {
-                            isCountDown = true;
-                            while (!isOpenNumberStartHistory && mNumberTime >= 0 && isExit) {
-                                sleep(1000);
-                                mNumberTime -= 1000;
-                            }
-                            isCountDown = false;
+            if (mNumberInfo.getNextTime() != null) {
+                mNumberTime = DateUtil.getCurrentTime(mNumberInfo.getNextTime()) - Long.parseLong(serverTime);// 获取下一期开奖时间
+                if (!isCountDown && isExit) {
+                    new Thread() {
+                        public void run() {
+                            try {
+                                isCountDown = true;
+                                while (!isOpenNumberStartHistory && mNumberTime >= 0 && isExit) {
+                                    sleep(1000);
+                                    mNumberTime -= 1000;
+                                }
+                                isCountDown = false;
 
-                            if (isExit) {
-                                initData();
-                                numbersDataShow(2);// 开奖时重新获取开奖状态
-                            }
+                                if (isExit) {
+                                    initData();
+                                    numbersDataShow(2);// 开奖时重新获取开奖状态
+                                }
 
-                        } catch (InterruptedException e) {
-                            L.d("倒计时子线程休眠异常！" + e.getMessage());
+                            } catch (InterruptedException e) {
+                                L.d("倒计时子线程休眠异常！" + e.getMessage());
+                            }
                         }
-                    }
 
-                }.start();
+                    }.start();
+                }
             }
         } catch (Exception e) {
             L.d("时间日期转换异常！" + e.getMessage());
@@ -309,13 +311,14 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                MobclickAgent.onEvent(mContext,"Lottery_History_List");
+                MobclickAgent.onEvent(mContext, "Lottery_History_List");
                 fl_number_history_list.setVisibility(View.GONE);
                 fl_numbner_history_info.setVisibility(View.VISIBLE);
                 viewPagerIndex = arg2;
 
                 if (arg2 == 0) {
                     right.setAlpha(0f);
+                    iv_lottery_right.setAlpha(0f);
                     if (!isOpenNumberStartHistory) {
                         number_new_icon.setVisibility(View.VISIBLE);
                     } else {
@@ -323,15 +326,18 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
                     }
                 } else {
                     right.setAlpha(1.0f);
+                    iv_lottery_right.setAlpha(1.0f);
                     number_new_icon.setVisibility(View.GONE);
                 }
 
                 if (arg2 == count - 1) {
                     left.setAlpha(0f);
+                    iv_lottery_left.setAlpha(0f);
                 } else {
                     left.setAlpha(1.0f);
+                    iv_lottery_left.setAlpha(1.0f);
                 }
-
+                ((NumbersInfoBaseActivity)mContext).isHistoryPager = true;
                 numberHistorySelect(arg2);// 显示指定期数号码开奖明细
 
             }
@@ -456,47 +462,29 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
      * 访问网络数据
      */
     private void loadingNetData() {
-        // 发送消息，开始加载数据
-        // mHandler.sendEmptyMessage(STARTLOADING);
         if (null != mNumberInfo) {
-            if ("1".equals(mNumberInfo.getName())) {
-                VolleyContentFast.requestJsonByGet(AppConstants.numberHistoryURLs[Integer.parseInt(mNumberInfo.getName())], new VolleyContentFast.ResponseSuccessListener<NumbersHistoryBean>() {
-                    @Override
-                    public synchronized void onResponse(final NumbersHistoryBean json) {
-                        mNumberHKList = json.getHistoryLotteryResults();
-                        count = mNumberHKList.size();
-
-                        // 发送加载数据成功消息
-                        mHandler.sendEmptyMessage(SUCCESS);
-
-                        mAdapter = new numbersListViewAdapter();
-                        mListView.setAdapter(mAdapter);
+            VolleyContentFast.requestJsonByGet(AppConstants.numberHistoryURLs[Integer.parseInt(mNumberInfo.getName())], new VolleyContentFast.ResponseSuccessListener<NumbersHistoryBean>() {
+                @Override
+                public synchronized void onResponse(final NumbersHistoryBean json) {
+                    if (mNumberHistoryList != null) {
+                        mNumberHistoryList.clear();
                     }
-                }, new VolleyContentFast.ResponseErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                        mHandler.sendEmptyMessage(ERRORLOADING);
-                    }
-                }, NumbersHistoryBean.class);
-            } else {
-                VolleyContentFast.requestJsonByGet(AppConstants.numberHistoryURLs[Integer.parseInt(mNumberInfo.getName())], new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
-                    @Override
-                    public synchronized void onResponse(final NumbersOpenBean json) {
-                        mNumberList = json.getHistoryLotteryResults();
-                        count = mNumberList.size();
+                    mNumberHistoryList = json.getHistoryLotteryResults();
 
-                        // 发送加载数据成功消息
-                        mHandler.sendEmptyMessage(SUCCESS);
+                    count = mNumberHistoryList.size();
 
-                        mListView.setAdapter(new numbersListViewAdapter());
-                    }
-                }, new VolleyContentFast.ResponseErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                        mHandler.sendEmptyMessage(ERRORLOADING);
-                    }
-                }, NumbersOpenBean.class);
-            }
+                    // 发送加载数据成功消息
+                    mHandler.sendEmptyMessage(SUCCESS);
+
+                    mAdapter = new numbersListViewAdapter();
+                    mListView.setAdapter(mAdapter);
+                }
+            }, new VolleyContentFast.ResponseErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                    mHandler.sendEmptyMessage(ERRORLOADING);
+                }
+            }, NumbersHistoryBean.class);
         }
     }
 
@@ -599,6 +587,10 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
         left.setOnClickListener(this);
         right.setVisibility(View.VISIBLE);
         right.setOnClickListener(this);
+        iv_lottery_left = (ImageView) view.findViewById(R.id.iv_lottery_left);
+        iv_lottery_right = (ImageView) view.findViewById(R.id.iv_lottery_right);
+        iv_lottery_left.setOnClickListener(this);
+        iv_lottery_right.setOnClickListener(this);
 
         ll_scan_animation = (LinearLayout) view.findViewById(R.id.ll_number_animation);// 动画布局
         iv_number_copy = (ImageView) view.findViewById(R.id.iv_number_copy);// 当前布局的图片容器
@@ -618,11 +610,15 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
             // 六合彩
             if ("1".equals(mNumberInfo.getName())) {
 
-                NumberHistoryHKInfo hkInfo = mNumberHKList.get(position);// 获取当前彩票对象
+                NumberCurrentInfo hkInfo = mNumberHistoryList.get(position);// 获取当前彩票对象
                 holder.tv_issue.setText(mContext.getResources().getString(R.string.number_code_di) + hkInfo.getIssue() + mContext.getResources().getString(R.string.number_code_qi));
 
                 String weekDate = DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(hkInfo.getTime()));// 根据日期获取星期
-                String[] Dates = hkInfo.getTime().split(" ");
+                String[] Dates = {null, null};
+                if (hkInfo.getTime() != null) {
+                    Dates = hkInfo.getTime().split(" ");
+                }
+
 
                 holder.tv_time.setText(Dates[0] + " " + weekDate);// 设置日期
 
@@ -695,24 +691,45 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
                 }
 
             } else {
-                NumberHistoryInfo historyInfo = mNumberList.get(position);// 获取当前彩票对象
+                NumberCurrentInfo historyInfo = mNumberHistoryList.get(position);// 获取当前彩票对象
                 holder.tv_issue.setText(mContext.getResources().getString(R.string.number_code_di) + historyInfo.getIssue() + mContext.getResources().getString(R.string.number_code_qi));
 
                 String weekDate = DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(historyInfo.getTime()));// 根据日期获取星期
-                String[] Dates = historyInfo.getTime().split(" ");
+                String[] Dates = {null, null};
+                if (historyInfo.getTime() != null) {
+                    Dates = historyInfo.getTime().split(" ");
+                }
 
-                if ("6".equals(mNumberInfo.getName())) {
+                if ("6".equals(mNumberInfo.getName()) || "24".equals(mNumberInfo.getName()) || "28".equals(mNumberInfo.getName()) ||
+                        "29".equals(mNumberInfo.getName()) || "25".equals(mNumberInfo.getName()) || "26".equals(mNumberInfo.getName())) {
 
                     holder.tv_time.setText(Dates[0] + " " + weekDate);// 设置日期
                 } else {
-                    String mTime = Dates[1].substring(0, Dates[1].lastIndexOf(":"));
-                    holder.tv_time.setText(mTime);// 设置日期
+                    if (Dates[1] != null) {
+                        String mTime = Dates[1].substring(0, Dates[1].lastIndexOf(":"));
+                        holder.tv_time.setText(mTime);// 设置日期
+                    } else {
+                        holder.tv_time.setText("");
+                    }
                 }
 
-                String[] nums1 = historyInfo.getNumbers().split(",");
+                String num;
+                if (historyInfo.getNumbers().contains("#")) {
+                    num = historyInfo.getNumbers().replace('#', ',');
+                } else {
+                    num = historyInfo.getNumbers();
+                }
+
+                String[] nums1 = num.split(",");
 
                 // 将号码添加到集合中
                 for (int i = 0; i < nums1.length; i++) {
+                    if ("24".equals(mNumberInfo.getName()) && i == 6) {
+                        numbers.add("88");
+                    }
+                    if ("29".equals(mNumberInfo.getName()) && i == 5) {
+                        numbers.add("88");
+                    }
                     numbers.add(nums1[i]);
                 }
             }
@@ -981,6 +998,92 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
                         ll.addView(tv_number);
                     }
                     break;
+                    case 24:// 双色球
+                    {
+                        if (i == 6) {
+                            params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                            params.gravity = Gravity.CENTER;
+                            ImageView iv = new ImageView(mContext);
+                            iv.setLayoutParams(params);
+                            iv.setImageResource(R.mipmap.number_tiema_icon);
+                            iv.setPadding(0, DisplayUtil.dip2px(mContext, 8), 0, 0);
+                            ll.addView(iv);
+                        } else {
+                            TextView tv_number = new TextView(mContext);
+                            tv_number.setLayoutParams(params);
+                            tv_number.setGravity(Gravity.CENTER);
+                            tv_number.setText(numbers.get(i));
+                            tv_number.setTextColor(getResources().getColor(R.color.numberinfo_text_color));
+                            if (i > 5) {
+                                tv_number.setBackgroundResource(R.mipmap.number_bg_blue);
+                            } else {
+                                tv_number.setBackgroundResource(R.mipmap.number_bg_red);
+                            }
+                            ll.addView(tv_number);
+                        }
+                    }
+                    break;
+                    case 28:// 七乐彩
+                    {
+                        TextView tv_number = new TextView(mContext);
+                        tv_number.setLayoutParams(params);
+                        tv_number.setGravity(Gravity.CENTER);
+                        tv_number.setText(numbers.get(i));
+                        tv_number.setTextColor(getResources().getColor(R.color.numberinfo_text_color));
+                        if (i > 6) {
+                            tv_number.setBackgroundResource(R.mipmap.number_bg_blue);
+                        } else {
+                            tv_number.setBackgroundResource(R.mipmap.number_bg_red);
+                        }
+                        ll.addView(tv_number);
+                    }
+                    break;
+                    case 29:// 大乐透
+                    {
+                        if (i == 5) {
+                            params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                            params.gravity = Gravity.CENTER;
+                            ImageView iv = new ImageView(mContext);
+                            iv.setLayoutParams(params);
+                            iv.setImageResource(R.mipmap.number_tiema_icon);
+                            iv.setPadding(0, DisplayUtil.dip2px(mContext, 8), 0, 0);
+                            ll.addView(iv);
+                        } else {
+                            TextView tv_number = new TextView(mContext);
+                            tv_number.setLayoutParams(params);
+                            tv_number.setGravity(Gravity.CENTER);
+                            tv_number.setText(numbers.get(i));
+                            tv_number.setTextColor(getResources().getColor(R.color.numberinfo_text_color));
+                            if (i > 4) {
+                                tv_number.setBackgroundResource(R.mipmap.number_bg_blue);
+                            } else {
+                                tv_number.setBackgroundResource(R.mipmap.number_bg_red);
+                            }
+                            ll.addView(tv_number);
+                        }
+                    }
+                    break;
+                    case 30:
+                    case 31:
+                    case 32: {
+                        TextView tv_number = new TextView(mContext);
+                        params = new LinearLayout.LayoutParams(DisplayUtil.dip2px(mContext, 17), DisplayUtil.dip2px(mContext, 24));
+                        tv_number.setLayoutParams(params);
+                        tv_number.setGravity(Gravity.CENTER);
+                        tv_number.setText(numbers.get(i).equals("null") ? "..." : numbers.get(i));
+                        tv_number.setTextColor(mContext.getResources().getColor(R.color.numberinfo_text_color));
+                        tv_number.setBackgroundResource(R.mipmap.number_bg_jc);
+                        ll.addView(tv_number);
+
+                        params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                        if (i == 0) {
+                            params.setMargins(DisplayUtil.dip2px(mContext, 10), 0, 0, 0);
+                        } else {
+                            params.setMargins(DisplayUtil.dip2px(mContext, 3), 0, 0, 0);
+                        }
+                        ll.setLayoutParams(params);
+                    }
+                    break;
                     case 8:// 快乐十分
                     case 11: {
                         TextView tv_number = new TextView(mContext);
@@ -1043,6 +1146,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
 
         switch (v.getId()) {
             case R.id.iv_numbers_right:// 上一期
+            case R.id.iv_lottery_right:// 上一期
 
                 if (!isAnimationStart) {
                     if (viewPagerIndex > 0) {
@@ -1051,6 +1155,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
                 }
                 break;
             case R.id.iv_numbers_left:// 下一期
+            case R.id.iv_lottery_left:// 下一期
                 if (!isAnimationStart) {
                     getNext();
                 }
@@ -1068,18 +1173,22 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
         if (viewPagerIndex >= count - 1) {
             numberHistorySelect(count - 1);
             left.setAlpha(0f);
+            iv_lottery_left.setAlpha(0f);
         } else {
 
             rightAnimation();
             numberHistorySelect(++viewPagerIndex);
             if (viewPagerIndex == count - 1) {
                 left.setAlpha(0f);
+                iv_lottery_left.setAlpha(0f);
             } else {
                 left.setAlpha(1.0f);
+                iv_lottery_left.setAlpha(1.0f);
             }
         }
         if (viewPagerIndex <= 0) {
             right.setAlpha(0f);
+            iv_lottery_right.setAlpha(0f);
             if (!isOpenNumberStartHistory) {
                 number_new_icon.setVisibility(View.VISIBLE);
             } else {
@@ -1087,6 +1196,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
             }
         } else {
             right.setAlpha(1.0f);
+            iv_lottery_right.setAlpha(1.0f);
             number_new_icon.setVisibility(View.GONE);
         }
     }
@@ -1099,6 +1209,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
         if (viewPagerIndex <= 0) {
             numberHistorySelect(0);
             right.setAlpha(0f);
+            iv_lottery_right.setAlpha(0f);
             if (!isOpenNumberStartHistory) {
                 number_new_icon.setVisibility(View.VISIBLE);
             } else {
@@ -1108,6 +1219,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
             numberHistorySelect(--viewPagerIndex);
             if (viewPagerIndex == 0) {
                 right.setAlpha(0f);
+                iv_lottery_right.setAlpha(0f);
                 if (!isOpenNumberStartHistory) {
                     number_new_icon.setVisibility(View.VISIBLE);
                 } else {
@@ -1115,13 +1227,16 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
                 }
             } else {
                 right.setAlpha(1.0f);
+                iv_lottery_right.setAlpha(1.0f);
                 number_new_icon.setVisibility(View.GONE);
             }
         }
         if (viewPagerIndex >= count) {
             left.setAlpha(0f);
+            iv_lottery_left.setAlpha(0f);
         } else {
             left.setAlpha(1.0f);
+            iv_lottery_left.setAlpha(1.0f);
         }
     }
 
@@ -1132,25 +1247,26 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
      */
     private void numberHistorySelect(int index) {
         if (mNumberInfo != null) {
-            NumberCurrentInfo mNumber = new NumberCurrentInfo();
-            mNumber.setName(mNumberInfo.getName());
-
-            if ("1".equals(mNumberInfo.getName())) {
-                NumberHistoryHKInfo numberHistoryHKInfo = mNumberHKList.get(index);
-                mNumber.setIssue(numberHistoryHKInfo.getIssue());
-                mNumber.setNumbers(numberHistoryHKInfo.getNumbers());
-                mNumber.setTime(numberHistoryHKInfo.getTime());
-                mNumber.setZodiac(numberHistoryHKInfo.getZodiac());
-            } else {
-
-                NumberHistoryInfo numberHistoryInfo = mNumberList.get(index);
-                mNumber.setIssue(numberHistoryInfo.getIssue());
-                mNumber.setNumbers(numberHistoryInfo.getNumbers());
-                mNumber.setTime(numberHistoryInfo.getTime());
-            }
-
+//            NumberCurrentInfo mNumber = new NumberCurrentInfo();
+//            mNumber.setName(mNumberInfo.getName());
+//
+//            if ("1".equals(mNumberInfo.getName())) {
+//                NumberHistoryHKInfo numberHistoryHKInfo = mNumberHKList.get(index);
+//                mNumber.setIssue(numberHistoryHKInfo.getIssue());
+//                mNumber.setNumbers(numberHistoryHKInfo.getNumbers());
+//                mNumber.setTime(numberHistoryHKInfo.getTime());
+//                mNumber.setZodiac(numberHistoryHKInfo.getZodiac());
+//            } else {
+//
+//                NumberHistoryInfo numberHistoryInfo = mNumberHistoryList.get(index);
+//                mNumber.setIssue(numberHistoryInfo.getIssue());
+//                mNumber.setNumbers(numberHistoryInfo.getNumbers());
+//                mNumber.setTime(numberHistoryInfo.getTime());
+//            }
+            NumberCurrentInfo currentInfo = mNumberHistoryList.get(index);
+            currentInfo.setName(mNumberName);
             NumberDataUtils utils = new NumberDataUtils();
-            utils.numberHistoryShow(mContext, view, mNumber, 2, false, false, null);
+            utils.numberHistoryShow(mContext, view, currentInfo, 2, false, false, null, serverTime);
         }
     }
 
@@ -1161,7 +1277,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
             fl_number_history_list.setVisibility(View.VISIBLE);
             fl_numbner_history_info.setVisibility(View.GONE);
 
-            numbersDataShow(1);
+//            numbersDataShow(1);
         }
     }
 
@@ -1253,6 +1369,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
      */
     private void leftAnimation() {
         getObtianDraw1();
+        getPrevious();
         AnimatorSet leftSet = new AnimatorSet();
         iv_number_copy.measure(0, 0);
         ObjectAnimator transright = ObjectAnimator.ofFloat(iv_number_copy, "translationX", 0, -iv_number_copy.getMeasuredWidth());
@@ -1276,7 +1393,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                getPrevious();
+//                getPrevious();
                 isAnimationStart = false;
             }
 

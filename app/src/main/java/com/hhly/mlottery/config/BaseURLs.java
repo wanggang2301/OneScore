@@ -165,7 +165,9 @@ public class BaseURLs {
 
 
     // 所有彩票最后一期开奖结果
-    private final static String URL_LASTLOTTERY = "lastLotteryResults.findLastLotteryResults.do";
+//    private final static String URL_LASTLOTTERY = "lastLotteryResults.findLastLotteryResults.do";
+//    private final static String URL_LASTLOTTERY = "lastLotteryResults.findNewAndroidSecLastLotteryResults.do";// 新增了6个彩种
+    private final static String URL_LASTLOTTERY = "lastLotteryResults.findAndroidSecLastLotteryResults.do";// 新增了8个彩种
 
     // 香港开奖
     private final static String URL_LHCDetailed = "detailedLotteryResults.findLhcDetailedResults.do";
@@ -183,7 +185,8 @@ public class BaseURLs {
     private final static String URL_YNSSCDetailed = "detailedLotteryResults.findYNSSCDetailedResults.do";
 
     // 七星彩
-    private final static String URL_QXCDetailed = "detailedLotteryResults.findQXCDetailedResults.do";
+//    private final static String URL_QXCDetailed = "detailedLotteryResults.findQXCDetailedResults.do";
+    private final static String URL_QXCDetailed = "detailedLotteryResults.findNewQXCAndroidDetailedResults.do";// 此接口新增了奖金池
 
     // 广东11选5
     private final static String URL_D11X5Detailed = "detailedLotteryResults.findD11X5DetailedResults.do";
@@ -235,6 +238,37 @@ public class BaseURLs {
 
     // 天津时时彩
     private final static String URL_TJSSCDetailed = "detailedLotteryResults.findTJSSCDetailedResults.do";
+
+    // 双色球
+//    private final static String URL_SSQDetailed = "detailedLotteryResults.findSSQAndroidDetailedResults.do";
+    private final static String URL_SSQDetailed = "detailedLotteryResults.findSSQAndroidSecDetailedResults.do";
+
+    // 排列3
+//    private final static String URL_PL3Detailed = "detailedLotteryResults.findPL3AndroidDetailedResults.do";
+    private final static String URL_PL3Detailed = "detailedLotteryResults.findPL3AndroidSecDetailedResults.do";
+
+    // 排列5
+//    private final static String URL_PL5Detailed = "detailedLotteryResults.findPL5AndroidDetailedResults.do";
+    private final static String URL_PL5Detailed = "detailedLotteryResults.findPL5AndroidSecDetailedResults.do";
+
+    // 福彩3D
+    private final static String URL_F3DDetailed = "detailedLotteryResults.findF3DAndroidDetailedResults.do";
+
+    // 七乐彩
+    private final static String URL_QLCDetailed = "detailedLotteryResults.findQLCAndroidDetailedResults.do";
+
+    // 大乐透
+//    private final static String URL_DLTDetailed = "detailedLotteryResults.findDLTAndroidDetailedResults.do";
+    private final static String URL_DLTDetailed = "detailedLotteryResults.findDLTAndroidSecDetailedResults.do";
+
+    // 胜负彩
+    private final static String URL_SFCDetailed = "detailedLotteryResults.findSFCAndroidSecDetailedResults.do";
+
+    // 6场半全场
+    private final static String URL_LCBQCDetailed = "detailedLotteryResults.findZC6AndroidSecDetailedResults.do";
+
+    // 4场进球
+    private final static String URL_SCJQDetailed = "detailedLotteryResults.findJQ4AndroidSecDetailedResults.do";
 
     /*
      *
@@ -356,7 +390,8 @@ public class BaseURLs {
     //视频直播
     public final static String URL_FOOTBALL_DETAIL_URL_MATCHVIDEO_DATA = URL_API_HOST + URL_MATCHVIDEO_DATA;
     // 二期改版首页接口
-    private final static String URL_HOME_PAGER_DATA = "mainPage.findAndroidMainRsts.do";
+//    private final static String URL_HOME_PAGER_DATA = "mainPage.findAndroidMainRsts.do";
+    private final static String URL_HOME_PAGER_DATA = "mainPage.findAndroidLotteryMainRsts.do";// 1.2.0版本首页新接口
 
 
     //足球内页改版滚球赔率接口和详情接口
@@ -441,6 +476,33 @@ public class BaseURLs {
 
     // 天津时时彩
     public final static String URL_TJSSCDetailedResults = URL_API_HOST + URL_TJSSCDetailed;
+
+    // 双色球
+    public final static String URL_SSQDetailedResults = URL_API_HOST + URL_SSQDetailed;
+
+    // 排列3
+    public final static String URL_PL3DetailedResults = URL_API_HOST + URL_PL3Detailed;
+
+    // 排列5
+    public final static String URL_PL5DetailedResults = URL_API_HOST + URL_PL5Detailed;
+
+    // 福彩3D
+    public final static String URL_F3DDetailedResults = URL_API_HOST + URL_F3DDetailed;
+
+    // 七乐彩
+    public final static String URL_QLCDetailedResults = URL_API_HOST + URL_QLCDetailed;
+
+    // 大乐透
+    public final static String URL_DLTDetailedResults = URL_API_HOST + URL_DLTDetailed;
+
+    // 胜负彩
+    public final static String URL_SFCDetailedResults = URL_API_HOST + URL_SFCDetailed;
+
+    // 6场半全场
+    public final static String URL_LCBQCDetailedResults = URL_API_HOST + URL_LCBQCDetailed;
+
+    // 4场进球
+    public final static String URL_SCJQDetailedResults = URL_API_HOST + URL_SCJQDetailed;
 
     /*
      *
@@ -914,11 +976,11 @@ public class BaseURLs {
     public final static String BASKET_FIND_MATCH = URL_API_HOST + "androidBasketballMatch.findConcernVsThirdIds.do";
 
     //用户注销
-    public final static String EXIT_PUSH_ONLINE = URL_API_HOST + "pushSetting.exitUpdateOnlile.do";
+    public final static String EXIT_PUSH_ONLINE=URL_API_HOST+"pushSetting.exitUpdateOnlile.do";
     //上传性别的公用接口
-    public final static String UPDATEUSERINFO = URL_API_HOST + "androidUserCenter.updateUserInfo.do";
+    public final static String UPDATEUSERINFO=URL_API_HOST+"androidUserCenter.updateUserInfo.do";
     //明星头像
-    public final static String FINDHEADICONS = URL_API_HOST + "systemSettings.findHeadIcons.do";
+    public final static String  FINDHEADICONS=URL_API_HOST+"systemSettings.findHeadIcons.do";
 
     //篮球内页文字直播
     public final static String BASKET_DETAIL_TEXTLIVE = URL_API_HOST + "basketballDetail.findTextLive.do";  //basketballDetail  改接口

@@ -1,6 +1,7 @@
 package com.hhly.mlottery.bean.homepagerentity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -46,6 +47,16 @@ public class HomeBodysEntity implements Serializable {
     private int type;// 关联赛事类型 1篮球，2足球
     private String infoTypeName;// 资讯类型
     private String summary;// 资讯摘要
+
+    private List<HomeBodysLottery> lottery;// 新彩票条目
+
+    public List<HomeBodysLottery> getLottery() {
+        return lottery;
+    }
+
+    public void setLottery(List<HomeBodysLottery> lottery) {
+        this.lottery = lottery;
+    }
 
     public String getSummary() {
         return summary;

@@ -44,6 +44,6 @@ public class NumberHistoryInfo implements Serializable {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return "开奖期号：" + getIssue() + "-开奖号码 ：" + getNumbers() + "--时间："
-				+ getTime();
+				+ getTime() ;
 	}
 }

@@ -14,17 +14,21 @@ import android.view.ViewParent;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.gif.GifDrawableLoadProvider;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.activity.HomePagerActivity;
+import com.hhly.mlottery.activity.NumbersActivity;
 import com.hhly.mlottery.activity.NumbersInfoBaseActivity;
 import com.hhly.mlottery.activity.WebActivity;
 import com.hhly.mlottery.bean.homepagerentity.HomeBodysEntity;
+import com.hhly.mlottery.bean.homepagerentity.HomeBodysLottery;
 import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomeOtherListsEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomePagerEntity;
@@ -35,9 +39,11 @@ import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.HomeNumbersSplit;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.NumberDataUtils;
 import com.hhly.mlottery.widget.WrapContentHeightViewPager;
 import com.umeng.analytics.MobclickAgent;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -76,6 +82,12 @@ public class HomeListBaseAdapter extends BaseAdapter {
 
     private List<Fragment> fragmentList = new ArrayList<>();
     private int circularSize = 0;// 入口小圆点
+    private List<View> lottery_item_list;// 新彩票条目集合
+    private List<TextView> lottery_item_name_list;// 新彩票入口名称
+    private List<TextView> lottery_item_desc_list;// 新彩票入口描述
+    private List<ImageView> lottery_item_icon_list;// 新彩票入口图标
+    private View lotteryItemView;// 新彩票条目
+    private LinearLayout ll_lottery_item_title;
 
     /**
      * 构造
@@ -147,6 +159,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         final String imageurl = bodys.get(j).getPicUrl();// 分享图片Url
                         final String title = bodys.get(j).getTitle();// 分享标题
                         final String summary = bodys.get(j).getSummary();// 分享摘要
+                        final String lotteryName = bodys.get(j).getName();// 彩票name
+                        final List<HomeBodysLottery> lotteryList = bodys.get(j).getLottery();// 彩票Item
                         switch (labType) {
                             case 1:// 热门赛事
                                 MobclickAgent.onEvent(mContext, "HomePager_Competition_Item");
@@ -236,8 +250,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                                 case 2:// 内页
                                                 {
                                                     Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
-                                                    String numberName = jumpAddr.substring(1, jumpAddr.toCharArray().length);
-                                                    intent.putExtra("numberName", numberName);
+//                                                    String numberName = jumpAddr.substring(1, jumpAddr.toCharArray().length);
+                                                    intent.putExtra("numberName", lotteryName);
                                                     mContext.startActivity(intent);
                                                     break;
                                                 }
@@ -245,6 +259,43 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                         }
                                     }
                                 });
+                                break;
+                            case 7:// 1.2.0版新增彩票入口条目
+                                ll_lottery_item_title.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        mContext.startActivity(new Intent(mContext, NumbersActivity.class));
+                                    }
+                                });
+                                for (int m = 0, lenm = lottery_item_list.size(); m < lenm; m++) {
+                                    final int index = m;
+                                    lottery_item_list.get(m).setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            if (index < lotteryList.size()) {
+                                                HomeBodysLottery lottery = lotteryList.get(index);
+                                                switch (lottery.getJumpType()) {
+                                                    case 0:// 无
+                                                        break;
+                                                    case 1:// 页面
+                                                    {
+                                                        Intent intent = new Intent(mContext, WebActivity.class);
+                                                        intent.putExtra("key", lottery.getJumpAddr());
+                                                        mContext.startActivity(intent);
+                                                        break;
+                                                    }
+                                                    case 2:// 内页
+                                                    {
+                                                        Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
+                                                        intent.putExtra("numberName", lottery.getName());
+                                                        mContext.startActivity(intent);
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    });
+                                }
                                 break;
                         }
                     }
@@ -285,6 +336,55 @@ public class HomeListBaseAdapter extends BaseAdapter {
         data_info_icon01 = (ImageView) view.findViewById(R.id.iv_data_info_icon01);
         data_info_title01 = (TextView) view.findViewById(R.id.tv_data_info_title01);
         data_info_date01 = (TextView) view.findViewById(R.id.tv_data_info_date01);
+        return view;
+    }
+
+    /**
+     * 获取1.2.0版新加彩票入口条目
+     *
+     * @return 热门资讯条目
+     */
+    private View getLotteryItemView() {
+        View view = View.inflate(mContext, R.layout.home_page_item_lottery, null);
+        ll_lottery_item_title = (LinearLayout) view.findViewById(R.id.ll_lottery_item_title);
+        TextView home_lottery_item_name1 = (TextView) view.findViewById(R.id.home_lottery_item_name1);
+        TextView home_lottery_item_name2 = (TextView) view.findViewById(R.id.home_lottery_item_name2);
+        TextView home_lottery_item_name3 = (TextView) view.findViewById(R.id.home_lottery_item_name3);
+        TextView home_lottery_item_name4 = (TextView) view.findViewById(R.id.home_lottery_item_name4);
+        TextView home_lottery_item_name5 = (TextView) view.findViewById(R.id.home_lottery_item_name5);
+        TextView home_lottery_item_desc2 = (TextView) view.findViewById(R.id.home_lottery_item_desc2);
+        TextView home_lottery_item_desc3 = (TextView) view.findViewById(R.id.home_lottery_item_desc3);
+        TextView home_lottery_item_desc4 = (TextView) view.findViewById(R.id.home_lottery_item_desc4);
+        TextView home_lottery_item_desc5 = (TextView) view.findViewById(R.id.home_lottery_item_desc5);
+        ImageView home_lottery_item_icon1 = (ImageView) view.findViewById(R.id.home_lottery_item_icon1);
+        ImageView home_lottery_item_icon2 = (ImageView) view.findViewById(R.id.home_lottery_item_icon2);
+        ImageView home_lottery_item_icon3 = (ImageView) view.findViewById(R.id.home_lottery_item_icon3);
+        ImageView home_lottery_item_icon4 = (ImageView) view.findViewById(R.id.home_lottery_item_icon4);
+        ImageView home_lottery_item_icon5 = (ImageView) view.findViewById(R.id.home_lottery_item_icon5);
+        lottery_item_list = new ArrayList<>();
+        lottery_item_list.add(view.findViewById(R.id.rl_lottery_item1));
+        lottery_item_list.add(view.findViewById(R.id.ll_lottery_item2));
+        lottery_item_list.add(view.findViewById(R.id.ll_lottery_item3));
+        lottery_item_list.add(view.findViewById(R.id.ll_lottery_item4));
+        lottery_item_list.add(view.findViewById(R.id.ll_lottery_item5));
+        lottery_item_name_list = new ArrayList<>();
+        lottery_item_name_list.add(home_lottery_item_name1);
+        lottery_item_name_list.add(home_lottery_item_name2);
+        lottery_item_name_list.add(home_lottery_item_name3);
+        lottery_item_name_list.add(home_lottery_item_name4);
+        lottery_item_name_list.add(home_lottery_item_name5);
+        lottery_item_desc_list = new ArrayList<>();
+        lottery_item_desc_list.add(null);// 第一条彩种没有描述信息
+        lottery_item_desc_list.add(home_lottery_item_desc2);
+        lottery_item_desc_list.add(home_lottery_item_desc3);
+        lottery_item_desc_list.add(home_lottery_item_desc4);
+        lottery_item_desc_list.add(home_lottery_item_desc5);
+        lottery_item_icon_list = new ArrayList<>();
+        lottery_item_icon_list.add(home_lottery_item_icon1);
+        lottery_item_icon_list.add(home_lottery_item_icon2);
+        lottery_item_icon_list.add(home_lottery_item_icon3);
+        lottery_item_icon_list.add(home_lottery_item_icon4);
+        lottery_item_icon_list.add(home_lottery_item_icon5);
         return view;
     }
 
@@ -602,14 +702,14 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             if (homeBodysEntity.getHomeLogoUrl() == null) {
                                 score01_home_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_score_item_icon_def));
                             } else {
-                                ImageLoader.load(mContext,homeBodysEntity.getHomeLogoUrl(),R.mipmap.home_score_item_icon_def).into(score01_home_icon);
+                                ImageLoader.load(mContext, homeBodysEntity.getHomeLogoUrl(), R.mipmap.home_score_item_icon_def).into(score01_home_icon);
 
                             }
                             score01_home_name.setText(homeBodysEntity.getHometeam());// 设置主队队名
                             if (homeBodysEntity.getGuestLogoUrl() == null) {
                                 score01_guest_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_score_item_icon_def));
                             } else {
-                                ImageLoader.load(mContext,homeBodysEntity.getGuestLogoUrl(),R.mipmap.home_score_item_icon_def).into(score01_guest_icon);
+                                ImageLoader.load(mContext, homeBodysEntity.getGuestLogoUrl(), R.mipmap.home_score_item_icon_def).into(score01_guest_icon);
                             }
                             score01_guest_name.setText(homeBodysEntity.getGuestteam());// 设置客队队名
                         }
@@ -624,7 +724,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             if (homeBodysEntity.getPicUrl() == null) {
                                 data_info_icon01.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_data_info_def));
                             } else {
-                                ImageLoader.load(mContext,homeBodysEntity.getPicUrl(),R.mipmap.home_data_info_def).into(data_info_icon01);
+                                ImageLoader.load(mContext, homeBodysEntity.getPicUrl(), R.mipmap.home_data_info_def).into(data_info_icon01);
                             }
                             Date curDate = new Date(System.currentTimeMillis());// 获取当前日期
                             String mDate = DateUtil.formatDate(curDate);
@@ -704,6 +804,59 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             }
                         }
                         break;
+                        case 7:// 1.2.0版新彩票条目入口
+                            // 初始化控件
+                            lotteryItemView = getLotteryItemView();
+
+                            // 设置控件数据
+                            for (int k = 0, lens = bodys.get(j).getLottery().size(); k < lens; k++) {
+                                HomeBodysLottery mLottery = bodys.get(j).getLottery().get(k);
+                                NumberDataUtils.setTextTitle(mContext, lottery_item_name_list.get(k), mLottery.getName());
+                                ImageLoader.loadFitCenter(mContext, mLottery.getPicUrl(), R.mipmap.home_number_item_icon_def).into(lottery_item_icon_list.get(k));
+                                if (k != 0) {
+                                    switch (mLottery.getName()) {
+                                        case "24":// 双色球
+                                        case "29":// 大乐透
+                                            // 显示奖金池 用亿做单位保留两们小数
+                                            String bonus;
+                                            if (!TextUtils.isEmpty(mLottery.getJackpot())) {
+                                                if (mLottery.getJackpot().length() >= 9) {
+                                                    Double str = Double.parseDouble(mLottery.getJackpot()) / 100000000;
+                                                    DecimalFormat df = new DecimalFormat("#.00");
+                                                    bonus = df.format(str);
+                                                    lottery_item_desc_list.get(k).setText(TextUtils.isEmpty(bonus) ? mContext.getResources().getString(R.string.home_number_desc_bonus) : mContext.getResources().getString(R.string.home_number_desc_bonus) + bonus + mContext.getResources().getString(R.string.home_number_desc_yi));
+                                                } else {
+                                                    Double str = Double.parseDouble(mLottery.getJackpot()) / 10000;
+                                                    DecimalFormat df = new DecimalFormat("#.00");
+                                                    bonus = df.format(str);
+                                                    lottery_item_desc_list.get(k).setText(TextUtils.isEmpty(bonus) ? mContext.getResources().getString(R.string.home_number_desc_bonus) : mContext.getResources().getString(R.string.home_number_desc_bonus) + bonus + mContext.getResources().getString(R.string.home_number_desc_wan));
+                                                }
+                                            }else{
+                                                lottery_item_desc_list.get(k).setText(mContext.getResources().getString(R.string.home_number_desc_bonus));
+                                            }
+                                            break;
+                                        case "6":// 七星彩
+                                        case "28":// 七乐彩
+                                        case "30":
+                                        case "31":
+                                        case "32":
+                                            // 显示奖金池 用万做单位保留两们小数
+                                            String bonus1 = null;
+                                            if (!TextUtils.isEmpty(mLottery.getJackpot())) {
+                                                Double str = Double.parseDouble(mLottery.getJackpot()) / 10000;
+                                                DecimalFormat df = new DecimalFormat("#.00");
+                                                bonus1 = df.format(str);
+                                            }
+                                            lottery_item_desc_list.get(k).setText(TextUtils.isEmpty(bonus1) ? mContext.getResources().getString(R.string.home_number_desc_bonus) : mContext.getResources().getString(R.string.home_number_desc_bonus) + bonus1 + mContext.getResources().getString(R.string.home_number_desc_wan));
+                                            break;
+                                        default:
+                                            // 其它没有奖金池 显示描述信息
+                                            NumberDataUtils.numberAddDesc(mContext, lottery_item_desc_list.get(k), mLottery.getName());
+                                            break;
+                                    }
+                                }
+                            }
+                            break;
                     }
                 }
             }
@@ -755,7 +908,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
         if (homeBodysEntity.getPicUrl() == null) {
             ks_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
         } else {
-            ImageLoader.load(mContext,homeBodysEntity.getPicUrl(),R.mipmap.home_number_item_icon_def).into(ks_icon);
+            ImageLoader.load(mContext, homeBodysEntity.getPicUrl(), R.mipmap.home_number_item_icon_def).into(ks_icon);
 
         }
         ks_name.setText(lotteryName);
@@ -781,7 +934,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
         if (homeBodysEntity.getPicUrl() == null) {
             klsf_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
         } else {
-            ImageLoader.load(mContext,homeBodysEntity.getPicUrl(),R.mipmap.home_number_item_icon_def).into(klsf_icon);
+            ImageLoader.load(mContext, homeBodysEntity.getPicUrl(), R.mipmap.home_number_item_icon_def).into(klsf_icon);
 
         }
         klsf_name.setText(lotteryName);
@@ -821,7 +974,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
         if (homeBodysEntity.getPicUrl() == null) {
             bjsc_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
         } else {
-            ImageLoader.load(mContext,homeBodysEntity.getPicUrl(),R.mipmap.home_number_item_icon_def).into(bjsc_icon);
+            ImageLoader.load(mContext, homeBodysEntity.getPicUrl(), R.mipmap.home_number_item_icon_def).into(bjsc_icon);
 
         }
         bjsc_name.setText(lotteryName);
@@ -847,7 +1000,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
         if (homeBodysEntity.getPicUrl() == null) {
             qxc_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
         } else {
-            ImageLoader.load(mContext,homeBodysEntity.getPicUrl(),R.mipmap.home_number_item_icon_def).into(qxc_icon);
+            ImageLoader.load(mContext, homeBodysEntity.getPicUrl(), R.mipmap.home_number_item_icon_def).into(qxc_icon);
 
         }
         qxc_name.setText(lotteryName);
@@ -881,7 +1034,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
         if (homeBodysEntity.getPicUrl() == null) {
             hk_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
         } else {
-            ImageLoader.load(mContext,homeBodysEntity.getPicUrl(),R.mipmap.home_number_item_icon_def).into(hk_icon);
+            ImageLoader.load(mContext, homeBodysEntity.getPicUrl(), R.mipmap.home_number_item_icon_def).into(hk_icon);
 
         }
         hk_name.setText(lotteryName);
@@ -1021,7 +1174,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
         if (homeBodysEntity.getPicUrl() == null) {
             ssc_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
         } else {
-            ImageLoader.load(mContext,homeBodysEntity.getPicUrl(),R.mipmap.home_number_item_icon_def).into(ssc_icon);
+            ImageLoader.load(mContext, homeBodysEntity.getPicUrl(), R.mipmap.home_number_item_icon_def).into(ssc_icon);
 
         }
         ssc_name.setText(lotteryName);
@@ -1060,6 +1213,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
 
                     mPagerAdapter = new HomePagerAdapter(mContext, mHomePagerEntity, mViewHolder);
                     mViewHolder.mViewPager.setAdapter(mPagerAdapter);// 轮播图适配数据
+
                     try {
                         if (mHomePagerEntity == null || mHomePagerEntity.getBanners() == null || mHomePagerEntity.getBanners().getContent() == null || mHomePagerEntity.getBanners().getContent().size() == 0) {
 
@@ -1184,6 +1338,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             }
                             mViewHolderOther.ll_content.addView(lotteryView);
                             addViewLottery = true;
+                            break;
+                        case 7:
+                            mViewHolderOther.tv_title.setVisibility(View.GONE);
+                            mViewHolderOther.ll_content.addView(lotteryItemView);
                             break;
                     }
                 }

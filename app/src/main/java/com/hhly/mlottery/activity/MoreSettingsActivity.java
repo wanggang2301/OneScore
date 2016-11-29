@@ -107,12 +107,13 @@ public class MoreSettingsActivity extends BaseActivity  implements View.OnClickL
         super.onResume();
         if(CommonUtils.isLogin()){
             tv_logout.setVisibility(View.VISIBLE);
-            findViewById(R.id.view_botom).setVisibility(View.VISIBLE);
-
+         //
+            //   findViewById(R.id.view_botom).setVisibility(View.VISIBLE);
         }else{
             tv_logout.setVisibility(View.GONE);
          /*   findViewById(R.id.view_top).setVisibility(View.GONE);
             findViewById(R.id.view_botom).setVisibility(View.GONE);*/
+            findViewById(R.id.hui_img).setVisibility(View.GONE);
             findViewById(R.id.view_botom).setVisibility(View.GONE);
         }
     }

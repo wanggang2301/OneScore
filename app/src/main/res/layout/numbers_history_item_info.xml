@@ -84,7 +84,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:padding="5dp"
-                android:layout_marginRight="5dp"
                 android:src="@mipmap/number_right_icon" />
         </LinearLayout>
         

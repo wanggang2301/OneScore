@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!--开奖查询条目-->
+
+    <LinearLayout
+        android:id="@+id/ll_lottery_item_title"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:src="@mipmap/home_item_lottery_icon_title" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_weight="2"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/number_item_name"
+                android:textColor="@color/home_item_lottery_title"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingTop="3dp"
+                android:text="@string/number_item_name_desc"
+                android:textColor="@color/home_item_lottery_title_des"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:text=">>" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/linecolor" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_lottery_item1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/home_lottery_item_icon1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_margin="20dp"
+                tools:src="@mipmap/home_item_lottery_icon_sfc" />
+
+            <TextView
+                android:id="@+id/home_lottery_item_name1"
+                style="@style/home_item_lottery_name"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                tools:text="@string/number_cz_sfc" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/linecolor" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/ll_lottery_item2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/home_lottery_item_name2"
+                            style="@style/home_item_lottery_name"
+                            tools:text="@string/number_cz_ssq" />
+
+                        <TextView
+                            android:id="@+id/home_lottery_item_desc2"
+                            style="@style/home_item_lottery_name_desc"
+                            tools:text="滚动奖池0.15亿" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/home_lottery_item_icon2"
+                        style="@style/home_item_lottery_icon"
+                        tools:src="@mipmap/home_item_lottery_icon_ssq" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/linecolor" />
+
+                <LinearLayout
+                    android:id="@+id/ll_lottery_item3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/home_lottery_item_name3"
+                            style="@style/home_item_lottery_name"
+                            tools:text="@string/number_cz_dlt" />
+
+                        <TextView
+                            android:id="@+id/home_lottery_item_desc3"
+                            style="@style/home_item_lottery_name_desc"
+                            tools:text="滚动奖池0.15亿" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/home_lottery_item_icon3"
+                        style="@style/home_item_lottery_icon"
+                        tools:src="@mipmap/home_item_lottery_icon_dlt" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/linecolor" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/ll_lottery_item4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/home_lottery_item_name4"
+                            style="@style/home_item_lottery_name"
+                            tools:text="@string/number_cz_pl3" />
+
+                        <TextView
+                            android:id="@+id/home_lottery_item_desc4"
+                            style="@style/home_item_lottery_name_desc"
+                            tools:text="@string/number_code_desc_pl3" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/home_lottery_item_icon4"
+                        style="@style/home_item_lottery_icon"
+                        tools:src="@mipmap/home_item_lottery_icon_pl3" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/linecolor" />
+
+                <LinearLayout
+                    android:id="@+id/ll_lottery_item5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/home_lottery_item_name5"
+                            style="@style/home_item_lottery_name"
+                            tools:text="@string/number_cz_pl5" />
+
+                        <TextView
+                            android:id="@+id/home_lottery_item_desc5"
+                            style="@style/home_item_lottery_name_desc"
+                            tools:text="@string/number_code_desc_pl5" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/home_lottery_item_icon5"
+                        style="@style/home_item_lottery_icon"
+                        tools:src="@mipmap/home_item_lottery_icon_pl5" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

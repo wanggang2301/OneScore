@@ -11,15 +11,26 @@ import java.util.List;
  * @date 2015-10-20 下午12:04:11
  */
 public class NumbersHistoryBean {
-	public List<NumberHistoryHKInfo> historyLotteryResults;
 
-	public List<NumberHistoryHKInfo> getHistoryLotteryResults() {
+	public List<NumberCurrentInfo> historyLotteryResults;
+
+	public List<NumberCurrentInfo> getHistoryLotteryResults() {
 		return historyLotteryResults;
 	}
 
-	public void setHistoryLotteryResults(
-			List<NumberHistoryHKInfo> historyLotteryResults) {
+	public void setHistoryLotteryResults(List<NumberCurrentInfo> historyLotteryResults) {
 		this.historyLotteryResults = historyLotteryResults;
 	}
+
+	//	public List<NumberHistoryHKInfo> historyLotteryResults;
+//
+//	public List<NumberHistoryHKInfo> getHistoryLotteryResults() {
+//		return historyLotteryResults;
+//	}
+//
+//	public void setHistoryLotteryResults(
+//			List<NumberHistoryHKInfo> historyLotteryResults) {
+//		this.historyLotteryResults = historyLotteryResults;
+//	}
 
 }

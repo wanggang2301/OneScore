@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -77,7 +78,7 @@ public class AvatarSelectionActivity extends  Activity implements  View.OnClickL
                         mMaleDatas = json.getData().getMale();
                         //start_male_size.setText(mMaleDatas.size());
 
-
+                    start_male_size.setText(mMaleDatas.size()+"");
 
                     if (choseStartManAdapter==null){
                         choseStartManAdapter = new ChoseStartManAdapter(AvatarSelectionActivity.this,json.getData().getMale(), R.layout.avatar_start_head_child);
@@ -98,7 +99,7 @@ public class AvatarSelectionActivity extends  Activity implements  View.OnClickL
 
                     //足球宝贝
                     mFemaleDatas = json.getData().getFemale();
-
+                    start_famle_size.setText(mFemaleDatas.size()+"");
                     if (choseStartAdapter==null){
                         choseStartAdapter = new ChoseStartWomanAdapter(AvatarSelectionActivity.this, json.getData().getFemale(), R.layout.avatar_start_head_child);
                         famle_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -174,8 +175,6 @@ public class AvatarSelectionActivity extends  Activity implements  View.OnClickL
     /*上传图片url  后台绑定*/
 
     private void putPhotoUrl(final String headerUrl) {
-
-
         Map<String, String> param = new HashMap<>();
 
         param.put("deviceToken", AppConstants.deviceToken);
@@ -191,7 +190,9 @@ public class AvatarSelectionActivity extends  Activity implements  View.OnClickL
                     UiUtils.toast(MyApp.getInstance(), R.string.picture_put_success);
                     CommonUtils.saveRegisterInfo(register);
                     AppConstants.register.getData().getUser().setHeadIcon(headerUrl);
-                    EventBus.getDefault().post(new ChoseHeadStartBean(headerUrl));
+                    if (register.getData().getUser().getHeadIcon()!=null){
+                        EventBus.getDefault().post(new ChoseHeadStartBean(headerUrl));
+                    }
                 } else {
                     CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
                 }
@@ -199,7 +200,7 @@ public class AvatarSelectionActivity extends  Activity implements  View.OnClickL
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                UiUtils.toast(AvatarSelectionActivity.this, R.string.picture_put_failed);
+                //UiUtils.toast(AvatarSelectionActivity.this, R.string.picture_put_failed);
             }
         }, Register.class);
 

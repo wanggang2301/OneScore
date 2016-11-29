@@ -78,7 +78,11 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                     break;
                 case LOGGED_ON:
                     mTv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
-                    ImageLoader.load(HomeUserOptionsActivity.this,AppConstants.register.getData().getUser().getHeadIcon()).into(mUser_image);
+                   // ImageLoader.load(HomeUserOptionsActivity.this,AppConstants.register.getData().getUser().getHeadIcon()).into(mUser_image);
+                    Glide.with(HomeUserOptionsActivity.this)
+                            .load(AppConstants.register.getData().getUser().getHeadIcon())
+                            .error(R.mipmap.center_head)
+                            .into(mUser_image);
                     mTv_nickname.setEnabled(false);
                     break;
                 default:
@@ -342,12 +346,20 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     }
     public void onEventMainThread(ChoseHeadStartBean choseHeadStartBean){
 
-        ImageLoader.load(HomeUserOptionsActivity.this,choseHeadStartBean.startUrl).into(mUser_image);
+        //ImageLoader.load(HomeUserOptionsActivity.this,choseHeadStartBean.startUrl,R.mipmap.center_head).into(mUser_image);
+        Glide.with(HomeUserOptionsActivity.this)
+                .load(choseHeadStartBean.startUrl)
+                .error(R.mipmap.center_head)
+                .into(mUser_image);
     }
     public void onEventMainThread(Register register){
 
-        ImageLoader.load(HomeUserOptionsActivity.this,register.getData().getUser().getHeadIcon()).into(mUser_image);
-        mTv_nickname.setText(register.getData().getUser().getNickName());
+        //ImageLoader.load(HomeUserOptionsActivity.this,register.getData().getUser().getHeadIcon()).into(mUser_image);
+      Glide.with(HomeUserOptionsActivity.this)
+              .load(register.getData().getUser().getHeadIcon())
+              .error(R.mipmap.center_head)
+              .into(mUser_image);
+       mTv_nickname.setText(register.getData().getUser().getNickName());
     }
     @Override
     protected void onResume() {
