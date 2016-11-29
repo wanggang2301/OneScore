@@ -91,27 +91,6 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
             timeMsg = mContext.getResources().getString(R.string.foreign_now);
         }
 
-/*
-        if (month >= 1) {
-            timeMsg = (int) month + mContext.getResources().getString(R.string.foreign_month); //显示月
-        } else {
-            //mouth< 1
-            if (dd >= 1) {
-                timeMsg = (int) dd + mContext.getResources().getString(R.string.foreign_day); //显示日
-            } else {
-                if (hh >= 1) {
-                    timeMsg = (int) hh + mContext.getResources().getString(R.string.foreign_hour); //显示小时
-                } else {
-                    if (mm >= 1) {
-                        timeMsg = (int) mm + mContext.getResources().getString(R.string.foreign_minites); //显示分轴
-                    } else {
-                        timeMsg = mContext.getResources().getString(R.string.foreign_now);
-                    }
-
-                }
-            }
-        }*/
-
 
         L.d("asdfgh", "month=" + month);
         L.d("asdfgh", "dd=" + day);
@@ -160,6 +139,8 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
                     Glide.with(mContext).load(o.getPhoto()).asBitmap().into((ImageView) viewHolder.getView(R.id.iv_photo));
                 }
             });
+
+
             // ImageLoader.load(mContext,o.getPhoto(),R.mipmap.counsel_depth).into((ImageView) viewHolder.getView(R.id.iv_photo));
 
             if ("2".equals(o.getInfoType())) {
