@@ -1015,7 +1015,7 @@
     <string name="logout">退出當前帳號</string>
     <string name="logouting">正在注銷...</string>
     <string name="logout_fail">注銷失敗</string>
-    <string name="logout_succ">注銷成功</string>
+    <string name="logout_succ">退出成功</string>
     <string name="resend">重發</string>
     <string name="register_fail">注冊失敗</string>
     <string name="register_succ">注冊成功</string>

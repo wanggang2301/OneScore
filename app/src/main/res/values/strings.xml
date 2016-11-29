@@ -1028,7 +1028,7 @@
     <string name="logout">退出当前账户</string>
     <string name="logouting">正在注销...</string>
     <string name="logout_fail">注销失败</string>
-    <string name="logout_succ">注销成功</string>
+    <string name="logout_succ">退出成功</string>
     <string name="resend">重发</string>
     <string name="register_fail">注册失败</string>
     <string name="register_succ">注册成功</string>
