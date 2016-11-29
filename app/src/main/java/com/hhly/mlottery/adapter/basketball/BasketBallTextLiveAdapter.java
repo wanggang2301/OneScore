@@ -6,12 +6,12 @@ import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
-import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.view.CircleImageView;
 
 import java.util.List;
@@ -73,9 +73,16 @@ public class BasketBallTextLiveAdapter extends BaseQuickAdapter<BasketEachTextLi
             circleImageView.setVisibility(View.VISIBLE);
 
             if (1 == b.getTeamType()) { //主队
-                ImageLoader.load(mContext, BasketDetailsActivityTest.homeIconUrl, R.mipmap.basket_default).into(circleImageView);
+
+
+                Glide.with(mContext).load(BasketDetailsActivityTest.homeIconUrl).into(circleImageView);
+
+              //  ImageLoader.load(mContext, BasketDetailsActivityTest.homeIconUrl, R.mipmap.basket_default).into(circleImageView);
             } else if (2 == b.getTeamType()) { //客队
-                ImageLoader.load(mContext, BasketDetailsActivityTest.guestIconUrl, R.mipmap.basket_default).into(circleImageView);
+
+                Glide.with(mContext).load(BasketDetailsActivityTest.guestIconUrl).into(circleImageView);
+
+               // ImageLoader.load(mContext, BasketDetailsActivityTest.guestIconUrl, R.mipmap.basket_default).into(circleImageView);
             } else {
                 circleImageView.setVisibility(View.GONE);  //既不是主队也不是客队
             }
