@@ -41,7 +41,7 @@ public class BaseURLs {
             }
         }
 
-//        return "m.1332255.com:81";//测试环境。
+        //return "m.1332255.com";测试环境。
         return "m.13322.com";//发布版本
 
     }
@@ -831,9 +831,6 @@ public class BaseURLs {
     public final static String URL_FOOTBALL_DATABASE_STATISTIC_DETAILS = URL_API_HOST + "androidLeagueData.findAndroidStatics.do"; // "http://192.168.33.32:8080/mlottery/core/androidLeagueData.findAndroidStatics.do";
 
 
-
-
-
     //足球赛事提点
     public final static String URL_LEAGUESTATISTICSTODAY = URL_API_HOST + "toDayMatchStatistics.findTodayMatchStatistics.do";
 
@@ -986,7 +983,7 @@ public class BaseURLs {
     public final static String  FINDHEADICONS=URL_API_HOST+"systemSettings.findHeadIcons.do";
 
     //篮球内页文字直播
-    public final static String BASKET_DETAIL_TEXTLIVE = URL_API_HOST + "basketballDetail.findTextLive.do";
+    public final static String BASKET_DETAIL_TEXTLIVE = URL_API_HOST + "basketballDetail.findTextLive.do";  //basketballDetail  改接口
     //篮球内页球队统计
     public final static String BASKET_DETAIL_TEAM=URL_API_HOST+"basketballDetail.findTeamStats.do";
     //篮球内页球员统计

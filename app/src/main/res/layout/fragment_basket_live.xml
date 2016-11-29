@@ -13,6 +13,7 @@
         android:orientation="horizontal"
         android:paddingBottom="15dp"
         android:paddingTop="15dp"
+        android:visibility="gone"
         android:weightSum="4">
 
         <RadioButton
@@ -53,7 +54,79 @@
     <FrameLayout
         android:id="@+id/fl_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:layout_height="match_parent"
+        android:visibility="gone"></FrameLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#242328">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <FrameLayout
+                android:id="@+id/textlive_notext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="#242328"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="100dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/textlive_notext" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/basket_no_text_live"
+                        android:textColor="@color/version"
+                        android:textSize="@dimen/text_size_14" />
+
+                </LinearLayout>
+
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_pb"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#242328">
+
+                <ProgressBar
+                    android:id="@+id/pb_progress"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="90dp"
+                    android:gravity="center_horizontal"
+                    android:indeterminate="true" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_error"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#242328">
+
+                <include layout="@layout/basket_odds_new_error" />
+            </FrameLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>
 

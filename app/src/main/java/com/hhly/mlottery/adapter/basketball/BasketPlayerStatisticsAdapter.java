@@ -32,7 +32,7 @@ public class BasketPlayerStatisticsAdapter extends BaseQuickAdapter<BasketPlayer
             holder.setBackgroundColor(R.id.ll_basket_player,MyApp.getContext().getResources().getColor(R.color.usercenter_body_bg));
         }
 
-        holder.setText(R.id.basket_player_score1,entity.getPlayTime()+"");
+//        holder.setText(R.id.basket_player_score1,entity.getPlayTime()+"");
         holder.setText(R.id.basket_player_score2,entity.getScore()+"");
         holder.setText(R.id.basket_player_score3,entity.getShootHit()+"-"+entity.getShoot());
         holder.setText(R.id.basket_player_score4,(entity.getDefensiveRebound()+entity.getOffensiveRebound())+"");

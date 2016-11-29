@@ -1398,4 +1398,7 @@
     <string name="basket_text_live">文字直播</string>
     <string name="basket_team_statictics">球隊統計</string>
     <string name="basket_players_statictics">球員統計</string>
+    <string name="basket_no_text_live">暫無直播數據</string>
+
+    <string name="basket_player_no_data">暫無統計數據</string>
 </resources>

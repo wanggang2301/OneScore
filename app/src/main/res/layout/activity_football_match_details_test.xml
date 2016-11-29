@@ -233,11 +233,11 @@
                 android:id="@+id/iv_join_room_foot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="true"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginBottom="60dp"
                 android:layout_marginRight="20dp"
+                android:clickable="true"
                 android:src="@mipmap/join_room_icon" />
         </RelativeLayout>
 
