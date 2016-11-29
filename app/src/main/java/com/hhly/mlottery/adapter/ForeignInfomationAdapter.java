@@ -24,6 +24,7 @@ import com.hhly.mlottery.bean.foreigninfomation.OverseasInformationListBean;
 import com.hhly.mlottery.bean.foreigninfomation.TightBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.ImageLoader;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.ScreenUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.CircleImageView;
@@ -61,31 +62,61 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
         LinearLayout linearLayout = viewHolder.getView(R.id.item_ll);
         ImageLoader.load(mContext, o.getAvatar(), R.mipmap.center_head).into((CircleImageView) viewHolder.getView(R.id.civ_logo));
 
-        long mNumberTime = o.getCurrentTimestamp() - o.getTimestamp();
+        long mNumberTimeMinute = ((long) (o.getCurrentTimestamp() - o.getTimestamp())) / 1000;  //得到秒
+        // long minutes=mNumberTime
 
-        long month = mNumberTime / (1000 * 60 * 60 * 24 * 30);// 获取月
 
-        long dd = mNumberTime / (1000 * 60 * 60 * 24);// 获取天
+        float month = (float) mNumberTimeMinute / (60 * 60 * 24 * 30);// 获取月
 
-        long hh = mNumberTime / (1000 * 60 * 60);// 获取相差小时
 
-        long mm = mNumberTime / (1000 * 60);// 获取相差分
+        float day = (float) mNumberTimeMinute / (60 * 60 * 24);// 获取天
 
-        long ss = mNumberTime / 1000;// 获取相差秒
+        float hour = (float) mNumberTimeMinute / (60 * 60);// 获取相差小时
+
+        float minute = (float) mNumberTimeMinute / 60;// 获取相差分
+
+        float second = (float) mNumberTimeMinute;// 获取相差秒
 
         String timeMsg = "";
 
-        if (month != 0) {
-            timeMsg = dd + mContext.getResources().getString(R.string.foreign_month);
-        } else if (dd != 0) {
-            timeMsg = dd + mContext.getResources().getString(R.string.foreign_day);
-        } else if (hh != 0) {
-            timeMsg = hh + mContext.getResources().getString(R.string.foreign_hour);
-        } else if (mm != 0) {
-            timeMsg = mm + mContext.getResources().getString(R.string.foreign_minites);
+        if (month >= 1) {
+            timeMsg = (int) month + mContext.getResources().getString(R.string.foreign_month); //显示月
+        } else if (day >= 1) {
+            timeMsg = (int) day + mContext.getResources().getString(R.string.foreign_day); //显示日
+        } else if (hour >= 1) {
+            timeMsg = (int) hour + mContext.getResources().getString(R.string.foreign_hour); //显示小时
+        } else if (minute >= 1) {
+            timeMsg = (int) minute + mContext.getResources().getString(R.string.foreign_minites); //显示分轴
         } else {
             timeMsg = mContext.getResources().getString(R.string.foreign_now);
         }
+
+/*
+        if (month >= 1) {
+            timeMsg = (int) month + mContext.getResources().getString(R.string.foreign_month); //显示月
+        } else {
+            //mouth< 1
+            if (dd >= 1) {
+                timeMsg = (int) dd + mContext.getResources().getString(R.string.foreign_day); //显示日
+            } else {
+                if (hh >= 1) {
+                    timeMsg = (int) hh + mContext.getResources().getString(R.string.foreign_hour); //显示小时
+                } else {
+                    if (mm >= 1) {
+                        timeMsg = (int) mm + mContext.getResources().getString(R.string.foreign_minites); //显示分轴
+                    } else {
+                        timeMsg = mContext.getResources().getString(R.string.foreign_now);
+                    }
+
+                }
+            }
+        }*/
+
+
+        L.d("asdfgh", "month=" + month);
+        L.d("asdfgh", "dd=" + day);
+        L.d("asdfgh", "hh=" + hour);
+
 
         o.setSendtime(timeMsg);
 
@@ -123,7 +154,7 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
                     int imageWidth = resource.getWidth();
                     int imageHeight = resource.getHeight();
                     int height = ScreenUtils.getScreenWidth(mContext) * imageHeight / imageWidth;
-                    ViewGroup.LayoutParams para = ( viewHolder.getView(R.id.iv_photo)).getLayoutParams();
+                    ViewGroup.LayoutParams para = (viewHolder.getView(R.id.iv_photo)).getLayoutParams();
                     para.height = height;
                     (viewHolder.getView(R.id.iv_photo)).setLayoutParams(para);
                     Glide.with(mContext).load(o.getPhoto()).asBitmap().into((ImageView) viewHolder.getView(R.id.iv_photo));
