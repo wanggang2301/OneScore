@@ -170,7 +170,9 @@ public class BasketLiveFragment extends Fragment {
     }
 
     public void switchFragment(int position) {
-        currentFramnet = FragmentUtils.switchFragment(fragmentManager, R.id.fl_content, currentFramnet, fragments.get(position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, false);
+
+//        currentFramnet = FragmentUtils.switchFragment(fragmentManager, R.id.fl_content, currentFramnet, fragments.get(position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, false);
+        FragmentUtils.replaceFragment(fragmentManager,R.id.fl_content,fragments.get(position));
     }
 
     public void refresh() {
