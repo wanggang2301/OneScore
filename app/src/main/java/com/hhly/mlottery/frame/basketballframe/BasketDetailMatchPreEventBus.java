@@ -7,10 +7,10 @@ package com.hhly.mlottery.frame.basketballframe;
  * @Created on:2016/11/25  14:21.
  */
 
-public class BsaketDeatilMatchPreEventBus {
+public class BasketDetailMatchPreEventBus {
     private String msg;
 
-    public BsaketDeatilMatchPreEventBus(String msg) {
+    public BasketDetailMatchPreEventBus(String msg) {
         this.msg = msg;
     }
 

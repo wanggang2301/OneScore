@@ -322,12 +322,12 @@ public class BasketTextLiveFragment extends Fragment {
                         //1分钟刷新一次知道有文字直播时，切换到直播界面
 
                         if (!isFirstPolling) {
-                            EventBus.getDefault().post(new BsaketDeatilMatchPreEventBus("0"));
+                            EventBus.getDefault().post(new BasketDetailMatchPreEventBus("0"));
                         }
                         startTimePolling();  //轮询赛程
                     } else {
                         closeTimePolling();
-                        EventBus.getDefault().post(new BsaketDeatilMatchPreEventBus("1"));
+                        EventBus.getDefault().post(new BasketDetailMatchPreEventBus("1"));
 
                         mProgressBarRefresh.setVisibility(View.GONE);
                         fl_comment.setVisibility(View.VISIBLE);
@@ -364,7 +364,7 @@ public class BasketTextLiveFragment extends Fragment {
     }
 
     private void requestError() {
-        EventBus.getDefault().post(new BsaketDeatilMatchPreEventBus("2"));
+        EventBus.getDefault().post(new BasketDetailMatchPreEventBus("2"));
         mProgressBarRefresh.setVisibility(View.GONE);
     }
 
