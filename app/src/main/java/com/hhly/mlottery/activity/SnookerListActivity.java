@@ -500,7 +500,6 @@ public class SnookerListActivity extends BaseWebSocketActivity implements SwipeR
                     Toast.makeText(SnookerListActivity.this, "没有更多数据了...", Toast.LENGTH_SHORT).show();
 
                 }
-                mRecyclerView.setSelected(false);
                 updateAdapter();
             }
         }, 1000);
