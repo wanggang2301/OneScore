@@ -145,7 +145,7 @@ public class BasketLiveFragment extends Fragment {
     }
 
 
-    public void onEventMainThread(BsaketDeatilMatchPreEventBus b) {
+    public void onEventMainThread(BasketDetailMatchPreEventBus b) {
         if ("0".equals(b.getMsg())) {
             flContent.setVisibility(View.GONE);
             radioGroup.setVisibility(View.GONE);
