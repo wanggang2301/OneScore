@@ -667,7 +667,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 }
                 //  L.e();
                 updateData(mBasketDetails);
-
                 //文字直播推送
                 if (mBasketDetails.getData().getTextLiveEntity() != null) {
                     updateTextLive(mBasketDetails.getData().getTextLiveEntity());
@@ -731,7 +730,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         if (mCollapsingToolbarLayout.getHeight() + verticalOffset < mHeadviewpager.getHeight()) {
             mRefreshLayout.setEnabled(false);   //收缩
         } else {
-                mRefreshLayout.setEnabled(true); //展开
+            mRefreshLayout.setEnabled(true); //展开
         }
 
     }
@@ -744,8 +743,12 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 mRefreshLayout.setRefreshing(false);
                 loadData();
 
+
                 //直播刷新
-                mBasketLiveFragment.refresh();
+
+                if (mBasketLiveFragment != null) {
+                    mBasketLiveFragment.refresh();
+                }
 
 
                 mAnalyzeFragment.initData();

@@ -147,6 +147,7 @@ public class BasketTextLiveFragment extends Fragment {
         listfooter_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                L.d("qazwsx", "点击加载=" + isRequestFinish);
                 if (isRequestFinish) {//上一个请求完成才执行这个 不然一直往上拉，会连续发多个请求
                     if (!mLoadMore.getText().equals(getResources().getString(R.string.foot_nomoredata))) {//没有更多数据的时候，上拉不再发起请求
                         getRequestTextLiveData();
@@ -154,17 +155,6 @@ public class BasketTextLiveFragment extends Fragment {
                 }
             }
         });
-
-/*
-        //出错加载
-        network_exception_reload_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ll_error.setVisibility(View.GONE);
-                loadData();
-
-            }
-        });*/
 
         mBasketBallTextLiveAdapter.addFooterView(listfooter_more);
     }
@@ -182,7 +172,6 @@ public class BasketTextLiveFragment extends Fragment {
             }
         }
     }
-
 
     Handler textLiveHandler = new Handler() {
         @Override
@@ -322,12 +311,12 @@ public class BasketTextLiveFragment extends Fragment {
                         //1分钟刷新一次知道有文字直播时，切换到直播界面
 
                         if (!isFirstPolling) {
-                            EventBus.getDefault().post(new BsaketDeatilMatchPreEventBus("0"));
+                            EventBus.getDefault().post(new BasketDetailMatchPreEventBus("0"));
                         }
                         startTimePolling();  //轮询赛程
                     } else {
                         closeTimePolling();
-                        EventBus.getDefault().post(new BsaketDeatilMatchPreEventBus("1"));
+                        EventBus.getDefault().post(new BasketDetailMatchPreEventBus("1"));
 
                         mProgressBarRefresh.setVisibility(View.GONE);
                         fl_comment.setVisibility(View.VISIBLE);
@@ -346,6 +335,7 @@ public class BasketTextLiveFragment extends Fragment {
                         if (basketEachTextLiveBeanList.size() == 0) {//，没请求到数据 mNoData显示
                             mBasketBallTextLiveAdapter.setEmptyView(emptyView);
                         } else {
+                            isRequestFinish = true;
                             lastId = basketTextLiveBean.getData().get(basketTextLiveBean.getData().size() - 1).getId();
                             mBasketBallTextLiveAdapter.getData().clear();
                             mBasketBallTextLiveAdapter.addData(basketEachTextLiveBeanList);
@@ -364,7 +354,7 @@ public class BasketTextLiveFragment extends Fragment {
     }
 
     private void requestError() {
-        EventBus.getDefault().post(new BsaketDeatilMatchPreEventBus("2"));
+        EventBus.getDefault().post(new BasketDetailMatchPreEventBus("2"));
         mProgressBarRefresh.setVisibility(View.GONE);
     }
 
@@ -398,10 +388,7 @@ public class BasketTextLiveFragment extends Fragment {
      */
     public void onEventMainThread(BasketDetailLiveTextRefresh basketDetailLiveTextRefreshEventBus) {
         isRequestFinish = true;
-
         closeTimePolling();
-
-
         loadData();
     }
 

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
 import com.hhly.mlottery.bean.websocket.DataEntity;
@@ -697,14 +698,14 @@ public class BasketDetailsHeadFragment extends Fragment {
         guest.setText(guestScore + "");
         home.setText(homeScore + "");
         if (guestScore > homeScore) {//得分少的用灰色
-            guest.setTextColor(getResources().getColor(R.color.basket_score_white));
-            home.setTextColor(getResources().getColor(R.color.basket_score_gray));
+            guest.setTextColor(MyApp.getContext().getResources().getColor(R.color.basket_score_white));
+            home.setTextColor(MyApp.getContext().getResources().getColor(R.color.basket_score_gray));
         } else if (guestScore < homeScore) {
-            guest.setTextColor(getResources().getColor(R.color.basket_score_gray));
-            home.setTextColor(getResources().getColor(R.color.basket_score_white));
+            guest.setTextColor(MyApp.getContext().getResources().getColor(R.color.basket_score_gray));
+            home.setTextColor(MyApp.getContext().getResources().getColor(R.color.basket_score_white));
         } else {
-            guest.setTextColor(getResources().getColor(R.color.basket_score_white));
-            home.setTextColor(getResources().getColor(R.color.basket_score_white));
+            guest.setTextColor(MyApp.getContext().getResources().getColor(R.color.basket_score_white));
+            home.setTextColor(MyApp.getContext().getResources().getColor(R.color.basket_score_white));
         }
 
 

@@ -23,7 +23,6 @@ import com.hhly.mlottery.activity.PicturePreviewActivity;
 import com.hhly.mlottery.bean.foreigninfomation.OverseasInformationListBean;
 import com.hhly.mlottery.bean.foreigninfomation.TightBean;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.ScreenUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -60,11 +59,10 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
     @Override
     protected void convert(final BaseViewHolder viewHolder, final OverseasInformationListBean o) {
         LinearLayout linearLayout = viewHolder.getView(R.id.item_ll);
-        ImageLoader.load(mContext, o.getAvatar(), R.mipmap.center_head).into((CircleImageView) viewHolder.getView(R.id.civ_logo));
+
+        Glide.with(mContext).load(o.getAvatar()).into((CircleImageView) viewHolder.getView(R.id.civ_logo));
 
         long mNumberTimeMinute = ((long) (o.getCurrentTimestamp() - o.getTimestamp())) / 1000;  //得到秒
-        // long minutes=mNumberTime
-
 
         float month = (float) mNumberTimeMinute / (60 * 60 * 24 * 30);// 获取月
 
@@ -90,27 +88,6 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
         } else {
             timeMsg = mContext.getResources().getString(R.string.foreign_now);
         }
-
-/*
-        if (month >= 1) {
-            timeMsg = (int) month + mContext.getResources().getString(R.string.foreign_month); //显示月
-        } else {
-            //mouth< 1
-            if (dd >= 1) {
-                timeMsg = (int) dd + mContext.getResources().getString(R.string.foreign_day); //显示日
-            } else {
-                if (hh >= 1) {
-                    timeMsg = (int) hh + mContext.getResources().getString(R.string.foreign_hour); //显示小时
-                } else {
-                    if (mm >= 1) {
-                        timeMsg = (int) mm + mContext.getResources().getString(R.string.foreign_minites); //显示分轴
-                    } else {
-                        timeMsg = mContext.getResources().getString(R.string.foreign_now);
-                    }
-
-                }
-            }
-        }*/
 
 
         L.d("asdfgh", "month=" + month);
@@ -160,6 +137,8 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
                     Glide.with(mContext).load(o.getPhoto()).asBitmap().into((ImageView) viewHolder.getView(R.id.iv_photo));
                 }
             });
+
+
             // ImageLoader.load(mContext,o.getPhoto(),R.mipmap.counsel_depth).into((ImageView) viewHolder.getView(R.id.iv_photo));
 
             if ("2".equals(o.getInfoType())) {

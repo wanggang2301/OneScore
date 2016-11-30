@@ -14,7 +14,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
 
@@ -55,8 +54,6 @@ public class BasketLiveFragment extends Fragment {
     private View mView;
     private Context mContext;
 
-    private List<BasketEachTextLiveBean> data;
-
     private BasketTextLiveFragment mBasketTextLiveFragment;
     private BasketTeamStatisticsFragment mBasketTeamStatisticsFragment;
     private BasketPlayersStatisticsFragment mBasketPlayersStatisticsFragment;
@@ -70,10 +67,11 @@ public class BasketLiveFragment extends Fragment {
 
     private int currentFrag = 0;
 
+    private String mThirdId;
+
 
     public static BasketLiveFragment newInstance() {
         BasketLiveFragment basketLiveFragment = new BasketLiveFragment();
-
         return basketLiveFragment;
     }
 
@@ -88,14 +86,12 @@ public class BasketLiveFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_basket_live, container, false);
         mContext = getActivity();
         ButterKnife.bind(this, mView);
-
         initView();
         return mView;
     }
 
 
     private void initView() {
-
         fragmentManager = getChildFragmentManager();
         mBasketTextLiveFragment = BasketTextLiveFragment.newInstance();
         mBasketTeamStatisticsFragment = BasketTeamStatisticsFragment.newInstance();
@@ -106,7 +102,6 @@ public class BasketLiveFragment extends Fragment {
         fragments.add(mBasketTextLiveFragment);
         fragments.add(mBasketTeamStatisticsFragment);
         fragments.add(mBasketPlayersStatisticsFragment);
-
 
         flError.setVisibility(View.GONE);
 
@@ -120,21 +115,21 @@ public class BasketLiveFragment extends Fragment {
                     case R.id.text_live:
                         //FragmentUtils.replaceFragment(fragmentManager, R.id.fl_content, mBasketTextLiveFragment);
                         currentFrag = 0;
-                        switchFragment(0);
+                        replaceFragment(0);
 
                         break;
                     case R.id.statistics_team:
                         // FragmentUtils.replaceFragment(fragmentManager, R.id.fl_content, mBasketTeamStatisticsFragment);
                         currentFrag = 1;
 
-                        switchFragment(1);
+                        replaceFragment(1);
                         break;
                     case R.id.statistics_players:
                         // FragmentUtils.replaceFragment(fragmentManager, R.id.fl_content, mBasketPlayersStatisticsFragment);
 
                         currentFrag = 2;
 
-                        switchFragment(2);
+                        replaceFragment(2);
                         break;
                     default:
                         break;
@@ -145,7 +140,7 @@ public class BasketLiveFragment extends Fragment {
     }
 
 
-    public void onEventMainThread(BsaketDeatilMatchPreEventBus b) {
+    public void onEventMainThread(BasketDetailMatchPreEventBus b) {
         if ("0".equals(b.getMsg())) {
             flContent.setVisibility(View.GONE);
             radioGroup.setVisibility(View.GONE);
@@ -171,7 +166,10 @@ public class BasketLiveFragment extends Fragment {
 
     public void switchFragment(int position) {
 
-//        currentFramnet = FragmentUtils.switchFragment(fragmentManager, R.id.fl_content, currentFramnet, fragments.get(position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, false);
+        currentFramnet = FragmentUtils.switchFragment(fragmentManager, R.id.fl_content, currentFramnet, fragments.get(position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, false);
+
+    }
+    public void replaceFragment(int position){
         FragmentUtils.replaceFragment(fragmentManager,R.id.fl_content,fragments.get(position));
     }
 

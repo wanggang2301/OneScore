@@ -61,6 +61,10 @@ public class BasketPlayersStatisticsFragment extends Fragment implements View.On
     TextView  mGuestName;
     @BindView(R.id.basket_player_home_team_name)
     TextView  mHomeName;
+    @BindView(R.id.rl_guest_team)
+    RelativeLayout mRlGuest;
+    @BindView(R.id.rl_home_team)
+    RelativeLayout mRlHome;
 
     /**主客队选中*/
     private boolean isCheckedGuest=true;
@@ -193,9 +197,13 @@ public class BasketPlayersStatisticsFragment extends Fragment implements View.On
      * 设置监听事件
      */
     private void setListener() {
-        mGuestName.setOnClickListener(this);
-        mHomeName.setOnClickListener(this);
+//        mGuestName.setOnClickListener(this);
+//        mHomeName.setOnClickListener(this);
         mBtnRefresh.setOnClickListener(this);
+        mRlGuest.setOnClickListener(this);
+        mRlHome.setOnClickListener(this);
+        mGuestName.setFocusable(false);
+        mHomeName.setFocusable(false);
 
     }
 
@@ -256,7 +264,7 @@ public class BasketPlayersStatisticsFragment extends Fragment implements View.On
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.basket_player_guest_team_name:
+            case R.id.rl_guest_team:
                 if(!isCheckedGuest){ //防止不停的点击就不停的设置颜色
                     mGuestName.setTextColor(MyApp.getContext().getResources().getColor(R.color.tabtitle));
                     mHomeName.setTextColor(MyApp.getContext().getResources().getColor(R.color.black_details_textcolor));
@@ -278,7 +286,7 @@ public class BasketPlayersStatisticsFragment extends Fragment implements View.On
                isCheckedGuest=true;
 
                 break;
-            case R.id.basket_player_home_team_name:
+            case R.id.rl_home_team:
                 if(isCheckedGuest){
                     mGuestName.setTextColor(MyApp.getContext().getResources().getColor(R.color.black_details_textcolor));
                     mHomeName.setTextColor(MyApp.getContext().getResources().getColor(R.color.tabtitle));
