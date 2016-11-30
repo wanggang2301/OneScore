@@ -6,12 +6,12 @@ import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
-import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.view.CircleImageView;
 
 import java.util.List;
@@ -73,9 +73,15 @@ public class BasketBallTextLiveAdapter extends BaseQuickAdapter<BasketEachTextLi
             circleImageView.setVisibility(View.VISIBLE);
 
             if (1 == b.getTeamType()) { //主队
-                ImageLoader.load(mContext, BasketDetailsActivityTest.homeIconUrl, R.mipmap.basket_default).into(circleImageView);
+                if (BasketDetailsActivityTest.homeIconUrl != null && !"".equals(BasketDetailsActivityTest.homeIconUrl)) {
+                    Glide.with(mContext).load(BasketDetailsActivityTest.homeIconUrl).placeholder(R.mipmap.basket_default).into(circleImageView);
+                }
+                //  ImageLoader.load(mContext, BasketDetailsActivityTest.homeIconUrl, R.mipmap.basket_default).into(circleImageView);
             } else if (2 == b.getTeamType()) { //客队
-                ImageLoader.load(mContext, BasketDetailsActivityTest.guestIconUrl, R.mipmap.basket_default).into(circleImageView);
+                if (BasketDetailsActivityTest.guestIconUrl != null && !"".equals(BasketDetailsActivityTest.guestIconUrl)) {
+                    Glide.with(mContext).load(BasketDetailsActivityTest.guestIconUrl).placeholder(R.mipmap.basket_default).into(circleImageView);
+                }
+                // ImageLoader.load(mContext, BasketDetailsActivityTest.guestIconUrl, R.mipmap.basket_default).into(circleImageView);
             } else {
                 circleImageView.setVisibility(View.GONE);  //既不是主队也不是客队
             }
@@ -89,6 +95,8 @@ public class BasketBallTextLiveAdapter extends BaseQuickAdapter<BasketEachTextLi
                 baseViewHolder.getView(R.id.tv_remainTime).setVisibility(View.VISIBLE);
                 baseViewHolder.setText(R.id.tv_remainTime, b.getRemainTime());
             }
+
+
 
             baseViewHolder.getView(R.id.tv_eventContent).setBackgroundResource(R.drawable.item_basket_eventontent_bg);
             ((TextView) baseViewHolder.getView(R.id.tv_eventContent)).setTextColor(mContext.getResources().getColor(R.color.content_txt_black));

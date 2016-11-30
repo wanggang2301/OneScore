@@ -398,10 +398,7 @@ public class BasketTextLiveFragment extends Fragment {
      */
     public void onEventMainThread(BasketDetailLiveTextRefresh basketDetailLiveTextRefreshEventBus) {
         isRequestFinish = true;
-
         closeTimePolling();
-
-
         loadData();
     }
 
