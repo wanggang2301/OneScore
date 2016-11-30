@@ -96,6 +96,8 @@ public class BasketBallTextLiveAdapter extends BaseQuickAdapter<BasketEachTextLi
                 baseViewHolder.setText(R.id.tv_remainTime, b.getRemainTime());
             }
 
+
+
             baseViewHolder.getView(R.id.tv_eventContent).setBackgroundResource(R.drawable.item_basket_eventontent_bg);
             ((TextView) baseViewHolder.getView(R.id.tv_eventContent)).setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
         }

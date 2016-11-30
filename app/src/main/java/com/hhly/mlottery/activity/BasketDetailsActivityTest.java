@@ -667,7 +667,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 }
                 //  L.e();
                 updateData(mBasketDetails);
-
                 //文字直播推送
                 if (mBasketDetails.getData().getTextLiveEntity() != null) {
                     updateTextLive(mBasketDetails.getData().getTextLiveEntity());
