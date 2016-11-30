@@ -538,6 +538,8 @@
     <string name="number_info_result">彩果</string>
     <string name="number_info_qj">區間</string>
     <string name="number_info_jo">奇偶</string>
+    <string name="number_info_j">奇</string>
+    <string name="number_info_o">偶</string>
     <string name="number_info_dx">大小</string>
     <string name="number_info_boll_red">紅球</string>
     <string name="number_info_comprehensive">綜合</string>
