@@ -1026,7 +1026,7 @@
     <string name="verify_code">请输入验证码</string>
     <string name="verify_code_send">发送验证码</string>
     <string name="logout">退出当前账户</string>
-    <string name="logouting">正在注销...</string>
+    <string name="logouting">正在退出...</string>
     <string name="logout_fail">注销失败</string>
     <string name="logout_succ">退出成功</string>
     <string name="resend">重发</string>
