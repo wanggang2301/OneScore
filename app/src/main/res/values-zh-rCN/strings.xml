@@ -550,6 +550,8 @@
     <string name="number_info_result">彩果</string>
     <string name="number_info_qj">区间</string>
     <string name="number_info_jo">奇偶</string>
+    <string name="number_info_j">奇</string>
+    <string name="number_info_o">偶</string>
     <string name="number_info_dx">大小</string>
     <string name="number_info_boll_red">红球</string>
     <string name="number_info_comprehensive">综合</string>

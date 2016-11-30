@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:paddingBottom="10dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp">
 
@@ -156,25 +157,81 @@
                 style="@style/lottery_info_title"
                 android:text="@string/number_info_result" />
 
-            <TextView
-                android:id="@+id/lottery_scjq_result1"
+            <LinearLayout
                 style="@style/lottery_info_content_right"
-                android:background="@drawable/number_tab_solid_all_r_b2" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/lottery_scjq_result2"
-                style="@style/lottery_info_content_right"
-                android:background="@drawable/number_tab_solid_all_r_b2" />
+                <TextView
+                    android:id="@+id/lottery_scjq_half_result1"
+                    style="@style/lottery_info_content_right"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/number_tab_solid_all_r_b2" />
 
-            <TextView
-                android:id="@+id/lottery_scjq_result3"
-                style="@style/lottery_info_content_right"
-                android:background="@drawable/number_tab_solid_all_r_b2" />
+                <TextView
+                    android:id="@+id/lottery_scjq_full_result1"
+                    style="@style/lottery_info_content_right"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/number_tab_solid_all_r_b2" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/lottery_scjq_result4"
+            <LinearLayout
                 style="@style/lottery_info_content_right"
-                android:background="@drawable/number_tab_solid_all_r_b2" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/lottery_scjq_half_result2"
+                    style="@style/lottery_info_content_right"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/number_tab_solid_all_r_b2" />
+
+                <TextView
+                    android:id="@+id/lottery_scjq_full_result2"
+                    style="@style/lottery_info_content_right"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/number_tab_solid_all_r_b2" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/lottery_info_content_right"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/lottery_scjq_half_result3"
+                    style="@style/lottery_info_content_right"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/number_tab_solid_all_r_b2" />
+
+                <TextView
+                    android:id="@+id/lottery_scjq_full_result3"
+                    style="@style/lottery_info_content_right"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/number_tab_solid_all_r_b2" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/lottery_info_content_right"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/lottery_scjq_half_result4"
+                    style="@style/lottery_info_content_right"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/number_tab_solid_all_r_b2" />
+
+                <TextView
+                    android:id="@+id/lottery_scjq_full_result4"
+                    style="@style/lottery_info_content_right"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/number_tab_solid_all_r_b2" />
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>
