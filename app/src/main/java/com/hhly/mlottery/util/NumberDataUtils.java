@@ -14,19 +14,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.NumbersActivity;
-import com.hhly.mlottery.bean.numbersBean.FootIssueResultData;
 import com.hhly.mlottery.bean.numbersBean.NumberCurrentInfo;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import pl.droidsonroids.gif.GifImageView;
 
 /**
  * @author Tenney
@@ -254,17 +252,10 @@ public class NumberDataUtils {
                 // 重庆幸运农场
                 if (isGravity == 1 && isQXCOpenNumberStart) {
                     // 正在开奖中时显示的内容
-                    ImageView iv = new ImageView(context);
-                    iv.setLayoutParams(params);
 
-//                    iv.setImageResource(R.mipmap.number_anim_klsf_blue);// 蓝球
-//                    ImageLoader.loadFitCenter(context, R.mipmap.number_anim_klsf_blue, R.mipmap.number_kj_icon_def).into(iv);
-                    Glide.with(context)
-                            .load(R.mipmap.number_anim_klsf_blue)
-                            .placeholder(R.mipmap.number_kj_icon_def)
-                            .fitCenter()
-                            .crossFade()
-                            .into(iv);
+                    GifImageView iv = new GifImageView(context);
+                    iv.setLayoutParams(params);
+                    iv.setImageResource(R.mipmap.number_anim_klsf_blue);
 
                     ll.addView(iv);
                 } else {
@@ -334,15 +325,9 @@ public class NumberDataUtils {
 
                         isDynamicNumber = true;
                         // 显示动态的gif图
-                        ImageView iv = new ImageView(context);
-//                        iv.setImageResource(AppConstants.numberHKOpenGIF[i]);
-//                        ImageLoader.loadFitCenter(context, AppConstants.numberHKOpenGIF[i], R.mipmap.number_kj_icon_def).into(iv);
-                        Glide.with(context)
-                                .load(AppConstants.numberHKOpenGIF[i])
-                                .placeholder(R.mipmap.number_kj_icon_def)
-                                .fitCenter()
-                                .crossFade()
-                                .into(iv);
+
+                        GifImageView iv = new GifImageView(context);
+                        iv.setImageResource(AppConstants.numberHKOpenGIF[i]);
 
                         // 设置GIF图的大小和左右的外边距
                         params = new LinearLayout.LayoutParams(DisplayUtil.dip2px(context, 26), DisplayUtil.dip2px(context, 26));
@@ -521,15 +506,11 @@ public class NumberDataUtils {
                 // 七星彩
                 if (isQXCOpenNumberStart) {
                     // 正在开奖中时显示的内容
-                    ImageView iv = new ImageView(context);
+
+                    GifImageView iv = new GifImageView(context);
                     iv.setLayoutParams(params);
-//                    ImageLoader.loadFitCenter(context, AppConstants.numberQXCOpenGIF[i], R.mipmap.number_kj_icon_def).into(iv);
-                    Glide.with(context)
-                            .load(AppConstants.numberQXCOpenGIF[i])
-                            .placeholder(R.mipmap.number_kj_icon_def)
-                            .fitCenter()
-                            .crossFade()
-                            .into(iv);
+                    iv.setImageResource(AppConstants.numberQXCOpenGIF[i]);
+
                     ll.addView(iv);
                 } else {
                     TextView tv_number = new TextView(context);
@@ -557,24 +538,14 @@ public class NumberDataUtils {
                 } else {
 
                     if (isSSQOpenNumberStart) {
-                        ImageView iv = new ImageView(context);// 正在开奖中时显示的内容
+                        GifImageView iv = new GifImageView(context);
                         iv.setLayoutParams(params);
                         if (i <= 5) {
-//                            ImageLoader.loadFitCenter(context, R.mipmap.number_anim_red_ssq, R.mipmap.number_kj_icon_def).into(iv);
-                            Glide.with(context)
-                                    .load(R.mipmap.number_anim_red_ssq)
-                                    .placeholder(R.mipmap.number_kj_icon_def)
-                                    .fitCenter()
-                                    .crossFade()
-                                    .into(iv);
+
+                            iv.setImageResource(R.mipmap.number_anim_red_ssq);
                         } else {
-//                            ImageLoader.loadFitCenter(context, R.mipmap.number_anim_blue_ssq, R.mipmap.number_kj_icon_def).into(iv);
-                            Glide.with(context)
-                                    .load(R.mipmap.number_anim_blue_ssq)
-                                    .placeholder(R.mipmap.number_kj_icon_def)
-                                    .fitCenter()
-                                    .crossFade()
-                                    .into(iv);
+
+                            iv.setImageResource(R.mipmap.number_anim_blue_ssq);
                         }
                         ll.addView(iv);
                     } else {
@@ -604,24 +575,14 @@ public class NumberDataUtils {
                 } else {
 
                     if (isDLTOpenNumberStart) {
-                        ImageView iv = new ImageView(context);// 正在开奖中时显示的内容
+                        GifImageView iv = new GifImageView(context);
                         iv.setLayoutParams(params);
                         if (i <= 4) {
-//                            ImageLoader.loadFitCenter(context, R.mipmap.number_anim_red_dlt, R.mipmap.number_kj_icon_def).into(iv);
-                            Glide.with(context)
-                                    .load(R.mipmap.number_anim_red_dlt)
-                                    .placeholder(R.mipmap.number_kj_icon_def)
-                                    .fitCenter()
-                                    .crossFade()
-                                    .into(iv);
+
+                            iv.setImageResource(R.mipmap.number_anim_red_dlt);
                         } else {
-//                            ImageLoader.loadFitCenter(context, R.mipmap.number_anim_blue_dlt, R.mipmap.number_kj_icon_def).into(iv);
-                            Glide.with(context)
-                                    .load(R.mipmap.number_anim_blue_dlt)
-                                    .placeholder(R.mipmap.number_kj_icon_def)
-                                    .fitCenter()
-                                    .crossFade()
-                                    .into(iv);
+
+                            iv.setImageResource(R.mipmap.number_anim_blue_dlt);
                         }
                         ll.addView(iv);
                     } else {
@@ -640,24 +601,14 @@ public class NumberDataUtils {
                 }
             } else if ("28".equals(mNumberInfo.getName())) {// 七乐彩
                 if (isQLCOpenNumberStart) {
-                    ImageView iv = new ImageView(context);// 正在开奖中时显示的内容
+                    GifImageView iv = new GifImageView(context);
                     iv.setLayoutParams(params);
                     if (i <= 6) {
-//                        ImageLoader.loadFitCenter(context, R.mipmap.number_anim_red_qlc, R.mipmap.number_kj_icon_def).into(iv);
-                        Glide.with(context)
-                                .load(R.mipmap.number_anim_red_qlc)
-                                .placeholder(R.mipmap.number_kj_icon_def)
-                                .fitCenter()
-                                .crossFade()
-                                .into(iv);
+
+                        iv.setImageResource(R.mipmap.number_anim_red_qlc);
                     } else {
-//                        ImageLoader.loadFitCenter(context, R.mipmap.number_anim_blue_qlc, R.mipmap.number_kj_icon_def).into(iv);
-                        Glide.with(context)
-                                .load(R.mipmap.number_anim_blue_qlc)
-                                .placeholder(R.mipmap.number_kj_icon_def)
-                                .fitCenter()
-                                .crossFade()
-                                .into(iv);
+
+                        iv.setImageResource(R.mipmap.number_anim_blue_qlc);
                     }
                     ll.addView(iv);
                 } else {
@@ -702,16 +653,9 @@ public class NumberDataUtils {
                 // 广东快乐十分,湖南快乐十分
                 if (isGravity == 1 && isQXCOpenNumberStart) {
                     // 正在开奖中时显示的内容
-                    ImageView iv = new ImageView(context);
+                    GifImageView iv = new GifImageView(context);
                     iv.setLayoutParams(params);
-//                    iv.setImageResource(R.mipmap.number_anim_klsf_blue);// 蓝球
-//                    ImageLoader.loadFitCenter(context, R.mipmap.number_anim_klsf_blue, R.mipmap.number_kj_icon_def).into(iv);
-                    Glide.with(context)
-                            .load(R.mipmap.number_anim_klsf_blue)
-                            .placeholder(R.mipmap.number_kj_icon_def)
-                            .fitCenter()
-                            .crossFade()
-                            .into(iv);
+                    iv.setImageResource(R.mipmap.number_anim_klsf_blue);// 蓝球
                     ll.addView(iv);
                 } else {
                     TextView tv_number = new TextView(context);
@@ -758,16 +702,9 @@ public class NumberDataUtils {
                 // 其它号码
                 if (isGravity == 1 && isQXCOpenNumberStart) {
                     // 正在开奖中时显示的内容
-                    ImageView iv = new ImageView(context);
+                    GifImageView iv = new GifImageView(context);
                     iv.setLayoutParams(params);
-//                    iv.setImageResource(AppConstants.numberQXCOpenGIF[0]);
-//                    ImageLoader.loadFitCenter(context, AppConstants.numberQXCOpenGIF[0], R.mipmap.number_kj_icon_def).into(iv);
-                    Glide.with(context)
-                            .load(AppConstants.numberQXCOpenGIF[0])
-                            .placeholder(R.mipmap.number_kj_icon_def)
-                            .fitCenter()
-                            .crossFade()
-                            .into(iv);
+                    iv.setImageResource(AppConstants.numberQXCOpenGIF[0]);
                     ll.addView(iv);
                 } else {
                     // 添加号码布局
@@ -2197,9 +2134,9 @@ public class NumberDataUtils {
                     }
                     // 奇偶
                     if (num % 2 == 0) {
-                        lottery_dlt_later_jo1.setText(context.getResources().getString(R.string.number_bjsc_suang));
+                        lottery_dlt_later_jo1.setText(context.getResources().getString(R.string.number_info_o));
                     } else {
-                        lottery_dlt_later_jo1.setText(context.getResources().getString(R.string.number_bjsc_dan));
+                        lottery_dlt_later_jo1.setText(context.getResources().getString(R.string.number_info_j));
                     }
                     // 五行和方位
                     setTextValue(lastNum, lottery_dlt_later_wx1, lottery_dlt_later_fw1);
