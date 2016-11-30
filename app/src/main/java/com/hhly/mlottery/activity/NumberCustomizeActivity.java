@@ -93,6 +93,9 @@ public class NumberCustomizeActivity extends BaseActivity implements OnClickList
 						lv_customize_ok.setVisibility(View.GONE);
 					}
 				}
+
+				lv_customize_ok.smoothScrollToPosition(sortOks.size());
+
 			}
 		});
 
