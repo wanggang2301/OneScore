@@ -1,28 +1,15 @@
 package com.hhly.mlottery.adapter;
 
 import android.content.Context;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.codetroopers.betterpickers.radialtimepicker.AmPmCirclesView;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.AvatarSelectionActivity;
 import com.hhly.mlottery.bean.ChoseStartBean;
-import com.hhly.mlottery.util.GlideUtils;
-import com.hhly.mlottery.util.ImageLoader;
-import com.hhly.mlottery.util.ListDatasSaveUtils;
-import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
-import com.orhanobut.hawk.Hawk;
-import com.orhanobut.hawk.HawkBuilder;
-import com.orhanobut.hawk.LogLevel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
