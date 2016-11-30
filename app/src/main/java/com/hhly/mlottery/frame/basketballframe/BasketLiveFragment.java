@@ -127,7 +127,7 @@ public class BasketLiveFragment extends Fragment {
                         // FragmentUtils.replaceFragment(fragmentManager, R.id.fl_content, mBasketTeamStatisticsFragment);
                         currentFrag = 1;
 
-                        switchFragment(1);
+                        replaceFragment(1);
                         break;
                     case R.id.statistics_players:
                         // FragmentUtils.replaceFragment(fragmentManager, R.id.fl_content, mBasketPlayersStatisticsFragment);
@@ -171,7 +171,10 @@ public class BasketLiveFragment extends Fragment {
 
     public void switchFragment(int position) {
 
-//        currentFramnet = FragmentUtils.switchFragment(fragmentManager, R.id.fl_content, currentFramnet, fragments.get(position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, false);
+        currentFramnet = FragmentUtils.switchFragment(fragmentManager, R.id.fl_content, currentFramnet, fragments.get(position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, false);
+
+    }
+    public void replaceFragment(int position){
         FragmentUtils.replaceFragment(fragmentManager,R.id.fl_content,fragments.get(position));
     }
 
