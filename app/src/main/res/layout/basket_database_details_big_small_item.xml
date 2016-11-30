@@ -21,8 +21,8 @@
 
             <TextView
                 android:id="@+id/basket_database_datails_ranking_big_small"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
                 android:gravity="center"
                 android:textSize="13sp"
                 android:text="1"
