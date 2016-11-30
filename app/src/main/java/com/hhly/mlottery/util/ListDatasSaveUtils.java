@@ -45,8 +45,8 @@ public class ListDatasSaveUtils {
          * @param tag
          * @return
          */
-        public <T> List<String> getDataList(String tag) {
-            List<String> datalist=new ArrayList<String>();
+        public <T> List<T> getDataList(String tag) {
+            List<T> datalist=new ArrayList<T>();
             String strJson = preferences.getString(tag, null);
             if (null == strJson) {
                 return datalist;
@@ -55,7 +55,6 @@ public class ListDatasSaveUtils {
             datalist = gson.fromJson(strJson, new TypeToken<List<T>>() {
             }.getType());
             return datalist;
-
         }
 
 }
