@@ -115,7 +115,7 @@ public class BasketLiveFragment extends Fragment {
                     case R.id.text_live:
                         //FragmentUtils.replaceFragment(fragmentManager, R.id.fl_content, mBasketTextLiveFragment);
                         currentFrag = 0;
-                        switchFragment(0);
+                        replaceFragment(0);
 
                         break;
                     case R.id.statistics_team:
@@ -129,7 +129,7 @@ public class BasketLiveFragment extends Fragment {
 
                         currentFrag = 2;
 
-                        switchFragment(2);
+                        replaceFragment(2);
                         break;
                     default:
                         break;
