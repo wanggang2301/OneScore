@@ -200,8 +200,6 @@ public class BasketTextLiveFragment extends Fragment {
 
         if (true) {
 
-            L.d("zxcvbn", "请求");
-
 
             Map<String, String> params = new HashMap<>();
             params.put("thirdId", BasketDetailsActivityTest.mThirdId);

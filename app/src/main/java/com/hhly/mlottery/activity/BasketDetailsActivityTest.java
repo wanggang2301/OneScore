@@ -746,8 +746,11 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
                 //直播刷新
 
-                if (mBasketLiveFragment != null) {
-                    mBasketLiveFragment.refresh();
+                if (isNBA) {
+
+                    if (mBasketLiveFragment != null) {
+                        mBasketLiveFragment.refresh();
+                    }
                 }
 
 
