@@ -21,6 +21,7 @@ import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
+import com.hhly.mlottery.util.ListDatasSaveUtils;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -42,7 +43,6 @@ public class AvatarSelectionActivity extends  Activity implements  View.OnClickL
     private TextView public_txt_title;
     private TextView tv_right;
     private GridView male_gridview;
-    private GridView famle_gridview;
     private List<ChoseStartBean.DataBean.MaleBean> mMaleDatas;
     private List<ChoseStartBean.DataBean.FemaleBean> mFemaleDatas;
     private ChoseStartManAdapter choseStartManAdapter;//足球风采adapter
@@ -55,6 +55,9 @@ public class AvatarSelectionActivity extends  Activity implements  View.OnClickL
     private TextView start_famle_size;
     private TextView start_male_size;
 
+    private ListDatasSaveUtils listMaleDatasSaveUtils;
+    private GridView famle_gridview;
+    private List<ChoseStartBean> maleDatas=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,16 +73,19 @@ public class AvatarSelectionActivity extends  Activity implements  View.OnClickL
 
         VolleyContentFast.requestJsonByGet(BaseURLs.FINDHEADICONS, null, new VolleyContentFast.ResponseSuccessListener<ChoseStartBean>() {
 
+
             @Override
             public void onResponse(final ChoseStartBean json) {
 
                 if(json.getResult()==200){
 
-                        mMaleDatas = json.getData().getMale();
+                    mMaleDatas = json.getData().getMale();
                         //start_male_size.setText(mMaleDatas.size());
-
                     start_male_size.setText(mMaleDatas.size()+"");
-
+                    maleDatas.add(json);
+                    listMaleDatasSaveUtils.setDataList("male",maleDatas);
+                    //listMaleDatasSaveUtils.setDataList("maleDatas",mMaleDatas);
+                    Log.i("asdasdas","maleDatas>>>>>>>>>>>>>>>>"+listMaleDatasSaveUtils.getDataList("male"));
                     if (choseStartManAdapter==null){
                         choseStartManAdapter = new ChoseStartManAdapter(AvatarSelectionActivity.this,json.getData().getMale(), R.layout.avatar_start_head_child);
                         male_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -99,6 +105,7 @@ public class AvatarSelectionActivity extends  Activity implements  View.OnClickL
 
                     //足球宝贝
                     mFemaleDatas = json.getData().getFemale();
+                    //listMaleDatasSaveUtils.setDataList("femaleDatas",mFemaleDatas);
                     start_famle_size.setText(mFemaleDatas.size()+"");
                     if (choseStartAdapter==null){
                         choseStartAdapter = new ChoseStartWomanAdapter(AvatarSelectionActivity.this, json.getData().getFemale(), R.layout.avatar_start_head_child);
@@ -121,6 +128,48 @@ public class AvatarSelectionActivity extends  Activity implements  View.OnClickL
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                //start_male_size.setText(mMaleDatas.size());
+                if (!listMaleDatasSaveUtils.getDataList("maleDatas").isEmpty()){
+                    start_male_size.setText(listMaleDatasSaveUtils.getDataList("maleDatas")+"");
+                    listMaleDatasSaveUtils.setDataList("maleDatas",mMaleDatas);
+                    if (choseStartManAdapter==null){
+                        choseStartManAdapter = new ChoseStartManAdapter(AvatarSelectionActivity.this,null, R.layout.avatar_start_head_child);
+                        male_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                choseStartManAdapter.setSeclection(position);
+                                choseStartAdapter.setSeclection(-1);
+                                choseStartAdapter.notifyDataSetChanged();
+                                choseStartManAdapter.notifyDataSetChanged();
+                                CupChicked=null;
+                                CupChicked=mMaleDatas.get(position).getHeadIcon();
+                            }
+                        });
+                        //   choseStartManAdapter.setOnCheckListener(onCheckmanListener);
+                        male_gridview.setAdapter(choseStartManAdapter);
+                    }
+                }
+
+
+               /* //足球宝贝
+                listMaleDatasSaveUtils.setDataList("femaleDatas",mFemaleDatas);
+                start_famle_size.setText(mFemaleDatas.size()+"");
+                if (choseStartAdapter==null){
+                    choseStartAdapter = new ChoseStartWomanAdapter(AvatarSelectionActivity.this, json.getData().getFemale(), R.layout.avatar_start_head_child);
+                    famle_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            choseStartAdapter.setSeclection(position);
+                            choseStartManAdapter.setSeclection(-1);
+                            choseStartManAdapter.notifyDataSetChanged();
+                            choseStartAdapter.notifyDataSetChanged();
+                            CupChicked=null;
+                            CupChicked=mFemaleDatas.get(position).getHeadIcon();
+                        }
+                    });
+                    famle_gridview.setAdapter(choseStartAdapter);
+                }*/
+
             }
         }, ChoseStartBean.class);
     }
@@ -128,8 +177,13 @@ public class AvatarSelectionActivity extends  Activity implements  View.OnClickL
 
 
     private void initView() {
+        progressBar = new ProgressDialog(this);
+        progressBar.setCancelable(false);
+        progressBar.setMessage(getResources().getString(R.string.is_uploading));
 
-
+        if (listMaleDatasSaveUtils==null){
+            listMaleDatasSaveUtils = new ListDatasSaveUtils(AvatarSelectionActivity.this,"Datas");
+        }
        setContentView(R.layout.avatar_selection_heade);
 
         famle_gridview = (GridView) findViewById(R.id.famle_gridview);
@@ -160,7 +214,6 @@ public class AvatarSelectionActivity extends  Activity implements  View.OnClickL
             //请求后台进行账户绑定
                 if (CupChicked!=null){
                     putPhotoUrl(CupChicked);
-                    finish();
                 }else if(CupChicked==null){
                     UiUtils.toast(getApplicationContext(),"您还未选择头像");
                 }
@@ -175,6 +228,7 @@ public class AvatarSelectionActivity extends  Activity implements  View.OnClickL
     /*上传图片url  后台绑定*/
 
     private void putPhotoUrl(final String headerUrl) {
+        progressBar.show();
         Map<String, String> param = new HashMap<>();
 
         param.put("deviceToken", AppConstants.deviceToken);
@@ -186,21 +240,27 @@ public class AvatarSelectionActivity extends  Activity implements  View.OnClickL
             @Override
             public void onResponse(Register register) {
               //  progressBar.dismiss();
+
                 if (register.getResult() == AccountResultCode.SUCC) {
                     UiUtils.toast(MyApp.getInstance(), R.string.picture_put_success);
+                    register.getData().getUser().setLoginAccount(PreferenceUtil.getString(AppConstants.SPKEY_LOGINACCOUNT, "aa"));
                     CommonUtils.saveRegisterInfo(register);
                     AppConstants.register.getData().getUser().setHeadIcon(headerUrl);
                     if (register.getData().getUser().getHeadIcon()!=null){
                         EventBus.getDefault().post(new ChoseHeadStartBean(headerUrl));
                     }
+                    progressBar.dismiss();
+                    finish();
                 } else {
                     CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
+                    progressBar.dismiss();
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                //UiUtils.toast(AvatarSelectionActivity.this, R.string.picture_put_failed);
+                progressBar.dismiss();
+                UiUtils.toast(AvatarSelectionActivity.this, R.string.picture_put_failed);
             }
         }, Register.class);
 
