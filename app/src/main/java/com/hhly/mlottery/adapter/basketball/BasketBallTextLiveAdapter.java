@@ -73,16 +73,15 @@ public class BasketBallTextLiveAdapter extends BaseQuickAdapter<BasketEachTextLi
             circleImageView.setVisibility(View.VISIBLE);
 
             if (1 == b.getTeamType()) { //主队
-
-
-                Glide.with(mContext).load(BasketDetailsActivityTest.homeIconUrl).into(circleImageView);
-
-              //  ImageLoader.load(mContext, BasketDetailsActivityTest.homeIconUrl, R.mipmap.basket_default).into(circleImageView);
+                if (BasketDetailsActivityTest.homeIconUrl != null && !"".equals(BasketDetailsActivityTest.homeIconUrl)) {
+                    Glide.with(mContext).load(BasketDetailsActivityTest.homeIconUrl).placeholder(R.mipmap.basket_default).into(circleImageView);
+                }
+                //  ImageLoader.load(mContext, BasketDetailsActivityTest.homeIconUrl, R.mipmap.basket_default).into(circleImageView);
             } else if (2 == b.getTeamType()) { //客队
-
-                Glide.with(mContext).load(BasketDetailsActivityTest.guestIconUrl).into(circleImageView);
-
-               // ImageLoader.load(mContext, BasketDetailsActivityTest.guestIconUrl, R.mipmap.basket_default).into(circleImageView);
+                if (BasketDetailsActivityTest.guestIconUrl != null && !"".equals(BasketDetailsActivityTest.guestIconUrl)) {
+                    Glide.with(mContext).load(BasketDetailsActivityTest.guestIconUrl).placeholder(R.mipmap.basket_default).into(circleImageView);
+                }
+                // ImageLoader.load(mContext, BasketDetailsActivityTest.guestIconUrl, R.mipmap.basket_default).into(circleImageView);
             } else {
                 circleImageView.setVisibility(View.GONE);  //既不是主队也不是客队
             }

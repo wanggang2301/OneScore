@@ -14,7 +14,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
 
@@ -55,8 +54,6 @@ public class BasketLiveFragment extends Fragment {
     private View mView;
     private Context mContext;
 
-    private List<BasketEachTextLiveBean> data;
-
     private BasketTextLiveFragment mBasketTextLiveFragment;
     private BasketTeamStatisticsFragment mBasketTeamStatisticsFragment;
     private BasketPlayersStatisticsFragment mBasketPlayersStatisticsFragment;
@@ -70,10 +67,11 @@ public class BasketLiveFragment extends Fragment {
 
     private int currentFrag = 0;
 
+    private String mThirdId;
+
 
     public static BasketLiveFragment newInstance() {
         BasketLiveFragment basketLiveFragment = new BasketLiveFragment();
-
         return basketLiveFragment;
     }
 
@@ -88,14 +86,12 @@ public class BasketLiveFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_basket_live, container, false);
         mContext = getActivity();
         ButterKnife.bind(this, mView);
-
         initView();
         return mView;
     }
 
 
     private void initView() {
-
         fragmentManager = getChildFragmentManager();
         mBasketTextLiveFragment = BasketTextLiveFragment.newInstance();
         mBasketTeamStatisticsFragment = BasketTeamStatisticsFragment.newInstance();
@@ -106,7 +102,6 @@ public class BasketLiveFragment extends Fragment {
         fragments.add(mBasketTextLiveFragment);
         fragments.add(mBasketTeamStatisticsFragment);
         fragments.add(mBasketPlayersStatisticsFragment);
-
 
         flError.setVisibility(View.GONE);
 
@@ -172,7 +167,7 @@ public class BasketLiveFragment extends Fragment {
     public void switchFragment(int position) {
 
 //        currentFramnet = FragmentUtils.switchFragment(fragmentManager, R.id.fl_content, currentFramnet, fragments.get(position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, false);
-        FragmentUtils.replaceFragment(fragmentManager,R.id.fl_content,fragments.get(position));
+        FragmentUtils.replaceFragment(fragmentManager, R.id.fl_content, fragments.get(position));
     }
 
     public void refresh() {
