@@ -57,14 +57,15 @@ public class CommonUtils {
         } else {
             PreferenceUtil.commitString(AppConstants.SPKEY_USERID, register.getData().getUser().getUserId());
             PreferenceUtil.commitString(AppConstants.SPKEY_NICKNAME, register.getData().getUser().getNickName());
-            PreferenceUtil.commitString(AppConstants.SPKEY_LOGINACCOUNT, register.getData().getUser().getLoginAccount());
+            if(register.getData().getUser().getLoginAccount()!=null){
+                PreferenceUtil.commitString(AppConstants.SPKEY_LOGINACCOUNT, register.getData().getUser().getLoginAccount());
+            }
             PreferenceUtil.commitString(AppConstants.HEADICON, register.getData().getUser().getHeadIcon());
             PreferenceUtil.commitString(AppConstants.SEX, register.getData().getUser().getSex());
             android.util.Log.i("smsdas","comGetSex>>>>>>>"+   PreferenceUtil.getString(AppConstants.SEX, "aa"));
             String token = register.getData().getLoginToken();
             L.d(TAG, " saveRegisterInfo   token = " + token);
             PreferenceUtil.commitString(AppConstants.SPKEY_TOKEN, token);
-
 
             AppConstants.register = register;
         }

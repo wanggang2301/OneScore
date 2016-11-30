@@ -312,6 +312,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
 
                 String url = BaseURLs.UPDATEUSERINFO;
                 Map<String, String> param = new HashMap<>();
+                param.put("account", AppConstants.register.getData().getUser().getLoginAccount());
                 param.put("loginToken", AppConstants.register.getData().getLoginToken());
                 param.put("deviceToken", AppConstants.deviceToken);
                 param.put("sex", sexDatas.get(0).toString());
@@ -320,7 +321,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                     @Override
                     public void onResponse(Register register) {
                         if (register.getResult() == AccountResultCode.SUCC) {
-                            CommonUtils.saveRegisterInfo(register);
+                            // CommonUtils.saveRegisterInfo(register);
                             AppConstants.register.getData().getUser().setSex(sexDatas.get(0));
                             Log.i("smsdas","getSex>>>>>>>"+register.getData().getUser().getSex());
                             finish();
@@ -652,10 +653,15 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 progressBar.dismiss();
                 if (register.getResult() == AccountResultCode.SUCC) {
                     UiUtils.toast(MyApp.getInstance(), R.string.picture_put_success);
-                   // CommonUtils.saveRegisterInfo(register);
+                    register.getData().getUser().setLoginAccount(AppConstants.register.getData().getLoginToken());
+                    CommonUtils.saveRegisterInfo(register);
 
                     PreferenceUtil.commitString(AppConstants.HEADICON, register.getData().getUser().getHeadIcon().toString());
-                    ImageLoader.load(ProfileActivity.this,register.getData().getUser().getHeadIcon(),R.mipmap.center_head).into(mHead_portrait);
+                    Glide.with(ProfileActivity.this)
+                            .load(register.getData().getUser().getHeadIcon())
+                            .error(R.mipmap.center_head)
+                            .into(mHead_portrait);
+                    //ImageLoader.load(ProfileActivity.this,register.getData().getUser().getHeadIcon(),R.mipmap.center_head).into(mHead_portrait);
 
                 } else {
                     CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());

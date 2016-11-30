@@ -910,7 +910,7 @@
     <string name="verify_code">請輸入驗證碼</string>
     <string name="verify_code_send">發送驗證碼</string>
     <string name="logout">退出當前帳號</string>
-    <string name="logouting">正在注銷...</string>
+    <string name="logouting">正在退出...</string>
     <string name="logout_fail">注銷失敗</string>
     <string name="logout_succ">退出成功</string>
     <string name="resend">重發</string>
