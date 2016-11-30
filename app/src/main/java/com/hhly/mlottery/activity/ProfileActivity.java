@@ -251,17 +251,18 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 MobclickAgent.onEvent(ProfileActivity.this, "ModifyPasswordActivity_Start");
                 startActivity(new Intent(this, ModifyPasswordActivity.class));
                 break;
-           /* case R.id.head_portrait:///显示全图
-                MobclickAgent.onEvent(mContext, "ProfileActivity_SetHead");
-                 Intent intent2 = new Intent(ProfileActivity.this, EnlargePhotoActivity.class);
+            case R.id.head_portrait:///显示全图
+ /*                Intent intent2 = new Intent(ProfileActivity.this, EnlargePhotoActivity.class);
                  startActivity(intent2);
 //                Intent intent2 = new Intent(ProfileActivity.this, PicturePreviewActivity.class);
 //                 intent2.putExtra("url", PreferenceUtil.getString(AppConstants.HEADICON, ""));
-//                 startActivity(intent2);
-                break;*/
+//                 startActivity(intent2);*/
+                backgroundAlpha(0.5f);
+                setHeadView(v);
+                break;
             case R.id.modify_avatar: //修改头像
                 backgroundAlpha(0.5f);
-              setHeadView(v);
+                setHeadView(v);
                 break;
         /*    case R.id.tv_photograph:  //拍照
                 doTakePhoto();
