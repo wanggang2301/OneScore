@@ -20,7 +20,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by yixq on 2016/11/15.
  * mail：yixq@13322.com
- * describe:
+ * describe:斯洛克设置页
  */
 
 public class SnookerSettingActivity extends BaseActivity implements View.OnClickListener {

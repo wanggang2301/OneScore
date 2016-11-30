@@ -55,7 +55,7 @@ import rx.functions.Func1;
 /**
  * Created by yixq on 2016/11/15.
  * mail：yixq@13322.com
- * describe:
+ * describe:斯洛克列表数据
  */
 
 public class SnookerListActivity extends BaseWebSocketActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
