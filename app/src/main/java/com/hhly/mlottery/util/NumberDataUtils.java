@@ -1528,7 +1528,7 @@ public class NumberDataUtils {
 
 //        lottery_sfc_issue.setText(context.getResources().getString(R.string.number_code_di) + (mNumberInfo.getIssue() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getIssue()) + context.getResources().getString(R.string.number_code_qi));
 
-        for (int i = 0, len = mNumberInfo.getFootballLotteryIssueResultData().size(); i < len; i++) {
+        for (int i = 0, len = mNumberInfo.getFootballLotteryIssueResultData() == null ? 0 : mNumberInfo.getFootballLotteryIssueResultData().size(); i < len; i++) {
             // 判断是否开赛时间
 //            try {
 //                if (mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime() == null) {
@@ -1673,7 +1673,7 @@ public class NumberDataUtils {
 
 //        lottery_lcbqc_issue.setText(context.getResources().getString(R.string.number_code_di) + (mNumberInfo.getIssue() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getIssue()) + context.getResources().getString(R.string.number_code_qi));
 
-        for (int i = 0, len = mNumberInfo.getFootballLotteryIssueResultData().size(); i < len; i++) {
+        for (int i = 0, len = mNumberInfo.getFootballLotteryIssueResultData() == null ? 0 : mNumberInfo.getFootballLotteryIssueResultData().size(); i < len; i++) {
             // 判断是否开赛时间
 //            try {
 //                if (mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime() == null) {
@@ -1788,7 +1788,7 @@ public class NumberDataUtils {
 //        lottery_scjq_issue.setText(context.getResources().getString(R.string.number_code_di) + (mNumberInfo.getIssue() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getIssue()) + context.getResources().getString(R.string.number_code_qi));
         // 设置对阵和开赛时间
         int index = 0;
-        for (int i = 0, len = mNumberInfo.getFootballLotteryIssueResultData().size(); i < len; i++) {
+        for (int i = 0, len = mNumberInfo.getFootballLotteryIssueResultData() == null ? 0 : mNumberInfo.getFootballLotteryIssueResultData().size(); i < len; i++) {
             // 判断是否开赛时间
 //            try {
 //                if (mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime() == null) {
