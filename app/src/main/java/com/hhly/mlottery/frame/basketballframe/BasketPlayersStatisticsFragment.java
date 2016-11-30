@@ -240,9 +240,10 @@ public class BasketPlayersStatisticsFragment extends Fragment implements View.On
     private void loadData() {
         mGuestName.setText(mData.getData().getGuestTeam());
         mHomeName.setText(mData.getData().getHomeTeam());
-        ImageLoader.load(getActivity(),mData.getData().getGuestLogoUrl(),R.mipmap.basket_default).into(mGuestIcon);
-        ImageLoader.load(getActivity(),mData.getData().getHomeLogoUrl(),R.mipmap.basket_default).into(mHomeIcon);
-
+        if(getActivity()!=null){
+            ImageLoader.load(getActivity(),mData.getData().getGuestLogoUrl(),R.mipmap.basket_default).into(mGuestIcon);
+            ImageLoader.load(getActivity(),mData.getData().getHomeLogoUrl(),R.mipmap.basket_default).into(mHomeIcon);
+        }
         list.clear();
 
         list.addAll(mData.getData().getGuestPlayerStats());

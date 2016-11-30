@@ -487,7 +487,10 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
             }
 
             ImageView mIcon= (ImageView)holder.getConvertView().findViewById(R.id.progress_statistic);
-            ImageLoader.load(getActivity(),basketDatabaseMostDat.getTeamIconUrl(),R.mipmap.basket_default).into(mIcon);
+            if(getActivity()!=null){
+                ImageLoader.load(getActivity(),basketDatabaseMostDat.getTeamIconUrl(),R.mipmap.basket_default).into(mIcon);
+
+            }
 
         }
     }
