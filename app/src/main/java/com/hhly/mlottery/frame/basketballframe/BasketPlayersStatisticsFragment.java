@@ -202,8 +202,6 @@ public class BasketPlayersStatisticsFragment extends Fragment implements View.On
         mBtnRefresh.setOnClickListener(this);
         mRlGuest.setOnClickListener(this);
         mRlHome.setOnClickListener(this);
-        mGuestName.setFocusable(false);
-        mHomeName.setFocusable(false);
 
     }
 
