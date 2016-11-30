@@ -4,9 +4,12 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.ChoseStartBean;
 import com.hhly.mlottery.util.ImageLoader;
+import com.hhly.mlottery.util.ListDatasSaveUtils;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
@@ -30,6 +33,7 @@ public class ChoseStartWomanAdapter extends CommonAdapter<ChoseStartBean.DataBea
         super(context, datas, layoutId);
         this.mContext=context;
         this.datas=datas;
+
     }
   //定义一个判断postion的公共方法
     public void setSeclection(int position) {
@@ -47,7 +51,9 @@ public class ChoseStartWomanAdapter extends CommonAdapter<ChoseStartBean.DataBea
          this.holder=holder;
         chose_head_child = holder.getView(R.id.chose_head_child);
         imageView4 = holder.getView(R.id.imageView4);
-        ImageLoader.load(mContext, femaleBean.getHeadIcon(), R.mipmap.center_head).into(chose_head_child);
+        Glide.with(mContext).load(femaleBean.getHeadIcon())
+                .diskCacheStrategy(DiskCacheStrategy.ALL).into(chose_head_child);
+      //  ImageLoader.load(mContext, femaleBean.getHeadIcon(), R.mipmap.center_head).into(chose_head_child);
 
         if (clickStatus==position) {
             holder.setBackgroundRes(R.id.imageView4, R.mipmap.right2x);
