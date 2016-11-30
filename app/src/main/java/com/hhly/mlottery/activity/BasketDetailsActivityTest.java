@@ -732,7 +732,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         } else {
             mRefreshLayout.setEnabled(true); //展开
         }
-
     }
 
     @Override
@@ -742,17 +741,12 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             public void run() {
                 mRefreshLayout.setRefreshing(false);
                 loadData();
-
-
                 //直播刷新
-
                 if (isNBA) {
-
                     if (mBasketLiveFragment != null) {
                         mBasketLiveFragment.refresh();
                     }
                 }
-
 
                 mAnalyzeFragment.initData();
                 mOddsEuro.initData();
