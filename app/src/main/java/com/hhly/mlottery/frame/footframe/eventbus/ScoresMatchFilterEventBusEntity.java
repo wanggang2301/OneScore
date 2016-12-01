@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * @author: Wangg
  * @Name：ScoresMatchFilterEventBusEntity
- * @Description:
+ * @Description:帅选Activity返回
  * @Created on:2016/12/1  14:52.
  */
 

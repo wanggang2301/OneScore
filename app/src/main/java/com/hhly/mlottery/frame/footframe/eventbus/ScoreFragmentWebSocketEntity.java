@@ -3,7 +3,7 @@ package com.hhly.mlottery.frame.footframe.eventbus;
 /**
  * @author: Wangg
  * @Name：ScoreFramnetWebSocketEntity
- * @Description:
+ * @Description:其他界面滚逼socket连接
  * @Created on:2016/12/1  14:19.
  */
 
