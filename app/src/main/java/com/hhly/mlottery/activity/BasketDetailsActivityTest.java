@@ -205,6 +205,10 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         }
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.basketball.score." + mThirdId + ".zh");
+
+        L.d("zxcvbn", "basketURL===" + BaseURLs.WS_SERVICE);
+        L.d("zxcvbn", "basketTopic===" + "USER.topic.basketball.score." + mThirdId + ".zh");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket_details_activity_test);
         /**不统计当前的Activity界面，只统计Fragment界面*/

@@ -331,6 +331,8 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
         setTopic("USER.topic.liveEvent." + mThirdId + "." + appendLanguage());
 
 
+        L.d("zxcvbn", "footURL===" + BaseURLs.WS_SERVICE);
+        L.d("zxcvbn", "footTopic===" + "USER.topic.liveEvent." + mThirdId + "." + appendLanguage());
         super.onCreate(savedInstanceState);
 
 
