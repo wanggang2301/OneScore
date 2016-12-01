@@ -203,6 +203,4 @@ public class FootballActivity extends BaseActivity {
         super.onPause();
         MobclickAgent.onPause(this);
     }
-
-
 }
