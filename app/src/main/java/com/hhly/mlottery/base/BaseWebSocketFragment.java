@@ -172,7 +172,6 @@ public abstract class BaseWebSocketFragment extends Fragment {
                 }
             }
 
-            L.d("qazwsx", "fragment链接成功");
 
         } catch (WebSocketException | IOException e) {
             onConnectFail();
@@ -183,6 +182,8 @@ public abstract class BaseWebSocketFragment extends Fragment {
      * 子类可调用的重连方法
      */
     protected void connectWebSocket() {
+
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -195,6 +196,7 @@ public abstract class BaseWebSocketFragment extends Fragment {
      * 子类可调用的关闭方法
      */
     protected void closeWebSocket() {
+
         new Thread(new Runnable() {
             @Override
             public void run() {

@@ -27,7 +27,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.ImmediateAdapter;
 import com.hhly.mlottery.adapter.ImmediateInternationalAdapter;
 import com.hhly.mlottery.bean.Focus;
@@ -44,6 +44,8 @@ import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.ScoresFragment;
+import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFocusEventBusEntity;
+import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchSettingEventBusEntity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
@@ -92,7 +94,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
     private LinearLayout mLoadingLayout;
     private LinearLayout mErrorLayout;
 
-//    private LinearLayout mUnconectionLayout;
+    //    private LinearLayout mUnconectionLayout;
     private ExactSwipeRefrashLayout mSwipeRefreshLayout;
 
     private View mUnFocusLayout;
@@ -124,7 +126,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
     /**
      * 关注事件EventBus
      */
-    public static EventBus focusEventBus;
+    // public static EventBus focusEventBus;
 
 
     Handler mLoadHandler = new Handler();
@@ -194,9 +196,10 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 //            e.printStackTrace();
 //        }
 
-        focusEventBus = new EventBus();
-        focusEventBus.register(this);
+        // focusEventBus = new EventBus();
+        // focusEventBus.register(this);
 
+        EventBus.getDefault().register(this);
 
 
     }
@@ -289,7 +292,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.recyclerview_focus);
 
         mRecyclerView.setLayoutManager(layoutManager);
-
 
 
         /**需要修改**/
@@ -468,17 +470,17 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         if (getActivity() == null) {
             return;
         }
-        String url="http://192.168.31.73:8080/mlottery/core/pushSetting.findFocusMatchs.do";
+        String url = "http://192.168.31.73:8080/mlottery/core/pushSetting.findFocusMatchs.do";
 
         Map<String, String> params = new HashMap<String, String>();
-        String deviceId=AppConstants.deviceToken;
-        String userId="";
-        if(AppConstants.register!=null&&AppConstants.register.getData()!=null&&AppConstants.register.getData().getUser()!=null){
-            userId= AppConstants.register.getData().getUser().getUserId();
+        String deviceId = AppConstants.deviceToken;
+        String userId = "";
+        if (AppConstants.register != null && AppConstants.register.getData() != null && AppConstants.register.getData().getUser() != null) {
+            userId = AppConstants.register.getData().getUser().getUserId();
         }
-        params.put("userId",userId);
-        params.put("deviceId",deviceId);
-        params.put("thirdId",thirdId);
+        params.put("userId", userId);
+        params.put("deviceId", deviceId);
+        params.put("thirdId", thirdId);
 
         VolleyContentFast.requestJsonByPost(BaseURLs.FOCUS_FRAGMENT_CONCERN, params, new VolleyContentFast.ResponseSuccessListener<Focus>() {
             @Override
@@ -496,9 +498,9 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
                 mAllMatchs = json.getFocus();
 
-                teamLogoPre=json.getTeamLogoPre();
+                teamLogoPre = json.getTeamLogoPre();
 
-                teamLogoSuff=json.getTeamLogoSuff();
+                teamLogoSuff = json.getTeamLogoSuff();
 
                 mMatchs = new ArrayList<Match>();
 
@@ -529,16 +531,16 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 //                }
                 //把请求回来的列表存入本地
                 StringBuffer sb = new StringBuffer("");
-                for(Match m:mAllMatchs){
-                    if("".equals(sb.toString())){
+                for (Match m : mAllMatchs) {
+                    if ("".equals(sb.toString())) {
                         sb.append(m.getThirdId());
-                    }else {
-                        sb.append(","+m.getThirdId());
+                    } else {
+                        sb.append("," + m.getThirdId());
                     }
                 }
 
                 PreferenceUtil.commitString(FOCUS_ISD, sb.toString());
-                Log.e("BBB","存进去时"+sb.toString());
+                Log.e("BBB", "存进去时" + sb.toString());
                 ((ScoresFragment) getParentFragment()).focusCallback();
 
 
@@ -552,26 +554,23 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                 }
 
 
-
-
-                    if(mAdapter==null){
-                        mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
-                        mAdapter.setmFocusMatchClickListener(mFocusClickListener);
-                        mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
-                            @Override
-                            public void onItemClick(View view, String data) {
-                                String thirdId = data;
-                                Intent intent = new Intent(getActivity(), FootballMatchDetailActivityTest.class);
-                                intent.putExtra("thirdId", thirdId);
-                                intent.putExtra("currentFragmentId", 3);
-
-                                getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
-                            }
-                        });
-                        mRecyclerView.setAdapter(mAdapter);
-                    }else{
-                        updateAdapter();
-                    }
+                if (mAdapter == null) {
+                    mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
+                    mAdapter.setmFocusMatchClickListener(mFocusClickListener);
+                    mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, String data) {
+                            String thirdId = data;
+                            Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
+                            intent.putExtra("thirdId", thirdId);
+                            intent.putExtra("currentFragmentId", 4);
+                            getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                        }
+                    });
+                    mRecyclerView.setAdapter(mAdapter);
+                } else {
+                    updateAdapter();
+                }
 
 
                 isLoadedData = true;
@@ -774,37 +773,37 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
                 if ((isSetFocus && isFocus) || (!isSetFocus)) { //
 
-                    boolean isCheckedGoal=PreferenceUtil.getBoolean(MyConstants.GOAL,true);//进球
-                    boolean isCheckedRed=PreferenceUtil.getBoolean(MyConstants.RED_CARD,true); //红牌
-                    boolean isCheckedShake=PreferenceUtil.getBoolean(MyConstants.SHAKE,true);//震动
-                    boolean isCheckedSound=PreferenceUtil.getBoolean(MyConstants.SOUND,true); //声音
+                    boolean isCheckedGoal = PreferenceUtil.getBoolean(MyConstants.GOAL, true);//进球
+                    boolean isCheckedRed = PreferenceUtil.getBoolean(MyConstants.RED_CARD, true); //红牌
+                    boolean isCheckedShake = PreferenceUtil.getBoolean(MyConstants.SHAKE, true);//震动
+                    boolean isCheckedSound = PreferenceUtil.getBoolean(MyConstants.SOUND, true); //声音
 
                     if ("1".equals(eventType) || "2".equals(eventType)) { //主队进球或者取消进球
 
-                        if(isCheckedGoal&&isCheckedShake){ //选中进球跟震动。则震动
+                        if (isCheckedGoal && isCheckedShake) { //选中进球跟震动。则震动
                             mVibrator.vibrate(1000);
                         }
-                        if(isCheckedGoal&&isCheckedSound){
-                            mSoundPool.play(mSoundMap.get(1),1,1,0,0,1); //主队进球第一个声音
+                        if (isCheckedGoal && isCheckedSound) {
+                            mSoundPool.play(mSoundMap.get(1), 1, 1, 0, 0, 1); //主队进球第一个声音
                         }
 
 
                     } else if ("5".equals(eventType) || "6".equals(eventType)) { //客队进球或者取消进球
-                        if(isCheckedGoal&&isCheckedShake){ //选中进球跟震动。则震动
+                        if (isCheckedGoal && isCheckedShake) { //选中进球跟震动。则震动
                             mVibrator.vibrate(1000);
                         }
-                        if(isCheckedGoal&&isCheckedSound){
-                            mSoundPool.play(mSoundMap.get(2),1,1,0,0,1); //客队进球第2个声音
+                        if (isCheckedGoal && isCheckedSound) {
+                            mSoundPool.play(mSoundMap.get(2), 1, 1, 0, 0, 1); //客队进球第2个声音
                         }
 
 
                     } else if ("3".equals(eventType) || "4".equals(eventType) || "7".equals(eventType) || "8".equals(eventType)) { //主队红牌或者客队红牌
 
-                        if(isCheckedRed&&isCheckedShake){ //选中红牌跟震动。则震动
+                        if (isCheckedRed && isCheckedShake) { //选中红牌跟震动。则震动
                             mVibrator.vibrate(1000);
                         }
-                        if(isCheckedRed&&isCheckedSound){
-                            mSoundPool.play(mSoundMap.get(3),1,1,0,0,1); //红牌使用第三个声音
+                        if (isCheckedRed && isCheckedSound) {
+                            mSoundPool.play(mSoundMap.get(3), 1, 1, 0, 0, 1); //红牌使用第三个声音
                         }
                     }
                 }
@@ -1039,11 +1038,11 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
     public void updateAdapter() {
 
-            if (mAdapter == null) {
-                return;
-            }
-            mAdapter.updateDatas(mMatchs);
-            mAdapter.notifyDataSetChanged();
+        if (mAdapter == null) {
+            return;
+        }
+        mAdapter.updateDatas(mMatchs);
+        mAdapter.notifyDataSetChanged();
 
     }
 
@@ -1085,6 +1084,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
     }
 
     public void onEventMainThread(ScoresFragment.FootballScoresWebSocketEntity entity) {
+        L.d("qazwsx", "关注推送");
         if (mAdapter == null) {
             return;
         }
@@ -1110,7 +1110,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
      * EventBus设置
      */
 
-    public void onEventMainThread(Integer currentFragmentId) {
+    public void onEventMainThread(ScoresMatchSettingEventBusEntity scoresMatchSettingEventBusEntity) {
         if (PreferenceUtil.getBoolean(MyConstants.RBSECOND, true)) {
             mHandicap = 1;
         } else if (PreferenceUtil.getBoolean(MyConstants.rbSizeBall, false)) {
@@ -1136,30 +1136,29 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
      * EventBus 赛场比赛详情返回FootballMatchDetailActivity
      * 接受消息的页面实现
      */
-    public void onEventMainThread(String currentFragmentId) {
-//        if (isDestroy) {
-//            return;
-//        }
 
-        if ("".equals(PreferenceUtil.getString(FocusFragment.FOCUS_ISD, ""))) {
-            if (mMatchs != null) {
-                mMatchs.clear();
+    public void onEventMainThread(ScoresMatchFocusEventBusEntity scoresMatchFocusEventBusEntity) {
+        if (scoresMatchFocusEventBusEntity.getFgIndex() == 4) {
+            if ("".equals(PreferenceUtil.getString(FocusFragment.FOCUS_ISD, ""))) {
+                if (mMatchs != null) {
+                    mMatchs.clear();
+                }
+
+                if (mAllMatchs != null) {
+                    mAllMatchs.clear();
+                }
+                updateAdapter();
             }
 
-            if (mAllMatchs != null) {
-                mAllMatchs.clear();
-            }
-            updateAdapter();
+            ((ScoresFragment) getParentFragment()).focusCallback();
+
+            mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
+            mLoadHandler.postDelayed(mLoadingDataThread, 0);
         }
-
-        ((ScoresFragment) getParentFragment()).focusCallback();
-
-        mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-        mLoadHandler.postDelayed(mLoadingDataThread, 0);
     }
 
 
-    public void reLoadData(){
+    public void reLoadData() {
         mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         mLoadHandler.post(mLoadingDataThread);
     }
@@ -1198,6 +1197,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
     /**
      * 添加focusId
+     *
      * @param thirdId
      */
     public static void addFocusId(String thirdId) {
@@ -1208,29 +1208,29 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
             PreferenceUtil.commitString(FocusFragment.FOCUS_ISD, focusIds + "," + thirdId);
         }
         //TODO:把用户id,deviceId,deviceToken 传给服务器
-        String deviceId=AppConstants.deviceToken;
-        String uMengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
-        Log.e("AAA",uMengDeviceToken+"???");
-        String userId="";
-        if(AppConstants.register!=null&&AppConstants.register.getData()!=null&&AppConstants.register.getData().getUser()!=null){
-            userId= AppConstants.register.getData().getUser().getUserId();
+        String deviceId = AppConstants.deviceToken;
+        String uMengDeviceToken = PreferenceUtil.getString(AppConstants.uMengDeviceToken, "");
+        Log.e("AAA", uMengDeviceToken + "???");
+        String userId = "";
+        if (AppConstants.register != null && AppConstants.register.getData() != null && AppConstants.register.getData().getUser() != null) {
+            userId = AppConstants.register.getData().getUser().getUserId();
         }
         //thirdId
-        String url="http://192.168.31.73:8080/mlottery/core/pushSetting.followMatch.do";
-        Map<String,String> params=new HashMap<>();
+        String url = "http://192.168.31.73:8080/mlottery/core/pushSetting.followMatch.do";
+        Map<String, String> params = new HashMap<>();
 
-        params.put("deviceId",deviceId);
-        params.put("deviceToken",uMengDeviceToken);// 第一次获取的时候可能没得到
+        params.put("deviceId", deviceId);
+        params.put("deviceToken", uMengDeviceToken);// 第一次获取的时候可能没得到
         //这样可以再次尝试获取deviceToken
-        params.put("userId",userId);
-        params.put("follow","true");
-        params.put("thirdId",thirdId);
-        params.put("appNo","11"); //固定国内版11
+        params.put("userId", userId);
+        params.put("follow", "true");
+        params.put("thirdId", thirdId);
+        params.put("appNo", "11"); //固定国内版11
 
         VolleyContentFast.requestJsonByPost(BaseURLs.FOOTBALL_ADD_FOCUS, params, new VolleyContentFast.ResponseSuccessListener<ConcernBean>() {
             @Override
             public void onResponse(ConcernBean concernBean) {
-                Log.e("AAAA","concern");
+                Log.e("AAAA", "concern");
 
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -1238,7 +1238,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
 
             }
-        },ConcernBean.class);
+        }, ConcernBean.class);
 
 
     }
@@ -1246,6 +1246,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
     /**
      * 删除focusId
+     *
      * @param thirdId
      */
     public static void deleteFocusId(String thirdId) {
@@ -1265,23 +1266,23 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         PreferenceUtil.commitString(FocusFragment.FOCUS_ISD, sb.toString());
 
         //请求后台
-        String deviceId=AppConstants.deviceToken;
-        String uMengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
-        String userId="";
-        if(AppConstants.register!=null&&AppConstants.register.getData()!=null&&AppConstants.register.getData().getUser()!=null){
-            userId= AppConstants.register.getData().getUser().getUserId();
+        String deviceId = AppConstants.deviceToken;
+        String uMengDeviceToken = PreferenceUtil.getString(AppConstants.uMengDeviceToken, "");
+        String userId = "";
+        if (AppConstants.register != null && AppConstants.register.getData() != null && AppConstants.register.getData().getUser() != null) {
+            userId = AppConstants.register.getData().getUser().getUserId();
         }
         //thirdId
-        String url="http://192.168.31.73:8080/mlottery/core/pushSetting.followMatch.do";
-        Map<String,String> params=new HashMap<>();
+        String url = "http://192.168.31.73:8080/mlottery/core/pushSetting.followMatch.do";
+        Map<String, String> params = new HashMap<>();
 
-        params.put("deviceId",deviceId);
-        params.put("deviceToken",uMengDeviceToken==""? UmengRegistrar.getRegistrationId(MyApp.getContext()):uMengDeviceToken);// 第一次获取的时候可能没得到
+        params.put("deviceId", deviceId);
+        params.put("deviceToken", uMengDeviceToken == "" ? UmengRegistrar.getRegistrationId(MyApp.getContext()) : uMengDeviceToken);// 第一次获取的时候可能没得到
         //这样可以再次尝试获取deviceToken
-        params.put("userId",userId);
-        params.put("follow","false");
-        params.put("thirdId",thirdId);
-        params.put("appNo","11"); //固定国内版11
+        params.put("userId", userId);
+        params.put("follow", "false");
+        params.put("thirdId", thirdId);
+        params.put("appNo", "11"); //固定国内版11
 
         VolleyContentFast.requestJsonByPost(BaseURLs.FOOTBALL_ADD_FOCUS, params, new VolleyContentFast.ResponseSuccessListener<CancelConcernBean>() {
             @Override
@@ -1293,11 +1294,18 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
 
             }
-        },CancelConcernBean.class);
+        }, CancelConcernBean.class);
 
     }
 
 //    private boolean isPause = false;
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
 
     @Override
     public void onPause() {

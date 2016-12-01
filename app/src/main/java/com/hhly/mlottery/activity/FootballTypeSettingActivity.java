@@ -21,12 +21,8 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.frame.footframe.FocusFragment;
-import com.hhly.mlottery.frame.footframe.ImmediateFragment;
-import com.hhly.mlottery.frame.footframe.ResultFragment;
-import com.hhly.mlottery.frame.footframe.ScheduleFragment;
+import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchSettingEventBusEntity;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -34,6 +30,8 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * 足球设置
@@ -69,7 +67,7 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
 
     HashMap<Integer, Integer> soundMap = new HashMap<Integer, Integer>();
 
-    private int currentFragmentId=0;
+    private int currentFragmentId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +99,8 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
     }
 
     private void initData() {
-        Intent intent=getIntent();
-        currentFragmentId=intent.getIntExtra("currentFragmentId",0);
+        Intent intent = getIntent();
+        currentFragmentId = intent.getIntExtra("currentFragmentId", 0);
 
         //第一次进来根据文件选择选中哪个。默认是亚盘
         boolean asize = PreferenceUtil.getBoolean(MyConstants.rbSizeBall, false);
@@ -124,31 +122,31 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
             cb_notice.setChecked(false);
         }
 
-        if(PreferenceUtil.getBoolean(MyConstants.GOAL,true)){
+        if (PreferenceUtil.getBoolean(MyConstants.GOAL, true)) {
             sb_goal.setChecked(true);
-        }else {
+        } else {
             sb_goal.setChecked(false);
         }
-        if(PreferenceUtil.getBoolean(MyConstants.RED_CARD,true)){
+        if (PreferenceUtil.getBoolean(MyConstants.RED_CARD, true)) {
             sb_red.setChecked(true);
-        }else {
+        } else {
             sb_red.setChecked(false);
         }
-        if(PreferenceUtil.getBoolean(MyConstants.SHAKE,true)){
+        if (PreferenceUtil.getBoolean(MyConstants.SHAKE, true)) {
             sb_shake.setChecked(true);
-        }else {
+        } else {
             sb_shake.setChecked(false);
         }
-        if(PreferenceUtil.getBoolean(MyConstants.SOUND,true)){
+        if (PreferenceUtil.getBoolean(MyConstants.SOUND, true)) {
             sb_sound.setChecked(true);
-        }else {
+        } else {
             sb_sound.setChecked(false);
         }
 
         //推送关注比赛
-        if(PreferenceUtil.getBoolean(MyConstants.FOOTBALL_PUSH_FOCUS,true)){
+        if (PreferenceUtil.getBoolean(MyConstants.FOOTBALL_PUSH_FOCUS, true)) {
             sb_push.setChecked(true);
-        }else {
+        } else {
             sb_push.setChecked(false);
         }
 
@@ -157,7 +155,7 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
 
     private void initView() {
 
-        ib_back= (ImageView) findViewById(R.id.public_img_back);
+        ib_back = (ImageView) findViewById(R.id.public_img_back);
         //赔率提示
         mAlet = (RelativeLayout) findViewById(R.id.rl_set_alet);
         mAlet.setOnClickListener(this);
@@ -174,12 +172,12 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
         mRd_noshow = (RadioButton) findViewById(R.id.set_rd_noshow);
 
         //震动提示
-        sb_goal= (SwitchCompat) findViewById(R.id.sb_goal);
-        sb_red= (SwitchCompat) findViewById(R.id.sb_red_card);
-        sb_shake= (SwitchCompat) findViewById(R.id.sb_shake);
-        sb_sound= (SwitchCompat) findViewById(R.id.sb_sound);
-        cb_notice= (SwitchCompat) findViewById(R.id.cb_notice);
-        sb_push= (SwitchCompat) findViewById(R.id.sb_push);
+        sb_goal = (SwitchCompat) findViewById(R.id.sb_goal);
+        sb_red = (SwitchCompat) findViewById(R.id.sb_red_card);
+        sb_shake = (SwitchCompat) findViewById(R.id.sb_shake);
+        sb_sound = (SwitchCompat) findViewById(R.id.sb_sound);
+        cb_notice = (SwitchCompat) findViewById(R.id.cb_notice);
+        sb_push = (SwitchCompat) findViewById(R.id.sb_push);
 
 
         vibrator = (Vibrator) getSystemService(Service.VIBRATOR_SERVICE);
@@ -227,23 +225,13 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
                 break;
 
             case R.id.public_img_back:
-                MobclickAgent.onEvent(mContext,"Football_Setting_Exit");
-             //   setResult(Activity.RESULT_OK);
+                MobclickAgent.onEvent(mContext, "Football_Setting_Exit");
+                //   setResult(Activity.RESULT_OK);
                 Intent intent = new Intent();
                 intent.putExtra("resultType", resultstring);
 
-                if (currentFragmentId==1){
-                    ImmediateFragment.imEventBus.post(currentFragmentId);
-                }else if (currentFragmentId==2){
-                    ResultFragment.resultEventBus.post(currentFragmentId);
-
-                }else if (currentFragmentId==3){
-                    L.i("102","赛程发送");
-                    ScheduleFragment.schEventBus.post(currentFragmentId);
-                }else if (currentFragmentId==4){
-                    FocusFragment.focusEventBus.post(currentFragmentId);
-                }
-                setResult(Activity.RESULT_OK,intent);
+                eventbus();
+                setResult(Activity.RESULT_OK, intent);
                 finish();
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 break;
@@ -256,22 +244,13 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-         //   setResult(Activity.RESULT_OK);
+            //   setResult(Activity.RESULT_OK);
             Intent intent = new Intent();
             intent.putExtra("resultType", resultstring);
 
-            if (currentFragmentId==1){
-                ImmediateFragment.imEventBus.post(currentFragmentId);
-            }else if (currentFragmentId==2){
-                ResultFragment.resultEventBus.post(currentFragmentId);
+            eventbus();
 
-            }else if (currentFragmentId==3){
-                L.i("102","赛程发送");
-                ScheduleFragment.schEventBus.post(currentFragmentId);
-            }else if (currentFragmentId==4){
-                FocusFragment.focusEventBus.post(currentFragmentId);
-            }
-            setResult(Activity.RESULT_OK,intent);
+            setResult(Activity.RESULT_OK, intent);
             finish();
             overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
             return true;
@@ -279,6 +258,22 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
         return super.onKeyDown(keyCode, event);
     }
 
+
+    private void eventbus() {
+       /* if (currentFragmentId == 1) {
+            ImmediateFragment.imEventBus.post(currentFragmentId);
+        } else if (currentFragmentId == 2) {
+            EventBus.getDefault().post(new ScoresMatchSettingEventBusEntity(currentFragmentId));
+
+        } else if (currentFragmentId == 3) {
+            EventBus.getDefault().post(new ScoresMatchSettingEventBusEntity(currentFragmentId));
+        } else if (currentFragmentId == 4) {
+            FocusFragment.focusEventBus.post(currentFragmentId);
+        }*/
+
+        EventBus.getDefault().post(new ScoresMatchSettingEventBusEntity(currentFragmentId));
+
+    }
 
     @Override
     public void onCheckedChanged(CompoundButton button, boolean isChecked) {
@@ -314,15 +309,15 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
                 }
                 break;
             case R.id.cb_notice:
-                PreferenceUtil.commitBoolean(MyConstants.GAMEATTENTION,cb_notice.isChecked());
+                PreferenceUtil.commitBoolean(MyConstants.GAMEATTENTION, cb_notice.isChecked());
                 break;
             case R.id.sb_push:
-                PreferenceUtil.commitBoolean(MyConstants.FOOTBALL_PUSH_FOCUS,sb_push.isChecked());
+                PreferenceUtil.commitBoolean(MyConstants.FOOTBALL_PUSH_FOCUS, sb_push.isChecked());
 
                 //TODO:把是否接受推送消息的状态传给服务器
-                if(sb_push.isChecked()){
+                if (sb_push.isChecked()) {
                     requestServer("true");
-                }else {
+                } else {
                     requestServer("false");
                 }
             default:
@@ -330,25 +325,27 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
         }
 
     }
+
     /**
      * 把是否接受关注提交给后台
+     *
      * @param isPush
      */
     private void requestServer(String isPush) {
-        String deviceId= AppConstants.deviceToken;
-        String userId=AppConstants.register.getData().getUser().getUserId();
-        String uMengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
-        Map<String ,String> params=new HashMap<>();
-        params.put("deviceId",deviceId);
-        params.put("userId",userId);
-        params.put("statusPush",isPush);
-        params.put("deviceToken",uMengDeviceToken);
-        params.put("appNo","11");
-        String url="http://192.168.31.73:8080/mlottery/core/pushSetting.followUserPushSetting.do";
+        String deviceId = AppConstants.deviceToken;
+        String userId = AppConstants.register.getData().getUser().getUserId();
+        String uMengDeviceToken = PreferenceUtil.getString(AppConstants.uMengDeviceToken, "");
+        Map<String, String> params = new HashMap<>();
+        params.put("deviceId", deviceId);
+        params.put("userId", userId);
+        params.put("statusPush", isPush);
+        params.put("deviceToken", uMengDeviceToken);
+        params.put("appNo", "11");
+        String url = "http://192.168.31.73:8080/mlottery/core/pushSetting.followUserPushSetting.do";
         VolleyContentFast.requestJsonByPost(BaseURLs.FOOTBALL_USER_SET, params, new VolleyContentFast.ResponseSuccessListener<String>() {
             @Override
             public void onResponse(String jsonObject) {
-                Log.e("AAA","足球推送开关请求成功");
+                Log.e("AAA", "足球推送开关请求成功");
 
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -356,11 +353,11 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
 
             }
-        },String.class);
+        }, String.class);
 
     }
 
-    private void save(){
+    private void save() {
         PreferenceUtil.commitBoolean(MyConstants.RBSECOND, mRd_alet.isChecked()); //亚盘
         PreferenceUtil.commitBoolean(MyConstants.RBOCOMPENSATE, mRd_eur.isChecked());//欧赔
         PreferenceUtil.commitBoolean(MyConstants.rbSizeBall, mRd_asize.isChecked());//大小球

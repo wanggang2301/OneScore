@@ -28,7 +28,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
-import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.ImmediateAdapter;
 import com.hhly.mlottery.adapter.ImmediateInternationalAdapter;
 import com.hhly.mlottery.bean.HotFocusLeagueCup;
@@ -46,6 +46,9 @@ import com.hhly.mlottery.callback.RequestHostFocusCallBack;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.ScoresFragment;
+import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFilterEventBusEntity;
+import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFocusEventBusEntity;
+import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchSettingEventBusEntity;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.HotFocusUtils;
@@ -73,12 +76,10 @@ import de.greenrobot.event.EventBus;
  * @Description: 即时
  * @date 2015-10-15 上午9:53:24
  */
-public class  ImmediateFragment extends Fragment implements OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class ImmediateFragment extends Fragment implements OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-
     private static final String TAG = "ImmediateFragment";
     // private static Logger logger;
 
@@ -93,14 +94,6 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
 
     public static int mLoadDataStatus = LOAD_DATA_STATUS_INIT;// 加载数据状态
     public static boolean isNetSuccess = true;// 告诉筛选页面数据是否加载成功
-
-    // private SlideListView mListView;
-
-/*    private ImageView mBackImgBtn;// 返回菜单
-    private ImageView mFilterImgBtn;// 筛选
-    private ImageView mSetImgBtn;// 设置
-    private TextView mTitleTv;// 标题*/
-
 
     private TextView mReloadTvBtn;// 重新加载按钮
 
@@ -128,10 +121,6 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
     // 判断是否加载过数据
     private boolean isLoadedData = false;
     public static boolean isCheckedDefualt = false;// true为默认选中全部，但是在筛选页面不选中
-//    private boolean isWebSocketStart = false;// 不使用websocket时可设置为true
-
-//    private HappySocketClient mSocketClient;
-//    private URI mSocketUri = null;
 
     private int mHandicap = 1;// 盘口 1.亚盘 2.大小球 3.欧赔 4.不显示
 
@@ -155,19 +144,10 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
     private SoundPool mSoundPool;
     private HashMap<Integer, Integer> mSoundMap = new HashMap<>();
 
-//	private ImageView mLoadingImg;
-//	private Animation mLoadingAnimation;
-
-    private ImmediateNetStateReceiver mNetStateReceiver;
-
-    public static EventBus imEventBus;
+    //  public static EventBus imEventBus;
 
 
     private static final String FRAGMENT_INDEX = "fragment_index";
-    private final int FIRST_FRAGMENT = 0;
-    private final int SECOND_FRAGMENT = 1;
-    private final int THIRD_FRAGMENT = 2;
-    private final int FOUR_FRAGMENT = 2;
 
     private TextView mFragmentView;
 
@@ -213,47 +193,20 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        try {
-//            mSocketUri = new URI(BaseURLs.WS_SERVICE);
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//        }
-        imEventBus = new EventBus();
-        imEventBus.register(this);
+     /*   imEventBus = new EventBus();
+        imEventBus.register(this);*/
 
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         L.d(TAG, "___onCreateView____");
 
-/*
-        if (mView==null) {
-            mView = inflater.inflate(R.layout.football_immediate, container, false);
-            Bundle bundle=getArguments();
-            if (bundle!=null){
-                mCurIndex=bundle.getInt(FRAGMENT_INDEX);
-            }
-            isPrepared=true;
-            initView();
-
-            lazyLoad();
-        }
-
-        ViewGroup parent=(ViewGroup)mView.getParent();
-        if (parent!=null){
-            parent.removeView(mView);
-        }*/
-
-
         mView = inflater.inflate(R.layout.football_immediate, container, false);
-
 
         initMedia();
         initView();
-
-//        initBroadCase();
-
         return mView;
     }
 
@@ -281,10 +234,6 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
-        //mSwipeRefreshLayout.setRefreshing(true);
-
-        // 加载数据的listview
-        //  mListView = (SlideListView) mView.findViewById(R.id.immediate_listview);
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.recyclerview_immedia);
 
         mRecyclerView.setLayoutManager(layoutManager);
@@ -303,11 +252,6 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
             @Override
             public void onClick(View view, String third) {
 
-//				if (AppConstants.isGOKeyboard) {
-                //  mListView.slideBack();
-//				}
-
-                //String focusIds = PreferenceUtil.getString("focus_ids", "");
 
                 boolean isCheck = (Boolean) view.getTag();// 检查之前是否被选中
                 if (!isCheck) {// 插入数据
@@ -336,8 +280,6 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
     private final static int VIEW_STATUS_SUCCESS = 3;
     private final static int VIEW_STATUS_NET_ERROR = 4;
     private final static int VIEW_STATUS_FLITER_NO_DATA = 5;
-//    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS = 6;
-//    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_FAIL = 7;
 
     private Handler mViewHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -419,11 +361,6 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
 
     // 初始化数据
     private synchronized void initData() {
-
-        // Log.e(TAG, "url:"+BaseURLs.URL_ImmediateMatchs);
-//        isStartInitData = true;
-        L.d("imedia", "dddd");
-
         ((ScoresFragment) getParentFragment()).getFootballUserConcern();
 
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_ImmediateMatchs, new VolleyContentFast.ResponseSuccessListener<ImmediateMatchs>() {
@@ -524,14 +461,14 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
                                 @Override
                                 public void onItemClick(View view, String data) {
                                     String thirdId = data;
-                                    Intent intent = new Intent(getActivity(), FootballMatchDetailActivityTest.class);
+                                    Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
                                     intent.putExtra("thirdId", thirdId);
-                                    intent.putExtra("currentFragmentId", 0);
+                                    intent.putExtra("currentFragmentId", 1);
                                     getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
                                 }
                             });
                             mRecyclerView.setAdapter(mAdapter);
-                        }else{
+                        } else {
                             updateAdapter();
                         }
 
@@ -570,8 +507,6 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
                     // Log.e(TAG, "ws_json = " + ws_json);
                     webSocketMatchStatus = JSON.parseObject(ws_json, WebSocketMatchStatus.class);
                 }
-                // Log.e(TAG, "----webSocketMatchStatus -----" +
-                // webSocketMatchStatus.getThirdId());
                 updateListViewItemStatus(webSocketMatchStatus);
             } else if (msg.arg1 == 2) {
                 String ws_json = (String) msg.obj;
@@ -584,7 +519,6 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
                     webSocketMatchOdd = JSON.parseObject(ws_json, WebSocketMatchOdd.class);
                 }
 
-                //L.e(TAG, "----webSocketMatchStatus -----" + webSocketMatchOdd.getThirdId());
                 updateListViewItemOdd(webSocketMatchOdd);
             } else if (msg.arg1 == 4) {
 
@@ -755,37 +689,37 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
 
                     if ((isSetFocus && isFocus) || (!isSetFocus)) { //
 
-                        boolean isCheckedGoal=PreferenceUtil.getBoolean(MyConstants.GOAL,true);//进球
-                        boolean isCheckedRed=PreferenceUtil.getBoolean(MyConstants.RED_CARD,true); //红牌
-                        boolean isCheckedShake=PreferenceUtil.getBoolean(MyConstants.SHAKE,true);//震动
-                        boolean isCheckedSound=PreferenceUtil.getBoolean(MyConstants.SOUND,true); //声音
+                        boolean isCheckedGoal = PreferenceUtil.getBoolean(MyConstants.GOAL, true);//进球
+                        boolean isCheckedRed = PreferenceUtil.getBoolean(MyConstants.RED_CARD, true); //红牌
+                        boolean isCheckedShake = PreferenceUtil.getBoolean(MyConstants.SHAKE, true);//震动
+                        boolean isCheckedSound = PreferenceUtil.getBoolean(MyConstants.SOUND, true); //声音
 
                         if ("1".equals(eventType) || "2".equals(eventType)) { //主队进球或者取消进球
 
-                            if(isCheckedGoal&&isCheckedShake){ //选中进球跟震动。则震动
+                            if (isCheckedGoal && isCheckedShake) { //选中进球跟震动。则震动
                                 mVibrator.vibrate(1000);
                             }
-                            if(isCheckedGoal&&isCheckedSound){
-                                mSoundPool.play(mSoundMap.get(1),1,1,0,0,1); //主队进球第一个声音
+                            if (isCheckedGoal && isCheckedSound) {
+                                mSoundPool.play(mSoundMap.get(1), 1, 1, 0, 0, 1); //主队进球第一个声音
                             }
 
 
                         } else if ("5".equals(eventType) || "6".equals(eventType)) { //客队进球或者取消进球
-                            if(isCheckedGoal&&isCheckedShake){ //选中进球跟震动。则震动
+                            if (isCheckedGoal && isCheckedShake) { //选中进球跟震动。则震动
                                 mVibrator.vibrate(1000);
                             }
-                            if(isCheckedGoal&&isCheckedSound){
-                                mSoundPool.play(mSoundMap.get(2),1,1,0,0,1); //客队进球第2个声音
+                            if (isCheckedGoal && isCheckedSound) {
+                                mSoundPool.play(mSoundMap.get(2), 1, 1, 0, 0, 1); //客队进球第2个声音
                             }
 
 
                         } else if ("3".equals(eventType) || "4".equals(eventType) || "7".equals(eventType) || "8".equals(eventType)) { //主队红牌或者客队红牌
 
-                            if(isCheckedRed&&isCheckedShake){ //选中红牌跟震动。则震动
+                            if (isCheckedRed && isCheckedShake) { //选中红牌跟震动。则震动
                                 mVibrator.vibrate(1000);
                             }
-                            if(isCheckedRed&&isCheckedSound){
-                                mSoundPool.play(mSoundMap.get(3),1,1,0,0,1); //红牌使用第三个声音
+                            if (isCheckedRed && isCheckedSound) {
+                                mSoundPool.play(mSoundMap.get(3), 1, 1, 0, 0, 1); //红牌使用第三个声音
                             }
                         }
                     }
@@ -892,10 +826,6 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
                                 if (targetCup.getCount() > 1) {
                                     targetCup.setCount(targetCup.getCount() - 1);
                                 } else {
-                                    // LeagueCup[] tempCups = new
-                                    // LeagueCup[mCups.size()];//
-                                    // int index = 0;
-
                                     List<LeagueCup> tempCups = new ArrayList<LeagueCup>();
 
                                     for (LeagueCup acup : mCups) {
@@ -1157,18 +1087,14 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.network_exception_reload_btn:
-
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
                 mLoadHandler.post(mLoadingDataThread);
-
                 break;
-
             case R.layout.item_header_unconection_view:
                 L.w(TAG, "head onclick");
                 break;
             default:
                 break;
-
         }
     }
 
@@ -1177,61 +1103,58 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
      * 刷选返回
      * 接受消息的页面实现
      */
-    public void onEventMainThread(Map<String, Object> map) {
-        String[] checkedIds = (String[]) ((LinkedList) map.get(FiltrateMatchConfigActivity.RESULT_CHECKED_CUPS_IDS)).toArray(new String[]{});
-        FiltrateCupsMap.immediateCups = checkedIds;
-        mMatchs.clear();
-        for (Match match : mAllMatchs) {
-            boolean isExistId = false;
-            for (String checkedId : checkedIds) {
-                if (match.getRaceId().equals(checkedId)) {
-                    isExistId = true;
-                    break;
+    public void onEventMainThread(ScoresMatchFilterEventBusEntity scoresMatchFilterEventBusEntity) {
+        if (scoresMatchFilterEventBusEntity.getFgIndex() == 1) {
+            Map<String, Object> map = scoresMatchFilterEventBusEntity.getMap();
+            String[] checkedIds = (String[]) ((LinkedList) map.get(FiltrateMatchConfigActivity.RESULT_CHECKED_CUPS_IDS)).toArray(new String[]{});
+            FiltrateCupsMap.immediateCups = checkedIds;
+            mMatchs.clear();
+            for (Match match : mAllMatchs) {
+                boolean isExistId = false;
+                for (String checkedId : checkedIds) {
+                    if (match.getRaceId().equals(checkedId)) {
+                        isExistId = true;
+                        break;
+                    }
+                }
+                if (isExistId) {
+                    mMatchs.add(match);
                 }
             }
-            if (isExistId) {
-                mMatchs.add(match);
-            }
-        }
-        List<LeagueCup> leagueCupList = new ArrayList<LeagueCup>();
+            List<LeagueCup> leagueCupList = new ArrayList<LeagueCup>();
 
-        for (LeagueCup cup : mCups) {
-            boolean isExistId = false;
-            for (String checkedId : checkedIds) {
-                if (checkedId.equals(cup.getRaceId())) {
-                    isExistId = true;
-                    break;
+            for (LeagueCup cup : mCups) {
+                boolean isExistId = false;
+                for (String checkedId : checkedIds) {
+                    if (checkedId.equals(cup.getRaceId())) {
+                        isExistId = true;
+                        break;
+                    }
+                }
+
+                if (isExistId) {
+                    leagueCupList.add(cup);
                 }
             }
 
-            if (isExistId) {
-                leagueCupList.add(cup);
+            mCheckedCups = leagueCupList.toArray(new LeagueCup[]{});
+            updateAdapter();
+            isCheckedDefualt = (boolean) map.get(FiltrateMatchConfigActivity.CHECKED_DEFUALT);
+
+            if (mMatchs.size() == 0) {// 没有比赛
+                mViewHandler.sendEmptyMessage(VIEW_STATUS_FLITER_NO_DATA);
+            } else {
+                mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
             }
-        }
-
-        mCheckedCups = leagueCupList.toArray(new LeagueCup[]{});
-
-        updateAdapter();
-
-        isCheckedDefualt = (boolean) map.get(FiltrateMatchConfigActivity.CHECKED_DEFUALT);
-
-        if (mMatchs.size() == 0) {// 没有比赛
-            mViewHandler.sendEmptyMessage(VIEW_STATUS_FLITER_NO_DATA);
-        } else {
-            mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
         }
     }
-
-
-
 
 
     /**
      * 设置
      * 接受消息的页面实现
      */
-    public void onEventMainThread(Integer currentFragmentId) {
-
+    public void onEventMainThread(ScoresMatchSettingEventBusEntity scoresMatchSettingEventBusEntity) {
         if (PreferenceUtil.getBoolean(MyConstants.RBSECOND, true)) {
             mHandicap = 1;
         } else if (PreferenceUtil.getBoolean(MyConstants.rbSizeBall, false)) {
@@ -1241,7 +1164,6 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
         } else if (PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false)) {
             mHandicap = 4;
         }
-
         if (mMatchs == null) {
             return;
         }
@@ -1257,28 +1179,20 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
      * 比赛详情返回FootballMatchDetailActivity
      * 接受消息的页面实现
      */
-    public void onEventMainThread(String currentFragmentId) {
-        updateAdapter();
-        ((ScoresFragment) getParentFragment()).focusCallback();
+    public void onEventMainThread(ScoresMatchFocusEventBusEntity scoresMatchFocusEventBusEntity) {
+        if (scoresMatchFocusEventBusEntity.getFgIndex() == 1) {
+            updateAdapter();
+            ((ScoresFragment) getParentFragment()).focusCallback();
+        }
     }
 
 
     private void updateAdapter() {
-
-       /* if (AppConstants.isGOKeyboard) {
-            if (mInternationalAdapter == null) {
-                return;
-            }
-
-            mInternationalAdapter.updateDatas(mMatchs);
-            mInternationalAdapter.notifyDataSetChanged();
-        } else {*/
         if (mAdapter == null) {
             return;
         }
         mAdapter.updateDatas(mMatchs);
         mAdapter.notifyDataSetChanged();
-        //  }
     }
 
 
@@ -1286,141 +1200,20 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
     public void onResume() {
         super.onResume();
         L.v(TAG, "___onResume___");
-
-//        isPause = false;
-//        if (isDestroy) {
-//            return;
-//        }
-
-//        mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-//        mLoadHandler.postDelayed(mLoadingDataThread, 0);
-
-//        if (!isLoadedData && mLoadDataStatus != LOAD_DATA_STATUS_LOADING) {
-//
-//        } else {
-//
-//        }
-
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-//        L.v(TAG, "___onHiddenChanged___");
-//        L.v(TAG, "hidden = "+hidden);
-//        if (hidden) {
-//            isPause = true;
-//            if (mSocketClient != null) {
-//                isDestroy = true;
-//                mSocketClient.close();
-//            }
-//        } else {
-//            isPause = false;
-//            isDestroy = false;
-//            if (mLoadDataStatus != LOAD_DATA_STATUS_LOADING) {
-//                mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-//                mLoadHandler.postDelayed(mLoadingDataThread, 0);
-//            }
-//        }
     }
-
-//    private boolean isDestroy = false;
 
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         L.d(TAG, "__onDestroy___");
-//        if (mSocketClient != null) {
-//            isDestroy = true;
-//            mSocketClient.close();
-//        }
-//
-//        if (getActivity() != null && mNetStateReceiver != null) {
-//            getActivity().unregisterReceiver(mNetStateReceiver);
-//        }
-
-
     }
 
-//    private boolean isError = false;
-//
-//    @Override
-//    public void onError(Exception exception) {
-//        L.e(TAG, "websocket error");
-//        isError = true;
-//        restartSocket();
-//    }
-
-//    @Override
-//    public void onClose(String message) {
-//        L.e(TAG, "websocket close");
-//
-//        if (!isError) {
-//            restartSocket();
-//        }
-//    }
-
-//    private Timer timer = new Timer();
-//    private boolean isTimerStart = false;
-//
-//    private synchronized void restartSocket() {
-//        if (!isDestroy) {
-//            if (!isTimerStart) {
-//                TimerTask timerTask = new TimerTask() {
-//                    @Override
-//                    public void run() {
-//                        if (!isDestroy) {
-//                            startWebsocket();
-//                        } else {
-//                            timer.cancel();
-//                        }
-//                    }
-//                };
-//                timer.schedule(timerTask, 2000, 5000);
-//                isTimerStart = true;
-//            }
-//        }
-//    }
-
-//    @Override
-//    public void onMessage(String message) {
-//        L.w(TAG, "message = " + message);
-    // L.e(TAG, "websocket isClosed = " + client.isClosed());
-    // L.e(TAG, "websocket isClosing = " + client.isClosing());
-    // L.e(TAG, "websocket isConnecting = " + client.isConnecting());
-    // L.e(TAG, "websocket isFlushAndClose = " + client.isFlushAndClose());
-    // L.e(TAG, "websocket isOpen = " + client.isOpen());
-
-//        if (message.startsWith("CONNECTED")) {
-//            String id = "android" + DeviceInfo.getDeviceId(getActivity());
-    // if (logger != null) {
-    // logger.debug(DateUtil.getMillisDateTime(new Date()) +
-    // " CONNECTED-----" + id);
-    // }
-    // L.d(TAG, "id = " + id);
-//            id = MD5Util.getMD5(id);
-    // L.d(TAG, "md5 id = " + id);
-    // client.send("SUBSCRIBE\nid:" + id +
-    // "\ndestination:/topic/USER.topic.app\n\n");
-//            mSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.app\n\n");
-//            isWebSocketStart = true;
-//            return;
-//        } else if (message.startsWith("MESSAGE")) {
-//            String[] msgs = message.split("\n");
-//            // System.out.println("msgs.length = " +
-//            // msgs.length);
-//            String ws_json = msgs[msgs.length - 1];
-//
-//            // if (logger != null) {
-//            // logger.debug(ws_json);
-//            // }
-//
-//            // System.out.println("msgs last = " + ws_json);
-//
-//        }
-//        mSocketClient.send("\n");
-//    }
 
     @Override
     public void onRefresh() {
@@ -1465,7 +1258,9 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
     }
 
 
+    //推送
     public void onEventMainThread(ScoresFragment.FootballScoresWebSocketEntity entity) {
+        L.d("qazwsx", "即时比分推送");
         if (mAdapter == null) {
             return;
         }
@@ -1512,8 +1307,8 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        //  EventBus.getDefault().unregister(this);
-        imEventBus.unregister(this);
+        EventBus.getDefault().unregister(this);
+        // imEventBus.unregister(this);
 
         L.d("100", "onDestroyView");
         L.w(TAG, "immediate fragment destroy view..");

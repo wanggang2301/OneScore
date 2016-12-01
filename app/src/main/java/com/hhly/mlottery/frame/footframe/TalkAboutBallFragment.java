@@ -25,7 +25,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
-import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.ChatballAdapter;
 import com.hhly.mlottery.bean.footballDetails.MatchLike;
 import com.hhly.mlottery.config.BaseURLs;
@@ -514,7 +514,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                     if(type == 1){
                         ((BasketDetailsActivityTest)mContext).talkAboutBallLoginBasket();
                     }else if(type == 0){
-                        ((FootballMatchDetailActivityTest)mContext).talkAboutBallLoginFoot();
+                        ((FootballMatchDetailActivity)mContext).talkAboutBallLoginFoot();
                     }
                 } else {//跳转输入评论页面
 //                    Intent intent2 = new Intent(mContext, InputActivity.class);
@@ -523,7 +523,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                     if(type == 1){
                         ((BasketDetailsActivityTest)mContext).talkAboutBallSendBasket(topicid);
                     }else if(type == 0){
-                        ((FootballMatchDetailActivityTest)mContext).talkAboutBallSendFoot(topicid);
+                        ((FootballMatchDetailActivity)mContext).talkAboutBallSendFoot(topicid);
                     }
                     mLinearLayout.setVisibility(View.GONE);
                     System.out.println("lzftalk跳" + topicid);

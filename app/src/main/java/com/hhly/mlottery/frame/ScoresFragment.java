@@ -34,6 +34,7 @@ import com.hhly.mlottery.frame.footframe.ImmediateFragment;
 import com.hhly.mlottery.frame.footframe.ResultFragment;
 import com.hhly.mlottery.frame.footframe.RollBallFragment;
 import com.hhly.mlottery.frame.footframe.ScheduleFragment;
+import com.hhly.mlottery.frame.footframe.eventbus.ScoreFragmentWebSocketEntity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -45,6 +46,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * @author Tenney
@@ -117,6 +120,8 @@ public class ScoresFragment extends BaseWebSocketFragment {
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.app");
         super.onCreate(savedInstanceState);
+
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -129,8 +134,6 @@ public class ScoresFragment extends BaseWebSocketFragment {
         initData();
         initEVent();
         setFootballLeagueStatisticsTodayClick();
-
-
         return view;
     }
 
@@ -260,7 +263,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
         });
         mViewPager.setAdapter(pureViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-       // mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        // mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
 
         mViewPager.setOffscreenPageLimit(5);
@@ -426,46 +429,47 @@ public class ScoresFragment extends BaseWebSocketFragment {
             }
         });
     }
+
     /**
      * 请求关注列表。登录后跟刷新，都会请求
      */
-    public void getFootballUserConcern(){
+    public void getFootballUserConcern() {
 
-        String userId="";
-        if(AppConstants.register!=null&&AppConstants.register.getData()!=null&&AppConstants.register.getData().getUser()!=null){
-             userId= AppConstants.register.getData().getUser().getUserId();
+        String userId = "";
+        if (AppConstants.register != null && AppConstants.register.getData() != null && AppConstants.register.getData().getUser() != null) {
+            userId = AppConstants.register.getData().getUser().getUserId();
         }
 
-        if(userId!=null&&userId!=""){
+        if (userId != null && userId != "") {
             //devideID;
-            String deviceId=AppConstants.deviceToken;
+            String deviceId = AppConstants.deviceToken;
             //devicetoken 友盟。
-            String umengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
-            String appNo="11";
-            String url="http://192.168.31.73:8080/mlottery/core/pushSetting.loginUserFindMatch.do";
-            Map<String,String> params=new HashMap<>();
-            params.put("appNo",appNo);
-            params.put("userId",userId);
-            params.put("deviceToken",umengDeviceToken);
-            params.put("deviceId",deviceId);
+            String umengDeviceToken = PreferenceUtil.getString(AppConstants.uMengDeviceToken, "");
+            String appNo = "11";
+            String url = "http://192.168.31.73:8080/mlottery/core/pushSetting.loginUserFindMatch.do";
+            Map<String, String> params = new HashMap<>();
+            params.put("appNo", appNo);
+            params.put("userId", userId);
+            params.put("deviceToken", umengDeviceToken);
+            params.put("deviceId", deviceId);
 
-            Log.e("CCC",umengDeviceToken);
+            Log.e("CCC", umengDeviceToken);
             //volley请求
             VolleyContentFast.requestJsonByGet(BaseURLs.FOOTBALL_FIND_MATCH, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
                 @Override
                 public void onResponse(BasketballConcernListBean jsonObject) {
-                    if(jsonObject.getResult().equals("200")){
-                        Log.e("AAA","登陆后请求的足球关注列表");
+                    if (jsonObject.getResult().equals("200")) {
+                        Log.e("AAA", "登陆后请求的足球关注列表");
                         //将关注写入文件
-                        StringBuffer sb=new StringBuffer();
-                        for(String thirdId:jsonObject.getConcerns()){
-                            if("".equals(sb.toString())){
+                        StringBuffer sb = new StringBuffer();
+                        for (String thirdId : jsonObject.getConcerns()) {
+                            if ("".equals(sb.toString())) {
                                 sb.append(thirdId);
-                            }else {
-                                sb.append(","+thirdId);
+                            } else {
+                                sb.append("," + thirdId);
                             }
                         }
-                        PreferenceUtil.commitString(FocusFragment.FOCUS_ISD,sb.toString());
+                        PreferenceUtil.commitString(FocusFragment.FOCUS_ISD, sb.toString());
                         focusCallback();
                     }
 
@@ -475,7 +479,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
                 public void onErrorResponse(VolleyContentFast.VolleyException exception) {
 
                 }
-            },BasketballConcernListBean.class);
+            }, BasketballConcernListBean.class);
         }
     }
 
@@ -483,7 +487,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
     public void focusCallback() {
         String focusIds = PreferenceUtil.getString("focus_ids", "");
         String[] arrayId = focusIds.split("[,]");
-        if(getActivity()!=null){
+        if (getActivity() != null) {
             if ("".equals(focusIds) || arrayId.length == 0) {
                 mTabLayout.getTabAt(FOCUS_FRAGMENT).setText(getActivity().getResources().getString(R.string.foot_guanzhu_txt));
             } else {
@@ -549,6 +553,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
             }
         }
         if (getActivity() != null && ((FootballActivity) mContext).fragmentIndex != FootballActivity.BASKET_FRAGMENT) {
+            L.d("qazwsx", "________connectWebSocket");
             connectWebSocket();
         }
 
@@ -591,20 +596,26 @@ public class ScoresFragment extends BaseWebSocketFragment {
         L.d(TAG, "football Fragment start..");
     }
 
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         L.d(TAG, "football Fragment destroy..");
+        L.d("qazwsx", "________onDestroy");
+
     }
 
     @Override
     protected void onTextResult(String text) {
-        if (ImmediateFragment.imEventBus != null)
+        L.d("qazwsx", "收到消息==" + text);
+       /* if (ImmediateFragment.imEventBus != null)
             ImmediateFragment.imEventBus.post(new FootballScoresWebSocketEntity(text));
         if (FocusFragment.focusEventBus != null)
             FocusFragment.focusEventBus.post(new FootballScoresWebSocketEntity(text));
         if (RollBallFragment.eventBus != null)
-            RollBallFragment.eventBus.post(new FootballScoresWebSocketEntity(text));
+            RollBallFragment.eventBus.post(new FootballScoresWebSocketEntity(text));*/
+
+        EventBus.getDefault().post(new FootballScoresWebSocketEntity(text));
     }
 
     public class FootballScoresWebSocketEntity {
@@ -652,12 +663,34 @@ public class ScoresFragment extends BaseWebSocketFragment {
     public void onDestroyView() {
         super.onDestroyView();
         L.d(TAG, "football Fragment destroy view..");
+
+        EventBus.getDefault().unregister(this);
+
+        L.d("qazwsx", "________onDestroyView");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         L.d(TAG, "football Fragment detach..");
+    }
+
+
+    /***
+     * 足球比分(比分、资讯、视频、数据、指数)
+     * 只有切换到比分时连接Socket推送，其余断开推送
+     *
+     * @param scoreFragmentWebSocketEntity
+     */
+    public void onEventMainThread(ScoreFragmentWebSocketEntity scoreFragmentWebSocketEntity) {
+        if (scoreFragmentWebSocketEntity.getFgIndex() == 0) {
+            L.d("qazwsx", "________比分==" + scoreFragmentWebSocketEntity.getFgIndex());
+            connectWebSocket();
+        } else {
+            L.d("qazwsx", "________其余==" + scoreFragmentWebSocketEntity.getFgIndex());
+
+            closeWebSocket();
+        }
     }
 
     /**
@@ -829,4 +862,6 @@ public class ScoresFragment extends BaseWebSocketFragment {
             L.d("xxx", "FocusFragment>>>显示");
         }
     }
+
+
 }

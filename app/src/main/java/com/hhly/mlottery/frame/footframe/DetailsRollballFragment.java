@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.footballDetails.BottomOdds;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsItem;
@@ -372,7 +372,7 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
         mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
 
         Map<String, String> params = new HashMap<>();
-        params.put("thirdId", ((FootballMatchDetailActivityTest) getActivity()).mThirdId);
+        params.put("thirdId", ((FootballMatchDetailActivity) getActivity()).mThirdId);
         //String url = "http://192.168.10.242:8181/mlottery/core/footballBallList.ballListOverview.do";
 
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_BALLLISTOVERVIEW_INFO, params,
@@ -670,7 +670,7 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
 
 //    @Override
 //    public void onMessage(String message) {
-//        // L.d(TAG, "---onMessage---推送比赛thirdId==" + ((FootballMatchDetailActivityTest) getActivity()).mThirdId);
+//        // L.d(TAG, "---onMessage---推送比赛thirdId==" + ((FootballMatchDetailActivity) getActivity()).mThirdId);
 //
 //        pushStartTime = System.currentTimeMillis(); // 记录起始时间
 //        L.d(TAG, "心跳时间" + pushStartTime);
