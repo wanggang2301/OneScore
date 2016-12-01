@@ -152,16 +152,6 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-     /*   if(AppConstants.register.getData().getUser().getSex()!=null){
-            if(AppConstants.register.getData().getUser().getSex().equals("1")){
-                sexChange(R.color.home_logo_color,R.mipmap.man_sex,R.color.res_pl_color,R.mipmap.default_noon_sex,R.color.res_pl_color,R.mipmap.default_woman_sex);
-            }else if(AppConstants.register.getData().getUser().getSex().equals("2")){
-                sexChange(R.color.res_pl_color,R.mipmap.default_man_sex,R.color.res_pl_color,R.mipmap.default_noon_sex,R.color.woman_sex,R.mipmap.woman_sex);
-            }else {
-                sexChange(R.color.res_pl_color,R.mipmap.default_man_sex,R.color.noon_sex,R.mipmap.noon_sex,R.color.res_pl_color,R.mipmap.default_woman_sex);
-            }
-        }
-        Log.i("smsdas","getSex"+AppConstants.register.getData().getUser().getSex());*/
         tv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
 
     }
@@ -227,6 +217,31 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
         tv_nickname = ((TextView) findViewById(R.id.tv_nickname));
         ((TextView) findViewById(R.id.tv_account_real)).setText(AppConstants.register.getData().getUser().getLoginAccount());
     }
+    /*提示保存性别修改信息*/
+    private void showDialog() {
+
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(ProfileActivity.this, R.style.AppThemeDialog);//  android.R.style.Theme_Material_Light_Dialog
+        builder.setCancelable(false);// 设置对话框以外不可点击
+        builder.setTitle("");// 提示标题
+        builder.setMessage(R.string.confirm_the_selected_sex);// 提示内容
+        builder.setPositiveButton(R.string.about_confirm, new DialogInterface.OnClickListener() {
+            //@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                modifyGender();
+            }
+        });
+        builder.setNegativeButton(R.string.about_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                finish();
+            }
+        });
+        alertDialog = builder.create();
+        alertDialog.show();
+    }
 
     @Override
     public void onClick(View v) {
@@ -236,9 +251,10 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 if(sexDatas.size()==0){
                     finish();
                 }else{
-                    modifyGender();
+                    showDialog();
+
                 }
-                 finish();
+                // finish();
                 break;
             case R.id.rl_nickname: // 昵称栏
                 MobclickAgent.onEvent(ProfileActivity.this, "ModifyNicknameActivity_Start");
@@ -310,7 +326,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     }
    //修改性别
     private void modifyGender() {
-
+                progressBar.show();
                 String url = BaseURLs.UPDATEUSERINFO;
                 Map<String, String> param = new HashMap<>();
                 param.put("account", AppConstants.register.getData().getUser().getLoginAccount());
@@ -325,12 +341,16 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                             // CommonUtils.saveRegisterInfo(register);
                             AppConstants.register.getData().getUser().setSex(sexDatas.get(0));
                             Log.i("smsdas","getSex>>>>>>>"+register.getData().getUser().getSex());
+                            progressBar.dismiss();
                             finish();
                         } else if (register.getResult() == AccountResultCode.USER_NOT_LOGIN) {
+                            progressBar.dismiss();
                             UiUtils.toast(getApplicationContext() ,R.string.name_invalid);
                             Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
                             startActivity(intent);
+
                         } else {
+                            progressBar.dismiss();
                             CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
                         }
                     }
@@ -339,6 +359,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                         L.e(TAG, "上传性别失败");
                      UiUtils.toast(ProfileActivity.this, R.string.foot_neterror_post_photo);
+                        progressBar.dismiss();
                         finish();
                     }
                 }, Register.class);

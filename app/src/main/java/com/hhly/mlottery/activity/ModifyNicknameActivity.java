@@ -130,7 +130,7 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
                              UiUtils.toast(MyApp.getInstance(), R.string.modify_nickname_succ);
                              AppConstants.register.getData().getUser().setNickName(nickName);
                             // CommonUtils.saveRegisterInfo(AppConstants.register);
-                            PreferenceUtil.commitString(AppConstants.SPKEY_NICKNAME, bean.getData().getUser().getNickName());
+                             PreferenceUtil.commitString(AppConstants.SPKEY_NICKNAME, bean.getData().getUser().getNickName());
                              finish();
                          } else if (bean.getResult() == AccountResultCode.USER_NOT_LOGIN) {
                              UiUtils.toast(getApplicationContext() ,R.string.name_invalid);

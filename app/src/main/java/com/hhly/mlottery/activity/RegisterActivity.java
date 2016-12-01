@@ -386,10 +386,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 } else if (code.getResult() == AccountResultCode.PHONE_ALREADY_EXIST
                         || code.getResult() == AccountResultCode.PHONE_FORMAT_ERROR
                         || code.getResult() == AccountResultCode.MESSAGE_SEND_FAIL
-                        ||code.getResult()==AccountResultCode.ONLY_FIVE_EACHDAY) {
+                        ||code.getResult()==AccountResultCode.ONLY_FIVE_EACHDAY
+                        ||code.getResult()==AccountResultCode.USERNAME_EXIST) {
                     countDown.cancel();
-                    tv_verycode.setText(R.string.resend);
-                    tv_verycode.setClickable(true);
+                    //tv_verycode.setText(R.string.resend);
+                    //tv_verycode.setClickable(true);
                     enableVeryCode();
                 }
             }
