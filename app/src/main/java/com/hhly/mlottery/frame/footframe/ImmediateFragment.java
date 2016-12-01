@@ -370,6 +370,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
                     return;
                 }
+                L.d("qazwsx","即时比分请求数据");
                 mAllMatchs = jsonMatch.getImmediateMatch();// 获取所有赛程
                 mMatchs = new ArrayList<Match>();//
 

@@ -103,7 +103,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
      */
     public final static String ODDS_SIZE = "asiaSize";
     public static String mThirdId = "936707";
-    private String mMatchStatus;
+    public static String mMatchStatus;
     private Context mContext;
 
 

@@ -556,8 +556,6 @@ public class ScoresFragment extends BaseWebSocketFragment {
             L.d("qazwsx", "________connectWebSocket");
             connectWebSocket();
         }
-
-
     }
 
     @Override
@@ -597,6 +595,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
     }
 
 
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -605,6 +604,10 @@ public class ScoresFragment extends BaseWebSocketFragment {
 
     }
 
+    /**
+     * 发送文字直播
+     * @param text
+     */
     @Override
     protected void onTextResult(String text) {
         L.d("qazwsx", "收到消息==" + text);
@@ -663,10 +666,10 @@ public class ScoresFragment extends BaseWebSocketFragment {
     public void onDestroyView() {
         super.onDestroyView();
         L.d(TAG, "football Fragment destroy view..");
+        L.d("qazwsx", "________onDestroyView");
 
         EventBus.getDefault().unregister(this);
 
-        L.d("qazwsx", "________onDestroyView");
     }
 
     @Override

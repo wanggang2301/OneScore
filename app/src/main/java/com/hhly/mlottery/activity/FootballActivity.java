@@ -17,7 +17,6 @@ import com.hhly.mlottery.frame.NewVideoFragment;
 import com.hhly.mlottery.frame.ScoresFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketScoresFragment;
 import com.hhly.mlottery.frame.footframe.InformationFragment;
-import com.hhly.mlottery.frame.footframe.eventbus.ScoreFragmentWebSocketEntity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
@@ -25,8 +24,6 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import de.greenrobot.event.EventBus;
 
 /****
  * @author wangg
@@ -164,7 +161,7 @@ public class FootballActivity extends BaseActivity {
                 }
 
                 //测试切换到其他页面能否收到推送消息
-                EventBus.getDefault().post(new ScoreFragmentWebSocketEntity(currentPosition));
+                //EventBus.getDefault().post(new ScoreFragmentWebSocketEntity(currentPosition));
 
             }
         });
@@ -182,18 +179,8 @@ public class FootballActivity extends BaseActivity {
         super.onDestroy();
         CpiFiltrateActivity.mCheckedIds.clear();
         CpiFiltrateActivity.isDefaultHot = true;
-       /* if (ImmediateFragment.imEventBus != null) {
-            ImmediateFragment.imEventBus.unregister(ImmediateFragment.class);
-        }
-       // if (ResultFragment.resultEventBus != null) {
-       //     ResultFragment.resultEventBus.unregister(ResultFragment.class);
-       // }
-       *//* if (ScheduleFragment.schEventBus != null) {
-            ScheduleFragment.schEventBus.unregister(ScheduleFragment.class);
-        }*//*
-        if (FocusFragment.focusEventBus != null) {
-            FocusFragment.focusEventBus.unregister(FocusFragment.class);
-        }*/
+
+        L.d("qazwsx","_____Footballactivity onDestroy");
     }
 
     @Override
@@ -216,4 +203,6 @@ public class FootballActivity extends BaseActivity {
         super.onPause();
         MobclickAgent.onPause(this);
     }
+
+
 }

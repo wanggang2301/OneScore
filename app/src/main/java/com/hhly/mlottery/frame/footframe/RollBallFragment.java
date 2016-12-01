@@ -216,6 +216,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        L.d("qazwsx","滚球eventbus解除注册");
         EventBus.getDefault().unregister(this);
        /* if (eventBus != null) {
             eventBus.unregister(this);

@@ -183,7 +183,6 @@ public abstract class BaseWebSocketFragment extends Fragment {
      */
     protected void connectWebSocket() {
 
-
         new Thread(new Runnable() {
             @Override
             public void run() {
