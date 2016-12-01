@@ -153,6 +153,16 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         tv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
+        if(AppConstants.register.getData().getUser().getSex()!=null){
+            Log.i("sdadasdas","getSex"+AppConstants.register.getData().getUser().getSex());
+            if(AppConstants.register.getData().getUser().getSex().equals("1")){
+                sexChange(R.color.home_logo_color,R.mipmap.man_sex,R.color.res_pl_color,R.mipmap.default_noon_sex,R.color.res_pl_color,R.mipmap.default_woman_sex);
+            }else if(AppConstants.register.getData().getUser().getSex().equals("2")){
+                sexChange(R.color.res_pl_color,R.mipmap.default_man_sex,R.color.res_pl_color,R.mipmap.default_noon_sex,R.color.woman_sex,R.mipmap.woman_sex);
+            }else {
+                sexChange(R.color.res_pl_color,R.mipmap.default_man_sex,R.color.noon_sex,R.mipmap.noon_sex,R.color.res_pl_color,R.mipmap.default_woman_sex);
+            }
+        }
 
     }
 
@@ -198,16 +208,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
         woman_sex = (ImageView) findViewById(R.id.woman_sex);
         man_sex = (ImageView) findViewById(R.id.man_sex);
         noon_sex = (ImageView) findViewById(R.id.noon_sex);
-     if(AppConstants.register.getData().getUser().getSex()!=null){
-            if(AppConstants.register.getData().getUser().getSex().equals("1")){
-                sexChange(R.color.home_logo_color,R.mipmap.man_sex,R.color.res_pl_color,R.mipmap.default_noon_sex,R.color.res_pl_color,R.mipmap.default_woman_sex);
-            }else if(AppConstants.register.getData().getUser().getSex().equals("2")){
-                sexChange(R.color.res_pl_color,R.mipmap.default_man_sex,R.color.res_pl_color,R.mipmap.default_noon_sex,R.color.woman_sex,R.mipmap.woman_sex);
-            }else {
-                sexChange(R.color.res_pl_color,R.mipmap.default_man_sex,R.color.noon_sex,R.mipmap.noon_sex,R.color.res_pl_color,R.mipmap.default_woman_sex);
-            }
-        }
-        Log.i("smsdas","getSex"+AppConstants.register.getData().getUser().getSex());
+
 
         //第三方登录时隐藏修改密码栏
         if(PreferenceUtil.getBoolean("three_login",false)){
@@ -340,6 +341,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                         if (register.getResult() == AccountResultCode.SUCC) {
                             // CommonUtils.saveRegisterInfo(register);
                             AppConstants.register.getData().getUser().setSex(sexDatas.get(0));
+                            PreferenceUtil.commitString(AppConstants.SEX, register.getData().getUser().getSex());
                             Log.i("smsdas","getSex>>>>>>>"+register.getData().getUser().getSex());
                             progressBar.dismiss();
                             finish();
