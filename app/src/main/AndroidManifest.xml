@@ -332,7 +332,6 @@
         <activity
             android:name=".activity.MoreSettingsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.TestSocketActivity"></activity>
 
     </application>
 
