@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Settings;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -38,6 +37,7 @@ import com.hhly.mlottery.frame.ScoresFragment;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.HotFocusUtils;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.RxBus;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
@@ -193,6 +193,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     @Override
     protected void initData() {
         this.requestApi();
+
+        L.d("qazwsx","_________rollball");
 //        this.setupWebSocketClient();
 //        this.checkedOutWebsocketIsConnected();
     }
@@ -248,63 +250,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         this.initData();
         ((ScoresFragment) getParentFragment()).reconnectWebSocket();
     }
-
-//    private synchronized void setupWebSocketClient() {
-//        if (socketClient == null || (socketClient != null && socketClient.isClosed())) {
-//            try {
-//                socketClient = new HappySocketClient(new URI(BaseURLs.WS_SERVICE), new Draft_17(), new HappySocketClient.Callback() {
-//                    @Override
-//                    public void onMessage(String message) {
-//                        ++onNewMessageCount;
-//                        if (message.startsWith("CONNECTED")) {
-//                            socketClient.send("SUBSCRIBE\nid:" + MD5Util.getMD5(
-//                                    "android" + DeviceInfo.getDeviceId(getActivity())) + "\ndestination:/topic/USER.topic.app\n\n");
-//                            return;
-//                        } else if (message.startsWith("MESSAGE")) {
-//                            String[] msgs = message.split("\n");
-//                            String ws_json = msgs[msgs.length - 1];
-//                            String type = "";
-//                            try {
-//                                JSONObject jsonObject = new JSONObject(ws_json);
-//                                type = jsonObject.getString("type");
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                            if (!TextUtils.isEmpty(type)) {
-//                                Message msg = Message.obtain();
-//                                msg.obj = ws_json;
-//                                msg.arg1 = Integer.parseInt(type);
-//                                apiHandler.sendMessage(msg);
-//                            }
-//                        }
-//                        socketClient.send("\n");
-//                    }
-//
-//                    @Override
-//                    public void onError(Exception exception) {
-//                        RollBallFragment.this.restoreSocketClient();
-//                    }
-//
-//                    @Override
-//                    public void onClose(String message) {
-//                        RollBallFragment.this.restoreSocketClient();
-//                    }
-//                });
-//
-//                socketClient.connect();
-//            } catch (Exception e) {
-//                RollBallFragment.this.restoreSocketClient();
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-
-//    private synchronized void restoreSocketClient() {
-//        if (socketClient != null) {
-//            socketClient.close();
-//            socketClient = null;
-//        }
-//    }
 
     public void onEventMainThread(ScoresFragment.FootballScoresWebSocketEntity entity) {
         if (adapter == null) {
@@ -385,16 +330,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     }
 
     private void setupRecyclerView() {
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            dataDecration = new BorderDividerItemDecration(
-                    getResources().getDimensionPixelOffset(R.dimen.data_border_divider_height),
-                    getResources().getDimensionPixelOffset(R.dimen.data_border_padding_infra_spans));
-        } else {
-            dataDecration = new BorderDividerItemDecration(
-                    getResources().getDimensionPixelOffset(R.dimen.data_border_divider_height_half),
-                    getResources().getDimensionPixelOffset(R.dimen.data_border_divider_height_half));
-        }
-        recyclerView.addItemDecoration(dataDecration);*/
+
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
     }

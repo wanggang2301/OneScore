@@ -171,6 +171,9 @@ public abstract class BaseWebSocketFragment extends Fragment {
                     }
                 }
             }
+
+            L.d("qazwsx", "fragment链接成功");
+
         } catch (WebSocketException | IOException e) {
             onConnectFail();
         }

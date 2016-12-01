@@ -263,30 +263,6 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
         mContext = context;
     }
 
-    /* protected void lazyLoad(){
-        if (!isPrepared || !isVisible || mHasLoadedOnce) {
-            return;
-        }
-      //  if (!isLoadedData && mLoadDataStatus != LOAD_DATA_STATUS_LOADING) {
-            mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-            mLoadHandler.postDelayed(mLoadingDataThread, 0);
-      //  } else {
-
-     //   }
-
-    }*/
-
-
-//    private void initBroadCase() {
-//        if (getActivity() != null) {
-//            mNetStateReceiver = new ImmediateNetStateReceiver();
-//            IntentFilter filter = new IntentFilter();
-//            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-//            getActivity().registerReceiver(mNetStateReceiver, filter);
-//        }
-//
-//    }
-
     private void initMedia() {
         mVibrator = (Vibrator) mContext.getSystemService(Service.VIBRATOR_SERVICE);
         mSoundPool = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5); //
@@ -297,11 +273,7 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
 
     // 初始化控件
     private void initView() {
-        // 加载动画
-//		mLoadingImg = (ImageView) mView.findViewById(R.id.iv_loading_img);
-//		mLoadingAnimation = AnimationUtils.loadAnimation(mContext, R.anim.cirle);
-//		mLoadingAnimation.setInterpolator(new LinearInterpolator());
-//		mLoadingImg.startAnimation(mLoadingAnimation);
+
         layoutManager = new LinearLayoutManager(mContext);
 
 
@@ -317,28 +289,12 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
 
         mRecyclerView.setLayoutManager(layoutManager);
 
-
-//		if (AppConstants.isGOKeyboard) {
-        //左划禁止 mod_forbid
-        //   mListView.initSlideMode(SlideListView.MOD_FORBID);
-        //  mListView.setSwipeRefreshLayout(mSwipeRefreshLayout);
-
-//		}
-
         mReloadTvBtn = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
         mReloadTvBtn.setOnClickListener(this);
 
         mNoDataLayout = mView.findViewById(R.id.football_immediate_unfocus_ll);// 没有数据板块
         mNoDataTextView = (TextView) mView.findViewById(R.id.football_immediate_no_data_tv);
         mNoDataTextView.setText(R.string.immediate_no_data);
-
-//        mUnconectionLayout = (LinearLayout) mView.findViewById(R.id.unconection_layout);// 没有网络板块
-//        mUnconectionLayout.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(Settings.ACTION_SETTINGS));
-//            }
-//        });
 
         mLoadingLayout = (LinearLayout) mView.findViewById(R.id.football_immediate_loading_ll);// Loading板块
         mErrorLayout = (LinearLayout) mView.findViewById(R.id.network_exception_layout);// 网络错误板块
@@ -528,30 +484,7 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
                             mMatchs.addAll(mAllMatchs);
                             mCheckedCups = mCups.toArray(new LeagueCup[mCups.size()]);
                             if (mMatchs.size() == 0) {// 一个赛事都没有，显示“暂无赛事”
-                                //  mRecyclerView.setLayoutManager(layoutManager);
 
-                               /* if (AppConstants.isGOKeyboard) {
-                                    *//*mInternationalAdapter = new ImmediateInternationalAdapter(mContext, mMatchs, R.layout.item_football_international);
-                                    mInternationalAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
-                                    mInternationalAdapter.setFocusClickListener(mFocusClickListener);
-                                    mListView.setAdapter(mInternationalAdapter);*//*
-                                } else {*/
-//                                if (mAdapter == null) {
-//                                    mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
-//                                    mAdapter.setmFocusMatchClickListener(mFocusClickListener);
-//                                    mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
-//                                        @Override
-//                                        public void onItemClick(View view, String data) {
-//                                            String thirdId = data;
-//                                            Intent intent = new Intent(getActivity(), FootballMatchDetailActivityTest.class);
-//                                            intent.putExtra("thirdId", thirdId);
-//                                            intent.putExtra("currentFragmentId", 0);
-//                                            getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
-//                                        }
-//                                    });
-//                                    mRecyclerView.setAdapter(mAdapter);
-//                                }
-                                // }
 
                                 isLoadedData = true;
                                 mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
@@ -583,14 +516,6 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
                             mCheckedCups = tempHotCups.toArray(new LeagueCup[tempHotCups.size()]);
                         }
 
-
-
-                      /*  if (AppConstants.isGOKeyboard) {
-                           *//* mInternationalAdapter = new ImmediateInternationalAdapter(mContext, mMatchs, R.layout.item_football_international);
-                            mInternationalAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
-                            mInternationalAdapter.setFocusClickListener(mFocusClickListener);
-                            mListView.setAdapter(mInternationalAdapter);*//*
-                        } else {*/
                         if (mAdapter == null) {
                             mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
                             //  mAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
@@ -624,40 +549,8 @@ public class  ImmediateFragment extends Fragment implements OnClickListener, Swi
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
             }
         }, ImmediateMatchs.class);
-
-//
     }
 
-//    private synchronized void startWebsocket() {
-//
-//        if (mSocketClient == null || (mSocketClient != null && mSocketClient.isClosed())) {
-//            // client.close();
-//            mSocketClient = new HappySocketClient(mSocketUri, new Draft_17());
-//            mSocketClient.setSocketResponseMessageListener(this);
-//            mSocketClient.setSocketResponseCloseListener(this);
-//            mSocketClient.setSocketResponseErrorListener(this);
-//            try {
-//                mSocketClient.connect();
-//            } catch (IllegalThreadStateException e) {
-//                mSocketClient.close();
-//                L.e(TAG, "IllegalThreadStateException.........");
-//            }
-//
-//            if (isError) {
-//                initData();
-//            }
-//
-//            isError = false;
-//        }
-//
-//        L.d(TAG, "websocket start status..");
-//        L.e(TAG, "websocket isClosed = " + mSocketClient.isClosed());
-//        L.e(TAG, "websocket isClosing = " + mSocketClient.isClosing());
-//        L.e(TAG, "websocket isConnecting = " + mSocketClient.isConnecting());
-//        L.e(TAG, "websocket isFlushAndClose = " + mSocketClient.isFlushAndClose());
-//        L.e(TAG, "websocket isOpen = " + mSocketClient.isOpen());
-//        L.e(TAG, "isWebSocketStart = " + isWebSocketStart);
-//    }
 
     Handler mSocketHandler = new Handler() {
         @Override

@@ -29,7 +29,6 @@ import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.LeagueCup;
 import com.hhly.mlottery.bean.focusAndPush.BasketballConcernListBean;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.ImmediateFragment;
 import com.hhly.mlottery.frame.footframe.ResultFragment;
@@ -121,8 +120,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mContext = getActivity();
         view = View.inflate(mContext, R.layout.frage_football, null);
         initView();
@@ -132,8 +130,6 @@ public class ScoresFragment extends BaseWebSocketFragment {
         initEVent();
         setFootballLeagueStatisticsTodayClick();
 
-//        eventBus = new EventBus();
-//        eventBus.register(this);
 
         return view;
     }
@@ -219,10 +215,6 @@ public class ScoresFragment extends BaseWebSocketFragment {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-//                L.d(TAG, "onPageScrolled");
-//                L.d(TAG, "position = " + position);
-//                L.d(TAG, "positionOffset = " + positionOffset);
-//                L.d(TAG, "positionOffsetPixels = " + positionOffsetPixels);
 
                 if (positionOffsetPixels == 0) {
                     switch (position) {
@@ -482,7 +474,6 @@ public class ScoresFragment extends BaseWebSocketFragment {
                 @Override
                 public void onErrorResponse(VolleyContentFast.VolleyException exception) {
 
-
                 }
             },BasketballConcernListBean.class);
         }
@@ -499,17 +490,14 @@ public class ScoresFragment extends BaseWebSocketFragment {
                 mTabLayout.getTabAt(FOCUS_FRAGMENT).setText(getActivity().getResources().getString(R.string.foot_guanzhu_txt) + "(" + arrayId.length + ")");
             }
         }
-
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (hidden) {
-//            L.d("xxx", ">>>足球>>>>hidden");
             onPause();
         } else {
-//            L.d("xxx", ">>>足球>>>>show");
             onResume();
         }
     }
@@ -607,7 +595,6 @@ public class ScoresFragment extends BaseWebSocketFragment {
     public void onDestroy() {
         super.onDestroy();
         L.d(TAG, "football Fragment destroy..");
-//        eventBus.unregister(this);
     }
 
     @Override
