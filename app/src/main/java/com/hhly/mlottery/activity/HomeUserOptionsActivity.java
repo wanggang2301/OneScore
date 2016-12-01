@@ -366,8 +366,10 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         super.onResume();
         MobclickAgent.onResume(this);
         MobclickAgent.onPageStart("HomeUserOptionsActivity");
-        if(CommonUtils.isLogin()){
 
+
+        if(CommonUtils.isLogin()){
+            mTv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
         }else {
             mTv_nickname.setText(R.string.Login_register);
             mUser_image.setImageResource(R.mipmap.center_head);

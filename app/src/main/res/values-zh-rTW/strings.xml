@@ -941,7 +941,7 @@
     <string name="username_pass_error">登錄名或者密碼錯誤</string>
     <string name="username_original_pass_error">請輸入正確的原始密碼</string>
     <string name="logout_check">確認退出登錄?</string>
-    <string name="confirm_the_selected_sex">確認保存選中的性別?</string>
+    <string name="confirm_the_selected_sex">確認保存修改的個人資訊?</string>
     <string name="chose_start_photo">選擇球星頭像</string>
     <string name="chose_start_text">伴隨你的，不僅有球星的風采；</string>
     <string name="only_chose_start_text">還有一比分。</string>

@@ -960,7 +960,7 @@
     <string name="username_original_pass_error">请输入正确的原始密码</string>
     <string name="logout_check">确认退出登录?</string>
     <string name="can_only_choose_a_picture">亲，只能选择一张图片</string>
-    <string name="confirm_the_selected_sex">确认保存选中的性别?</string>
+    <string name="confirm_the_selected_sex">确认保存修改的个人信息?</string>
     <string name="chose_start_photo">选择球星头像</string>
     <string name="chose_start_text">伴随你的，不仅有球星的风采；</string>
     <string name="only_chose_start_text">还有一比分。</string>
