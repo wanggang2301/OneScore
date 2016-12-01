@@ -344,9 +344,9 @@ public class SnookerListActivity extends BaseWebSocketActivity implements SwipeR
      * @param listData
      * @param dataBean
      */
-    private void addData(List<SnookerMatchesBean> listData, List<SnookerLeaguesBean> dataBean){
+    private void constituteData(List<SnookerMatchesBean> listData, List<SnookerLeaguesBean> dataBean){
 
-        if (listData == null) {
+        if (listData == null) { // constitute
             listData = new ArrayList<>();
         }
         for (int i = 0; i < dataBean.size(); i++) {
@@ -410,6 +410,11 @@ public class SnookerListActivity extends BaseWebSocketActivity implements SwipeR
                 }).subscribe();
     }
 
+    /**
+     * 加载跟多数据的方法 （上拉 、 下拉 加载）
+     * @param parameterUrl
+     * @param type
+     */
     private void addData(String parameterUrl , final int type) {
 
         String url = BaseURLs.SNOOKER_LIST_LOADMORE_URL;
@@ -431,8 +436,6 @@ public class SnookerListActivity extends BaseWebSocketActivity implements SwipeR
 
                 List<SnookerLeaguesBean> dataBean = json.getData();
 
-
-
                 if (type == 0) {
                     //数据加载
                     setData(currentAllData , dataBean);
@@ -440,7 +443,7 @@ public class SnookerListActivity extends BaseWebSocketActivity implements SwipeR
                 }else if (type == 1) {
 
                     List<SnookerMatchesBean> historyData = new ArrayList<SnookerMatchesBean>();
-                    addData(historyData , dataBean);
+                    constituteData(historyData , dataBean);
 
                     List<SnookerMatchesBean> downDataList = new ArrayList<>();
                     for (SnookerMatchesBean newData:historyData) {
@@ -453,6 +456,7 @@ public class SnookerListActivity extends BaseWebSocketActivity implements SwipeR
                     currentAllData.clear();
                     currentAllData = downDataList;
                     downLoadNum--;
+                    L.d("yxq+++++++ " , "请求到的数据" + downDataList.size());
                 }
                 updateAdapter();
                 Toast.makeText(SnookerListActivity.this, "yxqAAAAAAAA" + currentAllData.size(), Toast.LENGTH_SHORT).show();
@@ -501,6 +505,7 @@ public class SnookerListActivity extends BaseWebSocketActivity implements SwipeR
 
                 }
                 updateAdapter();
+                L.d("yxq+++++++ " , "----下拉完成----" );
             }
         }, 1000);
     }
@@ -537,7 +542,7 @@ public class SnookerListActivity extends BaseWebSocketActivity implements SwipeR
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //反注册
+        //反注册 取消绑定
         EventBus.getDefault().unregister(this);
     }
 
