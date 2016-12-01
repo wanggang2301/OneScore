@@ -633,6 +633,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
     @Override
     protected void onConnectFail() {
         L.d(TAG, "__onConnectFail__");
+        L.d("qazwsx", "__onConnectFail__");
 //        ((RollBallFragment) fragments.get(0)).connectFail();
 //        ((ImmediateFragment) fragments.get(1)).connectFail();
 //        ((FocusFragment) fragments.get(4)).connectFail();
@@ -641,6 +642,8 @@ public class ScoresFragment extends BaseWebSocketFragment {
     @Override
     protected void onDisconnected() {
         L.d(TAG, "__onDisconnected__");
+        L.d("qazwsx", "__onDisconnected__");
+
 //        ((RollBallFragment) fragments.get(0)).connectFail();
 //        ((ImmediateFragment) fragments.get(1)).connectFail();
 //        ((FocusFragment) fragments.get(4)).connectFail();

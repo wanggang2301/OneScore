@@ -111,6 +111,7 @@ public abstract class BaseWebSocketFragment extends Fragment {
         WebSocketFactory factory = new WebSocketFactory();
 
         try {
+            L.d("qazwsx","ws==="+mWebSocketUri);
             ws = factory.createSocket(mWebSocketUri, DEFUAL_TIMEOUT);
         } catch (IOException e) {
             e.printStackTrace();

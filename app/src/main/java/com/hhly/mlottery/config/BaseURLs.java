@@ -22,6 +22,7 @@ public class BaseURLs {
 
 
     private static String getHost() {
+
         if (AppConstants.isTestEnv) {//开发不需要修改下面代码
             int url_config = PreferenceUtil.getInt(MyConstants.URL_HOME_CONFIG, DebugConfigActivity.URL_1332255);
 
@@ -92,7 +93,8 @@ public class BaseURLs {
     private static String WS_HOST = getWsHost();
 
     private static String getWsHost() {
-        if (AppConstants.isTestEnv) {//开发不需要修改下面代码
+        return "192.168.31.19:8061";
+        /*if (AppConstants.isTestEnv) {//开发不需要修改下面代码
             int ws_config = PreferenceUtil.getInt(MyConstants.WS_HOME_CONFIG, DebugConfigActivity.WS_242);
             if (ws_config == DebugConfigActivity.WS_82) {
                 return "m.1332255.com:81/ws";
@@ -106,7 +108,7 @@ public class BaseURLs {
             }
         }
         return "m.13322.com/ws";//开发，发布改这里
-        //	return  "m.13322.com/ws";//开发，发布改这里
+        //	return  "m.13322.com/ws";//开发，发布改这里*/
     }
 
     /**
@@ -976,17 +978,17 @@ public class BaseURLs {
     public final static String BASKET_FIND_MATCH = URL_API_HOST + "androidBasketballMatch.findConcernVsThirdIds.do";
 
     //用户注销
-    public final static String EXIT_PUSH_ONLINE=URL_API_HOST+"pushSetting.exitUpdateOnlile.do";
+    public final static String EXIT_PUSH_ONLINE = URL_API_HOST + "pushSetting.exitUpdateOnlile.do";
     //上传性别的公用接口
-    public final static String UPDATEUSERINFO=URL_API_HOST+"androidUserCenter.updateUserInfo.do";
+    public final static String UPDATEUSERINFO = URL_API_HOST + "androidUserCenter.updateUserInfo.do";
     //明星头像
-    public final static String  FINDHEADICONS=URL_API_HOST+"systemSettings.findHeadIcons.do";
+    public final static String FINDHEADICONS = URL_API_HOST + "systemSettings.findHeadIcons.do";
 
     //篮球内页文字直播
     public final static String BASKET_DETAIL_TEXTLIVE = URL_API_HOST + "basketballDetail.findTextLive.do";  //basketballDetail  改接口
     //篮球内页球队统计
-    public final static String BASKET_DETAIL_TEAM=URL_API_HOST+"basketballDetail.findTeamStats.do";
+    public final static String BASKET_DETAIL_TEAM = URL_API_HOST + "basketballDetail.findTeamStats.do";
     //篮球内页球员统计
-    public final static String BASKET_DETAIL_PLAYER=URL_API_HOST+"basketballDetail.findPlayerStats.do";
+    public final static String BASKET_DETAIL_PLAYER = URL_API_HOST + "basketballDetail.findPlayerStats.do";
 
 }
