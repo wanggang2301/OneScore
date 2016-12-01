@@ -27,7 +27,8 @@
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="10dp"
-            android:src="@mipmap/logo"/>
+            android:src="@mipmap/logo"
+            android:id="@+id/imageView5" />
 
     </LinearLayout>
 
@@ -59,9 +60,11 @@
             android:textSize="15sp"/>
 
         <ImageView
+            android:paddingTop="27dp"
             android:id="@+id/iv_delete"
-            style="@style/login_item_image_right"
-            android:layout_marginRight="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="44dp"
             android:src="@mipmap/new_login_delete"/>
 
     </LinearLayout>
@@ -99,6 +102,7 @@
 
 
         <ImageView
+            android:layout_marginTop="10dp"
             android:id="@+id/iv_eye"
             style="@style/login_item_image_right"
             android:layout_width="20dp"
