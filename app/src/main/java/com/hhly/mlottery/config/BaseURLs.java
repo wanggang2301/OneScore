@@ -26,13 +26,10 @@ public class BaseURLs {
         if (AppConstants.isTestEnv) {//开发不需要修改下面代码
             int url_config = PreferenceUtil.getInt(MyConstants.URL_HOME_CONFIG, DebugConfigActivity.URL_1332255);
 
-//            url_config = DebugConfigActivity.URL_242;
             if (url_config == DebugConfigActivity.URL_1332255) {
                 return "m.1332255.com:81";//测试环境
             } else if (url_config == DebugConfigActivity.URL_242) {
-//                return "192.168.31.65:8181";
                 return "192.168.10.242:8181";//开发环境。
-//                return "192.168.12.242:8181";//余勇俊测试
             } else if (url_config == DebugConfigActivity.URL_93) {
                 return "183.61.172.93:8096"; // 典哥新加
             } else if (url_config == DebugConfigActivity.DIY_INPUT) {
@@ -42,7 +39,6 @@ public class BaseURLs {
             }
         }
 
-        //return "m.1332255.com";测试环境。
         return "m.13322.com";//发布版本
 
     }
@@ -52,33 +48,25 @@ public class BaseURLs {
 
     private static String PHOST = getPHost();
 
-
     private static String getPHost() {
         if (AppConstants.isTestEnv) {//开发不需要修改下面代码
             int url_config = PreferenceUtil.getInt(MyConstants.URL_HOME_CONFIG, DebugConfigActivity.URL_1332255);
 
-//            url_config = DebugConfigActivity.URL_242;
             if (url_config == DebugConfigActivity.URL_1332255) {
                 return "file.1332255.com:81";//测试环境
             } else if (url_config == DebugConfigActivity.URL_242) {
-//                return "192.168.31.65:8181";
                 return "192.168.10.242:8181";//开发环境。
-//                return "192.168.12.242:8181";//余勇俊测试
             } else {
                 return "file.13322.com";
             }
         }
-
-        //return "m.1332255.com";测试环境。
         return "file.13322.com";//发布版本
-
     }
 
 
     /**
      * 内网
      */
-//	private final static String HOST = "m.1332255.com";
     private final static String HTTP = "http://";
 
     private final static String HTTPS = "https://";
@@ -93,14 +81,16 @@ public class BaseURLs {
     private static String WS_HOST = getWsHost();
 
     private static String getWsHost() {
-        return "192.168.31.19:8061";
-        /*if (AppConstants.isTestEnv) {//开发不需要修改下面代码
+
+        //测试scoket链接数 ActiveMQ
+        //return "192.168.31.19:8061";
+
+        if (AppConstants.isTestEnv) {//开发不需要修改下面代码
             int ws_config = PreferenceUtil.getInt(MyConstants.WS_HOME_CONFIG, DebugConfigActivity.WS_242);
             if (ws_config == DebugConfigActivity.WS_82) {
                 return "m.1332255.com:81/ws";
             } else if (ws_config == DebugConfigActivity.WS_242) {
                 return "192.168.10.242:61634";
-//                return "192.168.12.242:61634";//余勇俊测试
             } else if (ws_config == DebugConfigActivity.DIY_INPUT) {
                 return PreferenceUtil.getString("DIY_INPUT", "m.13322.com/ws");// 自定义
             } else {
@@ -108,15 +98,12 @@ public class BaseURLs {
             }
         }
         return "m.13322.com/ws";//开发，发布改这里
-        //	return  "m.13322.com/ws";//开发，发布改这里*/
     }
 
     /**
      * 推送内网
      */
-//	private final static String WS_HOST = "192.168.10.242:61634";
-    public final static String WS_NAME = "happywin";
-    public final static String WS_PASSWORD = "happywin";
+
 
     public final static String WS_SERVICE = WS + WS_HOST;
 
