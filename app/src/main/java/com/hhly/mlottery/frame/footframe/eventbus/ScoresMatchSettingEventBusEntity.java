@@ -3,7 +3,7 @@ package com.hhly.mlottery.frame.footframe.eventbus;
 /**
  * @author: Wangg
  * @Name：ScoresMatchSettingEventBusEntity
- * @Description: 设置Activity返回
+ * @Description: 设置Activity设置赔率后返回列表赔率改变
  * @Created on:2016/12/1  15:20.
  */
 

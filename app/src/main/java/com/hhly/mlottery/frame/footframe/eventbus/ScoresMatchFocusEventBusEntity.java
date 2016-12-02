@@ -3,7 +3,7 @@ package com.hhly.mlottery.frame.footframe.eventbus;
 /**
  * @author: Wangg
  * @Name：ScoresMatchFocusEventBusEntity
- * @Description:足球列表和足球内页关注EventBus
+ * @Description:足球内页关注比赛后返回列表结果
  * @Created on:2016/12/1  15:05.
  */
 
