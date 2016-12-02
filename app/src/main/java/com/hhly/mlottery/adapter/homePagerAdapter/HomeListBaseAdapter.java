@@ -822,12 +822,12 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                             if (!TextUtils.isEmpty(mLottery.getJackpot())) {
                                                 if (mLottery.getJackpot().length() >= 9) {
                                                     Double str = Double.parseDouble(mLottery.getJackpot()) / 100000000;
-                                                    DecimalFormat df = new DecimalFormat("#.00");
+                                                    DecimalFormat df = new DecimalFormat("0.00");
                                                     bonus = df.format(str);
                                                     lottery_item_desc_list.get(k).setText(TextUtils.isEmpty(bonus) ? mContext.getResources().getString(R.string.home_number_desc_bonus) : mContext.getResources().getString(R.string.home_number_desc_bonus) + bonus + mContext.getResources().getString(R.string.home_number_desc_yi));
                                                 } else {
                                                     Double str = Double.parseDouble(mLottery.getJackpot()) / 10000;
-                                                    DecimalFormat df = new DecimalFormat("#.00");
+                                                    DecimalFormat df = new DecimalFormat("0.00");
                                                     bonus = df.format(str);
                                                     lottery_item_desc_list.get(k).setText(TextUtils.isEmpty(bonus) ? mContext.getResources().getString(R.string.home_number_desc_bonus) : mContext.getResources().getString(R.string.home_number_desc_bonus) + bonus + mContext.getResources().getString(R.string.home_number_desc_wan));
                                                 }
@@ -844,7 +844,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                             String bonus1 = null;
                                             if (!TextUtils.isEmpty(mLottery.getJackpot())) {
                                                 Double str = Double.parseDouble(mLottery.getJackpot()) / 10000;
-                                                DecimalFormat df = new DecimalFormat("#.00");
+                                                DecimalFormat df = new DecimalFormat("0.00");
                                                 bonus1 = df.format(str);
                                             }
                                             lottery_item_desc_list.get(k).setText(TextUtils.isEmpty(bonus1) ? mContext.getResources().getString(R.string.home_number_desc_bonus) : mContext.getResources().getString(R.string.home_number_desc_bonus) + bonus1 + mContext.getResources().getString(R.string.home_number_desc_wan));
