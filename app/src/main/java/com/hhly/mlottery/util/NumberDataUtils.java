@@ -2066,8 +2066,8 @@ public class NumberDataUtils {
 
             lottery_dlt_count1.setText(mNumberInfo.getFifthCount() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFirstCount())));
             lottery_dlt_bonus1.setText(mNumberInfo.getFifthBonus() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFirstBonus())));
-            lottery_dlt_add_count1.setText(mNumberInfo.getFifthAddCount() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFirstAddCount())));
-            lottery_dlt_add_bonus1.setText(mNumberInfo.getFifthAddBonus() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFirstAddBonus())));
+            lottery_dlt_add_count1.setText(mNumberInfo.getFirstAddCount() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFirstAddCount())));
+            lottery_dlt_add_bonus1.setText(mNumberInfo.getFirstAddBonus() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getFirstAddBonus())));
             lottery_dlt_count2.setText(mNumberInfo.getSecondCount() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getSecondCount())));
             lottery_dlt_bonus2.setText(mNumberInfo.getSecondBonus() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getSecondBonus())));
             lottery_dlt_add_count2.setText(mNumberInfo.getSecondAddCount() == null ? context.getResources().getString(R.string.number_info_default) : NumberSubUtils.qianweifenge(Long.parseLong(mNumberInfo.getSecondAddCount())));
