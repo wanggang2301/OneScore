@@ -68,8 +68,8 @@ public class InfoCenterActivity extends BaseActivity implements View.OnClickList
             public void onItemClick(View view, int i) {
                 int thirdId = mInfoCenterBean.intelligences.get(currentIndexDate).list.get(i).thirdId;
                 L.d("xxx", "thirdId: " + thirdId);
-                Intent intent = new Intent(mContext, FootballMatchDetailActivityTest.class);
-                intent.putExtra(FootballMatchDetailActivityTest.BUNDLE_PARAM_THIRDID, String.valueOf(thirdId));
+                Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
+                intent.putExtra(FootballMatchDetailActivity.BUNDLE_PARAM_THIRDID, String.valueOf(thirdId));
                 intent.putExtra("info_center", 1);
                 startActivity(intent);
             }

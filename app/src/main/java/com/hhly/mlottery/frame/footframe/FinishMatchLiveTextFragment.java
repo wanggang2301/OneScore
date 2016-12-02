@@ -25,7 +25,7 @@ import android.widget.Toast;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.FootBallLiveTextAdapter;
 import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.PreLiveText;
@@ -264,7 +264,7 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
         }
 
 
-        String mThirdId = ((FootballMatchDetailActivityTest) getActivity()).mThirdId;
+        String mThirdId = ((FootballMatchDetailActivity) getActivity()).mThirdId;
 
 
         pageId = pageId + 1;

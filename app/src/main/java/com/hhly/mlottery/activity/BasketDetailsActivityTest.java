@@ -103,7 +103,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
      */
     public final static String ODDS_SIZE = "asiaSize";
     public static String mThirdId = "936707";
-    private String mMatchStatus;
+    public static String mMatchStatus;
     private Context mContext;
 
 
@@ -205,6 +205,10 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         }
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.basketball.score." + mThirdId + ".zh");
+
+        L.d("zxcvbn", "basketURL===" + BaseURLs.WS_SERVICE);
+        L.d("zxcvbn", "basketTopic===" + "USER.topic.basketball.score." + mThirdId + ".zh");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket_details_activity_test);
         /**不统计当前的Activity界面，只统计Fragment界面*/
@@ -732,7 +736,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         } else {
             mRefreshLayout.setEnabled(true); //展开
         }
-
     }
 
     @Override
@@ -742,14 +745,12 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             public void run() {
                 mRefreshLayout.setRefreshing(false);
                 loadData();
-
-
                 //直播刷新
-
-                if (mBasketLiveFragment != null) {
-                    mBasketLiveFragment.refresh();
+                if (isNBA) {
+                    if (mBasketLiveFragment != null) {
+                        mBasketLiveFragment.refresh();
+                    }
                 }
-
 
                 mAnalyzeFragment.initData();
                 mOddsEuro.initData();

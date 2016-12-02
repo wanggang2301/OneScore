@@ -51,15 +51,13 @@ import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
 import com.hhly.mlottery.frame.footframe.AnimHeadLiveFragment;
 import com.hhly.mlottery.frame.footframe.DetailsRollballFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
-import com.hhly.mlottery.frame.footframe.ImmediateFragment;
 import com.hhly.mlottery.frame.footframe.IntelligenceFragment;
 import com.hhly.mlottery.frame.footframe.LiveHeadInfoFragment;
 import com.hhly.mlottery.frame.footframe.OddsFragment;
 import com.hhly.mlottery.frame.footframe.PreHeadInfoFrament;
-import com.hhly.mlottery.frame.footframe.ResultFragment;
-import com.hhly.mlottery.frame.footframe.ScheduleFragment;
 import com.hhly.mlottery.frame.footframe.StatisticsFragment;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
+import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;
@@ -97,12 +95,12 @@ import me.relex.circleindicator.CircleIndicator;
  * @date 2016/6/2 16:53
  * @des 足球内页改版
  */
-public class FootballMatchDetailActivityTest extends BaseWebSocketActivity implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, ExactSwipeRefrashLayout.OnRefreshListener {
+public class FootballMatchDetailActivity extends BaseWebSocketActivity implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, ExactSwipeRefrashLayout.OnRefreshListener {
 
-    private final static int IMMEDIA_FRAGMENT = 0;
-    private final static int RESULT_FRAGMENT = 1;
-    private final static int SCHEDULE_FRAGMENT = 2;
-    private final static int FOCUS_FRAGMENT = 3;
+    private final static int IMMEDIA_FRAGMENT = 1;
+    private final static int RESULT_FRAGMENT = 2;
+    private final static int SCHEDULE_FRAGMENT = 3;
+    private final static int FOCUS_FRAGMENT = 4;
     private final static int BANNER_PLAY_TIME = 2500; //头部5秒轮播
     private final static int BANNER_ANIM_TIME = 500; //轮播动画时间
     private final static int ERROR = -1;//访问失败
@@ -331,6 +329,8 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
         setTopic("USER.topic.liveEvent." + mThirdId + "." + appendLanguage());
 
 
+        L.d("zxcvbn", "footURL===" + BaseURLs.WS_SERVICE);
+        L.d("zxcvbn", "footTopic===" + "USER.topic.liveEvent." + mThirdId + "." + appendLanguage());
         super.onCreate(savedInstanceState);
 
 
@@ -2742,28 +2742,14 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
 
     }
 
-
-//    @Override
-//    public void onClose(String message) {
-//    }
-//
-//    @Override
-//    public void onError(Exception exception) {
-//
-//    }
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState, outPersistentState);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             eventBusPost();
-
-            // setResult(Activity.RESULT_OK);
-
             finish();
             return true;
         }
@@ -2772,23 +2758,29 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
 
 
     private void eventBusPost() {
-        if (currentFragmentId == IMMEDIA_FRAGMENT) {
+      /*  if (currentFragmentId == IMMEDIA_FRAGMENT) {
             if (ImmediateFragment.imEventBus != null) {
                 ImmediateFragment.imEventBus.post("");
             }
         } else if (currentFragmentId == RESULT_FRAGMENT) {
-            if (ResultFragment.resultEventBus != null) {
-                ResultFragment.resultEventBus.post("");
-            }
+
+            EventBus.getDefault().post(new ScoresMatchFocusEventBusEntity(currentFragmentId));
+            //if (ResultFragment.resultEventBus != null) {
+            //     ResultFragment.resultEventBus.post("");
+            // }
         } else if (currentFragmentId == SCHEDULE_FRAGMENT) {
-            if (ScheduleFragment.schEventBus != null) {
+           *//* if (ScheduleFragment.schEventBus != null) {
                 ScheduleFragment.schEventBus.post("");
-            }
+            }*//*
+            EventBus.getDefault().post(new ScoresMatchFocusEventBusEntity(currentFragmentId));
+
         } else if (currentFragmentId == FOCUS_FRAGMENT) {
             if (FocusFragment.focusEventBus != null) {
                 FocusFragment.focusEventBus.post("");
             }
-        }
+        }*/
+        EventBus.getDefault().post(new ScoresMatchFocusEventBusEntity(currentFragmentId));
+
     }
 
 

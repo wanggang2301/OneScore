@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import com.android.volley.VolleyError;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiDetailsActivity;
-import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.cpiadapter.CPIRecyclerListAdapter;
 import com.hhly.mlottery.bean.enums.OddsTypeEnum;
 import com.hhly.mlottery.bean.enums.StatusEnum;
@@ -122,7 +122,7 @@ public class CPIOddsFragment extends Fragment {
         mAdapter.setOnItemClickListener(new CPIRecyclerListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(NewOddsInfo.AllInfoBean item) {
-                Intent intent = new Intent(getContext(), FootballMatchDetailActivityTest.class);
+                Intent intent = new Intent(getContext(), FootballMatchDetailActivity.class);
                 intent.putExtra("thirdId", item.getMatchInfo().getMatchId());
                 getContext().startActivity(intent);
             }

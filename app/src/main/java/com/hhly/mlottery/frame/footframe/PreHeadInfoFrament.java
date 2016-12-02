@@ -1,5 +1,6 @@
 package com.hhly.mlottery.frame.footframe;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -14,13 +15,11 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.MatchDetail;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.StringUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-
 
 import java.util.Random;
 
@@ -65,10 +64,9 @@ public class PreHeadInfoFrament extends Fragment {
     private TextView mMatchType1;
 
     private TextView mMatchType2;
-
+    private Activity mActivity;
 
     private static final String baseUrl = "http://pic.13322.com/bg/";
-
 
 
     public static PreHeadInfoFrament newInstance() {
@@ -81,7 +79,7 @@ public class PreHeadInfoFrament extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_pre_headinfo, container, false);
 
-        this.mContext = getActivity();
+        this.mContext = mActivity;
         initView();
 
         return mView;
@@ -114,7 +112,7 @@ public class PreHeadInfoFrament extends Fragment {
         // if (flag) {
         int random = new Random().nextInt(20);
         String url = baseUrl + random + ".png";
-        ImageLoader.load(mContext,url,R.color.colorPrimary).into(iv_bg);
+        ImageLoader.load(mContext, url, R.color.colorPrimary).into(iv_bg);
 //        Glide.with(this).load(url).into(iv_bg);
 
         // }
@@ -183,5 +181,9 @@ public class PreHeadInfoFrament extends Fragment {
         score.setTextColor(id);
     }
 
-
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
+    }
 }

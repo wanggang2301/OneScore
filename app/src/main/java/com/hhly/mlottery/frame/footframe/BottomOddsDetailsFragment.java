@@ -21,7 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.football.BottomOddsAdapter;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsDetails;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsDetailsItem;
@@ -307,7 +307,7 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
         mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
 
         Map<String, String> params = new HashMap<>();
-        params.put("thirdId", ((FootballMatchDetailActivityTest) getActivity()).mThirdId);
+        params.put("thirdId", ((FootballMatchDetailActivity) getActivity()).mThirdId);
         //
         params.put("oddType", mType + "");
 

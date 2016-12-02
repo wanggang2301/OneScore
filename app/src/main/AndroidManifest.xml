@@ -113,10 +113,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name=".activity.FootballTypeSettingDetailsActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.FootballMatchDetailActivityTest"
+            android:name=".activity.FootballMatchDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />
@@ -332,6 +329,7 @@
         <activity
             android:name=".activity.MoreSettingsActivity"
             android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>
