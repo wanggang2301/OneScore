@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingLeft="10dp"
+    android:paddingBottom="10dp"
     android:paddingRight="10dp">
 
     <!-- 胜负彩 -->

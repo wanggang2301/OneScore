@@ -17,15 +17,14 @@ import android.widget.TextView;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.NumbersActivity;
-import com.hhly.mlottery.bean.numbersBean.FootIssueResultData;
 import com.hhly.mlottery.bean.numbersBean.NumberCurrentInfo;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import pl.droidsonroids.gif.GifImageView;
 
 /**
  * @author Tenney
@@ -253,11 +252,10 @@ public class NumberDataUtils {
                 // 重庆幸运农场
                 if (isGravity == 1 && isQXCOpenNumberStart) {
                     // 正在开奖中时显示的内容
-                    ImageView iv = new ImageView(context);
-                    iv.setLayoutParams(params);
 
-//                    iv.setImageResource(R.mipmap.number_anim_klsf_blue);// 蓝球
-                    ImageLoader.loadFitCenter(context, R.mipmap.number_anim_klsf_blue, R.mipmap.number_kj_icon_def).into(iv);
+                    GifImageView iv = new GifImageView(context);
+                    iv.setLayoutParams(params);
+                    iv.setImageResource(R.mipmap.number_anim_klsf_blue);
 
                     ll.addView(iv);
                 } else {
@@ -327,9 +325,9 @@ public class NumberDataUtils {
 
                         isDynamicNumber = true;
                         // 显示动态的gif图
-                        ImageView iv = new ImageView(context);
-//                        iv.setImageResource(AppConstants.numberHKOpenGIF[i]);
-                        ImageLoader.loadFitCenter(context, AppConstants.numberHKOpenGIF[i], R.mipmap.number_kj_icon_def).into(iv);
+
+                        GifImageView iv = new GifImageView(context);
+                        iv.setImageResource(AppConstants.numberHKOpenGIF[i]);
 
                         // 设置GIF图的大小和左右的外边距
                         params = new LinearLayout.LayoutParams(DisplayUtil.dip2px(context, 26), DisplayUtil.dip2px(context, 26));
@@ -508,9 +506,11 @@ public class NumberDataUtils {
                 // 七星彩
                 if (isQXCOpenNumberStart) {
                     // 正在开奖中时显示的内容
-                    ImageView iv = new ImageView(context);
+
+                    GifImageView iv = new GifImageView(context);
                     iv.setLayoutParams(params);
-                    ImageLoader.loadFitCenter(context, AppConstants.numberQXCOpenGIF[i], R.mipmap.number_kj_icon_def).into(iv);
+                    iv.setImageResource(AppConstants.numberQXCOpenGIF[i]);
+
                     ll.addView(iv);
                 } else {
                     TextView tv_number = new TextView(context);
@@ -538,12 +538,14 @@ public class NumberDataUtils {
                 } else {
 
                     if (isSSQOpenNumberStart) {
-                        ImageView iv = new ImageView(context);// 正在开奖中时显示的内容
+                        GifImageView iv = new GifImageView(context);
                         iv.setLayoutParams(params);
                         if (i <= 5) {
-                            ImageLoader.loadFitCenter(context, R.mipmap.number_anim_red_ssq, R.mipmap.number_kj_icon_def).into(iv);
+
+                            iv.setImageResource(R.mipmap.number_anim_red_ssq);
                         } else {
-                            ImageLoader.loadFitCenter(context, R.mipmap.number_anim_blue_ssq, R.mipmap.number_kj_icon_def).into(iv);
+
+                            iv.setImageResource(R.mipmap.number_anim_blue_ssq);
                         }
                         ll.addView(iv);
                     } else {
@@ -573,12 +575,14 @@ public class NumberDataUtils {
                 } else {
 
                     if (isDLTOpenNumberStart) {
-                        ImageView iv = new ImageView(context);// 正在开奖中时显示的内容
+                        GifImageView iv = new GifImageView(context);
                         iv.setLayoutParams(params);
                         if (i <= 4) {
-                            ImageLoader.loadFitCenter(context, R.mipmap.number_anim_red_dlt, R.mipmap.number_kj_icon_def).into(iv);
+
+                            iv.setImageResource(R.mipmap.number_anim_red_dlt);
                         } else {
-                            ImageLoader.loadFitCenter(context, R.mipmap.number_anim_blue_dlt, R.mipmap.number_kj_icon_def).into(iv);
+
+                            iv.setImageResource(R.mipmap.number_anim_blue_dlt);
                         }
                         ll.addView(iv);
                     } else {
@@ -597,12 +601,14 @@ public class NumberDataUtils {
                 }
             } else if ("28".equals(mNumberInfo.getName())) {// 七乐彩
                 if (isQLCOpenNumberStart) {
-                    ImageView iv = new ImageView(context);// 正在开奖中时显示的内容
+                    GifImageView iv = new GifImageView(context);
                     iv.setLayoutParams(params);
                     if (i <= 6) {
-                        ImageLoader.loadFitCenter(context, R.mipmap.number_anim_red_qlc, R.mipmap.number_kj_icon_def).into(iv);
+
+                        iv.setImageResource(R.mipmap.number_anim_red_qlc);
                     } else {
-                        ImageLoader.loadFitCenter(context, R.mipmap.number_anim_blue_qlc, R.mipmap.number_kj_icon_def).into(iv);
+
+                        iv.setImageResource(R.mipmap.number_anim_blue_qlc);
                     }
                     ll.addView(iv);
                 } else {
@@ -647,10 +653,9 @@ public class NumberDataUtils {
                 // 广东快乐十分,湖南快乐十分
                 if (isGravity == 1 && isQXCOpenNumberStart) {
                     // 正在开奖中时显示的内容
-                    ImageView iv = new ImageView(context);
+                    GifImageView iv = new GifImageView(context);
                     iv.setLayoutParams(params);
-//                    iv.setImageResource(R.mipmap.number_anim_klsf_blue);// 蓝球
-                    ImageLoader.loadFitCenter(context, R.mipmap.number_anim_klsf_blue, R.mipmap.number_kj_icon_def).into(iv);
+                    iv.setImageResource(R.mipmap.number_anim_klsf_blue);// 蓝球
                     ll.addView(iv);
                 } else {
                     TextView tv_number = new TextView(context);
@@ -697,10 +702,9 @@ public class NumberDataUtils {
                 // 其它号码
                 if (isGravity == 1 && isQXCOpenNumberStart) {
                     // 正在开奖中时显示的内容
-                    ImageView iv = new ImageView(context);
+                    GifImageView iv = new GifImageView(context);
                     iv.setLayoutParams(params);
-//                    iv.setImageResource(AppConstants.numberQXCOpenGIF[0]);
-                    ImageLoader.loadFitCenter(context, AppConstants.numberQXCOpenGIF[0], R.mipmap.number_kj_icon_def).into(iv);
+                    iv.setImageResource(AppConstants.numberQXCOpenGIF[0]);
                     ll.addView(iv);
                 } else {
                     // 添加号码布局
@@ -784,10 +788,10 @@ public class NumberDataUtils {
             ll_number_info_content.setVisibility(View.GONE);
             rl_lottery_switch.setVisibility(View.VISIBLE);
             tv_lottery_issue.setText(context.getResources().getString(R.string.number_code_di) + (mNumberInfo.getIssue() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getIssue()) + context.getResources().getString(R.string.number_code_qi));
-            if(isGravity == 2){// 历史详情显示左右按钮
+            if (isGravity == 2) {// 历史详情显示左右按钮
                 iv_lottery_left.setVisibility(View.VISIBLE);
                 iv_lottery_right.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 iv_lottery_left.setVisibility(View.GONE);
                 iv_lottery_right.setVisibility(View.GONE);
             }
@@ -1283,7 +1287,7 @@ public class NumberDataUtils {
                 fl_number_lcbqc.setVisibility(View.GONE);
                 fl_number_scjq.setVisibility(View.VISIBLE);
 
-                processingMethodSCJQ();
+                processingMethodSCJQ(numbersInfo);
                 break;
         }
     }
@@ -1524,28 +1528,35 @@ public class NumberDataUtils {
 
 //        lottery_sfc_issue.setText(context.getResources().getString(R.string.number_code_di) + (mNumberInfo.getIssue() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getIssue()) + context.getResources().getString(R.string.number_code_qi));
 
-        for (int i = 0, len = mNumberInfo.getFootballLotteryIssueResultData().size(); i < len; i++) {
+        for (int i = 0, len = mNumberInfo.getFootballLotteryIssueResultData() == null ? 0 : mNumberInfo.getFootballLotteryIssueResultData().size(); i < len; i++) {
             // 判断是否开赛时间
-            try {
-                if(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime() == null){
-                    sfc_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
-                    sfc_vs_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
-                }else if (Long.parseLong(mServerTime) > DateUtil.getCurrentTime(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime())) {
-                    sfc_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.number_red));
-                    sfc_vs_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore());
-                } else {
-                    sfc_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
-                    sfc_vs_list.get(i).setText("VS");
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
-                sfc_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
-                sfc_vs_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
-            }
+//            try {
+//                if (mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime() == null) {
+//                    sfc_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
+//                    sfc_vs_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
+//                    sfc_result_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
+//                } else if (Long.parseLong(mServerTime) > DateUtil.getCurrentTime(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime())) {
+//                    sfc_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.number_red));
+//                    sfc_vs_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore());
+//                    sfc_result_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullDrawcode() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullDrawcode());
+//                } else {
+//                    sfc_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
+//                    sfc_vs_list.get(i).setText("VS");
+//                    sfc_result_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
+//                }
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//                sfc_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
+//                sfc_vs_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
+//            }
+
+            sfc_vs_list.get(i).setTextColor(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore() == null ? context.getResources().getColor(R.color.content_txt_dark_grad) : context.getResources().getColor(R.color.number_red));
+            sfc_vs_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore() == null ? "VS" : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore());
+            sfc_result_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullDrawcode() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullDrawcode());
+
             sfc_home_name_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getHomeName() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getHomeName());
             sfc_guest_name_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getGuestName() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getGuestName());
-            sfc_time_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime() == null ? context.getResources().getString(R.string.number_info_default) : DateUtil.getLotteryInfoDate(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime(), "MM-dd HH:mm"));
-            sfc_result_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullDrawcode() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullDrawcode());
+            sfc_time_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime() == null ? context.getResources().getString(R.string.number_info_default) : DateUtil.getLotteryInfoDate(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime(), "yyyy-MM-dd"));
         }
         lottery_sfssc_sales_volume.setText(mNumberInfo.getFootballFirlottery().getSales() == null ? context.getResources().getString(R.string.number_info_default) : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getFootballFirlottery().getSales())));
         lottery_sfc_bonus_sum.setText(mNumberInfo.getFootballFirlottery().getJackpot() == null ? context.getResources().getString(R.string.number_info_default) : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getFootballFirlottery().getJackpot())));
@@ -1662,33 +1673,46 @@ public class NumberDataUtils {
 
 //        lottery_lcbqc_issue.setText(context.getResources().getString(R.string.number_code_di) + (mNumberInfo.getIssue() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getIssue()) + context.getResources().getString(R.string.number_code_qi));
 
-        for (int i = 0, len = mNumberInfo.getFootballLotteryIssueResultData().size(); i < len; i++) {
+        for (int i = 0, len = mNumberInfo.getFootballLotteryIssueResultData() == null ? 0 : mNumberInfo.getFootballLotteryIssueResultData().size(); i < len; i++) {
             // 判断是否开赛时间
-            try {
-                if(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime() == null){
-                    lcbqc_full_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
-                    lcbqc_full_vs_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
-                }else if (Long.parseLong(mServerTime) > DateUtil.getCurrentTime(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime())) {
-                    lcbqc_half_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.number_red));
-                    lcbqc_half_vs_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getHalfScore() == null ? "(--)" : "(" + mNumberInfo.getFootballLotteryIssueResultData().get(i).getHalfScore() + ")");
-                    lcbqc_full_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.number_red));
-                    lcbqc_full_vs_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore());
-                } else {
-                    lcbqc_half_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
-                    lcbqc_full_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
-                    lcbqc_half_vs_list.get(i).setText("");
-                    lcbqc_full_vs_list.get(i).setText("VS");
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
-                lcbqc_full_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
-                lcbqc_full_vs_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
-            }
-            lcbqc_home_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getHomeName() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getHomeName());
-            lcbqc_guest_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getGuestName() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getGuestName());
-            lcbqc_time_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime() == null ? context.getResources().getString(R.string.number_info_default) : DateUtil.getLotteryInfoDate(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime(), "MM-dd HH:mm"));
+//            try {
+//                if (mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime() == null) {
+//                    lcbqc_full_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
+//                    lcbqc_full_vs_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
+//                    lcbqc_half_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
+//                    lcbqc_full_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
+//                } else if (Long.parseLong(mServerTime) > DateUtil.getCurrentTime(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime())) {
+//                    lcbqc_half_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.number_red));
+//                    lcbqc_half_vs_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getHalfScore() == null ? "(--)" : "(" + mNumberInfo.getFootballLotteryIssueResultData().get(i).getHalfScore() + ")");
+//                    lcbqc_full_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.number_red));
+//                    lcbqc_full_vs_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore());
+//                    lcbqc_half_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getHalfDrawcode() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getHalfDrawcode());
+//                    lcbqc_full_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullDrawcode() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullDrawcode());
+//                } else {
+//                    lcbqc_half_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
+//                    lcbqc_full_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
+//                    lcbqc_half_vs_list.get(i).setText("");
+//                    lcbqc_full_vs_list.get(i).setText("VS");
+//                    lcbqc_half_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
+//                    lcbqc_full_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
+//                }
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//                lcbqc_full_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
+//                lcbqc_full_vs_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
+//            }
+
+            lcbqc_half_vs_list.get(i).setTextColor(mNumberInfo.getFootballLotteryIssueResultData().get(i).getHalfScore() == null ? context.getResources().getColor(R.color.content_txt_dark_grad) : context.getResources().getColor(R.color.number_red));
+            lcbqc_half_vs_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getHalfScore() == null ? "" : "(" + mNumberInfo.getFootballLotteryIssueResultData().get(i).getHalfScore() + ")");
+            lcbqc_full_vs_list.get(i).setTextColor(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore() == null ? context.getResources().getColor(R.color.content_txt_dark_grad) : context.getResources().getColor(R.color.number_red));
+            lcbqc_full_vs_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore() == null ? "VS" : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore());
             lcbqc_half_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getHalfDrawcode() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getHalfDrawcode());
             lcbqc_full_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullDrawcode() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullDrawcode());
+
+            lcbqc_home_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getHomeName() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getHomeName());
+            lcbqc_guest_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getGuestName() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getGuestName());
+            lcbqc_time_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime() == null ? context.getResources().getString(R.string.number_info_default) : DateUtil.getLotteryInfoDate(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime(), "yyyy-MM-dd"));
+
         }
         lottery_lcbqc_sales_volume.setText(mNumberInfo.getFootballFirlottery().getSales() == null ? context.getResources().getString(R.string.number_info_default) : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getFootballFirlottery().getSales())));
         lottery_lcbqc_bonus_sum.setText(mNumberInfo.getFootballFirlottery().getJackpot() == null ? context.getResources().getString(R.string.number_info_default) : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getFootballFirlottery().getJackpot())));
@@ -1699,7 +1723,7 @@ public class NumberDataUtils {
     /**
      * 4场进球
      */
-    private void processingMethodSCJQ() {
+    private void processingMethodSCJQ(List<String> numbers) {
 //        TextView lottery_scjq_issue = (TextView) mView.findViewById(R.id.lottery_scjq_issue);
         TextView lottery_scjq_home_name1 = (TextView) mView.findViewById(R.id.lottery_scjq_home_name1);
         TextView lottery_scjq_home_name2 = (TextView) mView.findViewById(R.id.lottery_scjq_home_name2);
@@ -1709,10 +1733,14 @@ public class NumberDataUtils {
         TextView lottery_scjq_vs2 = (TextView) mView.findViewById(R.id.lottery_scjq_vs2);
         TextView lottery_scjq_vs3 = (TextView) mView.findViewById(R.id.lottery_scjq_vs3);
         TextView lottery_scjq_vs4 = (TextView) mView.findViewById(R.id.lottery_scjq_vs4);
-        TextView lottery_scjq_result1 = (TextView) mView.findViewById(R.id.lottery_scjq_result1);
-        TextView lottery_scjq_result2 = (TextView) mView.findViewById(R.id.lottery_scjq_result2);
-        TextView lottery_scjq_result3 = (TextView) mView.findViewById(R.id.lottery_scjq_result3);
-        TextView lottery_scjq_result4 = (TextView) mView.findViewById(R.id.lottery_scjq_result4);
+        TextView lottery_scjq_half_result1 = (TextView) mView.findViewById(R.id.lottery_scjq_half_result1);
+        TextView lottery_scjq_half_result2 = (TextView) mView.findViewById(R.id.lottery_scjq_half_result2);
+        TextView lottery_scjq_half_result3 = (TextView) mView.findViewById(R.id.lottery_scjq_half_result3);
+        TextView lottery_scjq_half_result4 = (TextView) mView.findViewById(R.id.lottery_scjq_half_result4);
+        TextView lottery_scjq_full_result1 = (TextView) mView.findViewById(R.id.lottery_scjq_full_result1);
+        TextView lottery_scjq_full_result2 = (TextView) mView.findViewById(R.id.lottery_scjq_full_result2);
+        TextView lottery_scjq_full_result3 = (TextView) mView.findViewById(R.id.lottery_scjq_full_result3);
+        TextView lottery_scjq_full_result4 = (TextView) mView.findViewById(R.id.lottery_scjq_full_result4);
         TextView lottery_scjq_guest_name1 = (TextView) mView.findViewById(R.id.lottery_scjq_guest_name1);
         TextView lottery_scjq_guest_name2 = (TextView) mView.findViewById(R.id.lottery_scjq_guest_name2);
         TextView lottery_scjq_guest_name3 = (TextView) mView.findViewById(R.id.lottery_scjq_guest_name3);
@@ -1746,36 +1774,67 @@ public class NumberDataUtils {
         scjq_time_list.add(lottery_scjq_time2);
         scjq_time_list.add(lottery_scjq_time3);
         scjq_time_list.add(lottery_scjq_time4);
-        List<TextView> scjq_result_list = new ArrayList<>();
-        scjq_result_list.add(lottery_scjq_result1);
-        scjq_result_list.add(lottery_scjq_result2);
-        scjq_result_list.add(lottery_scjq_result3);
-        scjq_result_list.add(lottery_scjq_result4);
+        List<TextView> scjq_half_result_list = new ArrayList<>();
+        scjq_half_result_list.add(lottery_scjq_half_result1);
+        scjq_half_result_list.add(lottery_scjq_half_result2);
+        scjq_half_result_list.add(lottery_scjq_half_result3);
+        scjq_half_result_list.add(lottery_scjq_half_result4);
+        List<TextView> scjq_full_result_list = new ArrayList<>();
+        scjq_full_result_list.add(lottery_scjq_full_result1);
+        scjq_full_result_list.add(lottery_scjq_full_result2);
+        scjq_full_result_list.add(lottery_scjq_full_result3);
+        scjq_full_result_list.add(lottery_scjq_full_result4);
 
 //        lottery_scjq_issue.setText(context.getResources().getString(R.string.number_code_di) + (mNumberInfo.getIssue() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getIssue()) + context.getResources().getString(R.string.number_code_qi));
         // 设置对阵和开赛时间
-        for (int i = 0, len = mNumberInfo.getFootballLotteryIssueResultData().size(); i < len; i++) {
+        int index = 0;
+        for (int i = 0, len = mNumberInfo.getFootballLotteryIssueResultData() == null ? 0 : mNumberInfo.getFootballLotteryIssueResultData().size(); i < len; i++) {
             // 判断是否开赛时间
-            try {
-                if(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime() == null){
-                    scjq_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
-                    scjq_vs_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
-                }else if (Long.parseLong(mServerTime) > DateUtil.getCurrentTime(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime())) {
-                    scjq_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.number_red));
-                    scjq_vs_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore());
-                } else {
-                    scjq_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
-                    scjq_vs_list.get(i).setText("VS");
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
-                scjq_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
-                scjq_vs_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
+//            try {
+//                if (mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime() == null) {
+//                    scjq_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
+//                    scjq_vs_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
+//                    scjq_half_result_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
+//                    scjq_full_result_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
+//                } else if (Long.parseLong(mServerTime) > DateUtil.getCurrentTime(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime())) {
+//                    scjq_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.number_red));
+//                    scjq_vs_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore());
+//
+//                    if (i == 0) {
+//                        index = i;
+//                    }else{
+//                        index++;
+//                    }
+//                    scjq_half_result_list.get(i).setText(numbers.get(index) == null ? "" : numbers.get(index));
+//                    index++;
+//                    scjq_full_result_list.get(i).setText(numbers.get(index) == null ? "" : numbers.get(index));
+//                } else {
+//                    scjq_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
+//                    scjq_vs_list.get(i).setText("VS");
+//                    scjq_half_result_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
+//                    scjq_full_result_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
+//                }
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//                scjq_vs_list.get(i).setTextColor(context.getResources().getColor(R.color.content_txt_dark_grad));
+//                scjq_vs_list.get(i).setText(context.getResources().getString(R.string.number_info_default));
+//            }
+
+            scjq_vs_list.get(i).setTextColor(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore() == null ? context.getResources().getColor(R.color.content_txt_dark_grad) : context.getResources().getColor(R.color.number_red));
+            scjq_vs_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore() == null ? "VS" : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullScore());
+
+            if (i == 0) {
+                index = i;
+            } else {
+                index++;
             }
+            scjq_half_result_list.get(i).setText(numbers.get(index) == null ? context.getResources().getString(R.string.number_info_default) : numbers.get(index));
+            index++;
+            scjq_full_result_list.get(i).setText(numbers.get(index) == null ? context.getResources().getString(R.string.number_info_default) : numbers.get(index));
+
             scjq_home_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getHomeName() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getHomeName());
             scjq_guest_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getGuestName() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getGuestName());
-            scjq_time_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime() == null ? context.getResources().getString(R.string.number_info_default) : DateUtil.getLotteryInfoDate(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime(), "MM-dd HH:mm"));
-            scjq_result_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullDrawcode() == null ? context.getResources().getString(R.string.number_info_default) : mNumberInfo.getFootballLotteryIssueResultData().get(i).getFullDrawcode());
+            scjq_time_list.get(i).setText(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime() == null ? context.getResources().getString(R.string.number_info_default) : DateUtil.getLotteryInfoDate(mNumberInfo.getFootballLotteryIssueResultData().get(i).getKickOffTime(), "yyyy-MM-dd"));
         }
         lottery_scjq_sales_volume.setText(mNumberInfo.getFootballFirlottery().getSales() == null ? context.getResources().getString(R.string.number_info_default) : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getFootballFirlottery().getSales())));
         lottery_scjq_bonus_sum.setText(mNumberInfo.getFootballFirlottery().getJackpot() == null ? context.getResources().getString(R.string.number_info_default) : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getFootballFirlottery().getJackpot())));
@@ -2052,9 +2111,9 @@ public class NumberDataUtils {
                     }
                     // 奇偶
                     if (num % 2 == 0) {
-                        dlt_front_jo_list.get(i).setText(context.getResources().getString(R.string.number_bjsc_suang));
+                        dlt_front_jo_list.get(i).setText(context.getResources().getString(R.string.number_info_o));
                     } else {
-                        dlt_front_jo_list.get(i).setText(context.getResources().getString(R.string.number_bjsc_dan));
+                        dlt_front_jo_list.get(i).setText(context.getResources().getString(R.string.number_info_j));
                     }
                     // 区间
                     if (num <= 12) {
@@ -2075,9 +2134,9 @@ public class NumberDataUtils {
                     }
                     // 奇偶
                     if (num % 2 == 0) {
-                        lottery_dlt_later_jo1.setText(context.getResources().getString(R.string.number_bjsc_suang));
+                        lottery_dlt_later_jo1.setText(context.getResources().getString(R.string.number_info_o));
                     } else {
-                        lottery_dlt_later_jo1.setText(context.getResources().getString(R.string.number_bjsc_dan));
+                        lottery_dlt_later_jo1.setText(context.getResources().getString(R.string.number_info_j));
                     }
                     // 五行和方位
                     setTextValue(lastNum, lottery_dlt_later_wx1, lottery_dlt_later_fw1);
@@ -2090,9 +2149,9 @@ public class NumberDataUtils {
                     }
                     // 奇偶
                     if (num % 2 == 0) {
-                        lottery_dlt_later_jo2.setText(context.getResources().getString(R.string.number_bjsc_suang));
+                        lottery_dlt_later_jo2.setText(context.getResources().getString(R.string.number_info_o));
                     } else {
-                        lottery_dlt_later_jo2.setText(context.getResources().getString(R.string.number_bjsc_dan));
+                        lottery_dlt_later_jo2.setText(context.getResources().getString(R.string.number_info_j));
                     }
                     // 五行和方位
                     setTextValue(lastNum, lottery_dlt_later_wx2, lottery_dlt_later_fw2);
@@ -2332,20 +2391,20 @@ public class NumberDataUtils {
             lottery_ssq_b_fw.setText(context.getResources().getString(R.string.number_info_default));
         } else {
             // 没数据时　隐藏复式开奖条目
-            if(mNumberInfo.getFirstAddCount() == null && mNumberInfo.getFirstAddBonus() == null){
+            if (mNumberInfo.getFirstAddCount() == null && mNumberInfo.getFirstAddBonus() == null) {
                 lottery_title1.setVisibility(View.GONE);
                 lottery_ssq_count1_1.setVisibility(View.GONE);
                 lottery_ssq_bonus1_1.setVisibility(View.GONE);
-            }else{
+            } else {
                 lottery_title1.setVisibility(View.VISIBLE);
                 lottery_ssq_count1_1.setVisibility(View.VISIBLE);
                 lottery_ssq_bonus1_1.setVisibility(View.VISIBLE);
             }
-            if(mNumberInfo.getSixthAddCount() == null && mNumberInfo.getSixthAddBonus() == null){
+            if (mNumberInfo.getSixthAddCount() == null && mNumberInfo.getSixthAddBonus() == null) {
                 lottery_title6.setVisibility(View.GONE);
                 lottery_ssq_count6_1.setVisibility(View.GONE);
                 lottery_ssq_bonus6_1.setVisibility(View.GONE);
-            }else{
+            } else {
                 lottery_title6.setVisibility(View.VISIBLE);
                 lottery_ssq_count6_1.setVisibility(View.VISIBLE);
                 lottery_ssq_bonus6_1.setVisibility(View.VISIBLE);
@@ -2392,9 +2451,9 @@ public class NumberDataUtils {
                     }
                     // 奇偶
                     if (num % 2 == 0) {
-                        ssq_jo_list.get(i).setText(context.getResources().getString(R.string.number_bjsc_suang));
+                        ssq_jo_list.get(i).setText(context.getResources().getString(R.string.number_info_o));
                     } else {
-                        ssq_jo_list.get(i).setText(context.getResources().getString(R.string.number_bjsc_dan));
+                        ssq_jo_list.get(i).setText(context.getResources().getString(R.string.number_info_j));
                     }
                     // 区位
                     if (num <= 11) {
@@ -2415,9 +2474,9 @@ public class NumberDataUtils {
                     }
                     // 奇偶
                     if (num % 2 == 0) {
-                        lottery_ssq_b_jo.setText(context.getResources().getString(R.string.number_bjsc_suang));
+                        lottery_ssq_b_jo.setText(context.getResources().getString(R.string.number_info_o));
                     } else {
-                        lottery_ssq_b_jo.setText(context.getResources().getString(R.string.number_bjsc_dan));
+                        lottery_ssq_b_jo.setText(context.getResources().getString(R.string.number_info_j));
                     }
                     // 五行和方位
                     setTextValue(lastNum, lottery_ssq_b_wx, lottery_ssq_b_fw);

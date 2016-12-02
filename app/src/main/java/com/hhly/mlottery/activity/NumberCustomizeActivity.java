@@ -93,6 +93,9 @@ public class NumberCustomizeActivity extends BaseActivity implements OnClickList
 						lv_customize_ok.setVisibility(View.GONE);
 					}
 				}
+
+				lv_customize_ok.smoothScrollToPosition(sortOks.size());
+
 			}
 		});
 
@@ -296,6 +299,7 @@ public class NumberCustomizeActivity extends BaseActivity implements OnClickList
 		lv_customize_ok = (DragGridView) findViewById(R.id.lv_customize_ok);
 		tv_customize_hint = (TextView) findViewById(R.id.tv_customize_hint);
 		lv_customize_not = (GridView) findViewById(R.id.lv_customize_not);
+		lv_customize_not.setVerticalScrollBarEnabled(false);
 
 		bt_customize_ok = (Button) findViewById(R.id.bt_customize_ok);
 		bt_customize_not = (Button) findViewById(R.id.bt_customize_not);

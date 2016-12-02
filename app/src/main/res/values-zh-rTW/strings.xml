@@ -538,6 +538,8 @@
     <string name="number_info_result">彩果</string>
     <string name="number_info_qj">區間</string>
     <string name="number_info_jo">奇偶</string>
+    <string name="number_info_j">奇</string>
+    <string name="number_info_o">偶</string>
     <string name="number_info_dx">大小</string>
     <string name="number_info_boll_red">紅球</string>
     <string name="number_info_comprehensive">綜合</string>
@@ -1013,7 +1015,7 @@
     <string name="verify_code">請輸入驗證碼</string>
     <string name="verify_code_send">發送驗證碼</string>
     <string name="logout">退出當前帳號</string>
-    <string name="logouting">正在注銷...</string>
+    <string name="logouting">正在退出...</string>
     <string name="logout_fail">注銷失敗</string>
     <string name="logout_succ">退出成功</string>
     <string name="resend">重發</string>
@@ -1044,7 +1046,7 @@
     <string name="username_pass_error">登錄名或者密碼錯誤</string>
     <string name="username_original_pass_error">請輸入正確的原始密碼</string>
     <string name="logout_check">確認退出登錄?</string>
-    <string name="confirm_the_selected_sex">確認保存選中的性別?</string>
+    <string name="confirm_the_selected_sex">確認保存修改的個人資訊?</string>
     <string name="chose_start_photo">選擇球星頭像</string>
     <string name="chose_start_text">伴隨你的，不僅有球星的風采；</string>
     <string name="only_chose_start_text">還有一比分。</string>

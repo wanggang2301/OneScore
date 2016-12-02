@@ -550,6 +550,8 @@
     <string name="number_info_result">彩果</string>
     <string name="number_info_qj">区间</string>
     <string name="number_info_jo">奇偶</string>
+    <string name="number_info_j">奇</string>
+    <string name="number_info_o">偶</string>
     <string name="number_info_dx">大小</string>
     <string name="number_info_boll_red">红球</string>
     <string name="number_info_comprehensive">综合</string>
@@ -1027,7 +1029,7 @@
     <string name="verify_code">请输入验证码</string>
     <string name="verify_code_send">发送验证码</string>
     <string name="logout">退出当前账号</string>
-    <string name="logouting">正在注销...</string>
+    <string name="logouting">正在退出...</string>
     <string name="logout_fail">注销失败</string>
     <string name="logout_succ">退出成功</string>
     <string name="resend">重发</string>
@@ -1058,7 +1060,7 @@
     <string name="username_pass_error">登录名或者密码错误</string>
     <string name="username_original_pass_error">请输入正确的原始密码</string>
     <string name="logout_check">确认退出登录?</string>
-    <string name="confirm_the_selected_sex">确认保存选中的性别?</string>
+    <string name="confirm_the_selected_sex">确认保存修改的个人信息?</string>
     <string name="chose_start_photo">选择球星头像</string>
     <string name="chose_start_text">伴随你的，不仅有球星的风采；</string>
     <string name="only_chose_start_text">还有一比分。</string>
