@@ -694,7 +694,6 @@ public class ScoresFragment extends BaseWebSocketFragment {
             connectWebSocket();
         } else {
             L.d("qazwsx", "________其余==" + scoreFragmentWebSocketEntity.getFgIndex());
-
             closeWebSocket();
         }
     }
