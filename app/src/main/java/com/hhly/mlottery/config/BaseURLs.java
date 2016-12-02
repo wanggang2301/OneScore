@@ -575,10 +575,6 @@ public class BaseURLs {
      */
 
     private final static String URL_MAIN = "matchResults.main.findMainResult.do";
-    // main.findMainResult.do
-
-    // 即时
-    //  private final static String URL_IMMEDIATE = "matchResults.findImmediateMatchs.do";
 
     //即时(增加队徽请求字段)
     private final static String URL_IMMEDIATE = "androidMatchResults.findImmediateMatchs.do";
@@ -586,28 +582,14 @@ public class BaseURLs {
     // 滚球
     private final static String URL_ROLLBALL = "matchResults.findBallList.do";
 
-
     // 热门和焦点
     private final static String URL_HOT = "matchResults.findHotRaceIds.do";
-
-
-    // 赛果
-    //  private final static String URL_RESULT = "appMatchResults.findResultOfBallMatch.do";//
 
     //赛果(增加队徽请求字段)
     private final static String URL_RESULT = "androidMatchResults.findResultOfBallMatch.do";// 新接口
 
-
-    // 赛程
-    //  private final static String URL_CEASELESS = "appMatchResults.findCeaselessMatch.do";
-
     //赛程(增加队徽请求字段)
     private final static String URL_CEASELESS = "androidMatchResults.findCeaselessMatch.do";
-
-
-    // 关注
-    //  private final static String URL_FOCUS = "matchResults.findFocusMatchs.do";
-
 
     //关注(增加队徽请求字段)
     private final static String URL_FOCUS = "androidMatchResults.findFocusMatchs.do";
@@ -634,14 +616,11 @@ public class BaseURLs {
     public final static String URL_Hot_focus = URL_API_HOST + URL_HOT;
 
     //赛场
-    public final static String URL_FOOTBALL_DETAIL_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL;
-
     public final static String URL_FOOTBALL_DETAIL_INFO_FIRST = URL_API_HOST + URL_FOOTBALL_DETAIL_FIRST;
 
     //足球内页赛事分享
 
     public final static String URL_FOOTBALL_DETAIL_INFO_SHARE = HTTP + HOST + URL_SPLITTER + URL_FOOTBALL_DETAIL_SHARE;
-
 
     //赛场点赞
     public final static String URL_FOOTBALL_DETAIL_LIKE_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_LIKE;
@@ -658,13 +637,6 @@ public class BaseURLs {
     public final static String URL_FOOTBALL_DETAIL_STATISTICAL_DATA_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_STATISTICAL_DATA;
     // 阵容
     public final static String URL_FOOTBALL_DETAIL_FINDLINEUP_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_FINDLINEUP;
-    // 角球
-    public final static String URL_FOOTBALL_DETAIL_FINDCORNERKICKCOUNTS_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_FINDCORNERKICKCOUNTS;
-    // 攻防
-    public final static String URL_FOOTBALL_DETAIL_FINDDEFENSECOUNTS_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_FINDDEFENSECOUNTS;
-    // 角球和攻防
-    public final static String URL_FOOTBALL_DETAIL_FINDCORNERANDDANGER_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_FINDCORNERANDDANGER;
-
 
     //走势图表 进攻 危险进攻 射正 射偏
 
@@ -803,7 +775,6 @@ public class BaseURLs {
     //足球资料库
     public final static String URL_FOOTBALL_DATABASE = URL_API_HOST + "androidLeagueData.findAndroidDataMenu.do";
 
-    //足球资料库赛程   http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRound.do?lang=zh&leagueId=60
     public final static String URL_FOOTBALL_DATABASE_SCHEDULE_FIRST = URL_API_HOST + "androidLeagueData.findAndroidLeagueRound.do";//"http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRound.do";
     public final static String URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST = URL_API_HOST + "androidLeagueData.findAndroidLeagueRace.do";//"http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRace.do";
     //足球资料库积分
