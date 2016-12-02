@@ -150,8 +150,15 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
         tv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
         if(AppConstants.register.getData().getUser().getSex()!=null){
             Log.i("sdadasdas","getSex"+AppConstants.register.getData().getUser().getSex());
