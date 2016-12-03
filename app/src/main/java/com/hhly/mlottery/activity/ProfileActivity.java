@@ -346,6 +346,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                     @Override
                     public void onResponse(Register register) {
                         if (register.getResult() == AccountResultCode.SUCC) {
+                            //
                             // CommonUtils.saveRegisterInfo(register);
                             AppConstants.register.getData().getUser().setSex(sexDatas.get(0));
                             PreferenceUtil.commitString(AppConstants.SEX, register.getData().getUser().getSex());
@@ -369,7 +370,6 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                         L.e(TAG, "上传性别失败");
                      UiUtils.toast(ProfileActivity.this, R.string.foot_neterror_post_photo);
                         progressBar.dismiss();
-                        finish();
                     }
                 }, Register.class);
 
