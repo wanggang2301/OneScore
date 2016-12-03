@@ -153,6 +153,7 @@ public class NumbersInfoBaseActivity extends BaseActivity implements
                 }
                 break;
             case R.id.public_btn_set:// 历史开奖
+                MobclickAgent.onEvent(mContext,"Lottery_Info_History");
                 isHistoryPager = true;
                 current.setVisibility(View.GONE);
                 historyh.setVisibility(View.VISIBLE);
