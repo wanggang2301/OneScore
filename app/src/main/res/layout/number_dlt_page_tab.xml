@@ -672,10 +672,6 @@
                         android:id="@+id/lottery_dlt_later_hz1"
                         style="@style/lottery_info_red"/>
 
-                    <TextView
-                        android:id="@+id/lottery_dlt_later_hz2"
-                        style="@style/lottery_info_red"/>
-
                 </LinearLayout>
 
                 <LinearLayout

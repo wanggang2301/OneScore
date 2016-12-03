@@ -1964,7 +1964,7 @@ public class NumberDataUtils {
         TextView lottery_dlt_front_qj4 = (TextView) mView.findViewById(R.id.lottery_dlt_front_qj4);
         TextView lottery_dlt_front_qj5 = (TextView) mView.findViewById(R.id.lottery_dlt_front_qj5);
         TextView lottery_dlt_later_hz1 = (TextView) mView.findViewById(R.id.lottery_dlt_later_hz1);
-        TextView lottery_dlt_later_hz2 = (TextView) mView.findViewById(R.id.lottery_dlt_later_hz2);
+//        TextView lottery_dlt_later_hz2 = (TextView) mView.findViewById(R.id.lottery_dlt_later_hz2);
         TextView lottery_dlt_later_jo1 = (TextView) mView.findViewById(R.id.lottery_dlt_later_jo1);
         TextView lottery_dlt_later_jo2 = (TextView) mView.findViewById(R.id.lottery_dlt_later_jo2);
         TextView lottery_dlt_later_wx1 = (TextView) mView.findViewById(R.id.lottery_dlt_later_wx1);
@@ -2055,7 +2055,7 @@ public class NumberDataUtils {
             lottery_dlt_front_qj4.setText(context.getResources().getString(R.string.number_info_default));
             lottery_dlt_front_qj5.setText(context.getResources().getString(R.string.number_info_default));
             lottery_dlt_later_hz1.setText(context.getResources().getString(R.string.number_info_default));
-            lottery_dlt_later_hz2.setText(context.getResources().getString(R.string.number_info_default));
+//            lottery_dlt_later_hz2.setText(context.getResources().getString(R.string.number_info_default));
             lottery_dlt_later_jo1.setText(context.getResources().getString(R.string.number_info_default));
             lottery_dlt_later_jo2.setText(context.getResources().getString(R.string.number_info_default));
             lottery_dlt_later_wx1.setText(context.getResources().getString(R.string.number_info_default));
@@ -2090,6 +2090,7 @@ public class NumberDataUtils {
             lottery_dlt_bonus_sum.setText(mNumberInfo.getJackpot() == null ? context.getResources().getString(R.string.number_info_default) : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getJackpot())));
 
             int sum = 0;
+            int sum_b = 0;
             for (int i = 0, len = numbers.size(); i < len; i++) {
                 if (i == 5) {
                     continue;
@@ -2126,12 +2127,14 @@ public class NumberDataUtils {
                     // 五行和方位
                     setTextValue(lastNum, dlt_front_wx_list.get(i), dlt_front_fw_list.get(i));
                 } else if (i == 6 && num > 0) {
+                    sum_b += num;
+
                     // 大小
-                    if (num < 7) {
-                        lottery_dlt_later_hz1.setText(context.getResources().getString(R.string.number_bjsc_xiao));
-                    } else {
-                        lottery_dlt_later_hz1.setText(context.getResources().getString(R.string.number_bjsc_da));
-                    }
+//                    if (num < 7) {
+//                        lottery_dlt_later_hz1.setText(context.getResources().getString(R.string.number_bjsc_xiao));
+//                    } else {
+//                        lottery_dlt_later_hz1.setText(context.getResources().getString(R.string.number_bjsc_da));
+//                    }
                     // 奇偶
                     if (num % 2 == 0) {
                         lottery_dlt_later_jo1.setText(context.getResources().getString(R.string.number_info_o));
@@ -2141,12 +2144,13 @@ public class NumberDataUtils {
                     // 五行和方位
                     setTextValue(lastNum, lottery_dlt_later_wx1, lottery_dlt_later_fw1);
                 } else if (i == 7 && num > 0) {
+                    sum_b += num;
                     // 大小
-                    if (num < 7) {
-                        lottery_dlt_later_hz2.setText(context.getResources().getString(R.string.number_bjsc_xiao));
-                    } else {
-                        lottery_dlt_later_hz2.setText(context.getResources().getString(R.string.number_bjsc_da));
-                    }
+//                    if (num < 7) {
+//                        lottery_dlt_later_hz2.setText(context.getResources().getString(R.string.number_bjsc_xiao));
+//                    } else {
+//                        lottery_dlt_later_hz2.setText(context.getResources().getString(R.string.number_bjsc_da));
+//                    }
                     // 奇偶
                     if (num % 2 == 0) {
                         lottery_dlt_later_jo2.setText(context.getResources().getString(R.string.number_info_o));
@@ -2158,6 +2162,7 @@ public class NumberDataUtils {
                 }
             }
             lottery_dlt_front_hz.setText(String.valueOf(sum));
+            lottery_dlt_later_hz1.setText(String.valueOf(sum_b));
         }
     }
 
