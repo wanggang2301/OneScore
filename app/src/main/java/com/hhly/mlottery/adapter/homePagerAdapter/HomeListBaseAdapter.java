@@ -160,10 +160,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         final List<HomeBodysLottery> lotteryList = bodys.get(j).getLottery();// 彩票Item
                         switch (labType) {
                             case 1:// 热门赛事
-                                MobclickAgent.onEvent(mContext, "HomePager_Competition_Item");
                                 scoreViewList.get(j).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
+                                        MobclickAgent.onEvent(mContext, "HomePager_Competition_Item");
                                         if (!TextUtils.isEmpty(jumpAddr)) {
                                             switch (jumpType) {
                                                 case 0:// 无
@@ -195,10 +195,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 });
                                 break;
                             case 2:// 热门资讯
-                                MobclickAgent.onEvent(mContext, "HomePager_Date_Item");
                                 dataInfoViewList.get(j).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
+                                        MobclickAgent.onEvent(mContext, "HomePager_Date_Item");
                                         if (!TextUtils.isEmpty(jumpAddr)) {
                                             switch (jumpType) {
                                                 case 0:// 无
@@ -229,10 +229,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 });
                                 break;
                             case 3:// 彩票开奖
-                                MobclickAgent.onEvent(mContext, "HomePager_Lottery_Item");
                                 lotteryViewList.get(j).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
+                                        MobclickAgent.onEvent(mContext, "HomePager_Lottery_Item");
                                         if (!TextUtils.isEmpty(jumpAddr)) {
                                             switch (jumpType) {
                                                 case 0:// 无
@@ -261,6 +261,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 ll_lottery_item_title.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
+                                        MobclickAgent.onEvent(mContext, "HomePager_New_Lottery_Item");
                                         mContext.startActivity(new Intent(mContext, NumbersActivity.class));
                                     }
                                 });
@@ -269,6 +270,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                     lottery_item_list.get(m).setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
+                                            MobclickAgent.onEvent(mContext, "HomePager_New_Lottery_Item_Info");
                                             if (index < lotteryList.size()) {
                                                 HomeBodysLottery lottery = lotteryList.get(index);
                                                 switch (lottery.getJumpType()) {
@@ -828,7 +830,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                                     bonus = df.format(str);
                                                     lottery_item_desc_list.get(k).setText(TextUtils.isEmpty(bonus) ? mContext.getResources().getString(R.string.home_number_desc_bonus) : mContext.getResources().getString(R.string.home_number_desc_bonus) + bonus + mContext.getResources().getString(R.string.home_number_desc_wan));
                                                 }
-                                            }else{
+                                            } else {
                                                 lottery_item_desc_list.get(k).setText(mContext.getResources().getString(R.string.home_number_desc_bonus));
                                             }
                                             break;

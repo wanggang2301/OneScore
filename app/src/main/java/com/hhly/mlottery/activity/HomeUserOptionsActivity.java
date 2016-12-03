@@ -145,9 +145,9 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_language_frame:// 语言切换
+                MobclickAgent.onEvent(HomeUserOptionsActivity.this, "LanguageChanger");
                 Intent intent = new Intent(HomeUserOptionsActivity.this, HomeLanguageActivity.class);
                 startActivity(intent);
-                MobclickAgent.onEvent(HomeUserOptionsActivity.this, "LanguageChanger");
                 break;
           /*  case R.id.rl_about_frame:// 关于我们
                 Intent intent2 = new Intent(HomeUserOptionsActivity.this, HomeAboutActivity.class);
@@ -155,16 +155,17 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 MobclickAgent.onEvent(mContext, "AboutWe");
                 break;*/
             case R.id.rl_setting_frame://更多設置
+                MobclickAgent.onEvent(HomeUserOptionsActivity.this, "HomeUserOptionsActivity_settings");
                 Intent intent2 = new Intent(HomeUserOptionsActivity.this, MoreSettingsActivity.class);
                 startActivity(intent2);
                 break;
             case R.id.rl_user_feedback:// 反馈
-                startActivity(new Intent(HomeUserOptionsActivity.this, FeedbackActivity.class));
                 MobclickAgent.onEvent(HomeUserOptionsActivity.this, "UserFeedback");
+                startActivity(new Intent(HomeUserOptionsActivity.this, FeedbackActivity.class));
                 break;
             case R.id.public_img_back:// 返回
-                finish();
                 MobclickAgent.onEvent(HomeUserOptionsActivity.this, "HomePagerUserSetting_Exit");
+                finish();
                 break;
             case R.id.tv_nickname:// 登录
                 MobclickAgent.onEvent(HomeUserOptionsActivity.this, "LoginActivity_Start");
@@ -365,8 +366,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart("HomeUserOptionsActivity");
-
 
         if(CommonUtils.isLogin()){
             mTv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
@@ -380,7 +379,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
-        MobclickAgent.onPageEnd("HomeUserOptionsActivity");
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

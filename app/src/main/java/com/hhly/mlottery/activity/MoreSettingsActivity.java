@@ -85,6 +85,7 @@ public class MoreSettingsActivity extends BaseActivity  implements View.OnClickL
         switch (v.getId()){
 
             case R.id.rl_about_frame:
+                MobclickAgent.onEvent(mContext, "AboutWe");
                 Intent intent2 = new Intent(MoreSettingsActivity.this, HomeAboutActivity.class);
                 startActivity(intent2);
                 MobclickAgent.onEvent(mContext, "AboutWe");

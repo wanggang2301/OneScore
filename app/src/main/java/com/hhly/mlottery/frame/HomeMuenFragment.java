@@ -421,11 +421,13 @@ public class HomeMuenFragment extends Fragment {
                                         case "60":// 情报中心
                                         {
                                             mContext.startActivity(new Intent(mContext, InfoCenterActivity.class));
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_InfoCenterActivity");
                                         }
                                         break;
                                         case "19":// 今日联赛统计
                                         {
                                             mContext.startActivity(new Intent(mContext, LeagueStatisticsTodayActivity.class));
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_LeagueStatisticsTodayActivity");
                                         }
                                         break;
                                         case "324":// 双色球
@@ -433,6 +435,7 @@ public class HomeMuenFragment extends Fragment {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.TWENTY_FOUR));
                                             mContext.startActivity(intent);
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_SSQ");
                                         }
                                         break;
                                         case "325":// 大乐透
@@ -440,6 +443,7 @@ public class HomeMuenFragment extends Fragment {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.TWENTY_NINE));
                                             mContext.startActivity(intent);
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_DLT");
                                         }
                                         break;
                                         case "326":// 排列三
@@ -447,6 +451,7 @@ public class HomeMuenFragment extends Fragment {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.TWENTY_FINE));
                                             mContext.startActivity(intent);
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_PL3");
                                         }
                                         break;
                                         case "327":// 排列五
@@ -454,6 +459,7 @@ public class HomeMuenFragment extends Fragment {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.TWENTY_SIX));
                                             mContext.startActivity(intent);
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_PL5");
                                         }
                                         break;
                                         case "328":// 胜负彩
@@ -461,6 +467,7 @@ public class HomeMuenFragment extends Fragment {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.THIRTY));
                                             mContext.startActivity(intent);
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_SFC");
                                         }
                                         break;
                                         case "329":// 六场半全场
@@ -468,6 +475,7 @@ public class HomeMuenFragment extends Fragment {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.THIRTY_ONE));
                                             mContext.startActivity(intent);
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_LCBQC");
                                         }
                                         break;
                                         case "330":// 四场进球彩
@@ -475,6 +483,7 @@ public class HomeMuenFragment extends Fragment {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.THIRTY_TWO));
                                             mContext.startActivity(intent);
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_SCJQ");
                                         }
                                         break;
                                         case "331":// 福彩3D
@@ -482,6 +491,7 @@ public class HomeMuenFragment extends Fragment {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.TWENTY_SEVEN));
                                             mContext.startActivity(intent);
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_F3D");
                                         }
                                         break;
                                         case "332":// 七乐彩
@@ -489,6 +499,7 @@ public class HomeMuenFragment extends Fragment {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.TWENTY_ENGHT));
                                             mContext.startActivity(intent);
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_QLC");
                                         }
                                         break;
                                     }

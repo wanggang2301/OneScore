@@ -828,6 +828,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_account:
+                MobclickAgent.onEvent(mContext, "HomePager_User_Info_Start");
                 goToUserOptionsActivity();
                 break;
 //            case R.id.rl_lottery_item_title:
