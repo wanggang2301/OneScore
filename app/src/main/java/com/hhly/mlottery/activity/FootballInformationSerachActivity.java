@@ -19,6 +19,7 @@ import com.hhly.mlottery.callback.SearchService;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.jakewharton.rxbinding.widget.RxTextView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -216,6 +217,7 @@ public class FootballInformationSerachActivity extends BaseActivity implements  
         switch (v.getId()){
 
             case R.id.search_btn_back:
+                MobclickAgent.onEvent(mContext,"FootballInformationSerachActivity_exit");
                 finish();
                 break;
 
