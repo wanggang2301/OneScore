@@ -993,7 +993,7 @@
     <string name="profile">个人资料</string>
     <string name="modify_nickname">更改昵称</string>
     <string name="modify_nickname_succ">修改昵称成功</string>
-    <string name="nickname_format">昵称:格式为1-15个字符(不超过七个中文),由中英文数字和字符组成</string>
+    <string name="nickname_format">昵称:格式为1-15个字符(不超过七个中文),由中英文数字和字母组成</string>
     <string name="modify_password">修改密码</string>
     <string name="modifying_password">正在修改密码...</string>
     <string name="modifying_nickname">正在修改昵称...</string>
