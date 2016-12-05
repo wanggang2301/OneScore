@@ -51,6 +51,8 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 
+import static android.R.transition.move;
+
 
 /**
  * Created by yixq on 2016/11/15.
@@ -253,7 +255,7 @@ public class SnookerListActivity extends BaseWebSocketActivity implements SwipeR
                 /**
                  * 上拉加载
                  */
-                mRecyclerView.addOnScrollListener(new LoadMoreRecyclerOnScrollListener(linearLayoutManager) {
+                mRecyclerView.addOnScrollListener(new LoadMoreRecyclerOnScrollListener(linearLayoutManager , isMove , mIndex , mRecyclerView) {
                     @Override
                     public void onLoadMore(int currentPage) {
 
@@ -267,10 +269,10 @@ public class SnookerListActivity extends BaseWebSocketActivity implements SwipeR
                             loadmore_text.setText(getApplicationContext().getResources().getString(R.string.nodata_txt));
                             progressBar.setVisibility(View.GONE);
                         }
-                        updateAdapter();
-
+//                        updateAdapter();
                     }
                 });
+
                 connectWebSocket();
 
             }
@@ -404,7 +406,7 @@ public class SnookerListActivity extends BaseWebSocketActivity implements SwipeR
                     @Override
                     public Object call(Long aLong) {
                         addData(parameter , type);
-                        mAdapter.notifyDataSetChanged();
+//                        mAdapter.notifyDataSetChanged();
                         return null;
                     }
                 }).subscribe();
@@ -440,6 +442,7 @@ public class SnookerListActivity extends BaseWebSocketActivity implements SwipeR
                     //数据加载
                     setData(currentAllData , dataBean);
                     upLoadNum++;
+                    updateAdapter();
                 }else if (type == 1) {
 
                     List<SnookerMatchesBean> historyData = new ArrayList<SnookerMatchesBean>();
@@ -449,6 +452,8 @@ public class SnookerListActivity extends BaseWebSocketActivity implements SwipeR
                     for (SnookerMatchesBean newData:historyData) {
                         downDataList.add(newData);
                     }
+                    int numData = downDataList.size();
+
                     for (SnookerMatchesBean currentData:currentAllData) {
                         downDataList.add(currentData);
                     }
@@ -457,8 +462,13 @@ public class SnookerListActivity extends BaseWebSocketActivity implements SwipeR
                     currentAllData = downDataList;
                     downLoadNum--;
                     L.d("yxq+++++++ " , "请求到的数据" + downDataList.size());
+                    updateAdapter();
+//                    move(historyData.size());
+                    move(numData);//下拉请求到新数据后显示位置不变，新数据隐藏在上面
+                    L.d("yxq+++++++ " , historyData.size() +" >>>>>" + numData);
                 }
-                updateAdapter();
+
+//                updateAdapter();
                 Toast.makeText(SnookerListActivity.this, "yxqAAAAAAAA" + currentAllData.size(), Toast.LENGTH_SHORT).show();
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -504,10 +514,50 @@ public class SnookerListActivity extends BaseWebSocketActivity implements SwipeR
                     Toast.makeText(SnookerListActivity.this, "没有更多数据了...", Toast.LENGTH_SHORT).show();
 
                 }
-                updateAdapter();
+//                updateAdapter();
                 L.d("yxq+++++++ " , "----下拉完成----" );
             }
         }, 1000);
+    }
+    private int mIndex = 0; //mIndex是记录的要置顶项在RecyclerView中的位置
+    private boolean isMove = false;//用于recycleview 滚动监听里面的记录
+
+    public void move(int n){
+        if (n<0 || n>=mAdapter.getItemCount() ){
+            Toast.makeText(this,"超出范围了",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mIndex = n;
+        mRecyclerView.stopScroll();
+        moveToPosition(n);
+    }
+
+    private void moveToPosition(int n) {
+
+        //先从RecyclerView的LayoutManager中获取第一项和最后一项的Position
+        int firstItem = linearLayoutManager.findFirstVisibleItemPosition();
+        int lastItem = linearLayoutManager.findLastVisibleItemPosition();
+
+        L.d("yxq+++++++ " , "first and last = " + firstItem + " --- "+ lastItem);
+
+        //然后区分情况
+        if (n <= firstItem ){
+            //当要置顶的项在当前显示的第一个项的前面时
+            mRecyclerView.scrollToPosition(n);
+            L.d("yxq+++++++ " , "n <= first 前");
+        }else if ( n <= lastItem ){
+            //当要置顶的项已经在屏幕上显示时
+            int top = mRecyclerView.getChildAt(n - firstItem).getTop();
+            mRecyclerView.scrollBy(0, top);
+            L.d("yxq+++++++ " , "n <= last 中");
+        }else{
+            //当要置顶的项在当前显示的最后一项的后面时
+            mRecyclerView.scrollToPosition(n);
+            //这里这个变量是用在RecyclerView滚动监听里面的
+            isMove = true;
+            L.d("yxq+++++++ " , "else 后");
+        }
+
     }
 
     @Override
