@@ -101,7 +101,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
     private TabLayout mTabLayout;
     private PureViewPagerAdapter pureViewPagerAdapter;
     private List<Fragment> fragments;
-    private Spinner mSpinner;
+//    private Spinner mSpinner;
     private String[] mItems;
 
     private RollBallFragment rollBallFragment;
@@ -132,28 +132,27 @@ public class ScoresFragment extends BaseWebSocketFragment {
         setupViewPager();
         focusCallback();// 加载关注数
         initData();
-        initEVent();
+//        initEVent();
         setFootballLeagueStatisticsTodayClick();
         return view;
     }
 
-    private void initEVent() {
-        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (mContext.getResources().getString(R.string.basket_left).equals(mItems[position])) {// 选择篮球
-                    ((FootballActivity) mContext).ly_tab_bar.setVisibility(View.GONE);
-                    ((FootballActivity) mContext).switchFragment(5);
-                    closeWebSocket();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-    }
+//    private void initEVent() {
+//        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                if (mContext.getResources().getString(R.string.basket_left).equals(mItems[position])) {// 选择篮球
+//                    ((FootballActivity) mContext).ly_tab_bar.setVisibility(View.GONE);
+//                    ((FootballActivity) mContext).switchFragment(5);
+//                    closeWebSocket();
+//                }
+//            }
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+//    }
 
     public void setFootballLeagueStatisticsTodayClick() {
         public_btn_infomation.setOnClickListener(new OnClickListener() {
@@ -182,12 +181,12 @@ public class ScoresFragment extends BaseWebSocketFragment {
                 public_txt_left_title.setVisibility(View.VISIBLE);
         public_txt_left_title.setText(R.string.football_frame_txt);*/
 
-        mSpinner = (Spinner) view.findViewById(R.id.public_txt_left_spinner);
-        mSpinner.setVisibility(View.VISIBLE);
-        mItems = getResources().getStringArray(R.array.ball_select);
-        BallSelectArrayAdapter mAdapter = new BallSelectArrayAdapter(mContext, mItems);
-        mSpinner.setAdapter(mAdapter);
-        mSpinner.setSelection(0);
+//        mSpinner = (Spinner) view.findViewById(R.id.public_txt_left_spinner);
+//        mSpinner.setVisibility(View.VISIBLE);
+//        mItems = getResources().getStringArray(R.array.ball_select);
+//        BallSelectArrayAdapter mAdapter = new BallSelectArrayAdapter(mContext, mItems);
+//        mSpinner.setAdapter(mAdapter);
+//        mSpinner.setSelection(0);
 
         // 筛选
         mFilterImgBtn = (ImageView) view.findViewById(R.id.public_btn_filter);
@@ -524,7 +523,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
     public void onResume() {
         super.onResume();
         L.d(TAG, "football Fragment resume..");
-        mSpinner.setSelection(0);
+//        mSpinner.setSelection(0);
         if (((FootballActivity) mContext).fragmentIndex == 0) {
             if (isRollballFragment) {
                 MobclickAgent.onPageStart("Football_RollballFragment");

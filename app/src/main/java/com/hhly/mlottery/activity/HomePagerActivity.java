@@ -241,8 +241,10 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
                         }
                         break;
                     case "basketball":// 篮球列表
-                        Intent intent = new Intent(mContext, FootballActivity.class);
-                        intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
+//                        Intent intent = new Intent(mContext, FootballActivity.class);
+//                        intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
+//                        mContext.startActivity(intent);
+                        Intent intent = new Intent(mContext, BasketballScoresActivity.class);
                         mContext.startActivity(intent);
                         break;
                     case "basketballInfo":// 篮球详情页面
