@@ -69,7 +69,6 @@ repositories {
 }
 
 dependencies {
-    compile(name: 'IMKit-release', ext: 'aar')
     compile(name: 'PushSDK-release', ext: 'aar')
     compile files('libs/microlog4android-1.0.0.jar')
     compile files('libs/eventbus.jar')

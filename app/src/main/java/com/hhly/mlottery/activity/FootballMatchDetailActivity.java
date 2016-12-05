@@ -1,15 +1,12 @@
 package com.hhly.mlottery.activity;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemClock;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
@@ -35,7 +32,6 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.BasePagerAdapter;
 import com.hhly.mlottery.adapter.football.FragmentAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
-import com.hhly.mlottery.bean.FirstEvent;
 import com.hhly.mlottery.bean.ShareBean;
 import com.hhly.mlottery.bean.footballDetails.MatchDetail;
 import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
@@ -58,12 +54,10 @@ import com.hhly.mlottery.frame.footframe.PreHeadInfoFrament;
 import com.hhly.mlottery.frame.footframe.StatisticsFragment;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
 import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFocusEventBusEntity;
-import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.FootballLiveTextComparator;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.RongYunUtils;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.CustomViewpager;
@@ -87,7 +81,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import de.greenrobot.event.EventBus;
-import io.rong.imkit.RongIM;
 import me.relex.circleindicator.CircleIndicator;
 
 /**
@@ -307,10 +300,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private FootballLiveGotoChart mFootballLiveGotoChart;
 
-    private ImageView iv_join_room_foot;// 聊天室悬浮按钮
-    private ProgressDialog pd;// 加载框
-    private boolean isExit = false;// 是否取消进入聊天室
-
     private Handler preGotoliveHandler;
     private Runnable runnable;
 
@@ -346,9 +335,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 //            infoCenter = getIntent().getExtras().getInt("info_center");
 //        }
 
-
-        EventBus.getDefault().register(this);//注册EventBus
-        RongYunUtils.createChatRoom(mThirdId);// 创建聊天室
 
         L.e(TAG, "mThirdId = " + mThirdId);
         L.e("456789", "mThirdId = " + mThirdId);
@@ -410,28 +396,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 //        } catch (URISyntaxException e) {
 //            e.printStackTrace();
 //        }
-
-        pd.setOnKeyListener(new DialogInterface.OnKeyListener() {
-            @Override
-            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    isExit = true;
-                    iv_join_room_foot.setVisibility(View.VISIBLE);
-                }
-                return false;
-            }
-        });
     }
 
 
     private void initView() {
-        // 初始化加载框
-        pd = new ProgressDialog(this);
-        pd.setCanceledOnTouchOutside(false);
-        pd.setMessage(getResources().getString(R.string.loading_data_txt));
-        // 初始化悬浮按钮
-        iv_join_room_foot = (ImageView) findViewById(R.id.iv_join_room_foot);
-        iv_join_room_foot.setOnClickListener(this);
 
         // String[] titles = mContext.getResourceName(R.attr.foot_details_tabs);
 
@@ -1287,9 +1255,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        isExit = true;
-        EventBus.getDefault().unregister(this);//取消注册EventBus
-        RongYunUtils.isCreateChartRoom = false;// 修改创建聊天室状态
 //        if (footballTimer != null) {
 //            L.d("timer", "footballdetails定时器");
 //            footballTimer.cancel();
@@ -1343,139 +1308,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     protected void onConnected() {
 
     }
-
-    /**
-     * EvenBus接收消息
-     *
-     * @param event
-     */
-    public void onEventMainThread(FirstEvent event) {
-        switch (event.getMsg()) {
-            case RongYunUtils.CHART_ROOM_EXIT:
-                L.d("xxx", "足球EventBus收到 ");
-                if (iv_join_room_foot != null) {
-                    iv_join_room_foot.setVisibility(View.VISIBLE);
-                }
-                break;
-        }
-    }
-
-    /***
-     * 开始推送socket
-     */
-//    private synchronized void startWebsocket() {
-//
-//        L.d(TAG, "---onMessage---开始推送" + mThirdId);
-//
-//        if (hSocketClient != null) {
-//            if (!hSocketClient.isClosed()) {
-//                hSocketClient.close();
-//            }
-//
-//            hSocketClient = new HappySocketClient(hSocketUri, new Draft_17());
-//            hSocketClient.setSocketResponseMessageListener(this);
-//            hSocketClient.setSocketResponseCloseListener(this);
-//            hSocketClient.setSocketResponseErrorListener(this);
-//            try {
-//                hSocketClient.connect();
-//            } catch (IllegalThreadStateException e) {
-//                hSocketClient.close();
-//            }
-//        } else {
-//            hSocketClient = new HappySocketClient(hSocketUri, new Draft_17());
-//            hSocketClient.setSocketResponseMessageListener(this);
-//            hSocketClient.setSocketResponseCloseListener(this);
-//            hSocketClient.setSocketResponseErrorListener(this);
-//            try {
-//                hSocketClient.connect();
-//            } catch (IllegalThreadStateException e) {
-//                hSocketClient.close();
-//            }
-//        }
-//    }
-
-//    //事件推送
-//    @Override
-//    public void onMessage(String message) {
-//        L.d(TAG, "---onMessage---推送比赛thirdId==" + mThirdId);
-//        L.d("eventlive", "---onMessage---推送比赛thirdId==" + mThirdId);
-//
-//        pushStartTime = System.currentTimeMillis(); // 记录起始时间
-//        L.d(TAG, "心跳时间" + pushStartTime);
-//        if (message.startsWith("CONNECTED")) {
-//            String id = "android" + DeviceInfo.getDeviceId(mContext);
-//            id = MD5Util.getMD5(id);
-//            if (mContext == null) {
-//                return;
-//            }
-//            hSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.liveEvent." + mThirdId + "." + appendLanguage() + "\n\n");
-//            L.d(TAG, "CONNECTED");
-//            return;
-//        } else if (message.startsWith("MESSAGE")) {
-//
-//            String[] msgs = message.split("\n");
-//            String ws_json = msgs[msgs.length - 1];
-//
-//            String type = "";
-//            try {
-//                JSONObject jsonObject = new JSONObject(ws_json);
-//                type = jsonObject.getString("type");
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//
-//            if (!"".equals(type)) {
-//                Message msg = Message.obtain();
-//                msg.obj = ws_json;
-//                msg.arg1 = Integer.parseInt(type);
-//
-//                mSocketHandler.sendMessage(msg);
-//            }
-//        }
-//        hSocketClient.send("\n");
-//
-//    }
-
-    //心跳时间
-    private long pushStartTime;
-
-    private Timer footballTimer = new Timer();
-
-
-    private boolean isStarComputeTimer = false;
-
-    /***
-     * 计算推送Socket断开重新连接
-     */
-//    private synchronized void computeWebSocket() {
-//
-//
-//        if (!isStarComputeTimer) {
-//            timerTask = new TimerTask() {
-//                @Override
-//                public void run() {
-//                    L.d(TAG, "计算");
-//
-//                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-//                    L.d(TAG, df.format(new Date()) + "---监听socket连接状态:Open=" + hSocketClient.isOpen() + ",Connecting=" + hSocketClient.isConnecting() + ",Close=" + hSocketClient.isClosed() + ",Closing=" + hSocketClient.isClosing());
-//                    long pushEndTime = System.currentTimeMillis();
-//                    if ((pushEndTime - pushStartTime) >= 30000) {
-//                        L.d(TAG, "重新启动socket");
-//                        startWebsocket();
-//                    }
-//                }
-//            };
-//
-//
-//            if (footballTimer != null) {
-//                L.d("456789", "footballTimer");
-//                footballTimer.schedule(timerTask, 15000, 30000);
-//                isStarComputeTimer = true;
-//            }
-//
-//        }
-//    }
-
 
     /**
      * 直播时间推送，更新比赛即时时间和时间轴、文字直播
@@ -2567,57 +2399,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                 loadData();
                 break;
-            case R.id.iv_join_room_foot:
-                MobclickAgent.onEvent(mContext, "Football_Join_Room");
-                joinRoom();
-                break;
             default:
                 break;
-        }
-    }
-
-    /**
-     * 进入聊天室
-     */
-    private void joinRoom() {
-        if (CommonUtils.isLogin()) {// 判断是否登录
-            pd.show();
-            iv_join_room_foot.setVisibility(View.GONE);
-
-            // 判断融云服务器是否连接OK
-            if (!"CONNECTED".equals(String.valueOf(RongIM.getInstance().getCurrentConnectionStatus()))) {
-                RongYunUtils.initRongIMConnect(mContext);// 连接融云服务器
-            }
-
-            if (RongYunUtils.isRongConnent && RongYunUtils.isCreateChartRoom) {
-                pd.dismiss();
-//                appBarLayout.setExpanded(true);// 显示头部内容
-                RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
-            } else {
-                new Thread() {
-                    @Override
-                    public void run() {
-                        while ((!RongYunUtils.isRongConnent || !RongYunUtils.isCreateChartRoom) && !isExit) {
-                            SystemClock.sleep(1000);
-                        }
-                        if (!isExit) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    pd.dismiss();
-//                                    appBarLayout.setExpanded(true);// 显示头部内容
-
-                                    RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
-                                }
-                            });
-                        }
-                    }
-                }.start();
-            }
-        } else {
-            // 跳转到登录界面
-            Intent intent1 = new Intent(mContext, LoginActivity.class);
-            startActivityForResult(intent1, RongYunUtils.CHART_ROOM_QUESTCODE_FOOT);
         }
     }
 
@@ -2625,9 +2408,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         L.d("xxx", ">>>requestCode:" + requestCode);
         L.d("xxx", ">>>resultCode:" + resultCode);
-        if (requestCode == RongYunUtils.CHART_ROOM_QUESTCODE_FOOT && resultCode == -1) {
-            joinRoom();
-        }
         if (requestCode == CyUtils.JUMP_COMMENT_QUESTCODE) {
             switch (resultCode) {
                 case CyUtils.RESULT_OK:

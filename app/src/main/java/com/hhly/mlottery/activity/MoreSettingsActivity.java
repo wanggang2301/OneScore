@@ -3,7 +3,6 @@ package com.hhly.mlottery.activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -21,17 +20,13 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
-import com.hhly.mlottery.util.RongYunUtils;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
-import com.sina.weibo.sdk.api.share.Base;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import io.rong.imkit.RongIM;
 
 /**
  * @ClassName: OneScoreGit
@@ -168,12 +163,6 @@ public class MoreSettingsActivity extends BaseActivity  implements View.OnClickL
                     PreferenceUtil.commitBoolean("three_login",false);
                     setResult(RESULT_OK);
 
-
-                    RongIM.getInstance().logout();// 退出融云账号
-                    RongIM.getInstance().disconnect();// 断开融云连接
-                    RongYunUtils.isRongConnent = false;// 设置融云断开状态
-                    PreferenceUtil.commitString(RongYunUtils.USER_TOKEN, "");// 清除用户本地token
-                    PreferenceUtil.commitString(RongYunUtils.USER_ID, "");// 清除用户本地id
                     PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS,""); //清空篮球关注列表
                     PreferenceUtil.commitString(FocusFragment.FOCUS_ISD,""); //清空足球关注列表
                     request(); //推送需要

@@ -1,14 +1,11 @@
 package com.hhly.mlottery.activity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemClock;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -28,7 +25,6 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.BasePagerAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
-import com.hhly.mlottery.bean.FirstEvent;
 import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
 import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
@@ -44,11 +40,9 @@ import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
-import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
-import com.hhly.mlottery.util.RongYunUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.CustomViewpager;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
@@ -61,7 +55,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.greenrobot.event.EventBus;
-import io.rong.imkit.RongIM;
 import me.relex.circleindicator.CircleIndicator;
 
 /**
@@ -154,9 +147,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
     private ExactSwipeRefrashLayout mRefreshLayout; //下拉刷新
 
-    private ImageView iv_join_room_basket;// 聊天室悬浮按钮
-    private ProgressDialog pd;// 加载框
-    private boolean isExit = false;// 是否取消进入聊天室动作
     private String mLeagueId; // 联赛ID
     private Integer mMatchType; //联赛类型
     private CustomViewpager mHeadviewpager;
@@ -214,9 +204,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         /**不统计当前的Activity界面，只统计Fragment界面*/
         MobclickAgent.openActivityDurationTrack(false);
         mContext = this;
-        EventBus.getDefault().register(this);//注册EventBus
-        RongYunUtils.createChatRoom(mThirdId);// 创建聊天室
-
 
 //        try {
 //            mSocketUri = new URI(BaseURLs.WS_SERVICE);//地址
@@ -254,16 +241,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         setListener();
         loadData();
 
-        pd.setOnKeyListener(new DialogInterface.OnKeyListener() {
-            @Override
-            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    isExit = true;
-                    iv_join_room_basket.setVisibility(View.VISIBLE);
-                }
-                return false;
-            }
-        });
     }
 
     public String getmThirdId() {
@@ -282,14 +259,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
      * 初始化界面
      */
     private void initView() {
-        // 初始化加载框
-        pd = new ProgressDialog(this);
-        pd.setCanceledOnTouchOutside(false);
-        pd.setMessage(getResources().getString(R.string.loading_data_txt));
-        // 初始化悬浮按钮
-        iv_join_room_basket = (ImageView) findViewById(R.id.iv_join_room_basket);
-        iv_join_room_basket.setOnClickListener(this);
-
         if (isNBA) {
             TITLES = new String[]{getResources().getString(R.string.basket_live), getResources().getString(R.string.basket_analyze), getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof), getResources().getString(R.string.basket_eur), getResources().getString(R.string.basket_details_talkable)};
         } else {
@@ -370,8 +339,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     @Override
     protected void onDestroy() { //关闭socket
         super.onDestroy();
-        isExit = true;
-        EventBus.getDefault().unregister(this);//取消注册EventBus
     }
 
     @Override
@@ -408,22 +375,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     @Override
     protected void onConnected() {
 
-    }
-
-    /**
-     * EvenBus接收消息
-     *
-     * @param event
-     */
-    public void onEventMainThread(FirstEvent event) {
-        switch (event.getMsg()) {
-            case RongYunUtils.CHART_ROOM_EXIT:
-                L.d("xxx", "篮球EventBus收到 ");
-                if (iv_join_room_basket != null) {
-                    iv_join_room_basket.setVisibility(View.VISIBLE);
-                }
-                break;
-        }
     }
 
     /**
@@ -489,64 +440,11 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                     mCollect.setImageResource(R.mipmap.basketball_collected);
                 }
                 break;
-            case R.id.iv_join_room_basket:
-                MobclickAgent.onEvent(mContext, "Basketball_Join_Room");
-                joinRoom();
-                break;
-        }
-    }
-
-    /**
-     * 进入聊天室
-     */
-    private void joinRoom() {
-        if (CommonUtils.isLogin()) {// 判断是否登录
-            pd.show();
-            iv_join_room_basket.setVisibility(View.GONE);
-
-            // 判断融云服务器是否连接OK
-            L.d("xxx", "融云服务器是否连接::" + RongIM.getInstance().getCurrentConnectionStatus());
-            if (!"CONNECTED".equals(String.valueOf(RongIM.getInstance().getCurrentConnectionStatus()))) {
-                RongYunUtils.initRongIMConnect(mContext);// 连接融云服务器
-                L.d("xxx", "融云服务器重新连接 。。。。。。");
-            }
-
-            if (RongYunUtils.isRongConnent && RongYunUtils.isCreateChartRoom) {
-                pd.dismiss();
-                RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
-            } else {
-                new Thread() {
-                    @Override
-                    public void run() {
-                        while ((!RongYunUtils.isRongConnent || !RongYunUtils.isCreateChartRoom) && !isExit) {
-                            SystemClock.sleep(1000);
-                        }
-                        if (!isExit) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    pd.dismiss();
-                                    RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
-                                }
-                            });
-                        }
-                    }
-                }.start();
-            }
-        } else {
-            // 跳转到登录界面
-            Intent intent1 = new Intent(mContext, LoginActivity.class);
-            startActivityForResult(intent1, RongYunUtils.CHART_ROOM_QUESTCODE_BASKET);
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        L.d("xxx", ">>>requestCode:" + requestCode);
-        L.d("xxx", ">>>resultCode:" + resultCode);
-        if (requestCode == RongYunUtils.CHART_ROOM_QUESTCODE_BASKET && resultCode == -1) {
-            joinRoom();
-        }
         if (requestCode == CyUtils.JUMP_COMMENT_QUESTCODE) {
             switch (resultCode) {
                 case CyUtils.RESULT_OK:

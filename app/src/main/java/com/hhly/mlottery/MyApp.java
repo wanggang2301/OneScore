@@ -23,8 +23,6 @@ import java.util.Locale;
 
 import cn.finalteam.okhttpfinal.OkHttpFinal;
 import cn.finalteam.okhttpfinal.OkHttpFinalConfiguration;
-import io.rong.imkit.RongIM;
-
 
 /**
  * @author Tenney
@@ -84,14 +82,6 @@ public class MyApp extends Application {
         isPackageName = this.getPackageName();
         // 设置时区
         settingTimeZone();
-        /**
-         * OnCreate 会被多个进程重入，这段保护代码，确保只有您需要使用 RongIMClient 的进程和 Push 进程执行了 init。
-         * io.rong.push 为融云 push 进程名称，不可修改。
-         */
-        if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext())) || "io.rong.push".equals(getCurProcessName(getApplicationContext()))) {
-            // 初始化融云
-            RongIM.init(this);
-        }
 
         /**
          * OkHttpFinal(此初始化只是简单赋值不会阻塞线程)
