@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             android:padding="10dp"
             android:src="@mipmap/back"/>
 
@@ -26,8 +26,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
-            android:src="@mipmap/logo"/>
+            android:layout_marginTop="10dp"
+            android:src="@mipmap/logo"
+            android:id="@+id/imageView5" />
 
     </LinearLayout>
 
@@ -35,13 +36,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.13"
+        android:layout_weight="0.11"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:orientation="horizontal">
 
 
         <EditText
+            android:layout_marginBottom="5dp"
+            android:gravity="bottom"
             android:id="@+id/et_username"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -53,12 +56,15 @@
             android:textColor="@color/white"
             android:textColorHint="@color/login_et_color"
             android:textCursorDrawable="@null"
+            android:singleLine="true"
             android:textSize="15sp"/>
 
         <ImageView
+            android:paddingTop="28dp"
             android:id="@+id/iv_delete"
-            style="@style/login_item_image_right"
-            android:layout_marginRight="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="44dp"
             android:src="@mipmap/new_login_delete"/>
 
     </LinearLayout>
@@ -74,11 +80,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.13"
+        android:layout_weight="0.11"
         android:orientation="horizontal">
 
 
         <EditText
+            android:layout_marginBottom="5dp"
+            android:gravity="bottom"
             android:id="@+id/et_password"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -94,6 +102,7 @@
 
 
         <ImageView
+            android:layout_marginTop="12dp"
             android:id="@+id/iv_eye"
             style="@style/login_item_image_right"
             android:layout_width="20dp"

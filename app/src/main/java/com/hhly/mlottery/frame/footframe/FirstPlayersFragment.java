@@ -16,7 +16,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.bean.footballDetails.FirstPlayersBean;
 import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
 import com.hhly.mlottery.config.BaseURLs;
@@ -92,7 +92,7 @@ public class FirstPlayersFragment extends Fragment {
                     case MotionEvent.ACTION_MOVE:
                         if (sv_first.getScrollY() != 0) {// 处于顶部
                             if (getActivity() != null) {
-                                ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(false);
+                                ((FootballMatchDetailActivity) getActivity()).mRefreshLayout.setEnabled(false);
                             }
                         }
                         break;
@@ -100,7 +100,7 @@ public class FirstPlayersFragment extends Fragment {
                     case MotionEvent.ACTION_CANCEL:
                     case MotionEvent.ACTION_UP:
                         if (getActivity() != null) {
-                            ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(true);
+                            ((FootballMatchDetailActivity) getActivity()).mRefreshLayout.setEnabled(true);
                         }
                         break;
                 }
@@ -119,7 +119,7 @@ public class FirstPlayersFragment extends Fragment {
         if (getActivity() == null) {
             return;
         }
-        String mThirdId = ((FootballMatchDetailActivityTest) getActivity()).mThirdId;
+        String mThirdId = ((FootballMatchDetailActivity) getActivity()).mThirdId;
         // 设置URL
         //String url = "http://192.168.10.152:8080/mlottery/core/footBallMatch.findLineUp.do";
         // 设置参数

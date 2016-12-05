@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:id="@+id/ll_basket_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <!--<TextView-->
+                <!--android:id="@+id/basket_player_score1"-->
+                <!--style="@style/Style_basket_player"-->
+                <!--/>-->
+
+            <TextView
+                android:id="@+id/basket_player_score2"
+                style="@style/Style_basket_player"
+                />
+            <TextView
+                android:id="@+id/basket_player_score3"
+                style="@style/Style_basket_player"
+                />
+            <TextView
+                android:id="@+id/basket_player_score4"
+                style="@style/Style_basket_player"
+                />
+            <TextView
+                android:id="@+id/basket_player_score5"
+                style="@style/Style_basket_player"
+                />
+            <TextView
+                android:id="@+id/basket_player_score6"
+                style="@style/Style_basket_player"
+                />
+            <TextView
+                android:id="@+id/basket_player_score7"
+                style="@style/Style_basket_player"
+                />
+            <TextView
+                android:id="@+id/basket_player_score8"
+                style="@style/Style_basket_player"
+                />
+            <TextView
+                android:id="@+id/basket_player_score9"
+                style="@style/Style_basket_player"
+                />
+            <TextView
+                android:id="@+id/basket_player_score10"
+                style="@style/Style_basket_player"
+                />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

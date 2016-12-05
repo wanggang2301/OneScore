@@ -116,32 +116,6 @@ public class AppConstants {
     public static final int FORTY_EIGHT = 48;
     public static final int FORTY_NINE = 49;
 
-    // 彩票种类名称
-    /*public static String[] numberNames = { MyApp.getContext().getResources().getString(R.string.number_cz_hk), // "香港彩"
-            MyApp.getContext().getResources().getString(R.string.number_cz_cq_ssc), // "重庆时时彩"
-			MyApp.getContext().getResources().getString(R.string.number_cz_jx_ssc), // "江西时时彩"
-			MyApp.getContext().getResources().getString(R.string.number_cz_xj_ssc),// "新疆时时彩"
-			MyApp.getContext().getResources().getString(R.string.number_cz_yn_ssc), // "云南时时彩"
-			MyApp.getContext().getResources().getString(R.string.number_cz_qxc),// "七星彩"
-			MyApp.getContext().getResources().getString(R.string.number_cz_gd_syxw), // "广东十一选五"
-			MyApp.getContext().getResources().getString(R.string.number_cz_gd_klsf), // "广东快乐十分"
-			MyApp.getContext().getResources().getString(R.string.number_cz_hb_syxw), // "湖北十一选五"
-			MyApp.getContext().getResources().getString(R.string.number_cz_ah_ks), // "安徽快三"
-			MyApp.getContext().getResources().getString(R.string.number_cz_hn_klsf),// "湖南快乐十分"
-			MyApp.getContext().getResources().getString(R.string.number_cz_kl8),// "快乐8奖"
-			MyApp.getContext().getResources().getString(R.string.number_cz_jl_ks),// "吉林快三"
-			MyApp.getContext().getResources().getString(R.string.number_cz_ln_xyxw),// "辽宁十一选五"
-			MyApp.getContext().getResources().getString(R.string.number_cz_bj_sc),// "北京赛车"
-			MyApp.getContext().getResources().getString(R.string.number_cz_js_ks),// "江苏快三"
-			MyApp.getContext().getResources().getString(R.string.number_cz_ssl),// "时时乐"
-			MyApp.getContext().getResources().getString(R.string.number_cz_gx_ks),// "广西快三"
-			MyApp.getContext().getResources().getString(R.string.number_cz_xylc),// "幸运农场"
-			MyApp.getContext().getResources().getString(R.string.number_cz_js_syxw),// "江苏十一选五"
-			MyApp.getContext().getResources().getString(R.string.number_cz_jx_syxw),// "江西十一选五"
-			MyApp.getContext().getResources().getString(R.string.number_cz_sd_syxw),// "山东十一选五"
-			MyApp.getContext().getResources().getString(R.string.number_cz_tj_ssc) // "天津时时彩"
-	};*/
-
     // 北京赛车开奖号码
     public static int[] numberCarNos = {R.mipmap.car_no1, R.mipmap.car_no2, R.mipmap.car_no3, R.mipmap.car_no4, R.mipmap.car_no5, R.mipmap.car_no6, R.mipmap.car_no7,
             R.mipmap.car_no8, R.mipmap.car_no9, R.mipmap.car_no10};
@@ -180,7 +154,16 @@ public class AppConstants {
             BaseURLs.URL_JS11X5DetailedResults,// 20江苏11选5
             BaseURLs.URL_JX11X5DetailedResults,// 21江西11选5
             BaseURLs.URL_SD11X5DetailedResults,// 22山东11选5
-            BaseURLs.URL_TJSSCDetailedResults // 23天津时时彩
+            BaseURLs.URL_TJSSCDetailedResults,// 23天津时时彩
+            BaseURLs.URL_SSQDetailedResults,// 24双色球
+            BaseURLs.URL_PL3DetailedResults,// 25排列3
+            BaseURLs.URL_PL5DetailedResults,// 26排列5
+            BaseURLs.URL_F3DDetailedResults,// 27福彩3D
+            BaseURLs.URL_QLCDetailedResults,// 28七乐彩
+            BaseURLs.URL_DLTDetailedResults, // 29大乐透
+            BaseURLs.URL_SFCDetailedResults, // 30胜负彩
+            BaseURLs.URL_LCBQCDetailedResults, // 31 六场半全场
+            BaseURLs.URL_SCJQDetailedResults // 32 4场进球
     };
 
     // 香港彩和七星彩的下一期开奖URL
@@ -236,7 +219,8 @@ public class AppConstants {
     public static final String LOTTERY_KEY = "numberName";// 彩票界面跳转Key
     public static final String HOME_PAGER_DATA_KEY = "homePagerDataKey";// 首页缓存数据key
     public static final String HOME_PAGER_VERSION_UPDATE_KEY = "homePagerVersionUpdate";// 首页忽略此版本
-
+    /**保存SEX*/
+    public static final int INTSEX=0;
 
 
 	// ============= account begin ==============
@@ -252,6 +236,8 @@ public class AppConstants {
 	public static final String SPKEY_LOGINACCOUNT = "loginAccount";
     /**保存友盟的deviceToken*/
     public static final String uMengDeviceToken="uMengDeviceToken";
+    /**保存SEX*/
+    public static final String SEX="sex";
 	/**应用启动的时候初始化*/
 	public static String deviceToken ="";
 	/**应用启动的时候初始化*/
@@ -275,5 +261,14 @@ public class AppConstants {
 
     /**-当前手机的终端ID-*/
     public static final String TERID = "terid";
+
+    /**
+     * 临时测试数据
+     *
+     * @return
+     */
+    public static String getTestData() {
+        return  "{\"menus\":{\"content\":[{\"jumpType\":2,\"jumpAddr\":\"13\",\"title\":\"足球比分\",\"picUrl\":\"http://m.1332255.com:81/news/upload/shortcut/4353f490e7e64fecb1f23053a7a2dd2d.png\",\"reqMethod\":\"post\",\"labSeq\":null},{\"jumpType\":2,\"jumpAddr\":\"20\",\"title\":\"篮球比分\",\"picUrl\":\"http://m.1332255.com:81/news/upload/shortcut/1c2169649f04436881c822541fa9fa9f.png\",\"reqMethod\":\"post\",\"labSeq\":null},{\"jumpType\":2,\"jumpAddr\":\"30\",\"title\":\"彩票开奖\",\"picUrl\":\"http://m.1332255.com:81/news/upload/shortcut/b1c8f2ab927c48468d0eb5f351ca1f3c.png\",\"reqMethod\":\"post\",\"labSeq\":null},{\"jumpType\":2,\"jumpAddr\":\"11\",\"title\":\"足球数据\",\"picUrl\":\"http://m.1332255.com:81/news/upload/shortcut/5003439a83c14d8098d97af0ac6601b1.png\",\"reqMethod\":\"post\",\"labSeq\":null},{\"jumpType\":2,\"jumpAddr\":\"10\",\"title\":\"足球指数\",\"picUrl\":\"http://m.1332255.com:81/news/upload/shortcut/09bae0ba205b400c912f0901f24156b1.png\",\"reqMethod\":\"post\",\"labSeq\":null},{\"jumpType\":2,\"jumpAddr\":\"12\",\"title\":\"体育资讯\",\"picUrl\":\"http://m.1332255.com:81/news/upload/shortcut/4b4495f76a194b68a5e0ca1f4c00b5cf.png\",\"reqMethod\":\"post\",\"labSeq\":null},{\"jumpType\":2,\"jumpAddr\":\"19\",\"title\":\"联赛统计\",\"picUrl\":\"http://m.1332255.com:81/news/upload/shortcut/8d6d884b1fcd42ac9cea7860e122b7c8.png\",\"reqMethod\":\"post\",\"labSeq\":null},{\"jumpType\":1,\"jumpAddr\":\"http://mobile.game1.1332255.com/h5/index?comment=false&share=false&loginTrace=android\",\"title\":\"游戏竞猜\",\"picUrl\":\"http://m.1332255.com:81/news/upload/shortcut/0c67c7184c874df89ab3fdd7d5acb52f.png\",\"reqMethod\":\"post\",\"labSeq\":null}],\"result\":200},\"result\":200,\"isAudit\":false,\"otherLists\":[{\"content\":{\"labType\":1,\"bodys\":[{\"jumpType\":2,\"jumpAddr\":\"13\",\"thirdId\":\"392907\",\"racename\":\"澳洲甲\",\"raceId\":\"273\",\"raceColor\":\"#FF7000\",\"date\":\"2016-11-25\",\"time\":\"15:50\",\"homeId\":20394,\"hometeam\":\"西悉尼流浪者\",\"guestId\":2914,\"guestteam\":\"布里斯班狮吼\",\"statusOrigin\":\"-1\",\"homeScore\":1,\"guestScore\":1,\"homeHalfScore\":0,\"guestHalfScore\":1,\"homeLogoUrl\":\"http://pic.13322.com/icons/teams/100/20394.png\",\"guestLogoUrl\":\"http://pic.13322.com/icons/teams/100/2914.png\",\"totalupdLike\":0}]},\"result\":200},{\"content\":{\"labType\":3,\"bodys\":[{\"jumpType\":2,\"jumpAddr\":\"31\",\"name\":\"1\",\"issue\":\"2016134\",\"numbers\":\"42,06,37,02,24,23#32\",\"picUrl\":\"http://m.1332255.com:81/news/upload/lottery/bca9174be1934bf79c77645f854e174b.png\",\"zodiac\":\"兔,兔,猴,羊,鸡,狗#牛\"}]},\"result\":200},{\"content\":{\"labType\":7,\"bodys\":[{\"jumpType\":0,\"jumpAddr\":null,\"title\":\"一键查询开奖结果\",\"titlePic\":\"开奖查询头部图片URL\",\"detail1\":\"快速\",\"detail2\":\"便捷\",\"detail3\":\"准确\",\"lottery\":[{\"jumpType\":2,\"jumpAddr\":\"328\",\"name\":\"30\",\"issue\":\"2016181\",\"numbers\":\"--,--,--,--,--,--,--,--,--,--,--,--,--,--\",\"picUrl\":\"http://m.1332255.com:81/news/upload/lottery/27a5e1ebde3e42f79912a29a1fa61308.png\",\"jackpot\":null},{\"jumpType\":2,\"jumpAddr\":\"324\",\"name\":\"24\",\"issue\":\"2016139\",\"numbers\":\"08,12,15,20,23,27#15\",\"picUrl\":\"http://m.1332255.com:81/news/upload/lottery/daf7f80b4b0b4ef2b50c44db28f49379.png\",\"jackpot\":\"854651325\"},{\"jumpType\":2,\"jumpAddr\":\"325\",\"name\":\"29\",\"issue\":\"2016138\",\"numbers\":\"12,13,16,29,35#05,11\",\"picUrl\":\"http://m.1332255.com:81/news/upload/lottery/7fff28b955de414b9c7dce728286e8e3.png\",\"jackpot\":\"5000000\"},{\"jumpType\":2,\"jumpAddr\":\"326\",\"name\":\"25\",\"issue\":\"2016320\",\"numbers\":\"6,6,5\",\"picUrl\":\"http://m.1332255.com:81/news/upload/lottery/38c0f80476bb40879bd98b1078927553.png\",\"jackpot\":null},{\"jumpType\":2,\"jumpAddr\":\"327\",\"name\":\"26\",\"issue\":\"2016320\",\"numbers\":\"6,6,5,6,6\",\"picUrl\":\"http://m.1332255.com:81/news/upload/lottery/ba8e21b3aad84432b5bcf00a49a67634.png\",\"jackpot\":null}]}]},\"result\":200}],\"banners\":{\"content\":[{\"jumpType\":1,\"jumpAddr\":\"http://m.13322.com/active/act/footerGame/index.html?comment=false&share=true&loginTrace=android\",\"picUrl\":\"http://m.1332255.com:81/news/upload/picAdvert/8700e2a1d016440fa48f1cc699c41348.jpg\",\"title\":\"国足\",\"labSeq\":null}],\"result\":200}}";
+    }
 
 }

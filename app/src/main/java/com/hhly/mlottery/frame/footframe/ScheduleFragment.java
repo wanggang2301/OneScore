@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
-import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.ResultMultiAdapter;
 import com.hhly.mlottery.adapter.ScheduleAdapter;
 import com.hhly.mlottery.adapter.ScheduleDateAdapter;
@@ -41,6 +41,9 @@ import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.ScoresFragment;
+import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFilterEventBusEntity;
+import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFocusEventBusEntity;
+import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchSettingEventBusEntity;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
@@ -124,7 +127,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     public static int mLoadDataStatus = LOAD_DATA_STATUS_INIT;// 加载数据状态
 
 
-    public static EventBus schEventBus;
+    // public static EventBus schEventBus;
 
     private static final String FRAGMENT_INDEX = "fragment_index";
 
@@ -186,8 +189,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        schEventBus = new EventBus();
-        schEventBus.register(this);
+       /* schEventBus = new EventBus();
+        schEventBus.register(this);*/
+        EventBus.getDefault().register(this);
     }
 
     @Nullable
@@ -427,9 +431,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                         @Override
                         public void onItemClick(View view, String data) {
                             String thirdId = data;
-                            Intent intent = new Intent(getActivity(), FootballMatchDetailActivityTest.class);
+                            Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
                             intent.putExtra("thirdId", thirdId);
-                            intent.putExtra("currentFragmentId", 2);
+                            intent.putExtra("currentFragmentId", 3);
                             getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
                         }
                     });
@@ -544,64 +548,66 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
      * 帅选比赛
      * 接受消息的页面实现
      */
-    public void onEventMainThread(Map<String, Object> map) {
-        String[] checkedIds = (String[]) ((LinkedList) map.get(FiltrateMatchConfigActivity.RESULT_CHECKED_CUPS_IDS)).toArray(new String[]{});
-        mMatchs.clear();
-        if (checkedIds.length != 0) {
-            for (ScheduleMatchDto match : mAllMatchs) {
-                if (match.getType() == VIEW_DATE_INDEX) {
-                    mMatchs.add(match);
-                    continue;
-                }
-
-                for (String checkedId : checkedIds) {
-                    if ((match.getType() == VIEW_MATCH_INDEX) && checkedId.equals(match.getSchmatchs().getRaceId())) {
+    public void onEventMainThread(ScoresMatchFilterEventBusEntity scoresMatchFilterEventBusEntity) {
+        if (scoresMatchFilterEventBusEntity.getFgIndex() == 3) {
+            Map<String, Object> map = scoresMatchFilterEventBusEntity.getMap();
+            String[] checkedIds = (String[]) ((LinkedList) map.get(FiltrateMatchConfigActivity.RESULT_CHECKED_CUPS_IDS)).toArray(new String[]{});
+            mMatchs.clear();
+            if (checkedIds.length != 0) {
+                for (ScheduleMatchDto match : mAllMatchs) {
+                    if (match.getType() == VIEW_DATE_INDEX) {
                         mMatchs.add(match);
-                        break;
+                        continue;
+                    }
+
+                    for (String checkedId : checkedIds) {
+                        if ((match.getType() == VIEW_MATCH_INDEX) && checkedId.equals(match.getSchmatchs().getRaceId())) {
+                            mMatchs.add(match);
+                            break;
+                        }
                     }
                 }
-            }
 
-            List<LeagueCup> leagueCupList = new ArrayList<LeagueCup>();
-            for (LeagueCup cup : mAllCup) {
-                boolean isExistId = false;
-                for (String checkedId : checkedIds) {
-                    if (checkedId.equals(cup.getRaceId())) {
-                        isExistId = true;
-                        break;
+                List<LeagueCup> leagueCupList = new ArrayList<LeagueCup>();
+                for (LeagueCup cup : mAllCup) {
+                    boolean isExistId = false;
+                    for (String checkedId : checkedIds) {
+                        if (checkedId.equals(cup.getRaceId())) {
+                            isExistId = true;
+                            break;
+                        }
+                    }
+                    if (isExistId) {
+                        leagueCupList.add(cup);
                     }
                 }
-                if (isExistId) {
-                    leagueCupList.add(cup);
+                mCheckedCups = leagueCupList.toArray(new LeagueCup[]{});
+                updateAdapter();
+                mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
+            } else {
+                for (ScheduleMatchDto match : mAllMatchs) {
+                    if (match.getType() == ResultMultiAdapter.VIEW_DATE_INDEX) {
+                        mMatchs.add(match);
+                        continue;
+                    }
                 }
-            }
-            mCheckedCups = leagueCupList.toArray(new LeagueCup[]{});
-            updateAdapter();
-            mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
-        } else {
-            for (ScheduleMatchDto match : mAllMatchs) {
-                if (match.getType() == ResultMultiAdapter.VIEW_DATE_INDEX) {
-                    mMatchs.add(match);
-                    continue;
-                }
+
+                mCheckedCups = new LeagueCup[]{};//选择0场  把选中联赛为 空集
+                mViewHandler.sendEmptyMessage(VIEW_STATUS_FLITER_NO_DATA);
+                updateAdapter();
             }
 
-            mCheckedCups = new LeagueCup[]{};//选择0场  把选中联赛为 空集
-            mViewHandler.sendEmptyMessage(VIEW_STATUS_FLITER_NO_DATA);
-            updateAdapter();
+            isCheckedDefualt = (boolean) map.get(FiltrateMatchConfigActivity.CHECKED_DEFUALT);
         }
 
-        isCheckedDefualt = (boolean) map.get(FiltrateMatchConfigActivity.CHECKED_DEFUALT);
-
-
     }
-
 
     /**
      * 设置
      * 接受消息的页面实现
      */
-    public void onEventMainThread(Integer currentFragmentId) {
+
+    public void onEventMainThread(ScoresMatchSettingEventBusEntity scoresMatchSettingEventBusEntity) {
         updateAdapter();
     }
 
@@ -609,9 +615,12 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
      * EventBus 赛场比赛详情返回FootballMatchDetailActivity
      * 接受消息的页面实现
      */
-    public void onEventMainThread(String currentFragmentId) {
-        updateAdapter();
-        ((ScoresFragment) getParentFragment()).focusCallback();
+    public void onEventMainThread(ScoresMatchFocusEventBusEntity scoresMatchFocusEventBusEntity) {
+        if (scoresMatchFocusEventBusEntity.getFgIndex() == 3) {
+            L.d("qazwsx", "赛程关注");
+            updateAdapter();
+            ((ScoresFragment) getParentFragment()).focusCallback();
+        }
     }
 
     @Override
@@ -636,6 +645,13 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         updateAdapter();
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

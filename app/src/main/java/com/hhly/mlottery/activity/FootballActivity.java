@@ -16,11 +16,7 @@ import com.hhly.mlottery.frame.CounselFragment;
 import com.hhly.mlottery.frame.NewVideoFragment;
 import com.hhly.mlottery.frame.ScoresFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketScoresFragment;
-import com.hhly.mlottery.frame.footframe.FocusFragment;
-import com.hhly.mlottery.frame.footframe.ImmediateFragment;
 import com.hhly.mlottery.frame.footframe.InformationFragment;
-import com.hhly.mlottery.frame.footframe.ResultFragment;
-import com.hhly.mlottery.frame.footframe.ScheduleFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
@@ -63,7 +59,7 @@ public class FootballActivity extends BaseActivity {
 
         currentPosition = getIntent().getIntExtra(AppConstants.FOTTBALL_KEY, 0);// 足球fragment下标
         infoPagerLabel = getIntent().getIntExtra(AppConstants.FOTTBALL_INFO_LABEL_KEY, 0);// 足球资讯pager下标
-        basketCurrentPosition = getIntent().getIntExtra(AppConstants.BASKETBALL_KEY,0);// 篮球fragment下标
+        basketCurrentPosition = getIntent().getIntExtra(AppConstants.BASKETBALL_KEY, 0);// 篮球fragment下标
 
 //        currentPosition = AppConstants.BASKETBALL_SCORE_VALUE;
 //        basketCurrentPosition = AppConstants.BASKETBALL_SCORE_KEY;
@@ -163,6 +159,10 @@ public class FootballActivity extends BaseActivity {
                     default:
                         break;
                 }
+
+                //测试切换到其他页面能否收到推送消息
+                //EventBus.getDefault().post(new ScoreFragmentWebSocketEntity(currentPosition));
+
             }
         });
     }
@@ -171,9 +171,7 @@ public class FootballActivity extends BaseActivity {
         fragmentIndex = position;// 当前fragment下标
         L.d("xxx", "当前Fragment下标：" + fragmentIndex);
         fragmentManager = getSupportFragmentManager();
-        currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content, currentFragment,
-                fragments.get(position).getClass(), null, false,
-                fragments.get(position).getClass().getSimpleName() + position, false);
+        currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content, currentFragment, fragments.get(position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, false);
     }
 
     @Override
@@ -181,18 +179,8 @@ public class FootballActivity extends BaseActivity {
         super.onDestroy();
         CpiFiltrateActivity.mCheckedIds.clear();
         CpiFiltrateActivity.isDefaultHot = true;
-        if (ImmediateFragment.imEventBus != null) {
-            ImmediateFragment.imEventBus.unregister(ImmediateFragment.class);
-        }
-        if (ResultFragment.resultEventBus != null) {
-            ResultFragment.resultEventBus.unregister(ResultFragment.class);
-        }
-        if (ScheduleFragment.schEventBus != null) {
-            ScheduleFragment.schEventBus.unregister(ScheduleFragment.class);
-        }
-        if (FocusFragment.focusEventBus != null) {
-            FocusFragment.focusEventBus.unregister(FocusFragment.class);
-        }
+
+        L.d("qazwsx","_____Footballactivity onDestroy");
     }
 
     @Override

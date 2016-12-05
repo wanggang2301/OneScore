@@ -13,6 +13,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.frame.footframe.FootballDatabaseFragment;
 import com.hhly.mlottery.frame.footframe.FootballDatabaseInterFragment;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * @author: Wangg
@@ -91,9 +92,11 @@ public class FootballDatabaseActivity extends BaseActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.public_img_back:
+                MobclickAgent.onEvent(mContext,"FootballDatabaseActivity_exit");
                 finish();
                 break;
             case R.id.public_btn_set:
+                MobclickAgent.onEvent(mContext,"FootballDatabaseActivity_into_search");
                 Intent intent = new Intent(getApplicationContext(), FootballInformationSerachActivity.class);
                 startActivity(intent);
                 break;

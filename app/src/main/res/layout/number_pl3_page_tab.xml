@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <!-- 排列3 -->
+
+    <!--奖项统计-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/lottery_info_title"
+                android:background="@drawable/number_tab_solid_all2"
+                android:text="@string/number_info_prize" />
+
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="@string/number_info_pl3_count1" />
+
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="@string/number_info_pl3_count2" />
+
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="@string/number_info_pl3_count3" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/lottery_info_title"
+                android:text="@string/number_info_count" />
+
+            <TextView
+                android:id="@+id/lottery_pl3_count1"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_pl3_count2"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_pl3_count3"
+                style="@style/lottery_info_content_right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/lottery_info_title"
+                android:text="@string/number_info_bonus" />
+
+            <TextView
+                android:id="@+id/lottery_pl3_bonus1"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_pl3_bonus2"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_pl3_bonus3"
+                style="@style/lottery_info_content_right"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--本期销量-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/number_info_sale" />
+
+        <TextView
+            android:id="@+id/lottery_pl3_sales_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/number_red" />
+
+    </LinearLayout>
+
+    <!--帮肋-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:orientation="vertical">
+        
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/lottery_pl3_help_icon"/>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="@string/number_info_pl3_desc1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/number_info_pl3_desc2"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/number_info_pl3_desc3"/>
+        
+    </LinearLayout>
+</LinearLayout>

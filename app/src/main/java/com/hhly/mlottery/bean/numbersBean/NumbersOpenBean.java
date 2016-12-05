@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class NumbersOpenBean {
 	private List<NumberCurrentInfo> numLotteryResults;
-	private List<NumberHistoryInfo> historyLotteryResults;
+//	private List<NumberHistoryInfo> historyLotteryResults;
 	//private List<NumberHistoryHKInfo> historyLotteryResults;
 	private String serverTime;
 
@@ -24,14 +24,14 @@ public class NumbersOpenBean {
 	}
 
 
-	public List<NumberHistoryInfo> getHistoryLotteryResults() {
-		return historyLotteryResults;
-	}
-
-	public void setHistoryLotteryResults(
-			List<NumberHistoryInfo> historyLotteryResults) {
-		this.historyLotteryResults = historyLotteryResults;
-	}
+//	public List<NumberHistoryInfo> getHistoryLotteryResults() {
+//		return historyLotteryResults;
+//	}
+//
+//	public void setHistoryLotteryResults(
+//			List<NumberHistoryInfo> historyLotteryResults) {
+//		this.historyLotteryResults = historyLotteryResults;
+//	}
 
 	public String getServerTime() {
 		return serverTime;

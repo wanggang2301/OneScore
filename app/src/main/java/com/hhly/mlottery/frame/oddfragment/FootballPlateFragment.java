@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.cpiadapter.FootballPlateAdapter;
 import com.hhly.mlottery.bean.enums.OddsTypeEnum;
 import com.hhly.mlottery.bean.enums.StatusEnum;
@@ -45,7 +45,7 @@ public class FootballPlateFragment extends Fragment {
     TextView mCenterTitle;
     TextView mRightTitle;
 
-    private FootballMatchDetailActivityTest mActivity;
+    private FootballMatchDetailActivity mActivity;
 
     private ArrayList<OddsDataInfo.ListOddEntity> items; // 指数数据源
     private FootballPlateAdapter mAdapter;
@@ -107,7 +107,7 @@ public class FootballPlateFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mActivity = (FootballMatchDetailActivityTest) getActivity();
+        mActivity = (FootballMatchDetailActivity) getActivity();
 
         loadData();
     }

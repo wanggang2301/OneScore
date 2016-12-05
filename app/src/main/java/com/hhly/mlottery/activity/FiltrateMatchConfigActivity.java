@@ -20,15 +20,14 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.frame.footframe.FiltrateMatchFragment;
 import com.hhly.mlottery.frame.footframe.FiltrateMatchFragment.CheckedCupsCallback;
 import com.hhly.mlottery.frame.footframe.FiltrateStatusFragment;
-import com.hhly.mlottery.frame.footframe.ImmediateFragment;
-import com.hhly.mlottery.frame.footframe.ResultFragment;
-import com.hhly.mlottery.frame.footframe.RollBallFragment;
-import com.hhly.mlottery.frame.footframe.ScheduleFragment;
+import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFilterEventBusEntity;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * @author chenml
@@ -197,15 +196,18 @@ public class FiltrateMatchConfigActivity extends BaseActivity implements OnClick
                     map.put("checkedDefualt", false);
 
 
-                    if (currentFragmentId == 0) {
+                    EventBus.getDefault().post(new ScoresMatchFilterEventBusEntity(currentFragmentId, map));
+
+                 /*   if (currentFragmentId == 0) {
                         RollBallFragment.eventBus.post(map);
                     } else if (currentFragmentId == 1) {
-                        ImmediateFragment.imEventBus.post(map);
+                        //ImmediateFragment.imEventBus.post(map);
                     } else if (currentFragmentId == 2) {
-                        ResultFragment.resultEventBus.post(map);
+                        // ResultFragment.resultEventBus.post(map);
+                        EventBus.getDefault().post(new ScoresMatchFilterEventBusEntity(currentFragmentId, map));
                     } else if (currentFragmentId == 3) {
-                        ScheduleFragment.schEventBus.post(map);
-                    }
+                        EventBus.getDefault().post(new ScoresMatchFilterEventBusEntity(currentFragmentId, map));
+                    }*/
 
                     //setResult(Activity.RESULT_OK, intent);
                 }

@@ -42,7 +42,7 @@ public class FootBallLiveTextAdapter extends BaseQuickAdapter<MatchTextLiveBean>
     private static final String MATCHFINISH = "-1";
 
 
-    public FootBallLiveTextAdapter(Context context, List<MatchTextLiveBean> data) {
+    public  FootBallLiveTextAdapter(Context context, List<MatchTextLiveBean> data) {
         super(R.layout.item_live_text, data);
         this.context = context;
         this.list = data;

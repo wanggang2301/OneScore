@@ -1,8 +1,6 @@
 package com.hhly.mlottery.frame.basketballframe;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,8 +14,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
+import com.hhly.mlottery.bean.websocket.DataEntity;
 import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
 import com.hhly.mlottery.util.ImageLoader;
@@ -499,14 +499,17 @@ public class BasketDetailsHeadFragment extends Fragment {
         }
 
         //图标
-        ImageLoader.load(mContext, mMatch.getHomeLogoUrl(), R.mipmap.basket_default).into(mHomeIcon);
+        if(mContext!=null){
+            ImageLoader.load(mContext, mMatch.getHomeLogoUrl(), R.mipmap.basket_default).into(mHomeIcon);
 //    mImageLoader.displayImage(mMatch.getHomeLogoUrl(), mHomeIcon, mOptions);
 
-        ImageLoader.load(mContext, mMatch.getGuestLogoUrl(), R.mipmap.basket_default).into(mGuestIcon);
+            ImageLoader.load(mContext, mMatch.getGuestLogoUrl(), R.mipmap.basket_default).into(mGuestIcon);
 //        mImageLoader.displayImage(mMatch.getGuestLogoUrl(), mGuestIcon, mOptions);
 
-        ImageLoader.load(mContext, bean.getBgUrl(), R.color.black).into(mHeadImage);
+            ImageLoader.load(mContext, bean.getBgUrl(), R.color.black).into(mHeadImage);
 //        mImageLoader.displayImage(bean.getBgUrl(), mHeadImage, mOptionsHead);
+        }
+
 
 
         if (mMatch.getSection() == 2) { //只有上下半场
@@ -695,14 +698,14 @@ public class BasketDetailsHeadFragment extends Fragment {
         guest.setText(guestScore + "");
         home.setText(homeScore + "");
         if (guestScore > homeScore) {//得分少的用灰色
-            guest.setTextColor(getResources().getColor(R.color.basket_score_white));
-            home.setTextColor(getResources().getColor(R.color.basket_score_gray));
+            guest.setTextColor(MyApp.getContext().getResources().getColor(R.color.basket_score_white));
+            home.setTextColor(MyApp.getContext().getResources().getColor(R.color.basket_score_gray));
         } else if (guestScore < homeScore) {
-            guest.setTextColor(getResources().getColor(R.color.basket_score_gray));
-            home.setTextColor(getResources().getColor(R.color.basket_score_white));
+            guest.setTextColor(MyApp.getContext().getResources().getColor(R.color.basket_score_gray));
+            home.setTextColor(MyApp.getContext().getResources().getColor(R.color.basket_score_white));
         } else {
-            guest.setTextColor(getResources().getColor(R.color.basket_score_white));
-            home.setTextColor(getResources().getColor(R.color.basket_score_white));
+            guest.setTextColor(MyApp.getContext().getResources().getColor(R.color.basket_score_white));
+            home.setTextColor(MyApp.getContext().getResources().getColor(R.color.basket_score_white));
         }
 
 
@@ -750,7 +753,7 @@ public class BasketDetailsHeadFragment extends Fragment {
     }
 
     public void updateData(WebSocketBasketBallDetails basketBallDetails, TalkAboutBallFragment mTalkAboutBallFragment, TextView mTitleGuest, TextView mTitleHome, TextView mTitleVS) {
-        WebSocketBasketBallDetails.DataEntity score = basketBallDetails.getData();
+        DataEntity score = basketBallDetails.getData();
 
         switch (basketBallDetails.getData().getMatchStatus()) {
             case DETERMINED://待定

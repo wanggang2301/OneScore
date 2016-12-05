@@ -64,7 +64,7 @@ public class PlayWebViewActivity extends BaseActivity implements View.OnClickLis
         // 设置可以支持缩放
         mWebView.getSettings().setSupportZoom(true);
         // 设置出现缩放工具
-        mWebView.getSettings().setBuiltInZoomControls(true);
+        mWebView.getSettings().setBuiltInZoomControls(false);
         //扩大比例的缩放
         mWebView.getSettings().setUseWideViewPort(true);
         //自适应屏幕

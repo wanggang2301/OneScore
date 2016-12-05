@@ -51,15 +51,13 @@ import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
 import com.hhly.mlottery.frame.footframe.AnimHeadLiveFragment;
 import com.hhly.mlottery.frame.footframe.DetailsRollballFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
-import com.hhly.mlottery.frame.footframe.ImmediateFragment;
 import com.hhly.mlottery.frame.footframe.IntelligenceFragment;
 import com.hhly.mlottery.frame.footframe.LiveHeadInfoFragment;
 import com.hhly.mlottery.frame.footframe.OddsFragment;
 import com.hhly.mlottery.frame.footframe.PreHeadInfoFrament;
-import com.hhly.mlottery.frame.footframe.ResultFragment;
-import com.hhly.mlottery.frame.footframe.ScheduleFragment;
 import com.hhly.mlottery.frame.footframe.StatisticsFragment;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
+import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;
@@ -97,12 +95,12 @@ import me.relex.circleindicator.CircleIndicator;
  * @date 2016/6/2 16:53
  * @des 足球内页改版
  */
-public class FootballMatchDetailActivityTest extends BaseWebSocketActivity implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, ExactSwipeRefrashLayout.OnRefreshListener {
+public class FootballMatchDetailActivity extends BaseWebSocketActivity implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, ExactSwipeRefrashLayout.OnRefreshListener {
 
-    private final static int IMMEDIA_FRAGMENT = 0;
-    private final static int RESULT_FRAGMENT = 1;
-    private final static int SCHEDULE_FRAGMENT = 2;
-    private final static int FOCUS_FRAGMENT = 3;
+    private final static int IMMEDIA_FRAGMENT = 1;
+    private final static int RESULT_FRAGMENT = 2;
+    private final static int SCHEDULE_FRAGMENT = 3;
+    private final static int FOCUS_FRAGMENT = 4;
     private final static int BANNER_PLAY_TIME = 2500; //头部5秒轮播
     private final static int BANNER_ANIM_TIME = 500; //轮播动画时间
     private final static int ERROR = -1;//访问失败
@@ -316,6 +314,8 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
     private Handler preGotoliveHandler;
     private Runnable runnable;
 
+    private String matchStartTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (getIntent().getExtras() != null) {
@@ -323,9 +323,14 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
             currentFragmentId = getIntent().getExtras().getInt("currentFragmentId");
             infoCenter = getIntent().getExtras().getInt("info_center");
         }
+
+
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.liveEvent." + mThirdId + "." + appendLanguage());
 
+
+        L.d("zxcvbn", "footURL===" + BaseURLs.WS_SERVICE);
+        L.d("zxcvbn", "footTopic===" + "USER.topic.liveEvent." + mThirdId + "." + appendLanguage());
         super.onCreate(savedInstanceState);
 
 
@@ -500,7 +505,6 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
         iv_setting.setOnClickListener(this);
 
         setScroller();
-
     }
 
     @Override
@@ -611,6 +615,7 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
 
                     //下拉刷新
                     if ("0".equals(mPreStatus) && "0".equals(matchDetail.getLiveStatus()) && !isFinishing()) { //赛前
+
 
                         mPreHeadInfoFrament.initData(matchDetail, true);
                         mPreHeadInfoFrament.setScoreText("VS");
@@ -829,6 +834,8 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
 
             mHeadviewpager.setIsScrollable(false);
             mIndicator.setVisibility(View.GONE);
+
+            matchStartTime = matchDetail.getMatchInfo().getStartTime();
 
             mPreHeadInfoFrament.initData(matchDetail, false);
             mPreHeadInfoFrament.setScoreText("VS");
@@ -2707,9 +2714,22 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
                     return;
                 }
 
-                ShareBean shareBean = new ShareBean();
                 String title = mMatchDetail.getHomeTeamInfo().getName() + " VS " + mMatchDetail.getGuestTeamInfo().getName();
-                String summary = getString(R.string.share_summary);
+                String summary = getString(R.string.share_summary_new);
+
+                if ("0".equals(mPreStatus)) {  //赛前
+                    title += " " + matchStartTime.split(" ")[1] + getString(R.string.football_analyze_details_game);
+                    summary = "[" + getString(R.string.share_match_pre) + "]" + summary;
+                } else if ("1".equals(mPreStatus)) {//赛中
+                    title += " " + getString(R.string.share_match_live2);
+                    summary = "[" + getString(R.string.share_match_live) + "]" + summary;
+                } else if ("-1".equals(mPreStatus)) {//赛后
+                    title += " " + getString(R.string.share_match_browse);
+                    summary = "[" + getString(R.string.share_match_over) + "]" + summary;
+                }
+
+                ShareBean shareBean = new ShareBean();
+
                 shareBean.setTitle(title != null ? title : getString(R.string.share_to_qq_app_name));
                 shareBean.setSummary(summary);
                 shareBean.setTarget_url(BaseURLs.URL_FOOTBALL_DETAIL_INFO_SHARE + mThirdId);
@@ -2722,28 +2742,14 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
 
     }
 
-
-//    @Override
-//    public void onClose(String message) {
-//    }
-//
-//    @Override
-//    public void onError(Exception exception) {
-//
-//    }
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState, outPersistentState);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             eventBusPost();
-
-            // setResult(Activity.RESULT_OK);
-
             finish();
             return true;
         }
@@ -2752,23 +2758,29 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
 
 
     private void eventBusPost() {
-        if (currentFragmentId == IMMEDIA_FRAGMENT) {
+      /*  if (currentFragmentId == IMMEDIA_FRAGMENT) {
             if (ImmediateFragment.imEventBus != null) {
                 ImmediateFragment.imEventBus.post("");
             }
         } else if (currentFragmentId == RESULT_FRAGMENT) {
-            if (ResultFragment.resultEventBus != null) {
-                ResultFragment.resultEventBus.post("");
-            }
+
+            EventBus.getDefault().post(new ScoresMatchFocusEventBusEntity(currentFragmentId));
+            //if (ResultFragment.resultEventBus != null) {
+            //     ResultFragment.resultEventBus.post("");
+            // }
         } else if (currentFragmentId == SCHEDULE_FRAGMENT) {
-            if (ScheduleFragment.schEventBus != null) {
+           *//* if (ScheduleFragment.schEventBus != null) {
                 ScheduleFragment.schEventBus.post("");
-            }
+            }*//*
+            EventBus.getDefault().post(new ScoresMatchFocusEventBusEntity(currentFragmentId));
+
         } else if (currentFragmentId == FOCUS_FRAGMENT) {
             if (FocusFragment.focusEventBus != null) {
                 FocusFragment.focusEventBus.post("");
             }
-        }
+        }*/
+        EventBus.getDefault().post(new ScoresMatchFocusEventBusEntity(currentFragmentId));
+
     }
 
 

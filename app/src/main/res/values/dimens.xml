@@ -65,6 +65,7 @@
     <dimen name="round_progressbar_staristic_width">15dp</dimen>
     <dimen name="round_progressbar_textsize">7dp</dimen>
     <dimen name="round_progressbar_analyze_width">5dp</dimen>
+    <dimen name="basket_player_team_icon">17dp</dimen>
 
     <dimen name="basket_item_height">35dp</dimen>
     <dimen name="basket_details_item">20dp</dimen>

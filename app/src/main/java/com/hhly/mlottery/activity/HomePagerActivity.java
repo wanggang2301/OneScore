@@ -1,7 +1,5 @@
 package com.hhly.mlottery.activity;
 
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,7 +23,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,8 +50,6 @@ import com.hhly.mlottery.util.RongYunUtils;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.message.ALIAS_TYPE;
-import com.umeng.message.MsgConstant;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
 
@@ -233,7 +228,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
                         break;
                     case "footballInfo":// 足球详情页面
                         if (!TextUtils.isEmpty(mThirdId)) {
-                            Intent footIntent = new Intent(mContext, FootballMatchDetailActivityTest.class);
+                            Intent footIntent = new Intent(mContext, FootballMatchDetailActivity.class);
                             footIntent.putExtra("currentFragmentId", -1);
                             footIntent.putExtra("thirdId", mThirdId);
                             startActivity(footIntent);
@@ -389,6 +384,16 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
         home_page_list = (ListView) findViewById(R.id.home_page_list);// 首页列表
+
+        // TODO
+//        View lotteryItemView = View.inflate(mContext, R.layout.home_page_item_lottery, null);
+//        lotteryItemView.findViewById(R.id.rl_lottery_item_title).setOnClickListener(this);
+//        lotteryItemView.findViewById(R.id.rl_lottery_item_sfc).setOnClickListener(this);
+//        lotteryItemView.findViewById(R.id.ll_lottery_item_ssq).setOnClickListener(this);
+//        lotteryItemView.findViewById(R.id.ll_lottery_item_dlt).setOnClickListener(this);
+//        lotteryItemView.findViewById(R.id.ll_lottery_item_pl3).setOnClickListener(this);
+//        lotteryItemView.findViewById(R.id.ll_lottery_item_pl5).setOnClickListener(this);
+//        home_page_list.addFooterView(lotteryItemView);
     }
 
     /**
@@ -401,6 +406,39 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         myPostParams.put("version", version);
         myPostParams.put("versionCode", versionCode);
         myPostParams.put("channelNumber", channelNumber);
+
+//        try {
+//                        mHomePagerEntity = JSON.parseObject(AppConstants.getTestData(), HomePagerEntity.class);
+//            /**----将百度渠道的游戏竞猜去除掉--Start---*/
+//            if ("B1001".equals(channelNumber) || "B1002".equals(channelNumber) || "B1003".equals(channelNumber)) {
+//                Iterator<HomeContentEntity> iterator = mHomePagerEntity.getMenus().getContent().iterator();
+//                while (iterator.hasNext()) {
+//                    HomeContentEntity b = iterator.next();
+//                    if ("遊戲競猜".equals(b.getTitle()) || "游戏竞猜".equals(b.getTitle())) {
+//                        iterator.remove();
+//                    }
+//                }
+//            }
+//            /**----将百度渠道的游戏竞猜去除掉--End---*/
+//            PreferenceUtil.commitString(AppConstants.HOME_PAGER_DATA_KEY, AppConstants.getTestData());// 保存首页缓存数据
+//            L.d("xxx", "保存数据到本地！jsonObject:" + AppConstants.getTestData());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        isAuditHandle(mHomePagerEntity);
+//        if (mHomePagerEntity.getResult() == 200) {
+//            switch (num) {
+//                case 0:// 首次加载
+//                    mHandler.sendEmptyMessage(LOADING_DATA_SUCCESS);
+//                    break;
+//                case 1:// 下拉刷新
+//                    mHandler.sendEmptyMessage(REFRES_DATA_SUCCESS);
+//                    break;
+//            }
+//        } else {
+//            mHandler.sendEmptyMessage(LOADING_DATA_ERROR);// 加载失败
+//        }
+
         VolleyContentFast.requestStringByGet(BaseURLs.URL_HOME_PAGER_INFO, myPostParams, null, new VolleyContentFast.ResponseSuccessListener<String>() {
             @Override
             public void onResponse(String jsonObject) {
@@ -790,16 +828,12 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_account:
-
-             /*   if (CommonUtils.isLogin()) {
-                    goToAccountActivity();
-                } else {
-                    goToUserOptionsActivity();
-                }*/
+                MobclickAgent.onEvent(mContext, "HomePager_User_Info_Start");
                 goToUserOptionsActivity();
-
-
                 break;
+//            case R.id.rl_lottery_item_title:
+//                UiUtils.toast(this,"一健查询开奖信息");
+//                break;
             default:
                 break;
         }

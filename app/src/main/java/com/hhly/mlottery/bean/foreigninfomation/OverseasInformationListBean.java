@@ -13,7 +13,7 @@ import android.os.Parcelable;
 public class OverseasInformationListBean implements Parcelable {
 
     private int id;
-    private long timestamp;
+    private double timestamp;
     private String infoType;
     private String fullname;
     private String fullnameTranslation;
@@ -25,7 +25,7 @@ public class OverseasInformationListBean implements Parcelable {
     private String photo;
     private String video;
     private int favorite;
-    private long currentTimestamp;
+    private double currentTimestamp;
     private String sendtime;
 
     public String getSendtime() {
@@ -60,7 +60,7 @@ public class OverseasInformationListBean implements Parcelable {
         this.id = id;
     }
 
-    public long getTimestamp() {
+    public double getTimestamp() {
         return timestamp;
     }
 
@@ -140,7 +140,7 @@ public class OverseasInformationListBean implements Parcelable {
         this.favorite = favorite;
     }
 
-    public long getCurrentTimestamp() {
+    public double getCurrentTimestamp() {
         return currentTimestamp;
     }
 
@@ -156,7 +156,7 @@ public class OverseasInformationListBean implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
-        dest.writeLong(this.timestamp);
+        dest.writeDouble(this.timestamp);
         dest.writeString(this.infoType);
         dest.writeString(this.fullname);
         dest.writeString(this.fullnameTranslation);
@@ -168,7 +168,7 @@ public class OverseasInformationListBean implements Parcelable {
         dest.writeString(this.photo);
         dest.writeString(this.video);
         dest.writeInt(this.favorite);
-        dest.writeLong(this.currentTimestamp);
+        dest.writeDouble(this.currentTimestamp);
         dest.writeString(this.sendtime);
 
     }

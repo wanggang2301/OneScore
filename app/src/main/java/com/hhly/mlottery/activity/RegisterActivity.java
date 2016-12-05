@@ -43,6 +43,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * 注册界面
  */
@@ -286,7 +288,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     if (register != null && register.getResult() == AccountResultCode.SUCC) {
                         CommonUtils.saveRegisterInfo(register);
                         UiUtils.toast(MyApp.getInstance(), R.string.register_succ);
-
+                        EventBus.getDefault().post(register);
                         //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
                         sendUserInfoToServer(register);
 
@@ -294,6 +296,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         setResult(RESULT_OK);
                         finish();
                     } else {
+                        countDown.cancel();
+
                         L.e(TAG, "成功请求，注册失败");
                         CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
                     }
@@ -301,6 +305,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             }, new VolleyContentFast.ResponseErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                    countDown.cancel();
+
                     progressBar.dismiss();
                     tv_register.setClickable(true);
                     L.e(TAG, "注册失败");
@@ -375,12 +381,16 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 countDown.start();
 //              // 正常情况下要1min后才能重新发验证码，但是遇到下面几种情况可以点击重发
                 if (code.getResult() == AccountResultCode.SUCC) {
+
                     UiUtils.toast(MyApp.getInstance(), R.string.send_register_succ);
                 } else if (code.getResult() == AccountResultCode.PHONE_ALREADY_EXIST
                         || code.getResult() == AccountResultCode.PHONE_FORMAT_ERROR
                         || code.getResult() == AccountResultCode.MESSAGE_SEND_FAIL
-                        ||code.getResult()==AccountResultCode.ONLY_FIVE_EACHDAY) {
+                        ||code.getResult()==AccountResultCode.ONLY_FIVE_EACHDAY
+                        ||code.getResult()==AccountResultCode.USERNAME_EXIST) {
                     countDown.cancel();
+                    //tv_verycode.setText(R.string.resend);
+                    //tv_verycode.setClickable(true);
                     enableVeryCode();
                 }
             }
@@ -388,6 +398,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onGetError(VolleyContentFast.VolleyException exception) {
                 countDown.cancel();
+                tv_verycode.setText(R.string.resend);
+                tv_verycode.setClickable(true);
                 enableVeryCode();
             }
         });

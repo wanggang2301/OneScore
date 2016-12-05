@@ -43,7 +43,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:layout_toRightOf="@+id/tv_pic"
+
+           android:layout_toLeftOf="@+id/tv_head"
             android:src="@mipmap/center_head"
             app:civ_border_width="2dp"
             app:civ_border_color="@color/light"
@@ -51,6 +52,7 @@
 
 
         <ImageView
+            android:id="@+id/tv_head"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
@@ -69,6 +71,7 @@
 
 
     <RelativeLayout
+        android:layout_marginTop="30dp"
         android:id="@+id/account_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -108,6 +111,109 @@
         android:background="@color/line_football_footer"
         />
 
+    <RelativeLayout
+        android:id="@+id/account_sex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:minHeight="60dp"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/tv_sex"
+            style="@style/login_textview_account_center_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="性别"
+            android:textSize="15sp"
+            />
+        <ImageView
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@+id/tv_sex"
+            android:id="@+id/man_sex"
+            style="@style/login_textview_account_center_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/default_man_sex"
+            />
+        <TextView
+            android:paddingLeft="10dp"
+            android:id="@+id/text_man"
+            android:layout_toRightOf="@+id/man_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/man_sex"
+            android:textColor="@color/res_pl_color"
+            android:textSize="13sp"
+            />
+        <ImageView
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@+id/text_man"
+            android:id="@+id/woman_sex"
+            style="@style/login_textview_account_center_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/default_woman_sex"
+            />
+        <TextView
+            android:paddingLeft="10dp"
+            android:id="@+id/text_woman"
+            android:layout_toRightOf="@+id/woman_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/woman_sex"
+            android:textColor="@color/res_pl_color"
+            android:textSize="13sp"
+            />
+        <ImageView
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@+id/text_woman"
+            android:id="@+id/noon_sex"
+            style="@style/login_textview_account_center_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/default_noon_sex"
+            />
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:id="@+id/text_noon"
+            android:layout_toRightOf="@+id/noon_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/noon_sex"
+            android:textSize="13sp"
+            />
+
+        <TextView
+            android:paddingLeft="10dp"
+            android:id="@+id/tv_account_sex"
+            style="@style/login_textview_account_center_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="25dp"
+            android:textColor="@color/res_pl_color"
+            android:textSize="15sp"
+            />
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_football_footer"
+        />
 
     <RelativeLayout
         android:id="@+id/rl_nickname"
@@ -139,7 +245,7 @@
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/image_login"
             android:src="@mipmap/person"
-            android:text="@string/nickname"
+            android:text=""
             android:textSize="15sp"
             />
 

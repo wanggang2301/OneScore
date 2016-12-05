@@ -22,16 +22,14 @@ public class BaseURLs {
 
 
     private static String getHost() {
+
         if (AppConstants.isTestEnv) {//开发不需要修改下面代码
             int url_config = PreferenceUtil.getInt(MyConstants.URL_HOME_CONFIG, DebugConfigActivity.URL_1332255);
 
-//            url_config = DebugConfigActivity.URL_242;
             if (url_config == DebugConfigActivity.URL_1332255) {
                 return "m.1332255.com:81";//测试环境
             } else if (url_config == DebugConfigActivity.URL_242) {
-//                return "192.168.31.65:8181";
                 return "192.168.10.242:8181";//开发环境。
-//                return "192.168.12.242:8181";//余勇俊测试
             } else if (url_config == DebugConfigActivity.URL_93) {
                 return "183.61.172.93:8096"; // 典哥新加
             } else if (url_config == DebugConfigActivity.DIY_INPUT) {
@@ -41,7 +39,6 @@ public class BaseURLs {
             }
         }
 
-        //return "m.1332255.com";测试环境。
         return "m.13322.com";//发布版本
 
     }
@@ -51,33 +48,25 @@ public class BaseURLs {
 
     private static String PHOST = getPHost();
 
-
     private static String getPHost() {
         if (AppConstants.isTestEnv) {//开发不需要修改下面代码
             int url_config = PreferenceUtil.getInt(MyConstants.URL_HOME_CONFIG, DebugConfigActivity.URL_1332255);
 
-//            url_config = DebugConfigActivity.URL_242;
             if (url_config == DebugConfigActivity.URL_1332255) {
                 return "file.1332255.com:81";//测试环境
             } else if (url_config == DebugConfigActivity.URL_242) {
-//                return "192.168.31.65:8181";
                 return "192.168.10.242:8181";//开发环境。
-//                return "192.168.12.242:8181";//余勇俊测试
             } else {
                 return "file.13322.com";
             }
         }
-
-        //return "m.1332255.com";测试环境。
         return "file.13322.com";//发布版本
-
     }
 
 
     /**
      * 内网
      */
-//	private final static String HOST = "m.1332255.com";
     private final static String HTTP = "http://";
 
     private final static String HTTPS = "https://";
@@ -92,13 +81,16 @@ public class BaseURLs {
     private static String WS_HOST = getWsHost();
 
     private static String getWsHost() {
+
+        //测试scoket链接数 ActiveMQ
+        //return "192.168.31.19:8061";
+
         if (AppConstants.isTestEnv) {//开发不需要修改下面代码
             int ws_config = PreferenceUtil.getInt(MyConstants.WS_HOME_CONFIG, DebugConfigActivity.WS_242);
             if (ws_config == DebugConfigActivity.WS_82) {
                 return "m.1332255.com:81/ws";
             } else if (ws_config == DebugConfigActivity.WS_242) {
                 return "192.168.10.242:61634";
-//                return "192.168.12.242:61634";//余勇俊测试
             } else if (ws_config == DebugConfigActivity.DIY_INPUT) {
                 return PreferenceUtil.getString("DIY_INPUT", "m.13322.com/ws");// 自定义
             } else {
@@ -106,15 +98,12 @@ public class BaseURLs {
             }
         }
         return "m.13322.com/ws";//开发，发布改这里
-        //	return  "m.13322.com/ws";//开发，发布改这里
     }
 
     /**
      * 推送内网
      */
-//	private final static String WS_HOST = "192.168.10.242:61634";
-    public final static String WS_NAME = "happywin";
-    public final static String WS_PASSWORD = "happywin";
+
 
     public final static String WS_SERVICE = WS + WS_HOST;
 
@@ -165,7 +154,9 @@ public class BaseURLs {
 
 
     // 所有彩票最后一期开奖结果
-    private final static String URL_LASTLOTTERY = "lastLotteryResults.findLastLotteryResults.do";
+//    private final static String URL_LASTLOTTERY = "lastLotteryResults.findLastLotteryResults.do";
+//    private final static String URL_LASTLOTTERY = "lastLotteryResults.findNewAndroidSecLastLotteryResults.do";// 新增了6个彩种
+    private final static String URL_LASTLOTTERY = "lastLotteryResults.findAndroidSecLastLotteryResults.do";// 新增了8个彩种
 
     // 香港开奖
     private final static String URL_LHCDetailed = "detailedLotteryResults.findLhcDetailedResults.do";
@@ -183,7 +174,8 @@ public class BaseURLs {
     private final static String URL_YNSSCDetailed = "detailedLotteryResults.findYNSSCDetailedResults.do";
 
     // 七星彩
-    private final static String URL_QXCDetailed = "detailedLotteryResults.findQXCDetailedResults.do";
+//    private final static String URL_QXCDetailed = "detailedLotteryResults.findQXCDetailedResults.do";
+    private final static String URL_QXCDetailed = "detailedLotteryResults.findNewQXCAndroidDetailedResults.do";// 此接口新增了奖金池
 
     // 广东11选5
     private final static String URL_D11X5Detailed = "detailedLotteryResults.findD11X5DetailedResults.do";
@@ -235,6 +227,37 @@ public class BaseURLs {
 
     // 天津时时彩
     private final static String URL_TJSSCDetailed = "detailedLotteryResults.findTJSSCDetailedResults.do";
+
+    // 双色球
+//    private final static String URL_SSQDetailed = "detailedLotteryResults.findSSQAndroidDetailedResults.do";
+    private final static String URL_SSQDetailed = "detailedLotteryResults.findSSQAndroidSecDetailedResults.do";
+
+    // 排列3
+//    private final static String URL_PL3Detailed = "detailedLotteryResults.findPL3AndroidDetailedResults.do";
+    private final static String URL_PL3Detailed = "detailedLotteryResults.findPL3AndroidSecDetailedResults.do";
+
+    // 排列5
+//    private final static String URL_PL5Detailed = "detailedLotteryResults.findPL5AndroidDetailedResults.do";
+    private final static String URL_PL5Detailed = "detailedLotteryResults.findPL5AndroidSecDetailedResults.do";
+
+    // 福彩3D
+    private final static String URL_F3DDetailed = "detailedLotteryResults.findF3DAndroidDetailedResults.do";
+
+    // 七乐彩
+    private final static String URL_QLCDetailed = "detailedLotteryResults.findQLCAndroidDetailedResults.do";
+
+    // 大乐透
+//    private final static String URL_DLTDetailed = "detailedLotteryResults.findDLTAndroidDetailedResults.do";
+    private final static String URL_DLTDetailed = "detailedLotteryResults.findDLTAndroidSecDetailedResults.do";
+
+    // 胜负彩
+    private final static String URL_SFCDetailed = "detailedLotteryResults.findSFCAndroidSecDetailedResults.do";
+
+    // 6场半全场
+    private final static String URL_LCBQCDetailed = "detailedLotteryResults.findZC6AndroidSecDetailedResults.do";
+
+    // 4场进球
+    private final static String URL_SCJQDetailed = "detailedLotteryResults.findJQ4AndroidSecDetailedResults.do";
 
     /*
      *
@@ -356,7 +379,8 @@ public class BaseURLs {
     //视频直播
     public final static String URL_FOOTBALL_DETAIL_URL_MATCHVIDEO_DATA = URL_API_HOST + URL_MATCHVIDEO_DATA;
     // 二期改版首页接口
-    private final static String URL_HOME_PAGER_DATA = "mainPage.findAndroidMainRsts.do";
+//    private final static String URL_HOME_PAGER_DATA = "mainPage.findAndroidMainRsts.do";
+    private final static String URL_HOME_PAGER_DATA = "mainPage.findAndroidLotteryMainRsts.do";// 1.2.0版本首页新接口
 
 
     //足球内页改版滚球赔率接口和详情接口
@@ -442,6 +466,33 @@ public class BaseURLs {
     // 天津时时彩
     public final static String URL_TJSSCDetailedResults = URL_API_HOST + URL_TJSSCDetailed;
 
+    // 双色球
+    public final static String URL_SSQDetailedResults = URL_API_HOST + URL_SSQDetailed;
+
+    // 排列3
+    public final static String URL_PL3DetailedResults = URL_API_HOST + URL_PL3Detailed;
+
+    // 排列5
+    public final static String URL_PL5DetailedResults = URL_API_HOST + URL_PL5Detailed;
+
+    // 福彩3D
+    public final static String URL_F3DDetailedResults = URL_API_HOST + URL_F3DDetailed;
+
+    // 七乐彩
+    public final static String URL_QLCDetailedResults = URL_API_HOST + URL_QLCDetailed;
+
+    // 大乐透
+    public final static String URL_DLTDetailedResults = URL_API_HOST + URL_DLTDetailed;
+
+    // 胜负彩
+    public final static String URL_SFCDetailedResults = URL_API_HOST + URL_SFCDetailed;
+
+    // 6场半全场
+    public final static String URL_LCBQCDetailedResults = URL_API_HOST + URL_LCBQCDetailed;
+
+    // 4场进球
+    public final static String URL_SCJQDetailedResults = URL_API_HOST + URL_SCJQDetailed;
+
     /*
      *
      * 获取当前期的开奖结果及下一期的开奖时间
@@ -524,10 +575,6 @@ public class BaseURLs {
      */
 
     private final static String URL_MAIN = "matchResults.main.findMainResult.do";
-    // main.findMainResult.do
-
-    // 即时
-    //  private final static String URL_IMMEDIATE = "matchResults.findImmediateMatchs.do";
 
     //即时(增加队徽请求字段)
     private final static String URL_IMMEDIATE = "androidMatchResults.findImmediateMatchs.do";
@@ -535,28 +582,14 @@ public class BaseURLs {
     // 滚球
     private final static String URL_ROLLBALL = "matchResults.findBallList.do";
 
-
     // 热门和焦点
     private final static String URL_HOT = "matchResults.findHotRaceIds.do";
-
-
-    // 赛果
-    //  private final static String URL_RESULT = "appMatchResults.findResultOfBallMatch.do";//
 
     //赛果(增加队徽请求字段)
     private final static String URL_RESULT = "androidMatchResults.findResultOfBallMatch.do";// 新接口
 
-
-    // 赛程
-    //  private final static String URL_CEASELESS = "appMatchResults.findCeaselessMatch.do";
-
     //赛程(增加队徽请求字段)
     private final static String URL_CEASELESS = "androidMatchResults.findCeaselessMatch.do";
-
-
-    // 关注
-    //  private final static String URL_FOCUS = "matchResults.findFocusMatchs.do";
-
 
     //关注(增加队徽请求字段)
     private final static String URL_FOCUS = "androidMatchResults.findFocusMatchs.do";
@@ -583,14 +616,11 @@ public class BaseURLs {
     public final static String URL_Hot_focus = URL_API_HOST + URL_HOT;
 
     //赛场
-    public final static String URL_FOOTBALL_DETAIL_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL;
-
     public final static String URL_FOOTBALL_DETAIL_INFO_FIRST = URL_API_HOST + URL_FOOTBALL_DETAIL_FIRST;
 
     //足球内页赛事分享
 
     public final static String URL_FOOTBALL_DETAIL_INFO_SHARE = HTTP + HOST + URL_SPLITTER + URL_FOOTBALL_DETAIL_SHARE;
-
 
     //赛场点赞
     public final static String URL_FOOTBALL_DETAIL_LIKE_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_LIKE;
@@ -607,13 +637,6 @@ public class BaseURLs {
     public final static String URL_FOOTBALL_DETAIL_STATISTICAL_DATA_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_STATISTICAL_DATA;
     // 阵容
     public final static String URL_FOOTBALL_DETAIL_FINDLINEUP_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_FINDLINEUP;
-    // 角球
-    public final static String URL_FOOTBALL_DETAIL_FINDCORNERKICKCOUNTS_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_FINDCORNERKICKCOUNTS;
-    // 攻防
-    public final static String URL_FOOTBALL_DETAIL_FINDDEFENSECOUNTS_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_FINDDEFENSECOUNTS;
-    // 角球和攻防
-    public final static String URL_FOOTBALL_DETAIL_FINDCORNERANDDANGER_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_FINDCORNERANDDANGER;
-
 
     //走势图表 进攻 危险进攻 射正 射偏
 
@@ -752,7 +775,6 @@ public class BaseURLs {
     //足球资料库
     public final static String URL_FOOTBALL_DATABASE = URL_API_HOST + "androidLeagueData.findAndroidDataMenu.do";
 
-    //足球资料库赛程   http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRound.do?lang=zh&leagueId=60
     public final static String URL_FOOTBALL_DATABASE_SCHEDULE_FIRST = URL_API_HOST + "androidLeagueData.findAndroidLeagueRound.do";//"http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRound.do";
     public final static String URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST = URL_API_HOST + "androidLeagueData.findAndroidLeagueRace.do";//"http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRace.do";
     //足球资料库积分
@@ -767,9 +789,6 @@ public class BaseURLs {
 
     //统计
     public final static String URL_FOOTBALL_DATABASE_STATISTIC_DETAILS = URL_API_HOST + "androidLeagueData.findAndroidStatics.do"; // "http://192.168.33.32:8080/mlottery/core/androidLeagueData.findAndroidStatics.do";
-
-
-
 
 
     //足球赛事提点
@@ -898,27 +917,37 @@ public class BaseURLs {
      * 关注绑定用户与推送
      */
     //足球关注界面url
-    public final static String FOCUS_FRAGMENT_CONCERN=URL_API_HOST+"pushSetting.findFocusMatchs.do";
+    public final static String FOCUS_FRAGMENT_CONCERN = URL_API_HOST + "pushSetting.findFocusMatchs.do";
     //足球界面点击关注跟取消关注
-    public final static String FOOTBALL_ADD_FOCUS=URL_API_HOST+"pushSetting.followMatch.do";
+    public final static String FOOTBALL_ADD_FOCUS = URL_API_HOST + "pushSetting.followMatch.do";
     //是否接受推送通知
-    public final static String FOOTBALL_USER_SET=URL_API_HOST+"pushSetting.followUserPushSetting.do";
+    public final static String FOOTBALL_USER_SET = URL_API_HOST + "pushSetting.followUserPushSetting.do";
     //获取足球关注列表
-    public final static String FOOTBALL_FIND_MATCH=URL_API_HOST+"pushSetting.loginUserFindMatch.do";
+    public final static String FOOTBALL_FIND_MATCH = URL_API_HOST + "pushSetting.loginUserFindMatch.do";
     //篮球关注页面url
-    public final static String BASKET_FOCUS=URL_API_HOST+"androidBasketballMatch.findCancelAfterConcernList.do";
+    public final static String BASKET_FOCUS = URL_API_HOST + "androidBasketballMatch.findCancelAfterConcernList.do";
     //篮球点击关注
-    public final static String BASKETBALL_ADD_FOCUS=URL_API_HOST+"androidBasketballMatch.customConcernVS.do";
+    public final static String BASKETBALL_ADD_FOCUS = URL_API_HOST + "androidBasketballMatch.customConcernVS.do";
     //取消
-    public final static String BASKETBALL_DELETE_FOCUS=URL_API_HOST+"androidBasketballMatch.cancelCustomConcernVS.do";
+    public final static String BASKETBALL_DELETE_FOCUS = URL_API_HOST + "androidBasketballMatch.cancelCustomConcernVS.do";
     //是否接受通知
-    public final static String BASKET_USER_SET=URL_API_HOST+"androidBasketballMatch.updatePushStatus.do";
+    public final static String BASKET_USER_SET = URL_API_HOST + "androidBasketballMatch.updatePushStatus.do";
     //获取篮球关注列表
-    public final static String BASKET_FIND_MATCH=URL_API_HOST+"androidBasketballMatch.findConcernVsThirdIds.do";
+    public final static String BASKET_FIND_MATCH = URL_API_HOST + "androidBasketballMatch.findConcernVsThirdIds.do";
 
     //用户注销
-    public final static String EXIT_PUSH_ONLINE=URL_API_HOST+"pushSetting.exitUpdateOnlile.do";
+    public final static String EXIT_PUSH_ONLINE = URL_API_HOST + "pushSetting.exitUpdateOnlile.do";
+    //上传性别的公用接口
+    public final static String UPDATEUSERINFO = URL_API_HOST + "androidUserCenter.updateUserInfo.do";
+    //明星头像
+    public final static String FINDHEADICONS = URL_API_HOST + "systemSettings.findHeadIcons.do";
 
+    //篮球内页文字直播
+    public final static String BASKET_DETAIL_TEXTLIVE = URL_API_HOST + "basketballDetail.findTextLive.do";  //basketballDetail  改接口
+    //篮球内页球队统计
+    public final static String BASKET_DETAIL_TEAM = URL_API_HOST + "basketballDetail.findTeamStats.do";
+    //篮球内页球员统计
+    public final static String BASKET_DETAIL_PLAYER = URL_API_HOST + "basketballDetail.findPlayerStats.do";
     /**
      * 斯洛克
      */

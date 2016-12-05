@@ -30,7 +30,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.football.EventAdapter;
 import com.hhly.mlottery.bean.footballDetails.DataStatisInfo;
 import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
@@ -1321,7 +1321,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         }
         mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
         // 获取对象ID
-        String mThirdId = ((FootballMatchDetailActivityTest) getActivity()).mThirdId;
+        String mThirdId = ((FootballMatchDetailActivity) getActivity()).mThirdId;
 
         L.d("112233", mThirdId);
         // 设置参数
@@ -1374,7 +1374,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         if (getActivity() == null) {
             return;
         } else {
-            map.put("thirdId", ((FootballMatchDetailActivityTest) getActivity()).mThirdId);
+            map.put("thirdId", ((FootballMatchDetailActivity) getActivity()).mThirdId);
 
             VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_STATISTICAL_DATA_INFO, map, new VolleyContentFast.ResponseSuccessListener<DataStatisInfo>() {
                 @Override

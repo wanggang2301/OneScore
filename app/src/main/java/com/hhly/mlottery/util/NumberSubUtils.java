@@ -1,5 +1,6 @@
 package com.hhly.mlottery.util;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import android.text.TextUtils;
@@ -59,5 +60,16 @@ public class NumberSubUtils {
 			}
 		}
 
+	}
+
+	/**
+	 * 添加千位符
+	 * @param num
+	 * @return
+     */
+	public static String qianweifenge(Long num) {
+		DecimalFormat df = new DecimalFormat("#,##0");
+		String ss = df.format(num);
+		return ss;
 	}
 }
