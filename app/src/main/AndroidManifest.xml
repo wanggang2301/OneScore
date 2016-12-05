@@ -41,12 +41,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
 
-            <!--
-                 <intent-filter>
-                    <action android:name="android.intent.action.MAIN" />
-                    <category android:name="android.intent.category.LAUNCHER" />
-                </intent-filter>
-            -->
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".activity.FiltrateMatchConfigActivity"
@@ -73,17 +71,13 @@
             android:name=".activity.WelcomeViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation" />
+
         <!-- 内地版的key-begin -->
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="5625a606e0f55aad6700244f" />
-        <meta-data
-            android:name="UMENG_MESSAGE_SECRET"
-            android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="BETA" />
+        <meta-data android:name="UMENG_APPKEY" android:value="5625a606e0f55aad6700244f" />
+        <meta-data android:name="UMENG_MESSAGE_SECRET" android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
+        <meta-data android:name="UMENG_CHANNEL" android:value="BETA" />
         <!-- 内地版的key-end -->
+
         <activity
             android:name=".activity.FootballInformationActivity"
             android:screenOrientation="portrait" />
@@ -113,10 +107,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name=".activity.FootballTypeSettingDetailsActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.FootballMatchDetailActivityTest"
+            android:name=".activity.FootballMatchDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />
@@ -321,12 +312,12 @@
         <activity
             android:name=".activity.FootballDatabaseActivity"
             android:screenOrientation="portrait" />
-        <!-- 斯洛克列表 -->
         <activity
-            android:name=".activity.SnookerListActivity"
+            android:name=".activity.AvatarSelectionActivity"
             android:screenOrientation="portrait" />
+        <!-- 更多设置 -->
         <activity
-            android:name=".activity.SnookerSettingActivity"
+            android:name=".activity.MoreSettingsActivity"
             android:screenOrientation="portrait" />
 
     </application>
