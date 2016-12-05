@@ -99,12 +99,7 @@ public class BasketballScoresActivity extends BaseWebSocketActivity implements V
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.frage_new_basketball);
-
-
         mContext = getApplicationContext();
-        L.d("yxq===xxx","篮球Fragment:currentFragmentId:" + currentFragmentId);
-        Toast.makeText(mContext, "从首页进入22222222", Toast.LENGTH_SHORT).show();
-        L.d("yxq===>>>" , "从首页进入22222222");
         initView();
         setupViewPager();
         focusCallback();// 加载关注数
