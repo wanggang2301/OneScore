@@ -811,7 +811,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             for (int k = 0, lens = bodys.get(j).getLottery().size(); k < lens; k++) {
                                 HomeBodysLottery mLottery = bodys.get(j).getLottery().get(k);
                                 NumberDataUtils.setTextTitle(mContext, lottery_item_name_list.get(k), mLottery.getName());
-                                ImageLoader.loadFitCenter(mContext, mLottery.getPicUrl(), R.mipmap.home_number_item_icon_def).into(lottery_item_icon_list.get(k));
+                                if(mContext!=null){
+                                    ImageLoader.loadFitCenter(mContext, mLottery.getPicUrl(), R.mipmap.home_number_item_icon_def).into(lottery_item_icon_list.get(k));
+                                }
+
                                 if (k != 0) {
                                     switch (mLottery.getName()) {
                                         case "24":// 双色球
