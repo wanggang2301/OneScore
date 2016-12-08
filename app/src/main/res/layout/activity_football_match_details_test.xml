@@ -23,8 +23,7 @@
                 android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:contentScrim="?attr/colorPrimary"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                app:contentScrim="?attr/colorPrimary">
 
                 <com.hhly.mlottery.widget.CustomViewpager
                     android:id="@+id/headviewpager"

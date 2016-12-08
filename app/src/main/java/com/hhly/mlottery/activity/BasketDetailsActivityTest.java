@@ -468,9 +468,9 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     }
 
     // 发表评论跳转
-    public void talkAboutBallSendBasket(long topicid) {
-        Intent intent2 = new Intent(mContext, InputActivity.class);
-        intent2.putExtra(CyUtils.INTENT_PARAMS_SID, topicid);
+    public void talkAboutBallSendBasket() {
+        Intent intent2 = new Intent(mContext, ChartballActivity.class);
+//        intent2.putExtra(CyUtils.INTENT_PARAMS_SID, topicid);
         startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
     }
 
