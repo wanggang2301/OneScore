@@ -96,6 +96,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private final static String ONLIVE = "1";//直播中
     private final static String LIVEENDED = "-1";//直播结束
 
+    private final static String MATCH_TYPE = "1"; //足球
 
     private final static int ROLLBALL_FG = 0;
     private final static int LIVE_FG = 1;
@@ -2577,9 +2578,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private void getCollectionCount() {
         Map<String, String> map = new HashMap<>();
-        map.put("matchType", "1");
+        map.put("matchType", MATCH_TYPE);
         map.put("thirdId", "399381");
-      //  map.put("thirdId", mThirdId);
+        //  map.put("thirdId", mThirdId);
         VolleyContentFast.requestJsonByGet(BaseURLs.FOOTBALL_DETAIL_COLLECTION_COUNT, map, new VolleyContentFast.ResponseSuccessListener<DetailsCollectionCountBean>() {
             @Override
             public void onResponse(DetailsCollectionCountBean jsonObject) {

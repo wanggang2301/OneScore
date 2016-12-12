@@ -45,6 +45,8 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
 
     private final static String GIF_TYPE = "0";
     private final static String VIDEO_TYPE = "1";
+    private final static String MATCH_TYPE = "1"; //足球
+
 
     private final static int REQUEST_ERROR = -1;
     private final static int REQUEST_SUCESS = 1;
@@ -170,7 +172,7 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
         Map<String, String> parms = new HashMap<>();
         parms.put("thirdId", "399366");
         // parms.put("thirdId", mThirdId);
-        parms.put("matchType", "1");  //足球
+        parms.put("matchType", MATCH_TYPE);  //足球
 
         VolleyContentFast.requestJsonByGet(BaseURLs.FOOTBALL_DETAIL_COLLECTION, parms, new VolleyContentFast.ResponseSuccessListener<VideoHighLights>() {
             @Override
