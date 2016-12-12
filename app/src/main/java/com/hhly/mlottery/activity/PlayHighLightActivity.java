@@ -2,6 +2,7 @@ package com.hhly.mlottery.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.widget.VideoView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.VideoHighLights;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.ImageLoaderUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -81,12 +83,18 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
     private RelativeLayout rl_content;
     private LinearLayout ll_error;
     private TextView reloading_txt;
+    private String mThirdId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         L.d("wangg", "onCreate");
+        if (getIntent().getExtras() != null) {
+            Intent intent = getIntent();
+            mThirdId = intent.getStringExtra("thirdId");
+        }
 
+        L.d("zxcvbn", "mThirdId=" + mThirdId);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_high_light);
         initView();
@@ -157,24 +165,23 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
     };
 
     private void getRequestGif() {
-
-        L.d("wangg", "加载");
         handler.sendEmptyMessage(REQUEST_LOAD);
 
         Map<String, String> parms = new HashMap<>();
         parms.put("thirdId", "399366");
+        // parms.put("thirdId", mThirdId);
         parms.put("matchType", "1");  //足球
-        L.d("sdfghj", "data==---------------");
 
-        VolleyContentFast.requestJsonByGet("http://m.13322.com/mlottery/core/operation.findMatchCollection.do", parms, new VolleyContentFast.ResponseSuccessListener<VideoHighLights>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.FOOTBALL_DETAIL_COLLECTION, parms, new VolleyContentFast.ResponseSuccessListener<VideoHighLights>() {
             @Override
             public void onResponse(VideoHighLights jsonObject) {
                 if (jsonObject.getResult() == 200) {
-                    L.d("sdfghj", "ddddd");
                     if (jsonObject.getData() != null && jsonObject.getData().size() > 0) {
                         list = jsonObject.getData();
                         initializeData();
                     }
+                } else {
+                    handler.sendEmptyMessage(REQUEST_ERROR);
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -186,29 +193,6 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
     }
 
     private void initializeData() {
-        /*list = new ArrayList<>();
-        //视频2   图片1
-        list.add(new VideoHighLights.DataBean("", "", "http://dianbo.13322.com/Act-ss-mp4-sd/9d11c1ef4f094f30bf5babc9daeb5774/12057.mp4", "2", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://image91.360doc.com/DownloadImg/2015/11/0622/62462126_17.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://s11.sinaimg.cn/mw690/00217UxTgy6UGeadzGGda&690", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://dianbo.13322.com/Act-ss-mp4-sd/9d11c1ef4f094f30bf5babc9daeb5774/12057.mp4", "2", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://m.1332255.com:81/news/upload/shareManageUrl/8553900bcd7f46e5ad15aa52ce91ad14.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://dianbo.13322.com/Act-ss-mp4-sd/9d11c1ef4f094f30bf5babc9daeb5774/12057.mp4", "2", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://dianbo.13322.com/Act-ss-mp4-sd/9d11c1ef4f094f30bf5babc9daeb5774/12057.mp4", "2", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://image94.360doc.com/DownloadImg/2016/02/0200/65537833_11.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://image94.360doc.com/DownloadImg/2016/02/0200/65537833_11.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://image94.360doc.com/DownloadImg/2016/02/0200/65537833_11.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://image94.360doc.com/DownloadImg/2016/02/0200/65537833_11.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://i2.hoopchina.com.cn/u/1309/17/356/4907356/b6fe0c73_530x.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://dianbo.13322.com/Act-ss-mp4-sd/9d11c1ef4f094f30bf5babc9daeb5774/12057.mp4", "2", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://photocdn.sohu.com/20150910/mp31287791_1441847326520_4.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://s11.sinaimg.cn/mw690/00217UxTgy6UGeadzGGda&690", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://image94.360doc.com/DownloadImg/2016/02/0200/65537833_11.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://dianbo.13322.com/Act-ss-mp4-sd/9d11c1ef4f094f30bf5babc9daeb5774/12057.mp4", "2", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://i2.hoopchina.com.cn/u/1309/17/356/4907356/b6fe0c73_530x.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://img.sc115.com/hb/gif/01/881508084712414.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://image.haha.mx/2015/04/08/middle/1730345_e670e49e9e6743df49c5955e73cbc662_1428479096.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://dianbo.13322.com/Act-ss-mp4-sd/9d11c1ef4f094f30bf5babc9daeb5774/12057.mp4", "2", "2", "", 0, true));*/
         for (int i = 0; i < list.size(); i++) {
             ViewGroup viewGroup = (ViewGroup) View.inflate(this, R.layout.page_layout, null);
             VideoView mVideoView = (VideoView) viewGroup.findViewById(R.id.mVideoView);

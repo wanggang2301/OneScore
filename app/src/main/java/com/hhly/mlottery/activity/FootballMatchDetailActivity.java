@@ -1940,6 +1940,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 if (type == 1) {
                     L.d("zxcvbn", "WIFI");
                     Intent intent = new Intent(FootballMatchDetailActivity.this, PlayHighLightActivity.class);
+                    intent.putExtra("thirdId", mThirdId);
                     startActivity(intent);
                     //wifi
                 } else if (type == 2 || type == 3 || type == 4) {//2G  3G  4G
@@ -1966,7 +1967,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-                    startActivity(new Intent(FootballMatchDetailActivity.this, PlayHighLightActivity.class));
+                    Intent intent = new Intent(FootballMatchDetailActivity.this, PlayHighLightActivity.class);
+                    intent.putExtra("thirdId", mThirdId);
+                    startActivity(intent);
                 }
             });
             builder.setNegativeButton(getApplicationContext().getResources().getString(R.string.basket_analyze_dialog_cancle), new DialogInterface.OnClickListener() {
@@ -2576,6 +2579,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         Map<String, String> map = new HashMap<>();
         map.put("matchType", "1");
         map.put("thirdId", "399381");
+      //  map.put("thirdId", mThirdId);
         VolleyContentFast.requestJsonByGet(BaseURLs.FOOTBALL_DETAIL_COLLECTION_COUNT, map, new VolleyContentFast.ResponseSuccessListener<DetailsCollectionCountBean>() {
             @Override
             public void onResponse(DetailsCollectionCountBean jsonObject) {
