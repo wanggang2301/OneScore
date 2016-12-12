@@ -607,7 +607,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                         break;
                     case VIEW_STATUS_NET_ERROR:
                         if (isLoadedData) {
-                            Toast.makeText(fragment.getContext(), R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(fragment.getContext(), fragment.getContext().getResources().getString(R.string.exp_net_status_txt), Toast.LENGTH_SHORT).show();
                         } else {
                             fragment.titleContainer.setVisibility(View.GONE);
                             fragment.networkExceptionLayout.setVisibility(View.VISIBLE);
