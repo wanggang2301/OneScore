@@ -2,7 +2,6 @@ package com.hhly.mlottery.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -54,7 +53,6 @@ import com.hhly.mlottery.frame.footframe.LiveHeadInfoFragment;
 import com.hhly.mlottery.frame.footframe.OddsFragment;
 import com.hhly.mlottery.frame.footframe.PreHeadInfoFrament;
 import com.hhly.mlottery.frame.footframe.StatisticsFragment;
-import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
 import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;
@@ -332,11 +330,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         MobclickAgent.openActivityDurationTrack(false);
 
         this.mContext = getApplicationContext();
-//        if (getIntent().getExtras() != null) {
-//            mThirdId = getIntent().getExtras().getString(BUNDLE_PARAM_THIRDID, "1300");
-//            currentFragmentId = getIntent().getExtras().getInt("currentFragmentId");
-//            infoCenter = getIntent().getExtras().getInt("info_center");
-//        }
 
 
         L.e(TAG, "mThirdId = " + mThirdId);
