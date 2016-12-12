@@ -257,6 +257,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyleTop"
             android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity
+            android:name=".activity.ChartballActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyleTop"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <!-- 消息推送服务 -->
         <service android:name=".service.umengPushService" />
         <activity
