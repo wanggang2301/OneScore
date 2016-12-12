@@ -590,7 +590,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         matchLive = mMatchDetail.getMatchInfo().getMatchLive();
                         allMatchLiveMsgId = new ArrayList<>();
 
-
+                        //是否显示精彩瞬间
+                        getCollectionCount();
                         //完场
                         if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
 
@@ -690,8 +691,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                             mStatisticsFragment.setTrendChartList(trendChartList);
 
                         }
-                        //是否显示精彩瞬间
-                        getCollectionCount();
+
                     }
                 }
 
@@ -775,10 +775,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mViewPager.setCurrentItem(ROLLBALL_FG, false);
             }
 
+            initPreData(matchDetail);
 
             matchLive = mMatchDetail.getMatchInfo().getMatchLive();
             allMatchLiveMsgId = new ArrayList<>();
-
+            //是否显示精彩瞬间
+            getCollectionCount();
 
             //完场
             if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
@@ -892,8 +894,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());
             }
 
-            //是否显示精彩瞬间
-            getCollectionCount();
+
         }
 
         mStatisticsFragment.setChartName(mMatchDetail.getHomeTeamInfo().getName(), mMatchDetail.getGuestTeamInfo().getName());
