@@ -12,14 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
-import com.hhly.mlottery.adapter.ChartBallAdapter;
+import com.hhly.mlottery.adapter.chartBallAdapter.ChartBallAdapter;
 import com.hhly.mlottery.frame.footframe.eventbus.ChartBallContentEntitiy;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.ToastTools;
@@ -100,12 +98,12 @@ public class ChartBallFragment extends Fragment {
             }
         });
 
-        mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+        /*mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
                 ToastTools.showQuick(mContext, "xxxxxx " + i);
             }
-        });
+        });*/
 
     }
 
@@ -132,7 +130,7 @@ public class ChartBallFragment extends Fragment {
         mData.add("ggggg");
         mData.add("eeeee");
 
-        mAdapter = new ChartBallAdapter(mContext, R.layout.item_char_ball_content, mData);
+        mAdapter = new ChartBallAdapter(mContext, mData);
         recycler_view.setAdapter(mAdapter);
 
     }

@@ -66,25 +66,20 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
     List<Fragment> emojiFragments = new ArrayList<>();
 
     private final static int LOCAL_PAGER_SIZE = 10;
-    private final static int EMOJI_PAGER_SIZE = 26;
+    private final static int EMOJI_PAGER_SIZE = 20;
     private LinearLayout local_point;
     private LinearLayout emoji_point;
     private int localPagerSize;
     private int emojiPagerSize;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
     private LinearLayout ll_local_content;
     private LinearLayout ll_emoji_content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chartball_layout);
         /**当前评论小窗口不统计*/
         MobclickAgent.openActivityDurationTrack(false);
+        setContentView(R.layout.activity_chartball_layout);
 
         initWindow();
         initView();
@@ -92,10 +87,6 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
         initEvent();
         IntentFilter intentFilter = new IntentFilter("closeself");
         registerReceiver(mBroadcastReceiver, intentFilter);
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     private void initEvent() {
@@ -312,6 +303,13 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
                         startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
                     }
                 }
+                // 隐藏软键盘
+                if (ChartballActivity.this.getCurrentFocus() != null) {
+                    inputMethodManager.hideSoftInputFromWindow(ChartballActivity.this.getCurrentFocus()
+                            .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+                // 隐藏表情框
+                ll_gallery_content.setVisibility(View.GONE);
                 break;
             case R.id.et_emoji_input:// 输入
                 if (!CommonUtils.isLogin()) {
@@ -369,42 +367,6 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
     public void finish() {
         super.finish();
         overridePendingTransition(0, android.R.anim.fade_out);
-    }
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("Chartball Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
     }
 }
 
