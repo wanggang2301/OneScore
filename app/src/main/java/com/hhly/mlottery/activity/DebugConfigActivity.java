@@ -128,7 +128,7 @@ public class DebugConfigActivity extends BaseActivity {
      */
     private void promptNetInfo() {
         try {
-            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext, R.style.AppThemeDialog);
+            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(DebugConfigActivity.this, R.style.AppThemeDialog);
             builder.setCancelable(false);// 设置对话框以外不可点击
             builder.setTitle(getApplicationContext().getResources().getString(R.string.to_update_kindly_reminder));// 提示标题
             builder.setMessage(getApplicationContext().getResources().getString(R.string.video_high_light_reminder_comment));// 提示内容
