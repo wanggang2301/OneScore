@@ -32,7 +32,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.adapter.football.FragmentAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.bean.ShareBean;
 import com.hhly.mlottery.bean.footballDetails.DetailsCollectionCountBean;
@@ -89,12 +88,6 @@ import de.greenrobot.event.EventBus;
  */
 public class FootballMatchDetailActivity extends BaseWebSocketActivity implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, ExactSwipeRefrashLayout.OnRefreshListener {
 
-    private final static int IMMEDIA_FRAGMENT = 1;
-    private final static int RESULT_FRAGMENT = 2;
-    private final static int SCHEDULE_FRAGMENT = 3;
-    private final static int FOCUS_FRAGMENT = 4;
-    private final static int BANNER_PLAY_TIME = 2500; //头部5秒轮播
-    private final static int BANNER_ANIM_TIME = 500; //轮播动画时间
     private final static int ERROR = -1;//访问失败
     private final static int SUCCESS = 0;// 访问成功
     private final static int STARTLOADING = 1;// 正在加载中
@@ -181,22 +174,15 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private ViewPager mViewPager;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     public AppBarLayout appBarLayout;
-    private FragmentAdapter fragmentAdapter;
     private TabLayout mTabLayout;
     private TabsAdapter mTabsAdapter;
     private Toolbar toolbar;
-
-
-    //  滑动到顶部显示的内容
-    private String toolbarTitle;
-
     private Context mContext;
 
     /**
      * 赛事id
      */
     public String mThirdId;
-
 
     public int mtype = 0;
     private int currentFragmentId = 0;
@@ -207,7 +193,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private List<MatchTextLiveBean> matchLive;
     private List<Integer> allMatchLiveMsgId;
-
 
     private List<MatchTimeLiveBean> eventMatchTimeLiveList; //赛中文字直播事件帅选List
 
@@ -237,19 +222,11 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
      * 保存上一场的状态
      */
     private String mPreStatus;
-
-//    private HappySocketClient hSocketClient;
-//    private URI hSocketUri = null;
-
-
     public final static String BUNDLE_PARAM_THIRDID = "thirdId";
-
 
     private boolean isMatchStart = false;  //判断比赛推送时间状态
 
     private DetailsRollballFragment mDetailsRollballFragment; //滚球
-
-//    private TalkAboutBallFragment mTalkAboutBallFragment;
 
     private AnalyzeFragment mAnalyzeFragment;  //分析
     private OddsFragment mOddsFragment;         //指数
@@ -257,25 +234,19 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private StatisticsFragment mStatisticsFragment;  //统计
     private IntelligenceFragment mIntelligenceFragment; // 情报
 
-    private int mStartTime;// 获取推送的开赛时间
     private TextView reLoading; //赔率请求失败重新加载
 
-
     private String shareHomeIconUrl;
-
 
     private ImageView iv_back;
     private ImageView iv_setting;
     private TextView head_score;
 
-
     private TextView head_home_name;
     private TextView head_guest_name;
     private View iv_share;
 
-
     private ShareFragment mShareFragment;
-
 
     private final static int PERIOD_20 = 1000 * 60 * 20;//刷新周期二十分钟
     private final static int PERIOD_5 = 1000 * 60 * 5;//刷新周期五分钟
@@ -287,12 +258,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private boolean isRquestSuccess = true;
 
-    private TimerTask timerTask;
-
     private FootballLiveGotoChart mFootballLiveGotoChart;
-
-    private Handler preGotoliveHandler;
-    private Runnable runnable;
 
     private String matchStartTime;
     private ChartBallFragment mChartBallFragment;
@@ -326,7 +292,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private LinearLayout btn_showGif;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (getIntent().getExtras() != null) {
@@ -335,16 +300,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             infoCenter = getIntent().getExtras().getInt("info_center");
         }
 
-
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.liveEvent." + mThirdId + "." + appendLanguage());
-
-
-        L.d("zxcvbn", "footURL===" + BaseURLs.WS_SERVICE);
-        L.d("zxcvbn", "footTopic===" + "USER.topic.liveEvent." + mThirdId + "." + appendLanguage());
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_football_match_details_test);
 
         /**当前Activity不统计*/
@@ -354,9 +312,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
 
         L.e(TAG, "mThirdId = " + mThirdId);
-        L.e("456789", "mThirdId = " + mThirdId);
         initHeadView();
-
         initView();
         initEvent();
 
@@ -391,22 +347,13 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         mHandler.sendEmptyMessage(STARTLOADING);
         loadData();
-
-
     }
 
 
     private void initView() {
-
-        // String[] titles = mContext.getResourceName(R.attr.foot_details_tabs);
-
-
         String[] titles = mContext.getResources().getStringArray(R.array.foot_details_tabs);
-
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         mRefreshLayout = (ExactSwipeRefrashLayout) findViewById(R.id.refresh_layout_details);
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
