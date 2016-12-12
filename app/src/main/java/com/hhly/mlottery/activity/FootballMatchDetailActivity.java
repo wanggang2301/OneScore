@@ -636,7 +636,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                             mStatisticsFragment.setTrendChartList(trendChartList);
 
                         }
-
                     }
                 }
 
