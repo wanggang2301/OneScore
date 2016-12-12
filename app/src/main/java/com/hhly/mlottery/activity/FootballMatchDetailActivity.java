@@ -654,7 +654,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         e.printStackTrace();
                     }
 
-
                     if (startTimestamp - serverTimestamp > (1000 * 60 * 60)) {//大于一个小时
                         mReloadPeriod = PERIOD_20;
                     } else {
@@ -668,11 +667,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     }
                     startReloadTimer();
                 }
-
-
                 mHandler.sendEmptyMessage(SUCCESS);
-
-
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
@@ -694,11 +689,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mViewPager.setCurrentItem(ANALYZE_FG, false);
             }
 
-
             matchStartTime = matchDetail.getMatchInfo().getStartTime();
             initPreData(matchDetail);
             setScoreText("VS");
-
 
             head_home_name.setText(matchDetail.getHomeTeamInfo().getName());
             head_guest_name.setText(matchDetail.getGuestTeamInfo().getName());
@@ -706,11 +699,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
             mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE, matchDetail);
             mStatisticsFragment.setEventMatchLive(mMatchDetail.getLiveStatus(), null);
-
-
             mStatisticsFragment.setmFootballLiveGotoChart(mFootballLiveGotoChart);
-
-
         } else {
 
             if (infoCenter == 1) {
@@ -729,10 +718,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
             //完场
             if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
-
                 String halfScore = mMatchDetail.getHomeTeamInfo().getHalfScore() + " : " + mMatchDetail.getGuestTeamInfo().getHalfScore();
                 String finishScore = mMatchDetail.getHomeTeamInfo().getScore() + " : " + mMatchDetail.getGuestTeamInfo().getScore();
-
 
                 //获取完场事件直播
                 eventMatchTimeLiveList = new ArrayList<>();
