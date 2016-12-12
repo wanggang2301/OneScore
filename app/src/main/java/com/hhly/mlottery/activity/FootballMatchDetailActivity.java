@@ -1,7 +1,9 @@
 package com.hhly.mlottery.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -61,7 +63,6 @@ import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.StringUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
-import com.ta.utdid2.android.utils.NetworkUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
@@ -773,7 +774,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             } else {
                 mViewPager.setCurrentItem(ROLLBALL_FG, false);
             }
-
 
 
             matchLive = mMatchDetail.getMatchInfo().getMatchLive();
@@ -2007,7 +2007,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 loadData();
                 break;
             case R.id.btn_showGif:
-                int type = NetworkUtils.getCurNetworkType(getApplicationContext());
+                int type = com.hhly.mlottery.util.NetworkUtils.getCurNetworkType(getApplicationContext());
                 if (type == 1) {
                     L.d("zxcvbn", "WIFI");
                     Intent intent = new Intent(FootballMatchDetailActivity.this, PlayHighLightActivity.class);
@@ -2021,6 +2021,35 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 break;
             default:
                 break;
+        }
+    }
+
+    /**
+     * 当前连接的网络提示
+     */
+    private void promptNetInfo() {
+        try {
+            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext, R.style.AppThemeDialog);
+            builder.setCancelable(false);// 设置对话框以外不可点击
+            builder.setTitle(getApplicationContext().getResources().getString(R.string.to_update_kindly_reminder));// 提示标题
+            builder.setMessage(getApplicationContext().getResources().getString(R.string.video_high_light_reminder_comment));// 提示内容
+            builder.setPositiveButton(getApplicationContext().getResources().getString(R.string.video_high_light_continue_open), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    startActivity(new Intent(FootballMatchDetailActivity.this, PlayHighLightActivity.class));
+                }
+            });
+            builder.setNegativeButton(getApplicationContext().getResources().getString(R.string.basket_analyze_dialog_cancle), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            android.support.v7.app.AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        } catch (Resources.NotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -2164,7 +2193,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         EventBus.getDefault().post(new ScoresMatchFocusEventBusEntity(currentFragmentId));
 
     }
-
 
 
     /**
