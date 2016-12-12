@@ -539,8 +539,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
 
     private void loadData() {
-
-
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", mThirdId);
 
