@@ -116,7 +116,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private static final String YTORED = "1045";//两黄变一红
     private static final String DIANQIU = "1031";
 
-
     //客队事件
     private static final String SCORE1 = "2053";//客队进球
     private static final String RED_CARD1 = "2056";
@@ -126,9 +125,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private static final String YTORED1 = "2069";//两黄变一红
     private static final String DIANQIU1 = "2055";
 
-
     //走势图
-
     private static final String SHOOT = "1039";
     private static final String SHOOTASIDE = "1040";
     private static final String SHOOTASIDE2 = "1041";
