@@ -16,7 +16,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@mipmap/basket_default" />
-        <TextView
+        <io.github.rockerhieu.emojicon.EmojiconTextView
             android:layout_marginRight="5dp"
             android:layout_gravity="center"
             android:id="@+id/content2"

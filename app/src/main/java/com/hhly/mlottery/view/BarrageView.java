@@ -20,7 +20,6 @@ import com.hhly.mlottery.util.UiUtils;
 
 import java.util.Random;
 
-import io.rong.imkit.widget.LoadingDialogFragment;
 
 /**
  * Created by yuely198 on 2016/12/5.

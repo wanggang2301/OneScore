@@ -20,6 +20,9 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.ChartBallAdapter;
+import com.hhly.mlottery.base.BaseWebSocketFragment;
+import com.hhly.mlottery.bean.BarrageBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.footframe.eventbus.ChartBallContentEntitiy;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.ToastTools;
@@ -37,7 +40,7 @@ import io.github.rockerhieu.emojicon.EmojiconEditText;
  * 作者：tangrr_107
  * 时间：2016/12/6
  */
-public class ChartBallFragment extends Fragment {
+public class ChartBallFragment extends BaseWebSocketFragment implements View.OnClickListener{
 
     private final static String MATCH_TYPE = "type";         // 赛事类型
     private final static String MATCH_THIRD_ID = "thirdId";  // 赛事ID
@@ -49,6 +52,7 @@ public class ChartBallFragment extends Fragment {
     private EmojiconEditText mEditText;
     private RecyclerView recycler_view;
     private ChartBallAdapter mAdapter;
+    private EmojiconEditText et_emoji_input;
 
     public static ChartBallFragment newInstance(int type, String thirdId) {
         ChartBallFragment fragment = new ChartBallFragment();
@@ -61,12 +65,16 @@ public class ChartBallFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
+
         if (getArguments() != null) {
             type = getArguments().getInt(MATCH_TYPE);
             mThirdId = getArguments().getString(MATCH_THIRD_ID);
         }
+        setWebSocketUri(BaseURLs.WS_SERVICE);
+        setTopic("USER.topic.chatroom.football"+mThirdId);
         EventBus.getDefault().register(this);
+        super.onCreate(savedInstanceState);
     }
 
     @Nullable
@@ -134,6 +142,10 @@ public class ChartBallFragment extends Fragment {
 
         mAdapter = new ChartBallAdapter(mContext, R.layout.item_char_ball_content, mData);
         recycler_view.setAdapter(mAdapter);
+        //聊天输入框
+        et_emoji_input = (EmojiconEditText) mView.findViewById(R.id.et_emoji_input);
+
+        mView.findViewById(R.id.tv_send).setOnClickListener(this);
 
     }
 
@@ -156,5 +168,38 @@ public class ChartBallFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    protected void onTextResult(String text) {
+
+    }
+
+    @Override
+    protected void onConnectFail() {
+
+    }
+
+    @Override
+    protected void onDisconnected() {
+
+    }
+
+    @Override
+    protected void onConnected() {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+
+            default:
+                break;
+
+
+        }
+
     }
 }

@@ -28,6 +28,15 @@
                 <include
                     style="@style/isFitsSystemWindows"
                     layout="@layout/fragment_pre_headinfo"></include>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.hhly.mlottery.view.BarrageView
+                        android:id="@+id/barrage_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp">
+                    </com.hhly.mlottery.view.BarrageView>
+                </FrameLayout>
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -101,6 +110,7 @@
                             android:scaleType="centerInside"
                             android:src="@mipmap/head_details" />
                     </FrameLayout>
+
 
 
                 </android.support.v7.widget.Toolbar>

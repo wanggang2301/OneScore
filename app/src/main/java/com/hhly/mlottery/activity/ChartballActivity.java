@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -23,12 +22,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.bean.BarrageBean;
 import com.hhly.mlottery.frame.chartBallFragment.EmojiFragment;
 import com.hhly.mlottery.frame.chartBallFragment.LocalFragment;
 import com.hhly.mlottery.adapter.football.BasePagerAdapter;
@@ -71,11 +67,7 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
     private LinearLayout emoji_point;
     private int localPagerSize;
     private int emojiPagerSize;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+
     private LinearLayout ll_local_content;
     private LinearLayout ll_emoji_content;
 
@@ -93,9 +85,6 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
         IntentFilter intentFilter = new IntentFilter("closeself");
         registerReceiver(mBroadcastReceiver, intentFilter);
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     private void initEvent() {
@@ -302,6 +291,7 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
 
                         // TODO 向会话列表发送输入内容
                         EventBus.getDefault().post(new ChartBallContentEntitiy(mEditText.getText().toString()));
+                        EventBus.getDefault().post(new BarrageBean("http://pic.13322.com/icons/avatar/male/1.png", mEditText.getText().toString()));
 
                         // 发送之后 清空输入框
                         mEditText.setText("");
@@ -371,40 +361,7 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
         overridePendingTransition(0, android.R.anim.fade_out);
     }
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("Chartball Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
-    }
 }
 
