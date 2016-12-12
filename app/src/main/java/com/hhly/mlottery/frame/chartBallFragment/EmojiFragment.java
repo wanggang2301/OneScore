@@ -1,11 +1,10 @@
-package com.hhly.mlottery.adapter.chartBallFragment;
+package com.hhly.mlottery.frame.chartBallFragment;
 
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +13,11 @@ import android.widget.AdapterView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.ChartballActivity;
 import com.hhly.mlottery.adapter.chartBallAdapter.EmojiGridAdapter;
-import com.hhly.mlottery.adapter.chartBallAdapter.LocalGridAdapter;
-import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.widget.MyGridView;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import io.github.rockerhieu.emojicon.EmojiconEditText;
-import io.github.rockerhieu.emojicon.EmojiconTextView;
 
 /**
  * desc:emoji表情fragment

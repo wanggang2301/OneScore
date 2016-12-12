@@ -1,4 +1,4 @@
-package com.hhly.mlottery.adapter.chartBallFragment;
+package com.hhly.mlottery.frame.chartBallFragment;
 
 
 import android.content.Context;
