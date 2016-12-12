@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.ChartballActivity;
@@ -31,6 +32,7 @@ public class EmojiFragment extends Fragment {
     private Context mContext;
     private MyGridView gridView;
     private EmojiconEditText mEditText;
+    private ImageView iv_delete;
 
     public static EmojiFragment newInstance(ArrayList<String> iconlist) {
         Bundle bundle = new Bundle();
@@ -68,12 +70,20 @@ public class EmojiFragment extends Fragment {
                 text = text + mData.get(i);
                 mEditText.setText(text);
 
+                // 将光标移到最后
+                mEditText.setSelection(mEditText.getText().length());
+            }
+        });
+
+        iv_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 // TODO  当点击的为删除键时 删除单个字符
-//                int index = mEditText.getSelectionStart();   //获取Edittext光标所在位置
-//                String str = mEditText.getText().toString();
-//                if (!str.equals("")) {//判断输入框不为空，执行删除
-//                    mEditText.getText().delete(index - 1, index);
-//                }
+                int index = mEditText.getSelectionStart();   //获取Edittext光标所在位置
+                String str = mEditText.getText().toString();
+                if (!str.equals("")) {//判断输入框不为空，执行删除
+                    mEditText.getText().delete(index - 1, index);
+                }
             }
         });
     }
@@ -81,7 +91,7 @@ public class EmojiFragment extends Fragment {
     private void initView() {
         gridView = (MyGridView) mView.findViewById(R.id.emoji_page_item_gridView);
         gridView.setAdapter(new EmojiGridAdapter(mContext, mData));
-
+        iv_delete = (ImageView) mView.findViewById(R.id.iv_delete);
         mEditText = ((ChartballActivity) mContext).mEditText;
     }
 }

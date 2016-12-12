@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:emojicon="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:emojicon="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
 
     >
@@ -10,7 +10,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="#dddddd"/>
+        android:background="#dddddd" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +27,6 @@
             android:layout_weight="1"
             android:background="@drawable/selector_counselcomment_edit"
             android:gravity="center_vertical"
-            android:hint="说点什么..."
             android:maxLength="100"
             android:paddingLeft="10dp"
             android:textColor="#333333"
@@ -59,7 +58,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="#dddddd"/>
+        android:background="#dddddd" />
 
     <!--表情展示窗口-->
     <LinearLayout
@@ -67,7 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <!--表情容器-->
         <FrameLayout
@@ -82,7 +81,7 @@
                 <android.support.v4.view.ViewPager
                     android:id="@+id/view_pager_local"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
 
                 <!--点-->
                 <LinearLayout
@@ -105,7 +104,7 @@
                 <android.support.v4.view.ViewPager
                     android:id="@+id/view_pager_emoji"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
 
                 <!--点-->
                 <LinearLayout
@@ -125,25 +124,44 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:gravity="center_vertical"
+            android:background="@color/home_item_bg"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/iv_select_icon"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/ll_local_content"
+                android:layout_width="40dp"
                 android:layout_height="match_parent"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:src="@mipmap/chart_ball_emoji_icon" />
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:background="@color/white"
+                android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/iv_select_emoji"
-                android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/iv_select_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/chart_ball_local_icon" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_emoji_content"
+                android:layout_width="40dp"
                 android:layout_height="match_parent"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:src="@mipmap/chart_ball_emoji_icon_note" />
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@color/home_item_bg"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
 
+                <ImageView
+                    android:id="@+id/iv_select_emoji"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/chart_ball_emoji_icon" />
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>

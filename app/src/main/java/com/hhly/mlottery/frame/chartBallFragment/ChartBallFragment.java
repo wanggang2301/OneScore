@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame.footframe;
+package com.hhly.mlottery.frame.chartBallFragment;
 
 import android.app.Activity;
 import android.content.Context;
@@ -47,8 +47,6 @@ public class ChartBallFragment extends Fragment {
     private int type = -1;                                   // 1 籃球、0 足球
     private String mThirdId;                                 // 赛事id
     private EmojiconEditText mEditText;
-    private RelativeLayout rl_send_content;
-    private LinearLayout ll_key;
     private RecyclerView recycler_view;
     private ChartBallAdapter mAdapter;
 
@@ -119,9 +117,6 @@ public class ChartBallFragment extends Fragment {
         mEditText.setFocusableInTouchMode(false);
         InputMethodManager inputManager = (InputMethodManager) mEditText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.showSoftInput(mEditText, 0);
-
-        rl_send_content = (RelativeLayout) mView.findViewById(R.id.rl_send_content);
-        ll_key = (LinearLayout) mView.findViewById(R.id.ll_key);
 
         recycler_view = (RecyclerView) mView.findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);

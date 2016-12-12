@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -22,6 +23,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.frame.chartBallFragment.EmojiFragment;
@@ -61,11 +66,18 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
     List<Fragment> emojiFragments = new ArrayList<>();
 
     private final static int LOCAL_PAGER_SIZE = 10;
-    private final static int EMOJI_PAGER_SIZE = 27;
+    private final static int EMOJI_PAGER_SIZE = 26;
     private LinearLayout local_point;
     private LinearLayout emoji_point;
     private int localPagerSize;
     private int emojiPagerSize;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
+    private LinearLayout ll_local_content;
+    private LinearLayout ll_emoji_content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +93,42 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
         IntentFilter intentFilter = new IntentFilter("closeself");
         registerReceiver(mBroadcastReceiver, intentFilter);
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     private void initEvent() {
+
+        mEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mSend.setVisibility(View.VISIBLE);
+                if (TextUtils.isEmpty(mEditText.getText())) {
+                    mSend.setSelected(false);
+                } else {
+                    mSend.setSelected(true);
+                }
+            }
+        });
+        mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                mEditText.setSelected(hasFocus);
+            }
+
+
+        });
+
         view_pager_local.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -233,6 +278,8 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
         findViewById(R.id.iv_select_icon).setOnClickListener(this);
         findViewById(R.id.iv_select_icon).setSelected(true);
         findViewById(R.id.iv_select_emoji).setOnClickListener(this);
+        ll_local_content = (LinearLayout) findViewById(R.id.ll_local_content);
+        ll_emoji_content = (LinearLayout) findViewById(R.id.ll_emoji_content);
         rl_local = (RelativeLayout) findViewById(R.id.rl_local);
         rl_emoji = (RelativeLayout) findViewById(R.id.rl_emoji);
 
@@ -240,35 +287,6 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
         view_pager_emoji = (ViewPager) findViewById(R.id.view_pager_emoji);
         local_point = (LinearLayout) findViewById(R.id.local_point);
         emoji_point = (LinearLayout) findViewById(R.id.emoji_point);
-
-        mEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                mSend.setVisibility(View.VISIBLE);
-                if (TextUtils.isEmpty(mEditText.getText())) {
-                    mSend.setSelected(false);
-                } else {
-                    mSend.setSelected(true);
-                }
-            }
-        });
-        mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                mEditText.setSelected(hasFocus);
-            }
-
-
-        });
     }
 
     @Override
@@ -282,25 +300,27 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
                     if (CommonUtils.isLogin()) {//已登录华海
 
 
+                        // TODO 向会话列表发送输入内容
+                        EventBus.getDefault().post(new ChartBallContentEntitiy(mEditText.getText().toString()));
+
+                        // 发送之后 清空输入框
+                        mEditText.setText("");
+
                     } else {
                         //跳转登录界面
                         Intent intent1 = new Intent(this, LoginActivity.class);
                         startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
                     }
-
                 }
-
-                // 向会话列表发送输入内容
-                EventBus.getDefault().post(new ChartBallContentEntitiy(mEditText.getText().toString()));
-                finish();
                 break;
             case R.id.et_emoji_input:// 输入
                 if (!CommonUtils.isLogin()) {
                     //跳转登录界面
                     Intent intent1 = new Intent(ChartballActivity.this, LoginActivity.class);
                     startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
+                } else {
+                    ll_gallery_content.setVisibility(View.GONE);
                 }
-                ll_gallery_content.setVisibility(View.GONE);
                 break;
             case R.id.iv_gallery:
 
@@ -315,12 +335,18 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
                 break;
 
             case R.id.iv_select_icon:// 显示自定义表情
+            case R.id.ll_local_content:
                 rl_local.setVisibility(View.VISIBLE);
                 rl_emoji.setVisibility(View.GONE);
+                ll_local_content.setBackgroundResource(R.color.white);
+                ll_emoji_content.setBackgroundResource(R.color.home_item_bg);
                 break;
             case R.id.iv_select_emoji:// 显示emoji表情
+            case R.id.ll_emoji_content:
                 rl_local.setVisibility(View.GONE);
                 rl_emoji.setVisibility(View.VISIBLE);
+                ll_local_content.setBackgroundResource(R.color.home_item_bg);
+                ll_emoji_content.setBackgroundResource(R.color.white);
                 break;
         }
 
@@ -343,6 +369,42 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
     public void finish() {
         super.finish();
         overridePendingTransition(0, android.R.anim.fade_out);
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("Chartball Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 }
 

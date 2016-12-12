@@ -1403,4 +1403,8 @@
     <string name="basket_no_text_live">暫無直播數據</string>
 
     <string name="basket_player_no_data">暫無統計數據</string>
+
+
+    <string name="video_high_light_reminder_comment">您正在使用移動數據，是否繼續打開？</string>
+    <string name="video_high_light_continue_open">打開</string>
 </resources>
