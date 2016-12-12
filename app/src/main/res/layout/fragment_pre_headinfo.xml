@@ -160,7 +160,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="2dp"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"
