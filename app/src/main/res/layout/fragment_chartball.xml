@@ -190,7 +190,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
-                    android:src="@mipmap/basket_lose" />
+                    android:src="@mipmap/chart_ball_emoji_icon_note" />
 
                 <TextView
                     android:id="@+id/tv_send"
@@ -205,7 +205,7 @@
                     android:textColor="#fff" />
             </LinearLayout>
 
-            <View
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="#dddddd" />
@@ -217,7 +217,7 @@
                 android:orientation="horizontal"
                 android:visibility="gone" />
 
-            <!--表情展示窗口-->
+            &lt;!&ndash;表情展示窗口&ndash;&gt;
             <LinearLayout
                 android:id="@+id/ll_gallery_content"
                 android:layout_width="match_parent"
@@ -225,7 +225,7 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <!--表情容器-->
+                &lt;!&ndash;表情容器&ndash;&gt;
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
@@ -238,7 +238,7 @@
 
                 </FrameLayout>
 
-                <!--底下表情种类-->
+                &lt;!&ndash;底下表情种类&ndash;&gt;
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -252,7 +252,7 @@
                         android:background="#dddddd"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
-                        android:src="@mipmap/basket_win" />
+                        android:src="@mipmap/chart_ball_local_icon" />
 
                     <ImageView
                         android:id="@+id/iv_select_emoji"
@@ -260,11 +260,11 @@
                         android:layout_height="match_parent"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
-                        android:src="@mipmap/basket_draw" />
+                        android:src="@mipmap/chart_ball_emoji_icon" />
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </LinearLayout>-->
 
         </LinearLayout>
     </RelativeLayout>
