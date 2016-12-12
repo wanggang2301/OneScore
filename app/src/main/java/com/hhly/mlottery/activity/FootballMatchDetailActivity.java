@@ -2,6 +2,7 @@ package com.hhly.mlottery.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -22,11 +23,14 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.FragmentAdapter;
@@ -53,6 +57,7 @@ import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFocusEventBusEntity
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.FootballLiveTextComparator;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -73,10 +78,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import de.greenrobot.event.EventBus;
+
+import static com.hhly.mlottery.R.id.btn_showGif;
 
 /**
  * @author wang gang
@@ -293,6 +301,37 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private String matchStartTime;
     private ChartBallFragment mChartBallFragment;
+
+
+    //头部
+    private ImageView iv_home_icon;
+    private ImageView iv_guest_icon;
+    private ImageView iv_bg;
+
+    private TextView tv_homename;
+    private TextView tv_guestname;
+
+    private TextView racename;
+
+    private TextView score;
+
+    private TextView date;
+
+    private RelativeLayout mMatchTypeLayout;
+
+    private int mType = 0;
+
+    private TextView mMatchType1;
+
+    private TextView mMatchType2;
+
+    private static final String baseUrl = "http://pic.13322.com/bg/";
+
+    private FrameLayout fl_head;
+
+    private LinearLayout btn_showGif;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -2530,5 +2569,126 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             isIntelligence = true;
             L.d("xxx", "IntelligenceFragment>>>显示");
         }
+    }
+
+
+    private void initHeadView() {
+
+        fl_head = (FrameLayout) findViewById(R.id.fl_head);
+
+        iv_home_icon = (ImageView) findViewById(R.id.iv_home_icon);
+        iv_guest_icon = (ImageView) findViewById(R.id.iv_guest_icon);
+        iv_bg = (ImageView) findViewById(R.id.iv_bg);
+
+
+        tv_homename = (TextView) findViewById(R.id.tv_home_name);
+        tv_guestname = (TextView) findViewById(R.id.tv_guest_name);
+        racename = (TextView) findViewById(R.id.race_name);
+        score = (TextView) findViewById(R.id.score);
+        date = (TextView) findViewById(R.id.date);
+        mMatchTypeLayout = (RelativeLayout) findViewById(R.id.football_match_detail_matchtype_layout);
+        mMatchType1 = (TextView) findViewById(R.id.football_match_detail_matchtype1);
+        mMatchType2 = (TextView) findViewById(R.id.football_match_detail_matchtype2);
+        btn_showGif = (LinearLayout) findViewById(btn_showGif);
+        btn_showGif.setOnClickListener(this);
+    }
+
+
+    private void initPreData(MatchDetail mMatchDetail) {
+
+        // if (flag) {
+        int random = new Random().nextInt(20);
+        String url = baseUrl + random + ".png";
+        ImageLoader.load(mContext, url, R.color.colorPrimary).into(iv_bg);
+//        Glide.with(this).load(url).into(iv_bg);
+
+        // }
+
+
+        loadImage(mMatchDetail.getHomeTeamInfo().getUrl(), iv_home_icon);
+        loadImage(mMatchDetail.getGuestTeamInfo().getUrl(), iv_guest_icon);
+        tv_homename.setText(mMatchDetail.getHomeTeamInfo().getName());
+        tv_guestname.setText(mMatchDetail.getGuestTeamInfo().getName());
+
+
+        //赛事类型
+
+        if (mMatchDetail.getMatchType1() == null && mMatchDetail.getMatchType2() == null) {
+            mMatchTypeLayout.setVisibility(View.GONE);
+            racename.setVisibility(View.VISIBLE);
+        } else {
+
+            if (StringUtils.isEmpty(mMatchDetail.getMatchType1())) {
+                mMatchType1.setVisibility(View.GONE);
+            }
+
+            if (StringUtils.isEmpty(mMatchDetail.getMatchType2())) {
+                mMatchType2.setVisibility(View.GONE);
+            }
+            mMatchType1.setText(StringUtils.nullStrToEmpty(mMatchDetail.getMatchType1()));
+            mMatchType2.setText(StringUtils.nullStrToEmpty(mMatchDetail.getMatchType2()));
+            mMatchTypeLayout.setVisibility(View.VISIBLE);
+            racename.setVisibility(View.GONE);
+        }
+
+        if (mMatchDetail.getMatchInfo().getStartTime() != null) {
+            String startTime = mMatchDetail.getMatchInfo().getStartTime();
+            if (date == null) {
+                return;
+            }
+            if (!StringUtils.isEmpty(startTime) && startTime.length() == 16) {
+                date.setText(startTime);
+            } else {
+                date.setText("");//开赛时间
+            }
+        }
+
+    }
+
+
+    //加载图片
+    private void loadImage(String imageUrl, final ImageView imageView) {
+        VolleyContentFast.requestImage(imageUrl, new Response.Listener<Bitmap>() {
+            @Override
+            public void onResponse(Bitmap response) {
+                imageView.setImageBitmap(response);
+            }
+        }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+    }
+
+    private void setScoreText(String msg) {
+        score.setText(msg);
+    }
+
+    private void setScoreClolor(int id) {
+        score.setTextColor(id);
+    }
+
+
+    private void getCollectionCount() {
+        Map<String, String> map = new HashMap<>();
+        map.put("matchType", "1");
+        map.put("thirdId", "399381");
+        VolleyContentFast.requestJsonByGet(BaseURLs.FOOTBALL_DETAIL_COLLECTION_COUNT, map, new VolleyContentFast.ResponseSuccessListener<DetailsCollectionCountBean>() {
+            @Override
+            public void onResponse(DetailsCollectionCountBean jsonObject) {
+                if (200 == jsonObject.getResult()) {
+                    if (jsonObject.getData() != 0) {
+                        btn_showGif.setVisibility(View.VISIBLE);
+                    } else {
+                        btn_showGif.setVisibility(View.GONE);
+                    }
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                btn_showGif.setVisibility(View.GONE);
+            }
+        }, DetailsCollectionCountBean.class);
     }
 }
