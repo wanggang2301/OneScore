@@ -70,7 +70,7 @@ public class MyApp extends Application {
         switchLanguage(PreferenceUtil.getString("language", ""));
         isLanguage = switchLanguage(PreferenceUtil.getString("language", ""));
         // 捕获异常
-        if (AppConstants.isTestEnv) {
+        if (AppConstants.isUploadCrash) {
             CrashException crashException = CrashException.getInstance();
             crashException.init(getApplicationContext());
         }
