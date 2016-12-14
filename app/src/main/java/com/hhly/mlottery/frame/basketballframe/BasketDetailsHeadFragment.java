@@ -36,8 +36,6 @@ import com.hhly.mlottery.util.net.VolleyContentFast;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.hhly.mlottery.activity.BasketDetailsActivityTest.mThirdId;
-
 /**
  * Created by Administrator on 2016/10/12.
  */
@@ -225,8 +223,8 @@ public class BasketDetailsHeadFragment extends Fragment {
 
     private void getCollectionCount() {
         Map<String, String> map = new HashMap<>();
-        map.put("matchType", "1");
-        map.put("thirdId", "399381");  //399381
+        map.put("matchType", MATCH_TYPE);
+        map.put("thirdId", BasketDetailsActivityTest.mThirdId);  //399381
         //  map.put("thirdId", mThirdId);
         VolleyContentFast.requestJsonByGet(BaseURLs.FOOTBALL_DETAIL_COLLECTION_COUNT, map, new VolleyContentFast.ResponseSuccessListener<DetailsCollectionCountBean>() {
             @Override
