@@ -77,7 +77,7 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
      * 页面视频缓冲图集合
      ***/
     private List<View> mCacheViewList;
-    private List<VideoHighLights.DataBean> list;
+    private List<VideoHighLights.DataBean> mList;
     private TextView tvImageIndex;
     private TextView tv_text;
     private ImageView iv_back;
@@ -121,6 +121,7 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
         mViewList = new ArrayList<>();
         mVideoViewList = new ArrayList<>();
         mCacheViewList = new ArrayList<>();
+        mList = new ArrayList<>();
 
         reloading_txt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,7 +180,7 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
             public void onResponse(VideoHighLights jsonObject) {
                 if (jsonObject.getResult() == 200) {
                     if (jsonObject.getData() != null && jsonObject.getData().size() > 0) {
-                        list = jsonObject.getData();
+                        mList = jsonObject.getData();
                         initializeData();
                     }
                 } else {
@@ -195,26 +196,26 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
     }
 
     private void initializeData() {
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < mList.size(); i++) {
             ViewGroup viewGroup = (ViewGroup) View.inflate(this, R.layout.page_layout, null);
             VideoView mVideoView = (VideoView) viewGroup.findViewById(R.id.mVideoView);
             PhotoView mImageView = (PhotoView) viewGroup.findViewById(R.id.pv_show_image);
             View mView = viewGroup.findViewById(R.id.mView);
 
             // resourceType==0 是图片资源
-            if (GIF_TYPE.equals(list.get(i).getResourceType())) {
+            if (GIF_TYPE.equals(mList.get(i).getResourceType())) {
                 mVideoView.setVisibility(View.GONE);
                 mView.setVisibility(View.GONE);
                 mImageView.setVisibility(View.VISIBLE);
                 mViewList.add(viewGroup);
                 mVideoViewList.add(mImageView);
-            } else if (VIDEO_TYPE.equals(list.get(i).getResourceType())) {
+            } else if (VIDEO_TYPE.equals(mList.get(i).getResourceType())) {
 
                 mImageView.setVisibility(View.GONE);
                 mVideoView.setVisibility(View.VISIBLE);
                 mView.setVisibility(View.VISIBLE);
-                mVideoView.setVideoURI(Uri.parse(list.get(i).getResourceUrl()));
-                tv_text.setText(list.get(i).getDescription());
+                mVideoView.setVideoURI(Uri.parse(mList.get(i).getResourceUrl()));
+                tv_text.setText(mList.get(i).getDescription());
                 setListener(mVideoView);
                 mViewList.add(viewGroup);
                 mVideoViewList.add(mVideoView);
@@ -223,20 +224,14 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
             mCacheViewList.add(mView);
         }
 
-        mAdapter = new
-
-                MyPagerAdapter(this, mViewList);
+        mAdapter = new MyPagerAdapter(this, mViewList);
 
         mViewPager.setAdapter(mAdapter);
 
-        if (list.size() > 1)
-
-        {
+        if (mList.size() > 1) {
             tvImageIndex.setVisibility(View.VISIBLE);
-            tvImageIndex.setText((0 + 1) + "/" + list.size());
-        } else
-
-        {
+            tvImageIndex.setText((0 + 1) + "/" + mList.size());
+        } else {
             tvImageIndex.setVisibility(View.GONE);
         }
 
@@ -254,29 +249,29 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
                                                    lastItem = currentItem;
                                                    currentItem = pageIndex;
 
-                                                   int index = pageIndex % list.size();
-                                                   tvImageIndex.setText((index + 1) + "/" + list.size());
-                                                   tv_text.setText(list.get(currentItem).getDescription());
+                                                   int index = pageIndex % mList.size();
+                                                   tvImageIndex.setText((index + 1) + "/" + mList.size());
+                                                   tv_text.setText(mList.get(currentItem).getDescription());
 
                                                    if ((mVideoViewList.get(lastItem)) instanceof VideoView) {  //如果上一个是video
                                                        if ((mVideoViewList.get(lastItem)) != null) {
                                                            if (((VideoView) mVideoViewList.get(lastItem)).isPlaying()) {   //如果是true
-                                                               list.get(lastItem).setmIsPlaying(true);
+                                                               mList.get(lastItem).setmIsPlaying(true);
                                                                // 记录播放状态
                                                                ((VideoView) (mVideoViewList.get(lastItem))).pause();
                                                            } else {
                                                                // 记录播放状态*ess5
-                                                               list.get(lastItem).setmIsPlaying(false);
+                                                               mList.get(lastItem).setmIsPlaying(false);
                                                            }
                                                            // 记录播放进度
-                                                           list.get(lastItem).setmCurrentPositions(((VideoView) mVideoViewList.get(lastItem)).getCurrentPosition());
+                                                           mList.get(lastItem).setmCurrentPositions(((VideoView) mVideoViewList.get(lastItem)).getCurrentPosition());
                                                        }
                                                    }
 
                                                    if (mVideoViewList.get(currentItem) instanceof VideoView) {
                                                        if (mVideoViewList.get(currentItem) != null) {
-                                                           ((VideoView) mVideoViewList.get(currentItem)).seekTo(list.get(currentItem).getmCurrentPositions());
-                                                           if (list.get(currentItem).ismIsPlaying()) {
+                                                           ((VideoView) mVideoViewList.get(currentItem)).seekTo(mList.get(currentItem).getmCurrentPositions());
+                                                           if (mList.get(currentItem).ismIsPlaying()) {
                                                                ((VideoView) mVideoViewList.get(currentItem)).start();
                                                            }
                                                        }
@@ -284,7 +279,7 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
                                                        PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher((PhotoView) mVideoViewList.get(currentItem));
                                                        photoViewAttacher.setScaleType(ImageView.ScaleType.FIT_CENTER);
                                                        photoViewAttacher.setMinimumScale(1F);
-                                                       ImageLoaderUtils.displayScaleImage(getApplicationContext(), (PhotoView) mVideoViewList.get(currentItem), list.get(currentItem).getResourceUrl(), photoViewAttacher);
+                                                       ImageLoaderUtils.displayScaleImage(getApplicationContext(), (PhotoView) mVideoViewList.get(currentItem), mList.get(currentItem).getResourceUrl(), photoViewAttacher);
                                                    }
                                                }
 
@@ -297,7 +292,7 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
         );
 
 
-        if (GIF_TYPE.equals(list.get(0).
+        if (GIF_TYPE.equals(mList.get(0).
 
                 getResourceType()
 
@@ -307,17 +302,17 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
             PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher((PhotoView) mVideoViewList.get(0));
             photoViewAttacher.setScaleType(ImageView.ScaleType.FIT_CENTER);
             photoViewAttacher.setMinimumScale(1F);
-            ImageLoaderUtils.displayScaleImage(getApplicationContext(), (PhotoView) mVideoViewList.get(0), list.get(0).getResourceUrl(), photoViewAttacher);
+            ImageLoaderUtils.displayScaleImage(getApplicationContext(), (PhotoView) mVideoViewList.get(0), mList.get(0).getResourceUrl(), photoViewAttacher);
         } else
 
         {
             if (mVideoViewList.get(0) != null) {
                 ((VideoView) mVideoViewList.get(0)).start();
-                list.get(0).setmIsPlaying(true);
+                mList.get(0).setmIsPlaying(true);
             }
         }
 
-        tv_text.setText(list.get(currentItem).
+        tv_text.setText(mList.get(currentItem).
 
                 getDescription()
 
@@ -370,8 +365,8 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
     public void onCompletion(MediaPlayer mp) {
         if (mVideoViewList.get(currentItem) != null) {
             if (mVideoViewList.get(currentItem) instanceof VideoView) {
-                list.get(currentItem).setmCurrentPositions(0);
-                list.get(currentItem).setmIsPlaying(true);
+                mList.get(currentItem).setmCurrentPositions(0);
+                mList.get(currentItem).setmIsPlaying(true);
                 ((VideoView) mVideoViewList.get(currentItem)).resume();
                 ((VideoView) mVideoViewList.get(currentItem)).start();
             }
@@ -423,12 +418,12 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
             if ((mVideoViewList.get(currentItem)) != null) {
                 if (mVideoViewList.get(currentItem) instanceof VideoView) {
                     if (((VideoView) mVideoViewList.get(currentItem)).isPlaying()) {
-                        list.get(currentItem).setmIsPlaying(true);
+                        mList.get(currentItem).setmIsPlaying(true);
                         ((VideoView) mVideoViewList.get(currentItem)).pause();
                     } else {
-                        list.get(currentItem).setmIsPlaying(false);
+                        mList.get(currentItem).setmIsPlaying(false);
                     }
-                    list.get(currentItem).setmCurrentPositions(((VideoView) mVideoViewList.get(currentItem)).getCurrentPosition());
+                    mList.get(currentItem).setmCurrentPositions(((VideoView) mVideoViewList.get(currentItem)).getCurrentPosition());
                 }
             }
         }
@@ -457,8 +452,8 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
         if (mVideoViewList.size() > 0) {
             if (mVideoViewList.get(currentItem) != null) {
                 if (mVideoViewList.get(currentItem) instanceof VideoView) {
-                    ((VideoView) mVideoViewList.get(currentItem)).seekTo(list.get(currentItem).getmCurrentPositions());
-                    if (list.get(currentItem).ismIsPlaying()) {
+                    ((VideoView) mVideoViewList.get(currentItem)).seekTo(mList.get(currentItem).getmCurrentPositions());
+                    if (mList.get(currentItem).ismIsPlaying()) {
                         ((VideoView) mVideoViewList.get(currentItem)).start();
                     }
                 }
@@ -472,7 +467,7 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
     private void clearList() {
         mVideoViewList.clear();
         mCacheViewList.clear();
-        list.clear();
+        mList.clear();
     }
 
     @Override
