@@ -170,7 +170,7 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
         handler.sendEmptyMessage(REQUEST_LOAD);
 
         Map<String, String> parms = new HashMap<>();
-        parms.put("thirdId", "399366");
+        parms.put("thirdId", mThirdId);
         // parms.put("thirdId", mThirdId);
         parms.put("matchType", MATCH_TYPE);  //足球
 

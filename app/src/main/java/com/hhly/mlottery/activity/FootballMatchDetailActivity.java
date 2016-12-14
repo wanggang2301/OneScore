@@ -2579,7 +2579,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private void getCollectionCount() {
         Map<String, String> map = new HashMap<>();
         map.put("matchType", MATCH_TYPE);
-        map.put("thirdId", "399381");
+        map.put("thirdId", mThirdId);
         //  map.put("thirdId", mThirdId);
         VolleyContentFast.requestJsonByGet(BaseURLs.FOOTBALL_DETAIL_COLLECTION_COUNT, map, new VolleyContentFast.ResponseSuccessListener<DetailsCollectionCountBean>() {
             @Override
