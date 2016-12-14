@@ -49,7 +49,7 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
 //        PushAgent pushAgent-
-        UmengMessageHandler handler=new UmengMessageHandler(){
+        UmengMessageHandler handler = new UmengMessageHandler() {
             @Override
             public Notification getNotification(Context context, UMessage uMessage) {
                 return super.getNotification(context, uMessage);
@@ -70,10 +70,9 @@ public class MyApp extends Application {
         switchLanguage(PreferenceUtil.getString("language", ""));
         isLanguage = switchLanguage(PreferenceUtil.getString("language", ""));
         // 捕获异常
-        if (AppConstants.isUploadCrash) {
-            CrashException crashException = CrashException.getInstance();
-            crashException.init(getApplicationContext());
-        }
+        CrashException crashException = CrashException.getInstance();
+        crashException.init(getApplicationContext());
+
         VolleyContentFast.init(this);
         //初始化畅言
         CyUtils.initCy(this);
@@ -95,7 +94,7 @@ public class MyApp extends Application {
     /**
      * 设置时区
      */
-    private void settingTimeZone(){
+    private void settingTimeZone() {
         switch (isPackageName) {
             case AppConstants.PACKGER_NAME_ZH:// 国内版
                 AppConstants.timeZone = 8;
@@ -153,7 +152,6 @@ public class MyApp extends Application {
     public static Context getContext() {
         return appcontext;
     }
-
 
 
     /**

@@ -19,7 +19,9 @@ import com.android.volley.toolbox.Volley;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
@@ -587,7 +589,9 @@ public class VolleyContentFast {
      */
     private static void isTimeOutError(VolleyError volleyError) {
         if(volleyError instanceof TimeoutError){
-            MobclickAgent.reportError(mContext,"NO_RESPONSE_FROM_SERVER： " + volleyError);
+            MobclickAgent.reportError(mContext,"NO_RESPONSE_FROM_SERVER! \n IMEI:" + DeviceInfo.getDeviceId(mContext) +
+                    "\n USERID: " + PreferenceUtil.getString(AppConstants.SPKEY_USERID, "") + "\n" +
+                    volleyError);
         }
     }
 }

@@ -11,13 +11,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.PopupWindow;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.chartBallAdapter.ChartBallAdapter;
+import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.frame.footframe.eventbus.ChartBallContentEntitiy;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.ToastTools;
@@ -98,13 +100,12 @@ public class ChartBallFragment extends Fragment {
             }
         });
 
-        /*mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+        mAdapter.setOnItemClickListener(new BaseRecyclerViewHolder.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int i) {
-                ToastTools.showQuick(mContext, "xxxxxx " + i);
+            public void onItemClick(View convertView, int position) {
+                ToastTools.showQuick(mContext,"点击 ："+position);
             }
-        });*/
-
+        });
     }
 
     List<String> mData = new ArrayList<>();
@@ -132,7 +133,6 @@ public class ChartBallFragment extends Fragment {
 
         mAdapter = new ChartBallAdapter(mContext, mData);
         recycler_view.setAdapter(mAdapter);
-
     }
 
     @Override

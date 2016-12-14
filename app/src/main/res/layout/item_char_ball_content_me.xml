@@ -2,50 +2,75 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="10dp">
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/ll_time_content_me"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:paddingRight="20dp">
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_nickname_me"
+            android:id="@+id/tv_time_me"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:paddingLeft="5dp"
-            android:text="hhly988888"
-            android:textColor="#0085e1"
-            android:textSize="15sp" />
+            android:background="@color/home_item_bg"
+            android:padding="10dp"
+            android:text="18:00"
+            android:textSize="12sp"/>
 
-        <!--用户发送内容-->
-        <LinearLayout
-            android:layout_width="match_parent"
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_nickname_me"
-            android:gravity="right"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:paddingRight="20dp">
 
             <TextView
+                android:id="@+id/tv_nickname_me"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="test" />
+                android:layout_alignParentRight="true"
+                android:paddingLeft="5dp"
+                android:text="hhly988888"
+                android:textColor="#0085e1"
+                android:textSize="15sp" />
 
-        </LinearLayout>
+            <!--用户发送内容-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_nickname_me"
+                android:gravity="right"
+                android:orientation="vertical"
+                android:padding="10dp">
 
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="test" />
 
-    <com.hhly.mlottery.view.CircleImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@mipmap/bighead" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <com.hhly.mlottery.view.CircleImageView
+            android:id="@+id/iv_me_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/bighead" />
+
+    </LinearLayout>
 </LinearLayout>
 
 

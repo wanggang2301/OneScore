@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -79,14 +80,18 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         /**当前评论小窗口不统计*/
         MobclickAgent.openActivityDurationTrack(false);
+
+        // Make us non-modal, so that others can receive touch events.
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+        // ...but notify us that it happened.
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH, WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
+
         setContentView(R.layout.activity_chartball_layout);
 
         initWindow();
         initView();
         initData();
         initEvent();
-        IntentFilter intentFilter = new IntentFilter("closeself");
-        registerReceiver(mBroadcastReceiver, intentFilter);
     }
 
     private void initEvent() {
@@ -223,24 +228,6 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
-    /**
-     * 足球、篮球详情页退出时调用
-     */
-    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            ChartballActivity.this.setResult(CyUtils.RESULT_CODE);
-            CyUtils.hideKeyBoard(ChartballActivity.this);
-            finish();
-        }
-    };
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(mBroadcastReceiver);
-    }
-
     private void initWindow() {
         Window window = getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
@@ -294,8 +281,12 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
                         // TODO 向会话列表发送输入内容
                         EventBus.getDefault().post(new ChartBallContentEntitiy(mEditText.getText().toString()));
 
-                        // 发送之后 清空输入框
-                        mEditText.setText("");
+                        // 隐藏软键盘
+                        if (ChartballActivity.this.getCurrentFocus() != null) {
+                            inputMethodManager.hideSoftInputFromWindow(ChartballActivity.this.getCurrentFocus()
+                                    .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                        }
+                        finish();
 
                     } else {
                         //跳转登录界面
@@ -303,13 +294,6 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
                         startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
                     }
                 }
-                // 隐藏软键盘
-                if (ChartballActivity.this.getCurrentFocus() != null) {
-                    inputMethodManager.hideSoftInputFromWindow(ChartballActivity.this.getCurrentFocus()
-                            .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                }
-                // 隐藏表情框
-                ll_gallery_content.setVisibility(View.GONE);
                 break;
             case R.id.et_emoji_input:// 输入
                 if (!CommonUtils.isLogin()) {
@@ -350,23 +334,24 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
 
     }
 
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            setResult(CyUtils.RESULT_BACK);//这里也需要通知  因为在本窗口关闭的时候那边的假输入框需要显示
-            finish();
-            return true;
-
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
     @Override
     public void finish() {
         super.finish();
         overridePendingTransition(0, android.R.anim.fade_out);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (MotionEvent.ACTION_OUTSIDE == event.getAction()) {
+            finish();
+            // 隐藏软键盘
+            if (ChartballActivity.this.getCurrentFocus() != null) {
+                inputMethodManager.hideSoftInputFromWindow(ChartballActivity.this.getCurrentFocus()
+                        .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+            return true;
+        }
+        return super.onTouchEvent(event);
     }
 }
 
