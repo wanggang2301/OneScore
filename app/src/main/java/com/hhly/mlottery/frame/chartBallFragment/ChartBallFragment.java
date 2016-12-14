@@ -2,6 +2,7 @@ package com.hhly.mlottery.frame.chartBallFragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -29,6 +30,8 @@ import java.util.List;
 
 import de.greenrobot.event.EventBus;
 import io.github.rockerhieu.emojicon.EmojiconEditText;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 
 /**

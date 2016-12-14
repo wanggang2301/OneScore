@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
@@ -74,6 +75,7 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
     private int emojiPagerSize;
     private LinearLayout ll_local_content;
     private LinearLayout ll_emoji_content;
+    private String callName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,6 +168,14 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void initData() {
+        if (getIntent() != null) {
+            callName = getIntent().getStringExtra("CALL_NAME");
+            if (!TextUtils.isEmpty(callName)) {
+                mEditText.setText(Html.fromHtml("<font color='#0090ff'>" + callName + "</font>"));
+                mEditText.setSelection(mEditText.getText().length());
+                mSend.setSelected(true);
+            }
+        }
         // 添加数据
         BasePagerAdapter localPagerAdapter = new BasePagerAdapter(getSupportFragmentManager());
         localPagerSize = AppConstants.localIcon.length % LOCAL_PAGER_SIZE == 0 ? AppConstants.localIcon.length / LOCAL_PAGER_SIZE : AppConstants.localIcon.length / LOCAL_PAGER_SIZE + 1;

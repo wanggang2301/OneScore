@@ -1,6 +1,7 @@
 package com.hhly.mlottery.adapter.chartBallAdapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -12,10 +13,12 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.ChartballActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewAdapter;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.frame.chartBallFragment.ChartBallReportDialogFragment;
+import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.ToastTools;
 
 import java.util.List;
@@ -71,7 +74,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         switch (getItemViewType(position)) {
             case 0:
                 ViewHolderMsg viewHolderMsg = (ViewHolderMsg) holder;
@@ -80,7 +83,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                 viewHolderMsg.iv_user_icon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        showPopup(v);
+                        showPopup(v, position);
                     }
                 });
                 break;
@@ -126,7 +129,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
         }
     }
 
-    private void showPopup(View v) {
+    private void showPopup(View v, final int index) {
         View popupView = View.inflate(mContext, R.layout.item_chart_ball_fragment_popup, null);
         mPopupWindow = new PopupWindow(popupView, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
         mPopupWindow.setTouchable(true);
@@ -147,7 +150,9 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                 ToastTools.showQuick(mContext, "艾特");
                 mPopupWindow.dismiss();
                 // TODO  获取用户昵称 用蓝色字体颜色显示在输入框中
-
+                Intent intent = new Intent(mContext, ChartballActivity.class);
+                intent.putExtra("CALL_NAME","@"+mData.get(index)+"：");
+                mContext.startActivity(intent);
             }
         });
 
@@ -159,8 +164,8 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                 mPopupWindow.dismiss();
                 // TODO 弹出举报框 获取被举报昵称 和 自己的昵称显示在弹框中，并将举报内容提交到服务器
 
-
-                showDialog("你好xxxxx");
+                // TODO 需要传 被举报人ID、昵称、消息ID
+                showDialog(mData.get(index));
 
             }
         });
@@ -170,7 +175,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
         void shwoDialog(String id);
     }
 
-    public static void showDialog(String id){
+    public static void showDialog(String id) {
         mAdapterListener.shwoDialog(id);
     }
 
