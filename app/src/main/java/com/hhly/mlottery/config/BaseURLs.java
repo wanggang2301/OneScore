@@ -956,4 +956,7 @@ public class BaseURLs {
 
     //精彩瞬间资源
     public final static String FOOTBALL_DETAIL_COLLECTION = URL_API_HOST + "operation.findMatchCollection.do";
+
+    //聊天室消息列表接口
+    public final static String MESSAGE_LIST = HTTP + HOST + URL_SPLITTER+ "chatServer/chat/chatHistoryList/football.do";
 }

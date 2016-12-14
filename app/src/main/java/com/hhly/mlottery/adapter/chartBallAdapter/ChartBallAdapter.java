@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.ChartballActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
@@ -20,6 +21,9 @@ import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.frame.chartBallFragment.ChartBallReportDialogFragment;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.ToastTools;
+import com.hhly.mlottery.bean.chart.ChartReceive;
+import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.view.CircleImageView;
 
 import java.util.List;
 
@@ -30,11 +34,13 @@ import java.util.List;
 
 public class ChartBallAdapter extends BaseRecyclerViewAdapter {
     Context mContext;
+    List<ChartReceive.DataBean.ChatHistoryBean> mData;
     List<String> mData;
     private PopupWindow mPopupWindow;
     public static AdapterListener mAdapterListener;
 
-    public ChartBallAdapter(Context context, List<String> data) {
+
+        public ChartBallAdapter(Context context, List<ChartReceive.DataBean.ChatHistoryBean> data) {
         this.mContext = context;
         this.mData = data;
     }
@@ -78,6 +84,9 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
         switch (getItemViewType(position)) {
             case 0:
                 ViewHolderMsg viewHolderMsg = (ViewHolderMsg) holder;
+                viewHolderMsg.receive_text.setText(mData.get(position).getMessage());
+                viewHolderMsg.tv_name.setText(mData.get(position).getFromUser().getUserNick());
+                Glide.with(mContext).load(mData.get(position).getFromUser().getUserLogo()).into(viewHolderMsg.bighead_view);
                 viewHolderMsg.tv_name.setText(mData.get(position));
                 final View v = viewHolderMsg.tv_name;
                 viewHolderMsg.iv_user_icon.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +98,9 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                 break;
             case 1:
                 ViewHolderMe viewHolderMe = (ViewHolderMe) holder;
-                viewHolderMe.tv_nickname_me.setText(mData.get(position));
+                Glide.with(mContext).load(mData.get(position).getFromUser().getUserLogo()).into(viewHolderMe.my_bighead_view);
+                viewHolderMe.tv_nickname_me.setText(mData.get(position).getFromUser().getUserNick());
+                viewHolderMe.my_text.setText(mData.get(position).getMessage());
                 break;
         }
     }
@@ -97,7 +108,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
     @Override
     public int getRecycleViewItemType(int position) {
         // TODO 显示返回item类型  如果为自己的id，则返回1
-        if (position == 0 || position == 5) {
+        if (mData.get(position).getFromUser().getUserId().equals(AppConstants.register.getData().getUser().getUserId())) {
             return 1;
         } else {
             return 0;
@@ -108,24 +119,28 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
     // 其它消息ViewHolder
     class ViewHolderMsg extends RecyclerView.ViewHolder {
         TextView tv_name;
-        ImageView iv_user_icon;
+        CircleImageView bighead_view;
+        private final TextView receive_text;
 
         public ViewHolderMsg(View view) {
             super(view);
             tv_name = (TextView) view.findViewById(R.id.tv_nickname);
-            iv_user_icon = (ImageView) view.findViewById(R.id.iv_user_icon);
+            bighead_view = (CircleImageView) view.findViewById(R.id.bighead_view);
+            receive_text = (TextView) view.findViewById(R.id.receive_text);
         }
     }
 
     // 我的消息ViewHolder
     class ViewHolderMe extends RecyclerView.ViewHolder {
         TextView tv_nickname_me;
-        ImageView iv_me_icon;
+        TextView my_text;
+        private final CircleImageView my_bighead_view;
 
         public ViewHolderMe(View itemView) {
             super(itemView);
             tv_nickname_me = (TextView) itemView.findViewById(R.id.tv_nickname_me);
-            iv_me_icon = (ImageView) itemView.findViewById(R.id.iv_me_icon);
+            my_text = (TextView) itemView.findViewById(R.id.my_text);
+            my_bighead_view = (CircleImageView) itemView.findViewById(R.id.my_bighead_view);
         }
     }
 

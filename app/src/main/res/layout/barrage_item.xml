@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/re"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:background="@drawable/rockett"
+        android:layout_width="wrap_content"
+        android:layout_height="49dp">
+
+        <ImageView
+            android:layout_marginRight="2dp"
+            android:layout_gravity="center"
+            android:id="@+id/face2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/basket_default" />
+        <io.github.rockerhieu.emojicon.EmojiconTextView
+            android:layout_marginRight="5dp"
+            android:layout_gravity="center"
+            android:id="@+id/content2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/face2"
+            android:text="弹幕"
+            android:textColor="#333333"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

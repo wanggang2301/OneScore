@@ -34,6 +34,9 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.FragmentAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
+import com.hhly.mlottery.bean.BarrageBean;
+import com.hhly.mlottery.bean.GoneBarrage;
+import com.hhly.mlottery.bean.OpenBarrage;
 import com.hhly.mlottery.bean.ShareBean;
 import com.hhly.mlottery.bean.footballDetails.DetailsCollectionCountBean;
 import com.hhly.mlottery.bean.footballDetails.MatchDetail;
@@ -61,7 +64,9 @@ import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.StringUtils;
+import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.view.BarrageView;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.umeng.analytics.MobclickAgent;
 
@@ -325,6 +330,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private FrameLayout fl_head;
 
     private LinearLayout btn_showGif;
+    private BarrageView barrage_view;
 
 
     @Override
@@ -334,8 +340,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             currentFragmentId = getIntent().getExtras().getInt("currentFragmentId");
             infoCenter = getIntent().getExtras().getInt("info_center");
         }
-
-
+        EventBus.getDefault().register(this);
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.liveEvent." + mThirdId + "." + appendLanguage());
 
@@ -359,6 +364,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         initView();
         initEvent();
+
 
         /***
          * 足球内页头部ViewPager
@@ -463,7 +469,21 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         iv_back.setOnClickListener(this);
         iv_setting.setOnClickListener(this);
 
+        barrage_view = (BarrageView) findViewById(R.id.barrage_view);
+
     }
+    public void onEventMainThread(BarrageBean barrageBean){
+        barrage_view.setDatas("",barrageBean.getMsg().toString());
+    }
+    public void onEventMainThread(GoneBarrage barrageBean){
+        barrage_view.setVisibility(View.GONE);
+
+    }
+    public void onEventMainThread(OpenBarrage barrageBean){
+        barrage_view.setVisibility(View.VISIBLE);
+
+    }
+
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -1153,7 +1173,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             mReloadTimer.purge();
 
         }
-
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -2066,7 +2086,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     // 发表评论跳转
     public void talkAboutBallSendFoot() {
         Intent intent2 = new Intent(mContext, ChartballActivity.class);
-//        intent2.putExtra(CyUtils.INTENT_PARAMS_SID, topicid);
+         intent2.putExtra("thirdId", mThirdId);
         startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
     }
 

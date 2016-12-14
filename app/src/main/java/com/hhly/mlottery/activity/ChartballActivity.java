@@ -5,17 +5,15 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -25,12 +23,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.adapter.chartBallAdapter.ChartBallAdapter;
+import com.hhly.mlottery.bean.BarrageBean;
+import com.hhly.mlottery.bean.chart.ChartReceive;
+import com.hhly.mlottery.bean.chart.SendMessageBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.chartBallFragment.EmojiFragment;
 import com.hhly.mlottery.frame.chartBallFragment.LocalFragment;
 import com.hhly.mlottery.adapter.football.BasePagerAdapter;
@@ -40,10 +39,14 @@ import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.ToastTools;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import de.greenrobot.event.EventBus;
 import io.github.rockerhieu.emojicon.EmojiconEditText;
@@ -55,6 +58,8 @@ import io.github.rockerhieu.emojicon.EmojiconEditText;
  */
 public class ChartballActivity extends BaseActivity implements View.OnClickListener {
 
+
+    public static String TAG = "ChartballActivity";
     public EmojiconEditText mEditText;//输入评论
     private TextView mSend;//发送评论
     private LinearLayout ll_gallery_content;
@@ -68,18 +73,22 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
     List<Fragment> emojiFragments = new ArrayList<>();
 
     private final static int LOCAL_PAGER_SIZE = 10;
-    private final static int EMOJI_PAGER_SIZE = 20;
+    private final static int EMOJI_PAGER_SIZE = 26;
     private LinearLayout local_point;
     private LinearLayout emoji_point;
     private int localPagerSize;
     private int emojiPagerSize;
+
     private LinearLayout ll_local_content;
     private LinearLayout ll_emoji_content;
+    private final static String MATCH_THIRD_ID = "thirdId";
+    private String mThirdId;
     private String callName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_chartball_layout);
         /**当前评论小窗口不统计*/
         MobclickAgent.openActivityDurationTrack(false);
 
@@ -89,6 +98,11 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH, WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
 
         setContentView(R.layout.activity_chartball_layout);
+
+        Intent intent=getIntent();
+        Bundle bundle=intent.getExtras();
+        mThirdId= bundle.getString(MATCH_THIRD_ID);
+        Log.i("sdasd","mThirdId="+mThirdId);
 
         initWindow();
         initView();
@@ -287,9 +301,15 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
                 } else {//有输入内容
                     if (CommonUtils.isLogin()) {//已登录华海
 
-
+                        sendMessage( mEditText.getText().toString(),null);
                         // TODO 向会话列表发送输入内容
-                        EventBus.getDefault().post(new ChartBallContentEntitiy(mEditText.getText().toString()));
+                        EventBus.getDefault().post(new ChartReceive.DataBean.ChatHistoryBean(mEditText.getText().toString(),new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
+                                ,AppConstants.register.getData().getUser().getHeadIcon(),AppConstants.register.getData().getUser().getNickName())));
+
+                        EventBus.getDefault().post(new BarrageBean("http://pic.13322.com/icons/avatar/male/1.png", mEditText.getText().toString()));
+
+                        // 发送之后 清空输入框
+                        mEditText.setText("");
 
                         // 隐藏软键盘
                         if (ChartballActivity.this.getCurrentFocus() != null) {
@@ -304,6 +324,7 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
                         startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
                     }
                 }
+
                 break;
             case R.id.et_emoji_input:// 输入
                 if (!CommonUtils.isLogin()) {
@@ -341,6 +362,49 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
                 ll_emoji_content.setBackgroundResource(R.color.white);
                 break;
         }
+
+    }
+   //发送消息后台
+    private void sendMessage(String message ,String toUserId) {
+
+
+
+        Map<String, String> params = new HashMap<>();
+        params.put("sourceName", "android");
+        params.put("chatType", "football");
+        params.put("thirdId", mThirdId);
+        params.put("msgCode", "1");//1普通消息 2@消息 3系统消息 4在线人数 5进入聊天室
+        params.put("loginToken", AppConstants.register.getData().getLoginToken());
+        params.put("toUserId", "");
+        params.put("deviceId", AppConstants.deviceToken);
+        params.put("message ", message);
+        params.put("msgId", UUID.randomUUID().toString());
+        Log.i("zczxc","thirdId="+mThirdId);
+        Log.i("zczxc","loginToken="+ AppConstants.register.getData().getLoginToken());
+        Log.i("zczxc","deviceId="+AppConstants.deviceToken);
+        Log.i("zczxc","msgId="+ UUID.randomUUID().toString());
+        VolleyContentFast.requestJsonByGet(BaseURLs.MESSAGE_LIST, params,
+                new VolleyContentFast.ResponseSuccessListener<SendMessageBean>() {
+                    @Override
+                    public void onResponse(SendMessageBean receive) {
+                        if (!receive.getResult().equals("200")) {
+                            Log.i(TAG,"消息发送失败");
+                            return;
+                        }
+
+
+                    }
+                }, new VolleyContentFast.ResponseErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+                        Log.i(TAG,"消息发送失败");
+                    }
+                }, SendMessageBean.class
+        );
+
+
+
 
     }
 
