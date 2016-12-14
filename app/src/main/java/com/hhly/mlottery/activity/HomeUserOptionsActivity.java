@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -27,10 +25,8 @@ import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
-import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
-import com.hhly.mlottery.util.RongYunUtils;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
@@ -38,11 +34,6 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import de.greenrobot.event.EventBus;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.model.UserInfo;
-
 
 /**
  * @ClassName: OneScoreGit
@@ -95,7 +86,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        EventBus.getDefault().register(this);
         initView();
 
     }
@@ -244,12 +234,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                     PreferenceUtil.commitBoolean("three_login",false);
                     setResult(RESULT_OK);
 
-
-                    RongIM.getInstance().logout();// 退出融云账号
-                    RongIM.getInstance().disconnect();// 断开融云连接
-                    RongYunUtils.isRongConnent = false;// 设置融云断开状态
-                    PreferenceUtil.commitString(RongYunUtils.USER_TOKEN, "");// 清除用户本地token
-                    PreferenceUtil.commitString(RongYunUtils.USER_ID, "");// 清除用户本地id
                     PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS,""); //清空篮球关注列表
                     PreferenceUtil.commitString(FocusFragment.FOCUS_ISD,""); //清空足球关注列表
                     request(); //推送需要
@@ -396,13 +380,4 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             }
         }
     }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // 刷新本地用户缓存
-       // RongIM.getInstance().refreshUserInfoCache(new UserInfo(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), Uri.parse(PreferenceUtil.getString(AppConstants.HEADICON, "xxx"))));
-       // RongIM.getInstance().refreshUserInfoCache(new UserInfo(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), Uri.parse(AppConstants.register.getData().getUser().getHeadIcon())));
-        EventBus.getDefault().unregister(this);
-    }
-
 }

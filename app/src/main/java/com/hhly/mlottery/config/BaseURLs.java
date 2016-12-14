@@ -949,4 +949,11 @@ public class BaseURLs {
     //篮球内页球员统计
     public final static String BASKET_DETAIL_PLAYER = URL_API_HOST + "basketballDetail.findPlayerStats.do";
 
+
+
+    //精彩瞬间个数
+    public final static String FOOTBALL_DETAIL_COLLECTION_COUNT = URL_API_HOST + "operation.findMatchCollectionCount.do";
+
+    //精彩瞬间资源
+    public final static String FOOTBALL_DETAIL_COLLECTION = URL_API_HOST + "operation.findMatchCollection.do";
 }

@@ -521,9 +521,9 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
 //                    intent2.putExtra(CyUtils.INTENT_PARAMS_SID, topicid);
 //                    startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
                     if(type == 1){
-                        ((BasketDetailsActivityTest)mContext).talkAboutBallSendBasket(topicid);
+                        ((BasketDetailsActivityTest)mContext).talkAboutBallSendBasket();
                     }else if(type == 0){
-                        ((FootballMatchDetailActivity)mContext).talkAboutBallSendFoot(topicid);
+                        ((FootballMatchDetailActivity)mContext).talkAboutBallSendFoot();
                     }
                     mLinearLayout.setVisibility(View.GONE);
                     System.out.println("lzftalk跳" + topicid);
