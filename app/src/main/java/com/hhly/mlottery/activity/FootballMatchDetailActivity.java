@@ -2086,7 +2086,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     // 发表评论跳转
     public void talkAboutBallSendFoot() {
         Intent intent2 = new Intent(mContext, ChartballActivity.class);
-//        intent2.putExtra(CyUtils.INTENT_PARAMS_SID, topicid);
+         intent2.putExtra("thirdId", mThirdId);
         startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
     }
 

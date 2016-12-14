@@ -7,25 +7,20 @@
     android:paddingRight="10dp"
     android:paddingTop="10dp">
 
-    <com.hhly.mlottery.view.CircleImageView
-        android:id="@+id/bighead_view"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@mipmap/bighead" />
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="0dp"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:paddingRight="20dp"
-        android:orientation="vertical">
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingRight="20dp">
 
         <TextView
-            android:id="@+id/tv_nickname"
+            android:id="@+id/tv_nickname_me"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="hhly988888"
+            android:layout_alignParentRight="true"
             android:paddingLeft="5dp"
+            android:text="hhly988888"
             android:textColor="#0085e1"
             android:textSize="15sp" />
 
@@ -33,18 +28,26 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/tv_nickname_me"
+            android:gravity="right"
             android:orientation="vertical"
             android:padding="10dp">
 
             <io.github.rockerhieu.emojicon.EmojiconTextView
-                android:id="@+id/receive_text"
+                android:id="@+id/my_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="test"/>
+                android:text="test" />
 
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
+
+    <com.hhly.mlottery.view.CircleImageView
+        android:id="@+id/my_bighead_view"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/bighead" />
 </LinearLayout>
 
 
