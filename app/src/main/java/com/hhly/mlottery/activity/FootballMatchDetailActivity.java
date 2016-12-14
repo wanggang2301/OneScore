@@ -58,6 +58,7 @@ import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.FootballLiveTextComparator;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.NetworkUtils;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.StringUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -105,7 +106,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private final static int ODDS_FG = 4;
     private final static int TALKBALL_FG = 5;
     private int infoCenter = -1;// 情报中心中转标记
-
 
     //事件直播
     //主队事件
@@ -1937,18 +1937,22 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 loadData();
                 break;
             case R.id.btn_showGif:
-                int type = com.hhly.mlottery.util.NetworkUtils.getCurNetworkType(getApplicationContext());
-                if (type == 1) {
-                    L.d("zxcvbn", "WIFI");
-                    Intent intent = new Intent(FootballMatchDetailActivity.this, PlayHighLightActivity.class);
-                    intent.putExtra("thirdId", mThirdId);
-                    startActivity(intent);
-                    //wifi
-                } else if (type == 2 || type == 3 || type == 4) {//2G  3G  4G
-                    L.d("zxcvbn", "移动网络-" + type + "G");
-                    promptNetInfo();
+                if (NetworkUtils.isConnected(getApplicationContext())) {
+                    int type = com.hhly.mlottery.util.NetworkUtils.getCurNetworkType(getApplicationContext());
+                    if (type == 1) {
+                        L.d("zxcvbn", "WIFI");
+                        Intent intent = new Intent(FootballMatchDetailActivity.this, PlayHighLightActivity.class);
+                        intent.putExtra("thirdId", mThirdId);
+                        intent.putExtra("match_type", MATCH_TYPE);
+                        startActivity(intent);
+                        //wifi
+                    } else if (type == 2 || type == 3 || type == 4) {//2G  3G  4G
+                        L.d("zxcvbn", "移动网络-" + type + "G");
+                        promptNetInfo();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.about_net_failed), Toast.LENGTH_SHORT).show();
                 }
-
                 break;
             default:
                 break;
@@ -1970,6 +1974,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     dialog.dismiss();
                     Intent intent = new Intent(FootballMatchDetailActivity.this, PlayHighLightActivity.class);
                     intent.putExtra("thirdId", mThirdId);
+                    intent.putExtra("match_type", MATCH_TYPE);
                     startActivity(intent);
                 }
             });
@@ -2579,7 +2584,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private void getCollectionCount() {
         Map<String, String> map = new HashMap<>();
         map.put("matchType", MATCH_TYPE);
-        map.put("thirdId", "399381");
+        map.put("thirdId", mThirdId);  //399381
         //  map.put("thirdId", mThirdId);
         VolleyContentFast.requestJsonByGet(BaseURLs.FOOTBALL_DETAIL_COLLECTION_COUNT, map, new VolleyContentFast.ResponseSuccessListener<DetailsCollectionCountBean>() {
             @Override

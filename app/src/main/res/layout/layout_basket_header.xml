@@ -464,6 +464,37 @@
                 android:text="[——]"
                 android:textColor="@color/black_details_ball_textcolor"
                 android:textSize="@dimen/text_size_10" />
+
+            <LinearLayout
+                android:id="@+id/btn_showGif"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/video_gif_bg"
+                android:orientation="horizontal"
+                android:paddingBottom="2dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="2dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@mipmap/video_gif" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="5dp"
+                    android:text="精彩瞬间"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/text_size_13" />
+            </LinearLayout>
+
+
         </LinearLayout>
 
     </RelativeLayout>
