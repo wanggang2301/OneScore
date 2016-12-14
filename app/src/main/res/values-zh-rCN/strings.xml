@@ -1426,4 +1426,7 @@
     <string name="video_high_light_reminder_comment">您正在使用移动数据，是否继续打开？</string>
     <string name="video_high_light_continue_open">打开</string>
 
+    <string name="chart_ball_report_to_user">被举报人：</string>
+    <string name="chart_ball_report_user">举报人：</string>
+
 </resources>

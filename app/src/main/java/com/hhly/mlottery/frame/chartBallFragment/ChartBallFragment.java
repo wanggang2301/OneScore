@@ -37,7 +37,7 @@ import io.github.rockerhieu.emojicon.EmojiconEditText;
  * 作者：tangrr_107
  * 时间：2016/12/6
  */
-public class ChartBallFragment extends Fragment {
+public class ChartBallFragment extends Fragment implements ChartBallAdapter.AdapterListener{
 
     private final static String MATCH_TYPE = "type";         // 赛事类型
     private final static String MATCH_THIRD_ID = "thirdId";  // 赛事ID
@@ -49,6 +49,7 @@ public class ChartBallFragment extends Fragment {
     private EmojiconEditText mEditText;
     private RecyclerView recycler_view;
     private ChartBallAdapter mAdapter;
+    private ChartBallReportDialogFragment dialogFragment;
 
     public static ChartBallFragment newInstance(int type, String thirdId) {
         ChartBallFragment fragment = new ChartBallFragment();
@@ -132,6 +133,7 @@ public class ChartBallFragment extends Fragment {
         mData.add("eeeee");
 
         mAdapter = new ChartBallAdapter(mContext, mData);
+        mAdapter.setShowDialogOnClickListener(this);
         recycler_view.setAdapter(mAdapter);
     }
 
@@ -154,5 +156,13 @@ public class ChartBallFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void shwoDialog(String id) {
+        dialogFragment = ChartBallReportDialogFragment.newInstance("asa",id,"hhly982121","猪");
+        if(!dialogFragment.isVisible()){
+            dialogFragment.show(getChildFragmentManager(),"chartballDialog");
+        }
     }
 }

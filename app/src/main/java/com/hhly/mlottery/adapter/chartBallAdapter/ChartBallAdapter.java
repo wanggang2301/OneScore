@@ -12,8 +12,10 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewAdapter;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
+import com.hhly.mlottery.frame.chartBallFragment.ChartBallReportDialogFragment;
 import com.hhly.mlottery.util.ToastTools;
 
 import java.util.List;
@@ -27,6 +29,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
     Context mContext;
     List<String> mData;
     private PopupWindow mPopupWindow;
+    public static AdapterListener mAdapterListener;
 
     public ChartBallAdapter(Context context, List<String> data) {
         this.mContext = context;
@@ -155,9 +158,23 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                 ToastTools.showQuick(mContext, "举报");
                 mPopupWindow.dismiss();
                 // TODO 弹出举报框 获取被举报昵称 和 自己的昵称显示在弹框中，并将举报内容提交到服务器
+
+
+                showDialog("你好xxxxx");
+
             }
         });
     }
 
+    public interface AdapterListener {
+        void shwoDialog(String id);
+    }
 
+    public static void showDialog(String id){
+        mAdapterListener.shwoDialog(id);
+    }
+
+    public void setShowDialogOnClickListener(AdapterListener listener) {
+        mAdapterListener = listener;
+    }
 }
