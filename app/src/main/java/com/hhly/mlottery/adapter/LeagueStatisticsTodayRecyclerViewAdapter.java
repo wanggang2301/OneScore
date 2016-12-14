@@ -2,6 +2,7 @@ package com.hhly.mlottery.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v7.widget.RecyclerView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,7 +18,7 @@ import java.util.List;
  * 作者:  wangg@13322.com
  * 时间:  2016/9/7 15:42
  */
-public class LeagueStatisticsTodayRecyclerViewAdapter extends BaseRecyclerViewAdapter {
+public class LeagueStatisticsTodayRecyclerViewAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolder> {
     private List<LeagueStatisticsTodayChildBean> datas;
     private Context mContext;
     private int handicap;

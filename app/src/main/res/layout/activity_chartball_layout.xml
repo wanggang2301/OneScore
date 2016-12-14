@@ -71,7 +71,7 @@
         <!--表情容器-->
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp">
+            android:layout_height="160dp">
 
             <RelativeLayout
                 android:id="@+id/rl_local"
@@ -129,7 +129,7 @@
 
             <LinearLayout
                 android:id="@+id/ll_local_content"
-                android:layout_width="40dp"
+                android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:clickable="true"
@@ -147,7 +147,7 @@
 
             <LinearLayout
                 android:id="@+id/ll_emoji_content"
-                android:layout_width="40dp"
+                android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:clickable="true"

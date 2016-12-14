@@ -8,8 +8,9 @@
 
     <io.github.rockerhieu.emojicon.EmojiconTextView
         android:id="@+id/iv_icon_home"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_margin="2.5dp"
-        emojicon:emojiconSize="20sp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        emojicon:emojiconSize="26sp" />
 </LinearLayout>
