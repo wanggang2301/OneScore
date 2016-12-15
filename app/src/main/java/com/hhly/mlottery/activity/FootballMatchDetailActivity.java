@@ -1096,6 +1096,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     }
 
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
