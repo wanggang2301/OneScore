@@ -386,6 +386,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
     }
 
+
     /**
      * 请求网络数据
      */
