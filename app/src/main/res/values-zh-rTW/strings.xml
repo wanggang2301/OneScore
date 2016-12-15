@@ -1410,5 +1410,6 @@
 
     <string name="chart_ball_report_to_user">被舉報人：</string>
     <string name="chart_ball_report_user">舉報人：</string>
+    <string name="chart_ball_report_content">舉報內容不能為空！</string>
 
 </resources>

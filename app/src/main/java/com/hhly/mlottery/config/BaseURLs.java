@@ -957,6 +957,15 @@ public class BaseURLs {
     //精彩瞬间资源
     public final static String FOOTBALL_DETAIL_COLLECTION = URL_API_HOST + "operation.findMatchCollection.do";
 
-    //聊天室消息列表接口
-    public final static String MESSAGE_LIST = HTTP + HOST + URL_SPLITTER+ "chatServer/chat/chatHistoryList/football.do";
+
+    // 聊球消息列表接口--足球
+    public final static String MESSAGE_LIST_FOOTBALL = HTTP + HOST + URL_SPLITTER+ "chatServer/chat/chatHistoryList/football";
+    // 聊球发送消息--足球
+    public final static String MESSAGE_SEND_FOOTBALL = HTTP + HOST + URL_SPLITTER+ "chatServer/chat/sendChatMessage/android/football";
+    // 聊球消息列表接口--篮球
+    public final static String MESSAGE_LIST_BASKET = HTTP + HOST + URL_SPLITTER+ "chatServer/chat/chatHistoryList/basketball";
+    // 聊球发送消息--篮球
+    public final static String MESSAGE_SEND_BASKET = HTTP + HOST + URL_SPLITTER+ "chatServer/chat/sendChatMessage/android/basketball";
+    // 聊球举报接口
+    public final static String REPORT_USER = HTTP + HOST + URL_SPLITTER+ "chatServer/chat/reportUser/android";
 }

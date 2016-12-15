@@ -2,6 +2,7 @@ package com.hhly.mlottery.frame.chartBallFragment;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -9,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -16,9 +18,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.bean.chart.ChartReceive;
+import com.hhly.mlottery.bean.chart.ReportResultBean;
+import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.ToastTools;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -45,6 +54,7 @@ public class ChartBallReportDialogFragment extends DialogFragment implements Vie
     private TextView tv_nickname;
     private EditText et_input_content;
     private InputMethodManager inputManager;
+    private ProgressDialog progressBar;
 
     public static ChartBallReportDialogFragment newInstance(String msgId, String nickName, String toUserId, String toNickName) {
         Bundle args = new Bundle();
@@ -67,6 +77,8 @@ public class ChartBallReportDialogFragment extends DialogFragment implements Vie
             mToUserId = args.getString(TO_USER_ID);
             mToNickName = args.getString(TO_NICK_NAME);
         }
+        progressBar = new ProgressDialog(mContext);
+        progressBar.setMessage(getResources().getString(R.string.feedback_submiting_txt));
     }
 
     @Override
@@ -114,19 +126,54 @@ public class ChartBallReportDialogFragment extends DialogFragment implements Vie
 
     @Override
     public void onClick(View view) {
+        // 关闭键盘
+        if (inputManager != null) {
+            inputManager.hideSoftInputFromWindow(et_input_content.getWindowToken(), 0);
+        }
         switch (view.getId()) {
             case R.id.bt_submit:
-                ToastTools.showQuick(mContext, "提交");
-                // TODO 获取举报内容 并上传到服务器
-
+                if (TextUtils.isEmpty(et_input_content.getText())) {
+                    ToastTools.showQuick(mContext, getResources().getString(R.string.chart_ball_report_content));
+                } else {
+                    postReportContent();
+                }
                 break;
             case R.id.bt_close:
-                // 关闭键盘
-                if(inputManager != null){
-                    inputManager.hideSoftInputFromWindow(et_input_content.getWindowToken(), 0);
-                }
                 getDialog().dismiss();
                 break;
         }
+    }
+
+    /**
+     * 提交请求
+     */
+    private void postReportContent() {
+        progressBar.show();
+        Map<String, String> params = new HashMap<>();
+        params.put("sourceName", "android");
+        params.put("msgId", mMsgId);
+        params.put("loginToken", AppConstants.register.getData().getLoginToken());
+        params.put("deviceId", AppConstants.deviceToken);
+        params.put("toUserId", mToUserId);
+        params.put("reportReason", et_input_content.getText().toString());
+
+        VolleyContentFast.requestJsonByGet(BaseURLs.REPORT_USER, params, new VolleyContentFast.ResponseSuccessListener<ReportResultBean>() {
+            @Override
+            public void onResponse(ReportResultBean jsonObject) {
+                if ("200".equals(jsonObject.getResult())) {
+                    ToastTools.showQuick(mContext, jsonObject.getData().getResultMsg());
+                } else {
+                    ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.warn_submitfail));
+                }
+                progressBar.dismiss();
+                getDialog().dismiss();
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.warn_submitfail));
+                progressBar.dismiss();
+            }
+        }, ReportResultBean.class);
     }
 }

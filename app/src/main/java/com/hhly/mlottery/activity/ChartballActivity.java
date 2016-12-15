@@ -303,12 +303,12 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
                 } else {//有输入内容
                     if (CommonUtils.isLogin()) {//已登录华海
 
-                        sendMessage( mEditText.getText().toString(),null);
-                        // TODO 向会话列表发送输入内容
+                        // 向会话列表发送输入内容
                         EventBus.getDefault().post(new ChartReceive.DataBean.ChatHistoryBean(mEditText.getText().toString(),new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
                                 ,AppConstants.register.getData().getUser().getHeadIcon(),AppConstants.register.getData().getUser().getNickName())));
 
-                        EventBus.getDefault().post(new BarrageBean("http://pic.13322.com/icons/avatar/male/1.png", mEditText.getText().toString()));
+                        // 用户自己的头像URL发向弹幕
+                        EventBus.getDefault().post(new BarrageBean(AppConstants.register.getData().getUser().getHeadIcon(), mEditText.getText().toString()));
 
                         // 发送之后 清空输入框
                         mEditText.setText("");
@@ -364,49 +364,6 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
                 ll_emoji_content.setBackgroundResource(R.color.white);
                 break;
         }
-
-    }
-   //发送消息后台
-    private void sendMessage(String message ,String toUserId) {
-
-
-
-        Map<String, String> params = new HashMap<>();
-        params.put("sourceName", "android");
-        params.put("chatType", "football");
-        params.put("thirdId", mThirdId);
-        params.put("msgCode", "1");//1普通消息 2@消息 3系统消息 4在线人数 5进入聊天室
-        params.put("loginToken", AppConstants.register.getData().getLoginToken());
-        params.put("toUserId", "");
-        params.put("deviceId", AppConstants.deviceToken);
-        params.put("message ", message);
-        params.put("msgId", UUID.randomUUID().toString());
-        Log.i("zczxc","thirdId="+mThirdId);
-        Log.i("zczxc","loginToken="+ AppConstants.register.getData().getLoginToken());
-        Log.i("zczxc","deviceId="+AppConstants.deviceToken);
-        Log.i("zczxc","msgId="+ UUID.randomUUID().toString());
-        VolleyContentFast.requestJsonByGet(BaseURLs.MESSAGE_LIST, params,
-                new VolleyContentFast.ResponseSuccessListener<SendMessageBean>() {
-                    @Override
-                    public void onResponse(SendMessageBean receive) {
-                        if (!receive.getResult().equals("200")) {
-                            Log.i(TAG,"消息发送失败");
-                            return;
-                        }
-
-
-                    }
-                }, new VolleyContentFast.ResponseErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-
-                        Log.i(TAG,"消息发送失败");
-                    }
-                }, SendMessageBean.class
-        );
-
-
-
 
     }
 

@@ -8,24 +8,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.ChartballActivity;
-import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewAdapter;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
-import com.hhly.mlottery.frame.chartBallFragment.ChartBallReportDialogFragment;
-import com.hhly.mlottery.util.CyUtils;
-import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.bean.chart.ChartReceive;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.view.CircleImageView;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * desc:聊球记录adapter
@@ -39,17 +35,15 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
     public static AdapterListener mAdapterListener;
 
 
-        public ChartBallAdapter(Context context, List<ChartReceive.DataBean.ChatHistoryBean> data) {
+    public ChartBallAdapter(Context context, List<ChartReceive.DataBean.ChatHistoryBean> data) {
         this.mContext = context;
         this.mData = data;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View view;
         RecyclerView.ViewHolder holder = null;
-        System.out.println("xxxxx viewType: " + viewType);
         switch (viewType) {
             case 0:
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_char_ball_content, parent, false);
@@ -75,7 +69,6 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
 
     @Override
     public void onBindRecycleViewHolder(BaseRecyclerViewHolder viewHolder, int position) {
-
     }
 
     @Override
@@ -83,9 +76,8 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
         switch (getItemViewType(position)) {
             case 0:
                 ViewHolderMsg viewHolderMsg = (ViewHolderMsg) holder;
-                viewHolderMsg.receive_text.setText(mData.get(position).getMessage());
                 viewHolderMsg.tv_name.setText(mData.get(position).getFromUser().getUserNick());
-                Glide.with(mContext).load(mData.get(position).getFromUser().getUserLogo()).into(viewHolderMsg.bighead_view);
+                Glide.with(mContext).load(mData.get(position).getFromUser().getUserLogo()).placeholder(R.mipmap.center_head).into(viewHolderMsg.bighead_view);
                 final View v = viewHolderMsg.tv_name;
                 viewHolderMsg.bighead_view.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -93,12 +85,41 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                         showPopup(v, position);
                     }
                 });
+                boolean isRn = false;
+                int resource = -1;
+                for (Map.Entry<String, Integer> entry : AppConstants.localMap.entrySet()) {
+                    if (mData.get(position).getMessage().equals(entry.getKey())) {
+                        isRn = true;
+                        resource = entry.getValue();
+                    }
+                }
+                if (!isRn) {
+                    viewHolderMsg.receive_text.setText(mData.get(position).getMessage());
+                } else {
+                    if(resource != -1){
+                        viewHolderMsg.receive_image.setBackgroundResource(resource);
+                    }
+                }
                 break;
-            case 1:
+            case 1:// 自己
                 ViewHolderMe viewHolderMe = (ViewHolderMe) holder;
-                Glide.with(mContext).load(mData.get(position).getFromUser().getUserLogo()).into(viewHolderMe.my_bighead_view);
+                Glide.with(mContext).load(mData.get(position).getFromUser().getUserLogo()).placeholder(R.mipmap.center_head).into(viewHolderMe.my_bighead_view);
                 viewHolderMe.tv_nickname_me.setText(mData.get(position).getFromUser().getUserNick());
-                viewHolderMe.my_text.setText(mData.get(position).getMessage());
+                boolean isRn_me = false;
+                int resource_me = -1;
+                for (Map.Entry<String, Integer> entry : AppConstants.localMap.entrySet()) {
+                    if (mData.get(position).getMessage().equals(entry.getKey())) {
+                        isRn_me = true;
+                        resource_me = entry.getValue();
+                    }
+                }
+                if (!isRn_me) {
+                    viewHolderMe.my_text.setText(mData.get(position).getMessage());
+                } else {
+                    if(resource_me != -1){
+                        viewHolderMe.my_image.setBackgroundResource(resource_me);
+                    }
+                }
                 break;
         }
     }
@@ -116,14 +137,16 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
     // 其它消息ViewHolder
     class ViewHolderMsg extends RecyclerView.ViewHolder {
         TextView tv_name;
+        TextView receive_image;
         CircleImageView bighead_view;
-        private final TextView receive_text;
+        TextView receive_text;
 
         public ViewHolderMsg(View view) {
             super(view);
             tv_name = (TextView) view.findViewById(R.id.tv_nickname);
             bighead_view = (CircleImageView) view.findViewById(R.id.bighead_view);
             receive_text = (TextView) view.findViewById(R.id.receive_text);
+            receive_image = (TextView) view.findViewById(R.id.receive_image);
         }
     }
 
@@ -131,13 +154,15 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
     class ViewHolderMe extends RecyclerView.ViewHolder {
         TextView tv_nickname_me;
         TextView my_text;
-        private final CircleImageView my_bighead_view;
+        TextView my_image;
+        CircleImageView my_bighead_view;
 
         public ViewHolderMe(View itemView) {
             super(itemView);
             tv_nickname_me = (TextView) itemView.findViewById(R.id.tv_nickname_me);
             my_text = (TextView) itemView.findViewById(R.id.my_text);
             my_bighead_view = (CircleImageView) itemView.findViewById(R.id.my_bighead_view);
+            my_image = (TextView) itemView.findViewById(R.id.my_image);
         }
     }
 
@@ -159,11 +184,9 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
         popupView.findViewById(R.id.tv_popup_aite).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastTools.showQuick(mContext, "艾特");
                 mPopupWindow.dismiss();
-                // TODO  获取用户昵称 用蓝色字体颜色显示在输入框中
                 Intent intent = new Intent(mContext, ChartballActivity.class);
-                intent.putExtra("CALL_NAME","@"+mData.get(index)+"：");
+                intent.putExtra("CALL_NAME", "@" + mData.get(index).getFromUser().getUserNick() + "：");
                 mContext.startActivity(intent);
             }
         });
@@ -172,23 +195,18 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
         popupView.findViewById(R.id.tv_popup_jubao).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastTools.showQuick(mContext, "举报");
                 mPopupWindow.dismiss();
-                // TODO 弹出举报框 获取被举报昵称 和 自己的昵称显示在弹框中，并将举报内容提交到服务器
-
-                // TODO 需要传 被举报人ID、昵称、消息ID
-                showDialog(mData.get(index).getMsgId());
-
+                showDialog(mData.get(index).getMsgId(), mData.get(index).getFromUser().getUserId(), mData.get(index).getFromUser().getUserNick());
             }
         });
     }
 
     public interface AdapterListener {
-        void shwoDialog(String id);
+        void shwoDialog(String msgId, String toUserId, String toUserNick);
     }
 
-    public static void showDialog(String id) {
-        mAdapterListener.shwoDialog(id);
+    public static void showDialog(String msgId, String toUserId, String toUserNick) {
+        mAdapterListener.shwoDialog(msgId, toUserId, toUserNick);
     }
 
     public void setShowDialogOnClickListener(AdapterListener listener) {

@@ -2230,9 +2230,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             @Override
             public void onPageSelected(int position) {
                 isHindShow(position);
-                if (position != 5) {
-//                    appBarLayout.setExpanded(false);
-                    MyApp.getContext().sendBroadcast(new Intent("closeself"));
+                if (position == 5) {// 聊球界面禁用下拉刷新
+                    mRefreshLayout.setEnabled(false);
+                }else{
+                    mRefreshLayout.setEnabled(true);
                 }
             }
 

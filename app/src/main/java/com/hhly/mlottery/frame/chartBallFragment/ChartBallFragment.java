@@ -3,6 +3,9 @@ package com.hhly.mlottery.frame.chartBallFragment;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -11,26 +14,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.chartBallAdapter.ChartBallAdapter;
-import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
+import com.hhly.mlottery.bean.BarrageBean;
 import com.hhly.mlottery.bean.chart.ChartReceive;
 import com.hhly.mlottery.bean.chart.ChartRoom;
+import com.hhly.mlottery.bean.chart.SendMessageBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
-import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import de.greenrobot.event.EventBus;
 import io.github.rockerhieu.emojicon.EmojiconEditText;
@@ -44,8 +48,11 @@ import io.github.rockerhieu.emojicon.EmojiconEditText;
  */
 public class ChartBallFragment extends BaseWebSocketFragment implements View.OnClickListener, ChartBallAdapter.AdapterListener {
 
-    private final static String MATCH_TYPE = "type";         // 赛事类型
-    private final static String MATCH_THIRD_ID = "thirdId";  // 赛事ID
+    private static final int START_LOADING = 0;               // 开始加载状态
+    private static final int SUCCESS_LOADING = 1;             // 加载成功
+    private static final int ERROR_LOADING = 2;               // 加载失败
+    private static final String MATCH_TYPE = "type";         // 赛事类型
+    private static final String MATCH_THIRD_ID = "thirdId";  // 赛事ID
 
     private Activity mContext;                               // 上下文
     private View mView;                                      // 总布局
@@ -55,9 +62,10 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     private RecyclerView recycler_view;
     private ChartBallAdapter mAdapter;
     private ChartBallReportDialogFragment dialogFragment;
-    private EmojiconEditText et_emoji_input;
+    private ChartReceive mChartReceive;
     private List<List<ChartReceive.DataBean.ChatHistoryBean>> chartHistory;
     private List<ChartReceive.DataBean.ChatHistoryBean> historyBeen;
+    private ImageView iv_not_chart_image;
 
     public static ChartBallFragment newInstance(int type, String thirdId) {
         ChartBallFragment fragment = new ChartBallFragment();
@@ -88,6 +96,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         mView = inflater.inflate(R.layout.fragment_chartball, container, false);
         initView();
         intiData();
+        initEvent();
         return mView;
     }
 
@@ -95,7 +104,6 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         mEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (!CommonUtils.isLogin()) {
                     if (type == 1) {
                         ((BasketDetailsActivityTest) mContext).talkAboutBallLoginBasket();
@@ -108,84 +116,136 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     } else if (type == 0) {
                         ((FootballMatchDetailActivity) mContext).talkAboutBallSendFoot();
                     }
-
                 }
             }
         });
-
-//        mAdapter.setOnItemClickListener(new BaseRecyclerViewHolder.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View convertView, int position) {
-//                ToastTools.showQuick(mContext,"点击 ："+position);
-//            }
-//        });
     }
 
     private void initView() {
         mEditText = (EmojiconEditText) mView.findViewById(R.id.et_emoji_input);
         mEditText.setFocusable(false);
         mEditText.setFocusableInTouchMode(false);
-        InputMethodManager inputManager = (InputMethodManager) mEditText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.showSoftInput(mEditText, 0);
-
         recycler_view = (RecyclerView) mView.findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setStackFromEnd(false);
         layoutManager.setOrientation(OrientationHelper.VERTICAL);
         recycler_view.setLayoutManager(layoutManager);
-
-
-        //聊天输入框
-        et_emoji_input = (EmojiconEditText) mView.findViewById(R.id.et_emoji_input);
+        iv_not_chart_image = (ImageView) mView.findViewById(R.id.iv_not_chart_image);
 
         mView.findViewById(R.id.tv_send).setOnClickListener(this);
-
     }
 
     /*自定发送消息测试*/
     private void intiData() {
+        mHandler.sendEmptyMessage(START_LOADING);// 正在加载数据中
 
-        L.d("ddd", "加载数据");
-        // mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
+        String URL = "";
+        String chatType = "";
+        if (type == 0) {
+            URL = BaseURLs.MESSAGE_LIST_FOOTBALL;
+            chatType = "football";
+        } else if (type == 1) {
+            URL = BaseURLs.MESSAGE_LIST_BASKET;
+            chatType = "basketball";
+        }
 
         Map<String, String> params = new HashMap<>();
-        params.put("chatType", "football");
+        params.put("chatType", chatType);
         params.put("thirdId", mThirdId);
-        params.put("pageSize", "4");
+        params.put("pageSize", "30");
         params.put("slideType", "0");
 
-        //String url = "http://192.168.10.242:8181/mlottery/core/footballBallList.ballListOverview.do";
-        VolleyContentFast.requestJsonByGet(BaseURLs.MESSAGE_LIST, params,
+        VolleyContentFast.requestJsonByGet(URL, params,
                 new VolleyContentFast.ResponseSuccessListener<ChartReceive>() {
                     @Override
                     public void onResponse(ChartReceive receive) {
-                        if (!receive.getResult().equals("200")) {
-                            Log.i("sfsfdgdfgfdgfd", "sile");
-                            return;
-                        }
+                        if (receive.getResult().equals("200")) {
 
-                        historyBeen = receive.getData().getChatHistory();
-                        mAdapter = new ChartBallAdapter(mContext, receive.getData().getChatHistory());
-                        mAdapter.setShowDialogOnClickListener(ChartBallAdapter.mAdapterListener);
-                        recycler_view.setAdapter(mAdapter);
-                        if (historyBeen.size() != 0) {
-                            recycler_view.smoothScrollToPosition(historyBeen.size() - 1);
+                            mChartReceive = receive;
+
+                            mHandler.sendEmptyMessage(SUCCESS_LOADING);
+                        } else {
+                            mHandler.sendEmptyMessage(ERROR_LOADING);
                         }
-                        initEvent();
-                        //开启socket推送
-                        connectWebSocket();
-                        // isSocketStart = false;
-                        //mHandler.sendEmptyMessage(SUCCESS);
                     }
                 }, new VolleyContentFast.ResponseErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                        // mHandler.sendEmptyMessage(ERROR);
-                        Log.i("sfsfdgdfgfdgfd", "获取列表数据失败");
+                        mHandler.sendEmptyMessage(ERROR_LOADING);
                     }
                 }, ChartReceive.class
         );
     }
+
+    //发送消息后台
+    private void sendMessage(String message, String toUserId) {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("sourceName", "android");
+        params.put("chatType", "football");
+        params.put("thirdId", mThirdId);
+        params.put("msgCode", "1");//1普通消息 2@消息 3系统消息 4在线人数 5进入聊天室
+        params.put("loginToken", AppConstants.register.getData().getLoginToken());
+        params.put("toUserId", "");
+        params.put("deviceId", AppConstants.deviceToken);
+        params.put("message ", message);
+        params.put("msgId", UUID.randomUUID().toString());
+
+        VolleyContentFast.requestStringByGet(BaseURLs.MESSAGE_SEND_FOOTBALL, params,null,
+                new VolleyContentFast.ResponseSuccessListener<String>() {
+                    @Override
+                    public void onResponse(String receive) {
+                        System.out.println("xxxxx 发送返回stringJson:" + receive);
+                    }
+                }, new VolleyContentFast.ResponseErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+                        Log.i(TAG, "消息发送失败");
+                    }
+                });
+    }
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case START_LOADING:
+                    break;
+                case SUCCESS_LOADING:
+                    historyBeen = mChartReceive.getData().getChatHistory();
+                    mAdapter = new ChartBallAdapter(mContext, historyBeen);
+                    mAdapter.setShowDialogOnClickListener(ChartBallFragment.this);
+                    recycler_view.setAdapter(mAdapter);
+
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            SystemClock.sleep(1000);
+                            mContext.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    recycler_view.smoothScrollToPosition(historyBeen.size() - 1);
+                                }
+                            });
+                        }
+                    }.start();
+
+                    if (historyBeen.size() == 0) {
+                        iv_not_chart_image.setVisibility(View.VISIBLE);
+                    } else {
+                        iv_not_chart_image.setVisibility(View.GONE);
+                    }
+
+                    //开启socket推送
+                    connectWebSocket();
+                    break;
+                case ERROR_LOADING:
+                    // TODO 显示失败界面
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onAttach(Context context) {
@@ -194,11 +254,12 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     }
 
     public void onEventMainThread(ChartReceive.DataBean.ChatHistoryBean contentEntitiy) {
-        //   System.out.println("xxxxx 足球收到了：" + contentEntitiy.getContent());
         // TODO 处理收到的数据
-        historyBeen.add(contentEntitiy);
-        mAdapter.notifyDataSetChanged();
-        recycler_view.smoothScrollToPosition(historyBeen.size() - 1);
+//        historyBeen.add(contentEntitiy);
+//        mAdapter.notifyDataSetChanged();
+//        recycler_view.smoothScrollToPosition(historyBeen.size() - 1);
+
+        sendMessage(contentEntitiy.getMessage(), null);
     }
 
     @Override
@@ -208,8 +269,8 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     }
 
     @Override
-    public void shwoDialog(String id) {
-        dialogFragment = ChartBallReportDialogFragment.newInstance("asa", id, "hhly982121", "猪");
+    public void shwoDialog(String msgId, String toUserId, String toUserNick) {
+        dialogFragment = ChartBallReportDialogFragment.newInstance(msgId, AppConstants.register.getData().getUser().getNickName(), toUserId, toUserNick);
         if (!dialogFragment.isVisible()) {
             dialogFragment.show(getChildFragmentManager(), "chartballDialog");
         }
@@ -217,17 +278,17 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
     @Override
     protected void onTextResult(String text) {
-        Log.i("sdasda", "sdad" + text.toString());
-
+        System.out.println("xxxxx 聊球推送：" + text);
         ChartRoom chartRoom = JSON.parseObject(text, ChartRoom.class);
         ChartReceive.DataBean.ChatHistoryBean chartbean = new ChartReceive.DataBean.ChatHistoryBean(chartRoom.getData().getMessage(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(chartRoom.getData().getFromUser().getUserId()
                 , chartRoom.getData().getFromUser().getUserLogo(), chartRoom.getData().getFromUser().getUserNick()));
         historyBeen.add(chartbean);
         mAdapter.notifyDataSetChanged();
         recycler_view.smoothScrollToPosition(historyBeen.size() - 1);
-        /*     Log.i("sdasd","chartReceive"+chartRoom.getData().getFromUser().getUserNick());
-        Log.i("sdasd","chartReceive"+chartRoom.getData().getFromUser().getUserId());
-        Log.i("sdasd","chartReceive"+chartRoom.getData().getFromUser().getUserLogo());*/
+        iv_not_chart_image.setVisibility(View.GONE);
+
+        // 收到消息，显示弹幕
+        EventBus.getDefault().post(new BarrageBean(chartbean.getFromUser().getUserLogo(), chartbean.getMessage()));
     }
 
     @Override

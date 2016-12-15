@@ -14,16 +14,15 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:paddingRight="20dp">
+        android:paddingRight="10dp">
 
         <TextView
             android:id="@+id/tv_nickname_me"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:paddingLeft="5dp"
-            android:text="hhly988888"
-            android:textColor="#0085e1"
+            tools:text="hhly988888"
+            android:textColor="@color/mdy_999"
             android:textSize="15sp" />
 
         <!--用户发送内容-->
@@ -40,7 +39,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 emojicon:emojiconSize="20sp"
+                android:visibility="visible"
+                android:textColor="@color/mdy_333"
                 tools:text="test" />
+
+            <TextView
+                android:id="@+id/my_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                tools:background="@mipmap/chart_ball_jinggaoni"/>
 
         </LinearLayout>
 
@@ -50,7 +58,7 @@
         android:id="@+id/my_bighead_view"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@mipmap/bighead" />
+        tools:src="@mipmap/bighead" />
 </LinearLayout>
 
 

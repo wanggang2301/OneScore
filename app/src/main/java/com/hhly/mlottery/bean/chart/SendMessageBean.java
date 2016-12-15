@@ -39,7 +39,7 @@ public class SendMessageBean {
 
         private int resultCode;
         private String resultMsg;
-        private Object resultObj;
+        private String resultObj;
 
         public int getResultCode() {
             return resultCode;
@@ -57,11 +57,11 @@ public class SendMessageBean {
             this.resultMsg = resultMsg;
         }
 
-        public Object getResultObj() {
+        public String getResultObj() {
             return resultObj;
         }
 
-        public void setResultObj(Object resultObj) {
+        public void setResultObj(String resultObj) {
             this.resultObj = resultObj;
         }
     }

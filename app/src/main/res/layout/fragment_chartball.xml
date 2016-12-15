@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:emojicon="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -100,18 +99,6 @@
         </LinearLayout>
     </RelativeLayout>
 
-
-    <!--<ScrollView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:scrollbars="none">-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:orientation="vertical">-->
-
-
     <!--聊天内容部分-->
     <FrameLayout
         android:id="@+id/fl_chart_content"
@@ -128,6 +115,20 @@
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_not_chart_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:src="@mipmap/chart_ball_null_bg"/>
 
         </FrameLayout>
 
@@ -204,73 +205,6 @@
                     android:text="@string/comment_send"
                     android:textColor="#fff" />
             </LinearLayout>
-
-            <!--<View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="#dddddd" />
-
-            <LinearLayout
-                android:id="@+id/ll_key"
-                android:layout_width="match_parent"
-                android:layout_height="265dp"
-                android:orientation="horizontal"
-                android:visibility="gone" />
-
-            &lt;!&ndash;表情展示窗口&ndash;&gt;
-            <LinearLayout
-                android:id="@+id/ll_gallery_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                &lt;!&ndash;表情容器&ndash;&gt;
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:background="#dddddd">
-
-                    <android.support.v4.view.ViewPager
-                        android:id="@+id/chart_viewPager"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </FrameLayout>
-
-                &lt;!&ndash;底下表情种类&ndash;&gt;
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/iv_select_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:background="#dddddd"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:src="@mipmap/chart_ball_local_icon" />
-
-                    <ImageView
-                        android:id="@+id/iv_select_emoji"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:src="@mipmap/chart_ball_emoji_icon" />
-
-                </LinearLayout>
-
-            </LinearLayout>-->
-
         </LinearLayout>
     </RelativeLayout>
-
-
-    <!--</LinearLayout>-->
-    <!--</ScrollView>-->
-
 </LinearLayout>
