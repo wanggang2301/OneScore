@@ -477,18 +477,21 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="2dp"
-                android:visibility="visible">
+                android:visibility="gone">
 
-                <View
-                    android:layout_width="5dp"
-                    android:layout_height="5dp"
-                    android:background="@drawable/red_point"></View>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:background="@mipmap/video_gif" />
+
+                <View
+                    android:id="@+id/red_point"
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_marginLeft="-3dp"
+                    android:background="@drawable/red_point"></View>
 
                 <TextView
                     android:layout_width="wrap_content"

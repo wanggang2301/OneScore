@@ -60,6 +60,7 @@ import com.hhly.mlottery.util.FootballLiveTextComparator;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.NetworkUtils;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.StringUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -250,7 +251,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private final static int PERIOD_20 = 1000 * 60 * 20;//刷新周期二十分钟
     private final static int PERIOD_5 = 1000 * 60 * 5;//刷新周期五分钟
 
-    private final static int GIFPERIOD_2 = 1000 * 60 * 2;//刷新周期五分钟
+    private final static int GIFPERIOD_2 = 1000 * 60 * 2;//刷新周期两分钟
 
     /**
      * 赛前轮询周期
@@ -306,6 +307,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private CountDown countDown;
     private final static int MILLIS_INFuture = 3000;//倒计时3秒
+    private final static String FOOTBALL_GIF = "football_gif";
+
+    private View red_point;
 
 
     @Override
@@ -1963,6 +1967,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     int type = com.hhly.mlottery.util.NetworkUtils.getCurNetworkType(getApplicationContext());
                     if (type == 1) {
                         L.d("zxcvbn", "WIFI");
+                        hideGifRedPoint();
                         Intent intent = new Intent(FootballMatchDetailActivity.this, PlayHighLightActivity.class);
                         intent.putExtra("thirdId", mThirdId);
                         intent.putExtra("match_type", MATCH_TYPE);
@@ -1993,6 +1998,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             builder.setPositiveButton(getApplicationContext().getResources().getString(R.string.video_high_light_continue_open), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    hideGifRedPoint();
                     dialog.dismiss();
                     Intent intent = new Intent(FootballMatchDetailActivity.this, PlayHighLightActivity.class);
                     intent.putExtra("thirdId", mThirdId);
@@ -2520,6 +2526,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         btn_showGif.setOnClickListener(this);
 
         rl_gif_notice = (RelativeLayout) findViewById(R.id.rl_gif_notice);
+        red_point = (View) findViewById(R.id.red_point);
     }
 
 
@@ -2636,6 +2643,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     if (jsonObject.getData() != 0) {
                         btn_showGif.setVisibility(View.VISIBLE);
                         if (isFirstShowGif) {  //第一次显示
+                            initGifRedPoint();
                             L.d("zxcvbn", "第一次进入------------");
                             gifCount = jsonObject.getData();
                             isFirstShowGif = false;
@@ -2643,6 +2651,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                             L.d("zxcvbn", "第二次进入------------");
                             if (jsonObject.getData() > gifCount) { //有新的gif出現
                                 L.d("zxcvbn", "有新的gif出現------------");
+                                showGifRedPoint();
                                 gifCount = jsonObject.getData();
                                 rl_gif_notice.setVisibility(View.VISIBLE);
                                 countDown.start();
@@ -2664,5 +2673,24 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 //  }
             }
         }, DetailsCollectionCountBean.class);
+    }
+
+
+    private void initGifRedPoint() {
+        if (PreferenceUtil.getBoolean(FOOTBALL_GIF, true)) {
+            red_point.setVisibility(View.VISIBLE);
+        } else {
+            red_point.setVisibility(View.GONE);
+        }
+    }
+
+    private void showGifRedPoint() {
+        PreferenceUtil.commitBoolean(FOOTBALL_GIF, true);
+        red_point.setVisibility(View.VISIBLE);
+    }
+
+    private void hideGifRedPoint() {
+        PreferenceUtil.commitBoolean(FOOTBALL_GIF, false);
+        red_point.setVisibility(View.GONE);
     }
 }

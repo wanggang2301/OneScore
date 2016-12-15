@@ -23,18 +23,13 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.PlayHighLightActivity;
 import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
-import com.hhly.mlottery.bean.footballDetails.DetailsCollectionCountBean;
 import com.hhly.mlottery.bean.websocket.DataEntity;
 import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
-import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.NetworkUtils;
-import com.hhly.mlottery.util.net.VolleyContentFast;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.hhly.mlottery.util.PreferenceUtil;
 
 /**
  * Created by Administrator on 2016/10/12.
@@ -81,6 +76,9 @@ public class BasketDetailsHeadFragment extends Fragment {
     private LinearLayout btn_showGif;
     private final static String MATCH_TYPE = "2"; //篮球
 
+    private View red_point;
+
+    private final static String BASKETBALL_GIF = "basketball_gif";
 
     public static BasketDetailsHeadFragment newInstance() {
 
@@ -154,12 +152,12 @@ public class BasketDetailsHeadFragment extends Fragment {
 
         btn_showGif = (LinearLayout) mView.findViewById(R.id.btn_showGif);
 
-
+        red_point = (View) mView.findViewById(R.id.red_point);
     }
 
 
     private void initGifData() {
-        getCollectionCount();
+        //getCollectionCount();
 
         btn_showGif.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,6 +165,9 @@ public class BasketDetailsHeadFragment extends Fragment {
                 if (NetworkUtils.isConnected(getActivity())) {
                     int type = com.hhly.mlottery.util.NetworkUtils.getCurNetworkType(getActivity());
                     if (type == 1) {
+
+                        hideGifRedPoint();
+
                         L.d("zxcvbn", "WIFI");
                         Intent intent = new Intent(getActivity(), PlayHighLightActivity.class);
                         intent.putExtra("thirdId", BasketDetailsActivityTest.mThirdId);
@@ -187,6 +188,19 @@ public class BasketDetailsHeadFragment extends Fragment {
     }
 
 
+    private void hideGifRedPoint() {
+        PreferenceUtil.commitBoolean(BASKETBALL_GIF, false);
+        red_point.setVisibility(View.GONE);
+    }
+
+    public void setBtn_showGifVisible(int visible) {
+        btn_showGif.setVisibility(visible);
+    }
+
+    public void setRedPointVisible(int visible) {
+        red_point.setVisibility(visible);
+    }
+
     /**
      * 当前连接的网络提示
      */
@@ -199,6 +213,7 @@ public class BasketDetailsHeadFragment extends Fragment {
             builder.setPositiveButton(getActivity().getResources().getString(R.string.video_high_light_continue_open), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    hideGifRedPoint();
                     dialog.dismiss();
                     Intent intent = new Intent(getActivity(), PlayHighLightActivity.class);
                     intent.putExtra("thirdId", BasketDetailsActivityTest.mThirdId);
@@ -221,7 +236,7 @@ public class BasketDetailsHeadFragment extends Fragment {
     }
 
 
-    private void getCollectionCount() {
+    /*private void getCollectionCount() {
         Map<String, String> map = new HashMap<>();
         map.put("matchType", MATCH_TYPE);
         map.put("thirdId", BasketDetailsActivityTest.mThirdId);  //399381
@@ -243,7 +258,7 @@ public class BasketDetailsHeadFragment extends Fragment {
                 btn_showGif.setVisibility(View.GONE);
             }
         }, DetailsCollectionCountBean.class);
-    }
+    }*/
 
 //    /**
 //     * 请求网络数据
