@@ -53,6 +53,7 @@ import com.hhly.mlottery.frame.footframe.IntelligenceFragment;
 import com.hhly.mlottery.frame.footframe.OddsFragment;
 import com.hhly.mlottery.frame.footframe.StatisticsFragment;
 import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFocusEventBusEntity;
+import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.FootballLiveTextComparator;
@@ -303,6 +304,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private int gifCount = 0;
 
+    private CountDown countDown;
+    private final static int MILLIS_INFuture = 3000;//倒计时3秒
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -419,7 +423,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         iv_back.setOnClickListener(this);
         iv_setting.setOnClickListener(this);
-
     }
 
     @Override
@@ -546,8 +549,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         matchLive = mMatchDetail.getMatchInfo().getMatchLive();
                         allMatchLiveMsgId = new ArrayList<>();
 
-                        //是否显示精彩瞬间
-                        getCollectionCount();
                         //完场
                         if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
 
@@ -573,6 +574,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                             head_guest_name.setText(matchDetail.getGuestTeamInfo().getName());
                             head_score.setText(mMatchDetail.getHomeTeamInfo().getScore() + ":" + mMatchDetail.getGuestTeamInfo().getScore());
                             mKeepTime = "5400000";//90分钟的毫秒数
+
+
+                            //是否显示精彩瞬间
+                            getCollectionCount();
 
                             mDetailsRollballFragment.refreshMatch(matchDetail, DetailsRollballFragment.DETAILSROLLBALL_TYPE_ED);
 
@@ -632,6 +637,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                                 mPreStatus = "1";
                             }
+
+
+                            //是否显示精彩瞬间
+                            pollingGifCount();
 
                             mDetailsRollballFragment.refreshMatch(matchDetail, DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING);
 
@@ -723,8 +732,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
             matchLive = mMatchDetail.getMatchInfo().getMatchLive();
             allMatchLiveMsgId = new ArrayList<>();
-            //是否显示精彩瞬间
-            getCollectionCount();
+
 
             //完场
             if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
@@ -757,18 +765,15 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                 mKeepTime = "5400000";//90分钟的毫秒数
 
+                //精彩瞬间
+                getCollectionCount();
 
                 //直播事件
                 mStatisticsFragment.setEventMatchLive(mMatchDetail.getLiveStatus(), eventMatchTimeLiveList);
-
                 //走势图
                 mStatisticsFragment.finishMatchRequest();
-
-
 //                mTalkAboutBallFragment.setClickableLikeBtn(false);
-
                 mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_ED, matchDetail);
-
 
             } else if (ONLIVE.equals(mMatchDetail.getLiveStatus())) { //未完场头部
 
@@ -815,6 +820,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     isMatchStart = false;
                 } else {
                 }
+
+                //精彩瞬间
+                pollingGifCount();
 
                 mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING, matchDetail);
 
@@ -2148,6 +2156,19 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
             }
         });
+
+
+        countDown = new CountDown(MILLIS_INFuture, 1000, new CountDown.CountDownCallback() {
+            @Override
+            public void onFinish() {
+                rl_gif_notice.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                //  L.d("zxcvbn", "countdown===" + millisUntilFinished / 1000 + "秒");
+            }
+        });
     }
 
     /**
@@ -2581,11 +2602,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             gifTimerTask = new TimerTask() {
                 @Override
                 public void run() {
-                    L.d("zxcvbn", "run-------------");
                     getCollectionCount();
                 }
             };
-            gifTimer.schedule(gifTimerTask, 5000, GIFPERIOD_2);
+
+            gifTimer.schedule(gifTimerTask, 2000, GIFPERIOD_2);
+            //gifTimer.schedule(gifTimerTask, 5000, 20000);
         }
     }
 
@@ -2612,30 +2634,34 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             public void onResponse(DetailsCollectionCountBean jsonObject) {
                 if (200 == jsonObject.getResult()) {
                     if (jsonObject.getData() != 0) {
+                        btn_showGif.setVisibility(View.VISIBLE);
                         if (isFirstShowGif) {  //第一次显示
-                            btn_showGif.setVisibility(View.VISIBLE);
-                            isFirstShowGif = false;
+                            L.d("zxcvbn", "第一次进入------------");
                             gifCount = jsonObject.getData();
+                            isFirstShowGif = false;
                         } else {
+                            L.d("zxcvbn", "第二次进入------------");
                             if (jsonObject.getData() > gifCount) { //有新的gif出現
-
+                                L.d("zxcvbn", "有新的gif出現------------");
+                                gifCount = jsonObject.getData();
                                 rl_gif_notice.setVisibility(View.VISIBLE);
-
+                                countDown.start();
                             }
                         }
                     } else {
-                        if (isFirstShowGif) {
-                            btn_showGif.setVisibility(View.GONE);
-                        }
+                        L.d("zxcvbn", "没有gif------------");
+                        isFirstShowGif = false;
+                        btn_showGif.setVisibility(View.GONE);
+                        // }
                     }
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                if (isFirstShowGif) {
-                    btn_showGif.setVisibility(View.GONE);
-                }
+                //   if (isFirstShowGif) {
+                //      btn_showGif.setVisibility(View.GONE);
+                //  }
             }
         }, DetailsCollectionCountBean.class);
     }
