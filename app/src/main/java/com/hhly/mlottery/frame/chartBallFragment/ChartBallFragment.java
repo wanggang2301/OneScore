@@ -179,23 +179,25 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
     //发送消息后台
     private void sendMessage(String message, String toUserId) {
+        System.out.println("xxxxx 发送的开始提交");
+        System.out.println("xxxxx message: " + message);
 
         Map<String, String> params = new HashMap<>();
         params.put("sourceName", "android");
         params.put("chatType", "football");
+        params.put("message", message);
         params.put("thirdId", mThirdId);
         params.put("msgCode", "1");//1普通消息 2@消息 3系统消息 4在线人数 5进入聊天室
         params.put("loginToken", AppConstants.register.getData().getLoginToken());
         params.put("toUserId", "");
         params.put("deviceId", AppConstants.deviceToken);
-        params.put("message ", message);
         params.put("msgId", UUID.randomUUID().toString());
 
-        VolleyContentFast.requestStringByGet(BaseURLs.MESSAGE_SEND_FOOTBALL, params,null,
-                new VolleyContentFast.ResponseSuccessListener<String>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.MESSAGE_SEND_FOOTBALL, params,
+                new VolleyContentFast.ResponseSuccessListener<SendMessageBean>() {
                     @Override
-                    public void onResponse(String receive) {
-                        System.out.println("xxxxx 发送返回stringJson:" + receive);
+                    public void onResponse(SendMessageBean receive) {
+                        System.out.println("xxxxx 发送返回stringJson:" + receive.getData());
                     }
                 }, new VolleyContentFast.ResponseErrorListener() {
                     @Override
@@ -203,7 +205,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
                         Log.i(TAG, "消息发送失败");
                     }
-                });
+                },SendMessageBean.class);
     }
 
     private Handler mHandler = new Handler() {
@@ -255,10 +257,22 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
     public void onEventMainThread(ChartReceive.DataBean.ChatHistoryBean contentEntitiy) {
         // TODO 处理收到的数据
-//        historyBeen.add(contentEntitiy);
-//        mAdapter.notifyDataSetChanged();
-//        recycler_view.smoothScrollToPosition(historyBeen.size() - 1);
+        historyBeen.add(contentEntitiy);
+        mAdapter.notifyDataSetChanged();
+        new Thread() {
+            @Override
+            public void run() {
+                SystemClock.sleep(500);
+                mContext.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        recycler_view.smoothScrollToPosition(historyBeen.size() - 1);
+                    }
+                });
+            }
+        }.start();
 
+        System.out.println("xxxxx 发送的是： " + contentEntitiy.getMessage());
         sendMessage(contentEntitiy.getMessage(), null);
     }
 
@@ -280,15 +294,29 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     protected void onTextResult(String text) {
         System.out.println("xxxxx 聊球推送：" + text);
         ChartRoom chartRoom = JSON.parseObject(text, ChartRoom.class);
+
         ChartReceive.DataBean.ChatHistoryBean chartbean = new ChartReceive.DataBean.ChatHistoryBean(chartRoom.getData().getMessage(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(chartRoom.getData().getFromUser().getUserId()
                 , chartRoom.getData().getFromUser().getUserLogo(), chartRoom.getData().getFromUser().getUserNick()));
-        historyBeen.add(chartbean);
-        mAdapter.notifyDataSetChanged();
-        recycler_view.smoothScrollToPosition(historyBeen.size() - 1);
-        iv_not_chart_image.setVisibility(View.GONE);
+        if(!AppConstants.register.getData().getUser().getUserId().equals(chartbean.getFromUser().getUserId())){
+            historyBeen.add(chartbean);
+            mAdapter.notifyDataSetChanged();
+            new Thread() {
+                @Override
+                public void run() {
+                    SystemClock.sleep(1000);
+                    mContext.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            recycler_view.smoothScrollToPosition(historyBeen.size() - 1);
+                        }
+                    });
+                }
+            }.start();
+            iv_not_chart_image.setVisibility(View.GONE);
 
-        // 收到消息，显示弹幕
-        EventBus.getDefault().post(new BarrageBean(chartbean.getFromUser().getUserLogo(), chartbean.getMessage()));
+            // 收到消息，显示弹幕
+            EventBus.getDefault().post(new BarrageBean(chartbean.getFromUser().getUserLogo(), chartbean.getMessage()));
+        }
     }
 
     @Override
