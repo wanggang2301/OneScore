@@ -12,12 +12,16 @@ import android.widget.AdapterView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.chartBallAdapter.LocalGridAdapter;
+import com.hhly.mlottery.bean.BarrageBean;
+import com.hhly.mlottery.bean.chart.ChartReceive;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.widget.MyGridView;
 
 import java.util.ArrayList;
 import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * desc:本地表情fragment
@@ -66,7 +70,14 @@ public class LocalFragment extends Fragment {
                 for (Map.Entry<String, Integer> entry : AppConstants.localMap.entrySet()) {
                     if (entry.getValue().equals(mData.get(i))) {
                         // TODO 此处点击之后直接发送消息
-                        ToastTools.showQuick(mContext, entry.getKey());
+                        // 向会话列表发送输入内容
+                        EventBus.getDefault().post(new ChartReceive.DataBean.ChatHistoryBean(entry.getKey(),new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
+                                ,AppConstants.register.getData().getUser().getHeadIcon(),AppConstants.register.getData().getUser().getNickName())));
+
+                        // 用户自己的头像URL发向弹幕
+                        EventBus.getDefault().post(new BarrageBean(AppConstants.register.getData().getUser().getHeadIcon(),entry.getKey()));
+
+                        return;
                     }
                 }
             }
