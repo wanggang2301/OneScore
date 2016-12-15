@@ -249,6 +249,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private final static int PERIOD_20 = 1000 * 60 * 20;//刷新周期二十分钟
     private final static int PERIOD_5 = 1000 * 60 * 5;//刷新周期五分钟
 
+    private final static int GIFPERIOD_2 = 1000 * 60 * 2;//刷新周期五分钟
+
     /**
      * 赛前轮询周期
      */
@@ -290,6 +292,18 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private LinearLayout btn_showGif;
 
+
+    private Timer gifTimer;
+
+    private TimerTask gifTimerTask;
+
+    private boolean isFirstShowGif = true;
+
+    private RelativeLayout rl_gif_notice;
+
+    private int gifCount = 0;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (getIntent().getExtras() != null) {
@@ -307,7 +321,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         MobclickAgent.openActivityDurationTrack(false);
 
         this.mContext = getApplicationContext();
-
 
         L.e(TAG, "mThirdId = " + mThirdId);
         initHeadView();
@@ -1079,8 +1092,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         if (mReloadTimer != null) {
             mReloadTimer.cancel();
             mReloadTimer.purge();
-
         }
+
+        closePollingGifCount();
 
     }
 
@@ -2107,29 +2121,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
 
     private void eventBusPost() {
-      /*  if (currentFragmentId == IMMEDIA_FRAGMENT) {
-            if (ImmediateFragment.imEventBus != null) {
-                ImmediateFragment.imEventBus.post("");
-            }
-        } else if (currentFragmentId == RESULT_FRAGMENT) {
-
-            EventBus.getDefault().post(new ScoresMatchFocusEventBusEntity(currentFragmentId));
-            //if (ResultFragment.resultEventBus != null) {
-            //     ResultFragment.resultEventBus.post("");
-            // }
-        } else if (currentFragmentId == SCHEDULE_FRAGMENT) {
-           *//* if (ScheduleFragment.schEventBus != null) {
-                ScheduleFragment.schEventBus.post("");
-            }*//*
-            EventBus.getDefault().post(new ScoresMatchFocusEventBusEntity(currentFragmentId));
-
-        } else if (currentFragmentId == FOCUS_FRAGMENT) {
-            if (FocusFragment.focusEventBus != null) {
-                FocusFragment.focusEventBus.post("");
-            }
-        }*/
         EventBus.getDefault().post(new ScoresMatchFocusEventBusEntity(currentFragmentId));
-
     }
 
 
@@ -2505,6 +2497,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         mMatchType2 = (TextView) findViewById(R.id.football_match_detail_matchtype2);
         btn_showGif = (LinearLayout) findViewById(R.id.btn_showGif);
         btn_showGif.setOnClickListener(this);
+
+        rl_gif_notice = (RelativeLayout) findViewById(R.id.rl_gif_notice);
     }
 
 
@@ -2581,6 +2575,33 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     }
 
 
+    private void pollingGifCount() {
+        if (gifTimer == null) {
+            gifTimer = new Timer();
+            gifTimerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    L.d("zxcvbn", "run-------------");
+                    getCollectionCount();
+                }
+            };
+            gifTimer.schedule(gifTimerTask, 5000, GIFPERIOD_2);
+        }
+    }
+
+    private void closePollingGifCount() {
+        if (gifTimer != null) {
+            gifTimerTask.cancel();
+            gifTimer.cancel();
+            gifTimer.purge();
+            gifTimerTask = null;
+            gifTimer = null;
+        }
+    }
+
+    /**
+     * 获取gif数量
+     */
     private void getCollectionCount() {
         Map<String, String> map = new HashMap<>();
         map.put("matchType", MATCH_TYPE);
@@ -2591,16 +2612,30 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             public void onResponse(DetailsCollectionCountBean jsonObject) {
                 if (200 == jsonObject.getResult()) {
                     if (jsonObject.getData() != 0) {
-                        btn_showGif.setVisibility(View.VISIBLE);
+                        if (isFirstShowGif) {  //第一次显示
+                            btn_showGif.setVisibility(View.VISIBLE);
+                            isFirstShowGif = false;
+                            gifCount = jsonObject.getData();
+                        } else {
+                            if (jsonObject.getData() > gifCount) { //有新的gif出現
+
+                                rl_gif_notice.setVisibility(View.VISIBLE);
+
+                            }
+                        }
                     } else {
-                        btn_showGif.setVisibility(View.GONE);
+                        if (isFirstShowGif) {
+                            btn_showGif.setVisibility(View.GONE);
+                        }
                     }
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                btn_showGif.setVisibility(View.GONE);
+                if (isFirstShowGif) {
+                    btn_showGif.setVisibility(View.GONE);
+                }
             }
         }, DetailsCollectionCountBean.class);
     }
