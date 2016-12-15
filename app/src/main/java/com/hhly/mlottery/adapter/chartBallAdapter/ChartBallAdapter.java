@@ -35,7 +35,6 @@ import java.util.List;
 public class ChartBallAdapter extends BaseRecyclerViewAdapter {
     Context mContext;
     List<ChartReceive.DataBean.ChatHistoryBean> mData;
-    List<String> mData;
     private PopupWindow mPopupWindow;
     public static AdapterListener mAdapterListener;
 
@@ -87,9 +86,8 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                 viewHolderMsg.receive_text.setText(mData.get(position).getMessage());
                 viewHolderMsg.tv_name.setText(mData.get(position).getFromUser().getUserNick());
                 Glide.with(mContext).load(mData.get(position).getFromUser().getUserLogo()).into(viewHolderMsg.bighead_view);
-                viewHolderMsg.tv_name.setText(mData.get(position));
                 final View v = viewHolderMsg.tv_name;
-                viewHolderMsg.iv_user_icon.setOnClickListener(new View.OnClickListener() {
+                viewHolderMsg.bighead_view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         showPopup(v, position);
@@ -107,7 +105,6 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
 
     @Override
     public int getRecycleViewItemType(int position) {
-        // TODO 显示返回item类型  如果为自己的id，则返回1
         if (mData.get(position).getFromUser().getUserId().equals(AppConstants.register.getData().getUser().getUserId())) {
             return 1;
         } else {
@@ -180,7 +177,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                 // TODO 弹出举报框 获取被举报昵称 和 自己的昵称显示在弹框中，并将举报内容提交到服务器
 
                 // TODO 需要传 被举报人ID、昵称、消息ID
-                showDialog(mData.get(index));
+                showDialog(mData.get(index).getMsgId());
 
             }
         });

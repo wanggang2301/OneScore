@@ -2,7 +2,6 @@ package com.hhly.mlottery.frame.chartBallFragment;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,12 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.PopupWindow;
 
 import com.alibaba.fastjson.JSON;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
@@ -27,24 +23,17 @@ import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.chart.ChartReceive;
 import com.hhly.mlottery.bean.chart.ChartRoom;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.frame.footframe.eventbus.ChartBallContentEntitiy;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 import io.github.rockerhieu.emojicon.EmojiconEditText;
-
-import static android.content.Context.INPUT_METHOD_SERVICE;
 
 
 /**
@@ -53,7 +42,7 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
  * 作者：tangrr_107
  * 时间：2016/12/6
  */
-public class ChartBallFragment extends BaseWebSocketFragment implements View.OnClickListener, ChartBallAdapter.AdapterListener{
+public class ChartBallFragment extends BaseWebSocketFragment implements View.OnClickListener, ChartBallAdapter.AdapterListener {
 
     private final static String MATCH_TYPE = "type";         // 赛事类型
     private final static String MATCH_THIRD_ID = "thirdId";  // 赛事ID
@@ -88,7 +77,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
             mThirdId = getArguments().getString(MATCH_THIRD_ID);
         }
         setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic("USER.topic.chatroom.football"+mThirdId);
+        setTopic("USER.topic.chatroom.football" + mThirdId);
         EventBus.getDefault().register(this);
         super.onCreate(savedInstanceState);
     }
@@ -124,12 +113,12 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
             }
         });
 
-        mAdapter.setOnItemClickListener(new BaseRecyclerViewHolder.OnItemClickListener() {
-            @Override
-            public void onItemClick(View convertView, int position) {
-                ToastTools.showQuick(mContext,"点击 ："+position);
-            }
-        });
+//        mAdapter.setOnItemClickListener(new BaseRecyclerViewHolder.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View convertView, int position) {
+//                ToastTools.showQuick(mContext,"点击 ："+position);
+//            }
+//        });
     }
 
     private void initView() {
@@ -146,20 +135,15 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         recycler_view.setLayoutManager(layoutManager);
 
 
-
-
         //聊天输入框
         et_emoji_input = (EmojiconEditText) mView.findViewById(R.id.et_emoji_input);
 
         mView.findViewById(R.id.tv_send).setOnClickListener(this);
 
     }
+
     /*自定发送消息测试*/
     private void intiData() {
-
-        if (getActivity() == null) {
-            return;
-        }
 
         L.d("ddd", "加载数据");
         // mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
@@ -176,14 +160,17 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     @Override
                     public void onResponse(ChartReceive receive) {
                         if (!receive.getResult().equals("200")) {
-                            Log.i("sfsfdgdfgfdgfd","sile");
+                            Log.i("sfsfdgdfgfdgfd", "sile");
                             return;
                         }
 
                         historyBeen = receive.getData().getChatHistory();
-                        mAdapter = new ChartBallAdapter(mContext,receive.getData().getChatHistory());
+                        mAdapter = new ChartBallAdapter(mContext, receive.getData().getChatHistory());
+                        mAdapter.setShowDialogOnClickListener(ChartBallAdapter.mAdapterListener);
                         recycler_view.setAdapter(mAdapter);
-                        recycler_view.smoothScrollToPosition(historyBeen.size()-1);
+                        if (historyBeen.size() != 0) {
+                            recycler_view.smoothScrollToPosition(historyBeen.size() - 1);
+                        }
                         initEvent();
                         //开启socket推送
                         connectWebSocket();
@@ -194,7 +181,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                         // mHandler.sendEmptyMessage(ERROR);
-                        Log.i("sfsfdgdfgfdgfd","获取列表数据失败");
+                        Log.i("sfsfdgdfgfdgfd", "获取列表数据失败");
                     }
                 }, ChartReceive.class
         );
@@ -207,7 +194,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     }
 
     public void onEventMainThread(ChartReceive.DataBean.ChatHistoryBean contentEntitiy) {
-     //   System.out.println("xxxxx 足球收到了：" + contentEntitiy.getContent());
+        //   System.out.println("xxxxx 足球收到了：" + contentEntitiy.getContent());
         // TODO 处理收到的数据
         historyBeen.add(contentEntitiy);
         mAdapter.notifyDataSetChanged();
@@ -222,19 +209,19 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
     @Override
     public void shwoDialog(String id) {
-        dialogFragment = ChartBallReportDialogFragment.newInstance("asa",id,"hhly982121","猪");
-        if(!dialogFragment.isVisible()){
-            dialogFragment.show(getChildFragmentManager(),"chartballDialog");
+        dialogFragment = ChartBallReportDialogFragment.newInstance("asa", id, "hhly982121", "猪");
+        if (!dialogFragment.isVisible()) {
+            dialogFragment.show(getChildFragmentManager(), "chartballDialog");
         }
     }
 
     @Override
     protected void onTextResult(String text) {
-        Log.i("sdasda","sdad"+text.toString());
+        Log.i("sdasda", "sdad" + text.toString());
 
         ChartRoom chartRoom = JSON.parseObject(text, ChartRoom.class);
-        ChartReceive.DataBean.ChatHistoryBean chartbean= new ChartReceive.DataBean.ChatHistoryBean(chartRoom.getData().getMessage(),new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(chartRoom.getData().getFromUser().getUserId()
-                ,chartRoom.getData().getFromUser().getUserLogo(),chartRoom.getData().getFromUser().getUserNick()));
+        ChartReceive.DataBean.ChatHistoryBean chartbean = new ChartReceive.DataBean.ChatHistoryBean(chartRoom.getData().getMessage(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(chartRoom.getData().getFromUser().getUserId()
+                , chartRoom.getData().getFromUser().getUserLogo(), chartRoom.getData().getFromUser().getUserNick()));
         historyBeen.add(chartbean);
         mAdapter.notifyDataSetChanged();
         recycler_view.smoothScrollToPosition(historyBeen.size() - 1);
@@ -261,7 +248,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
 
             default:
                 break;

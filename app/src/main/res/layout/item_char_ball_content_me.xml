@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:emojicon="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
@@ -37,7 +39,8 @@
                 android:id="@+id/my_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="test" />
+                emojicon:emojiconSize="20sp"
+                tools:text="test" />
 
         </LinearLayout>
 
@@ -45,8 +48,8 @@
 
     <com.hhly.mlottery.view.CircleImageView
         android:id="@+id/my_bighead_view"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@mipmap/bighead" />
 </LinearLayout>
 
