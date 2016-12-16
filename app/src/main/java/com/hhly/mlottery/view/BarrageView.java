@@ -73,7 +73,7 @@ public class BarrageView extends RelativeLayout {
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
-        totalHeight = 450;
+        totalHeight = 200;
         lineHeight = 30;
         totalLine = totalHeight / lineHeight;
         Log.i("sdasdasdas","totalLine="+totalLine);
@@ -105,7 +105,7 @@ public class BarrageView extends RelativeLayout {
 
         if (totalLine == 0) {
            // UiUtils.toast(mContext,"我哦進來了-");
-            totalHeight = 450;
+            totalHeight = 200;
             lineHeight = 30;
             totalLine = totalHeight / lineHeight;
         }
