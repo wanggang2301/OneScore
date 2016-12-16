@@ -186,8 +186,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private CountDown countDown;
     private final static int MILLIS_INFuture = 3000;//倒计时3秒
     private final static String MATCH_TYPE = "2"; //篮球
-    // private final static int GIFPERIOD_2 = 1000 * 60 * 2;//刷新周期两分钟
-    private final static int GIFPERIOD_2 = 1000 * 30;//刷新周期两分钟
+    private final static int GIFPERIOD_2 = 1000 * 60 * 2;//刷新周期两分钟
+    // private final static int GIFPERIOD_2 = 1000 * 30;//刷新周期两分钟
 
     private final static String BASKETBALL_GIF = "basketball_gif";
 
