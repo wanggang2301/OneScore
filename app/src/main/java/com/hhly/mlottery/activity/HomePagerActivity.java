@@ -829,7 +829,8 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         switch (v.getId()) {
             case R.id.iv_account:
                 MobclickAgent.onEvent(mContext, "HomePager_User_Info_Start");
-                goToUserOptionsActivity();
+//                goToUserOptionsActivity();
+                startActivity(new Intent(this,ProductAdviceActivity.class));
                 break;
 //            case R.id.rl_lottery_item_title:
 //                UiUtils.toast(this,"一健查询开奖信息");

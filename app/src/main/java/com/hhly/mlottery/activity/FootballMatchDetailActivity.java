@@ -68,7 +68,7 @@ import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.CustomViewpager;
 import com.hhly.mlottery.widget.DepthPageTransformer;
-import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
@@ -95,7 +95,7 @@ import me.relex.circleindicator.CircleIndicator;
  * @date 2016/6/2 16:53
  * @des 足球内页改版
  */
-public class FootballMatchDetailActivity extends BaseWebSocketActivity implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, ExactSwipeRefrashLayout.OnRefreshListener {
+public class FootballMatchDetailActivity extends BaseWebSocketActivity implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, ExactSwipeRefreshLayout.OnRefreshListener {
 
     private final static int IMMEDIA_FRAGMENT = 1;
     private final static int RESULT_FRAGMENT = 2;
@@ -183,7 +183,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private FrameLayout fl_odds_net_error_details;
 
 
-    public ExactSwipeRefrashLayout mRefreshLayout; //下拉刷新
+    public ExactSwipeRefreshLayout mRefreshLayout; //下拉刷新
 
     private FragmentManager fragmentManager;
     private CustomViewpager mHeadviewpager;
@@ -443,7 +443,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         setSupportActionBar(toolbar);
 
 
-        mRefreshLayout = (ExactSwipeRefrashLayout) findViewById(R.id.refresh_layout_details);
+        mRefreshLayout = (ExactSwipeRefreshLayout) findViewById(R.id.refresh_layout_details);
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
         mRefreshLayout.setOnRefreshListener(this);
 

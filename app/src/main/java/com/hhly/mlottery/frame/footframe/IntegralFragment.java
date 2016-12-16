@@ -18,7 +18,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballInformationActivity;
 import com.hhly.mlottery.adapter.IntegralExpandableAdapter;
 import com.hhly.mlottery.bean.footballDetails.IntegralBean.LangueScoreBean;
-import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 import com.hhly.mlottery.widget.PinnedHeaderExpandableListView;
 import com.umeng.analytics.MobclickAgent;
 
@@ -39,7 +39,7 @@ public class IntegralFragment extends Fragment implements View.OnClickListener, 
     private static Context context;
     private static LinearLayout mErrorLayout;//网络失败
     private TextView mReloadBtn;//刷新
-    private static ExactSwipeRefrashLayout mSwipeRefreshLayout;//下拉刷新
+    private static ExactSwipeRefreshLayout mSwipeRefreshLayout;//下拉刷新
     private static boolean isLoadedData = false; // 判断是否加载过数据
     private static String mLeagueId;
     private static TextView mTxt_title;
@@ -178,7 +178,7 @@ public class IntegralFragment extends Fragment implements View.OnClickListener, 
         mReload_btn.setOnClickListener(this);
 
         //下拉刷新
-        mSwipeRefreshLayout = (ExactSwipeRefrashLayout) view.findViewById(R.id.football_infor_swiperefreshlayout);
+        mSwipeRefreshLayout = (ExactSwipeRefreshLayout) view.findViewById(R.id.football_infor_swiperefreshlayout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         //没有数据

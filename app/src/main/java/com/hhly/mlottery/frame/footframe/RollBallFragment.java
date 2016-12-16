@@ -42,7 +42,7 @@ import com.hhly.mlottery.util.HotFocusUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.RxBus;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -90,7 +90,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     @BindView(R.id.network_exception_layout)
     LinearLayout networkExceptionLayout;
     @BindView(R.id.swipe_refresh_layout)
-    ExactSwipeRefrashLayout swipeRefreshLayout;
+    ExactSwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.titleContainer)
     PercentRelativeLayout titleContainer;
 //    @BindView(R.id.unconection_layout)

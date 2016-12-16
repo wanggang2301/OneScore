@@ -1,0 +1,276 @@
+package com.hhly.mlottery.activity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.hhly.mlottery.R;
+import com.hhly.mlottery.adapter.football.AdviceAdapter;
+import com.hhly.mlottery.bean.productadvice.ProductAdviceBean;
+import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class ProductAdviceActivity extends AppCompatActivity implements View.OnClickListener,SwipeRefreshLayout.OnRefreshListener{
+
+
+    @BindView(R.id.public_txt_title)
+    TextView title;
+    @BindView(R.id.advice_recyclerView)
+    RecyclerView mRecyclerView;
+
+    @BindView(R.id.advice_refresh)
+    ExactSwipeRefreshLayout mRefreshLayout;
+
+    /**
+     * 异常界面
+     */
+    @BindView(R.id.basket_odds_net_error)
+    LinearLayout mExceptionLayout;
+    /**
+     * 无数据的界面
+     */
+    @BindView(R.id.nodata)
+    TextView mNodataLayout;
+    /**
+     * 点击刷新
+     */
+    @BindView(R.id.network_exception_reload_btn)
+    TextView mBtnRefresh;
+    /**
+     * 加载中
+     */
+    @BindView(R.id.basket_player_progressbar)
+    FrameLayout mProgressBarLayout;
+
+
+    private View mNoLoadingView; //没有更多
+    private View mOnloadingView; //加载更多
+
+
+    private final static int VIEW_STATUS_LOADING = 1;
+    private final static int VIEW_STATUS_SUCCESS = 2;
+    private final static int VIEW_STATUS_NET_ERROR = 3;
+    private final static int VIEW_STATUS_NO_DATA=4;
+
+    private AdviceAdapter mAdapter;
+    private int currentPage=1;
+    private int PAGE_SIZE=20; //每页的最大数量
+
+    private List<ProductAdviceBean.DataEntity> data=new ArrayList<>();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_product_advice);
+        ButterKnife.bind(this);
+        initView();
+        initData();
+    }
+
+    private void initView() {
+        mProgressBarLayout.setVisibility(View.GONE);
+        mNodataLayout.setVisibility(View.GONE);
+        mExceptionLayout.setVisibility(View.GONE);
+
+        findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
+        findViewById(R.id.public_btn_set).setVisibility(View.GONE);
+        findViewById(R.id.public_btn_write_advice).setVisibility(View.VISIBLE);
+        findViewById(R.id.public_btn_write_advice).setOnClickListener(this);
+        findViewById(R.id.public_img_back).setOnClickListener(this);
+        mBtnRefresh.setOnClickListener(this);
+        title.setText("给产品建议");
+
+        mOnloadingView=getLayoutInflater().inflate(R.layout.onloading, (ViewGroup) mRecyclerView.getParent(),false);
+
+        mRefreshLayout.setColorSchemeResources(R.color.tabhost);
+        mRefreshLayout.setOnRefreshListener(this);
+
+        mAdapter=new AdviceAdapter(data,this);
+        mAdapter.setLoadingView(mOnloadingView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(mAdapter);
+
+        mAdapter.openLoadMore(PAGE_SIZE,true);
+        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        requestByPage();
+                    }
+                },1000);
+
+            }
+        });
+    }
+
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case VIEW_STATUS_LOADING:
+                    mExceptionLayout.setVisibility(View.GONE);
+                    mProgressBarLayout.setVisibility(View.VISIBLE);
+                    mNodataLayout.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.GONE);
+                    break;
+                case VIEW_STATUS_SUCCESS:
+                    mProgressBarLayout.setVisibility(View.GONE);
+                    mExceptionLayout.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    mNodataLayout.setVisibility(View.GONE);
+                    break;
+                case VIEW_STATUS_NET_ERROR:
+                    mProgressBarLayout.setVisibility(View.GONE);
+                    mNodataLayout.setVisibility(View.GONE);
+                    mExceptionLayout.setVisibility(View.VISIBLE);
+                    mRecyclerView.setVisibility(View.GONE);
+
+                    break;
+                // 无数据界面
+                case VIEW_STATUS_NO_DATA:
+                    mNodataLayout.setVisibility(View.VISIBLE);
+                    mRecyclerView.setVisibility(View.GONE);
+
+                    break;
+            }
+        }
+    };
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.public_btn_write_advice:
+                startActivity(new Intent(this,FeedbackActivity.class));
+                break;
+            case R.id.public_img_back:
+                finish();
+                break;
+            case R.id.network_exception_reload_btn:
+                handler.sendEmptyMessage(VIEW_STATUS_LOADING);
+                initData();
+                break;
+        }
+    }
+
+    /**
+     * 第一次请求
+     */
+    private void initData(){
+        currentPage=1;
+        String url="http://192.168.31.178:8888/mlottery/core/feedback.findAndroidFeedBackDetail.do";
+        HashMap<String,String> params=new HashMap<>();
+        params.put("currentPage",1+"");
+
+        VolleyContentFast.requestJsonByGet(url, params,new VolleyContentFast.ResponseSuccessListener<ProductAdviceBean>() {
+            @Override
+            public void onResponse(ProductAdviceBean jsonObject) {
+                if(mRefreshLayout.isRefreshing()){
+                    mRefreshLayout.setRefreshing(false);
+                }
+
+                mAdapter.openLoadMore(PAGE_SIZE,true);
+
+                if(jsonObject.getResult()==200){
+                    handler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
+                   mAdapter.setNewData(jsonObject.getData());
+                    mAdapter.notifyDataSetChanged();
+                    if(jsonObject.getData().size()==0){
+                        handler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
+                    }
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                handler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
+            }
+        },ProductAdviceBean.class);
+
+
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        mRefreshLayout.setRefreshing(true);
+    }
+
+    /**
+     * 分页请求
+     */
+    private void requestByPage(){
+        String url="http://192.168.31.178:8888/mlottery/core/feedback.findAndroidFeedBackDetail.do";
+        HashMap<String,String> params=new HashMap<>();
+        currentPage=++currentPage;
+        params.put("currentPage",currentPage+"");
+        Log.e("advice",currentPage+"++++++++++++++++++");
+
+        VolleyContentFast.requestJsonByGet(url, params,new VolleyContentFast.ResponseSuccessListener<ProductAdviceBean>() {
+            @Override
+            public void onResponse(ProductAdviceBean jsonObject) {
+
+
+                if(jsonObject.getResult()==200){
+
+                    if(jsonObject.getData().size()==0){
+                        if(mNoLoadingView==null){
+                            mNoLoadingView=getLayoutInflater().inflate(R.layout.nomoredata, (ViewGroup) mRecyclerView.getParent(),false);
+                        }
+                        mAdapter.notifyDataChangedAfterLoadMore(false);
+                        mAdapter.addFooterView(mNoLoadingView);
+                    }
+                    else {
+//                        data.addAll(jsonObject.getData());
+//                        Log.e("advice上拉请求的",data.size()+"");
+                        mAdapter.notifyDataChangedAfterLoadMore(jsonObject.getData(),true);
+                    }
+
+                }else{
+
+                }
+
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+            }
+        },ProductAdviceBean.class);
+
+    }
+
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRefreshLayout.setRefreshing(false);
+                initData();
+            }
+        },1000);
+    }
+}

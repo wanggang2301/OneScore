@@ -14,7 +14,7 @@
         layout="@layout/network_exception"
         >
     </include>
-    <com.hhly.mlottery.widget.ExactSwipeRefrashLayout
+    <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/swiperefreshlayout_counselfragmentchild"
@@ -27,5 +27,5 @@
             android:divider="#00000000">
 
         </com.hhly.mlottery.view.PullUpRefreshListView>
-    </com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
+    </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
 </RelativeLayout>

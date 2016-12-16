@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.hhly.mlottery.widget.ExactSwipeRefrashLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.hhly.mlottery.widget.ExactSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/basket_details_refresh_layout"
@@ -103,4 +103,4 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
-</com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
+</com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
