@@ -23,29 +23,11 @@
                 android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:contentScrim="?attr/colorPrimary"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                app:contentScrim="?attr/colorPrimary">
 
-                <com.hhly.mlottery.widget.CustomViewpager
-                    android:id="@+id/headviewpager"
+                <include
                     style="@style/isFitsSystemWindows"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp">
-
-                </com.hhly.mlottery.widget.CustomViewpager>
-
-                <me.relex.circleindicator.CircleIndicator
-                    android:id="@+id/indicator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_gravity="end|bottom"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    app:ci_animator="@animator/indicator_animator"
-                    app:ci_animator_reverse="@animator/indicator_animator_reverse"
-                    app:ci_drawable="@color/white"
-                    app:ci_height="2dp"
-                    app:ci_width="8dp" />
+                    layout="@layout/fragment_pre_headinfo"></include>
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -223,23 +205,6 @@
             android:layout_height="match_parent"
             android:visibility="gone"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-        <!--聊天室悬浮按钮-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/iv_join_room_foot"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="60dp"
-                android:layout_marginRight="20dp"
-                android:clickable="true"
-                android:src="@mipmap/join_room_icon" />
-        </RelativeLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 

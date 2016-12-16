@@ -188,7 +188,7 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
                     @Override
                     public void onResponse(ForeignInfomationBean foreignInfomationBean) {
                         if (!foreignInfomationBean.getResult().equals("200")) {
-                           loadmore_text.setText(mContext.getResources().getString(R.string.nodata_txt));
+                            loadmore_text.setText(mContext.getResources().getString(R.string.nodata_txt));
                             progressBar.setVisibility(View.GONE);
                             return;
                         } else {
@@ -223,6 +223,7 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
      * 可见
      */
     protected void onVisible() {
+        pageSize = 1;
         mHandler.sendEmptyMessage(DATA_STATUS_LOADING);
         new Handler().postDelayed(mLoadingDataThread, 0);
 

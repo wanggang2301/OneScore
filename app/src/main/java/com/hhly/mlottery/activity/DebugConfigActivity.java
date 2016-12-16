@@ -97,6 +97,7 @@ public class DebugConfigActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
+
                 EditText ed = (EditText) findViewById(R.id.et_input);
                 String str = ed.getText().toString();
                 if (TextUtils.isEmpty(str)) {
@@ -108,10 +109,11 @@ public class DebugConfigActivity extends BaseActivity {
                 PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, DIY_INPUT);
                 PreferenceUtil.commitString("DIY_INPUT", str);
 
-                startActivity(new Intent(DebugConfigActivity.this, WelcomeActivity.class));
-                System.exit(0);
+
+                 System.exit(0);
             }
         });
     }
+
 
 }

@@ -1419,4 +1419,12 @@
     <string name="basket_no_text_live">暂无直播数据</string>
 
     <string name="basket_player_no_data">暂无统计数据</string>
+
+
+
+
+    <string name="video_high_light_reminder_comment">您正在使用移动数据，是否继续打开？</string>
+    <string name="video_high_light_continue_open">打开</string>
+    <string name="video_high_light">精彩瞬间</string>
+
 </resources>

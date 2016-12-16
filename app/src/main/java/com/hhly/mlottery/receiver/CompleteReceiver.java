@@ -18,22 +18,22 @@ import com.hhly.mlottery.util.L;
 public class CompleteReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0);
-        L.d("xxx", "id = " + intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0));
-
-        DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-
-        Intent openIntent = new Intent();
-        openIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        openIntent.setAction(android.content.Intent.ACTION_VIEW);
-//        L.d("xxx","url = "+downloadManager.getUriForDownloadedFile(id).toString());
-//        L.d("xxx","path = "+downloadManager.getUriForDownloadedFile(id).getPath());
-
-        if (downloadManager.getUriForDownloadedFile(id) != null) {
-            openIntent.setDataAndType(downloadManager.getUriForDownloadedFile(id), "application/vnd.android.package-archive");
-            context.startActivity(openIntent);
-        }else{
-            Toast.makeText(context, context.getResources().getString(R.string.download_error), Toast.LENGTH_SHORT).show();
-        }
+//        long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0);
+//        L.d("xxx", "id = " + intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0));
+//
+//        DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+//
+//        Intent openIntent = new Intent();
+//        openIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        openIntent.setAction(android.content.Intent.ACTION_VIEW);
+////        L.d("xxx","url = "+downloadManager.getUriForDownloadedFile(id).toString());
+////        L.d("xxx","path = "+downloadManager.getUriForDownloadedFile(id).getPath());
+//
+//        if (downloadManager.getUriForDownloadedFile(id) != null) {
+//            openIntent.setDataAndType(downloadManager.getUriForDownloadedFile(id), "application/vnd.android.package-archive");
+//            context.startActivity(openIntent);
+//        }else{
+//            Toast.makeText(context, context.getResources().getString(R.string.download_error), Toast.LENGTH_SHORT).show();
+//        }
     }
 }
