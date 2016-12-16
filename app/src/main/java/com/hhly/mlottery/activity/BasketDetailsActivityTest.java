@@ -385,6 +385,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     }
 
     @Override
+
     protected void onConnectFail() {
 
     }
@@ -411,7 +412,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             public void onFinish() {
                 rl_gif_notice.setVisibility(View.GONE);
             }
-
             @Override
             public void onTick(long millisUntilFinished) {
                 //  L.d("zxcvbn", "countdown===" + millisUntilFinished / 1000 + "秒");
@@ -430,7 +430,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             @Override
             public void onResponse(BasketballDetailsBean basketDetailsBean) {
                 if (basketDetailsBean.getMatch() != null) {
-
 
 //                    initData(basketDetailsBean);
                     mBasketDetailsHeadFragment.initData(basketDetailsBean, mTalkAboutBallFragment, mTitleGuest, mTitleHome, mTitleVS);
@@ -694,8 +693,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     }
 
 
-
-
     /**
      * 直播、分析、欧赔、亚盘、大小、聊球Fragment页面统计
      */
@@ -913,8 +910,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     }
 
 
-
-
     private void pollingGifCount() {
         if (gifTimer == null) {
             gifTimer = new Timer();
@@ -924,9 +919,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                     getCollectionCount();
                 }
             };
-
-            //gifTimer.schedule(gifTimerTask, 2000, GIFPERIOD_2);
-            gifTimer.schedule(gifTimerTask, 5000, 20000);
+            gifTimer.schedule(gifTimerTask, 2000, GIFPERIOD_2);
+            //gifTimer.schedule(gifTimerTask, 5000, 20000);
         }
     }
 
@@ -991,7 +985,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private void initGifRedPoint() {
         if (PreferenceUtil.getBoolean(BASKETBALL_GIF, true)) {
             mBasketDetailsHeadFragment.setRedPointVisible(View.VISIBLE);
-        }else {
+        } else {
             mBasketDetailsHeadFragment.setRedPointVisible(View.GONE);
         }
     }
