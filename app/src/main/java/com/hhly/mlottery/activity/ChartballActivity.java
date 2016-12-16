@@ -85,7 +85,8 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
     private LinearLayout ll_emoji_content;
     private final static String MATCH_THIRD_ID = "thirdId";
     private String mThirdId;
-    private String callName;
+    private String callName;// @昵称
+    private String callUserId;// @昵称
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,11 +101,6 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH, WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
 
         setContentView(R.layout.activity_chartball_layout);
-
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        mThirdId = bundle.getString(MATCH_THIRD_ID);
-        Log.i("sdasd", "mThirdId=" + mThirdId);
 
         initWindow();
         initView();
@@ -125,6 +121,11 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!TextUtils.isEmpty(callName)) {
+                    if (!mEditText.getText().toString().contains(callName)) {
+                        mEditText.setTextColor(mContext.getResources().getColor(R.color.mdy_333));
+                    }
+                }
             }
 
             @Override
@@ -188,7 +189,9 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
 
     private void initData() {
         if (getIntent() != null) {
+            mThirdId = getIntent().getStringExtra(MATCH_THIRD_ID);
             callName = getIntent().getStringExtra("CALL_NAME");
+            callUserId = getIntent().getStringExtra("CALL_USER_ID");
             if (!TextUtils.isEmpty(callName)) {
                 mEditText.setText(Html.fromHtml("<font color='#0090ff'>" + callName + "</font>"));
                 mEditText.setSelection(mEditText.getText().length());
@@ -302,15 +305,35 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
             case R.id.tv_send://发送评论
                 MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivityTest_TalkSend");
                 if (TextUtils.isEmpty(mEditText.getText())) {//没有输入内容
-                    if(TextUtils.isEmpty(mEditText.getText().toString().trim())){
+                    if (mEditText.getText().toString().contains(callName)) {
+                        String replace = mEditText.getText().toString().replace(callName, "");
+                        if (TextUtils.isEmpty(replace)) {
+                            if (TextUtils.isEmpty(replace.trim())) {
+                                ToastTools.showQuickCenter(this, getResources().getString(R.string.warn_nullcontent));
+                            }
+                        }
+                    } else if (TextUtils.isEmpty(mEditText.getText().toString().trim())) {
                         ToastTools.showQuickCenter(this, getResources().getString(R.string.warn_nullcontent));
                     }
                 } else {//有输入内容
                     if (CommonUtils.isLogin()) {//已登录华海
-
+                        ChartReceive.DataBean.ChatHistoryBean chatHistoryBean;
+                        if (!TextUtils.isEmpty(callName)) {
+                            if (mEditText.getText().toString().contains(callName)) {
+                                // TODO  发送@消息
+                                String replace = mEditText.getText().toString().replace(callName, "");
+                                chatHistoryBean = new ChartReceive.DataBean.ChatHistoryBean(replace.trim(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
+                                        , AppConstants.register.getData().getUser().getHeadIcon(), AppConstants.register.getData().getUser().getNickName()), new ChartReceive.DataBean.ChatHistoryBean.ToUser(callUserId, null, callName));
+                            } else {
+                                chatHistoryBean = new ChartReceive.DataBean.ChatHistoryBean(mEditText.getText().toString().trim(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
+                                        , AppConstants.register.getData().getUser().getHeadIcon(), AppConstants.register.getData().getUser().getNickName()), new ChartReceive.DataBean.ChatHistoryBean.ToUser());
+                            }
+                        } else {
+                            chatHistoryBean = new ChartReceive.DataBean.ChatHistoryBean(mEditText.getText().toString().trim(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
+                                    , AppConstants.register.getData().getUser().getHeadIcon(), AppConstants.register.getData().getUser().getNickName()), new ChartReceive.DataBean.ChatHistoryBean.ToUser());
+                        }
                         // 向会话列表发送输入内容
-                        EventBus.getDefault().post(new ChartReceive.DataBean.ChatHistoryBean(mEditText.getText().toString().trim(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
-                                , AppConstants.register.getData().getUser().getHeadIcon(), AppConstants.register.getData().getUser().getNickName())));
+                        EventBus.getDefault().post(chatHistoryBean);
 
                         // 用户自己的头像URL发向弹幕
                         EventBus.getDefault().post(new BarrageBean(AppConstants.register.getData().getUser().getHeadIcon(), mEditText.getText().toString()));
@@ -398,8 +421,8 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 关闭当前activity
-            EventBus.getDefault().post(new ChartReceive.DataBean.ChatHistoryBean("EXIT_CURRENT_ACTIVITY",new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
-                    ,AppConstants.register.getData().getUser().getHeadIcon(),"EXIT_CURRENT_ACTIVITY")));
+            EventBus.getDefault().post(new ChartReceive.DataBean.ChatHistoryBean("EXIT_CURRENT_ACTIVITY", new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
+                    , AppConstants.register.getData().getUser().getHeadIcon(), "EXIT_CURRENT_ACTIVITY"), new ChartReceive.DataBean.ChatHistoryBean.ToUser()));
             finish();
             return true;
         }
@@ -408,7 +431,6 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
 
     /**
      * 隐藏软键盘和表情
-     *
      */
     public void hideKeyOrGallery() {
         ll_gallery_content.setVisibility(View.GONE);

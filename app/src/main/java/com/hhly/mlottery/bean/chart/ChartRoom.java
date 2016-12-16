@@ -62,7 +62,7 @@ public class ChartRoom {
         private String onlineNum;
         private int sourceType;
         private String time;
-        private String toUser;
+        private ToUser toUser;
         private boolean isShowTime;
         private boolean isEmoji;
 
@@ -80,14 +80,6 @@ public class ChartRoom {
 
         public void setOnlineNum(String onlineNum) {
             this.onlineNum = onlineNum;
-        }
-
-        public String getToUser() {
-            return toUser;
-        }
-
-        public void setToUser(String toUser) {
-            this.toUser = toUser;
         }
 
         public boolean isShowTime() {
@@ -124,6 +116,14 @@ public class ChartRoom {
 
         public int getMsgCode() {
             return msgCode;
+        }
+
+        public ToUser getToUser() {
+            return toUser;
+        }
+
+        public void setToUser(ToUser toUser) {
+            this.toUser = toUser;
         }
 
         public void setMsgCode(int msgCode) {
@@ -163,6 +163,36 @@ public class ChartRoom {
              * userNick : 王总
              */
 
+            private String userId;
+            private String userLogo;
+            private String userNick;
+
+            public String getUserId() {
+                return userId;
+            }
+
+            public void setUserId(String userId) {
+                this.userId = userId;
+            }
+
+            public String getUserLogo() {
+                return userLogo;
+            }
+
+            public void setUserLogo(String userLogo) {
+                this.userLogo = userLogo;
+            }
+
+            public String getUserNick() {
+                return userNick;
+            }
+
+            public void setUserNick(String userNick) {
+                this.userNick = userNick;
+            }
+        }
+
+        public static class ToUser{
             private String userId;
             private String userLogo;
             private String userNick;

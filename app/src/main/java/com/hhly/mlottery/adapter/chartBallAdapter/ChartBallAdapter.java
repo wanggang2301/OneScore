@@ -3,6 +3,7 @@ package com.hhly.mlottery.adapter.chartBallAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -94,11 +95,15 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                     }
                 }
                 if (!isRn) {
-                    viewHolderMsg.receive_text.setText(mData.get(position).getMessage());
+                    if (mData.get(position).isEmoji()) {
+                        viewHolderMsg.receive_text.setText((Html.fromHtml("<font color='#0090ff'>" + mData.get(position).getToUser().getUserNick() + "</font>") + mData.get(position).getMessage()));
+                    } else {
+                        viewHolderMsg.receive_text.setText(mData.get(position).getMessage());
+                    }
                     viewHolderMsg.receive_image.setVisibility(View.GONE);
                     viewHolderMsg.receive_text.setVisibility(View.VISIBLE);
                 } else {
-                    if(resource != -1){
+                    if (resource != -1) {
                         viewHolderMsg.receive_image.setBackgroundResource(resource);
                     }
                     viewHolderMsg.receive_image.setVisibility(View.VISIBLE);
@@ -118,11 +123,16 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                     }
                 }
                 if (!isRn_me) {
+                    if (mData.get(position).isEmoji()) {
+                        viewHolderMe.my_text.setText((Html.fromHtml("<font color='#0090ff'>@" + mData.get(position).getToUser().getUserNick() + ":</font>") + mData.get(position).getMessage()));
+                    } else {
+                        viewHolderMe.my_text.setText(mData.get(position).getMessage());
+                    }
                     viewHolderMe.my_text.setText(mData.get(position).getMessage());
                     viewHolderMe.my_image.setVisibility(View.GONE);
                     viewHolderMe.my_text.setVisibility(View.VISIBLE);
                 } else {
-                    if(resource_me != -1){
+                    if (resource_me != -1) {
                         viewHolderMe.my_image.setBackgroundResource(resource_me);
                     }
                     viewHolderMe.my_image.setVisibility(View.VISIBLE);
@@ -195,6 +205,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                 mPopupWindow.dismiss();
                 Intent intent = new Intent(mContext, ChartballActivity.class);
                 intent.putExtra("CALL_NAME", "@" + mData.get(index).getFromUser().getUserNick() + "：");
+                intent.putExtra("CALL_USER_ID", mData.get(index).getFromUser().getUserId());
                 mContext.startActivity(intent);
             }
         });

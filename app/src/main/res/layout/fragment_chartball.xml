@@ -121,18 +121,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/tv_online_count"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
-                    android:drawablePadding="5dp"
-                    android:drawableStart="@mipmap/chart_ball_line_count"
-                    android:textColor="@color/mdy_666"
-                    android:textSize="10sp"
-                    android:paddingEnd="30dp" />
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/tv_call_me"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@color/home_item_bg"
+                        android:padding="5dp"
+                        android:text="@string/chart_ball_call_me"
+                        android:textColor="@color/chart_ball_call_me"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tv_online_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="5dp"
+                        android:drawableStart="@mipmap/chart_ball_line_count"
+                        android:paddingEnd="30dp"
+                        android:textColor="@color/mdy_666"
+                        android:textSize="10sp" />
+
+
+                </LinearLayout>
             </RelativeLayout>
         </FrameLayout>
 
@@ -156,7 +175,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@mipmap/chart_ball_null_bg"/>
+                android:src="@mipmap/chart_ball_null_bg" />
         </FrameLayout>
 
     </FrameLayout>

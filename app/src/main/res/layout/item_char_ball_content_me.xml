@@ -40,9 +40,10 @@
                 android:layout_height="wrap_content"
                 emojicon:emojiconSize="20sp"
                 android:visibility="gone"
-                android:padding="10dp"
                 android:textColor="@color/mdy_333"
-                android:background="@drawable/blueair"
+                android:gravity="center_vertical"
+                android:background="@drawable/chart_ball_right_bg"
+                android:textSize="14sp"
                 tools:text="test" />
 
             <TextView
