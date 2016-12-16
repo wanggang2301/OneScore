@@ -321,6 +321,12 @@
         <activity
             android:name=".activity.BasketballScoresActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.hhly.mlottery.activity.CustomActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.hhly.mlottery.activity.CustomListActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

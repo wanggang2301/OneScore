@@ -53,6 +53,9 @@ import io.rong.imlib.model.UserInfo;
 public class HomeUserOptionsActivity extends Activity implements View.OnClickListener {
 
     public static String TAG = "HomeUserOptionsActivity";
+
+    /**我的定制*/
+    private RelativeLayout rl_custom;
     /**语言切换**/
     private RelativeLayout rl_language_frame;
     /**更多设置**/
@@ -91,6 +94,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,6 +131,10 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             mTv_nickname.setText(R.string.Login_register);
             mUser_image.setImageResource(R.mipmap.center_head);
         }
+
+        rl_custom = (RelativeLayout)findViewById(R.id.rl_custom);
+        rl_custom.setOnClickListener(this);
+
         rl_language_frame = (RelativeLayout) findViewById(R.id.rl_language_frame);
         rl_language_frame.setOnClickListener(this);
         rl_setting_frame = (RelativeLayout) findViewById(R.id.rl_setting_frame);
@@ -144,6 +152,12 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.rl_custom:
+
+                startActivity(new Intent(HomeUserOptionsActivity.this, CustomActivity.class));
+
+                break;
+
             case R.id.rl_language_frame:// 语言切换
                 MobclickAgent.onEvent(HomeUserOptionsActivity.this, "LanguageChanger");
                 Intent intent = new Intent(HomeUserOptionsActivity.this, HomeLanguageActivity.class);

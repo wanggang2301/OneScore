@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#EEEEEE">
+
+    <RelativeLayout
+        android:id="@+id/custom_riqi_item"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/basketball_date_icon"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="10dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/football_date"
+                />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/basketball_riqi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/basketball_date_icon"
+            android:paddingLeft="7dp"
+            android:text="2016-01-01"
+            android:textSize="@dimen/text_size_13"
+            android:textColor="@color/content_txt_dark_grad"/>
+
+        <TextView
+            android:id="@+id/basketball_xingqi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/basketball_riqi"
+            android:text="周一"
+            android:textSize="@dimen/text_size_13"
+            android:textColor="@color/content_txt_dark_grad" />
+
+        <ImageView
+            android:id="@+id/basketball_details_open"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="25dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:background="@mipmap/iconfont_xiala_2"/>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/custon_match_nodata"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:textSize="15dp"
+        android:visibility="gone"
+        android:text="暂无赛事"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/linecolor"
+        />
+
+</LinearLayout>

@@ -180,6 +180,10 @@ public class SnookerListActivity extends BaseWebSocketActivity implements SwipeR
 
     }
 
+    /**
+     * 设置显示状态
+     * @param status
+     */
     private void setStatus(int status) {
         mRefresh.setVisibility(status == SHOW_STATUS_LOADING ? View.VISIBLE : View.GONE);
         mErrorLayout.setVisibility(status == SHOW_STATUS_ERROR ? View.VISIBLE : View.GONE);

@@ -88,6 +88,7 @@ public class DebugConfigActivity extends BaseActivity {
                 }
 
                 startActivity(new Intent(DebugConfigActivity.this, WelcomeActivity.class));
+//                startActivity(new Intent(DebugConfigActivity.this, CustomActivity.class));
                 System.exit(0);
 
             }

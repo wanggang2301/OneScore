@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="10dp"-->
+        <!--android:background="#EEEEEE"-->
+        <!--/>-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp"
+        >
+
+        <LinearLayout
+            android:id="@+id/asdfa"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:paddingLeft="10dp"
+                >
+                <ImageView
+                    android:id="@+id/custom_team_logo"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/iconfont_lanqiu2shixin" />
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/custom_team_name"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="西班牙甲级联赛"
+                android:singleLine="true"
+                android:textSize="@dimen/text_size_15"
+                android:textColor="@color/content_txt_black"/>
+
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:paddingLeft="10dp"
+                >
+                <ImageView
+                    android:id="@+id/custom_team_hot_icon"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/hot" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/custom_team_hot_num"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="99999"
+                android:singleLine="true"
+                android:textSize="@dimen/text_size_15"
+                android:textColor="@color/content_txt_black"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/custom_team_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:background="@mipmap/custom_unfocus"/>
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EEEEEE"
+    />
+
+</LinearLayout>

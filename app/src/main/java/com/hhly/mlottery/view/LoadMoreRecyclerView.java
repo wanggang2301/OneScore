@@ -132,7 +132,6 @@ public class LoadMoreRecyclerView extends RecyclerView {
             int itemCount = this.mAdapter.getItemCount();
             if(this.mAdapter != null){
                 if(rePosition < itemCount){
-                    Log.v("czm","rePosition/itemCount="+rePosition+"/"+itemCount);
                     this.mAdapter.onBindViewHolder(holder,rePosition);
                     return;
                 }
