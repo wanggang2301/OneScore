@@ -188,6 +188,10 @@ public class BasketDetailsHeadFragment extends Fragment {
     }
 
 
+    /**
+     * 影藏红点
+     */
+
     private void hideGifRedPoint() {
         PreferenceUtil.commitBoolean(BASKETBALL_GIF, false);
         red_point.setVisibility(View.GONE);
@@ -1087,4 +1091,7 @@ public class BasketDetailsHeadFragment extends Fragment {
         super.onAttach(context);
         mContext = context;
     }
+
+
+    
 }

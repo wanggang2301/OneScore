@@ -912,6 +912,10 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     }
 
 
+    /**
+     * 开启轮询
+     */
+
     private void pollingGifCount() {
         if (gifTimer == null) {
             gifTimer = new Timer();
@@ -922,9 +926,12 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 }
             };
             gifTimer.schedule(gifTimerTask, 2000, GIFPERIOD_2);
-            //gifTimer.schedule(gifTimerTask, 5000, 20000);
         }
     }
+
+    /**
+     * 关闭轮询
+     */
 
     private void closePollingGifCount() {
         if (gifTimer != null) {
