@@ -95,10 +95,14 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                 }
                 if (!isRn) {
                     viewHolderMsg.receive_text.setText(mData.get(position).getMessage());
+                    viewHolderMsg.receive_image.setVisibility(View.GONE);
+                    viewHolderMsg.receive_text.setVisibility(View.VISIBLE);
                 } else {
                     if(resource != -1){
                         viewHolderMsg.receive_image.setBackgroundResource(resource);
                     }
+                    viewHolderMsg.receive_image.setVisibility(View.VISIBLE);
+                    viewHolderMsg.receive_text.setVisibility(View.GONE);
                 }
                 break;
             case 1:// 自己
@@ -115,10 +119,14 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                 }
                 if (!isRn_me) {
                     viewHolderMe.my_text.setText(mData.get(position).getMessage());
+                    viewHolderMe.my_image.setVisibility(View.GONE);
+                    viewHolderMe.my_text.setVisibility(View.VISIBLE);
                 } else {
                     if(resource_me != -1){
                         viewHolderMe.my_image.setBackgroundResource(resource_me);
                     }
+                    viewHolderMe.my_image.setVisibility(View.VISIBLE);
+                    viewHolderMe.my_text.setVisibility(View.GONE);
                 }
                 break;
         }

@@ -64,7 +64,7 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
     public static String TAG = "ChartballActivity";
     public EmojiconEditText mEditText;//输入评论
     private TextView mSend;//发送评论
-    private LinearLayout ll_gallery_content;
+    public LinearLayout ll_gallery_content;
     private ImageView iv_gallery;
     private InputMethodManager inputMethodManager;
     private RelativeLayout rl_local;
@@ -101,15 +101,18 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_chartball_layout);
 
-        Intent intent=getIntent();
-        Bundle bundle=intent.getExtras();
-        mThirdId= bundle.getString(MATCH_THIRD_ID);
-        Log.i("sdasd","mThirdId="+mThirdId);
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        mThirdId = bundle.getString(MATCH_THIRD_ID);
+        Log.i("sdasd", "mThirdId=" + mThirdId);
 
         initWindow();
         initView();
         initData();
         initEvent();
+        IntentFilter intentFilter = new IntentFilter("CLOSE_INPUT_ACTIVITY");
+        registerReceiver(mBroadcastReceiver, intentFilter);
+
     }
 
     private void initEvent() {
@@ -299,13 +302,15 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
             case R.id.tv_send://发送评论
                 MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivityTest_TalkSend");
                 if (TextUtils.isEmpty(mEditText.getText())) {//没有输入内容
-                    ToastTools.showQuickCenter(this, getResources().getString(R.string.warn_nullcontent));
+                    if(TextUtils.isEmpty(mEditText.getText().toString().trim())){
+                        ToastTools.showQuickCenter(this, getResources().getString(R.string.warn_nullcontent));
+                    }
                 } else {//有输入内容
                     if (CommonUtils.isLogin()) {//已登录华海
 
                         // 向会话列表发送输入内容
-                        EventBus.getDefault().post(new ChartReceive.DataBean.ChatHistoryBean(mEditText.getText().toString(),new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
-                                ,AppConstants.register.getData().getUser().getHeadIcon(),AppConstants.register.getData().getUser().getNickName())));
+                        EventBus.getDefault().post(new ChartReceive.DataBean.ChatHistoryBean(mEditText.getText().toString().trim(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
+                                , AppConstants.register.getData().getUser().getHeadIcon(), AppConstants.register.getData().getUser().getNickName())));
 
                         // 用户自己的头像URL发向弹幕
                         EventBus.getDefault().post(new BarrageBean(AppConstants.register.getData().getUser().getHeadIcon(), mEditText.getText().toString()));
@@ -313,13 +318,7 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
                         // 发送之后 清空输入框
                         mEditText.setText("");
 
-                        // 隐藏软键盘
-                        if (ChartballActivity.this.getCurrentFocus() != null) {
-                            inputMethodManager.hideSoftInputFromWindow(ChartballActivity.this.getCurrentFocus()
-                                    .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                        }
-                        finish();
-
+                        hideKeyOrGallery();
                     } else {
                         //跳转登录界面
                         Intent intent1 = new Intent(this, LoginActivity.class);
@@ -338,15 +337,13 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
                 }
                 break;
             case R.id.iv_gallery:
-
+                // TODO 此处不流畅，需要优化
                 // 隐藏软键盘
                 if (ChartballActivity.this.getCurrentFocus() != null) {
                     inputMethodManager.hideSoftInputFromWindow(ChartballActivity.this.getCurrentFocus()
                             .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 }
-
                 ll_gallery_content.setVisibility(View.VISIBLE);
-
                 break;
 
             case R.id.iv_select_icon:// 显示自定义表情
@@ -376,15 +373,50 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (MotionEvent.ACTION_OUTSIDE == event.getAction()) {
-            finish();
-            // 隐藏软键盘
-            if (ChartballActivity.this.getCurrentFocus() != null) {
-                inputMethodManager.hideSoftInputFromWindow(ChartballActivity.this.getCurrentFocus()
-                        .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-            }
+            hideKeyOrGallery();
             return true;
         }
         return super.onTouchEvent(event);
+    }
+
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ChartballActivity.this.setResult(CyUtils.RESULT_CODE);
+            CyUtils.hideKeyBoard(ChartballActivity.this);
+            finish();
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mBroadcastReceiver);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // 关闭当前activity
+            EventBus.getDefault().post(new ChartReceive.DataBean.ChatHistoryBean("EXIT_CURRENT_ACTIVITY",new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
+                    ,AppConstants.register.getData().getUser().getHeadIcon(),"EXIT_CURRENT_ACTIVITY")));
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 隐藏软键盘和表情
+     *
+     */
+    public void hideKeyOrGallery() {
+        ll_gallery_content.setVisibility(View.GONE);
+        // 隐藏软键盘
+        if (ChartballActivity.this.getCurrentFocus() != null) {
+            inputMethodManager.hideSoftInputFromWindow(ChartballActivity.this.getCurrentFocus()
+                    .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 }
 

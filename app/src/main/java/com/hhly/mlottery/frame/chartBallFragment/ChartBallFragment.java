@@ -10,11 +10,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
@@ -31,6 +31,8 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +67,9 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     private ChartReceive mChartReceive;
     private List<List<ChartReceive.DataBean.ChatHistoryBean>> chartHistory;
     private List<ChartReceive.DataBean.ChatHistoryBean> historyBeen;
-    private ImageView iv_not_chart_image;
+    private FrameLayout fl_not_chart_image;
+    private FrameLayout rl_chart_content;
+    private TextView tv_online_count;// 在线人数
 
     public static ChartBallFragment newInstance(int type, String thirdId) {
         ChartBallFragment fragment = new ChartBallFragment();
@@ -130,8 +134,9 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         layoutManager.setStackFromEnd(false);
         layoutManager.setOrientation(OrientationHelper.VERTICAL);
         recycler_view.setLayoutManager(layoutManager);
-        iv_not_chart_image = (ImageView) mView.findViewById(R.id.iv_not_chart_image);
-
+        fl_not_chart_image = (FrameLayout) mView.findViewById(R.id.fl_not_chart_image);
+        rl_chart_content = (FrameLayout) mView.findViewById(R.id.rl_chart_content);
+        tv_online_count = (TextView) mView.findViewById(R.id.tv_online_count);
         mView.findViewById(R.id.tv_send).setOnClickListener(this);
     }
 
@@ -183,10 +188,17 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         System.out.println("xxxxx 发送的开始提交");
         System.out.println("xxxxx message: " + message);
 
+        String str = "";
+        try {
+            str = URLEncoder.encode(message, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         Map<String, String> params = new HashMap<>();
         params.put("sourceName", "android");
         params.put("chatType", "football");
-        params.put("message", message.trim());
+        params.put("message", str);
         params.put("thirdId", mThirdId);
         params.put("msgCode", msgCode);//1普通消息 2@消息 3系统消息 4在线人数 5进入聊天室
         params.put("loginToken", AppConstants.register.getData().getLoginToken());
@@ -237,9 +249,11 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     }.start();
 
                     if (historyBeen.size() == 0) {
-                        iv_not_chart_image.setVisibility(View.VISIBLE);
+                        fl_not_chart_image.setVisibility(View.VISIBLE);
+                        rl_chart_content.setVisibility(View.GONE);
                     } else {
-                        iv_not_chart_image.setVisibility(View.GONE);
+                        fl_not_chart_image.setVisibility(View.GONE);
+                        rl_chart_content.setVisibility(View.VISIBLE);
                     }
 
                     //开启socket推送
@@ -260,26 +274,32 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
     public void onEventMainThread(ChartReceive.DataBean.ChatHistoryBean contentEntitiy) {
         // TODO 处理收到的数据
-        iv_not_chart_image.setVisibility(View.GONE);
-        historyBeen.add(contentEntitiy);
-        mAdapter.notifyDataSetChanged();
-        new Thread() {
-            @Override
-            public void run() {
-                SystemClock.sleep(500);
-                mContext.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (historyBeen.size() != 0) {
-                            recycler_view.smoothScrollToPosition(historyBeen.size() - 1);
-                        }
-                    }
-                });
-            }
-        }.start();
 
-        System.out.println("xxxxx 发送的是： " + contentEntitiy.getMessage());
-        sendMessage("1", contentEntitiy.getMessage(), null);
+        if ("EXIT_CURRENT_ACTIVITY".equals(contentEntitiy.getMessage()) && "EXIT_CURRENT_ACTIVITY".equals(contentEntitiy.getFromUser().getUserNick())) {
+            mContext.finish();
+        } else {
+            fl_not_chart_image.setVisibility(View.GONE);
+            rl_chart_content.setVisibility(View.VISIBLE);
+            historyBeen.add(contentEntitiy);
+            mAdapter.notifyDataSetChanged();
+            new Thread() {
+                @Override
+                public void run() {
+                    SystemClock.sleep(500);
+                    mContext.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (historyBeen.size() != 0) {
+                                recycler_view.smoothScrollToPosition(historyBeen.size() - 1);
+                            }
+                        }
+                    });
+                }
+            }.start();
+
+            System.out.println("xxxxx 发送的是： " + contentEntitiy.getMessage());
+            sendMessage("1", contentEntitiy.getMessage(), null);
+        }
     }
 
     @Override
@@ -300,6 +320,13 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     protected void onTextResult(String text) {
         System.out.println("xxxxx 聊球推送：" + text);
         ChartRoom chartRoom = JSON.parseObject(text, ChartRoom.class);
+        final String online = chartRoom.getData().getOnlineNum();
+        mContext.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tv_online_count.setText(online == null ? "0" : String.valueOf(online) + mContext.getResources().getString(R.string.chart_ball_online));// 在线人数
+            }
+        });
 
         ChartReceive.DataBean.ChatHistoryBean chartbean = new ChartReceive.DataBean.ChatHistoryBean(chartRoom.getData().getMessage(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(chartRoom.getData().getFromUser().getUserId()
                 , chartRoom.getData().getFromUser().getUserLogo(), chartRoom.getData().getFromUser().getUserNick()));
@@ -321,10 +348,11 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                 }
             }.start();
 
+            fl_not_chart_image.setVisibility(View.GONE);
+            rl_chart_content.setVisibility(View.VISIBLE);
             // 收到消息，显示弹幕
             EventBus.getDefault().post(new BarrageBean(chartbean.getFromUser().getUserLogo(), chartbean.getMessage()));
         }
-        iv_not_chart_image.setVisibility(View.GONE);
     }
 
     @Override

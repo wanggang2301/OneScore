@@ -2015,7 +2015,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             case R.id.iv_back:  //返回
                 MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Exit");
                 eventBusPost();
-                MyApp.getContext().sendBroadcast(new Intent("closeself"));
+                MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
                 // setResult(Activity.RESULT_OK);
                 finish();
                 break;
@@ -2086,7 +2086,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     // 发表评论跳转
     public void talkAboutBallSendFoot() {
         Intent intent2 = new Intent(mContext, ChartballActivity.class);
-         intent2.putExtra("thirdId", mThirdId);
+        intent2.putExtra("thirdId", mThirdId);
         startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
     }
 
@@ -2232,8 +2232,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 isHindShow(position);
                 if (position == 5) {// 聊球界面禁用下拉刷新
                     mRefreshLayout.setEnabled(false);
+
                 }else{
                     mRefreshLayout.setEnabled(true);
+                    MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
                 }
             }
 

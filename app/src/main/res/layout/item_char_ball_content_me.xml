@@ -5,8 +5,9 @@
     xmlns:emojicon="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
-    android:paddingLeft="10dp"
+    android:paddingLeft="50dp"
     android:paddingRight="10dp"
+    android:paddingBottom="5dp"
     android:paddingTop="10dp">
 
     <RelativeLayout
@@ -14,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:paddingRight="10dp">
+        android:paddingRight="5dp">
 
         <TextView
             android:id="@+id/tv_nickname_me"
@@ -31,23 +32,24 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_nickname_me"
             android:gravity="right"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:orientation="vertical">
 
             <io.github.rockerhieu.emojicon.EmojiconTextView
                 android:id="@+id/my_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 emojicon:emojiconSize="20sp"
-                android:visibility="visible"
+                android:visibility="gone"
+                android:padding="10dp"
                 android:textColor="@color/mdy_333"
+                android:background="@drawable/chart_ball_bubble_right"
                 tools:text="test" />
 
             <TextView
                 android:id="@+id/my_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:background="@mipmap/chart_ball_jinggaoni"/>
 
         </LinearLayout>

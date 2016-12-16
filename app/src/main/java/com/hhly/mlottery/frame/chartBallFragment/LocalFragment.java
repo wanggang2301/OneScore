@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.ChartballActivity;
 import com.hhly.mlottery.adapter.chartBallAdapter.LocalGridAdapter;
 import com.hhly.mlottery.bean.BarrageBean;
 import com.hhly.mlottery.bean.chart.ChartReceive;
@@ -69,14 +70,13 @@ public class LocalFragment extends Fragment {
 
                 for (Map.Entry<String, Integer> entry : AppConstants.localMap.entrySet()) {
                     if (entry.getValue().equals(mData.get(i))) {
-                        // TODO 此处点击之后直接发送消息
                         // 向会话列表发送输入内容
                         EventBus.getDefault().post(new ChartReceive.DataBean.ChatHistoryBean(entry.getKey(),new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
                                 ,AppConstants.register.getData().getUser().getHeadIcon(),AppConstants.register.getData().getUser().getNickName())));
 
                         // 用户自己的头像URL发向弹幕
                         EventBus.getDefault().post(new BarrageBean(AppConstants.register.getData().getUser().getHeadIcon(),entry.getKey()));
-
+                        ((ChartballActivity)mContext).hideKeyOrGallery();
                         return;
                     }
                 }

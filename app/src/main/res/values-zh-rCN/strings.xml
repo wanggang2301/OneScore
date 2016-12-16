@@ -1429,5 +1429,6 @@
     <string name="chart_ball_report_to_user">被举报人：</string>
     <string name="chart_ball_report_user">举报人：</string>
     <string name="chart_ball_report_content">举报内容不能为空！</string>
+    <string name="chart_ball_online">人</string>
 
 </resources>

@@ -101,12 +101,12 @@
 
     <!--聊天内容部分-->
     <FrameLayout
-        android:id="@+id/fl_chart_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
         <FrameLayout
+            android:id="@+id/rl_chart_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible">
@@ -116,30 +116,47 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
+            <!--在线人数-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_online_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:drawablePadding="5dp"
+                    android:drawableStart="@mipmap/chart_ball_line_count"
+                    android:textColor="@color/mdy_666"
+                    android:paddingEnd="30dp" />
+
+            </RelativeLayout>
         </FrameLayout>
 
+        <!--<ProgressBar-->
+        <!--style="?android:attr/progressBarStyleSmall"-->
+        <!--android:layout_width="40dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:gravity="center"-->
+        <!--android:indeterminate="true"-->
+        <!--android:visibility="gone" />-->
+
+        <!--空沙发-->
         <FrameLayout
+            android:id="@+id/fl_not_chart_image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="gone">
 
             <ImageView
-                android:id="@+id/iv_not_chart_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:visibility="gone"
                 android:src="@mipmap/chart_ball_null_bg"/>
-
         </FrameLayout>
-
-        <ProgressBar
-            style="?android:attr/progressBarStyleSmall"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:indeterminate="true"
-            android:visibility="gone" />
 
     </FrameLayout>
 
@@ -191,7 +208,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
-                    android:src="@mipmap/chart_ball_emoji_icon_note" />
+                    android:src="@mipmap/chart_ball_emoji_icon_note"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tv_send"

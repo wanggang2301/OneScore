@@ -6,7 +6,7 @@
     xmlns:emojicon="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:paddingLeft="10dp"
-    android:paddingRight="10dp"
+    android:paddingRight="50dp"
     android:paddingTop="10dp">
 
     <com.hhly.mlottery.view.CircleImageView
@@ -19,7 +19,6 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:paddingRight="20dp"
         android:orientation="vertical">
 
         <TextView
@@ -35,23 +34,24 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:orientation="vertical">
 
             <io.github.rockerhieu.emojicon.EmojiconTextView
                 android:id="@+id/receive_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 emojicon:emojiconSize="20sp"
-                android:visibility="visible"
+                android:visibility="gone"
+                android:padding="10dp"
                 android:textColor="@color/mdy_333"
+                android:background="@drawable/chart_ball_bubble_left"
                 tools:text="test"/>
 
             <TextView
                 android:id="@+id/receive_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:background="@mipmap/chart_ball_jinggaoni"/>
 
         </LinearLayout>
