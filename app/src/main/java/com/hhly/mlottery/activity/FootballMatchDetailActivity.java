@@ -2576,7 +2576,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 date.setText("");//开赛时间
             }
         }
-
     }
 
 
@@ -2603,6 +2602,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     }
 
 
+    /**
+     * 开启轮询
+     */
     private void pollingGifCount() {
         if (gifTimer == null) {
             gifTimer = new Timer();
@@ -2618,6 +2620,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         }
     }
 
+    /**
+     *关闭轮询
+     */
     private void closePollingGifCount() {
         if (gifTimer != null) {
             gifTimerTask.cancel();
@@ -2676,7 +2681,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         }, DetailsCollectionCountBean.class);
     }
 
-
     private void initGifRedPoint() {
         if (PreferenceUtil.getBoolean(FOOTBALL_GIF, true)) {
             red_point.setVisibility(View.VISIBLE);
@@ -2685,11 +2689,18 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         }
     }
 
+
+    /**
+     * 显示红点
+     */
     private void showGifRedPoint() {
         PreferenceUtil.commitBoolean(FOOTBALL_GIF, true);
         red_point.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * 影藏红点
+     */
     private void hideGifRedPoint() {
         PreferenceUtil.commitBoolean(FOOTBALL_GIF, false);
         red_point.setVisibility(View.GONE);
