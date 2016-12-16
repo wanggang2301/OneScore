@@ -1096,7 +1096,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     }
 
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -2661,6 +2660,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     } else {
                         L.d("zxcvbn", "没有gif------------");
                         isFirstShowGif = false;
+                        gifCount = 0;
                         btn_showGif.setVisibility(View.GONE);
                         // }
                     }

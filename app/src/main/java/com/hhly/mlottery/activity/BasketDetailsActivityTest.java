@@ -186,7 +186,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private CountDown countDown;
     private final static int MILLIS_INFuture = 3000;//倒计时3秒
     private final static String MATCH_TYPE = "2"; //篮球
-    private final static int GIFPERIOD_2 = 1000 * 60 * 2;//刷新周期两分钟
+    // private final static int GIFPERIOD_2 = 1000 * 60 * 2;//刷新周期两分钟
+    private final static int GIFPERIOD_2 = 1000 * 30;//刷新周期两分钟
 
     private final static String BASKETBALL_GIF = "basketball_gif";
 
@@ -412,6 +413,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             public void onFinish() {
                 rl_gif_notice.setVisibility(View.GONE);
             }
+
             @Override
             public void onTick(long millisUntilFinished) {
                 //  L.d("zxcvbn", "countdown===" + millisUntilFinished / 1000 + "秒");
@@ -942,6 +944,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         map.put("matchType", MATCH_TYPE);
         map.put("thirdId", mThirdId);  //399381
         //  map.put("thirdId", mThirdId);
+        L.d("zxcvbn", "[-----------------------------------------------------]");
+
         VolleyContentFast.requestJsonByGet(BaseURLs.FOOTBALL_DETAIL_COLLECTION_COUNT, map, new VolleyContentFast.ResponseSuccessListener<DetailsCollectionCountBean>() {
             @Override
             public void onResponse(DetailsCollectionCountBean jsonObject) {
@@ -967,6 +971,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                     } else {
                         L.d("zxcvbn", "没有gif------------");
                         isFirstShowGif = false;
+                        gifCount = 0;
                         mBasketDetailsHeadFragment.setBtn_showGifVisible(View.GONE);
                         // }
                     }
