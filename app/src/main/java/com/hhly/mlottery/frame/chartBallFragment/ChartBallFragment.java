@@ -320,11 +320,11 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     protected void onTextResult(String text) {
         System.out.println("xxxxx 聊球推送：" + text);
         ChartRoom chartRoom = JSON.parseObject(text, ChartRoom.class);
-        final String online = chartRoom.getData().getOnlineNum();
+        final String online = chartRoom.getData().getOnlineNum() == null ? "0" : chartRoom.getData().getOnlineNum();
         mContext.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                tv_online_count.setText(online == null ? "0" : String.valueOf(online) + mContext.getResources().getString(R.string.chart_ball_online));// 在线人数
+                tv_online_count.setText((online + mContext.getResources().getString(R.string.chart_ball_online)));// 在线人数
             }
         });
 

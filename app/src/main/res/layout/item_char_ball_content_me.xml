@@ -42,7 +42,7 @@
                 android:visibility="gone"
                 android:padding="10dp"
                 android:textColor="@color/mdy_333"
-                android:background="@drawable/chart_ball_bubble_right"
+                android:background="@drawable/blueair"
                 tools:text="test" />
 
             <TextView
