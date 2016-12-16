@@ -1,4 +1,4 @@
-<com.hhly.mlottery.widget.ExactSwipeRefrashLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.hhly.mlottery.widget.ExactSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/league_swiperefreshlayout"
     android:layout_width="match_parent"
@@ -303,4 +303,4 @@
 
         <include layout="@layout/network_exception" />
     </LinearLayout>
-</com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
+</com.hhly.mlottery.widget.ExactSwipeRefreshLayout>

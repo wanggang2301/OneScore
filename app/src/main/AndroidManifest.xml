@@ -225,10 +225,8 @@
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data android:scheme="1104883879" />
             </intent-filter>
         </activity>
@@ -304,10 +302,14 @@
         <activity
             android:name=".activity.MoreSettingsActivity"
             android:screenOrientation="portrait" />
+        <!--产品建议页面-->
+        <activity android:name=".activity.ProductAdviceActivity"
+            android:screenOrientation="portrait"
+            >
+        </activity>
         <activity
-            android:name=".activity.PlayHighLightActivity"
-            android:screenOrientation="portrait"></activity>
-
+                android:name=".activity.PlayHighLightActivity"
+                android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
