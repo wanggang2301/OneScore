@@ -64,7 +64,6 @@ public class ChartRoom {
         private String time;
         private ToUser toUser;
         private boolean isShowTime;
-        private boolean isEmoji;
 
         public String getMsgType() {
             return msgType;
@@ -88,14 +87,6 @@ public class ChartRoom {
 
         public void setShowTime(boolean showTime) {
             isShowTime = showTime;
-        }
-
-        public boolean isEmoji() {
-            return isEmoji;
-        }
-
-        public void setEmoji(boolean emoji) {
-            isEmoji = emoji;
         }
 
         public FromUserBean getFromUser() {

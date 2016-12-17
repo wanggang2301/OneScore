@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
@@ -61,6 +63,7 @@ import io.github.rockerhieu.emojicon.EmojiconEditText;
 public class ChartballActivity extends BaseActivity implements View.OnClickListener {
 
 
+    private static final int TEXT_CHANGED = 1;
     public static String TAG = "ChartballActivity";
     public EmojiconEditText mEditText;//输入评论
     private TextView mSend;//发送评论
@@ -86,7 +89,7 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
     private final static String MATCH_THIRD_ID = "thirdId";
     private String mThirdId;
     private String callName;// @昵称
-    private String callUserId;// @昵称
+    private String callUserId;// @昵称id
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,19 +114,34 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
 
     }
 
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case TEXT_CHANGED:
+                    isContains = false;
+                    mEditText.setText(mText);
+                    mEditText.setSelection(mEditText.getText().length());
+                    break;
+            }
+        }
+    };
+    String mText;
+    boolean isContains = false;// 是否去掉@用户
+
     private void initEvent() {
 
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!TextUtils.isEmpty(callName)) {
-                    if (!mEditText.getText().toString().contains(callName)) {
-                        mEditText.setTextColor(mContext.getResources().getColor(R.color.mdy_333));
+                    if (!s.toString().contains("@" + callName + ":") && isContains) {
+                        mText = s.toString();
+                        mHandler.sendEmptyMessage(TEXT_CHANGED);
                     }
                 }
             }
@@ -192,9 +210,11 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
             mThirdId = getIntent().getStringExtra(MATCH_THIRD_ID);
             callName = getIntent().getStringExtra("CALL_NAME");
             callUserId = getIntent().getStringExtra("CALL_USER_ID");
+            System.out.println("xxxxx 头像点击传过来的： " + callName);
             if (!TextUtils.isEmpty(callName)) {
-                mEditText.setText(Html.fromHtml("<font color='#0090ff'>" + callName + "</font>"));
+                mEditText.setText(Html.fromHtml("<font color='#0090ff'>@" + callName + ":</font>"));
                 mEditText.setSelection(mEditText.getText().length());
+                isContains = true;
                 mSend.setSelected(true);
             }
         }
@@ -305,31 +325,25 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
             case R.id.tv_send://发送评论
                 MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivityTest_TalkSend");
                 if (TextUtils.isEmpty(mEditText.getText())) {//没有输入内容
-                    if (mEditText.getText().toString().contains(callName)) {
-                        String replace = mEditText.getText().toString().replace(callName, "");
-                        if (TextUtils.isEmpty(replace)) {
-                            if (TextUtils.isEmpty(replace.trim())) {
-                                ToastTools.showQuickCenter(this, getResources().getString(R.string.warn_nullcontent));
-                            }
-                        }
-                    } else if (TextUtils.isEmpty(mEditText.getText().toString().trim())) {
+                    if (TextUtils.isEmpty(mEditText.getText().toString().trim())) {
                         ToastTools.showQuickCenter(this, getResources().getString(R.string.warn_nullcontent));
                     }
                 } else {//有输入内容
                     if (CommonUtils.isLogin()) {//已登录华海
                         ChartReceive.DataBean.ChatHistoryBean chatHistoryBean;
+
                         if (!TextUtils.isEmpty(callName)) {
-                            if (mEditText.getText().toString().contains(callName)) {
-                                // TODO  发送@消息
-                                String replace = mEditText.getText().toString().replace(callName, "");
-                                chatHistoryBean = new ChartReceive.DataBean.ChatHistoryBean(replace.trim(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
+                            if (mEditText.getText().toString().contains("@" + callName + ":")) {
+                                String replace = mEditText.getText().toString().replace("@" + callName + ":", "");
+                                chatHistoryBean = new ChartReceive.DataBean.ChatHistoryBean(2, replace.trim(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
                                         , AppConstants.register.getData().getUser().getHeadIcon(), AppConstants.register.getData().getUser().getNickName()), new ChartReceive.DataBean.ChatHistoryBean.ToUser(callUserId, null, callName));
                             } else {
-                                chatHistoryBean = new ChartReceive.DataBean.ChatHistoryBean(mEditText.getText().toString().trim(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
+                                // TODO 这里要把@和:去掉
+                                chatHistoryBean = new ChartReceive.DataBean.ChatHistoryBean(1, mEditText.getText().toString().trim(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
                                         , AppConstants.register.getData().getUser().getHeadIcon(), AppConstants.register.getData().getUser().getNickName()), new ChartReceive.DataBean.ChatHistoryBean.ToUser());
                             }
                         } else {
-                            chatHistoryBean = new ChartReceive.DataBean.ChatHistoryBean(mEditText.getText().toString().trim(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
+                            chatHistoryBean = new ChartReceive.DataBean.ChatHistoryBean(1, mEditText.getText().toString().trim(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
                                     , AppConstants.register.getData().getUser().getHeadIcon(), AppConstants.register.getData().getUser().getNickName()), new ChartReceive.DataBean.ChatHistoryBean.ToUser());
                         }
                         // 向会话列表发送输入内容
@@ -421,7 +435,7 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 关闭当前activity
-            EventBus.getDefault().post(new ChartReceive.DataBean.ChatHistoryBean("EXIT_CURRENT_ACTIVITY", new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
+            EventBus.getDefault().post(new ChartReceive.DataBean.ChatHistoryBean(1, "EXIT_CURRENT_ACTIVITY", new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
                     , AppConstants.register.getData().getUser().getHeadIcon(), "EXIT_CURRENT_ACTIVITY"), new ChartReceive.DataBean.ChatHistoryBean.ToUser()));
             finish();
             return true;

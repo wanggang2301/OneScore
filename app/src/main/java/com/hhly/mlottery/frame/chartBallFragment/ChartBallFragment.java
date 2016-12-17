@@ -2,6 +2,7 @@ package com.hhly.mlottery.frame.chartBallFragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,7 +11,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
@@ -27,11 +28,9 @@ import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.BarrageBean;
 import com.hhly.mlottery.bean.chart.ChartReceive;
 import com.hhly.mlottery.bean.chart.ChartRoom;
-import com.hhly.mlottery.bean.chart.SendMessageBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
-import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.io.UnsupportedEncodingException;
@@ -261,23 +260,24 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                 case START_LOADING:
                     break;
                 case SUCCESS_LOADING:
+                    // TODO 开启socket推送  --需要判断是否多次开启
+                    connectWebSocket();
+
                     historyBeen = mChartReceive.getData().getChatHistory();
                     mAdapter = new ChartBallAdapter(mContext, historyBeen);
                     mAdapter.setShowDialogOnClickListener(ChartBallFragment.this);
                     recycler_view.setAdapter(mAdapter);
 
                     sleepView();
+                    System.out.println("xxxxx historyBeen.size(): " + historyBeen.size());
 
-                    if (historyBeen.size() == 0) {
+                    if (historyBeen == null || historyBeen.size() == 0) {
                         fl_not_chart_image.setVisibility(View.VISIBLE);
                         rl_chart_content.setVisibility(View.GONE);
                     } else {
                         fl_not_chart_image.setVisibility(View.GONE);
                         rl_chart_content.setVisibility(View.VISIBLE);
                     }
-
-                    //开启socket推送
-                    connectWebSocket();
                     break;
                 case ERROR_LOADING:
                     // TODO 显示失败界面
@@ -287,12 +287,13 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     break;
                 case MSG_UPDATE_LIST:// 更新会话
                     ChartReceive.DataBean.ChatHistoryBean chartbean = (ChartReceive.DataBean.ChatHistoryBean) msg.obj;
-                    // 收到消息，显示弹幕
-                    EventBus.getDefault().post(new BarrageBean(chartbean.getFromUser().getUserLogo(), chartbean.getMessage()));
 
-                    if (msg.arg1 == 2) {
-                        // TODO 有人发@消息,加上@人员的昵称
-                        chartbean.setEmoji(true);
+                    // 收到消息，显示弹幕
+                    if (chartbean.getMsgCode() == 1) {
+                        EventBus.getDefault().post(new BarrageBean(chartbean.getFromUser().getUserLogo(), chartbean.getMessage()));
+                    } else if (chartbean.getMsgCode() == 2) {
+                        String message = chartbean.getToUser() != null ? "@" + chartbean.getToUser().getUserNick() + ":" + chartbean.getMessage() : chartbean.getMessage();
+                        EventBus.getDefault().post(new BarrageBean(chartbean.getFromUser().getUserLogo(), message));
                     }
 
                     if (msg.arg2 == 2) { // 为@消息
@@ -310,16 +311,18 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     break;
                 case MSG_SEND_TO_ME:// 本地发送消息
                     ChartReceive.DataBean.ChatHistoryBean contentEntitiy = (ChartReceive.DataBean.ChatHistoryBean) msg.obj;
-                    fl_not_chart_image.setVisibility(View.GONE);
-                    rl_chart_content.setVisibility(View.VISIBLE);
-                    historyBeen.add(contentEntitiy);
-                    mAdapter.notifyDataSetChanged();
-                    sleepView();
                     if (!TextUtils.isEmpty(contentEntitiy.getToUser().getUserId())) {
                         sendMessageToServer(TYPE_MSG_TO_ME, contentEntitiy.getMessage(), contentEntitiy.getToUser().getUserId());
                     } else {
                         sendMessageToServer(TYPE_MSG, contentEntitiy.getMessage(), null);
                     }
+                    fl_not_chart_image.setVisibility(View.GONE);
+                    rl_chart_content.setVisibility(View.VISIBLE);
+                    System.out.println("xxxxx 这边传过来的code: " + contentEntitiy.getMsgCode());
+                    historyBeen.add(contentEntitiy);
+                    mAdapter.notifyDataSetChanged();
+                    sleepView();
+
                     break;
             }
         }
@@ -345,6 +348,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     @Override
     public void onDestroy() {
         super.onDestroy();
+        MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
         EventBus.getDefault().unregister(this);
     }
 
@@ -358,13 +362,13 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
     @Override
     protected void onTextResult(final String text) {
-
         new Thread() {
             @Override
             public void run() {
+                System.out.println("xxxxx 滚球推送：" + text);
                 ChartRoom chartRoom = JSON.parseObject(text, ChartRoom.class);
 
-                ChartReceive.DataBean.ChatHistoryBean chartbean = new ChartReceive.DataBean.ChatHistoryBean(chartRoom.getData().getMessage(),
+                ChartReceive.DataBean.ChatHistoryBean chartbean = new ChartReceive.DataBean.ChatHistoryBean(chartRoom.getData().getMsgCode(), chartRoom.getData().getMessage(),
                         chartRoom.getData().getFromUser() == null ? new ChartReceive.DataBean.ChatHistoryBean.FromUserBean() : new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(chartRoom.getData().getFromUser().getUserId(), chartRoom.getData().getFromUser().getUserLogo(), chartRoom.getData().getFromUser().getUserNick()),
                         chartRoom.getData().getToUser() == null ? new ChartReceive.DataBean.ChatHistoryBean.ToUser() : new ChartReceive.DataBean.ChatHistoryBean.ToUser(chartRoom.getData().getToUser().getUserId(), chartRoom.getData().getToUser().getUserLogo(), chartRoom.getData().getToUser().getUserNick()));
 

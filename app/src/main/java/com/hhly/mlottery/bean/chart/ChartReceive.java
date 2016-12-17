@@ -73,13 +73,14 @@ public class ChartReceive {
             private int msgType;
             private String onlineNum;
             private boolean isShowTime;
-            private boolean isEmoji;
 
-            public ChatHistoryBean(String s, FromUserBean fromUserBean ,ToUser toUserBean) {
-                this.fromUser=fromUserBean;
-                this.message=s;
+            public ChatHistoryBean(int msgcode, String s, FromUserBean fromUserBean, ToUser toUserBean) {
+                this.msgCode = msgcode;
+                this.fromUser = fromUserBean;
+                this.message = s;
                 this.toUser = toUserBean;
             }
+
             public ChatHistoryBean() {
 
             }
@@ -91,14 +92,6 @@ public class ChartReceive {
 
             public void setShowTime(boolean showTime) {
                 isShowTime = showTime;
-            }
-
-            public boolean isEmoji() {
-                return isEmoji;
-            }
-
-            public void setEmoji(boolean emoji) {
-                isEmoji = emoji;
             }
 
             public String getMsgId() {
@@ -173,14 +166,15 @@ public class ChartReceive {
                 this.msgType = msgType;
             }
 
-            public static class ToUser{
+            public static class ToUser {
                 private String userId;
                 private String userLogo;
                 private String userNick;
 
-                public ToUser(){}
+                public ToUser() {
+                }
 
-                public ToUser(String userid,String userlogo,String usernick){
+                public ToUser(String userid, String userlogo, String usernick) {
                     this.userId = userid;
                     this.userLogo = userlogo;
                     this.userNick = usernick;

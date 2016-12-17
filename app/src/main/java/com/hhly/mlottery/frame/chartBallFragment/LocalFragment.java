@@ -71,12 +71,12 @@ public class LocalFragment extends Fragment {
                 for (Map.Entry<String, Integer> entry : AppConstants.localMap.entrySet()) {
                     if (entry.getValue().equals(mData.get(i))) {
                         // 向会话列表发送输入内容
-                        EventBus.getDefault().post(new ChartReceive.DataBean.ChatHistoryBean(entry.getKey(),new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
-                                ,AppConstants.register.getData().getUser().getHeadIcon(),AppConstants.register.getData().getUser().getNickName()),new ChartReceive.DataBean.ChatHistoryBean.ToUser()));
+                        EventBus.getDefault().post(new ChartReceive.DataBean.ChatHistoryBean(1, entry.getKey(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
+                                , AppConstants.register.getData().getUser().getHeadIcon(), AppConstants.register.getData().getUser().getNickName()), new ChartReceive.DataBean.ChatHistoryBean.ToUser()));
 
                         // 用户自己的头像URL发向弹幕
-                        EventBus.getDefault().post(new BarrageBean(AppConstants.register.getData().getUser().getHeadIcon(),entry.getKey()));
-                        ((ChartballActivity)mContext).hideKeyOrGallery();
+                        EventBus.getDefault().post(new BarrageBean(AppConstants.register.getData().getUser().getHeadIcon(), entry.getKey()));
+                        ((ChartballActivity) mContext).hideKeyOrGallery();
                         return;
                     }
                 }

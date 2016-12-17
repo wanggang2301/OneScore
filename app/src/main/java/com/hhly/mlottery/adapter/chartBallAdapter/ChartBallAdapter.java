@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -74,6 +75,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+
         switch (getItemViewType(position)) {
             case 0:
                 ViewHolderMsg viewHolderMsg = (ViewHolderMsg) holder;
@@ -86,17 +88,24 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                         showPopup(v, position);
                     }
                 });
+                if (mData.get(position).isShowTime()) {
+                    viewHolderMsg.ll_time_content.setVisibility(View.VISIBLE);
+                } else {
+                    viewHolderMsg.ll_time_content.setVisibility(View.GONE);
+                }
                 boolean isRn = false;
                 int resource = -1;
                 for (Map.Entry<String, Integer> entry : AppConstants.localMap.entrySet()) {
-                    if (mData.get(position).getMessage().equals(entry.getKey())) {
-                        isRn = true;
-                        resource = entry.getValue();
+                    if (mData.get(position).getMessage() != null) {
+                        if (mData.get(position).getMessage().equals(entry.getKey())) {
+                            isRn = true;
+                            resource = entry.getValue();
+                        }
                     }
                 }
                 if (!isRn) {
-                    if (mData.get(position).isEmoji()) {
-                        viewHolderMsg.receive_text.setText((Html.fromHtml("<font color='#0090ff'>" + mData.get(position).getToUser().getUserNick() + "</font>") + mData.get(position).getMessage()));
+                    if (mData.get(position).getMsgCode() == 2) {
+                        viewHolderMsg.receive_text.setText(Html.fromHtml("<font color='#0090ff'>@" + mData.get(position).getToUser().getUserNick() + ":</font>" + mData.get(position).getMessage()));
                     } else {
                         viewHolderMsg.receive_text.setText(mData.get(position).getMessage());
                     }
@@ -114,21 +123,28 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                 ViewHolderMe viewHolderMe = (ViewHolderMe) holder;
                 Glide.with(mContext).load(mData.get(position).getFromUser().getUserLogo()).placeholder(R.mipmap.center_head).into(viewHolderMe.my_bighead_view);
                 viewHolderMe.tv_nickname_me.setText(mData.get(position).getFromUser().getUserNick());
+                if (mData.get(position).isShowTime()) {
+                    viewHolderMe.ll_time_content_me.setVisibility(View.VISIBLE);
+                } else {
+                    viewHolderMe.ll_time_content_me.setVisibility(View.GONE);
+                }
                 boolean isRn_me = false;
                 int resource_me = -1;
                 for (Map.Entry<String, Integer> entry : AppConstants.localMap.entrySet()) {
-                    if (mData.get(position).getMessage().equals(entry.getKey())) {
-                        isRn_me = true;
-                        resource_me = entry.getValue();
+                    if (mData.get(position).getMessage() != null) {
+                        if (mData.get(position).getMessage().equals(entry.getKey())) {
+                            isRn_me = true;
+                            resource_me = entry.getValue();
+                        }
                     }
                 }
                 if (!isRn_me) {
-                    if (mData.get(position).isEmoji()) {
-                        viewHolderMe.my_text.setText((Html.fromHtml("<font color='#0090ff'>@" + mData.get(position).getToUser().getUserNick() + ":</font>") + mData.get(position).getMessage()));
+                    if (mData.get(position).getMsgCode() == 2) {
+                        System.out.println("xxxxx mData.get(position).getToUser().getUserNick(): " + mData.get(position).getToUser().getUserNick());
+                        viewHolderMe.my_text.setText(Html.fromHtml("<font color='#0090ff'>@" + mData.get(position).getToUser().getUserNick() + ":</font>" + mData.get(position).getMessage()));
                     } else {
                         viewHolderMe.my_text.setText(mData.get(position).getMessage());
                     }
-                    viewHolderMe.my_text.setText(mData.get(position).getMessage());
                     viewHolderMe.my_image.setVisibility(View.GONE);
                     viewHolderMe.my_text.setVisibility(View.VISIBLE);
                 } else {
@@ -158,6 +174,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
         TextView receive_image;
         CircleImageView bighead_view;
         TextView receive_text;
+        LinearLayout ll_time_content;
 
         public ViewHolderMsg(View view) {
             super(view);
@@ -165,6 +182,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
             bighead_view = (CircleImageView) view.findViewById(R.id.bighead_view);
             receive_text = (TextView) view.findViewById(R.id.receive_text);
             receive_image = (TextView) view.findViewById(R.id.receive_image);
+            ll_time_content = (LinearLayout) view.findViewById(R.id.ll_time_content);
         }
     }
 
@@ -174,6 +192,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
         TextView my_text;
         TextView my_image;
         CircleImageView my_bighead_view;
+        LinearLayout ll_time_content_me;
 
         public ViewHolderMe(View itemView) {
             super(itemView);
@@ -181,6 +200,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
             my_text = (TextView) itemView.findViewById(R.id.my_text);
             my_bighead_view = (CircleImageView) itemView.findViewById(R.id.my_bighead_view);
             my_image = (TextView) itemView.findViewById(R.id.my_image);
+            ll_time_content_me = (LinearLayout) itemView.findViewById(R.id.ll_time_content_me);
         }
     }
 
@@ -204,7 +224,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
             public void onClick(View view) {
                 mPopupWindow.dismiss();
                 Intent intent = new Intent(mContext, ChartballActivity.class);
-                intent.putExtra("CALL_NAME", "@" + mData.get(index).getFromUser().getUserNick() + "：");
+                intent.putExtra("CALL_NAME", mData.get(index).getFromUser().getUserNick());
                 intent.putExtra("CALL_USER_ID", mData.get(index).getFromUser().getUserId());
                 mContext.startActivity(intent);
             }
