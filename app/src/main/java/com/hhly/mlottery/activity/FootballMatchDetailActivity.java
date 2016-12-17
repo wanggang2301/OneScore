@@ -404,7 +404,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         fragmentManager = getSupportFragmentManager();
 
-
         //底部ViewPager(滚球、指数等)
         mTabsAdapter = new TabsAdapter(getSupportFragmentManager());
         mTabsAdapter.setTitles(titles);
@@ -2070,7 +2069,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     FocusFragment.addFocusId(mThirdId);
                     ((ImageView) mView.findViewById(R.id.football_item_focus_iv)).setImageResource(R.mipmap.head_focus);
                     ((TextView) mView.findViewById(R.id.football_item_focus_tv)).setText(getString(R.string.foot_details_focused));
-
                 }
             }
         });
