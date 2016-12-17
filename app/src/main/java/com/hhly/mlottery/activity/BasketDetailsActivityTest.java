@@ -316,7 +316,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         basePagerAdapter = new BasePagerAdapter(fragmentManager);
 
         headLayout = (LinearLayout) findViewById(R.id.basket_details_header_layout);
-
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -360,12 +359,12 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     @Override
     protected void onDestroy() { //关闭socket
         super.onDestroy();
-
         closePollingGifCount();
     }
 
     @Override
     protected void onTextResult(String text) {
+        L.d("socket", "socket==" + text);
 
         String type = "";
         try {

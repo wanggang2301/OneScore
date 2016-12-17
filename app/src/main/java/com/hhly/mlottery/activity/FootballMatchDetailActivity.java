@@ -373,14 +373,11 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         String[] titles = mContext.getResources().getStringArray(R.array.foot_details_tabs);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         mRefreshLayout = (ExactSwipeRefrashLayout) findViewById(R.id.refresh_layout_details);
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
         mRefreshLayout.setOnRefreshListener(this);
 
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-
-
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -394,7 +391,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 //                if (position == 5) {
 //                    appBarLayout.setExpanded(false);
 //                }
-
             }
 
             @Override
