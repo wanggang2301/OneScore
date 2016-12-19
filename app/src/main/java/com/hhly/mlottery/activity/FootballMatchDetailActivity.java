@@ -2110,7 +2110,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mShareFragment.show(getSupportFragmentManager(), "bottomShare");
             }
         });
-
     }
 
     @Override
