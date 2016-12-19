@@ -60,7 +60,7 @@
         android:layout_height="1px"
         android:background="#dddddd"></View>
 
-    <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
+    <com.hhly.mlottery.widget.ExactSwipeRefrashLayout
         android:id="@+id/info_swiperefreshlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -136,7 +136,7 @@
 
         </FrameLayout>
 
-    </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
+    </com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
 
     <include layout="@layout/network_exception" />
 

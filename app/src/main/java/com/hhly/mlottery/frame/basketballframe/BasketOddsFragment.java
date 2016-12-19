@@ -224,9 +224,7 @@ public class BasketOddsFragment extends Fragment implements View.OnClickListener
      */
     private void loadData(BasketDetailOddsBean oddsBean) {
         if(getActivity()!=null){
-            if(oddsBean.getCompanyOdds()!=null){
-                mOddsCompanyList=oddsBean.getCompanyOdds();
-            }
+            mOddsCompanyList=oddsBean.getCompanyOdds();
             mOddsAdapter = new BasketOddsAdapter(getActivity(), mOddsCompanyList,mType);//欧赔
             listView.setAdapter(mOddsAdapter);
             mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);

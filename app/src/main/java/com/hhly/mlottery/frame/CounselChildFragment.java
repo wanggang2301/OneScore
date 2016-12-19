@@ -30,7 +30,7 @@ import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.PullUpRefreshListView;
-import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,7 +56,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
     private TextView reLoading;//点击重新加载
     private TextView nodataorloading;//没有数据
     private CounselFragmentLvAdapter mAdapter; //listview适配器
-    private ExactSwipeRefreshLayout mSwipeRefreshLayout;//下拉刷新
+    private ExactSwipeRefrashLayout mSwipeRefreshLayout;//下拉刷新
     int index;//当前fragment
     private boolean isImageLeft;//item是否是左边布局
     private int mCurrentPager = 1;//当前页数
@@ -106,7 +106,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
         reLoading.setOnClickListener(this);
         nodataorloading = (TextView) mView.findViewById(R.id.dataloding_ornodata);
         //下拉刷新
-        mSwipeRefreshLayout = (ExactSwipeRefreshLayout) mView.findViewById(R.id.swiperefreshlayout_counselfragmentchild);
+        mSwipeRefreshLayout = (ExactSwipeRefrashLayout) mView.findViewById(R.id.swiperefreshlayout_counselfragmentchild);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));

@@ -55,7 +55,7 @@
                 android:textSize="@dimen/text_size_14" />
         </RelativeLayout>
 
-        <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
+        <com.hhly.mlottery.widget.ExactSwipeRefrashLayout
             android:id="@+id/football_immediate_swiperefreshlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -67,7 +67,7 @@
                 android:layout_height="match_parent">
             </android.support.v7.widget.RecyclerView>
 
-        </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
+        </com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
 
 
         <include layout="@layout/network_exception" />

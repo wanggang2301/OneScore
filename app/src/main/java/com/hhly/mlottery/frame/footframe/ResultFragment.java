@@ -51,7 +51,7 @@ import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.ResultDateUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -88,7 +88,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
     private List<ScheduleDate> mDateList; // 日期
 
-    private ExactSwipeRefreshLayout mSwipeRefreshLayout;// 下拉刷新 layout
+    private ExactSwipeRefrashLayout mSwipeRefreshLayout;// 下拉刷新 layout
 
     private FocusClickListener mFocusClickListener;// 关注点击事件
 
@@ -273,7 +273,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
         mNoDataLayout = (RelativeLayout) mView.findViewById(R.id.football_result_unfocus_ll);
 
         // 下拉刷新
-        mSwipeRefreshLayout = (ExactSwipeRefreshLayout) mView.findViewById(R.id.football_result_swiperefreshlayout);
+        mSwipeRefreshLayout = (ExactSwipeRefrashLayout) mView.findViewById(R.id.football_result_swiperefreshlayout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));

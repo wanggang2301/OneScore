@@ -2,6 +2,7 @@ package com.hhly.mlottery.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
@@ -24,6 +25,7 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.SportsDialogAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
@@ -39,7 +41,7 @@ import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MDStatusBarCompat;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.hhly.mlottery.widget.ScrollTouchListView;
 import com.umeng.analytics.MobclickAgent;
 
@@ -81,7 +83,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity
 
     LinearLayout headLayout;// 小头部
 
-    private ExactSwipeRefreshLayout mRefreshLayout; //下拉刷新
+    private ExactSwipeRefrashLayout mRefreshLayout; //下拉刷新
 
     private BasketDatabaseScheduleFragment mScheduleFragment; // 赛程
     private BasketDatabaseRankingFragment mRankingFragment; // 排行
@@ -196,7 +198,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity
             }
         });
 
-        mRefreshLayout = (ExactSwipeRefreshLayout) findViewById(R.id.basket_database_details_refresh_layout);
+        mRefreshLayout = (ExactSwipeRefrashLayout) findViewById(R.id.basket_database_details_refresh_layout);
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
         mRefreshLayout.setOnRefreshListener(this);
 

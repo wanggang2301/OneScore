@@ -43,9 +43,8 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
     private ViewPager mViewPager;
     private MyPagerAdapter mAdapter;
 
-    private final static String GIF_TYPE = "0";  //图片
-    private final static String VIDEO_TYPE = "1"; //视频
-    private final static String MATCH_TYPE = "1"; //足球
+    private final static String GIF_TYPE = "0";
+    private final static String VIDEO_TYPE = "1";
 
 
     private final static int REQUEST_ERROR = -1;
@@ -86,6 +85,7 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
     private LinearLayout ll_error;
     private TextView reloading_txt;
     private String mThirdId;
+    private String match_type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +94,7 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
         if (getIntent().getExtras() != null) {
             Intent intent = getIntent();
             mThirdId = intent.getStringExtra("thirdId");
+            match_type = intent.getStringExtra("match_type");
         }
 
         L.d("zxcvbn", "mThirdId=" + mThirdId);
@@ -169,11 +170,9 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
 
     private void getRequestGif() {
         handler.sendEmptyMessage(REQUEST_LOAD);
-
         Map<String, String> parms = new HashMap<>();
         parms.put("thirdId", mThirdId);
-        // parms.put("thirdId", mThirdId);
-        parms.put("matchType", MATCH_TYPE);  //足球
+        parms.put("matchType", match_type);  //足球1 篮球2
 
         VolleyContentFast.requestJsonByGet(BaseURLs.FOOTBALL_DETAIL_COLLECTION, parms, new VolleyContentFast.ResponseSuccessListener<VideoHighLights>() {
             @Override
@@ -195,6 +194,10 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
         }, VideoHighLights.class);
     }
 
+    /**\
+     * 初始化
+     */
+
     private void initializeData() {
         for (int i = 0; i < mList.size(); i++) {
             ViewGroup viewGroup = (ViewGroup) View.inflate(this, R.layout.page_layout, null);
@@ -209,8 +212,7 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
                 mImageView.setVisibility(View.VISIBLE);
                 mViewList.add(viewGroup);
                 mVideoViewList.add(mImageView);
-            } else if (VIDEO_TYPE.equals(mList.get(i).getResourceType())) {
-
+            } else {
                 mImageView.setVisibility(View.GONE);
                 mVideoView.setVisibility(View.VISIBLE);
                 mView.setVisibility(View.VISIBLE);
@@ -219,104 +221,87 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
                 setListener(mVideoView);
                 mViewList.add(viewGroup);
                 mVideoViewList.add(mVideoView);
-
             }
             mCacheViewList.add(mView);
         }
-
         mAdapter = new MyPagerAdapter(this, mViewList);
-
         mViewPager.setAdapter(mAdapter);
 
         if (mList.size() > 1) {
             tvImageIndex.setVisibility(View.VISIBLE);
             tvImageIndex.setText((0 + 1) + "/" + mList.size());
+
+
         } else {
             tvImageIndex.setVisibility(View.GONE);
         }
 
 
-        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener()
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
-                                           {
-                                               @Override
-                                               public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                                               }
+            @Override
+            public void onPageSelected(int pageIndex) {
 
-                                               @Override
-                                               public void onPageSelected(int pageIndex) {
+                lastItem = currentItem;
+                currentItem = pageIndex;
 
-                                                   lastItem = currentItem;
-                                                   currentItem = pageIndex;
+                int index = pageIndex % mList.size();
+                tvImageIndex.setText((index + 1) + "/" + mList.size());
+                tv_text.setText(mList.get(currentItem).getDescription());
 
-                                                   int index = pageIndex % mList.size();
-                                                   tvImageIndex.setText((index + 1) + "/" + mList.size());
-                                                   tv_text.setText(mList.get(currentItem).getDescription());
+                if ((mVideoViewList.get(lastItem)) instanceof VideoView) {  //如果上一个是video
+                    if ((mVideoViewList.get(lastItem)) != null) {
+                        if (((VideoView) mVideoViewList.get(lastItem)).isPlaying()) {   //如果是true
+                            mList.get(lastItem).setmIsPlaying(true);
+                            // 记录播放状态
+                            ((VideoView) (mVideoViewList.get(lastItem))).pause();
+                        } else {
+                            // 记录播放状态*ess5
+                            mList.get(lastItem).setmIsPlaying(false);
+                        }
+                        // 记录播放进度
+                        mList.get(lastItem).setmCurrentPositions(((VideoView) mVideoViewList.get(lastItem)).getCurrentPosition());
+                    }
+                }
 
-                                                   if ((mVideoViewList.get(lastItem)) instanceof VideoView) {  //如果上一个是video
-                                                       if ((mVideoViewList.get(lastItem)) != null) {
-                                                           if (((VideoView) mVideoViewList.get(lastItem)).isPlaying()) {   //如果是true
-                                                               mList.get(lastItem).setmIsPlaying(true);
-                                                               // 记录播放状态
-                                                               ((VideoView) (mVideoViewList.get(lastItem))).pause();
-                                                           } else {
-                                                               // 记录播放状态*ess5
-                                                               mList.get(lastItem).setmIsPlaying(false);
-                                                           }
-                                                           // 记录播放进度
-                                                           mList.get(lastItem).setmCurrentPositions(((VideoView) mVideoViewList.get(lastItem)).getCurrentPosition());
-                                                       }
-                                                   }
+                if (mVideoViewList.get(currentItem) instanceof VideoView) {
+                    if (mVideoViewList.get(currentItem) != null) {
+                        ((VideoView) mVideoViewList.get(currentItem)).seekTo(mList.get(currentItem).getmCurrentPositions());
+                        if (mList.get(currentItem).ismIsPlaying()) {
+                            ((VideoView) mVideoViewList.get(currentItem)).start();
+                        }
+                    }
+                } else {
+                    PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher((PhotoView) mVideoViewList.get(currentItem));
+                    photoViewAttacher.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    photoViewAttacher.setMinimumScale(1F);
+                    ImageLoaderUtils.displayScaleImage(getApplicationContext(), (PhotoView) mVideoViewList.get(currentItem), mList.get(currentItem).getResourceUrl(), photoViewAttacher);
+                }
+            }
 
-                                                   if (mVideoViewList.get(currentItem) instanceof VideoView) {
-                                                       if (mVideoViewList.get(currentItem) != null) {
-                                                           ((VideoView) mVideoViewList.get(currentItem)).seekTo(mList.get(currentItem).getmCurrentPositions());
-                                                           if (mList.get(currentItem).ismIsPlaying()) {
-                                                               ((VideoView) mVideoViewList.get(currentItem)).start();
-                                                           }
-                                                       }
-                                                   } else {
-                                                       PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher((PhotoView) mVideoViewList.get(currentItem));
-                                                       photoViewAttacher.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                                                       photoViewAttacher.setMinimumScale(1F);
-                                                       ImageLoaderUtils.displayScaleImage(getApplicationContext(), (PhotoView) mVideoViewList.get(currentItem), mList.get(currentItem).getResourceUrl(), photoViewAttacher);
-                                                   }
-                                               }
+            @Override
+            public void onPageScrollStateChanged(int state) {
 
-                                               @Override
-                                               public void onPageScrollStateChanged(int state) {
-
-                                               }
-                                           }
-
-        );
+            }
+        });
 
 
-        if (GIF_TYPE.equals(mList.get(0).
-
-                getResourceType()
-
-        ))
-
-        {
+        if (GIF_TYPE.equals(mList.get(0).getResourceType())) {
             PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher((PhotoView) mVideoViewList.get(0));
             photoViewAttacher.setScaleType(ImageView.ScaleType.FIT_CENTER);
             photoViewAttacher.setMinimumScale(1F);
             ImageLoaderUtils.displayScaleImage(getApplicationContext(), (PhotoView) mVideoViewList.get(0), mList.get(0).getResourceUrl(), photoViewAttacher);
-        } else
-
-        {
+        } else {
             if (mVideoViewList.get(0) != null) {
                 ((VideoView) mVideoViewList.get(0)).start();
                 mList.get(0).setmIsPlaying(true);
             }
         }
 
-        tv_text.setText(mList.get(currentItem).
-
-                getDescription()
-
-        );
+        tv_text.setText(mList.get(currentItem).getDescription());
         handler.sendEmptyMessage(REQUEST_SUCESS);
     }
 
@@ -357,7 +342,6 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
             container.addView(mViewList.get(position));
             return mViewList.get(position);
         }
-
     }
 
 
