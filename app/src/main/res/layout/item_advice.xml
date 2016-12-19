@@ -26,7 +26,7 @@
                     android:id="@+id/advice_user_icon"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@mipmap/basket_default"
+                    android:src="@mipmap/center_head"
                     />
                 <TextView
                     android:id="@+id/advice_user_name"
@@ -51,24 +51,31 @@
                     android:layout_marginLeft="10dp"
 
                     />
-                <TextView
-                    android:id="@+id/advice_user_like"
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="13sp"
-                    android:text="9999"
+                    android:orientation="horizontal"
                     android:layout_alignParentRight="true"
-                    android:gravity="left"
-                    android:layout_centerVertical="true"
-                    />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/like_red"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="40dp"
-                    />
+                    >
+                    <ImageView
+                        android:id="@+id/advice_user_img_like"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/advice_like_white"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:layout_marginTop="2dp"
+                        />
+                    <TextView
+                        android:id="@+id/advice_user_like"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="13sp"
+                        android:text="0000"
+                        />
+                </LinearLayout>
+
 
             </RelativeLayout>
 
@@ -81,7 +88,7 @@
                 android:textColor="@color/mdy_333"
                 android:textSize="13sp"
                 android:layout_marginTop="10dp"
-                android:text="为什么这么多广告"
+                android:text=""
                 />
 
             <RelativeLayout
@@ -106,20 +113,14 @@
                     android:textColor="@color/product_advice"
                     android:layout_toLeftOf="@id/product_icon"
                     android:layout_marginRight="8dp"
-                    android:text="产品回复"
+                    android:text="@string/product_advice"
                     />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/product_advice"
-                    android:layout_toLeftOf="@id/product_1"
-                    android:paddingRight="10dp"
-                    />
+
                 <TextView
                     android:id="@+id/advice_product_reply"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="后面会化后面会进行优化后面会进行优化后面会进行优化"
+                    android:text=""
                     android:textColor="@color/mdy_333"
                     android:gravity="left"
                     android:background="@drawable/shape_product_advice"

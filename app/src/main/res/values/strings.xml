@@ -1428,5 +1428,7 @@
     <string name="video_high_light_reminder_comment">您正在使用移动数据，是否继续打开？</string>
     <string name="video_high_light_continue_open">打开</string>
     <string name="video_high_light">精彩瞬间</string>
+    <string name="title_product_advice">给产品建议</string>
+    <string name="product_advice">产品回复</string>
 
 </resources>

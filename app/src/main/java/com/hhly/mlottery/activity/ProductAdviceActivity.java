@@ -21,6 +21,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.AdviceAdapter;
 import com.hhly.mlottery.bean.productadvice.ProductAdviceBean;
+import com.hhly.mlottery.callback.TheLikeOfProductAdviceListener;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
@@ -76,6 +77,8 @@ public class ProductAdviceActivity extends AppCompatActivity implements View.OnC
     private AdviceAdapter mAdapter;
     private int currentPage=1;
     private int PAGE_SIZE=20; //每页的最大数量
+    public final static  String LIKE_IDS="like_ids";
+
 
     private List<ProductAdviceBean.DataEntity> data=new ArrayList<>();
 
@@ -85,6 +88,7 @@ public class ProductAdviceActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_product_advice);
         ButterKnife.bind(this);
         initView();
+        setListener();
         initData();
     }
 
@@ -99,7 +103,7 @@ public class ProductAdviceActivity extends AppCompatActivity implements View.OnC
         findViewById(R.id.public_btn_write_advice).setOnClickListener(this);
         findViewById(R.id.public_img_back).setOnClickListener(this);
         mBtnRefresh.setOnClickListener(this);
-        title.setText("给产品建议");
+        title.setText(R.string.title_product_advice);
 
         mOnloadingView=getLayoutInflater().inflate(R.layout.onloading, (ViewGroup) mRecyclerView.getParent(),false);
 
@@ -109,9 +113,23 @@ public class ProductAdviceActivity extends AppCompatActivity implements View.OnC
         mAdapter=new AdviceAdapter(data,this);
         mAdapter.setLoadingView(mOnloadingView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         mRecyclerView.setAdapter(mAdapter);
 
         mAdapter.openLoadMore(PAGE_SIZE,true);
+
+
+    }
+    private void setListener(){
+        //点赞监听
+        mAdapter.setUserLikeClickListener(new TheLikeOfProductAdviceListener() {
+            @Override
+            public void onclick(View view, String id) {
+
+            }
+        });
+
+        //上拉加载更多
         mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
@@ -124,6 +142,7 @@ public class ProductAdviceActivity extends AppCompatActivity implements View.OnC
 
             }
         });
+
     }
 
     private Handler handler=new Handler(){
@@ -148,7 +167,9 @@ public class ProductAdviceActivity extends AppCompatActivity implements View.OnC
                     mNodataLayout.setVisibility(View.GONE);
                     mExceptionLayout.setVisibility(View.VISIBLE);
                     mRecyclerView.setVisibility(View.GONE);
-
+                    if(mRefreshLayout.isRefreshing()){
+                        mRefreshLayout.setRefreshing(false);
+                    }
                     break;
                 // 无数据界面
                 case VIEW_STATUS_NO_DATA:
@@ -180,7 +201,7 @@ public class ProductAdviceActivity extends AppCompatActivity implements View.OnC
      */
     private void initData(){
         currentPage=1;
-        String url="http://192.168.31.178:8888/mlottery/core/feedback.findAndroidFeedBackDetail.do";
+        String url="http://192.168.33.45:8080/mlottery/core/feedback.findAndroidFeedBackDetail.do";
         HashMap<String,String> params=new HashMap<>();
         params.put("currentPage",1+"");
 
@@ -222,7 +243,7 @@ public class ProductAdviceActivity extends AppCompatActivity implements View.OnC
      * 分页请求
      */
     private void requestByPage(){
-        String url="http://192.168.31.178:8888/mlottery/core/feedback.findAndroidFeedBackDetail.do";
+        String url="http://192.168.33.45:8080/mlottery/core/feedback.findAndroidFeedBackDetail.do";
         HashMap<String,String> params=new HashMap<>();
         currentPage=++currentPage;
         params.put("currentPage",currentPage+"");
@@ -257,6 +278,7 @@ public class ProductAdviceActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
 
+                Toast.makeText(ProductAdviceActivity.this, "error", Toast.LENGTH_SHORT).show();
             }
         },ProductAdviceBean.class);
 

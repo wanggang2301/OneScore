@@ -42,10 +42,19 @@ public class ProductAdviceBean {
         private String appVersion;
         private String userId;
         private String replyContent;
-        private int id;
+        private String id;
         private String replyTime;
         private String nickName;
         private String userImg;
+        private int likes;
+
+        public int getLikes() {
+            return likes;
+        }
+
+        public void setLikes(int likes) {
+            this.likes = likes;
+        }
 
         public int getJumpType() {
             return jumpType;
@@ -143,11 +152,11 @@ public class ProductAdviceBean {
             this.replyContent = replyContent;
         }
 
-        public int getId() {
+        public String getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(String id) {
             this.id = id;
         }
 

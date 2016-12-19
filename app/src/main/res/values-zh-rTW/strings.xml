@@ -1408,5 +1408,7 @@
     <string name="video_high_light_reminder_comment">您正在使用移動數據，是否繼續打開？</string>
     <string name="video_high_light_continue_open">打開</string>
     <string name="video_high_light">精彩瞬間</string>
+    <string name="title_product_advice">給產品建議</string>
+    <string name="product_advice">產品回復</string>
 
 </resources>
