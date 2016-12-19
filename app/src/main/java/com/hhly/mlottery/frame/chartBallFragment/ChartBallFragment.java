@@ -370,7 +370,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                                     }else if(currentTime - lastTime >= SHOW_TIME_LONG){
                                         // 显示时分秒
                                         historyBeen.get(i).setShowTime(currentTime - lastTime >= SHOW_TIME_LONG);
-                                        historyBeen.get(i).setTime(null);// TODO
+                                        historyBeen.get(i).setTime(DateUtil.getLotteryInfoDate(historyBeen.get(i).getTime(),"HH:mm:ss"));
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -509,7 +509,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                                     }else if(currentTime - lastTime >= SHOW_TIME_LONG){
                                         // 显示时分秒
                                         chartbean.setShowTime(currentTime - lastTime >= SHOW_TIME_LONG);
-                                        chartbean.setTime(null);// TODO
+                                        chartbean.setTime(DateUtil.getLotteryInfoDate(chartRoom.getData().getTime(),"HH:mm:ss"));
                                     }
                                 }
                             } catch (Exception e) {
@@ -543,7 +543,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                                             }else if(currentTime - lastTime >= SHOW_TIME_LONG){
                                                 // 显示时分秒
                                                 historyBeen.get(i).setShowTime(currentTime - lastTime >= SHOW_TIME_LONG);
-                                                historyBeen.get(i).setTime(null);// TODO
+                                                historyBeen.get(i).setTime(DateUtil.getLotteryInfoDate(chartRoom.getData().getTime(),"HH:mm:ss"));
                                             }
                                         } catch (Exception e) {
                                             e.printStackTrace();

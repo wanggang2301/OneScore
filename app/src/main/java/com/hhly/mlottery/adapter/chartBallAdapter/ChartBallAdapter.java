@@ -91,10 +91,8 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                         showPopup(v, position);
                     }
                 });
-                System.out.println("xxxxx  adapter: isShowTime ： " + mData.get(position).isShowTime());
                 if (mData.get(position).isShowTime()) {
                     viewHolderMsg.ll_time_content.setVisibility(View.VISIBLE);
-                    // TODO 时间日期需要转换
                     viewHolderMsg.tv_time.setText(mData.get(position).getTime());
                 } else {
                     viewHolderMsg.ll_time_content.setVisibility(View.GONE);
@@ -129,10 +127,8 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                 ViewHolderMe viewHolderMe = (ViewHolderMe) holder;
                 Glide.with(mContext).load(mData.get(position).getFromUser().getUserLogo()).placeholder(R.mipmap.center_head).into(viewHolderMe.my_bighead_view);
                 viewHolderMe.tv_nickname_me.setText(mData.get(position).getFromUser().getUserNick());
-                System.out.println("xxxxx  adapter: isShowTime ： " + mData.get(position).isShowTime());
                 if (mData.get(position).isShowTime()) {
                     viewHolderMe.ll_time_content_me.setVisibility(View.VISIBLE);
-                    // TODO 时间日期需要转换
                     viewHolderMe.tv_time_me.setText(mData.get(position).getTime());
                 } else {
                     viewHolderMe.ll_time_content_me.setVisibility(View.GONE);
@@ -149,7 +145,6 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                 }
                 if (!isRn_me) {
                     if (mData.get(position).getMsgCode() == 2) {
-                        System.out.println("xxxxx mData.get(position).getToUser().getUserNick(): " + mData.get(position).getToUser().getUserNick());
                         viewHolderMe.my_text.setText(Html.fromHtml("<font color='#0090ff'>@" + mData.get(position).getToUser().getUserNick() + ":</font>" + mData.get(position).getMessage()));
                     } else {
                         viewHolderMe.my_text.setText(mData.get(position).getMessage());
@@ -222,7 +217,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
         mPopupWindow = new PopupWindow(popupView, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
         mPopupWindow.setTouchable(true);
         mPopupWindow.setOutsideTouchable(true);
-        mPopupWindow.setBackgroundDrawable(mContext.getResources().getDrawable(R.mipmap.chart_ball_report_bg));
+        mPopupWindow.setBackgroundDrawable(mContext.getResources().getDrawable(R.mipmap.chart_ball_popup_report_bg));
         v.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         int popupWidth = v.getMeasuredWidth();
         int popupHeight = v.getMeasuredHeight();
