@@ -199,12 +199,37 @@
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 
+
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <RelativeLayout
+            android:id="@+id/rl_gif_notice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="200dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/gif_notice" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:alpha="0.8"
+                android:paddingTop="60dp"
+                android:text="@string/video_high_notice"
+                android:textColor="@color/white" />
+        </RelativeLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 

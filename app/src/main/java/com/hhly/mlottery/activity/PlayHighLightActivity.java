@@ -308,7 +308,7 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
         {
             if (mVideoViewList.get(0) != null) {
                 ((VideoView) mVideoViewList.get(0)).start();
-                mList.get(0).setmIsPlaying(true);
+                list.get(0).setmIsPlaying(true);
             }
         }
 

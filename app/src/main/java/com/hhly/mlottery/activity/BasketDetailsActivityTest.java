@@ -27,6 +27,7 @@ import com.hhly.mlottery.adapter.football.BasePagerAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
+import com.hhly.mlottery.bean.footballDetails.DetailsCollectionCountBean;
 import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.BasketAnalyzeFragment;
@@ -40,6 +41,7 @@ import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
+import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -53,6 +55,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.greenrobot.event.EventBus;
 import me.relex.circleindicator.CircleIndicator;
@@ -169,6 +173,25 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     public static String guestIconUrl;
 
 
+    private Timer gifTimer;
+
+    private TimerTask gifTimerTask;
+
+    private boolean isFirstShowGif = true;
+
+    private RelativeLayout rl_gif_notice;
+
+    private int gifCount = 0;
+
+    private CountDown countDown;
+    private final static int MILLIS_INFuture = 3000;//倒计时3秒
+    private final static String MATCH_TYPE = "2"; //篮球
+    private final static int GIFPERIOD_2 = 1000 * 60 * 2;//刷新周期两分钟
+    // private final static int GIFPERIOD_2 = 1000 * 30;//刷新周期两分钟
+
+    private final static String BASKETBALL_GIF = "basketball_gif";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (getIntent().getExtras() != null) {
@@ -205,11 +228,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         MobclickAgent.openActivityDurationTrack(false);
         mContext = this;
 
-//        try {
-//            mSocketUri = new URI(BaseURLs.WS_SERVICE);//地址
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//        }
 
         initView();
         mBasketDetailsHeadFragment = BasketDetailsHeadFragment.newInstance();
@@ -240,6 +258,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
         setListener();
         loadData();
+        pollingGifCount();
 
     }
 
@@ -267,9 +286,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
         toolbar = (Toolbar) findViewById(R.id.basket_details_toolbar);
         setSupportActionBar(toolbar);
-
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-
         mHeadviewpager = new CustomViewpager(mContext);
         mHeadviewpager = (CustomViewpager) findViewById(R.id.headviewpager);
         mIndicator = (CircleIndicator) findViewById(R.id.indicator);
@@ -280,7 +297,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         mTabLayout = (TabLayout) findViewById(R.id.basket_details_tab_layout);
         mTabsAdapter = new TabsAdapter(getSupportFragmentManager());
         mTabsAdapter.setTitles(TITLES);
-
 
         if (isNBA) {  //是NBA
             mTabsAdapter.addFragments(mBasketLiveFragment, mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mTalkAboutBallFragment);
@@ -297,7 +313,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         basePagerAdapter = new BasePagerAdapter(fragmentManager);
 
         headLayout = (LinearLayout) findViewById(R.id.basket_details_header_layout);
-
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -325,6 +340,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         mTitleVS = (TextView) this.findViewById(R.id.title_vs);
         mBack = (ImageView) this.findViewById(R.id.basket_details_back);
 
+        rl_gif_notice = (RelativeLayout) findViewById(R.id.rl_gif_notice);
+
         mTitleScore = (RelativeLayout) this.findViewById(R.id.ll_basket_title_score);
         mCollect = (ImageView) this.findViewById(R.id.basket_details_collect);
 
@@ -339,10 +356,12 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     @Override
     protected void onDestroy() { //关闭socket
         super.onDestroy();
+        closePollingGifCount();
     }
 
     @Override
     protected void onTextResult(String text) {
+        L.d("socket", "socket==" + text);
 
         String type = "";
         try {
@@ -363,6 +382,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     }
 
     @Override
+
     protected void onConnectFail() {
 
     }
@@ -384,6 +404,17 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         mBack.setOnClickListener(this);
         mCollect.setOnClickListener(this);
 
+        countDown = new CountDown(MILLIS_INFuture, 1000, new CountDown.CountDownCallback() {
+            @Override
+            public void onFinish() {
+                rl_gif_notice.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                //  L.d("zxcvbn", "countdown===" + millisUntilFinished / 1000 + "秒");
+            }
+        });
     }
 
 
@@ -398,7 +429,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             @Override
             public void onResponse(BasketballDetailsBean basketDetailsBean) {
                 if (basketDetailsBean.getMatch() != null) {
-
 
 //                    initData(basketDetailsBean);
                     mBasketDetailsHeadFragment.initData(basketDetailsBean, mTalkAboutBallFragment, mTitleGuest, mTitleHome, mTitleVS);
@@ -661,6 +691,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         }, 1000);
     }
 
+
     /**
      * 直播、分析、欧赔、亚盘、大小、聊球Fragment页面统计
      */
@@ -875,5 +906,101 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             is5 = false;
             L.d("xxx", "直播隐藏");
         }
+    }
+
+
+    /**
+     * 开启轮询
+     */
+
+    private void pollingGifCount() {
+        if (gifTimer == null) {
+            gifTimer = new Timer();
+            gifTimerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    getCollectionCount();
+                }
+            };
+            gifTimer.schedule(gifTimerTask, 2000, GIFPERIOD_2);
+        }
+    }
+
+    /**
+     * 关闭轮询
+     */
+
+    private void closePollingGifCount() {
+        if (gifTimer != null) {
+            gifTimerTask.cancel();
+            gifTimer.cancel();
+            gifTimer.purge();
+            gifTimerTask = null;
+            gifTimer = null;
+        }
+    }
+
+    /**
+     * 获取gif数量
+     */
+    private void getCollectionCount() {
+        Map<String, String> map = new HashMap<>();
+        map.put("matchType", MATCH_TYPE);
+        map.put("thirdId", mThirdId);  //399381
+        //  map.put("thirdId", mThirdId);
+        L.d("zxcvbn", "[-----------------------------------------------------]");
+
+        VolleyContentFast.requestJsonByGet(BaseURLs.FOOTBALL_DETAIL_COLLECTION_COUNT, map, new VolleyContentFast.ResponseSuccessListener<DetailsCollectionCountBean>() {
+            @Override
+            public void onResponse(DetailsCollectionCountBean jsonObject) {
+                if (200 == jsonObject.getResult()) {
+                    if (jsonObject.getData() != 0) {
+                        mBasketDetailsHeadFragment.setBtn_showGifVisible(View.VISIBLE);
+                        if (isFirstShowGif) {  //第一次显示
+                            L.d("zxcvbn", "第一次进入------------");
+                            initGifRedPoint();
+
+                            gifCount = jsonObject.getData();
+                            isFirstShowGif = false;
+                        } else {
+                            L.d("zxcvbn", "第二次进入------------");
+                            if (jsonObject.getData() > gifCount) { //有新的gif出現
+                                L.d("zxcvbn", "有新的gif出現------------");
+                                showGifRedPoint();
+                                gifCount = jsonObject.getData();
+                                rl_gif_notice.setVisibility(View.VISIBLE);
+                                countDown.start();
+                            }
+                        }
+                    } else {
+                        L.d("zxcvbn", "没有gif------------");
+                        isFirstShowGif = false;
+                        gifCount = 0;
+                        mBasketDetailsHeadFragment.setBtn_showGifVisible(View.GONE);
+                        // }
+                    }
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                //   if (isFirstShowGif) {
+                //      btn_showGif.setVisibility(View.GONE);
+                //  }
+            }
+        }, DetailsCollectionCountBean.class);
+    }
+
+    private void initGifRedPoint() {
+        if (PreferenceUtil.getBoolean(BASKETBALL_GIF, true)) {
+            mBasketDetailsHeadFragment.setRedPointVisible(View.VISIBLE);
+        } else {
+            mBasketDetailsHeadFragment.setRedPointVisible(View.GONE);
+        }
+    }
+
+    private void showGifRedPoint() {
+        PreferenceUtil.commitBoolean(BASKETBALL_GIF, true);
+        mBasketDetailsHeadFragment.setRedPointVisible(View.VISIBLE);
     }
 }
