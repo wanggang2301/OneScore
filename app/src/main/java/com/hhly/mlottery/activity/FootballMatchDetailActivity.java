@@ -1999,6 +1999,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     intent.putExtra("thirdId", mThirdId);
                     intent.putExtra("match_type", MATCH_TYPE);
                     startActivity(intent);
+
                 }
             });
             builder.setNegativeButton(getApplicationContext().getResources().getString(R.string.basket_analyze_dialog_cancle), new DialogInterface.OnClickListener() {
