@@ -45,6 +45,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +63,8 @@ import io.github.rockerhieu.emojicon.EmojiconEditText;
  */
 public class ChartBallFragment extends BaseWebSocketFragment implements View.OnClickListener, ChartBallAdapter.AdapterListener {
 
-    private static final Long SHOW_TIME_LONG = 300000L;       // 聊天日期显示的间隔时长(毫秒)
+    private static final Long SHOW_TIME_LONG = 5 * 60000L;    // 显示时分秒(分钟)
+    private static final Long SHOW_TIME_LONG_FULL = 8 * 3600000L;// 显示年月日(小时)
     private static final int START_LOADING = 0;               // 开始加载状态
     private static final int SUCCESS_LOADING = 1;             // 加载成功
     private static final int ERROR_LOADING = 2;               // 加载失败
@@ -84,9 +86,10 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
     private static final String MATCH_TYPE = "type";          // 赛事类型
     private static final String MATCH_THIRD_ID = "thirdId";   // 赛事ID
-    private String mMsgId;// @消息的id
-    private String mOnline;// 在线人数
-    private boolean isOneJoin = true;// 是否首次调用
+    private String mMsgId;                                    // @消息的id
+    private String mOnline;                                   // 在线人数
+    private boolean isOneJoin = true;                         // 是否首次调用
+    private String mLastTime;                                  // 最后一条信息的time
 
     private Activity mContext;                                // 上下文
     private View mView;                                       // 总布局
@@ -354,6 +357,27 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     ll_errorLoading.setVisibility(View.GONE);
 
                     historyBeen = mChartReceive.getData().getChatHistory();
+                    if (historyBeen != null) {
+                        mLastTime = historyBeen.size() == 0 ? historyBeen.get(0).getTime() : historyBeen.get(historyBeen.size() - 1).getTime();
+                        for (int i = 0, len = historyBeen.size(); i < len; i++) {// 判断是否显示时间控件
+                            if (i != 0) {
+                                try {
+                                    Long lastTime = DateUtil.getCurrentTime(historyBeen.get(i - 1).getTime());
+                                    Long currentTime = DateUtil.getCurrentTime(historyBeen.get(i).getTime());
+                                    if(currentTime - lastTime >= SHOW_TIME_LONG_FULL){
+                                        // 显示年月日
+                                        historyBeen.get(i).setShowTime(currentTime - lastTime >= SHOW_TIME_LONG_FULL);
+                                    }else if(currentTime - lastTime >= SHOW_TIME_LONG){
+                                        // 显示时分秒
+                                        historyBeen.get(i).setShowTime(currentTime - lastTime >= SHOW_TIME_LONG);
+                                        historyBeen.get(i).setTime(null);// TODO
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
                     mAdapter = new ChartBallAdapter(mContext, historyBeen);
                     mAdapter.setShowDialogOnClickListener(ChartBallFragment.this);
                     recycler_view.setAdapter(mAdapter);
@@ -420,30 +444,6 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         }
     };
 
-//    private void settingTime(){
-//        System.out.println("xxxxx 推送回来的数据isShowTime ： " + chartbean.isShowTime());
-//        // 判断是否显示日期
-//        try {
-//            if (historyBeen != null && historyBeen.size() != 0) {
-//                if (!TextUtils.isEmpty(chartbean.getTime())) {
-//                    System.out.println("xxxxx time: " + historyBeen.get(historyBeen.size() - 1).getTime());
-//                    Long lastTime = DateUtil.getCurrentTime(historyBeen.get(historyBeen.size() - 1).getTime());
-//                    Long currentTime = DateUtil.getCurrentTime(chartRoom.getData().getTime());
-//
-//                    if (currentTime - lastTime > SHOW_TIME_LONG) {
-//                        chartbean.setShowTime(true);
-//                    }
-//                }
-//            } else {
-//                chartbean.setShowTime(true);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        System.out.println("xxxxx  判断后的数据 isShowTime ： " + chartbean.isShowTime());
-//    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -499,8 +499,22 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     case 2:
                         // 发送数据并更新
                         if (!AppConstants.register.getData().getUser().getUserId().equals(chartRoom.getData().getFromUser().getUserId())) {
-                            settingTime(chartbean, chartRoom.getData().getTime());
-
+                            try {
+                                if (historyBeen != null && historyBeen.size() > 1) {
+                                    Long lastTime = DateUtil.getCurrentTime(mLastTime);
+                                    Long currentTime = DateUtil.getCurrentTime(chartRoom.getData().getTime());
+                                    if(currentTime - lastTime >= SHOW_TIME_LONG_FULL){
+                                        // 显示年月日
+                                        chartbean.setShowTime(currentTime - lastTime >= SHOW_TIME_LONG_FULL);
+                                    }else if(currentTime - lastTime >= SHOW_TIME_LONG){
+                                        // 显示时分秒
+                                        chartbean.setShowTime(currentTime - lastTime >= SHOW_TIME_LONG);
+                                        chartbean.setTime(null);// TODO
+                                    }
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                             Message msg = mHandler.obtainMessage();
                             msg.what = MSG_UPDATA_LIST;
                             msg.arg1 = chartRoom.getData().getMsgCode();
@@ -509,15 +523,33 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                                 msg.arg2 = 2;
                                 mMsgId = chartRoom.getData().getMsgId();
                             }
+                            mLastTime = chartRoom.getData().getTime();
                             mHandler.sendMessage(msg);
                         } else {
                             // 本地所发的信息
-                            for (ChartReceive.DataBean.ChatHistoryBean chatHistoryBean : historyBeen) {
-                                if (chatHistoryBean.getMsgId() == null && chatHistoryBean.getMessage().equals(chartRoom.getData().getMessage())) {
-                                    chatHistoryBean.setMsgId(chartRoom.getData().getMsgId());
-                                    chatHistoryBean.getToUser().setUserLogo(chartRoom.getData().getToUser() == null ? null : chartRoom.getData().getToUser().getUserLogo());
-                                    chatHistoryBean.setTime(chartRoom.getData().getTime());
-                                    settingTime(chatHistoryBean, chartRoom.getData().getTime());
+                            for (int i = 0, len = historyBeen.size(); i < len; i++) {
+                                if (historyBeen.get(i).getMsgId() == null && historyBeen.get(i).getMessage().equals(chartRoom.getData().getMessage())) {
+                                    historyBeen.get(i).setMsgId(chartRoom.getData().getMsgId());
+                                    historyBeen.get(i).getToUser().setUserLogo(chartRoom.getData().getToUser() == null ? null : chartRoom.getData().getToUser().getUserLogo());
+                                    historyBeen.get(i).setTime(chartRoom.getData().getTime());
+
+                                    if (i != 0) {
+                                        try {
+                                            Long lastTime = DateUtil.getCurrentTime(historyBeen.get(i - 1).getTime());
+                                            Long currentTime = DateUtil.getCurrentTime(historyBeen.get(i).getTime());
+                                            if(currentTime - lastTime >= SHOW_TIME_LONG_FULL){
+                                                // 显示年月日
+                                                historyBeen.get(i).setShowTime(currentTime - lastTime >= SHOW_TIME_LONG_FULL);
+                                            }else if(currentTime - lastTime >= SHOW_TIME_LONG){
+                                                // 显示时分秒
+                                                historyBeen.get(i).setShowTime(currentTime - lastTime >= SHOW_TIME_LONG);
+                                                historyBeen.get(i).setTime(null);// TODO
+                                            }
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    mLastTime = chartRoom.getData().getTime();
                                     mHandler.sendEmptyMessage(MSG_UPDATA_TIME);
                                     break;
                                 }
@@ -528,21 +560,6 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                 }
             }
         }.start();
-    }
-
-    // 判断是否显示日期
-    private void settingTime(ChartReceive.DataBean.ChatHistoryBean chartbean, String time) {
-        try {
-            if (historyBeen != null && historyBeen.size() != 0 && !TextUtils.isEmpty(chartbean.getTime()) && historyBeen.get(historyBeen.size() - 1).getTime() != null) {
-                Long lastTime = DateUtil.getCurrentTime(historyBeen.get(historyBeen.size() - 1).getTime());
-                Long currentTime = DateUtil.getCurrentTime(time);
-                chartbean.setShowTime(currentTime - lastTime >= SHOW_TIME_LONG);
-            } else {
-                chartbean.setShowTime(true);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     // 等adapter更新OK后再执行

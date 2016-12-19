@@ -76,7 +76,9 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-
+        if (mData != null && mData.get(0) != null) {
+            mData.get(0).setShowTime(true);// 默认第一条数据显示日期
+        }
         switch (getItemViewType(position)) {
             case 0:
                 ViewHolderMsg viewHolderMsg = (ViewHolderMsg) holder;
