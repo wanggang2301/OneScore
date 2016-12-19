@@ -127,8 +127,8 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mContext = getActivity();
         mView = View.inflate(mContext, R.layout.frage_new_basketball, null);
-        currentFragmentId = ((FootballActivity) mContext).basketCurrentPosition;
-        L.d("xxx", "篮球Fragment:currentFragmentId:" + currentFragmentId);
+        currentFragmentId = ((FootballActivity)mContext).basketCurrentPosition;
+        L.d("xxx","篮球Fragment:currentFragmentId:" + currentFragmentId);
         initView();
         setupViewPager();
         focusCallback();// 加载关注数
@@ -255,10 +255,10 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
     /**
      * 刷新tab栏后的关注个数
      */
-    public void focusCallback() {
+    public  void focusCallback() {
         String focusIds = PreferenceUtil.getString(FocusBasketballFragment.BASKET_FOCUS_IDS, "");
         String[] arrayId = focusIds.split("[,]");
-        if (getActivity() != null) {
+        if(getActivity()!=null){
             if ("".equals(focusIds) || arrayId.length == 0) {
                 mTabLayout.getTabAt(3).setText(getActivity().getResources().getString(R.string.foot_guanzhu_txt));
             } else {
@@ -271,41 +271,39 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
     /**
      * 请求关注列表。登录后跟刷新，都会请求
      */
-    public void getBasketballUserConcern() {
+    public void getBasketballUserConcern(){
         //请求后台，及时更新关注赛事内容
-        String userId = "";
-        if (AppConstants.register != null && AppConstants.register.getData() != null && AppConstants.register.getData().getUser() != null) {
-            userId = AppConstants.register.getData().getUser().getUserId();
+        String userId="";
+        if(AppConstants.register!=null&&AppConstants.register.getData()!=null&&AppConstants.register.getData().getUser()!=null){
+            userId= AppConstants.register.getData().getUser().getUserId();
         }
-        if (userId != null && userId != "") {
-            String url = " http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.findConcernVsThirdIds.do";
-            String deviceId = AppConstants.deviceToken;
+        if(userId!=null&&userId!=""){
+            String url=" http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.findConcernVsThirdIds.do";
+            String deviceId=AppConstants.deviceToken;
             //devicetoken 友盟。
-            String umengDeviceToken = PreferenceUtil.getString(AppConstants.uMengDeviceToken, "");
-            Map<String, String> params = new HashMap<>();
-            params.put("userId", userId);
-            Log.e("AAA", userId + "用户名");
-            params.put("deviceId", deviceId);
+            String umengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
+            Map<String,String > params=new HashMap<>();
+            params.put("userId",userId);
+            Log.e("AAA",userId+"用户名");
+            params.put("deviceId",deviceId);
 //        params.put("deviceToken",umengDeviceToken);
             VolleyContentFast.requestJsonByPost(BaseURLs.BASKET_FIND_MATCH, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
                 @Override
                 public void onResponse(BasketballConcernListBean jsonObject) {
-                    if (jsonObject != null) {
-                        if (jsonObject.getResult().equals("200")) {
-                            Log.e("AAA", "登陆后请求的篮球关注列表");
+                    if(jsonObject.getResult().equals("200")){
+                        Log.e("AAA","登陆后请求的篮球关注列表");
                             //将关注写入文件
-                            StringBuffer sb = new StringBuffer();
-                            for (String thirdId : jsonObject.getConcerns()) {
-                                if ("".equals(sb.toString())) {
+                            StringBuffer sb=new StringBuffer();
+                            for(String thirdId:jsonObject.getConcerns()){
+                                if("".equals(sb.toString())){
                                     sb.append(thirdId);
-                                } else {
-                                    sb.append("," + thirdId);
+                                }else {
+                                    sb.append(","+thirdId);
                                 }
 
                             }
-                            PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS, sb.toString());
+                            PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS,sb.toString());
                             focusCallback();
-                        }
                     }
 
                 }
@@ -315,7 +313,7 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
 
 
                 }
-            }, BasketballConcernListBean.class);
+            },BasketballConcernListBean.class);
 
         }
 
@@ -329,8 +327,8 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
 
     @Override
     protected void onTextResult(String text) {
-        ((ImmedBasketballFragment) fragments.get(0)).handleSocketMessage(text);
-        ((FocusBasketballFragment) fragments.get(3)).handleSocketMessage(text);
+        ((ImmedBasketballFragment)fragments.get(0)).handleSocketMessage(text);
+        ((FocusBasketballFragment)fragments.get(3)).handleSocketMessage(text);
 
 
     }
@@ -353,6 +351,8 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
     public void reconnectWebSocket() {
         connectWebSocket();
     }
+
+
 
 
     @Override
@@ -507,11 +507,10 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
 
     /**
      * 初始化当前显示的Fragment
-     *
      * @param currentId
      */
-    private void initCurrentFragment(int currentId) {
-        switch (currentId) {
+    private void initCurrentFragment(int currentId){
+        switch (currentId){
             case 0:
                 isImmediateFragment = true;
                 break;
@@ -526,7 +525,6 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
                 break;
         }
     }
-
     /**
      * 判断四个Fragment切换显示或隐藏的状态
      *

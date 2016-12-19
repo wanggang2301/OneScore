@@ -195,10 +195,6 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
         }, VideoHighLights.class);
     }
 
-    /**\
-     * 初始化
-     */
-
     private void initializeData() {
         for (int i = 0; i < mList.size(); i++) {
             ViewGroup viewGroup = (ViewGroup) View.inflate(this, R.layout.page_layout, null);
@@ -235,8 +231,6 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
         if (mList.size() > 1) {
             tvImageIndex.setVisibility(View.VISIBLE);
             tvImageIndex.setText((0 + 1) + "/" + mList.size());
-
-
         } else {
             tvImageIndex.setVisibility(View.GONE);
         }
@@ -314,7 +308,7 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
         {
             if (mVideoViewList.get(0) != null) {
                 ((VideoView) mVideoViewList.get(0)).start();
-                list.get(0).setmIsPlaying(true);
+                mList.get(0).setmIsPlaying(true);
             }
         }
 

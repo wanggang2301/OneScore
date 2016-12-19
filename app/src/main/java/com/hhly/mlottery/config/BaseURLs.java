@@ -14,35 +14,6 @@ import com.hhly.mlottery.util.PreferenceUtil;
  */
 public class BaseURLs {
 
-    //                              __
-    //                        __   (__`\
-    //                       (__`\   \\`\
-    //                        `\\`\   \\ \
-    //                          `\\`\  \\ \
-    //                            `\\`\#\\ \#
-    //                              \_ ##\_ |##
-    //                              (___)(___)##
-    //                               (0)  (0)`\##
-    //                                |~   ~ , \##
-    //                                |      |  \##
-    //                                |     /\   \##         __..---'''''-.._.._
-    //                                |     | \   `\##  _.--'                _  `.
-    //                                Y     |  \    `##'                     \`\  \
-    //                               /      |   \                             | `\ \
-    //                              /_...___|    \                            |   `\\
-    //                             /        `.    |      MA DONG YUN         /      ##
-    //                            |          |    |                         /      ####
-    //                            |          |    |                        /       ####
-    //                            | () ()    |     \     |          |  _.-'         ##
-    //                            `.        .'      `._. |______..| |-'|
-    //                              `------'           | | | |    | || |
-    //                                                 | | | |    | || |
-    //                                                 | | | |    | || |
-    //                                                 | | | |    | || |
-    //                                           _____ | | | |____| || |
-    //                                          /     `` |-`/     ` |` |
-    //                                          \________\__\_______\__\
-    //                                           """""""""   """""""'"""
 
     /**
      * 公网
@@ -979,27 +950,10 @@ public class BaseURLs {
     public final static String BASKET_DETAIL_PLAYER = URL_API_HOST + "basketballDetail.findPlayerStats.do";
 
 
+
     //精彩瞬间个数
     public final static String FOOTBALL_DETAIL_COLLECTION_COUNT = URL_API_HOST + "operation.findMatchCollectionCount.do";
 
     //精彩瞬间资源
     public final static String FOOTBALL_DETAIL_COLLECTION = URL_API_HOST + "operation.findMatchCollection.do";
-
-    //                                                     _(\_/)
-    //                                                   ,((((^`\
-    //                                                  ((((  (6 \
-    //                                                ,((((( ,    \
-    //                            ,,,_              ,(((((  /"._  ,`,
-    //                           ((((\\ ,...       ,((((   /    `-.-'
-    //                           )))  ;'    `"'"'""((((   (
-    //                          (((  /            (((      \
-    //                           )) |                      |
-    //                          ((  |        .       '     |
-    //                          ))  \     _ '      `t   ,.')
-    //                          (   |   y;- -,-""'"-.\   \/
-    //                          )   / ./  ) /         `\  \
-    //                             |./   ( (           / /'
-    //                             ||     \\          //'|
-    //                             ||      \\       _//'||
-    //                             ||       ))     |_/  ||
 }
