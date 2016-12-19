@@ -57,7 +57,7 @@ import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.StringUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -98,7 +98,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
     private TextView mReloadTvBtn;// 重新加载按钮
 
     private LinearLayout mUnconectionLayout;// 没有网络提示
-    private ExactSwipeRefreshLayout mSwipeRefreshLayout;// 下拉刷新
+    private ExactSwipeRefrashLayout mSwipeRefreshLayout;// 下拉刷新
 
     private LinearLayout mLoadingLayout;// 正在加载
     private LinearLayout mErrorLayout;// 网络异常
@@ -230,7 +230,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
         layoutManager = new LinearLayoutManager(mContext);
 
 
-        mSwipeRefreshLayout = (ExactSwipeRefreshLayout) mView.findViewById(R.id.football_immediate_swiperefreshlayout);// 数据板块，listview
+        mSwipeRefreshLayout = (ExactSwipeRefrashLayout) mView.findViewById(R.id.football_immediate_swiperefreshlayout);// 数据板块，listview
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));

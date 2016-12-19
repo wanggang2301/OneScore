@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
+        <com.hhly.mlottery.widget.ExactSwipeRefrashLayout
             android:id="@+id/football_infor_swiperefreshlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -29,7 +29,7 @@
                 android:scrollingCache="true"
                 />
 
-        </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
+        </com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
 
         <RelativeLayout
             android:id="@+id/football_integral_unfocus_ll"

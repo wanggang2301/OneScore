@@ -25,7 +25,7 @@ import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +36,7 @@ import java.util.Map;
  * 作者:  wangg@13322.com
  * 时间:  2016/9/18 11:16
  */
-public class FootballDatabaseInterFragment extends Fragment implements ExactSwipeRefreshLayout.OnRefreshListener {
+public class FootballDatabaseInterFragment extends Fragment implements ExactSwipeRefrashLayout.OnRefreshListener {
     private static final String TAG = "FootballDatabaseInterFragment";
     private static final String TYPE_PARM = "TYPE_PARM";
     private static final int DATA_STATUS_LOADING = 1;
@@ -49,7 +49,7 @@ public class FootballDatabaseInterFragment extends Fragment implements ExactSwip
 
     private static final int ROWNUM = 4;
 
-    private ExactSwipeRefreshLayout mExactSwipeRefreshLayout;
+    private ExactSwipeRefrashLayout mExactSwipeRefrashLayout;
     private FootBallInfoGridAdapter mFootBallInfoGridAdapterInternatrion;
     private FootBallInfoGridAdapter mFootBallInfoGridAdapterInterShaTan;
 
@@ -112,10 +112,10 @@ public class FootballDatabaseInterFragment extends Fragment implements ExactSwip
         gridviewShaTan = (GridView) mView.findViewById(R.id.gridview_shatan);
 
 
-        mExactSwipeRefreshLayout = (ExactSwipeRefreshLayout) mView.findViewById(R.id.info_swiperefreshlayout);
-        mExactSwipeRefreshLayout.setOnRefreshListener(this);
-        mExactSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
-        mExactSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
+        mExactSwipeRefrashLayout = (ExactSwipeRefrashLayout) mView.findViewById(R.id.info_swiperefreshlayout);
+        mExactSwipeRefrashLayout.setOnRefreshListener(this);
+        mExactSwipeRefrashLayout.setColorSchemeResources(R.color.bg_header);
+        mExactSwipeRefrashLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
 
         ll_loading = (LinearLayout) mView.findViewById(R.id.info_loading_ll);
         ll_net_error = (LinearLayout) mView.findViewById(R.id.network_exception_layout);
@@ -127,7 +127,7 @@ public class FootballDatabaseInterFragment extends Fragment implements ExactSwip
 
         network_exception_reload_btn = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
 
-        mExactSwipeRefreshLayout.setEnabled(false);
+        mExactSwipeRefrashLayout.setEnabled(false);
 
         gridviewInter.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -136,9 +136,9 @@ public class FootballDatabaseInterFragment extends Fragment implements ExactSwip
                     case MotionEvent.ACTION_DOWN:
                     case MotionEvent.ACTION_MOVE:
                         if (!isTop(gridviewInter)) {
-                            mExactSwipeRefreshLayout.setEnabled(false);
+                            mExactSwipeRefrashLayout.setEnabled(false);
                         } else {
-                            mExactSwipeRefreshLayout.setEnabled(true);
+                            mExactSwipeRefrashLayout.setEnabled(true);
                         }
                         break;
 
@@ -159,9 +159,9 @@ public class FootballDatabaseInterFragment extends Fragment implements ExactSwip
                     case MotionEvent.ACTION_DOWN:
                     case MotionEvent.ACTION_MOVE:
                         if (!isTop(gridviewShaTan)) {
-                            mExactSwipeRefreshLayout.setEnabled(false);
+                            mExactSwipeRefrashLayout.setEnabled(false);
                         } else {
-                            mExactSwipeRefreshLayout.setEnabled(true);
+                            mExactSwipeRefrashLayout.setEnabled(true);
                         }
                         break;
 
@@ -217,9 +217,9 @@ public class FootballDatabaseInterFragment extends Fragment implements ExactSwip
                 case DATA_STATUS_LOADING:
                     ll_loading.setVisibility(View.VISIBLE);
                     radioGroup.setVisibility(View.GONE);
-                    mExactSwipeRefreshLayout.setVisibility(View.GONE);
+                    mExactSwipeRefrashLayout.setVisibility(View.GONE);
                     ll_net_error.setVisibility(View.GONE);
-                    mExactSwipeRefreshLayout.setRefreshing(true);
+                    mExactSwipeRefrashLayout.setRefreshing(true);
                     break;
 
                 case DATA_STATUS_NODATA_INTER:
@@ -227,13 +227,13 @@ public class FootballDatabaseInterFragment extends Fragment implements ExactSwip
                     radioGroup.setVisibility(View.VISIBLE);
 
 
-                    mExactSwipeRefreshLayout.setVisibility(View.VISIBLE);
+                    mExactSwipeRefrashLayout.setVisibility(View.VISIBLE);
                     gridviewInter.setVisibility(View.GONE);
 
                     ll_net_error.setVisibility(View.GONE);
                     ll_nodata_inter.setVisibility(View.VISIBLE);
 
-                    mExactSwipeRefreshLayout.setRefreshing(false);
+                    mExactSwipeRefrashLayout.setRefreshing(false);
 
                     break;
 
@@ -242,25 +242,25 @@ public class FootballDatabaseInterFragment extends Fragment implements ExactSwip
                     radioGroup.setVisibility(View.VISIBLE);
 
 
-                    mExactSwipeRefreshLayout.setVisibility(View.VISIBLE);
+                    mExactSwipeRefrashLayout.setVisibility(View.VISIBLE);
                     gridviewShaTan.setVisibility(View.GONE);
 
                     ll_net_error.setVisibility(View.GONE);
                     ll_nodata_country.setVisibility(View.VISIBLE);
 
-                    mExactSwipeRefreshLayout.setRefreshing(false);
+                    mExactSwipeRefrashLayout.setRefreshing(false);
                     break;
 
                 case DATA_STATUS_SUCCESS_INTER:
                     ll_loading.setVisibility(View.GONE);
                     radioGroup.setVisibility(View.VISIBLE);
 
-                    mExactSwipeRefreshLayout.setVisibility(View.VISIBLE);
+                    mExactSwipeRefrashLayout.setVisibility(View.VISIBLE);
                     gridviewInter.setVisibility(View.VISIBLE);
                     ll_net_error.setVisibility(View.GONE);
                     ll_nodata_inter.setVisibility(View.GONE);
 
-                    mExactSwipeRefreshLayout.setRefreshing(false);
+                    mExactSwipeRefrashLayout.setRefreshing(false);
                     break;
 
 
@@ -268,21 +268,21 @@ public class FootballDatabaseInterFragment extends Fragment implements ExactSwip
                     ll_loading.setVisibility(View.GONE);
                     radioGroup.setVisibility(View.VISIBLE);
 
-                    mExactSwipeRefreshLayout.setVisibility(View.VISIBLE);
+                    mExactSwipeRefrashLayout.setVisibility(View.VISIBLE);
                     gridviewShaTan.setVisibility(View.VISIBLE);
 
                     ll_net_error.setVisibility(View.GONE);
                     ll_nodata_country.setVisibility(View.GONE);
 
-                    mExactSwipeRefreshLayout.setRefreshing(false);
+                    mExactSwipeRefrashLayout.setRefreshing(false);
                     break;
 
                 case DATA_STATUS_ERROR:
                     ll_loading.setVisibility(View.GONE);
                     radioGroup.setVisibility(View.GONE);
-                    mExactSwipeRefreshLayout.setVisibility(View.GONE);
+                    mExactSwipeRefrashLayout.setVisibility(View.GONE);
                     ll_net_error.setVisibility(View.VISIBLE);
-                    mExactSwipeRefreshLayout.setRefreshing(false);
+                    mExactSwipeRefrashLayout.setRefreshing(false);
                     break;
 
             }

@@ -97,7 +97,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-        <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
+        <com.hhly.mlottery.widget.ExactSwipeRefrashLayout
             android:id="@+id/basket_odds_details_refreshlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -254,6 +254,6 @@
                 <!--android:gravity="center"-->
                 <!--android:background="@color/black_grounding"-->
                 <!--/>-->
-        </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
+        </com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
     </LinearLayout>
 </FrameLayout>

@@ -24,7 +24,7 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -41,7 +41,7 @@ import de.greenrobot.event.EventBus;
  * @date 2016/9/20 10:00
  * @des 资讯—境外新闻
  */
-public class ForeignInfomationFragment extends Fragment implements ExactSwipeRefreshLayout.OnRefreshListener {
+public class ForeignInfomationFragment extends Fragment implements ExactSwipeRefrashLayout.OnRefreshListener {
 
     private static final int DATA_STATUS_LOADING = 1;
     private static final int DATA_STATUS_SUCCESS = 2;
@@ -50,7 +50,7 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.refresh)
-    ExactSwipeRefreshLayout refresh;
+    ExactSwipeRefrashLayout refresh;
     @BindView(R.id.network_exception_reload_btn)
     TextView networkExceptionReloadBtn;
     @BindView(R.id.network_exception_reload_layout)

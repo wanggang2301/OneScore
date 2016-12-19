@@ -521,7 +521,7 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
                     ImageView iv = new ImageView(mContext);
                     iv.setLayoutParams(params);
 
-                    if (j == index&&mContext!=null) {
+                    if (j == index) {
 //                        iv.setImageResource(R.mipmap.number_anim_klsf_red);// 红球
                         ImageLoader.loadFitCenter(mContext, R.mipmap.number_anim_klsf_red, R.mipmap.number_kj_icon_def).into(iv);// 红球
                     }

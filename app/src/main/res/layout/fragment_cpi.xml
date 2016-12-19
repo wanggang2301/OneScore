@@ -19,7 +19,7 @@
         app:tabSelectedTextColor="@color/white"
         app:tabTextAppearance="@style/MyTabLayoutTextAppearanceInverse"/>
 
-    <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
+    <com.hhly.mlottery.widget.ExactSwipeRefrashLayout
         android:id="@+id/cpi_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -28,6 +28,6 @@
             android:id="@+id/cpi_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-    </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
+    </com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
 
 </LinearLayout>

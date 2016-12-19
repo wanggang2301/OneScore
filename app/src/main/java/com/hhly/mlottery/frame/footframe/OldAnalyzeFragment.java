@@ -24,7 +24,7 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.AnalyzeTitle;
-import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 
 import java.util.HashMap;
 import java.util.List;
@@ -162,7 +162,7 @@ public class OldAnalyzeFragment extends Fragment implements View.OnClickListener
      */
     private TextView mGuestText;
 
-    private ExactSwipeRefreshLayout mRefreshLayout;//下拉刷新页面
+    private ExactSwipeRefrashLayout mRefreshLayout;//下拉刷新页面
 
     public OldAnalyzeFragment() {
     }
@@ -250,7 +250,7 @@ public class OldAnalyzeFragment extends Fragment implements View.OnClickListener
         TextView reloadBtn = (TextView) view.findViewById(R.id.network_exception_reload_btn);
         reloadBtn.setOnClickListener(this);
 
-        mRefreshLayout = (ExactSwipeRefreshLayout) view.findViewById(R.id.analyze_rereshlayout);
+        mRefreshLayout = (ExactSwipeRefrashLayout) view.findViewById(R.id.analyze_rereshlayout);
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
         mRefreshLayout.setOnRefreshListener(this);
 

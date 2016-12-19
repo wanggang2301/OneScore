@@ -53,7 +53,7 @@ import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.StringUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.umeng.message.UmengRegistrar;
 
 import org.json.JSONException;
@@ -95,7 +95,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
     private LinearLayout mErrorLayout;
 
     //    private LinearLayout mUnconectionLayout;
-    private ExactSwipeRefreshLayout mSwipeRefreshLayout;
+    private ExactSwipeRefrashLayout mSwipeRefreshLayout;
 
     private View mUnFocusLayout;
 
@@ -283,7 +283,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 //        mLoadingImg.startAnimation(mLoadingAnimation);
         layoutManager = new LinearLayoutManager(getActivity());
 
-        mSwipeRefreshLayout = (ExactSwipeRefreshLayout) mView.findViewById(R.id.football_immediate_swiperefreshlayout);
+        mSwipeRefreshLayout = (ExactSwipeRefrashLayout) mView.findViewById(R.id.football_immediate_swiperefreshlayout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));

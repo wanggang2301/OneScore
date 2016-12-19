@@ -25,7 +25,7 @@ import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
     private String mOddsType; //欧亚大小(id)
     private List<BasketDetailOddsBean.CompanyOddsEntity> mOddsCompanyList = new ArrayList<>();
     private TextView mNoData;
-    private ExactSwipeRefreshLayout mRefresh;
+    private ExactSwipeRefrashLayout mRefresh;
     private LinearLayout mEerrorll;
     private TextView mErrorBtn;
     private TextView mOddsLeft;
@@ -147,7 +147,7 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
         mErrorBtn = (TextView) findViewById(R.id.basketball_odds_details_error_btn);
         mErrorBtn.setOnClickListener(this);
 
-        mRefresh = (ExactSwipeRefreshLayout)findViewById(R.id.basket_odds_details_refreshlayout);
+        mRefresh = (ExactSwipeRefrashLayout)findViewById(R.id.basket_odds_details_refreshlayout);
         mRefresh.setColorSchemeResources(R.color.tabhost);
         mRefresh.setOnRefreshListener(BasketOddsDetailsActivity.this);
         mRefresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(this, StaticValues.REFRASH_OFFSET_END));
