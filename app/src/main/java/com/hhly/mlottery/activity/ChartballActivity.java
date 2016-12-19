@@ -336,14 +336,14 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
                             if (mEditText.getText().toString().contains("@" + callName + ":")) {
                                 String replace = mEditText.getText().toString().replace("@" + callName + ":", "");
                                 chatHistoryBean = new ChartReceive.DataBean.ChatHistoryBean(null, 2, replace.trim(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
-                                        , AppConstants.register.getData().getUser().getHeadIcon(), AppConstants.register.getData().getUser().getNickName()), new ChartReceive.DataBean.ChatHistoryBean.ToUser(callUserId, null, callName));
+                                        , AppConstants.register.getData().getUser().getHeadIcon(), AppConstants.register.getData().getUser().getNickName()), new ChartReceive.DataBean.ChatHistoryBean.ToUser(callUserId, null, callName), null);
                             } else {
                                 chatHistoryBean = new ChartReceive.DataBean.ChatHistoryBean(null, 1, mEditText.getText().toString().trim(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
-                                        , AppConstants.register.getData().getUser().getHeadIcon(), AppConstants.register.getData().getUser().getNickName()), new ChartReceive.DataBean.ChatHistoryBean.ToUser());
+                                        , AppConstants.register.getData().getUser().getHeadIcon(), AppConstants.register.getData().getUser().getNickName()), new ChartReceive.DataBean.ChatHistoryBean.ToUser(), null);
                             }
                         } else {
                             chatHistoryBean = new ChartReceive.DataBean.ChatHistoryBean(null, 1, mEditText.getText().toString().trim(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
-                                    , AppConstants.register.getData().getUser().getHeadIcon(), AppConstants.register.getData().getUser().getNickName()), new ChartReceive.DataBean.ChatHistoryBean.ToUser());
+                                    , AppConstants.register.getData().getUser().getHeadIcon(), AppConstants.register.getData().getUser().getNickName()), new ChartReceive.DataBean.ChatHistoryBean.ToUser(), null);
                         }
                         // 向会话列表发送输入内容
                         EventBus.getDefault().post(chatHistoryBean);
@@ -435,7 +435,7 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 关闭当前activity
             EventBus.getDefault().post(new ChartReceive.DataBean.ChatHistoryBean(null, 1, "EXIT_CURRENT_ACTIVITY", new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
-                    , AppConstants.register.getData().getUser().getHeadIcon(), "EXIT_CURRENT_ACTIVITY"), new ChartReceive.DataBean.ChatHistoryBean.ToUser()));
+                    , AppConstants.register.getData().getUser().getHeadIcon(), "EXIT_CURRENT_ACTIVITY"), new ChartReceive.DataBean.ChatHistoryBean.ToUser(), null));
             finish();
             return true;
         }

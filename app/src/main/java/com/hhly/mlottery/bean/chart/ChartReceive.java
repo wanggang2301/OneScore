@@ -74,12 +74,13 @@ public class ChartReceive {
             private String onlineNum;
             private boolean isShowTime;
 
-            public ChatHistoryBean(String msgid, int msgcode, String s, FromUserBean fromUserBean, ToUser toUserBean) {
+            public ChatHistoryBean(String msgid, int msgcode, String s, FromUserBean fromUserBean, ToUser toUserBean,String time) {
                 this.msgId = msgid;
                 this.msgCode = msgcode;
                 this.fromUser = fromUserBean;
                 this.message = s;
                 this.toUser = toUserBean;
+                this.time = time;
             }
 
             public ChatHistoryBean() {

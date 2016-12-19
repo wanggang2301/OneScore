@@ -89,8 +89,11 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                         showPopup(v, position);
                     }
                 });
+                System.out.println("xxxxx  adapter: isShowTime ： " + mData.get(position).isShowTime());
                 if (mData.get(position).isShowTime()) {
                     viewHolderMsg.ll_time_content.setVisibility(View.VISIBLE);
+                    // TODO 时间日期需要转换
+                    viewHolderMsg.tv_time.setText(mData.get(position).getTime());
                 } else {
                     viewHolderMsg.ll_time_content.setVisibility(View.GONE);
                 }
@@ -124,8 +127,11 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                 ViewHolderMe viewHolderMe = (ViewHolderMe) holder;
                 Glide.with(mContext).load(mData.get(position).getFromUser().getUserLogo()).placeholder(R.mipmap.center_head).into(viewHolderMe.my_bighead_view);
                 viewHolderMe.tv_nickname_me.setText(mData.get(position).getFromUser().getUserNick());
+                System.out.println("xxxxx  adapter: isShowTime ： " + mData.get(position).isShowTime());
                 if (mData.get(position).isShowTime()) {
                     viewHolderMe.ll_time_content_me.setVisibility(View.VISIBLE);
+                    // TODO 时间日期需要转换
+                    viewHolderMe.tv_time_me.setText(mData.get(position).getTime());
                 } else {
                     viewHolderMe.ll_time_content_me.setVisibility(View.GONE);
                 }
@@ -175,6 +181,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
         TextView receive_image;
         CircleImageView bighead_view;
         TextView receive_text;
+        TextView tv_time;
         LinearLayout ll_time_content;
 
         public ViewHolderMsg(View view) {
@@ -183,6 +190,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
             bighead_view = (CircleImageView) view.findViewById(R.id.bighead_view);
             receive_text = (TextView) view.findViewById(R.id.receive_text);
             receive_image = (TextView) view.findViewById(R.id.receive_image);
+            tv_time = (TextView) view.findViewById(R.id.tv_time);
             ll_time_content = (LinearLayout) view.findViewById(R.id.ll_time_content);
         }
     }
@@ -192,6 +200,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
         TextView tv_nickname_me;
         TextView my_text;
         TextView my_image;
+        TextView tv_time_me;
         CircleImageView my_bighead_view;
         LinearLayout ll_time_content_me;
 
@@ -201,6 +210,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
             my_text = (TextView) itemView.findViewById(R.id.my_text);
             my_bighead_view = (CircleImageView) itemView.findViewById(R.id.my_bighead_view);
             my_image = (TextView) itemView.findViewById(R.id.my_image);
+            tv_time_me = (TextView) itemView.findViewById(R.id.tv_time_me);
             ll_time_content_me = (LinearLayout) itemView.findViewById(R.id.ll_time_content_me);
         }
     }

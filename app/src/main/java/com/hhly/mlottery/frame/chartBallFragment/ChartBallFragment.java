@@ -15,8 +15,14 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -29,10 +35,13 @@ import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.BarrageBean;
 import com.hhly.mlottery.bean.chart.ChartReceive;
 import com.hhly.mlottery.bean.chart.ChartRoom;
+import com.hhly.mlottery.bean.footballDetails.MatchLike;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -53,12 +62,14 @@ import io.github.rockerhieu.emojicon.EmojiconEditText;
  */
 public class ChartBallFragment extends BaseWebSocketFragment implements View.OnClickListener, ChartBallAdapter.AdapterListener {
 
+    private static final Long SHOW_TIME_LONG = 300000L;       // 聊天日期显示的间隔时长(毫秒)
     private static final int START_LOADING = 0;               // 开始加载状态
     private static final int SUCCESS_LOADING = 1;             // 加载成功
     private static final int ERROR_LOADING = 2;               // 加载失败
     private static final int MSG_ON_LINE_COUNT = 3;           // 在线人数消息
-    private static final int MSG_UPDATE_LIST = 5;             // 更新会话列表
+    private static final int MSG_UPDATA_LIST = 5;             // 更新会话列表
     private static final int MSG_SEND_TO_ME = 6;              // 发送消息
+    private static final int MSG_UPDATA_TIME = 7;             // 设置时间并更新
     private static final String TYPE_MSG = "1";               // 1普通消息
     private static final String TYPE_MSG_TO_ME = "2";         // 2@消息
     private static final String TYPE_MSG_SERVER = "3";        // 3系统消息
@@ -68,6 +79,8 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     private static final String SLIDE_TYPE_MSG_HISTORY = "-1";// -1历史消息
     private static final String SLIDE_TYPE_MSG_NEW = "1";     // 1最新消息
     private static final String SLIDE_TYPE_MSG_ONE = "0";     // 0首次调用
+    private static final String ADDKEYHOME = "homeAdd";
+    private static final String ADDKEYGUEST = "guestAdd";
 
     private static final String MATCH_TYPE = "type";          // 赛事类型
     private static final String MATCH_THIRD_ID = "thirdId";   // 赛事ID
@@ -91,6 +104,18 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     private TextView tv_call_me;// 艾特提示
     private LinearLayout ll_errorLoading;// 无网络
     private LinearLayout ll_progress;
+
+    private ProgressBar talkballpro;//客队Vs主队点赞的比例
+    private ImageView ivHomeLike;//点赞主队
+    private ImageView ivGuestLike;//点赞客队
+    private TextView tvGuestLikeCount;//点赞客队数
+    private TextView tvHomeLikeCount;//点赞主队数
+    //主队点赞
+    private ImageView mHomeLike;
+    private ImageView mGuestLike;
+    //点赞动画
+    private AnimationSet mRiseHomeAnim;
+    private AnimationSet mRiseGuestAnim;
 
     public static ChartBallFragment newInstance(int type, String thirdId) {
         ChartBallFragment fragment = new ChartBallFragment();
@@ -120,6 +145,8 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_chartball, container, false);
         initView();
+        requestLikeData(ADDKEYHOME, "0", type);
+        initAnim();
         initData(SLIDE_TYPE_MSG_ONE);
         initEvent();
         return mView;
@@ -164,6 +191,19 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         mView.findViewById(R.id.reLoading).setOnClickListener(this);
         ll_errorLoading = (LinearLayout) mView.findViewById(R.id.ll_errorLoading);
         ll_progress = (LinearLayout) mView.findViewById(R.id.ll_progress);
+
+        talkballpro = (ProgressBar) mView.findViewById(R.id.talkball_pro);
+        ivHomeLike = (ImageView) mView.findViewById(R.id.talkball_like_anim_img);
+        ivGuestLike = (ImageView) mView.findViewById(R.id.talkbail_guest_like_anim_img);
+        tvHomeLikeCount = (TextView) mView.findViewById(R.id.talkball_like_count);
+        tvGuestLikeCount = (TextView) mView.findViewById(R.id.talkbail_guest_like_count);
+        mHomeLike = (ImageView) mView.findViewById(R.id.talkball_home_like);
+        mGuestLike = (ImageView) mView.findViewById(R.id.talkball_guest_like);
+        mHomeLike.setOnClickListener(this);
+        mGuestLike.setOnClickListener(this);
+        ivHomeLike.setVisibility(View.INVISIBLE);
+        ivGuestLike.setVisibility(View.INVISIBLE);
+        setClickableLikeBtn(true);
     }
 
     /*自定发送消息测试*/
@@ -264,6 +304,40 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                 });
     }
 
+    //请求点赞数据
+    private void requestLikeData(String addkey, String addcount, int type) {
+        Map<String, String> params = new HashMap<>();
+        params.put("thirdId", mThirdId);
+        params.put(addkey, addcount);
+        String url = "";
+        if (type == 0) {//足球点赞
+            url = BaseURLs.URL_FOOTBALL_DETAIL_LIKE_INFO;
+        } else if (type == 1) {//篮球点赞
+            url = BaseURLs.URL_BASKETBALLBALL_DETAIL_LIKE_INFO;
+        }
+        VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<MatchLike>() {
+            @Override
+            public void onResponse(MatchLike matchLike) {
+                tvHomeLikeCount.setText(matchLike.getHomeLike());
+                tvGuestLikeCount.setText(matchLike.getGuestLike());
+                System.out.println("lzfdianzan" + matchLike.getGuestLike() + matchLike.getHomeLike());
+                if (matchLike.getHomeLike() != null && matchLike.getGuestLike() != null) {
+                    int homeLikeCount = Integer.parseInt(matchLike.getHomeLike());
+                    int guestLikeCount = Integer.parseInt(matchLike.getGuestLike());
+                    talkballpro.setMax(homeLikeCount + guestLikeCount);
+                    talkballpro.setProgress(homeLikeCount);
+                } else {
+                    tvHomeLikeCount.setText("0");
+                    tvGuestLikeCount.setText("0");
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+            }
+        }, MatchLike.class);
+    }
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -285,7 +359,6 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     recycler_view.setAdapter(mAdapter);
 
                     sleepView();
-                    System.out.println("xxxxx historyBeen.size(): " + historyBeen.size());
 
                     if (historyBeen == null || historyBeen.size() == 0) {
                         fl_not_chart_image.setVisibility(View.VISIBLE);
@@ -302,7 +375,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                 case MSG_ON_LINE_COUNT:// 在线人数
                     tv_online_count.setText((mOnline + mContext.getResources().getString(R.string.chart_ball_online)));// 在线人数
                     break;
-                case MSG_UPDATE_LIST:// 更新会话
+                case MSG_UPDATA_LIST:// 更新会话
                     ChartReceive.DataBean.ChatHistoryBean chartbean = (ChartReceive.DataBean.ChatHistoryBean) msg.obj;
 
                     // 收到消息，显示弹幕
@@ -340,9 +413,36 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     sleepView();
 
                     break;
+                case MSG_UPDATA_TIME:
+                    mAdapter.notifyDataSetChanged();
+                    break;
             }
         }
     };
+
+//    private void settingTime(){
+//        System.out.println("xxxxx 推送回来的数据isShowTime ： " + chartbean.isShowTime());
+//        // 判断是否显示日期
+//        try {
+//            if (historyBeen != null && historyBeen.size() != 0) {
+//                if (!TextUtils.isEmpty(chartbean.getTime())) {
+//                    System.out.println("xxxxx time: " + historyBeen.get(historyBeen.size() - 1).getTime());
+//                    Long lastTime = DateUtil.getCurrentTime(historyBeen.get(historyBeen.size() - 1).getTime());
+//                    Long currentTime = DateUtil.getCurrentTime(chartRoom.getData().getTime());
+//
+//                    if (currentTime - lastTime > SHOW_TIME_LONG) {
+//                        chartbean.setShowTime(true);
+//                    }
+//                }
+//            } else {
+//                chartbean.setShowTime(true);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        System.out.println("xxxxx  判断后的数据 isShowTime ： " + chartbean.isShowTime());
+//    }
 
     @Override
     public void onAttach(Context context) {
@@ -350,6 +450,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         mContext = (Activity) context;
     }
 
+    // EvenBus-->ChartBallActivity传过来
     public void onEventMainThread(ChartReceive.DataBean.ChatHistoryBean contentEntitiy) {
         if ("EXIT_CURRENT_ACTIVITY".equals(contentEntitiy.getMessage()) && "EXIT_CURRENT_ACTIVITY".equals(contentEntitiy.getFromUser().getUserNick())) {
             mContext.finish();
@@ -386,38 +487,65 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
                 ChartReceive.DataBean.ChatHistoryBean chartbean = new ChartReceive.DataBean.ChatHistoryBean(chartRoom.getData().getMsgId(), chartRoom.getData().getMsgCode(), chartRoom.getData().getMessage(),
                         chartRoom.getData().getFromUser() == null ? new ChartReceive.DataBean.ChatHistoryBean.FromUserBean() : new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(chartRoom.getData().getFromUser().getUserId(), chartRoom.getData().getFromUser().getUserLogo(), chartRoom.getData().getFromUser().getUserNick()),
-                        chartRoom.getData().getToUser() == null ? new ChartReceive.DataBean.ChatHistoryBean.ToUser() : new ChartReceive.DataBean.ChatHistoryBean.ToUser(chartRoom.getData().getToUser().getUserId(), chartRoom.getData().getToUser().getUserLogo(), chartRoom.getData().getToUser().getUserNick()));
+                        chartRoom.getData().getToUser() == null ? new ChartReceive.DataBean.ChatHistoryBean.ToUser() : new ChartReceive.DataBean.ChatHistoryBean.ToUser(chartRoom.getData().getToUser().getUserId(), chartRoom.getData().getToUser().getUserLogo(), chartRoom.getData().getToUser().getUserNick()),
+                        chartRoom.getData().getTime());
 
-                if (chartRoom.getData().getMsgCode() == 4) {// 获取在线人数消息
-                    mOnline = chartRoom.getData().getOnlineNum() == null ? "0" : chartRoom.getData().getOnlineNum();
-                    mHandler.sendEmptyMessage(MSG_ON_LINE_COUNT);
-                } else if (chartRoom.getData().getFromUser() != null) {
-                    if (!AppConstants.register.getData().getUser().getUserId().equals(chartRoom.getData().getFromUser().getUserId())) {
-                        Message msg = mHandler.obtainMessage();
-                        msg.what = MSG_UPDATE_LIST;
-                        msg.arg1 = chartRoom.getData().getMsgCode();
-                        msg.obj = chartbean;
-                        if (chartRoom.getData().getMsgCode() == 2 && AppConstants.register.getData().getUser().getUserId().equals(chartRoom.getData().getToUser().getUserId())) {
-                            msg.arg2 = 2;
-                            mMsgId = chartRoom.getData().getMsgId();
-                        }
-                        mHandler.sendMessage(msg);
-                    } else {
-                        // 本地所发的信息
-                        for (ChartReceive.DataBean.ChatHistoryBean chatHistoryBean : historyBeen) {
-                            if (chatHistoryBean.getMsgId() == null && chatHistoryBean.getMessage().equals(chartRoom.getData().getMessage())) {
-                                chatHistoryBean.setMsgId(chartRoom.getData().getMsgId());
-                                chatHistoryBean.getToUser().setUserLogo(chartRoom.getData().getToUser().getUserLogo());
-                                break;
+                switch (chartRoom.getData().getMsgCode()) {
+                    case 4:// 获取在线人数消息
+                        mOnline = chartRoom.getData().getOnlineNum() == null ? "0" : chartRoom.getData().getOnlineNum();
+                        mHandler.sendEmptyMessage(MSG_ON_LINE_COUNT);
+                        break;
+                    case 1:
+                    case 2:
+                        // 发送数据并更新
+                        if (!AppConstants.register.getData().getUser().getUserId().equals(chartRoom.getData().getFromUser().getUserId())) {
+                            settingTime(chartbean, chartRoom.getData().getTime());
+
+                            Message msg = mHandler.obtainMessage();
+                            msg.what = MSG_UPDATA_LIST;
+                            msg.arg1 = chartRoom.getData().getMsgCode();
+                            msg.obj = chartbean;
+                            if (chartRoom.getData().getMsgCode() == 2 && AppConstants.register.getData().getUser().getUserId().equals(chartRoom.getData().getToUser().getUserId())) {
+                                msg.arg2 = 2;
+                                mMsgId = chartRoom.getData().getMsgId();
                             }
-                        }
+                            mHandler.sendMessage(msg);
+                        } else {
+                            // 本地所发的信息
+                            for (ChartReceive.DataBean.ChatHistoryBean chatHistoryBean : historyBeen) {
+                                if (chatHistoryBean.getMsgId() == null && chatHistoryBean.getMessage().equals(chartRoom.getData().getMessage())) {
+                                    chatHistoryBean.setMsgId(chartRoom.getData().getMsgId());
+                                    chatHistoryBean.getToUser().setUserLogo(chartRoom.getData().getToUser() == null ? null : chartRoom.getData().getToUser().getUserLogo());
+                                    chatHistoryBean.setTime(chartRoom.getData().getTime());
+                                    settingTime(chatHistoryBean, chartRoom.getData().getTime());
+                                    mHandler.sendEmptyMessage(MSG_UPDATA_TIME);
+                                    break;
+                                }
+                            }
 
-                    }
+                        }
+                        break;
                 }
             }
         }.start();
     }
 
+    // 判断是否显示日期
+    private void settingTime(ChartReceive.DataBean.ChatHistoryBean chartbean, String time) {
+        try {
+            if (historyBeen != null && historyBeen.size() != 0 && !TextUtils.isEmpty(chartbean.getTime()) && historyBeen.get(historyBeen.size() - 1).getTime() != null) {
+                Long lastTime = DateUtil.getCurrentTime(historyBeen.get(historyBeen.size() - 1).getTime());
+                Long currentTime = DateUtil.getCurrentTime(time);
+                chartbean.setShowTime(currentTime - lastTime >= SHOW_TIME_LONG);
+            } else {
+                chartbean.setShowTime(true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // 等adapter更新OK后再执行
     private void sleepView() {
         new Thread() {
             @Override
@@ -466,8 +594,82 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                 System.out.println("xxxxx reLoading");
                 initData(SLIDE_TYPE_MSG_ONE);
                 break;
+            case R.id.talkball_home_like:
+                MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivityTest_HomeLike");
+                ivHomeLike.setVisibility(View.VISIBLE);
+                ivHomeLike.startAnimation(mRiseHomeAnim);
+                requestLikeData(ADDKEYHOME, "1", type);
+                break;
+            case R.id.talkball_guest_like:
+                MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivityTest_GuestLike");
+                ivGuestLike.setVisibility(View.VISIBLE);
+                ivGuestLike.startAnimation(mRiseGuestAnim);
+                requestLikeData(ADDKEYGUEST, "1", type);
+                break;
             default:
                 break;
+        }
+    }
+
+    /**
+     * 初始化点赞动画
+     */
+    private void initAnim() {
+        mRiseHomeAnim = new AnimationSet(true);
+        TranslateAnimation translateAnimation = new TranslateAnimation(0f, 0f, 0f, -50f);
+        AlphaAnimation alphaAnimation = new AlphaAnimation(1f, 0f);
+        mRiseHomeAnim.addAnimation(translateAnimation);
+        mRiseHomeAnim.addAnimation(alphaAnimation);
+        mRiseHomeAnim.setDuration(300);
+        mRiseHomeAnim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                ivHomeLike.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+        mRiseGuestAnim = new AnimationSet(true);
+        mRiseGuestAnim.addAnimation(translateAnimation);
+        mRiseGuestAnim.addAnimation(alphaAnimation);
+        mRiseGuestAnim.setDuration(300);
+        mRiseGuestAnim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                ivGuestLike.setVisibility(View.INVISIBLE);
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+    }
+
+    // 是否可以点赞
+    public void setClickableLikeBtn(boolean clickable) {
+        mHomeLike.setClickable(clickable);
+        mGuestLike.setClickable(clickable);
+        if (clickable) {
+            mHomeLike.setImageResource(R.mipmap.like_red);
+            mGuestLike.setImageResource(R.mipmap.like_blue);
+        } else {
+            mHomeLike.setImageResource(R.mipmap.like_anim_left);
+            mGuestLike.setImageResource(R.mipmap.like_anim_right);
         }
     }
 }
