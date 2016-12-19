@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -72,6 +73,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     private static final String MATCH_THIRD_ID = "thirdId";   // 赛事ID
     private String mMsgId;// @消息的id
     private String mOnline;// 在线人数
+    private boolean isOneJoin = true;// 是否首次调用
 
     private Activity mContext;                                // 上下文
     private View mView;                                       // 总布局
@@ -87,6 +89,8 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     private FrameLayout rl_chart_content;
     private TextView tv_online_count;// 在线人数
     private TextView tv_call_me;// 艾特提示
+    private LinearLayout ll_errorLoading;// 无网络
+    private LinearLayout ll_progress;
 
     public static ChartBallFragment newInstance(int type, String thirdId) {
         ChartBallFragment fragment = new ChartBallFragment();
@@ -116,7 +120,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_chartball, container, false);
         initView();
-        intiData(SLIDE_TYPE_MSG_ONE);
+        initData(SLIDE_TYPE_MSG_ONE);
         initEvent();
         return mView;
     }
@@ -157,16 +161,19 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         tv_call_me = (TextView) mView.findViewById(R.id.tv_call_me);
         tv_call_me.setOnClickListener(this);
         mView.findViewById(R.id.tv_send).setOnClickListener(this);
+        mView.findViewById(R.id.reLoading).setOnClickListener(this);
+        ll_errorLoading = (LinearLayout) mView.findViewById(R.id.ll_errorLoading);
+        ll_progress = (LinearLayout) mView.findViewById(R.id.ll_progress);
     }
 
     /*自定发送消息测试*/
-    private void intiData(String slideType) {
-        String mSlideType = slideType;
+    private void initData(String slideType) {
+        mHandler.sendEmptyMessage(START_LOADING);// 正在加载数据中
+
         // 首次调用，加载进入聊天室接口
-        if (SLIDE_TYPE_MSG_ONE.equals(mSlideType)) {
+        if (isOneJoin) {
             sendMessageToServer(TYPE_MSG_JOIN_ROOM, "", null);
         }
-        mHandler.sendEmptyMessage(START_LOADING);// 正在加载数据中
 
         String URL = "";
         String chatType = "";
@@ -182,7 +189,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         params.put("chatType", chatType);
         params.put("thirdId", mThirdId);
         params.put("pageSize", LOADING_MSG_SIZE);
-        params.put("slideType", mSlideType);
+        params.put("slideType", slideType);
 
         VolleyContentFast.requestJsonByGet(URL, params,
                 new VolleyContentFast.ResponseSuccessListener<ChartReceive>() {
@@ -205,7 +212,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     }
 
     //发送消息后台
-    private void sendMessageToServer(String msgCode, String message, String toUserId) {
+    private void sendMessageToServer(final String msgCode, String message, String toUserId) {
         System.out.println("xxxxx 发送的message: " + message);
         System.out.println("xxxxx 发送的msgCode: " + msgCode);
 
@@ -241,6 +248,10 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                 new VolleyContentFast.ResponseSuccessListener<String>() {
                     @Override
                     public void onResponse(String receive) {
+                        if (msgCode.equals(TYPE_MSG_JOIN_ROOM)) {
+                            isOneJoin = false;// 首次进入聊天室调用成功
+                        }
+
                         // TODO 根据后台返回码进行提示
                         System.out.println("xxxxx 发送返回stringJson:" + receive);
                     }
@@ -258,10 +269,15 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case START_LOADING:
+                    ll_progress.setVisibility(View.VISIBLE);
+                    ll_errorLoading.setVisibility(View.GONE);
                     break;
                 case SUCCESS_LOADING:
                     // TODO 开启socket推送  --需要判断是否多次开启
                     connectWebSocket();
+
+                    ll_progress.setVisibility(View.GONE);
+                    ll_errorLoading.setVisibility(View.GONE);
 
                     historyBeen = mChartReceive.getData().getChatHistory();
                     mAdapter = new ChartBallAdapter(mContext, historyBeen);
@@ -280,7 +296,8 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     }
                     break;
                 case ERROR_LOADING:
-                    // TODO 显示失败界面
+                    ll_progress.setVisibility(View.GONE);
+                    ll_errorLoading.setVisibility(View.VISIBLE);
                     break;
                 case MSG_ON_LINE_COUNT:// 在线人数
                     tv_online_count.setText((mOnline + mContext.getResources().getString(R.string.chart_ball_online)));// 在线人数
@@ -318,7 +335,6 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     }
                     fl_not_chart_image.setVisibility(View.GONE);
                     rl_chart_content.setVisibility(View.VISIBLE);
-                    System.out.println("xxxxx 这边传过来的code: " + contentEntitiy.getMsgCode());
                     historyBeen.add(contentEntitiy);
                     mAdapter.notifyDataSetChanged();
                     sleepView();
@@ -368,7 +384,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                 System.out.println("xxxxx 滚球推送：" + text);
                 ChartRoom chartRoom = JSON.parseObject(text, ChartRoom.class);
 
-                ChartReceive.DataBean.ChatHistoryBean chartbean = new ChartReceive.DataBean.ChatHistoryBean(chartRoom.getData().getMsgCode(), chartRoom.getData().getMessage(),
+                ChartReceive.DataBean.ChatHistoryBean chartbean = new ChartReceive.DataBean.ChatHistoryBean(chartRoom.getData().getMsgId(), chartRoom.getData().getMsgCode(), chartRoom.getData().getMessage(),
                         chartRoom.getData().getFromUser() == null ? new ChartReceive.DataBean.ChatHistoryBean.FromUserBean() : new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(chartRoom.getData().getFromUser().getUserId(), chartRoom.getData().getFromUser().getUserLogo(), chartRoom.getData().getFromUser().getUserNick()),
                         chartRoom.getData().getToUser() == null ? new ChartReceive.DataBean.ChatHistoryBean.ToUser() : new ChartReceive.DataBean.ChatHistoryBean.ToUser(chartRoom.getData().getToUser().getUserId(), chartRoom.getData().getToUser().getUserLogo(), chartRoom.getData().getToUser().getUserNick()));
 
@@ -386,6 +402,16 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                             mMsgId = chartRoom.getData().getMsgId();
                         }
                         mHandler.sendMessage(msg);
+                    } else {
+                        // 本地所发的信息
+                        for (ChartReceive.DataBean.ChatHistoryBean chatHistoryBean : historyBeen) {
+                            if (chatHistoryBean.getMsgId() == null && chatHistoryBean.getMessage().equals(chartRoom.getData().getMessage())) {
+                                chatHistoryBean.setMsgId(chartRoom.getData().getMsgId());
+                                chatHistoryBean.getToUser().setUserLogo(chartRoom.getData().getToUser().getUserLogo());
+                                break;
+                            }
+                        }
+
                     }
                 }
             }
@@ -428,13 +454,17 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_call_me:
-                tv_call_me.setVisibility(View.GONE);
                 for (int i = 0, len = historyBeen.size(); i < len; i++) {
                     if (mMsgId.equals(historyBeen.get(i).getMsgId())) {
-                        recycler_view.smoothScrollToPosition(i + 1 < len ? i + 1 : i);
+                        recycler_view.smoothScrollToPosition(i);
+                        tv_call_me.setVisibility(View.GONE);
                         return;
                     }
                 }
+                break;
+            case R.id.reLoading:
+                System.out.println("xxxxx reLoading");
+                initData(SLIDE_TYPE_MSG_ONE);
                 break;
             default:
                 break;

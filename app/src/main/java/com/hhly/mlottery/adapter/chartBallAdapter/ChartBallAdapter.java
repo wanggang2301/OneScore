@@ -14,6 +14,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.ChartballActivity;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewAdapter;
@@ -234,6 +235,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
         popupView.findViewById(R.id.tv_popup_jubao).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
                 mPopupWindow.dismiss();
                 showDialog(mData.get(index).getMsgId(), mData.get(index).getFromUser().getUserId(), mData.get(index).getFromUser().getUserNick());
             }

@@ -1413,5 +1413,6 @@
     <string name="chart_ball_report_content">舉報內容不能為空！</string>
     <string name="chart_ball_online">人</string>
     <string name="chart_ball_call_me">\@妳：</string>
+    <string name="chart_ball_call_ta">\@TA</string>
 
 </resources>
