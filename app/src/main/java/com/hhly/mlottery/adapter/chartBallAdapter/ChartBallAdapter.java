@@ -37,7 +37,6 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
     private PopupWindow mPopupWindow;
     public static AdapterListener mAdapterListener;
 
-
     public ChartBallAdapter(Context context, List<ChartReceive.DataBean.ChatHistoryBean> data) {
         this.mContext = context;
         this.mData = data;
@@ -56,13 +55,17 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_char_ball_content_me, parent, false);
                 holder = new ViewHolderMe(view);
                 break;
+            case 3:
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_char_ball_loading, parent, false);
+                holder = new ViewHolderLoading(view);
+                break;
         }
         return holder;
     }
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mData.size() >= 5 ? mData.size() + 1 : mData.size();
     }
 
     @Override
@@ -159,18 +162,22 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                     viewHolderMe.my_text.setVisibility(View.GONE);
                 }
                 break;
+            case 3:
+                ViewHolderLoading viewHolderLoading = (ViewHolderLoading) holder;
+                break;
         }
     }
 
     @Override
     public int getRecycleViewItemType(int position) {
-        if (mData.get(position).getFromUser().getUserId().equals(AppConstants.register.getData().getUser().getUserId())) {
+        if (position >= mData.size() && mData.size() >= 5) {
+            return 3;
+        } else if (mData.get(position).getFromUser().getUserId().equals(AppConstants.register.getData().getUser().getUserId())) {
             return 1;
         } else {
             return 0;
         }
     }
-
 
     // 其它消息ViewHolder
     class ViewHolderMsg extends RecyclerView.ViewHolder {
@@ -209,6 +216,15 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
             my_image = (TextView) itemView.findViewById(R.id.my_image);
             tv_time_me = (TextView) itemView.findViewById(R.id.tv_time_me);
             ll_time_content_me = (LinearLayout) itemView.findViewById(R.id.ll_time_content_me);
+        }
+    }
+
+    class ViewHolderLoading extends RecyclerView.ViewHolder {
+        LinearLayout ll_loading;
+
+        public ViewHolderLoading(View itemView) {
+            super(itemView);
+            ll_loading = (LinearLayout) itemView.findViewById(R.id.ll_loading);
         }
     }
 
