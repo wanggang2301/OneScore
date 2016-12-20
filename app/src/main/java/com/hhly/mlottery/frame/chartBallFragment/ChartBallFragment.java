@@ -359,9 +359,11 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     historyBeen = mChartReceive.getData().getChatHistory();
                     if (historyBeen != null) {
                         if (historyBeen.size() != 0) {
-                            mLastTime = historyBeen.get(0).getTime();
-                        } else {
-                            mLastTime = historyBeen.get(historyBeen.size() - 1).getTime();
+                            if (historyBeen.size() < 2) {
+                                mLastTime = historyBeen.get(0).getTime();
+                            } else {
+                                mLastTime = historyBeen.get(historyBeen.size() - 1).getTime();
+                            }
                         }
                     }
                     for (int i = 0, len = historyBeen.size(); i < len; i++) {// 判断是否显示时间控件

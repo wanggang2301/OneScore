@@ -2232,7 +2232,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 isHindShow(position);
                 if (position == 5) {// 聊球界面禁用下拉刷新
                     mRefreshLayout.setEnabled(false);
-
+                    mRefreshLayout.setRefreshing(false);
                 }else{
                     mRefreshLayout.setEnabled(true);
                     MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
@@ -2269,31 +2269,38 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         if (isDetailsRollballFragment) {
             MobclickAgent.onPageStart("Football_DetailsRollballFragment");
             isDetailsRollball = true;
+            mRefreshLayout.setEnabled(true);
             L.d("xxx", "DetailsRollballFragment>>>显示");
         }
         if (isTalkAboutBallFragment) {
             MobclickAgent.onPageStart("Football_TalkAboutBallFragment");
             isTalkAboutBall = true;
+            mRefreshLayout.setEnabled(false);
+            mRefreshLayout.setRefreshing(false);
             L.d("xxx", "TalkAboutBallFragment>>>显示");
         }
         if (isAnalyzeFragment) {
             MobclickAgent.onPageStart("Football_AnalyzeFragment");
             isAnalyze = true;
+            mRefreshLayout.setEnabled(true);
             L.d("xxx", "AnalyzeFragment>>>显示");
         }
         if (isOddsFragment) {
             MobclickAgent.onPageStart("Football_OddsFragment");
             isOdds = true;
+            mRefreshLayout.setEnabled(true);
             L.d("xxx", "OddsFragment>>>显示");
         }
         if (isStatisticsFragmentTest) {
             MobclickAgent.onPageStart("Football_StatisticsFragmentTest");
             isStatistics = true;
+            mRefreshLayout.setEnabled(true);
             L.d("xxx", "StatisticsFragment>>>显示");
         }
         if (isIntelligenceFragment) {
             MobclickAgent.onPageStart("Football_IntelligenceFragment");
             isIntelligence = true;
+            mRefreshLayout.setEnabled(true);
             L.d("xxx", "IntelligenceFragment>>>显示");
         }
     }
@@ -2419,6 +2426,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             }
             MobclickAgent.onPageStart("Football_DetailsRollballFragment");
             isDetailsRollball = true;
+            mRefreshLayout.setEnabled(true);
             L.d("xxx", "DetailsRollballFragment>>>显示");
         }
         if (isTalkAboutBallFragment) {
@@ -2449,6 +2457,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             }
             MobclickAgent.onPageStart("Football_TalkAboutBallFragment");
             isTalkAboutBall = true;
+            mRefreshLayout.setEnabled(false);
+            mRefreshLayout.setRefreshing(false);
             L.d("xxx", "TalkAboutBallFragment>>>显示");
         }
         if (isAnalyzeFragment) {
@@ -2479,6 +2489,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             }
             MobclickAgent.onPageStart("Football_AnalyzeFragment");
             isAnalyze = true;
+            mRefreshLayout.setEnabled(true);
             L.d("xxx", "AnalyzeFragment>>>显示");
         }
         if (isOddsFragment) {
@@ -2509,6 +2520,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             }
             MobclickAgent.onPageStart("Football_OddsFragment");
             isOdds = true;
+            mRefreshLayout.setEnabled(true);
             L.d("xxx", "OddsFragment>>>显示");
         }
         if (isStatisticsFragmentTest) {
@@ -2539,6 +2551,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             }
             MobclickAgent.onPageStart("Football_StatisticsFragmentTest");
             isStatistics = true;
+            mRefreshLayout.setEnabled(true);
             L.d("xxx", "StatisticsFragment>>>显示");
         }
         if (isIntelligenceFragment) {
@@ -2569,6 +2582,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             }
             MobclickAgent.onPageStart("Football_IntelligenceFragment");
             isIntelligence = true;
+            mRefreshLayout.setEnabled(true);
             L.d("xxx", "IntelligenceFragment>>>显示");
         }
     }
