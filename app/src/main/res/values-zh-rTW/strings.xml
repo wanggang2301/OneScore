@@ -1449,5 +1449,6 @@
     <string name="product_advice">產品回復</string>
     <string name="product_advice_load_more">正在加載中....</string>
     <string name="more"><![CDATA[更多>>]]></string>
+    <string name="nomoredatashangla">沒有更多數據了...</string>
 
 </resources>
