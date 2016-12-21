@@ -25,6 +25,9 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.BasePagerAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
+import com.hhly.mlottery.bean.BarrageBean;
+import com.hhly.mlottery.bean.GoneBarrage;
+import com.hhly.mlottery.bean.OpenBarrage;
 import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.DetailsCollectionCountBean;
@@ -47,6 +50,7 @@ import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.view.BarrageView;
 import com.hhly.mlottery.widget.CustomViewpager;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.umeng.analytics.MobclickAgent;
@@ -192,7 +196,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     //private final static int GIFPERIOD_2 = 1000 * 15;//刷新周期两分钟
 
     private final static String BASKETBALL_GIF = "basketball_gif";
-
+    private BarrageView barrage_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -219,6 +223,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
             mCurrentId = getIntent().getExtras().getInt("currentfragment");
         }
+        EventBus.getDefault().register(this);
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.basketball.score." + mThirdId + ".zh");
 
@@ -356,12 +361,27 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         } else {
             mCollect.setImageResource(R.mipmap.basketball_collect);
         }
+
+        barrage_view = (BarrageView) findViewById(R.id.barrage_view);
     }
 
+    public void onEventMainThread(BarrageBean barrageBean){
+        System.out.println("xxxxx barrageBean: " + barrageBean.getMsg());
+        barrage_view.setDatas("",barrageBean.getMsg().toString());
+    }
+    public void onEventMainThread(GoneBarrage barrageBean){
+        barrage_view.setVisibility(View.GONE);
+
+    }
+    public void onEventMainThread(OpenBarrage barrageBean){
+        barrage_view.setVisibility(View.VISIBLE);
+
+    }
     @Override
     protected void onDestroy() { //关闭socket
         super.onDestroy();
         closePollingGifCount();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
