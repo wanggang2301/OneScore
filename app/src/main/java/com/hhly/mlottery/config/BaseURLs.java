@@ -977,7 +977,22 @@ public class BaseURLs {
     public final static String BASKET_DETAIL_TEAM = URL_API_HOST + "basketballDetail.findTeamStats.do";
     //篮球内页球员统计
     public final static String BASKET_DETAIL_PLAYER = URL_API_HOST + "basketballDetail.findPlayerStats.do";
+    /**
+     * 斯洛克
+     */
+    public final static String SNOOKER_LIST_URL = URL_API_HOST+"snookerMatch.getFirstSnookerMatch.do";
+    public final static String SNOOKER_LIST_LOADMORE_URL = URL_API_HOST+"snookerMatch.getSnookerLeagues.do"; // http://m.1332255.com:81/mlottery/core/snookerMatch.getSnookerLeagues.do?dateLeaguesId=2016-11-20_125358,2016-11-19_125358
 
+    /**
+     * 我的定制
+     */
+    //我的定制页
+    public final static String CUSTOM_MINE_CUS_URL = URL_API_HOST+"basketballCommonMacth.findBasketballMyConcernMatch.do";//http://192.168.10.242:8181/mlottery/core/basketballCommonMacth.findBasketballMyConcernMatch.do
+    //定制完成 发送id
+    public final static String CUSTOM_SENDID_CUS_URL = URL_API_HOST+"basketballCommonMacth.customHotLeagueAndTeamConcern.do";//http://192.168.10.242:8181/mlottery/core/basketballCommonMacth.customHotLeagueAndTeamConcern.do
+    //定制列表页
+    public final static String CUSTOM_LIST_CUS_URL = URL_API_HOST + "basketballCommonMacth.findHotLeagueAndTeamConcern.do";//"http://192.168.10.242:8181/mlottery/core/basketballCommonMacth.findHotLeagueAndTeamConcern.do";
+}
 
     //精彩瞬间个数
     public final static String FOOTBALL_DETAIL_COLLECTION_COUNT = URL_API_HOST + "operation.findMatchCollectionCount.do";

@@ -649,4 +649,13 @@
     <color name="statistics_most_guest_color">#0090FF</color>
     <color name="woman_sex">#EB5668</color>
     <color name="noon_sex">#CE57e8</color>
+
+    <!--斯洛克-->
+    <color name="snooker_round_textcolor">#0EAE7A</color>
+    <color name="snooker_time_textcolor">#999999</color>
+    <color name="snooker_fulltime_textcolor">#FF0000</color>
+    <color name="snooker_score_textcolor">#FFFFFF</color>
+    <color name="snooker_odds_textcolor">#666666</color>
+
+
 </resources>

@@ -269,7 +269,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                isLoad = false; //不可筛选
+                isLoad = false; //不可筛选 aaaa
             }
         }, BasketDatabaseBean.class);
 

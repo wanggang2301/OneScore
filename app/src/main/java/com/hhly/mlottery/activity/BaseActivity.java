@@ -76,7 +76,7 @@ public class BaseActivity extends FragmentActivity {
      *
      * @param containerId
      */
-    protected void setContainer(int containerId) {
+    protected void  setContainer(int containerId) {
         this.containerId = containerId;
     }
 
