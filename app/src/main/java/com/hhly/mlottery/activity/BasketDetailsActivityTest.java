@@ -310,12 +310,10 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             @Override
             public void onPageSelected(int position) {
                 isHindShow(position);
-                if (position == 5) {// 聊球界面禁用下拉刷新
-                    mRefreshLayout.setEnabled(false);
-
-                }else{
-                    mRefreshLayout.setEnabled(true);
+                if (position != 4) {// 聊球界面禁用下拉刷新
                     MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
+                }else{
+                    mRefreshLayout.setEnabled(true); //展开
                 }
             }
 
@@ -661,7 +659,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 mOddsEuro.initData();
                 mOddsLet.initData();
                 mOddsSize.initData();
-
+                mChartBallFragment.onRefresh();
 //                mTalkAboutBallFragment.loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
             }
         }, 1000);

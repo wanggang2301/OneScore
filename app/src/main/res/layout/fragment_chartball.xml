@@ -161,90 +161,79 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <com.hhly.mlottery.widget.ExactSwipeRefrashLayout
-        android:id="@+id/exactSwipeRefrashLayout"
+    <!--聊天内容部分-->
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/rl_chart_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:visibility="visible">
 
-            <!--聊天内容部分-->
-            <FrameLayout
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
+                android:scrollbars="vertical" />
+
+            <!--在线人数-->
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <FrameLayout
-                    android:id="@+id/rl_chart_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="visible">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="vertical">
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recycler_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                    <!--在线人数-->
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_alignParentEnd="true"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/tv_call_me"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="5dp"
-                                android:layout_marginEnd="10dp"
-                                android:background="@color/home_item_bg"
-                                android:padding="5dp"
-                                android:text="@string/chart_ball_call_me"
-                                android:textColor="@color/chart_ball_call_me"
-                                android:visibility="gone" />
-
-                            <TextView
-                                android:id="@+id/tv_online_count"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:drawablePadding="5dp"
-                                android:drawableStart="@mipmap/chart_ball_line_count"
-                                android:paddingEnd="30dp"
-                                android:textColor="@color/mdy_666"
-                                android:textSize="10sp" />
-
-
-                        </LinearLayout>
-                    </RelativeLayout>
-                </FrameLayout>
-
-                <!--空沙发-->
-                <FrameLayout
-                    android:id="@+id/fl_not_chart_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone">
-
-                    <ImageView
+                    <TextView
+                        android:id="@+id/tv_call_me"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@mipmap/chart_ball_null_bg" />
-                </FrameLayout>
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@color/home_item_bg"
+                        android:padding="5dp"
+                        android:text="@string/chart_ball_call_me"
+                        android:textColor="@color/chart_ball_call_me"
+                        android:visibility="gone" />
 
-            </FrameLayout>
+                    <TextView
+                        android:id="@+id/tv_online_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="5dp"
+                        android:drawableStart="@mipmap/chart_ball_line_count"
+                        android:paddingEnd="30dp"
+                        android:textColor="@color/mdy_666"
+                        android:textSize="10sp" />
 
-        </LinearLayout>
-    </com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
+
+                </LinearLayout>
+            </RelativeLayout>
+        </FrameLayout>
+
+        <!--空沙发-->
+        <FrameLayout
+            android:id="@+id/fl_not_chart_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@mipmap/chart_ball_null_bg" />
+        </FrameLayout>
+
+    </FrameLayout>
 
     <!--发送中心-->
     <RelativeLayout

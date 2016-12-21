@@ -1432,5 +1432,7 @@
     <string name="chart_ball_online">人</string>
     <string name="chart_ball_call_me">\@你：</string>
     <string name="chart_ball_call_ta">\@TA</string>
+    <string name="chart_ball_send_error">发送失败！</string>
+    <string name="chart_ball_loading_error">加载失败！</string>
 
 </resources>

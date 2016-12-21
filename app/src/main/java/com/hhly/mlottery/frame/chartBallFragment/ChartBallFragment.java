@@ -31,6 +31,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.chartBallAdapter.ChartBallAdapter;
+import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.BarrageBean;
 import com.hhly.mlottery.bean.chart.ChartReceive;
@@ -52,6 +53,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import butterknife.internal.DebouncingOnClickListener;
 import de.greenrobot.event.EventBus;
 import io.github.rockerhieu.emojicon.EmojiconEditText;
 
@@ -62,7 +64,7 @@ import io.github.rockerhieu.emojicon.EmojiconEditText;
  * 作者：tangrr_107
  * 时间：2016/12/6
  */
-public class ChartBallFragment extends BaseWebSocketFragment implements View.OnClickListener, ChartBallAdapter.AdapterListener, ExactSwipeRefrashLayout.OnRefreshListener {
+public class ChartBallFragment extends BaseWebSocketFragment implements View.OnClickListener, ChartBallAdapter.AdapterListener {
 
     private static final Long SHOW_TIME_LONG = 5 * 60000L;    // 显示时分秒(分钟)
     private static final Long SHOW_TIME_LONG_FULL = 8 * 3600000L;// 显示年月日(小时)
@@ -122,7 +124,6 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     //点赞动画
     private AnimationSet mRiseHomeAnim;
     private AnimationSet mRiseGuestAnim;
-    private ExactSwipeRefrashLayout exactSwipeRefrashLayout;
 
     public static ChartBallFragment newInstance(int type, String thirdId) {
         ChartBallFragment fragment = new ChartBallFragment();
@@ -203,6 +204,8 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         });
     }
 
+    private Long doubleClickTime;
+
     private void initView() {
         mEditText = (EmojiconEditText) mView.findViewById(R.id.et_emoji_input);
         mEditText.setFocusable(false);
@@ -221,10 +224,6 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         mView.findViewById(R.id.reLoading).setOnClickListener(this);
         ll_errorLoading = (LinearLayout) mView.findViewById(R.id.ll_errorLoading);
         ll_progress = (LinearLayout) mView.findViewById(R.id.ll_progress);
-
-        exactSwipeRefrashLayout = (ExactSwipeRefrashLayout) mView.findViewById(R.id.exactSwipeRefrashLayout);
-        exactSwipeRefrashLayout.setColorSchemeResources(R.color.tabhost);
-        exactSwipeRefrashLayout.setOnRefreshListener(this);
 
         talkballpro = (ProgressBar) mView.findViewById(R.id.talkball_pro);
         ivHomeLike = (ImageView) mView.findViewById(R.id.talkball_like_anim_img);
@@ -276,30 +275,35 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                             if (SLIDE_TYPE_MSG_ONE.equals(slideType)) {
                                 mHandler.sendEmptyMessage(SUCCESS_LOADING);
                             } else if (SLIDE_TYPE_MSG_HISTORY.equals(slideType)) {
-                                mHandler.sendEmptyMessage(SUCCESS_REFRASH_HISTORY);
+                                historyBeen.addAll(mChartReceive.getData().getChatHistory());
+                                mAdapter.notifyDataSetChanged();
                             } else if (SLIDE_TYPE_MSG_NEW.equals(slideType)) {
-                                mHandler.sendEmptyMessage(SUCCESS_REFRASH_HISTORY);
+                                historyBeen.addAll(mChartReceive.getData().getChatHistory());
+                                mAdapter.notifyDataSetChanged();
+                                sleepView();
                             }
                         } else {
                             if (SLIDE_TYPE_MSG_ONE.equals(slideType)) {
                                 mHandler.sendEmptyMessage(ERROR_LOADING);
                             } else if (SLIDE_TYPE_MSG_HISTORY.equals(slideType)) {
-                                mHandler.sendEmptyMessage(ERROR_REFRASH_HISTORY);
+                                ToastTools.showQuick(mContext, R.string.chart_ball_loading_error);
                             } else if (SLIDE_TYPE_MSG_NEW.equals(slideType)) {
-                                new Thread() {
-                                    @Override
-                                    public void run() {
-                                        mHandler.sendEmptyMessage(ERROR_REFRASH_HISTORY);
-                                    }
-                                }.start();
-
+                                recycler_view.smoothScrollToPosition(historyBeen.size() - 3);
+                                ToastTools.showQuick(mContext, R.string.chart_ball_loading_error);
                             }
                         }
                     }
                 }, new VolleyContentFast.ResponseErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                        mHandler.sendEmptyMessage(ERROR_LOADING);
+                        if (SLIDE_TYPE_MSG_ONE.equals(slideType)) {
+                            mHandler.sendEmptyMessage(ERROR_LOADING);
+                        } else if (SLIDE_TYPE_MSG_HISTORY.equals(slideType)) {
+                            ToastTools.showQuick(mContext, R.string.chart_ball_loading_error);
+                        } else if (SLIDE_TYPE_MSG_NEW.equals(slideType)) {
+                            recycler_view.smoothScrollToPosition(historyBeen.size() - 3);
+                            ToastTools.showQuick(mContext, R.string.chart_ball_loading_error);
+                        }
                     }
                 }, ChartReceive.class
         );
@@ -346,14 +350,14 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                             isOneJoin = false;// 首次进入聊天室调用成功
                         }
 
-                        // TODO 根据后台返回码进行提示
                         System.out.println("xxxxx 发送返回stringJson:" + receive);
                     }
                 }, new VolleyContentFast.ResponseErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                        // TODO 失败 显示失败提示
+
                         System.out.println("xxxxx 发送失败！");
+                        ToastTools.showQuick(mContext, R.string.chart_ball_send_error);
                     }
                 });
     }
@@ -397,14 +401,12 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case START_LOADING:
-                    exactSwipeRefrashLayout.setRefreshing(true);
 //                    ll_progress.setVisibility(View.VISIBLE);
                     ll_errorLoading.setVisibility(View.GONE);
                     break;
                 case SUCCESS_LOADING:
-                    // TODO 开启socket推送  --需要判断是否多次开启
+                    // 开启socket推送
                     connectWebSocket();
-                    exactSwipeRefrashLayout.setRefreshing(false);
                     ll_progress.setVisibility(View.GONE);
                     ll_errorLoading.setVisibility(View.GONE);
 
@@ -440,6 +442,20 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     mAdapter = new ChartBallAdapter(mContext, historyBeen);
                     mAdapter.setShowDialogOnClickListener(ChartBallFragment.this);
                     recycler_view.setAdapter(mAdapter);
+                    mAdapter.setOnItemClickListener(new BaseRecyclerViewHolder.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View convertView, int position) {
+                            System.out.println("xxxxx position！" + position);
+                            Long currentTime = System.currentTimeMillis();
+                            if(doubleClickTime != null){
+                                doubleClickTime = currentTime;
+                                if(currentTime - doubleClickTime < 1000){
+                                    System.out.println("xxxxx 双击事件！");
+                                }
+                                doubleClickTime = null;
+                            }
+                        }
+                    });
 
                     sleepView();
 
@@ -452,7 +468,6 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     }
                     break;
                 case ERROR_LOADING:
-                    exactSwipeRefrashLayout.setRefreshing(false);
                     ll_progress.setVisibility(View.GONE);
                     ll_errorLoading.setVisibility(View.VISIBLE);
                     break;
@@ -500,17 +515,12 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                 case MSG_UPDATA_TIME:
                     mAdapter.notifyDataSetChanged();
                     break;
-                case SUCCESS_REFRASH_HISTORY:
-                    exactSwipeRefrashLayout.setRefreshing(false);
-                    historyBeen.addAll(mChartReceive.getData().getChatHistory());
-                    mAdapter.notifyDataSetChanged();
-                    sleepView();
-                    break;
-                case ERROR_REFRASH_HISTORY:
-                    recycler_view.smoothScrollToPosition(historyBeen.size() - 3);
-                    ToastTools.showQuick(mContext,"加载失败！");
-                    // TODO 提示获取历史消息失败！
-                    break;
+//                case SUCCESS_REFRASH_HISTORY:
+//
+//                    break;
+//                case ERROR_REFRASH_HISTORY:
+//
+//                    break;
             }
         }
     };
@@ -761,7 +771,6 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         }
     }
 
-    @Override
     public void onRefresh() {
         initData(SLIDE_TYPE_MSG_HISTORY);
     }
