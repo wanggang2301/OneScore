@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketballInformationActivity;
+import com.hhly.mlottery.activity.BasketballScoresActivity;
 import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.activity.InfoCenterActivity;
 import com.hhly.mlottery.activity.LeagueStatisticsTodayActivity;
@@ -189,9 +190,12 @@ public class HomeMuenFragment extends Fragment {
                                         break;
                                         case "20":// 篮球即时比分
                                         {
-                                            Intent intent = new Intent(mContext, FootballActivity.class);
-                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
-                                            intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_SCORE_KEY);
+//                                            Intent intent = new Intent(mContext, FootballActivity.class);
+//                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
+//                                            intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_SCORE_KEY);
+//                                            mContext.startActivity(intent);
+//                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Score");
+                                            Intent intent = new Intent(mContext, BasketballScoresActivity.class);
                                             mContext.startActivity(intent);
                                             MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Score");
                                         }

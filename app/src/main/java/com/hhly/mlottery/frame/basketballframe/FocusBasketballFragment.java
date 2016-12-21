@@ -24,6 +24,7 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
+import com.hhly.mlottery.activity.BasketballScoresActivity;
 import com.hhly.mlottery.activity.BasketballSettingActivity;
 import com.hhly.mlottery.adapter.basketball.PinnedHeaderExpandableFocusAdapter;
 import com.hhly.mlottery.bean.basket.BasketAllOddBean;
@@ -357,7 +358,8 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
                     mErrorLayout.setVisibility(View.GONE);
                     mNoDataLayout.setVisibility(View.VISIBLE);
 
-                    ((BasketScoresFragment) getParentFragment()).focusCallback();
+//                    ((BasketScoresFragment) getParentFragment()).focusCallback();
+                    ((BasketballScoresActivity) getActivity()).focusCallback();
                     return;
                 }
 
@@ -366,16 +368,16 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
                 StringBuffer sb=new StringBuffer();
                 for (BasketRootBean databean : mMatchdata) {
                     for (BasketMatchBean listMatch : databean.getMatch()) {
-                            if("".equals(sb.toString())){
-                                sb.append(listMatch.getThirdId());
-                            }else {
-                                sb.append(","+listMatch.getThirdId());
-                            }
+                        if("".equals(sb.toString())){
+                            sb.append(listMatch.getThirdId());
+                        }else {
+                            sb.append(","+listMatch.getThirdId());
+                        }
                         PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS,sb.toString());
                     }
                 }
-                ((BasketScoresFragment) getParentFragment()).focusCallback();
-
+//                ((BasketScoresFragment) getParentFragment()).focusCallback();
+                ((BasketballScoresActivity) getActivity()).focusCallback();
 
                 if (mBasketballType != TYPE_FOCUS) { //非关注页面
                     mAllFilter = json.getMatchFilter();
@@ -471,8 +473,8 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
                 mLoadingLayout.setVisibility(View.GONE);
                 mErrorLayout.setVisibility(View.GONE);
 
-                ((BasketScoresFragment) getParentFragment()).focusCallback();
-
+//                ((BasketScoresFragment) getParentFragment()).focusCallback();
+                ((BasketballScoresActivity) getActivity()).focusCallback();
 
 
             }
@@ -642,7 +644,8 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
     @Override
     public void onRefresh() {
         isLoad = -1;
-        ((BasketScoresFragment) getParentFragment()).reconnectWebSocket();
+//        ((BasketScoresFragment) getParentFragment()).reconnectWebSocket();
+        ((BasketballScoresActivity) getActivity()).reconnectWebSocket();
         mLoadHandler.postDelayed(mRun, 0);
 
     }
@@ -1279,11 +1282,13 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
         if (mBasketballType == TYPE_FOCUS) {
             mLoadHandler.postDelayed(mRun, 0);
 //            ((BasketListActivity) getActivity()).focusCallback();
-            ((BasketScoresFragment) getParentFragment()).focusCallback();
+//            ((BasketScoresFragment) getParentFragment()).focusCallback();
+            ((BasketballScoresActivity) getActivity()).focusCallback();
         } else {
             updateAdapter();
 //            ((BasketListActivity) getActivity()).focusCallback();
-            ((BasketScoresFragment) getParentFragment()).focusCallback();
+//            ((BasketScoresFragment) getParentFragment()).focusCallback();
+            ((BasketballScoresActivity) getActivity()).focusCallback();
         }
 //        ((BasketScoresFragment)getParentFragment()).focusCallback();
     }

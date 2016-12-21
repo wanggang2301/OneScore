@@ -21,6 +21,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketAnalyzeMoreRecordActivity;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketballDatabaseDetailsActivity;
+import com.hhly.mlottery.activity.SnookerListActivity;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketAnalyzeBean;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketAnalyzeContentBean;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketAnalyzeFutureMatchBean;
@@ -155,7 +156,6 @@ public class BasketAnalyzeFragment extends Fragment  {
     };
 
     private void initView() {
-
         mProgressBar = (ProgressBar) mView.findViewById(R.id.basket_progressbar);
         mBasketProgressbarGuest = (TextView) mView.findViewById(R.id.basket_progressbar_guest);
 

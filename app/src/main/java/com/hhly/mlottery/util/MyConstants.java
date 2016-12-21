@@ -56,4 +56,11 @@ public interface MyConstants {
 
 	//启动页url
 	String START_IMAGE_URL="start_image_url";
+
+	//斯洛克 设置页
+	String SNOOKER_ALET = "snooker_alet";// 亚盘
+	String SNOOKER_EURO = "snooker_euro";// 欧赔
+	String SNOOKER_ASIZE = "snooker_asize";// 大小盘
+	String SNOOKER_SINGLETWIN = "snooker_single_twin";//单双
+	String SNOOKER_NOTSHOW = "snooker_noShow";// 不显示
 }

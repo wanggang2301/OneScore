@@ -33,6 +33,9 @@ import com.android.volley.VolleyError;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
+import com.hhly.mlottery.bean.BarrageBean;
+import com.hhly.mlottery.bean.GoneBarrage;
+import com.hhly.mlottery.bean.OpenBarrage;
 import com.hhly.mlottery.bean.ShareBean;
 import com.hhly.mlottery.bean.footballDetails.DetailsCollectionCountBean;
 import com.hhly.mlottery.bean.footballDetails.MatchDetail;
@@ -45,8 +48,8 @@ import com.hhly.mlottery.bean.websocket.WebSocketStadiumLiveTextEvent;
 import com.hhly.mlottery.callback.FootballLiveGotoChart;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.ShareFragment;
+import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
 import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
-import com.hhly.mlottery.frame.footframe.ChartBallFragment;
 import com.hhly.mlottery.frame.footframe.DetailsRollballFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.IntelligenceFragment;
@@ -63,7 +66,9 @@ import com.hhly.mlottery.util.NetworkUtils;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.StringUtils;
+import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.view.BarrageView;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.umeng.analytics.MobclickAgent;
 
@@ -293,6 +298,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private FrameLayout fl_head;
 
     private LinearLayout btn_showGif;
+    private BarrageView barrage_view;
 
 
     private Timer gifTimer;
@@ -319,6 +325,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             currentFragmentId = getIntent().getExtras().getInt("currentFragmentId");
             infoCenter = getIntent().getExtras().getInt("info_center");
         }
+        EventBus.getDefault().register(this);
 
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.liveEvent." + mThirdId + "." + appendLanguage());
@@ -334,6 +341,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         initHeadView();
         initView();
         initEvent();
+
 
         /***
          * 足球内页头部ViewPager
@@ -379,25 +387,27 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-//                if (position == 5) {
-//                    appBarLayout.setExpanded(false);
+//        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                if (position != 5) {
+////                    appBarLayout.setExpanded(false);
+//                    MyApp.getContext().sendBroadcast(new Intent("closeself"));
 //                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+//
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
         appBarLayout.addOnOffsetChangedListener(this);
@@ -422,7 +432,22 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         iv_back.setOnClickListener(this);
         iv_setting.setOnClickListener(this);
+
+        barrage_view = (BarrageView) findViewById(R.id.barrage_view);
+
     }
+    public void onEventMainThread(BarrageBean barrageBean){
+        barrage_view.setDatas("",barrageBean.getMsg().toString());
+    }
+    public void onEventMainThread(GoneBarrage barrageBean){
+        barrage_view.setVisibility(View.GONE);
+
+    }
+    public void onEventMainThread(OpenBarrage barrageBean){
+        barrage_view.setVisibility(View.VISIBLE);
+
+    }
+
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -474,6 +499,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     if (ONLIVE.equals(mMatchDetail.getLiveStatus())) {
                         connectWebSocket();
                     }
+
+                    // 聊球
+                    mChartBallFragment.onRefresh();
                 }
             }
         }, 1000);
@@ -1103,6 +1131,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         closePollingGifCount();
 
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -1944,7 +1973,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             case R.id.iv_back:  //返回
                 MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Exit");
                 eventBusPost();
-                MyApp.getContext().sendBroadcast(new Intent("closeself"));
+                MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
                 // setResult(Activity.RESULT_OK);
                 finish();
                 break;
@@ -2026,7 +2055,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     // 发表评论跳转
     public void talkAboutBallSendFoot() {
         Intent intent2 = new Intent(mContext, ChartballActivity.class);
-//        intent2.putExtra(CyUtils.INTENT_PARAMS_SID, topicid);
+        intent2.putExtra("thirdId", mThirdId);
         startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
     }
 
@@ -2146,9 +2175,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             @Override
             public void onPageSelected(int position) {
                 isHindShow(position);
-//                if (position == 5) {
-//                    appBarLayout.setExpanded(false);
-//                }
+                if (position != 5) {// 聊球界面禁用下拉刷新
+                    MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
+                }else{
+                    mRefreshLayout.setEnabled(true); //展开
+                    appBarLayout.setExpanded(false);
+                }
             }
 
             @Override

@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
+import com.hhly.mlottery.activity.BasketballScoresActivity;
 import com.hhly.mlottery.activity.BasketballSettingActivity;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.adapter.basketball.PinnedHeaderExpandableResultAdapter;
@@ -157,8 +158,8 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
 //            mBasketballType = getArguments().getInt(PARAMS);
             mBasketballType = 1;
         }
-            BasketResultEventBus = new EventBus();
-            BasketResultEventBus.register(this);
+        BasketResultEventBus = new EventBus();
+        BasketResultEventBus.register(this);
     }
 
     /**
@@ -310,7 +311,11 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
     private int mSize; //记录共有几天的数据
 
     private void initData() {
-        ((BasketScoresFragment)getParentFragment()).getBasketballUserConcern(); //获取关注列表
+//        ((BasketScoresFragment)getParentFragment()).getBasketballUserConcern(); //获取关注列表
+
+        BasketballScoresActivity parentActivity = (BasketballScoresActivity)getActivity();
+        parentActivity.getBasketballUserConcern();
+
         Map<String, String> params = new HashMap<>();
         String version = getAppVersionCode(mContext);//获得当前版本号 android:versionCode="5"
 
@@ -482,11 +487,11 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
                 boolean isCheck = (Boolean) v.getTag();// 检查之前是否被选中
 
                 if (!isCheck) {//未关注->关注
-                  FocusBasketballFragment.addFocusId(root.getThirdId());
+                    FocusBasketballFragment.addFocusId(root.getThirdId());
                     v.setTag(true);
 
                 } else {//关注->未关注
-                   FocusBasketballFragment.deleteFocusId(root.getThirdId());
+                    FocusBasketballFragment.deleteFocusId(root.getThirdId());
                     v.setTag(false);
                     //判断 如果是关注页面
                     if (mBasketballType == TYPE_FOCUS) {
@@ -514,16 +519,16 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
                         for (int i = 0; i < groupDataList.size(); i++) {
                             explistview.expandGroup(i);
                         }
-//                        ((BasketballFragment) getParentFragment()).focusCallback();
-//                        ((BasketListActivity) getActivity()).focusCallback();
-                        ((BasketScoresFragment)getParentFragment()).focusCallback();
+//                        ((BasketScoresFragment)getParentFragment()).focusCallback();
+                        ((BasketballScoresActivity) getActivity()).focusCallback();
                         return;
                     }
                 }
                 updateAdapter();//防止复用
 //                ((BasketballFragment) getParentFragment()).focusCallback();
 //                ((BasketListActivity) getActivity()).focusCallback();
-                ((BasketScoresFragment)getParentFragment()).focusCallback();
+//                ((BasketScoresFragment)getParentFragment()).focusCallback();
+                ((BasketballScoresActivity) getActivity()).focusCallback();
             }
         };
     }
@@ -532,8 +537,8 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
      */
     @Override
     public void onRefresh() {
-            isLoad = -1;
-            mLoadHandler.postDelayed(mRun, 0);
+        isLoad = -1;
+        mLoadHandler.postDelayed(mRun, 0);
     }
 
     /**
@@ -1245,11 +1250,13 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
         if (mBasketballType == TYPE_FOCUS) {
             mLoadHandler.postDelayed(mRun, 0);
 //            ((BasketListActivity) getActivity()).focusCallback();
-            ((BasketScoresFragment)getParentFragment()).focusCallback();
+//            ((BasketScoresFragment)getParentFragment()).focusCallback();
+            ((BasketballScoresActivity) getActivity()).focusCallback();
         }else{
             updateAdapter();
 //            ((BasketListActivity) getActivity()).focusCallback();
-            ((BasketScoresFragment)getParentFragment()).focusCallback();
+//            ((BasketScoresFragment)getParentFragment()).focusCallback();
+            ((BasketballScoresActivity) getActivity()).focusCallback();
         }
 //        ((BasketScoresFragment)getParentFragment()).focusCallback();
     }

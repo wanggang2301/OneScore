@@ -73,15 +73,9 @@
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation" />
 
         <!-- 内地版的key-begin -->
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="5625a606e0f55aad6700244f" />
-        <meta-data
-            android:name="UMENG_MESSAGE_SECRET"
-            android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="BETA" />
+        <meta-data android:name="UMENG_APPKEY" android:value="5625a606e0f55aad6700244f" />
+        <meta-data android:name="UMENG_MESSAGE_SECRET" android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
+        <meta-data android:name="UMENG_CHANNEL" android:value="BETA" />
         <!-- 内地版的key-end -->
 
         <activity
@@ -231,10 +225,8 @@
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data android:scheme="1104883879" />
             </intent-filter>
         </activity>
@@ -313,6 +305,19 @@
         <activity
             android:name=".activity.PlayHighLightActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.BasketballScoresActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.hhly.mlottery.activity.CustomActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.hhly.mlottery.activity.CustomListActivity"
+            android:screenOrientation="portrait" /><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
     </application>
 

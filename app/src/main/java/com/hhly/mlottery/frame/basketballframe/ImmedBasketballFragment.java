@@ -23,6 +23,7 @@ import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
+import com.hhly.mlottery.activity.BasketballScoresActivity;
 import com.hhly.mlottery.activity.BasketballSettingActivity;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.adapter.basketball.PinnedHeaderExpandableAdapter;
@@ -352,7 +353,9 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
 
     private void initData() {
 
-        ((BasketScoresFragment)getParentFragment()).getBasketballUserConcern(); //获取关注列表
+//        ((BasketScoresFragment)getParentFragment()).getBasketballUserConcern(); //获取关注列表
+        BasketballScoresActivity parentActivity = (BasketballScoresActivity)getActivity();
+        parentActivity.getBasketballUserConcern();
 
         Map<String, String> params = new HashMap<>();
         String version = getAppVersionCode(mContext);//获得当前版本号 android:versionCode="5"
@@ -559,14 +562,16 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                         }
 //                        ((BasketballFragment) getParentFragment()).focusCallback();
 //                        ((BasketListActivity) getActivity()).focusCallback();
-                        ((BasketScoresFragment) getParentFragment()).focusCallback();
+//                        ((BasketScoresFragment) getParentFragment()).focusCallback();
+                        ((BasketballScoresActivity) getActivity()).focusCallback();
                         return;
                     }
                 }
                 updateAdapter();//防止复用
 //                ((BasketballFragment) getParentFragment()).focusCallback();
 //                ((BasketListActivity) getActivity()).focusCallback();
-                ((BasketScoresFragment) getParentFragment()).focusCallback();
+//                ((BasketScoresFragment) getParentFragment()).focusCallback();
+                ((BasketballScoresActivity) getActivity()).focusCallback();
             }
         };
     }
@@ -578,7 +583,8 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     public void onRefresh() {
         isLoad = -1;
         mLoadHandler.postDelayed(mRun, 0);
-        ((BasketScoresFragment) getParentFragment()).reconnectWebSocket();
+//        ((BasketScoresFragment) getParentFragment()).reconnectWebSocket();
+        ((BasketballScoresActivity) getActivity()).reconnectWebSocket();
     }
 
     /**
@@ -1251,11 +1257,13 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
         if (mBasketballType == TYPE_FOCUS) {
             mLoadHandler.postDelayed(mRun, 0);
 //            ((BasketListActivity) getActivity()).focusCallback();
-            ((BasketScoresFragment) getParentFragment()).focusCallback();
+//            ((BasketScoresFragment) getParentFragment()).focusCallback();
+            ((BasketballScoresActivity) getActivity()).focusCallback();
         } else {
             updateAdapter();
 //            ((BasketListActivity) getActivity()).focusCallback();
-            ((BasketScoresFragment) getParentFragment()).focusCallback();
+//            ((BasketScoresFragment) getParentFragment()).focusCallback();
+            ((BasketballScoresActivity) getActivity()).focusCallback();
         }
 //        ((BasketScoresFragment)getParentFragment()).focusCallback();
     }
