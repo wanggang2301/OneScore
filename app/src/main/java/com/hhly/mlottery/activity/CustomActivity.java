@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
@@ -21,6 +22,7 @@ import com.hhly.mlottery.bean.custombean.CustomMineBean.CustomMineDataBean;
 import com.hhly.mlottery.bean.custombean.CustomMineBean.CustomMineFirstDataBean;
 import com.hhly.mlottery.bean.custombean.CustomMineBean.CustomMineScondDataBean;
 import com.hhly.mlottery.bean.custombean.CustomMineBean.CustomMineThirdDataBean;
+import com.hhly.mlottery.bean.custombean.customlistdata.CustomSecondBean;
 import com.hhly.mlottery.bean.custombean.customlistdata.CustomSendDataBean;
 import com.hhly.mlottery.bean.websocket.WebBasketAllOdds;
 import com.hhly.mlottery.bean.websocket.WebBasketMatch;
@@ -33,6 +35,7 @@ import com.hhly.mlottery.util.CustomListEvent;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
+import com.hhly.mlottery.util.net.CustomDetailsEvent;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.LoadMoreRecyclerView;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
@@ -414,6 +417,15 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
                     }
                 }else{// 否则为最内层（赛事层）比赛的点击事件这里写
                     // TODO***************************************************
+                    CustomMineThirdDataBean parent = (CustomMineThirdDataBean) mData.get(position);
+                    Intent intent = new Intent(CustomActivity.this, BasketDetailsActivityTest.class);
+                    intent.putExtra(BasketDetailsActivityTest.BASKET_THIRD_ID, parent.getThirdId());//跳转到详情
+                    intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_STATUS, parent.getMatchStatus());//跳转到详情
+                    intent.putExtra("currentfragment", 4);//代表定制页跳转
+                    intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_LEAGUEID , parent.getLeagueId());
+                    intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_MATCHTYPE , parent.getMatchType());
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
                 }
             }
         });
@@ -942,24 +954,9 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
     public void onEventMainThread(CustomListEvent customListEvent) {
         /**正在加载中*/
         setState(VIEW_STATUS_CUSTOM_REFRESH_ONCLICK);
-//        L.d("yxq123456 " ,  customListEvent.getmMsg());
-//        String[] str = customListEvent.getmMsg().split("%");
-//        String temaId = str[0];
-//        String leagueId = str[1];
 
         L.d("yxq123456 " ,  customListEvent.getmLeagueMsg() + " **** " + customListEvent.getmTeamMsg());
-//        String[] str = customListEvent.getmMsg().split("%");
-//        String temaId = str[0];
-//        String leagueId = str[1];
-
-
-//        L.d("yxq123456 " ,  temaId + " *** " + leagueId);
-
-//        String url = "http://192.168.31.41:8080/mlottery/core/basketballCommonMacth.findBasketballMyConcernMatch.do";
-//        sendUrl = "http://192.168.10.242:8181/mlottery/core/basketballCommonMacth.customHotLeagueAndTeamConcern.do";
         sendUrl = BaseURLs.CUSTOM_SENDID_CUS_URL;
-//        String url = "http://192.168.31.41:8080/mlottery/core/basketballCommonMacth.customHotLeagueAndTeamConcern.do";
-        //?lang=zh&userId=13714102745&deviceId=21126FC4-DAF0-40DC-AF5C-1AD33EFB5F67
         String userids = AppConstants.register.getData().getUser().getUserId();
         String deviceid = AppConstants.deviceToken;
         String devicetoken = PreferenceUtil.getString(AppConstants.uMengDeviceToken , "");
@@ -971,14 +968,10 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
         sendMap.put("teamIdsByleagueId" , customListEvent.getmTeamMsg());//关注球队的id
         sendMap.put("leagueIds" , customListEvent.getmLeagueMsg());//关注联赛的id
 
-//        map.put("userId" , "13714102745");
-//        map.put("deviceId" , "21126FC4-DAF0-40DC-AF5C-1AD33EFB5F67");
-//        map.put("deviceToken" , "");
-//        map.put("teamIdsByleagueId" , customListEvent.getmMsg());//关注球队的id
-//        map.put("leagueIds" , "1");//关注联赛的id
-
         secondInitData(sendUrl, sendMap);
-
+    }
+    public void onEventMainThread(CustomDetailsEvent event) {
+//        updateAdapter();
     }
 
     /**

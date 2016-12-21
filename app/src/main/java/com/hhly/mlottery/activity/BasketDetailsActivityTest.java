@@ -49,6 +49,7 @@ import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.RongYunUtils;
+import com.hhly.mlottery.util.net.CustomDetailsEvent;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.CustomViewpager;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
@@ -151,6 +152,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private final int RESULT_FRAGMENT = 1;
     private final int SCHEDULE_FRAGMENT = 2;
     private final int FOCUS_FRAGMENT = 3;
+    private final int CUSTOM_FRAGMENT = 4;
 
     private ExactSwipeRefrashLayout mRefreshLayout; //下拉刷新
 
@@ -202,6 +204,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             mTalkAboutBallFragment = TalkAboutBallFragment.newInstance(mThirdId, mMatchStatus, 1, "");
 
             mCurrentId = getIntent().getExtras().getInt("currentfragment");
+
         }
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.basketball.score." + mThirdId + ".zh");
@@ -717,6 +720,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             if (FocusBasketballFragment.BasketFocusEventBus != null) {
                 FocusBasketballFragment.BasketFocusEventBus.post("");
             }
+        } else if(mCurrentId == CUSTOM_FRAGMENT){
+            EventBus.getDefault().post(new CustomDetailsEvent(""));
         }
     }
 
