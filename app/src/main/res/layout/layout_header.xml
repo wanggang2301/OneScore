@@ -247,7 +247,6 @@
             android:padding="10dp"
             android:visibility="gone"
             />
-
     </RelativeLayout>
 
 </LinearLayout>
