@@ -921,7 +921,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                     getCollectionCount();
                 }
             };
-            gifTimer.schedule(gifTimerTask, 2000, GIFPERIOD_2);
+            gifTimer.schedule(gifTimerTask, 1000, GIFPERIOD_2);
         }
     }
 

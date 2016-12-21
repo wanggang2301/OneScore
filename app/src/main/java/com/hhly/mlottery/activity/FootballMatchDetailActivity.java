@@ -2609,13 +2609,13 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 }
             };
 
-            gifTimer.schedule(gifTimerTask, 2000, GIFPERIOD_2);
+            gifTimer.schedule(gifTimerTask, 1000, GIFPERIOD_2);
             //gifTimer.schedule(gifTimerTask, 5000, 20000);
         }
     }
 
     /**
-     *关闭轮询
+     * 关闭轮询
      */
     private void closePollingGifCount() {
         if (gifTimer != null) {
