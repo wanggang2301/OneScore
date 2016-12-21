@@ -12,7 +12,8 @@ public class CustomSecondBean {
 //    teamConcernNum	1
 //    teamId	9
 //    teamName	ดีทรอยต์ พิสตันส์
-
+//    leagueId
+    private String leagueId;
     private boolean isConcern;
     private String teamConcernNum;
     private String teamId;
@@ -22,6 +23,14 @@ public class CustomSecondBean {
 
     private String teamLogoPre;
     private String teamLogoSuff;
+
+    public String getLeagueId() {
+        return leagueId;
+    }
+
+    public void setLeagueId(String leagueId) {
+        this.leagueId = leagueId;
+    }
 
     public String getTeamLogoPre() {
         return teamLogoPre;

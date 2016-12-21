@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="您还未订制任何球队/联赛"/>
+            android:text="@string/custom_no_cus"/>
         <TextView
             android:id="@+id/to_custom"
             android:layout_width="wrap_content"
@@ -79,7 +79,22 @@
             android:layout_gravity="center"
             android:paddingTop="10dp"
             android:textColor="@color/exp_refresh"
-            android:text="马上去定制"/>
+            android:text="@string/custom_to_cus"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/custom_loading_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/basketball_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loading_txt"
+            android:textColor="@color/loading_txt_color" />
     </LinearLayout>
 
 </FrameLayout>

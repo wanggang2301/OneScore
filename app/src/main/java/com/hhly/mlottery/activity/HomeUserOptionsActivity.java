@@ -93,6 +93,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             }
         }
     };
+    private View mRedDot;
 
 
     @Override
@@ -144,7 +145,14 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         rl_user_feedback = (RelativeLayout) findViewById(R.id.rl_user_feedback);
         rl_user_feedback.setOnClickListener(this);
 
-
+        /**我的定制红点*/
+        mRedDot = findViewById(R.id.custom_red_dot_view);
+        boolean currenRedDot = PreferenceUtil.getBoolean("custom_red_dot" , true);
+        if (currenRedDot) {
+            mRedDot.setVisibility(View.VISIBLE);
+        }else{
+            mRedDot.setVisibility(View.GONE);
+        }
 
     }
 
@@ -153,7 +161,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_custom:
-
+                PreferenceUtil.commitBoolean("custom_red_dot" , false);
+                mRedDot.setVisibility(View.GONE);
                 startActivity(new Intent(HomeUserOptionsActivity.this, CustomActivity.class));
 
                 break;

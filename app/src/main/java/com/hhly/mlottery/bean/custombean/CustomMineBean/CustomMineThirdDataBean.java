@@ -76,6 +76,7 @@ public class CustomMineThirdDataBean {
 
     private int thirdType = 2;
 
+
     public int getThirdType() {
         return thirdType;
     }

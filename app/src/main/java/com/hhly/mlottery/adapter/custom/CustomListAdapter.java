@@ -31,30 +31,22 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
     private Context mContext;
     private List mData;
 
-//    public CustomListAdapter(List data) {
-//        super(data);
-//        this.mData = data;
-//    }
-
-//    public CustomListAdapter(View contentView, List data) {
-//        super(contentView, data);
-//        this.mData = data;
-//    }
-
-    public CustomListAdapter(Context context , List data) {
+    public CustomListAdapter(Context context, List data) {
         super(R.layout.custom_list_league_item, data);
         this.mContext = context;
         this.mData = data;
-
     }
-    public void setData(List data){
+
+    public void setData(List data) {
         this.mData = data;
     }
 
     public interface OnItemClickListener {
-        void onItemClick(View view, int position , ImageView mIsOpen);
+        void onItemClick(View view, int position, ImageView mIsOpen);
     }
+
     private OnItemClickListener onItemClickListener;
+
     public void setOnItemClickLitener(OnItemClickListener itemClickListener) {
         this.onItemClickListener = itemClickListener;
     }
@@ -74,15 +66,14 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
          * 联赛类型
          */
         else if (mData.get(position) instanceof CustomFristBean) {
-            return ((CustomFristBean)mData.get(position)).getFirstType();
+            return ((CustomFristBean) mData.get(position)).getFirstType();
         }
         /**
          * 球队类型
          */
         else if (mData.get(position) instanceof CustomSecondBean) {
             return ((CustomSecondBean) mData.get(position)).getSecondType();
-        }
-        else{
+        } else {
             /**
              * 都不属于 return super
              */
@@ -94,15 +85,15 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = null;
         BaseViewHolder holder = null;
-        switch(viewType){
+        switch (viewType) {
             case 0:
                 //联赛
-                view = LayoutInflater.from(mContext).inflate(R.layout.custom_list_league_item , parent , false);
+                view = LayoutInflater.from(mContext).inflate(R.layout.custom_list_league_item, parent, false);
                 holder = new ViewHolderLeague(view);
                 break;
             case 1:
                 //日期
-                view = LayoutInflater.from(mContext).inflate(R.layout.custom_team_league_item , parent , false);
+                view = LayoutInflater.from(mContext).inflate(R.layout.custom_team_league_item, parent, false);
                 holder = new ViewHolderTeamData(view);
                 break;
         }
@@ -115,16 +106,23 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
         if (mData == null) {
             return;
         }
-        switch (getItemViewType(positions)){
+        switch (getItemViewType(positions)) {
             case 0:
                 final ViewHolderLeague viewHolderLeague = (ViewHolderLeague) holder;
 
-                final CustomFristBean firstData = (CustomFristBean)mData.get(positions);
+                final CustomFristBean firstData = (CustomFristBean) mData.get(positions);
 
 
-                String logoUrl = firstData.getLeagueLogoPre()+ firstData.getLeagueId() + firstData.getLeagueLogoSuff();
-                ImageLoader.load(mContext,logoUrl,R.mipmap.iconfont_lanqiu2shixin).into(viewHolderLeague.mLeagueLogo);
-//                viewHolderLeague.mLeagueName.setText("NBA " + positions);
+                String logoUrl = firstData.getLeagueLogoPre() + firstData.getLeagueId() + firstData.getLeagueLogoSuff();
+                ImageLoader.load(mContext, logoUrl, R.mipmap.iconfont_lanqiu2shixin).into(viewHolderLeague.mLeagueLogo);
+
+                if (firstData.getTeamConcerns() == null || firstData.getTeamConcerns().size() == 0) {
+                    viewHolderLeague.mNoData.setVisibility(View.VISIBLE);
+                    viewHolderLeague.mIsOpen.setVisibility(View.GONE);
+                } else {
+                    viewHolderLeague.mNoData.setVisibility(View.GONE);
+                    viewHolderLeague.mIsOpen.setVisibility(View.VISIBLE);
+                }
                 viewHolderLeague.mLeagueName.setText(firstData.getLeagueName());
                 viewHolderLeague.mLeagueHotNum.setText(firstData.getLegueConcernNum());
 
@@ -133,12 +131,12 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
                         @Override
                         public void onClick(View v) {
                             int pos = holder.getLayoutPosition();
-                            onItemClickListener.onItemClick(holder.itemView , pos , viewHolderLeague.mIsOpen);
+                            onItemClickListener.onItemClick(holder.itemView, pos, viewHolderLeague.mIsOpen);
                         }
                     });
                 }
 
-                String focus_leagueids = PreferenceUtil.getString("custom_focus_ids" , "");
+                String focus_leagueids = PreferenceUtil.getString("custom_leagueId_focus_ids", "");
                 String[] leagueIds = focus_leagueids.split("[,]");
 
                 for (String id : leagueIds) {
@@ -147,7 +145,7 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
                         viewHolderLeague.mLeagueStar.setTag(true);
                         firstData.setConcern(true);
                         break;
-                    }else{
+                    } else {
                         viewHolderLeague.mLeagueStar.setBackgroundResource(R.mipmap.custom_unfocus);
                         viewHolderLeague.mLeagueStar.setTag(false);
                         firstData.setConcern(false);
@@ -158,18 +156,17 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
                     @Override
                     public void onClick(View v) {
                         /** + "-A" 区分联赛 和球队 id相同的情况*/
-                            mFocus.FocusOnClick(v, firstData.getLeagueId() + "_A" , firstData);
+                        mFocus.FocusOnClick(v, firstData.getLeagueId() + "_A", firstData);
                     }
                 });
                 break;
             case 1:
                 final ViewHolderTeamData viewHolderDate = (ViewHolderTeamData) holder;
 
-                final CustomSecondBean secondData = (CustomSecondBean)mData.get(positions);
+                final CustomSecondBean secondData = (CustomSecondBean) mData.get(positions);
 
-                String tameLogoUrl = secondData.getTeamLogoPre()+ secondData.getTeamId() + secondData.getTeamLogoSuff();
-                ImageLoader.load(mContext,tameLogoUrl,R.mipmap.iconfont_lanqiu2shixin).into(viewHolderDate.mTeamLogo);
-//                viewHolderDate.mTeamName.setText("火箭 " + positions);
+                String tameLogoUrl = secondData.getTeamLogoPre() + secondData.getTeamId() + secondData.getTeamLogoSuff();
+                ImageLoader.load(mContext, tameLogoUrl, R.mipmap.iconfont_lanqiu2shixin).into(viewHolderDate.mTeamLogo);
                 viewHolderDate.mTeamName.setText(secondData.getTeamName());
                 viewHolderDate.mTeamHotNum.setText(secondData.getTeamConcernNum());
 
@@ -178,12 +175,12 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
                         @Override
                         public void onClick(View v) {
                             int pos = holder.getLayoutPosition();
-                            onItemClickListener.onItemClick(holder.itemView , pos , null);
+                            onItemClickListener.onItemClick(holder.itemView, pos, null);
                         }
                     });
                 }
 
-                String focus_Dateids = PreferenceUtil.getString("custom_focus_ids" , "");
+                String focus_Dateids = PreferenceUtil.getString("custom_team_focus_ids", "");
                 String[] dateids = focus_Dateids.split("[,]");
                 for (String id : dateids) {
                     if (id.equals(secondData.getTeamId() + "_B")) {
@@ -191,7 +188,7 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
                         viewHolderDate.mTeamStar.setTag(true);
                         secondData.setConcern(true);
                         break;
-                    }else{
+                    } else {
                         viewHolderDate.mTeamStar.setBackgroundResource(R.mipmap.custom_unfocus);
                         viewHolderDate.mTeamStar.setTag(false);
                         secondData.setConcern(false);
@@ -201,23 +198,12 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
                     @Override
                     public void onClick(View v) {
                         /** + "-B" 区分联赛 和球队 id相同的情况*/
-                        mFocus.FocusOnClick(v, secondData.getTeamId() + "_B" , secondData);
+                        mFocus.FocusOnClick(v, secondData.getTeamId() + "_B", secondData);
                     }
                 });
 
                 break;
         }
-
-//        if (onItemClickListener != null) {
-//            holder.itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    int pos = holder.getLayoutPosition();
-//                    onItemClickListener.onItemClick(holder.itemView , pos);
-//                }
-//            });
-//        }
-
     }
 
     @Override
@@ -227,6 +213,7 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
 
     /**
      * 添加所有child
+     *
      * @param lists
      * @param position
      */
@@ -234,14 +221,16 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
         mData.addAll(position, lists);
         notifyItemRangeInserted(position, lists.size());
     }
+
     /**
      * 删除所有child
+     *
      * @param position
      * @param itemnum
      */
     public void deleteAllChild(int position, int itemnum) {
         for (int i = 0; i < itemnum; i++) {
-             mData.remove(position);
+            mData.remove(position);
         }
         notifyItemRangeRemoved(position, itemnum);
     }
@@ -250,7 +239,7 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
     /**
      * 球队holder
      */
-    class ViewHolderTeamData extends BaseViewHolder{
+    class ViewHolderTeamData extends BaseViewHolder {
         ImageView mTeamLogo;
         TextView mTeamName;
         TextView mTeamHotNum;
@@ -269,13 +258,15 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
     /**
      * 联赛holder
      */
-    public class ViewHolderLeague extends BaseViewHolder{
+    public class ViewHolderLeague extends BaseViewHolder {
 
         ImageView mLeagueLogo;
         TextView mLeagueName;
         TextView mLeagueHotNum;
         ImageView mIsOpen;
         ImageView mLeagueStar;
+        TextView mNoData;
+
         public ViewHolderLeague(View itemView) {
             super(itemView);
 
@@ -284,10 +275,12 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
             mLeagueHotNum = (TextView) itemView.findViewById(R.id.custom_league_hot_num);
             mIsOpen = (ImageView) itemView.findViewById(R.id.custom_item_isopen);
             mLeagueStar = (ImageView) itemView.findViewById(R.id.custom_league_star);
+            mNoData = (TextView) itemView.findViewById(R.id.custon_league_nodata);
 
 
         }
     }
+
     @Override
     protected void convert(BaseViewHolder baseViewHolder, CustomFristBean customFristBean) {
     }

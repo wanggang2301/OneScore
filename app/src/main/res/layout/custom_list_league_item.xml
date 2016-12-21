@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:paddingLeft="5dp"
-                android:text="西班牙甲级联赛"
+                android:text="----"
                 android:singleLine="true"
                 android:textSize="@dimen/text_size_15"
                 android:textColor="@color/content_txt_black"/>
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:paddingLeft="5dp"
-                android:text="99999"
+                android:text="----"
                 android:singleLine="true"
                 android:textSize="@dimen/text_size_15"
                 android:textColor="@color/content_txt_black"/>
@@ -122,6 +122,21 @@
                 android:src="@mipmap/custom_unfocus" />
         </RelativeLayout>
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EEEEEE"
+        />
+
+    <TextView
+        android:id="@+id/custon_league_nodata"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:textSize="15dp"
+        android:textColor="#333333"
+        android:text="@string/custom_noevent_cus"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

@@ -54,12 +54,6 @@ public interface MyConstants {
 	String BASKETBALL_RBOCOMPENSATE = "basketball_rbOCompensate";// 欧赔
 	String BASKETBALL_RBNOTSHOW = "basketball_rbNotShow";// 不显示
 
-	//篮球 赔率提示
-	String BASKETBALL_CUSTOM_RBSECOND = "basketball_custom_rbSecond";// 亚盘
-	String BASKETBALL_CUSTOM_rbSizeBall = "basketball_custom_RBSIZEBALL";// 大小球
-	String BASKETBALL_CUSTOM_RBOCOMPENSATE = "basketball_custom_rbOCompensate";// 欧赔
-	String BASKETBALL_CUSTOM_RBNOTSHOW = "basketball_custom_rbNotShow";// 不显示
-
 	//启动页url
 	String START_IMAGE_URL="start_image_url";
 
