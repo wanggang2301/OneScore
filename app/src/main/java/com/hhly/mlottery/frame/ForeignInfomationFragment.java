@@ -24,7 +24,7 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -41,7 +41,7 @@ import de.greenrobot.event.EventBus;
  * @date 2016/9/20 10:00
  * @des 资讯—境外新闻
  */
-public class ForeignInfomationFragment extends Fragment implements ExactSwipeRefrashLayout.OnRefreshListener {
+public class ForeignInfomationFragment extends Fragment implements ExactSwipeRefreshLayout.OnRefreshListener {
 
     private static final int DATA_STATUS_LOADING = 1;
     private static final int DATA_STATUS_SUCCESS = 2;
@@ -50,7 +50,7 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.refresh)
-    ExactSwipeRefrashLayout refresh;
+    ExactSwipeRefreshLayout refresh;
     @BindView(R.id.network_exception_reload_btn)
     TextView networkExceptionReloadBtn;
     @BindView(R.id.network_exception_reload_layout)
@@ -188,7 +188,7 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
                     @Override
                     public void onResponse(ForeignInfomationBean foreignInfomationBean) {
                         if (!foreignInfomationBean.getResult().equals("200")) {
-                           loadmore_text.setText(mContext.getResources().getString(R.string.nodata_txt));
+                            loadmore_text.setText(mContext.getResources().getString(R.string.nodata_txt));
                             progressBar.setVisibility(View.GONE);
                             return;
                         } else {
@@ -223,6 +223,7 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
      * 可见
      */
     protected void onVisible() {
+        pageSize = 1;
         mHandler.sendEmptyMessage(DATA_STATUS_LOADING);
         new Handler().postDelayed(mLoadingDataThread, 0);
 

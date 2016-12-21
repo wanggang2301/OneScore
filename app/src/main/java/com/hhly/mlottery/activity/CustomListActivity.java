@@ -25,7 +25,7 @@ import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.LoadMoreRecyclerView;
-import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
 
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
     private LinearLayout mNoCustom;
     private TextView mCustomTxt;
     private LinearLayout monClickLoading;
-    private ExactSwipeRefrashLayout mRefresh;
+    private ExactSwipeRefreshLayout mRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +117,7 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
 
         //下拉控件
-        mRefresh = (ExactSwipeRefrashLayout)findViewById(R.id.custom_refresh_layout);
+        mRefresh = (ExactSwipeRefreshLayout)findViewById(R.id.custom_refresh_layout);
         mRefresh.setColorSchemeResources(R.color.bg_header);
         mRefresh.setOnRefreshListener(this);
         mRefresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getApplicationContext(), StaticValues.REFRASH_OFFSET_END));

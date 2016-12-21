@@ -1423,6 +1423,13 @@
     <string name="basket_no_text_live">暂无直播数据</string>
     <string name="basket_player_no_data">暂无统计数据</string>
 
+
+
+    <string name="video_high_light_reminder_comment">您正在使用移动数据，是否继续打开？</string>
+    <string name="video_high_light_continue_open">打开</string>
+    <string name="video_high_light">精彩瞬间</string>
+    <string name="video_high_notice">精彩瞬间来啦</string>
+
     <!--斯洛克-->
     <string name="snooker_title">斯洛克</string>
     <string name="snooker_setting_title">斯洛克设置</string>
@@ -1448,5 +1455,19 @@
     <string name="custom_redact_cus">编辑</string>
     <string name="custom_accomplish_cus">完成</string>
     <string name="custom_noevent_cus">暂无赛事</string>
+
+    <string name="chart_ball_report_to_user">被举报人：</string>
+    <string name="chart_ball_report_user">举报人：</string>
+    <string name="chart_ball_report_content">举报内容不能为空！</string>
+    <string name="chart_ball_online">人</string>
+    <string name="chart_ball_call_me">\@你：</string>
+    <string name="chart_ball_call_ta">\@TA</string>
+    <string name="chart_ball_send_error">发送失败！</string>
+    <string name="chart_ball_loading_error">加载失败！</string>
+    <string name="title_product_advice">给产品建议</string>
+    <string name="product_advice">产品回复</string>
+    <string name="product_advice_load_more">正在加载中....</string>
+    <string name="more"><![CDATA[更多>>]]></string>
+    <string name="nomoredatashangla">没有更多数据了...</string>
 
 </resources>

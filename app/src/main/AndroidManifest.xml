@@ -40,6 +40,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
+
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -254,15 +255,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyleTop"
             android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity
+            android:name=".activity.ChartballActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyleTop"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <!-- 消息推送服务 -->
         <service android:name=".service.umengPushService" />
-        <!-- 版本更新广播 -->
-        <receiver android:name=".receiver.CompleteReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
-                <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED" />
-            </intent-filter>
-        </receiver>
 
         <activity
             android:name=".activity.BasketDetailsActivityTest"
@@ -279,22 +278,7 @@
         <activity
             android:name=".activity.FootballInformationSerachActivity"
             android:screenOrientation="portrait" />
-        <!-- 融云会话列表 -->
-        <activity
-            android:name=".frame.ConversationFragment"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/chart_room"
-            android:windowSoftInputMode="stateHidden|adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data
-                    android:host="com.hhly.mlottery"
-                    android:pathPrefix="/conversation/"
-                    android:scheme="rong" />
-            </intent-filter>
-        </activity>
+        <!--今日联赛统计-->
         <activity
             android:name=".activity.LeagueStatisticsTodayActivity"
             android:screenOrientation="portrait" />
@@ -318,6 +302,11 @@
         <activity
             android:name=".activity.MoreSettingsActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.ProductAdviceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PlayHighLightActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.BasketballScoresActivity"
             android:screenOrientation="portrait" />
@@ -326,11 +315,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.hhly.mlottery.activity.CustomListActivity"
-            android:screenOrientation="portrait" /><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:screenOrientation="portrait" />
 
     </application>
 

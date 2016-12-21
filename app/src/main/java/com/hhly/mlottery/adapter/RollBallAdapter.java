@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -38,7 +39,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-public class RollBallAdapter extends BaseRecyclerViewAdapter {
+public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolder> {
 
      /*private boolean notify_locked_tag;
     private Subscription subscription;

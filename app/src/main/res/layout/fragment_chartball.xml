@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:emojicon="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--加载中-->
+    <LinearLayout
+        android:id="@+id/ll_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <android.support.v4.widget.ContentLoadingProgressBar
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+    <!-- 网络访问失败 -->
+    <LinearLayout
+        android:id="@+id/ll_errorLoading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/refresh" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/exp_net_status_txt"
+            android:textColor="@color/version"
+            android:textSize="@dimen/text_size_14" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dip"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dip"
+                android:text="@string/exp__check_txt"
+                android:textColor="@color/msg"
+                android:textSize="@dimen/text_size_14" />
+
+            <TextView
+                android:id="@+id/reLoading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/exp_refresh_txt"
+                android:textColor="@color/exp_refresh"
+                android:textSize="@dimen/text_size_14" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--点赞部分-->
+    <RelativeLayout
+        android:id="@+id/rl_zhan_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/talkball_home_like"
+                    style="@style/MatchDetailLike"
+                    android:src="@mipmap/like_red" />
+
+                <ImageView
+                    android:id="@+id/talkball_like_anim_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="7dp"
+                    android:src="@mipmap/like_anim_left" />
+
+                <TextView
+                    android:id="@+id/talkball_like_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/talkball_like_anim_img"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="4dp"
+                    android:text="0"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+            </RelativeLayout>
+
+            <ProgressBar
+                android:id="@+id/talkball_pro"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="4"
+                android:max="100"
+                android:progress="50"
+                android:progressDrawable="@drawable/pro_analyze" />
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/talkball_guest_like"
+                    style="@style/MatchDetailLike"
+                    android:src="@mipmap/like_blue" />
+
+                <ImageView
+                    android:id="@+id/talkbail_guest_like_anim_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="7dp"
+                    android:src="@mipmap/like_anim_right" />
+
+                <TextView
+                    android:id="@+id/talkbail_guest_like_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/talkbail_guest_like_anim_img"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="4dp"
+                    android:text="0"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!--聊天内容部分-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <FrameLayout
+            android:id="@+id/rl_chart_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
+                android:scrollbars="vertical" />
+
+            <!--在线人数-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_call_me"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@color/home_item_bg"
+                        android:padding="5dp"
+                        android:text="@string/chart_ball_call_me"
+                        android:textColor="@color/chart_ball_call_me"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tv_online_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="5dp"
+                        android:drawableStart="@mipmap/chart_ball_line_count"
+                        android:paddingEnd="30dp"
+                        android:textColor="@color/mdy_666"
+                        android:textSize="10sp" />
+
+
+                </LinearLayout>
+            </RelativeLayout>
+        </FrameLayout>
+
+        <!--空沙发-->
+        <FrameLayout
+            android:id="@+id/fl_not_chart_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@mipmap/chart_ball_null_bg" />
+        </FrameLayout>
+
+    </FrameLayout>
+
+    <!--发送中心-->
+    <RelativeLayout
+        android:id="@+id/rl_send_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:id="@+id/ll_send_input_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#dddddd" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="#f5f5f5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <io.github.rockerhieu.emojicon.EmojiconEditText
+                    android:id="@+id/et_emoji_input"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_counselcomment_edit"
+                    android:gravity="center_vertical"
+                    android:hint="说点什么..."
+                    android:maxLength="100"
+                    android:paddingLeft="10dp"
+                    android:textColor="#333333"
+                    android:textColorHint="#999999"
+                    android:textSize="14sp"
+                    emojicon:emojiconSize="20sp" />
+
+                <!--emoji-->
+                <ImageView
+                    android:id="@+id/iv_gallery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:src="@mipmap/chart_ball_emoji_icon_note"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_send"
+                    android:layout_width="64dp"
+                    android:layout_height="37dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/selector_counselcomment_send"
+                    android:gravity="center"
+                    android:paddingBottom="3dp"
+                    android:paddingTop="3dp"
+                    android:text="@string/comment_send"
+                    android:textColor="#fff" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

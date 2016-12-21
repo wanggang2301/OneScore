@@ -27,7 +27,7 @@ import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.RoundProgressBar;
-import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 import com.hhly.mlottery.widget.NestedListView;
 
 import java.util.ArrayList;
@@ -78,7 +78,7 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
     private TextView mHomeFruture;
     Handler mHandler = new Handler();
     private TextView mError;
-    private ExactSwipeRefrashLayout mRefresh;
+    private ExactSwipeRefreshLayout mRefresh;
     private TextView mNoData1;
     private TextView mNoData2;
     private TextView mNoData3;
@@ -172,7 +172,7 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
         mError = (TextView)findViewById(R.id.football_details_error_btn);
         mError.setOnClickListener(this);
 
-        mRefresh = (ExactSwipeRefrashLayout)findViewById(R.id.football_analyze_details_refreshlayout);
+        mRefresh = (ExactSwipeRefreshLayout)findViewById(R.id.football_analyze_details_refreshlayout);
         mRefresh.setColorSchemeResources(R.color.tabhost);
         mRefresh.setOnRefreshListener(FootballAnalyzeDetailsActivity.this);
         mRefresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(this, StaticValues.REFRASH_OFFSET_END));

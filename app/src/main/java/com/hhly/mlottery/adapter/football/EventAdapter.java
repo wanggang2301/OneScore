@@ -1,6 +1,7 @@
 package com.hhly.mlottery.adapter.football;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,7 +10,6 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewAdapter;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.StadiumUtils;
 
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
  * 作者:  wangg@13322.com
  * 时间:  2016/8/9 15:40
  */
-public class EventAdapter extends BaseRecyclerViewAdapter {
+public class EventAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolder> {
 
     private static final int VIEW_TYPE_DEFAULT = 1;
     private static final int VIEW_TYPE_HALF_FINISH = 2;

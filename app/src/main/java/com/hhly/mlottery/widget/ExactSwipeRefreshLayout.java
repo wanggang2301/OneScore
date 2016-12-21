@@ -11,18 +11,18 @@ import android.view.ViewConfiguration;
  * 手势只有在往下的时候才出现下拉的球
  * 准确度高的下拉刷新。
  */
-public class ExactSwipeRefrashLayout extends SwipeRefreshLayout {
+public class ExactSwipeRefreshLayout extends SwipeRefreshLayout {
 
     private final static String TAG = "ExactSwipeRefrashLayout";
 
     private int mTouchSlop;
     private float mPrevX;
 
-    public ExactSwipeRefrashLayout(Context context) {
+    public ExactSwipeRefreshLayout(Context context) {
         this(context, null);
     }
 
-    public ExactSwipeRefrashLayout(Context context, AttributeSet attrs) {
+    public ExactSwipeRefreshLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
     }

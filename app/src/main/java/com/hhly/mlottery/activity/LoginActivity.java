@@ -40,7 +40,6 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
-import com.hhly.mlottery.util.RongYunUtils;
 import com.hhly.mlottery.util.ShareConstants;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.cipher.MD5Util;
@@ -558,7 +557,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     getFootballUserFocus(register.getData().getUser().getUserId());
                     getBasketballUserConcern(register.getData().getUser().getUserId());
                     finish();
-                    RongYunUtils.initRongIMConnect(mContext);// 登录成功后初始化融云
                 } else {
                     CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
                 }
@@ -623,7 +621,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                              //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
                              sendUserInfoToServer(register);
                              finish();
-                             RongYunUtils.initRongIMConnect(mContext);// 登录成功后初始化融云
                              //TODO:发送请求，从后台获取该用户的关注信息
                              getFootballUserFocus(register.getData().getUser().getUserId());
                              getBasketballUserConcern(register.getData().getUser().getUserId());

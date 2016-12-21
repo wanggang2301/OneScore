@@ -1404,6 +1404,12 @@
 
     <string name="basket_player_no_data">暫無統計數據</string>
 
+    <string name="video_high_light_reminder_comment">您正在使用移動數據，是否繼續打開？</string>
+    <string name="video_high_light_continue_open">打開</string>
+    <string name="video_high_light">精彩瞬間</string>
+    <string name="video_high_notice">精彩瞬間來啦</string>
+
+
     <!--斯洛克-->
     <string name="snooker_title">斯洛克</string>
     <string name="snooker_setting_title">斯洛克設置</string>
@@ -1429,5 +1435,20 @@
     <string name="custom_redact_cus">編輯</string>
     <string name="custom_accomplish_cus">完成</string>
     <string name="custom_noevent_cus">暫無賽事</string>
+
+
+    <string name="chart_ball_report_to_user">被舉報人：</string>
+    <string name="chart_ball_report_user">舉報人：</string>
+    <string name="chart_ball_report_content">舉報內容不能為空！</string>
+    <string name="chart_ball_online">人</string>
+    <string name="chart_ball_call_me">\@妳：</string>
+    <string name="chart_ball_call_ta">\@TA</string>
+    <string name="chart_ball_send_error">發送失敗！</string>
+    <string name="chart_ball_loading_error">加載失敗！</string>
+    <string name="title_product_advice">給產品建議</string>
+    <string name="product_advice">產品回復</string>
+    <string name="product_advice_load_more">正在加載中....</string>
+    <string name="more"><![CDATA[更多>>]]></string>
+    <string name="nomoredatashangla">沒有更多數據了...</string>
 
 </resources>

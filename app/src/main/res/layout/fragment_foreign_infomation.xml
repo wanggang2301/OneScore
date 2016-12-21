@@ -6,7 +6,7 @@
     android:background="#f5f5f5"
     android:orientation="vertical">
 
-    <com.hhly.mlottery.widget.ExactSwipeRefrashLayout
+    <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
 
-    </com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
+    </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
 
     <include layout="@layout/network_exception" />
 </LinearLayout>

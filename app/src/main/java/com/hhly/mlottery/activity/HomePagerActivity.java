@@ -46,7 +46,6 @@ import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
-import com.hhly.mlottery.util.RongYunUtils;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
@@ -368,7 +367,6 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         iv_account = (ImageView) findViewById(R.id.iv_account);
         if (CommonUtils.isLogin()) {
             iv_account.setImageResource(R.mipmap.login);
-            RongYunUtils.initRongIMConnect(mContext);// 初始化融云
         } else {
             iv_account.setImageResource(R.mipmap.logout);
         }
@@ -441,6 +439,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
 //            mHandler.sendEmptyMessage(LOADING_DATA_ERROR);// 加载失败
 //        }
 
+        String url="http://192.168.33.45:8080/mlottery/core/mainPage.findAndroidLotteryMainRsts.do";
         VolleyContentFast.requestStringByGet(BaseURLs.URL_HOME_PAGER_INFO, myPostParams, null, new VolleyContentFast.ResponseSuccessListener<String>() {
             @Override
             public void onResponse(String jsonObject) {

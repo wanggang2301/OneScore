@@ -27,7 +27,7 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 import com.hhly.mlottery.widget.NestedListView;
 import com.umeng.analytics.MobclickAgent;
 
@@ -76,7 +76,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
     private TextView mHomeFruture;
     Handler mHandler = new Handler();
     private TextView mError;
-    private ExactSwipeRefrashLayout mRefresh;
+    private ExactSwipeRefreshLayout mRefresh;
     private TextView mNoData1;
     private TextView mNoData2;
     private TextView mNoData3;
@@ -157,7 +157,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
         mError = (TextView)findViewById(R.id.basketball_details_error_btn);
         mError.setOnClickListener(this);
 
-        mRefresh = (ExactSwipeRefrashLayout)findViewById(R.id.basket_analyze_details_refreshlayout);
+        mRefresh = (ExactSwipeRefreshLayout)findViewById(R.id.basket_analyze_details_refreshlayout);
         mRefresh.setColorSchemeResources(R.color.tabhost);
         mRefresh.setOnRefreshListener(BasketAnalyzeMoreRecordActivity.this);
         mRefresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(this, StaticValues.REFRASH_OFFSET_END));

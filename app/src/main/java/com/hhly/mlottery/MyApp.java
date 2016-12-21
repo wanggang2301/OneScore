@@ -23,8 +23,6 @@ import java.util.Locale;
 
 import cn.finalteam.okhttpfinal.OkHttpFinal;
 import cn.finalteam.okhttpfinal.OkHttpFinalConfiguration;
-import io.rong.imkit.RongIM;
-
 
 /**
  * @author Tenney
@@ -51,7 +49,7 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
 //        PushAgent pushAgent-
-        UmengMessageHandler handler=new UmengMessageHandler(){
+        UmengMessageHandler handler = new UmengMessageHandler() {
             @Override
             public Notification getNotification(Context context, UMessage uMessage) {
                 return super.getNotification(context, uMessage);
@@ -72,10 +70,9 @@ public class MyApp extends Application {
         switchLanguage(PreferenceUtil.getString("language", ""));
         isLanguage = switchLanguage(PreferenceUtil.getString("language", ""));
         // 捕获异常
-        if (AppConstants.isTestEnv) {
-            CrashException crashException = CrashException.getInstance();
-            crashException.init(getApplicationContext());
-        }
+        CrashException crashException = CrashException.getInstance();
+        crashException.init(getApplicationContext());
+
         VolleyContentFast.init(this);
         //初始化畅言
         CyUtils.initCy(this);
@@ -84,14 +81,6 @@ public class MyApp extends Application {
         isPackageName = this.getPackageName();
         // 设置时区
         settingTimeZone();
-        /**
-         * OnCreate 会被多个进程重入，这段保护代码，确保只有您需要使用 RongIMClient 的进程和 Push 进程执行了 init。
-         * io.rong.push 为融云 push 进程名称，不可修改。
-         */
-        if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext())) || "io.rong.push".equals(getCurProcessName(getApplicationContext()))) {
-            // 初始化融云
-            RongIM.init(this);
-        }
 
         /**
          * OkHttpFinal(此初始化只是简单赋值不会阻塞线程)
@@ -105,7 +94,7 @@ public class MyApp extends Application {
     /**
      * 设置时区
      */
-    private void settingTimeZone(){
+    private void settingTimeZone() {
         switch (isPackageName) {
             case AppConstants.PACKGER_NAME_ZH:// 国内版
                 AppConstants.timeZone = 8;
@@ -163,7 +152,6 @@ public class MyApp extends Application {
     public static Context getContext() {
         return appcontext;
     }
-
 
 
     /**

@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -35,7 +34,7 @@ import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.SnookerSettingEvent;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.LoadMoreRecyclerView;
-import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,8 +49,6 @@ import de.greenrobot.event.EventBus;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
-
-import static android.R.transition.move;
 
 
 /**
@@ -75,7 +72,7 @@ public class SnookerListActivity extends BaseWebSocketActivity implements SwipeR
     private static final int SHOW_STATUS_ERROR = 2;//加载失败
     private static final int SHOW_STATUS_NO_DATA = 3;//暂无数据
     private static final int SHOW_STATUS_SUCCESS = 4;//加载成功
-    private ExactSwipeRefrashLayout mRefresh;
+    private ExactSwipeRefreshLayout mRefresh;
 
     private ImageView mBackImage;
     private List<SnookerMatchesBean> currentAllData;
@@ -164,7 +161,7 @@ public class SnookerListActivity extends BaseWebSocketActivity implements SwipeR
         //暂无数据
         mNoData = (TextView) findViewById(R.id.snooker_nodata_txt);
 
-        mRefresh = (ExactSwipeRefrashLayout) findViewById(R.id.snooker_refresh_layout);
+        mRefresh = (ExactSwipeRefreshLayout) findViewById(R.id.snooker_refresh_layout);
         mRefresh.setColorSchemeResources(R.color.tabhost);
         mRefresh.setOnRefreshListener(this);
 

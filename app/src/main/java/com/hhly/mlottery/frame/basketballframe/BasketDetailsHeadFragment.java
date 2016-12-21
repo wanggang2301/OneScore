@@ -1,6 +1,9 @@
 package com.hhly.mlottery.frame.basketballframe;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,14 +16,21 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketDetailsActivityTest;
+import com.hhly.mlottery.activity.PlayHighLightActivity;
 import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
 import com.hhly.mlottery.bean.websocket.DataEntity;
 import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
+import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
 import com.hhly.mlottery.util.ImageLoader;
+import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.NetworkUtils;
+import com.hhly.mlottery.util.PreferenceUtil;
 
 /**
  * Created by Administrator on 2016/10/12.
@@ -64,6 +74,13 @@ public class BasketDetailsHeadFragment extends Fragment {
     private TextView mSmallHomeScore;
     private Context mContext;
 
+    private LinearLayout btn_showGif;
+    private final static String MATCH_TYPE = "2"; //篮球
+
+    private View red_point;
+
+    private final static String BASKETBALL_GIF = "basketball_gif";
+
     public static BasketDetailsHeadFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -80,6 +97,7 @@ public class BasketDetailsHeadFragment extends Fragment {
 
         initView();
 
+        initGifData();
         return mView;
     }
 
@@ -133,7 +151,119 @@ public class BasketDetailsHeadFragment extends Fragment {
         mSmallGuestScore = (TextView) mView.findViewById(R.id.basket_details_guest_small_total);
         mSmallHomeScore = (TextView) mView.findViewById(R.id.basket_details_home_small_total);
 
+        btn_showGif = (LinearLayout) mView.findViewById(R.id.btn_showGif);
+
+        red_point = (View) mView.findViewById(R.id.red_point);
     }
+
+
+    private void initGifData() {
+        //getCollectionCount();
+
+        btn_showGif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (NetworkUtils.isConnected(getActivity())) {
+                    int type = com.hhly.mlottery.util.NetworkUtils.getCurNetworkType(getActivity());
+                    if (type == 1) {
+
+                        hideGifRedPoint();
+
+                        L.d("zxcvbn", "WIFI");
+                        Intent intent = new Intent(getActivity(), PlayHighLightActivity.class);
+                        intent.putExtra("thirdId", BasketDetailsActivityTest.mThirdId);
+                        intent.putExtra("match_type", MATCH_TYPE);
+
+                        startActivity(intent);
+                        //wifi
+                    } else if (type == 2 || type == 3 || type == 4) {//2G  3G  4G
+                        L.d("zxcvbn", "移动网络-" + type + "G");
+                        promptNetInfo();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.about_net_failed), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+    }
+
+
+    /**
+     * 影藏红点
+     */
+
+    private void hideGifRedPoint() {
+        PreferenceUtil.commitBoolean(BASKETBALL_GIF, false);
+        red_point.setVisibility(View.GONE);
+    }
+
+    public void setBtn_showGifVisible(int visible) {
+        btn_showGif.setVisibility(visible);
+    }
+
+    public void setRedPointVisible(int visible) {
+        red_point.setVisibility(visible);
+    }
+
+    /**
+     * 当前连接的网络提示
+     */
+    private void promptNetInfo() {
+        try {
+            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity(), R.style.AppThemeDialog);
+            builder.setCancelable(false);// 设置对话框以外不可点击
+            builder.setTitle(getActivity().getResources().getString(R.string.to_update_kindly_reminder));// 提示标题
+            builder.setMessage(getActivity().getResources().getString(R.string.video_high_light_reminder_comment));// 提示内容
+            builder.setPositiveButton(getActivity().getResources().getString(R.string.video_high_light_continue_open), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    hideGifRedPoint();
+                    dialog.dismiss();
+                    Intent intent = new Intent(getActivity(), PlayHighLightActivity.class);
+                    intent.putExtra("thirdId", BasketDetailsActivityTest.mThirdId);
+                    intent.putExtra("match_type", MATCH_TYPE);
+
+                    startActivity(intent);
+                }
+            });
+            builder.setNegativeButton(getActivity().getResources().getString(R.string.basket_analyze_dialog_cancle), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            android.support.v7.app.AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        } catch (Resources.NotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /*private void getCollectionCount() {
+        Map<String, String> map = new HashMap<>();
+        map.put("matchType", MATCH_TYPE);
+        map.put("thirdId", BasketDetailsActivityTest.mThirdId);  //399381
+        //  map.put("thirdId", mThirdId);
+        VolleyContentFast.requestJsonByGet(BaseURLs.FOOTBALL_DETAIL_COLLECTION_COUNT, map, new VolleyContentFast.ResponseSuccessListener<DetailsCollectionCountBean>() {
+            @Override
+            public void onResponse(DetailsCollectionCountBean jsonObject) {
+                if (200 == jsonObject.getResult()) {
+                    if (jsonObject.getData() != 0) {
+                        btn_showGif.setVisibility(View.VISIBLE);
+                    } else {
+                        btn_showGif.setVisibility(View.GONE);
+                    }
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                btn_showGif.setVisibility(View.GONE);
+            }
+        }, DetailsCollectionCountBean.class);
+    }*/
 
 //    /**
 //     * 请求网络数据
@@ -438,7 +568,7 @@ public class BasketDetailsHeadFragment extends Fragment {
 //
 //    }
 
-    public void initData(BasketballDetailsBean bean, TalkAboutBallFragment mTalkAboutBallFragment, TextView mTitleGuest, TextView mTitleHome, TextView mTitleVS) {
+    public void initData(BasketballDetailsBean bean, ChartBallFragment mChartBallFragment, TextView mTitleGuest, TextView mTitleHome, TextView mTitleVS) {
 
         /**
          * 启动秒闪烁
@@ -471,10 +601,10 @@ public class BasketDetailsHeadFragment extends Fragment {
         BasketballDetailsBean.MatchEntity.MatchScoreEntity score = bean.getMatch().getMatchScore();//比分
         mMatch = bean.getMatch();
 
-        String state; //傳給老龍
-        state = mMatch.getGuestTeam() + "vs" + mMatch.getHomeTeam() + "_" + bean.getMatch().getDate() + "  " + bean.getMatch().getTime();
-
-        mTalkAboutBallFragment.setTitle(state);
+//        String state; //傳給老龍
+//        state = mMatch.getGuestTeam() + "vs" + mMatch.getHomeTeam() + "_" + bean.getMatch().getDate() + "  " + bean.getMatch().getTime();
+//
+//        mTalkAboutBallFragment.setTitle(state);
 
         if (score != null) {
             mGuestNum = score.getGuestScore();
@@ -499,7 +629,7 @@ public class BasketDetailsHeadFragment extends Fragment {
         }
 
         //图标
-        if(mContext!=null){
+        if (mContext != null) {
             ImageLoader.load(mContext, mMatch.getHomeLogoUrl(), R.mipmap.basket_default).into(mHomeIcon);
 //    mImageLoader.displayImage(mMatch.getHomeLogoUrl(), mHomeIcon, mOptions);
 
@@ -509,7 +639,6 @@ public class BasketDetailsHeadFragment extends Fragment {
             ImageLoader.load(mContext, bean.getBgUrl(), R.color.black).into(mHeadImage);
 //        mImageLoader.displayImage(bean.getBgUrl(), mHeadImage, mOptionsHead);
         }
-
 
 
         if (mMatch.getSection() == 2) { //只有上下半场
@@ -549,11 +678,11 @@ public class BasketDetailsHeadFragment extends Fragment {
                 mApos.setVisibility(View.GONE);
                 mRemainTime.setText("");
                 if (mMatch.getMatchStatus() == PRE_MATCH) {
-                    mTalkAboutBallFragment.setClickableLikeBtn(true);
+                    mChartBallFragment.setClickableLikeBtn(true);
                 }
                 break;
             case END://完场
-                mTalkAboutBallFragment.setClickableLikeBtn(false);
+                mChartBallFragment.setClickableLikeBtn(false);
 
                 mGuestScore.setText(score.getGuestScore() + "");
                 mHomeScore.setText(score.getHomeScore() + "");
@@ -628,7 +757,7 @@ public class BasketDetailsHeadFragment extends Fragment {
                 mVS.setText(":");
                 mTitleVS.setText(":");
 
-                mTalkAboutBallFragment.setClickableLikeBtn(true); //聊球可点赞
+                mChartBallFragment.setClickableLikeBtn(true); //聊球可点赞
 
                 //设置比赛时间及状态
                 if (mMatch.getMatchStatus() == FIRST_QUARTER) {
@@ -752,7 +881,7 @@ public class BasketDetailsHeadFragment extends Fragment {
         mApos.startAnimation(anim1);
     }
 
-    public void updateData(WebSocketBasketBallDetails basketBallDetails, TalkAboutBallFragment mTalkAboutBallFragment, TextView mTitleGuest, TextView mTitleHome, TextView mTitleVS) {
+    public void updateData(WebSocketBasketBallDetails basketBallDetails, ChartBallFragment mChartBallFragment, TextView mTitleGuest, TextView mTitleHome, TextView mTitleVS) {
         DataEntity score = basketBallDetails.getData();
 
         switch (basketBallDetails.getData().getMatchStatus()) {
@@ -771,11 +900,11 @@ public class BasketDetailsHeadFragment extends Fragment {
                 }
                 mApos.setVisibility(View.GONE);
                 mRemainTime.setText("");
-                mTalkAboutBallFragment.setClickableLikeBtn(false);
+                mChartBallFragment.setClickableLikeBtn(false);
                 break;
 
             case END://完场
-                mTalkAboutBallFragment.setClickableLikeBtn(false);
+                mChartBallFragment.setClickableLikeBtn(false);
                 mApos.setVisibility(View.GONE);
                 mGuestScore.setText(score.getGuestScore() + "");
                 mGuestScore.setTextColor(getResources().getColor(R.color.score_color_white));
@@ -876,7 +1005,7 @@ public class BasketDetailsHeadFragment extends Fragment {
                     scoreAnimation(mHomeScore);
                     mHomeNum = score.getHomeScore();
                 }
-                mTalkAboutBallFragment.setClickableLikeBtn(true);//聊球可点赞
+                mChartBallFragment.setClickableLikeBtn(true);//聊球可点赞
                 setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);// 动画有毒，最后在设一下比分
 
 //                L.d("score.getHomeScore()>>>>...>>>" + score.getHomeScore());
@@ -963,4 +1092,7 @@ public class BasketDetailsHeadFragment extends Fragment {
         super.onAttach(context);
         mContext = context;
     }
+
+
+    
 }

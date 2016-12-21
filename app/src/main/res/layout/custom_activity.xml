@@ -12,7 +12,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.hhly.mlottery.widget.ExactSwipeRefrashLayout
+        <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
             android:id="@+id/custom_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content">
             </com.hhly.mlottery.view.LoadMoreRecyclerView>
 
-        </com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
+        </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
 
         <include layout="@layout/empty_layout"/>
 

@@ -635,7 +635,6 @@
 
     <color name="database_win_color">#DD2F1C</color>
     <color name="database_lose_color">#21B11E</color>
-
     <!--篮球统计-->
     <color name="basket_database_statistics_progress">#21B11E</color>
     <color name="basket_database_statistics_background_h">#F15353</color>
@@ -650,6 +649,9 @@
     <color name="woman_sex">#EB5668</color>
     <color name="noon_sex">#CE57e8</color>
 
+    <color name="chart_ball_report_bg">#E5E5E5</color>
+    <color name="chart_ball_call_me">#0090FF</color>
+
     <!--斯洛克-->
     <color name="snooker_round_textcolor">#0EAE7A</color>
     <color name="snooker_time_textcolor">#999999</color>
@@ -657,5 +659,8 @@
     <color name="snooker_score_textcolor">#FFFFFF</color>
     <color name="snooker_odds_textcolor">#666666</color>
 
+
+    <color name="product_advice">#ff5c0b</color>
+    <color name="product_answer_shape_color">#fff2ec</color>
 
 </resources>
