@@ -2158,6 +2158,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         });
 
 
+        //新gif倒计时countDown
         countDown = new CountDown(MILLIS_INFuture, 1000, new CountDown.CountDownCallback() {
             @Override
             public void onFinish() {
