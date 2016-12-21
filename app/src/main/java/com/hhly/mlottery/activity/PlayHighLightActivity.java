@@ -212,7 +212,9 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
                 mImageView.setVisibility(View.GONE);
                 mVideoView.setVisibility(View.VISIBLE);
                 mView.setVisibility(View.VISIBLE);
-                Glide.with(getApplicationContext()).load(mList.get(i).getImageUrl()).into(mView);
+                if (mList.get(i).getImageUrl() != null) {
+                    Glide.with(getApplicationContext()).load(mList.get(i).getImageUrl()).into(mView);
+                }
                 mVideoView.setVideoURI(Uri.parse(mList.get(i).getResourceUrl()));
                 tv_text.setText(mList.get(i).getDescription());
                 setListener(mVideoView);
