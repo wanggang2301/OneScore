@@ -20,6 +20,7 @@
             android:layout_height="match_parent"
             android:background="@color/score_color_white"
             android:divider="@null"
+            android:listSelector="@color/transparency"
             android:scrollbars="none"></ListView>
     </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
 </LinearLayout>

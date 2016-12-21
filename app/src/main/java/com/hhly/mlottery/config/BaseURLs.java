@@ -956,4 +956,9 @@ public class BaseURLs {
 
     //精彩瞬间资源
     public final static String FOOTBALL_DETAIL_COLLECTION = URL_API_HOST + "operation.findMatchCollection.do";
+
+    //产品建议列表
+    public final static String PRODUCT_ADVICE_LIKE=URL_API_HOST+"feedback.addFeedBackLikes.do";
+    //产品建议列表
+    public final static String PRODUCT_ADVICE_LIKE_LIST=URL_API_HOST+"feedback.findAndroidFeedBackDetail.do";
 }

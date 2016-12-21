@@ -437,6 +437,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
 //            mHandler.sendEmptyMessage(LOADING_DATA_ERROR);// 加载失败
 //        }
 
+        String url="http://192.168.33.45:8080/mlottery/core/mainPage.findAndroidLotteryMainRsts.do";
         VolleyContentFast.requestStringByGet(BaseURLs.URL_HOME_PAGER_INFO, myPostParams, null, new VolleyContentFast.ResponseSuccessListener<String>() {
             @Override
             public void onResponse(String jsonObject) {
@@ -827,8 +828,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         switch (v.getId()) {
             case R.id.iv_account:
                 MobclickAgent.onEvent(mContext, "HomePager_User_Info_Start");
-//                goToUserOptionsActivity();
-                startActivity(new Intent(this,ProductAdviceActivity.class));
+                goToUserOptionsActivity();
                 break;
 //            case R.id.rl_lottery_item_title:
 //                UiUtils.toast(this,"一健查询开奖信息");

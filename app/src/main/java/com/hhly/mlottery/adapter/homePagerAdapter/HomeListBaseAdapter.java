@@ -15,6 +15,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
@@ -23,12 +24,14 @@ import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.activity.HomePagerActivity;
 import com.hhly.mlottery.activity.NumbersActivity;
 import com.hhly.mlottery.activity.NumbersInfoBaseActivity;
+import com.hhly.mlottery.activity.ProductAdviceActivity;
 import com.hhly.mlottery.activity.WebActivity;
 import com.hhly.mlottery.bean.homepagerentity.HomeBodysEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomeBodysLottery;
 import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomeOtherListsEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomePagerEntity;
+import com.hhly.mlottery.bean.productadvice.ProductUserLike;
 import com.hhly.mlottery.frame.HomeMuenFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
@@ -37,13 +40,17 @@ import com.hhly.mlottery.util.HomeNumbersSplit;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.NumberDataUtils;
+import com.hhly.mlottery.util.PreferenceUtil;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.WrapContentHeightViewPager;
 import com.umeng.analytics.MobclickAgent;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 首页ListView数据适配器
@@ -85,6 +92,18 @@ public class HomeListBaseAdapter extends BaseAdapter {
     private List<ImageView> lottery_item_icon_list;// 新彩票入口图标
     private View lotteryItemView;// 新彩票条目
     private LinearLayout ll_lottery_item_title;
+    /**
+     * 产品建议的view
+     */
+    private View mProductItemView;
+    ImageView adviceUserIcon;
+    TextView adviceUserName;
+    TextView adviceUserTime;
+    ImageView adviceImgUserLike;
+    TextView adviceTextUserLike;
+    TextView adviceUserContent;
+    TextView adviceProductReply;
+
 
     /**
      * 构造
@@ -341,7 +360,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
     /**
      * 获取1.2.0版新加彩票入口条目
      *
-     * @return 热门资讯条目
+     * @return 开奖查询
      */
     private View getLotteryItemView() {
         View view = View.inflate(mContext, R.layout.home_page_item_lottery, null);
@@ -384,6 +403,22 @@ public class HomeListBaseAdapter extends BaseAdapter {
         lottery_item_icon_list.add(home_lottery_item_icon3);
         lottery_item_icon_list.add(home_lottery_item_icon4);
         lottery_item_icon_list.add(home_lottery_item_icon5);
+        return view;
+    }
+
+    /**
+     * 获取产品建议View
+     */
+    private View getmProductItemView(){
+        View view=View.inflate(mContext,R.layout.item_advice,null);
+         adviceUserIcon= (ImageView) view.findViewById(R.id.advice_user_icon);
+         adviceUserName= (TextView) view.findViewById(R.id.advice_user_name);
+         adviceUserTime= (TextView) view.findViewById(R.id.advice_user_time);
+         adviceImgUserLike= (ImageView) view.findViewById(R.id.advice_user_img_like);
+         adviceTextUserLike= (TextView) view.findViewById(R.id.advice_user_like);
+         adviceUserContent= (TextView) view.findViewById(R.id.advice_user_content);
+         adviceProductReply= (TextView) view.findViewById(R.id.advice_product_reply);
+
         return view;
     }
 
@@ -858,7 +893,21 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                     }
                                 }
                             }
+                         break;
+                        case 5: //产品建议
+                            mProductItemView=getmProductItemView();
+                            adviceUserName.setText(bodys.get(0).getNickName());
+                            adviceUserTime.setText(bodys.get(0).getSendTime().substring(0,10));
+                            if(mContext!=null){
+                                ImageLoader.load(mContext,bodys.get(0).getUserImg(),R.mipmap.center_head).into(adviceUserIcon);
+                            }
+                            adviceUserContent.setText(bodys.get(0).getContent());
+                            adviceProductReply.setText(bodys.get(0).getReplyContent());
+                            adviceTextUserLike.setText(bodys.get(0).getLikes()+"");
+                            //点赞
+                            addLike(bodys.get(0)); //只有一条数据
                             break;
+
                     }
                 }
             }
@@ -867,6 +916,88 @@ public class HomeListBaseAdapter extends BaseAdapter {
         }
     }
 
+    /**
+     * 点赞功能
+     */
+    private void addLike(final HomeBodysEntity entity){
+        String likeId= PreferenceUtil.getString(ProductAdviceActivity.LIKE_IDS,"");
+        String []idArray=likeId.split("[,]");
+
+        for(String id:idArray){
+            if(id.equals(entity.getId())){
+                adviceImgUserLike.setImageResource(R.mipmap.advice_like_red);
+                adviceImgUserLike.setTag(true);
+                break;
+            }else {
+                adviceImgUserLike.setImageResource(R.mipmap.advice_like_white);
+                adviceImgUserLike.setTag(false);
+            }
+        }
+        adviceImgUserLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isCheck= (boolean) v.getTag();
+                if(isCheck){
+                    //不请求后台
+                }else {
+                    adviceImgUserLike.setImageResource(R.mipmap.advice_like_red);
+                    adviceImgUserLike.setTag(true);
+                    adviceTextUserLike.setText((entity.getLikes()+1)+"");
+                    //网络请求
+                    addFocusId(entity.getId());
+                }
+            }
+        });
+
+    }
+
+    /**
+     * 添加点赞
+     * @param id
+     */
+    public  void addFocusId(String id) {
+        String likeIds = PreferenceUtil.getString(ProductAdviceActivity.LIKE_IDS, "");
+        String []idArray=likeIds.split("[,]");
+
+        if ("".equals(likeIds)) {
+            PreferenceUtil.commitString(ProductAdviceActivity.LIKE_IDS, id);
+        } else {
+            for(String hasid:idArray){
+                if(hasid.equals(id)){
+                    break;
+                }else {
+                    PreferenceUtil.commitString(ProductAdviceActivity.LIKE_IDS, likeIds + "," + id);
+                }
+            }
+        }
+        String deviceId = AppConstants.deviceToken;
+        String userId = "";
+        if (AppConstants.register != null && AppConstants.register.getData() != null && AppConstants.register.getData().getUser() != null) {
+            userId = AppConstants.register.getData().getUser().getUserId();
+        }
+        //thirdId
+        String url = "http://192.168.33.45:8080/mlottery/core/feedback.addFeedBackLikes.do";
+        Map<String, String> params = new HashMap<>();
+
+        params.put("deviceId", deviceId);
+        params.put("userId", userId);
+        params.put("feedbackId",id);
+
+        VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<ProductUserLike>() {
+            @Override
+            public void onResponse(ProductUserLike like) {
+                if(like.getResult()==200){
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+            }
+        }, ProductUserLike.class);
+
+
+    }
     /**
      * 热门赛事条目数据设置
      *
@@ -1286,6 +1417,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                     convertView = View.inflate(mContext, R.layout.home_page_items, null);
                     mViewHolderOther.tv_title = (TextView) convertView.findViewById(R.id.tv_home_item_title);
                     mViewHolderOther.ll_content = (LinearLayout) convertView.findViewById(R.id.ll_home_item_content);
+                    mViewHolderOther.tv_more_advice= (TextView) convertView.findViewById(R.id.tv_home_item_more);
                     convertView.setTag(mViewHolderOther);
                     break;
             }
@@ -1299,7 +1431,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
             boolean addViewDataInfo = false;
             boolean addViewLottery = false;
             if (getItem(position) != null) {
-                HomeContentEntity mContent = (HomeContentEntity) getItem(position);
+                final HomeContentEntity mContent = (HomeContentEntity) getItem(position);
                 for (int i = 0, len = mContent.getBodys().size(); i < len; i++) {
                     switch (mContent.getLabType()) {
                         case 1: // 1、	热门赛事.
@@ -1313,6 +1445,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 ((ViewGroup) parentScore).removeAllViews();
                             }
                             mViewHolderOther.ll_content.addView(scoreView);
+                            mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
                             addViewScore = true;
                             break;
                         case 2:// 2、	热门资讯
@@ -1326,6 +1459,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 ((ViewGroup) parentDataInfo).removeAllViews();
                             }
                             mViewHolderOther.ll_content.addView(dataInfoView);
+                            mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
                             addViewDataInfo = true;
                             break;
                         case 3:// 3、	彩票开奖
@@ -1339,10 +1473,24 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 ((ViewGroup) parentLottery).removeAllViews();
                             }
                             mViewHolderOther.ll_content.addView(lotteryView);
+                            mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
                             addViewLottery = true;
+                            break;
+                        case 5:
+                            mViewHolderOther.tv_title.setText(mContext.getResources().getString(R.string.title_product_advice));
+                            mViewHolderOther.tv_more_advice.setVisibility(View.VISIBLE);
+                            mViewHolderOther.tv_more_advice.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mContext.startActivity(new Intent(mContext, ProductAdviceActivity.class));
+                                }
+                            });
+                            mViewHolderOther.ll_content.addView(mProductItemView);
+
                             break;
                         case 7:
                             mViewHolderOther.tv_title.setVisibility(View.GONE);
+                            mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
                             mViewHolderOther.ll_content.addView(lotteryItemView);
                             break;
                     }
@@ -1399,5 +1547,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
     public static class ViewHolderOther {
         TextView tv_title;// 标题
         LinearLayout ll_content;// 条目
+        TextView tv_more_advice; //产品建议条目的更多
     }
 }

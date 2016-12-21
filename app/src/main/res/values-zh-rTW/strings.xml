@@ -1410,5 +1410,7 @@
     <string name="video_high_light">精彩瞬間</string>
     <string name="title_product_advice">給產品建議</string>
     <string name="product_advice">產品回復</string>
+    <string name="product_advice_load_more">正在加載中....</string>
+    <string name="more"><![CDATA[更多>>]]></string>
 
 </resources>

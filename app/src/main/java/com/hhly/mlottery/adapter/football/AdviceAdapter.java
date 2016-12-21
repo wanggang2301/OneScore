@@ -16,6 +16,7 @@ import com.hhly.mlottery.activity.ProductAdviceActivity;
 import com.hhly.mlottery.bean.productadvice.ProductAdviceBean;
 import com.hhly.mlottery.bean.productadvice.ProductUserLike;
 import com.hhly.mlottery.callback.TheLikeOfProductAdviceListener;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -55,7 +56,7 @@ public class AdviceAdapter extends BaseQuickAdapter<ProductAdviceBean.DataEntity
     protected void convert(BaseViewHolder holder, final ProductAdviceBean.DataEntity dataEntity) {
         ImageView icon=holder.getView(R.id.advice_user_icon);
         holder.setText(R.id.advice_user_name,dataEntity.getNickName());
-        holder.setText(R.id.advice_user_time,dataEntity.getSendTime());
+        holder.setText(R.id.advice_user_time,dataEntity.getSendTime().substring(0,10));
         holder.setText(R.id.advice_user_content,dataEntity.getContent());
         final TextView textView=holder.getView(R.id.advice_user_like);
 
@@ -120,7 +121,7 @@ public class AdviceAdapter extends BaseQuickAdapter<ProductAdviceBean.DataEntity
                 }
             }
         }
-        Toast.makeText(context, likeIds, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, likeIds, Toast.LENGTH_SHORT).show();
         String deviceId = AppConstants.deviceToken;
         String userId = "";
         if (AppConstants.register != null && AppConstants.register.getData() != null && AppConstants.register.getData().getUser() != null) {
@@ -134,11 +135,11 @@ public class AdviceAdapter extends BaseQuickAdapter<ProductAdviceBean.DataEntity
         params.put("userId", userId);
         params.put("feedbackId",id);
 
-        VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<ProductUserLike>() {
+        VolleyContentFast.requestJsonByPost(BaseURLs.PRODUCT_ADVICE_LIKE, params, new VolleyContentFast.ResponseSuccessListener<ProductUserLike>() {
             @Override
             public void onResponse(ProductUserLike like) {
                 if(like.getResult()==200){
-                    Toast.makeText(context, "点赞成功", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "点赞成功", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {

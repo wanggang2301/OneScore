@@ -22,6 +22,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.AdviceAdapter;
 import com.hhly.mlottery.bean.productadvice.ProductAdviceBean;
 import com.hhly.mlottery.callback.TheLikeOfProductAdviceListener;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
@@ -249,7 +250,7 @@ public class ProductAdviceActivity extends AppCompatActivity implements View.OnC
         params.put("currentPage",currentPage+"");
         Log.e("advice",currentPage+"++++++++++++++++++");
 
-        VolleyContentFast.requestJsonByGet(url, params,new VolleyContentFast.ResponseSuccessListener<ProductAdviceBean>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.PRODUCT_ADVICE_LIKE_LIST, params,new VolleyContentFast.ResponseSuccessListener<ProductAdviceBean>() {
             @Override
             public void onResponse(ProductAdviceBean jsonObject) {
 
