@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.VideoHighLights;
 import com.hhly.mlottery.config.BaseURLs;
@@ -199,8 +200,7 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
             ViewGroup viewGroup = (ViewGroup) View.inflate(this, R.layout.page_layout, null);
             VideoView mVideoView = (VideoView) viewGroup.findViewById(R.id.mVideoView);
             PhotoView mImageView = (PhotoView) viewGroup.findViewById(R.id.pv_show_image);
-            View mView = viewGroup.findViewById(R.id.mView);
-
+            ImageView mView = (ImageView) viewGroup.findViewById(R.id.mView);
             // resourceType==0 是图片资源
             if (GIF_TYPE.equals(mList.get(i).getResourceType())) {
                 mVideoView.setVisibility(View.GONE);
@@ -212,6 +212,7 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
                 mImageView.setVisibility(View.GONE);
                 mVideoView.setVisibility(View.VISIBLE);
                 mView.setVisibility(View.VISIBLE);
+                Glide.with(getApplicationContext()).load(mList.get(i).getImageUrl()).into(mView);
                 mVideoView.setVideoURI(Uri.parse(mList.get(i).getResourceUrl()));
                 tv_text.setText(mList.get(i).getDescription());
                 setListener(mVideoView);
