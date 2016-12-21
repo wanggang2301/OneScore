@@ -63,7 +63,7 @@ public class AdviceAdapter extends BaseQuickAdapter<ProductAdviceBean.DataEntity
         holder.setText(R.id.advice_user_like,dataEntity.getLikes()+"");
 
         if(context!=null){
-            ImageLoader.load(context,dataEntity.getUserImg(),R.mipmap.basket_default).into(icon);
+            ImageLoader.load(context,dataEntity.getUserImg(),R.mipmap.center_head).into(icon);
         }
         if(dataEntity.getReplyContent()!=null&&dataEntity.getReplyContent()!=""){
             holder.setText(R.id.advice_product_reply,dataEntity.getReplyContent());

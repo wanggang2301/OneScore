@@ -206,7 +206,7 @@ public class ProductAdviceActivity extends AppCompatActivity implements View.OnC
         HashMap<String,String> params=new HashMap<>();
         params.put("currentPage",1+"");
 
-        VolleyContentFast.requestJsonByGet(url, params,new VolleyContentFast.ResponseSuccessListener<ProductAdviceBean>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.PRODUCT_ADVICE_LIKE_LIST, params,new VolleyContentFast.ResponseSuccessListener<ProductAdviceBean>() {
             @Override
             public void onResponse(ProductAdviceBean jsonObject) {
                 if(mRefreshLayout.isRefreshing()){
