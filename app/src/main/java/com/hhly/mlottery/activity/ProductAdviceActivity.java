@@ -231,7 +231,6 @@ public class ProductAdviceActivity extends AppCompatActivity implements View.OnC
             }
         },ProductAdviceBean.class);
 
-
     }
 
     @Override

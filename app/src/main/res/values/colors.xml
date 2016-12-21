@@ -635,7 +635,6 @@
 
     <color name="database_win_color">#DD2F1C</color>
     <color name="database_lose_color">#21B11E</color>
-
     <!--篮球统计-->
     <color name="basket_database_statistics_progress">#21B11E</color>
     <color name="basket_database_statistics_background_h">#F15353</color>
