@@ -1446,5 +1446,9 @@
     <string name="chart_ball_call_ta">\@TA</string>
     <string name="chart_ball_send_error">發送失敗！</string>
     <string name="chart_ball_loading_error">加載失敗！</string>
+    <string name="title_product_advice">給產品建議</string>
+    <string name="product_advice">產品回復</string>
+    <string name="product_advice_load_more">正在加載中....</string>
+    <string name="more"><![CDATA[更多>>]]></string>
 
 </resources>

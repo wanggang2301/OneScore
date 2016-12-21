@@ -48,6 +48,144 @@ public class HomeBodysEntity implements Serializable {
     private String infoTypeName;// 资讯类型
     private String summary;// 资讯摘要
 
+    //产品建议的字段
+    private String osName;
+    private String osVersion;
+    private String deviceBrand;
+    private String deviceModel;
+    private String sendTime;
+    private String content;
+    private String deviceToken;
+    private String appVersion;
+    private String userId;
+    private String replyContent;
+    private String id;
+
+    public String getOsName() {
+        return osName;
+    }
+
+    public void setOsName(String osName) {
+        this.osName = osName;
+    }
+
+    public String getOsVersion() {
+        return osVersion;
+    }
+
+    public void setOsVersion(String osVersion) {
+        this.osVersion = osVersion;
+    }
+
+    public String getDeviceBrand() {
+        return deviceBrand;
+    }
+
+    public void setDeviceBrand(String deviceBrand) {
+        this.deviceBrand = deviceBrand;
+    }
+
+    public String getDeviceModel() {
+        return deviceModel;
+    }
+
+    public void setDeviceModel(String deviceModel) {
+        this.deviceModel = deviceModel;
+    }
+
+    public String getSendTime() {
+        return sendTime;
+    }
+
+    public void setSendTime(String sendTime) {
+        this.sendTime = sendTime;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getDeviceToken() {
+        return deviceToken;
+    }
+
+    public void setDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
+    }
+
+    public String getAppVersion() {
+        return appVersion;
+    }
+
+    public void setAppVersion(String appVersion) {
+        this.appVersion = appVersion;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getReplyContent() {
+        return replyContent;
+    }
+
+    public void setReplyContent(String replyContent) {
+        this.replyContent = replyContent;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getReplyTime() {
+        return replyTime;
+    }
+
+    public void setReplyTime(String replyTime) {
+        this.replyTime = replyTime;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getUserImg() {
+        return userImg;
+    }
+
+    public void setUserImg(String userImg) {
+        this.userImg = userImg;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    private String replyTime;
+    private String nickName;
+    private String userImg;
+    private int likes;
+
     private List<HomeBodysLottery> lottery;// 新彩票条目
 
     public List<HomeBodysLottery> getLottery() {

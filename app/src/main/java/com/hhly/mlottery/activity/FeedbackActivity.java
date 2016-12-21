@@ -232,6 +232,8 @@ public class FeedbackActivity extends BaseActivity implements View.OnClickListen
                     params.put("deviceToken", id);
                     params.put("appVersion", versionName);
                     params.put("userId", PreferenceUtil.getString(AppConstants.SPKEY_USERID, ""));
+                    params.put("nickName",AppConstants.register.getData().getUser().getNickName());
+                    params.put("userImg",AppConstants.register.getData().getUser().getHeadIcon());
 
                     VolleyContentFast.requestStringByPost(BaseURLs.URL_FEEDBACK_ADD, params, new VolleyContentFast.ResponseSuccessListener<String>() {
                         @Override

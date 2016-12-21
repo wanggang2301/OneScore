@@ -439,6 +439,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
 //            mHandler.sendEmptyMessage(LOADING_DATA_ERROR);// 加载失败
 //        }
 
+        String url="http://192.168.33.45:8080/mlottery/core/mainPage.findAndroidLotteryMainRsts.do";
         VolleyContentFast.requestStringByGet(BaseURLs.URL_HOME_PAGER_INFO, myPostParams, null, new VolleyContentFast.ResponseSuccessListener<String>() {
             @Override
             public void onResponse(String jsonObject) {
