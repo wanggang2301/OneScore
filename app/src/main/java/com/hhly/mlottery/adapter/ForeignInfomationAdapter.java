@@ -200,6 +200,8 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
         });
     }
 
+
+
     private void tightClick(final TextView textView, final OverseasInformationListBean oil) {
         Map<String, String> params = new HashMap<>();
         params.put("id", oil.getId() + "");
