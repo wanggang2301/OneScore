@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_4"
         android:textColor="@android:color/black"
-        android:text="没有更多数据了..."
+        android:text="@string/nomoredatashangla"
         android:layout_gravity="center"
         android:textSize="14sp" />
 </LinearLayout>
