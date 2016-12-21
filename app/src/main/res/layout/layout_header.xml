@@ -235,6 +235,17 @@
             android:textSize="15sp"
             android:visibility="gone" />
 
+        <ImageView
+            android:id="@+id/public_btn_write_advice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/write_advice"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:padding="10dp"
+            android:visibility="gone"
+            />
     </RelativeLayout>
 
 </LinearLayout>
