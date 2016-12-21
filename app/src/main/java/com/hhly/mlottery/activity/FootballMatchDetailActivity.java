@@ -2190,6 +2190,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         });
 
 
+        //新gif倒计时countDown
         countDown = new CountDown(MILLIS_INFuture, 1000, new CountDown.CountDownCallback() {
             @Override
             public void onFinish() {
@@ -2605,7 +2606,11 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     }
 
 
-    //加载图片
+    /**
+     * load internet image
+     * @param imageUrl
+     * @param imageView
+     */
     private void loadImage(String imageUrl, final ImageView imageView) {
         VolleyContentFast.requestImage(imageUrl, new Response.Listener<Bitmap>() {
             @Override
@@ -2629,7 +2634,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
 
     /**
-     * 开启轮询
+     * start polling
      */
     private void pollingGifCount() {
         if (gifTimer == null) {
@@ -2647,7 +2652,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     }
 
     /**
-     * 关闭轮询
+     * close polling
      */
     private void closePollingGifCount() {
         if (gifTimer != null) {
@@ -2660,7 +2665,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     }
 
     /**
-     * 获取gif数量
+     * get gifs and videos quantity
      */
     private void getCollectionCount() {
         Map<String, String> map = new HashMap<>();
@@ -2707,6 +2712,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         }, DetailsCollectionCountBean.class);
     }
 
+    /**
+     * init red point function
+     */
     private void initGifRedPoint() {
         if (PreferenceUtil.getBoolean(FOOTBALL_GIF, true)) {
             red_point.setVisibility(View.VISIBLE);
@@ -2717,7 +2725,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
 
     /**
-     * 显示红点
+     * show red point
      */
     private void showGifRedPoint() {
         PreferenceUtil.commitBoolean(FOOTBALL_GIF, true);
@@ -2725,7 +2733,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     }
 
     /**
-     * 影藏红点
+     * hide red point
      */
     private void hideGifRedPoint() {
         PreferenceUtil.commitBoolean(FOOTBALL_GIF, false);
