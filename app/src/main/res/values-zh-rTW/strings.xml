@@ -1437,4 +1437,14 @@
     <string name="custom_accomplish_cus">完成</string>
     <string name="custom_noevent_cus">暫無賽事</string>
 
+
+    <string name="chart_ball_report_to_user">被舉報人：</string>
+    <string name="chart_ball_report_user">舉報人：</string>
+    <string name="chart_ball_report_content">舉報內容不能為空！</string>
+    <string name="chart_ball_online">人</string>
+    <string name="chart_ball_call_me">\@妳：</string>
+    <string name="chart_ball_call_ta">\@TA</string>
+    <string name="chart_ball_send_error">發送失敗！</string>
+    <string name="chart_ball_loading_error">加載失敗！</string>
+
 </resources>

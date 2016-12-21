@@ -40,6 +40,7 @@ import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
+import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
@@ -107,7 +108,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     BasketLiveFragment mBasketLiveFragment;
 
     BasketAnalyzeFragment mAnalyzeFragment = new BasketAnalyzeFragment();
-    TalkAboutBallFragment mTalkAboutBallFragment;
+    //    TalkAboutBallFragment mTalkAboutBallFragment;
+    ChartBallFragment mChartBallFragment;
 
     BasketOddsFragment mOddsEuro;
     BasketOddsFragment mOddsLet;
@@ -212,7 +214,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             mOddsEuro = BasketOddsFragment.newInstance(mThirdId, ODDS_EURO);
             mOddsLet = BasketOddsFragment.newInstance(mThirdId, ODDS_LET);
             mOddsSize = BasketOddsFragment.newInstance(mThirdId, ODDS_SIZE);
-            mTalkAboutBallFragment = TalkAboutBallFragment.newInstance(mThirdId, mMatchStatus, 1, "");
+//            mTalkAboutBallFragment = TalkAboutBallFragment.newInstance(mThirdId, mMatchStatus, 1, "");
+            mChartBallFragment = ChartBallFragment.newInstance(1, mThirdId);
 
             mCurrentId = getIntent().getExtras().getInt("currentfragment");
         }
@@ -299,9 +302,9 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         mTabsAdapter.setTitles(TITLES);
 
         if (isNBA) {  //是NBA
-            mTabsAdapter.addFragments(mBasketLiveFragment, mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mTalkAboutBallFragment);
+            mTabsAdapter.addFragments(mBasketLiveFragment, mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mChartBallFragment);
         } else {
-            mTabsAdapter.addFragments(mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mTalkAboutBallFragment);
+            mTabsAdapter.addFragments(mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mChartBallFragment);
         }
 
         mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
@@ -322,8 +325,10 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             @Override
             public void onPageSelected(int position) {
                 isHindShow(position);
-                if (position == 5) {
-                    appBarLayout.setExpanded(false);
+                if (position != 4) {// 聊球界面禁用下拉刷新
+                    MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
+                }else{
+                    mRefreshLayout.setEnabled(true); //展开
                 }
             }
 
@@ -430,7 +435,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 if (basketDetailsBean.getMatch() != null) {
 
 //                    initData(basketDetailsBean);
-                    mBasketDetailsHeadFragment.initData(basketDetailsBean, mTalkAboutBallFragment, mTitleGuest, mTitleHome, mTitleVS);
+                    mBasketDetailsHeadFragment.initData(basketDetailsBean, mChartBallFragment, mTitleGuest, mTitleHome, mTitleVS);
 
                     homeIconUrl = basketDetailsBean.getMatch().getHomeLogoUrl();
                     guestIconUrl = basketDetailsBean.getMatch().getGuestLogoUrl();
@@ -452,7 +457,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         switch (v.getId()) {
             case R.id.basket_details_back:
                 MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivity_Exit");
-                MyApp.getContext().sendBroadcast(new Intent("closeself"));
+                MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
                 setResult(Activity.RESULT_OK);
 
                 eventBusPost();
@@ -473,22 +478,22 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CyUtils.JUMP_COMMENT_QUESTCODE) {
-            switch (resultCode) {
-                case CyUtils.RESULT_OK:
-                    mTalkAboutBallFragment.getResultOk();
-                    break;
-                case CyUtils.RESULT_CODE://接收评论输入页面返回
-                    mTalkAboutBallFragment.getResultCode();
-                    break;
-                case CyUtils.RESULT_BACK://接收评论输入页面返回
-                    mTalkAboutBallFragment.getResultBack();
-                    break;
-            }
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode == CyUtils.JUMP_COMMENT_QUESTCODE) {
+//            switch (resultCode) {
+//                case CyUtils.RESULT_OK:
+//                    mTalkAboutBallFragment.getResultOk();
+//                    break;
+//                case CyUtils.RESULT_CODE://接收评论输入页面返回
+//                    mTalkAboutBallFragment.getResultCode();
+//                    break;
+//                case CyUtils.RESULT_BACK://接收评论输入页面返回
+//                    mTalkAboutBallFragment.getResultBack();
+//                    break;
+//            }
+//        }
+//    }
 
     // 评论登录跳转
     public void talkAboutBallLoginBasket() {
@@ -500,7 +505,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     // 发表评论跳转
     public void talkAboutBallSendBasket() {
         Intent intent2 = new Intent(mContext, ChartballActivity.class);
-//        intent2.putExtra(CyUtils.INTENT_PARAMS_SID, topicid);
+        intent2.putExtra("thirdId", mThirdId);
         startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
     }
 
@@ -614,7 +619,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
      * @param basketBallDetails 推送过来消息封装的实体类
      */
     private void updateData(WebSocketBasketBallDetails basketBallDetails) {
-        mBasketDetailsHeadFragment.updateData(basketBallDetails, mTalkAboutBallFragment, mTitleGuest, mTitleHome, mTitleVS);
+        mBasketDetailsHeadFragment.updateData(basketBallDetails, mChartBallFragment, mTitleGuest, mTitleHome, mTitleVS);
     }
 
     /**
@@ -684,8 +689,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 mOddsEuro.initData();
                 mOddsLet.initData();
                 mOddsSize.initData();
-
-                mTalkAboutBallFragment.loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
+                mChartBallFragment.onRefresh();
+//                mTalkAboutBallFragment.loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
             }
         }, 1000);
     }

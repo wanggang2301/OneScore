@@ -650,6 +650,9 @@
     <color name="woman_sex">#EB5668</color>
     <color name="noon_sex">#CE57e8</color>
 
+    <color name="chart_ball_report_bg">#E5E5E5</color>
+    <color name="chart_ball_call_me">#0090FF</color>
+
     <!--斯洛克-->
     <color name="snooker_round_textcolor">#0EAE7A</color>
     <color name="snooker_time_textcolor">#999999</color>

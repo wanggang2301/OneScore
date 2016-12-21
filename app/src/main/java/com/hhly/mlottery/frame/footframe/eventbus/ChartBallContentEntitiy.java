@@ -6,20 +6,38 @@ package com.hhly.mlottery.frame.footframe.eventbus;
  */
 
 public class ChartBallContentEntitiy {
+    private String nickName;
+    private String userId;
+    private String msg;
+    private  String headIcon;
+public  ChartBallContentEntitiy(String nickName,String userId,String headIcon,String msg){
+    this.nickName=nickName;
+    this.userId=userId;
+    this.headIcon=headIcon;
 
-    private String content;
+}
+    public String getNickName() {
+        return nickName;
+    }
 
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
-    public String getContent() {
-        return content;
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
 
-    public void setContent(String content) {
-        this.content = content;
+    public String getHeadIcon() {
+        return headIcon;
     }
 
-    public ChartBallContentEntitiy(String srt){
-        this.content = srt;
+    public void setHeadIcon(String headIcon) {
+        this.headIcon = headIcon;
     }
 }

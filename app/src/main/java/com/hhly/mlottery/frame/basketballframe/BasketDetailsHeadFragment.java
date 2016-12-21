@@ -25,6 +25,7 @@ import com.hhly.mlottery.activity.PlayHighLightActivity;
 import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
 import com.hhly.mlottery.bean.websocket.DataEntity;
 import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
+import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
@@ -567,7 +568,7 @@ public class BasketDetailsHeadFragment extends Fragment {
 //
 //    }
 
-    public void initData(BasketballDetailsBean bean, TalkAboutBallFragment mTalkAboutBallFragment, TextView mTitleGuest, TextView mTitleHome, TextView mTitleVS) {
+    public void initData(BasketballDetailsBean bean, ChartBallFragment mChartBallFragment, TextView mTitleGuest, TextView mTitleHome, TextView mTitleVS) {
 
         /**
          * 启动秒闪烁
@@ -600,10 +601,10 @@ public class BasketDetailsHeadFragment extends Fragment {
         BasketballDetailsBean.MatchEntity.MatchScoreEntity score = bean.getMatch().getMatchScore();//比分
         mMatch = bean.getMatch();
 
-        String state; //傳給老龍
-        state = mMatch.getGuestTeam() + "vs" + mMatch.getHomeTeam() + "_" + bean.getMatch().getDate() + "  " + bean.getMatch().getTime();
-
-        mTalkAboutBallFragment.setTitle(state);
+//        String state; //傳給老龍
+//        state = mMatch.getGuestTeam() + "vs" + mMatch.getHomeTeam() + "_" + bean.getMatch().getDate() + "  " + bean.getMatch().getTime();
+//
+//        mTalkAboutBallFragment.setTitle(state);
 
         if (score != null) {
             mGuestNum = score.getGuestScore();
@@ -677,11 +678,11 @@ public class BasketDetailsHeadFragment extends Fragment {
                 mApos.setVisibility(View.GONE);
                 mRemainTime.setText("");
                 if (mMatch.getMatchStatus() == PRE_MATCH) {
-                    mTalkAboutBallFragment.setClickableLikeBtn(true);
+                    mChartBallFragment.setClickableLikeBtn(true);
                 }
                 break;
             case END://完场
-                mTalkAboutBallFragment.setClickableLikeBtn(false);
+                mChartBallFragment.setClickableLikeBtn(false);
 
                 mGuestScore.setText(score.getGuestScore() + "");
                 mHomeScore.setText(score.getHomeScore() + "");
@@ -756,7 +757,7 @@ public class BasketDetailsHeadFragment extends Fragment {
                 mVS.setText(":");
                 mTitleVS.setText(":");
 
-                mTalkAboutBallFragment.setClickableLikeBtn(true); //聊球可点赞
+                mChartBallFragment.setClickableLikeBtn(true); //聊球可点赞
 
                 //设置比赛时间及状态
                 if (mMatch.getMatchStatus() == FIRST_QUARTER) {
@@ -880,7 +881,7 @@ public class BasketDetailsHeadFragment extends Fragment {
         mApos.startAnimation(anim1);
     }
 
-    public void updateData(WebSocketBasketBallDetails basketBallDetails, TalkAboutBallFragment mTalkAboutBallFragment, TextView mTitleGuest, TextView mTitleHome, TextView mTitleVS) {
+    public void updateData(WebSocketBasketBallDetails basketBallDetails, ChartBallFragment mChartBallFragment, TextView mTitleGuest, TextView mTitleHome, TextView mTitleVS) {
         DataEntity score = basketBallDetails.getData();
 
         switch (basketBallDetails.getData().getMatchStatus()) {
@@ -899,11 +900,11 @@ public class BasketDetailsHeadFragment extends Fragment {
                 }
                 mApos.setVisibility(View.GONE);
                 mRemainTime.setText("");
-                mTalkAboutBallFragment.setClickableLikeBtn(false);
+                mChartBallFragment.setClickableLikeBtn(false);
                 break;
 
             case END://完场
-                mTalkAboutBallFragment.setClickableLikeBtn(false);
+                mChartBallFragment.setClickableLikeBtn(false);
                 mApos.setVisibility(View.GONE);
                 mGuestScore.setText(score.getGuestScore() + "");
                 mGuestScore.setTextColor(getResources().getColor(R.color.score_color_white));
@@ -1004,7 +1005,7 @@ public class BasketDetailsHeadFragment extends Fragment {
                     scoreAnimation(mHomeScore);
                     mHomeNum = score.getHomeScore();
                 }
-                mTalkAboutBallFragment.setClickableLikeBtn(true);//聊球可点赞
+                mChartBallFragment.setClickableLikeBtn(true);//聊球可点赞
                 setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);// 动画有毒，最后在设一下比分
 
 //                L.d("score.getHomeScore()>>>>...>>>" + score.getHomeScore());

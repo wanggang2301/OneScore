@@ -1456,4 +1456,13 @@
     <string name="custom_accomplish_cus">完成</string>
     <string name="custom_noevent_cus">暂无赛事</string>
 
+    <string name="chart_ball_report_to_user">被举报人：</string>
+    <string name="chart_ball_report_user">举报人：</string>
+    <string name="chart_ball_report_content">举报内容不能为空！</string>
+    <string name="chart_ball_online">人</string>
+    <string name="chart_ball_call_me">\@你：</string>
+    <string name="chart_ball_call_ta">\@TA</string>
+    <string name="chart_ball_send_error">发送失败！</string>
+    <string name="chart_ball_loading_error">加载失败！</string>
+
 </resources>
