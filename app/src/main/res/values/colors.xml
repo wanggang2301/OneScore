@@ -661,4 +661,7 @@
     <color name="snooker_odds_textcolor">#666666</color>
 
 
+    <color name="product_advice">#ff5c0b</color>
+    <color name="product_answer_shape_color">#fff2ec</color>
+
 </resources>
