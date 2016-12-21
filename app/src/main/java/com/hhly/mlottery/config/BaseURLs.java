@@ -992,7 +992,7 @@ public class BaseURLs {
     public final static String CUSTOM_SENDID_CUS_URL = URL_API_HOST+"basketballCommonMacth.customHotLeagueAndTeamConcern.do";//http://192.168.10.242:8181/mlottery/core/basketballCommonMacth.customHotLeagueAndTeamConcern.do
     //定制列表页
     public final static String CUSTOM_LIST_CUS_URL = URL_API_HOST + "basketballCommonMacth.findHotLeagueAndTeamConcern.do";//"http://192.168.10.242:8181/mlottery/core/basketballCommonMacth.findHotLeagueAndTeamConcern.do";
-}
+
 
     //精彩瞬间个数
     public final static String FOOTBALL_DETAIL_COLLECTION_COUNT = URL_API_HOST + "operation.findMatchCollectionCount.do";
