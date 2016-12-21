@@ -187,7 +187,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private final static int MILLIS_INFuture = 3000;//倒计时3秒
     private final static String MATCH_TYPE = "2"; //篮球
     private final static int GIFPERIOD_2 = 1000 * 60 * 2;//刷新周期两分钟
-    // private final static int GIFPERIOD_2 = 1000 * 30;//刷新周期两分钟
+    //private final static int GIFPERIOD_2 = 1000 * 15;//刷新周期两分钟
 
     private final static String BASKETBALL_GIF = "basketball_gif";
 
@@ -956,13 +956,14 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                     if (jsonObject.getData() != 0) {
                         mBasketDetailsHeadFragment.setBtn_showGifVisible(View.VISIBLE);
                         if (isFirstShowGif) {  //第一次显示
-                            L.d("zxcvbn", "第一次进入------------");
                             initGifRedPoint();
 
                             gifCount = jsonObject.getData();
+                            L.d("zxcvbn", "第一次进入------------gifCount==" + gifCount);
+
                             isFirstShowGif = false;
                         } else {
-                            L.d("zxcvbn", "第二次进入------------");
+                            L.d("zxcvbn", "第二次进入------------gifCount=" + gifCount);
                             if (jsonObject.getData() > gifCount) { //有新的gif出現
                                 L.d("zxcvbn", "有新的gif出現------------");
                                 showGifRedPoint();
