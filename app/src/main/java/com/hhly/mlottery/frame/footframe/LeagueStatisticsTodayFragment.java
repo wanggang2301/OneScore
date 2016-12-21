@@ -33,7 +33,7 @@ import com.hhly.mlottery.util.LeagueStatisticsTodayWinBigToSmallComparator;
 import com.hhly.mlottery.util.LeagueStatisticsTodayWinSmallToBigComparator;
 import com.hhly.mlottery.util.NoDoubleClickUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
@@ -50,7 +50,7 @@ import java.util.Map;
  * @Description: 今日联赛统计Fragment
  * @Created on:2016/9/1  15:28.
  */
-public class LeagueStatisticsTodayFragment extends Fragment implements View.OnClickListener, ExactSwipeRefrashLayout.OnRefreshListener {
+public class LeagueStatisticsTodayFragment extends Fragment implements View.OnClickListener, ExactSwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "LeagueStatisticsTodayFragment";
     private static final Integer TAB0 = 0; //胜平负
@@ -108,7 +108,7 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
     private FrameLayout fl_nodata;
     private LinearLayout ll_showdata;
     private LinearLayout network_exception_layout;
-    private ExactSwipeRefrashLayout mExactSwipeRefrashLayout;
+    private ExactSwipeRefreshLayout mExactSwipeRefreshLayout;
 
     private List<LeagueStatisticsTodayChildBean> mLeagueStatisticsTodayChildBeans;
     private String startDate = "";
@@ -152,12 +152,12 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
         network_exception_layout = (LinearLayout) mView.findViewById(R.id.network_exception_layout);
 
         network_exception_reload_btn = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
-        mExactSwipeRefrashLayout = (ExactSwipeRefrashLayout) mView.findViewById(R.id.league_swiperefreshlayout);
-        mExactSwipeRefrashLayout.setOnRefreshListener(this);
-        mExactSwipeRefrashLayout.setColorSchemeResources(R.color.bg_header);
+        mExactSwipeRefreshLayout = (ExactSwipeRefreshLayout) mView.findViewById(R.id.league_swiperefreshlayout);
+        mExactSwipeRefreshLayout.setOnRefreshListener(this);
+        mExactSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
 
-        mExactSwipeRefrashLayout.setEnabled(false);
-        mExactSwipeRefrashLayout.setRefreshing(false);
+        mExactSwipeRefreshLayout.setEnabled(false);
+        mExactSwipeRefreshLayout.setRefreshing(false);
 
         tv_date1 = (TextView) mView.findViewById(R.id.tv_date1);
         tv_date2 = (TextView) mView.findViewById(R.id.tv_date2);
@@ -258,8 +258,8 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
                     fl_nodata.setVisibility(View.GONE);
                     ll_showdata.setVisibility(View.VISIBLE);
                     network_exception_layout.setVisibility(View.GONE);
-                    mExactSwipeRefrashLayout.setRefreshing(false);
-                    mExactSwipeRefrashLayout.setEnabled(true);
+                    mExactSwipeRefreshLayout.setRefreshing(false);
+                    mExactSwipeRefreshLayout.setEnabled(true);
                     initViewData();
                     break;
 
@@ -268,7 +268,7 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
                     fl_nodata.setVisibility(View.GONE);
                     ll_showdata.setVisibility(View.GONE);
                     network_exception_layout.setVisibility(View.VISIBLE);
-                    mExactSwipeRefrashLayout.setRefreshing(false);
+                    mExactSwipeRefreshLayout.setRefreshing(false);
                     break;
 
             }

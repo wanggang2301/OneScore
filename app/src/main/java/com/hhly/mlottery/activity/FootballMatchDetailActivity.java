@@ -66,10 +66,9 @@ import com.hhly.mlottery.util.NetworkUtils;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.StringUtils;
-import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.BarrageView;
-import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
@@ -94,7 +93,7 @@ import de.greenrobot.event.EventBus;
  * @date 2016/6/2 16:53
  * @des 足球内页改版
  */
-public class FootballMatchDetailActivity extends BaseWebSocketActivity implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, ExactSwipeRefrashLayout.OnRefreshListener {
+public class FootballMatchDetailActivity extends BaseWebSocketActivity implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, ExactSwipeRefreshLayout.OnRefreshListener {
 
     private final static int ERROR = -1;//访问失败
     private final static int SUCCESS = 0;// 访问成功
@@ -173,7 +172,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private FrameLayout fl_odds_net_error_details;
 
 
-    public ExactSwipeRefrashLayout mRefreshLayout; //下拉刷新
+    public ExactSwipeRefreshLayout mRefreshLayout; //下拉刷新
 
     private FragmentManager fragmentManager;
     private ViewPager mViewPager;
@@ -381,7 +380,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         String[] titles = mContext.getResources().getStringArray(R.array.foot_details_tabs);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mRefreshLayout = (ExactSwipeRefrashLayout) findViewById(R.id.refresh_layout_details);
+        mRefreshLayout = (ExactSwipeRefreshLayout) findViewById(R.id.refresh_layout_details);
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
         mRefreshLayout.setOnRefreshListener(this);
 

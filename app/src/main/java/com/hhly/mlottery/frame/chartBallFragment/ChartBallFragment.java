@@ -43,7 +43,6 @@ import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.UnsupportedEncodingException;
@@ -53,7 +52,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import butterknife.internal.DebouncingOnClickListener;
 import de.greenrobot.event.EventBus;
 import io.github.rockerhieu.emojicon.EmojiconEditText;
 

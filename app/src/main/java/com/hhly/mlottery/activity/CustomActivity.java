@@ -35,7 +35,7 @@ import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.LoadMoreRecyclerView;
-import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,7 +67,7 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
     private TextView mNoData;
     private LinearLayout mNoCustom;
     private TextView mCustomTxt;
-    private ExactSwipeRefrashLayout mRefresh;
+    private ExactSwipeRefreshLayout mRefresh;
 
     private final static int VIEW_STATUS_LOADING = 1;//请求中
     private final static int VIEW_STATUS_NET_NO_DATA = 2;//暂无数据
@@ -115,7 +115,7 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
         mCustomText.setOnClickListener(this);
 
         //下拉控件
-        mRefresh = (ExactSwipeRefrashLayout)findViewById(R.id.custom_refresh_layout);
+        mRefresh = (ExactSwipeRefreshLayout)findViewById(R.id.custom_refresh_layout);
         mRefresh.setColorSchemeResources(R.color.bg_header);
         mRefresh.setOnRefreshListener(this);
         mRefresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getApplicationContext(), StaticValues.REFRASH_OFFSET_END));

@@ -44,7 +44,6 @@ import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
-import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.L;
@@ -52,7 +51,7 @@ import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.BarrageView;
 import com.hhly.mlottery.widget.CustomViewpager;
-import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
@@ -71,7 +70,7 @@ import me.relex.circleindicator.CircleIndicator;
  *         Created by A on 2016/3/21.
  * @Description: 篮球详情的 Activity
  */
-public class BasketDetailsActivityTest extends BaseWebSocketActivity implements ExactSwipeRefrashLayout.OnRefreshListener, AppBarLayout.OnOffsetChangedListener, View.OnClickListener {
+public class BasketDetailsActivityTest extends BaseWebSocketActivity implements ExactSwipeRefreshLayout.OnRefreshListener, AppBarLayout.OnOffsetChangedListener, View.OnClickListener {
     public final static String BASKET_THIRD_ID = "thirdId";
     public final static String BASKET_MATCH_STATUS = "MatchStatus";
     public final static String BASKET_MATCH_LEAGUEID = "leagueId";
@@ -155,7 +154,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private final int SCHEDULE_FRAGMENT = 2;
     private final int FOCUS_FRAGMENT = 3;
 
-    private ExactSwipeRefrashLayout mRefreshLayout; //下拉刷新
+    private ExactSwipeRefreshLayout mRefreshLayout; //下拉刷新
 
     private String mLeagueId; // 联赛ID
     private Integer mMatchType; //联赛类型
@@ -342,7 +341,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
             }
         });
-        mRefreshLayout = (ExactSwipeRefrashLayout) findViewById(R.id.basket_details_refresh_layout);
+        mRefreshLayout = (ExactSwipeRefreshLayout) findViewById(R.id.basket_details_refresh_layout);
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
         mRefreshLayout.setOnRefreshListener(this);
         mTitleHome = (TextView) this.findViewById(R.id.title_home_score);
