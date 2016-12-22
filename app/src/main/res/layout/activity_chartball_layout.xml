@@ -27,7 +27,7 @@
             android:layout_weight="1"
             android:background="@drawable/selector_counselcomment_edit"
             android:gravity="center_vertical"
-            android:maxLength="100"
+            android:maxLength="500"
             android:paddingLeft="10dp"
             android:textColor="@color/mdy_333"
             android:textColorHint="#999999"

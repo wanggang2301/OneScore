@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ import com.hhly.mlottery.adapter.core.BaseRecyclerViewAdapter;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.bean.chart.ChartReceive;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.view.CircleImageView;
 
 import java.util.List;
@@ -55,17 +57,13 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_char_ball_content_me, parent, false);
                 holder = new ViewHolderMe(view);
                 break;
-            case 3:
-                view = LayoutInflater.from(mContext).inflate(R.layout.item_char_ball_loading, parent, false);
-                holder = new ViewHolderLoading(view);
-                break;
         }
         return holder;
     }
 
     @Override
     public int getItemCount() {
-        return mData.size() >= 5 ? mData.size() + 1 : mData.size();
+        return mData.size();
     }
 
     @Override
@@ -161,20 +159,24 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                     viewHolderMe.my_image.setVisibility(View.VISIBLE);
                     viewHolderMe.my_text.setVisibility(View.GONE);
                 }
-                break;
-            case 3:
-                ViewHolderLoading viewHolderLoading = (ViewHolderLoading) holder;
+                if (mData.get(position).isSendSuccess()) {
+                    viewHolderMe.iv_send_error.setVisibility(View.GONE);
+                } else {
+                    viewHolderMe.iv_send_error.setVisibility(View.VISIBLE);
+                }
                 break;
         }
     }
 
     @Override
     public int getRecycleViewItemType(int position) {
-        if (position >= mData.size() && mData.size() >= 5) {
-            return 3;
-        } else if (mData.get(position).getFromUser().getUserId().equals(AppConstants.register.getData().getUser().getUserId())) {
-            return 1;
-        } else {
+        if(CommonUtils.isLogin()){
+            if (mData.get(position).getFromUser().getUserId().equals(AppConstants.register.getData().getUser().getUserId())) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }else{
             return 0;
         }
     }
@@ -207,6 +209,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
         TextView tv_time_me;
         CircleImageView my_bighead_view;
         LinearLayout ll_time_content_me;
+        ImageView iv_send_error;
 
         public ViewHolderMe(View itemView) {
             super(itemView);
@@ -216,15 +219,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
             my_image = (TextView) itemView.findViewById(R.id.my_image);
             tv_time_me = (TextView) itemView.findViewById(R.id.tv_time_me);
             ll_time_content_me = (LinearLayout) itemView.findViewById(R.id.ll_time_content_me);
-        }
-    }
-
-    class ViewHolderLoading extends RecyclerView.ViewHolder {
-        LinearLayout ll_loading;
-
-        public ViewHolderLoading(View itemView) {
-            super(itemView);
-            ll_loading = (LinearLayout) itemView.findViewById(R.id.ll_loading);
+            iv_send_error = (ImageView) itemView.findViewById(R.id.iv_send_error);
         }
     }
 
@@ -259,18 +254,28 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
             @Override
             public void onClick(View view) {
                 MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
-                mPopupWindow.dismiss();
-                showDialog(mData.get(index).getMsgId(), mData.get(index).getFromUser().getUserId(), mData.get(index).getFromUser().getUserNick());
+                if (!CommonUtils.isLogin()) {
+                    // 未登录
+                    userLoginBack();
+                } else {
+                    mPopupWindow.dismiss();
+                    showDialog(mData.get(index).getMsgId(), mData.get(index).getFromUser().getUserId(), mData.get(index).getFromUser().getUserNick());
+                }
             }
         });
     }
 
     public interface AdapterListener {
         void shwoDialog(String msgId, String toUserId, String toUserNick);
+        void userLoginBack();
     }
 
     public static void showDialog(String msgId, String toUserId, String toUserNick) {
         mAdapterListener.shwoDialog(msgId, toUserId, toUserNick);
+    }
+
+    public static void userLoginBack(){
+        mAdapterListener.userLoginBack();
     }
 
     public void setShowDialogOnClickListener(AdapterListener listener) {

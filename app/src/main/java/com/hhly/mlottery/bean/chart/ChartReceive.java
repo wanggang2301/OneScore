@@ -73,6 +73,7 @@ public class ChartReceive {
             private int msgType;
             private String onlineNum;
             private boolean isShowTime;
+            private boolean isSendSuccess;
 
             public ChatHistoryBean(String msgid, int msgcode, String s, FromUserBean fromUserBean, ToUser toUserBean,String time) {
                 this.msgId = msgid;
@@ -87,6 +88,14 @@ public class ChartReceive {
 
             }
 
+
+            public boolean isSendSuccess() {
+                return isSendSuccess;
+            }
+
+            public void setSendSuccess(boolean sendSuccess) {
+                isSendSuccess = sendSuccess;
+            }
 
             public boolean isShowTime() {
                 return isShowTime;
