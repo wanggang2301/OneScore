@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.UiUtils;
 
@@ -85,6 +86,10 @@ public class BarrageView extends RelativeLayout {
         Log.i("sdasdasdas","我发送消息来了");
         generateItem();
         textView.setText(msg);
+        Glide.with(mContext)
+                .load(url)
+                .error(R.mipmap.center_head)
+                .into(imageView);
     }
 
     private void generateItem() {
