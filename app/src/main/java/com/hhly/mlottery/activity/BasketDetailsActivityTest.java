@@ -25,8 +25,12 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.BasePagerAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
+import com.hhly.mlottery.bean.BarrageBean;
+import com.hhly.mlottery.bean.GoneBarrage;
+import com.hhly.mlottery.bean.OpenBarrage;
 import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
+import com.hhly.mlottery.bean.footballDetails.DetailsCollectionCountBean;
 import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.BasketAnalyzeFragment;
@@ -39,13 +43,15 @@ import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
-import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
+import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
+import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.view.BarrageView;
 import com.hhly.mlottery.widget.CustomViewpager;
-import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
@@ -53,6 +59,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.greenrobot.event.EventBus;
 import me.relex.circleindicator.CircleIndicator;
@@ -62,7 +70,7 @@ import me.relex.circleindicator.CircleIndicator;
  *         Created by A on 2016/3/21.
  * @Description: 篮球详情的 Activity
  */
-public class BasketDetailsActivityTest extends BaseWebSocketActivity implements ExactSwipeRefrashLayout.OnRefreshListener, AppBarLayout.OnOffsetChangedListener, View.OnClickListener {
+public class BasketDetailsActivityTest extends BaseWebSocketActivity implements ExactSwipeRefreshLayout.OnRefreshListener, AppBarLayout.OnOffsetChangedListener, View.OnClickListener {
     public final static String BASKET_THIRD_ID = "thirdId";
     public final static String BASKET_MATCH_STATUS = "MatchStatus";
     public final static String BASKET_MATCH_LEAGUEID = "leagueId";
@@ -103,7 +111,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     BasketLiveFragment mBasketLiveFragment;
 
     BasketAnalyzeFragment mAnalyzeFragment = new BasketAnalyzeFragment();
-    TalkAboutBallFragment mTalkAboutBallFragment;
+    //    TalkAboutBallFragment mTalkAboutBallFragment;
+    ChartBallFragment mChartBallFragment;
 
     BasketOddsFragment mOddsEuro;
     BasketOddsFragment mOddsLet;
@@ -145,7 +154,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private final int SCHEDULE_FRAGMENT = 2;
     private final int FOCUS_FRAGMENT = 3;
 
-    private ExactSwipeRefrashLayout mRefreshLayout; //下拉刷新
+    private ExactSwipeRefreshLayout mRefreshLayout; //下拉刷新
 
     private String mLeagueId; // 联赛ID
     private Integer mMatchType; //联赛类型
@@ -169,6 +178,25 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     public static String guestIconUrl;
 
 
+    private Timer gifTimer;
+
+    private TimerTask gifTimerTask;
+
+    private boolean isFirstShowGif = true;
+
+    private RelativeLayout rl_gif_notice;
+
+    private int gifCount = 0;
+
+    private CountDown countDown;
+    private final static int MILLIS_INFuture = 3000;//倒计时3秒
+    private final static String MATCH_TYPE = "2"; //篮球
+    private final static int GIFPERIOD_2 = 1000 * 60 * 2;//刷新周期两分钟
+    //private final static int GIFPERIOD_2 = 1000 * 15;//刷新周期15秒
+
+    private final static String BASKETBALL_GIF = "basketball_gif";
+    private BarrageView barrage_view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (getIntent().getExtras() != null) {
@@ -189,10 +217,12 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             mOddsEuro = BasketOddsFragment.newInstance(mThirdId, ODDS_EURO);
             mOddsLet = BasketOddsFragment.newInstance(mThirdId, ODDS_LET);
             mOddsSize = BasketOddsFragment.newInstance(mThirdId, ODDS_SIZE);
-            mTalkAboutBallFragment = TalkAboutBallFragment.newInstance(mThirdId, mMatchStatus, 1, "");
+//            mTalkAboutBallFragment = TalkAboutBallFragment.newInstance(mThirdId, mMatchStatus, 1, "");
+            mChartBallFragment = ChartBallFragment.newInstance(1, mThirdId);
 
             mCurrentId = getIntent().getExtras().getInt("currentfragment");
         }
+        EventBus.getDefault().register(this);
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.basketball.score." + mThirdId + ".zh");
 
@@ -205,11 +235,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         MobclickAgent.openActivityDurationTrack(false);
         mContext = this;
 
-//        try {
-//            mSocketUri = new URI(BaseURLs.WS_SERVICE);//地址
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//        }
 
         initView();
         mBasketDetailsHeadFragment = BasketDetailsHeadFragment.newInstance();
@@ -240,6 +265,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
         setListener();
         loadData();
+        pollingGifCount();
 
     }
 
@@ -267,9 +293,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
         toolbar = (Toolbar) findViewById(R.id.basket_details_toolbar);
         setSupportActionBar(toolbar);
-
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-
         mHeadviewpager = new CustomViewpager(mContext);
         mHeadviewpager = (CustomViewpager) findViewById(R.id.headviewpager);
         mIndicator = (CircleIndicator) findViewById(R.id.indicator);
@@ -281,11 +305,10 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         mTabsAdapter = new TabsAdapter(getSupportFragmentManager());
         mTabsAdapter.setTitles(TITLES);
 
-
         if (isNBA) {  //是NBA
-            mTabsAdapter.addFragments(mBasketLiveFragment, mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mTalkAboutBallFragment);
+            mTabsAdapter.addFragments(mBasketLiveFragment, mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mChartBallFragment);
         } else {
-            mTabsAdapter.addFragments(mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mTalkAboutBallFragment);
+            mTabsAdapter.addFragments(mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mChartBallFragment);
         }
 
         mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
@@ -297,7 +320,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         basePagerAdapter = new BasePagerAdapter(fragmentManager);
 
         headLayout = (LinearLayout) findViewById(R.id.basket_details_header_layout);
-
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -307,8 +329,10 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             @Override
             public void onPageSelected(int position) {
                 isHindShow(position);
-                if (position == 5) {
-                    appBarLayout.setExpanded(false);
+                if (position != 4) {// 聊球界面禁用下拉刷新
+                    MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
+                }else{
+                    mRefreshLayout.setEnabled(true); //展开
                 }
             }
 
@@ -317,13 +341,15 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
             }
         });
-        mRefreshLayout = (ExactSwipeRefrashLayout) findViewById(R.id.basket_details_refresh_layout);
+        mRefreshLayout = (ExactSwipeRefreshLayout) findViewById(R.id.basket_details_refresh_layout);
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
         mRefreshLayout.setOnRefreshListener(this);
         mTitleHome = (TextView) this.findViewById(R.id.title_home_score);
         mTitleGuest = (TextView) this.findViewById(R.id.title_guest_score);
         mTitleVS = (TextView) this.findViewById(R.id.title_vs);
         mBack = (ImageView) this.findViewById(R.id.basket_details_back);
+
+        rl_gif_notice = (RelativeLayout) findViewById(R.id.rl_gif_notice);
 
         mTitleScore = (RelativeLayout) this.findViewById(R.id.ll_basket_title_score);
         mCollect = (ImageView) this.findViewById(R.id.basket_details_collect);
@@ -334,15 +360,32 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         } else {
             mCollect.setImageResource(R.mipmap.basketball_collect);
         }
+
+        barrage_view = (BarrageView) findViewById(R.id.barrage_view);
     }
 
+    public void onEventMainThread(BarrageBean barrageBean){
+        System.out.println("xxxxx barrageBean: " + barrageBean.getMsg());
+        barrage_view.setDatas("",barrageBean.getMsg().toString());
+    }
+    public void onEventMainThread(GoneBarrage barrageBean){
+        barrage_view.setVisibility(View.GONE);
+
+    }
+    public void onEventMainThread(OpenBarrage barrageBean){
+        barrage_view.setVisibility(View.VISIBLE);
+
+    }
     @Override
     protected void onDestroy() { //关闭socket
         super.onDestroy();
+        closePollingGifCount();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
     protected void onTextResult(String text) {
+        L.d("socket", "socket==" + text);
 
         String type = "";
         try {
@@ -363,6 +406,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     }
 
     @Override
+
     protected void onConnectFail() {
 
     }
@@ -384,6 +428,17 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         mBack.setOnClickListener(this);
         mCollect.setOnClickListener(this);
 
+        countDown = new CountDown(MILLIS_INFuture, 1000, new CountDown.CountDownCallback() {
+            @Override
+            public void onFinish() {
+                rl_gif_notice.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                //  L.d("zxcvbn", "countdown===" + millisUntilFinished / 1000 + "秒");
+            }
+        });
     }
 
     /**
@@ -398,9 +453,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             public void onResponse(BasketballDetailsBean basketDetailsBean) {
                 if (basketDetailsBean.getMatch() != null) {
 
-
 //                    initData(basketDetailsBean);
-                    mBasketDetailsHeadFragment.initData(basketDetailsBean, mTalkAboutBallFragment, mTitleGuest, mTitleHome, mTitleVS);
+                    mBasketDetailsHeadFragment.initData(basketDetailsBean, mChartBallFragment, mTitleGuest, mTitleHome, mTitleVS);
 
                     homeIconUrl = basketDetailsBean.getMatch().getHomeLogoUrl();
                     guestIconUrl = basketDetailsBean.getMatch().getGuestLogoUrl();
@@ -422,7 +476,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         switch (v.getId()) {
             case R.id.basket_details_back:
                 MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivity_Exit");
-                MyApp.getContext().sendBroadcast(new Intent("closeself"));
+                MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
                 setResult(Activity.RESULT_OK);
 
                 eventBusPost();
@@ -443,22 +497,22 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CyUtils.JUMP_COMMENT_QUESTCODE) {
-            switch (resultCode) {
-                case CyUtils.RESULT_OK:
-                    mTalkAboutBallFragment.getResultOk();
-                    break;
-                case CyUtils.RESULT_CODE://接收评论输入页面返回
-                    mTalkAboutBallFragment.getResultCode();
-                    break;
-                case CyUtils.RESULT_BACK://接收评论输入页面返回
-                    mTalkAboutBallFragment.getResultBack();
-                    break;
-            }
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode == CyUtils.JUMP_COMMENT_QUESTCODE) {
+//            switch (resultCode) {
+//                case CyUtils.RESULT_OK:
+//                    mTalkAboutBallFragment.getResultOk();
+//                    break;
+//                case CyUtils.RESULT_CODE://接收评论输入页面返回
+//                    mTalkAboutBallFragment.getResultCode();
+//                    break;
+//                case CyUtils.RESULT_BACK://接收评论输入页面返回
+//                    mTalkAboutBallFragment.getResultBack();
+//                    break;
+//            }
+//        }
+//    }
 
     // 评论登录跳转
     public void talkAboutBallLoginBasket() {
@@ -470,7 +524,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     // 发表评论跳转
     public void talkAboutBallSendBasket() {
         Intent intent2 = new Intent(mContext, ChartballActivity.class);
-//        intent2.putExtra(CyUtils.INTENT_PARAMS_SID, topicid);
+        intent2.putExtra("thirdId", mThirdId);
         startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
     }
 
@@ -584,7 +638,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
      * @param basketBallDetails 推送过来消息封装的实体类
      */
     private void updateData(WebSocketBasketBallDetails basketBallDetails) {
-        mBasketDetailsHeadFragment.updateData(basketBallDetails, mTalkAboutBallFragment, mTitleGuest, mTitleHome, mTitleVS);
+        mBasketDetailsHeadFragment.updateData(basketBallDetails, mChartBallFragment, mTitleGuest, mTitleHome, mTitleVS);
     }
 
     /**
@@ -654,11 +708,12 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 mOddsEuro.initData();
                 mOddsLet.initData();
                 mOddsSize.initData();
-
-                mTalkAboutBallFragment.loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
+                mChartBallFragment.onRefresh();
+//                mTalkAboutBallFragment.loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
             }
         }, 1000);
     }
+
 
     /**
      * 直播、分析、欧赔、亚盘、大小、聊球Fragment页面统计
@@ -874,5 +929,102 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             is5 = false;
             L.d("xxx", "直播隐藏");
         }
+    }
+
+
+    /**
+     * 开启轮询
+     */
+
+    private void pollingGifCount() {
+        if (gifTimer == null) {
+            gifTimer = new Timer();
+            gifTimerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    getCollectionCount();
+                }
+            };
+            gifTimer.schedule(gifTimerTask, 1000, GIFPERIOD_2);
+        }
+    }
+
+    /**
+     * 关闭轮询
+     */
+
+    private void closePollingGifCount() {
+        if (gifTimer != null) {
+            gifTimerTask.cancel();
+            gifTimer.cancel();
+            gifTimer.purge();
+            gifTimerTask = null;
+            gifTimer = null;
+        }
+    }
+
+    /**
+     * 获取gif数量
+     */
+    private void getCollectionCount() {
+        Map<String, String> map = new HashMap<>();
+        map.put("matchType", MATCH_TYPE);
+        map.put("thirdId", mThirdId);  //399381
+        //  map.put("thirdId", mThirdId);
+        L.d("zxcvbn", "[-----------------------------------------------------]");
+
+        VolleyContentFast.requestJsonByGet(BaseURLs.FOOTBALL_DETAIL_COLLECTION_COUNT, map, new VolleyContentFast.ResponseSuccessListener<DetailsCollectionCountBean>() {
+            @Override
+            public void onResponse(DetailsCollectionCountBean jsonObject) {
+                if (200 == jsonObject.getResult()) {
+                    if (jsonObject.getData() != 0) {
+                        mBasketDetailsHeadFragment.setBtn_showGifVisible(View.VISIBLE);
+                        if (isFirstShowGif) {  //第一次显示
+                            initGifRedPoint();
+
+                            gifCount = jsonObject.getData();
+                            L.d("zxcvbn", "第一次进入------------gifCount==" + gifCount);
+
+                            isFirstShowGif = false;
+                        } else {
+                            L.d("zxcvbn", "第二次进入------------gifCount=" + gifCount);
+                            if (jsonObject.getData() > gifCount) { //有新的gif出現
+                                L.d("zxcvbn", "有新的gif出現------------");
+                                showGifRedPoint();
+                                gifCount = jsonObject.getData();
+                                rl_gif_notice.setVisibility(View.VISIBLE);
+                                countDown.start();
+                            }
+                        }
+                    } else {
+                        L.d("zxcvbn", "没有gif------------");
+                        isFirstShowGif = false;
+                        gifCount = 0;
+                        mBasketDetailsHeadFragment.setBtn_showGifVisible(View.GONE);
+                        // }
+                    }
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                //   if (isFirstShowGif) {
+                //      btn_showGif.setVisibility(View.GONE);
+                //  }
+            }
+        }, DetailsCollectionCountBean.class);
+    }
+
+    private void initGifRedPoint() {
+        if (PreferenceUtil.getBoolean(BASKETBALL_GIF, true)) {
+            mBasketDetailsHeadFragment.setRedPointVisible(View.VISIBLE);
+        } else {
+            mBasketDetailsHeadFragment.setRedPointVisible(View.GONE);
+        }
+    }
+
+    private void showGifRedPoint() {
+        PreferenceUtil.commitBoolean(BASKETBALL_GIF, true);
+        mBasketDetailsHeadFragment.setRedPointVisible(View.VISIBLE);
     }
 }

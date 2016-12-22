@@ -225,10 +225,8 @@
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data android:scheme="1104883879" />
             </intent-filter>
         </activity>
@@ -304,9 +302,20 @@
         <activity
             android:name=".activity.MoreSettingsActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.ProductAdviceActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.PlayHighLightActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.BasketballScoresActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.hhly.mlottery.activity.CustomActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.hhly.mlottery.activity.CustomListActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

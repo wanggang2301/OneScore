@@ -29,7 +29,7 @@
             android:gravity="center_vertical"
             android:maxLength="100"
             android:paddingLeft="10dp"
-            android:textColor="#333333"
+            android:textColor="@color/mdy_333"
             android:textColorHint="#999999"
             android:textSize="14sp"
             emojicon:emojiconSize="20sp" />

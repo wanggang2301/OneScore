@@ -1,49 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:emojicon="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="10dp">
-
-    <com.hhly.mlottery.view.CircleImageView
-        android:id="@+id/bighead_view"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@mipmap/bighead" />
+    android:paddingRight="50dp">
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_weight="1"
+        android:id="@+id/ll_time_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingRight="20dp"
-        android:orientation="vertical">
+        android:gravity="center"
+        android:paddingStart="40dp"
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
-            android:id="@+id/tv_nickname"
+            android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="hhly988888"
-            android:paddingLeft="5dp"
-            android:textColor="#0085e1"
-            android:textSize="15sp" />
+            android:background="@color/home_item_bg"
+            android:padding="10dp"
+            tools:text="18:00"
+            android:textSize="12sp" />
 
-        <!--用户发送内容-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:orientation="horizontal">
+
+        <com.hhly.mlottery.view.CircleImageView
+            android:id="@+id/bighead_view"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            tools:src="@mipmap/bighead" />
+
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            <io.github.rockerhieu.emojicon.EmojiconTextView
-                android:id="@+id/receive_text"
+            <TextView
+                android:id="@+id/tv_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="test"/>
+                android:paddingLeft="5dp"
+                android:textColor="@color/mdy_999"
+                android:textSize="15sp"
+                tools:text="hhly988888" />
 
+            <!--用户发送内容-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <io.github.rockerhieu.emojicon.EmojiconTextView
+                    android:id="@+id/receive_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/chart_ball_left_bg"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/mdy_333"
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    emojicon:emojiconSize="20sp"
+                    tools:text="test" />
+
+                <TextView
+                    android:id="@+id/receive_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:background="@mipmap/chart_ball_jinggaoni" />
+
+            </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
 </LinearLayout>
 

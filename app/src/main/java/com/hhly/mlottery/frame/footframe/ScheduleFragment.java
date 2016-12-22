@@ -49,7 +49,7 @@ import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,7 +84,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     private RelativeLayout mNoDataLayout;
     private LinearLayout mErrorLayout;
     private TextView mReloadTvBtn;
-    private ExactSwipeRefrashLayout mSwipeRefreshLayout;
+    private ExactSwipeRefreshLayout mSwipeRefreshLayout;
 
     private TextView mNoDataTextView;
 
@@ -204,7 +204,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void initView() {
-        mSwipeRefreshLayout = (ExactSwipeRefrashLayout) view.findViewById(R.id.football_schedule_swiperefreshlayout);
+        mSwipeRefreshLayout = (ExactSwipeRefreshLayout) view.findViewById(R.id.football_schedule_swiperefreshlayout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
         mSwipeRefreshLayout.setOnRefreshListener(this);

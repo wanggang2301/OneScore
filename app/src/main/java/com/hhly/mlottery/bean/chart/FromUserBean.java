@@ -11,9 +11,9 @@ public class FromUserBean {
      * userNick : hhly299272
      */
     private String userId;
-    private Object userLogo;
+    private String userLogo;
     private String userNick;
-    public FromUserBean(String userId, Object userLogo, String userNick) {
+    public FromUserBean(String userId, String userLogo, String userNick) {
         this.userId = userId;
         this.userLogo = userLogo;
         this.userNick = userNick;
@@ -29,11 +29,11 @@ public class FromUserBean {
         this.userId = userId;
     }
 
-    public Object getUserLogo() {
+    public String getUserLogo() {
         return userLogo;
     }
 
-    public void setUserLogo(Object userLogo) {
+    public void setUserLogo(String userLogo) {
         this.userLogo = userLogo;
     }
 

@@ -2,6 +2,7 @@ package com.hhly.mlottery.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,8 +19,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.VideoHighLights;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.ImageLoaderUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -43,6 +46,7 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
 
     private final static String GIF_TYPE = "0";
     private final static String VIDEO_TYPE = "1";
+
 
     private final static int REQUEST_ERROR = -1;
     private final static int REQUEST_SUCESS = 1;
@@ -73,7 +77,7 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
      * 页面视频缓冲图集合
      ***/
     private List<View> mCacheViewList;
-    private List<VideoHighLights.DataBean> list;
+    private List<VideoHighLights.DataBean> mList;
     private TextView tvImageIndex;
     private TextView tv_text;
     private ImageView iv_back;
@@ -81,12 +85,20 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
     private RelativeLayout rl_content;
     private LinearLayout ll_error;
     private TextView reloading_txt;
+    private String mThirdId;
+    private String match_type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         L.d("wangg", "onCreate");
+        if (getIntent().getExtras() != null) {
+            Intent intent = getIntent();
+            mThirdId = intent.getStringExtra("thirdId");
+            match_type = intent.getStringExtra("match_type");
+        }
 
+        L.d("zxcvbn", "mThirdId=" + mThirdId);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_high_light);
         initView();
@@ -111,6 +123,7 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
         mViewList = new ArrayList<>();
         mVideoViewList = new ArrayList<>();
         mCacheViewList = new ArrayList<>();
+        mList = new ArrayList<>();
 
         reloading_txt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,24 +170,21 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
     };
 
     private void getRequestGif() {
-
-        L.d("wangg", "加载");
         handler.sendEmptyMessage(REQUEST_LOAD);
-
         Map<String, String> parms = new HashMap<>();
-        parms.put("thirdId", "399366");
-        parms.put("matchType", "1");  //足球
-        L.d("sdfghj", "data==---------------");
+        parms.put("thirdId", mThirdId);
+        parms.put("matchType", match_type);  //足球1 篮球2
 
-        VolleyContentFast.requestJsonByGet("http://m.13322.com/mlottery/core/operation.findMatchCollection.do", parms, new VolleyContentFast.ResponseSuccessListener<VideoHighLights>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.FOOTBALL_DETAIL_COLLECTION, parms, new VolleyContentFast.ResponseSuccessListener<VideoHighLights>() {
             @Override
             public void onResponse(VideoHighLights jsonObject) {
                 if (jsonObject.getResult() == 200) {
-                    L.d("sdfghj", "ddddd");
                     if (jsonObject.getData() != null && jsonObject.getData().size() > 0) {
-                        list = jsonObject.getData();
+                        mList = jsonObject.getData();
                         initializeData();
                     }
+                } else {
+                    handler.sendEmptyMessage(REQUEST_ERROR);
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -186,37 +196,13 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
     }
 
     private void initializeData() {
-        /*list = new ArrayList<>();
-        //视频2   图片1
-        list.add(new VideoHighLights.DataBean("", "", "http://dianbo.13322.com/Act-ss-mp4-sd/9d11c1ef4f094f30bf5babc9daeb5774/12057.mp4", "2", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://image91.360doc.com/DownloadImg/2015/11/0622/62462126_17.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://s11.sinaimg.cn/mw690/00217UxTgy6UGeadzGGda&690", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://dianbo.13322.com/Act-ss-mp4-sd/9d11c1ef4f094f30bf5babc9daeb5774/12057.mp4", "2", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://m.1332255.com:81/news/upload/shareManageUrl/8553900bcd7f46e5ad15aa52ce91ad14.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://dianbo.13322.com/Act-ss-mp4-sd/9d11c1ef4f094f30bf5babc9daeb5774/12057.mp4", "2", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://dianbo.13322.com/Act-ss-mp4-sd/9d11c1ef4f094f30bf5babc9daeb5774/12057.mp4", "2", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://image94.360doc.com/DownloadImg/2016/02/0200/65537833_11.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://image94.360doc.com/DownloadImg/2016/02/0200/65537833_11.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://image94.360doc.com/DownloadImg/2016/02/0200/65537833_11.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://image94.360doc.com/DownloadImg/2016/02/0200/65537833_11.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://i2.hoopchina.com.cn/u/1309/17/356/4907356/b6fe0c73_530x.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://dianbo.13322.com/Act-ss-mp4-sd/9d11c1ef4f094f30bf5babc9daeb5774/12057.mp4", "2", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://photocdn.sohu.com/20150910/mp31287791_1441847326520_4.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://s11.sinaimg.cn/mw690/00217UxTgy6UGeadzGGda&690", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://image94.360doc.com/DownloadImg/2016/02/0200/65537833_11.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://dianbo.13322.com/Act-ss-mp4-sd/9d11c1ef4f094f30bf5babc9daeb5774/12057.mp4", "2", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://i2.hoopchina.com.cn/u/1309/17/356/4907356/b6fe0c73_530x.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://img.sc115.com/hb/gif/01/881508084712414.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://image.haha.mx/2015/04/08/middle/1730345_e670e49e9e6743df49c5955e73cbc662_1428479096.gif", "1", "2", "", 0, true));
-        list.add(new VideoHighLights.DataBean("", "", "http://dianbo.13322.com/Act-ss-mp4-sd/9d11c1ef4f094f30bf5babc9daeb5774/12057.mp4", "2", "2", "", 0, true));*/
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < mList.size(); i++) {
             ViewGroup viewGroup = (ViewGroup) View.inflate(this, R.layout.page_layout, null);
             VideoView mVideoView = (VideoView) viewGroup.findViewById(R.id.mVideoView);
             PhotoView mImageView = (PhotoView) viewGroup.findViewById(R.id.pv_show_image);
-            View mView = viewGroup.findViewById(R.id.mView);
-
+            ImageView mView = (ImageView) viewGroup.findViewById(R.id.mView);
             // resourceType==0 是图片资源
-            if (GIF_TYPE.equals(list.get(i).getResourceType())) {
+            if (GIF_TYPE.equals(mList.get(i).getResourceType())) {
                 mVideoView.setVisibility(View.GONE);
                 mView.setVisibility(View.GONE);
                 mImageView.setVisibility(View.VISIBLE);
@@ -226,8 +212,11 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
                 mImageView.setVisibility(View.GONE);
                 mVideoView.setVisibility(View.VISIBLE);
                 mView.setVisibility(View.VISIBLE);
-                mVideoView.setVideoURI(Uri.parse(list.get(i).getResourceUrl()));
-                tv_text.setText(list.get(i).getDescription());
+                if (mList.get(i).getImageUrl() != null) {   //视频图片
+                    Glide.with(getApplicationContext()).load(mList.get(i).getImageUrl()).into(mView);
+                }
+                mVideoView.setVideoURI(Uri.parse(mList.get(i).getResourceUrl()));
+                tv_text.setText(mList.get(i).getDescription());
                 setListener(mVideoView);
                 mViewList.add(viewGroup);
                 mVideoViewList.add(mVideoView);
@@ -237,9 +226,9 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
         mAdapter = new MyPagerAdapter(this, mViewList);
         mViewPager.setAdapter(mAdapter);
 
-        if (list.size() > 1) {
+        if (mList.size() > 1) {
             tvImageIndex.setVisibility(View.VISIBLE);
-            tvImageIndex.setText((0 + 1) + "/" + list.size());
+            tvImageIndex.setText((0 + 1) + "/" + mList.size());
         } else {
             tvImageIndex.setVisibility(View.GONE);
         }
@@ -256,29 +245,29 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
                 lastItem = currentItem;
                 currentItem = pageIndex;
 
-                int index = pageIndex % list.size();
-                tvImageIndex.setText((index + 1) + "/" + list.size());
-                tv_text.setText(list.get(currentItem).getDescription());
+                int index = pageIndex % mList.size();
+                tvImageIndex.setText((index + 1) + "/" + mList.size());
+                tv_text.setText(mList.get(currentItem).getDescription());
 
                 if ((mVideoViewList.get(lastItem)) instanceof VideoView) {  //如果上一个是video
                     if ((mVideoViewList.get(lastItem)) != null) {
                         if (((VideoView) mVideoViewList.get(lastItem)).isPlaying()) {   //如果是true
-                            list.get(lastItem).setmIsPlaying(true);
+                            mList.get(lastItem).setmIsPlaying(true);
                             // 记录播放状态
                             ((VideoView) (mVideoViewList.get(lastItem))).pause();
                         } else {
                             // 记录播放状态*ess5
-                            list.get(lastItem).setmIsPlaying(false);
+                            mList.get(lastItem).setmIsPlaying(false);
                         }
                         // 记录播放进度
-                        list.get(lastItem).setmCurrentPositions(((VideoView) mVideoViewList.get(lastItem)).getCurrentPosition());
+                        mList.get(lastItem).setmCurrentPositions(((VideoView) mVideoViewList.get(lastItem)).getCurrentPosition());
                     }
                 }
 
                 if (mVideoViewList.get(currentItem) instanceof VideoView) {
                     if (mVideoViewList.get(currentItem) != null) {
-                        ((VideoView) mVideoViewList.get(currentItem)).seekTo(list.get(currentItem).getmCurrentPositions());
-                        if (list.get(currentItem).ismIsPlaying()) {
+                        ((VideoView) mVideoViewList.get(currentItem)).seekTo(mList.get(currentItem).getmCurrentPositions());
+                        if (mList.get(currentItem).ismIsPlaying()) {
                             ((VideoView) mVideoViewList.get(currentItem)).start();
                         }
                     }
@@ -286,7 +275,7 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
                     PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher((PhotoView) mVideoViewList.get(currentItem));
                     photoViewAttacher.setScaleType(ImageView.ScaleType.FIT_CENTER);
                     photoViewAttacher.setMinimumScale(1F);
-                    ImageLoaderUtils.displayScaleImage(getApplicationContext(), (PhotoView) mVideoViewList.get(currentItem), list.get(currentItem).getResourceUrl(), photoViewAttacher);
+                    ImageLoaderUtils.displayScaleImage(getApplicationContext(), (PhotoView) mVideoViewList.get(currentItem), mList.get(currentItem).getResourceUrl(), photoViewAttacher);
                 }
             }
 
@@ -297,19 +286,19 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
         });
 
 
-        if (GIF_TYPE.equals(list.get(0).getResourceType())) {
+        if (GIF_TYPE.equals(mList.get(0).getResourceType())) {
             PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher((PhotoView) mVideoViewList.get(0));
             photoViewAttacher.setScaleType(ImageView.ScaleType.FIT_CENTER);
             photoViewAttacher.setMinimumScale(1F);
-            ImageLoaderUtils.displayScaleImage(getApplicationContext(), (PhotoView) mVideoViewList.get(0), list.get(0).getResourceUrl(), photoViewAttacher);
+            ImageLoaderUtils.displayScaleImage(getApplicationContext(), (PhotoView) mVideoViewList.get(0), mList.get(0).getResourceUrl(), photoViewAttacher);
         } else {
             if (mVideoViewList.get(0) != null) {
                 ((VideoView) mVideoViewList.get(0)).start();
-                list.get(0).setmIsPlaying(true);
+                mList.get(0).setmIsPlaying(true);
             }
         }
 
-        tv_text.setText(list.get(currentItem).getDescription());
+        tv_text.setText(mList.get(currentItem).getDescription());
         handler.sendEmptyMessage(REQUEST_SUCESS);
     }
 
@@ -357,8 +346,8 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
     public void onCompletion(MediaPlayer mp) {
         if (mVideoViewList.get(currentItem) != null) {
             if (mVideoViewList.get(currentItem) instanceof VideoView) {
-                list.get(currentItem).setmCurrentPositions(0);
-                list.get(currentItem).setmIsPlaying(true);
+                mList.get(currentItem).setmCurrentPositions(0);
+                mList.get(currentItem).setmIsPlaying(true);
                 ((VideoView) mVideoViewList.get(currentItem)).resume();
                 ((VideoView) mVideoViewList.get(currentItem)).start();
             }
@@ -410,12 +399,12 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
             if ((mVideoViewList.get(currentItem)) != null) {
                 if (mVideoViewList.get(currentItem) instanceof VideoView) {
                     if (((VideoView) mVideoViewList.get(currentItem)).isPlaying()) {
-                        list.get(currentItem).setmIsPlaying(true);
+                        mList.get(currentItem).setmIsPlaying(true);
                         ((VideoView) mVideoViewList.get(currentItem)).pause();
                     } else {
-                        list.get(currentItem).setmIsPlaying(false);
+                        mList.get(currentItem).setmIsPlaying(false);
                     }
-                    list.get(currentItem).setmCurrentPositions(((VideoView) mVideoViewList.get(currentItem)).getCurrentPosition());
+                    mList.get(currentItem).setmCurrentPositions(((VideoView) mVideoViewList.get(currentItem)).getCurrentPosition());
                 }
             }
         }
@@ -444,8 +433,8 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
         if (mVideoViewList.size() > 0) {
             if (mVideoViewList.get(currentItem) != null) {
                 if (mVideoViewList.get(currentItem) instanceof VideoView) {
-                    ((VideoView) mVideoViewList.get(currentItem)).seekTo(list.get(currentItem).getmCurrentPositions());
-                    if (list.get(currentItem).ismIsPlaying()) {
+                    ((VideoView) mVideoViewList.get(currentItem)).seekTo(mList.get(currentItem).getmCurrentPositions());
+                    if (mList.get(currentItem).ismIsPlaying()) {
                         ((VideoView) mVideoViewList.get(currentItem)).start();
                     }
                 }
@@ -459,7 +448,7 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
     private void clearList() {
         mVideoViewList.clear();
         mCacheViewList.clear();
-        list.clear();
+        mList.clear();
     }
 
     @Override
@@ -471,6 +460,3 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
         return super.onKeyDown(keyCode, event);
     }
 }
-
-
-

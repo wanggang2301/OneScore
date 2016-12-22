@@ -31,7 +31,7 @@ import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +44,7 @@ import java.util.Map;
  * @Description:足球资料库
  * @Created on:2016/9/1  15:03.
  */
-public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefrashLayout.OnRefreshListener {
+public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = "FootballDatabaseFragment";
     private static final String TYPE_PARM = "TYPE_PARM";
     private static final int HOT_MATCH = 0;
@@ -58,7 +58,7 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
     private static final int ROWNUM = 4;
 
     private BasketInfomationCallBack basketInfomationCallBack;
-    private ExactSwipeRefrashLayout mExactSwipeRefrashLayout;
+    private ExactSwipeRefreshLayout mExactSwipeRefreshLayout;
     private FootBallInfoGridAdapter mFootBallInfoGridAdapterInternatrion;
     private FootBallExpandableGridAdapter mFootBallExpandableGridAdapter;
     private ExpandableListView expandableGridView;
@@ -127,10 +127,10 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
 
         gridviewInter = (GridView) mView.findViewById(R.id.gridview_inter);
         expandableGridView = (ExpandableListView) mView.findViewById(R.id.listview);
-        mExactSwipeRefrashLayout = (ExactSwipeRefrashLayout) mView.findViewById(R.id.info_swiperefreshlayout);
-        mExactSwipeRefrashLayout.setOnRefreshListener(this);
-        mExactSwipeRefrashLayout.setColorSchemeResources(R.color.bg_header);
-        mExactSwipeRefrashLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
+        mExactSwipeRefreshLayout = (ExactSwipeRefreshLayout) mView.findViewById(R.id.info_swiperefreshlayout);
+        mExactSwipeRefreshLayout.setOnRefreshListener(this);
+        mExactSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
+        mExactSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
 
         ll_loading = (LinearLayout) mView.findViewById(R.id.info_loading_ll);
         ll_net_error = (LinearLayout) mView.findViewById(R.id.network_exception_layout);
@@ -142,7 +142,7 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
 
         network_exception_reload_btn = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
 
-        mExactSwipeRefrashLayout.setEnabled(false);
+        mExactSwipeRefreshLayout.setEnabled(false);
 
         gridviewInter.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -151,9 +151,9 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
                     case MotionEvent.ACTION_DOWN:
                     case MotionEvent.ACTION_MOVE:
                         if (!isTop(gridviewInter)) {
-                            mExactSwipeRefrashLayout.setEnabled(false);
+                            mExactSwipeRefreshLayout.setEnabled(false);
                         } else {
-                            mExactSwipeRefrashLayout.setEnabled(true);
+                            mExactSwipeRefreshLayout.setEnabled(true);
                         }
                         break;
 
@@ -175,9 +175,9 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
                     case MotionEvent.ACTION_MOVE:
                         //只有listview滑到顶部才可以下拉刷新
                         if (!isTop(expandableGridView)) {
-                            mExactSwipeRefrashLayout.setEnabled(false);
+                            mExactSwipeRefreshLayout.setEnabled(false);
                         } else {
-                            mExactSwipeRefrashLayout.setEnabled(true);
+                            mExactSwipeRefreshLayout.setEnabled(true);
                         }
                         break;
 
@@ -238,9 +238,9 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
                 case DATA_STATUS_LOADING:
                     ll_loading.setVisibility(View.VISIBLE);
                     radioGroup.setVisibility(View.GONE);
-                    mExactSwipeRefrashLayout.setVisibility(View.GONE);
+                    mExactSwipeRefreshLayout.setVisibility(View.GONE);
                     ll_net_error.setVisibility(View.GONE);
-                    mExactSwipeRefrashLayout.setRefreshing(true);
+                    mExactSwipeRefreshLayout.setRefreshing(true);
                     break;
 
                 case DATA_STATUS_NODATA_INTER:
@@ -249,13 +249,13 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
                         radioGroup.setVisibility(View.VISIBLE);
                     }
 
-                    mExactSwipeRefrashLayout.setVisibility(View.VISIBLE);
+                    mExactSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     gridviewInter.setVisibility(View.GONE);
 
                     ll_net_error.setVisibility(View.GONE);
                     ll_nodata_inter.setVisibility(View.VISIBLE);
 
-                    mExactSwipeRefrashLayout.setRefreshing(false);
+                    mExactSwipeRefreshLayout.setRefreshing(false);
 
                     break;
 
@@ -264,13 +264,13 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
                         radioGroup.setVisibility(View.VISIBLE);
                     }
 
-                    mExactSwipeRefrashLayout.setVisibility(View.VISIBLE);
+                    mExactSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     expandableGridView.setVisibility(View.GONE);
 
                     ll_net_error.setVisibility(View.GONE);
                     ll_nodata_country.setVisibility(View.VISIBLE);
 
-                    mExactSwipeRefrashLayout.setRefreshing(false);
+                    mExactSwipeRefreshLayout.setRefreshing(false);
                     break;
 
                 case DATA_STATUS_SUCCESS_INTER:
@@ -279,12 +279,12 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
                         radioGroup.setVisibility(View.VISIBLE);
                     }
 
-                    mExactSwipeRefrashLayout.setVisibility(View.VISIBLE);
+                    mExactSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     gridviewInter.setVisibility(View.VISIBLE);
                     ll_net_error.setVisibility(View.GONE);
                     ll_nodata_inter.setVisibility(View.GONE);
 
-                    mExactSwipeRefrashLayout.setRefreshing(false);
+                    mExactSwipeRefreshLayout.setRefreshing(false);
                     break;
 
 
@@ -294,21 +294,21 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
                         radioGroup.setVisibility(View.VISIBLE);
                     }
 
-                    mExactSwipeRefrashLayout.setVisibility(View.VISIBLE);
+                    mExactSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     expandableGridView.setVisibility(View.VISIBLE);
 
                     ll_net_error.setVisibility(View.GONE);
                     ll_nodata_country.setVisibility(View.GONE);
 
-                    mExactSwipeRefrashLayout.setRefreshing(false);
+                    mExactSwipeRefreshLayout.setRefreshing(false);
                     break;
 
                 case DATA_STATUS_ERROR:
                     ll_loading.setVisibility(View.GONE);
                     radioGroup.setVisibility(View.GONE);
-                    mExactSwipeRefrashLayout.setVisibility(View.GONE);
+                    mExactSwipeRefreshLayout.setVisibility(View.GONE);
                     ll_net_error.setVisibility(View.VISIBLE);
-                    mExactSwipeRefrashLayout.setRefreshing(false);
+                    mExactSwipeRefreshLayout.setRefreshing(false);
                     break;
 
             }

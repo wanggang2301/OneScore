@@ -6,14 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -59,10 +63,11 @@ import io.github.rockerhieu.emojicon.EmojiconEditText;
 public class ChartballActivity extends BaseActivity implements View.OnClickListener {
 
 
+    private static final int TEXT_CHANGED = 1;
     public static String TAG = "ChartballActivity";
     public EmojiconEditText mEditText;//输入评论
     private TextView mSend;//发送评论
-    private LinearLayout ll_gallery_content;
+    public LinearLayout ll_gallery_content;
     private ImageView iv_gallery;
     private InputMethodManager inputMethodManager;
     private RelativeLayout rl_local;
@@ -73,7 +78,7 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
     List<Fragment> emojiFragments = new ArrayList<>();
 
     private final static int LOCAL_PAGER_SIZE = 10;
-    private final static int EMOJI_PAGER_SIZE = 26;
+    private final static int EMOJI_PAGER_SIZE = 20;
     private LinearLayout local_point;
     private LinearLayout emoji_point;
     private int localPagerSize;
@@ -83,6 +88,8 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
     private LinearLayout ll_emoji_content;
     private final static String MATCH_THIRD_ID = "thirdId";
     private String mThirdId;
+    private String callName;// @昵称
+    private String callUserId;// @昵称id
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,30 +98,52 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
         /**当前评论小窗口不统计*/
         MobclickAgent.openActivityDurationTrack(false);
 
-        Intent intent=getIntent();
-        Bundle bundle=intent.getExtras();
-        mThirdId= bundle.getString(MATCH_THIRD_ID);
-        Log.i("sdasd","mThirdId="+mThirdId);
+        // Make us non-modal, so that others can receive touch events.
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+        // ...but notify us that it happened.
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH, WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
+
+        setContentView(R.layout.activity_chartball_layout);
 
         initWindow();
         initView();
         initData();
         initEvent();
-        IntentFilter intentFilter = new IntentFilter("closeself");
+        IntentFilter intentFilter = new IntentFilter("CLOSE_INPUT_ACTIVITY");
         registerReceiver(mBroadcastReceiver, intentFilter);
 
     }
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case TEXT_CHANGED:
+                    isContains = false;
+                    mEditText.setText(mText);
+                    mEditText.setSelection(mEditText.getText().length());
+                    break;
+            }
+        }
+    };
+    String mText;
+    boolean isContains = false;// 是否去掉@用户
 
     private void initEvent() {
 
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!TextUtils.isEmpty(callName)) {
+                    if (!s.toString().contains("@" + callName + ":") && isContains) {
+                        mText = s.toString();
+                        mHandler.sendEmptyMessage(TEXT_CHANGED);
+                    }
+                }
             }
 
             @Override
@@ -177,6 +206,18 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void initData() {
+        if (getIntent() != null) {
+            mThirdId = getIntent().getStringExtra(MATCH_THIRD_ID);
+            callName = getIntent().getStringExtra("CALL_NAME");
+            callUserId = getIntent().getStringExtra("CALL_USER_ID");
+            System.out.println("xxxxx 头像点击传过来的： " + callName);
+            if (!TextUtils.isEmpty(callName)) {
+                mEditText.setText(Html.fromHtml("<font color='#0090ff'>@" + callName + ":</font>"));
+                mEditText.setSelection(mEditText.getText().length());
+                isContains = true;
+                mSend.setSelected(true);
+            }
+        }
         // 添加数据
         BasePagerAdapter localPagerAdapter = new BasePagerAdapter(getSupportFragmentManager());
         localPagerSize = AppConstants.localIcon.length % LOCAL_PAGER_SIZE == 0 ? AppConstants.localIcon.length / LOCAL_PAGER_SIZE : AppConstants.localIcon.length / LOCAL_PAGER_SIZE + 1;
@@ -239,24 +280,6 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
-    /**
-     * 足球、篮球详情页退出时调用
-     */
-    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            ChartballActivity.this.setResult(CyUtils.RESULT_CODE);
-            CyUtils.hideKeyBoard(ChartballActivity.this);
-            finish();
-        }
-    };
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(mBroadcastReceiver);
-    }
-
     private void initWindow() {
         Window window = getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
@@ -302,26 +325,43 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
             case R.id.tv_send://发送评论
                 MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivityTest_TalkSend");
                 if (TextUtils.isEmpty(mEditText.getText())) {//没有输入内容
-                    ToastTools.showQuickCenter(this, getResources().getString(R.string.warn_nullcontent));
+                    if (TextUtils.isEmpty(mEditText.getText().toString().trim())) {
+                        ToastTools.showQuickCenter(this, getResources().getString(R.string.warn_nullcontent));
+                    }
                 } else {//有输入内容
                     if (CommonUtils.isLogin()) {//已登录华海
+                        ChartReceive.DataBean.ChatHistoryBean chatHistoryBean;
 
+                        if (!TextUtils.isEmpty(callName)) {
+                            if (mEditText.getText().toString().contains("@" + callName + ":")) {
+                                String replace = mEditText.getText().toString().replace("@" + callName + ":", "");
+                                chatHistoryBean = new ChartReceive.DataBean.ChatHistoryBean(null, 2, replace.trim(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
+                                        , AppConstants.register.getData().getUser().getHeadIcon(), AppConstants.register.getData().getUser().getNickName()), new ChartReceive.DataBean.ChatHistoryBean.ToUser(callUserId, null, callName), null);
+                            } else {
+                                chatHistoryBean = new ChartReceive.DataBean.ChatHistoryBean(null, 1, mEditText.getText().toString().trim(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
+                                        , AppConstants.register.getData().getUser().getHeadIcon(), AppConstants.register.getData().getUser().getNickName()), new ChartReceive.DataBean.ChatHistoryBean.ToUser(), null);
+                            }
+                        } else {
+                            chatHistoryBean = new ChartReceive.DataBean.ChatHistoryBean(null, 1, mEditText.getText().toString().trim(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
+                                    , AppConstants.register.getData().getUser().getHeadIcon(), AppConstants.register.getData().getUser().getNickName()), new ChartReceive.DataBean.ChatHistoryBean.ToUser(), null);
+                        }
+                        // 向会话列表发送输入内容
+                        EventBus.getDefault().post(chatHistoryBean);
 
-                        // TODO 向会话列表发送输入内容
-                        EventBus.getDefault().post(new ChartReceive.DataBean.ChatHistoryBean(mEditText.getText().toString(),new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
-                                ,AppConstants.register.getData().getUser().getHeadIcon(),AppConstants.register.getData().getUser().getNickName())));
-
-                        EventBus.getDefault().post(new BarrageBean("http://pic.13322.com/icons/avatar/male/1.png", mEditText.getText().toString()));
+                        // 用户自己的头像URL发向弹幕
+                        EventBus.getDefault().post(new BarrageBean(AppConstants.register.getData().getUser().getHeadIcon(), mEditText.getText().toString()));
 
                         // 发送之后 清空输入框
                         mEditText.setText("");
 
+                        hideKeyOrGallery();
                     } else {
                         //跳转登录界面
                         Intent intent1 = new Intent(this, LoginActivity.class);
                         startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
                     }
                 }
+
                 break;
             case R.id.et_emoji_input:// 输入
                 if (!CommonUtils.isLogin()) {
@@ -333,15 +373,13 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
                 }
                 break;
             case R.id.iv_gallery:
-
+                // TODO 此处不流畅，需要优化
                 // 隐藏软键盘
                 if (ChartballActivity.this.getCurrentFocus() != null) {
                     inputMethodManager.hideSoftInputFromWindow(ChartballActivity.this.getCurrentFocus()
                             .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 }
-
                 ll_gallery_content.setVisibility(View.VISIBLE);
-
                 break;
 
             case R.id.iv_select_icon:// 显示自定义表情
@@ -362,29 +400,58 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
 
     }
 
-
-
-
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            setResult(CyUtils.RESULT_BACK);//这里也需要通知  因为在本窗口关闭的时候那边的假输入框需要显示
-            finish();
-            return true;
-
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
     @Override
     public void finish() {
         super.finish();
         overridePendingTransition(0, android.R.anim.fade_out);
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (MotionEvent.ACTION_OUTSIDE == event.getAction()) {
+            hideKeyOrGallery();
+            return true;
+        }
+        return super.onTouchEvent(event);
+    }
 
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ChartballActivity.this.setResult(CyUtils.RESULT_CODE);
+            CyUtils.hideKeyBoard(ChartballActivity.this);
+            finish();
+        }
+    };
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mBroadcastReceiver);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // 关闭当前activity
+            EventBus.getDefault().post(new ChartReceive.DataBean.ChatHistoryBean(null, 1, "EXIT_CURRENT_ACTIVITY", new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
+                    , AppConstants.register.getData().getUser().getHeadIcon(), "EXIT_CURRENT_ACTIVITY"), new ChartReceive.DataBean.ChatHistoryBean.ToUser(), null));
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 隐藏软键盘和表情
+     */
+    public void hideKeyOrGallery() {
+        ll_gallery_content.setVisibility(View.GONE);
+        // 隐藏软键盘
+        if (ChartballActivity.this.getCurrentFocus() != null) {
+            inputMethodManager.hideSoftInputFromWindow(ChartballActivity.this.getCurrentFocus()
+                    .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
 }
 

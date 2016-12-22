@@ -66,33 +66,36 @@ public class ChartReceive {
             private String msgId;
             private int msgCode;
             private FromUserBean fromUser;
-            private Object toUser;
+            private ToUser toUser;
             private String message;
             private int sourceType;
             private String time;
             private int msgType;
-            private Object onlineNum;
+            private String onlineNum;
+            private boolean isShowTime;
 
-            public ChatHistoryBean(String s, FromUserBean fromUserBean) {
-                this.fromUser=fromUserBean;
-                this.message=s;
+            public ChatHistoryBean(String msgid, int msgcode, String s, FromUserBean fromUserBean, ToUser toUserBean,String time) {
+                this.msgId = msgid;
+                this.msgCode = msgcode;
+                this.fromUser = fromUserBean;
+                this.message = s;
+                this.toUser = toUserBean;
+                this.time = time;
             }
+
             public ChatHistoryBean() {
 
             }
-   /*         public ChatHistoryBean(String message,FromUserBean fromUser){
 
-                this.message=message;
-                this.fromUser=fromUser;
-            }*/
 
-            public Object getOnlineNum() {
-                return onlineNum;
+            public boolean isShowTime() {
+                return isShowTime;
             }
 
-            public void setOnlineNum(Object onlineNum) {
-                this.onlineNum = onlineNum;
+            public void setShowTime(boolean showTime) {
+                isShowTime = showTime;
             }
+
             public String getMsgId() {
                 return msgId;
             }
@@ -117,12 +120,20 @@ public class ChartReceive {
                 this.fromUser = fromUser;
             }
 
-            public Object getToUser() {
+            public ToUser getToUser() {
                 return toUser;
             }
 
-            public void setToUser(Object toUser) {
+            public void setToUser(ToUser toUser) {
                 this.toUser = toUser;
+            }
+
+            public String getOnlineNum() {
+                return onlineNum;
+            }
+
+            public void setOnlineNum(String onlineNum) {
+                this.onlineNum = onlineNum;
             }
 
             public String getMessage() {
@@ -157,6 +168,45 @@ public class ChartReceive {
                 this.msgType = msgType;
             }
 
+            public static class ToUser {
+                private String userId;
+                private String userLogo;
+                private String userNick;
+
+                public ToUser() {
+                }
+
+                public ToUser(String userid, String userlogo, String usernick) {
+                    this.userId = userid;
+                    this.userLogo = userlogo;
+                    this.userNick = usernick;
+                }
+
+                public String getUserNick() {
+                    return userNick;
+                }
+
+                public void setUserNick(String userNick) {
+                    this.userNick = userNick;
+                }
+
+                public String getUserLogo() {
+                    return userLogo;
+                }
+
+                public void setUserLogo(String userLogo) {
+                    this.userLogo = userLogo;
+                }
+
+                public String getUserId() {
+                    return userId;
+                }
+
+                public void setUserId(String userId) {
+                    this.userId = userId;
+                }
+            }
+
             public static class FromUserBean {
                 // *
                 // * userId : hhly299272
@@ -164,20 +214,19 @@ public class ChartReceive {
                 // userNick : hhly299272
 
                 private String userId;
-                private Object userLogo;
+                private String userLogo;
                 private String userNick;
 
-                public FromUserBean(String userId, Object userLogo, String userNick) {
+                public FromUserBean(String userId, String userLogo, String userNick) {
                     this.userId = userId;
                     this.userLogo = userLogo;
                     this.userNick = userNick;
                 }
+
+
                 public FromUserBean() {
 
                 }
-
-
-
 
                 public String getUserId() {
                     return userId;
@@ -187,11 +236,11 @@ public class ChartReceive {
                     this.userId = userId;
                 }
 
-                public Object getUserLogo() {
+                public String getUserLogo() {
                     return userLogo;
                 }
 
-                public void setUserLogo(Object userLogo) {
+                public void setUserLogo(String userLogo) {
                     this.userLogo = userLogo;
                 }
 

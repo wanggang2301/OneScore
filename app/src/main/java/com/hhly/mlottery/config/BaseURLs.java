@@ -14,6 +14,35 @@ import com.hhly.mlottery.util.PreferenceUtil;
  */
 public class BaseURLs {
 
+    //                              __
+    //                        __   (__`\
+    //                       (__`\   \\`\
+    //                        `\\`\   \\ \
+    //                          `\\`\  \\ \
+    //                            `\\`\#\\ \#
+    //                              \_ ##\_ |##
+    //                              (___)(___)##
+    //                               (0)  (0)`\##
+    //                                |~   ~ , \##
+    //                                |      |  \##
+    //                                |     /\   \##         __..---'''''-.._.._
+    //                                |     | \   `\##  _.--'                _  `.
+    //                                Y     |  \    `##'                     \`\  \
+    //                               /      |   \                             | `\ \
+    //                              /_...___|    \                            |   `\\
+    //                             /        `.    |      MA DONG YUN         /      ##
+    //                            |          |    |                         /      ####
+    //                            |          |    |                        /       ####
+    //                            | () ()    |     \     |          |  _.-'         ##
+    //                            `.        .'      `._. |______..| |-'|
+    //                              `------'           | | | |    | || |
+    //                                                 | | | |    | || |
+    //                                                 | | | |    | || |
+    //                                                 | | | |    | || |
+    //                                           _____ | | | |____| || |
+    //                                          /     `` |-`/     ` |` |
+    //                                          \________\__\_______\__\
+    //                                           """""""""   """""""'"""
 
     /**
      * 公网
@@ -948,7 +977,21 @@ public class BaseURLs {
     public final static String BASKET_DETAIL_TEAM = URL_API_HOST + "basketballDetail.findTeamStats.do";
     //篮球内页球员统计
     public final static String BASKET_DETAIL_PLAYER = URL_API_HOST + "basketballDetail.findPlayerStats.do";
+    /**
+     * 斯洛克
+     */
+    public final static String SNOOKER_LIST_URL = URL_API_HOST+"snookerMatch.getFirstSnookerMatch.do";
+    public final static String SNOOKER_LIST_LOADMORE_URL = URL_API_HOST+"snookerMatch.getSnookerLeagues.do"; // http://m.1332255.com:81/mlottery/core/snookerMatch.getSnookerLeagues.do?dateLeaguesId=2016-11-20_125358,2016-11-19_125358
 
+    /**
+     * 我的定制
+     */
+    //我的定制页
+    public final static String CUSTOM_MINE_CUS_URL = URL_API_HOST+"basketballCommonMacth.findBasketballMyConcernMatch.do";//http://192.168.10.242:8181/mlottery/core/basketballCommonMacth.findBasketballMyConcernMatch.do
+    //定制完成 发送id
+    public final static String CUSTOM_SENDID_CUS_URL = URL_API_HOST+"basketballCommonMacth.customHotLeagueAndTeamConcern.do";//http://192.168.10.242:8181/mlottery/core/basketballCommonMacth.customHotLeagueAndTeamConcern.do
+    //定制列表页
+    public final static String CUSTOM_LIST_CUS_URL = URL_API_HOST + "basketballCommonMacth.findHotLeagueAndTeamConcern.do";//"http://192.168.10.242:8181/mlottery/core/basketballCommonMacth.findHotLeagueAndTeamConcern.do";
 
 
     //精彩瞬间个数
@@ -957,6 +1000,40 @@ public class BaseURLs {
     //精彩瞬间资源
     public final static String FOOTBALL_DETAIL_COLLECTION = URL_API_HOST + "operation.findMatchCollection.do";
 
-    //聊天室消息列表接口
-    public final static String MESSAGE_LIST = HTTP + HOST + URL_SPLITTER+ "chatServer/chat/chatHistoryList/football.do";
+    //产品建议列表
+    public final static String PRODUCT_ADVICE_LIKE=URL_API_HOST+"feedback.addFeedBackLikes.do";
+    //产品建议列表
+    public final static String PRODUCT_ADVICE_LIKE_LIST=URL_API_HOST+"feedback.findAndroidFeedBackDetail.do";
+
+
+
+    // 聊球消息列表接口--足球
+    public final static String MESSAGE_LIST_FOOTBALL = HTTP + HOST + URL_SPLITTER+ "chatServer/chat/chatHistoryList/football";
+    // 聊球发送消息--足球
+    public final static String MESSAGE_SEND_FOOTBALL = HTTP + HOST + URL_SPLITTER+ "chatServer/chat/sendChatMessage/android/football";
+    // 聊球消息列表接口--篮球
+    public final static String MESSAGE_LIST_BASKET = HTTP + HOST + URL_SPLITTER+ "chatServer/chat/chatHistoryList/basketball";
+    // 聊球发送消息--篮球
+    public final static String MESSAGE_SEND_BASKET = HTTP + HOST + URL_SPLITTER+ "chatServer/chat/sendChatMessage/android/basketball";
+    // 聊球举报接口
+    public final static String REPORT_USER = HTTP + HOST + URL_SPLITTER+ "chatServer/chat/reportUser/android";
+
+
+    //                                                     _(\_/)
+    //                                                   ,((((^`\
+    //                                                  ((((  (6 \
+    //                                                ,((((( ,    \
+    //                            ,,,_              ,(((((  /"._  ,`,
+    //                           ((((\\ ,...       ,((((   /    `-.-'
+    //                           )))  ;'    `"'"'""((((   (
+    //                          (((  /            (((      \
+    //                           )) |                      |
+    //                          ((  |        .       '     |
+    //                          ))  \     _ '      `t   ,.')
+    //                          (   |   y;- -,-""'"-.\   \/
+    //                          )   / ./  ) /         `\  \
+    //                             |./   ( (           / /'
+    //                             ||     \\          //'|
+    //                             ||      \\       _//'||
+    //                             ||       ))     |_/  ||
 }

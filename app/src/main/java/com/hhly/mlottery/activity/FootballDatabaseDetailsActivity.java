@@ -2,7 +2,6 @@ package com.hhly.mlottery.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
@@ -25,7 +24,6 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.SportsDialogAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
@@ -40,7 +38,7 @@ import com.hhly.mlottery.frame.footframe.FootballDatabaseStatisticsFragment;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.MDStatusBarCompat;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 import com.hhly.mlottery.widget.ScrollTouchListView;
 import com.umeng.analytics.MobclickAgent;
 
@@ -76,7 +74,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
     private TabLayout mTabLayout;
     private TabsAdapter tabsAdapter;
     private LinearLayout headLayout;
-    private ExactSwipeRefrashLayout mRefreshLayout;
+    private ExactSwipeRefreshLayout mRefreshLayout;
     private ImageView mBack;
     private LinearLayout mCollect;
 
@@ -179,7 +177,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
             }
         });
 
-        mRefreshLayout = (ExactSwipeRefrashLayout) findViewById(R.id.football_database_details_refresh_layout);
+        mRefreshLayout = (ExactSwipeRefreshLayout) findViewById(R.id.football_database_details_refresh_layout);
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
         mRefreshLayout.setOnRefreshListener(this);
         mBack = (ImageView) this.findViewById(R.id.football_database_details_back);

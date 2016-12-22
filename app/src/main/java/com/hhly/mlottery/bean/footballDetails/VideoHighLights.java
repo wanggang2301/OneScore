@@ -48,6 +48,7 @@ public class VideoHighLights {
         private Object title;
         private String description;
         private String resourceUrl;
+        private String imageUrl;
         private String resourceType;
         private String matchType;
         private String thirdId;
@@ -129,6 +130,14 @@ public class VideoHighLights {
 
         public void setmIsPlaying(boolean mIsPlaying) {
             this.mIsPlaying = mIsPlaying;
+        }
+
+        public String getImageUrl() {
+            return imageUrl;
+        }
+
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
         }
     }
 }

@@ -1,53 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:emojicon="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="10dp">
+    android:orientation="vertical"
+    android:paddingBottom="5dp"
+    android:paddingLeft="50dp"
+    android:paddingRight="10dp">
 
-    <RelativeLayout
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/ll_time_content_me"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:gravity="center"
         android:orientation="vertical"
-        android:paddingRight="20dp">
+        android:paddingEnd="40dp"
+        android:visibility="gone">
 
         <TextView
-            android:id="@+id/tv_nickname_me"
+            android:id="@+id/tv_time_me"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:paddingLeft="5dp"
-            android:text="hhly988888"
-            android:textColor="#0085e1"
-            android:textSize="15sp" />
+            android:background="@color/home_item_bg"
+            android:padding="10dp"
+            android:textSize="12sp"
+            tools:text="18:00" />
 
-        <!--用户发送内容-->
-        <LinearLayout
-            android:layout_width="match_parent"
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_nickname_me"
-            android:gravity="right"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:paddingRight="5dp">
 
-            <io.github.rockerhieu.emojicon.EmojiconTextView
-                android:id="@+id/my_text"
+            <TextView
+                android:id="@+id/tv_nickname_me"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="test" />
+                android:layout_alignParentRight="true"
+                android:textColor="@color/mdy_999"
+                android:textSize="15sp"
+                tools:text="hhly988888" />
 
-        </LinearLayout>
+            <!--用户发送内容-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_nickname_me"
+                android:gravity="right"
+                android:orientation="vertical">
 
-    </RelativeLayout>
+                <io.github.rockerhieu.emojicon.EmojiconTextView
+                    android:id="@+id/my_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/chart_ball_right_bg"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/mdy_333"
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    emojicon:emojiconSize="20sp"
+                    tools:text="test" />
 
-    <com.hhly.mlottery.view.CircleImageView
-        android:id="@+id/my_bighead_view"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@mipmap/bighead" />
+                <TextView
+                    android:id="@+id/my_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:background="@mipmap/chart_ball_jinggaoni" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <com.hhly.mlottery.view.CircleImageView
+            android:id="@+id/my_bighead_view"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            tools:src="@mipmap/bighead" />
+    </LinearLayout>
 </LinearLayout>
 
 

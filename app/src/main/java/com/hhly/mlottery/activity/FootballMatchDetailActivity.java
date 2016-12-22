@@ -32,7 +32,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.adapter.football.FragmentAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.bean.BarrageBean;
 import com.hhly.mlottery.bean.GoneBarrage;
@@ -57,17 +56,19 @@ import com.hhly.mlottery.frame.footframe.IntelligenceFragment;
 import com.hhly.mlottery.frame.footframe.OddsFragment;
 import com.hhly.mlottery.frame.footframe.StatisticsFragment;
 import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFocusEventBusEntity;
+import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.FootballLiveTextComparator;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.NetworkUtils;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.StringUtils;
-import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.BarrageView;
-import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
@@ -92,14 +93,8 @@ import de.greenrobot.event.EventBus;
  * @date 2016/6/2 16:53
  * @des 足球内页改版
  */
-public class FootballMatchDetailActivity extends BaseWebSocketActivity implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, ExactSwipeRefrashLayout.OnRefreshListener {
+public class FootballMatchDetailActivity extends BaseWebSocketActivity implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, ExactSwipeRefreshLayout.OnRefreshListener {
 
-    private final static int IMMEDIA_FRAGMENT = 1;
-    private final static int RESULT_FRAGMENT = 2;
-    private final static int SCHEDULE_FRAGMENT = 3;
-    private final static int FOCUS_FRAGMENT = 4;
-    private final static int BANNER_PLAY_TIME = 2500; //头部5秒轮播
-    private final static int BANNER_ANIM_TIME = 500; //轮播动画时间
     private final static int ERROR = -1;//访问失败
     private final static int SUCCESS = 0;// 访问成功
     private final static int STARTLOADING = 1;// 正在加载中
@@ -108,6 +103,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private final static String ONLIVE = "1";//直播中
     private final static String LIVEENDED = "-1";//直播结束
 
+    private final static String MATCH_TYPE = "1"; //足球
 
     private final static int ROLLBALL_FG = 0;
     private final static int LIVE_FG = 1;
@@ -116,7 +112,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private final static int ODDS_FG = 4;
     private final static int TALKBALL_FG = 5;
     private int infoCenter = -1;// 情报中心中转标记
-
 
     //事件直播
     //主队事件
@@ -128,7 +123,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private static final String YTORED = "1045";//两黄变一红
     private static final String DIANQIU = "1031";
 
-
     //客队事件
     private static final String SCORE1 = "2053";//客队进球
     private static final String RED_CARD1 = "2056";
@@ -138,9 +132,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private static final String YTORED1 = "2069";//两黄变一红
     private static final String DIANQIU1 = "2055";
 
-
     //走势图
-
     private static final String SHOOT = "1039";
     private static final String SHOOTASIDE = "1040";
     private static final String SHOOTASIDE2 = "1041";
@@ -180,28 +172,21 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private FrameLayout fl_odds_net_error_details;
 
 
-    public ExactSwipeRefrashLayout mRefreshLayout; //下拉刷新
+    public ExactSwipeRefreshLayout mRefreshLayout; //下拉刷新
 
     private FragmentManager fragmentManager;
     private ViewPager mViewPager;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     public AppBarLayout appBarLayout;
-    private FragmentAdapter fragmentAdapter;
     private TabLayout mTabLayout;
     private TabsAdapter mTabsAdapter;
     private Toolbar toolbar;
-
-
-    //  滑动到顶部显示的内容
-    private String toolbarTitle;
-
     private Context mContext;
 
     /**
      * 赛事id
      */
     public String mThirdId;
-
 
     public int mtype = 0;
     private int currentFragmentId = 0;
@@ -212,7 +197,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private List<MatchTextLiveBean> matchLive;
     private List<Integer> allMatchLiveMsgId;
-
 
     private List<MatchTimeLiveBean> eventMatchTimeLiveList; //赛中文字直播事件帅选List
 
@@ -242,19 +226,11 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
      * 保存上一场的状态
      */
     private String mPreStatus;
-
-//    private HappySocketClient hSocketClient;
-//    private URI hSocketUri = null;
-
-
     public final static String BUNDLE_PARAM_THIRDID = "thirdId";
-
 
     private boolean isMatchStart = false;  //判断比赛推送时间状态
 
     private DetailsRollballFragment mDetailsRollballFragment; //滚球
-
-//    private TalkAboutBallFragment mTalkAboutBallFragment;
 
     private AnalyzeFragment mAnalyzeFragment;  //分析
     private OddsFragment mOddsFragment;         //指数
@@ -262,28 +238,24 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private StatisticsFragment mStatisticsFragment;  //统计
     private IntelligenceFragment mIntelligenceFragment; // 情报
 
-    private int mStartTime;// 获取推送的开赛时间
     private TextView reLoading; //赔率请求失败重新加载
 
-
     private String shareHomeIconUrl;
-
 
     private ImageView iv_back;
     private ImageView iv_setting;
     private TextView head_score;
 
-
     private TextView head_home_name;
     private TextView head_guest_name;
     private View iv_share;
 
-
     private ShareFragment mShareFragment;
-
 
     private final static int PERIOD_20 = 1000 * 60 * 20;//刷新周期二十分钟
     private final static int PERIOD_5 = 1000 * 60 * 5;//刷新周期五分钟
+
+    private final static int GIFPERIOD_2 = 1000 * 60 * 2;//刷新周期两分钟
 
     /**
      * 赛前轮询周期
@@ -292,12 +264,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private boolean isRquestSuccess = true;
 
-    private TimerTask timerTask;
-
     private FootballLiveGotoChart mFootballLiveGotoChart;
-
-    private Handler preGotoliveHandler;
-    private Runnable runnable;
 
     private String matchStartTime;
     private ChartBallFragment mChartBallFragment;
@@ -333,6 +300,23 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private BarrageView barrage_view;
 
 
+    private Timer gifTimer;
+
+    private TimerTask gifTimerTask;
+
+    private boolean isFirstShowGif = true;
+
+    private RelativeLayout rl_gif_notice;
+
+    private int gifCount = 0;
+
+    private CountDown countDown;
+    private final static int MILLIS_INFuture = 3000;//倒计时3秒
+    private final static String FOOTBALL_GIF = "football_gif";
+
+    private View red_point;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (getIntent().getExtras() != null) {
@@ -341,15 +325,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             infoCenter = getIntent().getExtras().getInt("info_center");
         }
         EventBus.getDefault().register(this);
+
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.liveEvent." + mThirdId + "." + appendLanguage());
-
-
-        L.d("zxcvbn", "footURL===" + BaseURLs.WS_SERVICE);
-        L.d("zxcvbn", "footTopic===" + "USER.topic.liveEvent." + mThirdId + "." + appendLanguage());
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_football_match_details_test);
 
         /**当前Activity不统计*/
@@ -357,11 +336,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         this.mContext = getApplicationContext();
 
-
         L.e(TAG, "mThirdId = " + mThirdId);
-        L.e("456789", "mThirdId = " + mThirdId);
         initHeadView();
-
         initView();
         initEvent();
 
@@ -397,30 +373,18 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         mHandler.sendEmptyMessage(STARTLOADING);
         loadData();
-
-
     }
 
 
     private void initView() {
-
-        // String[] titles = mContext.getResourceName(R.attr.foot_details_tabs);
-
-
         String[] titles = mContext.getResources().getStringArray(R.array.foot_details_tabs);
-
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-        mRefreshLayout = (ExactSwipeRefrashLayout) findViewById(R.id.refresh_layout_details);
+        mRefreshLayout = (ExactSwipeRefreshLayout) findViewById(R.id.refresh_layout_details);
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
         mRefreshLayout.setOnRefreshListener(this);
 
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-
-
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
 //        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 //
@@ -448,7 +412,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         appBarLayout.addOnOffsetChangedListener(this);
 
         fragmentManager = getSupportFragmentManager();
-
 
         //底部ViewPager(滚球、指数等)
         mTabsAdapter = new TabsAdapter(getSupportFragmentManager());
@@ -535,6 +498,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     if (ONLIVE.equals(mMatchDetail.getLiveStatus())) {
                         connectWebSocket();
                     }
+
+                    // 聊球
+                    mChartBallFragment.onRefresh();
                 }
             }
         }, 1000);
@@ -560,8 +526,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
 
     private void loadData() {
-
-
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", mThirdId);
 
@@ -611,8 +575,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         matchLive = mMatchDetail.getMatchInfo().getMatchLive();
                         allMatchLiveMsgId = new ArrayList<>();
 
-                        //是否显示精彩瞬间
-                        getCollectionCount();
                         //完场
                         if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
 
@@ -638,6 +600,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                             head_guest_name.setText(matchDetail.getGuestTeamInfo().getName());
                             head_score.setText(mMatchDetail.getHomeTeamInfo().getScore() + ":" + mMatchDetail.getGuestTeamInfo().getScore());
                             mKeepTime = "5400000";//90分钟的毫秒数
+
+
+                            //是否显示精彩瞬间
+                            getCollectionCount();
 
                             mDetailsRollballFragment.refreshMatch(matchDetail, DetailsRollballFragment.DETAILSROLLBALL_TYPE_ED);
 
@@ -698,6 +664,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                                 mPreStatus = "1";
                             }
 
+
+                            //是否显示精彩瞬间
+                            pollingGifCount();
+
                             mDetailsRollballFragment.refreshMatch(matchDetail, DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING);
 
 //                            mTalkAboutBallFragment.setClickableLikeBtn(true);
@@ -712,7 +682,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                             mStatisticsFragment.setTrendChartList(trendChartList);
 
                         }
-
                     }
                 }
 
@@ -730,7 +699,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         e.printStackTrace();
                     }
 
-
                     if (startTimestamp - serverTimestamp > (1000 * 60 * 60)) {//大于一个小时
                         mReloadPeriod = PERIOD_20;
                     } else {
@@ -744,11 +712,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     }
                     startReloadTimer();
                 }
-
-
                 mHandler.sendEmptyMessage(SUCCESS);
-
-
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
@@ -770,11 +734,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mViewPager.setCurrentItem(ANALYZE_FG, false);
             }
 
-
             matchStartTime = matchDetail.getMatchInfo().getStartTime();
             initPreData(matchDetail);
             setScoreText("VS");
-
 
             head_home_name.setText(matchDetail.getHomeTeamInfo().getName());
             head_guest_name.setText(matchDetail.getGuestTeamInfo().getName());
@@ -782,11 +744,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
             mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE, matchDetail);
             mStatisticsFragment.setEventMatchLive(mMatchDetail.getLiveStatus(), null);
-
-
             mStatisticsFragment.setmFootballLiveGotoChart(mFootballLiveGotoChart);
-
-
         } else {
 
             if (infoCenter == 1) {
@@ -800,15 +758,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
             matchLive = mMatchDetail.getMatchInfo().getMatchLive();
             allMatchLiveMsgId = new ArrayList<>();
-            //是否显示精彩瞬间
-            getCollectionCount();
+
 
             //完场
             if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
-
                 String halfScore = mMatchDetail.getHomeTeamInfo().getHalfScore() + " : " + mMatchDetail.getGuestTeamInfo().getHalfScore();
                 String finishScore = mMatchDetail.getHomeTeamInfo().getScore() + " : " + mMatchDetail.getGuestTeamInfo().getScore();
-
 
                 //获取完场事件直播
                 eventMatchTimeLiveList = new ArrayList<>();
@@ -836,18 +791,15 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                 mKeepTime = "5400000";//90分钟的毫秒数
 
+                //精彩瞬间
+                getCollectionCount();
 
                 //直播事件
                 mStatisticsFragment.setEventMatchLive(mMatchDetail.getLiveStatus(), eventMatchTimeLiveList);
-
                 //走势图
                 mStatisticsFragment.finishMatchRequest();
-
-
 //                mTalkAboutBallFragment.setClickableLikeBtn(false);
-
                 mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_ED, matchDetail);
-
 
             } else if (ONLIVE.equals(mMatchDetail.getLiveStatus())) { //未完场头部
 
@@ -894,6 +846,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     isMatchStart = false;
                 } else {
                 }
+
+                //精彩瞬间
+                pollingGifCount();
 
                 mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING, matchDetail);
 
@@ -1171,8 +1126,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         if (mReloadTimer != null) {
             mReloadTimer.cancel();
             mReloadTimer.purge();
-
         }
+
+        closePollingGifCount();
+
         EventBus.getDefault().unregister(this);
     }
 
@@ -2015,7 +1972,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             case R.id.iv_back:  //返回
                 MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Exit");
                 eventBusPost();
-                MyApp.getContext().sendBroadcast(new Intent("closeself"));
+                MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
                 // setResult(Activity.RESULT_OK);
                 finish();
                 break;
@@ -2029,17 +1986,23 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 loadData();
                 break;
             case R.id.btn_showGif:
-                int type = com.hhly.mlottery.util.NetworkUtils.getCurNetworkType(getApplicationContext());
-                if (type == 1) {
-                    L.d("zxcvbn", "WIFI");
-                    Intent intent = new Intent(FootballMatchDetailActivity.this, PlayHighLightActivity.class);
-                    startActivity(intent);
-                    //wifi
-                } else if (type == 2 || type == 3 || type == 4) {//2G  3G  4G
-                    L.d("zxcvbn", "移动网络-" + type + "G");
-                    promptNetInfo();
+                if (NetworkUtils.isConnected(getApplicationContext())) {
+                    int type = com.hhly.mlottery.util.NetworkUtils.getCurNetworkType(getApplicationContext());
+                    if (type == 1) {
+                        L.d("zxcvbn", "WIFI");
+                        hideGifRedPoint();
+                        Intent intent = new Intent(FootballMatchDetailActivity.this, PlayHighLightActivity.class);
+                        intent.putExtra("thirdId", mThirdId);
+                        intent.putExtra("match_type", MATCH_TYPE);
+                        startActivity(intent);
+                        //wifi
+                    } else if (type == 2 || type == 3 || type == 4) {//2G  3G  4G
+                        L.d("zxcvbn", "移动网络-" + type + "G");
+                        promptNetInfo();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.about_net_failed), Toast.LENGTH_SHORT).show();
                 }
-
                 break;
             default:
                 break;
@@ -2051,15 +2014,20 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
      */
     private void promptNetInfo() {
         try {
-            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext, R.style.AppThemeDialog);
+            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(FootballMatchDetailActivity.this, R.style.AppThemeDialog);
             builder.setCancelable(false);// 设置对话框以外不可点击
             builder.setTitle(getApplicationContext().getResources().getString(R.string.to_update_kindly_reminder));// 提示标题
             builder.setMessage(getApplicationContext().getResources().getString(R.string.video_high_light_reminder_comment));// 提示内容
             builder.setPositiveButton(getApplicationContext().getResources().getString(R.string.video_high_light_continue_open), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    hideGifRedPoint();
                     dialog.dismiss();
-                    startActivity(new Intent(FootballMatchDetailActivity.this, PlayHighLightActivity.class));
+                    Intent intent = new Intent(FootballMatchDetailActivity.this, PlayHighLightActivity.class);
+                    intent.putExtra("thirdId", mThirdId);
+                    intent.putExtra("match_type", MATCH_TYPE);
+                    startActivity(intent);
+
                 }
             });
             builder.setNegativeButton(getApplicationContext().getResources().getString(R.string.basket_analyze_dialog_cancle), new DialogInterface.OnClickListener() {
@@ -2086,7 +2054,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     // 发表评论跳转
     public void talkAboutBallSendFoot() {
         Intent intent2 = new Intent(mContext, ChartballActivity.class);
-         intent2.putExtra("thirdId", mThirdId);
+        intent2.putExtra("thirdId", mThirdId);
         startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
     }
 
@@ -2130,7 +2098,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     FocusFragment.addFocusId(mThirdId);
                     ((ImageView) mView.findViewById(R.id.football_item_focus_iv)).setImageResource(R.mipmap.head_focus);
                     ((TextView) mView.findViewById(R.id.football_item_focus_tv)).setText(getString(R.string.foot_details_focused));
-
                 }
             }
         });
@@ -2172,7 +2139,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mShareFragment.show(getSupportFragmentManager(), "bottomShare");
             }
         });
-
     }
 
     @Override
@@ -2191,29 +2157,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
 
     private void eventBusPost() {
-      /*  if (currentFragmentId == IMMEDIA_FRAGMENT) {
-            if (ImmediateFragment.imEventBus != null) {
-                ImmediateFragment.imEventBus.post("");
-            }
-        } else if (currentFragmentId == RESULT_FRAGMENT) {
-
-            EventBus.getDefault().post(new ScoresMatchFocusEventBusEntity(currentFragmentId));
-            //if (ResultFragment.resultEventBus != null) {
-            //     ResultFragment.resultEventBus.post("");
-            // }
-        } else if (currentFragmentId == SCHEDULE_FRAGMENT) {
-           *//* if (ScheduleFragment.schEventBus != null) {
-                ScheduleFragment.schEventBus.post("");
-            }*//*
-            EventBus.getDefault().post(new ScoresMatchFocusEventBusEntity(currentFragmentId));
-
-        } else if (currentFragmentId == FOCUS_FRAGMENT) {
-            if (FocusFragment.focusEventBus != null) {
-                FocusFragment.focusEventBus.post("");
-            }
-        }*/
         EventBus.getDefault().post(new ScoresMatchFocusEventBusEntity(currentFragmentId));
-
     }
 
 
@@ -2230,15 +2174,31 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             @Override
             public void onPageSelected(int position) {
                 isHindShow(position);
-                if (position != 5) {
-//                    appBarLayout.setExpanded(false);
-                    MyApp.getContext().sendBroadcast(new Intent("closeself"));
+                if (position != 5) {// 聊球界面禁用下拉刷新
+                    MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
+                }else{
+                    mRefreshLayout.setEnabled(true); //展开
+                    appBarLayout.setExpanded(false);
                 }
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
 
+            }
+        });
+
+
+        //新gif倒计时countDown
+        countDown = new CountDown(MILLIS_INFuture, 1000, new CountDown.CountDownCallback() {
+            @Override
+            public void onFinish() {
+                rl_gif_notice.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                //  L.d("zxcvbn", "countdown===" + millisUntilFinished / 1000 + "秒");
             }
         });
     }
@@ -2590,6 +2550,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         mMatchType2 = (TextView) findViewById(R.id.football_match_detail_matchtype2);
         btn_showGif = (LinearLayout) findViewById(R.id.btn_showGif);
         btn_showGif.setOnClickListener(this);
+
+        rl_gif_notice = (RelativeLayout) findViewById(R.id.rl_gif_notice);
+        red_point = (View) findViewById(R.id.red_point);
     }
 
 
@@ -2639,11 +2602,14 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 date.setText("");//开赛时间
             }
         }
-
     }
 
 
-    //加载图片
+    /**
+     * load internet image
+     * @param imageUrl
+     * @param imageView
+     */
     private void loadImage(String imageUrl, final ImageView imageView) {
         VolleyContentFast.requestImage(imageUrl, new Response.Listener<Bitmap>() {
             @Override
@@ -2666,26 +2632,110 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     }
 
 
+    /**
+     * start polling
+     */
+    private void pollingGifCount() {
+        if (gifTimer == null) {
+            gifTimer = new Timer();
+            gifTimerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    getCollectionCount();
+                }
+            };
+
+            gifTimer.schedule(gifTimerTask, 1000, GIFPERIOD_2);
+            //gifTimer.schedule(gifTimerTask, 5000, 20000);
+        }
+    }
+
+    /**
+     * close polling
+     */
+    private void closePollingGifCount() {
+        if (gifTimer != null) {
+            gifTimerTask.cancel();
+            gifTimer.cancel();
+            gifTimer.purge();
+            gifTimerTask = null;
+            gifTimer = null;
+        }
+    }
+
+    /**
+     * get gifs and videos quantity
+     */
     private void getCollectionCount() {
         Map<String, String> map = new HashMap<>();
-        map.put("matchType", "1");
-        map.put("thirdId", "399381");
+        map.put("matchType", MATCH_TYPE);
+        map.put("thirdId", mThirdId);  //399381
+        //  map.put("thirdId", mThirdId);
         VolleyContentFast.requestJsonByGet(BaseURLs.FOOTBALL_DETAIL_COLLECTION_COUNT, map, new VolleyContentFast.ResponseSuccessListener<DetailsCollectionCountBean>() {
             @Override
             public void onResponse(DetailsCollectionCountBean jsonObject) {
                 if (200 == jsonObject.getResult()) {
                     if (jsonObject.getData() != 0) {
                         btn_showGif.setVisibility(View.VISIBLE);
+                        if (isFirstShowGif) {  //第一次显示
+                            initGifRedPoint();
+                            L.d("zxcvbn", "第一次进入------------");
+                            gifCount = jsonObject.getData();
+                            isFirstShowGif = false;
+                        } else {
+                            L.d("zxcvbn", "第二次进入------------");
+                            if (jsonObject.getData() > gifCount) { //有新的gif出現
+                                L.d("zxcvbn", "有新的gif出現------------");
+                                showGifRedPoint();
+                                gifCount = jsonObject.getData();
+                                rl_gif_notice.setVisibility(View.VISIBLE);
+                                countDown.start();
+                            }
+                        }
                     } else {
+                        L.d("zxcvbn", "没有gif------------");
+                        isFirstShowGif = false;
+                        gifCount = 0;
                         btn_showGif.setVisibility(View.GONE);
+                        // }
                     }
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                btn_showGif.setVisibility(View.GONE);
+                //   if (isFirstShowGif) {
+                //      btn_showGif.setVisibility(View.GONE);
+                //  }
             }
         }, DetailsCollectionCountBean.class);
+    }
+
+    /**
+     * init red point function
+     */
+    private void initGifRedPoint() {
+        if (PreferenceUtil.getBoolean(FOOTBALL_GIF, true)) {
+            red_point.setVisibility(View.VISIBLE);
+        } else {
+            red_point.setVisibility(View.GONE);
+        }
+    }
+
+
+    /**
+     * show red point
+     */
+    private void showGifRedPoint() {
+        PreferenceUtil.commitBoolean(FOOTBALL_GIF, true);
+        red_point.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * hide red point
+     */
+    private void hideGifRedPoint() {
+        PreferenceUtil.commitBoolean(FOOTBALL_GIF, false);
+        red_point.setVisibility(View.GONE);
     }
 }

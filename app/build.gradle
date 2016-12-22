@@ -37,10 +37,10 @@ android {
 
     defaultConfig {
         applicationId "com.hhly.mlottery"
-        minSdkVersion 17
+        minSdkVersion 16
         targetSdkVersion 22
         versionCode 24
-        versionName "1.2.1.1205"
+        versionName "1.2.1.1221"
         multiDexEnabled true
     }
 

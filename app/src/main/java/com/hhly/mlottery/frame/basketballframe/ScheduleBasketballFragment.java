@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
+import com.hhly.mlottery.activity.BasketballScoresActivity;
 import com.hhly.mlottery.activity.BasketballSettingActivity;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.adapter.basketball.PinnedHeaderExpandableScheduleAdapter;
@@ -156,8 +157,8 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
 //            mBasketballType = getArguments().getInt(PARAMS);
             mBasketballType = 2;
         }
-            BasketScheduleEventBus = new EventBus();
-            BasketScheduleEventBus.register(this);
+        BasketScheduleEventBus = new EventBus();
+        BasketScheduleEventBus.register(this);
     }
 
     /**
@@ -309,7 +310,9 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
     private int mSize; //记录共有几天的数据
 
     private void initData() {
-        ((BasketScoresFragment)getParentFragment()).getBasketballUserConcern(); //获取关注列表
+//        ((BasketScoresFragment)getParentFragment()).getBasketballUserConcern(); //获取关注列表
+        BasketballScoresActivity parentActivity = (BasketballScoresActivity)getActivity();
+        parentActivity.getBasketballUserConcern();
 
         Map<String, String> params = new HashMap<>();
         String version = getAppVersionCode(mContext);//获得当前版本号 android:versionCode="5"
@@ -486,7 +489,7 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
                     v.setTag(true);
 
                 } else {//关注->未关注
-                   FocusBasketballFragment.deleteFocusId(root.getThirdId());
+                    FocusBasketballFragment.deleteFocusId(root.getThirdId());
                     v.setTag(false);
                     //判断 如果是关注页面
                     if (mBasketballType == TYPE_FOCUS) {
@@ -516,14 +519,16 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
                         }
 //                        ((BasketballFragment) getParentFragment()).focusCallback();
 //                        ((BasketListActivity) getActivity()).focusCallback();
-                        ((BasketScoresFragment)getParentFragment()).focusCallback();
+//                        ((BasketScoresFragment)getParentFragment()).focusCallback();
+                        ((BasketballScoresActivity) getActivity()).focusCallback();
                         return;
                     }
                 }
                 updateAdapter();//防止复用
 //                ((BasketballFragment) getParentFragment()).focusCallback();
 //                ((BasketListActivity) getActivity()).focusCallback();
-                ((BasketScoresFragment)getParentFragment()).focusCallback();
+//                ((BasketScoresFragment)getParentFragment()).focusCallback();
+                ((BasketballScoresActivity) getActivity()).focusCallback();
             }
         };
     }
@@ -532,8 +537,8 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
      */
     @Override
     public void onRefresh() {
-            isLoad = -1;
-            mLoadHandler.postDelayed(mRun, 0);
+        isLoad = -1;
+        mLoadHandler.postDelayed(mRun, 0);
     }
 
     /**
@@ -741,11 +746,13 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
         if (mBasketballType == TYPE_FOCUS) {
             mLoadHandler.postDelayed(mRun, 0);
 //            ((BasketListActivity) getActivity()).focusCallback();
-            ((BasketScoresFragment)getParentFragment()).focusCallback();
+//            ((BasketScoresFragment)getParentFragment()).focusCallback();
+            ((BasketballScoresActivity) getActivity()).focusCallback();
         }else{
             updateAdapter();
 //            ((BasketListActivity) getActivity()).focusCallback();
-            ((BasketScoresFragment)getParentFragment()).focusCallback();
+//            ((BasketScoresFragment)getParentFragment()).focusCallback();
+            ((BasketballScoresActivity) getActivity()).focusCallback();
         }
 //        ((BasketScoresFragment)getParentFragment()).focusCallback();
     }

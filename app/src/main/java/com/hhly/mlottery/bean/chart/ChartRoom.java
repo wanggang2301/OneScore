@@ -58,11 +58,37 @@ public class ChartRoom {
         private String message;
         private int msgCode;
         private String msgId;
-        private Object msgType;
-        private Object onlineNum;
+        private String msgType;
+        private String onlineNum;
         private int sourceType;
         private String time;
-        private Object toUser;
+        private ToUser toUser;
+        private boolean isShowTime;
+
+        public String getMsgType() {
+            return msgType;
+        }
+
+        public void setMsgType(String msgType) {
+            this.msgType = msgType;
+        }
+
+        public String getOnlineNum() {
+            return onlineNum;
+        }
+
+        public void setOnlineNum(String onlineNum) {
+            this.onlineNum = onlineNum;
+        }
+
+        public boolean isShowTime() {
+            return isShowTime;
+        }
+
+        public void setShowTime(boolean showTime) {
+            isShowTime = showTime;
+        }
+
         public FromUserBean getFromUser() {
             return fromUser;
         }
@@ -83,6 +109,14 @@ public class ChartRoom {
             return msgCode;
         }
 
+        public ToUser getToUser() {
+            return toUser;
+        }
+
+        public void setToUser(ToUser toUser) {
+            this.toUser = toUser;
+        }
+
         public void setMsgCode(int msgCode) {
             this.msgCode = msgCode;
         }
@@ -93,22 +127,6 @@ public class ChartRoom {
 
         public void setMsgId(String msgId) {
             this.msgId = msgId;
-        }
-
-        public Object getMsgType() {
-            return msgType;
-        }
-
-        public void setMsgType(Object msgType) {
-            this.msgType = msgType;
-        }
-
-        public Object getOnlineNum() {
-            return onlineNum;
-        }
-
-        public void setOnlineNum(Object onlineNum) {
-            this.onlineNum = onlineNum;
         }
 
         public int getSourceType() {
@@ -127,13 +145,7 @@ public class ChartRoom {
             this.time = time;
         }
 
-        public Object getToUser() {
-            return toUser;
-        }
 
-        public void setToUser(Object toUser) {
-            this.toUser = toUser;
-        }
 
         public static class FromUserBean {
             /**
@@ -142,6 +154,36 @@ public class ChartRoom {
              * userNick : 王总
              */
 
+            private String userId;
+            private String userLogo;
+            private String userNick;
+
+            public String getUserId() {
+                return userId;
+            }
+
+            public void setUserId(String userId) {
+                this.userId = userId;
+            }
+
+            public String getUserLogo() {
+                return userLogo;
+            }
+
+            public void setUserLogo(String userLogo) {
+                this.userLogo = userLogo;
+            }
+
+            public String getUserNick() {
+                return userNick;
+            }
+
+            public void setUserNick(String userNick) {
+                this.userNick = userNick;
+            }
+        }
+
+        public static class ToUser{
             private String userId;
             private String userLogo;
             private String userNick;
