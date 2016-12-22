@@ -143,6 +143,13 @@ public class ProductAdviceActivity extends AppCompatActivity implements View.OnC
 
             }
         });
+        //首次進來可以刷新
+        mRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mRefreshLayout.setRefreshing(true);
+            }
+        });
 
     }
 
@@ -232,12 +239,12 @@ public class ProductAdviceActivity extends AppCompatActivity implements View.OnC
         },ProductAdviceBean.class);
 
     }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        mRefreshLayout.setRefreshing(true);
-    }
+//
+//    @Override
+//    public void onWindowFocusChanged(boolean hasFocus) {
+//        super.onWindowFocusChanged(hasFocus);
+//        mRefreshLayout.setRefreshing(true);
+//    }
 
     /**
      * 分页请求
