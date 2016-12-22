@@ -196,6 +196,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
     private final static String BASKETBALL_GIF = "basketball_gif";
     private BarrageView barrage_view;
+    private ImageView barrage_switch;
+    boolean barrage_isFocus=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -362,11 +364,14 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         }
 
         barrage_view = (BarrageView) findViewById(R.id.barrage_view);
+        barrage_switch = (ImageView) findViewById(R.id.barrage_switch);
+        barrage_switch.setOnClickListener(this);
+
     }
 
     public void onEventMainThread(BarrageBean barrageBean){
         System.out.println("xxxxx barrageBean: " + barrageBean.getMsg());
-        barrage_view.setDatas("",barrageBean.getMsg().toString());
+        barrage_view.setDatas(barrageBean.getUrl(),barrageBean.getMsg().toString());
     }
     public void onEventMainThread(GoneBarrage barrageBean){
         barrage_view.setVisibility(View.GONE);
@@ -492,6 +497,19 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 } else {
                     FocusBasketballFragment.addFocusId(mThirdId);
                     mCollect.setImageResource(R.mipmap.basketball_collected);
+                }
+                break;
+            case  R.id.barrage_switch:
+
+
+                if(barrage_isFocus) {
+                    barrage_switch.setImageResource(R.mipmap.danmu_open);
+                    barrage_isFocus=false;
+                    barrage_view.setVisibility(View.VISIBLE);
+                }else{
+                    barrage_switch.setImageResource(R.mipmap.danmu_close);
+                    barrage_isFocus=true;
+                    barrage_view.setVisibility(View.GONE);
                 }
                 break;
         }

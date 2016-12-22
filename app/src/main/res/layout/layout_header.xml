@@ -25,6 +25,7 @@
             android:src="@mipmap/back" />
 
         <ImageView
+
             android:id="@+id/iv_account"
             style="@style/RippleBackgroudBorderless"
             android:layout_width="wrap_content"
@@ -35,7 +36,8 @@
             android:paddingRight="10dp"
             android:scaleType="centerInside"
             android:src="@mipmap/logout"
-            android:visibility="gone" />
+            android:visibility="gone"
+            />
 
 
         <TextView

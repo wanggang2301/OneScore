@@ -8,17 +8,21 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.UiUtils;
 
+import java.util.Map;
 import java.util.Random;
 
 
@@ -49,6 +53,8 @@ public class BarrageView extends RelativeLayout {
 
     private static int SCREEN_WIDTH;
     private int heightPixels;
+    private ImageView imagView;
+    private LinearLayout linear_max;
     //    private List<BarrageItem> itemList = new ArrayList<BarrageItem>();
 
     public BarrageView(Context context) {
@@ -74,22 +80,92 @@ public class BarrageView extends RelativeLayout {
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
-        totalHeight = 200;
-        lineHeight = 30;
+        totalHeight = 150;
+        lineHeight = 20;
         totalLine = totalHeight / lineHeight;
-        Log.i("sdasdasdas","totalLine="+totalLine);
-        Log.i("sdasdasdas","getMeasuredHeight="+totalHeight);
-        Log.i("sdasdasdas","lineHeight="+lineHeight);
+
     }
 
+   /* public int resultImageView (String mgs){
+
+        switch (mgs){
+            case "[吃土了]":
+            return R.mipmap.chart_ball_chitule;
+            break;
+            case "[打裁判]":
+                return  R.mipmap.chart_ball_dacaipan;
+            break;
+            case "[腐败啦]":
+                return  R.mipmap.chart_ball_fubaila;
+            break;
+            case "[警告你]":
+                return R.mipmap.chart_ball_jinggaoni;
+            break;
+            case "[菊一紧]":
+                return R.mipmap.chart_ball_juyijing;
+            break;
+            case "[懵圈了]":
+                return R.mipmap.chart_ball_mengkuanle;
+            break;
+            case "[求大腿]":
+                return R.mipmap.chart_ball_qiudatui;
+            break;
+            case "[射射射]":
+                return R.mipmap.chart_ball_sesese;
+            break;
+            case "[上天台]":
+                return R.mipmap.chart_ball_shangtiantai;
+            break;
+            case "[石化了]":
+                return R.mipmap.chart_ball_shihuale;
+            break;
+            case "[收米啦]":
+                return R.mipmap.chart_ball_shoumila;
+            break;
+            case "[西湖水呀]":
+                return  R.mipmap.chart_ball_xihushuiya;
+            break;
+            case "[压压惊]":
+                return R.mipmap.chart_ball_yayajing;
+            break;
+            case "[有请关老爷]":
+                return R.mipmap.chart_ball_youqingguanlaoye;
+            break;
+            case "[再来一角]":
+                return R.mipmap.chart_ball_zailaiyijiao;
+            break;
+            default:
+                break;
+        }
+    }*/
+
     public void setDatas(String url,String msg) {
-        Log.i("sdasdasdas","我发送消息来了");
+
         generateItem();
-        textView.setText(msg);
+        if (msg.startsWith("[")){
+            for (Map.Entry<String, Integer> entry : AppConstants.localMap.entrySet()) {
+                if (msg != null) {
+                    if (msg.equals(entry.getKey())) {
+                        textView.setVisibility(View.GONE);
+                        imagView.setVisibility(View.VISIBLE);
+                        imageView.setMaxHeight(60);
+                        imagView.setMaxHeight(60);
+                        imagView.setImageResource(entry.getValue());
+
+                        break;
+                    }
+                }
+            }
+        }else {
+            textView.setText(msg);
+        }
+
+
         Glide.with(mContext)
                 .load(url)
                 .error(R.mipmap.center_head)
                 .into(imageView);
+
     }
 
     private void generateItem() {
@@ -99,8 +175,10 @@ public class BarrageView extends RelativeLayout {
         //String tx = itemText[(int) (Math.random() * textCount)];
         // int sz = (int) (minSize + (maxSize - minSize) * Math.random());
         relativeLayout = (RelativeLayout) LayoutInflater.from(mContext).inflate(R.layout.barrage_item, null);
+        linear_max = (LinearLayout) relativeLayout.findViewById(R.id.linear_max);
         imageView = (ImageView) relativeLayout.findViewById(R.id.face2);//头像
         textView = (TextView) relativeLayout.findViewById(R.id.content2);//文字
+        imagView = (ImageView) relativeLayout.findViewById(R.id.content3);
     /*    item.textView = new TextView(mContext);
         item.textView.setText(tx);
         item.textView.setTextSize(sz);
@@ -110,8 +188,8 @@ public class BarrageView extends RelativeLayout {
 
         if (totalLine == 0) {
            // UiUtils.toast(mContext,"我哦進來了-");
-            totalHeight = 200;
-            lineHeight = 30;
+            totalHeight = 150;
+            lineHeight = 20;
             totalLine = totalHeight / lineHeight;
         }
         item.verticalPos = random.nextInt(totalLine) * lineHeight;
