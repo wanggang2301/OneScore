@@ -315,6 +315,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private final static String FOOTBALL_GIF = "football_gif";
 
     private View red_point;
+    private ImageView barrage_switch;
+
+    boolean barrage_isFocus =true;
 
 
     @Override
@@ -433,6 +436,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         iv_setting.setOnClickListener(this);
 
         barrage_view = (BarrageView) findViewById(R.id.barrage_view);
+        barrage_switch = (ImageView) findViewById(R.id.barrage_switch);
+        barrage_switch.setOnClickListener(this);
+
 
     }
     public void onEventMainThread(BarrageBean barrageBean){
@@ -2002,6 +2008,20 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.about_net_failed), Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case  R.id.barrage_switch:
+
+
+                if(barrage_isFocus)
+                {
+                    barrage_switch.setImageResource(R.mipmap.danmu_open);
+                    barrage_isFocus=false;
+                    barrage_view.setVisibility(View.VISIBLE);
+                }else{
+                    barrage_switch.setImageResource(R.mipmap.danmu_close);
+                    barrage_isFocus=true;
+                    barrage_view.setVisibility(View.GONE);
                 }
                 break;
             default:
