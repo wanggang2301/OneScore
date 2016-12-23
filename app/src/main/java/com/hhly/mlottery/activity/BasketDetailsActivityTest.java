@@ -44,6 +44,7 @@ import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.L;
@@ -854,6 +855,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         if (isFragment4) {
             MobclickAgent.onPageStart("BasketBall_Info_LQ");
             is4 = true;
+            PreferenceUtil.commitBoolean(AppConstants.BASKET_RED_KEY, true);
             L.d("xxx", "聊球显示");
         }
     }

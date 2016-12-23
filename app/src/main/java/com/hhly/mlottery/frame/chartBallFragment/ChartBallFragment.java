@@ -244,6 +244,9 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         params.put("thirdId", mThirdId);
         params.put("pageSize", LOADING_MSG_SIZE);
         params.put("slideType", slideType);
+        if (SLIDE_TYPE_MSG_HISTORY.equals(slideType)) {
+            params.put("msgId", historyBeen.get(0).getMsgId());
+        }
 
         VolleyContentFast.requestJsonByGet(URL, params,
                 new VolleyContentFast.ResponseSuccessListener<ChartReceive>() {
@@ -254,7 +257,10 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                             if (SLIDE_TYPE_MSG_ONE.equals(slideType)) {
                                 mHandler.sendEmptyMessage(SUCCESS_LOADING);
                             } else if (SLIDE_TYPE_MSG_HISTORY.equals(slideType)) {
-                                historyBeen.addAll(mChartReceive.getData().getChatHistory());
+                                // 将数据添加到前面
+                                List<ChartReceive.DataBean.ChatHistoryBean> chatHistory = mChartReceive.getData().getChatHistory();
+
+                                historyBeen.addAll(0,chatHistory);
                                 mAdapter.notifyDataSetChanged();
                             } else if (SLIDE_TYPE_MSG_NEW.equals(slideType)) {
                                 historyBeen.addAll(mChartReceive.getData().getChatHistory());
@@ -329,6 +335,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                             isOneJoin = false;// 首次进入聊天室调用成功
                         } else {
                             if (receive != null && receive.getResult().equals("200")) {
+                                System.out.println("xxxxx 消息发送：" + receive.getData().getResultMsg());
                                 // 发送成功
                                 switch (receive.getData().getResultCode()) {
                                     case 1000:// 发送成功
@@ -361,8 +368,6 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                                             int h = bannedTime / 60;
                                             int m = bannedTime - h * 60;
 
-                                            System.out.println("xxxxx 被禁言：h  " + h);
-                                            System.out.println("xxxxx 被禁言：m  " + m);
                                             ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.chart_ball_banned) + String.valueOf(h) + mContext.getResources().getString(R.string.number_hk_hh) + String.valueOf(m) + mContext.getResources().getString(R.string.number_hk_mm));
 
                                         } else {// 直接显示分钟
@@ -401,7 +406,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     private void sendErrorChanged(String message) {
         for (int i = 0, len = historyBeen.size(); i < len; i++) {
             if (historyBeen.get(i).getMsgId() == null && historyBeen.get(i).getMessage().equals(message)) {
-                historyBeen.get(i).setSendSuccess(false);
+                historyBeen.get(i).setSendSuccess(true);
                 break;
             }
         }
@@ -562,7 +567,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         if ("EXIT_CURRENT_ACTIVITY".equals(contentEntitiy.getMessage()) && "EXIT_CURRENT_ACTIVITY".equals(contentEntitiy.getFromUser().getUserNick())) {
             mContext.finish();
         } else {
-            contentEntitiy.setSendSuccess(true);
+//            contentEntitiy.setSendSuccess(true);
             Message msg = mHandler.obtainMessage();
             msg.what = MSG_SEND_TO_ME;
             msg.obj = contentEntitiy;

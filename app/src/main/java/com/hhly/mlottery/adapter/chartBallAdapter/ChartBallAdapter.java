@@ -84,7 +84,11 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
             case 0:
                 ViewHolderMsg viewHolderMsg = (ViewHolderMsg) holder;
                 viewHolderMsg.tv_name.setText(mData.get(position).getFromUser().getUserNick());
-                Glide.with(mContext).load(mData.get(position).getFromUser().getUserLogo()).placeholder(R.mipmap.center_head).into(viewHolderMsg.bighead_view);
+                try {
+                    Glide.with(mContext).load(mData.get(position).getFromUser().getUserLogo()).placeholder(mContext.getResources().getDrawable(R.mipmap.center_head)).into(viewHolderMsg.bighead_view);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 final View v = viewHolderMsg.tv_name;
                 viewHolderMsg.bighead_view.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -126,7 +130,11 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                 break;
             case 1:// 自己
                 ViewHolderMe viewHolderMe = (ViewHolderMe) holder;
-                Glide.with(mContext).load(mData.get(position).getFromUser().getUserLogo()).placeholder(R.mipmap.center_head).into(viewHolderMe.my_bighead_view);
+                try {
+                    Glide.with(mContext).load(mData.get(position).getFromUser().getUserLogo()).placeholder(mContext.getResources().getDrawable(R.mipmap.center_head)).into(viewHolderMe.my_bighead_view);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 viewHolderMe.tv_nickname_me.setText(mData.get(position).getFromUser().getUserNick());
                 if (mData.get(position).isShowTime()) {
                     viewHolderMe.ll_time_content_me.setVisibility(View.VISIBLE);
@@ -159,7 +167,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                     viewHolderMe.my_image.setVisibility(View.VISIBLE);
                     viewHolderMe.my_text.setVisibility(View.GONE);
                 }
-                if (mData.get(position).isSendSuccess()) {
+                if (!mData.get(position).isSendSuccess()) {
                     viewHolderMe.iv_send_error.setVisibility(View.GONE);
                 } else {
                     viewHolderMe.iv_send_error.setVisibility(View.VISIBLE);

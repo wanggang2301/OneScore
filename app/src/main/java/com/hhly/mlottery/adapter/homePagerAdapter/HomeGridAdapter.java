@@ -1,17 +1,17 @@
 package com.hhly.mlottery.adapter.homePagerAdapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.ImageLoader;
+import com.hhly.mlottery.util.PreferenceUtil;
 
 import java.util.List;
 
@@ -46,6 +46,7 @@ public class HomeGridAdapter extends BaseAdapter {
             convertView = View.inflate(mContext, R.layout.home_page_item_menu_icon, null);
             mViewHolder.iv_icon = (ImageView) convertView.findViewById(R.id.iv_menu_icon_home);
             mViewHolder.tv_name = (TextView) convertView.findViewById(R.id.tv_menu_name_home);
+            mViewHolder.red_not = convertView.findViewById(R.id.home_menu_red_dot);
             convertView.setTag(mViewHolder);
         }
         mViewHolder = (ViewHolder) convertView.getTag();
@@ -54,10 +55,27 @@ public class HomeGridAdapter extends BaseAdapter {
         if (mContentEntity.getPicUrl() == null) {
             mViewHolder.iv_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_menu_icon_def));
         } else {
-            ImageLoader.load(mContext,mContentEntity.getPicUrl(),R.mipmap.home_menu_icon_def).into(mViewHolder.iv_icon);
+            ImageLoader.load(mContext, mContentEntity.getPicUrl(), R.mipmap.home_menu_icon_def).into(mViewHolder.iv_icon);
 
         }
         mViewHolder.tv_name.setText(mContentEntity.getTitle());
+
+        // 添加红点  足球
+        if ("13".equals(mContentEntity.getJumpAddr())) {
+            if (PreferenceUtil.getBoolean(AppConstants.FOOTBALL_RED_KEY, false)) {
+                mViewHolder.red_not.setVisibility(View.GONE);
+            } else {
+                mViewHolder.red_not.setVisibility(View.VISIBLE);
+            }
+        }
+        // 添加红点  篮球
+        if ("20".equals(mContentEntity.getJumpAddr())) {
+            if (PreferenceUtil.getBoolean(AppConstants.BASKET_RED_KEY, false)) {
+                mViewHolder.red_not.setVisibility(View.GONE);
+            } else {
+                mViewHolder.red_not.setVisibility(View.VISIBLE);
+            }
+        }
 
         return convertView;
     }
@@ -78,5 +96,6 @@ public class HomeGridAdapter extends BaseAdapter {
     private static class ViewHolder {
         ImageView iv_icon;
         TextView tv_name;
+        View red_not;
     }
 }

@@ -75,6 +75,10 @@ public class AppConstants {
     public static String APPKEY_RONGYUN = "";
     public static String APPSECRET_RONGYUN = "";
 
+    // 聊球红点key
+    public static final String FOOTBALL_RED_KEY = "football_red";
+    public static final String BASKET_RED_KEY = "basket_red";
+
     // public static String i18n = "en";// 测试英文语言环境
 
     // 1至46个数字
