@@ -29,6 +29,8 @@ import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -183,6 +185,12 @@ public class ProductAdviceActivity extends AppCompatActivity implements View.OnC
                 case VIEW_STATUS_NO_DATA:
                     mNodataLayout.setVisibility(View.VISIBLE);
                     mRecyclerView.setVisibility(View.GONE);
+                    break;
+
+                case 5:
+//                    mAdapter.notifyDataChangedAfterLoadMore(true);
+//                    mAdapter.remove();
+//                    mNoLoadingView.setVisibility(View.GONE);
 
                     break;
             }
@@ -239,12 +247,6 @@ public class ProductAdviceActivity extends AppCompatActivity implements View.OnC
         },ProductAdviceBean.class);
 
     }
-//
-//    @Override
-//    public void onWindowFocusChanged(boolean hasFocus) {
-//        super.onWindowFocusChanged(hasFocus);
-//        mRefreshLayout.setRefreshing(true);
-//    }
 
     /**
      * 分页请求
@@ -269,10 +271,11 @@ public class ProductAdviceActivity extends AppCompatActivity implements View.OnC
                         }
                         mAdapter.notifyDataChangedAfterLoadMore(false);
                         mAdapter.addFooterView(mNoLoadingView);
+                        //三秒钟后消失
+//                        handler.sendEmptyMessageDelayed(5,3000);
+
                     }
                     else {
-//                        data.addAll(jsonObject.getData());
-//                        Log.e("advice上拉请求的",data.size()+"");
                         mAdapter.notifyDataChangedAfterLoadMore(jsonObject.getData(),true);
                     }
 
