@@ -1450,6 +1450,7 @@
 
     <!--我的定制-->
     <string name="custom_mine_cus">我的定制</string>
+    <string name="custom_list_cus">定制列表</string>
     <string name="custom_no_cus">您还未订制任何球队/联赛</string>
     <string name="custom_to_cus">马上去定制</string>
     <string name="custom_redact_cus">编辑</string>

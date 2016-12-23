@@ -151,9 +151,16 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_custom:
-                PreferenceUtil.commitBoolean("custom_red_dot" , false);
-                mRedDot.setVisibility(View.GONE);
-                startActivity(new Intent(HomeUserOptionsActivity.this, CustomActivity.class));
+
+                if (CommonUtils.isLogin()) {
+
+                    PreferenceUtil.commitBoolean("custom_red_dot" , false);
+                    mRedDot.setVisibility(View.GONE);
+                    startActivity(new Intent(HomeUserOptionsActivity.this, CustomActivity.class));
+                }else{
+
+                    startActivity(new Intent(this, LoginActivity.class));
+                }
 
                 break;
 

@@ -36,6 +36,16 @@
             android:text="----"
             android:textColor="@color/content_txt_dark_grad"
             android:textSize="@dimen/text_size_13" />
+        <TextView
+            android:id="@+id/custom_xingqi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/basketball_riqi"
+            android:text="--"
+            android:textSize="12dp"
+            android:textColor="#0085E1" />
 
         <ImageView
             android:id="@+id/basketball_details_open"

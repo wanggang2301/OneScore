@@ -21,9 +21,11 @@ import com.hhly.mlottery.bean.custombean.CustomMineBean.CustomMineFirstDataBean;
 import com.hhly.mlottery.bean.custombean.CustomMineBean.CustomMineScondDataBean;
 import com.hhly.mlottery.bean.custombean.CustomMineBean.CustomMineThirdDataBean;
 import com.hhly.mlottery.frame.basketballframe.MyRotateAnimation;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
+import com.hhly.mlottery.util.ResultDateUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -161,7 +163,9 @@ public class CustomMyDataAdapter extends BaseQuickAdapter<CustomMineFirstDataBea
                 viewHolderDate.mRiqiItem.setVisibility(View.VISIBLE);
                 viewHolderDate.mNoData.setVisibility(View.GONE);
 
+                String week = ResultDateUtil.getWeekOfDate(DateUtil.parseDate(ResultDateUtil.getDate(0, riqiData.getDate())));
                 viewHolderDate.mDate.setText(riqiData.getDate());
+                viewHolderDate.mWeek.setText(week);
 
                 if (onItemClickListener != null) {
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -1209,6 +1213,7 @@ public class CustomMyDataAdapter extends BaseQuickAdapter<CustomMineFirstDataBea
 
     class ViewHolderDate extends BaseViewHolder {
         TextView mDate;
+        TextView mWeek;
         ImageView mDetails;
         TextView mNoData;
         RelativeLayout mRiqiItem;
@@ -1216,6 +1221,7 @@ public class CustomMyDataAdapter extends BaseQuickAdapter<CustomMineFirstDataBea
         public ViewHolderDate(View itemView) {
             super(itemView);
             mDate = (TextView) itemView.findViewById(R.id.basketball_riqi);
+            mWeek = (TextView) itemView.findViewById(R.id.custom_xingqi);
             mDetails = (ImageView) itemView.findViewById(R.id.basketball_details_open);
             mNoData = (TextView) itemView.findViewById(R.id.custon_match_nodata);
             mRiqiItem = (RelativeLayout) itemView.findViewById(R.id.custom_riqi_item);

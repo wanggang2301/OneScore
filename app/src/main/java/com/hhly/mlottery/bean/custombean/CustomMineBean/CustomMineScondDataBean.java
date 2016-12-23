@@ -17,7 +17,7 @@ public class CustomMineScondDataBean {
     private List<CustomMineThirdDataBean> matchItems;
 
     private int secondType = 1;
-    private boolean isUnfold = true;
+    private boolean isUnfold = false; //是否展开
 
     public boolean isUnfold() {
         return isUnfold;
