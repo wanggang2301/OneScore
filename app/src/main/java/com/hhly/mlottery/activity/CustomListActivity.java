@@ -517,7 +517,7 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
             if (currentTemaid != null) {
                 PreferenceUtil.commitString(CUSTOM_TEAM_FOCUSID, currentTemaid.toString());
             }
-            EventBus.getDefault().post(new CustomListEvent("", ""));
+
             finish();
             overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
             return true;
