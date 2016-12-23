@@ -442,7 +442,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     }
     public void onEventMainThread(BarrageBean barrageBean){
-        barrage_view.setDatas("",barrageBean.getMsg().toString());
+        barrage_view.setDatas(barrageBean.getUrl(),barrageBean.getMsg().toString());
     }
     public void onEventMainThread(GoneBarrage barrageBean){
         barrage_view.setVisibility(View.GONE);

@@ -209,7 +209,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawablePadding="5dp"
-                        android:drawableStart="@mipmap/chart_ball_line_count"
+                        android:drawableStart="@mipmap/homefavorcount"
                         android:paddingEnd="30dp"
                         android:textColor="@color/mdy_666"
                         android:textSize="10sp" />

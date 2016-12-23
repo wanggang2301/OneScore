@@ -275,7 +275,7 @@ public class AvatarSelectionActivity extends Activity implements View.OnClickLis
                     register.getData().getUser().setLoginAccount(PreferenceUtil.getString(AppConstants.SPKEY_LOGINACCOUNT, "aa"));
                     CommonUtils.saveRegisterInfo(register);
                     AppConstants.register.getData().getUser().setHeadIcon(headerUrl);
-                    if (register.getData().getUser().getHeadIcon() != null) {
+                    if (register.getData().getUser().getHeadIcon()!= null) {
                         EventBus.getDefault().post(new ChoseHeadStartBean(headerUrl));
                     }
                     progressBar.dismiss();

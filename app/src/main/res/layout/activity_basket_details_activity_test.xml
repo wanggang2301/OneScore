@@ -45,6 +45,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp">
                     </com.hhly.mlottery.view.BarrageView>
+                    <ImageView
+                        android:id="@+id/barrage_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="30dp"
+                        android:layout_marginRight="5dp"
+                        android:src="@mipmap/danmu_open"
+                        android:layout_gravity="bottom|right"/>
                 </FrameLayout>
 
                 <me.relex.circleindicator.CircleIndicator

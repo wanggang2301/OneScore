@@ -35,6 +35,8 @@ import com.umeng.analytics.MobclickAgent;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * @ClassName: OneScoreGit
  * @author:Administrator luyao
@@ -90,7 +92,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        EventBus.getDefault().register(this);
         initView();
 
     }
@@ -387,6 +389,12 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             mTv_nickname.setText(R.string.Login_register);
             mUser_image.setImageResource(R.mipmap.center_head);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

@@ -363,18 +363,25 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         public_img_back.setVisibility(View.GONE);
         ImageView public_btn_filter = (ImageView) findViewById(R.id.public_btn_filter);
         public_btn_filter.setVisibility(View.GONE);
-
+/*
         iv_account = (ImageView) findViewById(R.id.iv_account);
         if (CommonUtils.isLogin()) {
             iv_account.setImageResource(R.mipmap.login);
         } else {
             iv_account.setImageResource(R.mipmap.logout);
         }
-        iv_account.setVisibility(View.VISIBLE);
-        iv_account.setOnClickListener(this);
+        iv_account.setVisibility(View.GONE);
+        iv_account.setOnClickListener(this);*/
 
         public_btn_set = (ImageView) findViewById(R.id.public_btn_set);
-        public_btn_set.setVisibility(View.GONE);
+        public_btn_set.setVisibility(View.VISIBLE);
+        if (CommonUtils.isLogin()) {
+            public_btn_set.setImageResource(R.mipmap.login);
+        } else {
+            public_btn_set.setImageResource(R.mipmap.logout);
+        }
+        public_btn_set.setOnClickListener(this);
+
         // public_btn_set.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_user_setting));// 设置登录图标
 
         public_txt_title = (TextView) findViewById(R.id.public_txt_title);
@@ -828,7 +835,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_account:
+            case R.id.public_btn_set:
                 MobclickAgent.onEvent(mContext, "HomePager_User_Info_Start");
                 goToUserOptionsActivity();
                 break;
@@ -855,10 +862,10 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
             if (requestCode == REQUESTCODE_LOGIN) {
                 // 登录成功返回
                 L.d(TAG, "登录成功");
-                iv_account.setImageResource(R.mipmap.login);
+                public_btn_set.setImageResource(R.mipmap.login);
             } else if (requestCode == REQUESTCODE_LOGOUT) {
                 L.d(TAG, "注销成功");
-                iv_account.setImageResource(R.mipmap.logout);
+                public_btn_set.setImageResource(R.mipmap.logout);
             }
         }
 
