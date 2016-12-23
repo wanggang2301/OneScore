@@ -197,8 +197,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@color/home_item_bg"
+                        android:background="@color/transparency"
                         android:padding="5dp"
                         android:text="@string/chart_ball_call_me"
                         android:textColor="@color/chart_ball_call_me"
@@ -210,9 +209,9 @@
                         android:layout_height="wrap_content"
                         android:drawablePadding="5dp"
                         android:drawableLeft="@mipmap/chart_ball_line_count"
-                        android:paddingRight="30dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="5dp"
                         android:drawableStart="@mipmap/homefavorcount"
-                        android:paddingEnd="30dp"
                         android:textColor="@color/mdy_666"
                         android:textSize="10sp" />
 

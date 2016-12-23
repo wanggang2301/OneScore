@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -96,7 +97,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                         showPopup(v, position);
                     }
                 });
-                if (mData.get(position).isShowTime()) {
+                if (mData.get(position).isShowTime() && !TextUtils.isEmpty(mData.get(position).getTime())) {
                     viewHolderMsg.ll_time_content.setVisibility(View.VISIBLE);
                     viewHolderMsg.tv_time.setText(mData.get(position).getTime());
                 } else {
@@ -136,7 +137,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                     e.printStackTrace();
                 }
                 viewHolderMe.tv_nickname_me.setText(mData.get(position).getFromUser().getUserNick());
-                if (mData.get(position).isShowTime()) {
+                if (mData.get(position).isShowTime() && !TextUtils.isEmpty(mData.get(position).getTime())) {
                     viewHolderMe.ll_time_content_me.setVisibility(View.VISIBLE);
                     viewHolderMe.tv_time_me.setText(mData.get(position).getTime());
                 } else {
