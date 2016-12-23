@@ -155,11 +155,6 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
      * 数据展示状态设置
      */
     private void setState(int state){
-//        VIEW_STATUS_LOADING = 1;//请求中
-//        VIEW_STATUS_NET_NO_DATA = 2;//暂无数据
-//        VIEW_STATUS_SUCCESS = 3;//请求成功
-//        VIEW_STATUS_NET_ERROR = 4;//请求失败
-//        VIEW_STATUS_CUSTOM_NO_DATA = 5;//暂无定制
 
         if (state == VIEW_STATUS_LOADING) {
             mRefresh.setVisibility(View.VISIBLE);
@@ -215,8 +210,6 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
         String deviceid = AppConstants.deviceToken;
         map.put("userId" , userid);
         map.put("deviceId" , deviceid);
-//        map.put("userId" , "13714102745");
-//        map.put("deviceId" , "21126FC4-DAF0-40DC-AF5C-1AD33EFB5F67");
 
         VolleyContentFast.requestJsonByGet(url, map ,new VolleyContentFast.ResponseSuccessListener<CustomMineDataBean>() {
 
@@ -257,7 +250,8 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
 
                     /**必须先添加中间层，再添加最内层 顺序不可逆*/
                     addSecondTier();
-                    addThirdTier();
+
+//                    addThirdTier(); // 展开比赛层
                     /**必须先添加中间层，再添加最内层 顺序不可逆*/
 
                     setState(VIEW_STATUS_SUCCESS);
@@ -271,19 +265,6 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
                 setState(VIEW_STATUS_NET_ERROR);
             }
         },CustomMineDataBean.class);
-
-
-//        mFirstData = new ArrayList<>();
-//        mAdapter = new CustomMyDataAdapter(getApplicationContext() , mFirstData);
-//        setOnItemClick(mFirstData);
-//        addData();
-//        mCustomRecycle.setAdapter(mAdapter);
-//
-//
-//        /**必须先添加中间层，再添加最内层 顺序不可逆*/
-//        addSecondTier();
-//        addThirdTier(mFirstData);
-//        /**必须先添加中间层，再添加最内层 顺序不可逆*/
     }
 
     /**
@@ -330,7 +311,6 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
                 isGround=0;
             }
             if (mFirstData.get(i) instanceof CustomMineFirstDataBean) {
-//                isGround = 1;
                 isGround += 1; /** += 防止出现中间有某联赛下有无数据情况 添加数据时位置不对情况 */
             }
         }
@@ -367,7 +347,6 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
                              * 记录子层数据（赛事层），若日期层打开状态需要连比赛层一并删除
                              */
                             int thirdDataSize =  0;
-//                            L.d("yxq==========>>> " , "外层 size " + a);
                             for (CustomMineScondDataBean data : firstData.getMatchData()) {
                                 if (data.isUnfold()) {
                                     thirdDataSize += data.getMatchItems().size();
@@ -624,106 +603,7 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
                     }
                 }
             }
-//            for (List<BasketMatchBean> match : mFirstData) {
-//                for (BasketMatchBean matchchildern : match) {
-//                    if (matchchildern.getThirdId().equals(webBasketMatch.getThirdId())) {
-//
-//                        if (matchchildern.getMatchScore() != null) {
-//                            String newscoreguest = matchchildern.getMatchScore().getGuestScore() + ""; //推送之前的比分客队
-//                            String newscorehome = matchchildern.getMatchScore().getHomeScore() + "";
-//
-//                            //判断推送前后的比分是否变化, 变化==>开启动画
-//                            if (data.get("guestScore") != null && data.get("homeScore") != null) {
-//                                if (!data.get("guestScore").equals(newscoreguest)) { //isScroll 为 true：正在滑动  滑动中不启动动画;
-//                                    matchchildern.setIsGuestAnim(true);
-//                                } else {
-//                                    matchchildern.setIsGuestAnim(false);
-//                                }
-//                                if (!data.get("homeScore").equals(newscorehome)) {
-//                                    matchchildern.setIsHomeAnim(true);
-//                                } else {
-//                                    matchchildern.setIsHomeAnim(false);
-//                                }
-//                                updateMatchStatus(matchchildern, data);// 修改Match里面的数据
-//                            }
-//                        } else {
-//                            /**
-//                             * 未开始（VS）==>开始时候的处理
-//                             */
-//                            BasketScoreBean score = new BasketScoreBean();
-//
-//                            for (Map.Entry<String, String> entry : data.entrySet()) {
-//                                switch (entry.getKey()) {
-//                                    case "guest1":
-//                                        score.setGuest1(Integer.parseInt(entry.getValue()));
-//                                        break;
-//                                    case "guest2":
-//                                        score.setGuest2(Integer.parseInt(entry.getValue()));
-//                                        break;
-//                                    case "guest3":
-//                                        score.setGuest3(Integer.parseInt(entry.getValue()));
-//                                        break;
-//                                    case "guest4":
-//                                        score.setGuest4(Integer.parseInt(entry.getValue()));
-//                                        break;
-//                                    case "guestOt1":
-//                                        score.setGuestOt1(Integer.parseInt(entry.getValue()));
-//                                        break;
-//                                    case "guestOt2":
-//                                        score.setGuestOt2(Integer.parseInt(entry.getValue()));
-//                                        break;
-//                                    case "guestOt3":
-//                                        score.setGuestOt3(Integer.parseInt(entry.getValue()));
-//                                        break;
-//                                    case "guestScore":
-//                                        score.setGuestScore(Integer.parseInt(entry.getValue()));
-//                                        break;
-//                                    case "home1":
-//                                        score.setHome1(Integer.parseInt(entry.getValue()));
-//                                        break;
-//                                    case "home2":
-//                                        score.setHome2(Integer.parseInt(entry.getValue()));
-//                                        break;
-//                                    case "home3":
-//                                        score.setHome3(Integer.parseInt(entry.getValue()));
-//                                        break;
-//                                    case "home4":
-//                                        score.setHome4(Integer.parseInt(entry.getValue()));
-//                                        break;
-//                                    case "homeOt1":
-//                                        score.setHomeOt1(Integer.parseInt(entry.getValue()));
-//                                        break;
-//                                    case "homeOt2":
-//                                        score.setHomeOt2(Integer.parseInt(entry.getValue()));
-//                                        break;
-//                                    case "homeOt3":
-//                                        score.setHomeOt3(Integer.parseInt(entry.getValue()));
-//                                        break;
-//                                    case "homeScore":
-//                                        score.setHomeScore(Integer.parseInt(entry.getValue()));
-//                                        break;
-//                                    case "addTime":
-//                                        score.setAddTime(Integer.parseInt(entry.getValue()));
-//                                        break;
-//                                    case "remainTime":
-//                                        score.setRemainTime(entry.getValue());
-//                                        break;
-//                                    default:
-//                                        break;
-//                                }
-//                            }
-//
-//                            matchchildern.setMatchScore(score);
-//                            updateMatchStatus(matchchildern, data);
-//                        }
-//                        updateAdapter();
-//                        break;
-//                    }
-//                }
-//            }
         }
-
-
     }
 
     private void updateListViewItemOdd(WebBasketOdds webBasketOdds) {
@@ -747,16 +627,6 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
                     }
                 }
             }
-
-//            for (List<BasketMatchBean> match : sdfa) {// all里面的match
-//                for (BasketMatchBean matchchildern : match) {
-//                    if (matchchildern.getThirdId().equals(webBasketOdds.getThirdId())) {
-//                        updateMatchOdd(matchchildern, data);
-//                        updateAdapter();
-//                        break;
-//                    }
-//                }
-//            }
         }
     }
 
@@ -783,7 +653,6 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
             matchItems.getMatchScore().setGuestScore(Integer.parseInt(data.get("guestScore")));
         }
 
-        //
         if (null != data.get("home1") && matchItems.getMatchScore() != null) {
             matchItems.getMatchScore().setHome1(Integer.parseInt(data.get("home1")));
         }
@@ -970,8 +839,10 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
 
         secondInitData(sendUrl, sendMap);
     }
+    /**
+     * 详情页返回
+     * */
     public void onEventMainThread(CustomDetailsEvent event) {
-//        updateAdapter();
     }
 
     /**
@@ -1009,9 +880,8 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
      */
     @Override
     public void onRefresh() {
-
         setState(VIEW_STATUS_LOADING);
-        mLoadHandler.postDelayed(mRun, 500);
+        mCustomHandler.postDelayed(mCuntomRun, 500);
     }
 
     private void updateAdapter() {
