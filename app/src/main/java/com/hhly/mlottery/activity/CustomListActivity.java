@@ -55,8 +55,8 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
     private TextView mCustomText;
     private ImageView mBack;
 
-    private String CUSTOM_LEAGUE_FOCUSID = "custom_leagueId_focus_ids";
-    private String CUSTOM_TEAM_FOCUSID = "custom_team_focus_ids";
+    public static final String CUSTOM_LEAGUE_FOCUSID = "custom_leagueId_focus_ids";
+    public static final String CUSTOM_TEAM_FOCUSID = "custom_team_focus_ids";
 
     private final static int VIEW_STATUS_LOADING = 1;//请求中
     private final static int VIEW_STATUS_NET_NO_DATA = 2;//暂无数据
@@ -206,7 +206,6 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
                 String currentFucusTeamId = PreferenceUtil.getString(CUSTOM_TEAM_FOCUSID, "");
 
                 if (currentFucusLeagueId.equals("") && currentFucusTeamId.equals("")) {
-                    Toast.makeText(mContext, "无任何定制", Toast.LENGTH_SHORT).show();
 
                     for (int i = 0; i < mFirstData.size(); i++) {
                         if (mFirstData.get(i) instanceof CustomFristBean) {
