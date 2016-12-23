@@ -38,6 +38,7 @@ import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.util.AccessTokenKeeper;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
+import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ShareConstants;
@@ -304,6 +305,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             case R.id.tv_login: // 登录
                 MobclickAgent.onEvent(mContext, "LoginActivity_LoginOk");
                 login();
+                // 关闭软键盘
+                CyUtils.hideKeyBoard(this);
                 break;
             case R.id.tv_forgetpw:
                 MobclickAgent.onEvent(mContext, "LoginActivity_FindPassWord");

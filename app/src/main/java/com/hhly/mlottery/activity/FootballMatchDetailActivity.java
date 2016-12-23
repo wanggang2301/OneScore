@@ -56,6 +56,7 @@ import com.hhly.mlottery.frame.footframe.IntelligenceFragment;
 import com.hhly.mlottery.frame.footframe.OddsFragment;
 import com.hhly.mlottery.frame.footframe.StatisticsFragment;
 import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFocusEventBusEntity;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;
@@ -2426,6 +2427,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             }
             MobclickAgent.onPageStart("Football_TalkAboutBallFragment");
             isTalkAboutBall = true;
+            PreferenceUtil.commitBoolean(AppConstants.FOOTBALL_RED_KEY, true);
             L.d("xxx", "TalkAboutBallFragment>>>显示");
         }
         if (isAnalyzeFragment) {

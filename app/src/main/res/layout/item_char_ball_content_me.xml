@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingEnd="40dp"
+        android:paddingRight="40dp"
         android:visibility="gone">
 
         <TextView
@@ -58,27 +58,42 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_nickname_me"
                 android:gravity="right"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
-                <io.github.rockerhieu.emojicon.EmojiconTextView
-                    android:id="@+id/my_text"
+                <ImageView
+                    android:id="@+id/iv_send_error"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/chart_ball_right_bg"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/mdy_333"
-                    android:textSize="14sp"
+                    android:layout_gravity="center"
+                    android:paddingRight="5dp"
                     android:visibility="gone"
-                    emojicon:emojiconSize="20sp"
-                    tools:text="test" />
+                    android:src="@mipmap/chart_ball_send_error" />
 
-                <TextView
-                    android:id="@+id/my_image"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    tools:background="@mipmap/chart_ball_jinggaoni" />
+                    android:gravity="right"
+                    android:orientation="vertical">
 
+                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                        android:id="@+id/my_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/chart_ball_right_bg"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/mdy_333"
+                        android:textSize="14sp"
+                        android:visibility="gone"
+                        emojicon:emojiconSize="20sp"
+                        tools:text="test" />
+
+                    <TextView
+                        android:id="@+id/my_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        tools:background="@mipmap/chart_ball_jinggaoni" />
+                </LinearLayout>
             </LinearLayout>
 
         </RelativeLayout>

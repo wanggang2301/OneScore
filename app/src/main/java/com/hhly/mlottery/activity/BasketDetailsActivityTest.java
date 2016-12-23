@@ -44,6 +44,7 @@ import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.L;
@@ -312,8 +313,10 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
         if (isNBA) {  //是NBA
             mTabsAdapter.addFragments(mBasketLiveFragment, mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mChartBallFragment);
+            isFragment5 = true; // 直接
         } else {
             mTabsAdapter.addFragments(mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mChartBallFragment);
+            isFragment0 = true;// 分析
         }
 
         mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
@@ -336,7 +339,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 isHindShow(position);
                 if (position != 4) {// 聊球界面禁用下拉刷新
                     MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
-                }else{
+                } else {
                     mRefreshLayout.setEnabled(true); //展开
                 }
             }
@@ -741,7 +744,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     /**
      * 直播、分析、欧赔、亚盘、大小、聊球Fragment页面统计
      */
-    private boolean isFragment0 = true;
+    private boolean isFragment0 = false;
     private boolean is0 = false;
     private boolean isFragment1 = false;
     private boolean is1 = false;
@@ -751,12 +754,15 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private boolean is3 = false;
     private boolean isFragment4 = false;
     private boolean is4 = false;
-
     private boolean isFragment5 = false;
     private boolean is5 = false;
 
     private void isHindShow(int position) {
-        switch (position) {
+        int index = position;
+        if (!isNBA) {
+            index = position + 1;
+        }
+        switch (index) {
 
             case 0: //直播
                 isFragment0 = false;
@@ -877,6 +883,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         if (isFragment4) {
             MobclickAgent.onPageStart("BasketBall_Info_LQ");
             is4 = true;
+            PreferenceUtil.commitBoolean(AppConstants.BASKET_RED_KEY, true);
             L.d("xxx", "聊球显示");
         }
     }
@@ -913,7 +920,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         if (isFragment5) {
             MobclickAgent.onPageStart("BasketBall_Info_ZB");
             is5 = true;
-            L.d("xxx", "聊球显示");
+            L.d("xxx", "直播显示");
         }
     }
 
