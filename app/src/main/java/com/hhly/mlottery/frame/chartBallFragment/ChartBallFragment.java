@@ -244,7 +244,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         params.put("thirdId", mThirdId);
         params.put("pageSize", LOADING_MSG_SIZE);
         params.put("slideType", slideType);
-        if (SLIDE_TYPE_MSG_HISTORY.equals(slideType)) {
+        if (SLIDE_TYPE_MSG_HISTORY.equals(slideType) && historyBeen != null && historyBeen.size() != 0) {
             params.put("msgId", historyBeen.get(0).getMsgId());
         }
 
@@ -260,7 +260,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                                 // 将数据添加到前面
                                 List<ChartReceive.DataBean.ChatHistoryBean> chatHistory = mChartReceive.getData().getChatHistory();
 
-                                historyBeen.addAll(0,chatHistory);
+                                historyBeen.addAll(0, chatHistory);
                                 mAdapter.notifyDataSetChanged();
                             } else if (SLIDE_TYPE_MSG_NEW.equals(slideType)) {
                                 historyBeen.addAll(mChartReceive.getData().getChatHistory());
@@ -363,7 +363,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                                                     m = bannedTime - d * 1440 - h * 60;
                                                 }
                                             }
-                                            ToastTools.showQuick(mContext,  mContext.getResources().getString(R.string.chart_ball_banned) + String.valueOf(d) +  mContext.getResources().getString(R.string.number_hk_dd) + String.valueOf(h) +  mContext.getResources().getString(R.string.number_hk_hh) + String.valueOf(m) +  mContext.getResources().getString(R.string.number_hk_mm));
+                                            ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.chart_ball_banned) + String.valueOf(d) + mContext.getResources().getString(R.string.number_hk_dd) + String.valueOf(h) + mContext.getResources().getString(R.string.number_hk_hh) + String.valueOf(m) + mContext.getResources().getString(R.string.number_hk_mm));
                                         } else if (bannedTime >= 60) {// 超过一小时
                                             int h = bannedTime / 60;
                                             int m = bannedTime - h * 60;
@@ -371,34 +371,36 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                                             ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.chart_ball_banned) + String.valueOf(h) + mContext.getResources().getString(R.string.number_hk_hh) + String.valueOf(m) + mContext.getResources().getString(R.string.number_hk_mm));
 
                                         } else {// 直接显示分钟
-                                            ToastTools.showQuick(mContext,  mContext.getResources().getString(R.string.chart_ball_banned) + String.valueOf(bannedTime) +  mContext.getResources().getString(R.string.number_hk_mm));
+                                            ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.chart_ball_banned) + String.valueOf(bannedTime) + mContext.getResources().getString(R.string.number_hk_mm));
                                         }
                                         break;
                                     case 1014:// 被举报用户不存在
                                         sendErrorChanged(message);
-                                        ToastTools.showQuick(mContext,  mContext.getResources().getString(R.string.chart_ball_report_user_not));
+                                        ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.chart_ball_report_user_not));
                                         break;
                                     case 1016:// @用户不存在
                                         sendErrorChanged(message);
-                                        ToastTools.showQuick(mContext,  mContext.getResources().getString(R.string.chart_ball_call_user_not));
+                                        ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.chart_ball_call_user_not));
                                         break;
                                     default:
                                         // 服务器错误
                                         sendErrorChanged(message);
-                                        ToastTools.showQuick(mContext,  mContext.getResources().getString(R.string.about_service_exp));
+                                        ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.about_service_exp));
                                         break;
                                 }
                             } else {
                                 sendErrorChanged(message);
-                                ToastTools.showQuick(mContext,  mContext.getResources().getString(R.string.chart_ball_send_error));
+                                ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.chart_ball_send_error));
                             }
                         }
                     }
                 }, new VolleyContentFast.ResponseErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                        sendErrorChanged(message);
-                        ToastTools.showQuick(mContext,  mContext.getResources().getString(R.string.chart_ball_send_error));
+                        if (!msgCode.equals(TYPE_MSG_JOIN_ROOM)) {
+                            sendErrorChanged(message);
+                            ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.chart_ball_send_error));
+                        }
                     }
                 }, SendMessageBean.class);
     }
