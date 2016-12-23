@@ -62,15 +62,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/advice_like_white"
-                        android:paddingLeft="10dp"
+                        android:paddingLeft="20dp"
                         android:paddingRight="10dp"
-                        android:layout_marginTop="2dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
                         />
                     <TextView
                         android:id="@+id/advice_user_like"
                         android:layout_width="30dp"
                         android:layout_height="wrap_content"
                         android:textSize="13sp"
+                        android:layout_gravity="center_vertical"
                         android:text="0000"
                         />
                 </LinearLayout>
