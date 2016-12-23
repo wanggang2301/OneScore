@@ -701,13 +701,14 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
 
-        if ((-verticalOffset) == appBarLayout.getTotalScrollRange()) {
-            mTitleScore.setVisibility(View.VISIBLE);
-            headLayout.setBackgroundColor(getResources().getColor(R.color.black));
-        } else {
-            mTitleScore.setVisibility(View.INVISIBLE);
-            headLayout.setBackgroundColor(getResources().getColor(R.color.transparency));
-        }
+//        if ((-verticalOffset) == appBarLayout.getTotalScrollRange()) {
+//            mTitleScore.setVisibility(View.VISIBLE);
+//            headLayout.setBackgroundColor(getResources().getColor(R.color.black));
+//        } else {
+//            mTitleScore.setVisibility(View.INVISIBLE);
+//            headLayout.setBackgroundColor(getResources().getColor(R.color.transparency));
+//        }
+        headLayout.setBackgroundColor(getResources().getColor(R.color.transparency));
 
         if (mCollapsingToolbarLayout.getHeight() + verticalOffset < mHeadviewpager.getHeight()) {
             mRefreshLayout.setEnabled(false);   //收缩
