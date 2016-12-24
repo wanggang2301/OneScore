@@ -1,5 +1,7 @@
 package com.hhly.mlottery.bean.chart;
 
+import com.hhly.mlottery.bean.enums.SendMsgEnum;
+
 import java.util.List;
 
 /**
@@ -73,7 +75,7 @@ public class ChartReceive {
             private int msgType;
             private String onlineNum;
             private boolean isShowTime;
-            private boolean isSendSuccess;
+            private int sendStart = SendMsgEnum.SEND_SUCCESS;
 
             public ChatHistoryBean(String msgid, int msgcode, String s, FromUserBean fromUserBean, ToUser toUserBean,String time) {
                 this.msgId = msgid;
@@ -88,13 +90,12 @@ public class ChartReceive {
 
             }
 
-
-            public boolean isSendSuccess() {
-                return isSendSuccess;
+            public int getSendStart() {
+                return sendStart;
             }
 
-            public void setSendSuccess(boolean sendSuccess) {
-                isSendSuccess = sendSuccess;
+            public void setSendStart(int sendStart) {
+                this.sendStart = sendStart;
             }
 
             public boolean isShowTime() {

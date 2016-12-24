@@ -210,7 +210,6 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
             mThirdId = getIntent().getStringExtra(MATCH_THIRD_ID);
             callName = getIntent().getStringExtra("CALL_NAME");
             callUserId = getIntent().getStringExtra("CALL_USER_ID");
-            System.out.println("xxxxx 头像点击传过来的： " + callName);
             if (!TextUtils.isEmpty(callName)) {
                 mEditText.setText(Html.fromHtml("<font color='#0090ff'>@" + callName + ":</font>"));
                 mEditText.setSelection(mEditText.getText().length());
@@ -348,9 +347,6 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
                         // 向会话列表发送输入内容
                         EventBus.getDefault().post(chatHistoryBean);
 
-                        // 用户自己的头像URL发向弹幕
-                        EventBus.getDefault().post(new BarrageBean(AppConstants.register.getData().getUser().getHeadIcon(), mEditText.getText().toString()));
-
                         // 发送之后 清空输入框
                         mEditText.setText("");
 
@@ -373,7 +369,6 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
                 }
                 break;
             case R.id.iv_gallery:
-                // TODO 此处不流畅，需要优化
                 // 隐藏软键盘
                 if (ChartballActivity.this.getCurrentFocus() != null) {
                     inputMethodManager.hideSoftInputFromWindow(ChartballActivity.this.getCurrentFocus()

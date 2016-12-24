@@ -31,12 +31,12 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.chartBallAdapter.ChartBallAdapter;
-import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.BarrageBean;
 import com.hhly.mlottery.bean.chart.ChartReceive;
 import com.hhly.mlottery.bean.chart.ChartRoom;
 import com.hhly.mlottery.bean.chart.SendMessageBean;
+import com.hhly.mlottery.bean.enums.SendMsgEnum;
 import com.hhly.mlottery.bean.footballDetails.MatchLike;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
@@ -55,6 +55,7 @@ import java.util.UUID;
 
 import de.greenrobot.event.EventBus;
 import io.github.rockerhieu.emojicon.EmojiconEditText;
+import pl.droidsonroids.gif.GifImageView;
 
 
 /**
@@ -142,7 +143,11 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
             mThirdId = getArguments().getString(MATCH_THIRD_ID);
         }
         setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic("USER.topic.chatroom.football" + mThirdId);
+        if (type == 0) {
+            setTopic("USER.topic.chatroom.football" + mThirdId);
+        } else if (type == 1) {
+            setTopic("USER.topic.chatroom.basketball" + mThirdId);
+        }
         EventBus.getDefault().register(this);
         super.onCreate(savedInstanceState);
     }
@@ -335,13 +340,13 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                             isOneJoin = false;// 首次进入聊天室调用成功
                         } else {
                             if (receive != null && receive.getResult().equals("200")) {
-                                System.out.println("xxxxx 消息发送：" + receive.getData().getResultMsg());
                                 // 发送成功
                                 switch (receive.getData().getResultCode()) {
                                     case 1000:// 发送成功
+                                        sendMsgChanged(message, SendMsgEnum.SEND_SUCCESS);
                                         break;
                                     case 1010:// 您已被禁言
-                                        sendErrorChanged(message);
+                                        sendMsgChanged(message, SendMsgEnum.SEND_ERROR);
                                         int bannedTime = 0;
                                         try {
                                             bannedTime = Integer.parseInt(receive.getData().getResultObj());
@@ -375,22 +380,21 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                                         }
                                         break;
                                     case 1014:// 被举报用户不存在
-                                        sendErrorChanged(message);
+                                        sendMsgChanged(message, SendMsgEnum.SEND_ERROR);
                                         ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.chart_ball_report_user_not));
                                         break;
                                     case 1016:// @用户不存在
-                                        sendErrorChanged(message);
+                                        sendMsgChanged(message, SendMsgEnum.SEND_ERROR);
                                         ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.chart_ball_call_user_not));
                                         break;
                                     default:
                                         // 服务器错误
-                                        sendErrorChanged(message);
+                                        sendMsgChanged(message, SendMsgEnum.SEND_ERROR);
                                         ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.about_service_exp));
                                         break;
                                 }
                             } else {
-                                sendErrorChanged(message);
-                                ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.chart_ball_send_error));
+                                sendMsgChanged(message, SendMsgEnum.SEND_ERROR);
                             }
                         }
                     }
@@ -398,21 +402,34 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                         if (!msgCode.equals(TYPE_MSG_JOIN_ROOM)) {
-                            sendErrorChanged(message);
-                            ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.chart_ball_send_error));
+                            sendMsgChanged(message, SendMsgEnum.SEND_ERROR);
                         }
                     }
                 }, SendMessageBean.class);
     }
 
-    private void sendErrorChanged(String message) {
-        for (int i = 0, len = historyBeen.size(); i < len; i++) {
-            if (historyBeen.get(i).getMsgId() == null && historyBeen.get(i).getMessage().equals(message)) {
-                historyBeen.get(i).setSendSuccess(true);
+    private void sendMsgChanged(String message, int sendStart) {
+        ChartReceive.DataBean.ChatHistoryBean chatHistoryBean = null;
+        for (int len = historyBeen.size() - 1, i = len; i >= 0; i--) {
+            if (historyBeen.get(i).getMessage().equals(message)) {
+                historyBeen.get(i).setSendStart(sendStart);
+                mAdapter.notifyDataSetChanged();
+                chatHistoryBean = historyBeen.get(i);
                 break;
             }
         }
-        mAdapter.notifyDataSetChanged();
+        if (chatHistoryBean != null) {
+            if (sendStart == SendMsgEnum.SEND_SUCCESS) {
+                if (chatHistoryBean.getMsgCode() == 1) {
+                    // 普通消息
+                    EventBus.getDefault().post(new BarrageBean(AppConstants.register.getData().getUser().getHeadIcon(), chatHistoryBean.getMessage()));
+                } else if (chatHistoryBean.getMsgCode() == 2) {
+                    // @消息
+                    String msg = "@" + chatHistoryBean.getToUser().getUserNick() + ":" + chatHistoryBean.getMessage();
+                    EventBus.getDefault().post(new BarrageBean(AppConstants.register.getData().getUser().getHeadIcon(), msg));
+                }
+            }
+        }
     }
 
     //请求点赞数据
@@ -533,21 +550,21 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     fl_not_chart_image.setVisibility(View.GONE);
                     rl_chart_content.setVisibility(View.VISIBLE);
 
-
                     sleepView();
 
                     break;
                 case MSG_SEND_TO_ME:// 本地发送消息
                     ChartReceive.DataBean.ChatHistoryBean contentEntitiy = (ChartReceive.DataBean.ChatHistoryBean) msg.obj;
-                    if (!TextUtils.isEmpty(contentEntitiy.getToUser().getUserId())) {
-                        sendMessageToServer(TYPE_MSG_TO_ME, contentEntitiy.getMessage(), contentEntitiy.getToUser().getUserId());
-                    } else {
-                        sendMessageToServer(TYPE_MSG, contentEntitiy.getMessage(), null);
-                    }
                     fl_not_chart_image.setVisibility(View.GONE);
                     rl_chart_content.setVisibility(View.VISIBLE);
                     historyBeen.add(contentEntitiy);
                     mAdapter.notifyDataSetChanged();
+                    if (contentEntitiy.getMsgCode() == 2 && !TextUtils.isEmpty(contentEntitiy.getToUser().getUserId())) {
+                        sendMessageToServer(TYPE_MSG_TO_ME, contentEntitiy.getMessage(), contentEntitiy.getToUser().getUserId());
+                    } else {
+                        sendMessageToServer(TYPE_MSG, contentEntitiy.getMessage(), null);
+                    }
+
                     sleepView();
 
                     break;
@@ -569,7 +586,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         if ("EXIT_CURRENT_ACTIVITY".equals(contentEntitiy.getMessage()) && "EXIT_CURRENT_ACTIVITY".equals(contentEntitiy.getFromUser().getUserNick())) {
             mContext.finish();
         } else {
-//            contentEntitiy.setSendSuccess(true);
+            contentEntitiy.setSendStart(SendMsgEnum.SEND_LOADING);
             Message msg = mHandler.obtainMessage();
             msg.what = MSG_SEND_TO_ME;
             msg.obj = contentEntitiy;
@@ -595,6 +612,23 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     @Override
     public void userLoginBack() {
         loginBack();
+    }
+
+    @Override
+    public void againSendMsg(String msg) {
+        // 重新发送
+        for (int i = 0, len = historyBeen.size(); i < len; i++) {
+            if (historyBeen.get(i).getSendStart() == SendMsgEnum.SEND_ERROR && historyBeen.get(i).getFromUser().getUserId().equals(AppConstants.register.getData().getUser().getUserId()) && historyBeen.get(i).getMessage().equals(msg)) {
+                if (historyBeen.get(i).getMsgCode() == 2 && !TextUtils.isEmpty(historyBeen.get(i).getToUser().getUserId())) {
+                    sendMessageToServer(TYPE_MSG_TO_ME, historyBeen.get(i).getMessage(), historyBeen.get(i).getToUser().getUserId());
+                } else {
+                    sendMessageToServer(TYPE_MSG, historyBeen.get(i).getMessage(), null);
+                }
+                historyBeen.get(i).setSendStart(SendMsgEnum.SEND_LOADING);
+                mAdapter.notifyDataSetChanged();
+                break;
+            }
+        }
     }
 
     @Override

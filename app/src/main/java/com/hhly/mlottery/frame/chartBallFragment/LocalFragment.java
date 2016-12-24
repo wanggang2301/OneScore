@@ -74,8 +74,6 @@ public class LocalFragment extends Fragment {
                         EventBus.getDefault().post(new ChartReceive.DataBean.ChatHistoryBean(null, 1, entry.getKey(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
                                 , AppConstants.register.getData().getUser().getHeadIcon(), AppConstants.register.getData().getUser().getNickName()), new ChartReceive.DataBean.ChatHistoryBean.ToUser(), null));
 
-                        // 用户自己的头像URL发向弹幕
-                        EventBus.getDefault().post(new BarrageBean(AppConstants.register.getData().getUser().getHeadIcon(), entry.getKey()));
                         ((ChartballActivity) mContext).hideKeyOrGallery();
                         return;
                     }

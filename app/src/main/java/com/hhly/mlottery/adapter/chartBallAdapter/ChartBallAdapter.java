@@ -13,6 +13,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -22,8 +24,10 @@ import com.hhly.mlottery.activity.ChartballActivity;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewAdapter;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.bean.chart.ChartReceive;
+import com.hhly.mlottery.bean.enums.SendMsgEnum;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
+import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.view.CircleImageView;
 
 import java.util.List;
@@ -168,10 +172,25 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                     viewHolderMe.my_image.setVisibility(View.VISIBLE);
                     viewHolderMe.my_text.setVisibility(View.GONE);
                 }
-                if (!mData.get(position).isSendSuccess()) {
-                    viewHolderMe.iv_send_error.setVisibility(View.GONE);
-                } else {
-                    viewHolderMe.iv_send_error.setVisibility(View.VISIBLE);
+                switch (mData.get(position).getSendStart()) {
+                    case SendMsgEnum.SEND_LOADING:
+                        viewHolderMe.iv_send_error.setVisibility(View.GONE);
+                        viewHolderMe.pb_send_loading.setVisibility(View.VISIBLE);
+                        break;
+                    case SendMsgEnum.SEND_SUCCESS:
+                        viewHolderMe.iv_send_error.setVisibility(View.GONE);
+                        viewHolderMe.pb_send_loading.setVisibility(View.GONE);
+                        break;
+                    case SendMsgEnum.SEND_ERROR:
+                        viewHolderMe.iv_send_error.setVisibility(View.VISIBLE);
+                        viewHolderMe.pb_send_loading.setVisibility(View.GONE);
+                        viewHolderMe.iv_send_error.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                againSendMsg(mData.get(position).getMessage());
+                            }
+                        });
+                        break;
                 }
                 break;
         }
@@ -179,13 +198,13 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
 
     @Override
     public int getRecycleViewItemType(int position) {
-        if(CommonUtils.isLogin()){
+        if (CommonUtils.isLogin()) {
             if (mData.get(position).getFromUser().getUserId().equals(AppConstants.register.getData().getUser().getUserId())) {
                 return 1;
             } else {
                 return 0;
             }
-        }else{
+        } else {
             return 0;
         }
     }
@@ -219,6 +238,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
         CircleImageView my_bighead_view;
         LinearLayout ll_time_content_me;
         ImageView iv_send_error;
+        ProgressBar pb_send_loading;
 
         public ViewHolderMe(View itemView) {
             super(itemView);
@@ -229,6 +249,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
             tv_time_me = (TextView) itemView.findViewById(R.id.tv_time_me);
             ll_time_content_me = (LinearLayout) itemView.findViewById(R.id.ll_time_content_me);
             iv_send_error = (ImageView) itemView.findViewById(R.id.iv_send_error);
+            pb_send_loading = (ProgressBar) itemView.findViewById(R.id.pb_send_loading);
         }
     }
 
@@ -277,14 +298,19 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
     public interface AdapterListener {
         void shwoDialog(String msgId, String toUserId, String toUserNick);
         void userLoginBack();
+        void againSendMsg(String msg);
     }
 
     public static void showDialog(String msgId, String toUserId, String toUserNick) {
         mAdapterListener.shwoDialog(msgId, toUserId, toUserNick);
     }
 
-    public static void userLoginBack(){
+    public static void userLoginBack() {
         mAdapterListener.userLoginBack();
+    }
+
+    public static void againSendMsg(String msg){
+        mAdapterListener.againSendMsg(msg);
     }
 
     public void setShowDialogOnClickListener(AdapterListener listener) {
