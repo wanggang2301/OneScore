@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 
@@ -19,11 +20,13 @@ public class LocalGridAdapter extends BaseAdapter {
 
     Context mContext;
     ArrayList<Integer> mData;
+    ArrayList<String> mDataName;
     private ViewHolder mViewHolder;// ViewHolder
 
-    public LocalGridAdapter(Context context, ArrayList<Integer> list){
+    public LocalGridAdapter(Context context, ArrayList<Integer> list,ArrayList<String> listname){
         this.mContext = context;
         this.mData = list;
+        this.mDataName = listname;
     }
 
     @Override
@@ -47,11 +50,13 @@ public class LocalGridAdapter extends BaseAdapter {
             mViewHolder = new ViewHolder();
             convertView = View.inflate(mContext, R.layout.chart_ball_local_page_item_icon, null);
             mViewHolder.iv_icon = (ImageView) convertView.findViewById(R.id.iv_icon_home);
+            mViewHolder.tv_icon_name = (TextView) convertView.findViewById(R.id.tv_icon_name);
             convertView.setTag(mViewHolder);
         }
         mViewHolder = (ViewHolder) convertView.getTag();
 
         mViewHolder.iv_icon.setBackgroundResource(mData.get(position));
+        mViewHolder.tv_icon_name.setText(mDataName.get(position));
 
         return convertView;
     }
@@ -61,5 +66,6 @@ public class LocalGridAdapter extends BaseAdapter {
      */
     private static class ViewHolder {
         ImageView iv_icon;
+        TextView tv_icon_name;
     }
 }

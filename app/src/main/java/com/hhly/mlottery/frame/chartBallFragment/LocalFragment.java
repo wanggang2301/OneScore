@@ -31,14 +31,17 @@ import de.greenrobot.event.EventBus;
 
 public class LocalFragment extends Fragment {
     private static final String DATA_KEY = "mData";
+    private static final String DATA_NAME = "mDataName";
     private ArrayList<Integer> mData;
+    private ArrayList<String> listName;
     private View mView;
     private Context mContext;
     private MyGridView gridView;
 
-    public static LocalFragment newInstance(ArrayList<Integer> iconlist) {
+    public static LocalFragment newInstance(ArrayList<Integer> iconlist , ArrayList<String> iconlistname) {
         Bundle bundle = new Bundle();
         bundle.putIntegerArrayList(DATA_KEY, iconlist);
+        bundle.putStringArrayList(DATA_NAME, iconlistname);
         LocalFragment fragment = new LocalFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -50,6 +53,7 @@ public class LocalFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             mData = args.getIntegerArrayList(DATA_KEY);
+            listName = args.getStringArrayList(DATA_NAME);
         }
     }
 
@@ -84,6 +88,6 @@ public class LocalFragment extends Fragment {
 
     private void initView() {
         gridView = (MyGridView) mView.findViewById(R.id.local_page_item_gridView);
-        gridView.setAdapter(new LocalGridAdapter(mContext, mData));
+        gridView.setAdapter(new LocalGridAdapter(mContext, mData, listName));
     }
 }

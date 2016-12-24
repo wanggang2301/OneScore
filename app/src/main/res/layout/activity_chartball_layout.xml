@@ -71,7 +71,7 @@
         <!--表情容器-->
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="160dp">
+            android:layout_height="180dp">
 
             <RelativeLayout
                 android:id="@+id/rl_local"

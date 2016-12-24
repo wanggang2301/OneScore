@@ -222,12 +222,14 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
         localPagerSize = AppConstants.localIcon.length % LOCAL_PAGER_SIZE == 0 ? AppConstants.localIcon.length / LOCAL_PAGER_SIZE : AppConstants.localIcon.length / LOCAL_PAGER_SIZE + 1;
         for (int i = 0; i < localPagerSize; i++) {
             ArrayList<Integer> list = new ArrayList<>();
+            ArrayList<String> listName = new ArrayList<>();
             int startIndex = i * LOCAL_PAGER_SIZE;
             int endIndex = (i + 1) * LOCAL_PAGER_SIZE <= AppConstants.localIcon.length ? (i + 1) * LOCAL_PAGER_SIZE : AppConstants.localIcon.length;
             for (int j = startIndex; j < endIndex; j++) {
                 list.add(AppConstants.localIcon[j]);
+                listName.add(AppConstants.localIconName[j]);
             }
-            localFragments.add(LocalFragment.newInstance(list));
+            localFragments.add(LocalFragment.newInstance(list,listName));
         }
         localPagerAdapter.addFragments(localFragments);
         view_pager_local.setAdapter(localPagerAdapter);
