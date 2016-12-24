@@ -153,19 +153,17 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_custom:
-
                 if (CommonUtils.isLogin()) {
-
                     PreferenceUtil.commitBoolean("custom_red_dot" , false);
                     mRedDot.setVisibility(View.GONE);
                     startActivity(new Intent(HomeUserOptionsActivity.this, CustomActivity.class));
                 }else{
-
-                    startActivity(new Intent(this, LoginActivity.class));
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    intent.putExtra("custom",true); //传 true  表示我的定制进入登录  完成后直接进入定制界面
+                    startActivity(intent);
+//                    startActivity(new Intent(this, LoginActivity.class));
                 }
-
                 break;
-
             case R.id.rl_language_frame:// 语言切换
                 MobclickAgent.onEvent(HomeUserOptionsActivity.this, "LanguageChanger");
                 Intent intent = new Intent(HomeUserOptionsActivity.this, HomeLanguageActivity.class);
