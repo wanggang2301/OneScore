@@ -318,7 +318,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private View red_point;
     private ImageView barrage_switch;
 
-    boolean barrage_isFocus =true;
+    boolean barrage_isFocus = true;
 
 
     @Override
@@ -442,14 +442,17 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
 
     }
-    public void onEventMainThread(BarrageBean barrageBean){
-        barrage_view.setDatas(barrageBean.getUrl(),barrageBean.getMsg().toString());
+
+    public void onEventMainThread(BarrageBean barrageBean) {
+        barrage_view.setDatas(barrageBean.getUrl(), barrageBean.getMsg().toString());
     }
-    public void onEventMainThread(GoneBarrage barrageBean){
+
+    public void onEventMainThread(GoneBarrage barrageBean) {
         barrage_view.setVisibility(View.GONE);
 
     }
-    public void onEventMainThread(OpenBarrage barrageBean){
+
+    public void onEventMainThread(OpenBarrage barrageBean) {
         barrage_view.setVisibility(View.VISIBLE);
 
     }
@@ -493,10 +496,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     L.d(TAG, "下拉刷新未开赛和正在比赛的");
                     loadData();
 
-                    mAnalyzeFragment.initData();//分析下拉刷新
-
-                    mOddsFragment.oddPlateRefresh(); //指数刷新
-
                     //走势图
                     mStatisticsFragment.initChartData(mMatchDetail.getLiveStatus());
                     //统计图
@@ -506,8 +505,16 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         connectWebSocket();
                     }
 
-                    // 聊球
-                    mChartBallFragment.onRefresh();
+
+                    if(isAnalyze){
+                        mAnalyzeFragment.initData();// 分析下拉刷新
+                    }
+                    if(isOdds){
+                        mOddsFragment.oddPlateRefresh(); // 指数刷新
+                    }
+                    if (isTalkAboutBall) {
+                        mChartBallFragment.onRefresh();// 聊球
+                    }
                 }
             }
         }, 1000);
@@ -2011,17 +2018,16 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.about_net_failed), Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case  R.id.barrage_switch:
+            case R.id.barrage_switch:
 
 
-                if(barrage_isFocus)
-                {
+                if (barrage_isFocus) {
                     barrage_switch.setImageResource(R.mipmap.danmu_open);
-                    barrage_isFocus=false;
+                    barrage_isFocus = false;
                     barrage_view.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     barrage_switch.setImageResource(R.mipmap.danmu_close);
-                    barrage_isFocus=true;
+                    barrage_isFocus = true;
                     barrage_view.setVisibility(View.GONE);
                 }
                 break;
@@ -2197,7 +2203,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 isHindShow(position);
                 if (position != 5) {// 聊球界面禁用下拉刷新
                     MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
-                }else{
+                } else {
                     mRefreshLayout.setEnabled(true); //展开
                     appBarLayout.setExpanded(false);
                 }
@@ -2629,6 +2635,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     /**
      * load internet image
+     *
      * @param imageUrl
      * @param imageView
      */

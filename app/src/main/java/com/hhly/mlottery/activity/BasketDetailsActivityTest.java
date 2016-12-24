@@ -736,17 +736,27 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 mRefreshLayout.setRefreshing(false);
                 loadData();
                 //直播刷新
-                if (isNBA) {
+                if (isNBA && is5) {
                     if (mBasketLiveFragment != null) {
                         mBasketLiveFragment.refresh();
                     }
                 }
 
-                mAnalyzeFragment.initData();
-                mOddsEuro.initData();
-                mOddsLet.initData();
-                mOddsSize.initData();
-                mChartBallFragment.onRefresh();
+                if(is0){
+                    mAnalyzeFragment.initData();// 分析
+                }
+                if(is2){
+                    mOddsEuro.initData();// 亚盘
+                }
+                if(is1){
+                    mOddsLet.initData();// 欧赔
+                }
+                if(is3){
+                    mOddsSize.initData();// 大小
+                }
+                if(is4){
+                    mChartBallFragment.onRefresh();// 聊球
+                }
 //                mTalkAboutBallFragment.loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
             }
         }, 1000);

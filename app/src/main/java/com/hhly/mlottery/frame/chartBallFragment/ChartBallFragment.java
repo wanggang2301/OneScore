@@ -471,14 +471,12 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case START_LOADING:
-//                    ll_progress.setVisibility(View.VISIBLE);
+                    ll_progress.setVisibility(View.VISIBLE);
                     ll_errorLoading.setVisibility(View.GONE);
                     break;
                 case SUCCESS_LOADING:
                     // 开启socket推送
                     connectWebSocket();
-                    ll_progress.setVisibility(View.GONE);
-                    ll_errorLoading.setVisibility(View.GONE);
 
                     historyBeen = mChartReceive.getData().getChatHistory();
                     if (historyBeen != null) {
@@ -522,6 +520,9 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                         fl_not_chart_image.setVisibility(View.GONE);
                         rl_chart_content.setVisibility(View.VISIBLE);
                     }
+
+                    ll_progress.setVisibility(View.GONE);
+                    ll_errorLoading.setVisibility(View.GONE);
                     break;
                 case ERROR_LOADING:
                     ll_progress.setVisibility(View.GONE);
@@ -843,6 +844,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         }
     }
 
+    // 下拉刷新
     public void onRefresh() {
         initData(SLIDE_TYPE_MSG_HISTORY);
     }
