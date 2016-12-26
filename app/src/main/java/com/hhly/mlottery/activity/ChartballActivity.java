@@ -227,9 +227,9 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
             int endIndex = (i + 1) * LOCAL_PAGER_SIZE <= AppConstants.localIcon.length ? (i + 1) * LOCAL_PAGER_SIZE : AppConstants.localIcon.length;
             for (int j = startIndex; j < endIndex; j++) {
                 list.add(AppConstants.localIcon[j]);
-                listName.add(AppConstants.localIconName[j]);
+                listName.add(getLocalName()[j]);
             }
-            localFragments.add(LocalFragment.newInstance(list,listName));
+            localFragments.add(LocalFragment.newInstance(list, listName));
         }
         localPagerAdapter.addFragments(localFragments);
         view_pager_local.setAdapter(localPagerAdapter);
@@ -449,6 +449,33 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
             inputMethodManager.hideSoftInputFromWindow(ChartballActivity.this.getCurrentFocus()
                     .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
+    }
+
+    /**
+     * 本地表情描述，需和AppConstants.localIcon里的资源文件保持一致
+     *
+     * @return
+     */
+    private String[] getLocalName() {
+        String[] localIconName = {
+                mContext.getResources().getString(R.string.local_juyijing),
+                mContext.getResources().getString(R.string.local_shihuale),
+                mContext.getResources().getString(R.string.local_zailaiyijiao),
+                mContext.getResources().getString(R.string.local_mengkuanle),
+                mContext.getResources().getString(R.string.local_yayajing),
+                mContext.getResources().getString(R.string.local_dacaipan),
+                mContext.getResources().getString(R.string.local_jinggaoni),
+                mContext.getResources().getString(R.string.local_sesese),
+                mContext.getResources().getString(R.string.local_qiudatui),
+                mContext.getResources().getString(R.string.local_youqingguanlaoye),
+                mContext.getResources().getString(R.string.local_fubaila),
+                mContext.getResources().getString(R.string.local_shoumila),
+                mContext.getResources().getString(R.string.local_touzhele),
+                mContext.getResources().getString(R.string.local_shangtiantai),
+                mContext.getResources().getString(R.string.local_chitule),
+                mContext.getResources().getString(R.string.local_xihushuiya)
+        };
+        return localIconName;
     }
 }
 
