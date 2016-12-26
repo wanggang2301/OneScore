@@ -34,8 +34,6 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.bean.BarrageBean;
-import com.hhly.mlottery.bean.GoneBarrage;
-import com.hhly.mlottery.bean.OpenBarrage;
 import com.hhly.mlottery.bean.ShareBean;
 import com.hhly.mlottery.bean.footballDetails.DetailsCollectionCountBean;
 import com.hhly.mlottery.bean.footballDetails.MatchDetail;
@@ -318,7 +316,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private View red_point;
     private ImageView barrage_switch;
 
-    boolean barrage_isFocus =false;
+    boolean barrage_isFocus = true;
 
 
     @Override
@@ -442,17 +440,11 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
 
     }
-    public void onEventMainThread(BarrageBean barrageBean){
-        barrage_view.setDatas(barrageBean.getUrl(),barrageBean.getMsg().toString());
-    }
-    public void onEventMainThread(GoneBarrage barrageBean){
-        barrage_view.setVisibility(View.GONE);
 
+    public void onEventMainThread(BarrageBean barrageBean) {
+        barrage_view.setDatas(barrageBean.getUrl(), barrageBean.getMsg().toString());
     }
-    public void onEventMainThread(OpenBarrage barrageBean){
-        barrage_view.setVisibility(View.VISIBLE);
 
-    }
 
 
     @Override
@@ -2632,6 +2624,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     /**
      * load internet image
+     *
      * @param imageUrl
      * @param imageView
      */

@@ -1,6 +1,8 @@
 package com.hhly.mlottery.frame.basketballframe;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -73,6 +75,9 @@ public class BasketTextLiveFragment extends Fragment {
     private TextView network_exception_reload_btn;
 */
     private FrameLayout fl_comment;
+    private Activity mActivity;
+
+    private Context mContext;
 
 
     public static BasketTextLiveFragment newInstance() {
@@ -90,6 +95,7 @@ public class BasketTextLiveFragment extends Fragment {
         if (getArguments() != null) {
             mThirdId = getArguments().getString("thirdId");
         }
+        this.mContext = mActivity;
 
         EventBus.getDefault().register(this);
     }
@@ -132,8 +138,8 @@ public class BasketTextLiveFragment extends Fragment {
         layoutManager.setOrientation(OrientationHelper.VERTICAL);
 
         //设置Adapter
-        if (getActivity() != null) {
-            mBasketBallTextLiveAdapter = new BasketBallTextLiveAdapter(R.layout.item_basket_text_live_new, null, getActivity());
+        if (mContext != null) {
+            mBasketBallTextLiveAdapter = new BasketBallTextLiveAdapter(R.layout.item_basket_text_live_new, null, mContext);
             mRecyclerView.setAdapter(mBasketBallTextLiveAdapter);
 
             mBasketBallTextLiveAdapter.setPullUpLoading(new BasketBallTextLiveAdapter.PullUpLoading() {
@@ -403,5 +409,11 @@ public class BasketTextLiveFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.mActivity = (Activity) context;
     }
 }
