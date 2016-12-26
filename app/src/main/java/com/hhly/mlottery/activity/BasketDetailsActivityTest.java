@@ -200,7 +200,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private final static String BASKETBALL_GIF = "basketball_gif";
     private BarrageView barrage_view;
     private ImageView barrage_switch;
-    boolean barrage_isFocus=true;
+    boolean barrage_isFocus=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -506,7 +506,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 }
                 break;
             case  R.id.barrage_switch:
-
 
                 if(barrage_isFocus) {
                     barrage_switch.setImageResource(R.mipmap.danmu_open);

@@ -148,8 +148,6 @@ public class BarrageView extends RelativeLayout {
                     if (msg.equals(entry.getKey())) {
                         textView.setVisibility(View.GONE);
                         imagView.setVisibility(View.VISIBLE);
-                        imageView.setMaxHeight(60);
-                        imagView.setMaxHeight(60);
                         imagView.setImageResource(entry.getValue());
 
                         break;

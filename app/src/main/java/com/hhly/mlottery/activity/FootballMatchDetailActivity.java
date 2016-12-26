@@ -318,7 +318,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private View red_point;
     private ImageView barrage_switch;
 
-    boolean barrage_isFocus =true;
+    boolean barrage_isFocus =false;
 
 
     @Override
