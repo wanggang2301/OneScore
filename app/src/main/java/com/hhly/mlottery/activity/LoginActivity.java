@@ -137,6 +137,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private ImageView mLogin_qq;
     private ImageView mLogin_sina;
     private ImageView mLogin_weixin;
+    private boolean isCoustom;
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
@@ -144,6 +145,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.activity_login);
+        if (getIntent().getExtras() != null) {
+            isCoustom = getIntent().getBooleanExtra("custom" , false);
+        }
+
         //应UI要求，把状态栏设置成透明的
         Window window = getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -307,6 +312,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 login();
                 // 关闭软键盘
                 CyUtils.hideKeyBoard(this);
+                if (isCoustom) {
+                    PreferenceUtil.commitBoolean("custom_red_dot" , false);
+                    startActivity(new Intent(this, CustomActivity.class));
+                }
                 break;
             case R.id.tv_forgetpw:
                 MobclickAgent.onEvent(mContext, "LoginActivity_FindPassWord");

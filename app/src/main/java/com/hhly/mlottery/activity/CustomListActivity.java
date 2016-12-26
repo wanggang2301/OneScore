@@ -55,8 +55,8 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
     private TextView mCustomText;
     private ImageView mBack;
 
-    private String CUSTOM_LEAGUE_FOCUSID = "custom_leagueId_focus_ids";
-    private String CUSTOM_TEAM_FOCUSID = "custom_team_focus_ids";
+    public static final String CUSTOM_LEAGUE_FOCUSID = "custom_leagueId_focus_ids";
+    public static final String CUSTOM_TEAM_FOCUSID = "custom_team_focus_ids";
 
     private final static int VIEW_STATUS_LOADING = 1;//请求中
     private final static int VIEW_STATUS_NET_NO_DATA = 2;//暂无数据
@@ -71,6 +71,7 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
     private TextView mCustomTxt;
     private LinearLayout monClickLoading;
     private ExactSwipeRefreshLayout mRefresh;
+    private boolean isSccomplish = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,9 +193,20 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onResponse(CustomListBean json) {
 
+                if (json == null) {
+                    setState(VIEW_STATUS_NET_NO_DATA);
+                    return;
+                }else if(json.getConcernLeagueAndTeam() == null){
+                    setState(VIEW_STATUS_NET_NO_DATA);
+                    return;
+                }
+
                 mFirstData = new ArrayList();
 
                 mFirstData = json.getConcernLeagueAndTeam().getLeagueConcerns();
+                if (mFirstData != null && mFirstData.size() != 0) {
+                    isSccomplish = true;
+                }
 
                 mAllDataList = new ArrayList<>();
                 /**这里必须 for 对新对象赋值  直接引用数据(mFirstData)源变化会跟着变化*/
@@ -206,7 +218,6 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
                 String currentFucusTeamId = PreferenceUtil.getString(CUSTOM_TEAM_FOCUSID, "");
 
                 if (currentFucusLeagueId.equals("") && currentFucusTeamId.equals("")) {
-                    Toast.makeText(mContext, "无任何定制", Toast.LENGTH_SHORT).show();
 
                     for (int i = 0; i < mFirstData.size(); i++) {
                         if (mFirstData.get(i) instanceof CustomFristBean) {
@@ -258,11 +269,13 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
                 setOnItemClick(mFirstData);
 
                 addSecondTier();
+
                 setState(VIEW_STATUS_SUCCESS);
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                isSccomplish = false;
                 setState(VIEW_STATUS_NET_ERROR);
             }
         }, CustomListBean.class);
@@ -474,16 +487,21 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.tv_right:
 
-                String mTemaJsonId = sendTeamId();
-                String mLeagueJsonId = sendLeagueId();
+                if (isSccomplish) {
 
-                L.d("yxq1220", "=完成后==mLeagueIdBuff= " + PreferenceUtil.getString(CUSTOM_LEAGUE_FOCUSID, ""));
-                L.d("yxq1220", "=完成后=mTemaIdBuff= " + PreferenceUtil.getString(CUSTOM_TEAM_FOCUSID, ""));
+                    String mTemaJsonId = sendTeamId();
+                    String mLeagueJsonId = sendLeagueId();
 
-                L.d("yxq1220", "================点击完成=============================");
-                EventBus.getDefault().post(new CustomListEvent(mLeagueJsonId, mTemaJsonId));
-                finish();
-                overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
+                    L.d("yxq1220", "=完成后==mLeagueIdBuff= " + PreferenceUtil.getString(CUSTOM_LEAGUE_FOCUSID, ""));
+                    L.d("yxq1220", "=完成后=mTemaIdBuff= " + PreferenceUtil.getString(CUSTOM_TEAM_FOCUSID, ""));
+
+                    L.d("yxq1220", "================点击完成=============================");
+                    EventBus.getDefault().post(new CustomListEvent(mLeagueJsonId, mTemaJsonId));
+                    finish();
+                    overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
+                }else{
+                    Toast.makeText(mContext, "正在请求数据", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.public_img_back:
 
