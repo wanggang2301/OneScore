@@ -1485,6 +1485,7 @@
     <string name="local_youqingguanlaoye">有请关老爷</string>
     <string name="local_zailaiyijiao">再来一角</string>
     <string name="chart_ball_new_msg">有新的消息</string>
+    <string name="chart_ball_null_content">客官坐下来聊聊嘛</string>
 
     <string name="title_product_advice">给产品建议</string>
     <string name="product_advice">产品回复</string>

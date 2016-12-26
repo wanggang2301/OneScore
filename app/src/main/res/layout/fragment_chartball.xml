@@ -226,27 +226,36 @@
                     android:layout_centerHorizontal="true"
                     android:background="@color/aliceblue"
                     android:padding="10dp"
-                    android:visibility="gone"
                     android:text="@string/chart_ball_new_msg"
-                    android:textColor="@color/database_lose_color" />
+                    android:textColor="@color/database_lose_color"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
         </FrameLayout>
 
         <!--空沙发-->
-        <FrameLayout
-            android:id="@+id/fl_not_chart_image"
+        <LinearLayout
+            android:id="@+id/ll_not_chart_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:src="@mipmap/chart_ball_null_bg" />
-        </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/chart_ball_null_content"
+                android:textColor="@color/mdy_999"
+                android:textSize="14sp" />
+        </LinearLayout>
 
     </FrameLayout>
 

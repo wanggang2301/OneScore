@@ -55,7 +55,6 @@ import java.util.UUID;
 
 import de.greenrobot.event.EventBus;
 import io.github.rockerhieu.emojicon.EmojiconEditText;
-import pl.droidsonroids.gif.GifImageView;
 
 
 /**
@@ -106,7 +105,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     private ChartBallReportDialogFragment dialogFragment;
     private ChartReceive mChartReceive;
     private List<ChartReceive.DataBean.ChatHistoryBean> historyBeen;
-    private FrameLayout fl_not_chart_image;
+    private LinearLayout ll_not_chart_image;
     private FrameLayout rl_chart_content;
     private TextView tv_online_count;// 在线人数
     private TextView tv_call_me;// 艾特提示
@@ -186,7 +185,10 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     // 判断是否滚动到底部
                     if (lastVisibleItem == (totalItemCount - 1)) {
                         isScrollBottom = true;
-                    }else{
+                        if (tv_new_msg.getVisibility() == View.VISIBLE) {
+                            tv_new_msg.setVisibility(View.GONE);
+                        }
+                    } else {
                         isScrollBottom = false;
                     }
                 }
@@ -220,7 +222,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         layoutManager.setStackFromEnd(false);
         layoutManager.setOrientation(OrientationHelper.VERTICAL);
         recycler_view.setLayoutManager(layoutManager);
-        fl_not_chart_image = (FrameLayout) mView.findViewById(R.id.fl_not_chart_image);
+        ll_not_chart_image = (LinearLayout) mView.findViewById(R.id.ll_not_chart_image);
         rl_chart_content = (FrameLayout) mView.findViewById(R.id.rl_chart_content);
         tv_online_count = (TextView) mView.findViewById(R.id.tv_online_count);
         tv_call_me = (TextView) mView.findViewById(R.id.tv_call_me);
@@ -534,10 +536,10 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     sleepView();
 
                     if (historyBeen == null || historyBeen.size() == 0) {
-                        fl_not_chart_image.setVisibility(View.VISIBLE);
+                        ll_not_chart_image.setVisibility(View.VISIBLE);
                         rl_chart_content.setVisibility(View.GONE);
                     } else {
-                        fl_not_chart_image.setVisibility(View.GONE);
+                        ll_not_chart_image.setVisibility(View.GONE);
                         rl_chart_content.setVisibility(View.VISIBLE);
                     }
 
@@ -554,7 +556,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                 case MSG_UPDATA_LIST:// 更新会话
                     ChartReceive.DataBean.ChatHistoryBean chartbean = (ChartReceive.DataBean.ChatHistoryBean) msg.obj;
 
-                    if(!isScrollBottom){
+                    if (!isScrollBottom) {
                         tv_new_msg.setVisibility(View.VISIBLE);
                     }
 
@@ -572,7 +574,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
                     historyBeen.add(chartbean);
                     mAdapter.notifyDataSetChanged();
-                    fl_not_chart_image.setVisibility(View.GONE);
+                    ll_not_chart_image.setVisibility(View.GONE);
                     rl_chart_content.setVisibility(View.VISIBLE);
 
                     sleepView();
@@ -580,7 +582,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     break;
                 case MSG_SEND_TO_ME:// 本地发送消息
                     ChartReceive.DataBean.ChatHistoryBean contentEntitiy = (ChartReceive.DataBean.ChatHistoryBean) msg.obj;
-                    fl_not_chart_image.setVisibility(View.GONE);
+                    ll_not_chart_image.setVisibility(View.GONE);
                     rl_chart_content.setVisibility(View.VISIBLE);
                     historyBeen.add(contentEntitiy);
                     mAdapter.notifyDataSetChanged();
@@ -752,7 +754,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     @Override
                     public void run() {
                         if (historyBeen.size() != 0) {
-                            if(isScrollBottom){
+                            if (isScrollBottom) {
                                 recycler_view.smoothScrollToPosition(historyBeen.size() - 1);
                             }
                         }
