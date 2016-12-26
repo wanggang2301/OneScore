@@ -125,6 +125,9 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     private AnimationSet mRiseHomeAnim;
     private AnimationSet mRiseGuestAnim;
 
+    private boolean isScrollBottom = true;
+    private TextView tv_new_msg;
+
     public static ChartBallFragment newInstance(int type, String thirdId) {
         ChartBallFragment fragment = new ChartBallFragment();
         Bundle args = new Bundle();
@@ -171,6 +174,24 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                 loginBack();
             }
         });
+        recycler_view.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {// 当不滚动时
+                    //获取最后一个完全显示的ItemPosition
+                    int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
+                    int totalItemCount = manager.getItemCount();
+                    // 判断是否滚动到底部
+                    if (lastVisibleItem == (totalItemCount - 1)) {
+                        isScrollBottom = true;
+                    }else{
+                        isScrollBottom = false;
+                    }
+                }
+            }
+        });
     }
 
     // 登录返回
@@ -208,6 +229,8 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         mView.findViewById(R.id.reLoading).setOnClickListener(this);
         ll_errorLoading = (LinearLayout) mView.findViewById(R.id.ll_errorLoading);
         ll_progress = (LinearLayout) mView.findViewById(R.id.ll_progress);
+        tv_new_msg = (TextView) mView.findViewById(R.id.tv_new_msg);
+        tv_new_msg.setOnClickListener(this);
 
         talkballpro = (ProgressBar) mView.findViewById(R.id.talkball_pro);
         ivHomeLike = (ImageView) mView.findViewById(R.id.talkball_like_anim_img);
@@ -301,9 +324,6 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
     //发送消息后台
     private void sendMessageToServer(final String msgCode, final String message, String toUserId) {
-        System.out.println("xxxxx 发送的message: " + message);
-        System.out.println("xxxxx 发送的msgCode: " + msgCode);
-
         String str = "";
         try {
             str = URLEncoder.encode(message, "utf-8");
@@ -534,6 +554,10 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                 case MSG_UPDATA_LIST:// 更新会话
                     ChartReceive.DataBean.ChatHistoryBean chartbean = (ChartReceive.DataBean.ChatHistoryBean) msg.obj;
 
+                    if(!isScrollBottom){
+                        tv_new_msg.setVisibility(View.VISIBLE);
+                    }
+
                     // 收到消息，显示弹幕
                     if (chartbean.getMsgCode() == 1) {
                         EventBus.getDefault().post(new BarrageBean(chartbean.getFromUser().getUserLogo(), chartbean.getMessage()));
@@ -587,6 +611,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         if ("EXIT_CURRENT_ACTIVITY".equals(contentEntitiy.getMessage()) && "EXIT_CURRENT_ACTIVITY".equals(contentEntitiy.getFromUser().getUserNick())) {
             mContext.finish();
         } else {
+            isScrollBottom = true;
             contentEntitiy.setSendStart(SendMsgEnum.SEND_LOADING);
             Message msg = mHandler.obtainMessage();
             msg.what = MSG_SEND_TO_ME;
@@ -727,7 +752,9 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     @Override
                     public void run() {
                         if (historyBeen.size() != 0) {
-                            recycler_view.smoothScrollToPosition(historyBeen.size() - 1);
+                            if(isScrollBottom){
+                                recycler_view.smoothScrollToPosition(historyBeen.size() - 1);
+                            }
                         }
                     }
                 });
@@ -776,6 +803,11 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                 ivGuestLike.setVisibility(View.VISIBLE);
                 ivGuestLike.startAnimation(mRiseGuestAnim);
                 requestLikeData(ADDKEYGUEST, "1", type);
+                break;
+            case R.id.tv_new_msg:// 查看新消息
+                tv_new_msg.setVisibility(View.GONE);
+                isScrollBottom = true;
+                sleepView();
                 break;
             default:
                 break;
