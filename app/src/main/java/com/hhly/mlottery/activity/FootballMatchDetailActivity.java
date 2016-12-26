@@ -318,7 +318,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private View red_point;
     private ImageView barrage_switch;
 
-    boolean barrage_isFocus = true;
+    boolean barrage_isFocus =false;
 
 
     @Override
@@ -442,17 +442,14 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
 
     }
-
-    public void onEventMainThread(BarrageBean barrageBean) {
-        barrage_view.setDatas(barrageBean.getUrl(), barrageBean.getMsg().toString());
+    public void onEventMainThread(BarrageBean barrageBean){
+        barrage_view.setDatas(barrageBean.getUrl(),barrageBean.getMsg().toString());
     }
-
-    public void onEventMainThread(GoneBarrage barrageBean) {
+    public void onEventMainThread(GoneBarrage barrageBean){
         barrage_view.setVisibility(View.GONE);
 
     }
-
-    public void onEventMainThread(OpenBarrage barrageBean) {
+    public void onEventMainThread(OpenBarrage barrageBean){
         barrage_view.setVisibility(View.VISIBLE);
 
     }
@@ -2635,7 +2632,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     /**
      * load internet image
-     *
      * @param imageUrl
      * @param imageView
      */

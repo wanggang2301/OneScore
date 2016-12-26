@@ -8,7 +8,7 @@
         android:id="@+id/linear_max"
         android:background="@drawable/rockett"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="60dp">
 
         <ImageView
             android:layout_marginRight="2dp"
@@ -25,6 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/face2"
             android:text="弹幕"
+            android:maxLength="30"
+            android:lines="1"
             android:textColor="#333333"
             android:textSize="13sp" />
         <ImageView
