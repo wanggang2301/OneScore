@@ -148,7 +148,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         if (getIntent().getExtras() != null) {
             isCoustom = getIntent().getBooleanExtra("custom" , false);
         }
-        Toast.makeText(this, "isCoustom " + isCoustom, Toast.LENGTH_SHORT).show();
 
         //应UI要求，把状态栏设置成透明的
         Window window = getWindow();
