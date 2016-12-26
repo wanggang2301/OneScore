@@ -369,24 +369,24 @@ public class AppConstants {
             R.mipmap.chart_ball_chitule,
             R.mipmap.chart_ball_xihushuiya
     };
-    public static String[] localIconName = {
-            MyApp.getContext().getResources().getString(R.string.local_juyijing),
-            MyApp.getContext().getResources().getString(R.string.local_shihuale),
-            MyApp.getContext().getResources().getString(R.string.local_zailaiyijiao),
-            MyApp.getContext().getResources().getString(R.string.local_mengkuanle),
-            MyApp.getContext().getResources().getString(R.string.local_yayajing),
-            MyApp.getContext().getResources().getString(R.string.local_dacaipan),
-            MyApp.getContext().getResources().getString(R.string.local_jinggaoni),
-            MyApp.getContext().getResources().getString(R.string.local_sesese),
-            MyApp.getContext().getResources().getString(R.string.local_qiudatui),
-            MyApp.getContext().getResources().getString(R.string.local_youqingguanlaoye),
-            MyApp.getContext().getResources().getString(R.string.local_fubaila),
-            MyApp.getContext().getResources().getString(R.string.local_shoumila),
-            MyApp.getContext().getResources().getString(R.string.local_touzhele),
-            MyApp.getContext().getResources().getString(R.string.local_shangtiantai),
-            MyApp.getContext().getResources().getString(R.string.local_chitule),
-            MyApp.getContext().getResources().getString(R.string.local_xihushuiya)
-    };
+//    public static String[] localIconName = {
+//            MyApp.getContext().getResources().getString(R.string.local_juyijing),
+//            MyApp.getContext().getResources().getString(R.string.local_shihuale),
+//            MyApp.getContext().getResources().getString(R.string.local_zailaiyijiao),
+//            MyApp.getContext().getResources().getString(R.string.local_mengkuanle),
+//            MyApp.getContext().getResources().getString(R.string.local_yayajing),
+//            MyApp.getContext().getResources().getString(R.string.local_dacaipan),
+//            MyApp.getContext().getResources().getString(R.string.local_jinggaoni),
+//            MyApp.getContext().getResources().getString(R.string.local_sesese),
+//            MyApp.getContext().getResources().getString(R.string.local_qiudatui),
+//            MyApp.getContext().getResources().getString(R.string.local_youqingguanlaoye),
+//            MyApp.getContext().getResources().getString(R.string.local_fubaila),
+//            MyApp.getContext().getResources().getString(R.string.local_shoumila),
+//            MyApp.getContext().getResources().getString(R.string.local_touzhele),
+//            MyApp.getContext().getResources().getString(R.string.local_shangtiantai),
+//            MyApp.getContext().getResources().getString(R.string.local_chitule),
+//            MyApp.getContext().getResources().getString(R.string.local_xihushuiya)
+//    };
 
     public static Map<String, Integer> localMap = new HashMap<>();
 
