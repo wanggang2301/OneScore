@@ -207,32 +207,55 @@
                         android:id="@+id/tv_online_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawablePadding="5dp"
                         android:drawableLeft="@mipmap/chart_ball_line_count"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="5dp"
+                        android:drawablePadding="5dp"
                         android:drawableStart="@mipmap/homefavorcount"
+                        android:paddingBottom="5dp"
+                        android:paddingRight="10dp"
                         android:textColor="@color/mdy_666"
                         android:textSize="10sp" />
 
-
                 </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_new_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/aliceblue"
+                    android:padding="10dp"
+                    android:text="@string/chart_ball_new_msg"
+                    android:textColor="@color/database_lose_color"
+                    android:visibility="gone" />
+
             </RelativeLayout>
+
         </FrameLayout>
 
         <!--空沙发-->
-        <FrameLayout
-            android:id="@+id/fl_not_chart_image"
+        <LinearLayout
+            android:id="@+id/ll_not_chart_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:src="@mipmap/chart_ball_null_bg" />
-        </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/chart_ball_null_content"
+                android:textColor="@color/mdy_999"
+                android:textSize="14sp" />
+        </LinearLayout>
 
     </FrameLayout>
 

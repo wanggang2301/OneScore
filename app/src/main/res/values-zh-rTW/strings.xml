@@ -1465,6 +1465,8 @@
     <string name="local_yayajing">壓壓驚</string>
     <string name="local_youqingguanlaoye">有請關老爺</string>
     <string name="local_zailaiyijiao">再來壹角</string>
+    <string name="chart_ball_new_msg">有新的消息</string>
+    <string name="chart_ball_null_content">客官坐下來聊聊嘛</string>
 
     <string name="title_product_advice">給產品建議</string>
     <string name="product_advice">產品回復</string>

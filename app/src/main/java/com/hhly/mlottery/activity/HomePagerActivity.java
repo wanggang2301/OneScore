@@ -75,7 +75,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
     private ListView home_page_list;// 首页列表
     private HomeListBaseAdapter mListBaseAdapter;// ListView数据适配器
     private TextView public_txt_title;
-    public  PushAgent mPushAgent;
+    public PushAgent mPushAgent;
 
     public HomePagerEntity mHomePagerEntity;// 首页实体对象
     private UpdateInfo mUpdateInfo;// 版本更新对象
@@ -180,17 +180,17 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         MobclickAgent.setDebugMode(AppConstants.isTestEnv);//测试的时候的数据需要设置debug模式
         mPushAgent = PushAgent.getInstance(mContext);
         mPushAgent.enable();// 开启推送
-        String device_token=UmengRegistrar.getRegistrationId(this);
-        PreferenceUtil.commitString(AppConstants.uMengDeviceToken,device_token); //存入友盟的deviceToken
-        Log.e("AAA",device_token+"???");
+        String device_token = UmengRegistrar.getRegistrationId(this);
+        PreferenceUtil.commitString(AppConstants.uMengDeviceToken, device_token); //存入友盟的deviceToken
+        Log.e("AAA", device_token + "???");
         mPushAgent.onAppStart();// 统计应用启动
         pushMessageSkip();// 页面跳转处理
 //        mPushAgent.setNotificationPlaySound(R.raw.sound1);
 //        mPushAgent.setDisplayNotificationNumber();
 //        mPushAgent.setAlias("s","s");
 
-        String device_id= DeviceInfo.getDeviceId(MyApp.getContext());
-        Log.e("AAAid",device_id);
+        String device_id = DeviceInfo.getDeviceId(MyApp.getContext());
+        Log.e("AAAid", device_id);
 //        mPushAgent.setAlias(device_id, ALIAS_TYPE.BAIDU);
 
         // 使用友盟统计分析Android 4.6.3 对Fragment统计，开发者需要：来禁止默认的Activity页面统计方式。首先在程序入口处调用
@@ -298,8 +298,20 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
             mListBaseAdapter.start();// 启动轮播图
         }
         super.onResume();
-//        MobclickAgent.onResume(this);
-//        MobclickAgent.onPageStart("HomePagerActivity");
+
+        // 红点触发后自动刷新
+        if (PreferenceUtil.getBoolean(AppConstants.BASKET_RED_KEY, false) || PreferenceUtil.getBoolean(AppConstants.FOOTBALL_RED_KEY, false)) {
+            if (!PreferenceUtil.getBoolean(AppConstants.RED_KEY_START, false)) {
+                if (mHomePagerEntity != null) {
+                    mListBaseAdapter = new HomeListBaseAdapter(mContext, mHomePagerEntity);
+                    home_page_list.setAdapter(mListBaseAdapter);
+                }
+            }
+        }
+        if (PreferenceUtil.getBoolean(AppConstants.BASKET_RED_KEY, false) && PreferenceUtil.getBoolean(AppConstants.FOOTBALL_RED_KEY, false)) {
+            PreferenceUtil.commitBoolean(AppConstants.RED_KEY_START, true);// 不用再刷新了
+        }
+
     }
 
 
@@ -309,8 +321,6 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
             mListBaseAdapter.end();// 结束轮播图
         }
         super.onPause();
-//        MobclickAgent.onPause(this);
-//        MobclickAgent.onPageEnd("HomePagerActivity");
     }
 
     /**
@@ -414,39 +424,6 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         myPostParams.put("versionCode", versionCode);
         myPostParams.put("channelNumber", channelNumber);
 
-//        try {
-//                        mHomePagerEntity = JSON.parseObject(AppConstants.getTestData(), HomePagerEntity.class);
-//            /**----将百度渠道的游戏竞猜去除掉--Start---*/
-//            if ("B1001".equals(channelNumber) || "B1002".equals(channelNumber) || "B1003".equals(channelNumber)) {
-//                Iterator<HomeContentEntity> iterator = mHomePagerEntity.getMenus().getContent().iterator();
-//                while (iterator.hasNext()) {
-//                    HomeContentEntity b = iterator.next();
-//                    if ("遊戲競猜".equals(b.getTitle()) || "游戏竞猜".equals(b.getTitle())) {
-//                        iterator.remove();
-//                    }
-//                }
-//            }
-//            /**----将百度渠道的游戏竞猜去除掉--End---*/
-//            PreferenceUtil.commitString(AppConstants.HOME_PAGER_DATA_KEY, AppConstants.getTestData());// 保存首页缓存数据
-//            L.d("xxx", "保存数据到本地！jsonObject:" + AppConstants.getTestData());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        isAuditHandle(mHomePagerEntity);
-//        if (mHomePagerEntity.getResult() == 200) {
-//            switch (num) {
-//                case 0:// 首次加载
-//                    mHandler.sendEmptyMessage(LOADING_DATA_SUCCESS);
-//                    break;
-//                case 1:// 下拉刷新
-//                    mHandler.sendEmptyMessage(REFRES_DATA_SUCCESS);
-//                    break;
-//            }
-//        } else {
-//            mHandler.sendEmptyMessage(LOADING_DATA_ERROR);// 加载失败
-//        }
-
-        String url="http://192.168.33.45:8080/mlottery/core/mainPage.findAndroidLotteryMainRsts.do";
         VolleyContentFast.requestStringByGet(BaseURLs.URL_HOME_PAGER_INFO, myPostParams, null, new VolleyContentFast.ResponseSuccessListener<String>() {
             @Override
             public void onResponse(String jsonObject) {

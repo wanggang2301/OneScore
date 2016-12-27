@@ -200,7 +200,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private final static String BASKETBALL_GIF = "basketball_gif";
     private BarrageView barrage_view;
     private ImageView barrage_switch;
-    boolean barrage_isFocus = false;
+    boolean barrage_isFocus=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -228,9 +228,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             mCurrentId = getIntent().getExtras().getInt("currentfragment");
 
         }
-
         EventBus.getDefault().register(this);
-
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.basketball.score." + mThirdId + ".zh");
 
@@ -313,17 +311,25 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         mTabsAdapter = new TabsAdapter(getSupportFragmentManager());
         mTabsAdapter.setTitles(TITLES);
 
-        if (isNBA) {  //是NBA
-            mTabsAdapter.addFragments(mBasketLiveFragment, mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mChartBallFragment);
-            isFragment5 = true; // 直接
-        } else {
-            mTabsAdapter.addFragments(mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mChartBallFragment);
-            isFragment0 = true;// 分析
-        }
-
         mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
+        TabLayout.Tab tabAt;
+        if (isNBA) {  //是NBA
+            mTabsAdapter.addFragments(mBasketLiveFragment, mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mChartBallFragment);
+            isFragment5 = true; // 直接
+            tabAt = mTabLayout.getTabAt(5);
+        } else {
+            mTabsAdapter.addFragments(mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mChartBallFragment);
+            isFragment0 = true;// 分析
+            tabAt = mTabLayout.getTabAt(4);
+        }
+        // 添加红点  自定义view
+        if (!PreferenceUtil.getBoolean(AppConstants.BASKET_RED_KEY, false)) {
+            View view = View.inflate(mContext, R.layout.chart_bal_item_red, null);
+            view_red = view.findViewById(R.id.view_red);
+            tabAt.setCustomView(view);
+        }
 
         appBarLayout.addOnOffsetChangedListener(this);
         fragmentManager = getSupportFragmentManager();
@@ -343,12 +349,14 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                     if (position != 4) {// 聊球界面禁用下拉刷新
                         MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
                     } else {
+                        if(view_red != null){view_red.setVisibility(View.GONE);}
                         mRefreshLayout.setEnabled(true); //展开
                     }
                 } else {
                     if (position != 5) {// 聊球界面禁用下拉刷新
                         MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
                     } else {
+                        if(view_red != null){view_red.setVisibility(View.GONE);}
                         mRefreshLayout.setEnabled(true); //展开
                     }
                 }
@@ -385,21 +393,18 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
     }
 
-    public void onEventMainThread(BarrageBean barrageBean) {
+    public void onEventMainThread(BarrageBean barrageBean){
         System.out.println("xxxxx barrageBean: " + barrageBean.getMsg());
-        barrage_view.setDatas(barrageBean.getUrl(), barrageBean.getMsg().toString());
+        barrage_view.setDatas(barrageBean.getUrl(),barrageBean.getMsg().toString());
     }
-
-    public void onEventMainThread(GoneBarrage barrageBean) {
+    public void onEventMainThread(GoneBarrage barrageBean){
         barrage_view.setVisibility(View.GONE);
 
     }
-
-    public void onEventMainThread(OpenBarrage barrageBean) {
+    public void onEventMainThread(OpenBarrage barrageBean){
         barrage_view.setVisibility(View.VISIBLE);
 
     }
-
     @Override
     protected void onDestroy() { //关闭socket
         super.onDestroy();
@@ -425,6 +430,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             msg.obj = text;
             msg.arg1 = Integer.parseInt(type);
             L.e(TAG, type + "____________________");
+
             mSocketHandler.sendMessage(msg);
         }
     }
@@ -518,15 +524,15 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                     mCollect.setImageResource(R.mipmap.basketball_collected);
                 }
                 break;
-            case R.id.barrage_switch:
+            case  R.id.barrage_switch:
 
-                if (barrage_isFocus) {
+                if(barrage_isFocus) {
                     barrage_switch.setImageResource(R.mipmap.danmu_open);
-                    barrage_isFocus = false;
+                    barrage_isFocus=false;
                     barrage_view.setVisibility(View.VISIBLE);
-                } else {
+                }else{
                     barrage_switch.setImageResource(R.mipmap.danmu_close);
-                    barrage_isFocus = true;
+                    barrage_isFocus=true;
                     barrage_view.setVisibility(View.GONE);
                 }
                 break;
@@ -705,7 +711,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             if (FocusBasketballFragment.BasketFocusEventBus != null) {
                 FocusBasketballFragment.BasketFocusEventBus.post("");
             }
-        } else if (mCurrentId == CUSTOM_FRAGMENT) {
+        } else if(mCurrentId == CUSTOM_FRAGMENT){
             EventBus.getDefault().post(new CustomDetailsEvent(""));
         }
     }
@@ -743,19 +749,19 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                     }
                 }
 
-                if (is0) {
+                if(is0){
                     mAnalyzeFragment.initData();// 分析
                 }
-                if (is2) {
+                if(is2){
                     mOddsEuro.initData();// 亚盘
                 }
-                if (is1) {
+                if(is1){
                     mOddsLet.initData();// 欧赔
                 }
-                if (is3) {
+                if(is3){
                     mOddsSize.initData();// 大小
                 }
-                if (is4) {
+                if(is4){
                     mChartBallFragment.onRefresh();// 聊球
                 }
 //                mTalkAboutBallFragment.loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
