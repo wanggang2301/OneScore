@@ -892,7 +892,7 @@ public class BasketAnalyzeFragment extends Fragment {
         if (isValue) {
             mTextData.setText(mFutureMatch.getDiffdays() + getResources().getText(R.string.basket_analyze_day));
             mTextName.setText(mFutureMatch.getTeam());
-            ImageLoader.load(getActivity(), mFutureMatch.getLogourl(), R.mipmap.basket_default).into(mLogo);
+            ImageLoader.load(mContext, mFutureMatch.getLogourl(), R.mipmap.basket_default).into(mLogo);
         } else {
             mTextData.setText("--");
             mTextName.setText("--");
