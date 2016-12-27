@@ -1486,6 +1486,7 @@
     <string name="local_zailaiyijiao">再来一角</string>
     <string name="chart_ball_new_msg">有新的消息</string>
     <string name="chart_ball_null_content">客官坐下来聊聊嘛</string>
+    <string name="chart_ball_login_error">登录校验失败，请重新登录!</string>
 
     <string name="title_product_advice">给产品建议</string>
     <string name="product_advice">产品回复</string>
