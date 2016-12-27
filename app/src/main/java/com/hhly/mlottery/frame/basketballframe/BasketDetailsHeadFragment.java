@@ -1,5 +1,6 @@
 package com.hhly.mlottery.frame.basketballframe;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,7 +27,6 @@ import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
 import com.hhly.mlottery.bean.websocket.DataEntity;
 import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
 import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
-import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.NetworkUtils;
@@ -73,6 +73,7 @@ public class BasketDetailsHeadFragment extends Fragment {
     private TextView mSmallGuestScore;
     private TextView mSmallHomeScore;
     private Context mContext;
+    private Activity mActivity;
 
     private LinearLayout btn_showGif;
     private final static String MATCH_TYPE = "2"; //篮球
@@ -93,7 +94,11 @@ public class BasketDetailsHeadFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        mContext = mActivity;
+
         mView = inflater.inflate(R.layout.layout_basket_header, container, false);
+
 
         initView();
 
@@ -1090,9 +1095,6 @@ public class BasketDetailsHeadFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mContext = context;
+        mActivity = (Activity) context;
     }
-
-
-    
 }
