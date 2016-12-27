@@ -38,10 +38,10 @@
                     </com.hhly.mlottery.view.BarrageView>
                     <ImageView
                         android:id="@+id/barrage_switch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="18dp"
-                        android:layout_marginLeft="7dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginBottom="22dp"
+                        android:layout_marginLeft="15dp"
                         android:src="@mipmap/danmu_open"
                         android:layout_gravity="bottom"/>
                 </FrameLayout>

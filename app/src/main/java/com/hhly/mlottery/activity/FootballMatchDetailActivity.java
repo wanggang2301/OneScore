@@ -2014,15 +2014,16 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             case  R.id.barrage_switch:
 
 
-                if(barrage_isFocus)
-                {
+                if(barrage_isFocus) {
                     barrage_switch.setImageResource(R.mipmap.danmu_open);
                     barrage_isFocus=false;
-                    barrage_view.setVisibility(View.VISIBLE);
+                    //barrage_view.setVisibility(View.VISIBLE);
+                    barrage_view.setAlpha(1);
                 }else{
                     barrage_switch.setImageResource(R.mipmap.danmu_close);
                     barrage_isFocus=true;
-                    barrage_view.setVisibility(View.GONE);
+                    //barrage_view.setVisibility(View.INVISIBLE);
+                    barrage_view.setAlpha(0);
                 }
                 break;
             default:
