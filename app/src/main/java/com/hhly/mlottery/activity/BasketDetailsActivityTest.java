@@ -201,6 +201,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private BarrageView barrage_view;
     private ImageView barrage_switch;
     boolean barrage_isFocus=false;
+    private View view_red;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
