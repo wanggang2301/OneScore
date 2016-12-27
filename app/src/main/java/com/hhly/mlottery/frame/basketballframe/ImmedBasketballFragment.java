@@ -91,10 +91,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     private List<List<BasketMatchBean>> childrenDataList;//显示的比赛list
     private List<String> groupDataList;//显示日期list
     private List<BasketRootBean> mMatchdata = new ArrayList<>();//match的 内容(json)
-//    private List<Integer> isToday; // = -10;//(-1:昨天; 0:今天; 1:明天)
-
-//    private boolean isWebSocketStart = false; //默认使用 websocket;
-//    private HappySocketClient mSocketClient;//客户端  socket;
 
     private int expandFlag = -1;//控制列表的展开
     private PinnedHeaderExpandableAdapter adapter;
@@ -110,12 +106,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     private RelativeLayout mNoDataLayout;
     private LinearLayout mErrorLayout;
     private TextView mReloadTvBtn;// 刷新 控件
-
-    //    private ImageView mIb_back;//返回按钮
-    //    private TextView mTittle; //标题头
-//    private ImageView mFilterImgBtn = BasketScoresFragment.getmFilterImgBtn();// 筛选
-//    private ImageView mSetting = BasketScoresFragment.getmSetting();//设置按钮
-
 
     private Intent mIntent;
 
@@ -134,7 +124,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
 
     private URI mScoketuri = null;//推送 URI
 
-    //    private ImmediateStateBroadcastReceiver mNetStateReceiver; // TODO changName 广播服务
     private boolean isError = false;
 
     private SwipeRefreshLayout mSwipeRefreshLayout; //下拉刷新
@@ -154,9 +143,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
      * 关注事件EventBus
      */
     public static EventBus BasketImmedEventBus;
-//    public static EventBus BasketResultEventBus;
-//    public static EventBus BasketScheduleEventBus;
-//    public static EventBus BasketFocusEventBus;
     /**请求关注列表后的返回结果*/
     public static  boolean requestSuccess=false;
 
@@ -191,7 +177,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-//            mBasketballType = getArguments().getInt(PARAMS);
             mBasketballType = 0;
         }
         BasketImmedEventBus = new EventBus();
@@ -230,7 +215,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
         try {
             PackageManager pm = context.getPackageManager();
             PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
-//            versionName = pi.versionName;
             versioncode = pi.versionCode + "";
             if (versioncode == null || versioncode.length() <= 0) {
                 return "";
@@ -250,13 +234,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
         fragmentType(); //fragment 入口
 
         initView();
-//        initBroadCase();//添加监听
-//        try {
-//            mScoketuri = new URI("ws://192.168.10.242:61634/ws");//推送 URI  "ws://m.1332255.com/ws"
-//            mScoketuri = new URI(BaseURLs.URL_BASKET_SOCKET);//推送 URI
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//        }
         return mView;
     }
 
@@ -269,18 +246,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
             initData();
         }
     };
-
-//    /**
-//     * 启动广播监听
-//     */
-//    private void initBroadCase() {
-//        if (getActivity() != null) {
-//            mNetStateReceiver = new ImmediateStateBroadcastReceiver();
-//            IntentFilter filter = new IntentFilter();
-//            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-//            getActivity().registerReceiver(mNetStateReceiver, filter);
-//        }
-//    }
 
     /**
      * 初始化VIEW
@@ -306,28 +271,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
 
-//        //标题头部
-//        mTittle = (TextView) mView.findViewById(R.id.public_txt_title);
-//        mTittle.setText(R.string.basket_tittle);
-
-        //设置按钮
-//        mSetting = (ImageView) mView.findViewById(R.id.public_btn_set);
-//        mSetting.setOnClickListener(this);
-
-        // 筛选
-//        mFilterImgBtn = (ImageView) mView.findViewById(R.id.public_btn_filter);
-//        if (mBasketballType == TYPE_FOCUS) {
-//            mFilterImgBtn.setVisibility(View.GONE);
-//        } else {
-//            mFilterImgBtn.setVisibility(View.VISIBLE);
-//            mFilterImgBtn.setOnClickListener(this);
-//        }
-
-        //返回
-//        mIb_back = (ImageView) mView.findViewById(R.id.public_img_back);
-//        mIb_back.setOnClickListener(this);
-
-        // 加载状态图标
         mLoadingLayout = (LinearLayout) mView.findViewById(R.id.basketball_immediate_loading);
 
         mNoDataLayout = (RelativeLayout) mView.findViewById(R.id.basket_undata);
@@ -463,7 +406,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                     mChickedFilter = mAllFilter;//默认选中全部
                 }
 
-//                if (adapter == null || mBasketballType == TYPE_IMMEDIATE || mBasketballType == TYPE_FOCUS) {
                 if (adapter == null) {
                     adapter = new PinnedHeaderExpandableAdapter(childrenDataList, groupDataList, getActivity(), explistview);
                     explistview.setAdapter(adapter);
@@ -560,17 +502,11 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                         for (int i = 0; i < groupDataList.size(); i++) {
                             explistview.expandGroup(i);
                         }
-//                        ((BasketballFragment) getParentFragment()).focusCallback();
-//                        ((BasketListActivity) getActivity()).focusCallback();
-//                        ((BasketScoresFragment) getParentFragment()).focusCallback();
                         ((BasketballScoresActivity) getActivity()).focusCallback();
                         return;
                     }
                 }
                 updateAdapter();//防止复用
-//                ((BasketballFragment) getParentFragment()).focusCallback();
-//                ((BasketListActivity) getActivity()).focusCallback();
-//                ((BasketScoresFragment) getParentFragment()).focusCallback();
                 ((BasketballScoresActivity) getActivity()).focusCallback();
             }
         };
@@ -583,7 +519,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     public void onRefresh() {
         isLoad = -1;
         mLoadHandler.postDelayed(mRun, 0);
-//        ((BasketScoresFragment) getParentFragment()).reconnectWebSocket();
         ((BasketballScoresActivity) getActivity()).reconnectWebSocket();
     }
 
@@ -628,27 +563,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
                 break;
 
-//            case R.id.public_btn_filter: //筛选
-//                if (isLoad == 1) {
-//                    MobclickAgent.onEvent(mContext, "Basketball_Filter");
-//                    Intent intent = new Intent(getActivity(), BasketFiltrateActivity.class);
-//                    intent.putExtra("MatchAllFilterDatas", (Serializable) mAllFilter);//Serializable 序列化传值（所有联赛数据）
-//                    intent.putExtra("MatchChickedFilterDatas", (Serializable) mChickedFilter);//Serializable 序列化传值（选中的联赛数据）
-////                getParentFragment().startActivityForResult(intent, REQUEST_FILTERCODE);
-////                    getActivity().startActivityForResult(intent, REQUEST_FILTERCODE);
-//                    intent.putExtra("currentfragment" , 0);
-////                    Bundle bundlefil = new Bundle();
-////                    bundlefil.putInt("currentfragment" , 0);
-////                    intent.putExtras(bundlefil);
-//                    startActivity(intent);
-//                    getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
-//                }else if(isLoad == 0){
-//                    Toast.makeText(mContext, getResources().getText(R.string.immediate_unconection), Toast.LENGTH_SHORT).show();
-//                }else{
-//                    Toast.makeText(mContext, getResources().getText(R.string.basket_loading_txt), Toast.LENGTH_SHORT).show();
-//                }
-//                L.d("mBasketballType jishi >>>>>>>>>>>","mBasketballType == >"+mBasketballType);
-//                break;
             case R.id.public_img_back:  //返回
                 MobclickAgent.onEvent(mContext, "Basketball_Exit");
 //                ((MainActivity) getActivity()).openLeftLayout();
@@ -684,9 +598,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
 
     public void LoadData() {
         mSwipeRefreshLayout.setRefreshing(true);
-//        if (mChickedFilter.size()!=0) {
         mLoadHandler.post(mRun);
-//        }
     }
 
     public void handleSocketMessage(String text) {
@@ -709,74 +621,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
         }
     }
 
-//    /**
-//     * 广播接收者
-//     */
-//    public class ImmediateStateBroadcastReceiver extends BroadcastReceiver {
-//        @Override
-//        public void onReceive(Context con, Intent arg1) {
-//            L.d(TAG, "NetState ___ onReceive ");
-//            L.d(TAG, "action  " + arg1.getAction());
-//            ConnectivityManager manager = (ConnectivityManager) con.getSystemService(Context.CONNECTIVITY_SERVICE);
-//            NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
-//            if (activeNetwork == null || !activeNetwork.isAvailable()) {
-//                isWebSocketStart = false;
-//                if (mSocketClient != null) {
-//                    mSocketClient.close();
-//                }
-//                mSocketClient = null;
-//            }
-//        }
-//    }
-
-//    @Override
-//    public void onError(Exception exception) {
-//        L.e(TAG, "websocket error");
-//        isError = true;
-//        restartSocket();
-//    }
-//
-//    @Override
-//    public void onClose(String message) {
-//        L.e(TAG, "websocket close");
-//
-//        if (!isError) {
-//            restartSocket();
-//        }
-//    }
-
-//    @Override
-//    public void onMessage(String message) { //启动信息
-//        L.w(TAG, "message = " + message);
-//        if (message.startsWith("CONNECTED")) {
-//            String id = "android" + DeviceInfo.getDeviceId(getActivity());
-//            id = MD5Util.getMD5(id);
-//            mSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.app\n\n");
-//            mSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.basketball\n\n");
-//            isWebSocketStart = true;
-//            return;
-//        } else if (message.startsWith("MESSAGE")) {
-//            String[] msgs = message.split("\n");
-//            String ws_json = msgs[msgs.length - 1];
-//
-//            String type = "";
-//            try {
-//                JSONObject jsonObject = new JSONObject(ws_json);
-//                type = jsonObject.getString("type");
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//
-//            if (!"".equals(type)) {
-//                Message msg = Message.obtain();
-//                msg.obj = ws_json;
-//                msg.arg1 = Integer.parseInt(type);
-//
-//                mSocketHandler.sendMessage(msg);
-//            }
-//        }
-//        mSocketClient.send("\n");
-//    }
 
     Handler mSocketHandler = new Handler() {
         @Override
@@ -1100,18 +944,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     public void onResume() {
         super.onResume();
         L.v(TAG, "___onResume___");
-//        if (!isLoadData) {
-//            mLoadHandler.postDelayed(mRun, 0);
-//        }
-//        if (PreferenceUtil.getBoolean(MyConstants.BASKETBALL_RBSECOND, true)) {
-//            mHandicap = 1;
-//        } else if (PreferenceUtil.getBoolean(MyConstants.BASKETBALL_rbSizeBall, false)) {
-//            mHandicap = 2;// 大小球
-//        } else if (PreferenceUtil.getBoolean(MyConstants.BASKETBALL_RBOCOMPENSATE, false)) {
-//            mHandicap = 3;//欧赔
-//        } else if (PreferenceUtil.getBoolean(MyConstants.BASKETBALL_RBNOTSHOW, false)) {
-//            mHandicap = 4;//不显示
-//        }
     }
 
     private boolean isDestroy = false;
@@ -1120,19 +952,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     public void onDestroy() { //销毁
         super.onDestroy();
         L.d(TAG, "__onDestroy___");
-//        if (mSocketClient != null) {
-//            isDestroy = true;
-//            mSocketClient.close();
-//        }
-//
-//        if (isTimerStart) {
-//            timer.cancel();
-//        }
-
-//        if (getActivity() != null && mNetStateReceiver != null) {
-//            getActivity().unregisterReceiver(mNetStateReceiver);
-//        }
-
     }
 
     private Timer timer = new Timer();
@@ -1256,15 +1075,10 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
         //判断 关注页面重新请求 （详情中取消关注返回时关注页面跟着变化）
         if (mBasketballType == TYPE_FOCUS) {
             mLoadHandler.postDelayed(mRun, 0);
-//            ((BasketListActivity) getActivity()).focusCallback();
-//            ((BasketScoresFragment) getParentFragment()).focusCallback();
             ((BasketballScoresActivity) getActivity()).focusCallback();
         } else {
             updateAdapter();
-//            ((BasketListActivity) getActivity()).focusCallback();
-//            ((BasketScoresFragment) getParentFragment()).focusCallback();
             ((BasketballScoresActivity) getActivity()).focusCallback();
         }
-//        ((BasketScoresFragment)getParentFragment()).focusCallback();
     }
 }
