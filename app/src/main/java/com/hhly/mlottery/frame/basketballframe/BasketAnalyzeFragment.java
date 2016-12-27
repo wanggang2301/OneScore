@@ -1,8 +1,8 @@
 package com.hhly.mlottery.frame.basketballframe;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -15,13 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketAnalyzeMoreRecordActivity;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketballDatabaseDetailsActivity;
-import com.hhly.mlottery.activity.SnookerListActivity;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketAnalyzeBean;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketAnalyzeContentBean;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketAnalyzeFutureMatchBean;
@@ -40,10 +38,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Description: 篮球分析的 fragment
  * @author yixq
+ * @Description: 篮球分析的 fragment
  */
-public class BasketAnalyzeFragment extends Fragment  {
+public class BasketAnalyzeFragment extends Fragment {
 
     //    public static final int REQUEST_MORERECORD = 0x80;
     private View mView;
@@ -102,7 +100,7 @@ public class BasketAnalyzeFragment extends Fragment  {
     private TextView mScoreLose;
 //    private ExactSwipeRefrashLayout mRefresh;//下拉刷新
 
-//    private NestedListView mListView1;
+    //    private NestedListView mListView1;
 //    private NestedListView mListView2;
     private TextView mTextLine;
 
@@ -122,9 +120,15 @@ public class BasketAnalyzeFragment extends Fragment  {
     private Integer mMatchType;
     private TextView mMostData;
 
+    private Context mContext;
+    private Activity mActivity;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        mContext = mActivity;
+
 
         mThirdId = ((BasketDetailsActivityTest) getActivity()).getmThirdId();
         L.d("mThirdId ==AAAAA===", mThirdId + "");
@@ -256,20 +260,21 @@ public class BasketAnalyzeFragment extends Fragment  {
 
         mMostData = (TextView) mView.findViewById(R.id.basket_analyze_more_data);
     }
+
     /**
      * 跳转篮球资料库
      */
-    private void setMostOnclick(){
+    private void setMostOnclick() {
         mMostData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),BasketballDatabaseDetailsActivity.class);
+                Intent intent = new Intent(getActivity(), BasketballDatabaseDetailsActivity.class);
 
                 LeagueBean bean = new LeagueBean();
                 bean.setLeagueId(mLeagueId);
                 bean.setMatchType(mMatchType);
                 intent.putExtra("league", bean);
-                intent.putExtra("isRanking" , true);
+                intent.putExtra("isRanking", true);
                 startActivity(intent);
             }
         });
@@ -350,23 +355,23 @@ public class BasketAnalyzeFragment extends Fragment  {
                     mFutureLinearLayout.setVisibility(View.VISIBLE);
                     mFutureNodata.setVisibility(View.GONE);
 
-                    switch (guestNum){
+                    switch (guestNum) {
                         case 0:
                             if (homeNum >= 1) {
                                 if (homeNum == 1) {
                                     mGuest1.setVisibility(View.INVISIBLE);
                                     mGuest2.setVisibility(View.GONE);
                                     mGuest3.setVisibility(View.GONE);
-                                }else if(homeNum == 2){
+                                } else if (homeNum == 2) {
                                     mGuest1.setVisibility(View.INVISIBLE);
                                     mGuest2.setVisibility(View.INVISIBLE);
                                     mGuest3.setVisibility(View.GONE);
-                                }else{
+                                } else {
                                     mGuest1.setVisibility(View.INVISIBLE);
                                     mGuest2.setVisibility(View.INVISIBLE);
                                     mGuest3.setVisibility(View.INVISIBLE);
                                 }
-                            }else{
+                            } else {
                                 mGuest1.setVisibility(View.GONE);
                                 mGuest2.setVisibility(View.GONE);
                                 mGuest3.setVisibility(View.GONE);
@@ -378,12 +383,12 @@ public class BasketAnalyzeFragment extends Fragment  {
                                     mGuest1.setVisibility(View.VISIBLE);
                                     mGuest2.setVisibility(View.INVISIBLE);
                                     mGuest3.setVisibility(View.GONE);
-                                }else{
+                                } else {
                                     mGuest1.setVisibility(View.VISIBLE);
                                     mGuest2.setVisibility(View.INVISIBLE);
                                     mGuest3.setVisibility(View.INVISIBLE);
                                 }
-                            }else{
+                            } else {
                                 mGuest1.setVisibility(View.VISIBLE);
                                 mGuest2.setVisibility(View.GONE);
                                 mGuest3.setVisibility(View.GONE);
@@ -394,7 +399,7 @@ public class BasketAnalyzeFragment extends Fragment  {
                                 mGuest1.setVisibility(View.VISIBLE);
                                 mGuest2.setVisibility(View.VISIBLE);
                                 mGuest3.setVisibility(View.INVISIBLE);
-                            }else{
+                            } else {
                                 mGuest1.setVisibility(View.VISIBLE);
                                 mGuest2.setVisibility(View.VISIBLE);
                                 mGuest3.setVisibility(View.GONE);
@@ -406,23 +411,23 @@ public class BasketAnalyzeFragment extends Fragment  {
                             mGuest3.setVisibility(View.VISIBLE);
                             break;
                     }
-                    switch (homeNum){
+                    switch (homeNum) {
                         case 0:
                             if (guestNum >= 1) {
                                 if (guestNum == 1) {
                                     mHome1.setVisibility(View.INVISIBLE);
                                     mHome2.setVisibility(View.GONE);
                                     mHome3.setVisibility(View.GONE);
-                                }else if(guestNum == 2){
+                                } else if (guestNum == 2) {
                                     mHome1.setVisibility(View.INVISIBLE);
                                     mHome2.setVisibility(View.INVISIBLE);
                                     mHome3.setVisibility(View.GONE);
-                                }else{
+                                } else {
                                     mHome1.setVisibility(View.INVISIBLE);
                                     mHome2.setVisibility(View.INVISIBLE);
                                     mHome3.setVisibility(View.INVISIBLE);
                                 }
-                            }else{
+                            } else {
                                 mHome1.setVisibility(View.GONE);
                                 mHome2.setVisibility(View.GONE);
                                 mHome3.setVisibility(View.GONE);
@@ -434,12 +439,12 @@ public class BasketAnalyzeFragment extends Fragment  {
                                     mHome1.setVisibility(View.VISIBLE);
                                     mHome2.setVisibility(View.INVISIBLE);
                                     mHome3.setVisibility(View.GONE);
-                                }else{
+                                } else {
                                     mHome1.setVisibility(View.VISIBLE);
                                     mHome2.setVisibility(View.INVISIBLE);
                                     mHome3.setVisibility(View.INVISIBLE);
                                 }
-                            }else{
+                            } else {
                                 mHome1.setVisibility(View.VISIBLE);
                                 mHome2.setVisibility(View.GONE);
                                 mHome3.setVisibility(View.GONE);
@@ -450,7 +455,7 @@ public class BasketAnalyzeFragment extends Fragment  {
                                 mHome1.setVisibility(View.VISIBLE);
                                 mHome2.setVisibility(View.VISIBLE);
                                 mHome3.setVisibility(View.INVISIBLE);
-                            }else{
+                            } else {
                                 mHome1.setVisibility(View.VISIBLE);
                                 mHome2.setVisibility(View.VISIBLE);
                                 mHome3.setVisibility(View.GONE);
@@ -481,18 +486,19 @@ public class BasketAnalyzeFragment extends Fragment  {
 
     /**
      * 设置分割线长度（根据未来比赛数据）
+     *
      * @param num
      */
-    private void setLineHeight(int num){
-        switch (num){
+    private void setLineHeight(int num) {
+        switch (num) {
             case 1:
-                mTextLine.setLayoutParams(new LinearLayout.LayoutParams(1,getResources().getDimensionPixelSize(R.dimen.basket_analyze_line1)));
+                mTextLine.setLayoutParams(new LinearLayout.LayoutParams(1, getResources().getDimensionPixelSize(R.dimen.basket_analyze_line1)));
                 break;
             case 2:
-                mTextLine.setLayoutParams(new LinearLayout.LayoutParams(1,getResources().getDimensionPixelSize(R.dimen.basket_analyze_line2)));
+                mTextLine.setLayoutParams(new LinearLayout.LayoutParams(1, getResources().getDimensionPixelSize(R.dimen.basket_analyze_line2)));
                 break;
             case 3:
-                mTextLine.setLayoutParams(new LinearLayout.LayoutParams(1,getResources().getDimensionPixelSize(R.dimen.basket_analyze_line3)));
+                mTextLine.setLayoutParams(new LinearLayout.LayoutParams(1, getResources().getDimensionPixelSize(R.dimen.basket_analyze_line3)));
                 break;
             default:
                 break;
@@ -886,7 +892,7 @@ public class BasketAnalyzeFragment extends Fragment  {
         if (isValue) {
             mTextData.setText(mFutureMatch.getDiffdays() + getResources().getText(R.string.basket_analyze_day));
             mTextName.setText(mFutureMatch.getTeam());
-            ImageLoader.load(getActivity(),mFutureMatch.getLogourl(),R.mipmap.basket_default).into(mLogo);
+            ImageLoader.load(getActivity(), mFutureMatch.getLogourl(), R.mipmap.basket_default).into(mLogo);
         } else {
             mTextData.setText("--");
             mTextName.setText("--");
@@ -914,7 +920,7 @@ public class BasketAnalyzeFragment extends Fragment  {
                 ImageView image = (ImageView) holder.getConvertView().findViewById(R.id.basket_future_guest_3);
                 holder.setText(R.id.basket_future_guest_1, data.getDiffdays() + getResources().getText(R.string.basket_analyze_day));
                 holder.setText(R.id.basket_future_guest_2, data.getTeam());
-                ImageLoader.load(mContext,data.getLogourl(),R.mipmap.basket_default).into(image);
+                ImageLoader.load(mContext, data.getLogourl(), R.mipmap.basket_default).into(image);
             }
         }
     }
@@ -929,5 +935,12 @@ public class BasketAnalyzeFragment extends Fragment  {
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("BasketAnalyzeFragment");
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
+
     }
 }
