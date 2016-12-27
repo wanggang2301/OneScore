@@ -411,7 +411,6 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                                         break;
                                     case 1013:// 用户登录校验失败
                                         ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.chart_ball_login_error));
-                                        loginBack();
                                         break;
                                     default:
                                         // 服务器错误
