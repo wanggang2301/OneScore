@@ -177,10 +177,10 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 //scheduleViewHolder.home_icon.setTag(homelogourl);
                 //scheduleViewHolder.guest_icon.setTag(guestlogourl);
                 //ImagaeLoader -- 加载图片
-                ImageLoader.load(mContext,homelogourl,R.mipmap.score_default).into(scheduleViewHolder.home_icon);
-
-                ImageLoader.load(mContext,guestlogourl,R.mipmap.score_default).into(scheduleViewHolder.guest_icon);
-
+                if(mContext!=null){
+                    ImageLoader.load(mContext,homelogourl,R.mipmap.score_default).into(scheduleViewHolder.home_icon);
+                    ImageLoader.load(mContext,guestlogourl,R.mipmap.score_default).into(scheduleViewHolder.guest_icon);
+                }
 
                 scheduleViewHolder.item_football_racename.setText(scheduleMatchDto.getSchmatchs().getRacename());
                 scheduleViewHolder.item_football_racename.setTextColor(Color.parseColor(scheduleMatchDto.getSchmatchs().getRaceColor()));
