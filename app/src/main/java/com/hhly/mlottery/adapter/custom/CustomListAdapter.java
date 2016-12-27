@@ -114,7 +114,9 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
 
 
                 String logoUrl = firstData.getLeagueLogoPre() + firstData.getLeagueId() + firstData.getLeagueLogoSuff();
-                ImageLoader.load(mContext, logoUrl, R.mipmap.iconfont_lanqiu2shixin).into(viewHolderLeague.mLeagueLogo);
+                if (mContext != null) {
+                    ImageLoader.load(mContext, logoUrl, R.mipmap.iconfont_lanqiu2shixin).into(viewHolderLeague.mLeagueLogo);
+                }
 
                 if (firstData.getTeamConcerns() == null || firstData.getTeamConcerns().size() == 0) {
                     viewHolderLeague.mNoData.setVisibility(View.VISIBLE);
@@ -123,8 +125,13 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
                     viewHolderLeague.mNoData.setVisibility(View.GONE);
                     viewHolderLeague.mIsOpen.setVisibility(View.VISIBLE);
                 }
-                viewHolderLeague.mLeagueName.setText(firstData.getLeagueName());
-                viewHolderLeague.mLeagueHotNum.setText(firstData.getLegueConcernNum());
+                if (firstData != null) {
+                    viewHolderLeague.mLeagueName.setText(firstData.getLeagueName());
+                    viewHolderLeague.mLeagueHotNum.setText(firstData.getLegueConcernNum());
+                }else{
+                    viewHolderLeague.mLeagueName.setText("");
+                    viewHolderLeague.mLeagueHotNum.setText("");
+                }
 
                 if (onItemClickListener != null) {
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -166,9 +173,16 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
                 final CustomSecondBean secondData = (CustomSecondBean) mData.get(positions);
 
                 String tameLogoUrl = secondData.getTeamLogoPre() + secondData.getTeamId() + secondData.getTeamLogoSuff();
-                ImageLoader.load(mContext, tameLogoUrl, R.mipmap.iconfont_lanqiu2shixin).into(viewHolderDate.mTeamLogo);
-                viewHolderDate.mTeamName.setText(secondData.getTeamName());
-                viewHolderDate.mTeamHotNum.setText(secondData.getTeamConcernNum());
+                if (mContext != null) {
+                    ImageLoader.load(mContext, tameLogoUrl, R.mipmap.iconfont_lanqiu2shixin).into(viewHolderDate.mTeamLogo);
+                }
+                if (secondData != null) {
+                    viewHolderDate.mTeamName.setText(secondData.getTeamName());
+                    viewHolderDate.mTeamHotNum.setText(secondData.getTeamConcernNum());
+                }else{
+                    viewHolderDate.mTeamName.setText("");
+                    viewHolderDate.mTeamHotNum.setText("");
+                }
 
                 if (onItemClickListener != null) {
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
