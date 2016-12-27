@@ -886,7 +886,9 @@ public class BasketAnalyzeFragment extends Fragment  {
         if (isValue) {
             mTextData.setText(mFutureMatch.getDiffdays() + getResources().getText(R.string.basket_analyze_day));
             mTextName.setText(mFutureMatch.getTeam());
-            ImageLoader.load(getActivity(),mFutureMatch.getLogourl(),R.mipmap.basket_default).into(mLogo);
+            if(getActivity()!=null){
+                ImageLoader.load(getActivity(),mFutureMatch.getLogourl(),R.mipmap.basket_default).into(mLogo);
+            }
         } else {
             mTextData.setText("--");
             mTextName.setText("--");
@@ -914,7 +916,9 @@ public class BasketAnalyzeFragment extends Fragment  {
                 ImageView image = (ImageView) holder.getConvertView().findViewById(R.id.basket_future_guest_3);
                 holder.setText(R.id.basket_future_guest_1, data.getDiffdays() + getResources().getText(R.string.basket_analyze_day));
                 holder.setText(R.id.basket_future_guest_2, data.getTeam());
-                ImageLoader.load(mContext,data.getLogourl(),R.mipmap.basket_default).into(image);
+                if(mContext!=null){
+                    ImageLoader.load(mContext,data.getLogourl(),R.mipmap.basket_default).into(image);
+                }
             }
         }
     }

@@ -168,7 +168,9 @@ public class FootBallExpandableGridAdapter extends BaseExpandableListAdapter imp
             if (allDatas.get(groupPosition).get(0).getPic() == null || "".equals(allDatas.get(groupPosition).get(0).getPic())) {
                 listViewHolder.icon0.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.basket_info_default));
             } else {
-                ImageLoader.load(mContext,allDatas.get(groupPosition).get(0).getPic(),R.mipmap.basket_info_default).into(listViewHolder.icon0);
+                if(mContext!=null){
+                    ImageLoader.load(mContext,allDatas.get(groupPosition).get(0).getPic(),R.mipmap.basket_info_default).into(listViewHolder.icon0);
+                }
 
             }
 
