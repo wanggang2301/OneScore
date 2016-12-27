@@ -136,11 +136,11 @@ public class AdviceAdapter extends BaseQuickAdapter<ProductAdviceBean.DataEntity
         params.put("userId", userId);
         params.put("feedbackId",id);
 
-        VolleyContentFast.requestJsonByPost(BaseURLs.PRODUCT_ADVICE_LIKE, params, new VolleyContentFast.ResponseSuccessListener<ProductUserLike>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.PRODUCT_ADVICE_LIKE, params, new VolleyContentFast.ResponseSuccessListener<ProductUserLike>() {
             @Override
             public void onResponse(ProductUserLike like) {
-                if(like.getResult()==200){
-//                    Toast.makeText(context, "点赞成功", Toast.LENGTH_SHORT).show();
+                if(like.getResult()==500){
+                    Toast.makeText(context, "点赞成功", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {

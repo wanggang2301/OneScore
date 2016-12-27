@@ -37,6 +37,7 @@ import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomeMenusEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomeOtherListsEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomePagerEntity;
+import com.hhly.mlottery.callback.ProductListener;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.service.umengPushService;
@@ -101,6 +102,10 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
     private int clickCount = 0;// 点击次数
     private ProgressDialog progressBar;
 
+    private int REQUEST_CODE=1;
+
+    public ProductListener mListener;
+
 
     /**
      * 跳转其他Activity 的requestcode
@@ -125,6 +130,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         L.d("xxx", "versionCode:" + versionCode);
         L.d("xxx", "channelNumber:" + channelNumber);
     }
+
 
     /**
      * 获取application中指定的meta-data
@@ -402,6 +408,13 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
         home_page_list = (ListView) findViewById(R.id.home_page_list);// 首页列表
 
+        mListener=new ProductListener() {
+            @Override
+            public void toProductActivity() {
+                startActivityForResult(new Intent(HomePagerActivity.this,ProductAdviceActivity.class),REQUEST_CODE);
+            }
+        };
+
         // TODO
 //        View lotteryItemView = View.inflate(mContext, R.layout.home_page_item_lottery, null);
 //        lotteryItemView.findViewById(R.id.rl_lottery_item_title).setOnClickListener(this);
@@ -570,6 +583,8 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
                     mSwipeRefreshLayout.setRefreshing(false);
                     if (mHomePagerEntity != null) {
                         mListBaseAdapter = new HomeListBaseAdapter(mContext, mHomePagerEntity);
+                        //设置跳转监听
+                        mListBaseAdapter.setToProductListener(mListener);
                         home_page_list.setAdapter(mListBaseAdapter);
                     }
                     break;
@@ -581,6 +596,8 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
                     mSwipeRefreshLayout.setRefreshing(false);
                     if (mHomePagerEntity != null) {
                         mListBaseAdapter = new HomeListBaseAdapter(mContext, mHomePagerEntity);
+                        //设置跳转监听
+                        mListBaseAdapter.setToProductListener(mListener);
                         home_page_list.setAdapter(mListBaseAdapter);
                     }
                     break;
@@ -735,6 +752,8 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         }
     }
 
+
+
     /**
      * 当前连接的网络提示
      */
@@ -773,7 +792,10 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         if (jsondata != null) {
             mHomePagerEntity = JSON.parseObject(jsondata, HomePagerEntity.class);
             mListBaseAdapter = new HomeListBaseAdapter(mContext, mHomePagerEntity);
+            //设置跳转监听
+            mListBaseAdapter.setToProductListener(mListener);
             home_page_list.setAdapter(mListBaseAdapter);
+
         } else {
             showDefData();
         }
@@ -789,6 +811,10 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
             mHomePagerEntity = JSON.parseObject(defDataJson, HomePagerEntity.class);
 
             mListBaseAdapter = new HomeListBaseAdapter(mContext, mHomePagerEntity);
+
+            //设置跳转监听
+            mListBaseAdapter.setToProductListener(mListener);
+
             home_page_list.setAdapter(mListBaseAdapter);
         } catch (Exception e) {
             L.d("json解析失败：" + e.getMessage());
@@ -844,6 +870,9 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
                 L.d(TAG, "注销成功");
                 public_btn_set.setImageResource(R.mipmap.logout);
             }
+        }else if(resultCode==ProductAdviceActivity.RESULT_CODE){
+            getRequestData(1);
+
         }
 
     }
@@ -889,6 +918,5 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
     }
 }

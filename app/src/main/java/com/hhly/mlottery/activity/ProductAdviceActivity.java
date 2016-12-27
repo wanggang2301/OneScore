@@ -9,11 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +29,6 @@ import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,6 +79,7 @@ public class ProductAdviceActivity extends AppCompatActivity implements View.OnC
     private int currentPage=1;
     private int PAGE_SIZE=20; //每页的最大数量
     public final static  String LIKE_IDS="like_ids";
+    public  static int RESULT_CODE=2; //给首页的返回code
 
 
     private List<ProductAdviceBean.DataEntity> data=new ArrayList<>();
@@ -203,6 +202,7 @@ public class ProductAdviceActivity extends AppCompatActivity implements View.OnC
                 startActivity(new Intent(this,FeedbackActivity.class));
                 break;
             case R.id.public_img_back:
+                setResult(RESULT_CODE);
                 finish();
                 break;
             case R.id.network_exception_reload_btn:
@@ -271,9 +271,6 @@ public class ProductAdviceActivity extends AppCompatActivity implements View.OnC
                         }
                         mAdapter.notifyDataChangedAfterLoadMore(false);
                         mAdapter.addFooterView(mNoLoadingView);
-                        //三秒钟后消失
-//                        handler.sendEmptyMessageDelayed(5,3000);
-
                     }
                     else {
                         mAdapter.notifyDataChangedAfterLoadMore(jsonObject.getData(),true);
@@ -294,6 +291,17 @@ public class ProductAdviceActivity extends AppCompatActivity implements View.OnC
 
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+            setResult(RESULT_CODE);
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+
+    }
 
     @Override
     public void onRefresh() {
