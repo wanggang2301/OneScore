@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.UiUtils;
 
 import java.util.Map;
 import java.util.Random;
@@ -138,9 +139,10 @@ public class BarrageView extends RelativeLayout {
         }
     }*/
 
-    public void setDatas(String url, String msg) {
+    public void setDatas(String url,String msg) {
+
         generateItem();
-        if (msg.startsWith("[")) {
+        if (msg.startsWith("[")){
             for (Map.Entry<String, Integer> entry : AppConstants.localMap.entrySet()) {
                 if (msg != null) {
                     if (msg.equals(entry.getKey())) {
@@ -152,7 +154,7 @@ public class BarrageView extends RelativeLayout {
                     }
                 }
             }
-        } else {
+        }else {
             textView.setText(msg);
         }
 
@@ -183,7 +185,7 @@ public class BarrageView extends RelativeLayout {
         item.moveSpeed = (int) (minSpeed + (maxSpeed - minSpeed) * Math.random());
 
         if (totalLine == 0) {
-            // UiUtils.toast(mContext,"我哦進來了-");
+           // UiUtils.toast(mContext,"我哦進來了-");
             totalHeight = 150;
             lineHeight = 20;
             totalLine = totalHeight / lineHeight;
@@ -201,7 +203,7 @@ public class BarrageView extends RelativeLayout {
         params.topMargin = item.verticalPos;
         this.addView(relativeLayout, params);
         Animation anim = generateTranslateAnim(relativeLayout, SCREEN_WIDTH);
-        Log.i("sdasdasdas", "SCREEN_WIDTH" + SCREEN_WIDTH);
+        Log.i("sdasdasdas","SCREEN_WIDTH"+SCREEN_WIDTH);
         anim.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -211,7 +213,7 @@ public class BarrageView extends RelativeLayout {
             @Override
             public void onAnimationEnd(Animation animation) {
 
-                Log.i("sdasdasdas", "我走了结束>>>>>");
+                Log.i("sdasdasdas","我走了结束>>>>>");
                 //relativeLayout.clearAnimation();
                 //  relativeLayout.setVisibility(GONE);
                 //
