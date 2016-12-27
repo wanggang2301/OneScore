@@ -78,6 +78,7 @@ public class AppConstants {
     // 聊球红点key
     public static final String FOOTBALL_RED_KEY = "football_red";
     public static final String BASKET_RED_KEY = "basket_red";
+    public static final String RED_KEY_START = "red_key_start";
 
     // public static String i18n = "en";// 测试英文语言环境
 
@@ -317,11 +318,11 @@ public class AppConstants {
     public static String[] emojiList = {
             "\ue415", "\ue056", "\ue057", "\ue414",
             "\ue405", "\ue106", "\ue418", "\ue417", "\ue40d",
-            "\ue40a", "\ue404", "\ue105", "\ue409", "\ue40e",
+            "\ue40a", "\ue404", "\ue105", "\ue412", "\ue40e",
             "\ue402", "\ue108", "\ue403", "\ue058", "\ue407",
             "\ue401", "\ue40f", "\ue40b", "\ue406", "\ue413",
-            "\ue411", "\ue412", "\ue410", "\ue107", "\ue059",
-            "\ue416", "\ue408", "\ue40c", "\ue11a", "\ue10c",
+            "\ue411", "\ue410", "\ue107", "\ue059", "\ue416",
+            "\ue408", "\ue40c", "\ue409", "\ue11a", "\ue10c",
             "\ue32c", "\ue32a", "\ue32d", "\ue328", "\ue32b",
             "\ue022", "\ue023", "\ue327", "\ue329", "\ue32e",
             "\ue32f", "\ue335", "\ue334", "\ue021", "\ue337",
@@ -351,22 +352,43 @@ public class AppConstants {
     /**
      * 本地个性化表情
      */
-    public static int[] localIcon = {R.mipmap.chart_ball_chitule,
-            R.mipmap.chart_ball_dacaipan,
-            R.mipmap.chart_ball_fubaila,
-            R.mipmap.chart_ball_jinggaoni,
+    public static int[] localIcon = {
             R.mipmap.chart_ball_juyijing,
-            R.mipmap.chart_ball_mengkuanle,
-            R.mipmap.chart_ball_qiudatui,
-            R.mipmap.chart_ball_sesese,
-            R.mipmap.chart_ball_shangtiantai,
             R.mipmap.chart_ball_shihuale,
+            R.mipmap.chart_ball_zailaiyijiao,
+            R.mipmap.chart_ball_mengkuanle,
+            R.mipmap.chart_ball_yayajing,
+            R.mipmap.chart_ball_dacaipan,
+            R.mipmap.chart_ball_jinggaoni,
+            R.mipmap.chart_ball_sesese,
+            R.mipmap.chart_ball_qiudatui,
+            R.mipmap.chart_ball_youqingguanlaoye,
+            R.mipmap.chart_ball_fubaila,
             R.mipmap.chart_ball_shoumila,
             R.mipmap.chart_ball_touzhele,
-            R.mipmap.chart_ball_xihushuiya,
-            R.mipmap.chart_ball_yayajing,
-            R.mipmap.chart_ball_youqingguanlaoye,
-            R.mipmap.chart_ball_zailaiyijiao};
+            R.mipmap.chart_ball_shangtiantai,
+            R.mipmap.chart_ball_chitule,
+            R.mipmap.chart_ball_xihushuiya
+    };
+//    public static String[] localIconName = {
+//            MyApp.getContext().getResources().getString(R.string.local_juyijing),
+//            MyApp.getContext().getResources().getString(R.string.local_shihuale),
+//            MyApp.getContext().getResources().getString(R.string.local_zailaiyijiao),
+//            MyApp.getContext().getResources().getString(R.string.local_mengkuanle),
+//            MyApp.getContext().getResources().getString(R.string.local_yayajing),
+//            MyApp.getContext().getResources().getString(R.string.local_dacaipan),
+//            MyApp.getContext().getResources().getString(R.string.local_jinggaoni),
+//            MyApp.getContext().getResources().getString(R.string.local_sesese),
+//            MyApp.getContext().getResources().getString(R.string.local_qiudatui),
+//            MyApp.getContext().getResources().getString(R.string.local_youqingguanlaoye),
+//            MyApp.getContext().getResources().getString(R.string.local_fubaila),
+//            MyApp.getContext().getResources().getString(R.string.local_shoumila),
+//            MyApp.getContext().getResources().getString(R.string.local_touzhele),
+//            MyApp.getContext().getResources().getString(R.string.local_shangtiantai),
+//            MyApp.getContext().getResources().getString(R.string.local_chitule),
+//            MyApp.getContext().getResources().getString(R.string.local_xihushuiya)
+//    };
+
     public static Map<String, Integer> localMap = new HashMap<>();
 
     static {

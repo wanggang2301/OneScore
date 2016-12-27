@@ -256,7 +256,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private final static int PERIOD_20 = 1000 * 60 * 20;//刷新周期二十分钟
     private final static int PERIOD_5 = 1000 * 60 * 5;//刷新周期五分钟
 
-    private final static int GIFPERIOD_2 = 1000 * 60 * 2;//刷新周期两分钟
+    private final static int GIFPERIOD_2 = 1000 * 5;//刷新周期两分钟
 
     /**
      * 赛前轮询周期
@@ -318,7 +318,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private View red_point;
     private ImageView barrage_switch;
 
-    boolean barrage_isFocus =false;
+    boolean barrage_isFocus = true;
+    private View view_red;
 
 
     @Override
@@ -367,6 +368,13 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
+
+        if (!PreferenceUtil.getBoolean(AppConstants.FOOTBALL_RED_KEY, false)) { // 添加红点  自定义view
+            TabLayout.Tab tabAt = mTabLayout.getTabAt(5);
+            View view = View.inflate(mContext, R.layout.chart_bal_item_red, null);
+            view_red = view.findViewById(R.id.view_red);
+            tabAt.setCustomView(view);
+        }
 
         mFootballLiveGotoChart = new FootballLiveGotoChart() {
             @Override
@@ -445,15 +453,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     public void onEventMainThread(BarrageBean barrageBean){
         barrage_view.setDatas(barrageBean.getUrl(),barrageBean.getMsg().toString());
     }
-    public void onEventMainThread(GoneBarrage barrageBean){
-        barrage_view.setVisibility(View.GONE);
-
-    }
-    public void onEventMainThread(OpenBarrage barrageBean){
-        barrage_view.setVisibility(View.VISIBLE);
-
-    }
-
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -493,10 +492,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     L.d(TAG, "下拉刷新未开赛和正在比赛的");
                     loadData();
 
-                    mAnalyzeFragment.initData();//分析下拉刷新
-
-                    mOddsFragment.oddPlateRefresh(); //指数刷新
-
                     //走势图
                     mStatisticsFragment.initChartData(mMatchDetail.getLiveStatus());
                     //统计图
@@ -506,8 +501,16 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         connectWebSocket();
                     }
 
-                    // 聊球
-                    mChartBallFragment.onRefresh();
+
+                    if(isAnalyze){
+                        mAnalyzeFragment.initData();// 分析下拉刷新
+                    }
+                    if(isOdds){
+                        mOddsFragment.oddPlateRefresh(); // 指数刷新
+                    }
+                    if (isTalkAboutBall) {
+                        mChartBallFragment.onRefresh();// 聊球
+                    }
                 }
             }
         }, 1000);
@@ -607,8 +610,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                             head_guest_name.setText(matchDetail.getGuestTeamInfo().getName());
                             head_score.setText(mMatchDetail.getHomeTeamInfo().getScore() + ":" + mMatchDetail.getGuestTeamInfo().getScore());
                             mKeepTime = "5400000";//90分钟的毫秒数
-
-
                             //是否显示精彩瞬间
                             getCollectionCount();
 
@@ -2014,16 +2015,15 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             case  R.id.barrage_switch:
 
 
-                if(barrage_isFocus) {
+                if(barrage_isFocus)
+                {
                     barrage_switch.setImageResource(R.mipmap.danmu_open);
                     barrage_isFocus=false;
-                    //barrage_view.setVisibility(View.VISIBLE);
-                    barrage_view.setAlpha(1);
+                    barrage_view.setVisibility(View.VISIBLE);
                 }else{
                     barrage_switch.setImageResource(R.mipmap.danmu_close);
                     barrage_isFocus=true;
-                    //barrage_view.setVisibility(View.INVISIBLE);
-                    barrage_view.setAlpha(0);
+                    barrage_view.setVisibility(View.GONE);
                 }
                 break;
             default:
@@ -2198,7 +2198,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 isHindShow(position);
                 if (position != 5) {// 聊球界面禁用下拉刷新
                     MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
-                }else{
+                } else {
+                    if(view_red != null){view_red.setVisibility(View.GONE);}
                     mRefreshLayout.setEnabled(true); //展开
                     appBarLayout.setExpanded(false);
                 }

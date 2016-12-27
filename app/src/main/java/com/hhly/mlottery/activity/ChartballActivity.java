@@ -210,7 +210,6 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
             mThirdId = getIntent().getStringExtra(MATCH_THIRD_ID);
             callName = getIntent().getStringExtra("CALL_NAME");
             callUserId = getIntent().getStringExtra("CALL_USER_ID");
-            System.out.println("xxxxx 头像点击传过来的： " + callName);
             if (!TextUtils.isEmpty(callName)) {
                 mEditText.setText(Html.fromHtml("<font color='#0090ff'>@" + callName + ":</font>"));
                 mEditText.setSelection(mEditText.getText().length());
@@ -223,12 +222,14 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
         localPagerSize = AppConstants.localIcon.length % LOCAL_PAGER_SIZE == 0 ? AppConstants.localIcon.length / LOCAL_PAGER_SIZE : AppConstants.localIcon.length / LOCAL_PAGER_SIZE + 1;
         for (int i = 0; i < localPagerSize; i++) {
             ArrayList<Integer> list = new ArrayList<>();
+            ArrayList<String> listName = new ArrayList<>();
             int startIndex = i * LOCAL_PAGER_SIZE;
             int endIndex = (i + 1) * LOCAL_PAGER_SIZE <= AppConstants.localIcon.length ? (i + 1) * LOCAL_PAGER_SIZE : AppConstants.localIcon.length;
             for (int j = startIndex; j < endIndex; j++) {
                 list.add(AppConstants.localIcon[j]);
+                listName.add(getLocalName()[j]);
             }
-            localFragments.add(LocalFragment.newInstance(list));
+            localFragments.add(LocalFragment.newInstance(list, listName));
         }
         localPagerAdapter.addFragments(localFragments);
         view_pager_local.setAdapter(localPagerAdapter);
@@ -348,9 +349,6 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
                         // 向会话列表发送输入内容
                         EventBus.getDefault().post(chatHistoryBean);
 
-                        // 用户自己的头像URL发向弹幕
-                        EventBus.getDefault().post(new BarrageBean(AppConstants.register.getData().getUser().getHeadIcon(), mEditText.getText().toString()));
-
                         // 发送之后 清空输入框
                         mEditText.setText("");
 
@@ -373,7 +371,6 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
                 }
                 break;
             case R.id.iv_gallery:
-                // TODO 此处不流畅，需要优化
                 // 隐藏软键盘
                 if (ChartballActivity.this.getCurrentFocus() != null) {
                     inputMethodManager.hideSoftInputFromWindow(ChartballActivity.this.getCurrentFocus()
@@ -452,6 +449,33 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
             inputMethodManager.hideSoftInputFromWindow(ChartballActivity.this.getCurrentFocus()
                     .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
+    }
+
+    /**
+     * 本地表情描述，需和AppConstants.localIcon里的资源文件保持一致
+     *
+     * @return
+     */
+    private String[] getLocalName() {
+        String[] localIconName = {
+                mContext.getResources().getString(R.string.local_juyijing),
+                mContext.getResources().getString(R.string.local_shihuale),
+                mContext.getResources().getString(R.string.local_zailaiyijiao),
+                mContext.getResources().getString(R.string.local_mengkuanle),
+                mContext.getResources().getString(R.string.local_yayajing),
+                mContext.getResources().getString(R.string.local_dacaipan),
+                mContext.getResources().getString(R.string.local_jinggaoni),
+                mContext.getResources().getString(R.string.local_sesese),
+                mContext.getResources().getString(R.string.local_qiudatui),
+                mContext.getResources().getString(R.string.local_youqingguanlaoye),
+                mContext.getResources().getString(R.string.local_fubaila),
+                mContext.getResources().getString(R.string.local_shoumila),
+                mContext.getResources().getString(R.string.local_touzhele),
+                mContext.getResources().getString(R.string.local_shangtiantai),
+                mContext.getResources().getString(R.string.local_chitule),
+                mContext.getResources().getString(R.string.local_xihushuiya)
+        };
+        return localIconName;
     }
 }
 

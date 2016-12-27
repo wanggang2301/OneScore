@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
@@ -321,7 +322,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         swipeRefreshLayout.setRefreshing(true);
         swipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), 40));
+        swipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(MyApp.getContext(), 40));
     }
 
     private void setupEventBus() {
@@ -607,7 +608,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                         break;
                     case VIEW_STATUS_NET_ERROR:
                         if (isLoadedData) {
-                            Toast.makeText(fragment.getContext(), R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MyApp.getContext(), R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
                         } else {
                             fragment.titleContainer.setVisibility(View.GONE);
                             fragment.networkExceptionLayout.setVisibility(View.VISIBLE);

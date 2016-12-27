@@ -1468,6 +1468,24 @@
     <string name="chart_ball_call_user_not">\@用户不存在</string>
     <string name="chart_ball_report_user_not">被举报用户不存在</string>
     <string name="chart_ball_banned">您已被管理员禁言，禁言时间为</string>
+    <string name="local_chitule">吃土了</string>
+    <string name="local_dacaipan">打裁判</string>
+    <string name="local_fubaila">腐败啦</string>
+    <string name="local_jinggaoni">警告你</string>
+    <string name="local_juyijing">菊一紧</string>
+    <string name="local_mengkuanle">懵圈了</string>
+    <string name="local_qiudatui">求大腿</string>
+    <string name="local_sesese">射射射</string>
+    <string name="local_shangtiantai">上天台</string>
+    <string name="local_shihuale">石化了</string>
+    <string name="local_shoumila">收米啦</string>
+    <string name="local_touzhele">偷着乐</string>
+    <string name="local_xihushuiya">西湖水呀</string>
+    <string name="local_yayajing">压压惊</string>
+    <string name="local_youqingguanlaoye">有请关老爷</string>
+    <string name="local_zailaiyijiao">再来一角</string>
+    <string name="chart_ball_new_msg">有新的消息</string>
+    <string name="chart_ball_null_content">客官坐下来聊聊嘛</string>
 
     <string name="title_product_advice">给产品建议</string>
     <string name="product_advice">产品回复</string>

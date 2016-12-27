@@ -1,6 +1,8 @@
 package com.hhly.mlottery.frame.basketballframe;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -73,6 +75,9 @@ public class BasketTextLiveFragment extends Fragment {
     private TextView network_exception_reload_btn;
 */
     private FrameLayout fl_comment;
+    private Activity mActivity;
+
+    private Context mContext;
 
 
     public static BasketTextLiveFragment newInstance() {
@@ -90,6 +95,7 @@ public class BasketTextLiveFragment extends Fragment {
         if (getArguments() != null) {
             mThirdId = getArguments().getString("thirdId");
         }
+        this.mContext = mActivity;
 
         EventBus.getDefault().register(this);
     }
@@ -97,8 +103,10 @@ public class BasketTextLiveFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_basket_text_live, container, false);
-        listfooter_more = getActivity().getLayoutInflater().inflate(R.layout.listfooter_more, container, false);
-        emptyView = getActivity().getLayoutInflater().inflate(R.layout.layout_nodata, container, false);
+
+
+        listfooter_more = ((Activity) mContext).getLayoutInflater().inflate(R.layout.listfooter_more, container, false);
+        emptyView = ((Activity) mContext).getLayoutInflater().inflate(R.layout.layout_nodata, container, false);
         initView();
         loadData();
         return mView;
@@ -126,14 +134,14 @@ public class BasketTextLiveFragment extends Fragment {
         mLoadMore.setText(R.string.foot_loadmore);  //加载更多
         listfooter_more.setVisibility(View.GONE);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         //设置布局管理器
         mRecyclerView.setLayoutManager(layoutManager);
         layoutManager.setOrientation(OrientationHelper.VERTICAL);
 
         //设置Adapter
-        if (getActivity() != null) {
-            mBasketBallTextLiveAdapter = new BasketBallTextLiveAdapter(R.layout.item_basket_text_live_new, null, getActivity());
+        if (mContext != null) {
+            mBasketBallTextLiveAdapter = new BasketBallTextLiveAdapter(R.layout.item_basket_text_live_new, null, mContext);
             mRecyclerView.setAdapter(mBasketBallTextLiveAdapter);
 
             mBasketBallTextLiveAdapter.setPullUpLoading(new BasketBallTextLiveAdapter.PullUpLoading() {
@@ -403,5 +411,11 @@ public class BasketTextLiveFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.mActivity = (Activity) context;
     }
 }

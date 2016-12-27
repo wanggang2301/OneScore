@@ -165,6 +165,12 @@ public class MoreSettingsActivity extends BaseActivity  implements View.OnClickL
 
                     PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS,""); //清空篮球关注列表
                     PreferenceUtil.commitString(FocusFragment.FOCUS_ISD,""); //清空足球关注列表
+
+                    //清空定制列表id
+                    PreferenceUtil.commitString(CustomListActivity.CUSTOM_LEAGUE_FOCUSID , "");
+                    PreferenceUtil.commitString(CustomListActivity.CUSTOM_TEAM_FOCUSID , "");
+
+
                     request(); //推送需要
 
 //                    getFootballUserFocus(""); //注销时把未登录状态的用户id请求过来 .篮球不需要是因为篮球进行了预加载，会直接请求关注页面。足球没有。
