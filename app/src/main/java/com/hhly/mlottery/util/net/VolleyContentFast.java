@@ -39,6 +39,7 @@ public class VolleyContentFast {
     public final static int ERROR_CODE_VOLLEY_ERROR = 1003;
     private final static int RESPONSE_TYPE_STRING = 1;
     private final static int RESPONSE_TYPE_JSON = 2;
+    private final static int REQUEST_TIME_OUT = 10000;
 
     private static RequestQueue mQueue;
 
@@ -200,7 +201,7 @@ public class VolleyContentFast {
         if (retryPolicy != null) {
             stringRequest.setRetryPolicy(retryPolicy);
         } else {
-            stringRequest.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(REQUEST_TIME_OUT, 1, 1));
         }
         mQueue.add(stringRequest);
     }

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.hhly.mlottery.R;
@@ -54,8 +55,8 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
     private TextView mCustomText;
     private ImageView mBack;
 
-    private String CUSTOM_LEAGUE_FOCUSID = "custom_leagueId_focus_ids";
-    private String CUSTOM_TEAM_FOCUSID = "custom_team_focus_ids";
+    public static final String CUSTOM_LEAGUE_FOCUSID = "custom_leagueId_focus_ids";
+    public static final String CUSTOM_TEAM_FOCUSID = "custom_team_focus_ids";
 
     private final static int VIEW_STATUS_LOADING = 1;//请求中
     private final static int VIEW_STATUS_NET_NO_DATA = 2;//暂无数据
@@ -70,6 +71,7 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
     private TextView mCustomTxt;
     private LinearLayout monClickLoading;
     private ExactSwipeRefreshLayout mRefresh;
+    private boolean isSccomplish = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +105,7 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
     private void initView() {
         /**头部布局*/
         TextView mCustomTitle = (TextView) findViewById(R.id.public_txt_title);
-        mCustomTitle.setText(getResources().getString(R.string.custom_mine_cus));
+        mCustomTitle.setText(getResources().getString(R.string.custom_list_cus));
 
         mBack = (ImageView) findViewById(R.id.public_img_back);
         mBack.setOnClickListener(this);
@@ -117,23 +119,23 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
 
         //下拉控件
-        mRefresh = (ExactSwipeRefreshLayout)findViewById(R.id.custom_refresh_layout);
+        mRefresh = (ExactSwipeRefreshLayout) findViewById(R.id.custom_refresh_layout);
         mRefresh.setColorSchemeResources(R.color.bg_header);
         mRefresh.setOnRefreshListener(this);
         mRefresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getApplicationContext(), StaticValues.REFRASH_OFFSET_END));
 
         /**网络、数据 异常布局*/
         // 网络不给力提示
-        mErrorll = (LinearLayout)findViewById(R.id.error_layout);
+        mErrorll = (LinearLayout) findViewById(R.id.error_layout);
         //刷新点击按键
-        mrefshTxt = (TextView)findViewById(R.id.reloading_txt);
+        mrefshTxt = (TextView) findViewById(R.id.reloading_txt);
         mrefshTxt.setOnClickListener(this);
         //暂无数据提示
-        mNoData = (TextView)findViewById(R.id.nodata_txt);
+        mNoData = (TextView) findViewById(R.id.nodata_txt);
         //还未定制任何赛事
-        mNoCustom = (LinearLayout)findViewById(R.id.to_custom_ll);
+        mNoCustom = (LinearLayout) findViewById(R.id.to_custom_ll);
         //去定制按键
-        mCustomTxt = (TextView)findViewById(R.id.to_custom);
+        mCustomTxt = (TextView) findViewById(R.id.to_custom);
         mCustomTxt.setOnClickListener(this);
 
         //点击刷新是显示正在加载中....
@@ -147,30 +149,25 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
         mCustomListRecycle.setLayoutManager(mLinearLayoutManager);
 
     }
+
     /**
      * 数据展示状态设置
      */
-    private void setState(int state){
-//        VIEW_STATUS_LOADING = 1;//请求中
-//        VIEW_STATUS_NET_NO_DATA = 2;//暂无数据
-//        VIEW_STATUS_SUCCESS = 3;//请求成功
-//        VIEW_STATUS_NET_ERROR = 4;//请求失败
-//        VIEW_STATUS_CUSTOM_NO_DATA = 5;//暂无定制
+    private void setState(int state) {
 
         if (state == VIEW_STATUS_LOADING) {
             mRefresh.setVisibility(View.VISIBLE);
             mRefresh.setRefreshing(true);
-        }else if(state == VIEW_STATUS_SUCCESS){
+        } else if (state == VIEW_STATUS_SUCCESS) {
             mRefresh.setVisibility(View.VISIBLE);
             mRefresh.setRefreshing(false);
-        }else if (state == VIEW_STATUS_CUSTOM_REFRESH_ONCLICK){
+        } else if (state == VIEW_STATUS_CUSTOM_REFRESH_ONCLICK) {
             mRefresh.setVisibility(View.GONE);
             mRefresh.setRefreshing(true);
-        }else{
+        } else {
             mRefresh.setVisibility(View.GONE);
             mRefresh.setRefreshing(false);
         }
-
         monClickLoading.setVisibility((state == VIEW_STATUS_CUSTOM_REFRESH_ONCLICK) ? View.VISIBLE : View.GONE);
         mErrorll.setVisibility((state == VIEW_STATUS_NET_ERROR) ? View.VISIBLE : View.GONE);
         mNoData.setVisibility((state == VIEW_STATUS_NET_NO_DATA) ? View.VISIBLE : View.GONE);
@@ -179,6 +176,7 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
 
     private String currentLeagueid;
     private String currentTemaid;
+
     private void initData() {
 
 //        String url = "http://192.168.10.242:8181/mlottery/core/basketballCommonMacth.findHotLeagueAndTeamConcern.do";
@@ -189,62 +187,95 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
         String deviceid = AppConstants.deviceToken;
         map.put("userId", userid);
         map.put("deviceId", deviceid);
-//        map.put("userId", "hhly90522");
-//        map.put("deviceId", "868048029263480");
 
 
         VolleyContentFast.requestJsonByGet(url, map, new VolleyContentFast.ResponseSuccessListener<CustomListBean>() {
             @Override
             public void onResponse(CustomListBean json) {
 
+                if (json == null) {
+                    setState(VIEW_STATUS_NET_NO_DATA);
+                    return;
+                }else if(json.getConcernLeagueAndTeam() == null){
+                    setState(VIEW_STATUS_NET_NO_DATA);
+                    return;
+                }
+
                 mFirstData = new ArrayList();
 
                 mFirstData = json.getConcernLeagueAndTeam().getLeagueConcerns();
+                if (mFirstData != null && mFirstData.size() != 0) {
+                    isSccomplish = true;
+                }
 
                 mAllDataList = new ArrayList<>();
                 /**这里必须 for 对新对象赋值  直接引用数据(mFirstData)源变化会跟着变化*/
                 for (int i = 0; i < mFirstData.size(); i++) {
-                    mAllDataList.add((CustomFristBean)mFirstData.get(i));
+                    mAllDataList.add((CustomFristBean) mFirstData.get(i));
+                }
+
+                String currentFucusLeagueId = PreferenceUtil.getString(CUSTOM_LEAGUE_FOCUSID, "");
+                String currentFucusTeamId = PreferenceUtil.getString(CUSTOM_TEAM_FOCUSID, "");
+
+                if (currentFucusLeagueId.equals("") && currentFucusTeamId.equals("")) {
+
+                    for (int i = 0; i < mFirstData.size(); i++) {
+                        if (mFirstData.get(i) instanceof CustomFristBean) {
+                            CustomFristBean data = (CustomFristBean) mFirstData.get(i);
+                            L.d("yxq==1222====league ", "isConcern " + data.isConcern());
+                            if (data.isConcern()) {
+                                String fucusLeagueId = PreferenceUtil.getString(CUSTOM_LEAGUE_FOCUSID, "");
+                                if (fucusLeagueId.equals("")) {
+                                    PreferenceUtil.commitString(CUSTOM_LEAGUE_FOCUSID, data.getLeagueId() + "_A");
+                                } else {
+                                    PreferenceUtil.commitString(CUSTOM_LEAGUE_FOCUSID, fucusLeagueId + "," + data.getLeagueId() + "_A");
+                                }
+                            }
+
+                            for (CustomSecondBean sendData : data.getTeamConcerns()) {
+                                L.d("yxq==1222====team ", "isConcern " + sendData.isConcern());
+                                if (sendData.isConcern()) {
+                                    String fucusTeamId = PreferenceUtil.getString(CUSTOM_TEAM_FOCUSID, "");
+                                    if (fucusTeamId.equals("")) {
+                                        PreferenceUtil.commitString(CUSTOM_TEAM_FOCUSID, sendData.getTeamId() + "_B");
+                                    } else {
+                                        PreferenceUtil.commitString(CUSTOM_TEAM_FOCUSID, fucusTeamId + "," + sendData.getTeamId() + "_B");
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
                 currentLeagueid = PreferenceUtil.getString(CUSTOM_LEAGUE_FOCUSID, "");
                 currentTemaid = PreferenceUtil.getString(CUSTOM_TEAM_FOCUSID, "");
 
-                L.d("yxq1220" , "=完成前==mLeagueIdBuff= " + currentLeagueid.toString());
-                L.d("yxq1220" , "=完成前=mTemaIdBuff= " + currentTemaid.toString());
+                L.d("yxq1220", "=完成前==mLeagueIdBuff= " + currentLeagueid.toString());
+                L.d("yxq1220", "=完成前=mTemaIdBuff= " + currentTemaid.toString());
 
                 fucusEvent();
-                if (mAdapter == null) {
-                    mAdapter = new CustomListAdapter(getApplicationContext(), mFirstData);
-                    mCustomListRecycle.setAdapter(mAdapter);
-                }else{
-                    updateAdapter();
+
+
+                //刷新时清空recycleview 回收池
+                if (mAdapter != null) {
+                    mCustomListRecycle.getRecycledViewPool().clear();
+                    mAdapter.notifyDataSetChanged();
                 }
+                mAdapter = new CustomListAdapter(getApplicationContext(), mFirstData);
+                mCustomListRecycle.setAdapter(mAdapter);
 
                 mAdapter.setmFocus(mCustomFocusClickListener);
 
                 setOnItemClick(mFirstData);
 
                 addSecondTier();
-                setState(VIEW_STATUS_SUCCESS);
-//                int index = 0;
-//                for (int i = 0; i < mFirstData.size(); i++) {
-//
-//                    if (mFirstData.get(i) instanceof CustomFristBean) {
-//
-//                        CustomFristBean a = (CustomFristBean)mFirstData.get(i);
-//
-//                        mAllDataList.get(index).setTeamConcerns(a.getTeamConcerns());
-//                        index++;
-//                    }
-//                }
 
-//                Toast.makeText(mContext, "请求成功", Toast.LENGTH_SHORT).show();
+                setState(VIEW_STATUS_SUCCESS);
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-//                Toast.makeText(mContext, "请求失败", Toast.LENGTH_SHORT).show();
+                isSccomplish = false;
                 setState(VIEW_STATUS_NET_ERROR);
             }
         }, CustomListBean.class);
@@ -258,109 +289,58 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
         mAdapter.notifyDataSetChanged();
     }
 
-    private String sendLeagueId(){
+    private String sendLeagueId() {
 
         String fucusId = PreferenceUtil.getString(CUSTOM_LEAGUE_FOCUSID, "");
         String[] onlyId = fucusId.split("[,]");
 
-//        List<Integer> mlist = new ArrayList<>();
         StringBuffer msb = new StringBuffer();
         for (CustomFristBean firstdata : mAllDataList) {
 
             for (String id : onlyId) {
-                if (id.replaceAll("_A", "") .equals(firstdata.getLeagueId())) {
+                if (id.replaceAll("_A", "").equals(firstdata.getLeagueId())) {
                     if ("".equals(msb.toString())) {
                         msb.append(firstdata.getLeagueId());
-                    }else{
+                    } else {
                         msb.append("," + firstdata.getLeagueId());
                     }
-//                    mlist.add(Integer.parseInt(firstdata.getLeagueId()));
                 }
             }
         }
 
-        Gson gson = new Gson();
-//        String reslut = gson.toJson(mlist);
         String reslut = msb.toString();
         L.d("yxq1220", "jsonLeagueId ==*****" + reslut);
         return reslut;
     }
+
     private String sendTeamId() {
-
-        /** 初次进入 在当前页面没做操作时直接完成 得到的ID 是第一个联赛的  后面联赛的取不到  BUG！！！！！！！！ 待解决*/
-
-//        List<Map<String, String[]>> sendList = new ArrayList<>();
-//
-//        for (CustomFristBean firstdata : mAllDataList) {
-//
-//            boolean ishole = false;
-//            StringBuffer teamId = new StringBuffer();
-//            int a = 0;
-//            int b = 0;
-//            for (CustomSecondBean seconddata : firstdata.getTeamConcerns()) {
-//                if (seconddata.isConcern()) {
-//                    ishole = true;
-//                    if ("".equals(teamId.toString())) {
-//                        teamId.append(seconddata.getTeamId());
-//                    } else {
-//                        teamId.append("," + seconddata.getTeamId());
-//                    }
-//                    b++;
-//                }
-//                a++;
-//            }
-//            if (ishole) {
-//
-//                String[] idArray = teamId.toString().split("[,]");
-//                Map<String, String[]> temaIdMap = new HashMap<>();
-//                temaIdMap.put(firstdata.getLeagueId(), idArray);
-//                sendList.add(temaIdMap);
-//            }
-//            L.d("yxq123456", "ishole =AAAAAAAAAAAAAAAA=" + ishole);
-//
-//        }
-//        L.d("yxq123456", "sendList.size ==*****" + sendList.size());
 
         String fucusId = PreferenceUtil.getString(CUSTOM_TEAM_FOCUSID, "");
         String[] onlyId = fucusId.split("[,]");
 
-
-//        mAllDataList = new ArrayList<>();
-//        /**这里必须 for 对新对象赋值  直接引用数据(mFirstData)源变化会跟着变化*/
-//        for (int i = 0; i < mFirstData.size(); i++) {
-//            if (mFirstData.get(i) instanceof CustomFristBean ) {
-//                mAllDataList.add((CustomFristBean)mFirstData.get(i));
-//            }
-//        }
-        Map<String , List<Integer>> sendMap = new LinkedHashMap<>();
+        Map<String, List<Integer>> sendMap = new LinkedHashMap<>();
         for (CustomFristBean firstdata : mAllDataList) {
 
             List<Integer> mlist = new ArrayList<>();
 
-            boolean isConcern =false;
+            boolean isConcern = false;
             for (CustomSecondBean second : firstdata.getTeamConcerns()) {
 
                 for (String id : onlyId) {
-                    String sub = id.replaceAll( "_B","");
+                    String sub = id.replaceAll("_B", "");
 
                     if (sub.equals(second.getTeamId())) {
                         isConcern = true;
                         mlist.add(Integer.parseInt(second.getTeamId()));
                     }
                 }
-//                s=s.Substring(0,s.Length-1)
-//                if (second.isConcern()) {
-//                    mlist.add(Integer.parseInt(second.getTeamId()));
-//                }
-//                L.d("yxq===aaa11111===", " 是否选中=== " + second.isConcern());
             }
             if (isConcern) {
-                sendMap.put(firstdata.getLeagueId() , mlist);
+                sendMap.put(firstdata.getLeagueId(), mlist);
             }
         }
 
         Gson gson = new Gson();
-//        String reslut = gson.toJson(sendList);
         String reslut = gson.toJson(sendMap);
         L.d("yxq1220", "jsonTeamId ==*****" + reslut);
 
@@ -416,13 +396,6 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
         });
     }
 
-//    public void addAll(List<CustomFristBean> alldata) {
-//        for (CustomFristBean data : alldata) {
-//            mFirstData.add(data);
-//        }
-//    }
-
-
     public void fucusEvent() {
         mCustomFocusClickListener = new CustomFocusClickListener() {
             @Override
@@ -430,162 +403,57 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
                 boolean isFucus = (boolean) view.getTag();
 
                 if (!isFucus) {// 未选中 --> 选中
-                    addId(dataId , 0);
+                    addId(dataId, 0);
                     view.setTag(false);
                     firstData.setConcern(false);
+
                 } else { //选中 --> 未选中
-                    deletaId(dataId , 0);
+                    deletaId(dataId, 0);
                     view.setTag(true);
                     firstData.setConcern(true);
                 }
                 mAdapter.notifyDataSetChanged();
-//                Toast.makeText(getApplicationContext(), "yxq== " + dataId, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void FocusOnClick(View view, String dataId, CustomSecondBean secondData) {
                 boolean isFucus = (boolean) view.getTag();
-
                 if (!isFucus) {// 未选中 --> 选中
-                    addId(dataId , 1);
+                    addId(dataId, 1);
                     view.setTag(false);
                     secondData.setConcern(false);
-
-
-//                    boolean isAllConcern = false;
-//                    for (int i = 0; i < mFirstData.size(); i++) {
-//                        if (mFirstData.get(i) instanceof CustomFristBean) {
-//                            CustomFristBean data = (CustomFristBean)mFirstData.get(i);
-//
-//                            if (data.getLeagueId().equals(secondData.getLeagueId())) {
-//
-//                                for (CustomSecondBean isId: data.getTeamConcerns()) {
-//                                    if (!isId.isConcern()) {
-//                                        isAllConcern = false;
-//                                        return;
-//                                    }
-//                                }
-//                            }
-//                            if (isAllConcern) {
-////                                data.setConcern(true);
-//                                addId(data.getLeagueId() , 0);
-//                            }
-//                        }
-//                    }
-
-
                 } else { //选中 --> 未选中
-                    deletaId(dataId , 1);
+                    deletaId(dataId, 1);
                     view.setTag(true);
                     secondData.setConcern(true);
                 }
                 mAdapter.notifyDataSetChanged();
-//                Toast.makeText(getApplicationContext(), "yxq== " + dataId, Toast.LENGTH_SHORT).show();
             }
         };
     }
 
-//    private StringBuffer mLeagueIdBuff ;
-//    private StringBuffer mTemaIdBuff;
-
-    private void addId(String thirdid , int type)  {
-
-
-//        if (type == 0) {
-//
-//            if ("".equals(mLeagueIdBuff.toString())) {
-//                mLeagueIdBuff.append(thirdid);
-//            } else {
-//                mLeagueIdBuff.append("," + thirdid);
-//            }
-//
-//        }else{
-//
-//            if ("".equals(mTemaIdBuff.toString())) {
-//                mTemaIdBuff.append(thirdid);
-//            } else {
-//                mTemaIdBuff.append("," + thirdid);
-//            }
-//        }
-
+    private void addId(String thirdid, int type) {
         if (type == 0) {
-
             String fucusId = PreferenceUtil.getString(CUSTOM_LEAGUE_FOCUSID, "");
-
             if (fucusId.equals("")) {
-
                 PreferenceUtil.commitString(CUSTOM_LEAGUE_FOCUSID, thirdid);
             } else {
-
                 PreferenceUtil.commitString(CUSTOM_LEAGUE_FOCUSID, fucusId + "," + thirdid);
             }
-        }else {
-
+        } else {
             String fucusId = PreferenceUtil.getString(CUSTOM_TEAM_FOCUSID, "");
-
             if (fucusId.equals("")) {
-
                 PreferenceUtil.commitString(CUSTOM_TEAM_FOCUSID, thirdid);
             } else {
-
                 PreferenceUtil.commitString(CUSTOM_TEAM_FOCUSID, fucusId + "," + thirdid);
             }
-
-
-
-
         }
     }
 
-//    private StringBuffer mLeagueIdBuff = new StringBuffer();
-//    private StringBuffer mTemaIdBuff = new StringBuffer();
-
-    private void deletaId(String thirdid , int type) {
-
-//        if (type == 0) {
-//
-//           String leagueId =  mLeagueIdBuff.toString();
-//            String[] arrId = leagueId.split("[,]");
-//
-//            StringBuffer mSbuf = new StringBuffer();
-//            for (String id : arrId) {
-//                if (!id.equals(thirdid)) {
-//                    if ("".equals(mSbuf.toString())) {
-//                        mSbuf.append(id);
-//                    } else {
-//                        mSbuf.append("," + id);
-//                    }
-//                }
-//            }
-//            mLeagueIdBuff.delete(0 , mLeagueIdBuff.length());
-//            mLeagueIdBuff.append(mSbuf.toString());
-//
-//        }else{
-//
-//            String temaId =  mTemaIdBuff.toString();
-//            String[] arrId = temaId.split("[,]");
-//
-//            StringBuffer mSbuf = new StringBuffer();
-//            for (String id : arrId) {
-//                if (!id.equals(thirdid)) {
-//                    if ("".equals(mSbuf.toString())) {
-//                        mSbuf.append(id);
-//                    } else {
-//                        mSbuf.append("," + id);
-//                    }
-//                }
-//            }
-//            mTemaIdBuff.delete(0 , mTemaIdBuff.length());
-//            mTemaIdBuff.append(mSbuf.toString());
-//
-//        }
-
-
+    private void deletaId(String thirdid, int type) {
         if (type == 0) {
             String fucusId = PreferenceUtil.getString(CUSTOM_LEAGUE_FOCUSID, "");
-
             String[] arrId = fucusId.split("[,]");
-
             StringBuffer mSbuf = new StringBuffer();
             for (String id : arrId) {
                 if (!id.equals(thirdid)) {
@@ -597,12 +465,9 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
                 }
             }
             PreferenceUtil.commitString(CUSTOM_LEAGUE_FOCUSID, mSbuf.toString());
-        }else{
-
+        } else {
             String fucusId = PreferenceUtil.getString(CUSTOM_TEAM_FOCUSID, "");
-
             String[] arrId = fucusId.split("[,]");
-
             StringBuffer mSbuf = new StringBuffer();
             for (String id : arrId) {
                 if (!id.equals(thirdid)) {
@@ -615,34 +480,40 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
             }
             PreferenceUtil.commitString(CUSTOM_TEAM_FOCUSID, mSbuf.toString());
         }
-
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_right:
 
-                String  mTemaJsonId = sendTeamId();
-                String  mLeagueJsonId = sendLeagueId();
+                if (isSccomplish) {
 
-                L.d("yxq1220" , "=完成后==mLeagueIdBuff= " + PreferenceUtil.getString(CUSTOM_LEAGUE_FOCUSID , ""));
-                L.d("yxq1220" , "=完成后=mTemaIdBuff= " + PreferenceUtil.getString(CUSTOM_TEAM_FOCUSID , ""));
+                    String mTemaJsonId = sendTeamId();
+                    String mLeagueJsonId = sendLeagueId();
 
-//                String  mJsonId = mTemaJsonId + "%" + mLeagueJsonId;
-                L.d("yxq1220", "================点击完成=============================");
-//                EventBus.getDefault().post(new CustomListEvent(mJsonId));
-                EventBus.getDefault().post(new CustomListEvent(mLeagueJsonId , mTemaJsonId));
-                finish();
-                overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
+                    L.d("yxq1220", "=完成后==mLeagueIdBuff= " + PreferenceUtil.getString(CUSTOM_LEAGUE_FOCUSID, ""));
+                    L.d("yxq1220", "=完成后=mTemaIdBuff= " + PreferenceUtil.getString(CUSTOM_TEAM_FOCUSID, ""));
+
+                    L.d("yxq1220", "================点击完成=============================");
+                    EventBus.getDefault().post(new CustomListEvent(mLeagueJsonId, mTemaJsonId));
+                    finish();
+                    overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
+                }else{
+                    Toast.makeText(mContext, "正在请求数据", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.public_img_back:
 
-                PreferenceUtil.commitString(CUSTOM_LEAGUE_FOCUSID, currentLeagueid.toString());
-                PreferenceUtil.commitString(CUSTOM_TEAM_FOCUSID, currentTemaid.toString());
+                if (currentLeagueid != null) {
+                    PreferenceUtil.commitString(CUSTOM_LEAGUE_FOCUSID, currentLeagueid.toString());
+                }
+                if (currentTemaid != null) {
+                    PreferenceUtil.commitString(CUSTOM_TEAM_FOCUSID, currentTemaid.toString());
+                }
 
-                L.d("yxq1220" , "=返回后==mLeagueIdBuff= " + PreferenceUtil.getString(CUSTOM_LEAGUE_FOCUSID , ""));
-                L.d("yxq1220" , "=返回后=mTemaIdBuff= " + PreferenceUtil.getString(CUSTOM_TEAM_FOCUSID , ""));
+                L.d("yxq1220", "=返回后==mLeagueIdBuff= " + PreferenceUtil.getString(CUSTOM_LEAGUE_FOCUSID, ""));
+                L.d("yxq1220", "=返回后=mTemaIdBuff= " + PreferenceUtil.getString(CUSTOM_TEAM_FOCUSID, ""));
 
                 finish();
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
@@ -653,10 +524,18 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
                 break;
         }
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            EventBus.getDefault().post(new CustomListEvent("" , ""));
+
+            if (currentLeagueid != null) {
+                PreferenceUtil.commitString(CUSTOM_LEAGUE_FOCUSID, currentLeagueid.toString());
+            }
+            if (currentTemaid != null) {
+                PreferenceUtil.commitString(CUSTOM_TEAM_FOCUSID, currentTemaid.toString());
+            }
+
             finish();
             overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
             return true;

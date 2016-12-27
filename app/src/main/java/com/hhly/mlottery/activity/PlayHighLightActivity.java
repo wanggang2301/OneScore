@@ -281,7 +281,6 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
 

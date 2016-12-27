@@ -27,7 +27,7 @@
             android:layout_weight="1"
             android:background="@drawable/selector_counselcomment_edit"
             android:gravity="center_vertical"
-            android:maxLength="100"
+            android:maxLength="500"
             android:paddingLeft="10dp"
             android:textColor="@color/mdy_333"
             android:textColorHint="#999999"
@@ -71,7 +71,7 @@
         <!--表情容器-->
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="160dp">
+            android:layout_height="180dp">
 
             <RelativeLayout
                 android:id="@+id/rl_local"

@@ -68,8 +68,8 @@ public class CustomMineThirdDataBean {
     private String homeLogoUrl;
     private String homeRanking;
     private boolean hot;
-    private boolean matchType;
-    private boolean stageId;
+    private String matchType;
+    private String stageId;
 
     private boolean isHomeAnim;
     private boolean isGuestAnim;
@@ -237,22 +237,6 @@ public class CustomMineThirdDataBean {
         this.hot = hot;
     }
 
-    public boolean isMatchType() {
-        return matchType;
-    }
-
-    public void setMatchType(boolean matchType) {
-        this.matchType = matchType;
-    }
-
-    public boolean isStageId() {
-        return stageId;
-    }
-
-    public void setStageId(boolean stageId) {
-        this.stageId = stageId;
-    }
-
     public boolean isHomeAnim() {
         return isHomeAnim;
     }
@@ -267,5 +251,21 @@ public class CustomMineThirdDataBean {
 
     public void setGuestAnim(boolean guestAnim) {
         isGuestAnim = guestAnim;
+    }
+
+    public String getMatchType() {
+        return matchType;
+    }
+
+    public void setMatchType(String matchType) {
+        this.matchType = matchType;
+    }
+
+    public String getStageId() {
+        return stageId;
+    }
+
+    public void setStageId(String stageId) {
+        this.stageId = stageId;
     }
 }

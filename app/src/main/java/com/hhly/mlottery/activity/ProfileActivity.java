@@ -59,6 +59,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * @ClassName: OneScoreGit
  * @author:Administrator luyao
@@ -139,9 +141,17 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        EventBus.getDefault().register(this);
         initView();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -414,7 +424,12 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
 
     public void onEventMainThread(ChoseHeadStartBean choseHeadStartBean){
 
-        ImageLoader.load(ProfileActivity.this,choseHeadStartBean.startUrl).into(mHead_portrait);
+        Log.i("asdassd","我进来了"+choseHeadStartBean.getStartUrl());
+        //ImageLoader.load(ProfileActivity.this,choseHeadStartBean.startUrl).into(mHead_portrait);
+        Glide.with(ProfileActivity.this)
+                .load(choseHeadStartBean.startUrl)
+                .error(R.mipmap.center_head)
+                .into(mHead_portrait);
     }
     /**
      * 开启从相册获得图片功能

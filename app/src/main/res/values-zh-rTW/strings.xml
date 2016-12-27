@@ -1430,6 +1430,7 @@
 
     <!--我的定制-->
     <string name="custom_mine_cus">我的定制</string>
+    <string name="custom_list_cus">定制列表</string>
     <string name="custom_no_cus">您還未訂制任何球隊/聯賽</string>
     <string name="custom_to_cus">马上去定制</string>
     <string name="custom_redact_cus">編輯</string>
@@ -1445,6 +1446,28 @@
     <string name="chart_ball_call_ta">\@TA</string>
     <string name="chart_ball_send_error">發送失敗！</string>
     <string name="chart_ball_loading_error">加載失敗！</string>
+    <string name="chart_ball_call_user_not">\@用戶不存在</string>
+    <string name="chart_ball_report_user_not">被舉報用戶不存在</string>
+    <string name="chart_ball_banned">您已被管理員禁言，禁言時間為</string>
+    <string name="local_chitule">吃土了</string>
+    <string name="local_dacaipan">打裁判</string>
+    <string name="local_fubaila">腐敗啦</string>
+    <string name="local_jinggaoni">警告妳</string>
+    <string name="local_juyijing">菊一緊</string>
+    <string name="local_mengkuanle">懵圈了</string>
+    <string name="local_qiudatui">求大腿</string>
+    <string name="local_sesese">射射射</string>
+    <string name="local_shangtiantai">上天臺</string>
+    <string name="local_shihuale">石化了</string>
+    <string name="local_shoumila">收米啦</string>
+    <string name="local_touzhele">偷著樂</string>
+    <string name="local_xihushuiya">西湖水呀</string>
+    <string name="local_yayajing">壓壓驚</string>
+    <string name="local_youqingguanlaoye">有請關老爺</string>
+    <string name="local_zailaiyijiao">再來壹角</string>
+    <string name="chart_ball_new_msg">有新的消息</string>
+    <string name="chart_ball_null_content">客官坐下來聊聊嘛</string>
+
     <string name="title_product_advice">給產品建議</string>
     <string name="product_advice">產品回復</string>
     <string name="product_advice_load_more">正在加載中....</string>

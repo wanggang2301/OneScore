@@ -6,6 +6,17 @@ package com.hhly.mlottery.bean;
 
 public class BarrageBean {
 
+
+    private int  i;
+
+    public int getI() {
+        return i;
+    }
+
+    public void setI(int i) {
+        this.i = i;
+    }
+
     private String url;
     private String  msg;
     public   BarrageBean (String url,String msg){
