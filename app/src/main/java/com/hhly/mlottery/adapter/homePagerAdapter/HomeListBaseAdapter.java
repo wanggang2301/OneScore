@@ -32,6 +32,8 @@ import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomeOtherListsEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomePagerEntity;
 import com.hhly.mlottery.bean.productadvice.ProductUserLike;
+import com.hhly.mlottery.callback.ProductListener;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.HomeMuenFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
@@ -103,6 +105,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
     TextView adviceTextUserLike;
     TextView adviceUserContent;
     TextView adviceProductReply;
+
+    private ProductListener mProductListener;
 
 
     /**
@@ -980,7 +984,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
         params.put("userId", userId);
         params.put("feedbackId",id);
 
-        VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<ProductUserLike>() {
+        VolleyContentFast.requestJsonByPost(BaseURLs.PRODUCT_ADVICE_LIKE, params, new VolleyContentFast.ResponseSuccessListener<ProductUserLike>() {
             @Override
             public void onResponse(ProductUserLike like) {
                 if(like.getResult()==200){
@@ -1479,9 +1483,14 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             mViewHolderOther.tv_more_advice.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    mContext.startActivity(new Intent(mContext, ProductAdviceActivity.class));
+//                                    mContext.startActivity(new Intent(mContext, ProductAdviceActivity.class));
+                                    if(mProductListener!=null){
+                                        mProductListener.toProductActivity();
+                                    }
+
                                 }
                             });
+
                             mViewHolderOther.ll_content.addView(mProductItemView);
 
                             break;
@@ -1497,6 +1506,13 @@ public class HomeListBaseAdapter extends BaseAdapter {
         return convertView;
     }
 
+    /**
+     * 跳转到产品界面的监听
+     * @param listener
+     */
+    public void setToProductListener(ProductListener listener){
+        this.mProductListener=listener;
+    }
 
     @Override
     public Object getItem(int position) {
