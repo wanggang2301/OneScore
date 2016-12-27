@@ -194,13 +194,13 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private CountDown countDown;
     private final static int MILLIS_INFuture = 3000;//倒计时3秒
     private final static String MATCH_TYPE = "2"; //篮球
-    private final static int GIFPERIOD_2 = 1000 * 60 * 2;//刷新周期两分钟
+    private final static int GIFPERIOD_2 = 1000 * 5;//刷新周期两分钟
     //private final static int GIFPERIOD_2 = 1000 * 15;//刷新周期15秒
 
     private final static String BASKETBALL_GIF = "basketball_gif";
     private BarrageView barrage_view;
     private ImageView barrage_switch;
-    boolean barrage_isFocus=false;
+    boolean barrage_isFocus = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -228,7 +228,9 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             mCurrentId = getIntent().getExtras().getInt("currentfragment");
 
         }
+
         EventBus.getDefault().register(this);
+
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.basketball.score." + mThirdId + ".zh");
 
@@ -383,23 +385,27 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
     }
 
-    public void onEventMainThread(BarrageBean barrageBean){
+    public void onEventMainThread(BarrageBean barrageBean) {
         System.out.println("xxxxx barrageBean: " + barrageBean.getMsg());
-        barrage_view.setDatas(barrageBean.getUrl(),barrageBean.getMsg().toString());
+        barrage_view.setDatas(barrageBean.getUrl(), barrageBean.getMsg().toString());
     }
-    public void onEventMainThread(GoneBarrage barrageBean){
+
+    public void onEventMainThread(GoneBarrage barrageBean) {
         barrage_view.setVisibility(View.GONE);
 
     }
-    public void onEventMainThread(OpenBarrage barrageBean){
+
+    public void onEventMainThread(OpenBarrage barrageBean) {
         barrage_view.setVisibility(View.VISIBLE);
 
     }
+
     @Override
     protected void onDestroy() { //关闭socket
         super.onDestroy();
         closePollingGifCount();
         EventBus.getDefault().unregister(this);
+        closeWebSocket();
     }
 
     @Override
@@ -419,7 +425,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             msg.obj = text;
             msg.arg1 = Integer.parseInt(type);
             L.e(TAG, type + "____________________");
-
             mSocketHandler.sendMessage(msg);
         }
     }
@@ -513,15 +518,15 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                     mCollect.setImageResource(R.mipmap.basketball_collected);
                 }
                 break;
-            case  R.id.barrage_switch:
+            case R.id.barrage_switch:
 
-                if(barrage_isFocus) {
+                if (barrage_isFocus) {
                     barrage_switch.setImageResource(R.mipmap.danmu_open);
-                    barrage_isFocus=false;
+                    barrage_isFocus = false;
                     barrage_view.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     barrage_switch.setImageResource(R.mipmap.danmu_close);
-                    barrage_isFocus=true;
+                    barrage_isFocus = true;
                     barrage_view.setVisibility(View.GONE);
                 }
                 break;
@@ -700,7 +705,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             if (FocusBasketballFragment.BasketFocusEventBus != null) {
                 FocusBasketballFragment.BasketFocusEventBus.post("");
             }
-        } else if(mCurrentId == CUSTOM_FRAGMENT){
+        } else if (mCurrentId == CUSTOM_FRAGMENT) {
             EventBus.getDefault().post(new CustomDetailsEvent(""));
         }
     }
@@ -738,19 +743,19 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                     }
                 }
 
-                if(is0){
+                if (is0) {
                     mAnalyzeFragment.initData();// 分析
                 }
-                if(is2){
+                if (is2) {
                     mOddsEuro.initData();// 亚盘
                 }
-                if(is1){
+                if (is1) {
                     mOddsLet.initData();// 欧赔
                 }
-                if(is3){
+                if (is3) {
                     mOddsSize.initData();// 大小
                 }
-                if(is4){
+                if (is4) {
                     mChartBallFragment.onRefresh();// 聊球
                 }
 //                mTalkAboutBallFragment.loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);

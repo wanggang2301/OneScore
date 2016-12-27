@@ -103,8 +103,10 @@ public class BasketTextLiveFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_basket_text_live, container, false);
-        listfooter_more = getActivity().getLayoutInflater().inflate(R.layout.listfooter_more, container, false);
-        emptyView = getActivity().getLayoutInflater().inflate(R.layout.layout_nodata, container, false);
+
+
+        listfooter_more = ((Activity) mContext).getLayoutInflater().inflate(R.layout.listfooter_more, container, false);
+        emptyView = ((Activity) mContext).getLayoutInflater().inflate(R.layout.layout_nodata, container, false);
         initView();
         loadData();
         return mView;
@@ -132,7 +134,7 @@ public class BasketTextLiveFragment extends Fragment {
         mLoadMore.setText(R.string.foot_loadmore);  //加载更多
         listfooter_more.setVisibility(View.GONE);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         //设置布局管理器
         mRecyclerView.setLayoutManager(layoutManager);
         layoutManager.setOrientation(OrientationHelper.VERTICAL);

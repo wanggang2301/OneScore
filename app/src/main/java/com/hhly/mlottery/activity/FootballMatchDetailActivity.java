@@ -254,7 +254,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private final static int PERIOD_20 = 1000 * 60 * 20;//刷新周期二十分钟
     private final static int PERIOD_5 = 1000 * 60 * 5;//刷新周期五分钟
 
-    private final static int GIFPERIOD_2 = 1000 * 60 * 2;//刷新周期两分钟
+    private final static int GIFPERIOD_2 = 1000 * 5;//刷新周期两分钟
 
     /**
      * 赛前轮询周期
@@ -445,8 +445,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         barrage_view.setDatas(barrageBean.getUrl(), barrageBean.getMsg().toString());
     }
 
-
-
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
         if ((-verticalOffset) > appBarLayout.getTotalScrollRange() * 3 / 5) {
@@ -603,8 +601,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                             head_guest_name.setText(matchDetail.getGuestTeamInfo().getName());
                             head_score.setText(mMatchDetail.getHomeTeamInfo().getScore() + ":" + mMatchDetail.getGuestTeamInfo().getScore());
                             mKeepTime = "5400000";//90分钟的毫秒数
-
-
                             //是否显示精彩瞬间
                             getCollectionCount();
 
