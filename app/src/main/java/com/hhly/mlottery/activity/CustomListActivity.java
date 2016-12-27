@@ -222,7 +222,6 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
                 PreferenceUtil.commitString(CUSTOM_LEAGUE_FOCUSID,"");
                 PreferenceUtil.commitString(CUSTOM_TEAM_FOCUSID,"");
 
-                    Toast.makeText(mContext, "===chickid00===", Toast.LENGTH_SHORT).show();
                     for (int i = 0; i < mFirstData.size(); i++) {
                         if (mFirstData.get(i) instanceof CustomFristBean) {
                             CustomFristBean data = (CustomFristBean) mFirstData.get(i);
@@ -526,7 +525,7 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
                     finish();
                     overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 }else{
-                    Toast.makeText(mContext, "正在请求数据", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "正在请求数据", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.public_img_back:
