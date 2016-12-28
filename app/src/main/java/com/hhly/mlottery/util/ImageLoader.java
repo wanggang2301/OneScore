@@ -42,10 +42,11 @@ public class ImageLoader {
      * @param defaultImg 默认图
      * @return ImageRequestBuilder
      */
-    public static ImageRequestBuilder load(Context context,
-                                           String url,
-                                           @DrawableRes int defaultImg) {
-        DrawableRequestBuilder<String> builder = Glide.with(context)
+    public static ImageRequestBuilder load(Context context, String url, @DrawableRes int defaultImg) {
+
+
+        // DrawableRequestBuilder<String> builder = Glide.with(context)
+        DrawableRequestBuilder<String> builder = Glide.with(MyApp.getContext())
                 .load(url)
                 .placeholder(defaultImg)
                 .error(defaultImg)
@@ -142,7 +143,7 @@ public class ImageLoader {
      * @param defId   默认图片Id
      * @return ImageRequestBuilder
      */
-    public static ImageRequestBuilder loadFitCenter(Context context, int resId , int defId) {
+    public static ImageRequestBuilder loadFitCenter(Context context, int resId, int defId) {
         DrawableRequestBuilder<Uri> builder = Glide.with(context)
                 .load(resourceIdToUri(context, resId))
                 .placeholder(defId)

@@ -633,6 +633,7 @@ public class BasketDetailsHeadFragment extends Fragment {
             mGuestRanking.setText("[ " + mMatch.getGuestRanking() + " ]");
         }
 
+
         //图标
         if (mContext != null) {
             ImageLoader.load(mContext, mMatch.getHomeLogoUrl(), R.mipmap.basket_default).into(mHomeIcon);
@@ -1096,5 +1097,9 @@ public class BasketDetailsHeadFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
+        L.d("wanggg", "getApplicationContext=" + mActivity);
+        L.d("wanggg", "MyApp=" + MyApp.getContext());
+
+
     }
 }
