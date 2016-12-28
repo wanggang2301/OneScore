@@ -244,7 +244,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                     ((ImageView) view).setImageResource(R.mipmap.football_focus);
                     view.setTag(true);
                 } else {// 删除
-                    FocusFragment.addFocusId(third);
+                    FocusFragment.deleteFocusId(third);
                     ((ImageView) view).setImageResource(R.mipmap.football_nomal);
                     view.setTag(false);
                 }
