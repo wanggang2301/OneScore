@@ -33,6 +33,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.homePagerAdapter.HomeListBaseAdapter;
 import com.hhly.mlottery.bean.InformationBean;
 import com.hhly.mlottery.bean.UpdateInfo;
+import com.hhly.mlottery.bean.homepagerentity.HomeBodysEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomeMenusEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomeOtherListsEntity;
@@ -86,6 +87,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
     private static final int REFRES_DATA_SUCCESS = 3;// 下拉刷新
     private static final int VERSION_UPDATA_SUCCESS = 4;// 版本更新请求成功
     private static final int DOWNLOAD_UPGRADE = 5;// 准备开始升级下载
+    private static final int REFRESH_ADVICE=6;
     private static final String COMP_VER = "1"; // 完整版
     private static final String PURE_VER = "2"; // 纯净版
     private long mExitTime;// 退出程序...时间
@@ -310,6 +312,8 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
             if (!PreferenceUtil.getBoolean(AppConstants.RED_KEY_START, false)) {
                 if (mHomePagerEntity != null) {
                     mListBaseAdapter = new HomeListBaseAdapter(mContext, mHomePagerEntity);
+                    //设置跳转监听
+                    mListBaseAdapter.setToProductListener(mListener);
                     home_page_list.setAdapter(mListBaseAdapter);
                 }
             }
@@ -430,7 +434,9 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
      * 后台数据请求
      */
     public synchronized void getRequestData(final int num) {
-        mHandler.sendEmptyMessage(LOADING_DATA_START);// 开始加载数据
+        if(num!=2){
+            mHandler.sendEmptyMessage(LOADING_DATA_START);// 开始加载数据
+        }
         // 设置参数
         Map<String, String> myPostParams = new HashMap<>();
         myPostParams.put("version", version);
@@ -467,6 +473,10 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
                                 break;
                             case 1:// 下拉刷新
                                 mHandler.sendEmptyMessage(REFRES_DATA_SUCCESS);
+                                break;
+                            case 2: //产品建议界面返回
+                                // 只是为了请求一下新数据。不做其他处理
+                                mHandler.sendEmptyMessage(REFRESH_ADVICE);
                                 break;
                         }
                     } else {
@@ -646,6 +656,18 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
                         promptNetInfo();
                     } else {
                         downloadUpgrade();
+                    }
+                    break;
+                case REFRESH_ADVICE: //刷新首页点赞数
+                    for (int i = 0, len = mHomePagerEntity.getOtherLists().size(); i < len; i++) {
+                        int labType = mHomePagerEntity.getOtherLists().get(i).getContent().getLabType();// 获取类型
+                        List<HomeBodysEntity> bodys = mHomePagerEntity.getOtherLists().get(i).getContent().getBodys();
+                        for (int j = 0, len1 = bodys.size(); j < len1; j++) {
+                            if(labType==5){ //产品建议
+                                mListBaseAdapter.addLike(bodys.get(0),bodys);
+                                mListBaseAdapter.notifyDataSetChanged();
+                            }
+                        }
                     }
                     break;
             }
@@ -871,8 +893,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
                 public_btn_set.setImageResource(R.mipmap.logout);
             }
         }else if(resultCode==ProductAdviceActivity.RESULT_CODE){
-            getRequestData(1);
-
+            getRequestData(2);
         }
 
     }
