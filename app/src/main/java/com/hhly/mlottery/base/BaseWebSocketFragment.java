@@ -162,12 +162,14 @@ public abstract class BaseWebSocketFragment extends Fragment {
         try {
             if (ws != null) {
                 synchronized (ws) {
-                    if (ws.getState().equals(WebSocketState.CREATED)) {
-                        L.d(TAG, "before connect ws.getState() = " + ws.getState());
-                        ws.connect();
-                        L.d(TAG, "after connect ws.getState() = " + ws.getState());
-                    } else if (ws.getState().equals(WebSocketState.CLOSED)) {
-                        ws = ws.recreate().connect();
+                    if (ws != null) {
+                        if (ws.getState().equals(WebSocketState.CREATED)) {
+                            L.d(TAG, "before connect ws.getState() = " + ws.getState());
+                            ws.connect();
+                            L.d(TAG, "after connect ws.getState() = " + ws.getState());
+                        } else if (ws.getState().equals(WebSocketState.CLOSED)) {
+                            ws = ws.recreate().connect();
+                        }
                     }
                 }
             }
@@ -201,7 +203,9 @@ public abstract class BaseWebSocketFragment extends Fragment {
             public void run() {
                 if (ws != null) {
                     synchronized (ws) {
-                        ws.disconnect();
+                        if (ws != null) {
+                            ws.disconnect();
+                        }
                     }
                 }
             }

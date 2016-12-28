@@ -178,10 +178,12 @@ public abstract class BaseWebSocketActivity extends AppCompatActivity {
         try {
             if (ws != null) {
                 synchronized (ws) {
-                    if (ws.getState().equals(WebSocketState.CREATED)) {
-                        ws.connect();
-                    } else if (ws.getState().equals(WebSocketState.CLOSED)) {
-                        ws = ws.recreate().connect();
+                    if (ws != null) {
+                        if (ws.getState().equals(WebSocketState.CREATED)) {
+                            ws.connect();
+                        } else if (ws.getState().equals(WebSocketState.CLOSED)) {
+                            ws = ws.recreate().connect();
+                        }
                     }
                 }
             }
@@ -211,7 +213,9 @@ public abstract class BaseWebSocketActivity extends AppCompatActivity {
             public void run() {
                 if (ws != null) {
                     synchronized (ws) {
-                        ws.disconnect();
+                        if (ws != null) {
+                            ws.disconnect();
+                        }
                     }
                 }
             }
