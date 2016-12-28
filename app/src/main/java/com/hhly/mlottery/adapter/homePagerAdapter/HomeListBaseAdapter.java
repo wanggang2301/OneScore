@@ -896,17 +896,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             }
                          break;
                         case 5: //产品建议
-                            mProductItemView=getmProductItemView();
-                            adviceUserName.setText(bodys.get(0).getNickName());
-                            adviceUserTime.setText(bodys.get(0).getSendTime().substring(0,10));
-                            if(mContext!=null){
-                                ImageLoader.load(mContext,bodys.get(0).getUserImg(),R.mipmap.center_head).into(adviceUserIcon);
-                            }
-                            adviceUserContent.setText(bodys.get(0).getContent());
-                            adviceProductReply.setText(bodys.get(0).getReplyContent());
-                            adviceTextUserLike.setText(bodys.get(0).getLikes()+"");
-                            //点赞
-                            addLike(bodys.get(0)); //只有一条数据
+                            addLike(bodys.get(0),bodys); //只有一条数据
                             break;
 
                     }
@@ -920,7 +910,18 @@ public class HomeListBaseAdapter extends BaseAdapter {
     /**
      * 点赞功能
      */
-    private void addLike(final HomeBodysEntity entity){
+    public void addLike(final HomeBodysEntity entity,List<HomeBodysEntity> bodys){
+
+        mProductItemView=getmProductItemView();
+        adviceUserName.setText(bodys.get(0).getNickName());
+        adviceUserTime.setText(bodys.get(0).getSendTime().substring(0,10));
+        if(mContext!=null){
+            ImageLoader.load(mContext,bodys.get(0).getUserImg(),R.mipmap.center_head).into(adviceUserIcon);
+        }
+        adviceUserContent.setText(bodys.get(0).getContent());
+        adviceProductReply.setText(bodys.get(0).getReplyContent());
+        adviceTextUserLike.setText(bodys.get(0).getLikes()+"");
+        //点赞
         String likeId= PreferenceUtil.getString(ProductAdviceActivity.LIKE_IDS,"");
         String []idArray=likeId.split("[,]");
 

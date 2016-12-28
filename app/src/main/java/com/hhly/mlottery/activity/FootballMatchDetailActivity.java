@@ -47,6 +47,7 @@ import com.hhly.mlottery.bean.websocket.WebSocketStadiumKeepTime;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumLiveTextEvent;
 import com.hhly.mlottery.callback.FootballLiveGotoChart;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
 import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
@@ -60,6 +61,7 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;
+import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FootballLiveTextComparator;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
@@ -395,6 +397,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         mRefreshLayout = (ExactSwipeRefreshLayout) findViewById(R.id.refresh_layout_details);
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
         mRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
 
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         mViewPager = (ViewPager) findViewById(R.id.view_pager);

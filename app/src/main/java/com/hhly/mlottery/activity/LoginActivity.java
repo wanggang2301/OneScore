@@ -46,6 +46,7 @@ import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
+import com.hhly.mlottery.util.net.account.CustomEvent;
 import com.sina.weibo.sdk.auth.AuthInfo;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 import com.sina.weibo.sdk.auth.WeiboAuthListener;
@@ -629,6 +630,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                              sendUserInfoToServer(register);
                              if (isCoustom) {
                                  PreferenceUtil.commitBoolean("custom_red_dot" , false);
+                                 EventBus.getDefault().post(new CustomEvent(""));
                                  startActivity(new Intent(LoginActivity.this, CustomActivity.class));
                              }
                              finish();
