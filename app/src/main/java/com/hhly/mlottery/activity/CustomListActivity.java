@@ -214,44 +214,69 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
                     mAllDataList.add((CustomFristBean) mFirstData.get(i));
                 }
 
-                String currentFucusLeagueId = PreferenceUtil.getString(CUSTOM_LEAGUE_FOCUSID, "");
-                String currentFucusTeamId = PreferenceUtil.getString(CUSTOM_TEAM_FOCUSID, "");
+//                String currentFucusLeagueId = PreferenceUtil.getString(CUSTOM_LEAGUE_FOCUSID, "");
+//                String currentFucusTeamId = PreferenceUtil.getString(CUSTOM_TEAM_FOCUSID, "");
 
-                if (currentFucusLeagueId.equals("") && currentFucusTeamId.equals("")) {
+//                if (currentFucusLeagueId.equals("") && currentFucusTeamId.equals("")) {
+
+                PreferenceUtil.commitString(CUSTOM_LEAGUE_FOCUSID,"");
+                PreferenceUtil.commitString(CUSTOM_TEAM_FOCUSID,"");
 
                     for (int i = 0; i < mFirstData.size(); i++) {
                         if (mFirstData.get(i) instanceof CustomFristBean) {
                             CustomFristBean data = (CustomFristBean) mFirstData.get(i);
                             L.d("yxq==1222====league ", "isConcern " + data.isConcern());
                             if (data.isConcern()) {
+
                                 String fucusLeagueId = PreferenceUtil.getString(CUSTOM_LEAGUE_FOCUSID, "");
-                                if (fucusLeagueId.equals("")) {
+
+                                if ("".equals(fucusLeagueId)) {
                                     PreferenceUtil.commitString(CUSTOM_LEAGUE_FOCUSID, data.getLeagueId() + "_A");
                                 } else {
-                                    PreferenceUtil.commitString(CUSTOM_LEAGUE_FOCUSID, fucusLeagueId + "," + data.getLeagueId() + "_A");
+                                    String[] focusIdArray = fucusLeagueId.split(",");
+
+                                    for (String focusId : focusIdArray) {
+                                        if (!focusId.equals(data.getLeagueId()+"_A")) { // ! 非 说明原本地无记录，新的id
+                                            PreferenceUtil.commitString(CUSTOM_LEAGUE_FOCUSID, fucusLeagueId + "," + data.getLeagueId() + "_A");
+                                            break;
+                                        }
+                                    }
                                 }
+//                                if (fucusLeagueId.equals("")) {
+//                                    PreferenceUtil.commitString(CUSTOM_LEAGUE_FOCUSID, data.getLeagueId() + "_A");
+//                                } else {
+//                                    PreferenceUtil.commitString(CUSTOM_LEAGUE_FOCUSID, fucusLeagueId + "," + data.getLeagueId() + "_A");
+//                                }
                             }
 
                             for (CustomSecondBean sendData : data.getTeamConcerns()) {
                                 L.d("yxq==1222====team ", "isConcern " + sendData.isConcern());
                                 if (sendData.isConcern()) {
                                     String fucusTeamId = PreferenceUtil.getString(CUSTOM_TEAM_FOCUSID, "");
+
                                     if (fucusTeamId.equals("")) {
                                         PreferenceUtil.commitString(CUSTOM_TEAM_FOCUSID, sendData.getTeamId() + "_B");
                                     } else {
-                                        PreferenceUtil.commitString(CUSTOM_TEAM_FOCUSID, fucusTeamId + "," + sendData.getTeamId() + "_B");
+                                        String[] focusIdArray = fucusTeamId.split(",");
+                                        for (String focusId : focusIdArray) {
+                                            if (!focusId.equals(sendData.getTeamId()+"_B")) { // ! 非 说明原本地无记录，新的id
+                                                PreferenceUtil.commitString(CUSTOM_TEAM_FOCUSID, fucusTeamId + "," + sendData.getTeamId() + "_B");
+                                                break;
+                                            }
+                                        }
+//                                        PreferenceUtil.commitString(CUSTOM_TEAM_FOCUSID, fucusTeamId + "," + sendData.getTeamId() + "_B");
                                     }
                                 }
                             }
                         }
                     }
-                }
+//                }
 
                 currentLeagueid = PreferenceUtil.getString(CUSTOM_LEAGUE_FOCUSID, "");
                 currentTemaid = PreferenceUtil.getString(CUSTOM_TEAM_FOCUSID, "");
 
-                L.d("yxq1220", "=完成前==mLeagueIdBuff= " + currentLeagueid.toString());
-                L.d("yxq1220", "=完成前=mTemaIdBuff= " + currentTemaid.toString());
+                L.d("yxq1226", "=完成前==mLeagueIdBuff= " + currentLeagueid.toString());
+                L.d("yxq1226", "=完成前=mTemaIdBuff= " + currentTemaid.toString());
 
                 fucusEvent();
 
@@ -500,7 +525,7 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
                     finish();
                     overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 }else{
-                    Toast.makeText(mContext, "正在请求数据", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "正在请求数据", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.public_img_back:

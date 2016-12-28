@@ -312,10 +312,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 login();
                 // 关闭软键盘
                 CyUtils.hideKeyBoard(this);
-                if (isCoustom) {
-                    PreferenceUtil.commitBoolean("custom_red_dot" , false);
-                    startActivity(new Intent(this, CustomActivity.class));
-                }
                 break;
             case R.id.tv_forgetpw:
                 MobclickAgent.onEvent(mContext, "LoginActivity_FindPassWord");
@@ -604,7 +600,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                  Map<String, String> param = new HashMap<>();
                  param.put("account", userName);
                  param.put("password", MD5Util.getMD5(passWord));
-
+                 setResult(RESULT_OK);
                  Log.d(TAG, AppConstants.deviceToken);
                  param.put("deviceToken", AppConstants.deviceToken);
 
@@ -623,15 +619,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                      public void onResponse(Register register) {
 
                          progressBar.dismiss();
-
                          if (register.getResult() == AccountResultCode.SUCC) {
+
                              UiUtils.toast(MyApp.getInstance(), R.string.login_succ);
                              CommonUtils.saveRegisterInfo(register);
                              PreferenceUtil.commitBoolean("three_login", false);
-                             EventBus.getDefault().post(register);
                              setResult(RESULT_OK);
                              //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
                              sendUserInfoToServer(register);
+                             if (isCoustom) {
+                                 PreferenceUtil.commitBoolean("custom_red_dot" , false);
+                                 startActivity(new Intent(LoginActivity.this, CustomActivity.class));
+                             }
                              finish();
                              //TODO:发送请求，从后台获取该用户的关注信息
                              getFootballUserFocus(register.getData().getUser().getUserId());
@@ -644,11 +643,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                  }, new VolleyContentFast.ResponseErrorListener() {
                      @Override
                      public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-
                          progressBar.dismiss();
-
                          L.e(TAG, " 登录失败");
                          UiUtils.toast(LoginActivity.this, R.string.foot_neterror);
+
+
                      }
                  }, Register.class);
              }
@@ -798,6 +797,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        L.i(TAG, "我进来了");
         Tencent.onActivityResultData(requestCode, resultCode, data, mIUiListener);
         // SSO 授权回调
         // 重要：发起 SSO 登陆的 Activity 必须重写 onActivityResults
@@ -805,6 +805,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             mSsoHandler.authorizeCallBack(requestCode, resultCode, data);
         }
         if (resultCode == RESULT_OK) {
+            L.i(TAG, "进来了");
             switch (requestCode) {
                 case HomeUserOptionsActivity.REQUESTCODE_LOGIN:
                     L.i(TAG, "注册成功返回");

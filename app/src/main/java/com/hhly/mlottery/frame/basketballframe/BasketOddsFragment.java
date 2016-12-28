@@ -243,16 +243,4 @@ public class BasketOddsFragment extends Fragment implements View.OnClickListener
         }
 
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart("BasketOddsFragment");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("BasketOddsFragment");
-    }
 }

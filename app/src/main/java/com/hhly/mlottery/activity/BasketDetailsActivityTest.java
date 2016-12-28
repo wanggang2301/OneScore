@@ -33,6 +33,7 @@ import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.DetailsCollectionCountBean;
 import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.basketballframe.BasketAnalyzeFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketAnimLiveFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDetailsHeadFragment;
@@ -47,6 +48,7 @@ import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
+import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.CustomDetailsEvent;
@@ -371,6 +373,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         mRefreshLayout = (ExactSwipeRefreshLayout) findViewById(R.id.basket_details_refresh_layout);
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
         mRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
         mTitleHome = (TextView) this.findViewById(R.id.title_home_score);
         mTitleGuest = (TextView) this.findViewById(R.id.title_guest_score);
         mTitleVS = (TextView) this.findViewById(R.id.title_vs);
@@ -530,11 +533,13 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 if(barrage_isFocus) {
                     barrage_switch.setImageResource(R.mipmap.danmu_open);
                     barrage_isFocus=false;
-                    barrage_view.setVisibility(View.VISIBLE);
+                   // barrage_view.setVisibility(View.VISIBLE);
+                    barrage_view.setAlpha(1);
                 }else{
                     barrage_switch.setImageResource(R.mipmap.danmu_close);
                     barrage_isFocus=true;
-                    barrage_view.setVisibility(View.GONE);
+                    //barrage_view.setVisibility(View.GONE);
+                    barrage_view.setAlpha(0);
                 }
                 break;
         }

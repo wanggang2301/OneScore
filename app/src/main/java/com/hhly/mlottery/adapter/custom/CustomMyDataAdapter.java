@@ -148,10 +148,16 @@ public class CustomMyDataAdapter extends BaseQuickAdapter<CustomMineFirstDataBea
                     viewHolderLeague.mLeagueNoData.setVisibility(View.GONE);
                     viewHolderLeague.mDetails.setVisibility(View.VISIBLE);
                 }
-                viewHolderLeague.mCustomLeagueName.setText(leagueItem.getLeagueName());
+                if (leagueItem != null) {
+                    viewHolderLeague.mCustomLeagueName.setText(leagueItem.getLeagueName());
+                }else{
+                    viewHolderLeague.mCustomLeagueName.setText("");
+                }
 
                 String logoUrl = leagueItem.getLeagueLogoPre() + leagueItem.getLeagueId() + leagueItem.getLeagueLogoSuff();
-                ImageLoader.load(mContext, logoUrl, R.mipmap.basket_default).into(viewHolderLeague.mLeagueLogo);
+                if (mContext != null) {
+                    ImageLoader.load(mContext, logoUrl, R.mipmap.basket_default).into(viewHolderLeague.mLeagueLogo);
+                }
 
                 break;
             case 1:
@@ -223,8 +229,10 @@ public class CustomMyDataAdapter extends BaseQuickAdapter<CustomMineFirstDataBea
         /**
          * 设置tag 、默认图片
          */
-        ImageLoader.load(mContext, homelogourl, R.mipmap.basket_default).into(holder.home_icon);
-        ImageLoader.load(mContext, guestlogourl, R.mipmap.basket_default).into(holder.guest_icon);
+        if (mContext != null){
+            ImageLoader.load(mContext, homelogourl, R.mipmap.basket_default).into(holder.home_icon);
+            ImageLoader.load(mContext, guestlogourl, R.mipmap.basket_default).into(holder.guest_icon);
+        }
 
 
         //赔率设置

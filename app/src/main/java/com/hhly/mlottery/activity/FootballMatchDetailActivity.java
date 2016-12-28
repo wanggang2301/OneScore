@@ -19,7 +19,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,6 +34,8 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.bean.BarrageBean;
+import com.hhly.mlottery.bean.GoneBarrage;
+import com.hhly.mlottery.bean.OpenBarrage;
 import com.hhly.mlottery.bean.ShareBean;
 import com.hhly.mlottery.bean.footballDetails.DetailsCollectionCountBean;
 import com.hhly.mlottery.bean.footballDetails.MatchDetail;
@@ -46,6 +47,7 @@ import com.hhly.mlottery.bean.websocket.WebSocketStadiumKeepTime;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumLiveTextEvent;
 import com.hhly.mlottery.callback.FootballLiveGotoChart;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
 import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
@@ -59,6 +61,7 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;
+import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FootballLiveTextComparator;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
@@ -317,7 +320,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private View red_point;
     private ImageView barrage_switch;
 
-    boolean barrage_isFocus = true;
+    boolean barrage_isFocus = false;
     private View view_red;
 
 
@@ -394,6 +397,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         mRefreshLayout = (ExactSwipeRefreshLayout) findViewById(R.id.refresh_layout_details);
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
         mRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
 
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
@@ -2011,17 +2015,20 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.about_net_failed), Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case R.id.barrage_switch:
+            case  R.id.barrage_switch:
 
 
-                if (barrage_isFocus) {
+                if(barrage_isFocus)
+                {
                     barrage_switch.setImageResource(R.mipmap.danmu_open);
-                    barrage_isFocus = false;
-                    barrage_view.setVisibility(View.VISIBLE);
-                } else {
+                    barrage_isFocus=false;
+                   // barrage_view.setVisibility(View.VISIBLE);
+                    barrage_view.setAlpha(1);
+                }else{
                     barrage_switch.setImageResource(R.mipmap.danmu_close);
-                    barrage_isFocus = true;
-                    barrage_view.setVisibility(View.GONE);
+                    barrage_isFocus=true;
+                   // barrage_view.setVisibility(View.GONE);
+                    barrage_view.setAlpha(0);
                 }
                 break;
             default:
@@ -2629,7 +2636,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     /**
      * load internet image
-     *
      * @param imageUrl
      * @param imageView
      */
