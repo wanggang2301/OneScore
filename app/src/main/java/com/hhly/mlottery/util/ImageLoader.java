@@ -44,7 +44,6 @@ public class ImageLoader {
      */
     public static ImageRequestBuilder load(Context context, String url, @DrawableRes int defaultImg) {
 
-
         // DrawableRequestBuilder<String> builder = Glide.with(context)
         DrawableRequestBuilder<String> builder = Glide.with(MyApp.getContext())
                 .load(url)
