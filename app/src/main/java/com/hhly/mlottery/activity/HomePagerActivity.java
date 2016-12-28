@@ -312,6 +312,8 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
             if (!PreferenceUtil.getBoolean(AppConstants.RED_KEY_START, false)) {
                 if (mHomePagerEntity != null) {
                     mListBaseAdapter = new HomeListBaseAdapter(mContext, mHomePagerEntity);
+                    //设置跳转监听
+                    mListBaseAdapter.setToProductListener(mListener);
                     home_page_list.setAdapter(mListBaseAdapter);
                 }
             }
