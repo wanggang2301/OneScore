@@ -138,8 +138,6 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-
-
         if (getArguments() != null) {
             type = getArguments().getInt(MATCH_TYPE);
             mThirdId = getArguments().getString(MATCH_THIRD_ID);
@@ -320,8 +318,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                             ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.chart_ball_loading_error));
                         }
                     }
-                }, ChartReceive.class
-        );
+                }, ChartReceive.class);
     }
 
     //发送消息后台
