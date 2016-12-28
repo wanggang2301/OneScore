@@ -176,11 +176,13 @@ public abstract class BaseWebSocketActivity extends AppCompatActivity {
      */
     private void connect() {
         try {
-            synchronized (ws) {
-                if (ws.getState().equals(WebSocketState.CREATED)) {
-                    ws.connect();
-                } else if (ws.getState().equals(WebSocketState.CLOSED)) {
-                    ws = ws.recreate().connect();
+            if (ws != null) {
+                synchronized (ws) {
+                    if (ws.getState().equals(WebSocketState.CREATED)) {
+                        ws.connect();
+                    } else if (ws.getState().equals(WebSocketState.CLOSED)) {
+                        ws = ws.recreate().connect();
+                    }
                 }
             }
         } catch (WebSocketException | IOException e) {

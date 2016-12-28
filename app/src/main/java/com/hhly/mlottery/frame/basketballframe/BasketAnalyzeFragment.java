@@ -926,18 +926,6 @@ public class BasketAnalyzeFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart("BasketAnalyzeFragment");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("BasketAnalyzeFragment");
-    }
-
-    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
