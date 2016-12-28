@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,8 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 
 import de.greenrobot.event.EventBus;
@@ -126,6 +129,9 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
     private boolean isScrollBottom = true;
     private TextView tv_new_msg;
+
+
+    Timer timer=new Timer();
 
     public static ChartBallFragment newInstance(int type, String thirdId) {
         ChartBallFragment fragment = new ChartBallFragment();
@@ -214,6 +220,16 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     }
 
     private void initView() {
+
+        //定时器
+        TimerTask timerTask=new TimerTask() {
+            @Override
+            public void run() {
+                handler.sendEmptyMessage(0);
+            }
+        };
+        timer.schedule(timerTask,1000*1,1000*30);
+
         mEditText = (EmojiconEditText) mView.findViewById(R.id.et_emoji_input);
         mEditText.setFocusable(false);
         mEditText.setFocusableInTouchMode(false);
@@ -247,6 +263,20 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         ivGuestLike.setVisibility(View.INVISIBLE);
         setClickableLikeBtn(true);
     }
+
+    /**
+     * 30重连socket一次
+     */
+    Handler handler=new Handler(){
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            connectWebSocket();
+            Log.i("dasdasd","socket重连");
+        }
+    };
+
 
     /*自定发送消息测试*/
     private void initData(final String slideType) {
