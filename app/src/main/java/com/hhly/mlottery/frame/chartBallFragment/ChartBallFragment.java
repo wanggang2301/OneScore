@@ -880,6 +880,8 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
     // 下拉刷新
     public void onRefresh() {
-        initData(SLIDE_TYPE_MSG_HISTORY);
+        if (historyBeen != null && historyBeen.size() != 0) {
+            initData(SLIDE_TYPE_MSG_HISTORY);
+        }
     }
 }
