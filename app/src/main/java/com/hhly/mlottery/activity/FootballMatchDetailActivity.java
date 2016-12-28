@@ -34,8 +34,6 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.bean.BarrageBean;
-import com.hhly.mlottery.bean.GoneBarrage;
-import com.hhly.mlottery.bean.OpenBarrage;
 import com.hhly.mlottery.bean.ShareBean;
 import com.hhly.mlottery.bean.footballDetails.DetailsCollectionCountBean;
 import com.hhly.mlottery.bean.footballDetails.MatchDetail;
@@ -453,8 +451,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
 
     }
-    public void onEventMainThread(BarrageBean barrageBean){
-        barrage_view.setDatas(barrageBean.getUrl(),barrageBean.getMsg().toString());
+
+    public void onEventMainThread(BarrageBean barrageBean) {
+        barrage_view.setDatas(barrageBean.getUrl(), barrageBean.getMsg().toString());
     }
 
     @Override
@@ -505,10 +504,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     }
 
 
-                    if(isAnalyze){
+                    if (isAnalyze) {
                         mAnalyzeFragment.initData();// 分析下拉刷新
                     }
-                    if(isOdds){
+                    if (isOdds) {
                         mOddsFragment.oddPlateRefresh(); // 指数刷新
                     }
                     if (isTalkAboutBall) {
@@ -803,7 +802,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mKeepTime = "5400000";//90分钟的毫秒数
 
                 //精彩瞬间
-                getCollectionCount();
+                getOverMatchCollectionCount();
 
                 //直播事件
                 mStatisticsFragment.setEventMatchLive(mMatchDetail.getLiveStatus(), eventMatchTimeLiveList);
@@ -2015,19 +2014,18 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.about_net_failed), Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case  R.id.barrage_switch:
+            case R.id.barrage_switch:
 
 
-                if(barrage_isFocus)
-                {
+                if (barrage_isFocus) {
                     barrage_switch.setImageResource(R.mipmap.danmu_open);
-                    barrage_isFocus=false;
-                   // barrage_view.setVisibility(View.VISIBLE);
+                    barrage_isFocus = false;
+                    // barrage_view.setVisibility(View.VISIBLE);
                     barrage_view.setAlpha(1);
-                }else{
+                } else {
                     barrage_switch.setImageResource(R.mipmap.danmu_close);
-                    barrage_isFocus=true;
-                   // barrage_view.setVisibility(View.GONE);
+                    barrage_isFocus = true;
+                    // barrage_view.setVisibility(View.GONE);
                     barrage_view.setAlpha(0);
                 }
                 break;
@@ -2204,7 +2202,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 if (position != 5) {// 聊球界面禁用下拉刷新
                     MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
                 } else {
-                    if(view_red != null){view_red.setVisibility(View.GONE);}
+                    if (view_red != null) {
+                        view_red.setVisibility(View.GONE);
+                    }
                     mRefreshLayout.setEnabled(true); //展开
                     appBarLayout.setExpanded(false);
                 }
@@ -2636,6 +2636,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     /**
      * load internet image
+     *
      * @param imageUrl
      * @param imageView
      */
@@ -2690,6 +2691,35 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             gifTimerTask = null;
             gifTimer = null;
         }
+    }
+
+
+    private void getOverMatchCollectionCount() {
+        Map<String, String> map = new HashMap<>();
+        map.put("matchType", MATCH_TYPE);
+        map.put("thirdId", mThirdId);  //399381
+        //  map.put("thirdId", mThirdId);
+        VolleyContentFast.requestJsonByGet(BaseURLs.FOOTBALL_DETAIL_COLLECTION_COUNT, map, new VolleyContentFast.ResponseSuccessListener<DetailsCollectionCountBean>() {
+            @Override
+            public void onResponse(DetailsCollectionCountBean jsonObject) {
+                if (200 == jsonObject.getResult()) {
+                    if (jsonObject.getData() != 0) {
+                        btn_showGif.setVisibility(View.VISIBLE);
+                        initGifRedPoint();
+                    } else {
+                        btn_showGif.setVisibility(View.GONE);
+                        // }
+                    }
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                //   if (isFirstShowGif) {
+                //      btn_showGif.setVisibility(View.GONE);
+                //  }
+            }
+        }, DetailsCollectionCountBean.class);
     }
 
     /**

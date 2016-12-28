@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.hhly.mlottery.MyApp;
@@ -30,6 +31,7 @@ import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
+import com.hhly.mlottery.util.net.account.CustomEvent;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
@@ -158,11 +160,9 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                     mRedDot.setVisibility(View.GONE);
                     startActivity(new Intent(HomeUserOptionsActivity.this, CustomActivity.class));
                 }else{
-                    mRedDot.setVisibility(View.GONE);
                     Intent intent = new Intent(this, LoginActivity.class);
                     intent.putExtra("custom",true); //传 true  表示我的定制进入登录  完成后直接进入定制界面
                     startActivity(intent);
-//                    startActivity(new Intent(this, LoginActivity.class));
                 }
                 break;
             case R.id.rl_language_frame:// 语言切换
@@ -241,7 +241,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
 
 
-/**
+    /**
      * 注销
      */
 
@@ -359,6 +359,18 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             }
         },BasketballConcernListBean.class);
 
+    }
+
+    /**
+     * 定制页面返回
+     * @param event
+     */
+    public void onEventMainThread(CustomEvent event) {
+        if (PreferenceUtil.getBoolean("custom_red_dot" , true)) {
+            mRedDot.setVisibility(View.VISIBLE);
+        }else{
+            mRedDot.setVisibility(View.GONE);
+        }
     }
     public void onEventMainThread(ChoseHeadStartBean choseHeadStartBean){
 
