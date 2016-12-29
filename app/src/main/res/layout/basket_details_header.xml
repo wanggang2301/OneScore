@@ -22,6 +22,15 @@
 
 
         <ImageView
+            android:id="@+id/barrage_switch"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_toLeftOf="@+id/basket_details_collect"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/danmu_open"
+             />
+        <ImageView
             android:id="@+id/basket_details_collect"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
