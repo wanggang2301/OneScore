@@ -292,7 +292,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/selector_counselcomment_edit"
                     android:gravity="center_vertical"
-                    android:hint="说点什么..."
+                    android:hint="@string/chart_ball_hint_title"
                     android:maxLength="100"
                     android:paddingLeft="10dp"
                     android:textColor="#333333"

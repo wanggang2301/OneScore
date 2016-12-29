@@ -413,15 +413,15 @@ public class HomeListBaseAdapter extends BaseAdapter {
     /**
      * 获取产品建议View
      */
-    private View getmProductItemView(){
-        View view=View.inflate(mContext,R.layout.item_advice,null);
-         adviceUserIcon= (ImageView) view.findViewById(R.id.advice_user_icon);
-         adviceUserName= (TextView) view.findViewById(R.id.advice_user_name);
-         adviceUserTime= (TextView) view.findViewById(R.id.advice_user_time);
-         adviceImgUserLike= (ImageView) view.findViewById(R.id.advice_user_img_like);
-         adviceTextUserLike= (TextView) view.findViewById(R.id.advice_user_like);
-         adviceUserContent= (TextView) view.findViewById(R.id.advice_user_content);
-         adviceProductReply= (TextView) view.findViewById(R.id.advice_product_reply);
+    private View getmProductItemView() {
+        View view = View.inflate(mContext, R.layout.item_advice, null);
+        adviceUserIcon = (ImageView) view.findViewById(R.id.advice_user_icon);
+        adviceUserName = (TextView) view.findViewById(R.id.advice_user_name);
+        adviceUserTime = (TextView) view.findViewById(R.id.advice_user_time);
+        adviceImgUserLike = (ImageView) view.findViewById(R.id.advice_user_img_like);
+        adviceTextUserLike = (TextView) view.findViewById(R.id.advice_user_like);
+        adviceUserContent = (TextView) view.findViewById(R.id.advice_user_content);
+        adviceProductReply = (TextView) view.findViewById(R.id.advice_product_reply);
 
         return view;
     }
@@ -894,9 +894,9 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                     }
                                 }
                             }
-                         break;
+                            break;
                         case 5: //产品建议
-                            addLike(bodys.get(0),bodys); //只有一条数据
+                            addLike(bodys.get(0), bodys); //只有一条数据
                             break;
 
                     }
@@ -910,27 +910,27 @@ public class HomeListBaseAdapter extends BaseAdapter {
     /**
      * 点赞功能
      */
-    public void addLike(final HomeBodysEntity entity,List<HomeBodysEntity> bodys){
+    public void addLike(final HomeBodysEntity entity, List<HomeBodysEntity> bodys) {
 
-        mProductItemView=getmProductItemView();
+        mProductItemView = getmProductItemView();
         adviceUserName.setText(bodys.get(0).getNickName());
-        adviceUserTime.setText(bodys.get(0).getSendTime().substring(0,10));
-        if(mContext!=null){
-            ImageLoader.load(mContext,bodys.get(0).getUserImg(),R.mipmap.center_head).into(adviceUserIcon);
+        adviceUserTime.setText(bodys.get(0).getSendTime().substring(0, 10));
+        if (mContext != null) {
+            ImageLoader.load(mContext, bodys.get(0).getUserImg(), R.mipmap.center_head).into(adviceUserIcon);
         }
         adviceUserContent.setText(bodys.get(0).getContent());
         adviceProductReply.setText(bodys.get(0).getReplyContent());
-        adviceTextUserLike.setText(bodys.get(0).getLikes()+"");
+        adviceTextUserLike.setText(bodys.get(0).getLikes() + "");
         //点赞
-        String likeId= PreferenceUtil.getString(ProductAdviceActivity.LIKE_IDS,"");
-        String []idArray=likeId.split("[,]");
+        String likeId = PreferenceUtil.getString(ProductAdviceActivity.LIKE_IDS, "");
+        String[] idArray = likeId.split("[,]");
 
-        for(String id:idArray){
-            if(id.equals(entity.getId())){
+        for (String id : idArray) {
+            if (id.equals(entity.getId())) {
                 adviceImgUserLike.setImageResource(R.mipmap.advice_like_red);
                 adviceImgUserLike.setTag(true);
                 break;
-            }else {
+            } else {
                 adviceImgUserLike.setImageResource(R.mipmap.advice_like_white);
                 adviceImgUserLike.setTag(false);
             }
@@ -938,13 +938,13 @@ public class HomeListBaseAdapter extends BaseAdapter {
         adviceImgUserLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isCheck= (boolean) v.getTag();
-                if(isCheck){
+                boolean isCheck = (boolean) v.getTag();
+                if (isCheck) {
                     //不请求后台
-                }else {
+                } else {
                     adviceImgUserLike.setImageResource(R.mipmap.advice_like_red);
                     adviceImgUserLike.setTag(true);
-                    adviceTextUserLike.setText((entity.getLikes()+1)+"");
+                    adviceTextUserLike.setText((entity.getLikes() + 1) + "");
                     //网络请求
                     addFocusId(entity.getId());
                 }
@@ -955,19 +955,20 @@ public class HomeListBaseAdapter extends BaseAdapter {
 
     /**
      * 添加点赞
+     *
      * @param id
      */
-    public  void addFocusId(String id) {
+    public void addFocusId(String id) {
         String likeIds = PreferenceUtil.getString(ProductAdviceActivity.LIKE_IDS, "");
-        String []idArray=likeIds.split("[,]");
+        String[] idArray = likeIds.split("[,]");
 
         if ("".equals(likeIds)) {
             PreferenceUtil.commitString(ProductAdviceActivity.LIKE_IDS, id);
         } else {
-            for(String hasid:idArray){
-                if(hasid.equals(id)){
+            for (String hasid : idArray) {
+                if (hasid.equals(id)) {
                     break;
-                }else {
+                } else {
                     PreferenceUtil.commitString(ProductAdviceActivity.LIKE_IDS, likeIds + "," + id);
                 }
             }
@@ -983,12 +984,12 @@ public class HomeListBaseAdapter extends BaseAdapter {
 
         params.put("deviceId", deviceId);
         params.put("userId", userId);
-        params.put("feedbackId",id);
+        params.put("feedbackId", id);
 
         VolleyContentFast.requestJsonByPost(BaseURLs.PRODUCT_ADVICE_LIKE, params, new VolleyContentFast.ResponseSuccessListener<ProductUserLike>() {
             @Override
             public void onResponse(ProductUserLike like) {
-                if(like.getResult()==200){
+                if (like.getResult() == 200) {
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -1000,6 +1001,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
 
 
     }
+
     /**
      * 热门赛事条目数据设置
      *
@@ -1419,7 +1421,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                     convertView = View.inflate(mContext, R.layout.home_page_items, null);
                     mViewHolderOther.tv_title = (TextView) convertView.findViewById(R.id.tv_home_item_title);
                     mViewHolderOther.ll_content = (LinearLayout) convertView.findViewById(R.id.ll_home_item_content);
-                    mViewHolderOther.tv_more_advice= (TextView) convertView.findViewById(R.id.tv_home_item_more);
+                    mViewHolderOther.tv_more_advice = (TextView) convertView.findViewById(R.id.tv_home_item_more);
                     convertView.setTag(mViewHolderOther);
                     break;
             }
@@ -1485,17 +1487,25 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 @Override
                                 public void onClick(View v) {
 //                                    mContext.startActivity(new Intent(mContext, ProductAdviceActivity.class));
-                                    if(mProductListener!=null){
+                                    if (mProductListener != null) {
                                         mProductListener.toProductActivity();
                                     }
 
                                 }
                             });
 
+                            ViewParent productItemView = mProductItemView.getParent();
+                            if (productItemView != null) {
+                                ((ViewGroup) productItemView).removeAllViews();
+                            }
                             mViewHolderOther.ll_content.addView(mProductItemView);
 
                             break;
                         case 7:
+                            ViewParent parentItemView = lotteryItemView.getParent();
+                            if (parentItemView != null) {
+                                ((ViewGroup) parentItemView).removeAllViews();
+                            }
                             mViewHolderOther.tv_title.setVisibility(View.GONE);
                             mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
                             mViewHolderOther.ll_content.addView(lotteryItemView);
@@ -1509,10 +1519,11 @@ public class HomeListBaseAdapter extends BaseAdapter {
 
     /**
      * 跳转到产品界面的监听
+     *
      * @param listener
      */
-    public void setToProductListener(ProductListener listener){
-        this.mProductListener=listener;
+    public void setToProductListener(ProductListener listener) {
+        this.mProductListener = listener;
     }
 
     @Override

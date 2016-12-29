@@ -33,7 +33,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ProductAdviceActivity extends AppCompatActivity implements View.OnClickListener,SwipeRefreshLayout.OnRefreshListener{
+public class ProductAdviceActivity extends BaseActivity implements View.OnClickListener,SwipeRefreshLayout.OnRefreshListener{
 
 
     @BindView(R.id.public_txt_title)
