@@ -632,6 +632,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                              //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
                              sendUserInfoToServer(register);
                              finish();
+                             EventBus.getDefault().post(register);
                              //TODO:发送请求，从后台获取该用户的关注信息
                              getFootballUserFocus(register.getData().getUser().getUserId());
                              getBasketballUserConcern(register.getData().getUser().getUserId());
