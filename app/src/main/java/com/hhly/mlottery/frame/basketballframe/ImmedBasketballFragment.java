@@ -375,27 +375,39 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                  *判断是否 经过筛选
                  */
                 if (isFilter) { //已筛选
-                    for (List<BasketMatchBean> lists : mAllMatchdata) { // 遍历所有数据 得到筛选后的
-                        List<BasketMatchBean> checkedMatchs = new ArrayList<>();
-                        for (BasketMatchBean matchBean : lists) {
-                            for (String checkedId : FiltrateCupsMap.basketImmedateCups) {
-                                if (matchBean.getLeagueId().equals(checkedId)) {
-                                    checkedMatchs.add(matchBean);
+
+                    if (FiltrateCupsMap.basketImmedateCups.length == 0) {
+                        List<BasketMatchFilter> noCheckedFilters = new ArrayList<>();
+                        mChickedFilter = noCheckedFilters;//筛选0场后，再次进入赛选页面 显示已选中0场（全部不选中）
+
+                        mbasket_unfiltrate.setVisibility(View.VISIBLE);
+                        mSwipeRefreshLayout.setVisibility(View.GONE);
+                        mLoadingLayout.setVisibility(View.GONE);
+                        return;
+                    }else{
+                        for (List<BasketMatchBean> lists : mAllMatchdata) { // 遍历所有数据 得到筛选后的
+                            List<BasketMatchBean> checkedMatchs = new ArrayList<>();
+                            for (BasketMatchBean matchBean : lists) {
+                                for (String checkedId : FiltrateCupsMap.basketImmedateCups) {
+                                    if (matchBean.getLeagueId().equals(checkedId)) {
+                                        checkedMatchs.add(matchBean);
+                                    }
                                 }
                             }
-                        }
-                        if (checkedMatchs.size() != 0) {
-                            childrenDataList.add(checkedMatchs); //筛选后的比赛list
-                            for (String groupdata : mAllGroupdata) {
-                                String[] weekdatas = groupdata.split(",");
-                                String datas = weekdatas[0];
-                                if (checkedMatchs.get(0).getDate().equals(datas)) {
-                                    groupDataList.add(groupdata);//赛选后的日期list
-                                    break;
+                            if (checkedMatchs.size() != 0) {
+                                childrenDataList.add(checkedMatchs); //筛选后的比赛list
+                                for (String groupdata : mAllGroupdata) {
+                                    String[] weekdatas = groupdata.split(",");
+                                    String datas = weekdatas[0];
+                                    if (checkedMatchs.get(0).getDate().equals(datas)) {
+                                        groupDataList.add(groupdata);//赛选后的日期list
+                                        break;
+                                    }
                                 }
                             }
                         }
                     }
+
                 } else { //未筛选
                     for (List<BasketMatchBean> lists : mAllMatchdata) {
                         childrenDataList.add(lists);

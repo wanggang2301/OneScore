@@ -634,6 +634,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                                  startActivity(new Intent(LoginActivity.this, CustomActivity.class));
                              }
                              finish();
+                             EventBus.getDefault().post(register);
                              //TODO:发送请求，从后台获取该用户的关注信息
                              getFootballUserFocus(register.getData().getUser().getUserId());
                              getBasketballUserConcern(register.getData().getUser().getUserId());

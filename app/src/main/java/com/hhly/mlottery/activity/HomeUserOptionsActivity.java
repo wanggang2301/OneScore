@@ -373,7 +373,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         }
     }
     public void onEventMainThread(ChoseHeadStartBean choseHeadStartBean){
-
+        Log.i("homeUser","更新修改图片");
         //ImageLoader.load(HomeUserOptionsActivity.this,choseHeadStartBean.startUrl,R.mipmap.center_head).into(mUser_image);
         Glide.with(HomeUserOptionsActivity.this)
                 .load(choseHeadStartBean.startUrl)
