@@ -1449,10 +1449,10 @@
     <string name="snooker_state_single_double">单双</string>
 
     <!--我的定制-->
-    <string name="custom_mine_cus">我的定制</string>
-    <string name="custom_list_cus">定制列表</string>
+    <string name="custom_mine_cus">我的订制</string>
+    <string name="custom_list_cus">订制列表</string>
     <string name="custom_no_cus">您还未订制任何球队/联赛</string>
-    <string name="custom_to_cus">马上去定制</string>
+    <string name="custom_to_cus">马上去订制</string>
     <string name="custom_redact_cus">编辑</string>
     <string name="custom_accomplish_cus">完成</string>
     <string name="custom_noevent_cus">暂无赛事</string>
@@ -1487,6 +1487,9 @@
     <string name="chart_ball_new_msg">有新的消息</string>
     <string name="chart_ball_null_content">客官坐下来聊聊嘛</string>
     <string name="chart_ball_login_error">登录校验失败，请重新登录!</string>
+    <string name="chart_ball_hint_title">说点什么...</string>
+    <string name="chart_ball_report_hint">请输入举报内容</string>
+    <string name="chart_ball_report">举报</string>
 
     <string name="title_product_advice">给产品建议</string>
     <string name="product_advice">产品回复</string>

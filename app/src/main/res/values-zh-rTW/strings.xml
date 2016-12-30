@@ -1228,7 +1228,7 @@
     <string name="picture_put_failed">圖片上傳失敗!</string>
     <string name="save_file_not_found">保存檔案路徑找不到!</string>
     <string name="picture_save_failed">圖片保存失敗!</string>
-    <string name="picture_put_success">图片上传成功!</string>
+    <string name="picture_put_success">圖片上傳成功!</string>
     <string name="picture_save">圖片已保存至:</string>
     <string name="picture_save_telephone">保存到手機</string>
     <string name="chose_for_telephone">從手機相册選擇</string>
@@ -1429,10 +1429,10 @@
     <string name="snooker_state_single_double">單雙</string>
 
     <!--我的定制-->
-    <string name="custom_mine_cus">我的定制</string>
-    <string name="custom_list_cus">定制列表</string>
+    <string name="custom_mine_cus">我的訂制</string>
+    <string name="custom_list_cus">訂制列表</string>
     <string name="custom_no_cus">您還未訂制任何球隊/聯賽</string>
-    <string name="custom_to_cus">马上去定制</string>
+    <string name="custom_to_cus">马上去訂制</string>
     <string name="custom_redact_cus">編輯</string>
     <string name="custom_accomplish_cus">完成</string>
     <string name="custom_noevent_cus">暫無賽事</string>
@@ -1468,6 +1468,9 @@
     <string name="chart_ball_new_msg">有新的消息</string>
     <string name="chart_ball_null_content">客官坐下來聊聊嘛</string>
     <string name="chart_ball_login_error">登錄校驗失敗，請重新登錄!</string>
+    <string name="chart_ball_hint_title">說點什麽...</string>
+    <string name="chart_ball_report_hint">請輸入舉報內容</string>
+    <string name="chart_ball_report">舉報</string>
 
     <string name="title_product_advice">給產品建議</string>
     <string name="product_advice">產品回復</string>

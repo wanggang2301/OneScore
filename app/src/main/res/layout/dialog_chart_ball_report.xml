@@ -45,7 +45,7 @@
             android:background="@drawable/feedback_edittext_bg"
             android:padding="10dp"
             android:textColor="@color/content_txt_black"
-            android:hint="请输入举报内容"
+            android:hint="@string/chart_ball_report_hint"
             android:textColorHint="@color/content_txt_light_grad"
             android:textSize="15sp"
             android:longClickable="false"

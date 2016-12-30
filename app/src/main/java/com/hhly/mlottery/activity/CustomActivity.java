@@ -42,6 +42,7 @@ import com.hhly.mlottery.util.net.CustomDetailsEvent;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.LoadMoreRecyclerView;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -943,5 +944,17 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
         }
         mAdapter.setData(mFirstData);
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }
