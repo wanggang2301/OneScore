@@ -448,8 +448,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         barrage_view = (BarrageView) findViewById(R.id.barrage_view);
         barrage_switch = (ImageView) findViewById(R.id.barrage_switch);
         barrage_switch.setOnClickListener(this);
-
-
     }
 
     public void onEventMainThread(BarrageBean barrageBean) {
@@ -476,11 +474,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mRefreshLayout.setEnabled(true); //展开
             } else {
                 mRefreshLayout.setEnabled(false); //展开
-
             }
         }
     }
-
 
     @Override
     public void onRefresh() {
