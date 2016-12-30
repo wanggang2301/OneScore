@@ -162,6 +162,7 @@ public class BasketOddsFragment extends Fragment implements View.OnClickListener
     private void initView() {
 
         listView = (ListView) mView.findViewById(R.id.basket_odds_listview);
+        listView.setFocusable(false);
 
         //异常数据 处理
         mProgressBarLayout= (FrameLayout) mView.findViewById(R.id.basket_odds_progressbar);
