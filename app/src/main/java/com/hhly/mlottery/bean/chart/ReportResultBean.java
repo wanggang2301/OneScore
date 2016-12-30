@@ -12,15 +12,15 @@ public class ReportResultBean {
     private DataBean data;
 
     public static class DataBean {
-        String resultCode;
+        int resultCode;
         String resultMsg;
         String resultObj;
 
-        public String getResultCode() {
+        public int getResultCode() {
             return resultCode;
         }
 
-        public void setResultCode(String resultCode) {
+        public void setResultCode(int resultCode) {
             this.resultCode = resultCode;
         }
 

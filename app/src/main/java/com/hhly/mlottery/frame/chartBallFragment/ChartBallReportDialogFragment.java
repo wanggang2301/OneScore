@@ -161,7 +161,27 @@ public class ChartBallReportDialogFragment extends DialogFragment implements Vie
             @Override
             public void onResponse(ReportResultBean jsonObject) {
                 if ("200".equals(jsonObject.getResult())) {
-                    ToastTools.showQuick(mContext, jsonObject.getData().getResultMsg());
+
+                    switch (jsonObject.getData().getResultCode()) {
+                        case 1000:// 发送成功
+                            ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.errcode_success));
+                            break;
+//                        case 1010:// 您已被禁言
+//                            break;
+                        case 1014:// 被举报用户不存在
+                            ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.chart_ball_report_user_not));
+                            break;
+                        case 1016:// @用户不存在
+                            ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.chart_ball_call_user_not));
+                            break;
+                        case 1013:// 用户登录校验失败
+                            ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.chart_ball_login_error));
+                            break;
+                        default:
+                            // 服务器错误
+                            ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.about_service_exp));
+                            break;
+                    }
                 } else {
                     ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.warn_submitfail));
                 }

@@ -1228,7 +1228,7 @@
     <string name="picture_put_failed">圖片上傳失敗!</string>
     <string name="save_file_not_found">保存檔案路徑找不到!</string>
     <string name="picture_save_failed">圖片保存失敗!</string>
-    <string name="picture_put_success">图片上传成功!</string>
+    <string name="picture_put_success">圖片上傳成功!</string>
     <string name="picture_save">圖片已保存至:</string>
     <string name="picture_save_telephone">保存到手機</string>
     <string name="chose_for_telephone">從手機相册選擇</string>
