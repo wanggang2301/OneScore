@@ -180,8 +180,6 @@ public class BaseURLs {
     /**
      * 彩票开奖
      */
-
-
     // 所有彩票最后一期开奖结果
 //    private final static String URL_LASTLOTTERY = "lastLotteryResults.findLastLotteryResults.do";
 //    private final static String URL_LASTLOTTERY = "lastLotteryResults.findNewAndroidSecLastLotteryResults.do";// 新增了6个彩种
