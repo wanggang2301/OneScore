@@ -13,9 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +37,6 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.BallSelectArrayAdapter;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -243,6 +240,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
                         case FOCUS_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.GONE);
                             mSetImgBtn.setVisibility(View.VISIBLE);
+                            L.d("sdfgh","ddddd");
                             ((FocusFragment) fragments.get(position)).reLoadData();
                             break;
                     }

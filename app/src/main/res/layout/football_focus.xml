@@ -9,7 +9,6 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <LinearLayout
             android:id="@+id/football_immediate_loading_ll"
             android:layout_width="match_parent"
@@ -17,7 +16,6 @@
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="gone">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -28,7 +26,8 @@
         <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
             android:id="@+id/football_immediate_swiperefreshlayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="gone">
             <android.support.v7.widget.RecyclerView
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/recyclerview_focus"
@@ -42,14 +41,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone">
-
             <ImageView
                 android:id="@+id/football_immediate_unfocus_coffee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:src="@mipmap/unfocus_coffee" />
-
             <TextView
                 android:id="@+id/football_immediate_no_data_tv"
                 android:layout_width="wrap_content"
@@ -63,7 +60,5 @@
         </RelativeLayout>
 
         <include layout="@layout/network_exception"/>
-
-
     </FrameLayout>
 </LinearLayout>
