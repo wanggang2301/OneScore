@@ -710,7 +710,14 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     case 1:
                     case 2:
                         // 发送数据并更新
-                        if (!AppConstants.register.getData().getUser().getUserId().equals(chartRoom.getData().getFromUser().getUserId())) {
+                        String userId = "";
+                        try {
+                            userId = AppConstants.register.getData().getUser().getUserId();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+
+                        if (TextUtils.isEmpty(userId) && !userId.equals(chartRoom.getData().getFromUser().getUserId())) {
                             try {
                                 if (historyBeen != null && historyBeen.size() > 1) {
                                     Long lastTime = DateUtil.getCurrentTime(mLastTime);
