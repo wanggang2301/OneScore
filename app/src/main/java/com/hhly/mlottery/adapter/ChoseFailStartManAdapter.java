@@ -32,7 +32,6 @@ public class ChoseFailStartManAdapter extends CommonAdapter<String> {
         super(context, datas, layoutId);
         this.mContext=context;
         this.datas=datas;
-        Log.i("zxcvbn","ChoseFailStartManAdapter");
 
     }
     public void setSeclection(int position) {
@@ -41,8 +40,6 @@ public class ChoseFailStartManAdapter extends CommonAdapter<String> {
 
     @Override
     public void convert(ViewHolder holder, String s) {
-        Log.i("zxcvbn","convert");
-
         chose_head_child = holder.getView(R.id.chose_head_child);
         imageView4 = holder.getView(R.id.imageView4);
         Glide.with(mContext).load(s).diskCacheStrategy(DiskCacheStrategy.ALL).into(chose_head_child);

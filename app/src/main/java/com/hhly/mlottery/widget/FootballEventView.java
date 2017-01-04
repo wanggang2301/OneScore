@@ -258,12 +258,10 @@ public class FootballEventView extends View {
                     for (MatchTimeLiveBean bean : lhs.getValue()) {
                         if (bean.getCode().equals(SCORE) || bean.getCode().equals(SCORE1)) {
                             compare = 1;
-                            //   Log.e("OK??", "-------------" + bean.getCode());
                         }
                         for (MatchTimeLiveBean bean1 : rhs.getValue()) {
                             if (bean1.getCode().equals(SCORE) || bean1.getCode().equals(SCORE1)) {
                                 compare = -1;
-                                //  Log.e("OK??", "+++++++++++" + bean1.getCode() + "+=+" + bean1.getTime());
                             }
                         }
                     }

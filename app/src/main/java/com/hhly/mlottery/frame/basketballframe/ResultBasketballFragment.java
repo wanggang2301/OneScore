@@ -199,7 +199,6 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
                 return "";
             }
         } catch (Exception e) {
-            Log.e("VersionInfo", "Exception", e);
         }
         return versioncode;
     }
@@ -722,7 +721,6 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
 //                    mWebBasketMatch = JSON.parseObject(ws_json, WebBasketMatch.class);
 //                } catch (Exception e) {
 //                    ws_json = ws_json.substring(0, ws_json.length() - 1);
-//                    // Log.e(TAG, "ws_json = " + ws_json);
 //                    mWebBasketMatch = JSON.parseObject(ws_json, WebBasketMatch.class);
 //                }
 //

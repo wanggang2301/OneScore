@@ -383,7 +383,6 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
                                                                          @Override
                                                                          public void call(Object o) {
                                                                              if (o == null) {
-                                                                                 Log.e("HILO","cacheWebSocketPushData.size() = " + cacheWebSocketPushData.size());
                                                                                  notify_locked_tag = false;
                                                                                  if (cacheWebSocketPushData != null && cacheWebSocketPushData.size() > 0) {
                                                                                      updateItemFromWebSocket(cacheWebSocketPushData.get(0));
@@ -524,7 +523,6 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
         }
     }/* else {
             cacheWebSocketPushData.add(o);
-            Log.e("HILO","cacheWebSocketPushData.size() = " + cacheWebSocketPushData.size());
             RxBus.getDefault().post(null);
         }*/
 

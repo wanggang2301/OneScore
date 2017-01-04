@@ -220,7 +220,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                 return "";
             }
         } catch (Exception e) {
-            Log.e("VersionInfo", "Exception", e);
         }
         return versioncode;
     }
@@ -648,7 +647,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                     mWebBasketMatch = JSON.parseObject(ws_json, WebBasketMatch.class);
                 } catch (Exception e) {
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
-                    // Log.e(TAG, "ws_json = " + ws_json);
                     mWebBasketMatch = JSON.parseObject(ws_json, WebBasketMatch.class);
                 }
 

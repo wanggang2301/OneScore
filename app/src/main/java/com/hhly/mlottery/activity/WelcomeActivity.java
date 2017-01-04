@@ -199,7 +199,6 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
         RequestParams params = new RequestParams();
         params.addBodyParameter("REQTYPE", REQTYPE);
         TERID = PreferenceUtil.getString(AppConstants.TERID, "");// 端口id
-        System.out.println("WelcomeActivity:TERID: >" + TERID);
         params.addBodyParameter("TERID", TERID);
         params.addBodyParameter("IMEI", DeviceInfo.getDeviceId(mContext));
         params.addBodyParameter("IMSI", DeviceInfo.getSubscriberId(mContext));
@@ -237,7 +236,6 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
                         if (responseInfo != null) {
                             String text = responseInfo.result;
                             mUmengInfo = JSONObject.parseObject(text, UmengInfo.class);
-                            System.out.println("WelcomeActivity:mUmengInfo.getTERID(): >" + mUmengInfo.getTERID());
                             PreferenceUtil.commitString(AppConstants.TERID, mUmengInfo.getTERID());
 
                         }

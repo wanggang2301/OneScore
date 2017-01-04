@@ -450,13 +450,11 @@ public class ScoresFragment extends BaseWebSocketFragment {
             params.put("deviceToken", umengDeviceToken);
             params.put("deviceId", deviceId);
 
-            Log.e("CCC", umengDeviceToken);
             //volley请求
             VolleyContentFast.requestJsonByGet(BaseURLs.FOOTBALL_FIND_MATCH, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
                 @Override
                 public void onResponse(BasketballConcernListBean jsonObject) {
                     if (jsonObject.getResult().equals("200")) {
-                        Log.e("AAA", "登陆后请求的足球关注列表");
                         //将关注写入文件
                         StringBuffer sb = new StringBuffer();
                         for (String thirdId : jsonObject.getConcerns()) {

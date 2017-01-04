@@ -264,7 +264,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             param.put("registerType", RegisterType.PHONE);
             param.put("smsCode", verifyCode);
 
-            Log.d(TAG,AppConstants.deviceToken);
             param.put("deviceToken", AppConstants.deviceToken);
 
             //以下添加的参数为修复恶意注册的bug所加。

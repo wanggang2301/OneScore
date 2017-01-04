@@ -319,8 +319,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 startActivityForResult(new Intent(this, FindPassWordActivity.class), REQUESTCODE_FINDPW);
                 break;
             case R.id.login_qq:
-                Log.i(TAG, "点击我了>>>>>>>>>>");
-
                 QQlogin();
                 break;
 
@@ -444,7 +442,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             if (mOauth2AccessToken.isSessionValid()) {
                 // UiUtils.toast(MyApp.getInstance(),"build"+bundle.toString());
                 AccessTokenKeeper.writeAccessToken(LoginActivity.this, mOauth2AccessToken);
-                Log.i(TAG, "认证成功>>>>>>>>>>>>>");
                 String openID = bundle.getString("uid");
                 String accessToken = bundle.getString("access_token");
                 Map<String, String> param = new HashMap<>();
@@ -467,13 +464,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         @Override
         public void onWeiboException(WeiboException e) {
-            Log.e(TAG, "认证失败>>>>>>>>>>>>>" + e.toString());
 
         }
 
         @Override
         public void onCancel() {
-            Log.i(TAG, "认证取消>>>>>>>>>>>>>");
         }
     }
 
@@ -485,7 +480,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private class BaseUiListener implements IUiListener {
         @Override
         public void onComplete(Object response) {
-            Log.i(TAG, "回调成功>>>>>>>>>>>>>");
             // UiUtils.toast(MyApp.getInstance(), "三登录成功");
             if (response == null) {
                 return;
@@ -498,7 +492,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 JSONObject jo = JSON.parseObject(jsonString);
 
                 int ret = jo.getIntValue("ret");
-                System.out.println("json=" + String.valueOf(jo));
+                L.d("json=" + String.valueOf(jo));
                 if (ret == 0) {
                     String openID = jo.getString("openid");
                     String accessToken = jo.getString("access_token");
@@ -526,12 +520,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         @Override
         public void onError(UiError e) {
-            Log.i(TAG, "回调失败>>>>>>>>>>>>>");
         }
 
         @Override
         public void onCancel() {
-            Log.i(TAG, "回调取消>>>>>>>>>>>>>");
         }
     }
 
@@ -547,7 +539,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 }
                 UiUtils.toast(MyApp.getInstance(), R.string.login_succ);
                 CommonUtils.saveRegisterInfo(register);
-                Log.e(TAG, "register" + register.toString());
                 //UiUtils.toast(MyApp.getInstance(), register.toString());
                 PreferenceUtil.commitBoolean("three_login", true);
                 PreferenceUtil.commitString("code", "");
@@ -589,7 +580,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private void login() {
         String userName = et_username.getText().toString();
         String passWord = et_password.getText().toString();
-        Log.i("dasdasdas","userName==="+userName);
          if(userName.isEmpty()) {
              UiUtils.toast(LoginActivity.this, R.string.account_cannot_be_empty);
              return;
@@ -602,18 +592,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                  param.put("account", userName);
                  param.put("password", MD5Util.getMD5(passWord));
                  setResult(RESULT_OK);
-                 Log.d(TAG, AppConstants.deviceToken);
                  param.put("deviceToken", AppConstants.deviceToken);
 
                  //防止用户恶意注册后先添加的字段，versioncode和versionname;
                  int versionCode = CommonUtils.getVersionCode();
                  param.put("versionCode", String.valueOf(versionCode));
 
-                 Log.d(TAG, versionCode + "");
-
                  String versionName = CommonUtils.getVersionName();
                  param.put("versionName", versionName);
-                 Log.d(TAG, versionName);
 
                  VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
                      @Override
@@ -676,13 +662,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         params.put("deviceToken",umengDeviceToken);
         params.put("deviceId",deviceId);
 
-        Log.e("CCC",umengDeviceToken);
         //volley请求
         VolleyContentFast.requestJsonByPost(BaseURLs.FOOTBALL_FIND_MATCH, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
             @Override
             public void onResponse(BasketballConcernListBean jsonObject) {
                 if(jsonObject.getResult().equals("200")){
-                    Log.e("AAA","登陆后请求的足球关注列表");
                     //将关注写入文件
                     StringBuffer sb=new StringBuffer();
                     for(String thirdId:jsonObject.getConcerns()){
@@ -717,14 +701,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         String umengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
         Map<String,String > params=new HashMap<>();
         params.put("userId",userId);
-        Log.e("AAA",userId+"用户名");
         params.put("deviceId",deviceId);
 //        params.put("deviceToken",umengDeviceToken);
         VolleyContentFast.requestJsonByPost(BaseURLs.BASKET_FIND_MATCH, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
             @Override
             public void onResponse(BasketballConcernListBean jsonObject) {
                 if(jsonObject.getResult().equals("200")){
-                    Log.e("AAA","登陆后请求的篮球关注列表");
                         //将关注写入文件
                         StringBuffer sb=new StringBuffer();
                         for(String thirdId:jsonObject.getConcerns()){

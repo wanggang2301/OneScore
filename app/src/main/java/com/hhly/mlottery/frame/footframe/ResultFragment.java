@@ -288,7 +288,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 boolean isCheck = (Boolean) view.getTag();// 检查之前是否被选中
 
                 if (!isCheck) {// 插入数据
-                    Log.e("AAA", "有调用啊");
                     FocusFragment.addFocusId(third);
 
                     ((ImageView) view).setImageResource(R.mipmap.football_focus);

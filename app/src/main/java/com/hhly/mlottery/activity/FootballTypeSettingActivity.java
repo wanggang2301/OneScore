@@ -23,6 +23,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchSettingEventBusEntity;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -345,7 +346,7 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
         VolleyContentFast.requestJsonByPost(BaseURLs.FOOTBALL_USER_SET, params, new VolleyContentFast.ResponseSuccessListener<String>() {
             @Override
             public void onResponse(String jsonObject) {
-                Log.e("AAA", "足球推送开关请求成功");
+                L.d("AAA", "足球推送开关请求成功");
 
             }
         }, new VolleyContentFast.ResponseErrorListener() {

@@ -17,6 +17,7 @@ import com.hhly.mlottery.bean.FootballLeagueBean;
 import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
 import com.hhly.mlottery.callback.SearchService;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.umeng.analytics.MobclickAgent;
@@ -192,7 +193,7 @@ public class FootballInformationSerachActivity extends BaseActivity implements  
                 if( null!=resultListBeen.get(position).getLeagueId()&&!resultListBeen.get(position).getLeagueId().isEmpty()) {
                     Intent intent = new Intent(FootballInformationSerachActivity.this, FootballDatabaseDetailsActivity.class);
                     intent.putExtra(LEAGUEID, new DataBaseBean(resultListBeen.get(position).getKind(), resultListBeen.get(position).getLeagueId(), "", ""));//传递联赛ID
-                    System.out.println("resulistBeen=====================" + resultListBeen.get(position).toString());
+                    L.d("resulistBeen=====================" + resultListBeen.get(position).toString());
                     startActivity(intent);
                 }
             }

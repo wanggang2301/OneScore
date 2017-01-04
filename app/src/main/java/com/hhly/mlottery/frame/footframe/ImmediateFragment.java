@@ -505,7 +505,6 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                     webSocketMatchStatus = JSON.parseObject(ws_json, WebSocketMatchStatus.class);
                 } catch (Exception e) {
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
-                    // Log.e(TAG, "ws_json = " + ws_json);
                     webSocketMatchStatus = JSON.parseObject(ws_json, WebSocketMatchStatus.class);
                 }
                 updateListViewItemStatus(webSocketMatchStatus);
@@ -762,7 +761,6 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
         // updateMatchOdd(targetMatch, data);
         // updateListView(targetMatch);
         // } else {
-        // Log.e(TAG, "targetMatch is null,webSocketMatchOdd.id = " +
         // webSocketMatchOdd.getThirdId());
         // }
     }

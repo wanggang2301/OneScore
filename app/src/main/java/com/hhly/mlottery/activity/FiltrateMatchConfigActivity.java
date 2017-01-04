@@ -138,7 +138,6 @@ public class FiltrateMatchConfigActivity extends BaseActivity implements OnClick
         transaction.commit();
 
         mFragmentMatchId = fragmentMatch.getId();
-        //Log.i(TAG, "fragmentMatch.getId() = " + fragmentMatch.getId());
         mSubmit = (Button) findViewById(R.id.filtrate_submit_btn);
         mSubmit.setOnClickListener(this);
         // mCancel = (Button) findViewById(R.id.filtrate_cancel_btn);
@@ -172,7 +171,6 @@ public class FiltrateMatchConfigActivity extends BaseActivity implements OnClick
                 //overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 break;
             case R.id.filtrate_submit_btn:
-                // Log.i(TAG, "submit - -");
                 MobclickAgent.onEvent(mContext, "Football_Filtrate_Save");
                 FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -232,7 +230,6 @@ public class FiltrateMatchConfigActivity extends BaseActivity implements OnClick
 
     @Override
     public void onChange(LinkedList<String> checkedCups) {
-        //		Log.i(TAG, "checkedCups.size = " + checkedCups.size());
     }
 
     @Override

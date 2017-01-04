@@ -404,7 +404,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     }
 
     public void onEventMainThread(BarrageBean barrageBean) {
-        System.out.println("xxxxx barrageBean: " + barrageBean.getMsg());
+        L.d("xxxxx barrageBean: " + barrageBean.getMsg());
         barrage_view.setDatas(barrageBean.getUrl(), barrageBean.getMsg().toString());
     }
 
@@ -675,7 +675,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                     mBasketDetails = JSON.parseObject(ws_json, WebSocketBasketBallDetails.class);
                 } catch (Exception e) {
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
-                    // Log.e(TAG, "ws_json = " + ws_json);
                     mBasketDetails = JSON.parseObject(ws_json, WebSocketBasketBallDetails.class);
                 }
                 //  L.e();

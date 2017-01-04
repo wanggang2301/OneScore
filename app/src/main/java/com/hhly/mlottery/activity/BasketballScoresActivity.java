@@ -226,13 +226,11 @@ public class BasketballScoresActivity extends BaseWebSocketActivity implements V
             String umengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
             Map<String,String > params=new HashMap<>();
             params.put("userId",userId);
-            Log.e("AAA",userId+"用户名");
             params.put("deviceId",deviceId);
             VolleyContentFast.requestJsonByPost(BaseURLs.BASKET_FIND_MATCH, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
                 @Override
                 public void onResponse(BasketballConcernListBean jsonObject) {
                     if(jsonObject.getResult().equals("200")){
-                        Log.e("AAA","登陆后请求的篮球关注列表");
                         //将关注写入文件
                         StringBuffer sb=new StringBuffer();
                         for(String thirdId:jsonObject.getConcerns()){

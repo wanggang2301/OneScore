@@ -123,12 +123,12 @@ public class VolleyContentFast {
                 }
             }
             L.i(TAG, "request method get url = [ " + tempUrl + " ]");
-            Log.i("URL", "************GET****************[ " + tempUrl + " ]**************GET**************");
+            L.d("URL", "************GET****************[ " + tempUrl + " ]**************GET**************");
         } else {
             appendMapLanguage(params);
             appendMapTimeZone(params);
             L.i(TAG, "request method post url = [ " + url + " ]");
-            Log.i("URL", "************POST****************[ " + url + " ]***************POST*************");
+            L.d("URL", "************POST****************[ " + url + " ]***************POST*************");
             if (params != null && params.size() != 0) {
                 for (String key : params.keySet()) {
                     L.d(TAG, "[ key = " + key + " ，param = " + params.get(key) + " ]");
@@ -227,11 +227,11 @@ public class VolleyContentFast {
                 }
             }
             L.i(TAG, "request method get url = [ " + tempUrl + " ]");
-            Log.i("URL", "************GET****************[ " + tempUrl + " ]**************GET**************");
+            L.i("URL", "************GET****************[ " + tempUrl + " ]**************GET**************");
         } else {
             appendMapLanguage(params);
             L.i(TAG, "request method post url = [ " + url + " ]");
-            Log.i("URL", "************POST****************[ " + url + " ]***************POST*************");
+            L.i("URL", "************POST****************[ " + url + " ]***************POST*************");
             if (params != null && params.size() != 0) {
                 for (String key : params.keySet()) {
                     L.d(TAG, "[ key = " + key + " ，param = " + params.get(key) + " ]");

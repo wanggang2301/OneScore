@@ -206,8 +206,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "___onCreateView____");
-
 
         mContext = getActivity();
        /* if (mView == null) {
@@ -515,7 +513,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                 }
 
                 PreferenceUtil.commitString(FOCUS_ISD, sb.toString());
-                Log.e("BBB", "存进去时" + sb.toString());
                 ((ScoresFragment) getParentFragment()).focusCallback();
 
 
@@ -576,11 +573,8 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            Log.e(TAG, "__handleMessage__");
-            Log.e(TAG, "msg.arg1 = " + msg.arg1);
             if (msg.arg1 == 1) {
                 String ws_json = (String) msg.obj;
-                Log.e(TAG, "ws_json = " + ws_json);
                 WebSocketMatchStatus webSocketMatchStatus = null;
                 try {
                     webSocketMatchStatus = JSON.parseObject(ws_json, WebSocketMatchStatus.class);
@@ -591,7 +585,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                 updateListViewItemStatus(webSocketMatchStatus);
             } else if (msg.arg1 == 2) {
                 String ws_json = (String) msg.obj;
-                Log.e(TAG, "ws_json = " + ws_json);
                 WebSocketMatchOdd webSocketMatchOdd = null;
                 try {
                     webSocketMatchOdd = JSON.parseObject(ws_json, WebSocketMatchOdd.class);
@@ -600,11 +593,9 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                     webSocketMatchOdd = JSON.parseObject(ws_json, WebSocketMatchOdd.class);
                 }
 
-                Log.e(TAG, "----webSocketMatchStatus -----" + webSocketMatchOdd.getThirdId());
                 updateListViewItemOdd(webSocketMatchOdd);
             } else if (msg.arg1 == 3) {
                 String ws_json = (String) msg.obj;
-                Log.e(TAG, "ws_json = " + ws_json);
                 WebSocketMatchEvent webSocketMatchEvent = null;
                 try {
                     webSocketMatchEvent = JSON.parseObject(ws_json, WebSocketMatchEvent.class);
@@ -616,7 +607,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                 updateListViewItemEvent(webSocketMatchEvent);
             } else if (msg.arg1 == 5) {
                 String ws_json = (String) msg.obj;
-                Log.e(TAG, "ws_json = " + ws_json);
                 WebSocketMatchChange webSocketMatchChange = null;
                 try {
                     webSocketMatchChange = JSON.parseObject(ws_json, WebSocketMatchChange.class);
@@ -821,7 +811,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
     }
 
     private void updateMatchStatus(Match match, Map<String, String> data) {
-        // Log.d(TAG, msg);
         match.setStatusOrigin(data.get("statusOrigin"));
         if ("0".equals(match.getStatusOrigin()) && "1".equals(match.getStatusOrigin())) {// 未开场变成开场
             match.setHomeScore("0");
@@ -1190,7 +1179,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         //TODO:把用户id,deviceId,deviceToken 传给服务器
         String deviceId = AppConstants.deviceToken;
         String uMengDeviceToken = PreferenceUtil.getString(AppConstants.uMengDeviceToken, "");
-        Log.e("AAA", uMengDeviceToken + "???");
         String userId = "";
         if (AppConstants.register != null && AppConstants.register.getData() != null && AppConstants.register.getData().getUser() != null) {
             userId = AppConstants.register.getData().getUser().getUserId();
@@ -1210,7 +1198,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         VolleyContentFast.requestJsonByPost(BaseURLs.FOOTBALL_ADD_FOCUS, params, new VolleyContentFast.ResponseSuccessListener<ConcernBean>() {
             @Override
             public void onResponse(ConcernBean concernBean) {
-                Log.e("AAAA", "concern");
 
             }
         }, new VolleyContentFast.ResponseErrorListener() {

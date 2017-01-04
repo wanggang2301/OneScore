@@ -449,14 +449,12 @@ public class FootBallExpandableGridAdapter extends BaseExpandableListAdapter imp
         convertView = View.inflate(mContext, R.layout.basket_info_country_item_child, null);
         gridview = (MyGridViewInfo) convertView.findViewById(R.id.gridview_child);
 
-        // Log.d("112", "getchilview" + "gro=" + groupPosition + "item_event_half_finish=" + parentItem);
         child_array = new ArrayList<>();
 
         for (DataBaseBean dataBaseBean : allDatas.get(groupPosition).get(parentItem).getLeagueMenues()) {
             child_array.add(dataBaseBean);
         }
 
-        // Log.d("112", child_array.size() + "----" + allDatas.get(groupPosition).get(parentItem).getList().size());
         footBallGridChildAdapter = new FootBallGridChildAdapter(mContext, child_array);
         gridview.setAdapter(footBallGridChildAdapter);
         gridview.setOnItemClickListener(this);

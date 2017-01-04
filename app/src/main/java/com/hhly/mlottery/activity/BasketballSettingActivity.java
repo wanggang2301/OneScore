@@ -24,6 +24,7 @@ import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -261,7 +262,6 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 			PreferenceUtil.commitBoolean(MyConstants.BASKETBALL_PUSH_FOCUS, mTb_push.isChecked());
 
 			//TODO:把是否接受推送消息的状态传给服务器
-//			Log.e("BBB",UmengRegistrar.getRegistrationId(MyApp.getContext()));
 			if(mTb_push.isChecked()){
 				requestServer("true"); //接收推送
 			}else {
@@ -290,7 +290,7 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 		VolleyContentFast.requestJsonByPost(BaseURLs.BASKET_USER_SET, params, new VolleyContentFast.ResponseSuccessListener<String>() {
 			@Override
 			public void onResponse(String jsonObject) {
-				Log.e("AAA","篮球推送开关请求成功");
+				L.d("AAA","篮球推送开关请求成功");
 
 			}
 		}, new VolleyContentFast.ResponseErrorListener() {

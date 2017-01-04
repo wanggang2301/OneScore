@@ -206,7 +206,6 @@ public class SlideListView extends ListView {
 		case MotionEvent.ACTION_MOVE:
 			// System.out.println("touch-->" + "move");
 
-			// Log.e(TAG, "mTouchSlop = " + mTouchSlop);
 
 			if (!canMove && slidePosition != AdapterView.INVALID_POSITION && (Math.abs(ev.getX() - downX) > mTouchSlop && Math.abs(ev.getY() - downY) < mTouchSlop)) {
 				int offsetX = downX - lastX;
@@ -220,7 +219,6 @@ public class SlideListView extends ListView {
 				cancelEvent.setAction(MotionEvent.ACTION_CANCEL | (ev.getActionIndex() << MotionEvent.ACTION_POINTER_INDEX_SHIFT));
 				onTouchEvent(cancelEvent);
 			}
-			// Log.e(TAG, "canMove = " + canMove);
 			if (canMove) {
 				if (this.mSwipeRefreshLayout != null) {
 					this.mSwipeRefreshLayout.setEnabled(false);
@@ -232,13 +230,11 @@ public class SlideListView extends ListView {
 				// 手指拖动itemView滚动, deltaX大于0向左滚动，小于0向右滚
 				int deltaX = downX - lastX;
 
-//				Log.e(TAG, "deltaX = " + deltaX);
 				if (deltaX < 0 && (this.mode == MOD_BOTH || this.mode == MOD_LEFT)) {
 					/* 向左滑 */
 					itemView.scrollTo(deltaX, 0);
 				} else if (deltaX > 0 && (this.mode == MOD_BOTH || this.mode == MOD_RIGHT)) {
 					/* 向右滑 */
-					// Log.e(TAG, "mSlideRightMaxDelta = " +
 					// mSlideRightMaxDelta);
 					if (deltaX < rightLength) {
 						itemView.scrollTo(deltaX, 0);

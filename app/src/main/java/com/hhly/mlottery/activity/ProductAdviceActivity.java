@@ -256,7 +256,6 @@ public class ProductAdviceActivity extends BaseActivity implements View.OnClickL
         HashMap<String,String> params=new HashMap<>();
         currentPage=++currentPage;
         params.put("currentPage",currentPage+"");
-        Log.e("advice",currentPage+"++++++++++++++++++");
 
         VolleyContentFast.requestJsonByGet(BaseURLs.PRODUCT_ADVICE_LIKE_LIST, params,new VolleyContentFast.ResponseSuccessListener<ProductAdviceBean>() {
             @Override
