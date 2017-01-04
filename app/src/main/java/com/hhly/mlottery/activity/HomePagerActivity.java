@@ -87,7 +87,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
     private static final int REFRES_DATA_SUCCESS = 3;// 下拉刷新
     private static final int VERSION_UPDATA_SUCCESS = 4;// 版本更新请求成功
     private static final int DOWNLOAD_UPGRADE = 5;// 准备开始升级下载
-    private static final int REFRESH_ADVICE=6;
+    private static final int REFRESH_ADVICE = 6;
     private static final String COMP_VER = "1"; // 完整版
     private static final String PURE_VER = "2"; // 纯净版
     private long mExitTime;// 退出程序...时间
@@ -104,7 +104,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
     private int clickCount = 0;// 点击次数
     private ProgressDialog progressBar;
 
-    private int REQUEST_CODE=1;
+    private int REQUEST_CODE = 1;
 
     public ProductListener mListener;
 
@@ -412,10 +412,10 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
         home_page_list = (ListView) findViewById(R.id.home_page_list);// 首页列表
 
-        mListener=new ProductListener() {
+        mListener = new ProductListener() {
             @Override
             public void toProductActivity() {
-                startActivityForResult(new Intent(HomePagerActivity.this,ProductAdviceActivity.class),REQUEST_CODE);
+                startActivityForResult(new Intent(HomePagerActivity.this, ProductAdviceActivity.class), REQUEST_CODE);
             }
         };
 
@@ -434,7 +434,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
      * 后台数据请求
      */
     public synchronized void getRequestData(final int num) {
-        if(num!=2){
+        if (num != 2) {
             mHandler.sendEmptyMessage(LOADING_DATA_START);// 开始加载数据
         }
         // 设置参数
@@ -449,17 +449,59 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
                 if (jsonObject != null) {// 请求成功
                     try {
                         mHomePagerEntity = JSON.parseObject(jsonObject, HomePagerEntity.class);
-                        /**----将百度渠道的游戏竞猜去除掉--Start---*/
-                        if ("B1001".equals(channelNumber) || "B1002".equals(channelNumber) || "B1003".equals(channelNumber)) {
+                        /**----将百度渠道的游戏竞猜和彩票相关去除掉--Start---*/
+                        if ("B1001".equals(channelNumber) || "B1002".equals(channelNumber) || "B1003".equals(channelNumber) || "Q01116".equals(channelNumber)) {
+                            // 处理条目入口
+                            Iterator<HomeOtherListsEntity> iteratorItem = mHomePagerEntity.getOtherLists().iterator();
+                            while (iteratorItem.hasNext()){
+                                HomeOtherListsEntity nextEntity = iteratorItem.next();
+                                if(nextEntity.getContent().getLabType() == 3 || nextEntity.getContent().getLabType() == 7){
+                                    iteratorItem.remove();
+                                }
+                            }
+                            // 处理菜单入口
                             Iterator<HomeContentEntity> iterator = mHomePagerEntity.getMenus().getContent().iterator();
                             while (iterator.hasNext()) {
                                 HomeContentEntity b = iterator.next();
-                                if ("遊戲競猜".equals(b.getTitle()) || "游戏竞猜".equals(b.getTitle())) {
+                                if ("遊戲競猜".equals(b.getTitle()) || "游戏竞猜".equals(b.getTitle()) ||
+                                        "30".equals(b.getJumpAddr()) ||
+                                        "31".equals(b.getJumpAddr()) ||
+                                        "32".equals(b.getJumpAddr()) ||
+                                        "33".equals(b.getJumpAddr()) ||
+                                        "34".equals(b.getJumpAddr()) ||
+                                        "35".equals(b.getJumpAddr()) ||
+                                        "36".equals(b.getJumpAddr()) ||
+                                        "37".equals(b.getJumpAddr()) ||
+                                        "38".equals(b.getJumpAddr()) ||
+                                        "39".equals(b.getJumpAddr()) ||
+                                        "310".equals(b.getJumpAddr()) ||
+                                        "311".equals(b.getJumpAddr()) ||
+                                        "312".equals(b.getJumpAddr()) ||
+                                        "313".equals(b.getJumpAddr()) ||
+                                        "314".equals(b.getJumpAddr()) ||
+                                        "315".equals(b.getJumpAddr()) ||
+                                        "316".equals(b.getJumpAddr()) ||
+                                        "317".equals(b.getJumpAddr()) ||
+                                        "318".equals(b.getJumpAddr()) ||
+                                        "319".equals(b.getJumpAddr()) ||
+                                        "320".equals(b.getJumpAddr()) ||
+                                        "321".equals(b.getJumpAddr()) ||
+                                        "322".equals(b.getJumpAddr()) ||
+                                        "323".equals(b.getJumpAddr()) ||
+                                        "324".equals(b.getJumpAddr()) ||
+                                        "325".equals(b.getJumpAddr()) ||
+                                        "326".equals(b.getJumpAddr()) ||
+                                        "327".equals(b.getJumpAddr()) ||
+                                        "328".equals(b.getJumpAddr()) ||
+                                        "329".equals(b.getJumpAddr()) ||
+                                        "330".equals(b.getJumpAddr()) ||
+                                        "331".equals(b.getJumpAddr()) ||
+                                        "332".equals(b.getJumpAddr())) {
                                     iterator.remove();
                                 }
                             }
                         }
-                        /**----将百度渠道的游戏竞猜去除掉--End---*/
+                        /**----将百度渠道的游戏竞猜和彩票相关去除掉--End---*/
                         PreferenceUtil.commitString(AppConstants.HOME_PAGER_DATA_KEY, jsonObject);// 保存首页缓存数据
                         L.d("xxx", "保存数据到本地！jsonObject:" + jsonObject);
                     } catch (Exception e) {
@@ -663,8 +705,8 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
                         int labType = mHomePagerEntity.getOtherLists().get(i).getContent().getLabType();// 获取类型
                         List<HomeBodysEntity> bodys = mHomePagerEntity.getOtherLists().get(i).getContent().getBodys();
                         for (int j = 0, len1 = bodys.size(); j < len1; j++) {
-                            if(labType==5){ //产品建议
-                                mListBaseAdapter.addLike(bodys.get(0),bodys);
+                            if (labType == 5) { //产品建议
+                                mListBaseAdapter.addLike(bodys.get(0), bodys);
                                 mListBaseAdapter.notifyDataSetChanged();
                             }
                         }
@@ -773,7 +815,6 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
             e.printStackTrace();
         }
     }
-
 
 
     /**
@@ -892,7 +933,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
                 L.d(TAG, "注销成功");
                 public_btn_set.setImageResource(R.mipmap.logout);
             }
-        }else if(resultCode==ProductAdviceActivity.RESULT_CODE){
+        } else if (resultCode == ProductAdviceActivity.RESULT_CODE) {
             getRequestData(2);
         }
 
