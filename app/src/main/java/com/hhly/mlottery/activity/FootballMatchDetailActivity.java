@@ -60,6 +60,7 @@ import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.FootballLiveTextComparator;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
@@ -2082,7 +2083,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private void popWindow(View v) {
         final View mView = View.inflate(getApplicationContext(), R.layout.football_details, null);
 
-        boolean isFocus = FocusFragment.isFocusId(mThirdId);
+        boolean isFocus = FocusUtils.isFocusId(mThirdId);
 
         if (isFocus) {
             ((ImageView) mView.findViewById(R.id.football_item_focus_iv)).setImageResource(R.mipmap.head_focus);
@@ -2110,13 +2111,13 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 //Toast.makeText(mContext, "足球！", Toast.LENGTH_SHORT).show();
                 MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Focus");
                 popupWindow.dismiss();
-                if (FocusFragment.isFocusId(mThirdId)) {
-                    FocusFragment.deleteFocusId(mThirdId);
+                if (FocusUtils.isFocusId(mThirdId)) {
+                    FocusUtils.deleteFocusId(mThirdId);
                     ((ImageView) mView.findViewById(R.id.football_item_focus_iv)).setImageResource(R.mipmap.head_nomal);
                     ((TextView) mView.findViewById(R.id.football_item_focus_tv)).setText(getString(R.string.foot_details_focus));
 
                 } else {
-                    FocusFragment.addFocusId(mThirdId);
+                    FocusUtils.addFocusId(mThirdId);
                     ((ImageView) mView.findViewById(R.id.football_item_focus_iv)).setImageResource(R.mipmap.head_focus);
                     ((TextView) mView.findViewById(R.id.football_item_focus_tv)).setText(getString(R.string.foot_details_focused));
                 }
