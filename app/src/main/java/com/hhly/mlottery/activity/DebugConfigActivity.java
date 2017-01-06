@@ -107,7 +107,7 @@ public class DebugConfigActivity extends BaseActivity {
                 PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, DIY_INPUT);
                 PreferenceUtil.commitString("DIY_INPUT", str);*/
 
-                startActivity(new Intent(DebugConfigActivity.this, MultiScreenIntroduceActivity.class));
+                startActivity(new Intent(DebugConfigActivity.this, MultiScreenViewActivity.class));
 
                 System.exit(0);
             }

@@ -537,7 +537,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", mThirdId);
 
-        //BaseURLs.URL_FOOTBALL_DETAIL_INFO
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_INFO_FIRST, params, new VolleyContentFast.ResponseSuccessListener<MatchDetail>() {
             @Override
             public void onResponse(MatchDetail matchDetail) {
@@ -2587,8 +2586,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         int random = new Random().nextInt(20);
         String url = baseUrl + random + ".png";
         ImageLoader.load(mContext, url, R.color.colorPrimary).into(iv_bg);
-        //Glide.with(this).load(url).into(iv_bg);
-
 
         loadImage(mMatchDetail.getHomeTeamInfo().getUrl(), iv_home_icon);
         loadImage(mMatchDetail.getGuestTeamInfo().getUrl(), iv_guest_icon);

@@ -327,7 +327,8 @@
         <activity
             android:name=".activity.CustomListActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.MultiScreenIntroduceActivity"></activity>
+        <activity android:name=".activity.MultiScreenIntroduceActivity" />
+        <activity android:name=".activity.MultiScreenViewActivity"></activity>
     </application>
 
 </manifest>
