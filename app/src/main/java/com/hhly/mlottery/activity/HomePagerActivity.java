@@ -306,7 +306,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         super.onResume();
 
         // 红点触发后自动刷新
-        if (PreferenceUtil.getBoolean(AppConstants.BASKET_RED_KEY, false) || PreferenceUtil.getBoolean(AppConstants.FOOTBALL_RED_KEY, false)) {
+        if (PreferenceUtil.getBoolean(AppConstants.ANIMATION_RED_KEY, false)) {
             if (!PreferenceUtil.getBoolean(AppConstants.RED_KEY_START, false)) {
                 if (mHomePagerEntity != null) {
                     mListBaseAdapter = new HomeListBaseAdapter(mContext, mHomePagerEntity);
@@ -316,7 +316,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
                 }
             }
         }
-        if (PreferenceUtil.getBoolean(AppConstants.BASKET_RED_KEY, false) && PreferenceUtil.getBoolean(AppConstants.FOOTBALL_RED_KEY, false)) {
+        if (PreferenceUtil.getBoolean(AppConstants.ANIMATION_RED_KEY, false)) {
             PreferenceUtil.commitBoolean(AppConstants.RED_KEY_START, true);// 不用再刷新了
         }
 
@@ -451,9 +451,9 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
                         if ("B1001".equals(channelNumber) || "B1002".equals(channelNumber) || "B1003".equals(channelNumber) || "Q01116".equals(channelNumber)) {
                             // 处理条目入口
                             Iterator<HomeOtherListsEntity> iteratorItem = mHomePagerEntity.getOtherLists().iterator();
-                            while (iteratorItem.hasNext()){
+                            while (iteratorItem.hasNext()) {
                                 HomeOtherListsEntity nextEntity = iteratorItem.next();
-                                if(nextEntity.getContent().getLabType() == 3 || nextEntity.getContent().getLabType() == 7){
+                                if (nextEntity.getContent().getLabType() == 3 || nextEntity.getContent().getLabType() == 7) {
                                     iteratorItem.remove();
                                 }
                             }

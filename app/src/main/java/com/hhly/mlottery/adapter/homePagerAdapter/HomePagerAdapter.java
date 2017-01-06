@@ -19,7 +19,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.FootballActivity;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.activity.HomeUserOptionsActivity;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.activity.NumbersActivity;
@@ -33,6 +35,7 @@ import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.ToastTools;
 import com.umeng.analytics.MobclickAgent;
 
 import java.lang.reflect.Field;
@@ -491,6 +494,7 @@ public class HomePagerAdapter extends PagerAdapter {
                                 case "80":// 多屏动画列表
                                 {
                                     // TODO 轮播图跳转多屏动画
+                                    ToastTools.showQuick(mContext,"轮播图跳转多屏动画");
 //                                    mContext.startActivity(new Intent(mContext, MultiScreenViewingListActivity.class));
                                 }
                                 break;
@@ -507,11 +511,25 @@ public class HomePagerAdapter extends PagerAdapter {
                                 String[] split = jumpAddr.split("&");
                                 switch (split[0]) {
                                     case "18":// 足球
-
-                                        break;
+                                    {
+                                        Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
+                                        intent.putExtra("thirdId", split[1]);
+                                        intent.putExtra("currentFragmentId", 0);
+                                        intent.putExtra("chart_ball_view", 1);
+                                        mContext.startActivity(intent);
+                                    }
+                                    break;
                                     case "26":// 篮球
-
-                                        break;
+                                    {
+                                        Intent intent = new Intent(mContext, BasketDetailsActivityTest.class);
+                                        intent.putExtra("thirdId", split[1]);
+                                        intent.putExtra("chart_ball_view", 1);
+                                        // 后台固定只配置NBA赛事
+                                        intent.putExtra("leagueId", 1);
+                                        intent.putExtra("matchType", 1);
+                                        mContext.startActivity(intent);
+                                    }
+                                    break;
                                 }
                             }
                             break;

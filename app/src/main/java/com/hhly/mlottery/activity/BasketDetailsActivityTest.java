@@ -108,7 +108,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
      */
     public final static String ODDS_SIZE = "asiaSize";
     public static String mThirdId = "936707";
-    public static String mMatchStatus;
+    //    public static String mMatchStatus;
     private Context mContext;
 
 
@@ -204,6 +204,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private ImageView barrage_switch;
     boolean barrage_isFocus = false;
     private View view_red;
+    private int chartBallView = -1;// 聊球界面转标记
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,8 +212,9 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             mThirdId = getIntent().getExtras().getString(BASKET_THIRD_ID);
             mLeagueId = getIntent().getExtras().getString(BASKET_MATCH_LEAGUEID);
             mMatchType = getIntent().getExtras().getInt(BASKET_MATCH_MATCHTYPE);
+            chartBallView = getIntent().getExtras().getInt("chart_ball_view");
 
-            mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
+//            mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
 
             if (LEAGUEID_NBA.equals(mLeagueId)) {
                 isNBA = true;
@@ -323,17 +325,17 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         if (isNBA) {  //是NBA
             mTabsAdapter.addFragments(mBasketLiveFragment, mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mChartBallFragment);
             isFragment5 = true; // 直接
-            tabAt = mTabLayout.getTabAt(5);
+
+            if (chartBallView == 1) {
+                mViewPager.setCurrentItem(5, false);
+            }
         } else {
             mTabsAdapter.addFragments(mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mChartBallFragment);
             isFragment0 = true;// 分析
-            tabAt = mTabLayout.getTabAt(4);
-        }
-        // 添加红点  自定义view
-        if (!PreferenceUtil.getBoolean(AppConstants.BASKET_RED_KEY, false)) {
-            View view = View.inflate(mContext, R.layout.chart_bal_item_red, null);
-            view_red = view.findViewById(R.id.view_red);
-            tabAt.setCustomView(view);
+
+            if (chartBallView == 1) {
+                mViewPager.setCurrentItem(4, false);
+            }
         }
 
         appBarLayout.addOnOffsetChangedListener(this);
@@ -926,7 +928,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         if (isFragment4) {
             MobclickAgent.onPageStart("BasketBall_Info_LQ");
             is4 = true;
-            PreferenceUtil.commitBoolean(AppConstants.BASKET_RED_KEY, true);
             L.d("xxx", "聊球显示");
         }
     }

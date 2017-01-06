@@ -636,7 +636,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             scoreViewList.add(scoreView);
                             View splitView = View.inflate(mContext, R.layout.split_view, null);
                             scoreSplitViewList.add(splitView);
-                            // scoreView.setLayoutParams(scoreParams);
                             if ("13".equals(homeBodysEntity.getJumpAddr())) {// 足球比分
                                 score01_icon.setImageDrawable(mContext.getResources().getDrawable(AppConstants.homePageScoreFootBG[j % AppConstants.homePageScoreFootBG.length]));// 设置背景图片
                                 switch (homeBodysEntity.getStatusOrigin()) {
@@ -680,6 +679,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                         settingScoreItemData(homeBodysEntity, mContext.getResources().getColor(R.color.colorPrimary), "—", mContext.getResources().getString(R.string.fottball_home_quxiaozhibo));
                                         break;
                                 }
+                                score01_title.setText(homeBodysEntity.getRacename());// 设置赛事名称
+                                score01_title.setTextColor(Color.parseColor(homeBodysEntity.getRaceColor()));// 标题颜色
                             } else if ("20".equals(homeBodysEntity.getJumpAddr())) {// 篮球比分
                                 score01_icon.setImageDrawable(mContext.getResources().getDrawable(AppConstants.homePageScoreBasketBG[j % AppConstants.homePageScoreBasketBG.length]));// 设置背景图片
                                 switch (homeBodysEntity.getMatchStatus()) {
@@ -734,22 +735,22 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                         break;
 
                                 }
+                                score01_title.setText(homeBodysEntity.getLeagueName());// 设置赛事名称
+                                score01_title.setTextColor(Color.parseColor(homeBodysEntity.getLeagueColor()));// 标题颜色
                             }
-                            score01_title.setText(homeBodysEntity.getRacename());// 设置赛事名称
-                            score01_title.setTextColor(Color.parseColor(homeBodysEntity.getRaceColor()));// 标题颜色
+                            score01_home_name.setText(homeBodysEntity.getHometeam());// 设置主队队名
                             if (homeBodysEntity.getHomeLogoUrl() == null) {
                                 score01_home_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_score_item_icon_def));
                             } else {
                                 ImageLoader.load(mContext, homeBodysEntity.getHomeLogoUrl(), R.mipmap.home_score_item_icon_def).into(score01_home_icon);
 
                             }
-                            score01_home_name.setText(homeBodysEntity.getHometeam());// 设置主队队名
+                            score01_guest_name.setText(homeBodysEntity.getGuestteam());// 设置客队队名
                             if (homeBodysEntity.getGuestLogoUrl() == null) {
                                 score01_guest_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_score_item_icon_def));
                             } else {
                                 ImageLoader.load(mContext, homeBodysEntity.getGuestLogoUrl(), R.mipmap.home_score_item_icon_def).into(score01_guest_icon);
                             }
-                            score01_guest_name.setText(homeBodysEntity.getGuestteam());// 设置客队队名
                         }
                         break;
                         case 2:// 2、	热点资讯
