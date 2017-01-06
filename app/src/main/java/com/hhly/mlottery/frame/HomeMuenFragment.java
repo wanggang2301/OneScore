@@ -71,7 +71,7 @@ public class HomeMuenFragment extends Fragment {
 
     private void initView() {
         gridView = (MyGridView) mView.findViewById(R.id.home_page_item_gridView);
-        gridView.setAdapter(new HomeGridAdapter(getContext(),mData));
+        gridView.setAdapter(new HomeGridAdapter(getContext(), mData));
     }
 
     public static HomeMuenFragment newInstance(List<HomeContentEntity> list) {
@@ -190,13 +190,7 @@ public class HomeMuenFragment extends Fragment {
                                         break;
                                         case "20":// 篮球即时比分
                                         {
-//                                            Intent intent = new Intent(mContext, FootballActivity.class);
-//                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
-//                                            intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_SCORE_KEY);
-//                                            mContext.startActivity(intent);
-//                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Score");
-                                            Intent intent = new Intent(mContext, BasketballScoresActivity.class);
-                                            mContext.startActivity(intent);
+                                            mContext.startActivity(new Intent(mContext, BasketballScoresActivity.class));
                                             MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Score");
                                         }
                                         break;
@@ -504,6 +498,12 @@ public class HomeMuenFragment extends Fragment {
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.TWENTY_ENGHT));
                                             mContext.startActivity(intent);
                                             MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_QLC");
+                                        }
+                                        break;
+                                        case "80":// 多屏动画列表
+                                        {
+                                            // TODO 首页菜单跳转多屏动画
+//                                            mContext.startActivity(new Intent(mContext, MultiScreenViewingListActivity.class));
                                         }
                                         break;
                                     }
