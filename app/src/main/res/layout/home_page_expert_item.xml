@@ -51,7 +51,6 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tv_tj"
                     android:layout_width="30dp"
                     android:layout_height="15dp"
                     android:background="@drawable/shape_tuijian_bg"
@@ -61,7 +60,7 @@
                     android:textSize="10sp" />
 
                 <TextView
-                    android:id="@+id/tv_data_info_date01"
+                    android:id="@+id/tv_expert_summary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -73,7 +72,7 @@
                     tools:text="推荐：全场大分" />
 
                 <TextView
-                    android:id="@+id/tv_ybf"
+                    android:id="@+id/tv_expert_info_source"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="14dp"
@@ -82,6 +81,5 @@
                     tools:text="一比分" />
             </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
 </LinearLayout>
