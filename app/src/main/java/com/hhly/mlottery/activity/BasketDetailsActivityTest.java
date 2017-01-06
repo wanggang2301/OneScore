@@ -49,6 +49,7 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.CustomDetailsEvent;
@@ -390,7 +391,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         mTitleScore = (RelativeLayout) this.findViewById(R.id.ll_basket_title_score);
         mCollect = (ImageView) this.findViewById(R.id.basket_details_collect);
 
-        boolean isFocus = isFocusId(mThirdId);
+        boolean isFocus = FocusUtils.isBasketFocusId(mThirdId);
         if (isFocus) {
             mCollect.setImageResource(R.mipmap.basketball_collected);
         } else {
@@ -528,11 +529,11 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 break;
             case R.id.basket_details_collect:
                 MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivity_Attention");
-                if (isFocusId(mThirdId)) {
-                    FocusBasketballFragment.deleteFocusId(mThirdId);
+                if (FocusUtils.isBasketFocusId(mThirdId)) {
+                    FocusUtils.deleteBasketFocusId(mThirdId);
                     mCollect.setImageResource(R.mipmap.basketball_collect);
                 } else {
-                    FocusBasketballFragment.addFocusId(mThirdId);
+                    FocusUtils.addBasketFocusId(mThirdId);
                     mCollect.setImageResource(R.mipmap.basketball_collected);
                 }
                 break;
@@ -553,22 +554,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         }
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == CyUtils.JUMP_COMMENT_QUESTCODE) {
-//            switch (resultCode) {
-//                case CyUtils.RESULT_OK:
-//                    mTalkAboutBallFragment.getResultOk();
-//                    break;
-//                case CyUtils.RESULT_CODE://接收评论输入页面返回
-//                    mTalkAboutBallFragment.getResultCode();
-//                    break;
-//                case CyUtils.RESULT_BACK://接收评论输入页面返回
-//                    mTalkAboutBallFragment.getResultBack();
-//                    break;
-//            }
-//        }
-//    }
 
     // 评论登录跳转
     public void talkAboutBallLoginBasket() {
@@ -598,66 +583,9 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         return super.onKeyDown(keyCode, event);
     }
 
-    /**
-     * 判断thirdId是否已经关注
-     *
-     * @param thirdId
-     * @return true已关注，false还没关注
-     */
-    private boolean isFocusId(String thirdId) {
-        String focusIds = PreferenceUtil.getString(FocusBasketballFragment.BASKET_FOCUS_IDS, "");
 
-        if ("".equals(focusIds)) {
-            return false;
-        } else {
-            String[] focusIdArray = focusIds.split(",");
 
-            boolean isFocus = false;
-            for (String focusId : focusIdArray) {
-                if (focusId.equals(thirdId)) {
-                    isFocus = true;
-                    break;
-                }
-            }
-            return isFocus;
-        }
-    }
 
-//    /**
-//     * 添加关注
-//     *
-//     * @param thirdId
-//     */
-//    private void addFocusId(String thirdId) {
-//        String focusIds = PreferenceUtil.getString(BASKET_FOCUS_IDS, "");
-//        if ("".equals(focusIds)) {
-//            PreferenceUtil.commitString(BASKET_FOCUS_IDS, thirdId);
-//        } else {
-//            PreferenceUtil.commitString(BASKET_FOCUS_IDS, focusIds + "," + thirdId);
-//        }
-//    }
-//
-//    /**
-//     * 取消关注
-//     *
-//     * @param thirdId
-//     */
-//    private void deleteFocusId(String thirdId) {
-//        String focusIds = PreferenceUtil.getString(BASKET_FOCUS_IDS, "");
-//        String[] idArray = focusIds.split(",");
-//        StringBuffer sb = new StringBuffer();
-//        for (String id : idArray) {
-//            if (!id.equals(thirdId)) {
-//                if ("".equals(sb.toString())) {
-//                    sb.append(id);
-//                } else {
-//                    sb.append("," + id);
-//                }
-//
-//            }
-//        }
-//        PreferenceUtil.commitString(BASKET_FOCUS_IDS, sb.toString());
-//    }
 
     Handler mSocketHandler = new Handler() {
         @Override

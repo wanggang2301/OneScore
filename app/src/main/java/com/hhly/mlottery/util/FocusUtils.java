@@ -113,7 +113,7 @@ public class FocusUtils {
     }
 
     /**
-     * 点击关注，添加focusId
+     * z足球点击关注，添加focusId
      *
      * @param thirdId
      */
@@ -161,7 +161,7 @@ public class FocusUtils {
     }
 
     /**
-     * 删除focusId
+     * 足球关注删除focusId
      *
      * @param thirdId
      */
@@ -215,7 +215,7 @@ public class FocusUtils {
     }
 
     /**
-     * 判断thirdId是否已经关注
+     * 足球判断thirdId是否已经关注
      *
      * @param thirdId
      * @return true已关注，false还没关注
@@ -239,6 +239,122 @@ public class FocusUtils {
         }
     }
 
+    /**
+     * 添加篮球focusId
+     * @param thirdId
+     */
+    public static void addBasketFocusId(String thirdId) {
+        String focusIds = PreferenceUtil.getString(FocusBasketballFragment.BASKET_FOCUS_IDS, "");
+        if ("".equals(focusIds)) {
+            PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS, thirdId);
+        } else {
+            PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS, focusIds + "," + thirdId);
+        }
+        //TODO:把用户id,deviceId,deviceToken 传给服务器
+        String deviceId= AppConstants.deviceToken;
+        String uMengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
+        String userId="";
+        if(AppConstants.register!=null&&AppConstants.register.getData()!=null&&AppConstants.register.getData().getUser()!=null){
+            userId= AppConstants.register.getData().getUser().getUserId();
+        }
+        String isPushFocus=PreferenceUtil.getBoolean(MyConstants.BASKETBALL_PUSH_FOCUS,true)==true?"true":"false";
+        //thirdId
+        String url="http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.customConcernVS.do";
+        Map<String,String> params=new HashMap<>();
 
+        params.put("deviceId",deviceId);
+        params.put("deviceToken",uMengDeviceToken==""? UmengRegistrar.getRegistrationId(MyApp.getContext()):uMengDeviceToken);// 第一次获取的时候可能没得到
+        //这样可以再次尝试获取deviceToken
+        params.put("userId",userId);
+        params.put("isNotice",isPushFocus);
+        params.put("concernThirdIds",thirdId);
+        Log.e("AAA",thirdId+"");
+
+        VolleyContentFast.requestJsonByPost(BaseURLs.BASKETBALL_ADD_FOCUS, params, new VolleyContentFast.ResponseSuccessListener<ConcernBean>() {
+            @Override
+            public void onResponse(ConcernBean concernBean) {
+                Log.e("AAAA","concern");
+
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+            }
+        },ConcernBean.class);
+
+
+    }
+
+
+    /**
+     * 删除篮球focusId
+     * @param thirdId
+     */
+    public static void deleteBasketFocusId(String thirdId) {
+        String focusIds = PreferenceUtil.getString(FocusBasketballFragment.BASKET_FOCUS_IDS, "");
+        String[] idArray = focusIds.split("[,]");
+        StringBuffer sb = new StringBuffer();
+        for (String id : idArray) {
+            if (!id.equals(thirdId)) {
+                if ("".equals(sb.toString())) {
+                    sb.append(id);
+                } else {
+                    sb.append("," + id);
+                }
+
+            }
+        }
+        PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS, sb.toString());
+
+        String deviceId=AppConstants.deviceToken;
+        String userId="";
+        if(AppConstants.register!=null&&AppConstants.register.getData()!=null&&AppConstants.register.getData().getUser()!=null){
+            userId= AppConstants.register.getData().getUser().getUserId();
+        }
+        //TODO:请求后台
+        Map<String ,String > params=new HashMap<>();
+        String url=" http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.cancelCustomConcernVS.do";
+        params.put("userId",userId);
+        params.put("deviceId",deviceId);
+        params.put("cancelThirdIds",thirdId);
+
+        VolleyContentFast.requestJsonByPost(BaseURLs.BASKETBALL_DELETE_FOCUS, params, new VolleyContentFast.ResponseSuccessListener<CancelConcernBean>() {
+            @Override
+            public void onResponse(CancelConcernBean jsonObject) {
+
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+            }
+        },CancelConcernBean.class);
+    }
+
+    /**
+     * 判断thirdId是否已经关注
+     *
+     * @param thirdId
+     * @return true已关注，false还没关注
+     */
+    public static boolean isBasketFocusId(String thirdId) {
+        String focusIds = PreferenceUtil.getString(FocusBasketballFragment.BASKET_FOCUS_IDS, "");
+
+        if ("".equals(focusIds)) {
+            return false;
+        } else {
+            String[] focusIdArray = focusIds.split(",");
+
+            boolean isFocus = false;
+            for (String focusId : focusIdArray) {
+                if (focusId.equals(thirdId)) {
+                    isFocus = true;
+                    break;
+                }
+            }
+            return isFocus;
+        }
+    }
 
 }

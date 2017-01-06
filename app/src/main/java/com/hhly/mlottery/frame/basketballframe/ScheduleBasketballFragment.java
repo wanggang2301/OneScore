@@ -35,6 +35,7 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
+import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ResultDateUtil;
@@ -61,11 +62,6 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
     private static final String PARAMS = "BASKET_PARAMS";
 
     public final static String BASKET_FOCUS_IDS = "basket_focus_ids";
-
-    public static final int TYPE_IMMEDIATE = 0;
-    public static final int TYPE_RESULT = 1;
-    public static final int TYPE_SCHEDULE = 2;
-    public static final int TYPE_FOCUS = 3;
 
     private PinnedHeaderExpandableListView explistview;
 
@@ -98,28 +94,17 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
     private boolean isLoadData = false; //加载是否成功
     Handler mLoadHandler = new Handler();
 
-    public static final int REQUEST_FILTERCODE = 0x62;//筛选的标记
-    public static final int REQUEST_SETTINGCODE = 0x61;//设置的标记
-    public static final int REQUEST_DETAILSCODE = 0x66;
-
     private BasketFocusClickListener mFocusClickListener; //关注点击监听
 
-    private URI mScoketuri = null;//推送 URI
-
-    private boolean isError = false;
 
     private SwipeRefreshLayout mSwipeRefreshLayout; //下拉刷新
 
     private int mBasketballType; //判断是哪个fragment(即时 赛果 赛程)
 
     private boolean isFilter = false;  //是否赛选过
-    private String url;
 
     public static int isLoad = -1;
 
-    public static int getIsLoad() {
-        return isLoad;
-    }
 
     /**
      * 关注事件EventBus
@@ -162,29 +147,6 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
     }
 
     /**
-     * fragment 选择
-     */
-    public void fragmentType() {
-
-        switch (mBasketballType) {
-            case TYPE_IMMEDIATE:
-                url = BaseURLs.URL_BASKET_IMMEDIATE;
-                break;
-            case TYPE_RESULT:
-                url = BaseURLs.URL_BASKET_RESULT;
-                break;
-            case TYPE_SCHEDULE:
-                url = BaseURLs.URL_BASKET_SCHEDULE;
-                break;
-            case TYPE_FOCUS:
-                url = BaseURLs.URL_BASKET_FOCUS;
-                break;
-            default:
-                break;
-        }
-    }
-
-    /**
      * 返回当前程序版本号 versioncode
      */
     public static String getAppVersionCode(Context context) {
@@ -208,17 +170,8 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mContext = getActivity();
         mView = inflater.inflate(R.layout.pinned_listview, container, false);
-
-        fragmentType(); //fragment 入口
-
         initView();
-//        initBroadCase();//添加监听
-        try {
-//            mScoketuri = new URI("ws://192.168.10.242:61634/ws");//推送 URI  "ws://m.1332255.com/ws"
-            mScoketuri = new URI(BaseURLs.URL_BASKET_SOCKET);//推送 URI
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+
         return mView;
     }
 
@@ -231,18 +184,6 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
             initData();
         }
     };
-
-//    /**
-//     * 启动广播监听
-//     */
-//    private void initBroadCase() {
-//        if (getActivity() != null) {
-//            mNetStateReceiver = new ImmediateStateBroadcastReceiver();
-//            IntentFilter filter = new IntentFilter();
-//            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-//            getActivity().registerReceiver(mNetStateReceiver, filter);
-//        }
-//    }
 
     /**
      * 初始化VIEW
@@ -268,28 +209,6 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
 
-//        //标题头部
-//        mTittle = (TextView) mView.findViewById(R.id.public_txt_title);
-//        mTittle.setText(R.string.basket_tittle);
-
-        //设置按钮
-//        mSetting = (ImageView) mView.findViewById(R.id.public_btn_set);
-//        mSetting.setOnClickListener(this);
-
-        // 筛选
-//        mFilterImgBtn = (ImageView) mView.findViewById(R.id.public_btn_filter);
-//        if (mBasketballType == TYPE_FOCUS) {
-//            mFilterImgBtn.setVisibility(View.GONE);
-//        } else {
-//            mFilterImgBtn.setVisibility(View.VISIBLE);
-//            mFilterImgBtn.setOnClickListener(this);
-//        }
-
-        //返回
-//        mIb_back = (ImageView) mView.findViewById(R.id.public_img_back);
-//        mIb_back.setOnClickListener(this);
-
-        // 加载状态图标
         mLoadingLayout = (LinearLayout) mView.findViewById(R.id.basketball_immediate_loading);
 
         mNoDataLayout = (RelativeLayout)mView.findViewById(R.id.basket_undata);
@@ -310,31 +229,14 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
     private int mSize; //记录共有几天的数据
 
     private void initData() {
-//        ((BasketScoresFragment)getParentFragment()).getBasketballUserConcern(); //获取关注列表
-        BasketballScoresActivity parentActivity = (BasketballScoresActivity)getActivity();
-        parentActivity.getBasketballUserConcern();
 
         Map<String, String> params = new HashMap<>();
         String version = getAppVersionCode(mContext);//获得当前版本号 android:versionCode="5"
 
-        if (mBasketballType == TYPE_FOCUS) { //判断是否是关注页面
-
-            String fucusid = PreferenceUtil.getString(BASKET_FOCUS_IDS, "");
-
-            if ("".equals(fucusid) || ",".equals(fucusid) || fucusid.length() == 0) {
-                mbasketball_unfocus.setVisibility(View.VISIBLE); // 暂无关注
-                mLoadingLayout.setVisibility(View.GONE);
-                mSwipeRefreshLayout.setRefreshing(false);
-                mSwipeRefreshLayout.setVisibility(View.GONE);
-                return;
-            } else {
-                params.put("favourite", fucusid);
-            }
-        }
         params.put("version",version);//接口添加 version=xx 字段
         params.put("appType","2");//接口添加 &appType=2 字段
 
-        VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<BasketRoot>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_SCHEDULE, params, new VolleyContentFast.ResponseSuccessListener<BasketRoot>() {
             @Override
             public void onResponse(BasketRoot json) {
 
@@ -344,9 +246,6 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
 
                 isLoad = 1;
                 if (json == null || json.getMatchData() == null || json.getMatchData().size() == 0) {
-                    if (mBasketballType == TYPE_FOCUS) {
-                        PreferenceUtil.commitString(BASKET_FOCUS_IDS, "");
-                    }
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     mLoadingLayout.setVisibility(View.GONE);
@@ -356,11 +255,8 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
                 }
 
                 mMatchdata = json.getMatchData();
+                mAllFilter = json.getMatchFilter();
 
-                if (mBasketballType != TYPE_FOCUS) { //非关注页面
-                    mAllFilter = json.getMatchFilter();
-                    // mChickedFilter = json.getMatchFilter();//默认选中全部 -->mChickedFilter不赋值 默认全不选
-                }
                 mSize = json.getMatchData().size();
 
                 groupDataList = new ArrayList<String>();
@@ -375,13 +271,10 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
                     /**
                      * 子view数据
                      */
-                    //  childrenDataList.add(mMatchdata.get(i).getMatch());
                     mAllMatchdata.add(mMatchdata.get(i).getMatch());//显示的
                     /**
                      * 外层 view数据
                      */
-                    // groupDataList.add(mMatchdata.get(i).getDate() + "," + week);
-                    // isToday.add(mMatchdata.get(i).getDiffDays());// 获得日期状态码（昨天 今天 明天）
                     mAllGroupdata.add(mMatchdata.get(i).getDate() + "," + week + "," + mMatchdata.get(i).getDiffDays() + "");
                 }
 
@@ -420,7 +313,7 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
                     mChickedFilter = mAllFilter;//默认选中全部
                 }
 
-                if (adapter == null || mBasketballType == TYPE_IMMEDIATE || mBasketballType == TYPE_FOCUS) {
+                if (adapter == null ) {
                     adapter = new PinnedHeaderExpandableScheduleAdapter(childrenDataList, groupDataList, getActivity(), explistview);
                     explistview.setAdapter(adapter);
 
@@ -428,13 +321,6 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
                 } else {
                     updateAdapter();
                 }
-//                /**
-//                 * 判断 如果是即时和关注界面 则开启socket服务
-//                 */
-//                if (mBasketballType == TYPE_IMMEDIATE || mBasketballType == TYPE_FOCUS) {
-//                    startWebsocket(); //启动socket
-//                }
-                //全部展开
                 for (int i = 0; i < groupDataList.size(); i++) {
                     explistview.expandGroup(i);
                     /**
@@ -485,50 +371,15 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
                 boolean isCheck = (Boolean) v.getTag();// 检查之前是否被选中
 
                 if (!isCheck) {//未关注->关注
-                    FocusBasketballFragment.addFocusId(root.getThirdId());
+                    FocusUtils.addBasketFocusId(root.getThirdId());
                     v.setTag(true);
 
                 } else {//关注->未关注
-                    FocusBasketballFragment.deleteFocusId(root.getThirdId());
+                    FocusUtils.deleteBasketFocusId(root.getThirdId());
                     v.setTag(false);
-                    //判断 如果是关注页面
-                    if (mBasketballType == TYPE_FOCUS) {
-                        List<BasketMatchBean> emptyMatchs = null;
-                        for (int i = 0; i < childrenDataList.size(); i++) {
-                            childrenDataList.get(i).remove(root);
-                            if (childrenDataList.get(i).size() == 0) {
-                                groupDataList.remove(i);
-                                emptyMatchs = childrenDataList.get(i);
-                            }
-                        }
-                        if (emptyMatchs != null) {
-                            childrenDataList.remove(emptyMatchs);
-                        }
-                        if (groupDataList.size() == 0) {
-                            mbasketball_unfocus.setVisibility(View.VISIBLE); // 暂无关注
-                            mSwipeRefreshLayout.setVisibility(View.GONE);
-                            mLoadingLayout.setVisibility(View.GONE);
-                        } else {
-                            adapter = new PinnedHeaderExpandableScheduleAdapter(childrenDataList, groupDataList, getActivity(), explistview);
-                            explistview.setAdapter(adapter);
-                            adapter.setmFocus(mFocusClickListener);//设置关注
-                        }
-                        //全部展开
-                        for (int i = 0; i < groupDataList.size(); i++) {
-                            explistview.expandGroup(i);
-                        }
-//                        ((BasketballFragment) getParentFragment()).focusCallback();
-//                        ((BasketListActivity) getActivity()).focusCallback();
-//                        ((BasketScoresFragment)getParentFragment()).focusCallback();
-                        ((BasketballScoresActivity) getActivity()).focusCallback();
-                        return;
-                    }
+
                 }
                 updateAdapter();//防止复用
-//                ((BasketballFragment) getParentFragment()).focusCallback();
-//                ((BasketListActivity) getActivity()).focusCallback();
-//                ((BasketScoresFragment)getParentFragment()).focusCallback();
-                ((BasketballScoresActivity) getActivity()).focusCallback();
             }
         };
     }
@@ -610,10 +461,6 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
 
         adapter.updateDatas(childrenDataList, groupDataList);
         adapter.notifyDataSetChanged();
-        //设置打开全部日期内容
-//        for (int i = 0; i < groupDataList.size(); i++) {
-//            explistview.expandGroup(i);
-//        }
     }
 
     public void LoadData(){
@@ -639,7 +486,7 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
         /**
          * 过滤筛选0场的情况，防止筛选0场时刷新 切换设置时出现异常
          */
-        if (mChickedFilter.size() != 0 || mBasketballType == TYPE_FOCUS){
+        if (mChickedFilter.size() != 0 ){
             if (childrenDataList != null) {
                 if (childrenDataList.size() != 0) {
                     updateAdapter();
@@ -742,19 +589,7 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
      * @param id
      */
     public void onEventMainThread(String id) {
-        //判断 关注页面重新请求 （详情中取消关注返回时关注页面跟着变化）
-        if (mBasketballType == TYPE_FOCUS) {
-            mLoadHandler.postDelayed(mRun, 0);
-//            ((BasketListActivity) getActivity()).focusCallback();
-//            ((BasketScoresFragment)getParentFragment()).focusCallback();
-            ((BasketballScoresActivity) getActivity()).focusCallback();
-        }else{
             updateAdapter();
-//            ((BasketListActivity) getActivity()).focusCallback();
-//            ((BasketScoresFragment)getParentFragment()).focusCallback();
-            ((BasketballScoresActivity) getActivity()).focusCallback();
-        }
-//        ((BasketScoresFragment)getParentFragment()).focusCallback();
     }
 
 }
