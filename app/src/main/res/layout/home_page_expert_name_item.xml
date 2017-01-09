@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="110dp"
+    android:background="#fff"
+    android:orientation="horizontal">
+
+    <!--专家专栏名人名单-->
+    <LinearLayout
+        android:id="@+id/ll_expert_name_item1"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/ll_expert_content1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_expert_icon1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/home_menu_icon_def" />
+
+            <TextView
+                android:id="@+id/tv_expert_name1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/content_txt_dark_grad"
+                android:textSize="@dimen/item_football_half_score"
+                tools:text="test" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_expert_content2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_expert_icon2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/home_menu_icon_def" />
+
+            <TextView
+                android:id="@+id/tv_expert_name2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/content_txt_dark_grad"
+                android:textSize="@dimen/item_football_half_score" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_expert_content3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_expert_icon3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/home_menu_icon_def" />
+
+            <TextView
+                android:id="@+id/tv_expert_name3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/content_txt_dark_grad"
+                android:textSize="@dimen/item_football_half_score" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_expert_content4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_expert_icon4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/home_menu_icon_def" />
+
+            <TextView
+                android:id="@+id/tv_expert_name4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/content_txt_dark_grad"
+                android:textSize="@dimen/item_football_half_score" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_expert_name_item02"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/ll_expert_content01"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_expert_icon01"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/home_menu_icon_def" />
+
+            <TextView
+                android:id="@+id/tv_expert_name01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/content_txt_dark_grad"
+                android:textSize="@dimen/item_football_half_score" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_expert_content02"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_expert_icon02"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/home_menu_icon_def" />
+
+            <TextView
+                android:id="@+id/tv_expert_name02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/content_txt_dark_grad"
+                android:textSize="@dimen/item_football_half_score" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_expert_content03"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_expert_icon03"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/home_menu_icon_def" />
+
+            <TextView
+                android:id="@+id/tv_expert_name03"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/content_txt_dark_grad"
+                android:textSize="@dimen/item_football_half_score" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

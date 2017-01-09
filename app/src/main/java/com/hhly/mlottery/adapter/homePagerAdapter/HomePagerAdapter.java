@@ -506,7 +506,6 @@ public class HomePagerAdapter extends PagerAdapter {
                             }
                             break;
                         case 3:// 轮播图跳转足球和篮球内页
-                            // TODO
                             if (jumpAddr.contains("&")) {
                                 String[] split = jumpAddr.split("&");
                                 switch (split[0]) {

@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
+import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.activity.HomePagerActivity;
 import com.hhly.mlottery.activity.NumbersActivity;
@@ -177,6 +178,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         final String thirdId = bodys.get(j).getThirdId();// 赛事ID
                         final String isRelateMatch = bodys.get(j).getRelateMatch();// 是否有关联赛事
                         final int type = bodys.get(j).getType();// 关联赛事类型
+                        final int matchType = bodys.get(j).getMatchType();// 关联赛事类型-->专家专栏的
                         final String infoTypeName = bodys.get(j).getInfoTypeName();// 赛事类型名
                         final String imageurl = bodys.get(j).getPicUrl();// 分享图片Url
                         final String title = bodys.get(j).getTitle();// 分享标题
@@ -320,6 +322,36 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                         }
                                     });
                                 }
+                                break;
+                            case 4:
+                                expertViewList.get(j).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        if (!TextUtils.isEmpty(jumpAddr)) {
+                                            switch (jumpType) {
+                                                case 0:// 无
+                                                    break;
+                                                case 1:// 页面
+                                                {
+                                                    Intent intent = new Intent(mContext, WebActivity.class);
+                                                    intent.putExtra("key", jumpAddr);
+                                                    intent.putExtra("imageurl", imageurl);
+                                                    intent.putExtra("title", title);// 分享标题
+                                                    intent.putExtra("subtitle", summary);
+                                                    intent.putExtra("infoTypeName", infoTypeName);
+                                                    if ("true".equals(isRelateMatch)) {
+                                                        intent.putExtra("type", matchType == 0 ? 2 : matchType);
+                                                        intent.putExtra("thirdId", thirdId);
+                                                    }
+                                                    mContext.startActivity(intent);
+                                                    break;
+                                                }
+                                                case 2:// 内页
+                                                    break;
+                                            }
+                                        }
+                                    }
+                                });
                                 break;
                         }
                     }
@@ -931,7 +963,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             tv_expert_summary.setText(homeBodysEntity.getSummary());
                             tv_expert_info_source.setText(homeBodysEntity.getInfoSource());
                         }
-                            break;
+                        break;
                     }
                 }
             }
@@ -1457,6 +1489,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
             boolean addViewDataInfo = false;
             boolean addViewLottery = false;
             boolean addViewExpert = false;
+            boolean expertName = false;
             if (getItem(position) != null) {
                 final HomeContentEntity mContent = (HomeContentEntity) getItem(position);
                 for (int i = 0, len = mContent.getBodys().size(); i < len; i++) {
@@ -1534,10 +1567,18 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             mViewHolderOther.ll_content.addView(lotteryItemView);
                             break;
                         case 4:
+                            if (!expertName) {
+                                expertName = true;
+                                if (mHomePagerEntity != null && mHomePagerEntity.getHeadTitles() != null && mHomePagerEntity.getHeadTitles().getContent() != null && mHomePagerEntity.getHeadTitles().getContent().size() != 0) {
+                                    View expertNameView = addExpertNameItem();
+                                    mViewHolderOther.ll_content.addView(expertNameView);
+                                }
+                            }
+
                             if (addViewExpert) {
                                 mViewHolderOther.ll_content.addView(expertSplitViewList.get(i));// 添加分割线
                             }
-                            mViewHolderOther.tv_title.setText("专家专栏");
+                            mViewHolderOther.tv_title.setText(mContext.getResources().getString(R.string.home_expert_title));
                             View expertView = expertViewList.get(i);
                             ViewParent parentExpert = expertView.getParent();
                             if (parentExpert != null) {
@@ -1552,6 +1593,172 @@ public class HomeListBaseAdapter extends BaseAdapter {
             }
         }
         return convertView;
+    }
+
+    /**
+     * 添加专家专栏的专家名单
+     *
+     * @return
+     */
+    private View addExpertNameItem() {
+        View view = View.inflate(mContext, R.layout.home_page_expert_name_item, null);
+        LinearLayout ll_expert_name_item1 = (LinearLayout) view.findViewById(R.id.ll_expert_name_item1);
+        LinearLayout ll_expert_name_item02 = (LinearLayout) view.findViewById(R.id.ll_expert_name_item02);
+        LinearLayout ll_expert_content1 = (LinearLayout) view.findViewById(R.id.ll_expert_content1);
+        LinearLayout ll_expert_content2 = (LinearLayout) view.findViewById(R.id.ll_expert_content2);
+        LinearLayout ll_expert_content3 = (LinearLayout) view.findViewById(R.id.ll_expert_content3);
+        LinearLayout ll_expert_content4 = (LinearLayout) view.findViewById(R.id.ll_expert_content4);
+        LinearLayout ll_expert_content01 = (LinearLayout) view.findViewById(R.id.ll_expert_content01);
+        LinearLayout ll_expert_content02 = (LinearLayout) view.findViewById(R.id.ll_expert_content02);
+        LinearLayout ll_expert_content03 = (LinearLayout) view.findViewById(R.id.ll_expert_content03);
+        ImageView iv_expert_icon1 = (ImageView) view.findViewById(R.id.iv_expert_icon1);
+        ImageView iv_expert_icon2 = (ImageView) view.findViewById(R.id.iv_expert_icon2);
+        ImageView iv_expert_icon3 = (ImageView) view.findViewById(R.id.iv_expert_icon3);
+        ImageView iv_expert_icon4 = (ImageView) view.findViewById(R.id.iv_expert_icon4);
+        ImageView iv_expert_icon01 = (ImageView) view.findViewById(R.id.iv_expert_icon01);
+        ImageView iv_expert_icon02 = (ImageView) view.findViewById(R.id.iv_expert_icon02);
+        ImageView iv_expert_icon03 = (ImageView) view.findViewById(R.id.iv_expert_icon03);
+        TextView tv_expert_name1 = (TextView) view.findViewById(R.id.tv_expert_name1);
+        TextView tv_expert_name2 = (TextView) view.findViewById(R.id.tv_expert_name2);
+        TextView tv_expert_name3 = (TextView) view.findViewById(R.id.tv_expert_name3);
+        TextView tv_expert_name4 = (TextView) view.findViewById(R.id.tv_expert_name4);
+        TextView tv_expert_name01 = (TextView) view.findViewById(R.id.tv_expert_name01);
+        TextView tv_expert_name02 = (TextView) view.findViewById(R.id.tv_expert_name02);
+        TextView tv_expert_name03 = (TextView) view.findViewById(R.id.tv_expert_name03);
+        switch (mHomePagerEntity.getHeadTitles().getContent().size()) {
+            case 1:
+                ll_expert_name_item1.setVisibility(View.VISIBLE);
+                ll_expert_name_item02.setVisibility(View.GONE);
+                ll_expert_content1.setVisibility(View.VISIBLE);
+                try {
+                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                tv_expert_name1.setText(mHomePagerEntity.getHeadTitles().getContent().get(0).getTitle());
+                break;
+            case 2:
+                ll_expert_name_item1.setVisibility(View.VISIBLE);
+                ll_expert_name_item02.setVisibility(View.GONE);
+                ll_expert_content1.setVisibility(View.VISIBLE);
+                try {
+                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                tv_expert_name1.setText(mHomePagerEntity.getHeadTitles().getContent().get(0).getTitle());
+                ll_expert_content2.setVisibility(View.VISIBLE);
+                try {
+                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(1).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon2);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                tv_expert_name2.setText(mHomePagerEntity.getHeadTitles().getContent().get(1).getTitle());
+                break;
+            case 3:
+                ll_expert_name_item1.setVisibility(View.GONE);
+                ll_expert_name_item02.setVisibility(View.VISIBLE);
+                try {
+                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon01);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                tv_expert_name01.setText(mHomePagerEntity.getHeadTitles().getContent().get(0).getTitle());
+                try {
+                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(1).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon02);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                tv_expert_name02.setText(mHomePagerEntity.getHeadTitles().getContent().get(1).getTitle());
+                try {
+                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(2).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon03);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                tv_expert_name03.setText(mHomePagerEntity.getHeadTitles().getContent().get(2).getTitle());
+                break;
+            case 4:
+                ll_expert_name_item1.setVisibility(View.VISIBLE);
+                ll_expert_name_item02.setVisibility(View.GONE);
+                ll_expert_content1.setVisibility(View.VISIBLE);
+                try {
+                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                tv_expert_name1.setText(mHomePagerEntity.getHeadTitles().getContent().get(0).getTitle());
+                ll_expert_content2.setVisibility(View.VISIBLE);
+                try {
+                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(1).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon2);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                tv_expert_name2.setText(mHomePagerEntity.getHeadTitles().getContent().get(1).getTitle());
+                ll_expert_content3.setVisibility(View.VISIBLE);
+                try {
+                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(2).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon3);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                tv_expert_name3.setText(mHomePagerEntity.getHeadTitles().getContent().get(2).getTitle());
+                ll_expert_content4.setVisibility(View.VISIBLE);
+                try {
+                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(3).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon4);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                tv_expert_name4.setText(mHomePagerEntity.getHeadTitles().getContent().get(3).getTitle());
+                break;
+        }
+        ll_expert_content1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                joinDataInfo();
+            }
+        });
+        ll_expert_content2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                joinDataInfo();
+            }
+        });
+        ll_expert_content3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                joinDataInfo();
+            }
+        });
+        ll_expert_content4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                joinDataInfo();
+            }
+        });
+        ll_expert_content01.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                joinDataInfo();
+            }
+        });
+        ll_expert_content02.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                joinDataInfo();
+            }
+        });
+        ll_expert_content03.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                joinDataInfo();
+            }
+        });
+        return view;
+    }
+
+    private void joinDataInfo() {
+        Intent intent = new Intent(mContext, FootballActivity.class);
+        intent.putExtra(AppConstants.FOTTBALL_KEY, 1);
+        mContext.startActivity(intent);
     }
 
     /**
