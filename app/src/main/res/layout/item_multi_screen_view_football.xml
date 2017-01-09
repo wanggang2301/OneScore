@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="10dp">
+    android:paddingBottom="5dp">
 
     <ImageView
         android:id="@+id/iv_bg"
@@ -37,12 +37,12 @@
 
             <ImageView
                 android:id="@+id/iv_home_icon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
-                android:src="@mipmap/live_default" />
+                android:src="@mipmap/score_default" />
         </RelativeLayout>
 
         <LinearLayout
@@ -113,8 +113,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="---"
+                    android:gravity="center_vertical"
                     android:textColor="@color/white"
-                    android:textSize="25sp" />
+                    android:textSize="@dimen/text_size_30" />
 
                 <TextView
                     android:id="@+id/date"
@@ -139,12 +140,12 @@
 
             <ImageView
                 android:id="@+id/iv_guest_icon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
-                android:src="@mipmap/live_default" />
+                android:src="@mipmap/score_default" />
         </RelativeLayout>
 
         <LinearLayout

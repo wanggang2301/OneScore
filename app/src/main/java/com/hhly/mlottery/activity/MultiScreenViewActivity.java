@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.MyApp;
@@ -181,7 +182,6 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
                         }
                     }
                 }
-                closeWebSocket();
                 break;
 
             case "1029": //主队进球
@@ -251,11 +251,9 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
                                 ((MultiScreenFootBallBean) m.getData()).setGuestScore(((MultiScreenFootBallBean) m.getData()).getGuestScore() + 1);
                             }
                         }
-                        ((MultiScreenFootBallBean) m.getData()).setScore(((MultiScreenFootBallBean) m.getData()).getHomeScore() + ":" + ((MultiScreenFootBallBean) m.getData()).getGuestScore());
                     } else {
                         ((MultiScreenFootBallBean) m.getData()).setHomeScore(Integer.parseInt(homeScore));
                         ((MultiScreenFootBallBean) m.getData()).setGuestScore(Integer.parseInt(guestScore));
-                        ((MultiScreenFootBallBean) m.getData()).setScore(homeScore + ":" + guestScore);
                     }
                     //
                     multiScreenViewAdapter.notifyDataSetChanged();
@@ -282,7 +280,6 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
 
 
     private void initView() {
-
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -328,6 +325,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
                 break;
             case R.id.ll_add:
 
+                Toast.makeText(getApplicationContext(), "敬请期待", Toast.LENGTH_SHORT).show();
 
                 break;
         }
@@ -364,7 +362,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
             @Override
             public void onResponse(BasketballDetailsBean basketDetailsBean) {
                 if (basketDetailsBean.getMatch() != null) {
-                    L.d("qazwsx123","ddddd");
+                    L.d("qazwsx123", "ddddd");
 
                     list.add(new MultiScreenViewBean(VIEW_TYPE_BASKETBALL, id, basketDetailsBean));
 
@@ -403,13 +401,11 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
 
         footBallBean.setDate(matchDetail.getMatchInfo().getStartTime());
         if (LIVEBEFORE.equals(matchDetail.getLiveStatus())) { //赛前
-            footBallBean.setScore("VS");
         } else if (LIVEENDED.equals(matchDetail.getLiveStatus())) {
             footBallBean.setHomeScore(Integer.parseInt(matchDetail.getHomeTeamInfo().getScore()));
             footBallBean.setGuestScore(Integer.parseInt(matchDetail.getGuestTeamInfo().getScore()));
-            footBallBean.setScore(matchDetail.getHomeTeamInfo().getScore() + ":" + matchDetail.getGuestTeamInfo().getScore());
         } else if (ONLIVE.equals(matchDetail.getLiveStatus())) { //未完场头部  统计比分
-            footBallBean.setScore(computeMatchLiveScore(matchDetail.getMatchInfo().getMatchLive(), footBallBean));
+            computeMatchLiveScore(matchDetail.getMatchInfo().getMatchLive(), footBallBean);
         }
 
         list.add(new MultiScreenViewBean(VIEW_TYPE_FOOTBALL, id, footBallBean));
@@ -418,8 +414,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
     }
 
 
-    private String computeMatchLiveScore(List<MatchTextLiveBean> matchLive, MultiScreenFootBallBean multiScreenFootBallBean) {
-
+    private void computeMatchLiveScore(List<MatchTextLiveBean> matchLive, MultiScreenFootBallBean multiScreenFootBallBean) {
 
         int homeScore = 0;
         int guestScore = 0;
@@ -446,8 +441,6 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
 
         multiScreenFootBallBean.setHomeScore(homeScore);
         multiScreenFootBallBean.setGuestScore(guestScore);
-
-        return homeScore + ":" + guestScore + "";
     }
 
     private void updateAdapter() {

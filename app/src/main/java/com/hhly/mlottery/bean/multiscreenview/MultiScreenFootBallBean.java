@@ -30,15 +30,7 @@ public class MultiScreenFootBallBean {
     private String date;
     private int homeScore;
     private int guestScore;
-    private String score;
 
-    public String getScore() {
-        return score;
-    }
-
-    public void setScore(String score) {
-        this.score = score;
-    }
 
     public int getGuestScore() {
         return guestScore;

@@ -67,9 +67,6 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
 
     public MultiScreenViewCallBack multiScreenViewCallBack;
 
-    public MultiScreenViewCallBack getMultiScreenViewCallBack() {
-        return multiScreenViewCallBack;
-    }
 
     public void setMultiScreenViewCallBack(MultiScreenViewCallBack multiScreenViewCallBack) {
         this.multiScreenViewCallBack = multiScreenViewCallBack;
@@ -135,28 +132,30 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
         tv_homename.setText(m.getHome_name());
         tv_guestname.setText(m.getGuest_name());
 
-        score.setText(m.getScore());
 
         if (LIVEBEFORE.equals(m.getLiveStatus())) { //赛前
+            score.setText("VS");
             score.setTextColor(mContext.getResources().getColor(R.color.white));
         } else if (LIVEENDED.equals(m.getLiveStatus())) {
+            score.setText(m.getHomeScore() + ":" + m.getGuestScore());
             score.setTextColor(mContext.getResources().getColor(R.color.score));
         } else if (ONLIVE.equals(m.getLiveStatus())) { //未完场头部
+            score.setText(m.getHomeScore() + ":" + m.getGuestScore());
             score.setTextColor(mContext.getResources().getColor(R.color.white));
         }
 
         //赛事类型
 
         if (m.getmMatchType1() == null && m.getmMatchType2() == null) {
-            mMatchTypeLayout.setVisibility(View.GONE);
+            mMatchTypeLayout.setVisibility(View.INVISIBLE);
         } else {
 
             if (StringUtils.isEmpty(m.getmMatchType1())) {
-                mMatchType1.setVisibility(View.GONE);
+                mMatchType1.setVisibility(View.INVISIBLE);
             }
 
             if (StringUtils.isEmpty(m.getmMatchType2())) {
-                mMatchType2.setVisibility(View.GONE);
+                mMatchType2.setVisibility(View.INVISIBLE);
             }
             mMatchType1.setText(StringUtils.nullStrToEmpty(m.getmMatchType1()));
             mMatchType2.setText(StringUtils.nullStrToEmpty(m.getmMatchType2()));
@@ -252,7 +251,7 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
 
 
         BasketballDetailsBean.MatchEntity.MatchScoreEntity score = b.getMatch().getMatchScore();//比分
-        BasketballDetailsBean.MatchEntity mMatch= b.getMatch();
+        BasketballDetailsBean.MatchEntity mMatch = b.getMatch();
 
         L.d("qazwsx123", mMatch.getGuestTeam());
 
