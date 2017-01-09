@@ -15,10 +15,10 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
         android:background="@drawable/multi_btn_add"
         android:orientation="horizontal">
 
@@ -35,7 +35,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:paddingLeft="4dp"
-            android:text="添加"
+            android:text="@string/multi_add"
             android:textColor="#999999"
             android:textSize="@dimen/text_size_15" />
 

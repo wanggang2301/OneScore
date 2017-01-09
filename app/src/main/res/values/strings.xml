@@ -1496,4 +1496,7 @@
     <string name="more"><![CDATA[更多>>]]></string>
     <string name="nomoredatashangla">没有更多数据了...</string>
 
+    <string name="multi_header_name">壹观看</string>
+    <string name="multi_add">添加</string>
+
 </resources>

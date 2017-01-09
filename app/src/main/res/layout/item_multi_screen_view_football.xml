@@ -10,7 +10,7 @@
         android:id="@+id/iv_bg"
         android:layout_width="match_parent"
         android:layout_height="@dimen/flexible_space_image_height"
-        android:background="@color/colorPrimary"
+        android:background="@color/black_title"
         android:scaleType="centerCrop" />
 
     <ImageView
@@ -65,7 +65,7 @@
                 android:layout_gravity="center"
                 android:paddingTop="3dp"
                 android:singleLine="true"
-                android:text="主队"
+                android:text="——"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_13" />
         </LinearLayout>
@@ -112,8 +112,8 @@
                     android:id="@+id/score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="---"
                     android:gravity="center_vertical"
+                    android:text="-:-"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_30" />
 
@@ -167,7 +167,7 @@
                 android:layout_gravity="center"
                 android:paddingTop="3dp"
                 android:singleLine="true"
-                android:text="客队"
+                android:text="——"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_13" />
 

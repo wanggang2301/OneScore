@@ -1478,4 +1478,7 @@
     <string name="more"><![CDATA[更多>>]]></string>
     <string name="nomoredatashangla">沒有更多數據了...</string>
 
+    <string name="multi_header_name">壹觀看</string>
+    <string name="multi_add">添加</string>
+
 </resources>
