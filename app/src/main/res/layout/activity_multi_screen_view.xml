@@ -10,18 +10,43 @@
         android:id="@+id/header"
         layout="@layout/multi_screen_view_header"></include>
 
-    <Button
-        android:id="@+id/btn_add"
+    <LinearLayout
+        android:id="@+id/ll_add"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
-        android:text="添加" />
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/multi_btn_add"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableEnd="@mipmap/icon_add"
+            android:paddingRight="4dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="4dp"
+            android:text="添加"
+            android:textColor="#999999"
+            android:textSize="@dimen/text_size_15" />
+
+    </LinearLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/btn_add"
+        android:layout_above="@id/ll_add"
         android:layout_below="@+id/header"></android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

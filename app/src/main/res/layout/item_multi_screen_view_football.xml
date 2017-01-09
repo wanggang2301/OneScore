@@ -3,7 +3,8 @@
     android:id="@+id/fl_football"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="10dp">
 
     <ImageView
         android:id="@+id/iv_bg"
@@ -12,12 +13,14 @@
         android:background="@color/colorPrimary"
         android:scaleType="centerCrop" />
 
-    <Button
+    <ImageView
         android:id="@+id/btn_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:text="删除" />
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@mipmap/icon_close" />
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -10,8 +10,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.MyApp;
@@ -63,8 +63,8 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
 
     @BindView(R.id.public_img_back)
     ImageView publicImgBack;
-    @BindView(R.id.btn_add)
-    Button btnAdd;
+    @BindView(R.id.ll_add)
+    LinearLayout ll_add;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
@@ -142,8 +142,6 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
 
             if (w.getType() == VIEW_TYPE_BASKETBALL) {   //篮球
                 L.d("multiscreen", "篮球===" + w.getMatchId() + "_________________" + w.getTopic());
-
-
 
 
             } else if (w.getType() == VIEW_TYPE_FOOTBALL) { //足球
@@ -284,7 +282,11 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
 
 
     private void initView() {
+
+
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
         ((DefaultItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
 
         list = new ArrayList<>();
@@ -318,13 +320,13 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
         });
     }
 
-    @OnClick({R.id.public_img_back, R.id.btn_add})
+    @OnClick({R.id.public_img_back, R.id.ll_add})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.public_img_back:
                 finish();
                 break;
-            case R.id.btn_add:
+            case R.id.ll_add:
 
 
                 break;
@@ -362,6 +364,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
             @Override
             public void onResponse(BasketballDetailsBean basketDetailsBean) {
                 if (basketDetailsBean.getMatch() != null) {
+                    L.d("qazwsx123","ddddd");
 
                     list.add(new MultiScreenViewBean(VIEW_TYPE_BASKETBALL, id, basketDetailsBean));
 

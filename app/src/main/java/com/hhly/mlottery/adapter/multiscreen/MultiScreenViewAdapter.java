@@ -1,15 +1,12 @@
 package com.hhly.mlottery.adapter.multiscreen;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,7 +15,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewAdapter;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
@@ -51,8 +47,6 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
     private List<MultiScreenViewBean> list;
 
     private Context mContext;
-
-    BasketballDetailsBean.MatchEntity mMatch;
 
 
     private final static int PRE_MATCH = 0;//赛前
@@ -112,10 +106,9 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
 
         MultiScreenFootBallBean m = (MultiScreenFootBallBean) list.get(position).getData();
 
-        FrameLayout fl = viewHolder.findViewById(R.id.fl_football);
 
         ImageView iv_bg = viewHolder.findViewById(R.id.iv_bg);
-        Button delete = viewHolder.findViewById(R.id.btn_delete);
+        ImageView delete = viewHolder.findViewById(R.id.btn_delete);
         TextView tv_homename = viewHolder.findViewById(R.id.tv_home_name);
         TextView tv_guestname = viewHolder.findViewById(R.id.tv_guest_name);
 
@@ -191,11 +184,6 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
                 if (multiScreenViewCallBack != null) {
                     multiScreenViewCallBack.delete(position);
                 }
-
-             /*   list.remove(position);
-                notifyDataSetChanged();*/
-
-                //notifyItemRemoved(position);
             }
         });
 
@@ -210,11 +198,10 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
 
         BasketballDetailsBean b = (BasketballDetailsBean) list.get(position).getData();
 
-        FrameLayout fl = viewHolder.findViewById(R.id.fl_basketball);
-
+        L.d("qazwsx123", b.getMatch().getGuestTeam());
 
         ImageView mHeadImage = viewHolder.findViewById(R.id.image_background);
-        Button delete = viewHolder.findViewById(R.id.btn_delete);
+        ImageView delete = viewHolder.findViewById(R.id.btn_delete);
 
 
         ImageView mHomeIcon = viewHolder.findViewById(R.id.basket_details_home_icon);
@@ -265,12 +252,17 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
 
 
         BasketballDetailsBean.MatchEntity.MatchScoreEntity score = b.getMatch().getMatchScore();//比分
-        mMatch = b.getMatch();
+        BasketballDetailsBean.MatchEntity mMatch= b.getMatch();
+
+        L.d("qazwsx123", mMatch.getGuestTeam());
+
 
         if (score != null) {
             mGuestNum = score.getGuestScore();
             mHomeNum = score.getHomeScore();
         }
+
+        L.d("qazwsx123", mMatch.getLeagueName());
 
         //联赛名
         mLeagueName.setText(mMatch.getLeagueName());
@@ -475,16 +467,6 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
                     multiScreenViewCallBack.delete(position);
                 }
 
-            }
-        });
-
-
-        fl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, BasketDetailsActivityTest.class);
-                intent.putExtra("thirdId", list.get(position).getMatchId());
-                mContext.startActivity(intent);
             }
         });
 
