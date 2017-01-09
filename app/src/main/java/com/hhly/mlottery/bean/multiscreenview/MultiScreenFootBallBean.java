@@ -28,7 +28,34 @@ public class MultiScreenFootBallBean {
     private String mMatchType1;
     private String mMatchType2;
     private String date;
+    private int homeScore;
+    private int guestScore;
     private String score;
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
+    }
+
+    public int getGuestScore() {
+        return guestScore;
+    }
+
+    public void setGuestScore(int guestScore) {
+        this.guestScore = guestScore;
+    }
+
+    public int getHomeScore() {
+        return homeScore;
+    }
+
+    public void setHomeScore(int homeScore) {
+        this.homeScore = homeScore;
+    }
+
 
 
     public String getLiveStatus() {
@@ -96,11 +123,5 @@ public class MultiScreenFootBallBean {
         this.date = date;
     }
 
-    public String getScore() {
-        return score;
-    }
 
-    public void setScore(String score) {
-        this.score = score;
-    }
 }

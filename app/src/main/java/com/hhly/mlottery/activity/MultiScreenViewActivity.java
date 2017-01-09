@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
@@ -23,6 +24,7 @@ import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.multiscreenview.MultiScreenFootBallBean;
 import com.hhly.mlottery.bean.multiscreenview.MultiScreenViewBean;
 import com.hhly.mlottery.bean.multiscreenview.WebSocketMultiScreenViewBean;
+import com.hhly.mlottery.bean.websocket.WebSocketStadiumLiveTextEvent;
 import com.hhly.mlottery.callback.MultiScreenViewCallBack;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.L;
@@ -86,17 +88,17 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
     protected void onCreate(Bundle savedInstanceState) {
 
 
-        setWebSocketUri("ws://m.13322.com/ws");
+        // setWebSocketUri("ws://m.13322.com/ws");
         // setTopic("USER.topic.liveEvent." + mFootThirdId + "." + appendLanguage());  //足球
-        setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId, "USER.topic.basketball.score." + mBasketThirdId + ".zh"));  //篮球
-        setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId1, "USER.topic.basketball.score." + mBasketThirdId1 + ".zh"));  //篮球
-        setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId2, "USER.topic.basketball.score." + mBasketThirdId2 + ".zh"));  //篮球
+        // setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId, "USER.topic.basketball.score." + mBasketThirdId + ".zh"));  //篮球
+        // setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId1, "USER.topic.basketball.score." + mBasketThirdId1 + ".zh"));  //篮球
+        // setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId2, "USER.topic.basketball.score." + mBasketThirdId2 + ".zh"));  //篮球
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multi_screen_view);
         ButterKnife.bind(this);
         initView();
-        connectWebSocket();
+        // connectWebSocket();
 
     }
 
@@ -123,14 +125,12 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
                 }
 
             } else if (w.getType() == VIEW_TYPE_FOOTBALL) {
-                // msg.obj = w;
-                mSocketHandler.sendMessage(msg);
-
+                if (Integer.parseInt(type) == 6) { //足球事件直播type=6
+                    msg.obj = w;
+                    mSocketHandler.sendMessage(msg);
+                }
             }
-
         }
-
-
     }
 
 
@@ -140,31 +140,131 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
             super.handleMessage(msg);
             WebSocketMultiScreenViewBean w = (WebSocketMultiScreenViewBean) msg.obj;
 
-            if (w.getType() == VIEW_TYPE_BASKETBALL) {
+            if (w.getType() == VIEW_TYPE_BASKETBALL) {   //篮球
                 L.d("multiscreen", "篮球===" + w.getMatchId() + "_________________" + w.getTopic());
 
-            } else if (w.getType() == VIEW_TYPE_FOOTBALL) {
+
+
+
+            } else if (w.getType() == VIEW_TYPE_FOOTBALL) { //足球
                 L.d("multiscreen", "足球===" + w);
 
-            }
-
-          /*  if (msg.arg1 == 100) {  //type 为100 ==> 比分推送
-
-                String ws_json = (String) msg.obj;
-                L.e(TAG, "ws_json = " + ws_json);
-                WebSocketBasketBallDetails mBasketDetails = null;
+                String ws_json = w.getTopic();
+                WebSocketStadiumLiveTextEvent webSocketStadiumLiveTextEvent = null;
                 try {
-                    mBasketDetails = JSON.parseObject(ws_json, WebSocketBasketBallDetails.class);
+                    webSocketStadiumLiveTextEvent = JSON.parseObject(ws_json, WebSocketStadiumLiveTextEvent.class);
                 } catch (Exception e) {
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
-                    // Log.e(TAG, "ws_json = " + ws_json);
-                    mBasketDetails = JSON.parseObject(ws_json, WebSocketBasketBallDetails.class);
+                    webSocketStadiumLiveTextEvent = JSON.parseObject(ws_json, WebSocketStadiumLiveTextEvent.class);
                 }
 
-
-            }*/
+                Map<String, String> data = webSocketStadiumLiveTextEvent.getData();
+                //更新足球比分
+                updatePushFootBallScore(w.getMatchId(), data.get("code"), data.get("homeScore"), data.get("guestScore"));
+            }
         }
     };
+
+
+    private void updatePushFootBallScore(String matchId, String code, String homeGoal, String guestGoal) {
+        switch (code) {
+            case "12":
+            case "13":  //下半场开始
+                break;
+            case "3": //结束下半场
+                //socket关闭
+                // 获取上半场的走势图数据
+                // setScoreClolor(getApplicationContext().getResources().getColor(R.color.score));
+
+                for (MultiScreenViewBean m : list) {
+                    if (m.getMatchId().equals(matchId)) {
+                        if (m.getData() instanceof MultiScreenFootBallBean) {
+                            ((MultiScreenFootBallBean) m.getData()).setLiveStatus("-1");
+                        }
+                    }
+                }
+                closeWebSocket();
+                break;
+
+            case "1029": //主队进球
+                if ("".equals(homeGoal) || "".equals(guestGoal)) {
+                    updateAdapterFootballData(matchId, "", "", true, true, false);
+                } else {
+                    updateAdapterFootballData(matchId, homeGoal, guestGoal, false, true, false);
+                }
+
+                break;
+            case "1030"://取消主队进球
+                if (Integer.parseInt(homeGoal) > 0) {
+                    if ("".equals(homeGoal) || "".equals(guestGoal)) {
+                        updateAdapterFootballData(matchId, "", "", true, true, true);
+                    } else {
+                        updateAdapterFootballData(matchId, homeGoal, guestGoal, false, true, true);
+                    }
+                }
+
+                break;
+            case "2053"://客队进球
+
+                if ("".equals(homeGoal) || "".equals(guestGoal)) {
+                    updateAdapterFootballData(matchId, "", "", true, false, false);
+                } else {
+                    updateAdapterFootballData(matchId, homeGoal, guestGoal, false, false, false);
+                }
+
+                break;
+
+            case "2054"://取消客队进球
+                if (Integer.parseInt(guestGoal) > 0) {
+                    if ("".equals(homeGoal) || "".equals(guestGoal)) {
+                        updateAdapterFootballData(matchId, "", "", true, false, true);
+                    } else {
+                        updateAdapterFootballData(matchId, homeGoal, guestGoal, false, false, true);
+                    }
+                }
+
+                break;
+            default:
+                break;
+        }
+
+
+    }
+
+
+    private void updateAdapterFootballData(String matchId, String homeScore, String guestScore, boolean isScoreNull, boolean isHome, boolean isCancelScore) {
+        L.d("zxcvbnm", list.size() + "");
+
+        for (MultiScreenViewBean m : list) {
+            if (m.getMatchId().equals(matchId)) {
+                if (m.getData() instanceof MultiScreenFootBallBean) {
+                    //足球
+                    if (isScoreNull) {
+                        if (isHome) {
+                            if (isCancelScore) {  //取消=true
+                                ((MultiScreenFootBallBean) m.getData()).setHomeScore(((MultiScreenFootBallBean) m.getData()).getHomeScore() - 1);
+                            } else {
+                                ((MultiScreenFootBallBean) m.getData()).setHomeScore(((MultiScreenFootBallBean) m.getData()).getHomeScore() + 1);
+                            }
+                        } else {
+                            if (isCancelScore) {
+                                ((MultiScreenFootBallBean) m.getData()).setGuestScore(((MultiScreenFootBallBean) m.getData()).getGuestScore() - 1);
+                            } else {
+                                ((MultiScreenFootBallBean) m.getData()).setGuestScore(((MultiScreenFootBallBean) m.getData()).getGuestScore() + 1);
+                            }
+                        }
+                        ((MultiScreenFootBallBean) m.getData()).setScore(((MultiScreenFootBallBean) m.getData()).getHomeScore() + ":" + ((MultiScreenFootBallBean) m.getData()).getGuestScore());
+                    } else {
+                        ((MultiScreenFootBallBean) m.getData()).setHomeScore(Integer.parseInt(homeScore));
+                        ((MultiScreenFootBallBean) m.getData()).setGuestScore(Integer.parseInt(guestScore));
+                        ((MultiScreenFootBallBean) m.getData()).setScore(homeScore + ":" + guestScore);
+                    }
+                    //
+                    multiScreenViewAdapter.notifyDataSetChanged();
+                }
+            }
+        }
+    }
 
 
     @Override
@@ -225,29 +325,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
                 finish();
                 break;
             case R.id.btn_add:
-                //((MultiScreenFootBallBean) list.get(1).getData()).setScore("5:6");
-                // multiScreenViewAdapter.notifyItemChanged(1);
 
-                L.d("zxcvbnm", list.size() + "");
-
-
-                for (MultiScreenViewBean m : list) {
-
-                    if (m.getMatchId().equals("405181")) {
-                        if (m.getData() instanceof MultiScreenFootBallBean) {
-                            //足球
-
-                            ((MultiScreenFootBallBean) m.getData()).setScore("" + new Random().nextInt(10) + ":" + new Random().nextInt(10));
-                            multiScreenViewAdapter.notifyDataSetChanged();
-
-
-                        } else {
-                            //篮球
-                        }
-
-                    }
-
-                }
 
                 break;
         }
@@ -301,6 +379,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
     private void initFootballData(MatchDetail matchDetail, String id) {
 
         footBallBean = new MultiScreenFootBallBean();
+
         int random = new Random().nextInt(20);
         String url = baseUrl + random + ".png";
 
@@ -323,9 +402,11 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
         if (LIVEBEFORE.equals(matchDetail.getLiveStatus())) { //赛前
             footBallBean.setScore("VS");
         } else if (LIVEENDED.equals(matchDetail.getLiveStatus())) {
+            footBallBean.setHomeScore(Integer.parseInt(matchDetail.getHomeTeamInfo().getScore()));
+            footBallBean.setGuestScore(Integer.parseInt(matchDetail.getGuestTeamInfo().getScore()));
             footBallBean.setScore(matchDetail.getHomeTeamInfo().getScore() + ":" + matchDetail.getGuestTeamInfo().getScore());
         } else if (ONLIVE.equals(matchDetail.getLiveStatus())) { //未完场头部  统计比分
-            footBallBean.setScore(computeMatchLiveScore(matchDetail.getMatchInfo().getMatchLive()));
+            footBallBean.setScore(computeMatchLiveScore(matchDetail.getMatchInfo().getMatchLive(), footBallBean));
         }
 
         list.add(new MultiScreenViewBean(VIEW_TYPE_FOOTBALL, id, footBallBean));
@@ -333,10 +414,13 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
         updateAdapter();
     }
 
-    private String computeMatchLiveScore(List<MatchTextLiveBean> matchLive) {
+
+    private String computeMatchLiveScore(List<MatchTextLiveBean> matchLive, MultiScreenFootBallBean multiScreenFootBallBean) {
+
 
         int homeScore = 0;
         int guestScore = 0;
+
 
         for (MatchTextLiveBean m : matchLive) {
             switch (m.getCode().trim()) {
@@ -356,6 +440,9 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
                     break;
             }
         }
+
+        multiScreenFootBallBean.setHomeScore(homeScore);
+        multiScreenFootBallBean.setGuestScore(guestScore);
 
         return homeScore + ":" + guestScore + "";
     }
@@ -379,7 +466,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-                    updateAdapter(position);
+                    deleteAdapterItem(position);
                 }
             });
             builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -395,8 +482,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
         }
     }
 
-
-    private void updateAdapter(int position) {
+    private void deleteAdapterItem(int position) {
         list.remove(position);
         multiScreenViewAdapter.notifyDataSetChanged();
     }

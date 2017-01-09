@@ -147,7 +147,6 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
         if (LIVEBEFORE.equals(m.getLiveStatus())) { //赛前
             score.setTextColor(mContext.getResources().getColor(R.color.white));
         } else if (LIVEENDED.equals(m.getLiveStatus())) {
-            L.d("zzzzzzzzzzz", "==============");
             score.setTextColor(mContext.getResources().getColor(R.color.score));
         } else if (ONLIVE.equals(m.getLiveStatus())) { //未完场头部
             score.setTextColor(mContext.getResources().getColor(R.color.white));
