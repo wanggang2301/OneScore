@@ -1504,6 +1504,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             if (parentScore != null) {
                                 ((ViewGroup) parentScore).removeAllViews();
                             }
+                            mViewHolderOther.tv_title.setVisibility(View.VISIBLE);
                             mViewHolderOther.ll_content.addView(scoreView);
                             mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
                             addViewScore = true;
@@ -1518,6 +1519,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             if (parentDataInfo != null) {
                                 ((ViewGroup) parentDataInfo).removeAllViews();
                             }
+                            mViewHolderOther.tv_title.setVisibility(View.VISIBLE);
                             mViewHolderOther.ll_content.addView(dataInfoView);
                             mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
                             addViewDataInfo = true;
@@ -1532,6 +1534,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             if (parentLottery != null) {
                                 ((ViewGroup) parentLottery).removeAllViews();
                             }
+                            mViewHolderOther.tv_title.setVisibility(View.VISIBLE);
                             mViewHolderOther.ll_content.addView(lotteryView);
                             mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
                             addViewLottery = true;
@@ -1554,6 +1557,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             if (productItemView != null) {
                                 ((ViewGroup) productItemView).removeAllViews();
                             }
+                            mViewHolderOther.tv_title.setVisibility(View.VISIBLE);
                             mViewHolderOther.ll_content.addView(mProductItemView);
 
                             break;
@@ -1584,6 +1588,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             if (parentExpert != null) {
                                 ((ViewGroup) expertView).removeAllViews();
                             }
+                            mViewHolderOther.tv_title.setVisibility(View.VISIBLE);
                             mViewHolderOther.ll_content.addView(expertView);
                             mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
                             addViewExpert = true;
