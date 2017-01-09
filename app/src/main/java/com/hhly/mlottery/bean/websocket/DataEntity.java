@@ -31,7 +31,9 @@ public class DataEntity {
     private int guestOt3;
     private int addTime;
 
-    private BasketEachTextLiveBean textLiveEntity;
+
+
+        private BasketEachTextLiveBean textLiveEntity;
 
     public BasketEachTextLiveBean getTextLiveEntity() {
         return textLiveEntity;

@@ -1,6 +1,7 @@
 package com.hhly.mlottery.adapter.multiscreen;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewAdapter;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
@@ -109,6 +112,8 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
 
         MultiScreenFootBallBean m = (MultiScreenFootBallBean) list.get(position).getData();
 
+        FrameLayout fl = viewHolder.findViewById(R.id.fl_football);
+
         ImageView iv_bg = viewHolder.findViewById(R.id.iv_bg);
         Button delete = viewHolder.findViewById(R.id.btn_delete);
         TextView tv_homename = viewHolder.findViewById(R.id.tv_home_name);
@@ -142,14 +147,11 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
         if (LIVEBEFORE.equals(m.getLiveStatus())) { //赛前
             score.setTextColor(mContext.getResources().getColor(R.color.white));
         } else if (LIVEENDED.equals(m.getLiveStatus())) {
-            L.d("zzzzzzzzzzz","==============");
+            L.d("zzzzzzzzzzz", "==============");
             score.setTextColor(mContext.getResources().getColor(R.color.score));
         } else if (ONLIVE.equals(m.getLiveStatus())) { //未完场头部
-
+            score.setTextColor(mContext.getResources().getColor(R.color.white));
         }
-
-        // setScoreClolor(getApplicationContext().getResources().getColor(R.color.score));
-
 
         //赛事类型
 
@@ -197,6 +199,7 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
                 //notifyItemRemoved(position);
             }
         });
+
     }
 
 
@@ -207,6 +210,8 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
 
 
         BasketballDetailsBean b = (BasketballDetailsBean) list.get(position).getData();
+
+        FrameLayout fl = viewHolder.findViewById(R.id.fl_basketball);
 
 
         ImageView mHeadImage = viewHolder.findViewById(R.id.image_background);
@@ -471,6 +476,16 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
                     multiScreenViewCallBack.delete(position);
                 }
 
+            }
+        });
+
+
+        fl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, BasketDetailsActivityTest.class);
+                intent.putExtra("thirdId", list.get(position).getMatchId());
+                mContext.startActivity(intent);
             }
         });
 

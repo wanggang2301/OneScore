@@ -2,11 +2,8 @@ package com.hhly.mlottery.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
-import com.hhly.mlottery.util.DeviceInfo;
-import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.cipher.MD5Util;
+import com.hhly.mlottery.bean.multiscreenview.WebSocketMultiScreenViewBean;
 import com.neovisionaries.ws.client.WebSocket;
 import com.neovisionaries.ws.client.WebSocketAdapter;
 import com.neovisionaries.ws.client.WebSocketException;
@@ -15,19 +12,21 @@ import com.neovisionaries.ws.client.WebSocketFrame;
 import com.neovisionaries.ws.client.WebSocketState;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
- * 描    述：提供WebSocket功能的Activity基类
- * 作    者：chenml@13322.com
- * 时    间：2016/9/12
+ * @author: Wangg
+ * @Name：BaseWebSocketMultiScreenViewActivity
+ * @Description:
+ * @Created on:2017/1/6  14:42.
  */
-public abstract class BaseWebSocketActivity extends AppCompatActivity {
 
-    protected final String TAG = getClass().getSimpleName();
+public abstract class BaseWebSocketMultiScreenViewActivity extends AppCompatActivity {
 
-
+    private static final int VIEW_TYPE_FOOTBALL = 1;
+    private static final int VIEW_TYPE_BASKETBALL = 2;
     /**
      * 默认websocket的uri
      */
@@ -54,7 +53,7 @@ public abstract class BaseWebSocketActivity extends AppCompatActivity {
     private String mWebSocketUri = DEFUAL_WEBSOCKET_URI;
     private String mServerName = DEFUAL_SERVER_NAME;
     private String mServerPassword = DEFUAL_SERVER_PASSWORD;
-    private String mTopic = DEFUAL_TOPIC;
+    //  private String mTopic = DEFUAL_TOPIC;
 
     private WebSocket ws;
 
@@ -64,6 +63,11 @@ public abstract class BaseWebSocketActivity extends AppCompatActivity {
 
     private int retryConnect = 0;
 
+
+    /**
+     * 用户所阅定的所有主题
+     */
+    List<WebSocketMultiScreenViewBean> allSubTopic = new ArrayList<>();
 
     /**
      * 修改websocket的uri
@@ -94,11 +98,11 @@ public abstract class BaseWebSocketActivity extends AppCompatActivity {
 
     /**
      * 修改websocket的主题
-     *
-     * @param topic
      */
-    protected void setTopic(String topic) {
-        this.mTopic = topic;
+    protected void setTopic(WebSocketMultiScreenViewBean webSocketMultiScreenViewBean) {
+        //this.mTopic = topic;
+
+        this.allSubTopic.add(webSocketMultiScreenViewBean);
     }
 
 
@@ -106,7 +110,6 @@ public abstract class BaseWebSocketActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        L.d(TAG, "__onCreate__");
         WebSocketFactory factory = new WebSocketFactory();
 
         try {
@@ -115,9 +118,8 @@ public abstract class BaseWebSocketActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        ws.addListener(new BaseWebSocketActivity.MyWebSocketAdapter());
+        ws.addListener(new BaseWebSocketMultiScreenViewActivity.MyWebSocketAdapter());
 
-        L.d(TAG, "WebSocket State = " + ws.getState());
 
 
     }
@@ -126,32 +128,12 @@ public abstract class BaseWebSocketActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        L.d(TAG, "_onResume_");
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                synchronized (ws) {
-//        if (ws.getState().equals(WebSocketState.CREATED)) {
-//            L.d(TAG, "run");
-//            try {
-//                ws.connect();
-//            } catch (WebSocketException e) {
-//                onConnectFail();
-//                e.printStackTrace();
-//            }
-//        } else if (ws.getState().equals(WebSocketState.CLOSED)) {
-//            reconnect();
-//        }
-//                }
-//            }
-//        }).start();
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        L.d(TAG, "__onDestroy__");
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -222,7 +204,7 @@ public abstract class BaseWebSocketActivity extends AppCompatActivity {
     }
 
 
-    protected abstract void onTextResult(String text);
+    protected abstract void onTextResult(WebSocketMultiScreenViewBean text);
 
     protected abstract void onConnectFail();
 
@@ -235,7 +217,6 @@ public abstract class BaseWebSocketActivity extends AppCompatActivity {
         @Override
         public void onConnected(WebSocket websocket, Map<String, List<String>> headers) throws Exception {
             super.onConnected(websocket, headers);
-            L.d(TAG, "onConnected");
             StringBuilder builder = new StringBuilder();
             builder.append("CONNECT\nlogin:")
                     .append(mServerName)
@@ -244,17 +225,16 @@ public abstract class BaseWebSocketActivity extends AppCompatActivity {
                     .append("\naccept-version:1.1,1.0\nheart-beat:5000,5000\n")
                     .append("\n");
             websocket.sendText(builder.toString());
-            BaseWebSocketActivity.this.onConnected();
+            BaseWebSocketMultiScreenViewActivity.this.onConnected();
         }
 
         @Override
         public void onTextMessage(WebSocket websocket, String text) throws Exception {
             super.onTextMessage(websocket, text);
-            L.d(TAG, "onTextMessage");
-            L.d(TAG, "websocket = " + websocket.toString());
-            L.d(TAG, "text = " + text);
+
             if (text.startsWith("CONNECTED")) {
-                StringBuilder builder = new StringBuilder();
+
+               /* StringBuilder builder = new StringBuilder();
                 builder.append("SUBSCRIBE\nid:");
                 String id = "android" + DeviceInfo.getDeviceId(getApplicationContext());
                 builder.append(MD5Util.getMD5(id));
@@ -262,16 +242,64 @@ public abstract class BaseWebSocketActivity extends AppCompatActivity {
                 builder.append(mTopic);
                 builder.append("\n\n");
 //                websocket.sendText("SUBSCRIBE\nid:" +  + "\ndestination:/topic/INFO_BANNER.topic.game.yxjc\n\n");
-                websocket.sendText(builder.toString());
+                websocket.sendText(builder.toString());*/
+
+                subscribeAll();
 
                 return;
             } else if (text.startsWith("MESSAGE")) {
 
-                Log.d(TAG, "" + text);
+               // Log.d("multiscreen", "" + text);
                 String[] msgs = text.split("\n");
                 String json = msgs[msgs.length - 1];
                 json = json.substring(0, json.length() - 1);
-                onTextResult(json);
+
+/*
+                : text = MESSAGE
+                message-id:ID:localhost.localdomain-30963-1482289690687-7:25431:1:1:245
+                destination:/topic/USER.topic.basketball.score.4254957.zh
+                timestamp:1483692070174
+                expires:0
+                subscription:android-12312131321
+                priority:4*/
+
+/*
+
+
+                if (text.contains("/topic/USER.topic.app")) {//这是比较粗糙的判断
+                    // EventBus.getDefault().post(new FootballEvent(json));
+                } else if (text.contains("/topic/USER.topic.basketball")) {
+                    // EventBus.getDefault().post(new BasketEvent(json));
+                }
+
+                //setTopic("USER.topic.basketball.score." + mThirdId + ".zh");
+               // setTopic("USER.topic.liveEvent." + mThirdId + "." + appendLanguage());*/
+
+
+                for (WebSocketMultiScreenViewBean w : allSubTopic) {
+
+                    if (text.contains("/topic/" + w.getTopic())) {
+
+                        if (w.getType() == VIEW_TYPE_FOOTBALL) {
+                            onTextResult(new WebSocketMultiScreenViewBean(VIEW_TYPE_FOOTBALL, w.getMatchId(), json));
+
+                        } else if (w.getType() == VIEW_TYPE_BASKETBALL) {
+                            onTextResult(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, w.getMatchId(), json));
+
+                        }
+
+                    }
+/*
+                    if (w.getType() == VIEW_TYPE_BASKETBALL) {
+
+
+                    } else if (w.getType() == VIEW_TYPE_FOOTBALL) {
+
+                    }*/
+
+
+                }
+
 
             }
             websocket.sendText("\n");
@@ -280,31 +308,46 @@ public abstract class BaseWebSocketActivity extends AppCompatActivity {
         @Override
         public void onStateChanged(WebSocket websocket, WebSocketState newState) throws Exception {
             super.onStateChanged(websocket, newState);
-            L.d(TAG, "onStateChanged");
-            L.d(TAG, "newState = " + newState);
+
         }
 
         @Override
         public void onError(WebSocket websocket, WebSocketException cause) throws Exception {
             super.onError(websocket, cause);
-            L.d(TAG, "onError");
-            L.d(TAG, "cause" + cause.getMessage());
+
         }
 
         @Override
         public void onConnectError(WebSocket websocket, WebSocketException exception) throws Exception {
             super.onConnectError(websocket, exception);
-            L.d(TAG, "onConnectError");
 
         }
 
         @Override
         public void onDisconnected(WebSocket websocket, WebSocketFrame serverCloseFrame, WebSocketFrame clientCloseFrame, boolean closedByServer) throws Exception {
             super.onDisconnected(websocket, serverCloseFrame, clientCloseFrame, closedByServer);
-            L.d(TAG, "onDisconnected");
-            BaseWebSocketActivity.this.onDisconnected();
+            BaseWebSocketMultiScreenViewActivity.this.onDisconnected();
         }
 
 
     }
+
+    void subscribeAll() {
+        for (WebSocketMultiScreenViewBean webSocketMultiScreenViewBean : allSubTopic) {
+            subscribeTopic(webSocketMultiScreenViewBean.getTopic());
+        }
+
+    }
+
+    void subscribeTopic(String topic) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("SUBSCRIBE\nid:");
+        String id = "android-12312131321";
+        builder.append(id);
+        builder.append("\ndestination:/topic/");
+        builder.append(topic);
+        builder.append("\n\n");
+        ws.sendText(builder.toString());
+    }
 }
+
