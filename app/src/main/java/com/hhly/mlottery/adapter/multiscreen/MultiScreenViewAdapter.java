@@ -121,7 +121,7 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
 
         TextView mMatchType2 = viewHolder.findViewById(R.id.football_match_detail_matchtype2);
 
-        ImageLoader.load(mContext, m.getBg(), R.color.colorPrimary).into(iv_bg);
+        ImageLoader.load(mContext, m.getBg(), R.color.black_title).into(iv_bg);
 
         loadImage(m.getHome_icon(), iv_home_icon);
         loadImage(m.getGuest_icon(), iv_guest_icon);
