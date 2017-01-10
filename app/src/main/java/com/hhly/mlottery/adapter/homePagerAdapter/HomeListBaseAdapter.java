@@ -45,6 +45,7 @@ import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.NumberDataUtils;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.view.CircleImageView;
 import com.hhly.mlottery.widget.WrapContentHeightViewPager;
 import com.umeng.analytics.MobclickAgent;
 
@@ -71,7 +72,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
     private ImageView score01_icon, score01_home_icon, score01_guest_icon, data_info_icon01, hk_icon, ks01_number, ks02_number, ks03_number, qxc_icon, klsf_icon, ks_icon, ssc_icon, iv_expert_icon;
     private ImageView bjsc_icon, bjsc01_number, bjsc02_number, bjsc03_number, bjsc04_number, bjsc05_number, bjsc06_number, bjsc07_number, bjsc08_number, bjsc09_number, bjsc10_number;
     private TextView score01_title, score01_home_name, score01_home_score, score01_vs, score01_desc, score01_guest_name, score01_guest_score, qxc_issue, qxc01_number, ks_name, ssc_name, bjsc_name, tv_expert_title;
-    private TextView data_info_title01, data_info_date01, hk_issue, hk_hk01, hk_zodiacs01, hk_hk02, hk_zodiacs02, hk_hk03, qxc02_number, klsf_name, qxc03_number, hk_name, qxc_name, qxc07_number, tv_expert_summary;
+    private TextView data_info_title01, data_info_date01, hk_issue, hk_hk01, hk_zodiacs01, hk_hk02, hk_zodiacs02, hk_hk03, qxc02_number, klsf_name, qxc03_number, hk_name, qxc_name, qxc07_number, tv_expert_subtitle;
     private TextView hk_zodiacs03, hk_hk04, hk_zodiacs04, hk_hk05, hk_zodiacs05, hk_hk06, hk_zodiacs06, hk_hk07, hk_zodiacs07, bjsc_issue, klsf_issue, klsf01_number, klsf02_number, klsf03_number, klsf04_number, tv_expert_info_source;
     private TextView klsf05_number, klsf06_number, klsf07_number, klsf08_number, ks_issue, ssc_issue, ssc01_number, ssc02_number, ssc03_number, ssc04_number, ssc05_number, qxc04_number, qxc05_number, qxc06_number;
     private List<TextView> hk_numbers, hk_zodiacs, qxc_numbers, klsf_numbers, ssc_numbers;// 彩种号码View集合
@@ -404,7 +405,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
         View view = View.inflate(mContext, R.layout.home_page_expert_item, null);
         iv_expert_icon = (ImageView) view.findViewById(R.id.iv_expert_icon);
         tv_expert_title = (TextView) view.findViewById(R.id.tv_expert_title);
-        tv_expert_summary = (TextView) view.findViewById(R.id.tv_expert_summary);
+        tv_expert_subtitle = (TextView) view.findViewById(R.id.tv_expert_sub_title);
         tv_expert_info_source = (TextView) view.findViewById(R.id.tv_expert_info_source);
         return view;
     }
@@ -960,7 +961,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 e.printStackTrace();
                             }
                             tv_expert_title.setText(homeBodysEntity.getTitle());
-                            tv_expert_summary.setText(homeBodysEntity.getSummary());
+                            tv_expert_subtitle.setText(homeBodysEntity.getSubTitle());
                             tv_expert_info_source.setText(homeBodysEntity.getInfoSource());
                         }
                         break;
@@ -1577,6 +1578,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                     View expertNameView = addExpertNameItem();
                                     mViewHolderOther.ll_content.addView(expertNameView);
                                 }
+                                View splitView = View.inflate(mContext, R.layout.split_view, null);
+                                mViewHolderOther.ll_content.addView(splitView);
                             }
 
                             if (addViewExpert) {
@@ -1616,13 +1619,13 @@ public class HomeListBaseAdapter extends BaseAdapter {
         LinearLayout ll_expert_content01 = (LinearLayout) view.findViewById(R.id.ll_expert_content01);
         LinearLayout ll_expert_content02 = (LinearLayout) view.findViewById(R.id.ll_expert_content02);
         LinearLayout ll_expert_content03 = (LinearLayout) view.findViewById(R.id.ll_expert_content03);
-        ImageView iv_expert_icon1 = (ImageView) view.findViewById(R.id.iv_expert_icon1);
-        ImageView iv_expert_icon2 = (ImageView) view.findViewById(R.id.iv_expert_icon2);
-        ImageView iv_expert_icon3 = (ImageView) view.findViewById(R.id.iv_expert_icon3);
-        ImageView iv_expert_icon4 = (ImageView) view.findViewById(R.id.iv_expert_icon4);
-        ImageView iv_expert_icon01 = (ImageView) view.findViewById(R.id.iv_expert_icon01);
-        ImageView iv_expert_icon02 = (ImageView) view.findViewById(R.id.iv_expert_icon02);
-        ImageView iv_expert_icon03 = (ImageView) view.findViewById(R.id.iv_expert_icon03);
+        CircleImageView iv_expert_icon1 = (CircleImageView) view.findViewById(R.id.iv_expert_icon1);
+        CircleImageView iv_expert_icon2 = (CircleImageView) view.findViewById(R.id.iv_expert_icon2);
+        CircleImageView iv_expert_icon3 = (CircleImageView) view.findViewById(R.id.iv_expert_icon3);
+        CircleImageView iv_expert_icon4 = (CircleImageView) view.findViewById(R.id.iv_expert_icon4);
+        CircleImageView iv_expert_icon01 = (CircleImageView) view.findViewById(R.id.iv_expert_icon01);
+        CircleImageView iv_expert_icon02 = (CircleImageView) view.findViewById(R.id.iv_expert_icon02);
+        CircleImageView iv_expert_icon03 = (CircleImageView) view.findViewById(R.id.iv_expert_icon03);
         TextView tv_expert_name1 = (TextView) view.findViewById(R.id.tv_expert_name1);
         TextView tv_expert_name2 = (TextView) view.findViewById(R.id.tv_expert_name2);
         TextView tv_expert_name3 = (TextView) view.findViewById(R.id.tv_expert_name3);

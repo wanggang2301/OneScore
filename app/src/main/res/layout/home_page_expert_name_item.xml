@@ -22,9 +22,9 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="invisible">
 
-            <ImageView
+            <com.hhly.mlottery.view.CircleImageView
                 android:id="@+id/iv_expert_icon1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -34,6 +34,7 @@
                 android:id="@+id/tv_expert_name1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="5dp"
                 android:textColor="@color/content_txt_dark_grad"
                 android:textSize="@dimen/item_football_half_score"
                 tools:text="test" />
@@ -46,9 +47,9 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="invisible">
 
-            <ImageView
+            <com.hhly.mlottery.view.CircleImageView
                 android:id="@+id/iv_expert_icon2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -58,6 +59,7 @@
                 android:id="@+id/tv_expert_name2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="5dp"
                 android:textColor="@color/content_txt_dark_grad"
                 android:textSize="@dimen/item_football_half_score" />
         </LinearLayout>
@@ -69,9 +71,9 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="invisible">
 
-            <ImageView
+            <com.hhly.mlottery.view.CircleImageView
                 android:id="@+id/iv_expert_icon3"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -81,6 +83,7 @@
                 android:id="@+id/tv_expert_name3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="5dp"
                 android:textColor="@color/content_txt_dark_grad"
                 android:textSize="@dimen/item_football_half_score" />
         </LinearLayout>
@@ -92,9 +95,9 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="invisible">
 
-            <ImageView
+            <com.hhly.mlottery.view.CircleImageView
                 android:id="@+id/iv_expert_icon4"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -104,6 +107,7 @@
                 android:id="@+id/tv_expert_name4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="5dp"
                 android:textColor="@color/content_txt_dark_grad"
                 android:textSize="@dimen/item_football_half_score" />
         </LinearLayout>
@@ -125,7 +129,7 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
+            <com.hhly.mlottery.view.CircleImageView
                 android:id="@+id/iv_expert_icon01"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -135,6 +139,7 @@
                 android:id="@+id/tv_expert_name01"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="5dp"
                 android:textColor="@color/content_txt_dark_grad"
                 android:textSize="@dimen/item_football_half_score" />
         </LinearLayout>
@@ -147,7 +152,7 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
+            <com.hhly.mlottery.view.CircleImageView
                 android:id="@+id/iv_expert_icon02"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -157,6 +162,7 @@
                 android:id="@+id/tv_expert_name02"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="5dp"
                 android:textColor="@color/content_txt_dark_grad"
                 android:textSize="@dimen/item_football_half_score" />
         </LinearLayout>
@@ -169,7 +175,7 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
+            <com.hhly.mlottery.view.CircleImageView
                 android:id="@+id/iv_expert_icon03"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -179,6 +185,7 @@
                 android:id="@+id/tv_expert_name03"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="5dp"
                 android:textColor="@color/content_txt_dark_grad"
                 android:textSize="@dimen/item_football_half_score" />
         </LinearLayout>

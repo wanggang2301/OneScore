@@ -26,6 +26,7 @@ import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.widget.MyGridView;
 import com.umeng.analytics.MobclickAgent;
 
@@ -503,6 +504,7 @@ public class HomeMuenFragment extends Fragment {
                                         case "80":// 多屏动画列表
                                         {
                                             // TODO 首页菜单跳转多屏动画
+                                            ToastTools.showQuick(mContext,"首页菜单跳转多屏动画列表");
 //                                            mContext.startActivity(new Intent(mContext, MultiScreenViewingListActivity.class));
                                         }
                                         break;
