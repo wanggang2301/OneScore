@@ -79,13 +79,9 @@ public class HomeListBaseAdapter extends BaseAdapter {
     private List<ImageView> bjsc_numbers, ks_numbers;
 
     private List<View> scoreViewList = new ArrayList<>();// 热门赛事条目集合
-    private List<View> scoreSplitViewList = new ArrayList<>();// 热门赛事条目分割线
     private List<View> dataInfoViewList = new ArrayList<>();// 热门资讯条目集合
-    private List<View> dataInfoSplitViewList = new ArrayList<>();// 热门资讯条目分割线
     private List<View> lotteryViewList = new ArrayList<>();// 彩票条目集合
-    private List<View> lotterySplitViewList = new ArrayList<>();// 彩票条目分割线
     private List<View> expertViewList = new ArrayList<>();// 专家专栏条目集合
-    private List<View> expertSplitViewList = new ArrayList<>();// 专家专栏条目分割线
 
     private final int MIN_CLICK_DELAY_TIME = 1000;// 控件点击间隔时间
     private long lastClickTime = 0;
@@ -680,8 +676,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         {
                             View scoreView = getScoreView();
                             scoreViewList.add(scoreView);
-                            View splitView = View.inflate(mContext, R.layout.split_view, null);
-                            scoreSplitViewList.add(splitView);
                             if ("13".equals(homeBodysEntity.getJumpAddr())) {// 足球比分
                                 score01_icon.setImageDrawable(mContext.getResources().getDrawable(AppConstants.homePageScoreFootBG[j % AppConstants.homePageScoreFootBG.length]));// 设置背景图片
                                 switch (homeBodysEntity.getStatusOrigin()) {
@@ -802,8 +796,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         {
                             View dataInfoView = getDataInfoView();// 获取布局对象
                             dataInfoViewList.add(dataInfoView);
-                            View splitView = View.inflate(mContext, R.layout.split_view, null);
-                            dataInfoSplitViewList.add(splitView);
 
                             try {
                                 Glide.with(mContext).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_data_info_def).into(data_info_icon01);
@@ -825,8 +817,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         break;
                         case 3:// 3、	彩票开奖
                         {
-                            View splitView = View.inflate(mContext, R.layout.split_view, null);
-                            lotterySplitViewList.add(splitView);
 
                             switch (homeBodysEntity.getName()) {
                                 case "1":// 香港彩
@@ -953,8 +943,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         {
                             View expertView = getExpertView();// 获取布局对象
                             expertViewList.add(expertView);
-                            View splitView = View.inflate(mContext, R.layout.split_view, null);
-                            expertSplitViewList.add(splitView);
                             try {
                                 Glide.with(mContext).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_data_info_def).into(iv_expert_icon);
                             } catch (Exception e) {
@@ -1510,7 +1498,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
                     switch (mContent.getLabType()) {
                         case 1: // 1、	热门赛事.
                             if (addViewScore) {
-                                mViewHolderOther.ll_content.addView(scoreSplitViewList.get(i));// 添加分割线
+                                View splitView = View.inflate(mContext, R.layout.split_view, null);
+                                mViewHolderOther.ll_content.addView(splitView);// 添加分割线
                             }
                             mViewHolderOther.tv_title.setText(mContext.getResources().getString(R.string.hot_score_txt));
                             View scoreView = scoreViewList.get(i);
@@ -1523,7 +1512,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             break;
                         case 2:// 2、	热门资讯
                             if (addViewDataInfo) {
-                                mViewHolderOther.ll_content.addView(dataInfoSplitViewList.get(i));// 添加分割线
+                                View splitView = View.inflate(mContext, R.layout.split_view, null);
+                                mViewHolderOther.ll_content.addView(splitView);// 添加分割线
                             }
                             mViewHolderOther.tv_title.setText(mContext.getResources().getString(R.string.hor_data_info_txt));
                             View dataInfoView = dataInfoViewList.get(i);
@@ -1536,7 +1526,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             break;
                         case 3:// 3、	彩票开奖
                             if (addViewLottery) {
-                                mViewHolderOther.ll_content.addView(lotterySplitViewList.get(i));// 添加分割线
+                                View splitView = View.inflate(mContext, R.layout.split_view, null);
+                                mViewHolderOther.ll_content.addView(splitView);// 添加分割线
                             }
                             mViewHolderOther.tv_title.setText(mContext.getResources().getString(R.string.frame_home_jieguo_txt));
                             View lotteryView = lotteryViewList.get(i);
@@ -1584,7 +1575,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             }
 
                             if (addViewExpert) {
-                                mViewHolderOther.ll_content.addView(expertSplitViewList.get(i));// 添加分割线
+                                View splitView = View.inflate(mContext, R.layout.split_view, null);
+                                mViewHolderOther.ll_content.addView(splitView);// 添加分割线
                             }
                             mViewHolderOther.tv_title.setText(mContext.getResources().getString(R.string.home_expert_title));
                             View expertView = expertViewList.get(i);
