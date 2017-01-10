@@ -91,7 +91,6 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
         setWebSocketUri("ws://m.13322.com/ws");
         // setTopic("USER.topic.liveEvent." + mFootThirdId + "." + appendLanguage());  //足球
         setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId, "USER.topic.basketball.score." + mBasketThirdId + ".zh"));  //篮球
@@ -102,8 +101,8 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
         setContentView(R.layout.activity_multi_screen_view);
         ButterKnife.bind(this);
         initView();
+        loadData();
         connectWebSocket();
-
     }
 
     @Override
@@ -245,7 +244,6 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
                 } else {
                     updateAdapterFootballData(matchId, homeGoal, guestGoal, false, false, false);
                 }
-
                 break;
 
             case "2054"://取消客队进球
@@ -256,13 +254,10 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
                         updateAdapterFootballData(matchId, homeGoal, guestGoal, false, false, true);
                     }
                 }
-
                 break;
             default:
                 break;
         }
-
-
     }
 
 
@@ -316,15 +311,21 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
 
 
     private void initView() {
-
-
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-
         ((DefaultItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
-
         list = new ArrayList<>();
         multiScreenViewAdapter = new MultiScreenViewAdapter(getApplicationContext(), list);
         recyclerView.setAdapter(multiScreenViewAdapter);
+    }
+
+
+    private void loadData(){
+        requestFootballData("405181");
+        requestFootballData("405176");
+
+        requestBasketballData("4273637");
+        //  requestBasketballData("4273697");
+
 
 
         multiScreenViewCallBack = new MultiScreenViewCallBack() {
@@ -335,13 +336,6 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
         };
 
         multiScreenViewAdapter.setMultiScreenViewCallBack(multiScreenViewCallBack);
-
-        requestFootballData("405181");
-        requestFootballData("405176");
-
-        requestBasketballData("4273637");
-      //  requestBasketballData("4273697");
-
 
         multiScreenViewAdapter.setOnItemClickListener(new BaseRecyclerViewHolder.OnItemClickListener() {
             @Override
@@ -370,9 +364,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
                 finish();
                 break;
             case R.id.ll_add:
-
                 Toast.makeText(getApplicationContext(), "敬请期待", Toast.LENGTH_SHORT).show();
-
                 break;
         }
     }
