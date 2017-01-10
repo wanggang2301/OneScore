@@ -48,6 +48,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
+/***
+ * 多屏动画Activity
+ */
+
 public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivity {
 
 
@@ -75,7 +79,6 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
     LinearLayout ll_add;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-
 
     private MultiScreenViewAdapter multiScreenViewAdapter;
 
@@ -185,18 +188,18 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
     };
 
 
+    /***
+     * 篮球接受推送
+     *
+     * @param matchId
+     * @param matchScoreBean
+     */
     private void updatePushBasketBallScore(String matchId, MultiScreenBasketMatchScoreBean matchScoreBean) {
         for (MultiScreenViewBean m : list) {
             if (m.getMatchId().equals(matchId)) {
                 if (m.getData() instanceof MultiScreenBasketballBean) {
-
                     L.d("multiscreen123", "____篮球___" + matchScoreBean.getHomeScore());
-
-
                     ((MultiScreenBasketballBean) m.getData()).getMatch().setMatchScore(matchScoreBean);
-                    L.d("multiscreen123", "____篮球___" + ((MultiScreenBasketballBean) m.getData()).getMatch().getMatchScore().getHomeScore());
-
-
                     multiScreenViewAdapter.notifyDataSetChanged();
                 }
             }
@@ -204,6 +207,14 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
     }
 
 
+    /***
+     * 足球接受推送
+     *
+     * @param matchId
+     * @param code
+     * @param homeGoal
+     * @param guestGoal
+     */
     private void updatePushFootBallScore(String matchId, String code, String homeGoal, String guestGoal) {
         switch (code) {
             case "12":
@@ -265,6 +276,16 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
     }
 
 
+    /***
+     * 更新足球推送数据
+     *
+     * @param matchId
+     * @param homeScore
+     * @param guestScore
+     * @param isScoreNull
+     * @param isHome
+     * @param isCancelScore
+     */
     private void updateAdapterFootballData(String matchId, String homeScore, String guestScore, boolean isScoreNull, boolean isHome, boolean isCancelScore) {
         L.d("zxcvbnm", list.size() + "");
 
@@ -323,6 +344,9 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
     }
 
 
+    /***
+     * 首次进入请求数据
+     */
     private void loadData() {
         requestFootballData("405181");
         requestFootballData("405176");
@@ -372,6 +396,11 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
         }
     }
 
+    /***
+     * 请求足球数据
+     *
+     * @param id
+     */
     private void requestFootballData(final String id) {
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", id);
@@ -395,6 +424,11 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
     }
 
 
+    /***
+     * 请求篮球数据
+     *
+     * @param id
+     */
     public void requestBasketballData(final String id) {
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", id);
@@ -496,15 +530,15 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
             android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(MultiScreenViewActivity.this, R.style.AppThemeDialog);
             builder.setCancelable(false);// 设置对话框以外不可点击
             builder.setTitle(getApplicationContext().getResources().getString(R.string.to_update_kindly_reminder));// 提示标题
-            builder.setMessage("您确认移除这场比赛吗?");// 提示内容
-            builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            builder.setMessage(getApplicationContext().getResources().getString(R.string.multi_dialog_text));// 提示内容
+            builder.setPositiveButton(getApplicationContext().getResources().getString(R.string.about_confirm), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                     deleteAdapterItem(position);
                 }
             });
-            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton(getApplicationContext().getResources().getString(R.string.about_cancel), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
@@ -517,6 +551,12 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
         }
     }
 
+
+    /***
+     * 删除操作
+     *
+     * @param position
+     */
     private void deleteAdapterItem(int position) {
         list.remove(position);
         multiScreenViewAdapter.notifyDataSetChanged();
@@ -552,15 +592,12 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
             // 如果是越南语
             lang = BaseURLs.LANGUAGE_SWITCHING_VI;
         }
-
         return lang.trim();
     }
-
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         closeWebSocket();
     }
 }
