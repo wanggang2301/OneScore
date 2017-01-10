@@ -132,10 +132,10 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
             score.setText("VS");
             score.setTextColor(mContext.getResources().getColor(R.color.white));
         } else if (LIVEENDED.equals(m.getLiveStatus())) {
-            score.setText(m.getHomeScore() + ":" + m.getGuestScore());
+            score.setText(m.getHomeScore() + " : " + m.getGuestScore());
             score.setTextColor(mContext.getResources().getColor(R.color.score));
         } else if (ONLIVE.equals(m.getLiveStatus())) { //未完场头部
-            score.setText(m.getHomeScore() + ":" + m.getGuestScore());
+            score.setText(m.getHomeScore() + " : " + m.getGuestScore());
             score.setTextColor(mContext.getResources().getColor(R.color.white));
         }
         //赛事类型

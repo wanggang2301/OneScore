@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/iv_bg"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/flexible_space_image_height"
+        android:layout_height="@dimen/multiscreen_space_image_height"
         android:background="@color/black_title"
         android:scaleType="centerCrop" />
 
@@ -24,7 +24,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/flexible_space_image_height"
+        android:layout_height="@dimen/multiscreen_space_image_height"
         android:paddingTop="?attr/actionBarSize">
 
         <RelativeLayout

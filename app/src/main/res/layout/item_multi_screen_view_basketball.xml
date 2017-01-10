@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/image_background"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/flexible_space_image_height"
+        android:layout_height="@dimen/multiscreen_space_image_height"
         android:background="@color/black_title"
         android:scaleType="centerCrop" />
 
@@ -25,7 +25,7 @@
     <RelativeLayout
         android:id="@+id/basket_title_rl"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/flexible_space_image_height"
+        android:layout_height="@dimen/multiscreen_space_image_height"
         android:background="@android:color/transparent"
         android:paddingTop="?attr/actionBarSize">
 
@@ -176,9 +176,9 @@
                 android:layout_below="@id/basket_details_times"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal"
-                android:paddingBottom="3dp">
+                android:paddingBottom="5dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"

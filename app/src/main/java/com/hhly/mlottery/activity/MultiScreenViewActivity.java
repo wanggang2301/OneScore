@@ -108,8 +108,6 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
 
     @Override
     protected void onTextResult(WebSocketMultiScreenViewTextBean w) {
-
-
         String type = "";
         try {
             JSONObject jsonObject = new JSONObject(w.getText());
