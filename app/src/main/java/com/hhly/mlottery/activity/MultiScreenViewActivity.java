@@ -60,6 +60,10 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
     private static final int VIEW_TYPE_FOOTBALL = 1;
     private static final int VIEW_TYPE_BASKETBALL = 2;
 
+    private static final int REQUEST_ERROR = -1;
+    private static final int REQUEST_SUCESS = 1;
+    private static final int REQUEST_LOAD = 0;
+
     private final static String LIVEBEFORE = "0";//直播前
 
     private final static String ONLIVE = "1";//直播中
@@ -94,7 +98,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
         setWebSocketUri("ws://m.13322.com/ws");
         // setTopic("USER.topic.liveEvent." + mFootThirdId + "." + appendLanguage());  //足球
         setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId, "USER.topic.basketball.score." + mBasketThirdId + ".zh"));  //篮球
-       // setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId1, "USER.topic.basketball.score." + mBasketThirdId1 + ".zh"));  //篮球
+        // setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId1, "USER.topic.basketball.score." + mBasketThirdId1 + ".zh"));  //篮球
         // setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId2, "USER.topic.basketball.score." + mBasketThirdId2 + ".zh"));  //篮球
 
         super.onCreate(savedInstanceState);
@@ -319,13 +323,12 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
     }
 
 
-    private void loadData(){
+    private void loadData() {
         requestFootballData("405181");
         requestFootballData("405176");
 
         requestBasketballData("4273637");
         //  requestBasketballData("4273697");
-
 
 
         multiScreenViewCallBack = new MultiScreenViewCallBack() {
@@ -369,7 +372,6 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
         }
     }
 
-
     private void requestFootballData(final String id) {
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", id);
@@ -377,13 +379,13 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_INFO_FIRST, params, new VolleyContentFast.ResponseSuccessListener<MatchDetail>() {
             @Override
             public void onResponse(MatchDetail matchDetail) {
-
-                if (!"200".equals(matchDetail.getResult())) {
-                    // mHandler.sendEmptyMessage(ERROR);
-                    return;
+                if (matchDetail != null) {
+                    if (!"200".equals(matchDetail.getResult())) {
+                        //  mHandler.sendEmptyMessage(ERROR);
+                        return;
+                    }
+                    initFootballData(matchDetail, id);
                 }
-
-                initFootballData(matchDetail, id);
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
@@ -399,11 +401,11 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_DETAILS, params, new VolleyContentFast.ResponseSuccessListener<MultiScreenBasketballBean>() {
             @Override
             public void onResponse(MultiScreenBasketballBean basketDetailsBean) {
-                if (basketDetailsBean.getMatch() != null) {
-
-                    list.add(new MultiScreenViewBean(VIEW_TYPE_BASKETBALL, id, basketDetailsBean));
-
-                    updateAdapter();
+                if (basketDetailsBean != null) {
+                    if (basketDetailsBean.getMatch() != null) {
+                        list.add(new MultiScreenViewBean(VIEW_TYPE_BASKETBALL, id, basketDetailsBean));
+                        updateAdapter();
+                    }
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
