@@ -651,7 +651,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
             public void run() {
                 refresh.setRefreshing(false);
             }
-        }, 3000);
+        }, 5000);
 
     }
 }
