@@ -1477,6 +1477,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                     mViewHolderOther.tv_title = (TextView) convertView.findViewById(R.id.tv_home_item_title);
                     mViewHolderOther.ll_content = (LinearLayout) convertView.findViewById(R.id.ll_home_item_content);
                     mViewHolderOther.tv_more_advice = (TextView) convertView.findViewById(R.id.tv_home_item_more);
+                    mViewHolderOther.view_title_split = convertView.findViewById(R.id.view_title_split);
                     convertView.setTag(mViewHolderOther);
                     break;
             }
@@ -1500,8 +1501,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 }
                 if(mContent.getLabType() == 7){
                     mViewHolderOther.tv_title.setVisibility(View.GONE);
+                    mViewHolderOther.view_title_split.setVisibility(View.GONE);
                 }else{
                     mViewHolderOther.tv_title.setVisibility(View.VISIBLE);
+                    mViewHolderOther.view_title_split.setVisibility(View.VISIBLE);
                 }
                 for (int i = 0, len = mContent.getBodys().size(); i < len; i++) {
                     switch (mContent.getLabType()) {
@@ -1822,5 +1825,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
         TextView tv_title;// 标题
         LinearLayout ll_content;// 条目
         TextView tv_more_advice; //产品建议条目的更多
+        View view_title_split;
     }
 }
