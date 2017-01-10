@@ -40,7 +40,6 @@ import java.util.List;
 
 public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolder> {
 
-
     private static final int VIEW_TYPE_FOOTBALL = 1;
     private static final int VIEW_TYPE_BASKETBALL = 2;
 
@@ -50,7 +49,6 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
     private List<MultiScreenViewBean> list;
 
     private Context mContext;
-
 
     private final static int PRE_MATCH = 0;//赛前
     private final static int FIRST_QUARTER = 1;
@@ -76,7 +74,6 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
     }
 
     public MultiScreenViewAdapter(Context mContext, List<MultiScreenViewBean> list) {
-
         this.list = list;
         this.mContext = mContext;
     }
@@ -106,7 +103,6 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
 
         MultiScreenFootBallBean m = (MultiScreenFootBallBean) list.get(position).getData();
 
-
         ImageView iv_bg = viewHolder.findViewById(R.id.iv_bg);
         ImageView delete = viewHolder.findViewById(R.id.btn_delete);
         TextView tv_homename = viewHolder.findViewById(R.id.tv_home_name);
@@ -119,14 +115,11 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
 
         TextView date = viewHolder.findViewById(R.id.date);
 
-
         LinearLayout mMatchTypeLayout = viewHolder.findViewById(R.id.matchType);
-
 
         TextView mMatchType1 = viewHolder.findViewById(R.id.football_match_detail_matchtype1);
 
         TextView mMatchType2 = viewHolder.findViewById(R.id.football_match_detail_matchtype2);
-
 
         ImageLoader.load(mContext, m.getBg(), R.color.colorPrimary).into(iv_bg);
 
@@ -134,7 +127,6 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
         loadImage(m.getGuest_icon(), iv_guest_icon);
         tv_homename.setText(m.getHome_name());
         tv_guestname.setText(m.getGuest_name());
-
 
         if (LIVEBEFORE.equals(m.getLiveStatus())) { //赛前
             score.setText("VS");
@@ -146,7 +138,6 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
             score.setText(m.getHomeScore() + ":" + m.getGuestScore());
             score.setTextColor(mContext.getResources().getColor(R.color.white));
         }
-
         //赛事类型
 
         if (m.getmMatchType1() == null && m.getmMatchType2() == null) {
@@ -156,7 +147,6 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
             if (StringUtils.isEmpty(m.getmMatchType1())) {
                 mMatchType1.setVisibility(View.INVISIBLE);
             }
-
             if (StringUtils.isEmpty(m.getmMatchType2())) {
                 mMatchType2.setVisibility(View.INVISIBLE);
             }
@@ -177,39 +167,29 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
             }
         }
 
-
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 L.d("zxcvbnm", "足球" + position);
-
                 if (multiScreenViewCallBack != null) {
                     multiScreenViewCallBack.delete(position);
                 }
             }
         });
-
     }
-
 
     private int mGuestNum = 0;
     private int mHomeNum = 0;
 
     private void bindBasketballData(BaseRecyclerViewHolder viewHolder, final int position) {
-
-
         MultiScreenBasketballBean b = (MultiScreenBasketballBean) list.get(position).getData();
-
-
         ImageView mHeadImage = viewHolder.findViewById(R.id.image_background);
         ImageView delete = viewHolder.findViewById(R.id.btn_delete);
-
 
         ImageView mHomeIcon = viewHolder.findViewById(R.id.basket_details_home_icon);
         ImageView mGuestIcon = viewHolder.findViewById(R.id.basket_details_guest_icon);
         TextView mHomeTeam = viewHolder.findViewById(R.id.basket_details_home_name);
         TextView mGuestTeam = viewHolder.findViewById(R.id.basket_details_guest_name);
-        ;
         TextView mHomeRanking = viewHolder.findViewById(R.id.basket_details_home_Ranking);
         TextView mGuestRanking = viewHolder.findViewById(R.id.basket_details_guest_Ranking);
         TextView mLeagueName = viewHolder.findViewById(R.id.basket_details_matches_name);
@@ -232,7 +212,6 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
         TextView mHome3 = viewHolder.findViewById(R.id.basket_details_home_third);
         TextView mHome4 = viewHolder.findViewById(R.id.basket_details_home_fourth);
 
-
         LinearLayout mLayoutOt1 = viewHolder.findViewById(R.id.basket_details_llot1);
         LinearLayout mLayoutOt2 = viewHolder.findViewById(R.id.basket_details_llot2);
         LinearLayout mLayoutOt3 = viewHolder.findViewById(R.id.basket_details_llot3);
@@ -244,7 +223,6 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
         TextView mHomeOt3 = viewHolder.findViewById(R.id.basket_details_home_ot3);
         TextView mSmallGuestScore = viewHolder.findViewById(R.id.basket_details_guest_small_total);
         TextView mSmallHomeScore = viewHolder.findViewById(R.id.basket_details_home_small_total);
-
 
         /**
          * 启动秒闪烁
@@ -258,7 +236,6 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
             mGuestNum = score.getGuestScore();
             mHomeNum = score.getHomeScore();
         }
-
 
         //联赛名
         mLeagueName.setText(mMatch.getLeagueName());
@@ -277,16 +254,12 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
             mGuestRanking.setText("[ " + mMatch.getGuestRanking() + " ]");
         }
 
-
         //图标
         if (mContext != null) {
             ImageLoader.load(mContext, mMatch.getHomeLogoUrl(), R.mipmap.basket_default).into(mHomeIcon);
-
             ImageLoader.load(mContext, mMatch.getGuestLogoUrl(), R.mipmap.basket_default).into(mGuestIcon);
-
             ImageLoader.load(mContext, b.getBgUrl(), R.color.black).into(mHeadImage);
         }
-
 
         if (mMatch.getSection() == 2) { //只有上下半场
             mGuest2.setVisibility(View.INVISIBLE);
@@ -296,7 +269,6 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
         }
 
         if (mContext != null) {
-
             switch (mMatch.getMatchStatus()) {
                 case PRE_MATCH: ///赛前
                 case DETERMINED://待定
@@ -306,9 +278,6 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
                     //赛前显示 客队 VS  主队
                     mGuestScore.setText("");
                     mHomeScore.setText("");
-//                mGuestScore.setVisibility(View.GONE);
-//                mHomeScore.setVisibility(View.GONE);
-
                     mVS.setText("VS");
 
                     if (mMatch.getMatchStatus() == PRE_MATCH) {
@@ -330,13 +299,9 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
 
                     mGuestScore.setText(score.getGuestScore() + "");
                     mGuestScore.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
-
                     mHomeScore.setText(score.getHomeScore() + "");
                     mHomeScore.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
-
                     mMatchState.setText(R.string.finished_txt);
-
-
                     mGuest1.setText(score.getGuest1() + "");
                     mGuest1.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
                     mGuest2.setText(score.getGuest2() + "");
@@ -353,7 +318,6 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
                     mHome3.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
                     mHome4.setText(score.getHome4() + "");
                     mHome4.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
-
 
                     mSmallGuestScore.setText(score.getGuestScore() + "");
                     mSmallGuestScore.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
