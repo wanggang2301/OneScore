@@ -32,7 +32,6 @@ import com.hhly.mlottery.bean.multiscreenview.WebSocketMultiScreenViewTextBean;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumLiveTextEvent;
 import com.hhly.mlottery.callback.MultiScreenViewCallBack;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -344,7 +343,9 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
 
         refresh.setColorSchemeResources(R.color.colorPrimary);
         refresh.setOnRefreshListener(this);
-        refresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getApplicationContext(), StaticValues.REFRASH_OFFSET_END));
+        refresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getApplicationContext(), 100));
+
+        refresh.setEnabled(false); //禁止下拉刷新
 
         mHandler.sendEmptyMessage(REQUEST_LOAD);
 
@@ -651,7 +652,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
             public void run() {
                 refresh.setRefreshing(false);
             }
-        }, 5000);
+        }, 3000);
 
     }
 }
