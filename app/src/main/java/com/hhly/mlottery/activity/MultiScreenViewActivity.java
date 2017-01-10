@@ -19,12 +19,15 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.adapter.multiscreen.MultiScreenViewAdapter;
-import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
 import com.hhly.mlottery.bean.footballDetails.MatchDetail;
 import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
+import com.hhly.mlottery.bean.multiscreenview.MultiScreenBasketMatchScoreBean;
+import com.hhly.mlottery.bean.multiscreenview.MultiScreenBasketballBean;
 import com.hhly.mlottery.bean.multiscreenview.MultiScreenFootBallBean;
 import com.hhly.mlottery.bean.multiscreenview.MultiScreenViewBean;
+import com.hhly.mlottery.bean.multiscreenview.MultiWebSocketBasketBall;
 import com.hhly.mlottery.bean.multiscreenview.WebSocketMultiScreenViewBean;
+import com.hhly.mlottery.bean.multiscreenview.WebSocketMultiScreenViewTextBean;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumLiveTextEvent;
 import com.hhly.mlottery.callback.MultiScreenViewCallBack;
 import com.hhly.mlottery.config.BaseURLs;
@@ -80,8 +83,8 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
 
 
     private String mFootThirdId = "";
-    private String mBasketThirdId = "4254947";
-    private String mBasketThirdId1 = "4254957";
+    private String mBasketThirdId = "4273637";
+    //private String mBasketThirdId1 = "4273697";
     private String mBasketThirdId2 = "4228107";
 
 
@@ -89,27 +92,27 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
     protected void onCreate(Bundle savedInstanceState) {
 
 
-        // setWebSocketUri("ws://m.13322.com/ws");
+        setWebSocketUri("ws://m.13322.com/ws");
         // setTopic("USER.topic.liveEvent." + mFootThirdId + "." + appendLanguage());  //足球
-        // setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId, "USER.topic.basketball.score." + mBasketThirdId + ".zh"));  //篮球
-        // setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId1, "USER.topic.basketball.score." + mBasketThirdId1 + ".zh"));  //篮球
+        setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId, "USER.topic.basketball.score." + mBasketThirdId + ".zh"));  //篮球
+       // setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId1, "USER.topic.basketball.score." + mBasketThirdId1 + ".zh"));  //篮球
         // setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId2, "USER.topic.basketball.score." + mBasketThirdId2 + ".zh"));  //篮球
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multi_screen_view);
         ButterKnife.bind(this);
         initView();
-        // connectWebSocket();
+        connectWebSocket();
 
     }
 
     @Override
-    protected void onTextResult(WebSocketMultiScreenViewBean w) {
+    protected void onTextResult(WebSocketMultiScreenViewTextBean w) {
 
 
         String type = "";
         try {
-            JSONObject jsonObject = new JSONObject(w.getTopic());
+            JSONObject jsonObject = new JSONObject(w.getText());
             type = jsonObject.getString("type");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -139,16 +142,32 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            WebSocketMultiScreenViewBean w = (WebSocketMultiScreenViewBean) msg.obj;
+            WebSocketMultiScreenViewTextBean w = (WebSocketMultiScreenViewTextBean) msg.obj;
 
             if (w.getType() == VIEW_TYPE_BASKETBALL) {   //篮球
-                L.d("multiscreen", "篮球===" + w.getMatchId() + "_________________" + w.getTopic());
+
+                L.d("multiscreen", "____篮球___" + w.getMatchId() + "___" + w.getText());
+
+                String ws_json = w.getText();
+
+                MultiWebSocketBasketBall multiWebSocketBasketBall = null;
+                try {
+                    multiWebSocketBasketBall = JSON.parseObject(ws_json, MultiWebSocketBasketBall.class);
+                } catch (Exception e) {
+                    ws_json = ws_json.substring(0, ws_json.length() - 1);
+                    // Log.e(TAG, "ws_json = " + ws_json);
+                    multiWebSocketBasketBall = JSON.parseObject(ws_json, MultiWebSocketBasketBall.class);
+                }
+                //  L.e();
+
+
+                updatePushBasketBallScore(w.getMatchId(), multiWebSocketBasketBall.getData());
 
 
             } else if (w.getType() == VIEW_TYPE_FOOTBALL) { //足球
-                L.d("multiscreen", "足球===" + w);
+                L.d("multiscreen", "____足球___" + w.getMatchId() + "___" + w.getText());
 
-                String ws_json = w.getTopic();
+                String ws_json = w.getText();
                 WebSocketStadiumLiveTextEvent webSocketStadiumLiveTextEvent = null;
                 try {
                     webSocketStadiumLiveTextEvent = JSON.parseObject(ws_json, WebSocketStadiumLiveTextEvent.class);
@@ -163,6 +182,25 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
             }
         }
     };
+
+
+    private void updatePushBasketBallScore(String matchId, MultiScreenBasketMatchScoreBean matchScoreBean) {
+        for (MultiScreenViewBean m : list) {
+            if (m.getMatchId().equals(matchId)) {
+                if (m.getData() instanceof MultiScreenBasketballBean) {
+
+                    L.d("multiscreen123", "____篮球___" + matchScoreBean.getHomeScore());
+
+
+                    ((MultiScreenBasketballBean) m.getData()).getMatch().setMatchScore(matchScoreBean);
+                    L.d("multiscreen123", "____篮球___" + ((MultiScreenBasketballBean) m.getData()).getMatch().getMatchScore().getHomeScore());
+
+
+                    multiScreenViewAdapter.notifyDataSetChanged();
+                }
+            }
+        }
+    }
 
 
     private void updatePushFootBallScore(String matchId, String code, String homeGoal, String guestGoal) {
@@ -303,16 +341,26 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
         requestFootballData("405181");
         requestFootballData("405176");
 
-        requestBasketballData("4227937");
-        requestBasketballData("4227947");
+        requestBasketballData("4273637");
+      //  requestBasketballData("4273697");
 
 
         multiScreenViewAdapter.setOnItemClickListener(new BaseRecyclerViewHolder.OnItemClickListener() {
             @Override
             public void onItemClick(View convertView, int position) {
-                Intent intent = new Intent(MultiScreenViewActivity.this, FootballMatchDetailActivity.class);
-                intent.putExtra("thirdId", list.get(position).getMatchId());
-                startActivity(intent);
+
+                if (VIEW_TYPE_FOOTBALL == list.get(position).getType()) {
+                    Intent intent = new Intent(MultiScreenViewActivity.this, FootballMatchDetailActivity.class);
+                    intent.putExtra("thirdId", list.get(position).getMatchId());
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(MultiScreenViewActivity.this, BasketDetailsActivityTest.class);
+                    intent.putExtra("thirdId", list.get(position).getMatchId());
+                    intent.putExtra("MatchStatus", ((MultiScreenBasketballBean) list.get(position).getData()).getMatch().getMatchStatus());
+                    intent.putExtra("leagueId", ((MultiScreenBasketballBean) list.get(position).getData()).getMatch().getLeagueId());
+                    intent.putExtra("matchType", ((MultiScreenBasketballBean) list.get(position).getData()).getMatch().getMatchType());
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -358,11 +406,10 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
     public void requestBasketballData(final String id) {
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", id);
-        VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_DETAILS, params, new VolleyContentFast.ResponseSuccessListener<BasketballDetailsBean>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_DETAILS, params, new VolleyContentFast.ResponseSuccessListener<MultiScreenBasketballBean>() {
             @Override
-            public void onResponse(BasketballDetailsBean basketDetailsBean) {
+            public void onResponse(MultiScreenBasketballBean basketDetailsBean) {
                 if (basketDetailsBean.getMatch() != null) {
-                    L.d("qazwsx123", "ddddd");
 
                     list.add(new MultiScreenViewBean(VIEW_TYPE_BASKETBALL, id, basketDetailsBean));
 
@@ -373,7 +420,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
             }
-        }, BasketballDetailsBean.class);
+        }, MultiScreenBasketballBean.class);
     }
 
 

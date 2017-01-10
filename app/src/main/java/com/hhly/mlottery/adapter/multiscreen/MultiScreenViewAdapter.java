@@ -17,10 +17,13 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewAdapter;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
-import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
+import com.hhly.mlottery.bean.multiscreenview.MultiScreenBasketMatchBean;
+import com.hhly.mlottery.bean.multiscreenview.MultiScreenBasketMatchScoreBean;
+import com.hhly.mlottery.bean.multiscreenview.MultiScreenBasketballBean;
 import com.hhly.mlottery.bean.multiscreenview.MultiScreenFootBallBean;
 import com.hhly.mlottery.bean.multiscreenview.MultiScreenViewBean;
 import com.hhly.mlottery.callback.MultiScreenViewCallBack;
+import com.hhly.mlottery.frame.basketballframe.MyRotateAnimation;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.StringUtils;
@@ -195,9 +198,8 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
     private void bindBasketballData(BaseRecyclerViewHolder viewHolder, final int position) {
 
 
-        BasketballDetailsBean b = (BasketballDetailsBean) list.get(position).getData();
+        MultiScreenBasketballBean b = (MultiScreenBasketballBean) list.get(position).getData();
 
-        L.d("qazwsx123", b.getMatch().getGuestTeam());
 
         ImageView mHeadImage = viewHolder.findViewById(R.id.image_background);
         ImageView delete = viewHolder.findViewById(R.id.btn_delete);
@@ -249,19 +251,14 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
          */
         setApos(mApos);
 
-
-        BasketballDetailsBean.MatchEntity.MatchScoreEntity score = b.getMatch().getMatchScore();//比分
-        BasketballDetailsBean.MatchEntity mMatch = b.getMatch();
-
-        L.d("qazwsx123", mMatch.getGuestTeam());
-
+        MultiScreenBasketMatchBean mMatch = b.getMatch();
+        MultiScreenBasketMatchScoreBean score = b.getMatch().getMatchScore();//比分
 
         if (score != null) {
             mGuestNum = score.getGuestScore();
             mHomeNum = score.getHomeScore();
         }
 
-        L.d("qazwsx123", mMatch.getLeagueName());
 
         //联赛名
         mLeagueName.setText(mMatch.getLeagueName());
@@ -332,42 +329,72 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
                 case END://完场
 
                     mGuestScore.setText(score.getGuestScore() + "");
+                    mGuestScore.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
+
                     mHomeScore.setText(score.getHomeScore() + "");
+                    mHomeScore.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
+
                     mMatchState.setText(R.string.finished_txt);
+
+
                     mGuest1.setText(score.getGuest1() + "");
+                    mGuest1.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
                     mGuest2.setText(score.getGuest2() + "");
+                    mGuest2.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
                     mGuest3.setText(score.getGuest3() + "");
+                    mGuest3.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
                     mGuest4.setText(score.getGuest4() + "");
+                    mGuest4.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
                     mHome1.setText(score.getHome1() + "");
+                    mHome1.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
                     mHome2.setText(score.getHome2() + "");
+                    mHome2.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
                     mHome3.setText(score.getHome3() + "");
+                    mHome3.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
                     mHome4.setText(score.getHome4() + "");
+                    mHome4.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
 
 
                     mSmallGuestScore.setText(score.getGuestScore() + "");
+                    mSmallGuestScore.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
+
                     mSmallHomeScore.setText(score.getHomeScore() + "");
+                    mSmallHomeScore.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
+
                     mVS.setText(":");
                     if (score.getAddTime() == 3) {//三个加时
                         mLayoutOt3.setVisibility(View.VISIBLE);
                         mLayoutOt2.setVisibility(View.VISIBLE);
                         mLayoutOt1.setVisibility(View.VISIBLE);
                         mGuestOt1.setText(score.getGuestOt1() + "");
+                        mGuestOt1.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
                         mHomeOt1.setText(score.getHomeOt1() + "");
+                        mHomeOt1.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
                         mGuestOt2.setText(score.getGuestOt2() + "");
+                        mGuestOt2.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
                         mHomeOt2.setText(score.getHomeOt2() + "");
+                        mHomeOt2.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
                         mGuestOt3.setText(score.getGuestOt3() + "");
+                        mGuestOt3.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
                         mHomeOt3.setText(score.getHomeOt3() + "");
+                        mHomeOt3.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
                     } else if (score.getAddTime() == 2) {
                         mLayoutOt2.setVisibility(View.VISIBLE);
                         mLayoutOt1.setVisibility(View.VISIBLE);
                         mGuestOt1.setText(score.getGuestOt1() + "");
+                        mGuestOt1.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
                         mHomeOt1.setText(score.getHomeOt1() + "");
+                        mHomeOt1.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
                         mGuestOt2.setText(score.getGuestOt2() + "");
+                        mGuestOt2.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
                         mHomeOt2.setText(score.getHomeOt2() + "");
+                        mHomeOt2.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
                     } else if (score.getAddTime() == 1) {
                         mLayoutOt1.setVisibility(View.VISIBLE);
                         mGuestOt1.setText(score.getGuestOt1() + "");
+                        mGuestOt1.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
                         mHomeOt1.setText(score.getHomeOt1() + "");
+                        mHomeOt1.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
                     }
                     mApos.setVisibility(View.GONE);
                     mRemainTime.setText("");
@@ -398,6 +425,25 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
                     setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);
                     setScore(score.getGuestScore(), mSmallGuestScore, score.getHomeScore(), mSmallHomeScore);
                     mVS.setText(":");
+
+
+
+
+                    if (mGuestNum != score.getGuestScore()) {
+                        scoreAnimation(mGuestScore);
+                        mGuestNum = score.getGuestScore();
+                    }
+                    if (mHomeNum != score.getHomeScore()) {
+                        scoreAnimation(mHomeScore);
+                        mHomeNum = score.getHomeScore();
+                    }
+                    setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);// 动画有毒，最后在设一下比分
+
+                    setScore(score.getGuestScore(), mSmallGuestScore, score.getHomeScore(), mSmallHomeScore);
+
+
+
+
                     //设置比赛时间及状态
                     if (mMatch.getMatchStatus() == FIRST_QUARTER) {
                         if (mMatch.getSection() == 2) {
@@ -456,20 +502,25 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 L.d("zxcvbnm", "篮球" + position);
 
                 //notifyItemRemoved(position);
-
-
                 if (multiScreenViewCallBack != null) {
                     multiScreenViewCallBack.delete(position);
                 }
-
             }
         });
+    }
 
-
+    /**
+     * 设置比分变化时的的翻转动画
+     */
+    public void scoreAnimation(final TextView changeText) {
+        float cX = changeText.getWidth() / 2.0f;
+        float cY = changeText.getHeight() / 2.0f;
+        MyRotateAnimation rotateAnim = new MyRotateAnimation(cX, cY, MyRotateAnimation.ROTATE_DECREASE);
+        rotateAnim.setFillAfter(true);
+        changeText.startAnimation(rotateAnim);
     }
 
 

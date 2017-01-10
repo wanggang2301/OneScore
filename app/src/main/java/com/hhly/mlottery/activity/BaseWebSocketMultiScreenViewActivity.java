@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.hhly.mlottery.bean.multiscreenview.WebSocketMultiScreenViewBean;
+import com.hhly.mlottery.bean.multiscreenview.WebSocketMultiScreenViewTextBean;
 import com.neovisionaries.ws.client.WebSocket;
 import com.neovisionaries.ws.client.WebSocketAdapter;
 import com.neovisionaries.ws.client.WebSocketException;
@@ -204,7 +205,7 @@ public abstract class BaseWebSocketMultiScreenViewActivity extends AppCompatActi
     }
 
 
-    protected abstract void onTextResult(WebSocketMultiScreenViewBean text);
+    protected abstract void onTextResult(WebSocketMultiScreenViewTextBean text);
 
     protected abstract void onConnectFail();
 
@@ -281,10 +282,10 @@ public abstract class BaseWebSocketMultiScreenViewActivity extends AppCompatActi
                     if (text.contains("/topic/" + w.getTopic())) {
 
                         if (w.getType() == VIEW_TYPE_FOOTBALL) {
-                            onTextResult(new WebSocketMultiScreenViewBean(VIEW_TYPE_FOOTBALL, w.getMatchId(), json));
+                            onTextResult(new WebSocketMultiScreenViewTextBean(VIEW_TYPE_FOOTBALL, w.getMatchId(), json));
 
                         } else if (w.getType() == VIEW_TYPE_BASKETBALL) {
-                            onTextResult(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, w.getMatchId(), json));
+                            onTextResult(new WebSocketMultiScreenViewTextBean(VIEW_TYPE_BASKETBALL, w.getMatchId(), json));
 
                         }
 
