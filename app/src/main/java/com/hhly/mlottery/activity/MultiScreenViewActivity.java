@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,8 +32,11 @@ import com.hhly.mlottery.bean.multiscreenview.WebSocketMultiScreenViewTextBean;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumLiveTextEvent;
 import com.hhly.mlottery.callback.MultiScreenViewCallBack;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,7 +56,7 @@ import butterknife.OnClick;
  * 多屏动画Activity
  */
 
-public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivity {
+public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivity implements ExactSwipeRefreshLayout.OnRefreshListener {
 
 
     //setTopic("USER.topic.basketball.score." + mThirdId + ".zh");
@@ -79,6 +83,8 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
     LinearLayout ll_add;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.refresh)
+    ExactSwipeRefreshLayout refresh;
 
     private MultiScreenViewAdapter multiScreenViewAdapter;
 
@@ -109,7 +115,6 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
         ButterKnife.bind(this);
         initView();
         loadData();
-        connectWebSocket();
     }
 
     @Override
@@ -336,6 +341,13 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
 
 
     private void initView() {
+
+        refresh.setColorSchemeResources(R.color.colorPrimary);
+        refresh.setOnRefreshListener(this);
+        refresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getApplicationContext(), StaticValues.REFRASH_OFFSET_END));
+
+        mHandler.sendEmptyMessage(REQUEST_LOAD);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         ((DefaultItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         list = new ArrayList<>();
@@ -382,6 +394,9 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
                 }
             }
         });
+
+        //开启推送
+        connectWebSocket();
     }
 
     @OnClick({R.id.public_img_back, R.id.ll_add})
@@ -395,6 +410,28 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
                 break;
         }
     }
+
+
+    private Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+
+            switch (msg.what) {
+                case REQUEST_LOAD:
+                    refresh.setRefreshing(true);
+
+                    break;
+                case REQUEST_ERROR:
+
+                    break;
+                case REQUEST_SUCESS:
+                    refresh.setRefreshing(false);
+
+                    break;
+            }
+        }
+    };
 
     /***
      * 请求足球数据
@@ -410,10 +447,11 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
             public void onResponse(MatchDetail matchDetail) {
                 if (matchDetail != null) {
                     if (!"200".equals(matchDetail.getResult())) {
-                        //  mHandler.sendEmptyMessage(ERROR);
+                        // mHandler.sendEmptyMessage(ERROR);
                         return;
                     }
                     initFootballData(matchDetail, id);
+                    mHandler.sendEmptyMessage(REQUEST_SUCESS);
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -439,6 +477,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
                     if (basketDetailsBean.getMatch() != null) {
                         list.add(new MultiScreenViewBean(VIEW_TYPE_BASKETBALL, id, basketDetailsBean));
                         updateAdapter();
+                        mHandler.sendEmptyMessage(REQUEST_SUCESS);
                     }
                 }
             }
@@ -527,7 +566,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
      */
     private void promptNetInfo(final int position) {
         try {
-            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(MultiScreenViewActivity.this, R.style.AppThemeDialog);
+            AlertDialog.Builder builder = new AlertDialog.Builder(MultiScreenViewActivity.this, R.style.AppThemeDialog);
             builder.setCancelable(false);// 设置对话框以外不可点击
             builder.setTitle(getApplicationContext().getResources().getString(R.string.to_update_kindly_reminder));// 提示标题
             builder.setMessage(getApplicationContext().getResources().getString(R.string.multi_dialog_text));// 提示内容
@@ -544,7 +583,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
                     dialog.cancel();
                 }
             });
-            android.support.v7.app.AlertDialog alertDialog = builder.create();
+            AlertDialog alertDialog = builder.create();
             alertDialog.show();
         } catch (Resources.NotFoundException e) {
             e.printStackTrace();
@@ -599,5 +638,20 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
     protected void onDestroy() {
         super.onDestroy();
         closeWebSocket();
+    }
+
+    @Override
+    public void onRefresh() {
+
+        L.d("dddfff", "刷新");
+
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refresh.setRefreshing(false);
+            }
+        }, 3000);
+
     }
 }

@@ -10,6 +10,7 @@
         android:id="@+id/header"
         layout="@layout/multi_screen_view_header"></include>
 
+
     <LinearLayout
         android:id="@+id/ll_add"
         android:layout_width="match_parent"
@@ -41,12 +42,24 @@
 
     </LinearLayout>
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/ll_add"
-        android:layout_below="@+id/header"></android.support.v7.widget.RecyclerView>
+        android:layout_below="@+id/header">
+
+        <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
+            android:id="@+id/refresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+        </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
+
+    </FrameLayout>
+
 
 </RelativeLayout>
