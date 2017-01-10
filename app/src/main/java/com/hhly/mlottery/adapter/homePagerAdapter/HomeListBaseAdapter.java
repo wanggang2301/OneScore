@@ -1493,6 +1493,16 @@ public class HomeListBaseAdapter extends BaseAdapter {
             boolean expertName = false;
             if (getItem(position) != null) {
                 final HomeContentEntity mContent = (HomeContentEntity) getItem(position);
+                if (mContent.getLabType() == 5) {
+                    mViewHolderOther.tv_more_advice.setVisibility(View.VISIBLE);
+                } else {
+                    mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
+                }
+                if(mContent.getLabType() == 7){
+                    mViewHolderOther.tv_title.setVisibility(View.GONE);
+                }else{
+                    mViewHolderOther.tv_title.setVisibility(View.VISIBLE);
+                }
                 for (int i = 0, len = mContent.getBodys().size(); i < len; i++) {
                     switch (mContent.getLabType()) {
                         case 1: // 1、	热门赛事.
@@ -1505,9 +1515,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             if (parentScore != null) {
                                 ((ViewGroup) parentScore).removeAllViews();
                             }
-                            mViewHolderOther.tv_title.setVisibility(View.VISIBLE);
                             mViewHolderOther.ll_content.addView(scoreView);
-                            mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
                             addViewScore = true;
                             break;
                         case 2:// 2、	热门资讯
@@ -1520,9 +1528,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             if (parentDataInfo != null) {
                                 ((ViewGroup) parentDataInfo).removeAllViews();
                             }
-                            mViewHolderOther.tv_title.setVisibility(View.VISIBLE);
                             mViewHolderOther.ll_content.addView(dataInfoView);
-                            mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
                             addViewDataInfo = true;
                             break;
                         case 3:// 3、	彩票开奖
@@ -1535,22 +1541,17 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             if (parentLottery != null) {
                                 ((ViewGroup) parentLottery).removeAllViews();
                             }
-                            mViewHolderOther.tv_title.setVisibility(View.VISIBLE);
                             mViewHolderOther.ll_content.addView(lotteryView);
-                            mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
                             addViewLottery = true;
                             break;
                         case 5:
                             mViewHolderOther.tv_title.setText(mContext.getResources().getString(R.string.title_product_advice));
-                            mViewHolderOther.tv_more_advice.setVisibility(View.VISIBLE);
                             mViewHolderOther.tv_more_advice.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-//                                    mContext.startActivity(new Intent(mContext, ProductAdviceActivity.class));
                                     if (mProductListener != null) {
                                         mProductListener.toProductActivity();
                                     }
-
                                 }
                             });
 
@@ -1558,7 +1559,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             if (productItemView != null) {
                                 ((ViewGroup) productItemView).removeAllViews();
                             }
-                            mViewHolderOther.tv_title.setVisibility(View.VISIBLE);
                             mViewHolderOther.ll_content.addView(mProductItemView);
 
                             break;
@@ -1567,8 +1567,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             if (parentItemView != null) {
                                 ((ViewGroup) parentItemView).removeAllViews();
                             }
-                            mViewHolderOther.tv_title.setVisibility(View.GONE);
-                            mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
                             mViewHolderOther.ll_content.addView(lotteryItemView);
                             break;
                         case 4:
@@ -1589,9 +1587,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             View expertView = expertViewList.get(i);
                             ViewParent parentExpert = expertView.getParent();
                             if (parentExpert != null) {
-                                ((ViewGroup) expertView).removeAllViews();
+                                ((ViewGroup) parentExpert).removeAllViews();
                             }
-                            mViewHolderOther.tv_title.setVisibility(View.VISIBLE);
                             mViewHolderOther.ll_content.addView(expertView);
                             mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
                             addViewExpert = true;
