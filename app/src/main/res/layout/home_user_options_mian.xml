@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:src="@mipmap/custom_logo"/>
+            android:src="@mipmap/basketball_collect"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
