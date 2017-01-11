@@ -74,7 +74,11 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
     }
 
     private void initData() {
+        settingTitle();
+    }
 
+    // 设置标题名
+    private void settingTitle(){
         if (!TextUtils.isEmpty(mNumberName)) {
             NumberDataUtils.setTextTitle(mContext, public_txt_title, mNumberName);// 设置开奖标题
         } else {
@@ -147,6 +151,7 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
                 fl_numberContext_info.setVisibility(View.VISIBLE);
                 public_btn_set.setVisibility(View.VISIBLE);
                 fl_other_content.setVisibility(View.GONE);
+                settingTitle();
 
 
                 ToastTools.showQuick(mContext,"开奖");
@@ -158,13 +163,14 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
 
                 ToastTools.showQuick(mContext,"统计");
                 // TODO 添加统计Fragment
-
+                public_txt_title.setText(mContext.getResources().getString(R.string.home_lottery_info_start_title));
 
                 break;
             case R.id.rb_chart:
                 fl_numberContext_info.setVisibility(View.GONE);
                 public_btn_set.setVisibility(View.GONE);
                 fl_other_content.setVisibility(View.VISIBLE);
+                settingTitle();
 
                 ToastTools.showQuick(mContext,"图表");
                 // TODO 添加图表Fragment
