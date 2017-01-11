@@ -5,6 +5,7 @@ import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.AppCompatSpinner;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -47,6 +48,7 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
     private ImageView public_btn_set;
     private FrameLayout fl_numberContext_info;// 彩票详情数据
     private FrameLayout fl_other_content;// 统计和图表显示
+    private AppCompatSpinner public_txt_spinner;// 菜单下拉器
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +109,8 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
         ((RadioButton) findViewById(R.id.rb_open_lottery)).setChecked(true);
         findViewById(R.id.rb_statistics).setOnClickListener(this);
         findViewById(R.id.rb_chart).setOnClickListener(this);
+        public_txt_spinner = (AppCompatSpinner) findViewById(R.id.public_txt_spinner);
+
         if("1".equals(mNumberName)){
             ll_bottom_menu.setVisibility(View.VISIBLE);
         }else{
@@ -151,6 +155,7 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
                 fl_numberContext_info.setVisibility(View.VISIBLE);
                 public_btn_set.setVisibility(View.VISIBLE);
                 fl_other_content.setVisibility(View.GONE);
+                public_txt_spinner.setVisibility(View.GONE);
                 settingTitle();
 
 
@@ -160,16 +165,18 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
                 fl_numberContext_info.setVisibility(View.GONE);
                 public_btn_set.setVisibility(View.GONE);
                 fl_other_content.setVisibility(View.VISIBLE);
+                public_txt_spinner.setVisibility(View.VISIBLE);
+                public_txt_title.setText(mContext.getResources().getString(R.string.home_lottery_info_start_title));
 
                 ToastTools.showQuick(mContext,"统计");
                 // TODO 添加统计Fragment
-                public_txt_title.setText(mContext.getResources().getString(R.string.home_lottery_info_start_title));
 
                 break;
             case R.id.rb_chart:
                 fl_numberContext_info.setVisibility(View.GONE);
                 public_btn_set.setVisibility(View.GONE);
                 fl_other_content.setVisibility(View.VISIBLE);
+                public_txt_spinner.setVisibility(View.GONE);
                 settingTitle();
 
                 ToastTools.showQuick(mContext,"图表");
