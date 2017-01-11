@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * @author: Wangg
  * @Name：BaseWebSocketMultiScreenViewActivity
- * @Description:
+ * @Description:多屏动画推送websocket
  * @Created on:2017/1/6  14:42.
  */
 

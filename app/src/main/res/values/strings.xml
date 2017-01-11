@@ -1498,5 +1498,6 @@
 
     <string name="multi_header_name">壹观看</string>
     <string name="multi_add">添加</string>
+    <string name="multi_dialog_text">您确认移除这场比赛吗?</string>
 
 </resources>
