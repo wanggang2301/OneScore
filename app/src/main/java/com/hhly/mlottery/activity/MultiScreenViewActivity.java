@@ -212,14 +212,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
      */
     private void updatePushFootBallScore(String matchId, String code, String homeGoal, String guestGoal) {
         switch (code) {
-            case "12":
-            case "13":  //下半场开始
-                break;
             case "3": //结束下半场
-                //socket关闭
-                // 获取上半场的走势图数据
-                // setScoreClolor(getApplicationContext().getResources().getColor(R.color.score));
-
                 for (MultiScreenViewBean m : list) {
                     if (m.getMatchId().equals(matchId)) {
                         if (m.getData() instanceof MultiScreenFootBallBean) {
