@@ -61,7 +61,7 @@
 
             <RadioButton
                 android:id="@+id/rb_open_lottery"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:button="@null"
@@ -73,7 +73,7 @@
 
             <RadioButton
                 android:id="@+id/rb_statistics"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:button="@null"
@@ -86,7 +86,7 @@
 
             <RadioButton
                 android:id="@+id/rb_chart"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:button="@null"

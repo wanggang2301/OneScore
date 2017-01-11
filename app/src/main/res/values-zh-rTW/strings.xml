@@ -1483,5 +1483,8 @@
     <string name="home_lottery_info_stat">統計</string>
     <string name="home_lottery_info_chart">圖表</string>
     <string name="home_lottery_info_start_title">走勢統計</string>
+    <string name="home_lottery_info_start_tab_tm">特碼出現</string>
+    <string name="home_lottery_info_start_tab_pm">平碼出現</string>
+    <string name="home_lottery_info_start_tab_notm">特碼未出現</string>
 
 </resources>

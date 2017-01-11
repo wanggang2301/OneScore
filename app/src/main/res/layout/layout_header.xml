@@ -124,6 +124,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
             android:visibility="gone"
             app:backgroundTint="@color/spinner_drow_color" />
 

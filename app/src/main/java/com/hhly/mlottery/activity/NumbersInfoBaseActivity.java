@@ -18,10 +18,13 @@ import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.frame.numbersframe.CurrentNumberFragment;
+import com.hhly.mlottery.frame.numbersframe.HKLotteryChartFragment;
+import com.hhly.mlottery.frame.numbersframe.HKLotteryStartFragment;
 import com.hhly.mlottery.frame.numbersframe.HistoryNumberFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.NumberDataUtils;
 import com.hhly.mlottery.util.ToastTools;
+import com.hhly.mlottery.widget.BallSelectArrayAdapter;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -60,6 +63,8 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
         /**不统计当前Activity*/
         MobclickAgent.openActivityDurationTrack(false);
 
+        setContentView(R.layout.numbers_main_info);
+
         initView();
         initData();
         initFragment();
@@ -77,6 +82,8 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
 
     private void initData() {
         settingTitle();
+        // TODO 后台获取数据
+        public_txt_spinner.setAdapter(new BallSelectArrayAdapter(mContext,new String[]{"1000期","500期","100期","50期"}));
     }
 
     // 设置标题名
@@ -89,7 +96,7 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
     }
 
     private void initView() {
-        setContentView(R.layout.numbers_main_info);
+
 
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_img_back).setOnClickListener(this);
@@ -157,9 +164,6 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
                 fl_other_content.setVisibility(View.GONE);
                 public_txt_spinner.setVisibility(View.GONE);
                 settingTitle();
-
-
-                ToastTools.showQuick(mContext,"开奖");
                 break;
             case R.id.rb_statistics:
                 fl_numberContext_info.setVisibility(View.GONE);
@@ -168,8 +172,7 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
                 public_txt_spinner.setVisibility(View.VISIBLE);
                 public_txt_title.setText(mContext.getResources().getString(R.string.home_lottery_info_start_title));
 
-                ToastTools.showQuick(mContext,"统计");
-                // TODO 添加统计Fragment
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl_other_content, new HKLotteryStartFragment()).commit();
 
                 break;
             case R.id.rb_chart:
@@ -179,8 +182,7 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
                 public_txt_spinner.setVisibility(View.GONE);
                 settingTitle();
 
-                ToastTools.showQuick(mContext,"图表");
-                // TODO 添加图表Fragment
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl_other_content, new HKLotteryChartFragment()).commit();
 
                 break;
         }
