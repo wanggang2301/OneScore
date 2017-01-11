@@ -4,7 +4,7 @@
     android:id="@+id/activity_multi_screen_introduce"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/chart_room_bg"
+    android:background="@mipmap/multiintoduce"
     tools:context="com.hhly.mlottery.activity.MultiScreenIntroduceActivity">
 
     <TextView
@@ -20,7 +20,7 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:paddingTop="10dp"
-        android:text="点击进入"
+        android:text="@string/multi_enter_text"
         android:textColor="@color/white" />
 </RelativeLayout>
 
