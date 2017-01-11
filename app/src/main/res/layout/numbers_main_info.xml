@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="#ffffff"
     android:orientation="vertical">
 
@@ -35,41 +35,67 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <!--底部菜单栏-->
     <LinearLayout
         android:id="@+id/ll_bottom_menu"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#33ff0000"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="52dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/bottom_bg_color"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_open_lottery"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:background="@color/line_football_footer" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:gravity="center"
-            android:text="开奖" />
+            android:orientation="horizontal"
+            android:paddingTop="2dp">
 
-        <TextView
-            android:id="@+id/tv_statistics"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="统计" />
+            <RadioButton
+                android:id="@+id/rb_open_lottery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/home_lottery_info_menu_open"
+                android:gravity="center"
+                android:text="@string/home_lottery_info_open"
+                android:textColor="@drawable/frag__base_selector_color"
+                android:textSize="11dp" />
 
-        <TextView
-            android:id="@+id/tv_chart"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="图表" />
+            <RadioButton
+                android:id="@+id/rb_statistics"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/home_lottery_info_menu_stat"
+                android:gravity="center"
+                android:text="@string/home_lottery_info_stat"
+                android:textColor="@drawable/frag__base_selector_color"
+                android:textSize="11dp"
+                android:visibility="visible" />
 
+            <RadioButton
+                android:id="@+id/rb_chart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/home_lottery_info_menu_chart"
+                android:gravity="center"
+                android:text="@string/home_lottery_info_chart"
+                android:textColor="@drawable/frag__base_selector_color"
+                android:textSize="11dp" />
+        </RadioGroup>
     </LinearLayout>
 
 </LinearLayout>

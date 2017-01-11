@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +28,7 @@ import com.umeng.analytics.MobclickAgent;
  *
  * @author Tenney
  * @ClassName: NumbersInfoActivity
- * @Description: TODO
+ * @Description: 彩票详情数据展示页
  * @date 2015-10-19 下午4:24:45
  */
 public class NumbersInfoBaseActivity extends BaseActivity implements OnClickListener {
@@ -98,9 +99,10 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
         ll_bottom_menu = (LinearLayout) findViewById(R.id.ll_bottom_menu);
         fl_numberContext_info = (FrameLayout) findViewById(R.id.fl_numberContext_info);
         fl_other_content = (FrameLayout) findViewById(R.id.fl_other_content);
-        findViewById(R.id.tv_open_lottery).setOnClickListener(this);
-        findViewById(R.id.tv_statistics).setOnClickListener(this);
-        findViewById(R.id.tv_chart).setOnClickListener(this);
+        findViewById(R.id.rb_open_lottery).setOnClickListener(this);
+        ((RadioButton) findViewById(R.id.rb_open_lottery)).setChecked(true);
+        findViewById(R.id.rb_statistics).setOnClickListener(this);
+        findViewById(R.id.rb_chart).setOnClickListener(this);
         if("1".equals(mNumberName)){
             ll_bottom_menu.setVisibility(View.VISIBLE);
         }else{
@@ -141,7 +143,7 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
                 getSupportFragmentManager().beginTransaction().replace(R.id.fl_numberContext_historyh, historyhFragment).commit();
 
                 break;
-            case R.id.tv_open_lottery:
+            case R.id.rb_open_lottery:
                 fl_numberContext_info.setVisibility(View.VISIBLE);
                 public_btn_set.setVisibility(View.VISIBLE);
                 fl_other_content.setVisibility(View.GONE);
@@ -149,20 +151,23 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
 
                 ToastTools.showQuick(mContext,"开奖");
                 break;
-            case R.id.tv_statistics:
+            case R.id.rb_statistics:
                 fl_numberContext_info.setVisibility(View.GONE);
                 public_btn_set.setVisibility(View.GONE);
                 fl_other_content.setVisibility(View.VISIBLE);
 
                 ToastTools.showQuick(mContext,"统计");
+                // TODO 添加统计Fragment
+
 
                 break;
-            case R.id.tv_chart:
+            case R.id.rb_chart:
                 fl_numberContext_info.setVisibility(View.GONE);
                 public_btn_set.setVisibility(View.GONE);
                 fl_other_content.setVisibility(View.VISIBLE);
 
                 ToastTools.showQuick(mContext,"图表");
+                // TODO 添加图表Fragment
 
                 break;
         }

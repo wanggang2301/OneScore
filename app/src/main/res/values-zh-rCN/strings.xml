@@ -1498,4 +1498,8 @@
     <string name="more"><![CDATA[更多>>]]></string>
     <string name="nomoredatashangla">没有更多数据了...</string>
 
+    <string name="home_lottery_info_open">开奖</string>
+    <string name="home_lottery_info_stat">统计</string>
+    <string name="home_lottery_info_chart">图表</string>
+
 </resources>
