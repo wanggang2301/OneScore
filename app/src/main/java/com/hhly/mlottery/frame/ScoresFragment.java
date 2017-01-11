@@ -33,6 +33,7 @@ import com.hhly.mlottery.frame.footframe.ResultFragment;
 import com.hhly.mlottery.frame.footframe.RollBallFragment;
 import com.hhly.mlottery.frame.footframe.ScheduleFragment;
 import com.hhly.mlottery.frame.footframe.eventbus.ScoreFragmentWebSocketEntity;
+import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -134,22 +135,6 @@ public class ScoresFragment extends BaseWebSocketFragment {
         return view;
     }
 
-//    private void initEVent() {
-//        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                if (mContext.getResources().getString(R.string.basket_left).equals(mItems[position])) {// 选择篮球
-//                    ((FootballActivity) mContext).ly_tab_bar.setVisibility(View.GONE);
-//                    ((FootballActivity) mContext).switchFragment(5);
-//                    closeWebSocket();
-//                }
-//            }
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-//    }
 
     public void setFootballLeagueStatisticsTodayClick() {
         public_btn_infomation.setOnClickListener(new OnClickListener() {
@@ -172,18 +157,6 @@ public class ScoresFragment extends BaseWebSocketFragment {
         //中心标题
         mTitleTv = (TextView) view.findViewById(R.id.public_txt_title);
         mTitleTv.setVisibility(View.GONE);
-//        mTitleTv.setText(R.string.football_frame_txt);
-        //左边标题
-            /*  public_txt_left_title = (TextView) view.findViewById(R.id.public_txt_left_title);
-                public_txt_left_title.setVisibility(View.VISIBLE);
-        public_txt_left_title.setText(R.string.football_frame_txt);*/
-
-//        mSpinner = (Spinner) view.findViewById(R.id.public_txt_left_spinner);
-//        mSpinner.setVisibility(View.VISIBLE);
-//        mItems = getResources().getStringArray(R.array.ball_select);
-//        BallSelectArrayAdapter mAdapter = new BallSelectArrayAdapter(mContext, mItems);
-//        mSpinner.setAdapter(mAdapter);
-//        mSpinner.setSelection(0);
 
         // 筛选
         mFilterImgBtn = (ImageView) view.findViewById(R.id.public_btn_filter);
@@ -198,7 +171,6 @@ public class ScoresFragment extends BaseWebSocketFragment {
         titles.add(getString(R.string.foot_jishi_txt));
         titles.add(getString(R.string.foot_saiguo_txt));
         titles.add(getString(R.string.foot_saicheng_txt));
-//        titles.add(getString(R.string.foot_guanzhu_txt));
 
         fragments = new ArrayList<>();
         rollBallFragment = RollBallFragment.newInstance(ROLLBALL_FRAGMENT);
@@ -237,12 +209,6 @@ public class ScoresFragment extends BaseWebSocketFragment {
                             mSetImgBtn.setVisibility(View.VISIBLE);
                             ((ScheduleFragment) fragments.get(position)).updateAdapter();
                             break;
-//                        case FOCUS_FRAGMENT:
-//                            mFilterImgBtn.setVisibility(View.GONE);
-//                            mSetImgBtn.setVisibility(View.VISIBLE);
-//                            L.d("sdfgh","ddddd");
-//                            ((FocusFragment) fragments.get(position)).reLoadData();
-//                            break;
                     }
                 }
             }
@@ -271,6 +237,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
         mBackImgBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                ((FootballActivity)getActivity()).eventBusPost();
                 getActivity().finish();
                 MobclickAgent.onEvent(mContext, "Football_Exit");
             }
@@ -416,13 +383,6 @@ public class ScoresFragment extends BaseWebSocketFragment {
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }
-//                   else if (currentFragmentId == FOCUS_FRAGMENT) {
-//                    Intent intent = new Intent(getActivity(), FootballTypeSettingActivity.class);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putInt("currentFragmentId", FOCUS_FRAGMENT);
-//                    intent.putExtras(bundle);
-//                    startActivity(intent);
-//                }
 
             }
         });
@@ -552,6 +512,9 @@ public class ScoresFragment extends BaseWebSocketFragment {
         EventBus.getDefault().post(new FootballScoresWebSocketEntity(text));
     }
 
+    /***
+     * 足球界面接受推送的消息类
+     */
     public class FootballScoresWebSocketEntity {
         public String text;
 
@@ -560,6 +523,9 @@ public class ScoresFragment extends BaseWebSocketFragment {
         }
     }
 
+//    private void eventBusPost() {
+//        EventBus.getDefault().post(new ScoresMatchFocusEventBusEntity(0));
+//    }
 
     @Override
     protected void onConnectFail() {
@@ -664,13 +630,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
                 isImmediateFragment = false;
                 isFocusFragment = false;
                 break;
-//            case FOCUS_FRAGMENT:
-//                isFocusFragment = true;
-//                isRollballFragment = false;
-//                isScheduleFragment = false;
-//                isResultFragment = false;
-//                isImmediateFragment = false;
-//                break;
+
         }
         if (isRollballFragment) {
             if (isImmediate) {
@@ -688,11 +648,6 @@ public class ScoresFragment extends BaseWebSocketFragment {
                 isSchedule = false;
                 L.d("xxx", "ScheduleFragment>>>隐藏");
             }
-//            if (isFocus) {
-//                MobclickAgent.onPageEnd("Football_FocusFragment");
-//                isFocus = false;
-//                L.d("xxx", "FocusFragment>>>隐藏");
-//            }
             MobclickAgent.onPageStart("Football_RollballFragment");
             isRollball = true;
             L.d("xxx", "RollballFragment>>>显示");
@@ -713,11 +668,6 @@ public class ScoresFragment extends BaseWebSocketFragment {
                 isSchedule = false;
                 L.d("xxx", "ScheduleFragment>>>隐藏");
             }
-//            if (isFocus) {
-//                MobclickAgent.onPageEnd("Football_FocusFragment");
-//                isFocus = false;
-//                L.d("xxx", "FocusFragment>>>隐藏");
-//            }
             MobclickAgent.onPageStart("Football_ImmediateFragment");
             isImmediate = true;
             L.d("xxx", "ImmediateFragment>>>显示");
@@ -738,11 +688,6 @@ public class ScoresFragment extends BaseWebSocketFragment {
                 isSchedule = false;
                 L.d("xxx", "ScheduleFragment>>>隐藏");
             }
-//            if (isFocus) {
-//                MobclickAgent.onPageEnd("Football_FocusFragment");
-//                isFocus = false;
-//                L.d("xxx", "FocusFragment>>>隐藏");
-//            }
             MobclickAgent.onPageStart("Football_ResultFragment");
             isResult = true;
             L.d("xxx", "ResultFragment>>>显示");
@@ -763,40 +708,11 @@ public class ScoresFragment extends BaseWebSocketFragment {
                 isResult = false;
                 L.d("xxx", "ResultFragment>>>隐藏");
             }
-//            if (isFocus) {
-//                MobclickAgent.onPageEnd("Football_FocusFragment");
-//                isFocus = false;
-//                L.d("xxx", "FocusFragment>>>隐藏");
-//            }
             MobclickAgent.onPageStart("Football_ScheduleFragment");
             isSchedule = true;
             L.d("xxx", "ScheduleFragment>>>显示");
         }
-//        if (isFocusFragment) {
-//            if (isRollball) {
-//                MobclickAgent.onPageEnd("Football_RollballFragment");
-//                isRollball = false;
-//                L.d("xxx", "RollballFragment>>>隐藏");
-//            }
-//            if (isImmediate) {
-//                MobclickAgent.onPageEnd("Football_ImmediateFragment");
-//                isImmediate = false;
-//                L.d("xxx", "ImmediateFragment>>>隐藏");
-//            }
-//            if (isResult) {
-//                MobclickAgent.onPageEnd("Football_ResultFragment");
-//                isResult = false;
-//                L.d("xxx", "ResultFragment>>>隐藏");
-//            }
-//            if (isSchedule) {
-//                MobclickAgent.onPageEnd("Football_ScheduleFragment");
-//                isSchedule = false;
-//                L.d("xxx", "ScheduleFragment>>>隐藏");
-//            }
-//            MobclickAgent.onPageStart("Football_FocusFragment");
-//            isFocus = true;
-//            L.d("xxx", "FocusFragment>>>显示");
-//        }
+
     }
 
 

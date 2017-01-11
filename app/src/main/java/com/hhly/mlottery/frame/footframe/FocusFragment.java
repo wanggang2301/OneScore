@@ -27,9 +27,13 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketballScoresActivity;
+import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
+import com.hhly.mlottery.activity.MyFocusActivity;
 import com.hhly.mlottery.adapter.ImmediateAdapter;
 import com.hhly.mlottery.adapter.ImmediateInternationalAdapter;
+import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.Focus;
 import com.hhly.mlottery.bean.Match;
 import com.hhly.mlottery.bean.MatchOdd;
@@ -54,6 +58,7 @@ import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.StringUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
+import com.neovisionaries.ws.client.WebSocketFrame;
 import com.umeng.message.UmengRegistrar;
 
 import org.json.JSONException;
@@ -72,19 +77,19 @@ import de.greenrobot.event.EventBus;
  * @Description: 关注
  * @date 2015-10-15 上午9:57:25
  */
-public class FocusFragment extends Fragment implements OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class FocusFragment extends BaseWebSocketFragment implements OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     private static final String TAG = "FocusFragment";
 
+    /**保存足球关注id的key*/
     public final static String FOCUS_ISD = "focus_ids";
 
     public final static int REQUEST_SET_CODE = 0x42;
     public final static int REQUEST_DETAIL_CODE = 0x43;
 
-    //private SlideDeleteListView mListView;
 
     private RecyclerView mRecyclerView;
 
@@ -94,15 +99,15 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
     private LinearLayout mLoadingLayout;
     private LinearLayout mErrorLayout;
 
-    //    private LinearLayout mUnconectionLayout;
     private ExactSwipeRefreshLayout mSwipeRefreshLayout;
 
-    private View mUnFocusLayout;
+    private View mUnFocusLayout; //暂无关注界面
+
+    private TextView mToFocus; //点击去关注
 
     private Context mContext;
 
     private ImmediateAdapter mAdapter;
-    private ImmediateInternationalAdapter mInternationalAdapter;
 
     private List<Match> mAllMatchs;
     private List<Match> mMatchs;
@@ -128,15 +133,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
      */
     // public static EventBus focusEventBus;
 
-
-    Handler mLoadHandler = new Handler();
-    private Runnable mLoadingDataThread = new Runnable() {
-        @Override
-        public void run() {
-            // 在这里数据内容加载到Fragment上
-            initData();
-        }
-    };
 
     private Vibrator mVibrator;
     private SoundPool mSoundPool;
@@ -189,16 +185,9 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        setWebSocketUri(BaseURLs.WS_SERVICE);
+        setTopic("USER.topic.app");
         super.onCreate(savedInstanceState);
-//        try {
-//            socketUri = new URI(BaseURLs.WS_SERVICE);
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//        }
-
-        // focusEventBus = new EventBus();
-        // focusEventBus.register(this);
-
         EventBus.getDefault().register(this);
 
 
@@ -210,61 +199,18 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
 
         mContext = getActivity();
-       /* if (mView == null) {
-            mView = inflater.inflate(R.layout.football_focus, container, false);
-            Bundle bundle = getArguments();
-            if (bundle != null) {
-                mCurIndex = bundle.getInt(FRAGMENT_INDEX);
-            }
-            isPrepared = true;
 
-            initView();
-            lazyLoad();
-
-        }
-        ViewGroup parent = (ViewGroup) mView.getParent();
-        if (parent != null) {
-            parent.removeView(mView);
-        }*/
         mContext = getActivity();
         mView = inflater.inflate(R.layout.football_focus, container, false);
         initView();
-
+        setListener();
+        initData();
         initMedia();
 //        initBroadCase();
 
         return mView;
     }
 
-
-   /* protected void lazyLoad() {
-        if (!isPrepared || !isVisible || mHasLoadedOnce) {
-            return;
-        }
-
-      *//*  if (!isLoadedData) {
-*//*
-
-            mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-            mLoadHandler.postDelayed(mLoadingDataThread, 0);
-     *//*   } else {
-
-        }*//*
-
-    }
-*/
-
-//    private FocusNetStateReceiver mNetStateReceiver;
-
-//    private void initBroadCase() {
-//        if (getActivity() != null) {
-//            mNetStateReceiver = new FocusNetStateReceiver();
-//            IntentFilter filter = new IntentFilter();
-//            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-//            getActivity().registerReceiver(mNetStateReceiver, filter);
-//        }
-//
-//    }
 
     private void initMedia() {
         mVibrator = (Vibrator) getActivity().getSystemService(Service.VIBRATOR_SERVICE);
@@ -276,11 +222,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
     // 初始化控件
     public void initView() {
-        // 加载动画
-//        mLoadingImg = (ImageView) mView.findViewById(R.id.iv_loading_img);
-//        mLoadingAnimation = AnimationUtils.loadAnimation(mContext, R.anim.cirle);
-//        mLoadingAnimation.setInterpolator(new LinearInterpolator());
-//        mLoadingImg.startAnimation(mLoadingAnimation);
         layoutManager = new LinearLayoutManager(getActivity());
 
         mSwipeRefreshLayout = (ExactSwipeRefreshLayout) mView.findViewById(R.id.football_immediate_swiperefreshlayout);
@@ -288,39 +229,29 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
 
-
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.recyclerview_focus);
 
         mRecyclerView.setLayoutManager(layoutManager);
 
-
-        /**需要修改**/
-      /*  ImageView unfocusImage = (ImageView) mView.findViewById(R.id.football_immediate_unfocus_coffee);
-        TextView nodataTv = (TextView) mView.findViewById(R.id.football_immediate_no_data_tv);
-        nodataTv.setText(R.string.unfocus2);
-        */
-
         mReloadTvBtn = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
         mReloadTvBtn.setOnClickListener(this);
 
-        mUnFocusLayout = mView.findViewById(R.id.football_immediate_unfocus_ll);
+        mUnFocusLayout = mView.findViewById(R.id.to_football_focus_ll);
+        mToFocus= (TextView) mView.findViewById(R.id.to_football_focus);
 
-//        mUnconectionLayout = (LinearLayout) mView.findViewById(R.id.unconection_layout);
-//        mUnconectionLayout.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(Settings.ACTION_SETTINGS));
-//            }
-//        });
-
+        mToFocus.setOnClickListener(this);
         mLoadingLayout = (LinearLayout) mView.findViewById(R.id.football_immediate_loading_ll);
         mErrorLayout = (LinearLayout) mView.findViewById(R.id.network_exception_layout);
 
-/*
 
+        mSwipeRefreshLayout.setRefreshing(true);
+        mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+    }
 
-*/
-
+    /**
+     * 设置监听事件
+     */
+    private void setListener(){
         mFocusClickListener = new FocusMatchClickListener() {
             @Override
             public void onClick(View view, String third) {
@@ -360,21 +291,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                     PreferenceUtil.commitString(FOCUS_ISD, sb.toString());
                     ((ImageView) view).setImageResource(R.mipmap.football_nomal);
 
-//                    List<Match> allList = new ArrayList<Match>();
-//                    for (Match m : mAllMatchs) {
-//                        if (!m.getThirdId().equals(third)) {
-//                            allList.add(m);
-//                        }
-//                    }
-//
-//                    mAllMatchs = allList;
-//                    mMatchs = allList;
-//                    updateAdapter();
-//                    // mListView.slideBack();
-//
-//                    if (mMatchs.size() == 0) {
-//                        mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
-//                    }
                     request(third);
                 }
             }
@@ -537,7 +453,9 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                             Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
                             intent.putExtra("thirdId", thirdId);
                             intent.putExtra("currentFragmentId", 4);
-                            getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                            if(getActivity()!=null){
+                                getActivity().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                            }
                         }
                     });
                     mRecyclerView.setAdapter(mAdapter);
@@ -1033,11 +951,14 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                 // mListView.setVisibility(View.GONE);
                 // mSwipeRefreshLayout.setVisibility(View.GONE);
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-                mLoadHandler.postDelayed(mLoadingDataThread, 0);
+                initData();
                 break;
             case R.layout.item_header_unconection_view:
                 startActivity(new Intent(Settings.ACTION_SETTINGS));
                 break;
+            case R.id.to_football_focus:
+                Intent intent=new Intent(getActivity(),FootballActivity.class);
+                startActivity(intent);
             default:
                 break;
 
@@ -1059,15 +980,16 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         L.d(TAG, "__onDestroy___");
     }
 
-    public void onEventMainThread(ScoresFragment.FootballScoresWebSocketEntity entity) {
-        L.d("qazwsx", "关注推送");
+    @Override
+    protected void onTextResult(String text) {
+        L.e("Focus","tuisong");
         if (mAdapter == null) {
             return;
         }
 
         String type = "";
         try {
-            JSONObject jsonObject = new JSONObject(entity.text);
+            JSONObject jsonObject = new JSONObject(text);
             type = jsonObject.getString("type");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -1075,15 +997,31 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
         if (!"".equals(type)) {
             Message msg = Message.obtain();
-            msg.obj = entity.text;
+            msg.obj = text;
             msg.arg1 = Integer.parseInt(type);
 
             mSocketHandler.sendMessage(msg);
         }
     }
 
+    @Override
+    protected void onConnectFail() {
+
+    }
+
+    @Override
+    protected void onDisconnected() {
+
+    }
+
+    @Override
+    protected void onConnected() {
+
+    }
+
+
     /**
-     * EventBus设置
+     * 设置界面设置欧赔亚盘大小球的显示。这边接受。关注页面分离出来不需要改
      */
 
     public void onEventMainThread(ScoresMatchSettingEventBusEntity scoresMatchSettingEventBusEntity) {
@@ -1109,42 +1047,23 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
 
     /**
-     * EventBus 赛场比赛详情返回FootballMatchDetailActivity
+     * EventBus 赛场比赛详情返回FootballMatchDetailActivity.关注页面分离出来不需要改
      * 接受消息的页面实现
+     * 未关注页面去关注后返回也是此处接收
      */
 
     public void onEventMainThread(ScoresMatchFocusEventBusEntity scoresMatchFocusEventBusEntity) {
-        if (scoresMatchFocusEventBusEntity.getFgIndex() == 4) {
-            if ("".equals(PreferenceUtil.getString(FocusFragment.FOCUS_ISD, ""))) {
-                if (mMatchs != null) {
-                    mMatchs.clear();
-                }
-
-                if (mAllMatchs != null) {
-                    mAllMatchs.clear();
-                }
-                updateAdapter();
-            }
-
-//            ((ScoresFragment) getParentFragment()).focusCallback();
-
             mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-            mLoadHandler.postDelayed(mLoadingDataThread, 0);
-        }
+            initData();
     }
 
-
-    public void reLoadData() {
-        mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-        mLoadHandler.post(mLoadingDataThread);
-    }
 
     @Override
     public void onRefresh() {
         L.d("sdfgh","onRefresh");
 
-        mLoadHandler.post(mLoadingDataThread);
-        ((ScoresFragment) getParentFragment()).reconnectWebSocket();
+        initData();
+        connectWebSocket();
     }
 
 

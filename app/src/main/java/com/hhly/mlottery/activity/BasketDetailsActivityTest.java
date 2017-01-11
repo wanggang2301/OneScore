@@ -37,6 +37,7 @@ import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.basketballframe.BasketAnalyzeFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketAnimLiveFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDetailsHeadFragment;
+import com.hhly.mlottery.frame.basketballframe.BasketFocusEventBus;
 import com.hhly.mlottery.frame.basketballframe.BasketLiveFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketOddsFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketTextLiveEvent;
@@ -650,9 +651,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 ScheduleBasketballFragment.BasketScheduleEventBus.post("");
             }
         } else if (mCurrentId == FOCUS_FRAGMENT) {
-            if (FocusBasketballFragment.BasketFocusEventBus != null) {
-                FocusBasketballFragment.BasketFocusEventBus.post("");
-            }
+
+            EventBus.getDefault().post(new BasketFocusEventBus());
         } else if (mCurrentId == CUSTOM_FRAGMENT) {
             EventBus.getDefault().post(new CustomDetailsEvent(""));
         }

@@ -16,6 +16,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.bean.focusAndPush.BasketballConcernListBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.frame.basketballframe.BasketFocusEventBus;
 import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
@@ -24,6 +25,7 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.util.net.account.CustomEvent;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
@@ -31,6 +33,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by yixq on 2016/12/2.
@@ -90,12 +94,18 @@ public class BasketballScoresActivity extends BaseWebSocketActivity implements V
     private TabLayout mTabLayout;
     private PureViewPagerAdapter pureViewPagerAdapter;
     private List<Fragment> fragments;
+    /**判断是否来自关注页面*/
+    int mComeFromFocus=0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.basketball");
         super.onCreate(savedInstanceState);
+        if(getIntent().getExtras()!=null){
+            mComeFromFocus=getIntent().getExtras().getInt(FocusBasketballFragment.MY_BASKET_FOCUS,0);
+        }
+
 
         setContentView(R.layout.frage_new_basketball);
         mContext = getApplicationContext();
@@ -194,7 +204,6 @@ public class BasketballScoresActivity extends BaseWebSocketActivity implements V
     @Override
     protected void onTextResult(String text) {
         ((ImmedBasketballFragment)fragments.get(0)).handleSocketMessage(text);
-        ((FocusBasketballFragment)fragments.get(3)).handleSocketMessage(text);
     }
 
     @Override
@@ -216,6 +225,7 @@ public class BasketballScoresActivity extends BaseWebSocketActivity implements V
         connectWebSocket();
     }
 
+
     @Override
     public void onClick(View v) {
 
@@ -223,6 +233,9 @@ public class BasketballScoresActivity extends BaseWebSocketActivity implements V
             case R.id.public_img_back:  //返回
                 MobclickAgent.onEvent(mContext, "Basketball_Exit");
 //                ((MainActivity) getActivity()).openLeftLayout();
+                if(mComeFromFocus==FocusBasketballFragment.TYPE_FOCUS){
+                    EventBus.getDefault().post(new BasketFocusEventBus());
+                }
                 finish();
                 break;
             case R.id.public_btn_set:  //设置
@@ -317,7 +330,7 @@ public class BasketballScoresActivity extends BaseWebSocketActivity implements V
     }
 
     /**
-     * 判断四个Fragment切换显示或隐藏的状态
+     * 判断3个Fragment切换显示或隐藏的状态
      */
     private boolean isImmediateFragment = false;
     private boolean isImmediate = false;
@@ -343,7 +356,7 @@ public class BasketballScoresActivity extends BaseWebSocketActivity implements V
         }
     }
     /**
-     * 判断四个Fragment切换显示或隐藏的状态
+     * 判断3个Fragment切换显示或隐藏的状态
      *
      * @param position
      */

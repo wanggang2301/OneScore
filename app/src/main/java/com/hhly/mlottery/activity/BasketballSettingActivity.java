@@ -19,6 +19,7 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.R.string;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.frame.basketballframe.BasketFocusEventBus;
 import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
@@ -32,6 +33,8 @@ import com.umeng.message.UmengRegistrar;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * @ClassName: BasketballSettingActivity 
@@ -218,7 +221,8 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 //				L.i("102","赛程发送");
 				ScheduleBasketballFragment.BasketScheduleEventBus.post(mCurrentId);
 			}else if (mCurrentId==3){
-				FocusBasketballFragment.BasketFocusEventBus.post(mCurrentId);
+//				FocusBasketballFragment.BasketFocusEventBus.post(mCurrentId);
+				EventBus.getDefault().post(new BasketFocusEventBus());
 			}
 //			ImmedBasketballFragment.BasketImmedEventBus.post(0);
 			setResult(Activity.RESULT_OK,intent);
@@ -317,7 +321,7 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 //				L.i("102","赛程发送");
 				ScheduleBasketballFragment.BasketScheduleEventBus.post(mCurrentId);
 			}else if (mCurrentId==3){
-				FocusBasketballFragment.BasketFocusEventBus.post(mCurrentId);
+				EventBus.getDefault().post(new BasketFocusEventBus());
 			}
 
 			setResult(Activity.RESULT_OK,intent);

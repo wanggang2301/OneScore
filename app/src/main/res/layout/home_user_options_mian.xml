@@ -97,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="我的关注"
+                android:text="@string/my_focus"
                 android:textColor="@color/res_name_color"
                 android:textSize="@dimen/home_pager_user_title"/>
             <View

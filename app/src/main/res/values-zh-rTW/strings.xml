@@ -1477,5 +1477,11 @@
     <string name="product_advice_load_more">正在加載中....</string>
     <string name="more"><![CDATA[更多>>]]></string>
     <string name="nomoredatashangla">沒有更多數據了...</string>
+    <!--关注页面-->
+    <string name="my_focus_basket">籃球</string>
+    <string name="my_focus_football">足球</string>
+    <string name="no_focus">您還未關注任何比賽</string>
+    <string name="to_focus_now">馬上去關注</string>
+    <string name="my_focus">我的關注</string>
 
 </resources>

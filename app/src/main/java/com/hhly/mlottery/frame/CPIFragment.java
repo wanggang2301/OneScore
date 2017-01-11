@@ -23,6 +23,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiFiltrateActivity;
+import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.enums.OddsTypeEnum;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
@@ -112,6 +113,7 @@ public class CPIFragment extends BaseWebSocketFragment  {
             @Override
             public void onClick(View v) {
                 if (getActivity() != null) {
+                    ((FootballActivity)getActivity()).eventBusPost();
                     getActivity().finish();
                 }
             }

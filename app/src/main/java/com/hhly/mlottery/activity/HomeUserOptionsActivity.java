@@ -177,15 +177,10 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.rl_my_focus:
-                if(CommonUtils.isLogin()){
+            case R.id.rl_my_focus: //关注不需要登录
                     PreferenceUtil.commitBoolean(SHOW_RED,false);
                     mFocus_RedDot.setVisibility(View.GONE);
-//                    startActivity();
-                }else {
-                    Intent intent=new Intent(this,LoginActivity.class);
-//                    intent.put
-                }
+                    startActivity(new Intent(HomeUserOptionsActivity.this,MyFocusActivity.class));
                 break;
             case R.id.rl_custom:
                 if (CommonUtils.isLogin()) {

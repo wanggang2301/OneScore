@@ -232,7 +232,7 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
                             break;
                         case FOCUS_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.GONE);
-                            ((FocusBasketballFragment) fragments.get(position)).LoadData();
+//                            ((FocusBasketballFragment) fragments.get(position)).LoadData();
                             break;
                     }
                 }
@@ -330,7 +330,7 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
     @Override
     protected void onTextResult(String text) {
         ((ImmedBasketballFragment) fragments.get(0)).handleSocketMessage(text);
-        ((FocusBasketballFragment) fragments.get(3)).handleSocketMessage(text);
+//        ((FocusBasketballFragment) fragments.get(3)).handleSocketMessage(text);
 
 
     }

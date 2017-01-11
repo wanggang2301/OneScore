@@ -261,6 +261,7 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
         switch (view.getId()) {
             case R.id.public_img_back:
                 MobclickAgent.onEvent(mContext, "CounselChildFragment_Exit");
+                ((FootballActivity)getActivity()).eventBusPost();
                 ((FootballActivity) mContext).finish();
                 break;
             case R.id.network_exception_reload_btn:

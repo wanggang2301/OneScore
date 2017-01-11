@@ -101,6 +101,7 @@ public class InformationFragment extends Fragment implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.public_img_back:
+                ((FootballActivity)getActivity()).eventBusPost();
                 ((FootballActivity) mContext).finish();
                 break;
             case R.id.public_btn_set:
