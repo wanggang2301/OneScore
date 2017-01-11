@@ -33,32 +33,6 @@ public class MultiScreenBasketMatchScoreBean {
     private int guestOt2;
     private int guestOt3;
 
-
-    public MultiScreenBasketMatchScoreBean(){}
-
-    public MultiScreenBasketMatchScoreBean(int matchStatus, int section, String remainTime, int homeScore, int guestScore, int home1, int home2, int home3, int home4, int guest1, int guest2, int guest3, int guest4, int homeOt1, int homeOt2, int homeOt3, int guestOt1, int guestOt2, int guestOt3, int addTime) {
-        this.matchStatus = matchStatus;
-        this.section = section;
-        this.remainTime = remainTime;
-        this.homeScore = homeScore;
-        this.guestScore = guestScore;
-        this.home1 = home1;
-        this.home2 = home2;
-        this.home3 = home3;
-        this.home4 = home4;
-        this.guest1 = guest1;
-        this.guest2 = guest2;
-        this.guest3 = guest3;
-        this.guest4 = guest4;
-        this.homeOt1 = homeOt1;
-        this.homeOt2 = homeOt2;
-        this.homeOt3 = homeOt3;
-        this.guestOt1 = guestOt1;
-        this.guestOt2 = guestOt2;
-        this.guestOt3 = guestOt3;
-        this.addTime = addTime;
-    }
-
     public int getMatchStatus() {
         return matchStatus;
     }
