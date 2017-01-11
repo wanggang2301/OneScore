@@ -417,8 +417,9 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
                 break;
             case R.id.ll_add:
                 //Toast.makeText(getApplicationContext(), "敬请期待", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(MultiScreenViewActivity.this, MultiScreenViewingListActivity.class));
+                //startActivity(new Intent(MultiScreenViewActivity.this, MultiScreenViewingListActivity.class));
 
+                finish();
                 break;
         }
     }
