@@ -4,8 +4,14 @@
     android:id="@+id/activity_multi_screen_introduce"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/multiintoduce"
+    android:background="@color/black"
     tools:context="com.hhly.mlottery.activity.MultiScreenIntroduceActivity">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/multiintoduce"/>
 
     <TextView
         android:id="@+id/btn_enter"
