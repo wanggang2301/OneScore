@@ -663,5 +663,6 @@
 
     <color name="product_advice">#ff5c0b</color>
     <color name="product_answer_shape_color">#fff2ec</color>
-
+    <!--多屏列表-->
+    <color name="multiple_item_bg_color">#dff299</color>
 </resources>

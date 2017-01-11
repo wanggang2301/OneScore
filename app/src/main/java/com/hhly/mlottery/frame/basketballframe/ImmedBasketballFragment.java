@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
@@ -258,7 +259,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
         mbasket_unfiltrate = (RelativeLayout) mView.findViewById(R.id.basket_unfiltrate);
 
         explistview = (PinnedHeaderExpandableListView) mView.findViewById(R.id.explistview);
-        explistview.setChildDivider(getContext().getResources().getDrawable(R.color.linecolor)); //设置分割线 适配魅族
+        explistview.setChildDivider(MyApp.getContext().getResources().getDrawable(R.color.linecolor)); //设置分割线 适配魅族
 
         explistview.setOnChildClickListener(this);
 
@@ -269,7 +270,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
         mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.basketball_swiperefreshlayout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
+        mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(MyApp.getContext(), StaticValues.REFRASH_OFFSET_END));
 
         mLoadingLayout = (LinearLayout) mView.findViewById(R.id.basketball_immediate_loading);
 

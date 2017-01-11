@@ -85,8 +85,9 @@ public class DebugConfigActivity extends BaseActivity {
                 }
 
                 startActivity(new Intent(DebugConfigActivity.this, WelcomeActivity.class));
-//                startActivity(new Intent(DebugConfigActivity.this, CustomActivity.class));
+//                startActivity(new Intent(DebugConfigActivity.this, FootballActivity.class));
                 System.exit(0);
+
 
             }
         });
@@ -107,7 +108,7 @@ public class DebugConfigActivity extends BaseActivity {
                 PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, DIY_INPUT);
                 PreferenceUtil.commitString("DIY_INPUT", str);*/
 
-                startActivity(new Intent(DebugConfigActivity.this, MultiScreenViewActivity.class));
+                startActivity(new Intent(DebugConfigActivity.this, MultiScreenIntroduceActivity.class));
 
                 System.exit(0);
             }

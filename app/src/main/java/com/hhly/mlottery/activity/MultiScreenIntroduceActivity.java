@@ -1,6 +1,7 @@
 package com.hhly.mlottery.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -31,5 +32,6 @@ public class MultiScreenIntroduceActivity extends Activity {
     @OnClick(R.id.btn_enter)
     public void onClick() {
 
+        startActivity(new Intent(MultiScreenIntroduceActivity.this , MultiScreenViewingListActivity.class));
     }
 }
