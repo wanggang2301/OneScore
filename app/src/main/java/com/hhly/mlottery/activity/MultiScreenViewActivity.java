@@ -95,9 +95,9 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
 
 
     private String mFootThirdId = "";
-    private String mBasketThirdId = "4273637";
-    //private String mBasketThirdId1 = "4273697";
-    private String mBasketThirdId2 = "4228107";
+    private String mBasketThirdId = "4242537";
+    private String mBasketThirdId1 = "4242477";
+    // private String mBasketThirdId2 = "4228107";
 
 
     @Override
@@ -106,7 +106,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
         setWebSocketUri("ws://m.13322.com/ws");
         // setTopic("USER.topic.liveEvent." + mFootThirdId + "." + appendLanguage());  //足球
         setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId, "USER.topic.basketball.score." + mBasketThirdId + ".zh"));  //篮球
-        // setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId1, "USER.topic.basketball.score." + mBasketThirdId1 + ".zh"));  //篮球
+        setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId1, "USER.topic.basketball.score." + mBasketThirdId1 + ".zh"));  //篮球
         // setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId2, "USER.topic.basketball.score." + mBasketThirdId2 + ".zh"));  //篮球
 
         super.onCreate(savedInstanceState);
@@ -156,6 +156,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
 
                 L.d("multiscreen", "____篮球___" + w.getMatchId() + "___" + w.getText());
 
+
                 String ws_json = w.getText();
 
                 MultiWebSocketBasketBall multiWebSocketBasketBall = null;
@@ -163,11 +164,8 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
                     multiWebSocketBasketBall = JSON.parseObject(ws_json, MultiWebSocketBasketBall.class);
                 } catch (Exception e) {
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
-                    // Log.e(TAG, "ws_json = " + ws_json);
                     multiWebSocketBasketBall = JSON.parseObject(ws_json, MultiWebSocketBasketBall.class);
                 }
-                //  L.e();
-
 
                 updatePushBasketBallScore(w.getMatchId(), multiWebSocketBasketBall.getData());
 
@@ -202,7 +200,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
         for (MultiScreenViewBean m : list) {
             if (m.getMatchId().equals(matchId)) {
                 if (m.getData() instanceof MultiScreenBasketballBean) {
-                    L.d("multiscreen123", "____篮球___" + matchScoreBean.getHomeScore());
+                    ((MultiScreenBasketballBean) m.getData()).getMatch().setMatchStatus(matchScoreBean.getMatchStatus());
                     ((MultiScreenBasketballBean) m.getData()).getMatch().setMatchScore(matchScoreBean);
                     multiScreenViewAdapter.notifyDataSetChanged();
                 }
@@ -361,11 +359,11 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
      * 首次进入请求数据
      */
     private void loadData() {
-        requestFootballData("405181");
+        //requestFootballData("405181");
         requestFootballData("405176");
 
-        requestBasketballData("4273637");
-        //  requestBasketballData("4273697");
+        requestBasketballData(mBasketThirdId);
+        // requestBasketballData(mBasketThirdId1);
 
 
         multiScreenViewCallBack = new MultiScreenViewCallBack() {
@@ -407,7 +405,8 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
                 finish();
                 break;
             case R.id.ll_add:
-                Toast.makeText(getApplicationContext(), "敬请期待", Toast.LENGTH_SHORT).show();
+                 Toast.makeText(getApplicationContext(), "敬请期待", Toast.LENGTH_SHORT).show();
+
                 break;
         }
     }

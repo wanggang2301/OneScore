@@ -269,7 +269,9 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
         }
 
         if (mContext != null) {
+
             switch (mMatch.getMatchStatus()) {
+
                 case PRE_MATCH: ///赛前
                 case DETERMINED://待定
                 case GAME_CANCLE: //比赛取消
@@ -295,6 +297,8 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
                     mRemainTime.setText("");
 
                     break;
+
+
                 case END://完场
 
                     mGuestScore.setText(score.getGuestScore() + "");
@@ -302,6 +306,7 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
                     mHomeScore.setText(score.getHomeScore() + "");
                     mHomeScore.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
                     mMatchState.setText(R.string.finished_txt);
+                    // mMatchState.setText("哈哈哈");
                     mGuest1.setText(score.getGuest1() + "");
                     mGuest1.setTextColor(mContext.getResources().getColor(R.color.score_color_white));
                     mGuest2.setText(score.getGuest2() + "");
@@ -362,7 +367,10 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
                     }
                     mApos.setVisibility(View.GONE);
                     mRemainTime.setText("");
+
                     break;
+
+
                 case OT3:
                     mLayoutOt3.setVisibility(View.VISIBLE);
                     setScore(score.getGuestOt3(), mGuestOt3, score.getHomeOt3(), mHomeOt3);
@@ -384,13 +392,12 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
                 case SECOND_QUARTER:
                     setScore(score.getGuest2(), mGuest2, score.getHome2(), mHome2);
                 case FIRST_QUARTER:
+
                     setScore(score.getGuest1(), mGuest1, score.getHome1(), mHome1);
                     //不管是第几节都设置总比分,设置剩余时间
                     setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);
                     setScore(score.getGuestScore(), mSmallGuestScore, score.getHomeScore(), mSmallHomeScore);
                     mVS.setText(":");
-
-
 
 
                     if (mGuestNum != score.getGuestScore()) {
@@ -404,8 +411,6 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
                     setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);// 动画有毒，最后在设一下比分
 
                     setScore(score.getGuestScore(), mSmallGuestScore, score.getHomeScore(), mSmallHomeScore);
-
-
 
 
                     //设置比赛时间及状态
@@ -458,6 +463,9 @@ public class MultiScreenViewAdapter extends BaseRecyclerViewAdapter<RecyclerView
                     if (score.getRemainTime() == null || score.getRemainTime().equals("")) {//没有剩余时间的时候
                         mApos.setVisibility(View.GONE);
                     }
+                    break;
+
+                default:
                     break;
             }
         }
