@@ -721,6 +721,18 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 }
                                 score01_title.setText(homeBodysEntity.getRacename());// 设置赛事名称
                                 score01_title.setTextColor(Color.parseColor(homeBodysEntity.getRaceColor()));// 标题颜色
+                                score01_home_name.setText(homeBodysEntity.getHometeam());// 设置主队队名
+                                try {
+                                    Glide.with(mContext).load(homeBodysEntity.getHomeLogoUrl()).error(R.mipmap.home_score_item_icon_def).into(score01_home_icon);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                score01_guest_name.setText(homeBodysEntity.getGuestteam());// 设置客队队名
+                                try {
+                                    Glide.with(mContext).load(homeBodysEntity.getGuestLogoUrl()).error(R.mipmap.home_score_item_icon_def).into(score01_guest_icon);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             } else if ("20".equals(homeBodysEntity.getJumpAddr())) {// 篮球比分
                                 score01_icon.setImageDrawable(mContext.getResources().getDrawable(AppConstants.homePageScoreBasketBG[j % AppConstants.homePageScoreBasketBG.length]));// 设置背景图片
                                 switch (homeBodysEntity.getMatchStatus()) {
@@ -777,18 +789,19 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 }
                                 score01_title.setText(homeBodysEntity.getLeagueName());// 设置赛事名称
                                 score01_title.setTextColor(Color.parseColor(homeBodysEntity.getLeagueColor()));// 标题颜色
-                            }
-                            score01_home_name.setText(homeBodysEntity.getHometeam());// 设置主队队名
-                            try {
-                                Glide.with(mContext).load(homeBodysEntity.getHomeLogoUrl()).error(R.mipmap.home_score_item_icon_def).into(score01_home_icon);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            score01_guest_name.setText(homeBodysEntity.getGuestteam());// 设置客队队名
-                            try {
-                                Glide.with(mContext).load(homeBodysEntity.getGuestLogoUrl()).error(R.mipmap.home_score_item_icon_def).into(score01_guest_icon);
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                                // 篮球客队在前主队在后
+                                score01_guest_name.setText(homeBodysEntity.getHometeam());// 设置主队队名
+                                try {
+                                    Glide.with(mContext).load(homeBodysEntity.getHomeLogoUrl()).error(R.mipmap.home_score_item_icon_def).into(score01_guest_icon);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                score01_home_name.setText(homeBodysEntity.getGuestteam());// 设置客队队名
+                                try {
+                                    Glide.with(mContext).load(homeBodysEntity.getGuestLogoUrl()).error(R.mipmap.home_score_item_icon_def).into(score01_home_icon);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                         break;
