@@ -151,14 +151,10 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             WebSocketMultiScreenViewTextBean w = (WebSocketMultiScreenViewTextBean) msg.obj;
-
             if (w.getType() == VIEW_TYPE_BASKETBALL) {   //篮球
-
                 L.d("multiscreen", "____篮球___" + w.getMatchId() + "___" + w.getText());
 
-
                 String ws_json = w.getText();
-
                 MultiWebSocketBasketBall multiWebSocketBasketBall = null;
                 try {
                     multiWebSocketBasketBall = JSON.parseObject(ws_json, MultiWebSocketBasketBall.class);
@@ -166,10 +162,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
                     multiWebSocketBasketBall = JSON.parseObject(ws_json, MultiWebSocketBasketBall.class);
                 }
-
                 updatePushBasketBallScore(w.getMatchId(), multiWebSocketBasketBall.getData());
-
-
             } else if (w.getType() == VIEW_TYPE_FOOTBALL) { //足球
                 L.d("multiscreen", "____足球___" + w.getMatchId() + "___" + w.getText());
 
