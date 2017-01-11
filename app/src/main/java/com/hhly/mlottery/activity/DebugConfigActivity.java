@@ -113,8 +113,6 @@ public class DebugConfigActivity extends BaseActivity {
                 System.exit(0);
             }
         });
-
-
     }
 
 
@@ -126,6 +124,4 @@ public class DebugConfigActivity extends BaseActivity {
             startActivity(new Intent(DebugConfigActivity.this, MultiScreenViewingListActivity.class));
         }
     }
-
-
 }
