@@ -57,11 +57,6 @@ import butterknife.OnClick;
 
 public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivity implements ExactSwipeRefreshLayout.OnRefreshListener {
 
-
-    //setTopic("USER.topic.basketball.score." + mThirdId + ".zh");
-
-//        setTopic("USER.topic.liveEvent." + mThirdId + "." + appendLanguage());
-
     private static final String baseUrl = "http://pic.13322.com/bg/";
 
     private static final int VIEW_TYPE_FOOTBALL = 1;
@@ -102,6 +97,10 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        if (getIntent().getExtras() != null) {
+
+        }
 
         setWebSocketUri("ws://m.13322.com/ws");
         // setTopic("USER.topic.liveEvent." + mFootThirdId + "." + appendLanguage());  //足球
@@ -391,7 +390,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
                 finish();
                 break;
             case R.id.ll_add:
-                 Toast.makeText(getApplicationContext(), "敬请期待", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "敬请期待", Toast.LENGTH_SHORT).show();
 
                 break;
         }
