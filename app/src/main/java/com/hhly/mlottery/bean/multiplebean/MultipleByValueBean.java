@@ -1,20 +1,21 @@
 package com.hhly.mlottery.bean.multiplebean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by yixq on 2017/1/9.
  * mail：yixq@13322.com
  * describe: 多屏动画列表传值类
  */
 
-public class MultipleByValueBean {
+public class MultipleByValueBean implements Parcelable {
 
     //区分足篮球 [0:篮球 ， 1:足球]
     private int type;
 
     public String thirdId;//比赛id
-    public String MatchStatus;//比赛状态
-    public String leagueId;//联赛id
-    public String matchType;//联赛类型
+
 
     public int getType() {
         return type;
@@ -32,27 +33,34 @@ public class MultipleByValueBean {
         this.thirdId = thirdId;
     }
 
-    public String getMatchStatus() {
-        return MatchStatus;
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void setMatchStatus(String matchStatus) {
-        MatchStatus = matchStatus;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.type);
+        dest.writeString(this.thirdId);
     }
 
-    public String getLeagueId() {
-        return leagueId;
+    public MultipleByValueBean() {
     }
 
-    public void setLeagueId(String leagueId) {
-        this.leagueId = leagueId;
+    protected MultipleByValueBean(Parcel in) {
+        this.type = in.readInt();
+        this.thirdId = in.readString();
     }
 
-    public String getMatchType() {
-        return matchType;
-    }
+    public static final Parcelable.Creator<MultipleByValueBean> CREATOR = new Parcelable.Creator<MultipleByValueBean>() {
+        @Override
+        public MultipleByValueBean createFromParcel(Parcel source) {
+            return new MultipleByValueBean(source);
+        }
 
-    public void setMatchType(String matchType) {
-        this.matchType = matchType;
-    }
+        @Override
+        public MultipleByValueBean[] newArray(int size) {
+            return new MultipleByValueBean[size];
+        }
+    };
 }

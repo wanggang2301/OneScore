@@ -84,7 +84,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
     private final static int FOOTBALL_TYPE = 1;//请求中
     private int borf = BASKET_TYPE;//区分足篮球[默认篮球]、
 
-    private List<MultipleByValueBean> byValue = new LinkedList<>();//传参的list
+    private List<MultipleByValueBean> byValue = new ArrayList<>();//传参的list
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -313,9 +313,9 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                                             matchData.setChicks(!matchData.isChicks());
                                             mFootballAdapter.notifyDataSetChanged();
                                             L.d("yxq===011A ", "添加了对象 A " + valueBean.getThirdId());
-                                            Toast.makeText(mContext,  "选择 "+byValue.size(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(mContext, "选择 " + byValue.size(), Toast.LENGTH_SHORT).show();
                                             L.d("yxq===011A ", "byValue.size() = " + byValue.size() + " ** ");
-                                        }else if (datasize < 3){
+                                        } else if (datasize < 3) {
 
                                             boolean isSame = false;//记录所选id是否已选中
                                             int indext = -1;//记录所选id在已选对象中的索引位置
@@ -331,7 +331,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                                                 if (indext != -1) {
                                                     byValue.remove(indext);
                                                 }
-                                            }else{
+                                            } else {
                                                 MultipleByValueBean valueBeana = new MultipleByValueBean();
                                                 valueBeana.setType(1);
                                                 valueBeana.setThirdId(data);
@@ -341,9 +341,9 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
 
                                             matchData.setChicks(!matchData.isChicks());
                                             mFootballAdapter.notifyDataSetChanged();
-                                            Toast.makeText(mContext, "选择 "+ byValue.size(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(mContext, "选择 " + byValue.size(), Toast.LENGTH_SHORT).show();
                                             L.d("yxq===011B ", "byValue.size() = " + byValue.size() + " ** ");
-                                        }else if (datasize >= 3) {
+                                        } else if (datasize >= 3) {
                                             for (int i = 0; i < byValue.size(); i++) {
                                                 if (byValue.get(i).getThirdId().equals(data)) {
                                                     byValue.remove(i);
@@ -355,7 +355,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                                             }
 //                                            matchData.setChicks(!matchData.isChicks());
 //                                            mFootballAdapter.notifyDataSetChanged();
-                                            Toast.makeText(mContext, "选择 "+ byValue.size(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(mContext, "选择 " + byValue.size(), Toast.LENGTH_SHORT).show();
                                             L.d("yxq===011C ", "byValue.size() = " + byValue.size() + " ** ");
                                         }
                                     }
@@ -469,7 +469,11 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
             case R.id.multi_ok:
                 if (byValue == null || byValue.size() == 0) {
                     Toast.makeText(getApplicationContext(), "请选择比赛", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
+                    Intent intent = new Intent(MultiScreenViewingListActivity.this, MultiScreenViewActivity.class);
+                    intent.putExtra("byValue", (ArrayList) byValue);
+                    startActivity(intent);
+
                     Toast.makeText(getApplicationContext(), "已选择 " + byValue.size() + " 场比赛", Toast.LENGTH_SHORT).show();
                 }
                 break;
