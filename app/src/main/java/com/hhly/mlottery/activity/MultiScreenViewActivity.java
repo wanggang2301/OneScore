@@ -107,10 +107,9 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
 
             for (MultipleByValueBean m : matchIdList) {
                 if (m.getType() == VIEW_TYPE_FOOTBALL) {
-                    setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, m.getThirdId(), "USER.topic.liveEvent." + m.getThirdId() + "." + appendLanguage()));  //篮球
+                    setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_FOOTBALL, m.getThirdId(), "USER.topic.liveEvent." + m.getThirdId() + "." + appendLanguage()));  //篮球
                 } else if (m.getType() == VIEW_TYPE_BASKETBALL) {
-                    setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId, "USER.topic.basketball.score." + m.getThirdId() + ".zh"));  //篮球
-
+                    setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, m.getThirdId(), "USER.topic.basketball.score." + m.getThirdId() + ".zh"));  //篮球
                 }
             }
         }
