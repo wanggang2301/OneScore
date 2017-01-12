@@ -208,7 +208,7 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
         List<BasketMatchFilter> otherdatas = new ArrayList<>();//已有其他
         for (BasketMatchFilter filter:mAllFilterDatas) {
             String leagueId = filter.getLeagueId();
-            if (leagueId.equals("1") || leagueId.equals("5") || leagueId.equals("8") || leagueId.equals("15") ||
+            if (leagueId.equals("1") || leagueId.equals("5") || leagueId.equals("15") ||
                     leagueId.equals("21") || leagueId.equals("22") || leagueId.equals("57") || leagueId.equals("377")){
                 hotdatas.add(filter);
             }else{
