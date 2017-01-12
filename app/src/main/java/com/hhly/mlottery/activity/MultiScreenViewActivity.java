@@ -89,27 +89,25 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
 
     private MultiScreenViewCallBack multiScreenViewCallBack;
 
-
-    private String mFootThirdId = "";
-    private String mBasketThirdId = "4242537";
-    private String mBasketThirdId1 = "4242477";
-    // private String mBasketThirdId2 = "4228107";
-
     private List<MultipleByValueBean> matchIdList;
+
+    private static final String footballTopic = "USER.topic.liveEvent.";
+    private static final String basketballTopic = "USER.topic.basketball.score.";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (getIntent().getExtras() != null) {
             matchIdList = (ArrayList<MultipleByValueBean>) getIntent().getSerializableExtra("byValue");
+            // setWebSocketUri(BaseURLs.WS_SERVICE);
 
             setWebSocketUri("ws://m.13322.com/ws");
 
             for (MultipleByValueBean m : matchIdList) {
                 if (m.getType() == VIEW_TYPE_FOOTBALL) {
-                    setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_FOOTBALL, m.getThirdId(), "USER.topic.liveEvent." + m.getThirdId() + "." + appendLanguage()));  //篮球
+                    setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_FOOTBALL, m.getThirdId(), footballTopic + m.getThirdId() + "." + appendLanguage()));  //篮球
                 } else if (m.getType() == VIEW_TYPE_BASKETBALL) {
-                    setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, m.getThirdId(), "USER.topic.basketball.score." + m.getThirdId() + ".zh"));  //篮球
+                    setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, m.getThirdId(), basketballTopic + m.getThirdId() + ".zh"));  //篮球
                 }
             }
         }
