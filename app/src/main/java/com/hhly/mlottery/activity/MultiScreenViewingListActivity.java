@@ -98,6 +98,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
         super.onCreate(savedInstanceState);
         if (getIntent().getExtras() != null) {
             MultipleByValueBean mCurrentId = (MultipleByValueBean)getIntent().getExtras().get("thirdId");
+            borf = mCurrentId.getType();
             byValue.add(mCurrentId);
         }
         mContext = getApplicationContext();
@@ -115,8 +116,13 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
 
         mRadioGroup = (RadioGroup) findViewById(R.id.multiple_gendergroup);
         mBasketRadioButton = (RadioButton) findViewById(R.id.multiple_basket);
-        mBasketRadioButton.setChecked(true);//默认选中篮球
         mFootballRadioButton = (RadioButton) findViewById(R.id.multiple_football);
+        //默认选中
+        if (borf == BASKET_TYPE) {
+            mBasketRadioButton.setChecked(true);
+        }else if (borf == FOOTBALL_TYPE) {
+            mFootballRadioButton.setChecked(true);
+        }
         setRadioGroupClick();
 
         mConfirm = (TextView) findViewById(R.id.multi_ok);
@@ -285,20 +291,22 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                     mChickedFilter = mAllFilter;//默认选中全部
                 }
 
-                /**
-                 * 判断是否有选中的比赛
-                 */
-                if (byValue != null || byValue.size() != 0) {
-                    for (int i = 0; i < byValue.size(); i++) {
-                        if (byValue.get(i).getType() == BASKET_TYPE) {
-                            for (int j = 0; j < showDataList.size(); j++) {
-                                if (showDataList.get(j).getThirdId().equals(byValue.get(i).getThirdId())) {
-                                    showDataList.get(j).setBasketChicks(true);//设为选中
-                                }
-                            }
-                        }
-                    }
-                }
+                //* 判断是否有选中的比赛
+                currentClick(BASKET_TYPE);
+//                /**
+//                 * 判断是否有选中的比赛
+//                 */
+//                if (byValue != null || byValue.size() != 0) {
+//                    for (int i = 0; i < byValue.size(); i++) {
+//                        if (byValue.get(i).getType() == BASKET_TYPE) {
+//                            for (int j = 0; j < showDataList.size(); j++) {
+//                                if (showDataList.get(j).getThirdId().equals(byValue.get(i).getThirdId())) {
+//                                    showDataList.get(j).setBasketChicks(true);//设为选中
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
 
                 if (mBasketAdapter == null) {
                     mBasketAdapter = new MultipleListBasketAdapter(mContext, showDataList);
@@ -375,6 +383,36 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                 setState(MULTIPLE_STATUS_NET_ERROR);
             }
         },BasketMultipleRoot.class);
+    }
+    /**
+     * 判断是否有选中的比赛
+     */
+    private void currentClick(int type){
+        if (type == BASKET_TYPE) {
+            if (byValue != null || byValue.size() != 0) {
+                for (int i = 0; i < byValue.size(); i++) {
+                    if (byValue.get(i).getType() == BASKET_TYPE) {
+                        for (int j = 0; j < showDataList.size(); j++) {
+                            if (showDataList.get(j).getThirdId().equals(byValue.get(i).getThirdId())) {
+                                showDataList.get(j).setBasketChicks(true);//设为选中
+                            }
+                        }
+                    }
+                }
+            }
+        }else if (type == FOOTBALL_TYPE) {
+            if (byValue != null || byValue.size() != 0) {
+                for (int i = 0; i < byValue.size(); i++) {
+                    if (byValue.get(i).getType() == FOOTBALL_TYPE) {
+                        for (int j = 0; j < mMatchs.size(); j++) {
+                            if (mMatchs.get(j).getThirdId().equals(byValue.get(i).getThirdId())) {
+                                mMatchs.get(j).setFootballChicks(true);//设为选中
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -468,21 +506,22 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                             }
                             mCheckedCups = tempHotCups.toArray(new LeagueCup[tempHotCups.size()]);
                         }
-
-                        /**
-                         * 判断是否有选中的比赛
-                         */
-                        if (byValue != null || byValue.size() != 0) {
-                            for (int i = 0; i < byValue.size(); i++) {
-                                if (byValue.get(i).getType() == FOOTBALL_TYPE) {
-                                    for (int j = 0; j < mMatchs.size(); j++) {
-                                        if (mMatchs.get(j).getThirdId().equals(byValue.get(i).getThirdId())) {
-                                            mMatchs.get(j).setFootballChicks(true);//设为选中
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        //* 判断是否有选中的比赛
+                        currentClick(FOOTBALL_TYPE);
+//                        /**
+//                         * 判断是否有选中的比赛
+//                         */
+//                        if (byValue != null || byValue.size() != 0) {
+//                            for (int i = 0; i < byValue.size(); i++) {
+//                                if (byValue.get(i).getType() == FOOTBALL_TYPE) {
+//                                    for (int j = 0; j < mMatchs.size(); j++) {
+//                                        if (mMatchs.get(j).getThirdId().equals(byValue.get(i).getThirdId())) {
+//                                            mMatchs.get(j).setFootballChicks(true);//设为选中
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
 
                         if (mFootballAdapter == null) {
                             mFootballAdapter = new MultipleListFootballAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
@@ -701,6 +740,9 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                 }
 
                 mCheckedCups = leagueCupList.toArray(new LeagueCup[]{});
+                //* 判断是否有选中的比赛
+                currentClick(FOOTBALL_TYPE);
+
                 updateFootballAdapter();
                 isCheckedDefualt = (boolean) map.get(FiltrateMatchConfigActivity.CHECKED_DEFUALT);
 
@@ -807,6 +849,8 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
 //            mSwipeRefreshLayout.setVisibility(View.VISIBLE);
 
                 L.d("123", "childrenDataList >>>> = " + showDataList.size());
+                //* 判断是否有选中的比赛
+                currentClick(BASKET_TYPE);
                 updateBasketAdapter();
                 setState(MULTIPLE_STATUS_SUCCESS);
             }
