@@ -15,11 +15,14 @@ import android.view.ViewGroup;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
+import com.hhly.mlottery.bean.numbersBean.CoedAppearBean;
+import com.hhly.mlottery.bean.numbersBean.CoedNotAppearBean;
+import com.hhly.mlottery.bean.numbersBean.LotteryInfoDateBean;
 import com.hhly.mlottery.bean.numbersBean.LotteryInfoHKStartBean;
+import com.hhly.mlottery.bean.numbersBean.NumberAppearBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
@@ -43,6 +46,7 @@ public class HKLotteryStartFragment extends Fragment implements SwipeRefreshLayo
     private TabLayout tabLayout;
     private List<Fragment> fragments;
     private List<String> titles;
+    private LotteryInfoHKStartBean.DateBean mDate;
 
     @Nullable
     @Override
@@ -63,13 +67,10 @@ public class HKLotteryStartFragment extends Fragment implements SwipeRefreshLayo
         VolleyContentFast.requestJsonByGet(BaseURLs.LOTTERY_INFO_STARTIS_URL, null, new VolleyContentFast.ResponseSuccessListener<LotteryInfoHKStartBean>() {
             @Override
             public void onResponse(LotteryInfoHKStartBean jsonObject) {
-                if(jsonObject != null){
+                if (jsonObject != null && jsonObject.getResult() == 200) {
+                    mDate = jsonObject.getDate();
                     mHandler.sendEmptyMessage(SUCCESS);
-
-                    L.d("xxxxx","成功： " + jsonObject.getData().getFiveHundred().getZodiac().get(0).getKey());
-
-
-                }else{
+                } else {
                     mHandler.sendEmptyMessage(ERROR);
                 }
             }
@@ -89,20 +90,11 @@ public class HKLotteryStartFragment extends Fragment implements SwipeRefreshLayo
         mViewPager = (ViewPager) mView.findViewById(R.id.view_pager);
         tabLayout = (TabLayout) mView.findViewById(R.id.start_tabs);
 
-        fragments = new ArrayList<>();
-        // TODO 此处传递后台数据
-        fragments.add(StartPagerFragment.newInstance("特码出现"));
-        fragments.add(StartPagerFragment.newInstance("平码出现"));
-        fragments.add(StartPagerFragment.newInstance("特码未出现"));
-
         titles = new ArrayList<>();
         titles.add(mContext.getResources().getString(R.string.home_lottery_info_start_tab_tm));
         titles.add(mContext.getResources().getString(R.string.home_lottery_info_start_tab_pm));
         titles.add(mContext.getResources().getString(R.string.home_lottery_info_start_tab_notm));
 
-        mViewPager.setAdapter(new PureViewPagerAdapter(fragments, titles, getChildFragmentManager()));
-        tabLayout.setupWithViewPager(mViewPager);
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
     }
 
     private Handler mHandler = new Handler() {
@@ -113,14 +105,76 @@ public class HKLotteryStartFragment extends Fragment implements SwipeRefreshLayo
                     break;
                 case SUCCESS:
 
+                    sortDate(mDate);
 
+                    fragments = new ArrayList<>();
+                    fragments.add(StartPagerFragment.newInstance(1,zodiacList,numberList,mantissaList,boList));
+                    fragments.add(StartPagerFragment.newInstance(2,zodiacList,numberList,mantissaList,boList));
+                    fragments.add(StartPagerFragment.newInstance(3,zodiacList,numberList,mantissaList,boList));
 
+                    mViewPager.setAdapter(new PureViewPagerAdapter(fragments, titles, getChildFragmentManager()));
+                    tabLayout.setupWithViewPager(mViewPager);
+                    tabLayout.setTabMode(TabLayout.MODE_FIXED);
                     break;
                 case ERROR:
                     break;
             }
         }
     };
+
+
+    List<LotteryInfoDateBean> zodiacList;
+    List<LotteryInfoDateBean> numberList;
+    List<LotteryInfoDateBean> mantissaList;
+    List<LotteryInfoDateBean> boList;
+    private void sortDate(LotteryInfoHKStartBean.DateBean date){
+
+        zodiacList = new ArrayList<>();
+        numberList = new ArrayList<>();
+        mantissaList = new ArrayList<>();
+        boList = new ArrayList<>();
+
+        // TODO 此乃只是一千期的数据
+        List<LotteryInfoHKStartBean.DateBean.OneThousandBean.ZodiacBeanOneThousand> zodiac = date.getOneThousand().getZodiac();
+        for (LotteryInfoHKStartBean.DateBean.OneThousandBean.ZodiacBeanOneThousand zodiacBeanOneThousand : zodiac) {
+            LotteryInfoDateBean bean = new LotteryInfoDateBean();
+            bean.setCoedAppear(zodiacBeanOneThousand.getCoedAppear());
+            bean.setCoedNotAppear(zodiacBeanOneThousand.getCoedNotAppear());
+            bean.setNumberAppear(zodiacBeanOneThousand.getNumberAppear());
+            bean.setKey(zodiacBeanOneThousand.getKey());
+            zodiacList.add(bean);
+        }
+
+        List<LotteryInfoHKStartBean.DateBean.OneThousandBean.NumberBeanOneThousand> number = date.getOneThousand().getNumber();
+        for (LotteryInfoHKStartBean.DateBean.OneThousandBean.NumberBeanOneThousand numberBeanOneThousand : number) {
+            LotteryInfoDateBean bean = new LotteryInfoDateBean();
+            bean.setCoedAppear(numberBeanOneThousand.getCoedAppear());
+            bean.setCoedNotAppear(numberBeanOneThousand.getCoedNotAppear());
+            bean.setNumberAppear(numberBeanOneThousand.getNumberAppear());
+            bean.setKey(numberBeanOneThousand.getKey());
+            numberList.add(bean);
+        }
+
+        List<LotteryInfoHKStartBean.DateBean.OneThousandBean.MantissaBeanOneThousand> mantissa = date.getOneThousand().getMantissa();
+        for (LotteryInfoHKStartBean.DateBean.OneThousandBean.MantissaBeanOneThousand mantissaBeanOneThousand : mantissa) {
+            LotteryInfoDateBean bean = new LotteryInfoDateBean();
+            bean.setCoedAppear(mantissaBeanOneThousand.getCoedAppear());
+            bean.setCoedNotAppear(mantissaBeanOneThousand.getCoedNotAppear());
+            bean.setNumberAppear(mantissaBeanOneThousand.getNumberAppear());
+            bean.setKey(mantissaBeanOneThousand.getKey());
+            mantissaList.add(bean);
+        }
+
+        List<LotteryInfoHKStartBean.DateBean.OneThousandBean.BoBeanOneThousand> bo = date.getOneThousand().getBo();
+        for (LotteryInfoHKStartBean.DateBean.OneThousandBean.BoBeanOneThousand boBeanOneThousand : bo) {
+            LotteryInfoDateBean bean = new LotteryInfoDateBean();
+            bean.setCoedAppear(boBeanOneThousand.getCoedAppear());
+            bean.setCoedNotAppear(boBeanOneThousand.getCoedNotAppear());
+            bean.setNumberAppear(boBeanOneThousand.getNumberAppear());
+            bean.setKey(boBeanOneThousand.getKey());
+            boList.add(bean);
+        }
+    }
 
     @Override
     public void onRefresh() {

@@ -10,21 +10,22 @@ import java.util.List;
 public class LotteryInfoHKChartBean {
 
     private int result;
-    private List<Data> data;
+    private List<DateBean> date;
 
-    public class Data {
+    public static class DateBean {
+
         private int jumpType;
         private String jumpAddr;
         private int infoId;
-        private String picUrl; // 标题图片地址
-        private String title;// 主标题
-        private String subTitle;// 副标题
-        private String infoUrl;// 资讯详情跳转地址
-        private String infoSource;// 来源信息
-        private String lastModifyDate;// 最后修改日期
-        private String lastModifyTime;// 最后修改时间
-        private String summary;// 摘要
-        private String modelType;// 模板
+        private String picUrl;
+        private String title;
+        private String subTitle;
+        private String infoUrl;
+        private String infoSource;
+        private String lastModifyDate;
+        private String lastModifyTime;
+        private String summary;
+        private String modelType;
 
         public int getJumpType() {
             return jumpType;
@@ -122,20 +123,19 @@ public class LotteryInfoHKChartBean {
             this.modelType = modelType;
         }
     }
-
-    public List<Data> getData() {
-        return data;
-    }
-
-    public void setData(List<Data> data) {
-        this.data = data;
-    }
-
     public int getResult() {
         return result;
     }
 
     public void setResult(int result) {
         this.result = result;
+    }
+
+    public List<DateBean> getDate() {
+        return date;
+    }
+
+    public void setDate(List<DateBean> date) {
+        this.date = date;
     }
 }

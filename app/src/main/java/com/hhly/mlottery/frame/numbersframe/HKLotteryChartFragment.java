@@ -82,9 +82,7 @@ public class HKLotteryChartFragment extends Fragment implements SwipeRefreshLayo
         VolleyContentFast.requestJsonByGet(BaseURLs.LOTTERY_INFO_CHART_URL, map, new VolleyContentFast.ResponseSuccessListener<LotteryInfoHKChartBean>() {
             @Override
             public void onResponse(LotteryInfoHKChartBean jsonObject) {
-                if (jsonObject != null) {
-
-                    L.d("xxxxx","访问成功：" + jsonObject.getData().get(0).getTitle());
+                if (jsonObject != null && jsonObject.getResult() == 200) {
 
                     mHandler.sendEmptyMessage(SUCCESS);
                 } else {
