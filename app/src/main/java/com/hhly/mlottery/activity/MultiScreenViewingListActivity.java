@@ -31,7 +31,6 @@ import com.hhly.mlottery.bean.multiplebean.MultipleByValueBean;
 import com.hhly.mlottery.callback.RequestHostFocusCallBack;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
-import com.hhly.mlottery.frame.footframe.FootballDatabaseScheduleNewFragment;
 import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFilterEventBusEntity;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
@@ -676,6 +675,10 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                 if (byValue == null || byValue.size() == 0) {
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.multi_toast_clicks_match), Toast.LENGTH_SHORT).show();
                 }else{
+                    Intent intent = new Intent(MultiScreenViewingListActivity.this, MultiScreenViewActivity.class);
+                    intent.putExtra("byValue", (ArrayList) byValue);
+                    startActivity(intent);
+
 //                    Toast.makeText(getApplicationContext(), "已选择 " + byValue.size() + " 场比赛", Toast.LENGTH_SHORT).show();
                 }
                 break;
