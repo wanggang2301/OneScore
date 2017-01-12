@@ -97,7 +97,6 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getIntent().getExtras() != null) {
-            getIntent().getExtras().get("");
             MultipleByValueBean mCurrentId = (MultipleByValueBean)getIntent().getExtras().get("thirdId");
             byValue.add(mCurrentId);
         }
