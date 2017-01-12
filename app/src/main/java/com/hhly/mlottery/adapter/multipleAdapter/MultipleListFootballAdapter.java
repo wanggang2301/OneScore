@@ -83,17 +83,7 @@ public class MultipleListFootballAdapter extends RecyclerView.Adapter<RecyclerVi
         this.teamLogoPre = teamLogoPre;
         this.teamLogoSuff = teamLogoSuff;
 
-//        isClicks = new ArrayList<>();
-//        for (int i = 0; i < datas.size(); i++) {
-//            isClicks.add(false);
-//        }
-//        checkVector = new Vector();
-//        for (Match d : datas) {
-//            checkVector.add(false);
-//        }
-
     }
-
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -141,7 +131,7 @@ public class MultipleListFootballAdapter extends RecyclerView.Adapter<RecyclerVi
 //            immediaViewHolder.item_football_content_ll.setBackgroundResource(R.color.white);
 //        }
 
-        if (match.isChicks()) {
+        if (match.isFootballChicks()) {
             immediaViewHolder.item_football_content_ll.setBackgroundResource(R.color.multiple_item_bg_color);
 //            immediaViewHolder.item_football_content_ll.setBackgroundResource(R.color.white);
         }else{

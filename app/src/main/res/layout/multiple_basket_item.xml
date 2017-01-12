@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/custom_match_item"
+        android:id="@+id/multiple_match_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">

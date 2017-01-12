@@ -20,7 +20,7 @@
             android:background="@color/colorPrimary"
             android:textColor="#ffffff"
             android:textSize="@dimen/text_size_17"
-            android:text="确定"/>
+            android:text="@string/multi_item_clicks"/>
         
         <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
             android:id="@+id/custom_refresh_layout"

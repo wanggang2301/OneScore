@@ -1485,4 +1485,10 @@
     <string name="multi_enter_text">點擊進入</string>
     <string name="multi_add_view_text">添加多屏</string>
 
+    <!--多屏列表-->
+    <string name="multi_item_basket_name">籃球</string>
+    <string name="multi_item_football_name">足球</string>
+    <string name="multi_item_clicks">確定</string>
+    <string name="multi_toast_clicks_match">請選擇比賽</string>
+
 </resources>

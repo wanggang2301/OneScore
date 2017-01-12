@@ -56,14 +56,14 @@ public class Match implements Parcelable, Cloneable, Comparator<Match> {
     private int homeTeamTextColorId;
     private int guestTeamTextColorId;
 
-    private boolean isChicks = false; //标记item是否被选中(默认未选中)
+    private boolean isFootballChicks = false; //标记item是否被选中(默认未选中)
 
-    public boolean isChicks() {
-        return isChicks;
+    public boolean isFootballChicks() {
+        return isFootballChicks;
     }
 
-    public void setChicks(boolean chicks) {
-        isChicks = chicks;
+    public void setFootballChicks(boolean footballChicks) {
+        isFootballChicks = footballChicks;
     }
 
     private int itemBackGroundColorId;//用于进球背景变化
