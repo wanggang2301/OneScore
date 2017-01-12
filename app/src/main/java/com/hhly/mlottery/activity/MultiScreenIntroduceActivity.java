@@ -31,7 +31,7 @@ public class MultiScreenIntroduceActivity extends Activity {
 
     @OnClick(R.id.btn_enter)
     public void onClick() {
-
         startActivity(new Intent(MultiScreenIntroduceActivity.this , MultiScreenViewingListActivity.class));
+        finish();
     }
 }

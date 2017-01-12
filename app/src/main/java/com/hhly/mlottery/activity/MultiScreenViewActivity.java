@@ -121,6 +121,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
 
     /***
      * 接受推送消息
+     *
      * @param w
      */
     @Override
@@ -345,11 +346,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
         multiScreenViewAdapter = new MultiScreenViewAdapter(getApplicationContext(), list);
         recyclerView.setAdapter(multiScreenViewAdapter);
 
-        if (matchIdList.size() >= 3) {
-            ll_add.setVisibility(View.GONE);
-        } else {
-            ll_add.setVisibility(View.VISIBLE);
-        }
+        ll_add.setVisibility(matchIdList.size() >= 3 ? View.GONE : View.VISIBLE);
     }
 
 
@@ -603,11 +600,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
         list.remove(position);
         multiScreenViewAdapter.notifyDataSetChanged();
 
-        if (list.size() >= 3) {
-            ll_add.setVisibility(View.GONE);
-        } else {
-            ll_add.setVisibility(View.VISIBLE);
-        }
+        ll_add.setVisibility(list.size() >= 3 ? View.GONE : View.VISIBLE);
     }
 
 
