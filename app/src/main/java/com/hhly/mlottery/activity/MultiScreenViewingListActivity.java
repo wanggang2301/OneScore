@@ -293,20 +293,6 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
 
                 //* 判断是否有选中的比赛
                 currentClick(BASKET_TYPE);
-//                /**
-//                 * 判断是否有选中的比赛
-//                 */
-//                if (byValue != null || byValue.size() != 0) {
-//                    for (int i = 0; i < byValue.size(); i++) {
-//                        if (byValue.get(i).getType() == BASKET_TYPE) {
-//                            for (int j = 0; j < showDataList.size(); j++) {
-//                                if (showDataList.get(j).getThirdId().equals(byValue.get(i).getThirdId())) {
-//                                    showDataList.get(j).setBasketChicks(true);//设为选中
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
 
                 if (mBasketAdapter == null) {
                     mBasketAdapter = new MultipleListBasketAdapter(mContext, showDataList);
@@ -508,20 +494,6 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                         }
                         //* 判断是否有选中的比赛
                         currentClick(FOOTBALL_TYPE);
-//                        /**
-//                         * 判断是否有选中的比赛
-//                         */
-//                        if (byValue != null || byValue.size() != 0) {
-//                            for (int i = 0; i < byValue.size(); i++) {
-//                                if (byValue.get(i).getType() == FOOTBALL_TYPE) {
-//                                    for (int j = 0; j < mMatchs.size(); j++) {
-//                                        if (mMatchs.get(j).getThirdId().equals(byValue.get(i).getThirdId())) {
-//                                            mMatchs.get(j).setFootballChicks(true);//设为选中
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
 
                         if (mFootballAdapter == null) {
                             mFootballAdapter = new MultipleListFootballAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
@@ -687,8 +659,6 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                     Intent intent = new Intent(MultiScreenViewingListActivity.this, MultiScreenViewActivity.class);
                     intent.putExtra("byValue", (ArrayList) byValue);
                     startActivity(intent);
-
-//                    Toast.makeText(getApplicationContext(), "已选择 " + byValue.size() + " 场比赛", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.public_img_back:
@@ -747,10 +717,8 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                 isCheckedDefualt = (boolean) map.get(FiltrateMatchConfigActivity.CHECKED_DEFUALT);
 
                 if (mMatchs.size() == 0) {// 没有比赛
-//                mViewHandler.sendEmptyMessage(VIEW_STATUS_FLITER_NO_DATA);
                     setState(MULTIPLE_STATUS_FOCUS_NO_DATA);
                 } else {
-//                mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                     setState(MULTIPLE_STATUS_SUCCESS);
                 }
             }
@@ -768,7 +736,6 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
             String[] checkedIds = (String[]) ((List) map.get(BasketFiltrateActivity.CHECKED_CUPS_IDS)).toArray(new String[]{});
 
             L.d("AAAAA------------------", checkedIds.length + "");
-//        String[] checkedIds = (String[]) map.getCharSequenceArrayExtra(BasketFiltrateActivity.CHECKED_CUPS_IDS);// 返回数据是选择后的id字符串数组，数据类型String
             isBasketFilter = true;
 
             FiltrateCupsMap.basketImmedateCups = checkedIds;
@@ -777,13 +744,9 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                 mChickedFilter = noCheckedFilters;//筛选0场后，再次进入赛选页面 显示已选中0场（全部不选中）
 
                 setState(MULTIPLE_STATUS_FOCUS_NO_DATA);
-//            mbasket_unfiltrate.setVisibility(View.VISIBLE);
-//            mSwipeRefreshLayout.setVisibility(View.GONE);
-//            mLoadingLayout.setVisibility(View.GONE);
             } else {
 
                 showDataList.clear();
-//                    List<BasketMatchBean> checkedMatchs = new ArrayList<>();
                     for (BasketMatchBean matchBean : mMatchdata) {// 遍历所有数据 得到筛选后的
                         boolean isExistId = false;
                         for (String checkedId : checkedIds) {
@@ -796,44 +759,6 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                             showDataList.add(matchBean);
                         }
                     }
-//                    if (checkedMatchs.size() != 0) {
-//                        childrenDataList.add(checkedMatchs);
-//                        for (String groupdata : mAllGroupdata) {
-//                            String[] weekdatas = groupdata.split(",");
-//                            String datas = weekdatas[0];
-//                            if (checkedMatchs.get(0).getDate().equals(datas)) {
-//                                groupDataList.add(groupdata);
-//                                break;
-//                            }
-//                        }
-//                    }
-                /*         */
-//                for (List<BasketMatchBean> lists : mAllMatchdata) { // 遍历所有数据 得到筛选后的
-//                    List<BasketMatchBean> checkedMatchs = new ArrayList<>();
-//                    for (BasketMatchBean matchBean : lists) {
-//                        boolean isExistId = false;
-//                        for (String checkedId : checkedIds) {
-//                            if (matchBean.getLeagueId().equals(checkedId)) {
-//                                isExistId = true;
-//                                break;
-//                            }
-//                        }
-//                        if (isExistId) {
-//                            checkedMatchs.add(matchBean);
-//                        }
-//                    }
-//                    if (checkedMatchs.size() != 0) {
-//                        childrenDataList.add(checkedMatchs);
-//                        for (String groupdata : mAllGroupdata) {
-//                            String[] weekdatas = groupdata.split(",");
-//                            String datas = weekdatas[0];
-//                            if (checkedMatchs.get(0).getDate().equals(datas)) {
-//                                groupDataList.add(groupdata);
-//                                break;
-//                            }
-//                        }
-//                    }
-//                }
                 List<BasketMatchFilter> checkedFilters = new ArrayList<>();
                 // 清除原来选中的(重新赋值选中的)
                 for (BasketMatchFilter allFilter : mAllFilter) {
@@ -844,10 +769,6 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                     }
                 }
                 mChickedFilter = checkedFilters;
-//            mbasket_unfiltrate.setVisibility(View.GONE);
-//            mSwipeRefreshLayout.setRefreshing(false);
-//            mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-
                 L.d("123", "childrenDataList >>>> = " + showDataList.size());
                 //* 判断是否有选中的比赛
                 currentClick(BASKET_TYPE);
