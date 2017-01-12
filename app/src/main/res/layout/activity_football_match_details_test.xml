@@ -257,8 +257,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="bottom|right"
-            android:paddingBottom="18dp"
-            android:paddingRight="18dp">
+            android:paddingBottom="64dp"
+            android:paddingRight="10dp">
 
             <TextView
                 android:id="@+id/tv_addMultiView"
