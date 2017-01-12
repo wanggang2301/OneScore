@@ -19,13 +19,18 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.NumbersActivity;
 import com.hhly.mlottery.adapter.homePagerAdapter.HKLotteryInfoChartAdapter;
+import com.hhly.mlottery.bean.numbersBean.LotteryInfoHKChartBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * desc:香港开奖图表fragment
@@ -51,7 +56,7 @@ public class HKLotteryChartFragment extends Fragment implements SwipeRefreshLayo
         mView = inflater.inflate(R.layout.home_info_hk_chart_pager, container, false);
 
         initView();
-//        initData();
+        initData();
         initEvent();
         return mView;
     }
@@ -60,20 +65,27 @@ public class HKLotteryChartFragment extends Fragment implements SwipeRefreshLayo
         mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
-                ToastTools.showQuick(mContext,"下标：" + i);
+                ToastTools.showQuick(mContext, "下标：" + i);
                 // TODO 跳转到详情
             }
         });
     }
 
     private void initData() {
-
         mHandler.sendEmptyMessage(LOADING);
 
-        VolleyContentFast.requestJsonByGet("url", null, new VolleyContentFast.ResponseSuccessListener<Object>() {
+        Map<String, String> map = new HashMap<>();
+        map.put("platform", "android");
+        map.put("infoType", "15");
+        map.put("currentPage", "1");
+
+        VolleyContentFast.requestJsonByGet(BaseURLs.LOTTERY_INFO_CHART_URL, map, new VolleyContentFast.ResponseSuccessListener<LotteryInfoHKChartBean>() {
             @Override
-            public void onResponse(Object jsonObject) {
+            public void onResponse(LotteryInfoHKChartBean jsonObject) {
                 if (jsonObject != null) {
+
+                    L.d("xxxxx","访问成功：" + jsonObject.getData().get(0).getTitle());
+
                     mHandler.sendEmptyMessage(SUCCESS);
                 } else {
                     mHandler.sendEmptyMessage(ERROR);
@@ -84,7 +96,7 @@ public class HKLotteryChartFragment extends Fragment implements SwipeRefreshLayo
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 mHandler.sendEmptyMessage(ERROR);
             }
-        }, null);
+        }, LotteryInfoHKChartBean.class);
     }
 
     private void initView() {

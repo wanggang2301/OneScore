@@ -15,8 +15,11 @@ import android.view.ViewGroup;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
+import com.hhly.mlottery.bean.numbersBean.LotteryInfoHKStartBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
@@ -57,11 +60,15 @@ public class HKLotteryStartFragment extends Fragment implements SwipeRefreshLayo
 
         mHandler.sendEmptyMessage(LOADING);
 
-        VolleyContentFast.requestJsonByGet("url", null, new VolleyContentFast.ResponseSuccessListener<Object>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.LOTTERY_INFO_STARTIS_URL, null, new VolleyContentFast.ResponseSuccessListener<LotteryInfoHKStartBean>() {
             @Override
-            public void onResponse(Object jsonObject) {
+            public void onResponse(LotteryInfoHKStartBean jsonObject) {
                 if(jsonObject != null){
                     mHandler.sendEmptyMessage(SUCCESS);
+
+                    L.d("xxxxx","成功： " + jsonObject.getData().getFiveHundred().getZodiac().get(0).getKey());
+
+
                 }else{
                     mHandler.sendEmptyMessage(ERROR);
                 }
@@ -71,7 +78,7 @@ public class HKLotteryStartFragment extends Fragment implements SwipeRefreshLayo
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 mHandler.sendEmptyMessage(ERROR);
             }
-        }, null);
+        }, LotteryInfoHKStartBean.class);
     }
 
     private void initView() {
