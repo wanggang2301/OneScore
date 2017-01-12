@@ -266,7 +266,8 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
 
                 mCupAll.add(filter.getLeagueId());//所有联赛的  id
                 String leagueId = filter.getLeagueId();
-                if (leagueId.equals("1") || leagueId.equals("5") || leagueId.equals("8") || leagueId.equals("15") ||
+                /***|| leagueId.equals("8") NCAA (产品要求)从热门中去除*/
+                if (leagueId.equals("1") || leagueId.equals("5") || leagueId.equals("15") ||
                         leagueId.equals("21") || leagueId.equals("22") || leagueId.equals("57") || leagueId.equals("377")) {
                     mHotFilterDatas.add(filter); // 热门的数据
                     mCupHot.add(filter.getLeagueId());//热门id
