@@ -122,7 +122,6 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl_addMultiView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="bottom|right"
@@ -130,6 +129,7 @@
             android:paddingRight="18dp">
 
             <TextView
+                android:id="@+id/tv_addMultiView"
                 android:layout_width="70dp"
                 android:layout_height="24dp"
                 android:alpha="0.75"

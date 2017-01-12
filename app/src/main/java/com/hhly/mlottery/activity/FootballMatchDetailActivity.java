@@ -288,7 +288,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private RelativeLayout mMatchTypeLayout;
 
-    private RelativeLayout rl_addMultiView;
+    private TextView tv_addMultiView;
 
     private int mType = 0;
 
@@ -452,7 +452,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         barrage_switch = (ImageView) findViewById(R.id.barrage_switch);
         barrage_switch.setOnClickListener(this);
 
-        rl_addMultiView.setOnClickListener(this);
+        tv_addMultiView.setOnClickListener(this);
     }
 
     public void onEventMainThread(BarrageBean barrageBean) {
@@ -2015,7 +2015,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 }
                 break;
 
-            case R.id.rl_addMultiView:
+            case R.id.tv_addMultiView:
                 enterMultiScreenView();
                 break;
 
@@ -2601,7 +2601,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         btn_showGif.setOnClickListener(this);
 
         rl_gif_notice = (RelativeLayout) findViewById(R.id.rl_gif_notice);
-        rl_addMultiView = (RelativeLayout) findViewById(R.id.rl_addMultiView);
+        tv_addMultiView = (TextView) findViewById(R.id.tv_addMultiView);
         red_point = (View) findViewById(R.id.red_point);
     }
 

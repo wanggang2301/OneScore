@@ -206,7 +206,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     boolean barrage_isFocus = false;
     private View view_red;
 
-    private RelativeLayout rl_addMultiView;
+    private TextView tv_addMultiView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -389,7 +389,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         mBack = (ImageView) this.findViewById(R.id.basket_details_back);
 
         rl_gif_notice = (RelativeLayout) findViewById(R.id.rl_gif_notice);
-        rl_addMultiView = (RelativeLayout) findViewById(R.id.rl_addMultiView);
+        tv_addMultiView = (TextView) findViewById(R.id.tv_addMultiView);
 
         mTitleScore = (RelativeLayout) this.findViewById(R.id.ll_basket_title_score);
         mCollect = (ImageView) this.findViewById(R.id.basket_details_collect);
@@ -405,7 +405,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         barrage_switch = (ImageView) findViewById(R.id.barrage_switch);
         barrage_switch.setOnClickListener(this);
 
-        rl_addMultiView.setOnClickListener(this);
+        tv_addMultiView.setOnClickListener(this);
 
     }
 
@@ -558,7 +558,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 }
                 break;
 
-            case R.id.rl_addMultiView:
+            case R.id.tv_addMultiView:
                 enterMultiScreenView();
                 break;
         }
