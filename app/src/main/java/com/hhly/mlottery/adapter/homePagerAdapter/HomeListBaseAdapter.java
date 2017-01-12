@@ -15,11 +15,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
+import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.activity.HomePagerActivity;
 import com.hhly.mlottery.activity.NumbersActivity;
@@ -44,6 +45,7 @@ import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.NumberDataUtils;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.view.CircleImageView;
 import com.hhly.mlottery.widget.WrapContentHeightViewPager;
 import com.umeng.analytics.MobclickAgent;
 
@@ -67,21 +69,19 @@ public class HomeListBaseAdapter extends BaseAdapter {
     //    private HomeGridAdapter mGridAdapter;// GridView数据适配器
     private HomePagerAdapter mPagerAdapter;// ViewPager数据适配器
 
-    private ImageView score01_icon, score01_home_icon, score01_guest_icon, data_info_icon01, hk_icon, ks01_number, ks02_number, ks03_number, qxc_icon, klsf_icon, ks_icon, ssc_icon;
+    private ImageView score01_icon, score01_home_icon, score01_guest_icon, data_info_icon01, hk_icon, ks01_number, ks02_number, ks03_number, qxc_icon, klsf_icon, ks_icon, ssc_icon, iv_expert_icon;
     private ImageView bjsc_icon, bjsc01_number, bjsc02_number, bjsc03_number, bjsc04_number, bjsc05_number, bjsc06_number, bjsc07_number, bjsc08_number, bjsc09_number, bjsc10_number;
-    private TextView score01_title, score01_home_name, score01_home_score, score01_vs, score01_desc, score01_guest_name, score01_guest_score, qxc_issue, qxc01_number, ks_name, ssc_name, bjsc_name;
-    private TextView data_info_title01, data_info_date01, hk_issue, hk_hk01, hk_zodiacs01, hk_hk02, hk_zodiacs02, hk_hk03, qxc02_number, klsf_name, qxc03_number, hk_name, qxc_name, qxc07_number;
-    private TextView hk_zodiacs03, hk_hk04, hk_zodiacs04, hk_hk05, hk_zodiacs05, hk_hk06, hk_zodiacs06, hk_hk07, hk_zodiacs07, bjsc_issue, klsf_issue, klsf01_number, klsf02_number, klsf03_number, klsf04_number;
+    private TextView score01_title, score01_home_name, score01_home_score, score01_vs, score01_desc, score01_guest_name, score01_guest_score, qxc_issue, qxc01_number, ks_name, ssc_name, bjsc_name, tv_expert_title;
+    private TextView data_info_title01, data_info_date01, hk_issue, hk_hk01, hk_zodiacs01, hk_hk02, hk_zodiacs02, hk_hk03, qxc02_number, klsf_name, qxc03_number, hk_name, qxc_name, qxc07_number, tv_expert_subtitle;
+    private TextView hk_zodiacs03, hk_hk04, hk_zodiacs04, hk_hk05, hk_zodiacs05, hk_hk06, hk_zodiacs06, hk_hk07, hk_zodiacs07, bjsc_issue, klsf_issue, klsf01_number, klsf02_number, klsf03_number, klsf04_number, tv_expert_info_source;
     private TextView klsf05_number, klsf06_number, klsf07_number, klsf08_number, ks_issue, ssc_issue, ssc01_number, ssc02_number, ssc03_number, ssc04_number, ssc05_number, qxc04_number, qxc05_number, qxc06_number;
     private List<TextView> hk_numbers, hk_zodiacs, qxc_numbers, klsf_numbers, ssc_numbers;// 彩种号码View集合
     private List<ImageView> bjsc_numbers, ks_numbers;
 
     private List<View> scoreViewList = new ArrayList<>();// 热门赛事条目集合
-    private List<View> scoreSplitViewList = new ArrayList<>();// 热门赛事条目分割线
     private List<View> dataInfoViewList = new ArrayList<>();// 热门资讯条目集合
-    private List<View> dataInfoSplitViewList = new ArrayList<>();// 热门资讯条目分割线
     private List<View> lotteryViewList = new ArrayList<>();// 彩票条目集合
-    private List<View> lotterySplitViewList = new ArrayList<>();// 彩票条目分割线
+    private List<View> expertViewList = new ArrayList<>();// 专家专栏条目集合
 
     private final int MIN_CLICK_DELAY_TIME = 1000;// 控件点击间隔时间
     private long lastClickTime = 0;
@@ -175,6 +175,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         final String thirdId = bodys.get(j).getThirdId();// 赛事ID
                         final String isRelateMatch = bodys.get(j).getRelateMatch();// 是否有关联赛事
                         final int type = bodys.get(j).getType();// 关联赛事类型
+                        final int matchType = bodys.get(j).getMatchType();// 关联赛事类型-->专家专栏的
                         final String infoTypeName = bodys.get(j).getInfoTypeName();// 赛事类型名
                         final String imageurl = bodys.get(j).getPicUrl();// 分享图片Url
                         final String title = bodys.get(j).getTitle();// 分享标题
@@ -319,6 +320,36 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                     });
                                 }
                                 break;
+                            case 4:
+                                expertViewList.get(j).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        if (!TextUtils.isEmpty(jumpAddr)) {
+                                            switch (jumpType) {
+                                                case 0:// 无
+                                                    break;
+                                                case 1:// 页面
+                                                {
+                                                    Intent intent = new Intent(mContext, WebActivity.class);
+                                                    intent.putExtra("key", jumpAddr);
+                                                    intent.putExtra("imageurl", imageurl);
+                                                    intent.putExtra("title", title);// 分享标题
+                                                    intent.putExtra("subtitle", summary);
+                                                    intent.putExtra("infoTypeName", infoTypeName);
+                                                    if ("true".equals(isRelateMatch)) {
+                                                        intent.putExtra("type", matchType == 0 ? 2 : matchType);
+                                                        intent.putExtra("thirdId", thirdId);
+                                                    }
+                                                    mContext.startActivity(intent);
+                                                    break;
+                                                }
+                                                case 2:// 内页
+                                                    break;
+                                            }
+                                        }
+                                    }
+                                });
+                                break;
                         }
                     }
                 }
@@ -358,6 +389,20 @@ public class HomeListBaseAdapter extends BaseAdapter {
         data_info_icon01 = (ImageView) view.findViewById(R.id.iv_data_info_icon01);
         data_info_title01 = (TextView) view.findViewById(R.id.tv_data_info_title01);
         data_info_date01 = (TextView) view.findViewById(R.id.tv_data_info_date01);
+        return view;
+    }
+
+    /**
+     * 获取专家专栏条目_1.2.2版
+     *
+     * @return 专家专栏条目
+     */
+    private View getExpertView() {
+        View view = View.inflate(mContext, R.layout.home_page_expert_item, null);
+        iv_expert_icon = (ImageView) view.findViewById(R.id.iv_expert_icon);
+        tv_expert_title = (TextView) view.findViewById(R.id.tv_expert_title);
+        tv_expert_subtitle = (TextView) view.findViewById(R.id.tv_expert_sub_title);
+        tv_expert_info_source = (TextView) view.findViewById(R.id.tv_expert_info_source);
         return view;
     }
 
@@ -621,9 +666,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
      */
     private void init() {
         try {
-            //ViewGroup.LayoutParams scoreParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            // ViewGroup.LayoutParams lotteryHKParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//            ViewGroup.LayoutParams lotteryOtherParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DisplayUtil.dip2px(mContext, 110));
             for (int i = 0, len = mHomePagerEntity.getOtherLists().size(); i < len; i++) {
                 int labType = mHomePagerEntity.getOtherLists().get(i).getContent().getLabType();// 获取类型
                 List<HomeBodysEntity> bodys = mHomePagerEntity.getOtherLists().get(i).getContent().getBodys();
@@ -634,9 +676,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         {
                             View scoreView = getScoreView();
                             scoreViewList.add(scoreView);
-                            View splitView = View.inflate(mContext, R.layout.split_view, null);
-                            scoreSplitViewList.add(splitView);
-                            // scoreView.setLayoutParams(scoreParams);
                             if ("13".equals(homeBodysEntity.getJumpAddr())) {// 足球比分
                                 score01_icon.setImageDrawable(mContext.getResources().getDrawable(AppConstants.homePageScoreFootBG[j % AppConstants.homePageScoreFootBG.length]));// 设置背景图片
                                 switch (homeBodysEntity.getStatusOrigin()) {
@@ -680,6 +719,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                         settingScoreItemData(homeBodysEntity, mContext.getResources().getColor(R.color.colorPrimary), "—", mContext.getResources().getString(R.string.fottball_home_quxiaozhibo));
                                         break;
                                 }
+                                score01_title.setText(homeBodysEntity.getRacename());// 设置赛事名称
+                                score01_title.setTextColor(Color.parseColor(homeBodysEntity.getRaceColor()));// 标题颜色
                             } else if ("20".equals(homeBodysEntity.getJumpAddr())) {// 篮球比分
                                 score01_icon.setImageDrawable(mContext.getResources().getDrawable(AppConstants.homePageScoreBasketBG[j % AppConstants.homePageScoreBasketBG.length]));// 设置背景图片
                                 switch (homeBodysEntity.getMatchStatus()) {
@@ -734,36 +775,34 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                         break;
 
                                 }
-                            }
-                            score01_title.setText(homeBodysEntity.getRacename());// 设置赛事名称
-                            score01_title.setTextColor(Color.parseColor(homeBodysEntity.getRaceColor()));// 标题颜色
-                            if (homeBodysEntity.getHomeLogoUrl() == null) {
-                                score01_home_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_score_item_icon_def));
-                            } else {
-                                ImageLoader.load(mContext, homeBodysEntity.getHomeLogoUrl(), R.mipmap.home_score_item_icon_def).into(score01_home_icon);
-
+                                score01_title.setText(homeBodysEntity.getLeagueName());// 设置赛事名称
+                                score01_title.setTextColor(Color.parseColor(homeBodysEntity.getLeagueColor()));// 标题颜色
                             }
                             score01_home_name.setText(homeBodysEntity.getHometeam());// 设置主队队名
-                            if (homeBodysEntity.getGuestLogoUrl() == null) {
-                                score01_guest_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_score_item_icon_def));
-                            } else {
-                                ImageLoader.load(mContext, homeBodysEntity.getGuestLogoUrl(), R.mipmap.home_score_item_icon_def).into(score01_guest_icon);
+                            try {
+                                Glide.with(mContext).load(homeBodysEntity.getHomeLogoUrl()).error(R.mipmap.home_score_item_icon_def).into(score01_home_icon);
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
                             score01_guest_name.setText(homeBodysEntity.getGuestteam());// 设置客队队名
+                            try {
+                                Glide.with(mContext).load(homeBodysEntity.getGuestLogoUrl()).error(R.mipmap.home_score_item_icon_def).into(score01_guest_icon);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                         break;
                         case 2:// 2、	热点资讯
                         {
                             View dataInfoView = getDataInfoView();// 获取布局对象
                             dataInfoViewList.add(dataInfoView);
-                            View splitView = View.inflate(mContext, R.layout.split_view, null);
-                            dataInfoSplitViewList.add(splitView);
 
-                            if (homeBodysEntity.getPicUrl() == null) {
-                                data_info_icon01.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_data_info_def));
-                            } else {
-                                ImageLoader.load(mContext, homeBodysEntity.getPicUrl(), R.mipmap.home_data_info_def).into(data_info_icon01);
+                            try {
+                                Glide.with(mContext).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_data_info_def).into(data_info_icon01);
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
+
                             Date curDate = new Date(System.currentTimeMillis());// 获取当前日期
                             String mDate = DateUtil.formatDate(curDate);
                             if (!TextUtils.isEmpty(homeBodysEntity.getDate())) {
@@ -778,8 +817,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         break;
                         case 3:// 3、	彩票开奖
                         {
-                            View splitView = View.inflate(mContext, R.layout.split_view, null);
-                            lotterySplitViewList.add(splitView);
 
                             switch (homeBodysEntity.getName()) {
                                 case "1":// 香港彩
@@ -850,7 +887,11 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             for (int k = 0, lens = bodys.get(j).getLottery().size(); k < lens; k++) {
                                 HomeBodysLottery mLottery = bodys.get(j).getLottery().get(k);
                                 NumberDataUtils.setTextTitle(mContext, lottery_item_name_list.get(k), mLottery.getName());
-                                ImageLoader.loadFitCenter(mContext, mLottery.getPicUrl(), R.mipmap.home_number_item_icon_def).into(lottery_item_icon_list.get(k));
+                                try {
+                                    ImageLoader.loadFitCenter(mContext, mLottery.getPicUrl(), R.mipmap.home_number_item_icon_def).into(lottery_item_icon_list.get(k));
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                                 if (k != 0) {
                                     switch (mLottery.getName()) {
                                         case "24":// 双色球
@@ -898,7 +939,20 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         case 5: //产品建议
                             addLike(bodys.get(0), bodys); //只有一条数据
                             break;
-
+                        case 4:// 专家专栏
+                        {
+                            View expertView = getExpertView();// 获取布局对象
+                            expertViewList.add(expertView);
+                            try {
+                                Glide.with(mContext).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_data_info_def).into(iv_expert_icon);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            tv_expert_title.setText(homeBodysEntity.getTitle());
+                            tv_expert_subtitle.setText(homeBodysEntity.getSubTitle());
+                            tv_expert_info_source.setText(homeBodysEntity.getInfoSource());
+                        }
+                        break;
                     }
                 }
             }
@@ -915,8 +969,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
         mProductItemView = getmProductItemView();
         adviceUserName.setText(bodys.get(0).getNickName());
         adviceUserTime.setText(bodys.get(0).getSendTime().substring(0, 10));
-        if (mContext != null) {
+        try {
             ImageLoader.load(mContext, bodys.get(0).getUserImg(), R.mipmap.center_head).into(adviceUserIcon);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         adviceUserContent.setText(bodys.get(0).getContent());
         adviceProductReply.setText(bodys.get(0).getReplyContent());
@@ -1041,12 +1097,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
     private void lotteryKSAddView(HomeBodysEntity homeBodysEntity, String lotteryName) {
         View lotteryView = getLotteryKSView();
         lotteryViewList.add(lotteryView);
-
-        if (homeBodysEntity.getPicUrl() == null) {
-            ks_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
-        } else {
-            ImageLoader.load(mContext, homeBodysEntity.getPicUrl(), R.mipmap.home_number_item_icon_def).into(ks_icon);
-
+        try {
+            Glide.with(mContext).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_number_item_icon_def).into(ks_icon);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         ks_name.setText(lotteryName);
         ks_issue.setText(homeBodysEntity.getIssue());// 设置期号
@@ -1067,12 +1121,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
     private void lotteryKLSFAddView(HomeBodysEntity homeBodysEntity, String lotteryName) {
         View lotteryView = getLotteryKLSFView();
         lotteryViewList.add(lotteryView);
-
-        if (homeBodysEntity.getPicUrl() == null) {
-            klsf_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
-        } else {
-            ImageLoader.load(mContext, homeBodysEntity.getPicUrl(), R.mipmap.home_number_item_icon_def).into(klsf_icon);
-
+        try {
+            Glide.with(mContext).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_number_item_icon_def).into(klsf_icon);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         klsf_name.setText(lotteryName);
         klsf_issue.setText(homeBodysEntity.getIssue());// 设置期号
@@ -1107,12 +1159,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
     private void lotteryBJSCAddView(HomeBodysEntity homeBodysEntity, String lotteryName) {
         View lotteryView = getLotteryBJSCView();
         lotteryViewList.add(lotteryView);
-
-        if (homeBodysEntity.getPicUrl() == null) {
-            bjsc_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
-        } else {
-            ImageLoader.load(mContext, homeBodysEntity.getPicUrl(), R.mipmap.home_number_item_icon_def).into(bjsc_icon);
-
+        try {
+            Glide.with(mContext).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_number_item_icon_def).into(bjsc_icon);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         bjsc_name.setText(lotteryName);
         bjsc_issue.setText(homeBodysEntity.getIssue());// 设置期号
@@ -1133,12 +1183,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
     private void lotteryQXCAddView(HomeBodysEntity homeBodysEntity, String lotteryName) {
         View lotteryView = getLotteryyQXCView();
         lotteryViewList.add(lotteryView);
-
-        if (homeBodysEntity.getPicUrl() == null) {
-            qxc_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
-        } else {
-            ImageLoader.load(mContext, homeBodysEntity.getPicUrl(), R.mipmap.home_number_item_icon_def).into(qxc_icon);
-
+        try {
+            Glide.with(mContext).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_number_item_icon_def).into(qxc_icon);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         qxc_name.setText(lotteryName);
         qxc_issue.setText(homeBodysEntity.getIssue());// 设置期号
@@ -1166,13 +1214,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
     private void lotteryHKAddView(HomeBodysEntity homeBodysEntity, String lotteryName) {
         View lotteryView = getLotteryHKView();
         lotteryViewList.add(lotteryView);
-        //lotteryView.setLayoutParams(lotteryHKParams);
-
-        if (homeBodysEntity.getPicUrl() == null) {
-            hk_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
-        } else {
-            ImageLoader.load(mContext, homeBodysEntity.getPicUrl(), R.mipmap.home_number_item_icon_def).into(hk_icon);
-
+        try {
+            Glide.with(mContext).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_number_item_icon_def).into(hk_icon);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         hk_name.setText(lotteryName);
         hk_issue.setText(homeBodysEntity.getIssue());// 设置期号
@@ -1307,12 +1352,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
     private void lotterySSCAddView(HomeBodysEntity homeBodysEntity, String lotteryName) {
         View lotteryView = getLotterySSCView();
         lotteryViewList.add(lotteryView);
-
-        if (homeBodysEntity.getPicUrl() == null) {
-            ssc_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
-        } else {
-            ImageLoader.load(mContext, homeBodysEntity.getPicUrl(), R.mipmap.home_number_item_icon_def).into(ssc_icon);
-
+        try {
+            Glide.with(mContext).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_number_item_icon_def).into(ssc_icon);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         ssc_name.setText(lotteryName);
         ssc_issue.setText(homeBodysEntity.getIssue());// 设置期号
@@ -1422,6 +1465,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                     mViewHolderOther.tv_title = (TextView) convertView.findViewById(R.id.tv_home_item_title);
                     mViewHolderOther.ll_content = (LinearLayout) convertView.findViewById(R.id.ll_home_item_content);
                     mViewHolderOther.tv_more_advice = (TextView) convertView.findViewById(R.id.tv_home_item_more);
+                    mViewHolderOther.view_title_split = convertView.findViewById(R.id.view_title_split);
                     convertView.setTag(mViewHolderOther);
                     break;
             }
@@ -1434,13 +1478,28 @@ public class HomeListBaseAdapter extends BaseAdapter {
             boolean addViewScore = false;
             boolean addViewDataInfo = false;
             boolean addViewLottery = false;
+            boolean addViewExpert = false;
+            boolean expertName = false;
             if (getItem(position) != null) {
                 final HomeContentEntity mContent = (HomeContentEntity) getItem(position);
+                if (mContent.getLabType() == 5) {
+                    mViewHolderOther.tv_more_advice.setVisibility(View.VISIBLE);
+                } else {
+                    mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
+                }
+                if(mContent.getLabType() == 7){
+                    mViewHolderOther.tv_title.setVisibility(View.GONE);
+                    mViewHolderOther.view_title_split.setVisibility(View.GONE);
+                }else{
+                    mViewHolderOther.tv_title.setVisibility(View.VISIBLE);
+                    mViewHolderOther.view_title_split.setVisibility(View.VISIBLE);
+                }
                 for (int i = 0, len = mContent.getBodys().size(); i < len; i++) {
                     switch (mContent.getLabType()) {
                         case 1: // 1、	热门赛事.
                             if (addViewScore) {
-                                mViewHolderOther.ll_content.addView(scoreSplitViewList.get(i));// 添加分割线
+                                View splitView = View.inflate(mContext, R.layout.split_view, null);
+                                mViewHolderOther.ll_content.addView(splitView);// 添加分割线
                             }
                             mViewHolderOther.tv_title.setText(mContext.getResources().getString(R.string.hot_score_txt));
                             View scoreView = scoreViewList.get(i);
@@ -1449,12 +1508,12 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 ((ViewGroup) parentScore).removeAllViews();
                             }
                             mViewHolderOther.ll_content.addView(scoreView);
-                            mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
                             addViewScore = true;
                             break;
                         case 2:// 2、	热门资讯
                             if (addViewDataInfo) {
-                                mViewHolderOther.ll_content.addView(dataInfoSplitViewList.get(i));// 添加分割线
+                                View splitView = View.inflate(mContext, R.layout.split_view, null);
+                                mViewHolderOther.ll_content.addView(splitView);// 添加分割线
                             }
                             mViewHolderOther.tv_title.setText(mContext.getResources().getString(R.string.hor_data_info_txt));
                             View dataInfoView = dataInfoViewList.get(i);
@@ -1463,12 +1522,12 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 ((ViewGroup) parentDataInfo).removeAllViews();
                             }
                             mViewHolderOther.ll_content.addView(dataInfoView);
-                            mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
                             addViewDataInfo = true;
                             break;
                         case 3:// 3、	彩票开奖
                             if (addViewLottery) {
-                                mViewHolderOther.ll_content.addView(lotterySplitViewList.get(i));// 添加分割线
+                                View splitView = View.inflate(mContext, R.layout.split_view, null);
+                                mViewHolderOther.ll_content.addView(splitView);// 添加分割线
                             }
                             mViewHolderOther.tv_title.setText(mContext.getResources().getString(R.string.frame_home_jieguo_txt));
                             View lotteryView = lotteryViewList.get(i);
@@ -1477,20 +1536,16 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 ((ViewGroup) parentLottery).removeAllViews();
                             }
                             mViewHolderOther.ll_content.addView(lotteryView);
-                            mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
                             addViewLottery = true;
                             break;
                         case 5:
                             mViewHolderOther.tv_title.setText(mContext.getResources().getString(R.string.title_product_advice));
-                            mViewHolderOther.tv_more_advice.setVisibility(View.VISIBLE);
                             mViewHolderOther.tv_more_advice.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-//                                    mContext.startActivity(new Intent(mContext, ProductAdviceActivity.class));
                                     if (mProductListener != null) {
                                         mProductListener.toProductActivity();
                                     }
-
                                 }
                             });
 
@@ -1506,15 +1561,204 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             if (parentItemView != null) {
                                 ((ViewGroup) parentItemView).removeAllViews();
                             }
-                            mViewHolderOther.tv_title.setVisibility(View.GONE);
-                            mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
                             mViewHolderOther.ll_content.addView(lotteryItemView);
+                            break;
+                        case 4:
+                            if (!expertName) {
+                                expertName = true;
+                                if (mHomePagerEntity != null && mHomePagerEntity.getHeadTitles() != null && mHomePagerEntity.getHeadTitles().getContent() != null && mHomePagerEntity.getHeadTitles().getContent().size() != 0) {
+                                    View expertNameView = addExpertNameItem();
+                                    mViewHolderOther.ll_content.addView(expertNameView);
+                                }
+                                View splitView = View.inflate(mContext, R.layout.split_view, null);
+                                mViewHolderOther.ll_content.addView(splitView);
+                            }
+
+                            if (addViewExpert) {
+                                View splitView = View.inflate(mContext, R.layout.split_view, null);
+                                mViewHolderOther.ll_content.addView(splitView);// 添加分割线
+                            }
+                            mViewHolderOther.tv_title.setText(mContext.getResources().getString(R.string.home_expert_title));
+                            View expertView = expertViewList.get(i);
+                            ViewParent parentExpert = expertView.getParent();
+                            if (parentExpert != null) {
+                                ((ViewGroup) parentExpert).removeAllViews();
+                            }
+                            mViewHolderOther.ll_content.addView(expertView);
+                            mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
+                            addViewExpert = true;
                             break;
                     }
                 }
             }
         }
         return convertView;
+    }
+
+    /**
+     * 添加专家专栏的专家名单
+     *
+     * @return
+     */
+    private View addExpertNameItem() {
+        View view = View.inflate(mContext, R.layout.home_page_expert_name_item, null);
+        LinearLayout ll_expert_name_item1 = (LinearLayout) view.findViewById(R.id.ll_expert_name_item1);
+        LinearLayout ll_expert_name_item02 = (LinearLayout) view.findViewById(R.id.ll_expert_name_item02);
+        LinearLayout ll_expert_content1 = (LinearLayout) view.findViewById(R.id.ll_expert_content1);
+        LinearLayout ll_expert_content2 = (LinearLayout) view.findViewById(R.id.ll_expert_content2);
+        LinearLayout ll_expert_content3 = (LinearLayout) view.findViewById(R.id.ll_expert_content3);
+        LinearLayout ll_expert_content4 = (LinearLayout) view.findViewById(R.id.ll_expert_content4);
+        LinearLayout ll_expert_content01 = (LinearLayout) view.findViewById(R.id.ll_expert_content01);
+        LinearLayout ll_expert_content02 = (LinearLayout) view.findViewById(R.id.ll_expert_content02);
+        LinearLayout ll_expert_content03 = (LinearLayout) view.findViewById(R.id.ll_expert_content03);
+        CircleImageView iv_expert_icon1 = (CircleImageView) view.findViewById(R.id.iv_expert_icon1);
+        CircleImageView iv_expert_icon2 = (CircleImageView) view.findViewById(R.id.iv_expert_icon2);
+        CircleImageView iv_expert_icon3 = (CircleImageView) view.findViewById(R.id.iv_expert_icon3);
+        CircleImageView iv_expert_icon4 = (CircleImageView) view.findViewById(R.id.iv_expert_icon4);
+        CircleImageView iv_expert_icon01 = (CircleImageView) view.findViewById(R.id.iv_expert_icon01);
+        CircleImageView iv_expert_icon02 = (CircleImageView) view.findViewById(R.id.iv_expert_icon02);
+        CircleImageView iv_expert_icon03 = (CircleImageView) view.findViewById(R.id.iv_expert_icon03);
+        TextView tv_expert_name1 = (TextView) view.findViewById(R.id.tv_expert_name1);
+        TextView tv_expert_name2 = (TextView) view.findViewById(R.id.tv_expert_name2);
+        TextView tv_expert_name3 = (TextView) view.findViewById(R.id.tv_expert_name3);
+        TextView tv_expert_name4 = (TextView) view.findViewById(R.id.tv_expert_name4);
+        TextView tv_expert_name01 = (TextView) view.findViewById(R.id.tv_expert_name01);
+        TextView tv_expert_name02 = (TextView) view.findViewById(R.id.tv_expert_name02);
+        TextView tv_expert_name03 = (TextView) view.findViewById(R.id.tv_expert_name03);
+        switch (mHomePagerEntity.getHeadTitles().getContent().size()) {
+            case 1:
+                ll_expert_name_item1.setVisibility(View.VISIBLE);
+                ll_expert_name_item02.setVisibility(View.GONE);
+                ll_expert_content1.setVisibility(View.VISIBLE);
+                try {
+                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                tv_expert_name1.setText(mHomePagerEntity.getHeadTitles().getContent().get(0).getTitle());
+                break;
+            case 2:
+                ll_expert_name_item1.setVisibility(View.VISIBLE);
+                ll_expert_name_item02.setVisibility(View.GONE);
+                ll_expert_content1.setVisibility(View.VISIBLE);
+                try {
+                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                tv_expert_name1.setText(mHomePagerEntity.getHeadTitles().getContent().get(0).getTitle());
+                ll_expert_content2.setVisibility(View.VISIBLE);
+                try {
+                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(1).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon2);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                tv_expert_name2.setText(mHomePagerEntity.getHeadTitles().getContent().get(1).getTitle());
+                break;
+            case 3:
+                ll_expert_name_item1.setVisibility(View.GONE);
+                ll_expert_name_item02.setVisibility(View.VISIBLE);
+                try {
+                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon01);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                tv_expert_name01.setText(mHomePagerEntity.getHeadTitles().getContent().get(0).getTitle());
+                try {
+                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(1).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon02);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                tv_expert_name02.setText(mHomePagerEntity.getHeadTitles().getContent().get(1).getTitle());
+                try {
+                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(2).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon03);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                tv_expert_name03.setText(mHomePagerEntity.getHeadTitles().getContent().get(2).getTitle());
+                break;
+            case 4:
+                ll_expert_name_item1.setVisibility(View.VISIBLE);
+                ll_expert_name_item02.setVisibility(View.GONE);
+                ll_expert_content1.setVisibility(View.VISIBLE);
+                try {
+                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                tv_expert_name1.setText(mHomePagerEntity.getHeadTitles().getContent().get(0).getTitle());
+                ll_expert_content2.setVisibility(View.VISIBLE);
+                try {
+                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(1).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon2);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                tv_expert_name2.setText(mHomePagerEntity.getHeadTitles().getContent().get(1).getTitle());
+                ll_expert_content3.setVisibility(View.VISIBLE);
+                try {
+                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(2).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon3);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                tv_expert_name3.setText(mHomePagerEntity.getHeadTitles().getContent().get(2).getTitle());
+                ll_expert_content4.setVisibility(View.VISIBLE);
+                try {
+                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(3).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon4);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                tv_expert_name4.setText(mHomePagerEntity.getHeadTitles().getContent().get(3).getTitle());
+                break;
+        }
+        ll_expert_content1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                joinDataInfo();
+            }
+        });
+        ll_expert_content2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                joinDataInfo();
+            }
+        });
+        ll_expert_content3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                joinDataInfo();
+            }
+        });
+        ll_expert_content4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                joinDataInfo();
+            }
+        });
+        ll_expert_content01.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                joinDataInfo();
+            }
+        });
+        ll_expert_content02.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                joinDataInfo();
+            }
+        });
+        ll_expert_content03.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                joinDataInfo();
+            }
+        });
+        return view;
+    }
+
+    private void joinDataInfo() {
+        Intent intent = new Intent(mContext, FootballActivity.class);
+        intent.putExtra(AppConstants.FOTTBALL_KEY, 1);
+        mContext.startActivity(intent);
     }
 
     /**
@@ -1573,5 +1817,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
         TextView tv_title;// 标题
         LinearLayout ll_content;// 条目
         TextView tv_more_advice; //产品建议条目的更多
+        View view_title_split;
     }
 }

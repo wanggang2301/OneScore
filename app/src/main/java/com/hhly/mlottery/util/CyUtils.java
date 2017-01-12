@@ -137,8 +137,6 @@ public class CyUtils {
             sdk.getUserInfo(new CyanRequestListener<UserInfoResp>() {
                 @Override
                 public void onRequestSucceeded(UserInfoResp userInfoResp) {
-                    System.out.println("lzf" + JSON.toJSONString(userInfoResp));
-                    System.out.println(userInfoResp.user_id);
                     nickname = userInfoResp.nickname;
 
                 }

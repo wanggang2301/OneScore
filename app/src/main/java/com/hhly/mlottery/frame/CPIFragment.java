@@ -181,7 +181,6 @@ public class CPIFragment extends BaseWebSocketFragment  {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("onActivityResult", requestCode + "-" + resultCode + "-" + data);
         if (requestCode != startFilterRequestCode
                 || resultCode != Activity.RESULT_CANCELED
                 || data == null) {
@@ -368,7 +367,6 @@ public class CPIFragment extends BaseWebSocketFragment  {
 //            socketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.indexcenter" + "\n\n");
 //        } else if (message.startsWith("MESSAGE")) {
 //            final String jsonString = message.substring(message.indexOf("{"), message.lastIndexOf("}") + 1);
-//            Log.d("CPINewFragment", jsonString);
 //            mTabLayout.post(new Runnable() {
 //                @Override
 //                public void run() {
@@ -385,8 +383,6 @@ public class CPIFragment extends BaseWebSocketFragment  {
 //
 //    @Override
 //    public void onClose(String message) {
-//        Log.d("CPINewFragment", "webSocket has been closed!");
-//        Log.d("CPINewFragment", message);
 //        startWebSocket();
 //    }
 

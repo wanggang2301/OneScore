@@ -61,6 +61,107 @@ public class HomeBodysEntity implements Serializable {
     private String replyContent;
     private String id;
 
+    // 专家专栏
+    private int infoId;
+    private String subTitle;// 副标题
+    private String infoUrl;// 资讯详情跳转地址
+    private String infoSource;// 来源信息
+    private String lastModifyDate;// 最后修改日期
+    private String lastModifyTime;// 最后修改时间
+    private String infoType;
+    private String isvideoNews;// 是否是资讯视频
+    private String videoUrl;// 视频资讯地址
+    private int matchType;// 比赛类型 0是足球,1是篮球
+    private String expertId;// 专家id
+
+    public int getInfoId() {
+        return infoId;
+    }
+
+    public void setInfoId(int infoId) {
+        this.infoId = infoId;
+    }
+
+    public String getSubTitle() {
+        return subTitle;
+    }
+
+    public void setSubTitle(String subTitle) {
+        this.subTitle = subTitle;
+    }
+
+    public String getInfoUrl() {
+        return infoUrl;
+    }
+
+    public void setInfoUrl(String infoUrl) {
+        this.infoUrl = infoUrl;
+    }
+
+    public String getInfoSource() {
+        return infoSource;
+    }
+
+    public void setInfoSource(String infoSource) {
+        this.infoSource = infoSource;
+    }
+
+    public String getLastModifyDate() {
+        return lastModifyDate;
+    }
+
+    public void setLastModifyDate(String lastModifyDate) {
+        this.lastModifyDate = lastModifyDate;
+    }
+
+    public String getLastModifyTime() {
+        return lastModifyTime;
+    }
+
+    public void setLastModifyTime(String lastModifyTime) {
+        this.lastModifyTime = lastModifyTime;
+    }
+
+    public String getInfoType() {
+        return infoType;
+    }
+
+    public void setInfoType(String infoType) {
+        this.infoType = infoType;
+    }
+
+    public String getIsvideoNews() {
+        return isvideoNews;
+    }
+
+    public void setIsvideoNews(String isvideoNews) {
+        this.isvideoNews = isvideoNews;
+    }
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
+    }
+
+    public int getMatchType() {
+        return matchType;
+    }
+
+    public void setMatchType(int matchType) {
+        this.matchType = matchType;
+    }
+
+    public String getExpertId() {
+        return expertId;
+    }
+
+    public void setExpertId(String expertId) {
+        this.expertId = expertId;
+    }
+
     public String getOsName() {
         return osName;
     }

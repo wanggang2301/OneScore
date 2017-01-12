@@ -246,7 +246,6 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
          this.leagueId = stmLeaguesId;
          this.datas = datas;
          this.leagueType = leagueType;
-         Log.v(TAG, "AgendalFragment__======datas" + datas);
      }
 
  */
@@ -310,7 +309,6 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
                                 for (int n = 0; n < LeagueRoundBean_list.size(); n++) {
                                     if (LeagueRoundBean_list.get(n).isCurrent()) {
                                         mCurrentIndex = n;
-                                        // Log.v(TAG, "mCurrentIndex" + mCurrentIndex);
                                     }
                                 }
 

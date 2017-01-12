@@ -160,7 +160,6 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
                 return "";
             }
         } catch (Exception e) {
-            Log.e("VersionInfo", "Exception", e);
         }
         return versioncode;
     }

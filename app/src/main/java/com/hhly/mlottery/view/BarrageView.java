@@ -203,17 +203,14 @@ public class BarrageView extends RelativeLayout {
         params.topMargin = item.verticalPos;
         this.addView(relativeLayout, params);
         Animation anim = generateTranslateAnim(relativeLayout, SCREEN_WIDTH);
-        Log.i("sdasdasdas","SCREEN_WIDTH"+SCREEN_WIDTH);
         anim.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                Log.i("sdasdasdas", "我走了开始");
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
 
-                Log.i("sdasdasdas","我走了结束>>>>>");
                 //relativeLayout.clearAnimation();
                 //  relativeLayout.setVisibility(GONE);
                 //

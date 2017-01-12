@@ -14,6 +14,15 @@ public class HomePagerEntity implements Serializable {
     private HomeMenusEntity menus;
     private HomeBannersEntity banners;
     private List<HomeOtherListsEntity> otherLists;
+    private HomeHeadTitles headTitles;
+
+    public HomeHeadTitles getHeadTitles() {
+        return headTitles;
+    }
+
+    public void setHeadTitles(HomeHeadTitles headTitles) {
+        this.headTitles = headTitles;
+    }
 
     public String getIsAudit() {
         return isAudit;

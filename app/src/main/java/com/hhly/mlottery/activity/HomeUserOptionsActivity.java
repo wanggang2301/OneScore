@@ -324,7 +324,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             public void onResponse(ConcernBean jsonObject) {
                 if(jsonObject.getResult().equals("200")){
                     //注销成功
-                    Log.e("AAA","注销成功");
+                    L.d("AAA","注销成功");
 
                 }
                 finish();
@@ -355,13 +355,11 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         params.put("deviceToken",umengDeviceToken);
         params.put("deviceId",deviceId);
 
-        Log.e("CCC",umengDeviceToken);
         //volley请求
         VolleyContentFast.requestJsonByPost(BaseURLs.FOOTBALL_FIND_MATCH, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
             @Override
             public void onResponse(BasketballConcernListBean jsonObject) {
                 if(jsonObject.getResult().equals("200")){
-                    Log.e("AAA","登陆后请求的足球关注列表");
                     //将关注写入文件
                     StringBuffer sb=new StringBuffer();
                     for(String thirdId:jsonObject.getConcerns()){
@@ -401,7 +399,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         }
     }
     public void onEventMainThread(ChoseHeadStartBean choseHeadStartBean){
-        Log.i("homeUser","更新修改图片");
         //ImageLoader.load(HomeUserOptionsActivity.this,choseHeadStartBean.startUrl,R.mipmap.center_head).into(mUser_image);
         Glide.with(HomeUserOptionsActivity.this)
                 .load(choseHeadStartBean.startUrl)

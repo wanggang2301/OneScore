@@ -867,7 +867,6 @@ public class ImmediateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
 
         String focusIds = PreferenceUtil.getString(FocusFragment.FOCUS_ISD, "");
-        Log.e("BBB","取得时候"+focusIds);
         String[] idArray = focusIds.split("[,]");
 
         for (String id : idArray) {

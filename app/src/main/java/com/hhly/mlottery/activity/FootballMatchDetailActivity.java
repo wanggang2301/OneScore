@@ -114,6 +114,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private final static int ODDS_FG = 4;
     private final static int TALKBALL_FG = 5;
     private int infoCenter = -1;// 情报中心中转标记
+    private int chartBallView = -1;// 聊球界面转标记
 
     //事件直播
     //主队事件
@@ -329,6 +330,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             mThirdId = getIntent().getExtras().getString(BUNDLE_PARAM_THIRDID, "1300");
             currentFragmentId = getIntent().getExtras().getInt("currentFragmentId");
             infoCenter = getIntent().getExtras().getInt("info_center");
+            chartBallView = getIntent().getExtras().getInt("chart_ball_view");
         }
         EventBus.getDefault().register(this);
 
@@ -369,13 +371,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-
-        if (!PreferenceUtil.getBoolean(AppConstants.FOOTBALL_RED_KEY, false)) { // 添加红点  自定义view
-            TabLayout.Tab tabAt = mTabLayout.getTabAt(5);
-            View view = View.inflate(mContext, R.layout.chart_bal_item_red, null);
-            view_red = view.findViewById(R.id.view_red);
-            tabAt.setCustomView(view);
-        }
 
         mFootballLiveGotoChart = new FootballLiveGotoChart() {
             @Override
@@ -733,7 +728,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private void initViewPager(MatchDetail matchDetail) {
         if ("0".equals(matchDetail.getLiveStatus())) { //赛前
 
-            if (infoCenter == 1) {
+            if (chartBallView == 1) {
+                // 聊球
+                mViewPager.setCurrentItem(TALKBALL_FG, false);
+            } else if (infoCenter == 1) {
                 // 情报
                 mViewPager.setCurrentItem(STATISTICS_FG, false);
             } else {
@@ -754,7 +752,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             mStatisticsFragment.setmFootballLiveGotoChart(mFootballLiveGotoChart);
         } else {
 
-            if (infoCenter == 1) {
+            if (chartBallView == 1) {
+                // 聊球
+                mViewPager.setCurrentItem(TALKBALL_FG, false);
+            } else if (infoCenter == 1) {
                 // 情报
                 mViewPager.setCurrentItem(STATISTICS_FG, false);
             } else {
@@ -2431,7 +2432,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             }
             MobclickAgent.onPageStart("Football_TalkAboutBallFragment");
             isTalkAboutBall = true;
-            PreferenceUtil.commitBoolean(AppConstants.FOOTBALL_RED_KEY, true);
             L.d("xxx", "TalkAboutBallFragment>>>显示");
         }
         if (isAnalyzeFragment) {

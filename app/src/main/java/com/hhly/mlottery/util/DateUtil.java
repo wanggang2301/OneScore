@@ -154,7 +154,6 @@ public class DateUtil {
         DateFormat d2 = new SimpleDateFormat(style);
         try {
             strdate = d2.format(d1.parse(strdate));
-            System.out.println(strdate);
         } catch (Exception e) {
             e.printStackTrace();
         }

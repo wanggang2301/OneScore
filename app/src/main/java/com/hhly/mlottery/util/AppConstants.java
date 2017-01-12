@@ -75,9 +75,8 @@ public class AppConstants {
     public static String APPKEY_RONGYUN = "";
     public static String APPSECRET_RONGYUN = "";
 
-    // 聊球红点key
-    public static final String FOOTBALL_RED_KEY = "football_red";
-    public static final String BASKET_RED_KEY = "basket_red";
+    // 红点功能key
+    public static final String ANIMATION_RED_KEY = "animation_red_key";// 多屏动画首页菜单
     public static final String RED_KEY_START = "red_key_start";
 
     // public static String i18n = "en";// 测试英文语言环境

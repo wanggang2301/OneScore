@@ -200,7 +200,7 @@ public class MoreSettingsActivity extends BaseActivity  implements View.OnClickL
             public void onResponse(ConcernBean jsonObject) {
                 if(jsonObject.getResult().equals("200")){
                     //注销成功
-                    Log.e("AAA","注销成功");
+                    L.d("AAA","注销成功");
 
                 }
                finish();

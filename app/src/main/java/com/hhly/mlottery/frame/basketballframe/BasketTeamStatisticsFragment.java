@@ -168,7 +168,6 @@ public class BasketTeamStatisticsFragment extends Fragment {
                 if(jsonObject.getResult()==200){
                     mData=jsonObject;
                     loadData();
-                    Log.e("timerTask","定时器开启了哦");
                 }
 
             }

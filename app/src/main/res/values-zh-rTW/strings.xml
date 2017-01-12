@@ -1471,6 +1471,7 @@
     <string name="chart_ball_hint_title">說點什麽...</string>
     <string name="chart_ball_report_hint">請輸入舉報內容</string>
     <string name="chart_ball_report">舉報</string>
+    <string name="home_expert_title">專家專欄</string>
 
     <string name="title_product_advice">給產品建議</string>
     <string name="product_advice">產品回復</string>

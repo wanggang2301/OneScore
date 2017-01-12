@@ -166,7 +166,6 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
         MobclickAgent.onResume(this);
         tv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
         if(AppConstants.register.getData().getUser().getSex()!=null){
-            Log.i("sdadasdas","getSex"+AppConstants.register.getData().getUser().getSex());
             if(AppConstants.register.getData().getUser().getSex().equals("1")){
                 sexChange(R.color.home_logo_color,R.mipmap.man_sex,R.color.res_pl_color,R.mipmap.default_noon_sex,R.color.res_pl_color,R.mipmap.default_woman_sex);
             }else if(AppConstants.register.getData().getUser().getSex().equals("2")){
@@ -355,7 +354,6 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                             // CommonUtils.saveRegisterInfo(register);
                             AppConstants.register.getData().getUser().setSex(sexDatas.get(0));
                             PreferenceUtil.commitString(AppConstants.SEX, register.getData().getUser().getSex());
-                            Log.i("smsdas","getSex>>>>>>>"+register.getData().getUser().getSex());
                             progressBar.dismiss();
                             finish();
                         } else if (register.getResult() == AccountResultCode.USER_NOT_LOGIN) {
@@ -424,7 +422,6 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
 
     public void onEventMainThread(ChoseHeadStartBean choseHeadStartBean){
 
-        Log.i("asdassd","我进来了"+choseHeadStartBean.getStartUrl());
         //ImageLoader.load(ProfileActivity.this,choseHeadStartBean.startUrl).into(mHead_portrait);
         Glide.with(ProfileActivity.this)
                 .load(choseHeadStartBean.startUrl)
@@ -488,7 +485,6 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
         @Override
         public void onDismiss() {
             // TODO Auto-generated method stub
-            //Log.v("List_noteTypeActivity:", "我是关闭事件");
             backgroundAlpha(1f);
         }
     }
@@ -557,8 +553,6 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 doZoomImage(mCamerUri, width, height);
                 break;
             case REQUEST_IMAGE_CROP:
-                Log.i(TAG, "相册裁剪成功");
-                Log.i(TAG, "裁剪以后 [ " + data + " ]");
                 if (data == null) {
                     // 显示之前额图片,或者显示默认的图片
                     return;
@@ -594,9 +588,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                             //PreferenceUtil.commitString("image_url", outFile.toString());
                             boolean flag = photo.compress(Bitmap.CompressFormat.JPEG,
                                     100, fos);// 把数据写入文件
-                            Log.i("1", "flag=" + flag);
                             if (flag) {
-                                Log.i(TAG,"图片已保存至:" + outFile.getAbsolutePath());
                                  mHead_portrait.setImageBitmap(photo);
                                  doPostSycn(PUT_URL,outFile);//上传图片
 
@@ -648,12 +640,10 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 // UiUtils.toast(MyApp.getInstance(), R.string.picture_put_failed);
                  mViewHandler.sendEmptyMessage(Put_FAIL_PHOTO);
                  progressBar.dismiss();
-                 Log.d(TAG, "onFailure: "+e.getMessage());
              }
 
              @Override
              public void onResponse(Response response) throws IOException {
-                 Log.d(TAG, "onResponse: ");
 
                   String jsonString=response.body().string();
                   JSONObject jo = JSON.parseObject(jsonString);
@@ -679,13 +669,10 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
 
         Map<String, String> param = new HashMap<>();
 
-        Log.d(TAG, AppConstants.deviceToken);
         param.put("deviceToken", AppConstants.deviceToken);
 
-        Log.d(TAG, PreferenceUtil.getString(AppConstants.SPKEY_TOKEN, ""));
         param.put("loginToken", PreferenceUtil.getString(AppConstants.SPKEY_TOKEN, ""));
 
-        Log.d(TAG, AppConstants.deviceToken);
         param.put("imgUrl", headerUrl);
 
         VolleyContentFast.requestJsonByPost(BaseURLs.UPDATEHEADICON, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
