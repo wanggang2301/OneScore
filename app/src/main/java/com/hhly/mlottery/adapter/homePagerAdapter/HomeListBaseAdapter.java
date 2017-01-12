@@ -1638,91 +1638,89 @@ public class HomeListBaseAdapter extends BaseAdapter {
         TextView tv_expert_name01 = (TextView) view.findViewById(R.id.tv_expert_name01);
         TextView tv_expert_name02 = (TextView) view.findViewById(R.id.tv_expert_name02);
         TextView tv_expert_name03 = (TextView) view.findViewById(R.id.tv_expert_name03);
-        switch (mHomePagerEntity.getHeadTitles().getContent().size()) {
-            case 1:
-                ll_expert_name_item1.setVisibility(View.VISIBLE);
-                ll_expert_name_item02.setVisibility(View.GONE);
-                ll_expert_content1.setVisibility(View.VISIBLE);
-                try {
-                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon1);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                tv_expert_name1.setText(mHomePagerEntity.getHeadTitles().getContent().get(0).getTitle());
-                break;
-            case 2:
-                ll_expert_name_item1.setVisibility(View.VISIBLE);
-                ll_expert_name_item02.setVisibility(View.GONE);
-                ll_expert_content1.setVisibility(View.VISIBLE);
-                try {
-                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon1);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                tv_expert_name1.setText(mHomePagerEntity.getHeadTitles().getContent().get(0).getTitle());
-                ll_expert_content2.setVisibility(View.VISIBLE);
-                try {
-                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(1).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon2);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                tv_expert_name2.setText(mHomePagerEntity.getHeadTitles().getContent().get(1).getTitle());
-                break;
-            case 3:
-                ll_expert_name_item1.setVisibility(View.GONE);
-                ll_expert_name_item02.setVisibility(View.VISIBLE);
-                try {
-                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon01);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                tv_expert_name01.setText(mHomePagerEntity.getHeadTitles().getContent().get(0).getTitle());
-                try {
-                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(1).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon02);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                tv_expert_name02.setText(mHomePagerEntity.getHeadTitles().getContent().get(1).getTitle());
-                try {
-                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(2).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon03);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                tv_expert_name03.setText(mHomePagerEntity.getHeadTitles().getContent().get(2).getTitle());
-                break;
-            case 4:
-                ll_expert_name_item1.setVisibility(View.VISIBLE);
-                ll_expert_name_item02.setVisibility(View.GONE);
-                ll_expert_content1.setVisibility(View.VISIBLE);
-                try {
-                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon1);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                tv_expert_name1.setText(mHomePagerEntity.getHeadTitles().getContent().get(0).getTitle());
-                ll_expert_content2.setVisibility(View.VISIBLE);
-                try {
-                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(1).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon2);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                tv_expert_name2.setText(mHomePagerEntity.getHeadTitles().getContent().get(1).getTitle());
-                ll_expert_content3.setVisibility(View.VISIBLE);
-                try {
-                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(2).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon3);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                tv_expert_name3.setText(mHomePagerEntity.getHeadTitles().getContent().get(2).getTitle());
-                ll_expert_content4.setVisibility(View.VISIBLE);
-                try {
-                    Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(3).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon4);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                tv_expert_name4.setText(mHomePagerEntity.getHeadTitles().getContent().get(3).getTitle());
-                break;
+
+        int size = mHomePagerEntity.getHeadTitles().getContent().size();
+        if(size == 1){
+            ll_expert_name_item1.setVisibility(View.VISIBLE);
+            ll_expert_name_item02.setVisibility(View.GONE);
+            ll_expert_content1.setVisibility(View.VISIBLE);
+            try {
+                Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            tv_expert_name1.setText(mHomePagerEntity.getHeadTitles().getContent().get(0).getTitle());
+        }else if(size ==2){
+            ll_expert_name_item1.setVisibility(View.VISIBLE);
+            ll_expert_name_item02.setVisibility(View.GONE);
+            ll_expert_content1.setVisibility(View.VISIBLE);
+            try {
+                Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            tv_expert_name1.setText(mHomePagerEntity.getHeadTitles().getContent().get(0).getTitle());
+            ll_expert_content2.setVisibility(View.VISIBLE);
+            try {
+                Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(1).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon2);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            tv_expert_name2.setText(mHomePagerEntity.getHeadTitles().getContent().get(1).getTitle());
+        }else if(size == 3){
+            ll_expert_name_item1.setVisibility(View.GONE);
+            ll_expert_name_item02.setVisibility(View.VISIBLE);
+            try {
+                Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon01);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            tv_expert_name01.setText(mHomePagerEntity.getHeadTitles().getContent().get(0).getTitle());
+            try {
+                Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(1).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon02);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            tv_expert_name02.setText(mHomePagerEntity.getHeadTitles().getContent().get(1).getTitle());
+            try {
+                Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(2).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon03);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            tv_expert_name03.setText(mHomePagerEntity.getHeadTitles().getContent().get(2).getTitle());
+        }else if(size >= 4){
+            ll_expert_name_item1.setVisibility(View.VISIBLE);
+            ll_expert_name_item02.setVisibility(View.GONE);
+            ll_expert_content1.setVisibility(View.VISIBLE);
+            try {
+                Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            tv_expert_name1.setText(mHomePagerEntity.getHeadTitles().getContent().get(0).getTitle());
+            ll_expert_content2.setVisibility(View.VISIBLE);
+            try {
+                Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(1).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon2);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            tv_expert_name2.setText(mHomePagerEntity.getHeadTitles().getContent().get(1).getTitle());
+            ll_expert_content3.setVisibility(View.VISIBLE);
+            try {
+                Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(2).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon3);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            tv_expert_name3.setText(mHomePagerEntity.getHeadTitles().getContent().get(2).getTitle());
+            ll_expert_content4.setVisibility(View.VISIBLE);
+            try {
+                Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(3).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon4);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            tv_expert_name4.setText(mHomePagerEntity.getHeadTitles().getContent().get(3).getTitle());
         }
+
         ll_expert_content1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
