@@ -96,7 +96,11 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (getIntent().getExtras() != null) {
+            getIntent().getExtras().get("");
+            MultipleByValueBean mCurrentId = (MultipleByValueBean)getIntent().getExtras().get("thirdId");
+            byValue.add(mCurrentId);
+        }
         mContext = getApplicationContext();
 
         setContentView(R.layout.multiple_animation_list_act);
@@ -233,9 +237,9 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
         mFootballRecycler.setVisibility(View.GONE);
         mBasketRecycle.setVisibility(View.VISIBLE);
 
-        String url = "http://192.168.33.71:8080/mlottery/core/basketballMatch.findMultiScreenMatchList.do";//http://192.168.33.71:8080/mlottery/core/basketballMatch.findMultiScreenMatchList.do?lang=zh&timeZone=7
+//        String url = "http://192.168.33.71:8080/mlottery/core/basketballMatch.findMultiScreenMatchList.do";//http://192.168.33.71:8080/mlottery/core/basketballMatch.findMultiScreenMatchList.do?lang=zh&timeZone=7
 
-        VolleyContentFast.requestJsonByGet(url, new VolleyContentFast.ResponseSuccessListener<BasketMultipleRoot>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.MULTIPLE_BASKET_LIST_URL, new VolleyContentFast.ResponseSuccessListener<BasketMultipleRoot>() {
             @Override
             public void onResponse(BasketMultipleRoot json) {
 
@@ -402,7 +406,6 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
 
                     @Override
                     public void callBack(HotFocusLeagueCup hotFocusLeagueCup) {
-                        // hotFocusLeagueCup = null;
                         List<String> hotList = null;
 
                         if (hotFocusLeagueCup == null) {
@@ -431,7 +434,6 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                             }
                         }
                         mCups = matchs.getAll();
-//                            mNoDataTextView.setText(R.string.immediate_no_data);
                         if (mMatchs.size() == 0) {// 没有热门赛事，显示全部
 
                             mMatchs.addAll(mAllMatchs);
@@ -537,15 +539,12 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                                                 break;
                                             }
                                         }
-//                                            matchData.setChicks(!matchData.isChicks());
-//                                            mFootballAdapter.notifyDataSetChanged();
                                         L.d("yxq===011C ", "byValue.size() = " + byValue.size() + " ** ");
                                     }
                                 }
                             });
                             mFootballRecycler.setAdapter(mFootballAdapter);
                         } else {
-//                                updateAdapter();
                             mFootballAdapter.updateDatas(mMatchs);
                             mFootballAdapter.notifyDataSetChanged();
                         }
@@ -615,36 +614,8 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                         intent.putExtras(bundle);
                         startActivity(intent);
                     }else{
-                        Toast.makeText(getApplicationContext(), R.string.toast_data_loading, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, getResources().getText(R.string.basket_loading_txt), Toast.LENGTH_SHORT).show();
                     }
-//                    switch (isFootballLoad) {//TODO===========
-//                        case 0://加载失败
-//                            Intent intent = new Intent(getApplicationContext(), FiltrateMatchConfigActivity.class);
-//                            Bundle bundle = new Bundle();
-//                            bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS, false);
-//                            bundle.putInt("currentFragmentId", 1);
-//                            intent.putExtras(bundle);
-//                            startActivity(intent);
-//                            break;
-//                        case 1://加载成功
-//                            intent = new Intent(getApplicationContext(), FiltrateMatchConfigActivity.class);
-//                            bundle = new Bundle();
-//                            LeagueCup[] allCups = mCups.toArray(new LeagueCup[]{});
-//                            bundle.putParcelableArray(FiltrateMatchConfigActivity.ALL_CUPS, allCups);// 传值到筛选页面的全部联赛，数据类型是LeagueCup[]
-//                            bundle.putParcelableArray(FiltrateMatchConfigActivity.CHECKED_CUPS,
-//                                    mCheckedCups);// 传值到筛选页面的已经选择的联赛，数据类型是LeagueCup[]
-//                            bundle.putBoolean(FiltrateMatchConfigActivity.CHECKED_DEFUALT, isCheckedDefualt);// 是否默认选择
-//                            bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS, true);
-//                            bundle.putInt("currentFragmentId", 1);
-//                            intent.putExtras(bundle);
-//                            startActivity(intent);
-//                            break;
-//                        case 2://加载中
-//                            Toast.makeText(getApplicationContext(), R.string.toast_data_loading, Toast.LENGTH_SHORT).show();
-//                            break;
-//                        default:
-//                            break;
-//                    }
                 }else if(borf == BASKET_TYPE){
                     if (isBasketLoad == 1) {
                         Intent intent = new Intent(getApplicationContext(), BasketFiltrateActivity.class);
