@@ -68,7 +68,6 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
     private static final int REQUEST_LOAD = 0;
 
     private final static String LIVEBEFORE = "0";//直播前
-
     private final static String ONLIVE = "1";//直播中
     private final static String LIVEENDED = "-1";//直播结束
 
@@ -91,8 +90,8 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
 
     private List<MultipleByValueBean> matchIdList;
 
-    private static final String footballTopic = "USER.topic.liveEvent.";
-    private static final String basketballTopic = "USER.topic.basketball.score.";
+    private static final String FOOTBALL_TOPIC = "USER.topic.liveEvent.";   //足球推送主题
+    private static final String BASKETBALL_TOPIC = "USER.topic.basketball.score."; //篮球推送主题
 
 
     @Override
@@ -105,17 +104,12 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
 
             for (MultipleByValueBean m : matchIdList) {
                 if (m.getType() == VIEW_TYPE_FOOTBALL) {
-                    setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_FOOTBALL, m.getThirdId(), footballTopic + m.getThirdId() + "." + appendLanguage()));  //篮球
+                    setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_FOOTBALL, m.getThirdId(), FOOTBALL_TOPIC + m.getThirdId() + "." + appendLanguage()));  //篮球
                 } else if (m.getType() == VIEW_TYPE_BASKETBALL) {
-                    setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, m.getThirdId(), basketballTopic + m.getThirdId() + ".zh"));  //篮球
+                    setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, m.getThirdId(), BASKETBALL_TOPIC + m.getThirdId() + ".zh"));  //篮球
                 }
             }
         }
-
-        // setTopic("USER.topic.liveEvent." + mFootThirdId + "." + appendLanguage());  //足球
-        // setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId, "USER.topic.basketball.score." + mBasketThirdId + ".zh"));  //篮球
-        // setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId1, "USER.topic.basketball.score." + mBasketThirdId1 + ".zh"));  //篮球
-        // setTopic(new WebSocketMultiScreenViewBean(VIEW_TYPE_BASKETBALL, mBasketThirdId2, "USER.topic.basketball.score." + mBasketThirdId2 + ".zh"));  //篮球
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multi_screen_view);
@@ -124,6 +118,11 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
         loadData();
     }
 
+
+    /***
+     * 接受推送消息
+     * @param w
+     */
     @Override
     protected void onTextResult(WebSocketMultiScreenViewTextBean w) {
         String type = "";
@@ -143,7 +142,6 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
                     msg.obj = w;
                     mSocketHandler.sendMessage(msg);
                 }
-
             } else if (w.getType() == VIEW_TYPE_FOOTBALL) {
                 if (Integer.parseInt(type) == 6) { //足球事件直播type=6
                     msg.obj = w;
