@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.bean.multiplebean.MultipleByValueBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,16 +23,27 @@ public class MultiScreenIntroduceActivity extends Activity {
     @BindView(R.id.btn_enter)
     TextView btnEnter;
 
+    private MultipleByValueBean multipleByValueBean;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getIntent().getExtras() != null) {
+            multipleByValueBean = (MultipleByValueBean) getIntent().getExtras().get("thirdId");
+        }
+
         setContentView(R.layout.activity_multi_screen_introduce);
         ButterKnife.bind(this);
     }
 
     @OnClick(R.id.btn_enter)
     public void onClick() {
-        startActivity(new Intent(MultiScreenIntroduceActivity.this , MultiScreenViewingListActivity.class));
+        Intent intent = new Intent(MultiScreenIntroduceActivity.this, MultiScreenViewingListActivity.class);
+        if (multipleByValueBean != null) {
+            intent.putExtra("thirdId", multipleByValueBean);
+        }
+        startActivity(intent);
         finish();
     }
 }

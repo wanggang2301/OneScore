@@ -41,6 +41,7 @@ import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MathchStatisInfo;
 import com.hhly.mlottery.bean.footballDetails.PreLiveText;
+import com.hhly.mlottery.bean.multiplebean.MultipleByValueBean;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumKeepTime;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumLiveTextEvent;
 import com.hhly.mlottery.callback.FootballLiveGotoChart;
@@ -287,6 +288,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private RelativeLayout mMatchTypeLayout;
 
+    private RelativeLayout rl_addMultiView;
+
     private int mType = 0;
 
     private TextView mMatchType1;
@@ -448,6 +451,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         barrage_view = (BarrageView) findViewById(R.id.barrage_view);
         barrage_switch = (ImageView) findViewById(R.id.barrage_switch);
         barrage_switch.setOnClickListener(this);
+
+        rl_addMultiView.setOnClickListener(this);
     }
 
     public void onEventMainThread(BarrageBean barrageBean) {
@@ -2009,6 +2014,11 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.about_net_failed), Toast.LENGTH_SHORT).show();
                 }
                 break;
+
+            case R.id.rl_addMultiView:
+                enterMultiScreenView();
+                break;
+
             case R.id.barrage_switch:
 
 
@@ -2028,6 +2038,21 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 break;
         }
     }
+
+
+    private void enterMultiScreenView() {
+        if (PreferenceUtil.getBoolean("introduce", true)) {
+            Intent intent = new Intent(FootballMatchDetailActivity.this, MultiScreenIntroduceActivity.class);
+            intent.putExtra("thirdId", new MultipleByValueBean(1, mThirdId));
+            startActivity(intent);
+            PreferenceUtil.commitBoolean("introduce", false);
+        } else {
+            Intent intent = new Intent(FootballMatchDetailActivity.this, MultiScreenViewingListActivity.class);
+            intent.putExtra("thirdId", new MultipleByValueBean(1, mThirdId));
+            startActivity(intent);
+        }
+    }
+
 
     /**
      * 当前连接的网络提示
@@ -2576,6 +2601,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         btn_showGif.setOnClickListener(this);
 
         rl_gif_notice = (RelativeLayout) findViewById(R.id.rl_gif_notice);
+        rl_addMultiView = (RelativeLayout) findViewById(R.id.rl_addMultiView);
         red_point = (View) findViewById(R.id.red_point);
     }
 

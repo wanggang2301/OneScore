@@ -27,16 +27,17 @@
 
                 <include
                     style="@style/isFitsSystemWindows"
-                    layout="@layout/fragment_pre_headinfo"/>
+                    layout="@layout/fragment_pre_headinfo" />
+
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <com.hhly.mlottery.view.BarrageView
                         android:id="@+id/barrage_view"
                         android:layout_width="match_parent"
-                        android:paddingTop="30dp"
-                        android:layout_height="200dp">
-                    </com.hhly.mlottery.view.BarrageView>
+                        android:layout_height="200dp"
+                        android:paddingTop="30dp"></com.hhly.mlottery.view.BarrageView>
 
                 </FrameLayout>
 
@@ -101,14 +102,16 @@
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/text_size_15" />
                         </RelativeLayout>
+
                         <ImageView
 
                             android:id="@+id/barrage_switch"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
+                            android:layout_gravity="right"
                             android:layout_marginRight="40dp"
-                            android:src="@mipmap/danmu_open"
-                            android:layout_gravity="right"/>
+                            android:src="@mipmap/danmu_open" />
+
                         <ImageView
                             android:id="@+id/iv_setting"
                             android:layout_width="wrap_content"
@@ -120,7 +123,6 @@
                             android:src="@mipmap/head_details" />
 
                     </FrameLayout>
-
 
 
                 </android.support.v7.widget.Toolbar>
@@ -249,6 +251,25 @@
                 android:paddingTop="60dp"
                 android:text="@string/video_high_notice"
                 android:textColor="@color/white" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_addMultiView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom|right"
+            android:paddingBottom="18dp"
+            android:paddingRight="18dp">
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="24dp"
+                android:alpha="0.75"
+                android:background="@drawable/multi_add_view"
+                android:gravity="center"
+                android:text="@string/multi_add_view_text"
+                android:textColor="#fff"
+                android:textSize="@dimen/text_size_12" />
         </RelativeLayout>
 
     </android.support.design.widget.CoordinatorLayout>

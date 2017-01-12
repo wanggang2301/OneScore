@@ -16,6 +16,11 @@ public class MultipleByValueBean implements Parcelable {
 
     public String thirdId;//比赛id
 
+    public MultipleByValueBean(int type, String thirdId) {
+        this.type = type;
+        this.thirdId = thirdId;
+    }
+
 
     public int getType() {
         return type;
