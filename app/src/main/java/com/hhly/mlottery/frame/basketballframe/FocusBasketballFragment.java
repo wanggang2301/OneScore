@@ -598,7 +598,6 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
     @Override
     public void onRefresh() {
         isLoad = -1;
-
         connectWebSocket();
         initData();
 
@@ -926,9 +925,7 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
     public void onResume() {
         super.onResume();
         L.v(TAG, "___onResume___");
-//        if (!isLoadData) {
-//            mLoadHandler.postDelayed(mRun, 0);
-//        }
+        connectWebSocket(); //链接socket
     }
 
     private boolean isDestroy = false;

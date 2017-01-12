@@ -970,6 +970,7 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
         super.onResume();
 //        isPause = false;
         L.v(TAG, "___onResume___");
+        connectWebSocket();
 
     }
 
