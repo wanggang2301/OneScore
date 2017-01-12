@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,7 +18,9 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.custom.CustomMyDataAdapter;
 import com.hhly.mlottery.bean.basket.BasketAllOddBean;
+import com.hhly.mlottery.bean.basket.BasketMatchBean;
 import com.hhly.mlottery.bean.basket.BasketOddBean;
+import com.hhly.mlottery.bean.basket.BasketRootBean;
 import com.hhly.mlottery.bean.custombean.CustomMineBean.CustomMineThirdDataBean;
 import com.hhly.mlottery.frame.basketballframe.MyRotateAnimation;
 import com.hhly.mlottery.util.ImageLoader;
@@ -36,28 +39,30 @@ import java.util.Map;
 public class MultipleListBasketAdapter extends BaseQuickAdapter {
 
     private Context mContext;
-    private List<String> mData;
+    private List<BasketMatchBean> mData;
 
 
 
-    public MultipleListBasketAdapter(Context context , List<String> data){
+    public MultipleListBasketAdapter(Context context , List<BasketMatchBean> data){
         super(R.layout.multiple_basket_item, data);
         this.mContext = context;
         this.mData = data;
     }
 
-    public void setData(List data) {
+    public void setData(List<BasketMatchBean> data) {
         this.mData = data;
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position, ImageView img);
+    /**
+     * 赛事item click
+     */
+    private MultipleRecyclerViewBasketItemClickListener mOnItemClickListener = null;
+
+    public void setmOnItemClickListener(MultipleRecyclerViewBasketItemClickListener mOnItemClickListener) {
+        this.mOnItemClickListener = mOnItemClickListener;
     }
-
-    private CustomMyDataAdapter.OnItemClickListener onItemClickListener;
-
-    public void setOnItemClickLitener(CustomMyDataAdapter.OnItemClickListener itemClickListener) {
-        this.onItemClickListener = itemClickListener;
+    public interface MultipleRecyclerViewBasketItemClickListener {
+        void onItemClick(View view, String data , int pos , BasketMatchBean matchData);
     }
 
 
@@ -123,7 +128,7 @@ public class MultipleListBasketAdapter extends BaseQuickAdapter {
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int positions) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int positions) {
 
         if (mData == null) {
             return;
@@ -214,33 +219,47 @@ public class MultipleListBasketAdapter extends BaseQuickAdapter {
 //                break;
 //        }
         //赛事
+        final BasketMatchBean matchData = mData.get(positions);
+
+        holder.itemView.setTag(matchData.getThirdId());
+
         MultipleListBasketAdapter.ViewHolderItem viewHolderItem = (MultipleListBasketAdapter.ViewHolderItem) holder;
 
-        viewHolderItem.matches_name.setText(mData.get(positions));
-        viewHolderItem.guest_name.setText("湖人 " + positions);
-        viewHolderItem.home_name.setText("步行者" + positions);
+        if (matchData.isBasketChicks()) {
+            viewHolderItem.multipleItemll.setBackgroundResource(R.color.multiple_item_bg_color);
+        }else{
+            viewHolderItem.multipleItemll.setBackgroundResource(R.color.white);
+        }
 
-//        CustomMineThirdDataBean itemData = (CustomMineThirdDataBean) mData.get(positions);
+        if (mOnItemClickListener != null) {
+            //将创建的View注册点击事件
+            viewHolderItem.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onItemClick(v, (String) v.getTag(), positions , matchData);
+                }
+            });
+        }
 
-//        setItemData(viewHolderItem, itemData); //设置数据
+        setItemData(viewHolderItem , mData.get(positions));
+//        viewHolderItem.matches_name.setText(mData.get(positions));
+//        viewHolderItem.guest_name.setText("湖人 " + positions);
+//        viewHolderItem.home_name.setText("步行者" + positions);
 
-//        if (onItemClickListener != null) {
-//            holder.itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    int pos = holder.getLayoutPosition();
-//                    onItemClickListener.onItemClick(holder.itemView, pos, null);
-//                }
-//            });
-//        }
     }
 
+//    /**
+//     * 设置数据
+//     */
+//    private void setData(final MultipleListBasketAdapter.ViewHolderItem holder, BasketRootBean data){
+//
+////        holder.guest_name.setText();
+//    }
     /**
      * 设置比分赔率数据
      */
     private Map<String, BasketAllOddBean> MatchOdds;
-    private void setItemData(final MultipleListBasketAdapter.ViewHolderItem holder, CustomMineThirdDataBean data) {
-
+    private void setItemData(final MultipleListBasketAdapter.ViewHolderItem holder, BasketMatchBean data) {
 
         holder.basket_guest_all_score.setTag(data.getThirdId());
         holder.basket_home_all_score.setTag(data.getThirdId());
@@ -557,11 +576,11 @@ public class MultipleListBasketAdapter extends BaseQuickAdapter {
 
                         if (data.isHomeAnim()) {
                             scoreAnimation(holder.basket_home_all_score, data.getMatchScore().getHomeScore() + ""); //启动动画 客队
-                            data.setHomeAnim(false);
+                            data.setIsHomeAnim(false);
                         }
                         if (data.isGuestAnim()) {
                             scoreAnimation(holder.basket_guest_all_score, data.getMatchScore().getGuestScore() + ""); //启动动画 主队
-                            data.setGuestAnim(false);
+                            data.setIsGuestAnim(false);
                         }
 
                         holder.basket_guest_all_score.setText(data.getMatchScore().getGuestScore() + "");
@@ -613,11 +632,11 @@ public class MultipleListBasketAdapter extends BaseQuickAdapter {
 
                         if (data.isHomeAnim()) {
                             scoreAnimation(holder.basket_home_all_score, data.getMatchScore().getHomeScore() + ""); //启动动画 客队
-                            data.setHomeAnim(false);
+                            data.setIsHomeAnim(false);
                         }
                         if (data.isGuestAnim()) {
                             scoreAnimation(holder.basket_guest_all_score, data.getMatchScore().getGuestScore() + ""); //启动动画 主队
-                            data.setGuestAnim(false);
+                            data.setIsGuestAnim(false);
                         }
 
                         holder.basket_guest_all_score.setText(data.getMatchScore().getGuestScore() + "");
@@ -673,11 +692,11 @@ public class MultipleListBasketAdapter extends BaseQuickAdapter {
 
                         if (data.isHomeAnim()) {
                             scoreAnimation(holder.basket_home_all_score, data.getMatchScore().getHomeScore() + ""); //启动动画 客队
-                            data.setHomeAnim(false);
+                            data.setIsHomeAnim(false);
                         }
                         if (data.isGuestAnim()) {
                             scoreAnimation(holder.basket_guest_all_score, data.getMatchScore().getGuestScore() + ""); //启动动画 主队
-                            data.setGuestAnim(false);
+                            data.setIsGuestAnim(false);
                         }
 
                         holder.basket_guest_all_score.setText(data.getMatchScore().getGuestScore() + "");
@@ -732,11 +751,11 @@ public class MultipleListBasketAdapter extends BaseQuickAdapter {
 
                         if (data.isHomeAnim()) {
                             scoreAnimation(holder.basket_home_all_score, data.getMatchScore().getHomeScore() + ""); //启动动画 客队
-                            data.setHomeAnim(false);
+                            data.setIsHomeAnim(false);
                         }
                         if (data.isGuestAnim()) {
                             scoreAnimation(holder.basket_guest_all_score, data.getMatchScore().getGuestScore() + ""); //启动动画 主队
-                            data.setGuestAnim(false);
+                            data.setIsGuestAnim(false);
                         }
 
                         holder.basket_guest_all_score.setText(data.getMatchScore().getGuestScore() + "");
@@ -793,11 +812,11 @@ public class MultipleListBasketAdapter extends BaseQuickAdapter {
 
                         if (data.isHomeAnim()) {
                             scoreAnimation(holder.basket_home_all_score, data.getMatchScore().getHomeScore() + ""); //启动动画 客队
-                            data.setHomeAnim(false);
+                            data.setIsHomeAnim(false);
                         }
                         if (data.isGuestAnim()) {
                             scoreAnimation(holder.basket_guest_all_score, data.getMatchScore().getGuestScore() + ""); //启动动画 主队
-                            data.setGuestAnim(false);
+                            data.setIsGuestAnim(false);
                         }
 
                         holder.basket_guest_all_score.setText(data.getMatchScore().getGuestScore() + "");
@@ -846,11 +865,11 @@ public class MultipleListBasketAdapter extends BaseQuickAdapter {
 
                         if (data.isHomeAnim()) {
                             scoreAnimation(holder.basket_home_all_score, data.getMatchScore().getHomeScore() + ""); //启动动画 客队
-                            data.setHomeAnim(false);
+                            data.setIsHomeAnim(false);
                         }
                         if (data.isGuestAnim()) {
                             scoreAnimation(holder.basket_guest_all_score, data.getMatchScore().getGuestScore() + ""); //启动动画 主队
-                            data.setGuestAnim(false);
+                            data.setIsGuestAnim(false);
                         }
 
                         holder.basket_guest_all_score.setText(data.getMatchScore().getGuestScore() + "");
@@ -900,11 +919,11 @@ public class MultipleListBasketAdapter extends BaseQuickAdapter {
 
                         if (data.isHomeAnim()) {
                             scoreAnimation(holder.basket_home_all_score, data.getMatchScore().getHomeScore() + ""); //启动动画 客队
-                            data.setHomeAnim(false);
+                            data.setIsHomeAnim(false);
                         }
                         if (data.isGuestAnim()) {
                             scoreAnimation(holder.basket_guest_all_score, data.getMatchScore().getGuestScore() + ""); //启动动画 主队
-                            data.setGuestAnim(false);
+                            data.setIsGuestAnim(false);
                         }
 
                         holder.basket_guest_all_score.setText(data.getMatchScore().getGuestScore() + "");
@@ -1219,30 +1238,6 @@ public class MultipleListBasketAdapter extends BaseQuickAdapter {
         return super.getItemView(layoutResId, parent);
     }
 
-    /**
-     * 添加所有child
-     *
-     * @param lists
-     * @param position
-     */
-    public void addAllChild(List<String> lists, int position) { //TODO----------List<泛型为 ？>--------------
-        mData.addAll(position, lists);
-        notifyItemRangeInserted(position, lists.size());
-    }
-
-    /**
-     * 删除所有child
-     *
-     * @param position
-     * @param itemnum
-     */
-    public void deleteAllChild(int position, int itemnum) {
-        for (int i = 0; i < itemnum; i++) {
-            mData.remove(position);
-        }
-        notifyItemRangeRemoved(position, itemnum);
-    }
-
     class ViewHolderItem extends BaseViewHolder {
 
         private final ImageView home_icon;
@@ -1269,6 +1264,7 @@ public class MultipleListBasketAdapter extends BaseQuickAdapter {
         private final TextView tv_a;
         private final TextView tv_b;
         private final TextView backetball_apos;
+        private final LinearLayout multipleItemll;
 
         public ViewHolderItem(View itemView) {
             super(itemView);
@@ -1293,6 +1289,7 @@ public class MultipleListBasketAdapter extends BaseQuickAdapter {
             basket_home_all_score = (TextView) itemView.findViewById(R.id.basket_home_all_score);
 
             basket_half_score = (TextView) itemView.findViewById(R.id.basket_half_score);
+            multipleItemll = (LinearLayout) itemView.findViewById(R.id.multiple_match_item);
 
 
             /**

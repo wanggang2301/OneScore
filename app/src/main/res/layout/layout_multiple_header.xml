@@ -44,7 +44,7 @@
                     android:padding="5dp"
                     android:background="@drawable/multiple_radio_button_left"
                     android:checked="true"
-                    android:text="篮球"/>
+                    android:text="@string/multi_item_basket_name"/>
                 <RadioButton
                     android:id="@+id/multiple_football"
                     style="@style/multiple_radio_button"
@@ -54,11 +54,11 @@
                     android:layout_marginLeft="-1dp"
                     android:layout_marginStart="-1dp"
                     android:background="@drawable/multiple_radio_button_right"
-                    android:text="足球"/>
+                    android:text="@string/multi_item_football_name"/>
 
             </RadioGroup>
 
-        <TextView
+        <ImageView
             android:id="@+id/tv_right"
             style="@style/RippleBackgroudBorderless"
             android:layout_width="wrap_content"
@@ -68,10 +68,20 @@
             android:gravity="center"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
-            android:text="筛选"
-            android:textColor="@color/white"
-            android:textSize="15sp"
+            android:src="@mipmap/cpi_filtrate"
             />
+        <!--<ImageView-->
+            <!--android:id="@+id/public_btn_filter"-->
+            <!--style="@style/RippleBackgroudBorderless"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignBottom="@id/public_btn_set"-->
+            <!--android:layout_alignTop="@id/public_btn_set"-->
+            <!--android:layout_toLeftOf="@id/public_btn_set"-->
+            <!--android:paddingLeft="12dp"-->
+            <!--android:paddingRight="12dp"-->
+            <!--android:scaleType="centerInside"-->
+            <!--android:src="@mipmap/cpi_filtrate" />-->
 
     </RelativeLayout>
 

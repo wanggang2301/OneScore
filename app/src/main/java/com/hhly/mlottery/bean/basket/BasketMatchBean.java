@@ -40,6 +40,17 @@ public class BasketMatchBean {
 
     private boolean isHomeAnim;
     private boolean isGuestAnim;
+
+    private boolean isBasketChicks = false; //标记item是否被选中(默认未选中)
+
+    public boolean isBasketChicks() {
+        return isBasketChicks;
+    }
+
+    public void setBasketChicks(boolean basketChicks) {
+        isBasketChicks = basketChicks;
+    }
+
     public Integer getMatchType() {
         return matchType;
     }

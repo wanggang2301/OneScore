@@ -1500,4 +1500,10 @@
     <string name="multi_enter_text">点击进入</string>
     <string name="multi_add_view_text">添加多屏</string>
 
+    <!--多屏列表-->
+    <string name="multi_item_basket_name">篮球</string>
+    <string name="multi_item_football_name">足球</string>
+    <string name="multi_item_clicks">确定</string>
+    <string name="multi_toast_clicks_match">请选择比赛</string>
+
 </resources>
