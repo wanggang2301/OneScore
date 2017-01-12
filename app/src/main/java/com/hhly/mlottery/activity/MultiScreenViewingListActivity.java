@@ -588,7 +588,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
         });
     }
 
-    public static boolean isCheckedDefualt = false;// true为默认选中全部，但是在筛选页面不选中
+    public static boolean isCheckedDefualt = false;// true为默认选中全部，但是在筛选页面不选中的
 
     @Override
     public void onClick(View v) {
