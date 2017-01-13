@@ -222,7 +222,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             chartBallView = getIntent().getExtras().getInt("chart_ball_view");
 
 //            mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
-            mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
+//            mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
             isAddMultiViewHide = getIntent().getExtras().getBoolean("isAddMultiViewHide");
 
             if (LEAGUEID_NBA.equals(mLeagueId)) {

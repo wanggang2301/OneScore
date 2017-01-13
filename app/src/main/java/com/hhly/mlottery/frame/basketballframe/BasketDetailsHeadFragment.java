@@ -277,8 +277,6 @@ public class BasketDetailsHeadFragment extends Fragment {
 
     public void initData(BasketballDetailsBean bean, ChartBallFragment mChartBallFragment) {
 
-    public void initData(BasketballDetailsBean bean, ChartBallFragment mChartBallFragment, TextView mTitleGuest, TextView mTitleHome, TextView mTitleVS) {
-
         /**
          * 启动秒闪烁
          */
