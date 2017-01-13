@@ -15,12 +15,14 @@ public class LotteryInfoDateBean implements Parcelable {
     private int coedNotAppear;
     private String key;
 
-    protected LotteryInfoDateBean(Parcel in) {
+    public LotteryInfoDateBean(Parcel in) {
         coedAppear = in.readInt();
         numberAppear = in.readInt();
         coedNotAppear = in.readInt();
         key = in.readString();
     }
+
+    public LotteryInfoDateBean(){}
 
     public static final Creator<LotteryInfoDateBean> CREATOR = new Creator<LotteryInfoDateBean>() {
         @Override

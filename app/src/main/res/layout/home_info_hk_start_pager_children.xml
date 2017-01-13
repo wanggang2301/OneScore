@@ -17,7 +17,7 @@
             android:paddingLeft="10dp"
             android:textColor="@color/mdy_999"
             android:textSize="@dimen/item_football_half_score"
-            tools:text="特码生肖出现次数" />
+            android:text="@string/home_lottery_info_tm_zodiac_count" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,10 +39,11 @@
 
                     <io.github.rockerhieu.emojicon.EmojiconTextView
                         android:id="@+id/emoji_icon_01"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        tools:background="@mipmap/number_hk_emoji_long"
                         android:textSize="40sp"
-                        tools:text="" />
+                        tools:text="" />
 
                     <TextView
                         android:id="@+id/emoji_count_01"
@@ -64,10 +65,10 @@
 
                     <io.github.rockerhieu.emojicon.EmojiconTextView
                         android:id="@+id/emoji_icon_02"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:textSize="40sp"
-                        tools:text="" />
+                        tools:text="\ue109" />
 
                     <TextView
                         android:id="@+id/emoji_count_02"
@@ -89,8 +90,8 @@
 
                     <io.github.rockerhieu.emojicon.EmojiconTextView
                         android:id="@+id/emoji_icon_03"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:textSize="40sp"
                         tools:text="" />
 
@@ -114,8 +115,8 @@
 
                     <io.github.rockerhieu.emojicon.EmojiconTextView
                         android:id="@+id/emoji_icon_04"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:textSize="40sp"
                         tools:text="" />
 
@@ -139,8 +140,8 @@
 
                     <io.github.rockerhieu.emojicon.EmojiconTextView
                         android:id="@+id/emoji_icon_05"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:textSize="40sp"
                         tools:text="" />
 
@@ -164,8 +165,8 @@
 
                     <io.github.rockerhieu.emojicon.EmojiconTextView
                         android:id="@+id/emoji_icon_06"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:textSize="40sp"
                         tools:text="" />
 
@@ -196,8 +197,8 @@
 
                     <io.github.rockerhieu.emojicon.EmojiconTextView
                         android:id="@+id/emoji_icon_07"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:textSize="40sp"
                         tools:text="" />
 
@@ -221,8 +222,8 @@
 
                     <io.github.rockerhieu.emojicon.EmojiconTextView
                         android:id="@+id/emoji_icon_08"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:textSize="40sp"
                         tools:text="" />
 
@@ -246,8 +247,8 @@
 
                     <io.github.rockerhieu.emojicon.EmojiconTextView
                         android:id="@+id/emoji_icon_09"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:textSize="40sp"
                         tools:text="" />
 
@@ -271,8 +272,8 @@
 
                     <io.github.rockerhieu.emojicon.EmojiconTextView
                         android:id="@+id/emoji_icon_10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:textSize="40sp"
                         tools:text="" />
 
@@ -296,8 +297,8 @@
 
                     <io.github.rockerhieu.emojicon.EmojiconTextView
                         android:id="@+id/emoji_icon_11"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:textSize="40sp"
                         tools:text="" />
 
@@ -321,8 +322,8 @@
 
                     <io.github.rockerhieu.emojicon.EmojiconTextView
                         android:id="@+id/emoji_icon_12"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:textSize="40sp"
                         tools:text="" />
 
@@ -348,7 +349,7 @@
             android:paddingLeft="10dp"
             android:textColor="@color/mdy_999"
             android:textSize="@dimen/item_football_half_score"
-            tools:text="特码出现次数" />
+            android:text="@string/home_lottery_info_tm_count" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -375,7 +376,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -404,7 +405,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -433,7 +434,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -462,7 +463,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -491,7 +492,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -520,7 +521,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -549,7 +550,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -584,7 +585,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -613,7 +614,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -642,7 +643,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -671,7 +672,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -700,7 +701,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -729,7 +730,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -758,7 +759,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -793,7 +794,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -822,7 +823,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -851,7 +852,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -880,7 +881,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -909,7 +910,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -938,7 +939,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -967,7 +968,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1002,7 +1003,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1031,7 +1032,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1060,7 +1061,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1089,7 +1090,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1118,7 +1119,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1147,7 +1148,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1176,7 +1177,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1211,7 +1212,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1240,7 +1241,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1269,7 +1270,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1298,7 +1299,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1327,7 +1328,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1356,7 +1357,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1385,7 +1386,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1420,7 +1421,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1449,7 +1450,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1478,7 +1479,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1507,7 +1508,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1536,7 +1537,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1565,7 +1566,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1594,7 +1595,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1629,7 +1630,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1658,7 +1659,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1687,7 +1688,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1716,7 +1717,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1745,7 +1746,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1774,7 +1775,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1803,7 +1804,7 @@
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/home_menu_icon_def"
                         tools:text="49" />
 
                     <TextView
@@ -1830,7 +1831,7 @@
             android:paddingLeft="10dp"
             android:textColor="@color/mdy_999"
             android:textSize="@dimen/item_football_half_score"
-            tools:text="特码尾号出现次数" />
+            android:text="@string/home_lottery_info_tm_mantissa_count" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -1851,17 +1852,17 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_not_show_number01"
+                        android:id="@+id/tv_mantissa_number01"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/number_hk_info_mantissa"
                         tools:text="49" />
 
                     <TextView
-                        android:id="@+id/tv_not_show_count01"
+                        android:id="@+id/tv_mantissa_count01"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -1880,17 +1881,17 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_not_show_number02"
+                        android:id="@+id/tv_mantissa_number02"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/number_hk_info_mantissa"
                         tools:text="49" />
 
                     <TextView
-                        android:id="@+id/tv_not_show_count02"
+                        android:id="@+id/tv_mantissa_count02"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -1909,17 +1910,17 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_not_how_number03"
+                        android:id="@+id/tv_mantissa_number03"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/number_hk_info_mantissa"
                         tools:text="49" />
 
                     <TextView
-                        android:id="@+id/tv_not_show_count03"
+                        android:id="@+id/tv_mantissa_count03"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -1938,17 +1939,17 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_not_show_number04"
+                        android:id="@+id/tv_mantissa_number04"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/number_hk_info_mantissa"
                         tools:text="49" />
 
                     <TextView
-                        android:id="@+id/tv_not_show_count04"
+                        android:id="@+id/tv_mantissa_count04"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -1967,75 +1968,17 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_not_show_number05"
+                        android:id="@+id/tv_mantissa_number05"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/number_hk_info_mantissa"
                         tools:text="49" />
 
                     <TextView
-                        android:id="@+id/tv_not_show_count05"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:paddingTop="5dp"
-                        android:textSize="@dimen/item_football_left_odds"
-                        tools:text="10" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_not_show_number06"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
-                        tools:text="49" />
-
-                    <TextView
-                        android:id="@+id/tv_not_show_count06"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:paddingTop="5dp"
-                        android:textSize="@dimen/item_football_left_odds"
-                        tools:text="10" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_not_show_number07"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
-                        tools:text="49" />
-
-                    <TextView
-                        android:id="@+id/tv_not_show_count07"
+                        android:id="@+id/tv_mantissa_count05"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -2060,17 +2003,17 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_not_show_number08"
+                        android:id="@+id/tv_mantissa_number06"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/number_hk_info_mantissa"
                         tools:text="49" />
 
                     <TextView
-                        android:id="@+id/tv_not_show_count08"
+                        android:id="@+id/tv_mantissa_count06"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -2089,17 +2032,17 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_not_show_number09"
+                        android:id="@+id/tv_mantissa_number07"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/number_hk_info_mantissa"
                         tools:text="49" />
 
                     <TextView
-                        android:id="@+id/tv_not_show_count09"
+                        android:id="@+id/tv_mantissa_count07"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -2118,17 +2061,17 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_not_show_number10"
+                        android:id="@+id/tv_mantissa_number08"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/number_hk_info_mantissa"
                         tools:text="49" />
 
                     <TextView
-                        android:id="@+id/tv_not_show_count10"
+                        android:id="@+id/tv_mantissa_count08"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -2147,17 +2090,17 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_not_show_number11"
+                        android:id="@+id/tv_mantissa_number09"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/number_hk_info_mantissa"
                         tools:text="49" />
 
                     <TextView
-                        android:id="@+id/tv_not_show_count11"
+                        android:id="@+id/tv_mantissa_count09"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -2176,75 +2119,17 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_not_show_number12"
+                        android:id="@+id/tv_mantissa_number10"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
+                        android:background="@mipmap/number_hk_info_mantissa"
                         tools:text="49" />
 
                     <TextView
-                        android:id="@+id/tv_not_show_count12"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:paddingTop="5dp"
-                        android:textSize="@dimen/item_football_left_odds"
-                        tools:text="10" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_not_show_number13"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
-                        tools:text="49" />
-
-                    <TextView
-                        android:id="@+id/tv_not_show_count13"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:paddingTop="5dp"
-                        android:textSize="@dimen/item_football_left_odds"
-                        tools:text="10" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_not_show_number14"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/activity_football_match_detail_teamname"
-                        tools:background="@mipmap/number_bg_blue"
-                        tools:text="49" />
-
-                    <TextView
-                        android:id="@+id/tv_not_show_count14"
+                        android:id="@+id/tv_mantissa_count10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -2267,7 +2152,7 @@
             android:paddingLeft="10dp"
             android:textColor="@color/mdy_999"
             android:textSize="@dimen/item_football_half_score"
-            tools:text="特码波色出现次数" />
+            android:text="@string/home_lottery_info_tm_bo_count" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -2289,7 +2174,7 @@
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/activity_football_match_detail_teamname"
-                    tools:background="@mipmap/number_bg_blue"
+                    android:background="@mipmap/home_menu_icon_def"
                     tools:text="49" />
 
                 <TextView
@@ -2318,7 +2203,7 @@
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/activity_football_match_detail_teamname"
-                    tools:background="@mipmap/number_bg_blue"
+                    android:background="@mipmap/home_menu_icon_def"
                     tools:text="49" />
 
                 <TextView
@@ -2347,7 +2232,7 @@
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/activity_football_match_detail_teamname"
-                    tools:background="@mipmap/number_bg_blue"
+                    android:background="@mipmap/home_menu_icon_def"
                     tools:text="49" />
 
                 <TextView

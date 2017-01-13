@@ -27,6 +27,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.rockerhieu.emojicon.EmojiconTextView;
+
 import static com.hhly.mlottery.R.id.content;
 
 /**
@@ -49,6 +51,15 @@ public class StartPagerFragment extends Fragment {
     private List<LotteryInfoDateBean> mMantissaList;
     private List<LotteryInfoDateBean> mBoList;
     private int mLabs;
+
+    private List<EmojiconTextView> emojiIconList = new ArrayList<>(12);
+    private List<TextView> emojiCountList = new ArrayList<>(12);
+    private List<TextView> showNumberList = new ArrayList<>(49);
+    private List<TextView> showCountList = new ArrayList<>(49);
+    private List<TextView> mantissaNumberList = new ArrayList<>(10);
+    private List<TextView> mantissaCountList = new ArrayList<>(10);
+    private List<TextView> boNumberList = new ArrayList<>(3);
+    private List<TextView> boCountList = new ArrayList<>(3);
 
     public static StartPagerFragment newInstance(int labs, List<LotteryInfoDateBean> zodiacList, List<LotteryInfoDateBean> numberList, List<LotteryInfoDateBean> mantissaList, List<LotteryInfoDateBean> boList) {
         StartPagerFragment fragment = new StartPagerFragment();
@@ -87,11 +98,490 @@ public class StartPagerFragment extends Fragment {
     }
 
     private void initData() {
-        // TODO 由labs来判断当前页面的数据
 
+        // 鼠 \ue053
+        // 鸡 \ue52e
+        // 猴 \ue109
+        // 龙 自定义图片
+        // 兔 \ue52c
+        // 马 \ue01a
+        // 狗 \ue052
+        // 猪 \ue10b
+        // 羊 \ue529
+        // 牛 \ue52b
+        // 蛇 \ue52d
+        // 虎 \ue050
+
+        for (int i = 0; i < mZodiacList.size(); i++) {
+            switch (mZodiacList.get(i).getKey()){
+                case "鼠":
+                    emojiIconList.get(i).setText("\ue053");
+                    break;
+                case "鸡":
+                    emojiIconList.get(i).setText("\ue52e");
+                    break;
+                case "猴":
+                    emojiIconList.get(i).setText("\ue109");
+                    break;
+                case "龙":
+                    emojiIconList.get(i).setText("");
+                    emojiIconList.get(i).setBackground(mContext.getResources().getDrawable(R.mipmap.number_hk_emoji_long));
+                    break;
+                case "兔":
+                    emojiIconList.get(i).setText("\ue52c");
+                    break;
+                case "马":
+                    emojiIconList.get(i).setText("\ue01a");
+                    break;
+                case "狗":
+                    emojiIconList.get(i).setText("\ue052");
+                    break;
+                case "猪":
+                    emojiIconList.get(i).setText("\ue10b");
+                    break;
+                case "羊":
+                    emojiIconList.get(i).setText("\ue529");
+                    break;
+                case "牛":
+                    emojiIconList.get(i).setText("\ue52b");
+                    break;
+                case "蛇":
+                    emojiIconList.get(i).setText("\ue52d");
+                    break;
+                case "虎":
+                    emojiIconList.get(i).setText("\ue050");
+                    break;
+            }
+            switch (mLabs) {
+                case 1:
+                    emojiCountList.get(i).setText(String.valueOf(mZodiacList.get(i).getCoedAppear()));
+                    break;
+                case 2:
+                    emojiCountList.get(i).setText(String.valueOf(mZodiacList.get(i).getNumberAppear()));
+                    break;
+                case 3:
+                    emojiCountList.get(i).setText(String.valueOf(mZodiacList.get(i).getCoedNotAppear()));
+                    break;
+            }
+        }
+
+        for (int i = 0; i < mNumberList.size(); i++) {
+            showNumberList.get(i).setText(mNumberList.get(i).getKey());
+            settingBgColor(showNumberList.get(i), mNumberList.get(i).getKey());
+            switch (mLabs) {
+                case 1:
+                    showCountList.get(i).setText(String.valueOf(mNumberList.get(i).getCoedAppear()));
+                    break;
+                case 2:
+                    showCountList.get(i).setText(String.valueOf(mNumberList.get(i).getNumberAppear()));
+                    break;
+                case 3:
+                    showCountList.get(i).setText(String.valueOf(mNumberList.get(i).getCoedNotAppear()));
+                    break;
+            }
+        }
+
+        for (int i = 0; i < mMantissaList.size(); i++) {
+            mantissaNumberList.get(i).setText("*" + mMantissaList.get(i).getKey());
+            switch (mLabs) {
+                case 1:
+                    mantissaCountList.get(i).setText(String.valueOf(mMantissaList.get(i).getCoedAppear()));
+                    break;
+                case 2:
+                    mantissaCountList.get(i).setText(String.valueOf(mMantissaList.get(i).getNumberAppear()));
+                    break;
+                case 3:
+                    mantissaCountList.get(i).setText(String.valueOf(mMantissaList.get(i).getCoedNotAppear()));
+                    break;
+            }
+        }
+
+        for (int i = 0; i < mBoList.size(); i++) {
+            switch (mBoList.get(i).getKey()) {
+                case "红":
+                    boNumberList.get(i).setText(mContext.getResources().getString(R.string.home_lottery_info_tm_bo_r));
+                    boNumberList.get(i).setBackgroundResource(R.mipmap.number_bg_red);
+                    break;
+                case "绿":
+                    boNumberList.get(i).setText(mContext.getResources().getString(R.string.home_lottery_info_tm_bo_g));
+                    boNumberList.get(i).setBackgroundResource(R.mipmap.number_bg_green);
+                    break;
+                case "蓝":
+                    boNumberList.get(i).setText(mContext.getResources().getString(R.string.home_lottery_info_tm_bo_b));
+                    boNumberList.get(i).setBackgroundResource(R.mipmap.number_bg_blue);
+                    break;
+            }
+            switch (mLabs) {
+                case 1:
+                    boCountList.get(i).setText(String.valueOf(mBoList.get(i).getCoedAppear()));
+                    break;
+                case 2:
+                    boCountList.get(i).setText(String.valueOf(mBoList.get(i).getNumberAppear()));
+                    break;
+                case 3:
+                    boCountList.get(i).setText(String.valueOf(mBoList.get(i).getCoedNotAppear()));
+                    break;
+            }
+        }
+    }
+
+    // 根据号码设置波色
+    private void settingBgColor(TextView tv, String key) {
+        switch (key) {
+            case "01":
+            case "02":
+            case "07":
+            case "08":
+            case "12":
+            case "13":
+            case "18":
+            case "19":
+            case "23":
+            case "24":
+            case "29":
+            case "30":
+            case "34":
+            case "35":
+            case "40":
+            case "45":
+            case "46":
+                tv.setBackgroundResource(R.mipmap.number_bg_red);
+                break;
+            case "03":
+            case "04":
+            case "09":
+            case "10":
+            case "14":
+            case "15":
+            case "20":
+            case "25":
+            case "26":
+            case "31":
+            case "36":
+            case "37":
+            case "41":
+            case "42":
+            case "47":
+            case "48":
+                tv.setBackgroundResource(R.mipmap.number_bg_blue);
+                break;
+            case "05":
+            case "06":
+            case "11":
+            case "16":
+            case "17":
+            case "21":
+            case "22":
+            case "27":
+            case "28":
+            case "32":
+            case "33":
+            case "38":
+            case "39":
+            case "43":
+            case "44":
+            case "49":
+                tv.setBackgroundResource(R.mipmap.number_bg_green);
+                break;
+        }
     }
 
     private void initView() {
-
+        EmojiconTextView emoji_icon_01 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_01);
+        EmojiconTextView emoji_icon_02 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_02);
+        EmojiconTextView emoji_icon_03 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_03);
+        EmojiconTextView emoji_icon_04 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_04);
+        EmojiconTextView emoji_icon_05 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_05);
+        EmojiconTextView emoji_icon_06 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_06);
+        EmojiconTextView emoji_icon_07 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_07);
+        EmojiconTextView emoji_icon_08 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_08);
+        EmojiconTextView emoji_icon_09 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_09);
+        EmojiconTextView emoji_icon_10 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_10);
+        EmojiconTextView emoji_icon_11 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_11);
+        EmojiconTextView emoji_icon_12 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_12);
+        emojiIconList.add(emoji_icon_01);
+        emojiIconList.add(emoji_icon_02);
+        emojiIconList.add(emoji_icon_03);
+        emojiIconList.add(emoji_icon_04);
+        emojiIconList.add(emoji_icon_05);
+        emojiIconList.add(emoji_icon_06);
+        emojiIconList.add(emoji_icon_07);
+        emojiIconList.add(emoji_icon_08);
+        emojiIconList.add(emoji_icon_09);
+        emojiIconList.add(emoji_icon_10);
+        emojiIconList.add(emoji_icon_11);
+        emojiIconList.add(emoji_icon_12);
+        TextView emoji_count_01 = (TextView) mView.findViewById(R.id.emoji_count_01);
+        TextView emoji_count_02 = (TextView) mView.findViewById(R.id.emoji_count_02);
+        TextView emoji_count_03 = (TextView) mView.findViewById(R.id.emoji_count_03);
+        TextView emoji_count_04 = (TextView) mView.findViewById(R.id.emoji_count_04);
+        TextView emoji_count_05 = (TextView) mView.findViewById(R.id.emoji_count_05);
+        TextView emoji_count_06 = (TextView) mView.findViewById(R.id.emoji_count_06);
+        TextView emoji_count_07 = (TextView) mView.findViewById(R.id.emoji_count_07);
+        TextView emoji_count_08 = (TextView) mView.findViewById(R.id.emoji_count_08);
+        TextView emoji_count_09 = (TextView) mView.findViewById(R.id.emoji_count_09);
+        TextView emoji_count_10 = (TextView) mView.findViewById(R.id.emoji_count_10);
+        TextView emoji_count_11 = (TextView) mView.findViewById(R.id.emoji_count_11);
+        TextView emoji_count_12 = (TextView) mView.findViewById(R.id.emoji_count_12);
+        emojiCountList.add(emoji_count_01);
+        emojiCountList.add(emoji_count_02);
+        emojiCountList.add(emoji_count_03);
+        emojiCountList.add(emoji_count_04);
+        emojiCountList.add(emoji_count_05);
+        emojiCountList.add(emoji_count_06);
+        emojiCountList.add(emoji_count_07);
+        emojiCountList.add(emoji_count_08);
+        emojiCountList.add(emoji_count_09);
+        emojiCountList.add(emoji_count_10);
+        emojiCountList.add(emoji_count_11);
+        emojiCountList.add(emoji_count_12);
+        TextView tv_show_number01 = (TextView) mView.findViewById(R.id.tv_show_number01);
+        TextView tv_show_number02 = (TextView) mView.findViewById(R.id.tv_show_number02);
+        TextView tv_show_number03 = (TextView) mView.findViewById(R.id.tv_show_number03);
+        TextView tv_show_number04 = (TextView) mView.findViewById(R.id.tv_show_number04);
+        TextView tv_show_number05 = (TextView) mView.findViewById(R.id.tv_show_number05);
+        TextView tv_show_number06 = (TextView) mView.findViewById(R.id.tv_show_number06);
+        TextView tv_show_number07 = (TextView) mView.findViewById(R.id.tv_show_number07);
+        TextView tv_show_number08 = (TextView) mView.findViewById(R.id.tv_show_number08);
+        TextView tv_show_number09 = (TextView) mView.findViewById(R.id.tv_show_number09);
+        TextView tv_show_number10 = (TextView) mView.findViewById(R.id.tv_show_number10);
+        TextView tv_show_number11 = (TextView) mView.findViewById(R.id.tv_show_number11);
+        TextView tv_show_number12 = (TextView) mView.findViewById(R.id.tv_show_number12);
+        TextView tv_show_number13 = (TextView) mView.findViewById(R.id.tv_show_number13);
+        TextView tv_show_number14 = (TextView) mView.findViewById(R.id.tv_show_number14);
+        TextView tv_show_number15 = (TextView) mView.findViewById(R.id.tv_show_number15);
+        TextView tv_show_number16 = (TextView) mView.findViewById(R.id.tv_show_number16);
+        TextView tv_show_number17 = (TextView) mView.findViewById(R.id.tv_show_number17);
+        TextView tv_show_number18 = (TextView) mView.findViewById(R.id.tv_show_number18);
+        TextView tv_show_number19 = (TextView) mView.findViewById(R.id.tv_show_number19);
+        TextView tv_show_number20 = (TextView) mView.findViewById(R.id.tv_show_number20);
+        TextView tv_show_number21 = (TextView) mView.findViewById(R.id.tv_show_number21);
+        TextView tv_show_number22 = (TextView) mView.findViewById(R.id.tv_show_number22);
+        TextView tv_show_number23 = (TextView) mView.findViewById(R.id.tv_show_number23);
+        TextView tv_show_number24 = (TextView) mView.findViewById(R.id.tv_show_number24);
+        TextView tv_show_number25 = (TextView) mView.findViewById(R.id.tv_show_number25);
+        TextView tv_show_number26 = (TextView) mView.findViewById(R.id.tv_show_number26);
+        TextView tv_show_number27 = (TextView) mView.findViewById(R.id.tv_show_number27);
+        TextView tv_show_number28 = (TextView) mView.findViewById(R.id.tv_show_number28);
+        TextView tv_show_number29 = (TextView) mView.findViewById(R.id.tv_show_number29);
+        TextView tv_show_number30 = (TextView) mView.findViewById(R.id.tv_show_number30);
+        TextView tv_show_number31 = (TextView) mView.findViewById(R.id.tv_show_number31);
+        TextView tv_show_number32 = (TextView) mView.findViewById(R.id.tv_show_number32);
+        TextView tv_show_number33 = (TextView) mView.findViewById(R.id.tv_show_number33);
+        TextView tv_show_number34 = (TextView) mView.findViewById(R.id.tv_show_number34);
+        TextView tv_show_number35 = (TextView) mView.findViewById(R.id.tv_show_number35);
+        TextView tv_show_number36 = (TextView) mView.findViewById(R.id.tv_show_number36);
+        TextView tv_show_number37 = (TextView) mView.findViewById(R.id.tv_show_number37);
+        TextView tv_show_number38 = (TextView) mView.findViewById(R.id.tv_show_number38);
+        TextView tv_show_number39 = (TextView) mView.findViewById(R.id.tv_show_number39);
+        TextView tv_show_number40 = (TextView) mView.findViewById(R.id.tv_show_number40);
+        TextView tv_show_number41 = (TextView) mView.findViewById(R.id.tv_show_number41);
+        TextView tv_show_number42 = (TextView) mView.findViewById(R.id.tv_show_number42);
+        TextView tv_show_number43 = (TextView) mView.findViewById(R.id.tv_show_number43);
+        TextView tv_show_number44 = (TextView) mView.findViewById(R.id.tv_show_number44);
+        TextView tv_show_number45 = (TextView) mView.findViewById(R.id.tv_show_number45);
+        TextView tv_show_number46 = (TextView) mView.findViewById(R.id.tv_show_number46);
+        TextView tv_show_number47 = (TextView) mView.findViewById(R.id.tv_show_number47);
+        TextView tv_show_number48 = (TextView) mView.findViewById(R.id.tv_show_number48);
+        TextView tv_show_number49 = (TextView) mView.findViewById(R.id.tv_show_number49);
+        showNumberList.add(tv_show_number01);
+        showNumberList.add(tv_show_number02);
+        showNumberList.add(tv_show_number03);
+        showNumberList.add(tv_show_number04);
+        showNumberList.add(tv_show_number05);
+        showNumberList.add(tv_show_number06);
+        showNumberList.add(tv_show_number07);
+        showNumberList.add(tv_show_number08);
+        showNumberList.add(tv_show_number09);
+        showNumberList.add(tv_show_number10);
+        showNumberList.add(tv_show_number11);
+        showNumberList.add(tv_show_number12);
+        showNumberList.add(tv_show_number13);
+        showNumberList.add(tv_show_number14);
+        showNumberList.add(tv_show_number15);
+        showNumberList.add(tv_show_number16);
+        showNumberList.add(tv_show_number17);
+        showNumberList.add(tv_show_number18);
+        showNumberList.add(tv_show_number19);
+        showNumberList.add(tv_show_number20);
+        showNumberList.add(tv_show_number21);
+        showNumberList.add(tv_show_number22);
+        showNumberList.add(tv_show_number23);
+        showNumberList.add(tv_show_number24);
+        showNumberList.add(tv_show_number25);
+        showNumberList.add(tv_show_number26);
+        showNumberList.add(tv_show_number27);
+        showNumberList.add(tv_show_number28);
+        showNumberList.add(tv_show_number29);
+        showNumberList.add(tv_show_number30);
+        showNumberList.add(tv_show_number31);
+        showNumberList.add(tv_show_number32);
+        showNumberList.add(tv_show_number33);
+        showNumberList.add(tv_show_number34);
+        showNumberList.add(tv_show_number35);
+        showNumberList.add(tv_show_number36);
+        showNumberList.add(tv_show_number37);
+        showNumberList.add(tv_show_number38);
+        showNumberList.add(tv_show_number39);
+        showNumberList.add(tv_show_number40);
+        showNumberList.add(tv_show_number41);
+        showNumberList.add(tv_show_number42);
+        showNumberList.add(tv_show_number43);
+        showNumberList.add(tv_show_number44);
+        showNumberList.add(tv_show_number45);
+        showNumberList.add(tv_show_number46);
+        showNumberList.add(tv_show_number47);
+        showNumberList.add(tv_show_number48);
+        showNumberList.add(tv_show_number49);
+        TextView tv_show_count01 = (TextView) mView.findViewById(R.id.tv_show_count01);
+        TextView tv_show_count02 = (TextView) mView.findViewById(R.id.tv_show_count02);
+        TextView tv_show_count03 = (TextView) mView.findViewById(R.id.tv_show_count03);
+        TextView tv_show_count04 = (TextView) mView.findViewById(R.id.tv_show_count04);
+        TextView tv_show_count05 = (TextView) mView.findViewById(R.id.tv_show_count05);
+        TextView tv_show_count06 = (TextView) mView.findViewById(R.id.tv_show_count06);
+        TextView tv_show_count07 = (TextView) mView.findViewById(R.id.tv_show_count07);
+        TextView tv_show_count08 = (TextView) mView.findViewById(R.id.tv_show_count08);
+        TextView tv_show_count09 = (TextView) mView.findViewById(R.id.tv_show_count09);
+        TextView tv_show_count10 = (TextView) mView.findViewById(R.id.tv_show_count10);
+        TextView tv_show_count11 = (TextView) mView.findViewById(R.id.tv_show_count11);
+        TextView tv_show_count12 = (TextView) mView.findViewById(R.id.tv_show_count12);
+        TextView tv_show_count13 = (TextView) mView.findViewById(R.id.tv_show_count13);
+        TextView tv_show_count14 = (TextView) mView.findViewById(R.id.tv_show_count14);
+        TextView tv_show_count15 = (TextView) mView.findViewById(R.id.tv_show_count15);
+        TextView tv_show_count16 = (TextView) mView.findViewById(R.id.tv_show_count16);
+        TextView tv_show_count17 = (TextView) mView.findViewById(R.id.tv_show_count17);
+        TextView tv_show_count18 = (TextView) mView.findViewById(R.id.tv_show_count18);
+        TextView tv_show_count19 = (TextView) mView.findViewById(R.id.tv_show_count19);
+        TextView tv_show_count20 = (TextView) mView.findViewById(R.id.tv_show_count20);
+        TextView tv_show_count21 = (TextView) mView.findViewById(R.id.tv_show_count21);
+        TextView tv_show_count22 = (TextView) mView.findViewById(R.id.tv_show_count22);
+        TextView tv_show_count23 = (TextView) mView.findViewById(R.id.tv_show_count23);
+        TextView tv_show_count24 = (TextView) mView.findViewById(R.id.tv_show_count24);
+        TextView tv_show_count25 = (TextView) mView.findViewById(R.id.tv_show_count25);
+        TextView tv_show_count26 = (TextView) mView.findViewById(R.id.tv_show_count26);
+        TextView tv_show_count27 = (TextView) mView.findViewById(R.id.tv_show_count27);
+        TextView tv_show_count28 = (TextView) mView.findViewById(R.id.tv_show_count28);
+        TextView tv_show_count29 = (TextView) mView.findViewById(R.id.tv_show_count29);
+        TextView tv_show_count30 = (TextView) mView.findViewById(R.id.tv_show_count30);
+        TextView tv_show_count31 = (TextView) mView.findViewById(R.id.tv_show_count31);
+        TextView tv_show_count32 = (TextView) mView.findViewById(R.id.tv_show_count32);
+        TextView tv_show_count33 = (TextView) mView.findViewById(R.id.tv_show_count33);
+        TextView tv_show_count34 = (TextView) mView.findViewById(R.id.tv_show_count34);
+        TextView tv_show_count35 = (TextView) mView.findViewById(R.id.tv_show_count35);
+        TextView tv_show_count36 = (TextView) mView.findViewById(R.id.tv_show_count36);
+        TextView tv_show_count37 = (TextView) mView.findViewById(R.id.tv_show_count37);
+        TextView tv_show_count38 = (TextView) mView.findViewById(R.id.tv_show_count38);
+        TextView tv_show_count39 = (TextView) mView.findViewById(R.id.tv_show_count39);
+        TextView tv_show_count40 = (TextView) mView.findViewById(R.id.tv_show_count40);
+        TextView tv_show_count41 = (TextView) mView.findViewById(R.id.tv_show_count41);
+        TextView tv_show_count42 = (TextView) mView.findViewById(R.id.tv_show_count42);
+        TextView tv_show_count43 = (TextView) mView.findViewById(R.id.tv_show_count43);
+        TextView tv_show_count44 = (TextView) mView.findViewById(R.id.tv_show_count44);
+        TextView tv_show_count45 = (TextView) mView.findViewById(R.id.tv_show_count45);
+        TextView tv_show_count46 = (TextView) mView.findViewById(R.id.tv_show_count46);
+        TextView tv_show_count47 = (TextView) mView.findViewById(R.id.tv_show_count47);
+        TextView tv_show_count48 = (TextView) mView.findViewById(R.id.tv_show_count48);
+        TextView tv_show_count49 = (TextView) mView.findViewById(R.id.tv_show_count49);
+        showCountList.add(tv_show_count01);
+        showCountList.add(tv_show_count02);
+        showCountList.add(tv_show_count03);
+        showCountList.add(tv_show_count04);
+        showCountList.add(tv_show_count05);
+        showCountList.add(tv_show_count06);
+        showCountList.add(tv_show_count07);
+        showCountList.add(tv_show_count08);
+        showCountList.add(tv_show_count09);
+        showCountList.add(tv_show_count10);
+        showCountList.add(tv_show_count11);
+        showCountList.add(tv_show_count12);
+        showCountList.add(tv_show_count13);
+        showCountList.add(tv_show_count14);
+        showCountList.add(tv_show_count15);
+        showCountList.add(tv_show_count16);
+        showCountList.add(tv_show_count17);
+        showCountList.add(tv_show_count18);
+        showCountList.add(tv_show_count19);
+        showCountList.add(tv_show_count20);
+        showCountList.add(tv_show_count21);
+        showCountList.add(tv_show_count22);
+        showCountList.add(tv_show_count23);
+        showCountList.add(tv_show_count24);
+        showCountList.add(tv_show_count25);
+        showCountList.add(tv_show_count26);
+        showCountList.add(tv_show_count27);
+        showCountList.add(tv_show_count28);
+        showCountList.add(tv_show_count29);
+        showCountList.add(tv_show_count30);
+        showCountList.add(tv_show_count31);
+        showCountList.add(tv_show_count32);
+        showCountList.add(tv_show_count33);
+        showCountList.add(tv_show_count34);
+        showCountList.add(tv_show_count35);
+        showCountList.add(tv_show_count36);
+        showCountList.add(tv_show_count37);
+        showCountList.add(tv_show_count38);
+        showCountList.add(tv_show_count39);
+        showCountList.add(tv_show_count40);
+        showCountList.add(tv_show_count41);
+        showCountList.add(tv_show_count42);
+        showCountList.add(tv_show_count43);
+        showCountList.add(tv_show_count44);
+        showCountList.add(tv_show_count45);
+        showCountList.add(tv_show_count46);
+        showCountList.add(tv_show_count47);
+        showCountList.add(tv_show_count48);
+        showCountList.add(tv_show_count49);
+        TextView tv_mantissa_number01 = (TextView) mView.findViewById(R.id.tv_mantissa_number01);
+        TextView tv_mantissa_number02 = (TextView) mView.findViewById(R.id.tv_mantissa_number02);
+        TextView tv_mantissa_number03 = (TextView) mView.findViewById(R.id.tv_mantissa_number03);
+        TextView tv_mantissa_number04 = (TextView) mView.findViewById(R.id.tv_mantissa_number04);
+        TextView tv_mantissa_number05 = (TextView) mView.findViewById(R.id.tv_mantissa_number05);
+        TextView tv_mantissa_number06 = (TextView) mView.findViewById(R.id.tv_mantissa_number06);
+        TextView tv_mantissa_number07 = (TextView) mView.findViewById(R.id.tv_mantissa_number07);
+        TextView tv_mantissa_number08 = (TextView) mView.findViewById(R.id.tv_mantissa_number08);
+        TextView tv_mantissa_number09 = (TextView) mView.findViewById(R.id.tv_mantissa_number09);
+        TextView tv_mantissa_number10 = (TextView) mView.findViewById(R.id.tv_mantissa_number10);
+        mantissaNumberList.add(tv_mantissa_number01);
+        mantissaNumberList.add(tv_mantissa_number02);
+        mantissaNumberList.add(tv_mantissa_number03);
+        mantissaNumberList.add(tv_mantissa_number04);
+        mantissaNumberList.add(tv_mantissa_number05);
+        mantissaNumberList.add(tv_mantissa_number06);
+        mantissaNumberList.add(tv_mantissa_number07);
+        mantissaNumberList.add(tv_mantissa_number08);
+        mantissaNumberList.add(tv_mantissa_number09);
+        mantissaNumberList.add(tv_mantissa_number10);
+        TextView tv_mantissa_count01 = (TextView) mView.findViewById(R.id.tv_mantissa_count01);
+        TextView tv_mantissa_count02 = (TextView) mView.findViewById(R.id.tv_mantissa_count02);
+        TextView tv_mantissa_count03 = (TextView) mView.findViewById(R.id.tv_mantissa_count03);
+        TextView tv_mantissa_count04 = (TextView) mView.findViewById(R.id.tv_mantissa_count04);
+        TextView tv_mantissa_count05 = (TextView) mView.findViewById(R.id.tv_mantissa_count05);
+        TextView tv_mantissa_count06 = (TextView) mView.findViewById(R.id.tv_mantissa_count06);
+        TextView tv_mantissa_count07 = (TextView) mView.findViewById(R.id.tv_mantissa_count07);
+        TextView tv_mantissa_count08 = (TextView) mView.findViewById(R.id.tv_mantissa_count08);
+        TextView tv_mantissa_count09 = (TextView) mView.findViewById(R.id.tv_mantissa_count09);
+        TextView tv_mantissa_count10 = (TextView) mView.findViewById(R.id.tv_mantissa_count10);
+        mantissaCountList.add(tv_mantissa_count01);
+        mantissaCountList.add(tv_mantissa_count02);
+        mantissaCountList.add(tv_mantissa_count03);
+        mantissaCountList.add(tv_mantissa_count04);
+        mantissaCountList.add(tv_mantissa_count05);
+        mantissaCountList.add(tv_mantissa_count06);
+        mantissaCountList.add(tv_mantissa_count07);
+        mantissaCountList.add(tv_mantissa_count08);
+        mantissaCountList.add(tv_mantissa_count09);
+        mantissaCountList.add(tv_mantissa_count10);
+        TextView tv_bo_number01 = (TextView) mView.findViewById(R.id.tv_bo_number01);
+        TextView tv_bo_number02 = (TextView) mView.findViewById(R.id.tv_bo_number02);
+        TextView tv_bo_number03 = (TextView) mView.findViewById(R.id.tv_bo_number03);
+        boNumberList.add(tv_bo_number01);
+        boNumberList.add(tv_bo_number02);
+        boNumberList.add(tv_bo_number03);
+        TextView tv_bo_count01 = (TextView) mView.findViewById(R.id.tv_bo_count01);
+        TextView tv_bo_count02 = (TextView) mView.findViewById(R.id.tv_bo_count02);
+        TextView tv_bo_count03 = (TextView) mView.findViewById(R.id.tv_bo_count03);
+        boCountList.add(tv_bo_count01);
+        boCountList.add(tv_bo_count02);
+        boCountList.add(tv_bo_count03);
     }
 }
