@@ -10,13 +10,14 @@
       android:orientation="vertical"
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
-    <!--  <TextView
+      <TextView
           android:id="@+id/tv_photograph"
-          style="@style/login_textview_logout"
+          android:layout_width="match_parent"
           android:layout_height="55dp"
-          android:layout_gravity="center"
-          android:textSize="@dimen/home_pager_user_title"
-          android:text="@string/photograph"/>
+          android:gravity="center"
+          android:text="@string/photograph"
+          android:textColor="@color/colorPrimary"
+          android:textSize="@dimen/home_pager_user_title" />
 
       <View
           android:layout_width="match_parent"
@@ -24,15 +25,16 @@
           android:background="@color/line_football_footer"/>
       <TextView
           android:id="@+id/tv_chosephoto"
-          style="@style/login_textview_logout"
-          android:layout_gravity="center"
+          android:layout_width="match_parent"
           android:layout_height="55dp"
+          android:gravity="center"
+          android:textColor="@color/colorPrimary"
           android:textSize="@dimen/home_pager_user_title"
           android:text="@string/chose_for_telephone"/>
       <View
           android:layout_width="match_parent"
           android:layout_height="1px"
-          android:background="@color/line_football_footer"/>-->
+          android:background="@color/line_football_footer"/>
 
       <TextView
           android:id="@+id/tv_chose_start_photo"
