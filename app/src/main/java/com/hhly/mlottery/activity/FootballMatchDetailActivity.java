@@ -606,7 +606,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                             }
                             //99999999任意置值 加入完场状态
                             eventMatchTimeLiveList.add(new MatchTimeLiveBean("99999999", "3", finishScore, "99999", "-1", "", "", 0));
-                            setScoreText(mMatchDetail.getHomeTeamInfo().getScore() + ":" + mMatchDetail.getGuestTeamInfo().getScore());
+                            setScoreText(mMatchDetail.getHomeTeamInfo().getScore() + " : " + mMatchDetail.getGuestTeamInfo().getScore());
                             setScoreClolor(getApplicationContext().getResources().getColor(R.color.score));
 
 
@@ -793,7 +793,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 eventMatchTimeLiveList.add(new MatchTimeLiveBean("99999999", "3", finishScore, "99999", "-1", "", "", 0));
 
 
-                setScoreText(mMatchDetail.getHomeTeamInfo().getScore() + ":" + mMatchDetail.getGuestTeamInfo().getScore());
+                setScoreText(mMatchDetail.getHomeTeamInfo().getScore() + " : " + mMatchDetail.getGuestTeamInfo().getScore());
                 setScoreClolor(getApplicationContext().getResources().getColor(R.color.score));
 
 
@@ -824,7 +824,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 head_guest_name.setText(matchDetail.getGuestTeamInfo().getName());
                 head_score.setText(mathchStatisInfo.getHome_score() + ":" + mathchStatisInfo.getGuest_score());
 
-                setScoreText(mathchStatisInfo.getHome_score() + ":" + mathchStatisInfo.getGuest_score() + "");
+                setScoreText(mathchStatisInfo.getHome_score() + " : " + mathchStatisInfo.getGuest_score() + "");
 
 
                 String state = matchLive.get(0).getState();//获取最后一个的比赛状态
@@ -1318,7 +1318,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 }
                 mathchStatisInfo.setHome_shoot_correct(mathchStatisInfo.getHome_shoot_correct() + 1);
                 mathchStatisInfo.setGuest_rescue(mathchStatisInfo.getHome_shoot_correct() - mathchStatisInfo.getHome_score());
-                setScoreText(mathchStatisInfo.getHome_score() + ":" + mathchStatisInfo.getGuest_score());
+                setScoreText(mathchStatisInfo.getHome_score() + " : " + mathchStatisInfo.getGuest_score());
 
                 head_score.setText(mathchStatisInfo.getHome_score() + ":" + mathchStatisInfo.getGuest_score());
 
@@ -1347,7 +1347,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     mathchStatisInfo.setHome_shoot_correct(mathchStatisInfo.getHome_shoot_correct() - 1);
                 }
                 mathchStatisInfo.setGuest_rescue(mathchStatisInfo.getHome_shoot_correct() - mathchStatisInfo.getHome_score());
-                setScoreText(mathchStatisInfo.getHome_score() + ":" + mathchStatisInfo.getGuest_score());
+                setScoreText(mathchStatisInfo.getHome_score() + " : " + mathchStatisInfo.getGuest_score());
 
                 head_score.setText(mathchStatisInfo.getHome_score() + ":" + mathchStatisInfo.getGuest_score());
 
@@ -1373,7 +1373,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                 mathchStatisInfo.setGuest_shoot_correct(mathchStatisInfo.getGuest_shoot_correct() + 1);
                 mathchStatisInfo.setHome_rescue(mathchStatisInfo.getGuest_shoot_correct() - mathchStatisInfo.getGuest_score());
-                setScoreText(mathchStatisInfo.getHome_score() + ":" + mathchStatisInfo.getGuest_score());
+                setScoreText(mathchStatisInfo.getHome_score() + " : " + mathchStatisInfo.getGuest_score());
 
                 head_score.setText(mathchStatisInfo.getHome_score() + ":" + mathchStatisInfo.getGuest_score());
 
@@ -1403,7 +1403,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 }
 
                 mathchStatisInfo.setHome_rescue(mathchStatisInfo.getGuest_shoot_correct() - mathchStatisInfo.getGuest_score());
-                setScoreText(mathchStatisInfo.getHome_score() + ":" + mathchStatisInfo.getGuest_score());
+                setScoreText(mathchStatisInfo.getHome_score() + " : " + mathchStatisInfo.getGuest_score());
 
                 head_score.setText(mathchStatisInfo.getHome_score() + ":" + mathchStatisInfo.getGuest_score());
 

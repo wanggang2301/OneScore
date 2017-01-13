@@ -35,16 +35,16 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:orientation="vertical"
-            android:paddingTop="15dp">
+            android:paddingTop="20dp">
 
             <ImageView
                 android:id="@+id/basket_details_guest_icon"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:src="@mipmap/basket_default"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:src="@mipmap/basket_default" />
         </RelativeLayout>
 
         <LinearLayout
@@ -87,6 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
             android:text="--"
             android:textColor="#fefefe"
             android:textSize="@dimen/text_size_12" />
@@ -419,7 +420,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:orientation="vertical"
-            android:paddingTop="15dp">
+            android:paddingTop="20dp">
 
             <ImageView
                 android:id="@+id/basket_details_home_icon"
