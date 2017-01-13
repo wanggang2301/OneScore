@@ -98,9 +98,8 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
     protected void onCreate(Bundle savedInstanceState) {
         if (getIntent().getExtras() != null) {
             matchIdList = (ArrayList<MultipleByValueBean>) getIntent().getSerializableExtra("byValue");
-            // setWebSocketUri(BaseURLs.WS_SERVICE);
-
-            setWebSocketUri("ws://m.13322.com/ws");
+            setWebSocketUri(BaseURLs.WS_SERVICE);
+            // setWebSocketUri("ws://m.13322.com/ws");
 
             for (MultipleByValueBean m : matchIdList) {
                 if (m.getType() == VIEW_TYPE_FOOTBALL) {

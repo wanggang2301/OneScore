@@ -2,10 +2,13 @@ package com.hhly.mlottery.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.MyConstants;
@@ -97,7 +100,7 @@ public class DebugConfigActivity extends BaseActivity {
             public void onClick(View v) {
 
 
-               /* EditText ed = (EditText) findViewById(R.id.et_input);
+                EditText ed = (EditText) findViewById(R.id.et_input);
                 String str = ed.getText().toString();
                 if (TextUtils.isEmpty(str)) {
                     Toast.makeText(DebugConfigActivity.this, "不能为空！", Toast.LENGTH_SHORT).show();
@@ -106,16 +109,14 @@ public class DebugConfigActivity extends BaseActivity {
 
                 PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, DIY_INPUT);
                 PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, DIY_INPUT);
-                PreferenceUtil.commitString("DIY_INPUT", str);*/
-
-                enterMultiScreenView();
+                PreferenceUtil.commitString("DIY_INPUT", str);
 
                 System.exit(0);
             }
         });
     }
 
-
+/*
     private void enterMultiScreenView() {
         if (PreferenceUtil.getBoolean("introduce", true)) {
             startActivity(new Intent(DebugConfigActivity.this, MultiScreenIntroduceActivity.class));
@@ -124,5 +125,5 @@ public class DebugConfigActivity extends BaseActivity {
         } else {
             startActivity(new Intent(DebugConfigActivity.this, MultiScreenViewingListActivity.class));
         }
-    }
+    }*/
 }
