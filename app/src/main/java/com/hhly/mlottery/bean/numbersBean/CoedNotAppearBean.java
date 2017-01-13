@@ -7,7 +7,7 @@ import java.io.Serializable;
  * Created by 107_tangrr on 2017/1/12 0012.
  */
 
-public class CoedNotAppearBean implements Serializable {
+public class CoedNotAppearBean {
 
     private int coedNotAppear;
     private String key;

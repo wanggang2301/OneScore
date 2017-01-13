@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Created by 107_tangrr on 2017/1/12 0012.
  */
 
-public class NumberAppearBean implements Serializable {
+public class NumberAppearBean{
     private int numberAppear;
     private String key;
 

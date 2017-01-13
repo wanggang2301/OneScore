@@ -1,10 +1,7 @@
 package com.hhly.mlottery.activity;
 
-import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.frame.numbersframe.CurrentNumberFragment;
@@ -23,8 +19,6 @@ import com.hhly.mlottery.frame.numbersframe.HKLotteryStartFragment;
 import com.hhly.mlottery.frame.numbersframe.HistoryNumberFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.NumberDataUtils;
-import com.hhly.mlottery.util.ToastTools;
-import com.hhly.mlottery.widget.BallSelectArrayAdapter;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -51,7 +45,9 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
     private ImageView public_btn_set;
     private FrameLayout fl_numberContext_info;// 彩票详情数据
     private FrameLayout fl_other_content;// 统计和图表显示
-    private AppCompatSpinner public_txt_spinner;// 菜单下拉器
+    public AppCompatSpinner public_txt_spinner;// 菜单下拉器
+
+    private HKLotteryStartFragment hkLotteryStartFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +78,6 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
 
     private void initData() {
         settingTitle();
-        // TODO 后台获取数据
-        public_txt_spinner.setAdapter(new BallSelectArrayAdapter(mContext,new String[]{"1000期","500期","100期","50期"}));
     }
 
     // 设置标题名
@@ -96,7 +90,6 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
     }
 
     private void initView() {
-
 
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_img_back).setOnClickListener(this);
@@ -172,7 +165,8 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
                 public_txt_spinner.setVisibility(View.VISIBLE);
                 public_txt_title.setText(mContext.getResources().getString(R.string.home_lottery_info_start_title));
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.fl_other_content, new HKLotteryStartFragment()).commit();
+                hkLotteryStartFragment = new HKLotteryStartFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl_other_content, hkLotteryStartFragment).commit();
 
                 break;
             case R.id.rb_chart:

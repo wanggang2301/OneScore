@@ -2,34 +2,26 @@ package com.hhly.mlottery.frame.numbersframe;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.bean.numbersBean.CoedAppearBean;
 import com.hhly.mlottery.bean.numbersBean.CoedNotAppearBean;
 import com.hhly.mlottery.bean.numbersBean.LotteryInfoDateBean;
 import com.hhly.mlottery.bean.numbersBean.NumberAppearBean;
-import com.hhly.mlottery.util.net.VolleyContentFast;
 
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import io.github.rockerhieu.emojicon.EmojiconTextView;
-
-import static com.hhly.mlottery.R.id.content;
 
 /**
  * desc:香港开奖统计详情fragment
@@ -60,6 +52,10 @@ public class StartPagerFragment extends Fragment {
     private List<TextView> mantissaCountList = new ArrayList<>(10);
     private List<TextView> boNumberList = new ArrayList<>(3);
     private List<TextView> boCountList = new ArrayList<>(3);
+    private TextView tv_title_01;
+    private TextView tv_title_02;
+    private TextView tv_title_03;
+    private TextView tv_title_04;
 
     public static StartPagerFragment newInstance(int labs, List<LotteryInfoDateBean> zodiacList, List<LotteryInfoDateBean> numberList, List<LotteryInfoDateBean> mantissaList, List<LotteryInfoDateBean> boList) {
         StartPagerFragment fragment = new StartPagerFragment();
@@ -97,8 +93,129 @@ public class StartPagerFragment extends Fragment {
         return mView;
     }
 
+    List<CoedAppearBean> zodiacCoedAppearList = new ArrayList<>(12);
+    List<NumberAppearBean> zodiacNumberAppearList = new ArrayList<>(12);
+    List<CoedNotAppearBean> zodiacCoedNotAppearList = new ArrayList<>(12);
+
+    List<CoedAppearBean> numberCoedAppearList = new ArrayList<>(49);
+    List<NumberAppearBean> numberNumberAppearList = new ArrayList<>(49);
+    List<CoedNotAppearBean> numberCoedNotAppearList = new ArrayList<>(49);
+
+    List<CoedAppearBean> mantissaCoedAppearList = new ArrayList<>(10);
+    List<NumberAppearBean> mantissaNumberAppearList = new ArrayList<>(10);
+    List<CoedNotAppearBean> mantissaCoedNotAppearList = new ArrayList<>(10);
+
+    List<CoedAppearBean> boCoedAppearList = new ArrayList<>(3);
+    List<NumberAppearBean> boNumberAppearList = new ArrayList<>(3);
+    List<CoedNotAppearBean> boCoedNotAppearList = new ArrayList<>(3);
+
     private void initData() {
 
+        for (int i = 0; i < mZodiacList.size(); i++) {
+            CoedAppearBean coedAppearBean = new CoedAppearBean();
+            coedAppearBean.setKey(mZodiacList.get(i).getKey());
+            coedAppearBean.setCoedAppear(mZodiacList.get(i).getCoedAppear());
+            zodiacCoedAppearList.add(coedAppearBean);
+
+            NumberAppearBean numberAppearBean = new NumberAppearBean();
+            numberAppearBean.setKey(mZodiacList.get(i).getKey());
+            numberAppearBean.setNumberAppear(mZodiacList.get(i).getNumberAppear());
+            zodiacNumberAppearList.add(numberAppearBean);
+
+            CoedNotAppearBean coedNotAppearBean = new CoedNotAppearBean();
+            coedNotAppearBean.setKey(mZodiacList.get(i).getKey());
+            coedNotAppearBean.setCoedNotAppear(mZodiacList.get(i).getCoedNotAppear());
+            zodiacCoedNotAppearList.add(coedNotAppearBean);
+        }
+
+        for (int i = 0; i < mNumberList.size(); i++) {
+            CoedAppearBean coedAppearBean = new CoedAppearBean();
+            coedAppearBean.setKey(mNumberList.get(i).getKey());
+            coedAppearBean.setCoedAppear(mNumberList.get(i).getCoedAppear());
+            numberCoedAppearList.add(coedAppearBean);
+
+            NumberAppearBean numberAppearBean = new NumberAppearBean();
+            numberAppearBean.setKey(mNumberList.get(i).getKey());
+            numberAppearBean.setNumberAppear(mNumberList.get(i).getNumberAppear());
+            numberNumberAppearList.add(numberAppearBean);
+
+            CoedNotAppearBean coedNotAppearBean = new CoedNotAppearBean();
+            coedNotAppearBean.setKey(mNumberList.get(i).getKey());
+            coedNotAppearBean.setCoedNotAppear(mNumberList.get(i).getCoedNotAppear());
+            numberCoedNotAppearList.add(coedNotAppearBean);
+        }
+
+        for (int i = 0; i < mMantissaList.size(); i++) {
+            CoedAppearBean coedAppearBean = new CoedAppearBean();
+            coedAppearBean.setKey(mMantissaList.get(i).getKey());
+            coedAppearBean.setCoedAppear(mMantissaList.get(i).getCoedAppear());
+            mantissaCoedAppearList.add(coedAppearBean);
+
+            NumberAppearBean numberAppearBean = new NumberAppearBean();
+            numberAppearBean.setKey(mMantissaList.get(i).getKey());
+            numberAppearBean.setNumberAppear(mMantissaList.get(i).getNumberAppear());
+            mantissaNumberAppearList.add(numberAppearBean);
+
+            CoedNotAppearBean coedNotAppearBean = new CoedNotAppearBean();
+            coedNotAppearBean.setKey(mMantissaList.get(i).getKey());
+            coedNotAppearBean.setCoedNotAppear(mMantissaList.get(i).getCoedNotAppear());
+            mantissaCoedNotAppearList.add(coedNotAppearBean);
+        }
+
+        for (int i = 0; i < mBoList.size(); i++) {
+            CoedAppearBean coedAppearBean = new CoedAppearBean();
+            coedAppearBean.setKey(mBoList.get(i).getKey());
+            coedAppearBean.setCoedAppear(mBoList.get(i).getCoedAppear());
+            boCoedAppearList.add(coedAppearBean);
+
+            NumberAppearBean numberAppearBean = new NumberAppearBean();
+            numberAppearBean.setKey(mBoList.get(i).getKey());
+            numberAppearBean.setNumberAppear(mBoList.get(i).getNumberAppear());
+            boNumberAppearList.add(numberAppearBean);
+
+            CoedNotAppearBean coedNotAppearBean = new CoedNotAppearBean();
+            coedNotAppearBean.setKey(mBoList.get(i).getKey());
+            coedNotAppearBean.setCoedNotAppear(mBoList.get(i).getCoedNotAppear());
+            boCoedNotAppearList.add(coedNotAppearBean);
+        }
+
+        switch (mLabs) {
+            case 1:
+                tv_title_01.setText(mContext.getResources().getString(R.string.home_lottery_info_tm_zodiac_count));
+                tv_title_02.setText(mContext.getResources().getString(R.string.home_lottery_info_tm_count));
+                tv_title_03.setText(mContext.getResources().getString(R.string.home_lottery_info_tm_mantissa_count));
+                tv_title_04.setText(mContext.getResources().getString(R.string.home_lottery_info_tm_bo_count));
+                coedAppearSort(zodiacCoedAppearList, -1);
+                coedAppearSort(numberCoedAppearList, -1);
+                coedAppearSort(mantissaCoedAppearList, -1);
+                coedAppearSort(boCoedAppearList, -1);
+                break;
+            case 2:
+                tv_title_01.setText(mContext.getResources().getString(R.string.home_lottery_info_pm_zodiac_count));
+                tv_title_02.setText(mContext.getResources().getString(R.string.home_lottery_info_pm_count));
+                tv_title_03.setText(mContext.getResources().getString(R.string.home_lottery_info_pm_mantissa_count));
+                tv_title_04.setText(mContext.getResources().getString(R.string.home_lottery_info_pm_bo_count));
+                numberAppearSort(zodiacNumberAppearList, -1);
+                numberAppearSort(numberNumberAppearList, -1);
+                numberAppearSort(mantissaNumberAppearList, -1);
+                numberAppearSort(boNumberAppearList, -1);
+                break;
+            case 3:
+                tv_title_01.setText(mContext.getResources().getString(R.string.home_lottery_info_tm_not_zodiac_count));
+                tv_title_02.setText(mContext.getResources().getString(R.string.home_lottery_info_tm_not_count));
+                tv_title_03.setText(mContext.getResources().getString(R.string.home_lottery_info_tm_not_mantissa_count));
+                tv_title_04.setText(mContext.getResources().getString(R.string.home_lottery_info_tm_not_bo_count));
+                coedNotAppearSort(zodiacCoedNotAppearList, 1);
+                coedNotAppearSort(numberCoedNotAppearList, 1);
+                coedNotAppearSort(mantissaCoedNotAppearList, 1);
+                coedNotAppearSort(boCoedNotAppearList, 1);
+                break;
+        }
+
+        addDataShow();
+    }
+
+    private void addDataShow() {
         // 鼠 \ue053
         // 鸡 \ue52e
         // 猴 \ue109
@@ -111,117 +228,229 @@ public class StartPagerFragment extends Fragment {
         // 牛 \ue52b
         // 蛇 \ue52d
         // 虎 \ue050
-
-        for (int i = 0; i < mZodiacList.size(); i++) {
-            switch (mZodiacList.get(i).getKey()){
-                case "鼠":
-                    emojiIconList.get(i).setText("\ue053");
-                    break;
-                case "鸡":
-                    emojiIconList.get(i).setText("\ue52e");
-                    break;
-                case "猴":
-                    emojiIconList.get(i).setText("\ue109");
-                    break;
-                case "龙":
-                    emojiIconList.get(i).setText("");
-                    emojiIconList.get(i).setBackground(mContext.getResources().getDrawable(R.mipmap.number_hk_emoji_long));
-                    break;
-                case "兔":
-                    emojiIconList.get(i).setText("\ue52c");
-                    break;
-                case "马":
-                    emojiIconList.get(i).setText("\ue01a");
-                    break;
-                case "狗":
-                    emojiIconList.get(i).setText("\ue052");
-                    break;
-                case "猪":
-                    emojiIconList.get(i).setText("\ue10b");
-                    break;
-                case "羊":
-                    emojiIconList.get(i).setText("\ue529");
-                    break;
-                case "牛":
-                    emojiIconList.get(i).setText("\ue52b");
-                    break;
-                case "蛇":
-                    emojiIconList.get(i).setText("\ue52d");
-                    break;
-                case "虎":
-                    emojiIconList.get(i).setText("\ue050");
-                    break;
-            }
-            switch (mLabs) {
-                case 1:
-                    emojiCountList.get(i).setText(String.valueOf(mZodiacList.get(i).getCoedAppear()));
-                    break;
-                case 2:
-                    emojiCountList.get(i).setText(String.valueOf(mZodiacList.get(i).getNumberAppear()));
-                    break;
-                case 3:
-                    emojiCountList.get(i).setText(String.valueOf(mZodiacList.get(i).getCoedNotAppear()));
-                    break;
-            }
-        }
-
-        for (int i = 0; i < mNumberList.size(); i++) {
-            showNumberList.get(i).setText(mNumberList.get(i).getKey());
-            settingBgColor(showNumberList.get(i), mNumberList.get(i).getKey());
-            switch (mLabs) {
-                case 1:
-                    showCountList.get(i).setText(String.valueOf(mNumberList.get(i).getCoedAppear()));
-                    break;
-                case 2:
-                    showCountList.get(i).setText(String.valueOf(mNumberList.get(i).getNumberAppear()));
-                    break;
-                case 3:
-                    showCountList.get(i).setText(String.valueOf(mNumberList.get(i).getCoedNotAppear()));
-                    break;
-            }
-        }
-
-        for (int i = 0; i < mMantissaList.size(); i++) {
-            mantissaNumberList.get(i).setText("*" + mMantissaList.get(i).getKey());
-            switch (mLabs) {
-                case 1:
-                    mantissaCountList.get(i).setText(String.valueOf(mMantissaList.get(i).getCoedAppear()));
-                    break;
-                case 2:
-                    mantissaCountList.get(i).setText(String.valueOf(mMantissaList.get(i).getNumberAppear()));
-                    break;
-                case 3:
-                    mantissaCountList.get(i).setText(String.valueOf(mMantissaList.get(i).getCoedNotAppear()));
-                    break;
-            }
-        }
-
-        for (int i = 0; i < mBoList.size(); i++) {
-            switch (mBoList.get(i).getKey()) {
-                case "红":
-                    boNumberList.get(i).setText(mContext.getResources().getString(R.string.home_lottery_info_tm_bo_r));
-                    boNumberList.get(i).setBackgroundResource(R.mipmap.number_bg_red);
-                    break;
-                case "绿":
-                    boNumberList.get(i).setText(mContext.getResources().getString(R.string.home_lottery_info_tm_bo_g));
-                    boNumberList.get(i).setBackgroundResource(R.mipmap.number_bg_green);
-                    break;
-                case "蓝":
-                    boNumberList.get(i).setText(mContext.getResources().getString(R.string.home_lottery_info_tm_bo_b));
-                    boNumberList.get(i).setBackgroundResource(R.mipmap.number_bg_blue);
-                    break;
-            }
-            switch (mLabs) {
-                case 1:
-                    boCountList.get(i).setText(String.valueOf(mBoList.get(i).getCoedAppear()));
-                    break;
-                case 2:
-                    boCountList.get(i).setText(String.valueOf(mBoList.get(i).getNumberAppear()));
-                    break;
-                case 3:
-                    boCountList.get(i).setText(String.valueOf(mBoList.get(i).getCoedNotAppear()));
-                    break;
-            }
+        switch (mLabs) {
+            case 1:
+                // 生肖
+                for (int i = 0; i < zodiacCoedAppearList.size(); i++) {
+                    switch (zodiacCoedAppearList.get(i).getKey()) {
+                        case "鼠":
+                            emojiIconList.get(i).setText("\ue053");
+                            break;
+                        case "鸡":
+                            emojiIconList.get(i).setText("\ue52e");
+                            break;
+                        case "猴":
+                            emojiIconList.get(i).setText("\ue109");
+                            break;
+                        case "龙":
+                            emojiIconList.get(i).setText("");
+                            emojiIconList.get(i).setBackground(mContext.getResources().getDrawable(R.mipmap.number_hk_emoji_long));
+                            break;
+                        case "兔":
+                            emojiIconList.get(i).setText("\ue52c");
+                            break;
+                        case "马":
+                            emojiIconList.get(i).setText("\ue01a");
+                            break;
+                        case "狗":
+                            emojiIconList.get(i).setText("\ue052");
+                            break;
+                        case "猪":
+                            emojiIconList.get(i).setText("\ue10b");
+                            break;
+                        case "羊":
+                            emojiIconList.get(i).setText("\ue529");
+                            break;
+                        case "牛":
+                            emojiIconList.get(i).setText("\ue52b");
+                            break;
+                        case "蛇":
+                            emojiIconList.get(i).setText("\ue52d");
+                            break;
+                        case "虎":
+                            emojiIconList.get(i).setText("\ue050");
+                            break;
+                    }
+                    emojiCountList.get(i).setText(String.valueOf(zodiacCoedAppearList.get(i).getCoedAppear()));
+                }
+                // 特码出现
+                for (int i = 0; i < numberCoedAppearList.size(); i++) {
+                    showNumberList.get(i).setText(numberCoedAppearList.get(i).getKey());
+                    settingBgColor(showNumberList.get(i), numberCoedAppearList.get(i).getKey());
+                    showCountList.get(i).setText(String.valueOf(numberCoedAppearList.get(i).getCoedAppear()));
+                }
+                // 特码尾号出现
+                for (int i = 0; i < mantissaCoedAppearList.size(); i++) {
+                    mantissaNumberList.get(i).setText("*" + mantissaCoedAppearList.get(i).getKey());
+                    mantissaCountList.get(i).setText(String.valueOf(mantissaCoedAppearList.get(i).getCoedAppear()));
+                }
+                // 特码波色出现
+                for (int i = 0; i < boCoedAppearList.size(); i++) {
+                    switch (boCoedAppearList.get(i).getKey()) {
+                        case "红":
+                            boNumberList.get(i).setText(mContext.getResources().getString(R.string.home_lottery_info_tm_bo_r));
+                            boNumberList.get(i).setBackgroundResource(R.mipmap.number_bg_red);
+                            break;
+                        case "绿":
+                            boNumberList.get(i).setText(mContext.getResources().getString(R.string.home_lottery_info_tm_bo_g));
+                            boNumberList.get(i).setBackgroundResource(R.mipmap.number_bg_green);
+                            break;
+                        case "蓝":
+                            boNumberList.get(i).setText(mContext.getResources().getString(R.string.home_lottery_info_tm_bo_b));
+                            boNumberList.get(i).setBackgroundResource(R.mipmap.number_bg_blue);
+                            break;
+                    }
+                    boCountList.get(i).setText(String.valueOf(boCoedAppearList.get(i).getCoedAppear()));
+                }
+                break;
+            case 2:
+                // 生肖
+                for (int i = 0; i < zodiacNumberAppearList.size(); i++) {
+                    switch (zodiacNumberAppearList.get(i).getKey()) {
+                        case "鼠":
+                            emojiIconList.get(i).setText("\ue053");
+                            break;
+                        case "鸡":
+                            emojiIconList.get(i).setText("\ue52e");
+                            break;
+                        case "猴":
+                            emojiIconList.get(i).setText("\ue109");
+                            break;
+                        case "龙":
+                            emojiIconList.get(i).setText("");
+                            emojiIconList.get(i).setBackground(mContext.getResources().getDrawable(R.mipmap.number_hk_emoji_long));
+                            break;
+                        case "兔":
+                            emojiIconList.get(i).setText("\ue52c");
+                            break;
+                        case "马":
+                            emojiIconList.get(i).setText("\ue01a");
+                            break;
+                        case "狗":
+                            emojiIconList.get(i).setText("\ue052");
+                            break;
+                        case "猪":
+                            emojiIconList.get(i).setText("\ue10b");
+                            break;
+                        case "羊":
+                            emojiIconList.get(i).setText("\ue529");
+                            break;
+                        case "牛":
+                            emojiIconList.get(i).setText("\ue52b");
+                            break;
+                        case "蛇":
+                            emojiIconList.get(i).setText("\ue52d");
+                            break;
+                        case "虎":
+                            emojiIconList.get(i).setText("\ue050");
+                            break;
+                    }
+                    emojiCountList.get(i).setText(String.valueOf(zodiacNumberAppearList.get(i).getNumberAppear()));
+                }
+                // 特码出现
+                for (int i = 0; i < numberNumberAppearList.size(); i++) {
+                    showNumberList.get(i).setText(numberNumberAppearList.get(i).getKey());
+                    settingBgColor(showNumberList.get(i), numberNumberAppearList.get(i).getKey());
+                    showCountList.get(i).setText(String.valueOf(numberNumberAppearList.get(i).getNumberAppear()));
+                }
+                // 特码尾号出现
+                for (int i = 0; i < mantissaNumberAppearList.size(); i++) {
+                    mantissaNumberList.get(i).setText("*" + mantissaNumberAppearList.get(i).getKey());
+                    mantissaCountList.get(i).setText(String.valueOf(mantissaNumberAppearList.get(i).getNumberAppear()));
+                }
+                // 特码波色出现
+                for (int i = 0; i < boNumberAppearList.size(); i++) {
+                    switch (boNumberAppearList.get(i).getKey()) {
+                        case "红":
+                            boNumberList.get(i).setText(mContext.getResources().getString(R.string.home_lottery_info_tm_bo_r));
+                            boNumberList.get(i).setBackgroundResource(R.mipmap.number_bg_red);
+                            break;
+                        case "绿":
+                            boNumberList.get(i).setText(mContext.getResources().getString(R.string.home_lottery_info_tm_bo_g));
+                            boNumberList.get(i).setBackgroundResource(R.mipmap.number_bg_green);
+                            break;
+                        case "蓝":
+                            boNumberList.get(i).setText(mContext.getResources().getString(R.string.home_lottery_info_tm_bo_b));
+                            boNumberList.get(i).setBackgroundResource(R.mipmap.number_bg_blue);
+                            break;
+                    }
+                    boCountList.get(i).setText(String.valueOf(boNumberAppearList.get(i).getNumberAppear()));
+                }
+                break;
+            case 3:
+                // 生肖
+                for (int i = 0; i < zodiacCoedNotAppearList.size(); i++) {
+                    switch (zodiacCoedNotAppearList.get(i).getKey()) {
+                        case "鼠":
+                            emojiIconList.get(i).setText("\ue053");
+                            break;
+                        case "鸡":
+                            emojiIconList.get(i).setText("\ue52e");
+                            break;
+                        case "猴":
+                            emojiIconList.get(i).setText("\ue109");
+                            break;
+                        case "龙":
+                            emojiIconList.get(i).setText("");
+                            emojiIconList.get(i).setBackground(mContext.getResources().getDrawable(R.mipmap.number_hk_emoji_long));
+                            break;
+                        case "兔":
+                            emojiIconList.get(i).setText("\ue52c");
+                            break;
+                        case "马":
+                            emojiIconList.get(i).setText("\ue01a");
+                            break;
+                        case "狗":
+                            emojiIconList.get(i).setText("\ue052");
+                            break;
+                        case "猪":
+                            emojiIconList.get(i).setText("\ue10b");
+                            break;
+                        case "羊":
+                            emojiIconList.get(i).setText("\ue529");
+                            break;
+                        case "牛":
+                            emojiIconList.get(i).setText("\ue52b");
+                            break;
+                        case "蛇":
+                            emojiIconList.get(i).setText("\ue52d");
+                            break;
+                        case "虎":
+                            emojiIconList.get(i).setText("\ue050");
+                            break;
+                    }
+                    emojiCountList.get(i).setText(String.valueOf(zodiacCoedNotAppearList.get(i).getCoedNotAppear()));
+                }
+                // 特码出现
+                for (int i = 0; i < numberCoedNotAppearList.size(); i++) {
+                    showNumberList.get(i).setText(numberCoedNotAppearList.get(i).getKey());
+                    settingBgColor(showNumberList.get(i), numberCoedNotAppearList.get(i).getKey());
+                    showCountList.get(i).setText(String.valueOf(numberCoedNotAppearList.get(i).getCoedNotAppear()));
+                }
+                // 特码尾号出现
+                for (int i = 0; i < mantissaCoedNotAppearList.size(); i++) {
+                    mantissaNumberList.get(i).setText("*" + mantissaCoedNotAppearList.get(i).getKey());
+                    mantissaCountList.get(i).setText(String.valueOf(mantissaCoedNotAppearList.get(i).getCoedNotAppear()));
+                }
+                // 特码波色出现
+                for (int i = 0; i < boCoedNotAppearList.size(); i++) {
+                    switch (boCoedNotAppearList.get(i).getKey()) {
+                        case "红":
+                            boNumberList.get(i).setText(mContext.getResources().getString(R.string.home_lottery_info_tm_bo_r));
+                            boNumberList.get(i).setBackgroundResource(R.mipmap.number_bg_red);
+                            break;
+                        case "绿":
+                            boNumberList.get(i).setText(mContext.getResources().getString(R.string.home_lottery_info_tm_bo_g));
+                            boNumberList.get(i).setBackgroundResource(R.mipmap.number_bg_green);
+                            break;
+                        case "蓝":
+                            boNumberList.get(i).setText(mContext.getResources().getString(R.string.home_lottery_info_tm_bo_b));
+                            boNumberList.get(i).setBackgroundResource(R.mipmap.number_bg_blue);
+                            break;
+                    }
+                    boCountList.get(i).setText(String.valueOf(boCoedNotAppearList.get(i).getCoedNotAppear()));
+                }
+                break;
         }
     }
 
@@ -286,7 +515,93 @@ public class StartPagerFragment extends Fragment {
         }
     }
 
+    /**
+     * 排序
+     *
+     * @param list list
+     * @param type 1 正序，-1 倒序
+     */
+    private void coedAppearSort(List<CoedAppearBean> list, final int type) {
+        Collections.sort(list, new Comparator<CoedAppearBean>() {
+            public int compare(CoedAppearBean o1, CoedAppearBean o2) {
+                if (type == 1) {
+                    if (o1.getCoedAppear() < o2.getCoedAppear()) {
+                        return 1;
+                    }
+                    if (o1.getCoedAppear() == o2.getCoedAppear()) {
+                        return 0;
+                    }
+                    return -1;
+                } else if (type == -1) {
+                    if (o1.getCoedAppear() > o2.getCoedAppear()) {
+                        return 1;
+                    }
+                    if (o1.getCoedAppear() == o2.getCoedAppear()) {
+                        return 0;
+                    }
+                    return -1;
+                }
+                return -1;
+            }
+        });
+    }
+
+    private void numberAppearSort(List<NumberAppearBean> list, final int type) {
+        Collections.sort(list, new Comparator<NumberAppearBean>() {
+            public int compare(NumberAppearBean o1, NumberAppearBean o2) {
+                if (type == 1) {
+                    if (o1.getNumberAppear() < o2.getNumberAppear()) {
+                        return 1;
+                    }
+                    if (o1.getNumberAppear() == o2.getNumberAppear()) {
+                        return 0;
+                    }
+                    return -1;
+                } else if (type == -1) {
+                    if (o1.getNumberAppear() > o2.getNumberAppear()) {
+                        return 1;
+                    }
+                    if (o1.getNumberAppear() == o2.getNumberAppear()) {
+                        return 0;
+                    }
+                    return -1;
+                }
+                return -1;
+            }
+        });
+    }
+
+    private void coedNotAppearSort(List<CoedNotAppearBean> list, final int type) {
+        Collections.sort(list, new Comparator<CoedNotAppearBean>() {
+            public int compare(CoedNotAppearBean o1, CoedNotAppearBean o2) {
+                if (type == 1) {
+                    if (o1.getCoedNotAppear() < o2.getCoedNotAppear()) {
+                        return 1;
+                    }
+                    if (o1.getCoedNotAppear() == o2.getCoedNotAppear()) {
+                        return 0;
+                    }
+                    return -1;
+                } else if (type == -1) {
+                    if (o1.getCoedNotAppear() > o2.getCoedNotAppear()) {
+                        return 1;
+                    }
+                    if (o1.getCoedNotAppear() == o2.getCoedNotAppear()) {
+                        return 0;
+                    }
+                    return -1;
+                }
+                return -1;
+            }
+        });
+    }
+
     private void initView() {
+        tv_title_01 = (TextView) mView.findViewById(R.id.tv_title_01);
+        tv_title_02 = (TextView) mView.findViewById(R.id.tv_title_02);
+        tv_title_03 = (TextView) mView.findViewById(R.id.tv_title_03);
+        tv_title_04 = (TextView) mView.findViewById(R.id.tv_title_04);
+
         EmojiconTextView emoji_icon_01 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_01);
         EmojiconTextView emoji_icon_02 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_02);
         EmojiconTextView emoji_icon_03 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_03);

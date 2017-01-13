@@ -1490,6 +1490,14 @@
     <string name="home_lottery_info_tm_count">特碼出現次數</string>
     <string name="home_lottery_info_tm_mantissa_count">特碼尾號出現次數</string>
     <string name="home_lottery_info_tm_bo_count">特碼波色出現次數</string>
+    <string name="home_lottery_info_pm_zodiac_count">平碼生肖出現次數</string>
+    <string name="home_lottery_info_pm_count">平碼出現次數</string>
+    <string name="home_lottery_info_pm_mantissa_count">平碼尾號出現次數</string>
+    <string name="home_lottery_info_pm_bo_count">平碼波色出現次數</string>
+    <string name="home_lottery_info_tm_not_zodiac_count">特碼生肖連續未出</string>
+    <string name="home_lottery_info_tm_not_count">特碼連續未出</string>
+    <string name="home_lottery_info_tm_not_mantissa_count">特碼尾號連續未出</string>
+    <string name="home_lottery_info_tm_not_bo_count">特碼波色連續未出</string>
     <string name="home_lottery_info_tm_bo_r">紅</string>
     <string name="home_lottery_info_tm_bo_g">綠</string>
     <string name="home_lottery_info_tm_bo_b">藍</string>
