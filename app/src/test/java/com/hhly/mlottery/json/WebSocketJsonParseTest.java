@@ -3,6 +3,7 @@ package com.hhly.mlottery.json;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.hhly.mlottery.bean.websocket.WebSocketCPIResult;
+import com.hhly.mlottery.util.L;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -37,7 +38,7 @@ public class WebSocketJsonParseTest {
 
         List<WebSocketCPIResult.UpdateOdds> data = result.getData();
         for (WebSocketCPIResult.UpdateOdds odds : data) {
-            System.out.println(odds.getComId());
+            L.d(odds.getComId());
         }
         Assert.assertEquals("3", data.get(0).getComId());
     }

@@ -43,6 +43,7 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.DateUtil;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
@@ -131,7 +132,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     private TextView tv_new_msg;
 
 
-    Timer timer=new Timer();
+    Timer timer = new Timer();
 
     public static ChartBallFragment newInstance(int type, String thirdId) {
         ChartBallFragment fragment = new ChartBallFragment();
@@ -220,13 +221,13 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     private void initView() {
 
         //定时器
-        TimerTask timerTask=new TimerTask() {
+        TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
                 handler.sendEmptyMessage(0);
             }
         };
-        timer.schedule(timerTask,1000*1,1000*30);
+        timer.schedule(timerTask, 1000 * 1, 1000 * 30);
 
         mEditText = (EmojiconEditText) mView.findViewById(R.id.et_emoji_input);
         mEditText.setFocusable(false);
@@ -265,13 +266,12 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     /**
      * 30重连socket一次
      */
-    Handler handler=new Handler(){
+    Handler handler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             connectWebSocket();
-            Log.i("dasdasd","socket重连");
         }
     };
 
@@ -500,7 +500,6 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
             public void onResponse(MatchLike matchLike) {
                 tvHomeLikeCount.setText(matchLike.getHomeLike());
                 tvGuestLikeCount.setText(matchLike.getGuestLike());
-                System.out.println("lzfdianzan" + matchLike.getGuestLike() + matchLike.getHomeLike());
                 if (matchLike.getHomeLike() != null && matchLike.getGuestLike() != null) {
                     int homeLikeCount = Integer.parseInt(matchLike.getHomeLike());
                     int guestLikeCount = Integer.parseInt(matchLike.getGuestLike());
@@ -694,81 +693,90 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         new Thread() {
             @Override
             public void run() {
-                System.out.println("xxxxx 滚球推送：" + text);
-                ChartRoom chartRoom = JSON.parseObject(text, ChartRoom.class);
+                synchronized (this) {
+                    L.d("xxxxx","滚球推送：" + text);
+                    ChartRoom chartRoom = JSON.parseObject(text, ChartRoom.class);
 
-                ChartReceive.DataBean.ChatHistoryBean chartbean = new ChartReceive.DataBean.ChatHistoryBean(chartRoom.getData().getMsgId(), chartRoom.getData().getMsgCode(), chartRoom.getData().getMessage(),
-                        chartRoom.getData().getFromUser() == null ? new ChartReceive.DataBean.ChatHistoryBean.FromUserBean() : new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(chartRoom.getData().getFromUser().getUserId(), chartRoom.getData().getFromUser().getUserLogo(), chartRoom.getData().getFromUser().getUserNick()),
-                        chartRoom.getData().getToUser() == null ? new ChartReceive.DataBean.ChatHistoryBean.ToUser() : new ChartReceive.DataBean.ChatHistoryBean.ToUser(chartRoom.getData().getToUser().getUserId(), chartRoom.getData().getToUser().getUserLogo(), chartRoom.getData().getToUser().getUserNick()),
-                        chartRoom.getData().getTime());
+                    ChartReceive.DataBean.ChatHistoryBean chartbean = new ChartReceive.DataBean.ChatHistoryBean(chartRoom.getData().getMsgId(), chartRoom.getData().getMsgCode(), chartRoom.getData().getMessage(),
+                            chartRoom.getData().getFromUser() == null ? new ChartReceive.DataBean.ChatHistoryBean.FromUserBean() : new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(chartRoom.getData().getFromUser().getUserId(), chartRoom.getData().getFromUser().getUserLogo(), chartRoom.getData().getFromUser().getUserNick()),
+                            chartRoom.getData().getToUser() == null ? new ChartReceive.DataBean.ChatHistoryBean.ToUser() : new ChartReceive.DataBean.ChatHistoryBean.ToUser(chartRoom.getData().getToUser().getUserId(), chartRoom.getData().getToUser().getUserLogo(), chartRoom.getData().getToUser().getUserNick()),
+                            chartRoom.getData().getTime());
 
-                switch (chartRoom.getData().getMsgCode()) {
-                    case 4:// 获取在线人数消息
-                        mOnline = chartRoom.getData().getOnlineNum() == null ? "0" : chartRoom.getData().getOnlineNum();
-                        mHandler.sendEmptyMessage(MSG_ON_LINE_COUNT);
-                        break;
-                    case 1:
-                    case 2:
-                        // 发送数据并更新
-                        if (!AppConstants.register.getData().getUser().getUserId().equals(chartRoom.getData().getFromUser().getUserId())) {
+                    switch (chartRoom.getData().getMsgCode()) {
+                        case 4:// 获取在线人数消息
+                            mOnline = chartRoom.getData().getOnlineNum() == null ? "0" : chartRoom.getData().getOnlineNum();
+                            mHandler.sendEmptyMessage(MSG_ON_LINE_COUNT);
+                            break;
+                        case 1:
+                        case 2:
+                            // 发送数据并更新
+                            String userId = "";
                             try {
-                                if (historyBeen != null && historyBeen.size() > 1) {
-                                    Long lastTime = DateUtil.getCurrentTime(mLastTime);
-                                    Long currentTime = DateUtil.getCurrentTime(chartRoom.getData().getTime());
-                                    if (currentTime - lastTime >= SHOW_TIME_LONG_FULL) {
-                                        // 显示年月日
-                                        chartbean.setShowTime(currentTime - lastTime >= SHOW_TIME_LONG_FULL);
-                                    } else if (currentTime - lastTime >= SHOW_TIME_LONG) {
-                                        // 显示时分秒
-                                        chartbean.setShowTime(currentTime - lastTime >= SHOW_TIME_LONG);
-                                        chartbean.setTime(DateUtil.getLotteryInfoDate(chartRoom.getData().getTime(), "HH:mm:ss"));
-                                    }
-                                }
+                                userId = AppConstants.register.getData().getUser().getUserId();
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            Message msg = mHandler.obtainMessage();
-                            msg.what = MSG_UPDATA_LIST;
-                            msg.arg1 = chartRoom.getData().getMsgCode();
-                            msg.obj = chartbean;
-                            if (chartRoom.getData().getMsgCode() == 2 && AppConstants.register.getData().getUser().getUserId().equals(chartRoom.getData().getToUser().getUserId())) {
-                                msg.arg2 = 2;
-                                mMsgId = chartRoom.getData().getMsgId();
-                            }
-                            mLastTime = chartRoom.getData().getTime();
-                            mHandler.sendMessage(msg);
-                        } else {
-                            // 本地所发的信息
-                            for (int i = 0, len = historyBeen.size(); i < len; i++) {
-                                if (historyBeen.get(i).getMsgId() == null && historyBeen.get(i).getMessage().equals(chartRoom.getData().getMessage())) {
-                                    historyBeen.get(i).setMsgId(chartRoom.getData().getMsgId());
-                                    historyBeen.get(i).getToUser().setUserLogo(chartRoom.getData().getToUser() == null ? null : chartRoom.getData().getToUser().getUserLogo());
-                                    historyBeen.get(i).setTime(chartRoom.getData().getTime());
 
-                                    if (i != 0) {
-                                        try {
-                                            Long lastTime = DateUtil.getCurrentTime(historyBeen.get(i - 1).getTime());
-                                            Long currentTime = DateUtil.getCurrentTime(historyBeen.get(i).getTime());
-                                            if (currentTime - lastTime >= SHOW_TIME_LONG_FULL) {
-                                                // 显示年月日
-                                                historyBeen.get(i).setShowTime(currentTime - lastTime >= SHOW_TIME_LONG_FULL);
-                                            } else if (currentTime - lastTime >= SHOW_TIME_LONG) {
-                                                // 显示时分秒
-                                                historyBeen.get(i).setShowTime(currentTime - lastTime >= SHOW_TIME_LONG);
-                                                historyBeen.get(i).setTime(DateUtil.getLotteryInfoDate(chartRoom.getData().getTime(), "HH:mm:ss"));
-                                            }
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
+                            if (TextUtils.isEmpty(userId) && !userId.equals(chartRoom.getData().getFromUser().getUserId())) {
+                                try {
+                                    if (historyBeen != null && historyBeen.size() > 1) {
+                                        Long lastTime = DateUtil.getCurrentTime(mLastTime);
+                                        Long currentTime = DateUtil.getCurrentTime(chartRoom.getData().getTime());
+                                        if (currentTime - lastTime >= SHOW_TIME_LONG_FULL) {
+                                            // 显示年月日
+                                            chartbean.setShowTime(currentTime - lastTime >= SHOW_TIME_LONG_FULL);
+                                        } else if (currentTime - lastTime >= SHOW_TIME_LONG) {
+                                            // 显示时分秒
+                                            chartbean.setShowTime(currentTime - lastTime >= SHOW_TIME_LONG);
+                                            chartbean.setTime(DateUtil.getLotteryInfoDate(chartRoom.getData().getTime(), "HH:mm:ss"));
                                         }
                                     }
-                                    mLastTime = chartRoom.getData().getTime();
-                                    mHandler.sendEmptyMessage(MSG_UPDATA_TIME);
-                                    break;
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
-                            }
+                                Message msg = mHandler.obtainMessage();
+                                msg.what = MSG_UPDATA_LIST;
+                                msg.arg1 = chartRoom.getData().getMsgCode();
+                                msg.obj = chartbean;
+                                if (chartRoom.getData().getMsgCode() == 2 && AppConstants.register.getData().getUser().getUserId().equals(chartRoom.getData().getToUser().getUserId())) {
+                                    msg.arg2 = 2;
+                                    mMsgId = chartRoom.getData().getMsgId();
+                                }
+                                mLastTime = chartRoom.getData().getTime();
+                                mHandler.sendMessage(msg);
+                            } else {
+                                // 本地所发的信息
+                                for (int i = 0, len = historyBeen.size(); i < len; i++) {
+                                    if (historyBeen.get(i).getMsgId() == null && historyBeen.get(i).getMessage().equals(chartRoom.getData().getMessage())) {
+                                        historyBeen.get(i).setMsgId(chartRoom.getData().getMsgId());
+                                        historyBeen.get(i).getToUser().setUserLogo(chartRoom.getData().getToUser() == null ? null : chartRoom.getData().getToUser().getUserLogo());
+                                        historyBeen.get(i).setTime(chartRoom.getData().getTime());
 
-                        }
-                        break;
+                                        if (i != 0) {
+                                            try {
+                                                Long lastTime = DateUtil.getCurrentTime(historyBeen.get(i - 1).getTime());
+                                                Long currentTime = DateUtil.getCurrentTime(historyBeen.get(i).getTime());
+                                                if (currentTime - lastTime >= SHOW_TIME_LONG_FULL) {
+                                                    // 显示年月日
+                                                    historyBeen.get(i).setShowTime(currentTime - lastTime >= SHOW_TIME_LONG_FULL);
+                                                } else if (currentTime - lastTime >= SHOW_TIME_LONG) {
+                                                    // 显示时分秒
+                                                    historyBeen.get(i).setShowTime(currentTime - lastTime >= SHOW_TIME_LONG);
+                                                    historyBeen.get(i).setTime(DateUtil.getLotteryInfoDate(chartRoom.getData().getTime(), "HH:mm:ss"));
+                                                }
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                        mLastTime = chartRoom.getData().getTime();
+                                        mHandler.sendEmptyMessage(MSG_UPDATA_TIME);
+                                        break;
+                                    }
+                                }
+
+                            }
+                            break;
+                    }
                 }
             }
         }.start();

@@ -46,6 +46,7 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
+import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ResultDateUtil;
@@ -73,14 +74,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
 
     private static final String TAG = "ImmedBasketballFragment";
     private static final String PARAMS = "BASKET_PARAMS";
-
-    public final static String BASKET_FOCUS_IDS = "basket_focus_ids";
-
-    public static final int TYPE_IMMEDIATE = 0;
-    public static final int TYPE_RESULT = 1;
-    public static final int TYPE_SCHEDULE = 2;
-    public static final int TYPE_FOCUS = 3;
-
     private PinnedHeaderExpandableListView explistview;
 
     //筛选的数据
@@ -109,30 +102,15 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     private TextView mReloadTvBtn;// 刷新 控件
 
     private Intent mIntent;
-
-    private boolean isScroll = false; //是否处于划定状态
-
-    private int mHandicap = 1;// 盘口 1.亚盘 2.大小球 3.欧赔 4.不显示
-    private boolean isLoadData = false; //加载是否成功
     Handler mLoadHandler = new Handler();
 
-    public static final int REQUEST_FILTERCODE = 0x62;//筛选的标记
-    public static final int REQUEST_SETTINGCODE = 0x61;//设置的标记
-
-    public static final int REQUEST_DETAILSCODE = 0x66;
-
     private BasketFocusClickListener mFocusClickListener; //关注点击监听
-
-    private URI mScoketuri = null;//推送 URI
-
-    private boolean isError = false;
 
     private SwipeRefreshLayout mSwipeRefreshLayout; //下拉刷新
 
     private int mBasketballType; //判断是哪个fragment(即时 赛果 赛程)
 
     private boolean isFilter = false;  //是否赛选过
-    private String url;
 
     public static int isLoad = -1;
 
@@ -185,28 +163,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
 
     }
 
-    /**
-     * fragment 选择
-     */
-    public void fragmentType() {
-
-        switch (mBasketballType) {
-            case TYPE_IMMEDIATE:
-                url = BaseURLs.URL_BASKET_IMMEDIATE;
-                break;
-            case TYPE_RESULT:
-                url = BaseURLs.URL_BASKET_RESULT;
-                break;
-            case TYPE_SCHEDULE:
-                url = BaseURLs.URL_BASKET_SCHEDULE;
-                break;
-            case TYPE_FOCUS:
-                url = BaseURLs.URL_BASKET_FOCUS;
-                break;
-            default:
-                break;
-        }
-    }
 
     /**
      * 返回当前程序版本号 versioncode
@@ -221,7 +177,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                 return "";
             }
         } catch (Exception e) {
-            Log.e("VersionInfo", "Exception", e);
         }
         return versioncode;
     }
@@ -231,8 +186,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mContext = getActivity();
         mView = inflater.inflate(R.layout.pinned_listview, container, false);
-
-        fragmentType(); //fragment 入口
 
         initView();
         return mView;
@@ -297,31 +250,12 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
 
     private void initData() {
 
-//        ((BasketScoresFragment)getParentFragment()).getBasketballUserConcern(); //获取关注列表
-        BasketballScoresActivity parentActivity = (BasketballScoresActivity)getActivity();
-        parentActivity.getBasketballUserConcern();
-
         Map<String, String> params = new HashMap<>();
         String version = getAppVersionCode(mContext);//获得当前版本号 android:versionCode="5"
-
-        if (mBasketballType == TYPE_FOCUS) { //判断是否是关注页面
-
-            String fucusid = PreferenceUtil.getString(BASKET_FOCUS_IDS, "");
-
-            if ("".equals(fucusid) || ",".equals(fucusid) || fucusid.length() == 0) {
-                mbasketball_unfocus.setVisibility(View.VISIBLE); // 暂无关注
-                mLoadingLayout.setVisibility(View.GONE);
-                mSwipeRefreshLayout.setRefreshing(false);
-                mSwipeRefreshLayout.setVisibility(View.GONE);
-                return;
-            } else {
-                params.put("favourite", fucusid);
-            }
-        }
         params.put("version", version);//接口添加 version=xx 字段
         params.put("appType", "2");//接口添加 &appType=2 字段
 
-        VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<BasketRoot>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_IMMEDIATE, params, new VolleyContentFast.ResponseSuccessListener<BasketRoot>() {
             @Override
             public void onResponse(BasketRoot json) {
 
@@ -331,9 +265,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
 
                 isLoad = 1;
                 if (json == null || json.getMatchData() == null || json.getMatchData().size() == 0) {
-                    if (mBasketballType == TYPE_FOCUS) {
-                        PreferenceUtil.commitString(BASKET_FOCUS_IDS, "");
-                    }
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     mLoadingLayout.setVisibility(View.GONE);
@@ -344,10 +275,8 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
 
                 mMatchdata = json.getMatchData();
 
-                if (mBasketballType != TYPE_FOCUS) { //非关注页面
-                    mAllFilter = json.getMatchFilter();
-                    // mChickedFilter = json.getMatchFilter();//默认选中全部 -->mChickedFilter不赋值 默认全不选
-                }
+                mAllFilter = json.getMatchFilter();
+
                 mSize = json.getMatchData().size();
 
                 groupDataList = new ArrayList<String>();
@@ -362,13 +291,10 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                     /**
                      * 子view数据
                      */
-                    //  childrenDataList.add(mMatchdata.get(i).getMatch());
                     mAllMatchdata.add(mMatchdata.get(i).getMatch());//显示的
                     /**
                      * 外层 view数据
                      */
-                    // groupDataList.add(mMatchdata.get(i).getDate() + "," + week);
-                    // isToday.add(mMatchdata.get(i).getDiffDays());// 获得日期状态码（昨天 今天 明天）
                     mAllGroupdata.add(mMatchdata.get(i).getDate() + "," + week + "," + mMatchdata.get(i).getDiffDays() + "");
                 }
 
@@ -442,7 +368,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                         adapter.setGroupClickStatus(i, 1);//收起 ： 0  展开 ：1
                     }
                 }
-                isLoadData = true;
 
                 mSwipeRefreshLayout.setRefreshing(false);
                 mSwipeRefreshLayout.setVisibility(View.VISIBLE);
@@ -462,7 +387,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
 
                 isLoad = 0;
 
-                isLoadData = false;
                 mSwipeRefreshLayout.setVisibility(View.GONE);
                 mSwipeRefreshLayout.setRefreshing(false);
                 mLoadingLayout.setVisibility(View.GONE);
@@ -483,44 +407,14 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                 boolean isCheck = (Boolean) v.getTag();// 检查之前是否被选中
 
                 if (!isCheck) {//未关注->关注
-                    FocusBasketballFragment.addFocusId(root.getThirdId());
+                    FocusUtils.addBasketFocusId(root.getThirdId());
                     v.setTag(true);
 
                 } else {//关注->未关注
-                    FocusBasketballFragment.deleteFocusId(root.getThirdId());
+                    FocusUtils.deleteBasketFocusId(root.getThirdId());
                     v.setTag(false);
-                    //判断 如果是关注页面
-                    if (mBasketballType == TYPE_FOCUS) {
-                        List<BasketMatchBean> emptyMatchs = null;
-                        for (int i = 0; i < childrenDataList.size(); i++) {
-                            childrenDataList.get(i).remove(root);
-                            if (childrenDataList.get(i).size() == 0) {
-                                groupDataList.remove(i);
-                                emptyMatchs = childrenDataList.get(i);
-                            }
-                        }
-                        if (emptyMatchs != null) {
-                            childrenDataList.remove(emptyMatchs);
-                        }
-                        if (groupDataList.size() == 0) {
-                            mbasketball_unfocus.setVisibility(View.VISIBLE); // 暂无关注
-                            mSwipeRefreshLayout.setVisibility(View.GONE);
-                            mLoadingLayout.setVisibility(View.GONE);
-                        } else {
-                            adapter = new PinnedHeaderExpandableAdapter(childrenDataList, groupDataList, getActivity(), explistview);
-                            explistview.setAdapter(adapter);
-                            adapter.setmFocus(mFocusClickListener);//设置关注
-                        }
-                        //全部展开
-                        for (int i = 0; i < groupDataList.size(); i++) {
-                            explistview.expandGroup(i);
-                        }
-                        ((BasketballScoresActivity) getActivity()).focusCallback();
-                        return;
-                    }
                 }
                 updateAdapter();//防止复用
-                ((BasketballScoresActivity) getActivity()).focusCallback();
             }
         };
     }
@@ -649,7 +543,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                     mWebBasketMatch = JSON.parseObject(ws_json, WebBasketMatch.class);
                 } catch (Exception e) {
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
-                    // Log.e(TAG, "ws_json = " + ws_json);
                     mWebBasketMatch = JSON.parseObject(ws_json, WebBasketMatch.class);
                 }
 
@@ -980,7 +873,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
         /**
          * 过滤筛选0场的情况，防止筛选0场时刷新 切换设置时出现异常
          */
-        if (mChickedFilter.size() != 0 || mBasketballType == TYPE_FOCUS) {
+        if (mChickedFilter.size() != 0 ) {
             if (childrenDataList != null) {
                 if (childrenDataList.size() != 0) {
                     updateAdapter();
@@ -1085,13 +978,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
      * @param id
      */
     public void onEventMainThread(String id) {
-        //判断 关注页面重新请求 （详情中取消关注返回时关注页面跟着变化）
-        if (mBasketballType == TYPE_FOCUS) {
-            mLoadHandler.postDelayed(mRun, 0);
-            ((BasketballScoresActivity) getActivity()).focusCallback();
-        } else {
             updateAdapter();
-            ((BasketballScoresActivity) getActivity()).focusCallback();
-        }
     }
 }

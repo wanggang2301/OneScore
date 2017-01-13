@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="110dp"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="#fff"
     android:clickable="true"
     android:focusable="true"
@@ -11,18 +12,15 @@
     <LinearLayout
         android:id="@+id/ll_data_info_item01"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingRight="20dp">
+        android:layout_height="91dp"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/iv_data_info_icon01"
-            android:layout_width="80dp"
+            android:layout_width="95dp"
             android:layout_height="71dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_margin="10dp"
             android:scaleType="fitXY"
             android:src="@mipmap/home_data_info_def" />
 
@@ -36,9 +34,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
-                android:paddingLeft="8dp"
-                android:paddingTop="12dp"
-                android:text=""
+                android:paddingTop="10dp"
+                tools:text="title"
                 android:textColor="@color/content_txt_black"
                 android:textSize="@dimen/home_pager_title" />
 
@@ -48,8 +45,7 @@
                 android:layout_height="0dp"
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
-                android:paddingLeft="8dp"
-                android:text=""
+                tools:text="desc"
                 android:textColor="@color/content_txt_light_grad"
                 android:textSize="@dimen/number_desc" />
         </LinearLayout>

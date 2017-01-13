@@ -191,7 +191,6 @@ public class WebActivity extends BaseActivity implements OnClickListener {
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
                     view.loadUrl(url);
                     L.d("lzfshiping", url);
-                    System.out.println("lzfshiping" + url);
                     return true;
                 }
 
@@ -214,14 +213,9 @@ public class WebActivity extends BaseActivity implements OnClickListener {
                 url = url.replace("{deviceToken}", deviceId);
             }
 
-            L.d("lzfshiping", url);
-
             mWebView.loadUrl(url);
             L.d("lzf:" + "imageurl=" + imageurl + "title" + title + "subtitle" + subtitle);
-            Log.d("CommonUtils:", "token=" + token + "reqMethod" + reqMethod + "url=" + url);
 
-
-            L.d("lzf:" + "imageurl=" + imageurl + "title" + title + "subtitle" + subtitle);
         } catch (Exception e) {
             L.d("initData初始化失败:" + e.getMessage());
         }

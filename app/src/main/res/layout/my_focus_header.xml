@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/header_layout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/header_height"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/status_bar_offset">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/public_img_back"
+            style="@style/RippleBackgroudBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/back" />
+
+
+            <RadioGroup
+                android:id="@+id/my_focus_radio_group"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:orientation="horizontal"
+                >
+
+                <RadioButton
+                    android:id="@+id/my_focus_basket"
+                    style="@style/my_focus_radio_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="-1dp"
+                    android:layout_marginRight="-1dp"
+                    android:padding="5dp"
+                    android:background="@drawable/multiple_radio_button_left"
+                    android:checked="true"
+                    android:text="@string/my_focus_basket"/>
+                <RadioButton
+                    android:id="@+id/my_focus_football"
+                    style="@style/my_focus_radio_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp"
+                    android:layout_marginLeft="-1dp"
+                    android:layout_marginStart="-1dp"
+                    android:background="@drawable/multiple_radio_button_right"
+                    android:text="@string/my_focus_football"/>
+
+            </RadioGroup>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

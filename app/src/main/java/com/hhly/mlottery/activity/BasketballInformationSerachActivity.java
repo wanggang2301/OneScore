@@ -16,6 +16,7 @@ import com.hhly.mlottery.bean.BasketSerach;
 import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
 import com.hhly.mlottery.callback.BasketSearchservice;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
@@ -212,7 +213,7 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
                 if( null!=resultListBeen.get(position).getLeagueId()&&!resultListBeen.get(position).getLeagueId().isEmpty()) {
                     Intent intent = new Intent(BasketballInformationSerachActivity.this, BasketballDatabaseDetailsActivity.class);
                     intent.putExtra(LEAGUEID, resultListBeen.get(position));//传递联赛ID
-                    System.out.println("resulistBeen====================="+resultListBeen.get(position).toString());
+                    L.d("resulistBeen====================="+resultListBeen.get(position).toString());
                     startActivity(intent);
                 }
             }

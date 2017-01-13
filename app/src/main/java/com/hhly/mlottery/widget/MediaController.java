@@ -542,7 +542,6 @@ public class MediaController extends FrameLayout implements IMediaController {
                 else
                     mWindow.dismiss();
             } catch (IllegalArgumentException ex) {
-                Log.d(TAG, "MediaController already removed");
             }
             mShowing = false;
             if (mHiddenListener != null)

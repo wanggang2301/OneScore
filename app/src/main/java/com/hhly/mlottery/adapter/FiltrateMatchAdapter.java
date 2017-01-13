@@ -88,7 +88,6 @@ public class FiltrateMatchAdapter extends CommonAdapter<LeagueCup> {
 
 				@Override
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-					//Log.i(TAG, "________onCheckedChanged________isChecked = " + isChecked);
 
 					if (isChecked) {
 						if (!mCheckedIds.contains(buttonView.getTag())) {
@@ -107,7 +106,6 @@ public class FiltrateMatchAdapter extends CommonAdapter<LeagueCup> {
 
 				@Override
 				public void onClick(View v) {
-					//Log.i(TAG, "............click...........");
 
 					if (clickChangeListener != null) {
 						clickChangeListener.onClick((CompoundButton) v);

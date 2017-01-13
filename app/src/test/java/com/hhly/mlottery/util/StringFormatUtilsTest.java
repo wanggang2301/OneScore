@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class StringFormatUtilsTest {
     @Test
     public void toPercentString() throws Exception {
-        System.out.println(StringFormatUtils.toPercentString(0.23*0.25+0.27*0.25));
+        L.d(StringFormatUtils.toPercentString(0.23*0.25+0.27*0.25));
     }
 
 }

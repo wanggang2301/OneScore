@@ -19,11 +19,13 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.R.string;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.frame.basketballframe.BasketFocusEventBus;
 import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -32,6 +34,8 @@ import com.umeng.message.UmengRegistrar;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * @ClassName: BasketballSettingActivity 
@@ -218,7 +222,8 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 //				L.i("102","赛程发送");
 				ScheduleBasketballFragment.BasketScheduleEventBus.post(mCurrentId);
 			}else if (mCurrentId==3){
-				FocusBasketballFragment.BasketFocusEventBus.post(mCurrentId);
+//				FocusBasketballFragment.BasketFocusEventBus.post(mCurrentId);
+				EventBus.getDefault().post(new BasketFocusEventBus());
 			}
 //			ImmedBasketballFragment.BasketImmedEventBus.post(0);
 			setResult(Activity.RESULT_OK,intent);
@@ -261,7 +266,6 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 			PreferenceUtil.commitBoolean(MyConstants.BASKETBALL_PUSH_FOCUS, mTb_push.isChecked());
 
 			//TODO:把是否接受推送消息的状态传给服务器
-//			Log.e("BBB",UmengRegistrar.getRegistrationId(MyApp.getContext()));
 			if(mTb_push.isChecked()){
 				requestServer("true"); //接收推送
 			}else {
@@ -290,7 +294,7 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 		VolleyContentFast.requestJsonByPost(BaseURLs.BASKET_USER_SET, params, new VolleyContentFast.ResponseSuccessListener<String>() {
 			@Override
 			public void onResponse(String jsonObject) {
-				Log.e("AAA","篮球推送开关请求成功");
+				L.d("AAA","篮球推送开关请求成功");
 
 			}
 		}, new VolleyContentFast.ResponseErrorListener() {
@@ -317,7 +321,7 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 //				L.i("102","赛程发送");
 				ScheduleBasketballFragment.BasketScheduleEventBus.post(mCurrentId);
 			}else if (mCurrentId==3){
-				FocusBasketballFragment.BasketFocusEventBus.post(mCurrentId);
+				EventBus.getDefault().post(new BasketFocusEventBus());
 			}
 
 			setResult(Activity.RESULT_OK,intent);

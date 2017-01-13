@@ -93,7 +93,6 @@ public class LineChartView extends View{
         this.mCanvas=canvas;
         startX=width/12; //下方listview的中间来看。是12份
         startY=height/4;
-     //   Log.e("analyze",startX+"============"+startY+"");
 
         mPaint.setAntiAlias(true);
         mPaint.setColor(getResources().getColor(R.color.login_et_color));

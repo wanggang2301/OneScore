@@ -246,7 +246,6 @@ public class EnlargePhotoActivity extends  BaseActivity implements View.OnClickL
                             //PreferenceUtil.commitString("image_url", outFile.toString());
                             boolean flag = photo.compress(Bitmap.CompressFormat.PNG,
                                     100, fos);// 把数据写入文件
-                            Log.i("1", "flag=" + flag);
                             if (flag) {
                                 UiUtils.toast(MyApp.getInstance(),getResources().getString(R.string.picture_save)+ mPutDir.toString());
 
@@ -292,8 +291,6 @@ public class EnlargePhotoActivity extends  BaseActivity implements View.OnClickL
                 break;
 
             case REQUEST_IMAGE_CROP:
-                Log.i(TAG, "相册裁剪成功");
-                Log.i(TAG, "裁剪以后 [ " + data + " ]");
                 if (data == null) {
                     // 显示之前额图片,或者显示默认的图片
                     return;
@@ -326,9 +323,7 @@ public class EnlargePhotoActivity extends  BaseActivity implements View.OnClickL
                             //PreferenceUtil.commitString("image_url", outFile.toString());
                             boolean flag = photo.compress(Bitmap.CompressFormat.JPEG,
                                     100, fos);// 把数据写入文件
-                            Log.i("1", "flag=" + flag);
                             if (flag) {
-                                Log.i(TAG,R.string.picture_save + outFile.getAbsolutePath());
                                 //BaseURLs.UPLOADIMAGE
                                 doPostSycn(PUT_URL,outFile);
 
@@ -374,12 +369,10 @@ public class EnlargePhotoActivity extends  BaseActivity implements View.OnClickL
             public void onFailure(Request request, IOException e) {
                 mViewHandler.sendEmptyMessage(Put_FAIL_PHOTO);
                 progressBar.dismiss();
-                Log.d(TAG, "onFailure: "+e.getMessage());
             }
 
             @Override
             public void onResponse(Response response) throws IOException {
-                Log.d(TAG, "onResponse: ");
 
                 String jsonString=response.body().string();
                 JSONObject jo = JSON.parseObject(jsonString);
@@ -404,13 +397,10 @@ public class EnlargePhotoActivity extends  BaseActivity implements View.OnClickL
 
         Map<String, String> param = new HashMap<>();
 
-        Log.d(TAG, AppConstants.deviceToken);
         param.put("deviceToken", AppConstants.deviceToken);
 
-        Log.d(TAG, PreferenceUtil.getString(AppConstants.SPKEY_TOKEN, ""));
         param.put("loginToken", PreferenceUtil.getString(AppConstants.SPKEY_TOKEN, ""));
 
-        Log.d(TAG, AppConstants.deviceToken);
         param.put("imgUrl", headerUrl);
 
         VolleyContentFast.requestJsonByPost(BaseURLs.UPDATEHEADICON, param, new VolleyContentFast.ResponseSuccessListener<Register>() {

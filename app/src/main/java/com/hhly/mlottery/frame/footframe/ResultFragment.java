@@ -48,6 +48,7 @@ import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFocusEventBusEntity
 import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchSettingEventBusEntity;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.ResultDateUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -289,18 +290,18 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
                 if (!isCheck) {// 插入数据
                     Log.e("AAA", "有调用啊");
-                    FocusFragment.addFocusId(third);
+                    FocusUtils.addFocusId(third);
 
                     ((ImageView) view).setImageResource(R.mipmap.football_focus);
                     view.setTag(true);
                 } else {// 删除
-                    FocusFragment.deleteFocusId(third);
+                    FocusUtils.deleteFocusId(third);
 
                     ((ImageView) view).setImageResource(R.mipmap.football_nomal);
 
                     view.setTag(false);
                 }
-                ((ScoresFragment) getParentFragment()).focusCallback();
+//                ((ScoresFragment) getParentFragment()).focusCallback();
             }
         };
 
@@ -369,9 +370,14 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
             return;
         }
 
-        if (getParentFragment() != null) {
-            ((ScoresFragment) getParentFragment()).getFootballUserConcern();
-        }
+        /**
+         * 多点登录的时候。另一台手机登录需要进行请求关注的数据。现在单点登录之后，则在登录的时候请求一次就可以
+         * 因为不存在两台手机同时在关注列表瞎他tm的情况
+         */
+//
+//        if (getParentFragment() != null) {
+////            ((ScoresFragment) getParentFragment()).getFootballUserConcern();
+//        }
 
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_ResultMatchs, new VolleyContentFast.ResponseSuccessListener<ResultMatch>() {
             @Override
@@ -604,7 +610,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
         if (scoresMatchFocusEventBusEntity.getFgIndex() == 2) {
             L.d("qazwsx", "赛程关注内页返回EventBus");
             updateAdapter();
-            ((ScoresFragment) getParentFragment()).focusCallback();
+//            ((ScoresFragment) getParentFragment()).focusCallback();
         }
     }
 

@@ -97,12 +97,10 @@ public class AvatarSelectionActivity extends Activity implements View.OnClickLis
                     }
                     PreferenceUtil.commitString("maleSize", mMaleDatas.size() + "");
 
-                    Log.i("asdasdas", "male" + male);
                     //start_male_size.setText(mMaleDatas.size());
                     start_male_size.setText(mMaleDatas.size() + "");
                     ///maleDatas.add(mMaleDatas);
                     //listMaleDatasSaveUtils.setDataList("maleDatas",mMaleDatas);
-                    //Log.i("asdasdas","maleDatas>>>>>>>>>>>>>>>>"+listMaleDatasSaveUtils.getDataList("male"));
                     if (choseStartManAdapter == null) {
                         choseStartManAdapter = new ChoseStartManAdapter(AvatarSelectionActivity.this, json.getData().getMale(), R.layout.avatar_start_head_child);
                         male_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -157,7 +155,6 @@ public class AvatarSelectionActivity extends Activity implements View.OnClickLis
                         String url = PreferenceUtil.getString("male" + i, "");
                         male.add(url);
                     }
-                    Log.i("zxcvbn", "choseStartManAdapter==" + choseStartManAdapter);
                     if (choseStartManAdapter == null) {
                         choseFailStartManAdapter = new ChoseFailStartManAdapter(AvatarSelectionActivity.this, male, R.layout.avatar_start_head_child);
                         male_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -531,7 +531,6 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isCreated && getUserVisibleHint() && mInfos.size() == 0) {
-            Log.i("lzf", "可见" + index);
             onVisible();
 
         }
@@ -544,7 +543,6 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
      * 可见
      */
     protected void onVisible() {
-//        Log.i("lzf", "可见" + index);
         if (index != 0) {
             //发起网络请求数据
             loadNewsData(BaseURLs.URL_FOOTBALL_INFOLIST, mCurrentPager + "", infotype + "");
@@ -554,7 +552,6 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
     @Override
     public void onPause() {
         super.onPause();
-//        Log.i("lzf", "onPause" + index);
     }
 
     @Override

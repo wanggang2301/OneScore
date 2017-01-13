@@ -154,14 +154,12 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
 //        cpiGridViewHot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Log.d(TAG,"cpiGridViewHot --- onItemClick position = "+position);
 //            }
 //        });
 //
 //        cpiGridViewOther.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Log.d(TAG,"cpiGridViewOther --- onItemClick position = "+position);
 //            }
 //        });
 

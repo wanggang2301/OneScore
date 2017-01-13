@@ -104,7 +104,6 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
 
         mNumberName = null;
         mNumberName = getArguments().getString("mNumberName");
-        System.out.println("xxxxx 详情numbername: " + mNumberName);
 
         initView();
         //initData();

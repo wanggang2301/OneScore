@@ -39,6 +39,8 @@ import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 
+import static com.hhly.mlottery.R.id.focus_red_dot_view;
+
 /**
  * @ClassName: OneScoreGit
  * @author:Administrator luyao
@@ -49,6 +51,11 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
     public static String TAG = "HomeUserOptionsActivity";
 
+    /**我的关注*/
+    private RelativeLayout rl_focus;
+    private  View mFocus_RedDot; //关注红点
+    /**我的关注红点*/
+    boolean mShowRedDot=true;
     /**我的定制*/
     private RelativeLayout rl_custom;
     /**语言切换**/
@@ -58,6 +65,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     /**反馈**/
     private RelativeLayout rl_user_feedback;
     private ProgressDialog progressBar;
+
+
     /**
      * 跳转其他Activity 的requestcode
      */
@@ -65,8 +74,12 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     public static final int REQUESTCODE_LOGOUT = 110;
     public static final int NOT_LOGGED_ON = 33;
     public static final int LOGGED_ON = 44;
+    /**我的关注的红点*/
+    public static final String SHOW_RED="show_focus_red_dot";
+
     private TextView mTv_nickname;
     private ImageView mUser_image;
+    private View mRedDot;
     private TextView mTv_logout;
     private Handler mViewHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -88,8 +101,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             }
         }
     };
-    private View mRedDot;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +140,9 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
         rl_custom = (RelativeLayout)findViewById(R.id.rl_custom);
         rl_custom.setOnClickListener(this);
+        //我的关注
+        rl_focus= (RelativeLayout) findViewById(R.id.rl_my_focus);
+        rl_focus.setOnClickListener(this);
 
         rl_language_frame = (RelativeLayout) findViewById(R.id.rl_language_frame);
         rl_language_frame.setOnClickListener(this);
@@ -147,6 +161,14 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         }else{
             mRedDot.setVisibility(View.GONE);
         }
+        /**我的关注红点*/
+        mFocus_RedDot=findViewById(R.id.focus_red_dot_view);
+        mShowRedDot=PreferenceUtil.getBoolean(SHOW_RED,true);
+        if(mShowRedDot){
+            mFocus_RedDot.setVisibility(View.VISIBLE);
+        }else {
+            mFocus_RedDot.setVisibility(View.GONE);
+        }
 
     }
 
@@ -154,6 +176,12 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
+            case R.id.rl_my_focus: //关注不需要登录
+                    PreferenceUtil.commitBoolean(SHOW_RED,false);
+                    mFocus_RedDot.setVisibility(View.GONE);
+                    startActivity(new Intent(HomeUserOptionsActivity.this,MyFocusActivity.class));
+                break;
             case R.id.rl_custom:
                 if (CommonUtils.isLogin()) {
                     PreferenceUtil.commitBoolean("custom_red_dot" , false);
@@ -296,7 +324,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             public void onResponse(ConcernBean jsonObject) {
                 if(jsonObject.getResult().equals("200")){
                     //注销成功
-                    Log.e("AAA","注销成功");
+                    L.d("AAA","注销成功");
 
                 }
                 finish();
@@ -327,13 +355,11 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         params.put("deviceToken",umengDeviceToken);
         params.put("deviceId",deviceId);
 
-        Log.e("CCC",umengDeviceToken);
         //volley请求
         VolleyContentFast.requestJsonByPost(BaseURLs.FOOTBALL_FIND_MATCH, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
             @Override
             public void onResponse(BasketballConcernListBean jsonObject) {
                 if(jsonObject.getResult().equals("200")){
-                    Log.e("AAA","登陆后请求的足球关注列表");
                     //将关注写入文件
                     StringBuffer sb=new StringBuffer();
                     for(String thirdId:jsonObject.getConcerns()){
@@ -373,7 +399,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         }
     }
     public void onEventMainThread(ChoseHeadStartBean choseHeadStartBean){
-        Log.i("homeUser","更新修改图片");
         //ImageLoader.load(HomeUserOptionsActivity.this,choseHeadStartBean.startUrl,R.mipmap.center_head).into(mUser_image);
         Glide.with(HomeUserOptionsActivity.this)
                 .load(choseHeadStartBean.startUrl)

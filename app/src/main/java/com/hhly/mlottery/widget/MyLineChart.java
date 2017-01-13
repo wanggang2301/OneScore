@@ -199,21 +199,15 @@ public class MyLineChart extends View {
     private int calY(int y) {
         int y0 = 0;
         int y1 = 0;
-        //	Log.i("zzzz", "y:"+y);
         try {
             y0 = Integer.parseInt(Ylabel[0]);
-            //		Log.i("zzzz", "y0"+y0);
             y1 = Integer.parseInt(Ylabel[1]);
-            //		Log.i("zzzz","y1"+y1);
         } catch (Exception e) {
-            //		Log.i("zzzz", "string changed is err");
             return 0;
         }
         try {
-            //		Log.i("zzzz", "返回数据"+(Ypoint-(y-y0)*Yscale/(y1-y0)) );
             return Ypoint - ((y - y0) * Yscale / (y1 - y0));
         } catch (Exception e) {
-            //	Log.i("zzzz", "return is err");
             return 0;
         }
     }
