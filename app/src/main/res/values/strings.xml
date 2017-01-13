@@ -1515,5 +1515,6 @@
     <string name="multi_item_football_name">足球</string>
     <string name="multi_item_clicks">确定</string>
     <string name="multi_toast_clicks_match">请选择比赛</string>
+    <string name="multi_toast_upper_match">最多选择三场</string>
 
 </resources>

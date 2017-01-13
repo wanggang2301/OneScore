@@ -339,14 +339,18 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                                 mBasketAdapter.notifyDataSetChanged();
                                 L.d("yxq===012B ", "byValue.size() = " + byValue.size() + " ** ");
                             }else if (datasize >= 3) {
+                                boolean isRemove = true;
                                 for (int i = 0; i < byValue.size(); i++) {
                                     if (byValue.get(i).getThirdId().equals(data)) {
                                         byValue.remove(i);
-
+                                        isRemove = false;
                                         matchData.setBasketChicks(!matchData.isBasketChicks());
                                         mBasketAdapter.notifyDataSetChanged();
                                         break;
                                     }
+                                }
+                                if (isRemove) {
+                                    Toast.makeText(mContext, getApplicationContext().getResources().getString(R.string.multi_toast_upper_match), Toast.LENGTH_SHORT).show();
                                 }
                                 L.d("yxq===012C ", "byValue.size() = " + byValue.size() + " ** ");
                             }
@@ -540,14 +544,18 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                                         mFootballAdapter.notifyDataSetChanged();
                                         L.d("yxq===011B ", "byValue.size() = " + byValue.size() + " ** ");
                                     }else if (datasize >= 3) {
+                                        boolean isRemove = true;
                                         for (int i = 0; i < byValue.size(); i++) {
                                             if (byValue.get(i).getThirdId().equals(data)) {
                                                 byValue.remove(i);
-
+                                                isRemove = false;
                                                 matchData.setFootballChicks(!matchData.isFootballChicks());
                                                 mFootballAdapter.notifyDataSetChanged();
                                                 break;
                                             }
+                                        }
+                                        if (isRemove) {
+                                            Toast.makeText(mContext, getApplicationContext().getResources().getString(R.string.multi_toast_upper_match), Toast.LENGTH_SHORT).show();
                                         }
                                         L.d("yxq===011C ", "byValue.size() = " + byValue.size() + " ** ");
                                     }
