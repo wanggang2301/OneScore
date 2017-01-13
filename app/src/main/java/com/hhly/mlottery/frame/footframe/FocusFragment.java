@@ -103,8 +103,6 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
 
     private View mUnFocusLayout; //暂无关注界面
 
-    private TextView mToFocus; //点击去关注
-
     private Context mContext;
 
     private ImmediateAdapter mAdapter;
@@ -128,10 +126,6 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
     private static final int GOAL_COLOR_SENCOND = 15 * 1000;// 15秒
     private static final int GREEN_RED_SENCOND = 5 * 1000;// 5秒
 
-    /**
-     * 关注事件EventBus
-     */
-    // public static EventBus focusEventBus;
 
 
     private Vibrator mVibrator;
@@ -140,14 +134,6 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
 
 
     private static final String FRAGMENT_INDEX = "fragment_index";
-    private final int FIRST_FRAGMENT = 0;
-    private final int SECOND_FRAGMENT = 1;
-    private final int THIRD_FRAGMENT = 2;
-    private final int FOUR_FRAGMENT = 2;
-
-    private TextView mFragmentView;
-
-    private int mCurIndex = -1;
     /**
      * 标志位，标志已经初始化完成
      */
@@ -237,9 +223,8 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
         mReloadTvBtn.setOnClickListener(this);
 
         mUnFocusLayout = mView.findViewById(R.id.to_football_focus_ll);
-        mToFocus= (TextView) mView.findViewById(R.id.to_football_focus);
 
-        mToFocus.setOnClickListener(this);
+        mUnFocusLayout.setOnClickListener(this);
         mLoadingLayout = (LinearLayout) mView.findViewById(R.id.football_immediate_loading_ll);
         mErrorLayout = (LinearLayout) mView.findViewById(R.id.network_exception_layout);
 
@@ -956,7 +941,7 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
             case R.layout.item_header_unconection_view:
                 startActivity(new Intent(Settings.ACTION_SETTINGS));
                 break;
-            case R.id.to_football_focus:
+            case R.id.to_football_focus_ll:
                 Intent intent=new Intent(getActivity(),FootballActivity.class);
                 startActivity(intent);
             default:

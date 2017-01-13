@@ -102,21 +102,10 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
 
     private LinearLayout mLoadingLayout;
     private LinearLayout mNoDataLayout;
-    private TextView mToFocusBasket;
     private LinearLayout mErrorLayout;
     private TextView mReloadTvBtn;// 刷新 控件
 
     private Intent mIntent;
-
-    private boolean isScroll = false; //是否处于划定状态
-
-    private int mHandicap = 1;// 盘口 1.亚盘 2.大小球 3.欧赔 4.不显示
-    private boolean isLoadData = false; //加载是否成功
-    Handler mLoadHandler = new Handler();
-
-    public static final int REQUEST_FILTERCODE = 0x62;//筛选的标记
-    public static final int REQUEST_SETTINGCODE = 0x61;//设置的标记
-    public static final int REQUEST_DETAILSCODE = 0x66;
 
     private BasketFocusClickListener mFocusClickListener; //关注点击监听
 
@@ -236,8 +225,7 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
 
         mNoDataLayout = (LinearLayout) mView.findViewById(R.id.to_basket_focus_ll);
 
-        mToFocusBasket= (TextView) mView.findViewById(R.id.to_basket_focus);
-        mToFocusBasket.setOnClickListener(this);
+        mNoDataLayout.setOnClickListener(this);
 
 
         mErrorLayout = (LinearLayout) mView.findViewById(R.id.basketball_immediate_error);
@@ -399,7 +387,6 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
                         adapter.setGroupClickStatus(i, 1);//收起 ： 0  展开 ：1
                     }
                 }
-                isLoadData = true;
 
                 mSwipeRefreshLayout.setRefreshing(false);
                 mSwipeRefreshLayout.setVisibility(View.VISIBLE);
@@ -422,7 +409,6 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
 
                 isLoad = 0;
 
-                isLoadData = false;
                 mSwipeRefreshLayout.setVisibility(View.GONE);
                 mSwipeRefreshLayout.setRefreshing(false);
                 mLoadingLayout.setVisibility(View.GONE);
@@ -533,7 +519,7 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
                 mSwipeRefreshLayout.setVisibility(View.GONE);
                 initData();
                 break;
-            case R.id.to_basket_focus:
+            case R.id.to_basket_focus_ll:
                 if(getActivity()!=null){
                     Intent intent=new Intent(getActivity(), BasketballScoresActivity.class);
                     intent.putExtra(MY_BASKET_FOCUS,TYPE_FOCUS);
