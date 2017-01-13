@@ -347,11 +347,16 @@ public class PinnedHeaderExpandableResultAdapter extends BaseExpandableListAdapt
                                 holder.basket_rightOdds.setText(mAlet.getRightOdds());
 
                                 //int i = Integer.parseInt(mAlet.getHandicapValue());
-                                Double aletData = Double.parseDouble(mAlet.getHandicapValue()); // 转换为 int 型 不行(null)？？
-                                if (aletData > 0) {
-                                    holder.basket_handicap.setText(mContext.getString(R.string.basket_odds_alet) + "-" + aletData + "");
-                                } else {
-                                    holder.basket_handicap.setText(mContext.getString(R.string.basket_odds_alet) + "+" + Math.abs(aletData) + "");//绝对值
+                                if (mAlet.getHandicapValue() != null && !mAlet.getHandicapValue().equals("")) {
+
+                                    Double aletData = Double.parseDouble(mAlet.getHandicapValue()); // 转换为 int 型 不行(null)？？
+                                    if (aletData > 0) {
+                                        holder.basket_handicap.setText(mContext.getString(R.string.basket_odds_alet) + "-" + aletData + "");
+                                    } else {
+                                        holder.basket_handicap.setText(mContext.getString(R.string.basket_odds_alet) + "+" + Math.abs(aletData) + "");//绝对值
+                                    }
+                                }else{
+                                    holder.basket_handicap.setText("--");
                                 }
                                 holder.tv_a.setText("|");
                                 holder.tv_b.setText("|");

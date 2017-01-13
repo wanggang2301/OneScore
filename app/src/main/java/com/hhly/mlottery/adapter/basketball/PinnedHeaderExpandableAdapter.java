@@ -346,7 +346,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
                                 holder.basket_rightOdds.setText(mAlet.getRightOdds());
 
                                 //int i = Integer.parseInt(mAlet.getHandicapValue());
-                                if (mAlet.getHandicapValue() != null) {
+                                if (mAlet.getHandicapValue() != null && !mAlet.getHandicapValue().equals("")) {
 
                                     Double aletData = Double.parseDouble(mAlet.getHandicapValue()); // 转换为 int 型 不行(null)？？
                                     if (aletData > 0) {

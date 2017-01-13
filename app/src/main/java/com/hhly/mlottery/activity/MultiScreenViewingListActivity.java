@@ -541,6 +541,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                                         }
 
                                         matchData.setFootballChicks(!matchData.isFootballChicks());
+
                                         mFootballAdapter.notifyDataSetChanged();
                                         L.d("yxq===011B ", "byValue.size() = " + byValue.size() + " ** ");
                                     }else if (datasize >= 3) {
