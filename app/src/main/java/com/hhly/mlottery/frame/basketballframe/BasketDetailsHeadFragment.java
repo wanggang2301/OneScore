@@ -285,7 +285,7 @@ public class BasketDetailsHeadFragment extends Fragment {
 
         BasketballDetailsBean.MatchEntity.MatchScoreEntity score = bean.getMatch().getMatchScore();//比分
         mMatch = bean.getMatch();
-
+//
 
         if (score != null) {
             mGuestNum = score.getGuestScore();
