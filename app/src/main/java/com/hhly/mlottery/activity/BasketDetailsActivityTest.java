@@ -528,7 +528,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             }
         }, BasketballDetailsBean.class);
     }
-
+//
 
     @Override
     public void onClick(View v) {
