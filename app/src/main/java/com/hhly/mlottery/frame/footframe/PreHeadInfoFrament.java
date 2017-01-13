@@ -2,7 +2,6 @@ package com.hhly.mlottery.frame.footframe;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,20 +12,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.MatchDetail;
-import com.hhly.mlottery.util.ImageLoader;
-import com.hhly.mlottery.util.StringUtils;
-import com.hhly.mlottery.util.net.VolleyContentFast;
-
-import java.util.Random;
 
 /**
  * @author wang gang
  * @date 2016/6/3 9:53
- * @des 足球内页改版头部Viewpager第一页
+ * @des 足球内页改版头部Viewpager第一页    暂不使用
  */
 public class PreHeadInfoFrament extends Fragment {
 
@@ -80,13 +72,13 @@ public class PreHeadInfoFrament extends Fragment {
         mView = inflater.inflate(R.layout.fragment_pre_headinfo, container, false);
 
         this.mContext = mActivity;
-        initView();
+       // initView();
 
         return mView;
     }
 
 
-    private void initView() {
+   /* private void initView() {
 
 
         iv_home_icon = (ImageView) mView.findViewById(R.id.iv_home_icon);
@@ -185,5 +177,5 @@ public class PreHeadInfoFrament extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
-    }
+    }*/
 }

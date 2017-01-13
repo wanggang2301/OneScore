@@ -25,15 +25,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/multiscreen_space_image_height"
-        android:layout_gravity="center_vertical"
-        android:paddingTop="?attr/actionBarSize">
+        android:gravity="center_vertical">
 
         <RelativeLayout
             android:id="@+id/rl_iv"
             android:layout_width="105dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="15dp">
 
             <ImageView
                 android:id="@+id/iv_home_icon"
@@ -73,7 +73,6 @@
         <RelativeLayout
             android:layout_width="190dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/race_name"
             android:layout_centerHorizontal="true"
             android:orientation="vertical">
 
@@ -135,7 +134,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="15dp">
 
             <ImageView
                 android:id="@+id/iv_guest_icon"

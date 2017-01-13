@@ -1,150 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fl_head"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    tools:background="#D6D6D6">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="5dp">
 
     <ImageView
         android:id="@+id/iv_bg"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/multiscreen_space_image_height"
         android:background="@color/colorPrimary"
         android:scaleType="centerCrop" />
 
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_height="@dimen/multiscreen_space_image_height"
+        android:gravity="center_vertical">
 
-        <LinearLayout
-            android:id="@+id/ll_middle"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/rl_iv"
+            android:layout_width="105dp"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/race_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="13sp" />
-
-
-            <RelativeLayout
-                android:id="@+id/football_match_detail_matchtype_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/football_match_detail_matchtype1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textColor="@color/white"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/football_match_detail_matchtype2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textColor="@color/white"
-                        android:textSize="13sp" />
-
-                </LinearLayout>
-            </RelativeLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/score"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="---"
-                    android:textColor="@color/white"
-                    android:textSize="25sp" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_12" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/ll_middle"
-            android:gravity="center"
+            android:layout_marginLeft="5dp"
             android:orientation="vertical"
-            android:paddingRight="20dp">
+            android:paddingTop="15dp">
 
             <ImageView
                 android:id="@+id/iv_home_icon"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
                 android:src="@mipmap/live_default" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_guest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/rl_iv"
+            android:layout_alignLeft="@+id/rl_iv"
+            android:layout_alignRight="@+id/rl_iv"
+            android:layout_alignStart="@+id/rl_iv"
+            android:layout_below="@+id/rl_iv"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_home_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="主队"
+                android:layout_gravity="center"
+                android:paddingTop="3dp"
+                android:singleLine="true"
+                android:text="——"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_13" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/football_match_detail_matchtype_layout"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/ll_middle"
-            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/matchType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/football_match_detail_matchtype1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/football_match_detail_matchtype2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/matchType"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="-:-"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_30" />
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_12" />
+            </LinearLayout>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rl_iv2"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
             android:orientation="vertical"
-            android:paddingLeft="20dp">
+            android:paddingTop="15dp">
 
             <ImageView
                 android:id="@+id/iv_guest_icon"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
                 android:src="@mipmap/live_default" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/rl_iv2"
+            android:layout_alignLeft="@+id/rl_iv2"
+            android:layout_alignRight="@+id/rl_iv2"
+            android:layout_alignStart="@+id/rl_iv2"
+            android:layout_below="@+id/rl_iv2"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_guest_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="客队"
+                android:layout_gravity="center"
+                android:paddingTop="3dp"
+                android:singleLine="true"
+                android:text="——"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_13" />
+
         </LinearLayout>
+
     </RelativeLayout>
 
     <LinearLayout
@@ -166,12 +185,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@mipmap/video_gif" />
+
         <View
             android:id="@+id/red_point"
             android:layout_width="6dp"
             android:layout_height="6dp"
             android:layout_marginLeft="-3dp"
             android:background="@drawable/red_point"></View>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -181,4 +202,6 @@
             android:textColor="#FFFFFF"
             android:textSize="@dimen/text_size_13" />
     </LinearLayout>
+
+
 </FrameLayout>

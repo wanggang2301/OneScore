@@ -27,24 +27,24 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/multiscreen_space_image_height"
         android:background="@android:color/transparent"
-        android:layout_gravity="center_vertical"
-        android:paddingTop="?attr/actionBarSize">
+        android:gravity="center_vertical">
 
         <RelativeLayout
             android:id="@+id/rl_iv"
             android:layout_width="105dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="15dp">
 
             <ImageView
                 android:id="@+id/basket_details_guest_icon"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
-                android:src="@mipmap/basket_default" />
+                android:src="@mipmap/basket_default"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
         </RelativeLayout>
 
         <LinearLayout
@@ -418,7 +418,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="15dp">
 
             <ImageView
                 android:id="@+id/basket_details_home_icon"
@@ -462,45 +463,6 @@
                 android:text="[——]"
                 android:textColor="@color/black_details_ball_textcolor"
                 android:textSize="@dimen/text_size_10" />
-
-            <LinearLayout
-                android:id="@+id/btn_showGif"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="30dp"
-                android:background="@drawable/video_gif_bg"
-                android:orientation="horizontal"
-                android:paddingBottom="2dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="2dp"
-                android:visibility="gone">
-
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:background="@mipmap/video_gif" />
-
-                <View
-                    android:id="@+id/red_point"
-                    android:layout_width="6dp"
-                    android:layout_height="6dp"
-                    android:layout_marginLeft="-3dp"
-                    android:background="@drawable/red_point"></View>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:paddingLeft="5dp"
-                    android:text="@string/video_high_light"
-                    android:textColor="#FFFFFF"
-                    android:textSize="@dimen/text_size_13" />
-            </LinearLayout>
-
 
         </LinearLayout>
 

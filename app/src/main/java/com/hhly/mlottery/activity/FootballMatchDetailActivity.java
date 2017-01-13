@@ -280,13 +280,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private TextView tv_homename;
     private TextView tv_guestname;
 
-    private TextView racename;
 
     private TextView score;
 
     private TextView date;
 
-    private RelativeLayout mMatchTypeLayout;
+    private LinearLayout mMatchTypeLayout;
 
     private TextView tv_addMultiView;
 
@@ -2594,10 +2593,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         tv_homename = (TextView) findViewById(R.id.tv_home_name);
         tv_guestname = (TextView) findViewById(R.id.tv_guest_name);
-        racename = (TextView) findViewById(R.id.race_name);
         score = (TextView) findViewById(R.id.score);
         date = (TextView) findViewById(R.id.date);
-        mMatchTypeLayout = (RelativeLayout) findViewById(R.id.football_match_detail_matchtype_layout);
+        mMatchTypeLayout = (LinearLayout) findViewById(R.id.matchType);
         mMatchType1 = (TextView) findViewById(R.id.football_match_detail_matchtype1);
         mMatchType2 = (TextView) findViewById(R.id.football_match_detail_matchtype2);
         btn_showGif = (LinearLayout) findViewById(R.id.btn_showGif);
@@ -2629,21 +2627,19 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         //赛事类型
 
         if (mMatchDetail.getMatchType1() == null && mMatchDetail.getMatchType2() == null) {
-            mMatchTypeLayout.setVisibility(View.GONE);
-            racename.setVisibility(View.VISIBLE);
+            mMatchTypeLayout.setVisibility(View.INVISIBLE);
         } else {
 
             if (StringUtils.isEmpty(mMatchDetail.getMatchType1())) {
-                mMatchType1.setVisibility(View.GONE);
+                mMatchType1.setVisibility(View.INVISIBLE);
             }
 
             if (StringUtils.isEmpty(mMatchDetail.getMatchType2())) {
-                mMatchType2.setVisibility(View.GONE);
+                mMatchType2.setVisibility(View.INVISIBLE);
             }
             mMatchType1.setText(StringUtils.nullStrToEmpty(mMatchDetail.getMatchType1()));
             mMatchType2.setText(StringUtils.nullStrToEmpty(mMatchDetail.getMatchType2()));
             mMatchTypeLayout.setVisibility(View.VISIBLE);
-            racename.setVisibility(View.GONE);
         }
 
         if (mMatchDetail.getMatchInfo().getStartTime() != null) {
