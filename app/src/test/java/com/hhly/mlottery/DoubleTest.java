@@ -1,5 +1,7 @@
 package com.hhly.mlottery;
 
+import com.hhly.mlottery.util.L;
+
 import org.junit.Test;
 
 /**
@@ -12,6 +14,6 @@ public class DoubleTest {
 
     @Test
     public void testParseDouble() throws Exception {
-        System.out.println(Double.parseDouble("s"));
+        L.d("DoubleTest",""+Double.parseDouble("s"));
     }
 }

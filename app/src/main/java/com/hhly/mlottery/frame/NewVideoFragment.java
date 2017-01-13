@@ -155,6 +155,7 @@ public class NewVideoFragment extends Fragment  implements View.OnClickListener{
         switch (v.getId()){
 
             case R.id.public_img_back:
+                ((FootballActivity)getActivity()).eventBusPost();
                 ((FootballActivity) getActivity()).finish();
                 break;
             case R.id.scroll_refresh:

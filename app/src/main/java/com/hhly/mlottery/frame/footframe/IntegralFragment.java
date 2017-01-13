@@ -113,8 +113,6 @@ public class IntegralFragment extends Fragment implements View.OnClickListener, 
         this.mLeagueType=leagueType;
         this.mGroupDataList = groupDataList;java.lang.Object bvos;
         this.mChildrenDataList = childDataList;
-        Log.v(TAG, "integral_groupDataList==========" + mGroupDataList);
-        Log.v(TAG, "integral_childDataList==========" + mChildrenDataList);
     }*/
 
     @Override
@@ -139,8 +137,6 @@ public class IntegralFragment extends Fragment implements View.OnClickListener, 
         } else {
             if(mExpandableAdapter==null) {
                 mExpandableAdapter = new IntegralExpandableAdapter(childDataList, groupDataList, context, explistview_live, leagueType);
-                //Log.v(TAG, "integral_groupDataList==========" + groupDataList);
-                // Log.v(TAG, "integral_childDataList==========" + childDataList);
                 explistview_live.setAdapter(mExpandableAdapter);
                 explistview_live.setGroupIndicator(null);
             }else{

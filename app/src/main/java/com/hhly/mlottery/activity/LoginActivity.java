@@ -39,6 +39,7 @@ import com.hhly.mlottery.util.AccessTokenKeeper;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
+import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ShareConstants;
@@ -563,8 +564,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
                     sendUserInfoToServer(register);
                     //TODO: 请求获取用户关注
-                    getFootballUserFocus(register.getData().getUser().getUserId());
-                    getBasketballUserConcern(register.getData().getUser().getUserId());
+                    FocusUtils.getFootballUserFocus(register.getData().getUser().getUserId());
+                    FocusUtils.getBasketballUserConcern(register.getData().getUser().getUserId());
                     finish();
                 } else {
                     CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
@@ -630,14 +631,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                              sendUserInfoToServer(register);
                              if (isCoustom) {
                                  PreferenceUtil.commitBoolean("custom_red_dot" , false);
-                                 EventBus.getDefault().post(new CustomEvent(""));
                                  startActivity(new Intent(LoginActivity.this, CustomActivity.class));
                              }
                              finish();
                              EventBus.getDefault().post(register);
                              //TODO:发送请求，从后台获取该用户的关注信息
-                             getFootballUserFocus(register.getData().getUser().getUserId());
-                             getBasketballUserConcern(register.getData().getUser().getUserId());
+                             FocusUtils.getFootballUserFocus(register.getData().getUser().getUserId());
+                             FocusUtils.getBasketballUserConcern(register.getData().getUser().getUserId());
 
                          } else {
                              CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
@@ -656,96 +656,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
              }
 
          }
-
-    }
-
-    /**
-     * 获取用户足球关注列表
-     */
-    private void getFootballUserFocus(String userId) {
-
-        //devideID;
-        String deviceId=AppConstants.deviceToken;
-        //devicetoken 友盟。
-        String umengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
-        String appNo="11";
-        String url="http://192.168.31.73:8080/mlottery/core/pushSetting.loginUserFindMatch.do";
-        Map<String,String> params=new HashMap<>();
-        params.put("appNo",appNo);
-        params.put("userId",userId);
-        params.put("deviceToken",umengDeviceToken);
-        params.put("deviceId",deviceId);
-
-        Log.e("CCC",umengDeviceToken);
-        //volley请求
-        VolleyContentFast.requestJsonByPost(BaseURLs.FOOTBALL_FIND_MATCH, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
-            @Override
-            public void onResponse(BasketballConcernListBean jsonObject) {
-                if(jsonObject.getResult().equals("200")){
-                    Log.e("AAA","登陆后请求的足球关注列表");
-                    //将关注写入文件
-                    StringBuffer sb=new StringBuffer();
-                    for(String thirdId:jsonObject.getConcerns()){
-                        if("".equals(sb.toString())){
-                            sb.append(thirdId);
-                        }else {
-                            sb.append(","+thirdId);
-                        }
-                    }
-                    PreferenceUtil.commitString(FocusFragment.FOCUS_ISD,sb.toString());
-                }
-
-            }
-        }, new VolleyContentFast.ResponseErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-
-
-            }
-        },BasketballConcernListBean.class);
-
-    }
-
-    /**
-     * 获取用户篮球关注列表
-     */
-    public static void getBasketballUserConcern(String userId){
-
-        String url=" http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.findConcernVsThirdIds.do";
-        String deviceId=AppConstants.deviceToken;
-        //devicetoken 友盟。
-        String umengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
-        Map<String,String > params=new HashMap<>();
-        params.put("userId",userId);
-        Log.e("AAA",userId+"用户名");
-        params.put("deviceId",deviceId);
-//        params.put("deviceToken",umengDeviceToken);
-        VolleyContentFast.requestJsonByPost(BaseURLs.BASKET_FIND_MATCH, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
-            @Override
-            public void onResponse(BasketballConcernListBean jsonObject) {
-                if(jsonObject.getResult().equals("200")){
-                    Log.e("AAA","登陆后请求的篮球关注列表");
-                        //将关注写入文件
-                        StringBuffer sb=new StringBuffer();
-                        for(String thirdId:jsonObject.getConcerns()){
-                            if("".equals(sb.toString())){
-                                sb.append(thirdId);
-                            }else {
-                                sb.append(","+thirdId);
-                            }
-                        }
-                        PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS,sb.toString());
-                }
-
-            }
-        }, new VolleyContentFast.ResponseErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-
-
-            }
-        },BasketballConcernListBean.class);
-
 
     }
 

@@ -51,6 +51,7 @@ import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFocusEventBusEntity
 import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchSettingEventBusEntity;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
+import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.HotFocusUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
@@ -255,19 +256,19 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 
                 boolean isCheck = (Boolean) view.getTag();// 检查之前是否被选中
                 if (!isCheck) {// 插入数据
-                    FocusFragment.addFocusId(third);
+                    FocusUtils.addFocusId(third);
                     // ((TextView) view).setText(R.string.cancel_favourite);
                     ((ImageView) view).setImageResource(R.mipmap.football_focus);
 
                     view.setTag(true);
                 } else {// 删除
-                    FocusFragment.deleteFocusId(third);
+                    FocusUtils.deleteFocusId(third);
                     //  ((TextView) view).setText(R.string.favourite);
                     ((ImageView) view).setImageResource(R.mipmap.football_nomal);
 
                     view.setTag(false);
                 }
-                ((ScoresFragment) getParentFragment()).focusCallback();
+//                ((ScoresFragment) getParentFragment()).focusCallback();
             }
         };
 
@@ -361,7 +362,11 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 
     // 初始化数据
     private synchronized void initData() {
-        ((ScoresFragment) getParentFragment()).getFootballUserConcern();
+        /**
+         * 多点登录的时候。另一台手机登录需要进行请求关注的数据。现在单点登录之后，则在登录的时候请求一次就可以
+         * 因为不存在两台手机同时在关注列表瞎他tm的情况
+         */
+//        ((ScoresFragment) getParentFragment()).getFootballUserConcern();
 
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_ImmediateMatchs, new VolleyContentFast.ResponseSuccessListener<ImmediateMatchs>() {
             @Override
@@ -505,7 +510,6 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                     webSocketMatchStatus = JSON.parseObject(ws_json, WebSocketMatchStatus.class);
                 } catch (Exception e) {
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
-                    // Log.e(TAG, "ws_json = " + ws_json);
                     webSocketMatchStatus = JSON.parseObject(ws_json, WebSocketMatchStatus.class);
                 }
                 updateListViewItemStatus(webSocketMatchStatus);
@@ -764,7 +768,6 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
         // updateMatchOdd(targetMatch, data);
         // updateListView(targetMatch);
         // } else {
-        // Log.e(TAG, "targetMatch is null,webSocketMatchOdd.id = " +
         // webSocketMatchOdd.getThirdId());
         // }
     }
@@ -1185,7 +1188,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
     public void onEventMainThread(ScoresMatchFocusEventBusEntity scoresMatchFocusEventBusEntity) {
         if (scoresMatchFocusEventBusEntity.getFgIndex() == 1) {
             updateAdapter();
-            ((ScoresFragment) getParentFragment()).focusCallback();
+//            ((ScoresFragment) getParentFragment()).focusCallback();
         }
     }
 

@@ -267,7 +267,6 @@ public abstract class BaseWebSocketActivity extends AppCompatActivity {
                 return;
             } else if (text.startsWith("MESSAGE")) {
 
-                Log.d(TAG, "" + text);
                 String[] msgs = text.split("\n");
                 String json = msgs[msgs.length - 1];
                 json = json.substring(0, json.length() - 1);

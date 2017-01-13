@@ -474,7 +474,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     public void onEventMainThread(ScoresMatchFocusEventBusEntity scoresMatchFocusEventBusEntity) {
         if (scoresMatchFocusEventBusEntity.getFgIndex() == 0) {
             this.feedAdapter(feedAdapterLists);
-            ((ScoresFragment) getParentFragment()).focusCallback();
+//            ((ScoresFragment) getParentFragment()).focusCallback();
         }
     }
 

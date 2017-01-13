@@ -38,6 +38,7 @@ import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.basketballframe.BasketAnalyzeFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketAnimLiveFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDetailsHeadFragment;
+import com.hhly.mlottery.frame.basketballframe.BasketFocusEventBus;
 import com.hhly.mlottery.frame.basketballframe.BasketLiveFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketOddsFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketTextLiveEvent;
@@ -50,6 +51,7 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.CustomDetailsEvent;
@@ -109,7 +111,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
      */
     public final static String ODDS_SIZE = "asiaSize";
     public static String mThirdId = "936707";
-    public static String mMatchStatus;
+    //    public static String mMatchStatus;
     private Context mContext;
 
 
@@ -205,6 +207,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private ImageView barrage_switch;
     boolean barrage_isFocus = false;
     private View view_red;
+    private int chartBallView = -1;// 聊球界面转标记
 
     private TextView tv_addMultiView;
     private boolean isAddMultiViewHide = false;
@@ -216,8 +219,10 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             mThirdId = getIntent().getExtras().getString(BASKET_THIRD_ID);
             mLeagueId = getIntent().getExtras().getString(BASKET_MATCH_LEAGUEID);
             mMatchType = getIntent().getExtras().getInt(BASKET_MATCH_MATCHTYPE);
+            chartBallView = getIntent().getExtras().getInt("chart_ball_view");
 
-            mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
+//            mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
+//            mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
             isAddMultiViewHide = getIntent().getExtras().getBoolean("isAddMultiViewHide");
 
             if (LEAGUEID_NBA.equals(mLeagueId)) {
@@ -329,17 +334,17 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         if (isNBA) {  //是NBA
             mTabsAdapter.addFragments(mBasketLiveFragment, mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mChartBallFragment);
             isFragment5 = true; // 直接
-            tabAt = mTabLayout.getTabAt(5);
+
+            if (chartBallView == 1) {
+                mViewPager.setCurrentItem(5, false);
+            }
         } else {
             mTabsAdapter.addFragments(mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mChartBallFragment);
             isFragment0 = true;// 分析
-            tabAt = mTabLayout.getTabAt(4);
-        }
-        // 添加红点  自定义view
-        if (!PreferenceUtil.getBoolean(AppConstants.BASKET_RED_KEY, false)) {
-            View view = View.inflate(mContext, R.layout.chart_bal_item_red, null);
-            view_red = view.findViewById(R.id.view_red);
-            tabAt.setCustomView(view);
+
+            if (chartBallView == 1) {
+                mViewPager.setCurrentItem(4, false);
+            }
         }
 
         appBarLayout.addOnOffsetChangedListener(this);
@@ -400,7 +405,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         mTitleScore = (RelativeLayout) this.findViewById(R.id.ll_basket_title_score);
         mCollect = (ImageView) this.findViewById(R.id.basket_details_collect);
 
-        boolean isFocus = isFocusId(mThirdId);
+        boolean isFocus = FocusUtils.isBasketFocusId(mThirdId);
         if (isFocus) {
             mCollect.setImageResource(R.mipmap.basketball_collected);
         } else {
@@ -416,7 +421,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     }
 
     public void onEventMainThread(BarrageBean barrageBean) {
-        System.out.println("xxxxx barrageBean: " + barrageBean.getMsg());
+        L.d("xxxxx barrageBean: " + barrageBean.getMsg());
         barrage_view.setDatas(barrageBean.getUrl(), barrageBean.getMsg().toString());
     }
 
@@ -508,8 +513,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             public void onResponse(BasketballDetailsBean basketDetailsBean) {
                 if (basketDetailsBean.getMatch() != null) {
 
-//                    initData(basketDetailsBean);
-                    mBasketDetailsHeadFragment.initData(basketDetailsBean, mChartBallFragment, mTitleGuest, mTitleHome, mTitleVS);
+                    mBasketDetailsHeadFragment.initData(basketDetailsBean, mChartBallFragment);
 
                     homeIconUrl = basketDetailsBean.getMatch().getHomeLogoUrl();
                     guestIconUrl = basketDetailsBean.getMatch().getGuestLogoUrl();
@@ -524,7 +528,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             }
         }, BasketballDetailsBean.class);
     }
-
+//
 
     @Override
     public void onClick(View v) {
@@ -541,11 +545,11 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 break;
             case R.id.basket_details_collect:
                 MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivity_Attention");
-                if (isFocusId(mThirdId)) {
-                    FocusBasketballFragment.deleteFocusId(mThirdId);
+                if (FocusUtils.isBasketFocusId(mThirdId)) {
+                    FocusUtils.deleteBasketFocusId(mThirdId);
                     mCollect.setImageResource(R.mipmap.basketball_collect);
                 } else {
-                    FocusBasketballFragment.addFocusId(mThirdId);
+                    FocusUtils.addBasketFocusId(mThirdId);
                     mCollect.setImageResource(R.mipmap.basketball_collected);
                 }
                 break;
@@ -584,22 +588,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         }
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == CyUtils.JUMP_COMMENT_QUESTCODE) {
-//            switch (resultCode) {
-//                case CyUtils.RESULT_OK:
-//                    mTalkAboutBallFragment.getResultOk();
-//                    break;
-//                case CyUtils.RESULT_CODE://接收评论输入页面返回
-//                    mTalkAboutBallFragment.getResultCode();
-//                    break;
-//                case CyUtils.RESULT_BACK://接收评论输入页面返回
-//                    mTalkAboutBallFragment.getResultBack();
-//                    break;
-//            }
-//        }
-//    }
 
     // 评论登录跳转
     public void talkAboutBallLoginBasket() {
@@ -629,66 +617,9 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         return super.onKeyDown(keyCode, event);
     }
 
-    /**
-     * 判断thirdId是否已经关注
-     *
-     * @param thirdId
-     * @return true已关注，false还没关注
-     */
-    private boolean isFocusId(String thirdId) {
-        String focusIds = PreferenceUtil.getString(FocusBasketballFragment.BASKET_FOCUS_IDS, "");
 
-        if ("".equals(focusIds)) {
-            return false;
-        } else {
-            String[] focusIdArray = focusIds.split(",");
 
-            boolean isFocus = false;
-            for (String focusId : focusIdArray) {
-                if (focusId.equals(thirdId)) {
-                    isFocus = true;
-                    break;
-                }
-            }
-            return isFocus;
-        }
-    }
 
-//    /**
-//     * 添加关注
-//     *
-//     * @param thirdId
-//     */
-//    private void addFocusId(String thirdId) {
-//        String focusIds = PreferenceUtil.getString(BASKET_FOCUS_IDS, "");
-//        if ("".equals(focusIds)) {
-//            PreferenceUtil.commitString(BASKET_FOCUS_IDS, thirdId);
-//        } else {
-//            PreferenceUtil.commitString(BASKET_FOCUS_IDS, focusIds + "," + thirdId);
-//        }
-//    }
-//
-//    /**
-//     * 取消关注
-//     *
-//     * @param thirdId
-//     */
-//    private void deleteFocusId(String thirdId) {
-//        String focusIds = PreferenceUtil.getString(BASKET_FOCUS_IDS, "");
-//        String[] idArray = focusIds.split(",");
-//        StringBuffer sb = new StringBuffer();
-//        for (String id : idArray) {
-//            if (!id.equals(thirdId)) {
-//                if ("".equals(sb.toString())) {
-//                    sb.append(id);
-//                } else {
-//                    sb.append("," + id);
-//                }
-//
-//            }
-//        }
-//        PreferenceUtil.commitString(BASKET_FOCUS_IDS, sb.toString());
-//    }
 
     Handler mSocketHandler = new Handler() {
         @Override
@@ -705,7 +636,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                     mBasketDetails = JSON.parseObject(ws_json, WebSocketBasketBallDetails.class);
                 } catch (Exception e) {
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
-                    // Log.e(TAG, "ws_json = " + ws_json);
                     mBasketDetails = JSON.parseObject(ws_json, WebSocketBasketBallDetails.class);
                 }
                 //  L.e();
@@ -753,9 +683,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 ScheduleBasketballFragment.BasketScheduleEventBus.post("");
             }
         } else if (mCurrentId == FOCUS_FRAGMENT) {
-            if (FocusBasketballFragment.BasketFocusEventBus != null) {
-                FocusBasketballFragment.BasketFocusEventBus.post("");
-            }
+
+            EventBus.getDefault().post(new BasketFocusEventBus());
         } else if (mCurrentId == CUSTOM_FRAGMENT) {
             EventBus.getDefault().post(new CustomDetailsEvent(""));
         }
@@ -957,7 +886,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         if (isFragment4) {
             MobclickAgent.onPageStart("BasketBall_Info_LQ");
             is4 = true;
-            PreferenceUtil.commitBoolean(AppConstants.BASKET_RED_KEY, true);
             L.d("xxx", "聊球显示");
         }
     }

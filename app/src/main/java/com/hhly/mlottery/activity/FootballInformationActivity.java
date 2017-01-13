@@ -196,7 +196,6 @@ public class FootballInformationActivity extends BaseActivity implements View.On
                         //设置联赛标头
                         mTeam_abb = json.getLeagueTimes().getAbb();
                         mTxt_title.setText(mTeam_abb);
-                        // Log.v(TAG, "mTeam_abb" + mTeam_abb);
 
                         //获取联赛赛季时间
                         leagueData = json.getLeagueTimes().getLeagueDate();

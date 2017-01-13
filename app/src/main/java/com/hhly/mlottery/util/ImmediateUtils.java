@@ -117,7 +117,6 @@ public class ImmediateUtils {
             } catch (Exception e) {
                 holder.setText(R.id.item_football_half_score, "E");
                 holder.setTextColorRes(R.id.item_football_half_score, R.color.bg_header);
-                // Log.e(TAG, "时间出错！keeptime = " + match.getKeepTime());
             }
             holder.setVisible(R.id.item_football_half_score, true);// 显示时间
         } else if ("4".equals(match.getStatusOrigin())) {// 加时
@@ -212,7 +211,6 @@ public class ImmediateUtils {
 
         }
 
-        // Log.i(TAG, "id = " + match.getThirdId() + ",status = " +
         // match.getStatusOrigin());
 
         if ("1".equals(match.getStatusOrigin()) || "3".equals(match.getStatusOrigin())) {// 显示秒的闪烁

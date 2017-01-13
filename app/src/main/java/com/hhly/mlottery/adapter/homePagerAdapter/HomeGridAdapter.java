@@ -60,17 +60,9 @@ public class HomeGridAdapter extends BaseAdapter {
         }
         mViewHolder.tv_name.setText(mContentEntity.getTitle());
 
-        // 添加红点  足球
-        if ("13".equals(mContentEntity.getJumpAddr())) {
-            if (PreferenceUtil.getBoolean(AppConstants.FOOTBALL_RED_KEY, false)) {
-                mViewHolder.red_not.setVisibility(View.GONE);
-            } else {
-                mViewHolder.red_not.setVisibility(View.VISIBLE);
-            }
-        }
-        // 添加红点  篮球
-        if ("20".equals(mContentEntity.getJumpAddr())) {
-            if (PreferenceUtil.getBoolean(AppConstants.BASKET_RED_KEY, false)) {
+        // 添加红点  多屏动画
+        if ("80".equals(mContentEntity.getJumpAddr())) {
+            if (PreferenceUtil.getBoolean(AppConstants.ANIMATION_RED_KEY, false)) {
                 mViewHolder.red_not.setVisibility(View.GONE);
             } else {
                 mViewHolder.red_not.setVisibility(View.VISIBLE);

@@ -196,7 +196,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             public void onResponse(MatchLike matchLike) {
                 tvHomeLikeCount.setText(matchLike.getHomeLike());
                 tvGuestLikeCount.setText(matchLike.getGuestLike());
-                System.out.println("lzfdianzan" + matchLike.getGuestLike() + matchLike.getHomeLike());
                 if (matchLike.getHomeLike() != null && matchLike.getGuestLike() != null) {
                     int homeLikeCount = Integer.parseInt(matchLike.getHomeLike());
                     int guestLikeCount = Integer.parseInt(matchLike.getGuestLike());
@@ -526,7 +525,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                         ((FootballMatchDetailActivity)mContext).talkAboutBallSendFoot();
                     }
                     mLinearLayout.setVisibility(View.GONE);
-                    System.out.println("lzftalk跳" + topicid);
                     //解决在评论输入窗口的时候  上拉加载按钮被盖住的问题
                     FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mRecyclerView.getLayoutParams();
                     lp.setMargins(0, 0, 0, DisplayUtil.dip2px(mContext, 60));

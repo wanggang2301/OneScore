@@ -16,6 +16,7 @@ import com.hhly.mlottery.frame.CounselFragment;
 import com.hhly.mlottery.frame.NewVideoFragment;
 import com.hhly.mlottery.frame.ScoresFragment;
 import com.hhly.mlottery.frame.footframe.InformationFragment;
+import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
@@ -23,6 +24,8 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /****
  * @author wangg
@@ -185,6 +188,7 @@ public class FootballActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            eventBusPost();
             finish();
             return true;
         }
@@ -195,6 +199,11 @@ public class FootballActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
+    }
+
+
+    public void eventBusPost() {
+        EventBus.getDefault().post(new ScoresMatchFocusEventBusEntity(0));
     }
 
     @Override

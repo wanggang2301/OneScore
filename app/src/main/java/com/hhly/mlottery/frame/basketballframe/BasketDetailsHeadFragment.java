@@ -246,62 +246,6 @@ public class BasketDetailsHeadFragment extends Fragment {
     }
 
 
-    /*private void getCollectionCount() {
-        Map<String, String> map = new HashMap<>();
-        map.put("matchType", MATCH_TYPE);
-        map.put("thirdId", BasketDetailsActivityTest.mThirdId);  //399381
-        //  map.put("thirdId", mThirdId);
-        VolleyContentFast.requestJsonByGet(BaseURLs.FOOTBALL_DETAIL_COLLECTION_COUNT, map, new VolleyContentFast.ResponseSuccessListener<DetailsCollectionCountBean>() {
-            @Override
-            public void onResponse(DetailsCollectionCountBean jsonObject) {
-                if (200 == jsonObject.getResult()) {
-                    if (jsonObject.getData() != 0) {
-                        btn_showGif.setVisibility(View.VISIBLE);
-                    } else {
-                        btn_showGif.setVisibility(View.GONE);
-                    }
-                }
-            }
-        }, new VolleyContentFast.ResponseErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                btn_showGif.setVisibility(View.GONE);
-            }
-        }, DetailsCollectionCountBean.class);
-    }*/
-
-//    /**
-//     * 请求网络数据
-//     */
-//    public void loadData() {
-//        Map<String, String> params = new HashMap<>();
-//        params.put("thirdId", mThirdId);
-//        VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_DETAILS, params, new VolleyContentFast.ResponseSuccessListener<BasketballDetailsBean>() {
-//            @Override
-//            public void onResponse(BasketballDetailsBean basketDetailsBean) {
-//                if (basketDetailsBean.getMatch() != null) {
-//                    initData(basketDetailsBean);
-//
-////                    mLeagueId = basketDetailsBean.getMatch().getLeagueId();
-////                    mMatchType = basketDetailsBean.getMatch().getMatchType();
-//
-//
-//                    /**
-//                     * 启动秒闪烁
-//                     */
-//                    setApos();
-//                    if (basketDetailsBean.getMatch().getMatchStatus() != END) {
-////                        connectWebSocket();
-//                    }
-//                }
-//            }
-//        }, new VolleyContentFast.ResponseErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-//                mApos.setVisibility(View.GONE);
-//            }
-//        }, BasketballDetailsBean.class);
-//    }
 
     /**
      * 请求数据之后展示
@@ -331,8 +275,7 @@ public class BasketDetailsHeadFragment extends Fragment {
     private int mHomeNum = 0;
     BasketballDetailsBean.MatchEntity mMatch;
 
-
-    public void initData(BasketballDetailsBean bean, ChartBallFragment mChartBallFragment, TextView mTitleGuest, TextView mTitleHome, TextView mTitleVS) {
+    public void initData(BasketballDetailsBean bean, ChartBallFragment mChartBallFragment) {
 
         /**
          * 启动秒闪烁
@@ -342,11 +285,7 @@ public class BasketDetailsHeadFragment extends Fragment {
 
         BasketballDetailsBean.MatchEntity.MatchScoreEntity score = bean.getMatch().getMatchScore();//比分
         mMatch = bean.getMatch();
-
-//        String state; //傳給老龍
-//        state = mMatch.getGuestTeam() + "vs" + mMatch.getHomeTeam() + "_" + bean.getMatch().getDate() + "  " + bean.getMatch().getTime();
 //
-//        mTalkAboutBallFragment.setTitle(state);
 
         if (score != null) {
             mGuestNum = score.getGuestScore();
@@ -402,13 +341,8 @@ public class BasketDetailsHeadFragment extends Fragment {
                     //赛前显示 客队 VS  主队
                     mGuestScore.setText("");
                     mHomeScore.setText("");
-//                mGuestScore.setVisibility(View.GONE);
-//                mHomeScore.setVisibility(View.GONE);
 
                     mVS.setText("VS");
-                    mTitleGuest.setText(bean.getMatch().getGuestTeam());
-                    mTitleHome.setText(bean.getMatch().getHomeTeam());
-                    mTitleVS.setText("VS");
                     if (mMatch.getMatchStatus() == PRE_MATCH) {
                         mMatchState.setText(bean.getMatch().getDate() + "  " + bean.getMatch().getTime() + "   " + MyApp.getContext().getResources().getString(R.string.basket_begin_game));
                     } else if (mMatch.getMatchStatus() == DETERMINED) {
@@ -441,12 +375,10 @@ public class BasketDetailsHeadFragment extends Fragment {
                     mHome3.setText(score.getHome3() + "");
                     mHome4.setText(score.getHome4() + "");
 
-                    mTitleHome.setText(score.getHomeScore() + "");
-                    mTitleGuest.setText(score.getGuestScore() + "");
+
                     mSmallGuestScore.setText(score.getGuestScore() + "");
                     mSmallHomeScore.setText(score.getHomeScore() + "");
                     mVS.setText(":");
-                    mTitleVS.setText(":");
                     if (score.getAddTime() == 3) {//三个加时
                         mLayoutOt3.setVisibility(View.VISIBLE);
                         mLayoutOt2.setVisibility(View.VISIBLE);
@@ -497,10 +429,7 @@ public class BasketDetailsHeadFragment extends Fragment {
                     //不管是第几节都设置总比分,设置剩余时间
                     setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);
                     setScore(score.getGuestScore(), mSmallGuestScore, score.getHomeScore(), mSmallHomeScore);
-                    mTitleHome.setText(score.getHomeScore() + "");
-                    mTitleGuest.setText(score.getGuestScore() + "");
                     mVS.setText(":");
-                    mTitleVS.setText(":");
 
                     mChartBallFragment.setClickableLikeBtn(true); //聊球可点赞
 

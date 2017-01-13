@@ -46,6 +46,7 @@ import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFocusEventBusEntity
 import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchSettingEventBusEntity;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -240,15 +241,15 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                 boolean isCheck = (Boolean) view.getTag();// 检查之前是否被选中
 
                 if (!isCheck) {// 插入数据
-                    FocusFragment.addFocusId(third);
+                    FocusUtils.addFocusId(third);
                     ((ImageView) view).setImageResource(R.mipmap.football_focus);
                     view.setTag(true);
                 } else {// 删除
-                    FocusFragment.deleteFocusId(third);
+                    FocusUtils.deleteFocusId(third);
                     ((ImageView) view).setImageResource(R.mipmap.football_nomal);
                     view.setTag(false);
                 }
-                ((ScoresFragment) getParentFragment()).focusCallback();
+//                ((ScoresFragment) getParentFragment()).focusCallback();
             }
         };
         mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
@@ -336,7 +337,11 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
 
     private void initData(final int position) {
 
-        ((ScoresFragment) getParentFragment()).getFootballUserConcern();
+        /**
+         * 多点登录的时候。另一台手机登录需要进行请求关注的数据。现在单点登录之后，则在登录的时候请求一次就可以
+         * 因为不存在两台手机同时在关注列表瞎他tm的情况
+         */
+//        ((ScoresFragment) getParentFragment()).getFootballUserConcern();
 
         String url = BaseURLs.URL_CeaselessMatchs;
         Map<String, String> params = new HashMap<String, String>();
@@ -545,7 +550,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
 
 
     /**
-     * 帅选比赛
+     * 筛选比赛
      * 接受消息的页面实现
      */
     public void onEventMainThread(ScoresMatchFilterEventBusEntity scoresMatchFilterEventBusEntity) {
@@ -619,7 +624,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
         if (scoresMatchFocusEventBusEntity.getFgIndex() == 3) {
             L.d("qazwsx", "赛程关注");
             updateAdapter();
-            ((ScoresFragment) getParentFragment()).focusCallback();
+//            ((ScoresFragment) getParentFragment()).focusCallback();
         }
     }
 

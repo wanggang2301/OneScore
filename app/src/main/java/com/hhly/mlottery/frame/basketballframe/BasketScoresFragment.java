@@ -232,7 +232,7 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
                             break;
                         case FOCUS_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.GONE);
-                            ((FocusBasketballFragment) fragments.get(position)).LoadData();
+//                            ((FocusBasketballFragment) fragments.get(position)).LoadData();
                             break;
                     }
                 }
@@ -284,7 +284,6 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
             String umengDeviceToken = PreferenceUtil.getString(AppConstants.uMengDeviceToken, "");
             Map<String, String> params = new HashMap<>();
             params.put("userId", userId);
-            Log.e("AAA", userId + "用户名");
             params.put("deviceId", deviceId);
 //        params.put("deviceToken",umengDeviceToken);
             VolleyContentFast.requestJsonByPost(BaseURLs.BASKET_FIND_MATCH, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
@@ -292,7 +291,6 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
                 public void onResponse(BasketballConcernListBean jsonObject) {
                     if (jsonObject != null) {
                         if (jsonObject.getResult().equals("200")) {
-                            Log.e("AAA", "登陆后请求的篮球关注列表");
                             //将关注写入文件
                             StringBuffer sb = new StringBuffer();
                             for (String thirdId : jsonObject.getConcerns()) {
@@ -330,7 +328,7 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
     @Override
     protected void onTextResult(String text) {
         ((ImmedBasketballFragment) fragments.get(0)).handleSocketMessage(text);
-        ((FocusBasketballFragment) fragments.get(3)).handleSocketMessage(text);
+//        ((FocusBasketballFragment) fragments.get(3)).handleSocketMessage(text);
 
 
     }
