@@ -385,6 +385,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
                 if (VIEW_TYPE_FOOTBALL == list.get(position).getType()) {
                     Intent intent = new Intent(MultiScreenViewActivity.this, FootballMatchDetailActivity.class);
                     intent.putExtra("thirdId", list.get(position).getMatchId());
+                    intent.putExtra("isAddMultiViewHide", true);
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(MultiScreenViewActivity.this, BasketDetailsActivityTest.class);
@@ -392,6 +393,8 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
                     intent.putExtra("MatchStatus", ((MultiScreenBasketballBean) list.get(position).getData()).getMatch().getMatchStatus());
                     intent.putExtra("leagueId", ((MultiScreenBasketballBean) list.get(position).getData()).getMatch().getLeagueId());
                     intent.putExtra("matchType", ((MultiScreenBasketballBean) list.get(position).getData()).getMatch().getMatchType());
+                    intent.putExtra("isAddMultiViewHide", true);
+
                     startActivity(intent);
                 }
             }

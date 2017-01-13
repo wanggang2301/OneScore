@@ -324,6 +324,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     boolean barrage_isFocus = false;
     private View view_red;
 
+    boolean isAddMultiViewHide = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -331,6 +333,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             mThirdId = getIntent().getExtras().getString(BUNDLE_PARAM_THIRDID, "1300");
             currentFragmentId = getIntent().getExtras().getInt("currentFragmentId");
             infoCenter = getIntent().getExtras().getInt("info_center");
+            isAddMultiViewHide = getIntent().getExtras().getBoolean("isAddMultiViewHide");
         }
         EventBus.getDefault().register(this);
 
@@ -2602,6 +2605,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         rl_gif_notice = (RelativeLayout) findViewById(R.id.rl_gif_notice);
         tv_addMultiView = (TextView) findViewById(R.id.tv_addMultiView);
+
+        if (isAddMultiViewHide) {
+            tv_addMultiView.setVisibility(View.GONE);
+        }
         red_point = (View) findViewById(R.id.red_point);
     }
 

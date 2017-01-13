@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fl_basketball"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingBottom="5dp">
 
@@ -27,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/multiscreen_space_image_height"
         android:background="@android:color/transparent"
+        android:layout_gravity="center_vertical"
         android:paddingTop="?attr/actionBarSize">
 
         <RelativeLayout
@@ -34,8 +35,7 @@
             android:layout_width="105dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:orientation="vertical"
-            android:paddingTop="20dp">
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/basket_details_guest_icon"
@@ -418,8 +418,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:orientation="vertical"
-            android:paddingTop="20dp">
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/basket_details_home_icon"

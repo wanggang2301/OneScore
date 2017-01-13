@@ -207,6 +207,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private View view_red;
 
     private TextView tv_addMultiView;
+    private boolean isAddMultiViewHide = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -216,6 +218,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             mMatchType = getIntent().getExtras().getInt(BASKET_MATCH_MATCHTYPE);
 
             mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
+            isAddMultiViewHide = getIntent().getExtras().getBoolean("isAddMultiViewHide");
 
             if (LEAGUEID_NBA.equals(mLeagueId)) {
                 isNBA = true;
@@ -390,6 +393,9 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
         rl_gif_notice = (RelativeLayout) findViewById(R.id.rl_gif_notice);
         tv_addMultiView = (TextView) findViewById(R.id.tv_addMultiView);
+        if (isAddMultiViewHide) {
+            tv_addMultiView.setVisibility(View.GONE);
+        }
 
         mTitleScore = (RelativeLayout) this.findViewById(R.id.ll_basket_title_score);
         mCollect = (ImageView) this.findViewById(R.id.basket_details_collect);
