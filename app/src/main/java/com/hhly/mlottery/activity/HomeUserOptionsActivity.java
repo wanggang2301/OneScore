@@ -79,7 +79,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
     private TextView mTv_nickname;
     private ImageView mUser_image;
-    private View mRedDot;
+//    private View mRedDot;
     private TextView mTv_logout;
     private Handler mViewHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -154,13 +154,13 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         rl_user_feedback.setOnClickListener(this);
 
         /**我的定制红点*/
-        mRedDot = findViewById(R.id.custom_red_dot_view);
-        boolean currenRedDot = PreferenceUtil.getBoolean("custom_red_dot" , true);
-        if (currenRedDot) {
-            mRedDot.setVisibility(View.VISIBLE);
-        }else{
-            mRedDot.setVisibility(View.GONE);
-        }
+//        mRedDot = findViewById(R.id.custom_red_dot_view);
+//        boolean currenRedDot = PreferenceUtil.getBoolean("custom_red_dot" , true);
+//        if (currenRedDot) {
+//            mRedDot.setVisibility(View.VISIBLE);
+//        }else{
+//            mRedDot.setVisibility(View.GONE);
+//        }
         /**我的关注红点*/
         mFocus_RedDot=findViewById(R.id.focus_red_dot_view);
         mShowRedDot=PreferenceUtil.getBoolean(SHOW_RED,true);
@@ -185,7 +185,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             case R.id.rl_custom:
                 if (CommonUtils.isLogin()) {
                     PreferenceUtil.commitBoolean("custom_red_dot" , false);
-                    mRedDot.setVisibility(View.GONE);
+//                    mRedDot.setVisibility(View.GONE);
                     startActivity(new Intent(HomeUserOptionsActivity.this, CustomActivity.class));
                 }else{
                     Intent intent = new Intent(this, LoginActivity.class);
@@ -392,11 +392,11 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
      * @param event
      */
     public void onEventMainThread(CustomEvent event) {
-        if (PreferenceUtil.getBoolean("custom_red_dot" , true)) {
-            mRedDot.setVisibility(View.VISIBLE);
-        }else{
-            mRedDot.setVisibility(View.GONE);
-        }
+//        if (PreferenceUtil.getBoolean("custom_red_dot" , true)) {
+//            mRedDot.setVisibility(View.VISIBLE);
+//        }else{
+//            mRedDot.setVisibility(View.GONE);
+//        }
     }
     public void onEventMainThread(ChoseHeadStartBean choseHeadStartBean){
         //ImageLoader.load(HomeUserOptionsActivity.this,choseHeadStartBean.startUrl,R.mipmap.center_head).into(mUser_image);
