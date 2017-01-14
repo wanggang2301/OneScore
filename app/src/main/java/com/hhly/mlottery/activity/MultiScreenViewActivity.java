@@ -494,25 +494,16 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
     private void initFootballData(MatchDetail matchDetail, String id) {
 
         footBallBean = new MultiScreenFootBallBean();
-
         int random = new Random().nextInt(20);
         String url = baseUrl + random + ".png";
-
         footBallBean.setLiveStatus(matchDetail.getLiveStatus());
-
         footBallBean.setBg(url);
-
         footBallBean.setHome_name(matchDetail.getHomeTeamInfo().getName());
-
         footBallBean.setGuest_name(matchDetail.getGuestTeamInfo().getName());
-
         footBallBean.setHome_icon(matchDetail.getHomeTeamInfo().getUrl());
         footBallBean.setGuest_icon(matchDetail.getGuestTeamInfo().getUrl());
-
         footBallBean.setmMatchType1(matchDetail.getMatchType1());
-
         footBallBean.setmMatchType2(matchDetail.getMatchType2());
-
         footBallBean.setDate(matchDetail.getMatchInfo().getStartTime());
         if (LIVEBEFORE.equals(matchDetail.getLiveStatus())) { //赛前
         } else if (LIVEENDED.equals(matchDetail.getLiveStatus())) {
@@ -523,7 +514,6 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
         }
 
         list.add(new MultiScreenViewBean(VIEW_TYPE_FOOTBALL, id, footBallBean));
-
         updateAdapter();
     }
 
