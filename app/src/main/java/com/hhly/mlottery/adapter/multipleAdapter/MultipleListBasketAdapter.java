@@ -74,52 +74,12 @@ public class MultipleListBasketAdapter extends BaseQuickAdapter {
 
         return mData.size();
 
-//        /**
-//         * 联赛类型
-//         */
-//        else if (mData.get(position) instanceof CustomMineFirstDataBean) {
-//            return ((CustomMineFirstDataBean) mData.get(position)).getFirstType();
-//        }
-//        /**
-//         * 日期类型
-//         */
-//        else if (mData.get(position) instanceof CustomMineScondDataBean) {
-//            return ((CustomMineScondDataBean) mData.get(position)).getSecondType();
-//        }
-//        /**
-//         * 比赛类型
-//         */
-//        else if (mData.get(position) instanceof CustomMineThirdDataBean) {
-//            return ((CustomMineThirdDataBean) mData.get(position)).getThirdType();
-//        } else {
-//            /**
-//             * 都不属于 return super
-//             */
-//            return super.getItemViewType(position);
-//        }
     }
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = null;
         BaseViewHolder holder = null;
-//        switch (viewType) {
-//            case 0:
-//                //联赛
-//                view = LayoutInflater.from(mContext).inflate(R.layout.custom_league_item, parent, false);
-//                holder = new CustomMyDataAdapter.ViewHolderLeague(view);
-//                break;
-//            case 1:
-//                //日期
-//                view = LayoutInflater.from(mContext).inflate(R.layout.custom_riqi_head, parent, false);
-//                holder = new CustomMyDataAdapter.ViewHolderDate(view);
-//                break;
-//            case 2:
-//                //item详情
-//                view = LayoutInflater.from(mContext).inflate(R.layout.custom_details_item, parent, false);
-//                holder = new CustomMyDataAdapter.ViewHolderItem(view);
-//                break;
-//        }
 
         //item详情
         view = LayoutInflater.from(mContext).inflate(R.layout.multiple_basket_item, parent, false);
@@ -134,90 +94,6 @@ public class MultipleListBasketAdapter extends BaseQuickAdapter {
             return;
         }
 
-//        switch (getItemViewType(positions)) {
-//            case 0:
-//                CustomMyDataAdapter.ViewHolderLeague viewHolderLeague = (CustomMyDataAdapter.ViewHolderLeague) holder;
-//
-//                CustomMineFirstDataBean leagueItem = (CustomMineFirstDataBean) mData.get(positions);
-//
-//                if (onItemClickListener != null) {
-//                    holder.itemView.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            int pos = holder.getLayoutPosition();
-//                            onItemClickListener.onItemClick(holder.itemView, pos, ((CustomMyDataAdapter.ViewHolderLeague) holder).mDetails);
-//                        }
-//                    });
-//                }
-//
-//                if (leagueItem.getMatchData() == null || leagueItem.getMatchData().size() == 0) {
-//                    viewHolderLeague.mLeagueNoData.setVisibility(View.VISIBLE);
-//                    viewHolderLeague.mDetails.setVisibility(View.GONE);
-//                } else {
-//                    viewHolderLeague.mLeagueNoData.setVisibility(View.GONE);
-//                    viewHolderLeague.mDetails.setVisibility(View.VISIBLE);
-//                }
-//                if (leagueItem != null) {
-//                    viewHolderLeague.mCustomLeagueName.setText(leagueItem.getLeagueName());
-//                }else{
-//                    viewHolderLeague.mCustomLeagueName.setText("");
-//                }
-//
-//                String logoUrl = leagueItem.getLeagueLogoPre() + leagueItem.getLeagueId() + leagueItem.getLeagueLogoSuff();
-//                if (mContext != null) {
-//                    ImageLoader.load(mContext, logoUrl, R.mipmap.basket_default).into(viewHolderLeague.mLeagueLogo);
-//                }
-//
-//                break;
-//            case 1:
-//                //日期
-//                CustomMyDataAdapter.ViewHolderDate viewHolderDate = (CustomMyDataAdapter.ViewHolderDate) holder;
-//
-//                CustomMineScondDataBean riqiData = (CustomMineScondDataBean) mData.get(positions);
-//
-//                viewHolderDate.mRiqiItem.setVisibility(View.VISIBLE);
-//                viewHolderDate.mNoData.setVisibility(View.GONE);
-//
-//                String week = ResultDateUtil.getWeekOfDate(DateUtil.parseDate(ResultDateUtil.getDate(0, riqiData.getDate())));
-//                viewHolderDate.mDate.setText(riqiData.getDate());
-//                viewHolderDate.mWeek.setText(week);
-//
-//                if (onItemClickListener != null) {
-//                    holder.itemView.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            int pos = holder.getLayoutPosition();
-//                            onItemClickListener.onItemClick(holder.itemView, pos, ((CustomMyDataAdapter.ViewHolderDate) holder).mDetails);
-//                        }
-//                    });
-//                }
-//
-//                if (riqiData.isUnfold()) {
-//                    viewHolderDate.mDetails.setBackgroundResource(R.mipmap.iconfont_xiala_2);
-//                } else {
-//                    viewHolderDate.mDetails.setBackgroundResource(R.mipmap.iconfont_xiala_1);
-//                }
-//
-//                break;
-//            case 2:
-//                //赛事
-//                CustomMyDataAdapter.ViewHolderItem viewHolderItem = (CustomMyDataAdapter.ViewHolderItem) holder;
-//
-//                CustomMineThirdDataBean itemData = (CustomMineThirdDataBean) mData.get(positions);
-//
-//                setItemData(viewHolderItem, itemData); //设置数据
-//
-//                if (onItemClickListener != null) {
-//                    holder.itemView.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            int pos = holder.getLayoutPosition();
-//                            onItemClickListener.onItemClick(holder.itemView, pos, null);
-//                        }
-//                    });
-//                }
-//                break;
-//        }
         //赛事
         final BasketMatchBean matchData = mData.get(positions);
 
@@ -242,19 +118,9 @@ public class MultipleListBasketAdapter extends BaseQuickAdapter {
         }
 
         setItemData(viewHolderItem , mData.get(positions));
-//        viewHolderItem.matches_name.setText(mData.get(positions));
-//        viewHolderItem.guest_name.setText("湖人 " + positions);
-//        viewHolderItem.home_name.setText("步行者" + positions);
 
     }
 
-//    /**
-//     * 设置数据
-//     */
-//    private void setData(final MultipleListBasketAdapter.ViewHolderItem holder, BasketRootBean data){
-//
-////        holder.guest_name.setText();
-//    }
     /**
      * 设置比分赔率数据
      */
