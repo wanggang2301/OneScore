@@ -519,11 +519,8 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
 
 
     private void computeMatchLiveScore(List<MatchTextLiveBean> matchLive, MultiScreenFootBallBean multiScreenFootBallBean) {
-
         int homeScore = 0;
         int guestScore = 0;
-
-
         for (MatchTextLiveBean m : matchLive) {
             switch (m.getCode().trim()) {
                 case "1029": //主队进球
