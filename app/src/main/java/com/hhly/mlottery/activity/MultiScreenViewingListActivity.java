@@ -51,7 +51,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by yixq on 2017/1/5.
  * mail：yixq@13322.com
- * describe:
+ * describe:多屏动画列表页
  */
 
 public class MultiScreenViewingListActivity extends Activity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
@@ -76,9 +76,6 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
     private boolean isLoadedData = false;
     private ImageView mFilterTxt;
 
-    private int LOAD_DATA_STATUS_LOADING = 0;//加载中
-    private int LOAD_DATA_STATUS_SUCCESS = 1;//加载成功
-    private int LOAD_DATA_STATUS_ERROR = 2;//加载失败
     private LinearLayout mErrorLayout;
     private TextView mReload;
     private TextView mNodata;

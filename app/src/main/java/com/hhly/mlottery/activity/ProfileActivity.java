@@ -52,7 +52,10 @@ import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 import com.umeng.analytics.MobclickAgent;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -226,8 +229,9 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
             findViewById(R.id.rl_modifypass).setVisibility(View.GONE);
             findViewById(R.id.account_number).setVisibility(View.GONE);
         }
+
         tv_nickname = ((TextView) findViewById(R.id.tv_nickname));
-        ((TextView) findViewById(R.id.tv_account_real)).setText(AppConstants.register.getData().getUser().getLoginAccount());
+        ((TextView) findViewById(R.id.tv_account_real)).setText(PreferenceUtil.getString(AppConstants.SPKEY_LOGINACCOUNT,""));
     }
     /*提示保存性别修改信息*/
     private void showDialog() {
@@ -292,20 +296,21 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 backgroundAlpha(0.5f);
                 setHeadView(v);
                 break;
-        /*    case R.id.tv_photograph:  //拍照
+            case R.id.tv_photograph:  //拍照
                 doTakePhoto();
-               *//* Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+               /* Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 camera.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.
                         getExternalStorageDirectory(), "temp.jpg")));
-                startActivityForResult(camera, CAMERA_REQUEST_CODE);*//*
+                startActivityForResult(camera, CAMERA_REQUEST_CODE);*/
 
                 break;
+
             case R.id.tv_chosephoto:  //相册中选取
                 doPickPhotoFromGallery();
-               *//* Intent picture = new Intent(Intent.ACTION_PICK, null);
+           /*     Intent picture = new Intent(Intent.ACTION_PICK, null);
                 picture.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_UNSPECIFIED);
-                startActivityForResult(picture, ALBUM_REQUEST_CODE);*//*
-                break;*/
+                startActivityForResult(picture, ALBUM_REQUEST_CODE);*/
+                break;
             case R.id.tv_chose_start_photo:
                 Intent intent3 = new Intent(ProfileActivity.this, AvatarSelectionActivity.class);
                 startActivityForResult(intent3,REQUESTCODE_CHOSE);
@@ -446,8 +451,8 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     private void setHeadView(View v) {
         /// 找到布局文件
         LinearLayout layout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.avatar_selection, null);
-      //  layout.findViewById(R.id.tv_photograph).setOnClickListener(this);
-      //  layout.findViewById(R.id.tv_chosephoto).setOnClickListener(this);
+        layout.findViewById(R.id.tv_photograph).setOnClickListener(this);
+        layout.findViewById(R.id.tv_chosephoto).setOnClickListener(this);
         layout.findViewById(R.id.tv_chose_start_photo).setOnClickListener(this);
         layout.findViewById(R.id.tv_cancel).setOnClickListener(this);
         // 实例化一个PopuWindow对象
@@ -509,7 +514,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
      * 1取出拍照的结果存储到手机内存则指定的文件夹， 再从文件加下取出展示到界面
      * 2从相册中取出图片，压缩，展示到界面 。
      */
-   /* @Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
 
@@ -615,7 +620,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
             default:
                 break;
         }
-    }*/
+    }
 
      /*图片上传*/
      //异步上传图片并且携带其他参数
@@ -675,20 +680,24 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
 
         param.put("imgUrl", headerUrl);
 
+
         VolleyContentFast.requestJsonByPost(BaseURLs.UPDATEHEADICON, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
             @Override
             public void onResponse(Register register) {
                 progressBar.dismiss();
                 if (register.getResult() == AccountResultCode.SUCC) {
                     UiUtils.toast(MyApp.getInstance(), R.string.picture_put_success);
-                    register.getData().getUser().setLoginAccount(AppConstants.register.getData().getLoginToken());
+                   // register.getData().getUser().setLoginAccount(AppConstants.register.getData().getLoginToken());
                     CommonUtils.saveRegisterInfo(register);
 
-                    PreferenceUtil.commitString(AppConstants.HEADICON, register.getData().getUser().getHeadIcon().toString());
+                   // PreferenceUtil.commitString(AppConstants.HEADICON, register.getData().getUser().getHeadIcon().toString());
+                    Log.i("aasd","dasd"+register.getData().getUser().getLoginAccount());
+                    EventBus.getDefault().post(register);
                     Glide.with(ProfileActivity.this)
                             .load(register.getData().getUser().getHeadIcon())
                             .error(R.mipmap.center_head)
                             .into(mHead_portrait);
+
                     //ImageLoader.load(ProfileActivity.this,register.getData().getUser().getHeadIcon(),R.mipmap.center_head).into(mHead_portrait);
 
                 } else {

@@ -162,13 +162,13 @@
                 android:text="@string/custom_mine_cus"
                 android:textColor="@color/res_name_color"
                 android:textSize="@dimen/home_pager_user_title"/>
-            <View
-                android:id="@+id/custom_red_dot_view"
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:background="@drawable/shape_red_dot"
-                android:layout_toRightOf="@id/custom_txt"
-                />
+            <!--<View-->
+                <!--android:id="@+id/custom_red_dot_view"-->
+                <!--android:layout_width="8dp"-->
+                <!--android:layout_height="8dp"-->
+                <!--android:background="@drawable/shape_red_dot"-->
+                <!--android:layout_toRightOf="@id/custom_txt"-->
+                <!--/>-->
         </RelativeLayout>
 
 
