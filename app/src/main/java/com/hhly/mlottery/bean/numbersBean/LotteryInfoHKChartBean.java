@@ -1,5 +1,6 @@
 package com.hhly.mlottery.bean.numbersBean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,12 +8,12 @@ import java.util.List;
  * Created by 107_tangrr on 2017/1/12 0012.
  */
 
-public class LotteryInfoHKChartBean {
+public class LotteryInfoHKChartBean implements Serializable{
 
     private int result;
     private List<DataBean> data;
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
 
         private int jumpType;
         private String jumpAddr;

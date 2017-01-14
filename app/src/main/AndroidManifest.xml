@@ -316,7 +316,9 @@
         <activity
             android:name="com.hhly.mlottery.activity.CustomListActivity"
             android:screenOrientation="portrait" />
-
+        <!--袁天罡六合图片查看-->
+        <activity android:name=".activity.LotteryHKInfoImageActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

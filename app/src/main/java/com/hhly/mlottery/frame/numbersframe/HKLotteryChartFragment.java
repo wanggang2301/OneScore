@@ -1,9 +1,11 @@
 package com.hhly.mlottery.frame.numbersframe;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.LotteryHKInfoImageActivity;
 import com.hhly.mlottery.activity.NumbersInfoBaseActivity;
 import com.hhly.mlottery.adapter.homePagerAdapter.HKLotteryInfoChartAdapter;
 import com.hhly.mlottery.bean.numbersBean.LotteryInfoHKChartBean;
@@ -28,6 +31,7 @@ import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -154,9 +158,10 @@ public class HKLotteryChartFragment extends Fragment {
                     mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
                         @Override
                         public void onItemClick(View view, int i) {
-                            ToastTools.showQuick(mContext, "下标：" + i);
-                            // TODO 跳转到详情
-
+                            Intent intent = new Intent(mContext, LotteryHKInfoImageActivity.class);
+                            intent.putExtra("data", (Serializable) mData);
+                            intent.putExtra("index", i);
+                            mContext.startActivity(intent);
                         }
                     });
 
