@@ -88,8 +88,9 @@ public class DebugConfigActivity extends BaseActivity {
                 }
 
                 startActivity(new Intent(DebugConfigActivity.this, WelcomeActivity.class));
-//                startActivity(new Intent(DebugConfigActivity.this, CustomActivity.class));
+//                startActivity(new Intent(DebugConfigActivity.this, FootballActivity.class));
                 System.exit(0);
+
 
             }
         });
@@ -110,13 +111,19 @@ public class DebugConfigActivity extends BaseActivity {
                 PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, DIY_INPUT);
                 PreferenceUtil.commitString("DIY_INPUT", str);
 
-
-                 System.exit(0);
+                System.exit(0);
             }
         });
-
-
     }
 
+/*
+    private void enterMultiScreenView() {
+        if (PreferenceUtil.getBoolean("introduce", true)) {
+            startActivity(new Intent(DebugConfigActivity.this, MultiScreenIntroduceActivity.class));
 
+            PreferenceUtil.commitBoolean("introduce", false);
+        } else {
+            startActivity(new Intent(DebugConfigActivity.this, MultiScreenViewingListActivity.class));
+        }
+    }*/
 }

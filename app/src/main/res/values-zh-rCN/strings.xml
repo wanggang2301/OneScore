@@ -1421,13 +1421,10 @@
     <string name="basket_player_no_data">暂无统计数据</string>
 
 
-
-
     <string name="video_high_light_reminder_comment">您正在使用移动数据，是否继续打开？</string>
     <string name="video_high_light_continue_open">打开</string>
     <string name="video_high_light">精彩瞬间</string>
     <string name="video_high_notice">精彩瞬间来啦</string>
-
 
 
     <!--斯洛克-->
@@ -1503,5 +1500,18 @@
     <string name="no_focus">您还未关注任何比赛</string>
     <string name="to_focus_now">马上去关注</string>
     <string name="my_focus">我的关注</string>
+    <string name="multi_header_name">壹观看</string>
+    <string name="multi_add">添加</string>
+    <string name="multi_dialog_text">您确认移除这场比赛吗?</string>
+    <string name="multi_zhishao_text">至少展示一场比赛！</string>
+    <string name="multi_enter_text">点击进入</string>
+    <string name="multi_add_view_text">添加多屏</string>
+
+    <!--多屏列表-->
+    <string name="multi_item_basket_name">篮球</string>
+    <string name="multi_item_football_name">足球</string>
+    <string name="multi_item_clicks">确定</string>
+    <string name="multi_toast_clicks_match">请选择比赛</string>
+    <string name="multi_toast_upper_match">最多选择三场</string>
 
 </resources>

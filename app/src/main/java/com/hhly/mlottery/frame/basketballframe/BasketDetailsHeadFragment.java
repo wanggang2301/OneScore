@@ -285,7 +285,7 @@ public class BasketDetailsHeadFragment extends Fragment {
 
         BasketballDetailsBean.MatchEntity.MatchScoreEntity score = bean.getMatch().getMatchScore();//比分
         mMatch = bean.getMatch();
-
+//
 
         if (score != null) {
             mGuestNum = score.getGuestScore();
@@ -559,7 +559,7 @@ public class BasketDetailsHeadFragment extends Fragment {
     public void updateData(WebSocketBasketBallDetails basketBallDetails, ChartBallFragment mChartBallFragment, TextView mTitleGuest, TextView mTitleHome, TextView mTitleVS) {
         DataEntity score = basketBallDetails.getData();
 
-        switch (basketBallDetails.getData().getMatchStatus()) {
+        switch (score.getMatchStatus()) {
             case DETERMINED://待定
             case GAME_CANCLE: //比赛取消
             case GAME_CUT: //比赛中断

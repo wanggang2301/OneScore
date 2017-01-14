@@ -879,6 +879,14 @@
 
     </style>
 
+    <!-- 足球比赛详情、指数tab -->
+    <style name="multiple_radio_button">
+        <item name="android:layout_weight">1</item>
+        <item name="android:button">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/multiple_radio_txt_color</item>
+        <item name="android:textSize">@dimen/text_size_13</item>
+    </style>
 
     <!--AppDialog_Theme-->
     <style name="AppThemeDialog" parent="@style/Base.Theme.AppCompat.Light.Dialog.Alert">

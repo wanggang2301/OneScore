@@ -180,8 +180,6 @@ public class BaseURLs {
     /**
      * 彩票开奖
      */
-
-
     // 所有彩票最后一期开奖结果
 //    private final static String URL_LASTLOTTERY = "lastLotteryResults.findLastLotteryResults.do";
 //    private final static String URL_LASTLOTTERY = "lastLotteryResults.findNewAndroidSecLastLotteryResults.do";// 新增了6个彩种
@@ -625,7 +623,6 @@ public class BaseURLs {
 
 
     // 刷新
-    // 刷新
     private final static String URL_INCREMENT = "matchResults.findIncrementMatchs.do";
 
     public final static String URL_MainMatchs = URL_API_HOST + URL_MAIN;
@@ -1016,6 +1013,8 @@ public class BaseURLs {
     // 聊球举报接口
     public final static String REPORT_USER = HTTP + HOST + URL_SPLITTER+ "chatServer/chat/reportUser/android";
 
+    //多屏篮球列表
+    public final static String MULTIPLE_BASKET_LIST_URL = "http://192.168.33.71:8080/mlottery/core/basketballMatch.findMultiScreenMatchList.do";
 
     //                                                     _(\_/)
     //                                                   ,((((^`\

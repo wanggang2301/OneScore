@@ -49,6 +49,8 @@
 
 
     <!-- 篮球详情页-->
+    <dimen name="multiscreen_space_image_height">200dp</dimen>
+
     <dimen name="flexible_space_image_height">240dp</dimen>
     <dimen name="flexible_space_show_fab_offset">120dp</dimen>
     <dimen name="mheight">172dp</dimen>

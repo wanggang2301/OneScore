@@ -31,6 +31,7 @@ import com.hhly.mlottery.bean.OpenBarrage;
 import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.DetailsCollectionCountBean;
+import com.hhly.mlottery.bean.multiplebean.MultipleByValueBean;
 import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
@@ -208,6 +209,10 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private View view_red;
     private int chartBallView = -1;// 聊球界面转标记
 
+    private TextView tv_addMultiView;
+    private boolean isAddMultiViewHide = false;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (getIntent().getExtras() != null) {
@@ -217,6 +222,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             chartBallView = getIntent().getExtras().getInt("chart_ball_view");
 
 //            mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
+//            mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
+            isAddMultiViewHide = getIntent().getExtras().getBoolean("isAddMultiViewHide");
 
             if (LEAGUEID_NBA.equals(mLeagueId)) {
                 isNBA = true;
@@ -390,6 +397,10 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         mBack = (ImageView) this.findViewById(R.id.basket_details_back);
 
         rl_gif_notice = (RelativeLayout) findViewById(R.id.rl_gif_notice);
+        tv_addMultiView = (TextView) findViewById(R.id.tv_addMultiView);
+        if (isAddMultiViewHide) {
+            tv_addMultiView.setVisibility(View.GONE);
+        }
 
         mTitleScore = (RelativeLayout) this.findViewById(R.id.ll_basket_title_score);
         mCollect = (ImageView) this.findViewById(R.id.basket_details_collect);
@@ -404,6 +415,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         barrage_view = (BarrageView) findViewById(R.id.barrage_view);
         barrage_switch = (ImageView) findViewById(R.id.barrage_switch);
         barrage_switch.setOnClickListener(this);
+
+        tv_addMultiView.setOnClickListener(this);
 
     }
 
@@ -515,7 +528,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             }
         }, BasketballDetailsBean.class);
     }
-
+//
 
     @Override
     public void onClick(View v) {
@@ -554,6 +567,24 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                     barrage_view.setAlpha(0);
                 }
                 break;
+
+            case R.id.tv_addMultiView:
+                enterMultiScreenView();
+                break;
+        }
+    }
+
+
+    private void enterMultiScreenView() {
+        if (PreferenceUtil.getBoolean("introduce", true)) {
+            Intent intent = new Intent(BasketDetailsActivityTest.this, MultiScreenIntroduceActivity.class);
+            intent.putExtra("thirdId", new MultipleByValueBean(2, mThirdId));
+            startActivity(intent);
+            PreferenceUtil.commitBoolean("introduce", false);
+        } else {
+            Intent intent = new Intent(BasketDetailsActivityTest.this, MultiScreenViewingListActivity.class);
+            intent.putExtra("thirdId", new MultipleByValueBean(2, mThirdId));
+            startActivity(intent);
         }
     }
 

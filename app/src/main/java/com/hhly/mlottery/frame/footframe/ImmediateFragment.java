@@ -568,6 +568,8 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
         }
     };
 
+
+
     private void upateListViewItemMatchChange(WebSocketMatchChange webSocketMatchChange) {
         synchronized (mAllMatchs) {
             for (final Match match : mAllMatchs) {

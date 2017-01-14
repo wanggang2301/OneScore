@@ -327,6 +327,16 @@
         <activity
             android:name=".activity.CustomListActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.MultiScreenIntroduceActivity"></activity>
+        <activity
+            android:name="com.hhly.mlottery.activity.MultiScreenViewingListActivity"
+            android:screenOrientation="portrait" /><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <activity android:name=".activity.MultiScreenIntroduceActivity" />
+        <activity android:name=".activity.MultiScreenViewActivity"></activity>
         <activity android:name=".activity.MyFocusActivity"></activity>
     </application>
 
