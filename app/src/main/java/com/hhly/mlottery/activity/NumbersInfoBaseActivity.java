@@ -31,7 +31,6 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class NumbersInfoBaseActivity extends BaseActivity implements OnClickListener {
 
-    private FragmentManager fragmentManager;
     private String mNumberName;// 彩种名称
 
     private FrameLayout current;

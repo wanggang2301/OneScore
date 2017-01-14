@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.NumbersInfoBaseActivity;
@@ -54,6 +56,9 @@ public class HKLotteryStartFragment extends Fragment implements SwipeRefreshLayo
     private List<LotteryInfoDateBean> mantissaList = new ArrayList<>();
     private List<LotteryInfoDateBean> boList = new ArrayList<>();
     private String[] itemDatas;// 下拉选择数据
+    private FrameLayout fl_content;
+    private FrameLayout fl_notNet;
+    private TextView tv_reLoading;
 
     @Nullable
     @Override
@@ -63,8 +68,17 @@ public class HKLotteryStartFragment extends Fragment implements SwipeRefreshLayo
 
         initView();
         initData();
-
+        initEvent();
         return mView;
+    }
+
+    private void initEvent() {
+        tv_reLoading.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                initData();
+            }
+        });
     }
 
     private void initData() {
@@ -90,6 +104,9 @@ public class HKLotteryStartFragment extends Fragment implements SwipeRefreshLayo
     }
 
     private void initView() {
+        fl_content = (FrameLayout) mView.findViewById(R.id.fl_content);
+        fl_notNet = (FrameLayout) mView.findViewById(R.id.fl_current_notNet);
+        tv_reLoading = (TextView) mView.findViewById(R.id.tv_current_reLoading);
         swipeRefreshLayout = (ExactSwipeRefreshLayout) mView.findViewById(R.id.swipere_fresh_layout_start);
         swipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -110,10 +127,14 @@ public class HKLotteryStartFragment extends Fragment implements SwipeRefreshLayo
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case LOADING:
+                    swipeRefreshLayout.setRefreshing(true);
                     break;
                 case SUCCESS:
+                    swipeRefreshLayout.setRefreshing(false);
+                    fl_content.setVisibility(View.VISIBLE);
+                    fl_notNet.setVisibility(View.GONE);
 
-                    itemDatas = new String[]{"4000期", "1000期", "500期", "100期"};
+                    itemDatas = new String[]{"4000" + mContext.getResources().getString(R.string.number_code_qi), "1000" + mContext.getResources().getString(R.string.number_code_qi), "500" + mContext.getResources().getString(R.string.number_code_qi), "100" + mContext.getResources().getString(R.string.number_code_qi)};
                     ((NumbersInfoBaseActivity) mContext).public_txt_spinner.setAdapter(new BallSelectArrayAdapter(mContext, itemDatas));
                     ((NumbersInfoBaseActivity) mContext).public_txt_spinner.setSelection(1);
                     ((NumbersInfoBaseActivity) mContext).public_txt_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -140,9 +161,11 @@ public class HKLotteryStartFragment extends Fragment implements SwipeRefreshLayo
 
                         }
                     });
-
                     break;
                 case ERROR:
+                    swipeRefreshLayout.setRefreshing(false);
+                    fl_content.setVisibility(View.GONE);
+                    fl_notNet.setVisibility(View.VISIBLE);
                     break;
             }
         }
@@ -330,6 +353,6 @@ public class HKLotteryStartFragment extends Fragment implements SwipeRefreshLayo
 
     @Override
     public void onRefresh() {
-
+        initData();
     }
 }

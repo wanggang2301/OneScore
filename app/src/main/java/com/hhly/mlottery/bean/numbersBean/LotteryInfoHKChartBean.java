@@ -10,9 +10,9 @@ import java.util.List;
 public class LotteryInfoHKChartBean {
 
     private int result;
-    private List<DateBean> date;
+    private List<DataBean> data;
 
-    public static class DateBean {
+    public static class DataBean {
 
         private int jumpType;
         private String jumpAddr;
@@ -26,6 +26,15 @@ public class LotteryInfoHKChartBean {
         private String lastModifyTime;
         private String summary;
         private String modelType;
+        private String lotteryImg;
+
+        public String getLotteryImg() {
+            return lotteryImg;
+        }
+
+        public void setLotteryImg(String lotteryImg) {
+            this.lotteryImg = lotteryImg;
+        }
 
         public int getJumpType() {
             return jumpType;
@@ -131,11 +140,11 @@ public class LotteryInfoHKChartBean {
         this.result = result;
     }
 
-    public List<DateBean> getDate() {
-        return date;
+    public List<DataBean> getData() {
+        return data;
     }
 
-    public void setDate(List<DateBean> date) {
-        this.date = date;
+    public void setData(List<DataBean> data) {
+        this.data = data;
     }
 }

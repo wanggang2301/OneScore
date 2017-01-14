@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
@@ -52,10 +53,27 @@ public class StartPagerFragment extends Fragment {
     private List<TextView> mantissaCountList = new ArrayList<>(10);
     private List<TextView> boNumberList = new ArrayList<>(3);
     private List<TextView> boCountList = new ArrayList<>(3);
+
+    private List<CoedAppearBean> zodiacCoedAppearList = new ArrayList<>(12);
+    private List<NumberAppearBean> zodiacNumberAppearList = new ArrayList<>(12);
+    private List<CoedNotAppearBean> zodiacCoedNotAppearList = new ArrayList<>(12);
+    private List<CoedAppearBean> numberCoedAppearList = new ArrayList<>(49);
+    private List<NumberAppearBean> numberNumberAppearList = new ArrayList<>(49);
+    private List<CoedNotAppearBean> numberCoedNotAppearList = new ArrayList<>(49);
+    private List<CoedAppearBean> mantissaCoedAppearList = new ArrayList<>(10);
+    private List<NumberAppearBean> mantissaNumberAppearList = new ArrayList<>(10);
+    private List<CoedNotAppearBean> mantissaCoedNotAppearList = new ArrayList<>(10);
+    private List<CoedAppearBean> boCoedAppearList = new ArrayList<>(3);
+    private List<NumberAppearBean> boNumberAppearList = new ArrayList<>(3);
+    private List<CoedNotAppearBean> boCoedNotAppearList = new ArrayList<>(3);
+
     private TextView tv_title_01;
     private TextView tv_title_02;
     private TextView tv_title_03;
     private TextView tv_title_04;
+    private FrameLayout fl_content;
+    private FrameLayout fl_notNet;
+    private TextView tv_reLoading;
 
     public static StartPagerFragment newInstance(int labs, List<LotteryInfoDateBean> zodiacList, List<LotteryInfoDateBean> numberList, List<LotteryInfoDateBean> mantissaList, List<LotteryInfoDateBean> boList) {
         StartPagerFragment fragment = new StartPagerFragment();
@@ -92,22 +110,6 @@ public class StartPagerFragment extends Fragment {
 
         return mView;
     }
-
-    List<CoedAppearBean> zodiacCoedAppearList = new ArrayList<>(12);
-    List<NumberAppearBean> zodiacNumberAppearList = new ArrayList<>(12);
-    List<CoedNotAppearBean> zodiacCoedNotAppearList = new ArrayList<>(12);
-
-    List<CoedAppearBean> numberCoedAppearList = new ArrayList<>(49);
-    List<NumberAppearBean> numberNumberAppearList = new ArrayList<>(49);
-    List<CoedNotAppearBean> numberCoedNotAppearList = new ArrayList<>(49);
-
-    List<CoedAppearBean> mantissaCoedAppearList = new ArrayList<>(10);
-    List<NumberAppearBean> mantissaNumberAppearList = new ArrayList<>(10);
-    List<CoedNotAppearBean> mantissaCoedNotAppearList = new ArrayList<>(10);
-
-    List<CoedAppearBean> boCoedAppearList = new ArrayList<>(3);
-    List<NumberAppearBean> boNumberAppearList = new ArrayList<>(3);
-    List<CoedNotAppearBean> boCoedNotAppearList = new ArrayList<>(3);
 
     private void initData() {
 
@@ -215,6 +217,7 @@ public class StartPagerFragment extends Fragment {
         addDataShow();
     }
 
+    // 直充数据
     private void addDataShow() {
         // 鼠 \ue053
         // 鸡 \ue52e
@@ -597,6 +600,10 @@ public class StartPagerFragment extends Fragment {
     }
 
     private void initView() {
+        fl_content = (FrameLayout) mView.findViewById(R.id.fl_content);
+        fl_notNet = (FrameLayout) mView.findViewById(R.id.fl_current_notNet);
+        tv_reLoading = (TextView) mView.findViewById(R.id.tv_current_reLoading);
+
         tv_title_01 = (TextView) mView.findViewById(R.id.tv_title_01);
         tv_title_02 = (TextView) mView.findViewById(R.id.tv_title_02);
         tv_title_03 = (TextView) mView.findViewById(R.id.tv_title_03);
