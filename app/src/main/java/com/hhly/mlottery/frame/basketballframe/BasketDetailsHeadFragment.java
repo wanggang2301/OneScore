@@ -30,7 +30,6 @@ import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.NetworkUtils;
-import com.hhly.mlottery.util.PreferenceUtil;
 
 /**
  * Created by Administrator on 2016/10/12.
@@ -77,8 +76,6 @@ public class BasketDetailsHeadFragment extends Fragment {
 
     private LinearLayout btn_showGif;
     private final static String MATCH_TYPE = "2"; //篮球
-
-    private View red_point;
 
     private final static String BASKETBALL_GIF = "basketball_gif";
 
@@ -158,7 +155,6 @@ public class BasketDetailsHeadFragment extends Fragment {
 
         btn_showGif = (LinearLayout) mView.findViewById(R.id.btn_showGif);
 
-        red_point = (View) mView.findViewById(R.id.red_point);
     }
 
 
@@ -171,9 +167,6 @@ public class BasketDetailsHeadFragment extends Fragment {
                 if (NetworkUtils.isConnected(getActivity())) {
                     int type = com.hhly.mlottery.util.NetworkUtils.getCurNetworkType(getActivity());
                     if (type == 1) {
-
-                        hideGifRedPoint();
-
                         L.d("zxcvbn", "WIFI");
                         Intent intent = new Intent(getActivity(), PlayHighLightActivity.class);
                         intent.putExtra("thirdId", BasketDetailsActivityTest.mThirdId);
@@ -194,22 +187,12 @@ public class BasketDetailsHeadFragment extends Fragment {
     }
 
 
-    /**
-     * 影藏红点
-     */
 
-    private void hideGifRedPoint() {
-        PreferenceUtil.commitBoolean(BASKETBALL_GIF, false);
-        red_point.setVisibility(View.GONE);
-    }
 
     public void setBtn_showGifVisible(int visible) {
         btn_showGif.setVisibility(visible);
     }
 
-    public void setRedPointVisible(int visible) {
-        red_point.setVisibility(visible);
-    }
 
     /**
      * 当前连接的网络提示
@@ -223,7 +206,6 @@ public class BasketDetailsHeadFragment extends Fragment {
             builder.setPositiveButton(getActivity().getResources().getString(R.string.video_high_light_continue_open), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    hideGifRedPoint();
                     dialog.dismiss();
                     Intent intent = new Intent(getActivity(), PlayHighLightActivity.class);
                     intent.putExtra("thirdId", BasketDetailsActivityTest.mThirdId);

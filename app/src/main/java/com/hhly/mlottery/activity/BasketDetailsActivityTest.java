@@ -42,12 +42,10 @@ import com.hhly.mlottery.frame.basketballframe.BasketFocusEventBus;
 import com.hhly.mlottery.frame.basketballframe.BasketLiveFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketOddsFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketTextLiveEvent;
-import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
-import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -1012,7 +1010,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                     if (jsonObject.getData() != 0) {
                         mBasketDetailsHeadFragment.setBtn_showGifVisible(View.VISIBLE);
                         if (isFirstShowGif) {  //第一次显示
-                            initGifRedPoint();
 
                             gifCount = jsonObject.getData();
                             L.d("zxcvbn", "第一次进入------------gifCount==" + gifCount);
@@ -1022,7 +1019,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                             L.d("zxcvbn", "第二次进入------------gifCount=" + gifCount);
                             if (jsonObject.getData() > gifCount) { //有新的gif出現
                                 L.d("zxcvbn", "有新的gif出現------------");
-                                showGifRedPoint();
                                 gifCount = jsonObject.getData();
                                 rl_gif_notice.setVisibility(View.VISIBLE);
                                 countDown.start();
@@ -1047,16 +1043,4 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         }, DetailsCollectionCountBean.class);
     }
 
-    private void initGifRedPoint() {
-        if (PreferenceUtil.getBoolean(BASKETBALL_GIF, true)) {
-            mBasketDetailsHeadFragment.setRedPointVisible(View.VISIBLE);
-        } else {
-            mBasketDetailsHeadFragment.setRedPointVisible(View.GONE);
-        }
-    }
-
-    private void showGifRedPoint() {
-        PreferenceUtil.commitBoolean(BASKETBALL_GIF, true);
-        mBasketDetailsHeadFragment.setRedPointVisible(View.VISIBLE);
-    }
 }
