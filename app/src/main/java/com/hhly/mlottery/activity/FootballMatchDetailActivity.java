@@ -51,12 +51,10 @@ import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
 import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
 import com.hhly.mlottery.frame.footframe.DetailsRollballFragment;
-import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.IntelligenceFragment;
 import com.hhly.mlottery.frame.footframe.OddsFragment;
 import com.hhly.mlottery.frame.footframe.StatisticsFragment;
 import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFocusEventBusEntity;
-import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;
@@ -319,7 +317,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private final static int MILLIS_INFuture = 3000;//倒计时3秒
     private final static String FOOTBALL_GIF = "football_gif";
 
-    private View red_point;
     private ImageView barrage_switch;
 
     boolean barrage_isFocus = false;
@@ -2004,7 +2001,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     int type = com.hhly.mlottery.util.NetworkUtils.getCurNetworkType(getApplicationContext());
                     if (type == 1) {
                         L.d("zxcvbn", "WIFI");
-                        hideGifRedPoint();
                         Intent intent = new Intent(FootballMatchDetailActivity.this, PlayHighLightActivity.class);
                         intent.putExtra("thirdId", mThirdId);
                         intent.putExtra("match_type", MATCH_TYPE);
@@ -2070,7 +2066,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             builder.setPositiveButton(getApplicationContext().getResources().getString(R.string.video_high_light_continue_open), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    hideGifRedPoint();
                     dialog.dismiss();
                     Intent intent = new Intent(FootballMatchDetailActivity.this, PlayHighLightActivity.class);
                     intent.putExtra("thirdId", mThirdId);
@@ -2608,7 +2603,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         if (isAddMultiViewHide) {
             tv_addMultiView.setVisibility(View.GONE);
         }
-        red_point = (View) findViewById(R.id.red_point);
     }
 
 
@@ -2728,7 +2722,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 if (200 == jsonObject.getResult()) {
                     if (jsonObject.getData() != 0) {
                         btn_showGif.setVisibility(View.VISIBLE);
-                        initGifRedPoint();
                     } else {
                         btn_showGif.setVisibility(View.GONE);
                         // }
@@ -2760,7 +2753,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     if (jsonObject.getData() != 0) {
                         btn_showGif.setVisibility(View.VISIBLE);
                         if (isFirstShowGif) {  //第一次显示
-                            initGifRedPoint();
                             L.d("zxcvbn", "第一次进入------------");
                             gifCount = jsonObject.getData();
                             isFirstShowGif = false;
@@ -2768,7 +2760,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                             L.d("zxcvbn", "第二次进入------------");
                             if (jsonObject.getData() > gifCount) { //有新的gif出現
                                 L.d("zxcvbn", "有新的gif出現------------");
-                                showGifRedPoint();
                                 gifCount = jsonObject.getData();
                                 rl_gif_notice.setVisibility(View.VISIBLE);
                                 countDown.start();
@@ -2793,31 +2784,4 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         }, DetailsCollectionCountBean.class);
     }
 
-    /**
-     * init red point function
-     */
-    private void initGifRedPoint() {
-        if (PreferenceUtil.getBoolean(FOOTBALL_GIF, true)) {
-            red_point.setVisibility(View.VISIBLE);
-        } else {
-            red_point.setVisibility(View.GONE);
-        }
-    }
-
-
-    /**
-     * show red point
-     */
-    private void showGifRedPoint() {
-        PreferenceUtil.commitBoolean(FOOTBALL_GIF, true);
-        red_point.setVisibility(View.VISIBLE);
-    }
-
-    /**
-     * hide red point
-     */
-    private void hideGifRedPoint() {
-        PreferenceUtil.commitBoolean(FOOTBALL_GIF, false);
-        red_point.setVisibility(View.GONE);
-    }
 }
