@@ -20,10 +20,13 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
+import com.hhly.mlottery.activity.DebugConfigActivity;
 import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.activity.HomeUserOptionsActivity;
 import com.hhly.mlottery.activity.LoginActivity;
+import com.hhly.mlottery.activity.MultiScreenIntroduceActivity;
+import com.hhly.mlottery.activity.MultiScreenViewingListActivity;
 import com.hhly.mlottery.activity.NumbersActivity;
 import com.hhly.mlottery.activity.NumbersInfoBaseActivity;
 import com.hhly.mlottery.activity.WebActivity;
@@ -35,6 +38,7 @@ import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ToastTools;
 import com.umeng.analytics.MobclickAgent;
 
@@ -493,9 +497,13 @@ public class HomePagerAdapter extends PagerAdapter {
                                 break;
                                 case "80":// 多屏动画列表
                                 {
-                                    // TODO 轮播图跳转多屏动画
-                                    ToastTools.showQuick(mContext,"轮播图跳转多屏动画");
-//                                    mContext.startActivity(new Intent(mContext, MultiScreenViewingListActivity.class));
+                                    if (PreferenceUtil.getBoolean("introduce", true)) {
+                                        mContext.startActivity(new Intent(mContext, MultiScreenIntroduceActivity.class));
+
+                                        PreferenceUtil.commitBoolean("introduce", false);
+                                    } else {
+                                        mContext.startActivity(new Intent(mContext, MultiScreenViewingListActivity.class));
+                                    }
                                 }
                                 break;
                                 case "90":// 个人中心
