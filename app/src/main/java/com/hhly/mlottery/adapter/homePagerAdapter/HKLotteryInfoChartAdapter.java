@@ -37,6 +37,6 @@ public class HKLotteryInfoChartAdapter extends BaseQuickAdapter<LotteryInfoHKCha
             e.printStackTrace();
         }
         baseViewHolder.setText(R.id.tv_chart_title,dataBean.getTitle());
-        baseViewHolder.setText(R.id.tv_chart_sub_title,dataBean.getSubTitle());
+        baseViewHolder.setText(R.id.tv_chart_sub_title,dataBean.getSummary());
     }
 }
