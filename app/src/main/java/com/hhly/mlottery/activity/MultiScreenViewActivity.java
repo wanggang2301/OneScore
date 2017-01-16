@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -423,6 +424,17 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
 
     private void setResultData() {
         EventBus.getDefault().post(matchIdList);
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            setResultData();
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private Handler mHandler = new Handler() {
