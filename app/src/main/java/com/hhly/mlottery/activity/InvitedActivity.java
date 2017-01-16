@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.InvitedBean;
 import com.hhly.mlottery.bean.ShareBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.UiUtils;
@@ -101,8 +102,10 @@ public class InvitedActivity extends BaseActivity implements View.OnClickListene
             case R.id.public_btn_save:  //分享
                 ShareBean shareBean = new ShareBean();
                 shareBean.setTitle("邀请码");
-                shareBean.setSummary("[" + AppConstants.register.getData().getUser().getUserId() + "]" + "请您一起看比赛，输入邀请码，优惠多多哦。");
-                shareBean.setTarget_url("http://192.168.31.107:9000/download_yqm.html?userId=" + AppConstants.register.getData().getUser().getUserId());
+                shareBean.setSummary("【" + AppConstants.register.getData().getUser().getUserId() + "】" + "请您一起看比赛，输入邀请码，优惠多多哦。");
+                shareBean.setTarget_url(BaseURLs.INVITED_ACTIVITY_URL + "?userId=" + AppConstants.register.getData().getUser().getUserId());
+                shareBean.setCopy(shareBean.getTarget_url());
+
                 ShareFragment shareFragment = ShareFragment.newInstance(shareBean);
                 shareFragment.show(getSupportFragmentManager(), "InvitedActivity");
                 break;
