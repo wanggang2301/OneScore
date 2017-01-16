@@ -130,6 +130,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         //头像
         mUser_image = (ImageView) findViewById(R.id.user_info_image);
         mUser_image.setOnClickListener(this);
+        findViewById(R.id.rl_setting_invited).setOnClickListener(this);
              /*判断登录状态*/
         if (CommonUtils.isLogin()) {
             mViewHandler.sendEmptyMessage(LOGGED_ON);
@@ -234,6 +235,10 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                     startActivity(new Intent(this, LoginActivity.class));
                     //UiUtils.toast(MyApp.getInstance(), "请先登录");
                 }
+
+                break;
+            case R.id.rl_setting_invited:
+                startActivity(new Intent(HomeUserOptionsActivity.this, InvitedActivity.class));
 
                 break;
         }

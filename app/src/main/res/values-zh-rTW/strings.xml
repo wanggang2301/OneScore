@@ -212,6 +212,7 @@
     <string name="version_update_txt">版本更新</string>
     <string name="about_frame_txt">關於我們</string>
     <string name="more_setting">更多設定</string>
+    <string name="invited_prize">邀請有獎</string>
     <string name="can_only_choose_a_picture">親，只能選擇一張圖片</string>
     <string name="foot_jishi_txt">即時</string>
     <string name="foot_saiguo_txt">賽果</string>
@@ -1484,5 +1485,13 @@
     <string name="no_focus">您還未關注任何比賽</string>
     <string name="to_focus_now">馬上去關注</string>
     <string name="my_focus">我的關注</string>
+    <!--邀请码页面-->
+    <string name="invite_friends">邀請好友</string>
+    <string name="copy_text">已複製到粘貼板</string>
+    <string name="invitation_code_acquisition_failed">邀請碼獲取失敗</string>
+    <string name="your_invitation_code">你的邀請碼</string>
+    <string name="copy_tv">複製</string>
+    <string name="copy_text2">輸入邀請碼，一筆分後續會發放金幣</string>
+    <string name="copy_text3">參與一筆分活動，贏取精彩好禮！</string>
 
 </resources>
