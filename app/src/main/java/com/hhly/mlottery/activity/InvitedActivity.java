@@ -102,6 +102,11 @@ public class InvitedActivity extends BaseActivity implements View.OnClickListene
 
 
                 ShareBean shareBean = new ShareBean();
+                shareBean.setTitle("邀请码");
+                shareBean.setSummary("[" + AppConstants.register.getData().getUser().getUserId() + "]" + "请您一起看比赛，输入邀请码，优惠多多哦。");
+
+
+
 
                 ShareFragment shareFragment = ShareFragment.newInstance(shareBean);
                 shareFragment.show(getSupportFragmentManager(), "InvitedActivity");
