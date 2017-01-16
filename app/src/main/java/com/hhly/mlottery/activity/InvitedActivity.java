@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.InvitedBean;
+import com.hhly.mlottery.bean.ShareBean;
+import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -97,6 +99,13 @@ public class InvitedActivity extends Activity implements View.OnClickListener{
                 finish();
             break;
             case R.id.public_btn_save:  //分享
+
+
+                ShareBean shareBean=new ShareBean();
+
+                ShareFragment shareFragment=ShareFragment.newInstance(shareBean);
+               // shareFragment.show(getSupportFragmentManager(),"InvitedActivity");
+
 
             break;
             case R.id.iv_number_copy:
