@@ -226,6 +226,7 @@
     <string name="version_update_txt">版本更新</string>
     <string name="about_frame_txt">关于我们</string>
     <string name="more_setting">更多设置</string>
+    <string name="invited_prize">邀请有奖</string>
     <string name="can_only_choose_a_picture">亲，只能选择一张图片</string>
     <!-- 侧滑栏字体 -->
     <string name="foot_jishi_txt">即时</string>
@@ -1421,10 +1422,13 @@
     <string name="basket_player_no_data">暂无统计数据</string>
 
 
+
+
     <string name="video_high_light_reminder_comment">您正在使用移动数据，是否继续打开？</string>
     <string name="video_high_light_continue_open">打开</string>
     <string name="video_high_light">精彩瞬间</string>
     <string name="video_high_notice">精彩瞬间来啦</string>
+
 
 
     <!--斯洛克-->
@@ -1537,5 +1541,13 @@
     <string name="home_lottery_info_tm_bo_g">绿</string>
     <string name="home_lottery_info_tm_bo_b">蓝</string>
     <string name="home_lottery_info_image_desc">本站所有数据、资料仅供您参考，为避免遭受经济损失任何人不得用于非法用途，否则责任自负</string>
+    <!--邀请码页面-->
+    <string name="invite_friends">邀请好友</string>
+    <string name="copy_text">已复制到粘贴板</string>
+    <string name="invitation_code_acquisition_failed">邀请码获取失败</string>
+    <string name="your_invitation_code">邀请码获取失败</string>
+    <string name="copy_tv">复制</string>
+    <string name="copy_text2"> 输入邀请码，一笔分后续会发放金币</string>
+    <string name="copy_text3">参与一笔分活动，赢取精彩好礼！</string>
 
 </resources>

@@ -278,7 +278,7 @@
         <activity
             android:name=".activity.FootballInformationSerachActivity"
             android:screenOrientation="portrait" />
-        <!--今日联赛统计-->
+        <!-- 今日联赛统计 -->
         <activity
             android:name=".activity.LeagueStatisticsTodayActivity"
             android:screenOrientation="portrait" />
@@ -325,6 +325,10 @@
         <activity android:name=".activity.MyFocusActivity"/>
         <!--袁天罡六合图片查看-->
         <activity android:name=".activity.LotteryHKInfoImageActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.MyFocusActivity"></activity>
+        <activity
+            android:name=".activity.InvitedActivity"
             android:screenOrientation="portrait" />
     </application>
 

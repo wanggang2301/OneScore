@@ -341,8 +341,52 @@
             android:background="@color/linecolor"/>
     </LinearLayout>-->
 
-    <!----> 分割线
+    <!---->
+    <RelativeLayout
+        android:id="@+id/rl_setting_invited"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/channel_title_front"
+        android:clickable="true"
+        android:focusable="true">
 
+        <ImageView
+            android:id="@+id/invited_prize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/center_icon_invite"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/invited_prize"
+            android:padding="15dp"
+            android:text="@string/invited_prize"
+            android:textColor="@color/res_name_color"
+            android:textSize="@dimen/home_pager_user_title"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="15dp"
+            android:src="@mipmap/unconection_next"/>
+    </RelativeLayout>
+    <!--分割线-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/channel_title_front"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/linecolor"/>
+    </LinearLayout>
     <RelativeLayout
         android:id="@+id/rl_setting_frame"
         android:layout_width="match_parent"
