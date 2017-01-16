@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.InvitedBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -42,9 +43,9 @@ public class InvitedActivity extends Activity implements View.OnClickListener{
 
         param.put("userId", AppConstants.register.getData().getUser().getUserId());
         Log.i("sada","ada"+ AppConstants.register.getData().getUser().getUserId());
-        String url="http://m.1332255.com:81/mlottery/core/androidUserCenter.getInviteCode.do";
+        //String url="http://m.1332255.com:81/mlottery/core/androidUserCenter.getInviteCode.do";
 
-        VolleyContentFast.requestJsonByGet(url, param, new VolleyContentFast.ResponseSuccessListener<InvitedBean>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.INVITED_RUL, param, new VolleyContentFast.ResponseSuccessListener<InvitedBean>() {
             @Override
             public void onResponse(InvitedBean bean) {
 

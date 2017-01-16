@@ -1016,7 +1016,8 @@ public class BaseURLs {
     // 聊球举报接口
     public final static String REPORT_USER = HTTP + HOST + URL_SPLITTER+ "chatServer/chat/reportUser/android";
 
-
+    // 邀请码
+    public final static String INVITED_RUL = HTTP + HOST + URL_SPLITTER+ "androidUserCenter.getInviteCode.do";
     //                                                     _(\_/)
     //                                                   ,((((^`\
     //                                                  ((((  (6 \
