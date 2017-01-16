@@ -669,15 +669,6 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                 if (byValue == null || byValue.size() == 0) {
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.multi_toast_clicks_match), Toast.LENGTH_SHORT).show();
                 }else{
-
-                    if (byValue.size() == 1) {
-                        L.d("yxq0116 ==>> " , byValue.get(0).getThirdId());
-                    }else if(byValue.size() == 2){
-                        L.d("yxq0116 ==>> " , byValue.get(0).getThirdId() + " ; " + byValue.get(1).getThirdId());
-                    }else if (byValue.size() == 3) {
-                        L.d("yxq0116 ==>> " , byValue.get(0).getThirdId() + " ; " + byValue.get(1).getThirdId() + " ; " + byValue.get(2).getThirdId());
-                    }
-
                     Intent intent = new Intent(MultiScreenViewingListActivity.this, MultiScreenViewActivity.class);
                     intent.putExtra("byValue", (ArrayList) byValue);
                     startActivity(intent);
@@ -808,15 +799,6 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
         Toast.makeText(mContext, "多屏内页返回 == " + value.size(), Toast.LENGTH_SHORT).show();
         byValue.clear();
         byValue = value;
-
-        if (byValue.size() == 1) {
-            L.d("yxq0116 ==>> " , byValue.get(0).getThirdId());
-        }else if(byValue.size() == 2){
-            L.d("yxq0116 ==>> " , byValue.get(0).getThirdId() + " ; " + byValue.get(1).getThirdId());
-        }else if (byValue.size() == 3) {
-            L.d("yxq0116 ==>> " , byValue.get(0).getThirdId() + " ; " + byValue.get(1).getThirdId() + " ; " + byValue.get(2).getThirdId());
-        }
-
         currentClick(borf);
         if (borf == BASKET_TYPE) {
             updateBasketAdapter();
