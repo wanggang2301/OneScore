@@ -609,11 +609,11 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
         //删除
 
 
-        Iterator<MultipleByValueBean> it = matchIdList.iterator();
-        while (it.hasNext()) {
-            MultipleByValueBean m = it.next();
+        Iterator<MultipleByValueBean> iterator = matchIdList.iterator();
+        while (iterator.hasNext()) {
+            MultipleByValueBean m = iterator.next();
             if (m.getThirdId().equals(list.get(position).getMatchId())) {
-                it.remove();
+                iterator.remove();
             }
         }
 
