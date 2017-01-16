@@ -258,6 +258,9 @@ public class CommonUtils {
             case AccountResultCode.ONLY_FIVE_EACHDAY:
                 UiUtils.toast(MyApp.getInstance(), R.string.only_five_eachday);
                 break;
+            case AccountResultCode.INVITED_NUMBER_NOON:
+                UiUtils.toast(MyApp.getInstance(), R.string.invited_number_noon);
+                break;
             default:
                 L.e(TAG, "未定义错误码 : rescode = " + rescode + " , defaultMessage = " + defaultMessage);
                 if (!TextUtils.isEmpty(defaultMessage)) {

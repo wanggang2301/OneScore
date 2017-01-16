@@ -101,6 +101,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             }
         }
     };
+    private RelativeLayout rl_setting_invited;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,10 +131,15 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         //头像
         mUser_image = (ImageView) findViewById(R.id.user_info_image);
         mUser_image.setOnClickListener(this);
-        findViewById(R.id.rl_setting_invited).setOnClickListener(this);
+
+        rl_setting_invited = (RelativeLayout) findViewById(R.id.rl_setting_invited);
+        rl_setting_invited.setOnClickListener(this);
+
              /*判断登录状态*/
         if (CommonUtils.isLogin()) {
             mViewHandler.sendEmptyMessage(LOGGED_ON);
+
+
         } else {
             mTv_nickname.setText(R.string.Login_register);
             mUser_image.setImageResource(R.mipmap.center_head);
@@ -238,7 +244,12 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
                 break;
             case R.id.rl_setting_invited:
-                startActivity(new Intent(HomeUserOptionsActivity.this, InvitedActivity.class));
+                if (CommonUtils.isLogin()){
+                    startActivity(new Intent(HomeUserOptionsActivity.this, InvitedActivity.class));
+                }else{
+                    UiUtils.toast(getApplicationContext(),R.string.please_login_first);
+                }
+
 
                 break;
         }

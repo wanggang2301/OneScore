@@ -67,7 +67,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     //新需求，点击获取验证码的时候显示一个progressbar,服务器返回结果后再开始倒计时。
     private ProgressBar mProgressBar;
-
+    private EditText invited_number;
 
 
     @Override
@@ -137,6 +137,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         et_verifycode = (EditText) findViewById(R.id.et_verifycode);
         tv_verycode = (TextView) findViewById(R.id.tv_verycode);
         tv_verycode.setOnClickListener(this);
+
+        //获取邀请码
+        invited_number = (EditText) findViewById(R.id.invited_number);
 
     }
 
@@ -266,6 +269,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
             param.put("deviceToken", AppConstants.deviceToken);
 
+            //邀请码
+            param.put("inviteCode", invited_number.getText().toString());
             //以下添加的参数为修复恶意注册的bug所加。
             String sign = CommonUtils.getSign(userName, AppConstants.deviceToken, AppConstants.SIGN_KEY);
             param.put("sign",sign);

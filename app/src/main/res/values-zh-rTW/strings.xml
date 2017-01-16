@@ -1054,6 +1054,7 @@
     <string name="star_style">球星風采</string>
     <string name="football_baby">足球寶貝</string>
     <string name="account_cannot_be_empty">帳號或手機號不能為空</string>
+    <string name="please_login_first">請先登錄</string>
 
     <!--模糊搜索-->
     <string name="fuzzy_search">請輸入聯賽名</string>
@@ -1132,6 +1133,7 @@
     <string name="ninety_plus">90+</string>
     <string name="server_busy">系统繁忙</string>
     <string name="at_least_one_company">至少選擇壹家公司</string>
+    <string name="invited_number_noon">邀請碼不存在</string>
 
     <string name="home_win_rate">主勝率</string>
     <string name="home_lose_rate">主負率</string>
@@ -1493,6 +1495,7 @@
     <string name="copy_tv">複製</string>
     <string name="copy_text2">輸入邀請碼，一筆分後續會發放金幣</string>
     <string name="copy_text3">參與一筆分活動，贏取精彩好禮！</string>
+    <string name="please_invited_number">請輸入邀請碼</string>
 
     <string name="multi_header_name">壹觀看</string>
     <string name="multi_add">添加</string>
