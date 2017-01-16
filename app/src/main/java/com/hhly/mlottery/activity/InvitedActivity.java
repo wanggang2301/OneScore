@@ -105,7 +105,6 @@ public class InvitedActivity extends BaseActivity implements View.OnClickListene
                 shareBean.setTarget_url("http://192.168.31.107:9000/download_yqm.html?userId=" + AppConstants.register.getData().getUser().getUserId());
                 ShareFragment shareFragment = ShareFragment.newInstance(shareBean);
                 shareFragment.show(getSupportFragmentManager(), "InvitedActivity");
-
                 break;
             case R.id.iv_number_copy:
                 if (!copy_text.isEmpty()) {
