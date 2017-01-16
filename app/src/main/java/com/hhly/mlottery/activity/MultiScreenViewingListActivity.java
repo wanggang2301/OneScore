@@ -784,6 +784,14 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
         }
     }
 
+    /**
+     * 多屏内页返回
+     */
+    public void onEventMainThread(List<MultipleByValueBean> value){
+
+        Toast.makeText(mContext, "多屏内页返回 == " + value.size(), Toast.LENGTH_SHORT).show();
+    }
+
     private void updateFootballAdapter() {
         if (mFootballAdapter == null) {
             return;
