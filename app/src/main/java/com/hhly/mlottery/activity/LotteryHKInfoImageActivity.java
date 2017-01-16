@@ -123,6 +123,7 @@ public class LotteryHKInfoImageActivity extends BaseActivity implements View.OnC
                 shareBean.setSummary(mData.get(index).getSummary());
                 shareBean.setImage_url(mData.get(index).getPicUrl());
                 shareBean.setTarget_url(mData.get(index).getJumpAddr());
+                shareBean.setCopy(mData.get(index).getJumpAddr());
                 ShareFragment share = ShareFragment.newInstance(shareBean);
                 share.show(getSupportFragmentManager(), "LotteryHKInfoImageActivity");
                 break;
@@ -180,8 +181,7 @@ public class LotteryHKInfoImageActivity extends BaseActivity implements View.OnC
             PhotoView photo_view = (PhotoView) view.findViewById(R.id.photo_view);
 
             try {
-                // TODO 加载失败图片正在设计中。。。
-                Glide.with(mContext).load(mData.get(position).getLotteryImg()).error(R.mipmap.refresh).into(photo_view);
+                Glide.with(mContext).load(mData.get(position).getLotteryImg()).error(R.mipmap.impage_loading_error).into(photo_view);
             } catch (Exception e) {
                 e.printStackTrace();
             }
