@@ -38,6 +38,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:paddingTop="20dp"
+                android:lines="1"
+                android:ellipsize="end"
                 android:textColor="@color/content_txt_black"
                 android:textSize="@dimen/activity_football_match_detail_teamname"
                 tools:text="title" />
