@@ -1,24 +1,24 @@
 package com.hhly.mlottery.activity;
 
-import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.AppCompatSpinner;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.frame.numbersframe.CurrentNumberFragment;
+import com.hhly.mlottery.frame.numbersframe.HKLotteryChartFragment;
+import com.hhly.mlottery.frame.numbersframe.HKLotteryStartFragment;
 import com.hhly.mlottery.frame.numbersframe.HistoryNumberFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.NumberDataUtils;
-import com.hhly.mlottery.util.ToastTools;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -26,17 +26,11 @@ import com.umeng.analytics.MobclickAgent;
  *
  * @author Tenney
  * @ClassName: NumbersInfoActivity
- * @Description: TODO
+ * @Description: 彩票详情数据展示页
  * @date 2015-10-19 下午4:24:45
  */
-public class NumbersInfoBaseActivity extends BaseActivity implements
-        OnClickListener {
+public class NumbersInfoBaseActivity extends BaseActivity implements OnClickListener {
 
-    //    private ImageView tv_back;// 返回菜单
-//    private TextView title;// 设置标题
-//    private TextView currentNumberInfo;// 当前开奖
-//    private TextView historyNumberInfo;// 历史开奖
-    private FragmentManager fragmentManager;
     private String mNumberName;// 彩种名称
 
     private FrameLayout current;
@@ -46,10 +40,13 @@ public class NumbersInfoBaseActivity extends BaseActivity implements
     private TextView public_txt_title;
 
     public boolean isHistoryPager;
+    private LinearLayout ll_bottom_menu;// 底部导航菜单
+    private ImageView public_btn_set;
+    private FrameLayout fl_numberContext_info;// 彩票详情数据
+    private FrameLayout fl_other_content;// 统计和图表显示
+    public AppCompatSpinner public_txt_spinner;// 菜单下拉器
 
-//    public static CurrentNumberFragment getCurrentNumberFragment() {
-//        return currentFragment;
-//    }
+    private HKLotteryStartFragment hkLotteryStartFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +58,11 @@ public class NumbersInfoBaseActivity extends BaseActivity implements
         /**不统计当前Activity*/
         MobclickAgent.openActivityDurationTrack(false);
 
+        setContentView(R.layout.numbers_main_info);
+
         initView();
         initData();
         initFragment();
-        initEvent();
     }
 
     private void initFragment() {
@@ -75,34 +73,15 @@ public class NumbersInfoBaseActivity extends BaseActivity implements
         currentFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_numberContext_current, currentFragment).commit();
 
-//        fragmentManager = getSupportFragmentManager();
-//        FragmentTransaction transaction = fragmentManager.beginTransaction();
-//
-//        currentFragment = new CurrentNumberFragment();
-//        Bundle bundle1 = new Bundle();
-//        bundle1.putString("mNumberName", mNumberName);
-//        currentFragment.setArguments(bundle1);
-//        transaction.replace(R.id.fl_numberContext_current, currentFragment);
-//
-//        historyhFragment = new HistoryNumberFragment();
-//        Bundle bundle2 = new Bundle();
-//        bundle2.putString("mNumberName", mNumberName);
-//        historyhFragment.setArguments(bundle2);
-//        transaction.replace(R.id.fl_numberContext_historyh, historyhFragment);
-//
-//        transaction.commit();
-    }
-
-    private void initEvent() {
-//        tv_back.setOnClickListener(this);
-//        currentNumberInfo.setOnClickListener(this);
-//        historyNumberInfo.setOnClickListener(this);
     }
 
     private void initData() {
+        settingTitle();
+    }
 
+    // 设置标题名
+    private void settingTitle(){
         if (!TextUtils.isEmpty(mNumberName)) {
-//			 title.setText(AppConstants.numberNames[Integer.parseInt(mNumberName) - 1]);// 设置开奖标题
             NumberDataUtils.setTextTitle(mContext, public_txt_title, mNumberName);// 设置开奖标题
         } else {
             public_txt_title.setText("  ");
@@ -110,50 +89,56 @@ public class NumbersInfoBaseActivity extends BaseActivity implements
     }
 
     private void initView() {
-        setContentView(R.layout.numbers_main_info);
 
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_img_back).setOnClickListener(this);
-        ImageView public_btn_set = (ImageView) findViewById(R.id.public_btn_set);
+        public_btn_set = (ImageView) findViewById(R.id.public_btn_set);
         public_btn_set.setImageResource(R.mipmap.number_history_icon);
         public_btn_set.setOnClickListener(this);
         public_txt_title = (TextView) findViewById(R.id.public_txt_title);
 
-
-//        tv_back = $(R.id.iv_back_numberInfo);
-//        title = $(R.id.tv_title_numberInfo);
         current = $(R.id.fl_numberContext_current);
         historyh = $(R.id.fl_numberContext_historyh);
-//        current.setVisibility(View.VISIBLE);
-//        currentNumberInfo = $(R.id.tv_current_numberInfo);
-//        historyNumberInfo = $(R.id.tv_history_numberInfo);
-//        currentNumberInfo.setSelected(true);
         MobclickAgent.onEvent(mContext, "Lottery_Info_News");
+
+        ll_bottom_menu = (LinearLayout) findViewById(R.id.ll_bottom_menu);
+        fl_numberContext_info = (FrameLayout) findViewById(R.id.fl_numberContext_info);
+        fl_other_content = (FrameLayout) findViewById(R.id.fl_other_content);
+        findViewById(R.id.rb_open_lottery).setOnClickListener(this);
+        ((RadioButton) findViewById(R.id.rb_open_lottery)).setChecked(true);
+        findViewById(R.id.rb_statistics).setOnClickListener(this);
+        findViewById(R.id.rb_chart).setOnClickListener(this);
+        public_txt_spinner = (AppCompatSpinner) findViewById(R.id.public_txt_spinner);
+
+        if("1".equals(mNumberName)){
+            ll_bottom_menu.setVisibility(View.VISIBLE);
+        }else{
+            ll_bottom_menu.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void onClick(View v) {
-
         switch (v.getId()) {
             case R.id.public_img_back:// 关闭
                 MobclickAgent.onEvent(mContext, "Lottery_Info_Exit");
 
-                if(isHistoryPager){// 如果当前为历史详情，则返回到历史列表
+                if (isHistoryPager) {// 如果当前为历史详情，则返回到历史列表
                     historyhFragment.setValue(true);
                     current.setVisibility(View.GONE);
                     historyh.setVisibility(View.VISIBLE);
                     isHistoryPager = false;
-                }else{
-                    if(current.getVisibility() == View.GONE){
+                } else {
+                    if (current.getVisibility() == View.GONE) {
                         current.setVisibility(View.VISIBLE);
                         historyh.setVisibility(View.GONE);
-                    }else{
+                    } else {
                         finish();
                     }
                 }
                 break;
             case R.id.public_btn_set:// 历史开奖
-                MobclickAgent.onEvent(mContext,"Lottery_Info_History");
+                MobclickAgent.onEvent(mContext, "Lottery_Info_History");
                 isHistoryPager = true;
                 current.setVisibility(View.GONE);
                 historyh.setVisibility(View.VISIBLE);
@@ -165,42 +150,34 @@ public class NumbersInfoBaseActivity extends BaseActivity implements
                 getSupportFragmentManager().beginTransaction().replace(R.id.fl_numberContext_historyh, historyhFragment).commit();
 
                 break;
-//		case R.id.tv_current_numberInfo:// 当前开奖
-//			MobclickAgent.onEvent(mContext,"Lottery_Info_News");
-//			current.setVisibility(View.VISIBLE);
-//			currentNumberInfo.setSelected(true);
-//			currentNumberInfo.setTextColor(Color.WHITE);
-//
-//			historyh.setVisibility(View.GONE);
-//			historyNumberInfo.setSelected(false);
-//			historyNumberInfo.setTextColor(getResources().getColor(R.color.bg_header));
-//
-//			break;
-//		case R.id.tv_history_numberInfo:// 历史开奖
-//			MobclickAgent.onEvent(mContext,"Lottery_Info_History");
-//			currentNumberInfo.setSelected(false);
-//			current.setVisibility(View.GONE);
-//			currentNumberInfo.setTextColor(getResources().getColor(R.color.bg_header));
-//
-//			historyNumberInfo.setSelected(true);
-//			historyh.setVisibility(View.VISIBLE);
-//			historyNumberInfo.setTextColor(Color.WHITE);
-//
-//			historyhFragment.setValue(true);
-//
-//			break;
+            case R.id.rb_open_lottery:
+                fl_numberContext_info.setVisibility(View.VISIBLE);
+                public_btn_set.setVisibility(View.VISIBLE);
+                fl_other_content.setVisibility(View.GONE);
+                public_txt_spinner.setVisibility(View.GONE);
+                settingTitle();
+                break;
+            case R.id.rb_statistics:
+                fl_numberContext_info.setVisibility(View.GONE);
+                public_btn_set.setVisibility(View.GONE);
+                fl_other_content.setVisibility(View.VISIBLE);
+                public_txt_spinner.setVisibility(View.VISIBLE);
+                public_txt_title.setText(mContext.getResources().getString(R.string.home_lottery_info_start_title));
+
+                hkLotteryStartFragment = new HKLotteryStartFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl_other_content, hkLotteryStartFragment).commit();
+
+                break;
+            case R.id.rb_chart:
+                fl_numberContext_info.setVisibility(View.GONE);
+                public_btn_set.setVisibility(View.GONE);
+                fl_other_content.setVisibility(View.VISIBLE);
+                public_txt_spinner.setVisibility(View.GONE);
+                settingTitle();
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl_other_content, new HKLotteryChartFragment()).commit();
+
+                break;
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
     }
 }

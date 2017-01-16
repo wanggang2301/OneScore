@@ -41,12 +41,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
 
-            <!--
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".activity.FiltrateMatchConfigActivity"
@@ -227,10 +225,8 @@
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data android:scheme="1104883879" />
             </intent-filter>
         </activity>
@@ -282,7 +278,7 @@
         <activity
             android:name=".activity.FootballInformationSerachActivity"
             android:screenOrientation="portrait" />
-        <!-- 今日联赛统计 -->
+        <!--今日联赛统计-->
         <activity
             android:name=".activity.LeagueStatisticsTodayActivity"
             android:screenOrientation="portrait" />
@@ -306,12 +302,11 @@
         <activity
             android:name=".activity.MoreSettingsActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.ProductAdviceActivity"
+        <activity android:name=".activity.ProductAdviceActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.PlayHighLightActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.BasketballScoresActivity"
             android:screenOrientation="portrait" />
@@ -328,6 +323,9 @@
         <activity android:name=".activity.MultiScreenIntroduceActivity" />
         <activity android:name=".activity.MultiScreenViewActivity"/>
         <activity android:name=".activity.MyFocusActivity"/>
+        <!--袁天罡六合图片查看-->
+        <activity android:name=".activity.LotteryHKInfoImageActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

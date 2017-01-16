@@ -1499,4 +1499,28 @@
     <string name="multi_toast_clicks_match">請選擇比賽</string>
     <string name="multi_toast_upper_match">最多選擇三場</string>
 
+    <string name="home_lottery_info_open">開獎</string>
+    <string name="home_lottery_info_stat">統計</string>
+    <string name="home_lottery_info_chart">圖表</string>
+    <string name="home_lottery_info_start_title">走勢統計</string>
+    <string name="home_lottery_info_start_tab_tm">特碼出現</string>
+    <string name="home_lottery_info_start_tab_pm">平碼出現</string>
+    <string name="home_lottery_info_start_tab_notm">特碼未出現</string>
+    <string name="home_lottery_info_tm_zodiac_count">特碼生肖出現次數</string>
+    <string name="home_lottery_info_tm_count">特碼出現次數</string>
+    <string name="home_lottery_info_tm_mantissa_count">特碼尾號出現次數</string>
+    <string name="home_lottery_info_tm_bo_count">特碼波色出現次數</string>
+    <string name="home_lottery_info_pm_zodiac_count">平碼生肖出現次數</string>
+    <string name="home_lottery_info_pm_count">平碼出現次數</string>
+    <string name="home_lottery_info_pm_mantissa_count">平碼尾號出現次數</string>
+    <string name="home_lottery_info_pm_bo_count">平碼波色出現次數</string>
+    <string name="home_lottery_info_tm_not_zodiac_count">特碼生肖連續未出</string>
+    <string name="home_lottery_info_tm_not_count">特碼連續未出</string>
+    <string name="home_lottery_info_tm_not_mantissa_count">特碼尾號連續未出</string>
+    <string name="home_lottery_info_tm_not_bo_count">特碼波色連續未出</string>
+    <string name="home_lottery_info_tm_bo_r">紅</string>
+    <string name="home_lottery_info_tm_bo_g">綠</string>
+    <string name="home_lottery_info_tm_bo_b">藍</string>
+    <string name="home_lottery_info_image_desc">本站所有數據、資料僅供您參考，為避免遭受經濟損失任何人不得用於非法用途，否則責任自負</string>
+
 </resources>
