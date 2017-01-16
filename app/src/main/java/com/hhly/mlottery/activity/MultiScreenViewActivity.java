@@ -50,6 +50,7 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 
 /***
@@ -407,15 +408,21 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.public_img_back:
+                setResultData();
                 finish();
+
                 break;
             case R.id.ll_add:
                 //Toast.makeText(getApplicationContext(), "敬请期待", Toast.LENGTH_SHORT).show();
                 //startActivity(new Intent(MultiScreenViewActivity.this, MultiScreenViewingListActivity.class));
-
+                setResultData();
                 finish();
                 break;
         }
+    }
+
+    private void setResultData() {
+        EventBus.getDefault().post(matchIdList);
     }
 
     private Handler mHandler = new Handler() {
@@ -586,6 +593,14 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
      * @param position
      */
     private void deleteAdapterItem(int position) {
+
+
+        for (MultipleByValueBean m : matchIdList) {
+            if (m.getThirdId().equals(list.get(position).getMatchId())) {
+                matchIdList.remove(position);
+            }
+        }
+
         list.remove(position);
         multiScreenViewAdapter.notifyDataSetChanged();
 
