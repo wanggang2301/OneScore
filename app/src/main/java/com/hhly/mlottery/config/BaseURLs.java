@@ -1014,7 +1014,7 @@ public class BaseURLs {
     public final static String REPORT_USER = HTTP + HOST + URL_SPLITTER+ "chatServer/chat/reportUser/android";
 
     //多屏篮球列表
-    public final static String MULTIPLE_BASKET_LIST_URL = "http://192.168.33.71:8080/mlottery/core/basketballMatch.findMultiScreenMatchList.do";
+    public final static String MULTIPLE_BASKET_LIST_URL = URL_API_HOST + "basketballMatch.findMultiScreenMatchList.do";//"http://192.168.33.71:8080/mlottery/core/basketballMatch.findMultiScreenMatchList.do";
 
     //                                                     _(\_/)
     //                                                   ,((((^`\
