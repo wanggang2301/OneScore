@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -43,6 +44,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -50,6 +52,7 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 
 /***
@@ -407,15 +410,32 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.public_img_back:
+                setResultData();
                 finish();
+
                 break;
             case R.id.ll_add:
                 //Toast.makeText(getApplicationContext(), "敬请期待", Toast.LENGTH_SHORT).show();
                 //startActivity(new Intent(MultiScreenViewActivity.this, MultiScreenViewingListActivity.class));
-
+                setResultData();
                 finish();
                 break;
         }
+    }
+
+    private void setResultData() {
+        EventBus.getDefault().post(matchIdList);
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            setResultData();
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private Handler mHandler = new Handler() {
@@ -586,6 +606,18 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
      * @param position
      */
     private void deleteAdapterItem(int position) {
+        //删除
+
+
+        Iterator<MultipleByValueBean> iterator = matchIdList.iterator();
+        while (iterator.hasNext()) {
+            MultipleByValueBean m = iterator.next();
+            if (m.getThirdId().equals(list.get(position).getMatchId())) {
+                iterator.remove();
+            }
+        }
+
+
         list.remove(position);
         multiScreenViewAdapter.notifyDataSetChanged();
 

@@ -376,6 +376,10 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
      */
     private void currentClick(int type){
         if (type == BASKET_TYPE) {
+            //默认不选中
+            for (BasketMatchBean data : showDataList) {
+                data.setBasketChicks(false);
+            }
             if (byValue != null || byValue.size() != 0) {
                 for (int i = 0; i < byValue.size(); i++) {
                     if (byValue.get(i).getType() == BASKET_TYPE) {
@@ -388,6 +392,9 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                 }
             }
         }else if (type == FOOTBALL_TYPE) {
+            for (Match data : mMatchs) {
+                data.setFootballChicks(false);
+            }
             if (byValue != null || byValue.size() != 0) {
                 for (int i = 0; i < byValue.size(); i++) {
                     if (byValue.get(i).getType() == FOOTBALL_TYPE) {
@@ -781,6 +788,22 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                 updateBasketAdapter();
                 setState(MULTIPLE_STATUS_SUCCESS);
             }
+        }
+    }
+
+    /**
+     * 多屏内页返回
+     */
+    public void onEventMainThread(List<MultipleByValueBean> value){
+
+        Toast.makeText(mContext, "多屏内页返回 == " + value.size(), Toast.LENGTH_SHORT).show();
+        byValue.clear();
+        byValue = value;
+        currentClick(borf);
+        if (borf == BASKET_TYPE) {
+            updateBasketAdapter();
+        }else if(borf == FOOTBALL_TYPE){
+            updateFootballAdapter();
         }
     }
 
