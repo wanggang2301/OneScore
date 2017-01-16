@@ -605,6 +605,7 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
      * @param position
      */
     private void deleteAdapterItem(int position) {
+        //删除
 
 
         for (MultipleByValueBean m : matchIdList) {
