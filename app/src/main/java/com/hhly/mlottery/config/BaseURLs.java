@@ -1019,7 +1019,6 @@ public class BaseURLs {
     //多屏篮球列表
     public final static String MULTIPLE_BASKET_LIST_URL = URL_API_HOST + "basketballMatch.findMultiScreenMatchList.do";//"http://192.168.33.71:8080/mlottery/core/basketballMatch.findMultiScreenMatchList.do";
 
-
     //邀请码分享
     public final static String INVITED_ACTIVITY_URL = HTTP + HOST + URL_SPLITTER + "download_yqm.html";
 

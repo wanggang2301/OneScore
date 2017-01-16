@@ -225,6 +225,7 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
                             mWeiboShareAPI = WeiboShareSDK.createWeiboAPI(mContext, ShareConstants.SINA);
                             mWeiboShareAPI.registerApp();
                             shareSina();
+                            //sddd
                         }
                         break;
                     case COPY:
