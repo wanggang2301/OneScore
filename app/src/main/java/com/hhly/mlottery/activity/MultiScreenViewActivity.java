@@ -44,6 +44,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -607,11 +608,14 @@ public class MultiScreenViewActivity extends BaseWebSocketMultiScreenViewActivit
     private void deleteAdapterItem(int position) {
 
 
-        for (MultipleByValueBean m : matchIdList) {
+        Iterator<MultipleByValueBean> it = matchIdList.iterator();
+        while (it.hasNext()) {
+            MultipleByValueBean m = it.next();
             if (m.getThirdId().equals(list.get(position).getMatchId())) {
-                matchIdList.remove(position);
+                it.remove();
             }
         }
+
 
         list.remove(position);
         multiScreenViewAdapter.notifyDataSetChanged();
