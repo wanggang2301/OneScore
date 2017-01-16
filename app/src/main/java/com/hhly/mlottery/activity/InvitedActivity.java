@@ -25,7 +25,7 @@ import java.util.Map;
  * 获取邀请码页面
  */
 
-public class InvitedActivity extends Activity implements View.OnClickListener{
+public class InvitedActivity extends BaseActivity implements View.OnClickListener{
 
     private TextView iv_invited_number;
     private TextView iv_number_copy;
@@ -45,9 +45,6 @@ public class InvitedActivity extends Activity implements View.OnClickListener{
 
         param.put("userId", AppConstants.register.getData().getUser().getUserId());
         Log.i("sada","ada"+ AppConstants.register.getData().getUser().getUserId());
-        //String url="http://m.1332255.com:81/mlottery/core/androidUserCenter.getInviteCode.do";
-        Log.i("sada", "ada" + AppConstants.register.getData().getUser().getUserId());
-        String url = "http://m.1332255.com:81/mlottery/core/androidUserCenter.getInviteCode.do";
 
         VolleyContentFast.requestJsonByGet(BaseURLs.INVITED_RUL, param, new VolleyContentFast.ResponseSuccessListener<InvitedBean>() {
             @Override
