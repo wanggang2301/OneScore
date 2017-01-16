@@ -1022,7 +1022,8 @@ public class BaseURLs {
     //邀请码分享
     public final static String INVITED_ACTIVITY_URL = HTTP + HOST + URL_SPLITTER + "download_yqm.html";
 
-
+    // 邀请码
+    public final static String INVITED_RUL = HTTP + HOST + URL_SPLITTER+ "androidUserCenter.getInviteCode.do";
     //                                                     _(\_/)
     //                                                   ,((((^`\
     //                                                  ((((  (6 \
