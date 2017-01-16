@@ -99,18 +99,12 @@ public class InvitedActivity extends BaseActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.public_btn_save:  //分享
-
-
                 ShareBean shareBean = new ShareBean();
                 shareBean.setTitle("邀请码");
                 shareBean.setSummary("[" + AppConstants.register.getData().getUser().getUserId() + "]" + "请您一起看比赛，输入邀请码，优惠多多哦。");
-
-
-
-
+                shareBean.setTarget_url("http://192.168.31.107:9000/download_yqm.html?userId=" + AppConstants.register.getData().getUser().getUserId());
                 ShareFragment shareFragment = ShareFragment.newInstance(shareBean);
                 shareFragment.show(getSupportFragmentManager(), "InvitedActivity");
-
 
                 break;
             case R.id.iv_number_copy:
