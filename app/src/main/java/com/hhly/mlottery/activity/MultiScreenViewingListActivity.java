@@ -289,6 +289,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                     mChickedFilter = mAllFilter;//默认选中全部
                 }
 
+                L.d("yxq0117--AAAA-", "showDataList >>>> = " + showDataList.size());
                 //* 判断是否有选中的比赛
                 currentClick(BASKET_TYPE);
 
@@ -750,10 +751,10 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
 
         Map<String, Object> map = multipleBasketFilterListEvent.getMap();
 
-        L.d("yxq0117---", "checkedIds.length");
+        L.d("yxq0117---", "**************&&&&&&&&****************");
         String[] checkedIds = (String[]) ((List) map.get(BasketFiltrateActivity.CHECKED_CUPS_IDS)).toArray(new String[]{});
 
-        L.d("yxq0117------------checkedIds.length------", checkedIds.length + "");
+        L.d("yxq0117AA------------checkedIds.length------", checkedIds.length + "");
         isBasketFilter = true;
 
         FiltrateCupsMap.basketImmedateCups = checkedIds;
@@ -764,12 +765,14 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
             setState(MULTIPLE_STATUS_FOCUS_NO_DATA);
         } else {
 
+            L.d("yxq0117BB------------showDataList.size()------", showDataList.size() + "");
             showDataList.clear();
             for (BasketMatchBean matchBean : mMatchdata) {// 遍历所有数据 得到筛选后的
                 boolean isExistId = false;
                 for (String checkedId : checkedIds) {
                     if (matchBean.getLeagueId().equals(checkedId)) {
                         isExistId = true;
+
                         break;
                     }
                 }
@@ -787,7 +790,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                 }
             }
             mChickedFilter = checkedFilters;
-            L.d("yxq0117---", "childrenDataList >>>> = " + showDataList.size());
+            L.d("yxq0117CC---", "showDataList >>>> = " + showDataList.size()); //showDataList
             //* 判断是否有选中的比赛
             currentClick(BASKET_TYPE);
             updateBasketAdapter();

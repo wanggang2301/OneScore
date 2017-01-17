@@ -49,8 +49,8 @@ public class MultipleListBasketAdapter extends BaseQuickAdapter {
         this.mData = data;
     }
 
-    public void setData(List<BasketMatchBean> data) {
-        this.mData = data;
+    public void setData(List<BasketMatchBean> matchdata) {
+        this.mData = matchdata;
     }
 
     /**
