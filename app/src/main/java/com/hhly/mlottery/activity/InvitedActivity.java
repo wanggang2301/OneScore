@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.InvitedBean;
+import com.hhly.mlottery.bean.ShareBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -99,7 +101,7 @@ public class InvitedActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.public_btn_save:  //分享
                 ShareBean shareBean = new ShareBean();
-                shareBean.setTitle("邀请码");
+                shareBean.setTitle(getApplicationContext().getResources().getString(R.string.please_invited));
                 shareBean.setSummary("【" + AppConstants.register.getData().getUser().getUserId() + "】" + "请您一起看比赛，输入邀请码，优惠多多哦。");
                 shareBean.setTarget_url(BaseURLs.INVITED_ACTIVITY_URL + "?userId=" + AppConstants.register.getData().getUser().getUserId());
                 shareBean.setCopy(shareBean.getTarget_url());
@@ -108,12 +110,8 @@ public class InvitedActivity extends BaseActivity implements View.OnClickListene
                 shareFragment.show(getSupportFragmentManager(), "InvitedActivity");
                 break;
             case R.id.iv_number_copy:
-                if (!copy_text.isEmpty()) {
 
                     ClipboardManager cmb = (ClipboardManager) getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                    cmb.setText(copy_text);
-                    UiUtils.toast(getApplicationContext(), R.string.copy_text);
-                }
                     cmb.setText(copy_text+"");
                     UiUtils.toast(getApplicationContext(),R.string.copy_text);
                 break;

@@ -10,7 +10,8 @@
       android:orientation="vertical"
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
-      <TextView
+
+      ``<TextView
           android:id="@+id/tv_photograph"
           android:layout_width="match_parent"
           android:layout_height="55dp"
@@ -42,7 +43,7 @@
           android:layout_height="55dp"
           android:gravity="center"
           android:textColor="@color/colorPrimary"
-          android:textSize="18sp"
+          android:textSize="@dimen/home_pager_user_title"
           android:text="@string/chose_start_photo"/>
       <View
           android:layout_width="match_parent"
@@ -55,7 +56,7 @@
           android:layout_width="match_parent"
           android:gravity="center"
           android:layout_height="55dp"
-          android:textSize="18sp"
+          android:textSize="@dimen/home_pager_user_title"
           android:text="@string/fottball_home_quxiao"/>
 
       <View

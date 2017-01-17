@@ -98,10 +98,10 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     String PUT_URL="http://file.13322.com/upload/uploadImage.do";
 
     /**图片裁剪宽度*/
-    private int width = 300;
+    private int width = 400;
 
     /**图片裁剪高度*/
-    private int height = 300;
+    private int height = 400;
 
 
     private ProgressDialog progressBar;
@@ -626,44 +626,48 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
      //异步上传图片并且携带其他参数
      public void doPostSycn(String url,File file){
          progressBar.show();
+         try {
+             RequestBody requestBody = new MultipartBuilder() //建立请求的内容
 
-         RequestBody requestBody = new MultipartBuilder() //建立请求的内容
+                     .type(MultipartBuilder.FORM)//表单形式
+                     .addFormDataPart("imageFile", "imageFile", RequestBody.create(MEDIA_TYPE_PNG, file))
+                     .build();
 
-                 .type(MultipartBuilder.FORM)//表单形式
-                 .addFormDataPart("imageFile", "imageFile", RequestBody.create(MEDIA_TYPE_PNG, file))
-                 .build();
+             Request request = new Request.Builder()//建立请求
+                     .url(url)//请求的地址
+                     .post(requestBody)//请求的内容（上面建立的requestBody）
+                     .build();
 
-         Request request = new Request.Builder()//建立请求
-                 .url(url)//请求的地址
-                 .post(requestBody)//请求的内容（上面建立的requestBody）
-                 .build();
-
-         //发送异步请求，同步会报错，Android4.0以后禁止在主线程中进行耗时操作
-         client.newCall(request).enqueue(new Callback() {
-             @Override
-             public void onFailure(Request request, IOException e) {
-                // UiUtils.toast(MyApp.getInstance(), R.string.picture_put_failed);
-                 mViewHandler.sendEmptyMessage(Put_FAIL_PHOTO);
-                 progressBar.dismiss();
-             }
-
-             @Override
-             public void onResponse(Response response) throws IOException {
-
-                  String jsonString=response.body().string();
-                  JSONObject jo = JSON.parseObject(jsonString);
-                  //UiUtils.toast(MyApp.getInstance(), jo.toString());
-                  String headerUrl = jo.getString("url");
-                 if(!headerUrl.isEmpty()){
-                     putPhotoUrl(headerUrl);
-                 }else{
-                     UiUtils.toast(MyApp.getInstance(), R.string.picture_put_failed);
+             //发送异步请求，同步会报错，Android4.0以后禁止在主线程中进行耗时操作
+             client.newCall(request).enqueue(new Callback() {
+                 @Override
+                 public void onFailure(Request request, IOException e) {
+                     // UiUtils.toast(MyApp.getInstance(), R.string.picture_put_failed);
+                     mViewHandler.sendEmptyMessage(Put_FAIL_PHOTO);
+                     progressBar.dismiss();
                  }
 
-             }
+                 @Override
+                 public void onResponse(Response response) throws IOException {
+
+                     String jsonString=response.body().string();
+                     JSONObject jo = JSON.parseObject(jsonString);
+                     //UiUtils.toast(MyApp.getInstance(), jo.toString());
+                     String headerUrl = jo.getString("url");
+                     if(!headerUrl.isEmpty()){
+                         putPhotoUrl(headerUrl);
+                     }else{
+                         UiUtils.toast(MyApp.getInstance(), R.string.picture_put_failed);
+                     }
+                 }
+             });
+
+         }catch (Exception e){
+
+             UiUtils.toast(MyApp.getInstance(), R.string.picture_resource_does_not_exist);
+         }
 
 
-         });
      }
 
     /*上传图片url  后台绑定*/

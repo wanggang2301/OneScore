@@ -1239,6 +1239,7 @@
     <string name="avatar_settings">頭像</string>
     <string name="photograph">拍照</string>
     <string name="is_uploading">努力上傳中..........</string>
+    <string name="picture_resource_does_not_exist">圖片資源不存在</string>
 
     <string name="welcome_chart_room">歡迎進入聊天室!</string>
     <string name="to_update_kindly_reminder">溫馨提示</string>
@@ -1496,6 +1497,7 @@
     <string name="copy_text2">輸入邀請碼，一筆分後續會發放金幣</string>
     <string name="copy_text3">參與一筆分活動，贏取精彩好禮！</string>
     <string name="please_invited_number">請輸入邀請碼</string>
+    <string name="please_invited">邀請碼</string>
 
     <string name="multi_header_name">壹觀看</string>
     <string name="multi_add">添加</string>
