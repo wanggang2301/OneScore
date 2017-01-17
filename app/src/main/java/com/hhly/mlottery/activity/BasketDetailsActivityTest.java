@@ -509,7 +509,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_DETAILS, params, new VolleyContentFast.ResponseSuccessListener<BasketballDetailsBean>() {
             @Override
             public void onResponse(BasketballDetailsBean basketDetailsBean) {
-                if (basketDetailsBean.getMatch() != null) {
+                if (basketDetailsBean != null && basketDetailsBean.getMatch() != null) {
 
                     mBasketDetailsHeadFragment.initData(basketDetailsBean, mChartBallFragment);
 
@@ -614,9 +614,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         }
         return super.onKeyDown(keyCode, event);
     }
-
-
-
 
 
     Handler mSocketHandler = new Handler() {
