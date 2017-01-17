@@ -1054,6 +1054,7 @@
     <string name="star_style">球星風采</string>
     <string name="football_baby">足球寶貝</string>
     <string name="account_cannot_be_empty">帳號或手機號不能為空</string>
+    <string name="please_login_first">請先登錄</string>
 
     <!--模糊搜索-->
     <string name="fuzzy_search">請輸入聯賽名</string>
@@ -1132,6 +1133,7 @@
     <string name="ninety_plus">90+</string>
     <string name="server_busy">系统繁忙</string>
     <string name="at_least_one_company">至少選擇壹家公司</string>
+    <string name="invited_number_noon">邀請碼不存在</string>
 
     <string name="home_win_rate">主勝率</string>
     <string name="home_lose_rate">主負率</string>
@@ -1493,5 +1495,44 @@
     <string name="copy_tv">複製</string>
     <string name="copy_text2">輸入邀請碼，一筆分後續會發放金幣</string>
     <string name="copy_text3">參與一筆分活動，贏取精彩好禮！</string>
+    <string name="please_invited_number">請輸入邀請碼</string>
+
+    <string name="multi_header_name">壹觀看</string>
+    <string name="multi_add">添加</string>
+    <string name="multi_dialog_text">您確認移除這場比賽嗎?</string>
+    <string name="multi_zhishao_text">至少展示一場比賽！</string>
+    <string name="multi_enter_text">點擊進入</string>
+    <string name="multi_add_view_text">添加多屏</string>
+
+    <!--多屏列表-->
+    <string name="multi_item_basket_name">籃球</string>
+    <string name="multi_item_football_name">足球</string>
+    <string name="multi_item_clicks">確定</string>
+    <string name="multi_toast_clicks_match">請選擇比賽</string>
+    <string name="multi_toast_upper_match">最多選擇三場</string>
+
+    <string name="home_lottery_info_open">開獎</string>
+    <string name="home_lottery_info_stat">統計</string>
+    <string name="home_lottery_info_chart">圖表</string>
+    <string name="home_lottery_info_start_title">走勢統計</string>
+    <string name="home_lottery_info_start_tab_tm">特碼出現</string>
+    <string name="home_lottery_info_start_tab_pm">平碼出現</string>
+    <string name="home_lottery_info_start_tab_notm">特碼未出現</string>
+    <string name="home_lottery_info_tm_zodiac_count">特碼生肖出現次數</string>
+    <string name="home_lottery_info_tm_count">特碼出現次數</string>
+    <string name="home_lottery_info_tm_mantissa_count">特碼尾號出現次數</string>
+    <string name="home_lottery_info_tm_bo_count">特碼波色出現次數</string>
+    <string name="home_lottery_info_pm_zodiac_count">平碼生肖出現次數</string>
+    <string name="home_lottery_info_pm_count">平碼出現次數</string>
+    <string name="home_lottery_info_pm_mantissa_count">平碼尾號出現次數</string>
+    <string name="home_lottery_info_pm_bo_count">平碼波色出現次數</string>
+    <string name="home_lottery_info_tm_not_zodiac_count">特碼生肖連續未出</string>
+    <string name="home_lottery_info_tm_not_count">特碼連續未出</string>
+    <string name="home_lottery_info_tm_not_mantissa_count">特碼尾號連續未出</string>
+    <string name="home_lottery_info_tm_not_bo_count">特碼波色連續未出</string>
+    <string name="home_lottery_info_tm_bo_r">紅</string>
+    <string name="home_lottery_info_tm_bo_g">綠</string>
+    <string name="home_lottery_info_tm_bo_b">藍</string>
+    <string name="home_lottery_info_image_desc">本站所有數據、資料僅供您參考，為避免遭受經濟損失任何人不得用於非法用途，否則責任自負</string>
 
 </resources>

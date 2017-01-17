@@ -31,6 +31,7 @@ import com.hhly.mlottery.bean.OpenBarrage;
 import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.DetailsCollectionCountBean;
+import com.hhly.mlottery.bean.multiplebean.MultipleByValueBean;
 import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
@@ -41,12 +42,10 @@ import com.hhly.mlottery.frame.basketballframe.BasketFocusEventBus;
 import com.hhly.mlottery.frame.basketballframe.BasketLiveFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketOddsFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketTextLiveEvent;
-import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
-import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -208,6 +207,10 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private View view_red;
     private int chartBallView = -1;// 聊球界面转标记
 
+    private TextView tv_addMultiView;
+    private boolean isAddMultiViewHide = false;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (getIntent().getExtras() != null) {
@@ -217,6 +220,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             chartBallView = getIntent().getExtras().getInt("chart_ball_view");
 
 //            mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
+//            mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
+            isAddMultiViewHide = getIntent().getExtras().getBoolean("isAddMultiViewHide");
 
             if (LEAGUEID_NBA.equals(mLeagueId)) {
                 isNBA = true;
@@ -390,6 +395,10 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         mBack = (ImageView) this.findViewById(R.id.basket_details_back);
 
         rl_gif_notice = (RelativeLayout) findViewById(R.id.rl_gif_notice);
+        tv_addMultiView = (TextView) findViewById(R.id.tv_addMultiView);
+        if (isAddMultiViewHide) {
+            tv_addMultiView.setVisibility(View.GONE);
+        }
 
         mTitleScore = (RelativeLayout) this.findViewById(R.id.ll_basket_title_score);
         mCollect = (ImageView) this.findViewById(R.id.basket_details_collect);
@@ -404,6 +413,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         barrage_view = (BarrageView) findViewById(R.id.barrage_view);
         barrage_switch = (ImageView) findViewById(R.id.barrage_switch);
         barrage_switch.setOnClickListener(this);
+
+        tv_addMultiView.setOnClickListener(this);
 
     }
 
@@ -515,7 +526,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             }
         }, BasketballDetailsBean.class);
     }
-
+//
 
     @Override
     public void onClick(View v) {
@@ -554,6 +565,24 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                     barrage_view.setAlpha(0);
                 }
                 break;
+
+            case R.id.tv_addMultiView:
+                enterMultiScreenView();
+                break;
+        }
+    }
+
+
+    private void enterMultiScreenView() {
+        if (PreferenceUtil.getBoolean("introduce", true)) {
+            Intent intent = new Intent(BasketDetailsActivityTest.this, MultiScreenIntroduceActivity.class);
+            intent.putExtra("thirdId", new MultipleByValueBean(2, mThirdId));
+            startActivity(intent);
+            PreferenceUtil.commitBoolean("introduce", false);
+        } else {
+            Intent intent = new Intent(BasketDetailsActivityTest.this, MultiScreenViewingListActivity.class);
+            intent.putExtra("thirdId", new MultipleByValueBean(2, mThirdId));
+            startActivity(intent);
         }
     }
 
@@ -981,7 +1010,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                     if (jsonObject.getData() != 0) {
                         mBasketDetailsHeadFragment.setBtn_showGifVisible(View.VISIBLE);
                         if (isFirstShowGif) {  //第一次显示
-                            initGifRedPoint();
 
                             gifCount = jsonObject.getData();
                             L.d("zxcvbn", "第一次进入------------gifCount==" + gifCount);
@@ -991,7 +1019,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                             L.d("zxcvbn", "第二次进入------------gifCount=" + gifCount);
                             if (jsonObject.getData() > gifCount) { //有新的gif出現
                                 L.d("zxcvbn", "有新的gif出現------------");
-                                showGifRedPoint();
                                 gifCount = jsonObject.getData();
                                 rl_gif_notice.setVisibility(View.VISIBLE);
                                 countDown.start();
@@ -1016,16 +1043,4 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         }, DetailsCollectionCountBean.class);
     }
 
-    private void initGifRedPoint() {
-        if (PreferenceUtil.getBoolean(BASKETBALL_GIF, true)) {
-            mBasketDetailsHeadFragment.setRedPointVisible(View.VISIBLE);
-        } else {
-            mBasketDetailsHeadFragment.setRedPointVisible(View.GONE);
-        }
-    }
-
-    private void showGifRedPoint() {
-        PreferenceUtil.commitBoolean(BASKETBALL_GIF, true);
-        mBasketDetailsHeadFragment.setRedPointVisible(View.VISIBLE);
-    }
 }

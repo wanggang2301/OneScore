@@ -79,7 +79,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
     private TextView mTv_nickname;
     private ImageView mUser_image;
-    private View mRedDot;
+//    private View mRedDot;
     private TextView mTv_logout;
     private Handler mViewHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -101,6 +101,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             }
         }
     };
+    private RelativeLayout rl_setting_invited;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,10 +131,15 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         //头像
         mUser_image = (ImageView) findViewById(R.id.user_info_image);
         mUser_image.setOnClickListener(this);
-        findViewById(R.id.rl_setting_invited).setOnClickListener(this);
+
+        rl_setting_invited = (RelativeLayout) findViewById(R.id.rl_setting_invited);
+        rl_setting_invited.setOnClickListener(this);
+
              /*判断登录状态*/
         if (CommonUtils.isLogin()) {
             mViewHandler.sendEmptyMessage(LOGGED_ON);
+
+
         } else {
             mTv_nickname.setText(R.string.Login_register);
             mUser_image.setImageResource(R.mipmap.center_head);
@@ -155,13 +161,13 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         rl_user_feedback.setOnClickListener(this);
 
         /**我的定制红点*/
-        mRedDot = findViewById(R.id.custom_red_dot_view);
-        boolean currenRedDot = PreferenceUtil.getBoolean("custom_red_dot" , true);
-        if (currenRedDot) {
-            mRedDot.setVisibility(View.VISIBLE);
-        }else{
-            mRedDot.setVisibility(View.GONE);
-        }
+//        mRedDot = findViewById(R.id.custom_red_dot_view);
+//        boolean currenRedDot = PreferenceUtil.getBoolean("custom_red_dot" , true);
+//        if (currenRedDot) {
+//            mRedDot.setVisibility(View.VISIBLE);
+//        }else{
+//            mRedDot.setVisibility(View.GONE);
+//        }
         /**我的关注红点*/
         mFocus_RedDot=findViewById(R.id.focus_red_dot_view);
         mShowRedDot=PreferenceUtil.getBoolean(SHOW_RED,true);
@@ -186,7 +192,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             case R.id.rl_custom:
                 if (CommonUtils.isLogin()) {
                     PreferenceUtil.commitBoolean("custom_red_dot" , false);
-                    mRedDot.setVisibility(View.GONE);
+//                    mRedDot.setVisibility(View.GONE);
                     startActivity(new Intent(HomeUserOptionsActivity.this, CustomActivity.class));
                 }else{
                     Intent intent = new Intent(this, LoginActivity.class);
@@ -238,7 +244,12 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
                 break;
             case R.id.rl_setting_invited:
-                startActivity(new Intent(HomeUserOptionsActivity.this, InvitedActivity.class));
+                if (CommonUtils.isLogin()){
+                    startActivity(new Intent(HomeUserOptionsActivity.this, InvitedActivity.class));
+                }else{
+                    UiUtils.toast(getApplicationContext(),R.string.please_login_first);
+                }
+
 
                 break;
         }
@@ -397,11 +408,11 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
      * @param event
      */
     public void onEventMainThread(CustomEvent event) {
-        if (PreferenceUtil.getBoolean("custom_red_dot" , true)) {
-            mRedDot.setVisibility(View.VISIBLE);
-        }else{
-            mRedDot.setVisibility(View.GONE);
-        }
+//        if (PreferenceUtil.getBoolean("custom_red_dot" , true)) {
+//            mRedDot.setVisibility(View.VISIBLE);
+//        }else{
+//            mRedDot.setVisibility(View.GONE);
+//        }
     }
     public void onEventMainThread(ChoseHeadStartBean choseHeadStartBean){
         //ImageLoader.load(HomeUserOptionsActivity.this,choseHeadStartBean.startUrl,R.mipmap.center_head).into(mUser_image);

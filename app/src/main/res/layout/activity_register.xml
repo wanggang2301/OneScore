@@ -95,6 +95,26 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        style="@style/login_item_bg"
+        android:layout_height="48dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center_vertical"
+        >
+
+        <EditText
+            android:layout_marginLeft="10dp"
+            android:textSize="@dimen/text_size_13"
+            android:id="@+id/invited_number"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:hint="@string/please_invited_number"
+            android:background="@null"
+            android:layout_weight="1"/>
+
+
+
+    </LinearLayout>
 
 
     <TextView

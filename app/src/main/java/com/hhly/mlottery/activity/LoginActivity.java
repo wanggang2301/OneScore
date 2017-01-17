@@ -630,7 +630,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                              //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
                              sendUserInfoToServer(register);
                              if (isCoustom) {
-                                 PreferenceUtil.commitBoolean("custom_red_dot" , false);
+//                                 PreferenceUtil.commitBoolean("custom_red_dot" , false);
                                  startActivity(new Intent(LoginActivity.this, CustomActivity.class));
                              }
                              finish();

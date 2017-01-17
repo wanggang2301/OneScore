@@ -26,6 +26,7 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.ImageLoaderUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.view.ViewPagerFixed;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +42,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
  */
 
 public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnInfoListener, MediaPlayer.OnCompletionListener {
-    private ViewPager mViewPager;
+    private ViewPagerFixed mViewPager;
     private MyPagerAdapter mAdapter;
 
     private final static String GIF_TYPE = "0";
@@ -115,7 +116,7 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
 
         ll_error = (LinearLayout) findViewById(R.id.error);
         reloading_txt = (TextView) findViewById(R.id.reloading_txt);
-        mViewPager = (ViewPager) this.findViewById(R.id.mViewPager);
+        mViewPager = (ViewPagerFixed) this.findViewById(R.id.mViewPager);
         tvImageIndex = (TextView) findViewById(R.id.tv_image_index);
         tv_text = (TextView) findViewById(R.id.tv_text);
         iv_back = (ImageView) findViewById(R.id.iv_back);
@@ -302,6 +303,9 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
     }
 
 
+
+
+
     private void setListener(VideoView videoView) {
         videoView.setOnInfoListener(this);
         videoView.setOnCompletionListener(this);
@@ -338,6 +342,10 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
             container.addView(mViewList.get(position));
             return mViewList.get(position);
         }
+
+
+
+
     }
 
 

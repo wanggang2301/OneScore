@@ -36,25 +36,25 @@ public class BasketballDetailsBean {
             this.matchType = matchType;
         }
 
-        private Integer matchType;
+        private Integer matchType; //联赛类型  //跳转
 
 
-        private String thirdId;
+        private String thirdId;      //跳转
         private String homeTeam;
         private String guestTeam;
-        private String leagueId;
+        private String leagueId;   //联赛Id  //跳转
         private String leagueName;
         private String leagueColor;
         private String date;
         private String time;
-        private int matchStatus;
+        private int matchStatus;     //跳转
         private boolean hot;
         private String homeRanking;
         private String guestRanking;
 
         private MatchScoreEntity matchScore;
-        private Object matchOdds;
-        private int section;
+        private Object matchOdds;  //头部没用
+        private int section;     //篮球几节
         private String homeTeamId;
         private String guestTeamId;
         private String homeLogoUrl;
@@ -229,8 +229,8 @@ public class BasketballDetailsBean {
             private int guestOt1;
             private int guestOt2;
             private int guestOt3;
-            private String remainTime;
-            private int addTime;
+            private String remainTime;   //当前时间
+            private int addTime;   //加时时间
 
             public int getHomeScore() {
                 return homeScore;

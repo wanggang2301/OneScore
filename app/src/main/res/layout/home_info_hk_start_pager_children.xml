@@ -1,0 +1,2257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--特码生肖出现次数-->
+        <TextView
+            android:id="@+id/tv_title_01"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:background="@color/whitesmoke"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:textColor="@color/mdy_999"
+            android:textSize="@dimen/item_football_half_score"
+            android:text="@string/home_lottery_info_tm_zodiac_count" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                        android:id="@+id/emoji_icon_01"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        tools:background="@mipmap/number_hk_emoji_long"
+                        android:textSize="40sp"
+                        tools:text="" />
+
+                    <TextView
+                        android:id="@+id/emoji_count_01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                        android:id="@+id/emoji_icon_02"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:textSize="40sp"
+                        tools:text="\ue109" />
+
+                    <TextView
+                        android:id="@+id/emoji_count_02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                        android:id="@+id/emoji_icon_03"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:textSize="40sp"
+                        tools:text="" />
+
+                    <TextView
+                        android:id="@+id/emoji_count_03"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                        android:id="@+id/emoji_icon_04"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:textSize="40sp"
+                        tools:text="" />
+
+                    <TextView
+                        android:id="@+id/emoji_count_04"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                        android:id="@+id/emoji_icon_05"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:textSize="40sp"
+                        tools:text="" />
+
+                    <TextView
+                        android:id="@+id/emoji_count_05"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                        android:id="@+id/emoji_icon_06"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:textSize="40sp"
+                        tools:text="" />
+
+                    <TextView
+                        android:id="@+id/emoji_count_06"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="5dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                        android:id="@+id/emoji_icon_07"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:textSize="40sp"
+                        tools:text="" />
+
+                    <TextView
+                        android:id="@+id/emoji_count_07"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                        android:id="@+id/emoji_icon_08"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:textSize="40sp"
+                        tools:text="" />
+
+                    <TextView
+                        android:id="@+id/emoji_count_08"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                        android:id="@+id/emoji_icon_09"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:textSize="40sp"
+                        tools:text="" />
+
+                    <TextView
+                        android:id="@+id/emoji_count_09"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                        android:id="@+id/emoji_icon_10"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:textSize="40sp"
+                        tools:text="" />
+
+                    <TextView
+                        android:id="@+id/emoji_count_10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                        android:id="@+id/emoji_icon_11"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:textSize="40sp"
+                        tools:text="" />
+
+                    <TextView
+                        android:id="@+id/emoji_count_11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                        android:id="@+id/emoji_icon_12"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:textSize="40sp"
+                        tools:text="" />
+
+                    <TextView
+                        android:id="@+id/emoji_count_12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--特码出现次数-->
+        <TextView
+            android:id="@+id/tv_title_02"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:background="@color/whitesmoke"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:textColor="@color/mdy_999"
+            android:textSize="@dimen/item_football_half_score"
+            android:text="@string/home_lottery_info_tm_count" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number01"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:padding="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number02"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number03"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count03"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number04"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count04"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number05"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count05"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number06"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count06"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number07"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count07"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number08"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count08"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:padding="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number09"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count09"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number10"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number11"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number12"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number13"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number14"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number15"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:padding="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number16"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number17"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number18"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number19"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count19"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number20"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number21"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count21"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number22"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count22"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:padding="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number23"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count23"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number24"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number25"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count25"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number26"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count26"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number27"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count27"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number28"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count28"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number29"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count29"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:padding="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number30"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count30"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number31"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count31"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number32"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count32"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number33"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count33"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number34"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count34"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number35"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count35"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number36"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count36"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:padding="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number37"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count37"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number38"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count38"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number39"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count39"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number40"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count40"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number41"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count41"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number42"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count42"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number43"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count43"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:padding="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number44"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count44"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number45"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count45"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number46"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count46"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number47"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count47"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number48"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count48"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_show_number49"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/home_menu_icon_def"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_show_count49"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!--特码尾号出现次数-->
+        <TextView
+            android:id="@+id/tv_title_03"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:background="@color/whitesmoke"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:textColor="@color/mdy_999"
+            android:textSize="@dimen/item_football_half_score"
+            android:text="@string/home_lottery_info_tm_mantissa_count" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_mantissa_number01"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/number_hk_info_mantissa"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_mantissa_count01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:padding="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_mantissa_number02"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/number_hk_info_mantissa"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_mantissa_count02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_mantissa_number03"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/number_hk_info_mantissa"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_mantissa_count03"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_mantissa_number04"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/number_hk_info_mantissa"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_mantissa_count04"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_mantissa_number05"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/number_hk_info_mantissa"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_mantissa_count05"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_mantissa_number06"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/number_hk_info_mantissa"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_mantissa_count06"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:padding="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_mantissa_number07"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/number_hk_info_mantissa"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_mantissa_count07"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_mantissa_number08"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/number_hk_info_mantissa"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_mantissa_count08"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_mantissa_number09"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/number_hk_info_mantissa"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_mantissa_count09"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_mantissa_number10"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_football_match_detail_teamname"
+                        android:background="@mipmap/number_hk_info_mantissa"
+                        tools:text="49" />
+
+                    <TextView
+                        android:id="@+id/tv_mantissa_count10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/item_football_left_odds"
+                        tools:text="10" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!--特码波色出现次数-->
+        <TextView
+            android:id="@+id/tv_title_04"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:background="@color/whitesmoke"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:textColor="@color/mdy_999"
+            android:textSize="@dimen/item_football_half_score"
+            android:text="@string/home_lottery_info_tm_bo_count" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_bo_number01"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/activity_football_match_detail_teamname"
+                    android:background="@mipmap/home_menu_icon_def"
+                    tools:text="49" />
+
+                <TextView
+                    android:id="@+id/tv_bo_count01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:padding="5dp"
+                    android:textSize="@dimen/item_football_left_odds"
+                    tools:text="10" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_bo_number02"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/activity_football_match_detail_teamname"
+                    android:background="@mipmap/home_menu_icon_def"
+                    tools:text="49" />
+
+                <TextView
+                    android:id="@+id/tv_bo_count02"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:padding="5dp"
+                    android:textSize="@dimen/item_football_left_odds"
+                    tools:text="10" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_bo_number03"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/activity_football_match_detail_teamname"
+                    android:background="@mipmap/home_menu_icon_def"
+                    tools:text="49" />
+
+                <TextView
+                    android:id="@+id/tv_bo_count03"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:padding="5dp"
+                    android:textSize="@dimen/item_football_left_odds"
+                    tools:text="10" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

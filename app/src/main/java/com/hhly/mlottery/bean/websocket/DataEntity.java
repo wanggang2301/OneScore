@@ -12,7 +12,11 @@ import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
 public class DataEntity {
     private int matchStatus;
     private int section;
+
+
     private String remainTime;
+
+
     private int homeScore;
     private int guestScore;
     private int home1;
@@ -30,6 +34,32 @@ public class DataEntity {
     private int guestOt2;
     private int guestOt3;
     private int addTime;
+
+/*
+
+    private int homeScore;
+    private int guestScore;
+    private int home1;
+    private int home2;
+    private int home3;
+    private int home4;
+    private int guest1;
+    private int guest2;
+    private int guest3;
+    private int guest4;
+    private int homeOt1;
+    private int homeOt2;
+    private int homeOt3;
+    private int guestOt1;
+    private int guestOt2;
+    private int guestOt3;
+    private String remainTime;   //当前时间
+    private int addTime;   //加时时间
+*/
+
+
+
+
 
     private BasketEachTextLiveBean textLiveEntity;
 

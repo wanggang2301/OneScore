@@ -36,7 +36,7 @@ public class BallSelectArrayAdapter extends ArrayAdapter<String> {
         //此处text1是Spinner默认的用来显示文字的TextView
         TextView tv = (TextView) convertView.findViewById(android.R.id.text1);
         tv.setText(mStringArray[position]);
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
         tv.setTextColor(Color.BLACK);
 
         return convertView;
@@ -53,7 +53,7 @@ public class BallSelectArrayAdapter extends ArrayAdapter<String> {
         //此处text1是Spinner默认的用来显示文字的TextView
         TextView tv = (TextView) convertView.findViewById(android.R.id.text1);
         tv.setText(mStringArray[position]);
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         tv.setTextColor(Color.WHITE);
         return convertView;
     }

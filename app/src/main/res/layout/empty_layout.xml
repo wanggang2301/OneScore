@@ -81,13 +81,15 @@
             android:textColor="@color/exp_refresh"
             android:text="@string/custom_to_cus"/>
     </LinearLayout>
+    <!--加载中-->
     <LinearLayout
         android:id="@+id/custom_loading_ll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="gone"
+        >
 
         <TextView
             android:id="@+id/basketball_loading"
@@ -96,5 +98,31 @@
             android:text="@string/loading_txt"
             android:textColor="@color/loading_txt_color" />
     </LinearLayout>
+
+    <!--暂无关注-->
+    <RelativeLayout
+        android:id="@+id/multiple_unfocus_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            android:id="@+id/multiple_unfocus_coffee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/unfocus_coffee" />
+
+        <TextView
+            android:id="@+id/multiple_no_data_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/multiple_unfocus_coffee"
+            android:layout_centerHorizontal="true"
+            android:text="@string/unfocus"
+            android:textColor="@color/unfocus_text"
+            android:textSize="@dimen/text_size_14" />
+    </RelativeLayout>
 
 </FrameLayout>

@@ -180,8 +180,6 @@ public class BaseURLs {
     /**
      * 彩票开奖
      */
-
-
     // 所有彩票最后一期开奖结果
 //    private final static String URL_LASTLOTTERY = "lastLotteryResults.findLastLotteryResults.do";
 //    private final static String URL_LASTLOTTERY = "lastLotteryResults.findNewAndroidSecLastLotteryResults.do";// 新增了6个彩种
@@ -370,10 +368,6 @@ public class BaseURLs {
 
     //赛场新接口
     private final static String URL_FOOTBALL_DETAIL_FIRST = "footBallMatch.queryAndroidFirstMatchInfos.do";
-
-    //足球内页赛事分享
-
-    private final static String URL_FOOTBALL_DETAIL_SHARE = "live/bifen/index.html?id=";
 
 
     //赛场——点赞
@@ -625,7 +619,6 @@ public class BaseURLs {
 
 
     // 刷新
-    // 刷新
     private final static String URL_INCREMENT = "matchResults.findIncrementMatchs.do";
 
     public final static String URL_MainMatchs = URL_API_HOST + URL_MAIN;
@@ -647,9 +640,6 @@ public class BaseURLs {
     //赛场
     public final static String URL_FOOTBALL_DETAIL_INFO_FIRST = URL_API_HOST + URL_FOOTBALL_DETAIL_FIRST;
 
-    //足球内页赛事分享
-
-    public final static String URL_FOOTBALL_DETAIL_INFO_SHARE = HTTP + HOST + URL_SPLITTER + URL_FOOTBALL_DETAIL_SHARE;
 
     //赛场点赞
     public final static String URL_FOOTBALL_DETAIL_LIKE_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_LIKE;
@@ -899,11 +889,6 @@ public class BaseURLs {
     public final static String URL_INTELLIGENCE_BIG_DATA = URL_API_HOST + "footBallMatch.findIntelligence.do";
 
 
-    public final static String URL_FOOTBALLDETAIL_H5 = HTTP + HOST + URL_SPLITTER + "live/footballodds_graphic.html";
-
-    public final static String URL_BASKETBALLDETAIL_H5 = HTTP + HOST + URL_SPLITTER + "live/basket_graphic.html";
-
-
     /*模糊搜索*/
     public final static String FUZZYSEARCH = "/basketballData.fuzzySearch.do";
 
@@ -978,16 +963,16 @@ public class BaseURLs {
     /**
      * 斯洛克
      */
-    public final static String SNOOKER_LIST_URL = URL_API_HOST+"snookerMatch.getFirstSnookerMatch.do";
-    public final static String SNOOKER_LIST_LOADMORE_URL = URL_API_HOST+"snookerMatch.getSnookerLeagues.do"; // http://m.1332255.com:81/mlottery/core/snookerMatch.getSnookerLeagues.do?dateLeaguesId=2016-11-20_125358,2016-11-19_125358
+    public final static String SNOOKER_LIST_URL = URL_API_HOST + "snookerMatch.getFirstSnookerMatch.do";
+    public final static String SNOOKER_LIST_LOADMORE_URL = URL_API_HOST + "snookerMatch.getSnookerLeagues.do"; // http://m.1332255.com:81/mlottery/core/snookerMatch.getSnookerLeagues.do?dateLeaguesId=2016-11-20_125358,2016-11-19_125358
 
     /**
      * 我的定制
      */
     //我的定制页
-    public final static String CUSTOM_MINE_CUS_URL = URL_API_HOST+"basketballCommonMacth.findBasketballMyConcernMatch.do";//http://192.168.10.242:8181/mlottery/core/basketballCommonMacth.findBasketballMyConcernMatch.do
+    public final static String CUSTOM_MINE_CUS_URL = URL_API_HOST + "basketballCommonMacth.findBasketballMyConcernMatch.do";//http://192.168.10.242:8181/mlottery/core/basketballCommonMacth.findBasketballMyConcernMatch.do
     //定制完成 发送id
-    public final static String CUSTOM_SENDID_CUS_URL = URL_API_HOST+"basketballCommonMacth.customHotLeagueAndTeamConcern.do";//http://192.168.10.242:8181/mlottery/core/basketballCommonMacth.customHotLeagueAndTeamConcern.do
+    public final static String CUSTOM_SENDID_CUS_URL = URL_API_HOST + "basketballCommonMacth.customHotLeagueAndTeamConcern.do";//http://192.168.10.242:8181/mlottery/core/basketballCommonMacth.customHotLeagueAndTeamConcern.do
     //定制列表页
     public final static String CUSTOM_LIST_CUS_URL = URL_API_HOST + "basketballCommonMacth.findHotLeagueAndTeamConcern.do";//"http://192.168.10.242:8181/mlottery/core/basketballCommonMacth.findHotLeagueAndTeamConcern.do";
 
@@ -999,25 +984,54 @@ public class BaseURLs {
     public final static String FOOTBALL_DETAIL_COLLECTION = URL_API_HOST + "operation.findMatchCollection.do";
 
     //产品建议列表
-    public final static String PRODUCT_ADVICE_LIKE=URL_API_HOST+"feedback.addFeedBackLikes.do";
+    public final static String PRODUCT_ADVICE_LIKE = URL_API_HOST + "feedback.addFeedBackLikes.do";
     //产品建议列表
-    public final static String PRODUCT_ADVICE_LIKE_LIST=URL_API_HOST+"feedback.findAndroidFeedBackDetail.do";
-
-
+    public final static String PRODUCT_ADVICE_LIKE_LIST = URL_API_HOST + "feedback.findAndroidFeedBackDetail.do";
 
     // 聊球消息列表接口--足球
-    public final static String MESSAGE_LIST_FOOTBALL = HTTP + HOST + URL_SPLITTER+ "chatServer/chat/chatHistoryList/football";
+    public final static String MESSAGE_LIST_FOOTBALL = HTTP + HOST + URL_SPLITTER + "chatServer/chat/chatHistoryList/football";
     // 聊球发送消息--足球
-    public final static String MESSAGE_SEND_FOOTBALL = HTTP + HOST + URL_SPLITTER+ "chatServer/chat/sendChatMessage/android/football";
+    public final static String MESSAGE_SEND_FOOTBALL = HTTP + HOST + URL_SPLITTER + "chatServer/chat/sendChatMessage/android/football";
     // 聊球消息列表接口--篮球
-    public final static String MESSAGE_LIST_BASKET = HTTP + HOST + URL_SPLITTER+ "chatServer/chat/chatHistoryList/basketball";
+    public final static String MESSAGE_LIST_BASKET = HTTP + HOST + URL_SPLITTER + "chatServer/chat/chatHistoryList/basketball";
     // 聊球发送消息--篮球
-    public final static String MESSAGE_SEND_BASKET = HTTP + HOST + URL_SPLITTER+ "chatServer/chat/sendChatMessage/android/basketball";
+    public final static String MESSAGE_SEND_BASKET = HTTP + HOST + URL_SPLITTER + "chatServer/chat/sendChatMessage/android/basketball";
     // 聊球举报接口
-    public final static String REPORT_USER = HTTP + HOST + URL_SPLITTER+ "chatServer/chat/reportUser/android";
+    public final static String REPORT_USER = HTTP + HOST + URL_SPLITTER + "chatServer/chat/reportUser/android";
+
+    // 香港彩详情页——统计接口
+    public final static String LOTTERY_INFO_STARTIS_URL = URL_API_HOST + "chartLottery.findAndroidStatisChartDate.do";
+    // 香港彩详情页——图表接口
+    public final static String LOTTERY_INFO_CHART_URL = URL_API_HOST + "chartLottery.findLastAndroidLotteryResults.do";
+
+    //多屏篮球列表
+    public final static String MULTIPLE_BASKET_LIST_URL = URL_API_HOST + "basketballMatch.findMultiScreenMatchList.do";//"http://192.168.33.71:8080/mlottery/core/basketballMatch.findMultiScreenMatchList.do";
 
     // 邀请码
-    public final static String INVITED_RUL = HTTP + HOST + URL_SPLITTER+ "androidUserCenter.getInviteCode.do";
+    public final static String INVITED_RUL = URL_API_HOST + "androidUserCenter.getInviteCode.do";
+
+
+    /*****************************************************************************************************************
+     *下面URL为HTML页面
+     *
+     * 注意和接口区分URL拼接方式
+     */
+
+    //足球内页赛事分享
+    private final static String URL_FOOTBALL_DETAIL_SHARE = "live/bifen/index.html?id=";
+    //足球内页赛事分享
+    public final static String URL_FOOTBALL_DETAIL_INFO_SHARE = HTTP + HOST + URL_SPLITTER + URL_FOOTBALL_DETAIL_SHARE;
+
+    public final static String URL_FOOTBALLDETAIL_H5 = HTTP + HOST + URL_SPLITTER + "live/footballodds_graphic.html";
+
+    public final static String URL_BASKETBALLDETAIL_H5 = HTTP + HOST + URL_SPLITTER + "live/basket_graphic.html";
+
+    //邀请码分享
+    public final static String INVITED_ACTIVITY_URL = HTTP + HOST + URL_SPLITTER + "download_yqm.html";
+
+
+    /***********************************************************************************************************************/
+
     //                                                     _(\_/)
     //                                                   ,((((^`\
     //                                                  ((((  (6 \

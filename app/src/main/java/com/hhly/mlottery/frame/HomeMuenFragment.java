@@ -18,6 +18,8 @@ import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.activity.InfoCenterActivity;
 import com.hhly.mlottery.activity.LeagueStatisticsTodayActivity;
 import com.hhly.mlottery.activity.LoginActivity;
+import com.hhly.mlottery.activity.MultiScreenIntroduceActivity;
+import com.hhly.mlottery.activity.MultiScreenViewingListActivity;
 import com.hhly.mlottery.activity.NumbersActivity;
 import com.hhly.mlottery.activity.NumbersInfoBaseActivity;
 import com.hhly.mlottery.activity.WebActivity;
@@ -26,6 +28,7 @@ import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.widget.MyGridView;
 import com.umeng.analytics.MobclickAgent;
@@ -503,9 +506,13 @@ public class HomeMuenFragment extends Fragment {
                                         break;
                                         case "80":// 多屏动画列表
                                         {
-                                            // TODO 首页菜单跳转多屏动画
-                                            ToastTools.showQuick(mContext,"首页菜单跳转多屏动画列表");
-//                                            mContext.startActivity(new Intent(mContext, MultiScreenViewingListActivity.class));
+                                            if (PreferenceUtil.getBoolean("introduce", true)) {
+                                                mContext.startActivity(new Intent(mContext, MultiScreenIntroduceActivity.class));
+
+                                                PreferenceUtil.commitBoolean("introduce", false);
+                                            } else {
+                                                mContext.startActivity(new Intent(mContext, MultiScreenViewingListActivity.class));
+                                            }
                                         }
                                         break;
                                     }

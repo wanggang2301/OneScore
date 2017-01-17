@@ -40,7 +40,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 25
-        versionName "1.2.2.0112"
+        versionName "1.2.2.0116"
         multiDexEnabled true
     }
 
@@ -51,7 +51,7 @@ android {
 
     buildTypes {
         debug {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {

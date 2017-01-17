@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/header_layout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/header_height"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/status_bar_offset">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/public_img_back"
+            style="@style/RippleBackgroudBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/back" />
+
+
+            <RadioGroup
+                android:id="@+id/multiple_gendergroup"
+                android:layout_width="140dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:orientation="horizontal"
+                >
+
+                <RadioButton
+                    android:id="@+id/multiple_basket"
+                    style="@style/multiple_radio_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="-1dp"
+                    android:layout_marginRight="-1dp"
+                    android:padding="5dp"
+                    android:background="@drawable/multiple_radio_button_left"
+                    android:checked="true"
+                    android:text="@string/multi_item_basket_name"/>
+                <RadioButton
+                    android:id="@+id/multiple_football"
+                    style="@style/multiple_radio_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp"
+                    android:layout_marginLeft="-1dp"
+                    android:layout_marginStart="-1dp"
+                    android:background="@drawable/multiple_radio_button_right"
+                    android:text="@string/multi_item_football_name"/>
+
+            </RadioGroup>
+
+        <ImageView
+            android:id="@+id/tv_right"
+            style="@style/RippleBackgroudBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:src="@mipmap/cpi_filtrate"
+            />
+        <!--<ImageView-->
+            <!--android:id="@+id/public_btn_filter"-->
+            <!--style="@style/RippleBackgroudBorderless"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignBottom="@id/public_btn_set"-->
+            <!--android:layout_alignTop="@id/public_btn_set"-->
+            <!--android:layout_toLeftOf="@id/public_btn_set"-->
+            <!--android:paddingLeft="12dp"-->
+            <!--android:paddingRight="12dp"-->
+            <!--android:scaleType="centerInside"-->
+            <!--android:src="@mipmap/cpi_filtrate" />-->
+
+    </RelativeLayout>
+
+</LinearLayout>

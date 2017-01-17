@@ -1,123 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:orientation="vertical">
 
     <!-- 标题头 -->
-
     <include layout="@layout/layout_header" />
-    <!--<RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/header_height"
-        android:background="@color/colorPrimary"
-        android:paddingTop="@dimen/status_bar_offset">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-
-            <ImageView
-                android:id="@+id/iv_back_numberInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:clickable="true"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:src="@mipmap/back"
-                style="@style/RippleBackgroudBorderless"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:scaleType="centerInside"
-                />
-
-            <TextView
-                android:id="@+id/tv_title_numberInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:layout_centerInParent="true"
-                />
-        </RelativeLayout>
-    </RelativeLayout>-->
-
-    <!--<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="5dp">
-
-            <TextView
-                android:id="@+id/tv_current_numberInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:background="@drawable/number_current_bg_selector"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="@string/number_hk_openjiang_current"
-                android:textColor="#ffffff"
-                android:textSize="@dimen/number_title" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:paddingBottom="5dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp">
-
-            <TextView
-                android:id="@+id/tv_history_numberInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:background="@drawable/number_history_bg_selector"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="@string/number_hk_openjiang_history"
-                android:textColor="@color/bg_header"
-                android:textSize="@dimen/number_title" />
-        </LinearLayout>
-    </LinearLayout>
-
-    &lt;!&ndash; 分隔线 &ndash;&gt;
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:visibility="gone"
-        android:background="@color/linecolor" />-->
-
+    <!--开奖详情和历史-->
     <FrameLayout
         android:id="@+id/fl_numberContext_info"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <FrameLayout
             android:id="@+id/fl_numberContext_current"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible"/>
+            android:visibility="visible" />
 
         <FrameLayout
             android:id="@+id/fl_numberContext_historyh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </FrameLayout>
+
+    <!--统计和图表-->
+    <FrameLayout
+        android:id="@+id/fl_other_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="gone" />
+
+    <!--底部菜单栏-->
+    <LinearLayout
+        android:id="@+id/ll_bottom_menu"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/bottom_bg_color"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:background="@color/line_football_footer" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingTop="2dp">
+
+            <RadioButton
+                android:id="@+id/rb_open_lottery"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/home_lottery_info_menu_open"
+                android:gravity="center"
+                android:text="@string/home_lottery_info_open"
+                android:textColor="@drawable/frag__base_selector_color"
+                android:textSize="11dp" />
+
+            <RadioButton
+                android:id="@+id/rb_statistics"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/home_lottery_info_menu_stat"
+                android:gravity="center"
+                android:text="@string/home_lottery_info_stat"
+                android:textColor="@drawable/frag__base_selector_color"
+                android:textSize="11dp"
+                android:visibility="visible" />
+
+            <RadioButton
+                android:id="@+id/rb_chart"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/home_lottery_info_menu_chart"
+                android:gravity="center"
+                android:text="@string/home_lottery_info_chart"
+                android:textColor="@drawable/frag__base_selector_color"
+                android:textSize="11dp" />
+        </RadioGroup>
+    </LinearLayout>
 
 </LinearLayout>

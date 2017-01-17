@@ -225,13 +225,16 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
                             mWeiboShareAPI = WeiboShareSDK.createWeiboAPI(mContext, ShareConstants.SINA);
                             mWeiboShareAPI.registerApp();
                             shareSina();
+                            //sddd
                         }
                         break;
                     case COPY:
-                        ClipboardManager cmb = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
-                        cmb.setText(mShareBean.getCopy());
-                        ShareFragment.this.dismiss();
-                        Toast.makeText(mContext, mContext.getResources().getString(R.string.share_copy), Toast.LENGTH_SHORT).show();
+                        if (mShareBean.getCopy() != null || !mShareBean.getCopy().equals("")) {
+                            ClipboardManager cmb = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                            cmb.setText(mShareBean.getCopy());
+                            ShareFragment.this.dismiss();
+                            Toast.makeText(mContext, mContext.getResources().getString(R.string.share_copy), Toast.LENGTH_SHORT).show();
+                        }
                         break;
                     default:
                         break;
@@ -484,7 +487,7 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
 
                     break;
                 case WBConstants.ErrorCode.ERR_FAIL:
-                   // writeLogtoFile(MYLOG_TYPE, "shareFragment", "微博失败");
+                    // writeLogtoFile(MYLOG_TYPE, "shareFragment", "微博失败");
 
 
                     break;
@@ -498,17 +501,17 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
     IUiListener qqShareListener = new IUiListener() {
         @Override
         public void onCancel() {
-           // writeLogtoFile(MYLOG_TYPE, "shareFragment", "QQ取消");
+            // writeLogtoFile(MYLOG_TYPE, "shareFragment", "QQ取消");
         }
 
         @Override
         public void onComplete(Object response) {
-           // writeLogtoFile(MYLOG_TYPE, "shareFragment", "QQ取消");
+            // writeLogtoFile(MYLOG_TYPE, "shareFragment", "QQ取消");
         }
 
         @Override
         public void onError(UiError e) {
-           // writeLogtoFile(MYLOG_TYPE, "shareFragment", "QQ失败");
+            // writeLogtoFile(MYLOG_TYPE, "shareFragment", "QQ失败");
         }
     };
 

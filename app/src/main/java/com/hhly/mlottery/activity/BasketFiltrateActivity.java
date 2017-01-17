@@ -18,6 +18,7 @@ import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.frame.footframe.FiltrateMatchFragment;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.MultipleBasketFilterListEvent;
 import com.hhly.mlottery.view.GrapeGridview;
 import com.umeng.analytics.MobclickAgent;
 
@@ -27,6 +28,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * @Description: 篮球筛选页面Activity
@@ -205,7 +208,7 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
         List<BasketMatchFilter> otherdatas = new ArrayList<>();//已有其他
         for (BasketMatchFilter filter:mAllFilterDatas) {
             String leagueId = filter.getLeagueId();
-            if (leagueId.equals("1") || leagueId.equals("5") || leagueId.equals("8") || leagueId.equals("15") ||
+            if (leagueId.equals("1") || leagueId.equals("5") || leagueId.equals("15") ||
                     leagueId.equals("21") || leagueId.equals("22") || leagueId.equals("57") || leagueId.equals("377")){
                 hotdatas.add(filter);
             }else{
@@ -263,7 +266,8 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
 
                 mCupAll.add(filter.getLeagueId());//所有联赛的  id
                 String leagueId = filter.getLeagueId();
-                if (leagueId.equals("1") || leagueId.equals("5") || leagueId.equals("8") || leagueId.equals("15") ||
+                /***|| leagueId.equals("8") NCAA (产品要求)从热门中去除*/
+                if (leagueId.equals("1") || leagueId.equals("5") || leagueId.equals("15") ||
                         leagueId.equals("21") || leagueId.equals("22") || leagueId.equals("57") || leagueId.equals("377")) {
                     mHotFilterDatas.add(filter); // 热门的数据
                     mCupHot.add(filter.getLeagueId());//热门id
@@ -383,14 +387,18 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
                 map.put("checkedCupIds", mCupChicked);
 //                map.put("checkedDefualt", false); currentId
 
+//                if (currentId==0) {
+//                    EventBus.getDefault().post(new MultipleBasketFilterListEvent(map));
+//                }
                 if (currentId==0) {
                     ImmedBasketballFragment.BasketImmedEventBus.post(map);
                 }else if (currentId==1){
                     ResultBasketballFragment.BasketResultEventBus.post(map);
                 }else if (currentId==2){
                     ScheduleBasketballFragment.BasketScheduleEventBus.post(map);
+                }else if(currentId==3){
+                    EventBus.getDefault().post(new MultipleBasketFilterListEvent(map));
                 }
-//                ImmedBasketballFragment.BasketImmedEventBus.post(map);
 
                 L.d("currentId >>>>>>>>>>>","currentId == >"+currentId);
                 finish();

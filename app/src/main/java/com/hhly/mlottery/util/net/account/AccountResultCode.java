@@ -92,4 +92,7 @@ public interface AccountResultCode {
     /**同一个手机号一天只能发送五次短信*/
     int ONLY_FIVE_EACHDAY = 25;
 
+    /*邀请码不存在*/
+    int INVITED_NUMBER_NOON=143;
+
 }

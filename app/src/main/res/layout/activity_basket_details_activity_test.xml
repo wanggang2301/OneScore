@@ -121,6 +121,25 @@
                 android:textColor="@color/white" />
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom|right"
+            android:paddingBottom="82dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/tv_addMultiView"
+                android:layout_width="70dp"
+                android:layout_height="24dp"
+                android:alpha="0.75"
+                android:background="@drawable/multi_add_view"
+                android:gravity="center"
+                android:text="@string/multi_add_view_text"
+                android:textColor="#fff"
+                android:textSize="@dimen/text_size_12" />
+        </RelativeLayout>
+
 
     </android.support.design.widget.CoordinatorLayout>
 
