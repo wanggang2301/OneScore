@@ -94,7 +94,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getIntent().getExtras() != null) {
-            MultipleByValueBean mCurrentId = (MultipleByValueBean)getIntent().getExtras().get("thirdId");
+            MultipleByValueBean mCurrentId = (MultipleByValueBean) getIntent().getExtras().get("thirdId");
             borf = mCurrentId.getType();
             byValue.add(mCurrentId);
         }
@@ -117,7 +117,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
         //默认选中
         if (borf == BASKET_TYPE) {
             mBasketRadioButton.setChecked(true);
-        }else if (borf == FOOTBALL_TYPE) {
+        } else if (borf == FOOTBALL_TYPE) {
             mFootballRadioButton.setChecked(true);
         }
         setRadioGroupClick();
@@ -231,10 +231,11 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
     //内容数据
     private List<BasketMatchBean> showDataList;//显示的比赛list
     private boolean isBasketFilter = false;  //是否赛选过篮球
+
     /**
      * 篮球接口请求
      */
-    private void initBasketData(){
+    private void initBasketData() {
 
         mFootballRecycler.setVisibility(View.GONE);
         mBasketRecycle.setVisibility(View.VISIBLE);
@@ -270,21 +271,21 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
 
                         setState(MULTIPLE_STATUS_NET_NO_DATA);
                         return;
-                    }else{
-                            for (BasketMatchBean matchBean : mMatchdata) {
-                                for (String checkedId : FiltrateCupsMap.basketImmedateCups) {
-                                    if (matchBean.getLeagueId().equals(checkedId)) {
-                                        showDataList.add(matchBean);
-                                    }
+                    } else {
+                        for (BasketMatchBean matchBean : mMatchdata) {
+                            for (String checkedId : FiltrateCupsMap.basketImmedateCups) {
+                                if (matchBean.getLeagueId().equals(checkedId)) {
+                                    showDataList.add(matchBean);
                                 }
                             }
+                        }
                     }
 
                 } else { //未筛选
 
-                        for (BasketMatchBean lists : mMatchdata) {
-                            showDataList.add(lists);
-                        }
+                    for (BasketMatchBean lists : mMatchdata) {
+                        showDataList.add(lists);
+                    }
                     mChickedFilter = mAllFilter;//默认选中全部
                 }
 
@@ -308,7 +309,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                                 mBasketAdapter.notifyDataSetChanged();
                                 L.d("yxq===012A ", "添加了对象 A " + valueBean.getThirdId());
                                 L.d("yxq===012A ", "byValue.size() = " + byValue.size() + " ** ");
-                            }else if (datasize < 3){
+                            } else if (datasize < 3) {
 
                                 boolean isSame = false;//记录所选id是否已选中
                                 int indext = -1;//记录所选id在已选对象中的索引位置
@@ -324,7 +325,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                                     if (indext != -1) {
                                         byValue.remove(indext);
                                     }
-                                }else{
+                                } else {
                                     MultipleByValueBean valueBeana = new MultipleByValueBean();
                                     valueBeana.setType(BASKET_TYPE);
                                     valueBeana.setThirdId(data);
@@ -335,7 +336,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                                 matchData.setBasketChicks(!matchData.isBasketChicks());
                                 mBasketAdapter.notifyDataSetChanged();
                                 L.d("yxq===012B ", "byValue.size() = " + byValue.size() + " ** ");
-                            }else if (datasize >= 3) {
+                            } else if (datasize >= 3) {
                                 boolean isRemove = true;
                                 for (int i = 0; i < byValue.size(); i++) {
                                     if (byValue.get(i).getThirdId().equals(data)) {
@@ -369,12 +370,13 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                 isBasketLoad = 0;
                 setState(MULTIPLE_STATUS_NET_ERROR);
             }
-        },BasketMultipleRoot.class);
+        }, BasketMultipleRoot.class);
     }
+
     /**
      * 判断是否有选中的比赛
      */
-    private void currentClick(int type){
+    private void currentClick(int type) {
         if (type == BASKET_TYPE) {
             //默认不选中
             for (BasketMatchBean data : showDataList) {
@@ -391,7 +393,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                     }
                 }
             }
-        }else if (type == FOOTBALL_TYPE) {
+        } else if (type == FOOTBALL_TYPE) {
             for (Match data : mMatchs) {
                 data.setFootballChicks(false);
             }
@@ -412,7 +414,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
     /**
      * 足球接口请求
      */
-    private void initFootballData(){
+    private void initFootballData() {
         mFootballRecycler.setVisibility(View.VISIBLE);
         mBasketRecycle.setVisibility(View.GONE);
 
@@ -520,7 +522,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                                         mFootballAdapter.notifyDataSetChanged();
                                         L.d("yxq===011A ", "添加了对象 A " + valueBean.getThirdId());
                                         L.d("yxq===011A ", "byValue.size() = " + byValue.size() + " ** ");
-                                    }else if (datasize < 3){
+                                    } else if (datasize < 3) {
 
                                         boolean isSame = false;//记录所选id是否已选中
                                         int indext = -1;//记录所选id在已选对象中的索引位置
@@ -536,7 +538,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                                             if (indext != -1) {
                                                 byValue.remove(indext);
                                             }
-                                        }else{
+                                        } else {
                                             MultipleByValueBean valueBeana = new MultipleByValueBean();
                                             valueBeana.setType(FOOTBALL_TYPE);
                                             valueBeana.setThirdId(data);
@@ -548,7 +550,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
 
                                         mFootballAdapter.notifyDataSetChanged();
                                         L.d("yxq===011B ", "byValue.size() = " + byValue.size() + " ** ");
-                                    }else if (datasize >= 3) {
+                                    } else if (datasize >= 3) {
                                         boolean isRemove = true;
                                         for (int i = 0; i < byValue.size(); i++) {
                                             if (byValue.get(i).getThirdId().equals(data)) {
@@ -598,10 +600,12 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
 
                 if (checkedId == mBasketRadioButton.getId()) {
                     borf = BASKET_TYPE;
+                    isBasketLoad = -1;
                     setState(MULTIPLE_STATUS_LOADING);
                     mHandler.postDelayed(mRun, 500);
                 } else if (checkedId == mFootballRadioButton.getId()) {
                     borf = FOOTBALL_TYPE;
+                    isFootballLoad = -1;
                     setState(MULTIPLE_STATUS_LOADING);
                     mHandler.postDelayed(mRun, 500);
                 }
@@ -624,7 +628,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                         bundle.putInt("currentFragmentId", 1);
                         intent.putExtras(bundle);
                         startActivity(intent);
-                    }else if (isFootballLoad == 1) { //加载成功
+                    } else if (isFootballLoad == 1) { //加载成功
                         Intent intent = new Intent(getApplicationContext(), FiltrateMatchConfigActivity.class);
                         Bundle bundle = new Bundle();
                         LeagueCup[] allCups = mCups.toArray(new LeagueCup[]{});
@@ -636,14 +640,14 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                         bundle.putInt("currentFragmentId", 1);
                         intent.putExtras(bundle);
                         startActivity(intent);
-                    }else{
+                    } else {
                         Toast.makeText(mContext, getResources().getText(R.string.basket_loading_txt), Toast.LENGTH_SHORT).show();
                     }
-                }else if(borf == BASKET_TYPE){
+                } else if (borf == BASKET_TYPE) {
                     if (isBasketLoad == 1) {
                         Intent intent = new Intent(getApplicationContext(), BasketFiltrateActivity.class);
-                        intent.putExtra("MatchAllFilterDatas", (Serializable)mAllFilter);//Serializable 序列化传值（所有联赛数据）
-                        intent.putExtra("MatchChickedFilterDatas", (Serializable)mChickedFilter);//Serializable 序列化传值（选中的联赛数据）
+                        intent.putExtra("MatchAllFilterDatas", (Serializable) mAllFilter);//Serializable 序列化传值（所有联赛数据）
+                        intent.putExtra("MatchChickedFilterDatas", (Serializable) mChickedFilter);//Serializable 序列化传值（选中的联赛数据）
                         intent.putExtra("currentfragment", 3);
                         startActivity(intent);
                         this.overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
@@ -656,7 +660,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                 break;
             case R.id.reloading_txt:
                 //TODO===========
-                if (borf == BASKET_TYPE){
+                if (borf == BASKET_TYPE) {
                     isBasketLoad = -1;
                 }
                 if (borf == FOOTBALL_TYPE) {
@@ -668,7 +672,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
             case R.id.multi_ok:
                 if (byValue == null || byValue.size() == 0) {
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.multi_toast_clicks_match), Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     Intent intent = new Intent(MultiScreenViewingListActivity.this, MultiScreenViewActivity.class);
                     intent.putExtra("byValue", (ArrayList) byValue);
                     startActivity(intent);
@@ -687,122 +691,123 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
      * 接受消息的页面实现
      */
     public void onEventMainThread(ScoresMatchFilterEventBusEntity scoresMatchFilterEventBusEntity) {
-        if (borf == FOOTBALL_TYPE) {
+//        if (borf == FOOTBALL_TYPE) {
 
-            if (scoresMatchFilterEventBusEntity.getFgIndex() == 1) {
-                Map<String, Object> map = scoresMatchFilterEventBusEntity.getMap();
-                String[] checkedIds = (String[]) ((LinkedList) map.get(FiltrateMatchConfigActivity.RESULT_CHECKED_CUPS_IDS)).toArray(new String[]{});
-                FiltrateCupsMap.immediateCups = checkedIds;
-                mMatchs.clear();
-                for (Match match : mAllMatchs) {
-                    boolean isExistId = false;
-                    for (String checkedId : checkedIds) {
-                        if (match.getRaceId().equals(checkedId)) {
-                            isExistId = true;
-                            break;
-                        }
-                    }
-                    if (isExistId) {
-                        mMatchs.add(match);
+        if (scoresMatchFilterEventBusEntity.getFgIndex() == 1) {
+            Map<String, Object> map = scoresMatchFilterEventBusEntity.getMap();
+            String[] checkedIds = (String[]) ((LinkedList) map.get(FiltrateMatchConfigActivity.RESULT_CHECKED_CUPS_IDS)).toArray(new String[]{});
+            FiltrateCupsMap.immediateCups = checkedIds;
+            mMatchs.clear();
+            for (Match match : mAllMatchs) {
+                boolean isExistId = false;
+                for (String checkedId : checkedIds) {
+                    if (match.getRaceId().equals(checkedId)) {
+                        isExistId = true;
+                        break;
                     }
                 }
-                List<LeagueCup> leagueCupList = new ArrayList<LeagueCup>();
-
-                for (LeagueCup cup : mCups) {
-                    boolean isExistId = false;
-                    for (String checkedId : checkedIds) {
-                        if (checkedId.equals(cup.getRaceId())) {
-                            isExistId = true;
-                            break;
-                        }
-                    }
-
-                    if (isExistId) {
-                        leagueCupList.add(cup);
-                    }
-                }
-
-                mCheckedCups = leagueCupList.toArray(new LeagueCup[]{});
-                //* 判断是否有选中的比赛
-                currentClick(FOOTBALL_TYPE);
-
-                updateFootballAdapter();
-                isCheckedDefualt = (boolean) map.get(FiltrateMatchConfigActivity.CHECKED_DEFUALT);
-
-                if (mMatchs.size() == 0) {// 没有比赛
-                    setState(MULTIPLE_STATUS_FOCUS_NO_DATA);
-                } else {
-                    setState(MULTIPLE_STATUS_SUCCESS);
+                if (isExistId) {
+                    mMatchs.add(match);
                 }
             }
+            List<LeagueCup> leagueCupList = new ArrayList<LeagueCup>();
+
+            for (LeagueCup cup : mCups) {
+                boolean isExistId = false;
+                for (String checkedId : checkedIds) {
+                    if (checkedId.equals(cup.getRaceId())) {
+                        isExistId = true;
+                        break;
+                    }
+                }
+
+                if (isExistId) {
+                    leagueCupList.add(cup);
+                }
+            }
+
+            mCheckedCups = leagueCupList.toArray(new LeagueCup[]{});
+            //* 判断是否有选中的比赛
+            currentClick(FOOTBALL_TYPE);
+
+            updateFootballAdapter();
+            isCheckedDefualt = (boolean) map.get(FiltrateMatchConfigActivity.CHECKED_DEFUALT);
+
+            if (mMatchs.size() == 0) {// 没有比赛
+                setState(MULTIPLE_STATUS_FOCUS_NO_DATA);
+            } else {
+                setState(MULTIPLE_STATUS_SUCCESS);
+            }
         }
+//        }
     }
+
     /**
      * 篮球筛选返回
      */
     public void onEventMainThread(MultipleBasketFilterListEvent multipleBasketFilterListEvent) {
-        if (borf == BASKET_TYPE) {
+//        if (borf == BASKET_TYPE) {
 
-            Map<String,Object> map = multipleBasketFilterListEvent.getMap();
+        Map<String, Object> map = multipleBasketFilterListEvent.getMap();
 
-            L.d("AAAAA-++++++--", "checkedIds.length");
-            String[] checkedIds = (String[]) ((List) map.get(BasketFiltrateActivity.CHECKED_CUPS_IDS)).toArray(new String[]{});
+        L.d("yxq0117---", "checkedIds.length");
+        String[] checkedIds = (String[]) ((List) map.get(BasketFiltrateActivity.CHECKED_CUPS_IDS)).toArray(new String[]{});
 
-            L.d("AAAAA------------------", checkedIds.length + "");
-            isBasketFilter = true;
+        L.d("yxq0117------------checkedIds.length------", checkedIds.length + "");
+        isBasketFilter = true;
 
-            FiltrateCupsMap.basketImmedateCups = checkedIds;
-            if (checkedIds.length == 0) {
-                List<BasketMatchFilter> noCheckedFilters = new ArrayList<>();
-                mChickedFilter = noCheckedFilters;//筛选0场后，再次进入赛选页面 显示已选中0场（全部不选中）
+        FiltrateCupsMap.basketImmedateCups = checkedIds;
+        if (checkedIds.length == 0) {
+            List<BasketMatchFilter> noCheckedFilters = new ArrayList<>();
+            mChickedFilter = noCheckedFilters;//筛选0场后，再次进入赛选页面 显示已选中0场（全部不选中）
 
-                setState(MULTIPLE_STATUS_FOCUS_NO_DATA);
-            } else {
+            setState(MULTIPLE_STATUS_FOCUS_NO_DATA);
+        } else {
 
-                showDataList.clear();
-                    for (BasketMatchBean matchBean : mMatchdata) {// 遍历所有数据 得到筛选后的
-                        boolean isExistId = false;
-                        for (String checkedId : checkedIds) {
-                            if (matchBean.getLeagueId().equals(checkedId)) {
-                                isExistId = true;
-                                break;
-                            }
-                        }
-                        if (isExistId) {
-                            showDataList.add(matchBean);
-                        }
-                    }
-                List<BasketMatchFilter> checkedFilters = new ArrayList<>();
-                // 清除原来选中的(重新赋值选中的)
-                for (BasketMatchFilter allFilter : mAllFilter) {
-                    for (String checkedId : checkedIds) {
-                        if (allFilter.getLeagueId().equals(checkedId)) {
-                            checkedFilters.add(allFilter);
-                        }
+            showDataList.clear();
+            for (BasketMatchBean matchBean : mMatchdata) {// 遍历所有数据 得到筛选后的
+                boolean isExistId = false;
+                for (String checkedId : checkedIds) {
+                    if (matchBean.getLeagueId().equals(checkedId)) {
+                        isExistId = true;
+                        break;
                     }
                 }
-                mChickedFilter = checkedFilters;
-                L.d("123", "childrenDataList >>>> = " + showDataList.size());
-                //* 判断是否有选中的比赛
-                currentClick(BASKET_TYPE);
-                updateBasketAdapter();
-                setState(MULTIPLE_STATUS_SUCCESS);
+                if (isExistId) {
+                    showDataList.add(matchBean);
+                }
             }
+            List<BasketMatchFilter> checkedFilters = new ArrayList<>();
+            // 清除原来选中的(重新赋值选中的)
+            for (BasketMatchFilter allFilter : mAllFilter) {
+                for (String checkedId : checkedIds) {
+                    if (allFilter.getLeagueId().equals(checkedId)) {
+                        checkedFilters.add(allFilter);
+                    }
+                }
+            }
+            mChickedFilter = checkedFilters;
+            L.d("yxq0117---", "childrenDataList >>>> = " + showDataList.size());
+            //* 判断是否有选中的比赛
+            currentClick(BASKET_TYPE);
+            updateBasketAdapter();
+            setState(MULTIPLE_STATUS_SUCCESS);
         }
+//        }
     }
 
     /**
      * 多屏内页返回
      */
-    public void onEventMainThread(List<MultipleByValueBean> value){
+    public void onEventMainThread(List<MultipleByValueBean> value) {
 
-        Toast.makeText(mContext, "多屏内页返回 == " + value.size(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mContext, "多屏内页返回 == " + value.size(), Toast.LENGTH_SHORT).show();
         byValue.clear();
         byValue = value;
         currentClick(borf);
         if (borf == BASKET_TYPE) {
             updateBasketAdapter();
-        }else if(borf == FOOTBALL_TYPE){
+        } else if (borf == FOOTBALL_TYPE) {
             updateFootballAdapter();
         }
     }
@@ -814,6 +819,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
         mFootballAdapter.updateDatas(mMatchs);
         mFootballAdapter.notifyDataSetChanged();
     }
+
     private void updateBasketAdapter() {
         if (mBasketAdapter == null) {
             return;
