@@ -56,6 +56,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     private  View mFocus_RedDot; //关注红点
     /**我的关注红点*/
     boolean mShowRedDot=true;
+    boolean mInvitedShowRedDot=true;
+    /*邀请码红点*/
     /**我的定制*/
     private RelativeLayout rl_custom;
     /**语言切换**/
@@ -76,6 +78,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     public static final int LOGGED_ON = 44;
     /**我的关注的红点*/
     public static final String SHOW_RED="show_focus_red_dot";
+    /**我的关注的红点*/
+    public static final String INVITED_SHOW_RED="show_invited_red_dot";
 
     private TextView mTv_nickname;
     private ImageView mUser_image;
@@ -102,6 +106,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         }
     };
     private RelativeLayout rl_setting_invited;
+    private View invited_red_dot_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,7 +181,15 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         }else {
             mFocus_RedDot.setVisibility(View.GONE);
         }
+        /*邀请码红点*/
 
+        invited_red_dot_view = findViewById(R.id.invited_red_dot_view);
+        mInvitedShowRedDot=PreferenceUtil.getBoolean(INVITED_SHOW_RED,true);
+        if(mInvitedShowRedDot){
+            invited_red_dot_view.setVisibility(View.VISIBLE);
+        }else {
+            invited_red_dot_view.setVisibility(View.GONE);
+        }
     }
 
 
@@ -244,6 +257,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
                 break;
             case R.id.rl_setting_invited:
+                PreferenceUtil.commitBoolean(INVITED_SHOW_RED,false);
+                invited_red_dot_view.setVisibility(View.GONE);
                 if (CommonUtils.isLogin()){
                     startActivity(new Intent(HomeUserOptionsActivity.this, InvitedActivity.class));
                 }else{
