@@ -101,11 +101,10 @@ public class InvitedActivity extends Activity implements View.OnClickListener{
 
             break;
             case R.id.iv_number_copy:
-                if (!copy_text.isEmpty()){
+
                     ClipboardManager cmb = (ClipboardManager) getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                    cmb.setText(copy_text);
+                    cmb.setText(copy_text+"");
                     UiUtils.toast(getApplicationContext(),R.string.copy_text);
-                }
                 break;
             default:
                 break;
