@@ -19,7 +19,7 @@
         android:layout_height="match_parent"
         android:visibility="gone">
 
-        <com.hhly.mlottery.view.ViewPagerFixed
+        <com.hhly.mlottery.widget.ZoomViewPager
             android:id="@+id/mViewPager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
