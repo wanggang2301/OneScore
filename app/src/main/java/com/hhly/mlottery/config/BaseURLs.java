@@ -369,10 +369,6 @@ public class BaseURLs {
     //赛场新接口
     private final static String URL_FOOTBALL_DETAIL_FIRST = "footBallMatch.queryAndroidFirstMatchInfos.do";
 
-    //足球内页赛事分享
-
-    private final static String URL_FOOTBALL_DETAIL_SHARE = "live/bifen/index.html?id=";
-
 
     //赛场——点赞
     private final static String URL_FOOTBALL_DETAIL_LIKE = "footBallMatch.updLike.do";
@@ -644,9 +640,6 @@ public class BaseURLs {
     //赛场
     public final static String URL_FOOTBALL_DETAIL_INFO_FIRST = URL_API_HOST + URL_FOOTBALL_DETAIL_FIRST;
 
-    //足球内页赛事分享
-
-    public final static String URL_FOOTBALL_DETAIL_INFO_SHARE = HTTP + HOST + URL_SPLITTER + URL_FOOTBALL_DETAIL_SHARE;
 
     //赛场点赞
     public final static String URL_FOOTBALL_DETAIL_LIKE_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_LIKE;
@@ -896,11 +889,6 @@ public class BaseURLs {
     public final static String URL_INTELLIGENCE_BIG_DATA = URL_API_HOST + "footBallMatch.findIntelligence.do";
 
 
-    public final static String URL_FOOTBALLDETAIL_H5 = HTTP + HOST + URL_SPLITTER + "live/footballodds_graphic.html";
-
-    public final static String URL_BASKETBALLDETAIL_H5 = HTTP + HOST + URL_SPLITTER + "live/basket_graphic.html";
-
-
     /*模糊搜索*/
     public final static String FUZZYSEARCH = "/basketballData.fuzzySearch.do";
 
@@ -1019,11 +1007,31 @@ public class BaseURLs {
     //多屏篮球列表
     public final static String MULTIPLE_BASKET_LIST_URL = URL_API_HOST + "basketballMatch.findMultiScreenMatchList.do";//"http://192.168.33.71:8080/mlottery/core/basketballMatch.findMultiScreenMatchList.do";
 
+    // 邀请码
+    public final static String INVITED_RUL = URL_API_HOST + "androidUserCenter.getInviteCode.do";
+
+
+    /*****************************************************************************************************************
+     *下面URL为HTML页面
+     *
+     * 注意和接口区分URL组成方式
+     */
+
+    //足球内页赛事分享
+    private final static String URL_FOOTBALL_DETAIL_SHARE = "live/bifen/index.html?id=";
+    //足球内页赛事分享
+    public final static String URL_FOOTBALL_DETAIL_INFO_SHARE = HTTP + HOST + URL_SPLITTER + URL_FOOTBALL_DETAIL_SHARE;
+
+    public final static String URL_FOOTBALLDETAIL_H5 = HTTP + HOST + URL_SPLITTER + "live/footballodds_graphic.html";
+
+    public final static String URL_BASKETBALLDETAIL_H5 = HTTP + HOST + URL_SPLITTER + "live/basket_graphic.html";
+
     //邀请码分享
     public final static String INVITED_ACTIVITY_URL = HTTP + HOST + URL_SPLITTER + "download_yqm.html";
 
-    // 邀请码
-    public final static String INVITED_RUL = HTTP + HOST + URL_SPLITTER+ "androidUserCenter.getInviteCode.do";
+
+    /***********************************************************************************************************************/
+
     //                                                     _(\_/)
     //                                                   ,((((^`\
     //                                                  ((((  (6 \
