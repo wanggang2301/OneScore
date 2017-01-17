@@ -306,7 +306,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         super.onResume();
 
         // 红点触发后自动刷新
-        if (PreferenceUtil.getBoolean(AppConstants.ANIMATION_RED_KEY, false)) {
+        if (PreferenceUtil.getBoolean(AppConstants.ANIMATION_RED_KEY, false) || PreferenceUtil.getBoolean(AppConstants.LOTTERY_HK_RED_KEY, false)) {
             if (!PreferenceUtil.getBoolean(AppConstants.RED_KEY_START, false)) {
                 if (mHomePagerEntity != null) {
                     mListBaseAdapter = new HomeListBaseAdapter(mContext, mHomePagerEntity);
@@ -316,7 +316,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
                 }
             }
         }
-        if (PreferenceUtil.getBoolean(AppConstants.ANIMATION_RED_KEY, false)) {
+        if (PreferenceUtil.getBoolean(AppConstants.ANIMATION_RED_KEY, false) && PreferenceUtil.getBoolean(AppConstants.LOTTERY_HK_RED_KEY, false)) {
             PreferenceUtil.commitBoolean(AppConstants.RED_KEY_START, true);// 不用再刷新了
         }
 

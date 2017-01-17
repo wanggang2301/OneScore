@@ -511,6 +511,14 @@ public class HomePagerAdapter extends PagerAdapter {
                                     mContext.startActivity(new Intent(mContext, HomeUserOptionsActivity.class));
                                 }
                                 break;
+                                case "42":// 香港彩票图表页面
+                                {
+                                    Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
+                                    intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.ONE));
+                                    intent.putExtra("index",1);
+                                    mContext.startActivity(intent);
+                                }
+                                break;
                             }
                             break;
                         case 3:// 轮播图跳转足球和篮球内页

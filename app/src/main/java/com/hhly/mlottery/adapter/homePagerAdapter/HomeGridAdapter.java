@@ -68,6 +68,13 @@ public class HomeGridAdapter extends BaseAdapter {
                 mViewHolder.red_not.setVisibility(View.VISIBLE);
             }
         }
+        if("30".equals(mContentEntity.getJumpAddr()) || "31".equals(mContentEntity.getJumpAddr())){
+            if (PreferenceUtil.getBoolean(AppConstants.LOTTERY_HK_RED_KEY, false)) {
+                mViewHolder.red_not.setVisibility(View.GONE);
+            } else {
+                mViewHolder.red_not.setVisibility(View.VISIBLE);
+            }
+        }
 
         return convertView;
     }

@@ -77,6 +77,7 @@ public class AppConstants {
 
     // 红点功能key
     public static final String ANIMATION_RED_KEY = "animation_red_key";// 多屏动画首页菜单
+    public static final String LOTTERY_HK_RED_KEY = "lottery_hk_red_key";// 香港开奖首页菜单
     public static final String RED_KEY_START = "red_key_start";
 
     // public static String i18n = "en";// 测试英文语言环境

@@ -19,6 +19,7 @@ import com.hhly.mlottery.frame.numbersframe.HKLotteryStartFragment;
 import com.hhly.mlottery.frame.numbersframe.HistoryNumberFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.NumberDataUtils;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -47,6 +48,7 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
     public AppCompatSpinner public_txt_spinner;// 菜单下拉器
 
     private HKLotteryStartFragment hkLotteryStartFragment;
+    private int index = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
         // 获取传递的数据
         mNumberName = null;
         mNumberName = getIntent().getStringExtra(AppConstants.LOTTERY_KEY);
+        index = getIntent().getIntExtra("index", -1);
         /**不统计当前Activity*/
         MobclickAgent.openActivityDurationTrack(false);
 
@@ -63,6 +66,18 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
         initView();
         initData();
         initFragment();
+
+        if (index == 1) {// 直接显示图表页
+            fl_numberContext_info.setVisibility(View.GONE);
+            public_btn_set.setVisibility(View.GONE);
+            fl_other_content.setVisibility(View.VISIBLE);
+            public_txt_spinner.setVisibility(View.GONE);
+            settingTitle();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fl_other_content, new HKLotteryChartFragment()).commit();
+            if (!PreferenceUtil.getBoolean(AppConstants.LOTTERY_HK_RED_KEY, false)) {
+                PreferenceUtil.commitBoolean(AppConstants.LOTTERY_HK_RED_KEY, true);
+            }
+        }
     }
 
     private void initFragment() {
@@ -80,7 +95,7 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
     }
 
     // 设置标题名
-    private void settingTitle(){
+    private void settingTitle() {
         if (!TextUtils.isEmpty(mNumberName)) {
             NumberDataUtils.setTextTitle(mContext, public_txt_title, mNumberName);// 设置开奖标题
         } else {
@@ -105,14 +120,18 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
         fl_numberContext_info = (FrameLayout) findViewById(R.id.fl_numberContext_info);
         fl_other_content = (FrameLayout) findViewById(R.id.fl_other_content);
         findViewById(R.id.rb_open_lottery).setOnClickListener(this);
-        ((RadioButton) findViewById(R.id.rb_open_lottery)).setChecked(true);
+        if (index == 1) {
+            ((RadioButton) findViewById(R.id.rb_chart)).setChecked(true);
+        } else {
+            ((RadioButton) findViewById(R.id.rb_open_lottery)).setChecked(true);
+        }
         findViewById(R.id.rb_statistics).setOnClickListener(this);
         findViewById(R.id.rb_chart).setOnClickListener(this);
         public_txt_spinner = (AppCompatSpinner) findViewById(R.id.public_txt_spinner);
 
-        if("1".equals(mNumberName)){
+        if ("1".equals(mNumberName)) {
             ll_bottom_menu.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             ll_bottom_menu.setVisibility(View.GONE);
         }
     }
@@ -167,6 +186,9 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
                 hkLotteryStartFragment = new HKLotteryStartFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fl_other_content, hkLotteryStartFragment).commit();
 
+                if (!PreferenceUtil.getBoolean(AppConstants.LOTTERY_HK_RED_KEY, false)) {
+                    PreferenceUtil.commitBoolean(AppConstants.LOTTERY_HK_RED_KEY, true);
+                }
                 break;
             case R.id.rb_chart:
                 fl_numberContext_info.setVisibility(View.GONE);
@@ -177,6 +199,9 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fl_other_content, new HKLotteryChartFragment()).commit();
 
+                if (!PreferenceUtil.getBoolean(AppConstants.LOTTERY_HK_RED_KEY, false)) {
+                    PreferenceUtil.commitBoolean(AppConstants.LOTTERY_HK_RED_KEY, true);
+                }
                 break;
         }
     }
