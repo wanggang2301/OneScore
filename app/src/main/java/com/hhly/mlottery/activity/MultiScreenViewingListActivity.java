@@ -229,7 +229,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
     public static List<BasketMatchFilter> mAllFilter = new ArrayList<>();//所有的联赛
     private int mSize; //记录共有几天的数据
     //内容数据
-    private List<BasketMatchBean> showDataList;//显示的比赛list
+    private List<BasketMatchBean> showDataList = new ArrayList<BasketMatchBean>();//显示的比赛list
     private boolean isBasketFilter = false;  //是否赛选过篮球
 
     /**
@@ -258,8 +258,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                 }
                 mMatchdata = json.getMatchData();
                 mAllFilter = json.getMatchFilter();
-
-                showDataList = new ArrayList<BasketMatchBean>();
+                showDataList.clear();
                 /**
                  *判断是否 经过筛选
                  */
@@ -358,7 +357,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
                     mBasketRecycle.setAdapter(mBasketAdapter);
 
                 } else {
-                    mBasketAdapter.setData(showDataList);
+                    //mBasketAdapter.setData(showDataList);
                     mBasketAdapter.notifyDataSetChanged();
                 }
 
@@ -827,7 +826,7 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
         if (mBasketAdapter == null) {
             return;
         }
-        mBasketAdapter.setData(showDataList);
+        // mBasketAdapter.setData(showDataList);
         mBasketAdapter.notifyDataSetChanged();
     }
 
