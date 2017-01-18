@@ -36,7 +36,7 @@ import java.util.Map;
  * describe: 多屏动画篮球列表Adapter
  */
 
-public class MultipleListBasketAdapter extends BaseQuickAdapter {
+public class MultipleListBasketAdapter extends BaseQuickAdapter<BasketMatchBean> {
 
     private Context mContext;
     private List<BasketMatchBean> mData;
@@ -49,9 +49,17 @@ public class MultipleListBasketAdapter extends BaseQuickAdapter {
         this.mData = data;
     }
 
-    public void setData(List<BasketMatchBean> matchdata) {
-        this.mData = matchdata;
-    }
+//    public void setData(List<BasketMatchBean> matchdata) {
+//
+////        if (matchdata != null) {
+////            int previousSize = this.mData.size();
+////            this.mData.clear();
+////            notifyItemRangeRemoved(0, previousSize);
+////            this.mData.addAll(matchdata);
+////            notifyItemRangeInserted(0, this.mData.size());
+////        }
+////        this.mData = matchdata;
+//    }
 
     /**
      * 赛事item click
@@ -1195,7 +1203,7 @@ public class MultipleListBasketAdapter extends BaseQuickAdapter {
     }
 
     @Override
-    protected void convert(BaseViewHolder baseViewHolder, Object o) {
+    protected void convert(BaseViewHolder baseViewHolder, BasketMatchBean o) {
 
     }
 }
