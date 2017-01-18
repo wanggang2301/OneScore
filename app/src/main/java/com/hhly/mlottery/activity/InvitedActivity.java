@@ -1,6 +1,5 @@
 package com.hhly.mlottery.activity;
 
-import android.app.Activity;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
@@ -70,6 +69,7 @@ public class InvitedActivity extends BaseActivity implements View.OnClickListene
             }
         }, InvitedBean.class);
 
+        //
     }
 
     private void initView() {
