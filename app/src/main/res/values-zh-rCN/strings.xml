@@ -1548,7 +1548,7 @@
     <string name="invite_friends">邀请好友</string>
     <string name="copy_text">已复制到粘贴板</string>
     <string name="invitation_code_acquisition_failed">邀请码获取失败</string>
-    <string name="your_invitation_code">邀请码获取失败</string>
+    <string name="your_invitation_code">您的邀请码</string>
     <string name="copy_tv">复制</string>
     <string name="copy_text2"> 输入邀请码，一笔分后续会发放金币</string>
     <string name="copy_text3">参与一笔分活动，赢取精彩好礼！</string>

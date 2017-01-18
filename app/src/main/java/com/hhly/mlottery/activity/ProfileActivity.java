@@ -98,10 +98,10 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     String PUT_URL="http://file.13322.com/upload/uploadImage.do";
 
     /**图片裁剪宽度*/
-    private int width = 400;
+    private int width = 300;
 
     /**图片裁剪高度*/
-    private int height = 400;
+    private int height = 300;
 
 
     private ProgressDialog progressBar;
@@ -558,6 +558,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 doZoomImage(mCamerUri, width, height);
                 break;
             case REQUEST_IMAGE_CROP:
+
                 if (data == null) {
                     // 显示之前额图片,或者显示默认的图片
                     return;
@@ -610,12 +611,18 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                         UiUtils.toast(MyApp.getInstance(), R.string.save_file_not_found);
                         e.printStackTrace();
                     }
-                    mPopupWindow. dismiss();
+                   // mPopupWindow. dismiss();
                     mHead_portrait.setImageBitmap(photo); //把图片显示在ImageView控件上
                     photo.recycle();
                     System.gc();
                    }
                 }
+                try{
+                    mPopupWindow. dismiss();
+                }catch(Exception e){
+
+            }
+
                 break;
             default:
                 break;
@@ -673,7 +680,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     /*上传图片url  后台绑定*/
 
     private void putPhotoUrl(String headerUrl) {
-
+       //  mPopupWindow. dismiss();
         //final String url = BaseURLs.UPDATEHEADICON;
 
         Map<String, String> param = new HashMap<>();
