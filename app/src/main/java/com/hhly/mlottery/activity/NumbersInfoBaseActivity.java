@@ -170,6 +170,7 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
 
                 break;
             case R.id.rb_open_lottery:
+                MobclickAgent.onEvent(mContext, "Lottery_Info_open");
                 fl_numberContext_info.setVisibility(View.VISIBLE);
                 public_btn_set.setVisibility(View.VISIBLE);
                 fl_other_content.setVisibility(View.GONE);
@@ -177,6 +178,7 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
                 settingTitle();
                 break;
             case R.id.rb_statistics:
+                MobclickAgent.onEvent(mContext, "Lottery_Info_statistics");
                 fl_numberContext_info.setVisibility(View.GONE);
                 public_btn_set.setVisibility(View.GONE);
                 fl_other_content.setVisibility(View.VISIBLE);
@@ -191,6 +193,7 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
                 }
                 break;
             case R.id.rb_chart:
+                MobclickAgent.onEvent(mContext, "Lottery_Info_chart");
                 fl_numberContext_info.setVisibility(View.GONE);
                 public_btn_set.setVisibility(View.GONE);
                 fl_other_content.setVisibility(View.VISIBLE);

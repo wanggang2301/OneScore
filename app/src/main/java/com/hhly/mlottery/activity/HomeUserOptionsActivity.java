@@ -198,6 +198,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         switch (v.getId()) {
 
             case R.id.rl_my_focus: //关注不需要登录
+                MobclickAgent.onEvent(HomeUserOptionsActivity.this, "MyFocusActivity");
                     PreferenceUtil.commitBoolean(SHOW_RED,false);
                     mFocus_RedDot.setVisibility(View.GONE);
                     startActivity(new Intent(HomeUserOptionsActivity.this,MyFocusActivity.class));
@@ -257,6 +258,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
                 break;
             case R.id.rl_setting_invited:
+                MobclickAgent.onEvent(this, "InvitedActivity");
                 PreferenceUtil.commitBoolean(INVITED_SHOW_RED,false);
                 invited_red_dot_view.setVisibility(View.GONE);
                 if (CommonUtils.isLogin()){

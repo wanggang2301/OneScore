@@ -13,6 +13,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.util.FragmentUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +95,7 @@ public class MyFocusActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.public_img_back:
+                MobclickAgent.onEvent(this, "MyFocusActivity_Exit");
                 finish();
                 break;
         }
