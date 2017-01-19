@@ -513,6 +513,7 @@ public class HomeMuenFragment extends Fragment {
                                             } else {
                                                 mContext.startActivity(new Intent(mContext, MultiScreenViewingListActivity.class));
                                             }
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_MultiScreen_Introduce");
                                         }
                                         break;
                                     }

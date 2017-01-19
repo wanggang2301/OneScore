@@ -19,7 +19,7 @@ import butterknife.OnClick;
  * 多屏观看介绍页面
  */
 
-public class MultiScreenIntroduceActivity extends Activity {
+public class MultiScreenIntroduceActivity extends BaseActivity {
 
 
     @BindView(R.id.btn_enter)

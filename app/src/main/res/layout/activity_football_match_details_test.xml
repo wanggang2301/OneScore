@@ -257,7 +257,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="bottom|right"
-            android:paddingBottom="82dp"
+            android:paddingBottom="112dp"
             android:paddingRight="10dp">
 
             <TextView

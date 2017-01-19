@@ -346,7 +346,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 progressBar.show();
                 String url = BaseURLs.UPDATEUSERINFO;
                 Map<String, String> param = new HashMap<>();
-                param.put("account", AppConstants.register.getData().getUser().getLoginAccount());
+                param.put("account", PreferenceUtil.getString(AppConstants.SPKEY_LOGINACCOUNT,""));
                 param.put("loginToken", AppConstants.register.getData().getLoginToken());
                 param.put("deviceToken", AppConstants.deviceToken);
                 param.put("sex", sexDatas.get(0).toString());

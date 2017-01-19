@@ -16,6 +16,7 @@ import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -97,9 +98,11 @@ public class InvitedActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.public_img_back:
+                MobclickAgent.onEvent(this, "InvitedActivity_Exit");
                 finish();
                 break;
             case R.id.public_btn_save:  //分享
+                MobclickAgent.onEvent(this, "InvitedActivity_Save");
                 ShareBean shareBean = new ShareBean();
                 shareBean.setTitle(getApplicationContext().getResources().getString(R.string.please_invited));
                 shareBean.setSummary("【" + AppConstants.register.getData().getUser().getUserId() + "】" + "请您一起看比赛，输入邀请码，优惠多多哦。");
