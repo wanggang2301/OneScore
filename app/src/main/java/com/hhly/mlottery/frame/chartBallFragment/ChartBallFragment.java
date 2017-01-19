@@ -695,6 +695,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
             public void run() {
                 synchronized (this) {
                     L.d("xxxxx","滚球推送：" + text);
+                    System.out.println("xxxxx 滚球推送：" + text);
                     ChartRoom chartRoom = JSON.parseObject(text, ChartRoom.class);
 
                     ChartReceive.DataBean.ChatHistoryBean chartbean = new ChartReceive.DataBean.ChatHistoryBean(chartRoom.getData().getMsgId(), chartRoom.getData().getMsgCode(), chartRoom.getData().getMessage(),
@@ -710,14 +711,14 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                         case 1:
                         case 2:
                             // 发送数据并更新
-                            String userId = "";
+                            String userId = " ";
                             try {
                                 userId = AppConstants.register.getData().getUser().getUserId();
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
 
-                            if (TextUtils.isEmpty(userId) && !userId.equals(chartRoom.getData().getFromUser().getUserId())) {
+                            if (!userId.equals(chartRoom.getData().getFromUser().getUserId())) {
                                 try {
                                     if (historyBeen != null && historyBeen.size() > 1) {
                                         Long lastTime = DateUtil.getCurrentTime(mLastTime);
@@ -824,7 +825,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                 for (int i = 0, len = historyBeen.size(); i < len; i++) {
                     if (mMsgId.equals(historyBeen.get(i).getMsgId())) {
                         recycler_view.smoothScrollToPosition(i);
-                        tv_call_me.setVisibility(View.GONE);
+                        tv_call_me.setVisibility(View.INVISIBLE);
                         return;
                     }
                 }

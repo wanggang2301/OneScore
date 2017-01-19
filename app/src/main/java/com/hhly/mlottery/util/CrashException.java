@@ -90,6 +90,7 @@ public class CrashException implements UncaughtExceptionHandler {
             } catch (InterruptedException e) {
                 Log.e(TAG, "error : ", e);
             }
+            PreferenceUtil.commitString(AppConstants.HOME_PAGER_DATA_KEY, null);// 清除首页缓存
             //退出程序      
             android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(1);
