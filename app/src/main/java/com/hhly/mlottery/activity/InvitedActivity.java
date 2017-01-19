@@ -3,7 +3,7 @@ package com.hhly.mlottery.activity;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,18 +14,20 @@ import com.hhly.mlottery.bean.ShareBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
+
 /**
  * Created by yuely198 on 2017/1/13.
  * 获取邀请码页面
  */
 
-public class InvitedActivity extends BaseActivity implements View.OnClickListener{
+public class InvitedActivity extends BaseActivity implements View.OnClickListener {
 
     private TextView iv_invited_number;
     private TextView iv_number_copy;
@@ -40,11 +42,16 @@ public class InvitedActivity extends BaseActivity implements View.OnClickListene
         initData();
     }
 
+
+    //是否获取邀请码成功
+    private boolean isInvitedSucess = false;
+
     private void initData() {
         Map<String, String> param = new HashMap<>();
 
         param.put("userId", AppConstants.register.getData().getUser().getUserId());
-        Log.i("sada","ada"+ AppConstants.register.getData().getUser().getUserId());
+        // param.put("userId", "hhly91757");
+        L.i("yly123", "用户userId===" + AppConstants.register.getData().getUser().getUserId());
         //String url="http://m.1332255.com:81/mlottery/core/androidUserCenter.getInviteCode.do";
 
         VolleyContentFast.requestJsonByGet(BaseURLs.INVITED_RUL, param, new VolleyContentFast.ResponseSuccessListener<InvitedBean>() {
@@ -52,21 +59,35 @@ public class InvitedActivity extends BaseActivity implements View.OnClickListene
             public void onResponse(InvitedBean bean) {
 
                 if (bean.getResult() == 0) {
-                    copy_text = bean.getData().getInviteCode();
-                    iv_invited_number.setText(bean.getData().getInviteCode());
 
-                }else{
+                    if (!TextUtils.isEmpty(bean.getData().getInviteCode())) {
+                        copy_text = bean.getData().getInviteCode();
+
+                        L.i("yly123", "邀请码===" + bean.getData().getInviteCode());
+
+                        iv_invited_number.setText(bean.getData().getInviteCode());
+                        iv_number_copy.setText(getApplicationContext().getResources().getString(R.string.copy_tv));
+                        isInvitedSucess = true;
+                    } else {
+                        iv_invited_number.setText(R.string.invitation_code_acquisition_failed);
+                        iv_number_copy.setText(getApplicationContext().getResources().getString(R.string.exp_refresh_txt));
+                        isInvitedSucess = false;
+                    }
+
+
+                } else {
                     iv_invited_number.setText(R.string.invitation_code_acquisition_failed);
+                    iv_number_copy.setText(getApplicationContext().getResources().getString(R.string.exp_refresh_txt));
+                    isInvitedSucess = false;
                 }
-
-
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-               // UiUtils.toast(InvitedActivity.this, R.string.picture_put_failed);
+                // UiUtils.toast(InvitedActivity.this, R.string.picture_put_failed);
                 iv_invited_number.setText(R.string.invitation_code_acquisition_failed);
-
+                iv_number_copy.setText(getApplicationContext().getResources().getString(R.string.exp_refresh_txt));
+                isInvitedSucess = false;
             }
         }, InvitedBean.class);
 
@@ -114,14 +135,16 @@ public class InvitedActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.iv_number_copy:
 
+                if (isInvitedSucess) {
                     ClipboardManager cmb = (ClipboardManager) getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                    cmb.setText(copy_text+"");
-                    UiUtils.toast(getApplicationContext(),R.string.copy_text);
+                    cmb.setText(copy_text + "");
+                    UiUtils.toast(getApplicationContext(), R.string.copy_text);
+                } else {
+                    initData();
+                }
                 break;
             default:
                 break;
-
-
 
 
         }
