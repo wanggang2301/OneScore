@@ -18,6 +18,7 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -137,7 +138,7 @@ public class ModifyPasswordActivity extends BaseActivity implements View.OnClick
 
                         String url = BaseURLs.URL_CHANGEPASSWORD;
                         Map<String, String> param = new HashMap<>();
-                        param.put("account", AppConstants.register.getData().getUser().getLoginAccount());
+                        param.put("account", PreferenceUtil.getString(AppConstants.SPKEY_LOGINACCOUNT,""));
                         param.put("accountType", AccountType.TYPE_PHONE);
                         param.put("oldPassword", MD5Util.getMD5(pwOld));
                         param.put("newPassword", MD5Util.getMD5(pwNew));
