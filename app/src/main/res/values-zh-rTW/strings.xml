@@ -1492,8 +1492,7 @@
     <string name="invite_friends">邀請好友</string>
     <string name="copy_text">已複製到粘貼板</string>
     <string name="invitation_code_acquisition_failed">邀請碼獲取失敗</string>
-    <string name="your_invitation_code">您+
-        的邀請碼</string>
+    <string name="your_invitation_code">您的邀請碼</string>
     <string name="copy_tv">複製</string>
     <string name="copy_text2">輸入邀請碼，一筆分後續會發放金幣</string>
     <string name="copy_text3">參與一筆分活動，贏取精彩好禮！</string>
