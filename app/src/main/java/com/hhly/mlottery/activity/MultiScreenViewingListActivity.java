@@ -1,5 +1,6 @@
 package com.hhly.mlottery.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MultipleBasketFilterListEvent;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -53,7 +55,7 @@ import de.greenrobot.event.EventBus;
  * describe:多屏动画列表页
  */
 
-public class MultiScreenViewingListActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class MultiScreenViewingListActivity extends Activity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     protected Context mContext;
 
@@ -228,7 +230,7 @@ public class MultiScreenViewingListActivity extends BaseActivity implements View
     public static List<BasketMatchFilter> mAllFilter = new ArrayList<>();//所有的联赛
     private int mSize; //记录共有几天的数据
     //内容数据
-    private List<BasketMatchBean> showDataList= new ArrayList<BasketMatchBean>();//显示的比赛list
+    private List<BasketMatchBean> showDataList = new ArrayList<BasketMatchBean>();//显示的比赛list
     private boolean isBasketFilter = false;  //是否赛选过篮球
 
     /**
@@ -844,4 +846,17 @@ public class MultiScreenViewingListActivity extends BaseActivity implements View
         setState(MULTIPLE_STATUS_LOADING);
         mHandler.postDelayed(mRun, 500);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
 }
