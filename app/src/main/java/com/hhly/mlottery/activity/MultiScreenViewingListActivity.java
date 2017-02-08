@@ -53,6 +53,7 @@ import de.greenrobot.event.EventBus;
  * Created by yixq on 2017/1/5.
  * mail：yixq@13322.com
  * describe:多屏动画列表页
+ * ps: 由于BaseActivity复写了onSaveInstanceState()方法,继承BaseActivity使用Eventbus时在4.4系统手机中会崩溃，所以直接继承Activity。
  */
 
 public class MultiScreenViewingListActivity extends Activity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
