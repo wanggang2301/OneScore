@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.AppManager;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -297,6 +296,7 @@ public class HomeLanguageActivity extends BaseActivity implements View.OnClickLi
                 this.finish();
                 Intent intent = new Intent();
                 intent.setClass(this, HomePagerActivity.class);
+
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);// 跳回到首页面
                 break;

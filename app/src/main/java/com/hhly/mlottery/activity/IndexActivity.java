@@ -5,19 +5,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
-import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.frame.CPIFragment;
-import com.hhly.mlottery.frame.CounselFragment;
-import com.hhly.mlottery.frame.NewVideoFragment;
 import com.hhly.mlottery.frame.ScoresFragment;
-import com.hhly.mlottery.frame.footframe.InformationFragment;
-import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFocusEventBusEntity;
-import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.frame.cpifrag.CpiFragment;
+import com.hhly.mlottery.frame.datafrag.DataFragment;
+import com.hhly.mlottery.frame.homefrag.HomeFragment;
+import com.hhly.mlottery.frame.infofrag.InfoFragment;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
 import com.umeng.analytics.MobclickAgent;
@@ -25,21 +21,13 @@ import com.umeng.analytics.MobclickAgent;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.greenrobot.event.EventBus;
+public class IndexActivity extends BaseActivity {
 
-/****
- * @author wanggANG
- * @name:FootballActivity
- * @describe:足球（比分、资讯、数据、视频、指数）
- */
-public class FootballActivity extends BaseActivity {
-
-    public final static int SCORES_FRAGMENT = 0; //比分
-    public final static int NEWS_FRAGMENT = 1;   //资讯
-    public final static int DATA_FRAGMENT = 2;   //数据
-    public final static int VIDEO_FRAGMENT = 3;  //视频
-    public final static int CPI_FRAGMENT = 4;    //指数
-    public final static int BASKET_FRAGMENT = 5;    //篮球
+    public final static int HOME_FRAGMENT = 0; //首页
+    public final static int SCORE_FRAGMENT = 1;   //比分
+    public final static int INFO_FRAGMENT = 2;   //情报
+    public final static int CPI_FRAGMENT = 3;  //指数
+    public final static int DATA_FRAGMENT = 4;    //资料库
     private Context mContext;
 
     private RadioGroup mRadioGroup;
@@ -47,24 +35,14 @@ public class FootballActivity extends BaseActivity {
     private FragmentManager fragmentManager;
     private Fragment currentFragment;
     public int currentPosition = 0;// 足球界面Fragment下标
-    public int infoPagerLabel = 0;// 足球资讯pager下标
-    public int basketCurrentPosition = 0;// 篮球界面Fragment下标
-    public LinearLayout ly_tab_bar;
     public int fragmentIndex = 0;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.frag_basefootball);
+        setContentView(R.layout.activity_index);
+
         this.mContext = this;
-        /**当前Activity界面不统计，只统计下面Fragment界面*/
-        MobclickAgent.openActivityDurationTrack(false);
-
-        currentPosition = getIntent().getIntExtra(AppConstants.FOTTBALL_KEY, 0);// 足球fragment下标
-        infoPagerLabel = getIntent().getIntExtra(AppConstants.FOTTBALL_INFO_LABEL_KEY, 0);// 足球资讯pager下标
-        basketCurrentPosition = getIntent().getIntExtra(AppConstants.BASKETBALL_KEY, 0);// 篮球fragment下标
-
-//        currentPosition = AppConstants.BASKETBALL_SCORE_VALUE;
-//        basketCurrentPosition = AppConstants.BASKETBALL_SCORE_KEY;
 
         initView();
         initData();
@@ -74,42 +52,37 @@ public class FootballActivity extends BaseActivity {
      * 初始化界面View
      */
     private void initView() {
-        ly_tab_bar = (LinearLayout) findViewById(R.id.ly_tab_bar);
         mRadioGroup = (RadioGroup) findViewById(R.id.mRadioGroup);
+        fragments.add(new HomeFragment());
         fragments.add(new ScoresFragment());
-        fragments.add(new CounselFragment());
-        fragments.add(new InformationFragment());
-        fragments.add(new NewVideoFragment());
-        fragments.add(CPIFragment.newInstance());
-       //fragments.add(new BasketScoresFragment());
+        fragments.add(new InfoFragment());
+        fragments.add(new CpiFragment());
+        fragments.add(new DataFragment());
     }
 
     private void initData() {
         switch (currentPosition) {
-            case SCORES_FRAGMENT:
-                switchFragment(SCORES_FRAGMENT);
-                ((RadioButton) findViewById(R.id.rb_football)).setChecked(true);
+            case HOME_FRAGMENT:
+                switchFragment(HOME_FRAGMENT);
+                ((RadioButton) findViewById(R.id.rb_home)).setChecked(true);
                 break;
-            case NEWS_FRAGMENT:
-                switchFragment(NEWS_FRAGMENT);
-                ((RadioButton) findViewById(R.id.rb_news)).setChecked(true);
+            case SCORE_FRAGMENT:
+                switchFragment(SCORE_FRAGMENT);
+                ((RadioButton) findViewById(R.id.rb_score)).setChecked(true);
                 break;
-            case DATA_FRAGMENT:
-                switchFragment(DATA_FRAGMENT);
-                ((RadioButton) findViewById(R.id.rb_data)).setChecked(true);
-                break;
-            case VIDEO_FRAGMENT:
-                switchFragment(VIDEO_FRAGMENT);
-                ((RadioButton) findViewById(R.id.rb_video)).setChecked(true);
+            case INFO_FRAGMENT:
+                switchFragment(INFO_FRAGMENT);
+                ((RadioButton) findViewById(R.id.rb_info)).setChecked(true);
                 break;
             case CPI_FRAGMENT:
                 switchFragment(CPI_FRAGMENT);
                 ((RadioButton) findViewById(R.id.rb_cpi)).setChecked(true);
                 break;
-            case BASKET_FRAGMENT:
-                switchFragment(BASKET_FRAGMENT);
-                ly_tab_bar.setVisibility(View.GONE);
+            case DATA_FRAGMENT:
+                switchFragment(DATA_FRAGMENT);
+                ((RadioButton) findViewById(R.id.rb_data)).setChecked(true);
                 break;
+
             default:
                 break;
         }
@@ -119,44 +92,42 @@ public class FootballActivity extends BaseActivity {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 int radioButtonId = radioGroup.getCheckedRadioButtonId();
                 switch (radioButtonId) {
-                    case R.id.rb_football:
+                    case R.id.rb_home:
                         MobclickAgent.onEvent(mContext, "Football_Score");
-                        currentPosition = SCORES_FRAGMENT;
-                        switchFragment(SCORES_FRAGMENT);
+                        currentPosition = HOME_FRAGMENT;
+                        switchFragment(HOME_FRAGMENT);
                         break;
-                    case R.id.rb_news:
+                    case R.id.rb_score:
                         MobclickAgent.onEvent(mContext, "Football_News");
-//                        if (currentPosition == SCORES_FRAGMENT) {
-//                            ((ScoresFragment) currentFragment).disconnectWebSocket();
-//                        }
-                        currentPosition = NEWS_FRAGMENT;
-                        switchFragment(NEWS_FRAGMENT);
+//
+                        currentPosition = SCORE_FRAGMENT;
+                        switchFragment(SCORE_FRAGMENT);
 
                         break;
-                    case R.id.rb_data:
+                    case R.id.rb_info:
                         MobclickAgent.onEvent(mContext, "Football_Data");
 //                        if (currentPosition == SCORES_FRAGMENT) {
 //                            ((ScoresFragment) currentFragment).disconnectWebSocket();
 //                        }
-                        currentPosition = DATA_FRAGMENT;
-                        switchFragment(DATA_FRAGMENT);
-                        break;
-                    case R.id.rb_video:
-                        MobclickAgent.onEvent(mContext, "Football_Video");
-//                        if (currentPosition == SCORES_FRAGMENT) {
-//                            ((ScoresFragment) currentFragment).disconnectWebSocket();
-//                        }
-                        currentPosition = VIDEO_FRAGMENT;
-                        switchFragment(VIDEO_FRAGMENT);
-
+                        currentPosition = INFO_FRAGMENT;
+                        switchFragment(INFO_FRAGMENT);
                         break;
                     case R.id.rb_cpi:
-                        MobclickAgent.onEvent(mContext, "Football_CPI");
+                        MobclickAgent.onEvent(mContext, "Football_Video");
 //                        if (currentPosition == SCORES_FRAGMENT) {
 //                            ((ScoresFragment) currentFragment).disconnectWebSocket();
 //                        }
                         currentPosition = CPI_FRAGMENT;
                         switchFragment(CPI_FRAGMENT);
+
+                        break;
+                    case R.id.rb_data:
+                        MobclickAgent.onEvent(mContext, "Football_CPI");
+//                        if (currentPosition == SCORES_FRAGMENT) {
+//                            ((ScoresFragment) currentFragment).disconnectWebSocket();
+//                        }
+                        currentPosition = DATA_FRAGMENT;
+                        switchFragment(DATA_FRAGMENT);
                         break;
                     default:
                         break;
@@ -179,16 +150,11 @@ public class FootballActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        CpiFiltrateActivity.mCheckedIds.clear();
-        CpiFiltrateActivity.isDefaultHot = true;
-
-        L.d("qazwsx","_____Footballactivity onDestroy");
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            eventBusPost();
             finish();
             return true;
         }
@@ -201,10 +167,6 @@ public class FootballActivity extends BaseActivity {
         MobclickAgent.onResume(this);
     }
 
-
-    public void eventBusPost() {
-        EventBus.getDefault().post(new ScoresMatchFocusEventBusEntity(0));
-    }
 
     @Override
     public void onPause() {

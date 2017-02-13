@@ -2,13 +2,10 @@ package com.hhly.mlottery.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.MyConstants;
@@ -99,7 +96,7 @@ public class DebugConfigActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-
+/*
                 EditText ed = (EditText) findViewById(R.id.et_input);
                 String str = ed.getText().toString();
                 if (TextUtils.isEmpty(str)) {
@@ -111,7 +108,10 @@ public class DebugConfigActivity extends BaseActivity {
                 PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, DIY_INPUT);
                 PreferenceUtil.commitString("DIY_INPUT", str);
 
-                System.exit(0);
+                System.exit(0);*/
+
+                startActivity(new Intent(DebugConfigActivity.this, IndexActivity.class));
+
             }
         });
     }

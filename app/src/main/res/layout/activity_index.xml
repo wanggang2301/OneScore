@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ly_tab_bar"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/bottom_bg_color"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:background="@color/line_football_footer" />
+
+        <RadioGroup
+            android:id="@+id/mRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingTop="2dp">
+
+            <RadioButton
+                android:id="@+id/rb_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/frag_basefootball_menu_news"
+                android:gravity="center"
+                android:text="首页"
+                android:textColor="@drawable/frag__base_selector_color"
+                android:textSize="11dp" />
+
+            <RadioButton
+                android:id="@+id/rb_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/frag_basefootball_menu_foot"
+                android:gravity="center"
+                android:text="@string/football_score"
+                android:textColor="@drawable/frag__base_selector_color"
+                android:textSize="11dp"
+                android:visibility="visible" />
+
+            <RadioButton
+                android:id="@+id/rb_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/frag_basefootball_menu_video"
+                android:gravity="center"
+                android:text="情报"
+                android:textColor="@drawable/frag__base_selector_color"
+                android:textSize="11dp" />
+
+            <RadioButton
+                android:id="@+id/rb_cpi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/frag_basefootball_menu_cpi"
+                android:gravity="center"
+                android:text="指数"
+                android:textColor="@drawable/frag__base_selector_color"
+                android:textSize="11dp" />
+
+            <RadioButton
+                android:id="@+id/rb_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/frag_basefootball_menu_data"
+                android:gravity="center"
+                android:text="资料库"
+                android:textColor="@drawable/frag__base_selector_color"
+                android:textSize="11dp"
+                android:visibility="visible" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/ly_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/ly_tab_bar"></FrameLayout>
+
+
+</RelativeLayout>

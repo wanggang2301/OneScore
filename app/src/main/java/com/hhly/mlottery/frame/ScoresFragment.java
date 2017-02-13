@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,25 +24,17 @@ import com.hhly.mlottery.activity.FootballTypeSettingActivity;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.LeagueCup;
-import com.hhly.mlottery.bean.focusAndPush.BasketballConcernListBean;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.ImmediateFragment;
 import com.hhly.mlottery.frame.footframe.ResultFragment;
 import com.hhly.mlottery.frame.footframe.RollBallFragment;
 import com.hhly.mlottery.frame.footframe.ScheduleFragment;
 import com.hhly.mlottery.frame.footframe.eventbus.ScoreFragmentWebSocketEntity;
-import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFocusEventBusEntity;
-import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.PreferenceUtil;
-import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 
@@ -437,11 +428,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
                 isSchedule = true;
                 L.d("xxx", "ScheduleFragment>>>显示");
             }
-//            if (isFocusFragment) {
-//                MobclickAgent.onPageStart("Football_FocusFragment");
-//                isFocus = true;
-//                L.d("xxx", "FocusFragment>>>显示");
-//            }
+
         }
         if (getActivity() != null && ((FootballActivity) mContext).fragmentIndex != FootballActivity.BASKET_FRAGMENT) {
             L.d("qazwsx", "________connectWebSocket");
