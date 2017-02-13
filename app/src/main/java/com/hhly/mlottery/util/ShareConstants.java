@@ -13,6 +13,7 @@ public class ShareConstants {
     public final static String QQ_APP_ID = "1104883879";
 
     public final static String SINA = "1555498039";
+
     public final static String KEY_WEIXIN_APP_SECRET="89555c198286d31e05321eb3a8adf37e";
 
     public final static String REDIRECT_URL = "http://www.sina.com";

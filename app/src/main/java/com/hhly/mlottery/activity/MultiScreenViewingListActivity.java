@@ -599,7 +599,6 @@ public class MultiScreenViewingListActivity extends Activity implements View.OnC
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
                 if (checkedId == mBasketRadioButton.getId()) {
                     borf = BASKET_TYPE;
                     isBasketLoad = -1;
