@@ -18,7 +18,6 @@ import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -70,7 +69,7 @@ import cn.finalteam.okhttpfinal.HttpRequest;
  */
 public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
-    private static final java.lang.String TAG = "HomePagerActivity";
+    private static final String TAG = "HomePagerActivity";
     private Context mContext;// 上下文
     private ImageView public_btn_set;// 登录图标
     private SwipeRefreshLayout mSwipeRefreshLayout;// 下拉刷新
@@ -758,7 +757,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
     private void installAPK(File file) {
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setAction(android.content.Intent.ACTION_VIEW);
+        intent.setAction(Intent.ACTION_VIEW);
         intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
         startActivity(intent);
     }

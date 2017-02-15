@@ -64,7 +64,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     private ImageView mSetImgBtn;// 设置
     private ImageView public_btn_infomation;// 足球资料库
 
-    private String[] mItems = {getString(R.string.football_txt), getString(R.string.basketball_txt)};
+    private String[] mItems;
     private Spinner mSpinner;
     /**
      * 中间标题
@@ -108,6 +108,8 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
 
 
     private void initView() {
+        mItems = getResources().getStringArray(R.array.bifen_select);
+
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
 
         mSpinner = (Spinner) view.findViewById(R.id.public_txt_left_spinner);

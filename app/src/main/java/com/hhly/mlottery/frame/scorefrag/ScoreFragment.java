@@ -55,7 +55,7 @@ public class ScoreFragment extends Fragment {
     private void initView() {
         footBallScoreFragment = new FootBallScoreFragment();
         basketBallScoreFragment = new BasketBallScoreFragment();
-        snookerScoreFragment = new SnookerScoreFragment();
+        // snookerScoreFragment = new SnookerScoreFragment();
 
         fragments.add(footBallScoreFragment);
         fragments.add(basketBallScoreFragment);

@@ -22,7 +22,7 @@ import de.greenrobot.event.EventBus;
  */
 public class SnookerScoreFragment extends Fragment {
 
-    private String[] mItems = {getString(R.string.football_txt), getString(R.string.basketball_txt), getString(R.string.snooker_txt)};
+    private String[] mItems;
     private Spinner mSpinner;
 
     private View view;
@@ -56,6 +56,8 @@ public class SnookerScoreFragment extends Fragment {
     }
 
     private void initView() {
+        mItems = getResources().getStringArray(R.array.bifen_select);
+
         mSpinner = (Spinner) view.findViewById(R.id.public_txt_left_spinner);
         mSpinner.setVisibility(View.VISIBLE);
         BallSelectArrayAdapter mAdapter = new BallSelectArrayAdapter(mContext, mItems);

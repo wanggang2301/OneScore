@@ -295,7 +295,7 @@ public class HomeLanguageActivity extends BaseActivity implements View.OnClickLi
                 MyApp.mResources.updateConfiguration(MyApp.mConfiguration, MyApp.mDm);
                 this.finish();
                 Intent intent = new Intent();
-                intent.setClass(this, HomePagerActivity.class);
+                intent.setClass(this, IndexActivity.class);
 
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);// 跳回到首页面

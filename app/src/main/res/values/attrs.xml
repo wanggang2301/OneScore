@@ -87,6 +87,29 @@
         <item>@string/basket_left</item>
     </string-array>
 
+
+    <!--比分-->
+    <string-array name="bifen_select">
+        <item>@string/football_txt</item>
+        <item>@string/basketball_txt</item>
+    </string-array>
+
+    <!--情報-->
+    <string-array name="qingbao_select">
+        <item>@string/football_txt</item>
+    </string-array>
+
+    <!--指數-->
+    <string-array name="zhishu_select">
+        <item>@string/football_txt</item>
+    </string-array>
+    <!--資料庫-->
+    <string-array name="ziliaoku_select">
+        <item>@string/football_txt</item>
+        <item>@string/basketball_txt</item>
+    </string-array>
+
+
     <!--环形进度条-->
     <declare-styleable name="RoundProgressBar">
         <attr name="roundColor" format="color" />

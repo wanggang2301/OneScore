@@ -39,7 +39,7 @@ import de.greenrobot.event.EventBus;
  */
 public class BasketBallScoreFragment extends BaseWebSocketFragment implements View.OnClickListener {
 
-    private String[] mItems = {getString(R.string.football_txt), getString(R.string.basketball_txt)};
+    private String[] mItems;
     private Spinner mSpinner;
     private View view;
     private Context mContext;
@@ -115,6 +115,8 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
     }
 
     private void initView() {
+        mItems = getResources().getStringArray(R.array.bifen_select);
+
         mSpinner = (Spinner) view.findViewById(R.id.public_txt_left_spinner);
         mSpinner.setVisibility(View.VISIBLE);
         BallSelectArrayAdapter mAdapter = new BallSelectArrayAdapter(mContext, mItems);

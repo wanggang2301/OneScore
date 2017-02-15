@@ -39,7 +39,7 @@ public class DataFragment extends Fragment implements View.OnClickListener {
     private View mView;
 
     private Context mContext;
-    private String[] mItems = {getString(R.string.football_txt), getString(R.string.basketball_txt)};
+    private String[] mItems;
 
     private int fragmentIndex = 0;
     private FragmentManager fragmentManager;
@@ -57,6 +57,10 @@ public class DataFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initView() {
+
+        mItems = getResources().getStringArray(R.array.ziliaoku_select);
+
+
         mSpinner = (Spinner) mView.findViewById(R.id.public_txt_left_spinner);
         mSpinner.setVisibility(View.VISIBLE);
 

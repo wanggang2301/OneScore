@@ -158,9 +158,6 @@
             android:name=".activity.FootballDatabaseDetailsActivity"
             android:screenOrientation="portrait" />
         <!-- 首页Activity -->
-        <activity
-            android:name=".activity.HomePagerActivity"
-            android:screenOrientation="portrait" />
         <!-- 首页用户设置选项 -->
         <activity
             android:name=".activity.HomeUserOptionsActivity"
