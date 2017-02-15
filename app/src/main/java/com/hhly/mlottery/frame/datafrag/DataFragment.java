@@ -39,7 +39,7 @@ public class DataFragment extends Fragment implements View.OnClickListener {
     private View mView;
 
     private Context mContext;
-    private String[] mItems = {"足球", "篮球"};
+    private String[] mItems = {getString(R.string.football_txt), getString(R.string.basketball_txt)};
 
     private int fragmentIndex = 0;
     private FragmentManager fragmentManager;

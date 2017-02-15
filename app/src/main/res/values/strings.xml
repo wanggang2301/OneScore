@@ -1557,4 +1557,9 @@
     <string name="home_lottery_info_tm_bo_b">蓝</string>
     <string name="home_lottery_info_image_desc">本站所有数据、资料仅供您参考，为避免遭受经济损失任何人不得用于非法用途，否则责任自负</string>
 
+    <string name="football_txt">足球</string>
+    <string name="basketball_txt">篮球</string>
+    <string name="snooker_txt">斯洛克</string>
+    <string name="tennisball_txt">网球</string>
+
 </resources>

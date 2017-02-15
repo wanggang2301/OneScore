@@ -39,7 +39,7 @@ import de.greenrobot.event.EventBus;
  */
 public class BasketBallScoreFragment extends BaseWebSocketFragment implements View.OnClickListener {
 
-    private String[] mItems = {"足球", "篮球"};
+    private String[] mItems = {getString(R.string.football_txt), getString(R.string.basketball_txt)};
     private Spinner mSpinner;
     private View view;
     private Context mContext;

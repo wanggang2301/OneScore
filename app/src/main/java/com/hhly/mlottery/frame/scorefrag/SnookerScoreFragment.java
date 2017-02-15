@@ -22,7 +22,7 @@ import de.greenrobot.event.EventBus;
  */
 public class SnookerScoreFragment extends Fragment {
 
-    private String[] mItems = {"足球", "篮球", "斯洛克"};
+    private String[] mItems = {getString(R.string.football_txt), getString(R.string.basketball_txt), getString(R.string.snooker_txt)};
     private Spinner mSpinner;
 
     private View view;
@@ -36,8 +36,6 @@ public class SnookerScoreFragment extends Fragment {
      * 设置
      */
     private ImageView mSetImgBtn;// 设置
-
-
 
 
     @Override

@@ -64,7 +64,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     private ImageView mSetImgBtn;// 设置
     private ImageView public_btn_infomation;// 足球资料库
 
-    private String[] mItems = {"足球", "篮球"};
+    private String[] mItems = {getString(R.string.football_txt), getString(R.string.basketball_txt)};
     private Spinner mSpinner;
     /**
      * 中间标题
