@@ -9,11 +9,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.frame.ScoresFragment;
 import com.hhly.mlottery.frame.cpifrag.CpiFragment;
 import com.hhly.mlottery.frame.datafrag.DataFragment;
 import com.hhly.mlottery.frame.homefrag.HomeFragment;
 import com.hhly.mlottery.frame.infofrag.InfoFragment;
+import com.hhly.mlottery.frame.scorefrag.ScoreFragment;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
 import com.umeng.analytics.MobclickAgent;
@@ -54,7 +54,7 @@ public class IndexActivity extends BaseActivity {
     private void initView() {
         mRadioGroup = (RadioGroup) findViewById(R.id.mRadioGroup);
         fragments.add(new HomeFragment());
-        fragments.add(new ScoresFragment());
+        fragments.add(new ScoreFragment());
         fragments.add(new InfoFragment());
         fragments.add(new CpiFragment());
         fragments.add(new DataFragment());

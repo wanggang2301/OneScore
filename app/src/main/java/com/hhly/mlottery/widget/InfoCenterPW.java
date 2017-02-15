@@ -10,14 +10,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.PopupWindow;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.InfoCenterActivity;
 import com.hhly.mlottery.adapter.InfoCenterSelectAdapter;
 import com.hhly.mlottery.bean.infoCenterBean.IntelligencesEntity;
+import com.hhly.mlottery.frame.infofrag.FootInfoCallBack;
+import com.hhly.mlottery.frame.infofrag.FootInfoShowSelectInfoCallBack;
 
 import java.util.List;
 
@@ -35,6 +35,20 @@ public class InfoCenterPW extends PopupWindow {
     private int currentIndex;
     private final int width;
 
+
+    public FootInfoCallBack footInfoCallBack;
+    public FootInfoShowSelectInfoCallBack footInfoShowSelectInfoCallBack;
+
+    public void setFootInfoCallBack(FootInfoCallBack footInfoCallBack) {
+        this.footInfoCallBack = footInfoCallBack;
+    }
+
+
+    public void setFootInfoShowSelectInfoCallBack(FootInfoShowSelectInfoCallBack footInfoShowSelectInfoCallBack) {
+        this.footInfoShowSelectInfoCallBack = footInfoShowSelectInfoCallBack;
+    }
+
+
     public InfoCenterPW(final Activity context, List<IntelligencesEntity> list, int index) {
         this.mContext = context;
         this.datas = list;
@@ -51,8 +65,11 @@ public class InfoCenterPW extends PopupWindow {
         this.setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss() {
-//                backgroundAlpha(mContext, 1f);
-                ((InfoCenterActivity)mContext).fl_mask.setVisibility(View.GONE);
+                if (footInfoCallBack != null) {
+                    footInfoCallBack.onClick(false);
+                }
+
+                // ((Activity) mContext).fl_mask.setVisibility(View.GONE);
             }
         });
 
@@ -73,7 +90,9 @@ public class InfoCenterPW extends PopupWindow {
             @Override
             public void onItemClick(View view, int i) {
                 InfoCenterPW.this.dismiss();
-                ((InfoCenterActivity) mContext).showSelectInfo(i);
+                if (footInfoShowSelectInfoCallBack != null) {
+                    footInfoShowSelectInfoCallBack.onClick(i);
+                }
                 mRecyclerView.scrollToPosition(i);
                 infoCenterSelectAdapter.notifyDataSetChanged();
 
@@ -90,10 +109,17 @@ public class InfoCenterPW extends PopupWindow {
         if (!this.isShowing()) {
             this.showAsDropDown(parent, parent.getLayoutParams().width / 2, 0);// 以下拉方式显示popupwindow
 //            backgroundAlpha(mContext, 0.5f);
-            ((InfoCenterActivity)mContext).fl_mask.setVisibility(View.VISIBLE);
+
+            if (footInfoCallBack != null) {
+                footInfoCallBack.onClick(true);
+            }
+
         } else {
             this.dismiss();
-            ((InfoCenterActivity)mContext).fl_mask.setVisibility(View.GONE);
+
+            if (footInfoCallBack != null) {
+                footInfoCallBack.onClick(false);
+            }
         }
     }
 
@@ -108,7 +134,6 @@ public class InfoCenterPW extends PopupWindow {
 //        context.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 //        context.getWindow().setAttributes(lp);
 //    }
-
     public void notifyChanged(int indexPosition) {
         mRecyclerView.scrollToPosition(indexPosition);
         infoCenterSelectAdapter.notifyDataSetChanged();

@@ -5,8 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/cpi_layout_header" />
-
     <FrameLayout
         android:id="@+id/ly_content_cpi"
         android:layout_width="match_parent"

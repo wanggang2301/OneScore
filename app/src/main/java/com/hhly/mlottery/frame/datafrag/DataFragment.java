@@ -24,7 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
+ * 资料库
+ * wangg
  */
 public class DataFragment extends Fragment implements View.OnClickListener {
 
@@ -38,7 +39,7 @@ public class DataFragment extends Fragment implements View.OnClickListener {
     private View mView;
 
     private Context mContext;
-    private String[] mItems = {"足球", "篮球", "斯洛克"};
+    private String[] mItems = {"足球", "篮球"};
 
     private int fragmentIndex = 0;
     private FragmentManager fragmentManager;
@@ -73,9 +74,7 @@ public class DataFragment extends Fragment implements View.OnClickListener {
 
         fragments.add(new FootballInfomationFragment());
         fragments.add(new BasketballInfomationFragment());
-        fragments.add(new SnookerInfomationFragment());
-
-
+        // fragments.add(new SnookerInfomationFragment());
     }
 
     private void initEvent() {
@@ -97,7 +96,7 @@ public class DataFragment extends Fragment implements View.OnClickListener {
         fragmentIndex = position;// 当前fragment下标
         L.d("xxx", "当前Fragment下标：" + fragmentIndex);
         fragmentManager = getChildFragmentManager();
-        currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content_data, currentFragment, fragments.get(position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, false);
+        currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content_data, currentFragment, fragments.get(position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, true);
     }
 
     @Override

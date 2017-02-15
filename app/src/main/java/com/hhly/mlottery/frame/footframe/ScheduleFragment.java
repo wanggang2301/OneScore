@@ -40,7 +40,6 @@ import com.hhly.mlottery.callback.FocusMatchClickListener;
 import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
-import com.hhly.mlottery.frame.ScoresFragment;
 import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFilterEventBusEntity;
 import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchSettingEventBusEntity;
@@ -219,6 +218,8 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
 
         mListView.setSwipeRefreshLayout(mSwipeRefreshLayout);*/
         recyclerView.setLayoutManager(layoutManager);
+
+
 
 
         mNoDataLayout = (RelativeLayout) view.findViewById(R.id.football_schedule_unfocus_ll);
@@ -431,6 +432,8 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                     recyclerView.setAdapter(mAdapter);
                     mAdapter.setmFocusMatchClickListener(mFocusMatchClickListener);
                     mAdapter.setDateOnClickListener(mDateOnClickListener);
+
+
 
                     mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
                         @Override

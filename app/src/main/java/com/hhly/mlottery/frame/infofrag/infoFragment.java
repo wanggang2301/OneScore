@@ -21,6 +21,7 @@ import java.util.List;
 
 /**
  * 情报
+ * wangg
  */
 public class InfoFragment extends Fragment {
 
@@ -32,7 +33,7 @@ public class InfoFragment extends Fragment {
     private View mView;
 
     private Context mContext;
-    private String[] mItems = {"足球", "篮球", "斯洛克"};
+    private String[] mItems = {"足球"};
 
     private int fragmentIndex = 0;
     private FragmentManager fragmentManager;
@@ -62,8 +63,8 @@ public class InfoFragment extends Fragment {
 
 
         fragments.add(new FootInfoFragment());
-        fragments.add(new BasketInfoFragment());
-        fragments.add(new SnookerInfoFragment());
+        //fragments.add(new BasketInfoFragment());
+        // fragments.add(new SnookerInfoFragment());
     }
 
     private void initEvent() {
@@ -85,6 +86,6 @@ public class InfoFragment extends Fragment {
         fragmentIndex = position;// 当前fragment下标
         L.d("xxx", "当前Fragment下标：" + fragmentIndex);
         fragmentManager = getChildFragmentManager();
-        currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content_info, currentFragment, fragments.get(position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, false);
+        currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content_info, currentFragment, fragments.get(position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, true);
     }
 }

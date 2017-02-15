@@ -1,13 +1,24 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hhly.mlottery.frame.homefrag.HomeFragment">
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!--头部条目标题-->
+    <include layout="@layout/layout_header" />
+    <!--整体下拉刷新控件-->
+    <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
+        android:id="@+id/home_page_swiperefreshlayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="home" />
-
-</FrameLayout>
+        android:layout_height="match_parent">
+        <!--首页列表展示控件-->
+        <ListView
+            android:id="@+id/home_page_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/score_color_white"
+            android:divider="@null"
+            android:listSelector="@color/transparency"
+            android:scrollbars="none"></ListView>
+    </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
+</LinearLayout>

@@ -1,4 +1,5 @@
-package com.hhly.mlottery.frame;
+package com.hhly.mlottery.frame.cpifrag;
+
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -22,13 +24,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiFiltrateActivity;
-import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.enums.OddsTypeEnum;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.websocket.WebSocketCPIResult;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.frame.oddfragment.CPIOddsFragment;
 import com.hhly.mlottery.frame.oddfragment.CompanyChooseDialogFragment;
 import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
 
@@ -38,17 +38,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * 描    述：
- * 作    者：longs@13322.com
- * 时    间：2016/6/21.
+ * A simple {@link Fragment} subclass.
  */
-public class CPIFragment extends BaseWebSocketFragment {
+public class FootCpiFragment extends BaseWebSocketFragment {
+
 
     private static final int startFilterRequestCode = 10086;
 
     TextView mLeftTitle; // 左侧标题
 
-    ImageView mBackButton; // 返回按钮
 
     LinearLayout mDateLayout; // 日期布局
     TextView mDateTextView; // 日期 TextView
@@ -59,7 +57,7 @@ public class CPIFragment extends BaseWebSocketFragment {
     SwipeRefreshLayout mRefreshLayout; // SwipeRefreshLayout
     ViewPager mViewPager; // viewPage
 
-    private List<CPIOddsFragment> mFragments; // Fragments
+    private List<CPIOddsFragment2> mFragments; // Fragments
     private ArrayList<NewOddsInfo.CompanyBean> companyList; // 公司数据源
     private LinkedList<String> filterList; // 过滤信息数据源
 
@@ -72,6 +70,11 @@ public class CPIFragment extends BaseWebSocketFragment {
 //    private URI socketUri;
 //    private HappySocketClient socketClient; // WebSocket 客户端
 
+
+    public static FootCpiFragment newInstance() {
+        return new FootCpiFragment();
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setTopic("USER.topic.indexcenter");
@@ -83,7 +86,7 @@ public class CPIFragment extends BaseWebSocketFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_cpi, container, false);
+        return inflater.inflate(R.layout.fragment_foot_cpi, container, false);
     }
 
     @Override
@@ -94,12 +97,6 @@ public class CPIFragment extends BaseWebSocketFragment {
         companyList = new ArrayList<>();
 //        filterList = new LinkedList<>();
 
-        // 隐藏中间标题
-        hideView(view, R.id.public_txt_title);
-        // 隐藏 筛选、设置、热门隐藏
-        hideView(view, R.id.public_btn_filter);
-        hideView(view, R.id.public_btn_set);
-        hideView(view, R.id.public_img_hot);
 
         // 显示左侧标题
         mLeftTitle = (TextView) view.findViewById(R.id.public_txt_left_title);
@@ -107,7 +104,10 @@ public class CPIFragment extends BaseWebSocketFragment {
         mLeftTitle.setText(R.string.football_detail_odds_tab);
 
         // 返回
-        mBackButton = (ImageView) view.findViewById(R.id.public_img_back);
+        /**
+         * 研究作用
+         */
+      /*  mBackButton = (ImageView) view.findViewById(R.id.public_img_back);
         mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +116,7 @@ public class CPIFragment extends BaseWebSocketFragment {
                     getActivity().finish();
                 }
             }
-        });
+        });*/
 
         // 显示时间的布局和 TextView
         mDateLayout = (LinearLayout) view.findViewById(R.id.public_date_layout);
@@ -189,7 +189,7 @@ public class CPIFragment extends BaseWebSocketFragment {
         if (filterList == null) filterList = new LinkedList<>();
         filterList.clear();
         filterList.addAll(checkedIdList);
-        for (CPIOddsFragment fragment : mFragments) {
+        for (CPIOddsFragment2 fragment : mFragments) {
             fragment.updateFilterData();
         }
     }
@@ -283,7 +283,7 @@ public class CPIFragment extends BaseWebSocketFragment {
      *
      * @return CPIOddsListFragment
      */
-    public CPIOddsFragment getCurrentFragment() {
+    public CPIOddsFragment2 getCurrentFragment() {
         return mFragments.get(mViewPager.getCurrentItem());
     }
 
@@ -292,7 +292,7 @@ public class CPIFragment extends BaseWebSocketFragment {
      */
     public void refreshAllChildFragments() {
 //        mFragments.get(mViewPager.getCurrentItem()).refreshData(currentDate);
-        for (CPIOddsFragment fragment : mFragments) {
+        for (CPIOddsFragment2 fragment : mFragments) {
             // 未选日期的时候 choosenDate 为null，则请求当天数据
             // 选择日期之后 choosenDate 为选择的日期，请求选择日期的数据
             fragment.refreshData(choosenDate);
@@ -304,9 +304,9 @@ public class CPIFragment extends BaseWebSocketFragment {
      */
     private void initViewPager() {
         mFragments = new ArrayList<>();
-        mFragments.add(CPIOddsFragment.newInstance(OddsTypeEnum.PLATE));
-        mFragments.add(CPIOddsFragment.newInstance(OddsTypeEnum.BIG));
-        mFragments.add(CPIOddsFragment.newInstance(OddsTypeEnum.OP));
+        mFragments.add(CPIOddsFragment2.newInstance(OddsTypeEnum.PLATE));
+        mFragments.add(CPIOddsFragment2.newInstance(OddsTypeEnum.BIG));
+        mFragments.add(CPIOddsFragment2.newInstance(OddsTypeEnum.OP));
 
         CPIPagerAdapter pagerAdapter = new CPIPagerAdapter(getChildFragmentManager());
         mViewPager.setOffscreenPageLimit(3);//设置预加载页面的个数。
@@ -345,7 +345,7 @@ public class CPIFragment extends BaseWebSocketFragment {
                     new CompanyChooseDialogFragment.OnFinishSelectionListener() {
                         @Override
                         public void onFinishSelection() {
-                            for (CPIOddsFragment fragment : mFragments) {
+                            for (CPIOddsFragment2 fragment : mFragments) {
                                 fragment.updateFilterData();
                             }
                         }
@@ -353,9 +353,6 @@ public class CPIFragment extends BaseWebSocketFragment {
         }
     }
 
-    public static CPIFragment newInstance() {
-        return new CPIFragment();
-    }
 
 //    @Override
 //    public void onMessage(String message) {
@@ -414,7 +411,7 @@ public class CPIFragment extends BaseWebSocketFragment {
         WebSocketCPIResult<WebSocketCPIResult.UpdateScore> result =
                 WebSocketCPIResult.getScoreFromJson(jsonString);
         // 更新三个 Fragment 中对应的 List 中的对应 thirdId 的比赛的数据
-        for (CPIOddsFragment fragment : mFragments) {
+        for (CPIOddsFragment2 fragment : mFragments) {
             fragment.updateScore(result);
         }
     }
@@ -430,7 +427,7 @@ public class CPIFragment extends BaseWebSocketFragment {
         WebSocketCPIResult<List<WebSocketCPIResult.UpdateOdds>> result =
                 WebSocketCPIResult.getOddsFromJson(jsonString);
         // 更新三个 Fragment 中对应的 List 中的对应 thirdId 的比赛的数据
-        for (CPIOddsFragment fragment : mFragments) {
+        for (CPIOddsFragment2 fragment : mFragments) {
             fragment.updateOdds(result);
         }
     }
@@ -446,7 +443,7 @@ public class CPIFragment extends BaseWebSocketFragment {
         WebSocketCPIResult<WebSocketCPIResult.UpdateTimeAndStatus> result =
                 WebSocketCPIResult.getTimeAndStatusFromJson(jsonString);
         // 更新三个 Fragment 中对应的 List 中的对应 thirdId 的比赛的数据
-        for (CPIOddsFragment fragment : mFragments) {
+        for (CPIOddsFragment2 fragment : mFragments) {
             fragment.updateTimeAndStatus(result);
         }
     }
@@ -491,7 +488,7 @@ public class CPIFragment extends BaseWebSocketFragment {
         }
 
         @Override
-        public CPIOddsFragment getItem(int position) {
+        public CPIOddsFragment2 getItem(int position) {
             return mFragments.get(position);
         }
 

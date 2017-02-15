@@ -59,6 +59,9 @@ public class FootInfoFragment extends Fragment implements View.OnClickListener, 
     public FrameLayout fl_mask;
     private View emptyView;
 
+    public FootInfoCallBack footInfoCallBack;
+    public FootInfoShowSelectInfoCallBack footInfoShowSelectInfoCallBack;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_foot_info, container, false);
@@ -112,6 +115,9 @@ public class FootInfoFragment extends Fragment implements View.OnClickListener, 
                         tv_data_content.setText(getCurrentDate(mInfoCenterBean.intelligences.get(currentIndexDate).date, mInfoCenterBean.intelligences.get(currentIndexDate).count));
 
                         mInfoCenterPW = new InfoCenterPW((Activity) mContext, mInfoCenterBean.intelligences, currentIndexDate);
+                        mInfoCenterPW.setFootInfoCallBack(footInfoCallBack);
+                        mInfoCenterPW.setFootInfoShowSelectInfoCallBack(footInfoShowSelectInfoCallBack);
+
 
                         mInfoCenterBean.intelligences.get(currentIndexDate).isSelect = true;
                     } else {
@@ -145,12 +151,7 @@ public class FootInfoFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void initView() {
-        mView.findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
-        mView.findViewById(R.id.public_btn_set).setVisibility(View.GONE);
-        TextView title = (TextView) mView.findViewById(R.id.public_txt_title);
-        title.setText(R.string.title_info_center);
 
-        mView.findViewById(R.id.public_img_back).setOnClickListener(this);
         mView.findViewById(R.id.tv_current_reLoading).setOnClickListener(this);
 
         fl_mask = (FrameLayout) mView.findViewById(R.id.fl_mask);
@@ -163,7 +164,6 @@ public class FootInfoFragment extends Fragment implements View.OnClickListener, 
         tv_data_content = (TextView) mView.findViewById(R.id.tv_data_content);
         tv_data_content.setOnClickListener(this);
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.recycler_view);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(layoutManager);//设置布局管理器
         layoutManager.setOrientation(OrientationHelper.VERTICAL);//设置为垂直布局，这也是默认的
@@ -177,6 +177,27 @@ public class FootInfoFragment extends Fragment implements View.OnClickListener, 
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
 
         emptyView = View.inflate(mContext, R.layout.layout_nodata, null);
+
+        footInfoCallBack = new FootInfoCallBack() {
+            @Override
+            public void onClick(boolean b) {
+
+                if (b) {
+                    fl_mask.setVisibility(View.VISIBLE);
+                } else {
+                    fl_mask.setVisibility(View.GONE);
+                }
+            }
+        };
+
+        footInfoShowSelectInfoCallBack = new FootInfoShowSelectInfoCallBack() {
+            @Override
+            public void onClick(int i) {
+                showSelectInfo(i);
+            }
+        };
+
+
     }
 
     @Override
@@ -247,6 +268,5 @@ public class FootInfoFragment extends Fragment implements View.OnClickListener, 
     public void onRefresh() {
         initDate();
     }
-
 
 }
