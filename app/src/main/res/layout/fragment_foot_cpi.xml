@@ -6,7 +6,9 @@
     android:background="@color/number_info_two_bg"
     android:orientation="vertical">
 
-    <include layout="@layout/cpi_layout_header" />
+    <include
+        android:id="@+id/d_heasder"
+        layout="@layout/cpi_layout_header" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabs"

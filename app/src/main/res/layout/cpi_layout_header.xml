@@ -12,25 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
-        <TextView
-            android:id="@+id/public_txt_left_title"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@id/public_img_back"
-            android:gravity="center"
-            android:text="@string/app_name"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:visibility="gone" />
-
-
         <!--addtjl添加中间日期显示-->
         <LinearLayout
             android:id="@+id/public_date_layout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
+            android:layout_marginLeft="5dp"
             android:gravity="center"
             android:orientation="horizontal"
             android:visibility="gone">
@@ -70,7 +57,43 @@
 
         </LinearLayout>
         <!--addtjl end 添加中间日期显示-->
+        <LinearLayout
+            android:id="@+id/ll_match_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingTop="3dp">
 
+            <TextView
+                android:id="@+id/tv_match_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="足球"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_17" />
+
+            <ImageView
+                android:id="@+id/iv_match"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/nav_icon_cbb" />
+        </LinearLayout>
+
+        <ImageView
+            style="@style/RippleBackgroudBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/ll_match_select"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="3dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/icon_config_btn"
+            android:visibility="invisible" />
 
         <!--addtjl begin 热门，公司，筛选-->
         <ImageView

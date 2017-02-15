@@ -4,7 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 
 import com.hhly.mlottery.R;
@@ -110,10 +114,29 @@ public class DebugConfigActivity extends BaseActivity {
 
                 System.exit(0);*/
 
-                startActivity(new Intent(DebugConfigActivity.this, IndexActivity.class));
+                // startActivity(new Intent(DebugConfigActivity.this, IndexActivity.class));
+                popWindow(v);
 
             }
         });
+    }
+
+    private void popWindow(View v) {
+        final View mView = View.inflate(getApplicationContext(), R.layout.pop_select, null);
+        String[] arr = {"孙悟空", "猪八戒", "唐僧"};
+        // 创建ArrayAdapter对象
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, arr);
+
+        ListView listview = (ListView) mView.findViewById(R.id.match_type);
+        listview.setAdapter(adapter);
+
+
+        final PopupWindow popupWindow = new PopupWindow(mView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindow.setFocusable(true);
+
+        popupWindow.showAsDropDown(v);
+
+
     }
 
 /*

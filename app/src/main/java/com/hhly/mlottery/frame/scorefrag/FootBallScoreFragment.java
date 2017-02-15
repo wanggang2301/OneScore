@@ -1,8 +1,10 @@
 package com.hhly.mlottery.frame.scorefrag;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,9 +12,12 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.Spinner;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +34,7 @@ import com.hhly.mlottery.frame.footframe.RollBallFragment;
 import com.hhly.mlottery.frame.footframe.ScheduleFragment;
 import com.hhly.mlottery.frame.footframe.eventbus.ScoreFragmentWebSocketEntity;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.widget.BallSelectArrayAdapter;
+import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -41,6 +46,11 @@ import de.greenrobot.event.EventBus;
  * A simple {@link Fragment} subclass.
  */
 public class FootBallScoreFragment extends BaseWebSocketFragment {
+
+
+    private static final int FOOTBALL = 0;
+    private static final int BASKETBALL = 1;
+    private static final int SNOOKER = 2;
 
     private final int ROLLBALL_FRAGMENT = 0;
     private final int IMMEDIA_FRAGMENT = 1;
@@ -65,11 +75,6 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     private ImageView public_btn_infomation;// 足球资料库
 
     private String[] mItems;
-    private Spinner mSpinner;
-    /**
-     * 中间标题
-     */
-    private TextView mTitleTv;// 标题
 
     /**
      * 当前处于哪个比赛fg
@@ -83,7 +88,11 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
 
     private RollBallFragment rollBallFragment;
 
+    private LinearLayout d_header;
+    private LinearLayout ll_match_select;
 
+    private TextView tv_match_name;
+    private ImageView iv_match;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setWebSocketUri(BaseURLs.WS_SERVICE);
@@ -112,37 +121,78 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
 
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
 
-        mSpinner = (Spinner) view.findViewById(R.id.public_txt_left_spinner);
-        mSpinner.setVisibility(View.VISIBLE);
-        BallSelectArrayAdapter mAdapter = new BallSelectArrayAdapter(mContext, mItems);
-        mSpinner.setAdapter(mAdapter);
-        mSpinner.setSelection(0, true);
         // 筛选
         mFilterImgBtn = (ImageView) view.findViewById(R.id.public_btn_filter);
         mSetImgBtn = (ImageView) view.findViewById(R.id.public_btn_set);
         mSetImgBtn.setVisibility(View.VISIBLE);
+
+        ll_match_select = (LinearLayout) view.findViewById(R.id.ll_match_select);
+        tv_match_name = (TextView) view.findViewById(R.id.tv_match_name);
+        iv_match = (ImageView) view.findViewById(R.id.iv_match);
+        d_header = (LinearLayout) view.findViewById(R.id.d_heasder);
+
+        tv_match_name.setText(getResources().getString(R.string.football_txt));
     }
 
 
 
     private void initEvent() {
-
-        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        ll_match_select.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                L.d("wangg", "足球===vvvvvvvvvvv==" + position);
-
-
-                EventBus.getDefault().post(new ScoreSwitchFg(0, position));
-
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            public void onClick(View v) {
+                iv_match.setImageResource(R.mipmap.nav_icon_up);
+                backgroundAlpha(getActivity(), 0.5f);
+                popWindow(v);
             }
         });
+
+
+    }
+
+    private void popWindow(final View v) {
+        final View mView = View.inflate(mContext, R.layout.pop_select, null);
+        // 创建ArrayAdapter对象
+        BallChoiceArrayAdapter mAdapter = new BallChoiceArrayAdapter(mContext, mItems, FOOTBALL);
+
+        ListView listview = (ListView) mView.findViewById(R.id.match_type);
+        listview.setAdapter(mAdapter);
+
+
+        final PopupWindow popupWindow = new PopupWindow(mView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindow.setFocusable(true);
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+
+        popupWindow.showAsDropDown(d_header);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               // tv_match_name.setText(((TextView) view.findViewById(R.id.tv)).getText().toString());
+              //  iv_match.setImageResource(R.mipmap.nav_icon_cbb);
+                EventBus.getDefault().post(new ScoreSwitchFg(0, position));
+
+                popupWindow.dismiss();
+            }
+        });
+
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                iv_match.setImageResource(R.mipmap.nav_icon_cbb);
+                backgroundAlpha(getActivity(), 1f);
+            }
+        });
+    }
+
+    /**
+     * 设置添加屏幕的背景透明度
+     *
+     * @param bgAlpha
+     */
+    public void backgroundAlpha(Activity context, float bgAlpha) {
+        WindowManager.LayoutParams lp = context.getWindow().getAttributes();
+        lp.alpha = bgAlpha;
+        context.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        context.getWindow().setAttributes(lp);
     }
 
     private void setupViewPager() {

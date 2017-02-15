@@ -63,7 +63,7 @@ public class CpiFragment extends Fragment {
         snookerScoreFragment = new SnookerScoreFragment();
 
         fragments.add(FootCpiFragment.newInstance());
-        fragments.add(basketBallScoreFragment);
+      //  fragments.add(basketBallScoreFragment);
         //  fragments.add(snookerScoreFragment);
         switchFragment(0);
     }
