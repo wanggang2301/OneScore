@@ -34,7 +34,7 @@
                 android:button="@null"
                 android:drawableTop="@drawable/index_shouye"
                 android:gravity="center"
-                android:text="首页"
+                android:text="@string/home_frame_txt"
                 android:textColor="@drawable/frag__base_selector_color"
                 android:textSize="11dp" />
 
@@ -59,7 +59,7 @@
                 android:button="@null"
                 android:drawableTop="@drawable/index_qingbao"
                 android:gravity="center"
-                android:text="情报"
+                android:text="@string/foot_details_info"
                 android:textColor="@drawable/frag__base_selector_color"
                 android:textSize="11dp" />
 
@@ -71,7 +71,7 @@
                 android:button="@null"
                 android:drawableTop="@drawable/index_zhishu"
                 android:gravity="center"
-                android:text="指数"
+                android:text="@string/football_cpi"
                 android:textColor="@drawable/frag__base_selector_color"
                 android:textSize="11dp" />
 
@@ -83,7 +83,7 @@
                 android:button="@null"
                 android:drawableTop="@drawable/index_ziliaoku"
                 android:gravity="center"
-                android:text="资料库"
+                android:text="@string/football_ziliaoku"
                 android:textColor="@drawable/frag__base_selector_color"
                 android:textSize="11dp"
                 android:visibility="visible" />

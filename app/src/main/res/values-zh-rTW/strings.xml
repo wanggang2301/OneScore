@@ -1541,4 +1541,6 @@
     <string name="basketball_txt">籃球</string>
     <string name="snooker_txt">斯洛克</string>
     <string name="tennisball_txt">網球</string>
+    <string name="football_ziliaoku">資料庫</string>
+
 </resources>

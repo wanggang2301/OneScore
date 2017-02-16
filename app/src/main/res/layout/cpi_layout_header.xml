@@ -87,7 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/ll_match_select"
+            android:layout_toRightOf="@id/ll_match_select"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
             android:paddingTop="3dp"
