@@ -191,18 +191,10 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         PreferenceUtil.commitString(AppConstants.uMengDeviceToken, device_token); //存入友盟的deviceToken
         mPushAgent.onAppStart();// 统计应用启动
         pushMessageSkip();// 页面跳转处理
-//        mPushAgent.setNotificationPlaySound(R.raw.sound1);
-//        mPushAgent.setDisplayNotificationNumber();
-//        mPushAgent.setAlias("s","s");
+
 
         String device_id = DeviceInfo.getDeviceId(MyApp.getContext());
-//        mPushAgent.setAlias(device_id, ALIAS_TYPE.BAIDU);
 
-        // 使用友盟统计分析Android 4.6.3 对Fragment统计，开发者需要：来禁止默认的Activity页面统计方式。首先在程序入口处调用
-//        MobclickAgent.openActivityDurationTrack(false);
-        /*String device_token = UmengRegistrar.getRegistrationId(mContext);
-        L.d("xxx","device_token是: " + device_token);
-        L.d("xxx"," mPushAgent.isEnabled(): " + mPushAgent.isEnabled());*/
     }
 
     /**

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,25 +14,18 @@ import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
-import com.hhly.mlottery.bean.focusAndPush.BasketballConcernListBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.BasketFocusEventBus;
 import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
-import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.PreferenceUtil;
-import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.util.net.account.CustomEvent;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 
@@ -85,6 +77,7 @@ public class BasketballScoresActivity extends BaseWebSocketActivity implements V
      */
     private TextView mTittle;// 标题
 
+    private final boolean isNewFrameWork = false;
 
     /**
      * 当前处于哪个比赛fg
@@ -149,7 +142,7 @@ public class BasketballScoresActivity extends BaseWebSocketActivity implements V
         titles.add(getString(R.string.foot_saicheng_txt));
 
         fragments = new ArrayList<>();
-        fragments.add(ImmedBasketballFragment.newInstance(IMMEDIA_FRAGMENT));
+        fragments.add(ImmedBasketballFragment.newInstance(IMMEDIA_FRAGMENT,isNewFrameWork));
         fragments.add(ResultBasketballFragment.newInstance(RESULT_FRAGMENT));
         fragments.add(ScheduleBasketballFragment.newInstance(SCHEDULE_FRAGMENT));
 

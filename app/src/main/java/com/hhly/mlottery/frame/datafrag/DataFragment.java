@@ -24,6 +24,7 @@ import com.hhly.mlottery.activity.BasketballInformationSerachActivity;
 import com.hhly.mlottery.activity.FootballInformationSerachActivity;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 
 import java.util.ArrayList;
@@ -91,10 +92,22 @@ public class DataFragment extends Fragment implements View.OnClickListener {
         /**
          * 默认先选择足球
          */
-        tv_match_name.setText(getResources().getString(R.string.football_txt));
-        switchFragment(FOOTBALL);
+        choiceMatchType();
+    }
 
+    private void choiceMatchType() {
+        int matchChoiceType = PreferenceUtil.getInt("matchChoiceType", FOOTBALL);
 
+        if (matchChoiceType == FOOTBALL) {
+            tv_match_name.setText(getResources().getString(R.string.football_txt));
+            switchFragment(FOOTBALL);
+        } else if (matchChoiceType == BASKETBALL) {
+            tv_match_name.setText(getResources().getString(R.string.basketball_txt));
+            switchFragment(BASKETBALL);
+        } else {
+            tv_match_name.setText(getResources().getString(R.string.football_txt));
+            switchFragment(FOOTBALL);
+        }
     }
 
     private void initEvent() {
@@ -184,4 +197,30 @@ public class DataFragment extends Fragment implements View.OnClickListener {
         }
 
     }
+
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            int matchChoiceType = PreferenceUtil.getInt("matchChoiceType", FOOTBALL);
+            if (matchChoiceType != fragmentIndex) {
+                if (matchChoiceType == FOOTBALL) {
+
+                    tv_match_name.setText(getResources().getString(R.string.football_txt));
+                    switchFragment(FOOTBALL);
+                } else if (matchChoiceType == BASKETBALL) {
+                    tv_match_name.setText(getResources().getString(R.string.basketball_txt));
+                    switchFragment(BASKETBALL);
+                } else {
+                    tv_match_name.setText(getResources().getString(R.string.football_txt));
+                    switchFragment(FOOTBALL);
+                }
+            }
+        }
+
+    }
 }
+
+
+

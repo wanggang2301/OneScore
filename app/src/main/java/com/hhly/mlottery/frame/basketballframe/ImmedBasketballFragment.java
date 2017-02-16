@@ -10,7 +10,6 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,6 @@ import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
 import com.hhly.mlottery.activity.BasketballScoresActivity;
 import com.hhly.mlottery.activity.BasketballSettingActivity;
-import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.adapter.basketball.PinnedHeaderExpandableAdapter;
 import com.hhly.mlottery.bean.basket.BasketAllOddBean;
 import com.hhly.mlottery.bean.basket.BasketMatchBean;
@@ -35,20 +33,18 @@ import com.hhly.mlottery.bean.basket.BasketOddBean;
 import com.hhly.mlottery.bean.basket.BasketRoot;
 import com.hhly.mlottery.bean.basket.BasketRootBean;
 import com.hhly.mlottery.bean.basket.BasketScoreBean;
-import com.hhly.mlottery.bean.focusAndPush.BasketballConcernListBean;
 import com.hhly.mlottery.bean.websocket.WebBasketAllOdds;
 import com.hhly.mlottery.bean.websocket.WebBasketMatch;
 import com.hhly.mlottery.bean.websocket.WebBasketOdds;
 import com.hhly.mlottery.bean.websocket.WebBasketOdds5;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
-import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.frame.scorefrag.BasketBallScoreFragment;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ResultDateUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.PinnedHeaderExpandableListView;
@@ -57,7 +53,6 @@ import com.umeng.analytics.MobclickAgent;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -122,8 +117,12 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
      * 关注事件EventBus
      */
     public static EventBus BasketImmedEventBus;
-    /**请求关注列表后的返回结果*/
-    public static  boolean requestSuccess=false;
+    /**
+     * 请求关注列表后的返回结果
+     */
+    public static boolean requestSuccess = false;
+    private static final String ISNEW_FRAMEWORK = "isnew_framework";
+    private boolean isNewFrameWork;
 
 
     /**
@@ -143,10 +142,12 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
      * @param basketballType
      * @return
      */
-    public static ImmedBasketballFragment newInstance(int basketballType) {
+    public static ImmedBasketballFragment newInstance(int basketballType, boolean isNewFramWork) {
         ImmedBasketballFragment fragment = new ImmedBasketballFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(PARAMS, basketballType);
+        bundle.putBoolean(ISNEW_FRAMEWORK, isNewFramWork);
+
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -157,6 +158,8 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mBasketballType = 0;
+            isNewFrameWork = getArguments().getBoolean(ISNEW_FRAMEWORK);
+
         }
         BasketImmedEventBus = new EventBus();
         BasketImmedEventBus.register(this);
@@ -243,8 +246,9 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     }
 
     private int mSize; //记录共有几天的数据
-    public static void requestSuccess(){
-        requestSuccess=true;
+
+    public static void requestSuccess() {
+        requestSuccess = true;
 
     }
 
@@ -311,7 +315,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                         mSwipeRefreshLayout.setVisibility(View.GONE);
                         mLoadingLayout.setVisibility(View.GONE);
                         return;
-                    }else{
+                    } else {
                         for (List<BasketMatchBean> lists : mAllMatchdata) { // 遍历所有数据 得到筛选后的
                             List<BasketMatchBean> checkedMatchs = new ArrayList<>();
                             for (BasketMatchBean matchBean : lists) {
@@ -426,7 +430,11 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     public void onRefresh() {
         isLoad = -1;
         mLoadHandler.postDelayed(mRun, 0);
-        ((BasketballScoresActivity) getActivity()).reconnectWebSocket();
+        if (isNewFrameWork) {
+            ((BasketBallScoreFragment) getParentFragment()).reconnectWebSocket();
+        } else {
+            ((BasketballScoresActivity) getActivity()).reconnectWebSocket();
+        }
     }
 
     /**
@@ -440,8 +448,8 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
         //用getActivity().startActivityForResult();不走onActivityResult ;
 //        startActivityForResult(intent, REQUEST_DETAILSCODE);
         intent.putExtra("currentfragment", mBasketballType);
-        intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_LEAGUEID , childrenDataList.get(groupPosition).get(childPosition).getLeagueId());
-        intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_MATCHTYPE , childrenDataList.get(groupPosition).get(childPosition).getMatchType());
+        intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_LEAGUEID, childrenDataList.get(groupPosition).get(childPosition).getLeagueId());
+        intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_MATCHTYPE, childrenDataList.get(groupPosition).get(childPosition).getMatchType());
         startActivity(intent);
         getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
         MobclickAgent.onEvent(mContext, "Basketball_ListItem");
@@ -873,7 +881,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
         /**
          * 过滤筛选0场的情况，防止筛选0场时刷新 切换设置时出现异常
          */
-        if (mChickedFilter.size() != 0 ) {
+        if (mChickedFilter.size() != 0) {
             if (childrenDataList != null) {
                 if (childrenDataList.size() != 0) {
                     updateAdapter();
@@ -978,6 +986,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
      * @param id
      */
     public void onEventMainThread(String id) {
-            updateAdapter();
+        updateAdapter();
     }
 }

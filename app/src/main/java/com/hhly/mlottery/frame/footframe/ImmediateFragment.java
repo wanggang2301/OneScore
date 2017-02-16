@@ -49,6 +49,7 @@ import com.hhly.mlottery.frame.ScoresFragment;
 import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFilterEventBusEntity;
 import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchSettingEventBusEntity;
+import com.hhly.mlottery.frame.scorefrag.FootBallScoreFragment;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.FocusUtils;
@@ -149,6 +150,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 
 
     private static final String FRAGMENT_INDEX = "fragment_index";
+    private static final String ISNEW_FRAMEWORK = "isnew_framework";
 
     private TextView mFragmentView;
 
@@ -171,6 +173,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
     private String teamLogoPre;
 
     private String teamLogoSuff;
+    private boolean isNewFrameWork;
 
 
     public static ImmediateFragment newInstance(String param1, String param2) {
@@ -183,9 +186,10 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
     }
 
 
-    public static ImmediateFragment newInstance(int index) {
+    public static ImmediateFragment newInstance(int index, boolean isNewFramWork) {
         Bundle bundle = new Bundle();
         bundle.putInt(FRAGMENT_INDEX, index);
+        bundle.putBoolean(ISNEW_FRAMEWORK, isNewFramWork);
         ImmediateFragment fragment = new ImmediateFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -194,8 +198,10 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-     /*   imEventBus = new EventBus();
-        imEventBus.register(this);*/
+
+        if (getArguments() != null) {
+            isNewFrameWork = getArguments().getBoolean(ISNEW_FRAMEWORK);
+        }
 
         EventBus.getDefault().register(this);
     }
@@ -375,7 +381,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
                     return;
                 }
-                L.d("qazwsx","即时比分请求数据");
+                L.d("qazwsx", "即时比分请求数据");
                 mAllMatchs = jsonMatch.getImmediateMatch();// 获取所有赛程
                 mMatchs = new ArrayList<Match>();//
 
@@ -567,7 +573,6 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
             }
         }
     };
-
 
 
     private void upateListViewItemMatchChange(WebSocketMatchChange webSocketMatchChange) {
@@ -1226,7 +1231,12 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
         L.e(TAG, "__onRefresh___");
 
         mLoadHandler.post(mLoadingDataThread);
-        ((ScoresFragment) getParentFragment()).reconnectWebSocket();
+        if (isNewFrameWork) {
+            ((FootBallScoreFragment) getParentFragment()).reconnectWebSocket();
+        } else {
+            ((ScoresFragment) getParentFragment()).reconnectWebSocket();
+
+        }
 
     }
 
@@ -1266,6 +1276,29 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 
     //推送
     public void onEventMainThread(ScoresFragment.FootballScoresWebSocketEntity entity) {
+        L.d("qazwsx", "即时比分推送");
+        if (mAdapter == null) {
+            return;
+        }
+
+        String type = "";
+        try {
+            JSONObject jsonObject = new JSONObject(entity.text);
+            type = jsonObject.getString("type");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (!"".equals(type)) {
+            Message msg = Message.obtain();
+            msg.obj = entity.text;
+            msg.arg1 = Integer.parseInt(type);
+            mSocketHandler.sendMessage(msg);
+        }
+    }
+
+    //推送
+    public void onEventMainThread(FootBallScoreFragment.FootballScoresWebSocketEntity entity) {
         L.d("qazwsx", "即时比分推送");
         if (mAdapter == null) {
             return;

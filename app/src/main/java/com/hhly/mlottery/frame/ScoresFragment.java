@@ -44,11 +44,15 @@ import de.greenrobot.event.EventBus;
 @SuppressLint("NewApi")
 public class ScoresFragment extends BaseWebSocketFragment {
 
+
+    private final boolean isNewFrameWork = false;
+
     private final int ROLLBALL_FRAGMENT = 0;
     private final int IMMEDIA_FRAGMENT = 1;
     private final int RESULT_FRAGMENT = 2;
     private final int SCHEDULE_FRAGMENT = 3;
     private final int FOCUS_FRAGMENT = 4;
+
 
     private final static String TAG = "ScoresFragment";
     public static List<String> titles;
@@ -90,7 +94,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
     private TabLayout mTabLayout;
     private PureViewPagerAdapter pureViewPagerAdapter;
     private List<Fragment> fragments;
-//    private Spinner mSpinner;
+    //    private Spinner mSpinner;
     private String[] mItems;
 
     private RollBallFragment rollBallFragment;
@@ -164,9 +168,9 @@ public class ScoresFragment extends BaseWebSocketFragment {
         titles.add(getString(R.string.foot_saicheng_txt));
 
         fragments = new ArrayList<>();
-        rollBallFragment = RollBallFragment.newInstance(ROLLBALL_FRAGMENT);
+        rollBallFragment = RollBallFragment.newInstance(ROLLBALL_FRAGMENT,isNewFrameWork);
         fragments.add(rollBallFragment);
-        fragments.add(ImmediateFragment.newInstance(IMMEDIA_FRAGMENT));
+        fragments.add(ImmediateFragment.newInstance(IMMEDIA_FRAGMENT,isNewFrameWork));
         fragments.add(ResultFragment.newInstance(RESULT_FRAGMENT));
         fragments.add(ScheduleFragment.newInstance(SCHEDULE_FRAGMENT));
 //        fragments.add(FocusFragment.newInstance(FOCUS_FRAGMENT));
@@ -228,7 +232,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
         mBackImgBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((FootballActivity)getActivity()).eventBusPost();
+                ((FootballActivity) getActivity()).eventBusPost();
                 getActivity().finish();
                 MobclickAgent.onEvent(mContext, "Football_Exit");
             }
@@ -378,6 +382,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
             }
         });
     }
+
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
@@ -473,7 +478,6 @@ public class ScoresFragment extends BaseWebSocketFragment {
     }
 
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -484,6 +488,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
 
     /**
      * 发送文字直播
+     *
      * @param text
      */
     @Override

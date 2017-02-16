@@ -41,9 +41,11 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 /**
- * A simple {@link Fragment} subclass.
+ *篮球比分
  */
 public class BasketBallScoreFragment extends BaseWebSocketFragment implements View.OnClickListener {
+
+    private final boolean isNewFrameWork = true;
 
     private String[] mItems;
     private View view;
@@ -156,7 +158,7 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         titles.add(getString(R.string.foot_saicheng_txt));
 
         fragments = new ArrayList<>();
-        fragments.add(ImmedBasketballFragment.newInstance(IMMEDIA_FRAGMENT));
+        fragments.add(ImmedBasketballFragment.newInstance(IMMEDIA_FRAGMENT,isNewFrameWork));
         fragments.add(ResultBasketballFragment.newInstance(RESULT_FRAGMENT));
         fragments.add(ScheduleBasketballFragment.newInstance(SCHEDULE_FRAGMENT));
 

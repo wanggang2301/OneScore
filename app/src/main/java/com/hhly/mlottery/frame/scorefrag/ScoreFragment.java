@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +72,7 @@ public class ScoreFragment extends Fragment {
          * 默认先选择足球
          */
         switchFragment(FOOTBALL);
+        PreferenceUtil.commitInt("matchType", FOOTBALL);
     }
 
 
@@ -81,6 +83,8 @@ public class ScoreFragment extends Fragment {
 
     public void switchFragment(int position) {
         fragmentIndex = position;// 当前fragment下标
+        PreferenceUtil.commitInt("matchChoiceType", position);
+
         L.d("xxx", "当前Fragment下标：" + fragmentIndex);
         fragmentManager = getChildFragmentManager();
         currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content_score, currentFragment, fragments.get(position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, true);

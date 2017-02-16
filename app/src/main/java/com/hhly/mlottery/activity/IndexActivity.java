@@ -37,16 +37,19 @@ public class IndexActivity extends BaseActivity {
     public int currentPosition = 0;// 足球界面Fragment下标
     public int fragmentIndex = 0;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_index);
+        mContext = IndexActivity.this;
 
-        this.mContext = this;
+        setContentView(R.layout.activity_index);
 
         initView();
         initData();
     }
+
+
 
     /**
      * 初始化界面View

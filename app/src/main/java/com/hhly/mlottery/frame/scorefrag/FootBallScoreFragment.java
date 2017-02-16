@@ -47,6 +47,7 @@ import de.greenrobot.event.EventBus;
  */
 public class FootBallScoreFragment extends BaseWebSocketFragment {
 
+    private final boolean isNewFrameWork = true;
 
     private static final int FOOTBALL = 0;
     private static final int BASKETBALL = 1;
@@ -204,9 +205,9 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         titles.add(getString(R.string.foot_saicheng_txt));
 
         fragments = new ArrayList<>();
-        rollBallFragment = RollBallFragment.newInstance(ROLLBALL_FRAGMENT);
+        rollBallFragment = RollBallFragment.newInstance(ROLLBALL_FRAGMENT,isNewFrameWork);
         fragments.add(rollBallFragment);
-        fragments.add(ImmediateFragment.newInstance(IMMEDIA_FRAGMENT));
+        fragments.add(ImmediateFragment.newInstance(IMMEDIA_FRAGMENT,isNewFrameWork));
         fragments.add(ResultFragment.newInstance(RESULT_FRAGMENT));
         fragments.add(ScheduleFragment.newInstance(SCHEDULE_FRAGMENT));
 //        fragments.add(FocusFragment.newInstance(FOCUS_FRAGMENT));

@@ -26,6 +26,11 @@ import de.greenrobot.event.EventBus;
  */
 public class CpiFragment extends Fragment {
 
+    private static final int FOOTBALL = 0;
+    private static final int BASKETBALL = 1;
+    private static final int SNOOKER = 2;
+
+
     private View mView;
     private Context mContext;
 
@@ -63,11 +68,12 @@ public class CpiFragment extends Fragment {
         snookerScoreFragment = new SnookerScoreFragment();
 
         fragments.add(FootCpiFragment.newInstance());
-      //  fragments.add(basketBallScoreFragment);
+        //  fragments.add(basketBallScoreFragment);
         //  fragments.add(snookerScoreFragment);
-        switchFragment(0);
-    }
 
+        switchFragment(FOOTBALL);
+
+    }
 
     public void onEventMainThread(ScoreSwitchFg scoreSwitchFg) {
         switchFragment(scoreSwitchFg.getPosition());

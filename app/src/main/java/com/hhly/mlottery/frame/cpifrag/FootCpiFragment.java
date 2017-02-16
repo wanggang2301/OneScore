@@ -130,21 +130,6 @@ public class FootCpiFragment extends BaseWebSocketFragment {
         mItems = getResources().getStringArray(R.array.zhishu_select);
 
 
-        // 返回
-        /**
-         * 研究作用
-         */
-      /*  mBackButton = (ImageView) view.findViewById(R.id.public_img_back);
-        mBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (getActivity() != null) {
-                    ((FootballActivity) getActivity()).eventBusPost();
-                    getActivity().finish();
-                }
-            }
-        });*/
-
         // 显示时间的布局和 TextView
         mDateLayout = (LinearLayout) view.findViewById(R.id.public_date_layout);
         mDateTextView = (TextView) view.findViewById(R.id.public_txt_date);
