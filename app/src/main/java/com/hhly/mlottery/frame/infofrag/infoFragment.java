@@ -28,17 +28,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 情报
+ * 情报页面
  * wangg
  */
 public class InfoFragment extends Fragment {
-
     private static final int FOOTBALL = 0;
     private static final int BASKETBALL = 1;
     private static final int SNOOKER = 2;
-
     private View mView;
-
     private Context mContext;
     private String[] mItems;
 
@@ -46,7 +43,6 @@ public class InfoFragment extends Fragment {
     private FragmentManager fragmentManager;
     private Fragment currentFragment;
     private List<Fragment> fragments = new ArrayList<>();
-
 
     private LinearLayout d_header;
     private LinearLayout ll_match_select;
