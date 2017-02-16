@@ -17,7 +17,7 @@ import com.hhly.mlottery.frame.footframe.FootballDatabaseFragment;
 import com.hhly.mlottery.frame.footframe.FootballDatabaseInterFragment;
 
 /**
- * A simple {@link Fragment} subclass.
+ * 足球资料库
  */
 public class FootballInfomationFragment extends Fragment {
 

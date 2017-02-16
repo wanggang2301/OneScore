@@ -24,6 +24,11 @@ import de.greenrobot.event.EventBus;
  */
 public class ScoreFragment extends Fragment {
 
+
+    private static final int FOOTBALL = 0;
+    private static final int BASKETBALL = 1;
+    private static final int SNOOKER = 2;
+
     private View mView;
     private Context mContext;
 
@@ -60,7 +65,12 @@ public class ScoreFragment extends Fragment {
         fragments.add(footBallScoreFragment);
         fragments.add(basketBallScoreFragment);
         //  fragments.add(snookerScoreFragment);
-        switchFragment(0);
+
+
+        /**
+         * 默认先选择足球
+         */
+        switchFragment(FOOTBALL);
     }
 
 

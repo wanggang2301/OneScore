@@ -16,7 +16,7 @@ import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.frame.basketballframe.BasketInformationFragment;
 
 /**
- * A simple {@link Fragment} subclass.
+ * 篮球资料库.
  */
 public class BasketballInfomationFragment extends Fragment {
 

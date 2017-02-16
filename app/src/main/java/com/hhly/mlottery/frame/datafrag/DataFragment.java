@@ -43,7 +43,6 @@ public class DataFragment extends Fragment implements View.OnClickListener {
     private ImageView publicBtnSet;
 
 
-
     private View mView;
 
     private Context mContext;
@@ -89,8 +88,11 @@ public class DataFragment extends Fragment implements View.OnClickListener {
         // fragments.add(new SnookerInfomationFragment());
 
 
+        /**
+         * 默认先选择足球
+         */
         tv_match_name.setText(getResources().getString(R.string.football_txt));
-        switchFragment(0);
+        switchFragment(FOOTBALL);
 
 
     }
