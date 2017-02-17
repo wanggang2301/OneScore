@@ -41,27 +41,25 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
 
-            <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            -->
         </activity>
         <activity
             android:name=".activity.FiltrateMatchConfigActivity"
             android:screenOrientation="portrait" />
-        <!-- 环境选择 -->
-        <activity
-            android:name=".activity.DebugConfigActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.BlackStatusBar.ColorGreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <!--    &lt;!&ndash; 环境选择 &ndash;&gt;
+            <activity
+                android:name=".activity.DebugConfigActivity"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme.BlackStatusBar.ColorGreen">
+                <intent-filter>
+                    <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+                    <category android:name="android.intent.category.LAUNCHER" />
+                </intent-filter>
+            </activity>-->
 
         <!-- 情报中心 -->
         <activity
@@ -351,7 +349,9 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.IndexActivity"></activity>
+        <activity
+            android:name=".activity.IndexActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
