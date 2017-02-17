@@ -12,6 +12,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.frame.cpifrag.CpiFragment;
 import com.hhly.mlottery.frame.datafrag.DataFragment;
 import com.hhly.mlottery.frame.homefrag.HomeFragment;
+import com.hhly.mlottery.frame.infofrag.InfoFragment;
 import com.hhly.mlottery.frame.scorefrag.ScoreFragment;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
@@ -48,7 +49,6 @@ public class IndexActivity extends BaseActivity {
         initView();
         initData();
     }
-
 
 
     /**
@@ -154,8 +154,6 @@ public class IndexActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
-
-
 
 
     @Override
