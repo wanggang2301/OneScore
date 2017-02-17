@@ -55,7 +55,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     private RelativeLayout rl_focus;
     private  View mFocus_RedDot; //关注红点
     /**我的关注红点*/
-    boolean mShowRedDot=true;
+    boolean mShowRedDot=false;
     boolean mInvitedShowRedDot=true;
     /*邀请码红点*/
     /**我的定制*/
@@ -175,7 +175,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 //        }
         /**我的关注红点*/
         mFocus_RedDot=findViewById(R.id.focus_red_dot_view);
-        mShowRedDot=PreferenceUtil.getBoolean(SHOW_RED,true);
+        mShowRedDot=PreferenceUtil.getBoolean(SHOW_RED,false);
         if(mShowRedDot){
             mFocus_RedDot.setVisibility(View.VISIBLE);
         }else {
