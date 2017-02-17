@@ -16,6 +16,7 @@ import com.hhly.mlottery.frame.infofrag.InfoFragment;
 import com.hhly.mlottery.frame.scorefrag.ScoreFragment;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.UiUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -155,19 +156,30 @@ public class IndexActivity extends BaseActivity {
         super.onDestroy();
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            finish();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
+
+
 
     @Override
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
+    }
+
+    private long mExitTime;// 退出程序...时间
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if ((System.currentTimeMillis() - mExitTime) > 2000) {
+                UiUtils.toast(this, getResources().getString(R.string.main_exit_text), 1000);
+                mExitTime = System.currentTimeMillis();
+            } else {
+                System.exit(0);// 退出APP
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 
