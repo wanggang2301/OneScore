@@ -60,21 +60,25 @@ public class HomeGridAdapter extends BaseAdapter {
         }
         mViewHolder.tv_name.setText(mContentEntity.getTitle());
 
+
+        /***
+         * 关闭红点功能
+         */
         // 添加红点  多屏动画
-        if ("80".equals(mContentEntity.getJumpAddr())) {
+    /*    if ("80".equals(mContentEntity.getJumpAddr())) {
             if (PreferenceUtil.getBoolean(AppConstants.ANIMATION_RED_KEY, false)) {
                 mViewHolder.red_not.setVisibility(View.GONE);
             } else {
-                mViewHolder.red_not.setVisibility(View.VISIBLE);
+                mViewHolder.red_not.setVisibility(View.GONE);
             }
         }
         if("30".equals(mContentEntity.getJumpAddr()) || "31".equals(mContentEntity.getJumpAddr())){
             if (PreferenceUtil.getBoolean(AppConstants.LOTTERY_HK_RED_KEY, false)) {
                 mViewHolder.red_not.setVisibility(View.GONE);
             } else {
-                mViewHolder.red_not.setVisibility(View.VISIBLE);
+                mViewHolder.red_not.setVisibility(View.GONE);
             }
-        }
+        }*/
 
         return convertView;
     }
