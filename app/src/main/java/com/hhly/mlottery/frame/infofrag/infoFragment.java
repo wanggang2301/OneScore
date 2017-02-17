@@ -160,6 +160,7 @@ public class InfoFragment extends Fragment {
         fragmentIndex = position;// 当前fragment下标
         L.d("xxx", "当前Fragment下标：" + fragmentIndex);
         fragmentManager = getChildFragmentManager();
-        currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content_info, currentFragment, fragments.get(position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, true);
+        currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content_info, currentFragment, fragments.get
+                (position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, true);
     }
 }
