@@ -186,7 +186,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         invited_red_dot_view = findViewById(R.id.invited_red_dot_view);
         mInvitedShowRedDot=PreferenceUtil.getBoolean(INVITED_SHOW_RED,true);
         if(mInvitedShowRedDot){
-            invited_red_dot_view.setVisibility(View.VISIBLE);
+            invited_red_dot_view.setVisibility(View.GONE);
         }else {
             invited_red_dot_view.setVisibility(View.GONE);
         }

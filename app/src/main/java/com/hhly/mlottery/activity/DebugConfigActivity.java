@@ -2,14 +2,17 @@ package com.hhly.mlottery.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.MyConstants;
@@ -100,7 +103,6 @@ public class DebugConfigActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-/*
                 EditText ed = (EditText) findViewById(R.id.et_input);
                 String str = ed.getText().toString();
                 if (TextUtils.isEmpty(str)) {
@@ -112,41 +114,10 @@ public class DebugConfigActivity extends BaseActivity {
                 PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, DIY_INPUT);
                 PreferenceUtil.commitString("DIY_INPUT", str);
 
-                System.exit(0);*/
-
-                // startActivity(new Intent(DebugConfigActivity.this, IndexActivity.class));
-                popWindow(v);
+                System.exit(0);
 
             }
         });
     }
 
-    private void popWindow(View v) {
-        final View mView = View.inflate(getApplicationContext(), R.layout.pop_select, null);
-        String[] arr = {"孙悟空", "猪八戒", "唐僧"};
-        // 创建ArrayAdapter对象
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, arr);
-
-        ListView listview = (ListView) mView.findViewById(R.id.match_type);
-        listview.setAdapter(adapter);
-
-
-        final PopupWindow popupWindow = new PopupWindow(mView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        popupWindow.setFocusable(true);
-
-        popupWindow.showAsDropDown(v);
-
-
-    }
-
-/*
-    private void enterMultiScreenView() {
-        if (PreferenceUtil.getBoolean("introduce", true)) {
-            startActivity(new Intent(DebugConfigActivity.this, MultiScreenIntroduceActivity.class));
-
-            PreferenceUtil.commitBoolean("introduce", false);
-        } else {
-            startActivity(new Intent(DebugConfigActivity.this, MultiScreenViewingListActivity.class));
-        }
-    }*/
 }
