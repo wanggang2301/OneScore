@@ -86,7 +86,7 @@ public class DataFragment extends Fragment implements View.OnClickListener {
 
         fragments.add(new FootballInfomationFragment());
         fragments.add(new BasketballInfomationFragment());
-        // fragments.add(new SnookerInfomationFragment());
+        fragments.add(new SnookerInfomationFragment());
 
 
         /**
