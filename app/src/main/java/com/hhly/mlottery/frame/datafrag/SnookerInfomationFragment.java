@@ -13,16 +13,15 @@ import android.view.ViewGroup;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
-import com.hhly.mlottery.frame.basketballframe.BasketInformationFragment;
 import com.hhly.mlottery.frame.snooker.SnookerMatchFragment;
 import com.hhly.mlottery.frame.snooker.SnookerRankFragment;
 
 /**
- * A simple {@link Fragment} subclass.
+ * @author wangg
+ * @des 斯洛克资料库
+ * @date 2017/02/20
  */
 public class SnookerInfomationFragment extends Fragment {
-
-
     private TabLayout tabLayout;
     private ViewPager viewpager;
     private TabsAdapter mTabsAdapter;
@@ -39,7 +38,6 @@ public class SnookerInfomationFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_snooker_infomation, container, false);
         mContext = getActivity();
         initView();
@@ -51,7 +49,6 @@ public class SnookerInfomationFragment extends Fragment {
         viewpager = (ViewPager) mView.findViewById(R.id.viewpager);
 
         fragmentManager = getChildFragmentManager();
-
         String[] titles = mContext.getResources().getStringArray(R.array.snooker_data_tabs);
         mTabsAdapter = new TabsAdapter(fragmentManager);
         mTabsAdapter.setTitles(titles);
@@ -62,5 +59,4 @@ public class SnookerInfomationFragment extends Fragment {
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
     }
-
 }
