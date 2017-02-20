@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.util.L;
 
 /**
  * A simple {@link Fragment} subclass.
