@@ -39,47 +39,32 @@ import java.util.Map;
 
 public class SnookerRankFragment extends Fragment implements ExactSwipeRefreshLayout.OnRefreshListener {
 
-
     private static final int REQUEST_LOAD = 1;
     private static final int REQUEST_SUCESS = 2;
     private static final int REQUEST_ERROR = -1;
     private static final int REQUEST_NODATA = 0;
-
-
     private static final int PAGE_SIZE = 30;
-
     private int pageNum = 1;
-
     private View mView;
     private View moreView;
-
     private Context mContext;
-
     private RecyclerView recyclerView;
-
     private SnookerRankAdapter mSnookerRankAdapter;
-
     private List<SnookerRankBean.WorldRankingListBean> worldRankingList;
     private ExactSwipeRefreshLayout refresh;
     private LinearLayout ll_title;
-
-
-
     private TextView loadmore_text;
     private ProgressBar progressBar;
     private TextView network_exception_reload_btn;
     private FrameLayout fl_nodata;
     private LinearLayout ll_error;
 
-    public SnookerRankFragment() {
-        // Required empty public constructor
-    }
+    public SnookerRankFragment() {}
 
     public static SnookerRankFragment newInatance() {
         SnookerRankFragment snookerRankFragment = new SnookerRankFragment();
         return snookerRankFragment;
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -104,7 +89,6 @@ public class SnookerRankFragment extends Fragment implements ExactSwipeRefreshLa
         refresh.setOnRefreshListener(this);
         refresh.setColorSchemeResources(R.color.bg_header);
         refresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
-
         ll_title = (LinearLayout) mView.findViewById(R.id.ll_title);
         fl_nodata = (FrameLayout) mView.findViewById(R.id.fl_nodata);
         ll_error = (LinearLayout) mView.findViewById(R.id.network_exception_layout);
@@ -122,8 +106,6 @@ public class SnookerRankFragment extends Fragment implements ExactSwipeRefreshLa
                 new Handler().postDelayed(mLoadingDataThread, 500);
             }
         });
-
-
     }
 
 
