@@ -25,6 +25,7 @@ import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.footframe.RollBallFragment;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ import de.greenrobot.event.EventBus;
  * Created by 107_tangrr on 2017/2/20 0020.
  */
 
-public class TennisBallScoreFragment  extends BaseWebSocketFragment implements View.OnClickListener{
+public class TennisBallScoreFragment extends BaseWebSocketFragment implements View.OnClickListener {
 
     private static final int FOOTBALL = 0;
     private static final int BASKETBALL = 1;
@@ -67,8 +68,7 @@ public class TennisBallScoreFragment  extends BaseWebSocketFragment implements V
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setWebSocketUri(BaseURLs.WS_SERVICE);
-        // 修改为TennisBall的主题
-//        setTopic("USER.topic.app");
+        setTopic("USER.topic.tennis.score");
         super.onCreate(savedInstanceState);
     }
 
@@ -185,7 +185,7 @@ public class TennisBallScoreFragment  extends BaseWebSocketFragment implements V
     @Override
     protected void onTextResult(String text) {
         // 收到推送消息
-
+        L.d("xxx", "网球收到推送：" + text);
     }
 
     @Override
