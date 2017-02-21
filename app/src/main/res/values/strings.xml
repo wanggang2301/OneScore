@@ -1563,4 +1563,14 @@
     <string name="tennisball_txt">网球</string>
     <string name="football_ziliaoku">资料库</string>
 
+    <!--网球-->
+    <string name="tennis_match_p2">P2退赛</string>
+    <string name="tennis_match_p1">P1退赛</string>
+    <string name="tennis_match_dd">待定</string>
+    <string name="tennis_match_tc">推迟</string>
+    <string name="tennis_match_zd">中断</string>
+    <string name="tennis_match_over">完</string>
+    <string name="tennis_match_not_start">未开始</string>
+    <string name="tennis_match_join">进行中</string>
+
 </resources>

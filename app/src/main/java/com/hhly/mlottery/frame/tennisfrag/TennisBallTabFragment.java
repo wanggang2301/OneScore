@@ -19,6 +19,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.tennisball.TennisBallScoreAdapter;
 import com.hhly.mlottery.bean.tennisball.TennisBallBean;
 import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
@@ -42,6 +43,8 @@ public class TennisBallTabFragment extends Fragment implements SwipeRefreshLayou
     private ExactSwipeRefreshLayout swipeRefreshLayout;
     private TennisBallScoreAdapter mAdapter;
     private TennisDateChooseDialogFragment tennisDateChooseDialogFragment;
+
+    private String currentData;
 
     public static TennisBallTabFragment newInstance(int type) {
         TennisBallTabFragment fragment = new TennisBallTabFragment();
@@ -111,9 +114,11 @@ public class TennisBallTabFragment extends Fragment implements SwipeRefreshLayou
 
     private void getData() {
         tennisBallBean = JSON.parseObject(TestData, TennisBallBean.class);
+        settingData(tennisBallBean.getData().getDates().get(0));
     }
 
-    private String TestData = "{\"result\":200,\"data\":{\"dates\":[\"2017-02-20\",\"2017-02-19\",\"2017-02-15\"],\"matchData\":[{\"matchId\":\"786811\",\"leagueId\":\"323417\",\"leagueName\":\"卡塔尔公开赛 \",\"roundName\":\"第一轮\",\"time\":\"08:00:00\",\"date\":\"2017-02-20\",\"homePlayerId\":\"319473\",\"homePlayerName\":\"西格蒙德\",\"homePlayerId2\":\"\",\"homePlayerName2\":\"\",\"awayPlayerId\":\"319494\",\"awayPlayerName\":\"普格\",\"awayPlayerId2\":\"\",\"awayPlayerName2\":\"\",\"matchStatus\":-1,\"server\":0,\"set\":0,\"matchScore\":{\"homeSetScore1\":0,\"homeSetScore2\":0,\"homeSetScore3\":0,\"homeSetScore4\":0,\"homeSetScore5\":0,\"awaySetScore1\":0,\"awaySetScore2\":0,\"awaySetScore3\":0,\"awaySetScore4\":0,\"awaySetScore5\":0,\"homeDeciderScore1\":0,\"homeDeciderScore2\":0,\"homeDeciderScore3\":0,\"homeDeciderScore4\":0,\"homeDeciderScore5\":0,\"awayDeciderScore1\":0,\"awayDeciderScore2\":0,\"awayDeciderScore3\":0,\"awayDeciderScore4\":0,\"awayDeciderScore5\":0,\"homeTotalScore\":0,\"awayTotalScore\":0,\"homeCurrentScore\":null,\"awayCurrentScore\":null}},{\"matchId\":\"786563\",\"leagueId\":\"323417\",\"leagueName\":\"卡塔1111尔公开赛 \",\"roundName\":\"第一轮\",\"time\":\"16:00:00\",\"date\":\"2017-02-20\",\"homePlayerId\":\"319426\",\"homePlayerName\":\"张啊啊啊帅\",\"homePlayerId2\":\"\",\"homePlayerName2\":\"\",\"awayPlayerId\":\"319578\",\"awayPlayerName\":\"巴波丝\",\"awayPlayerId2\":\"\",\"awayPlayerName2\":\"\",\"matchStatus\":0,\"server\":0,\"set\":0,\"matchScore\":{\"homeSetScore1\":0,\"homeSetScore2\":10,\"homeSetScore3\":0,\"homeSetScore4\":0,\"homeSetScore5\":0,\"awaySetScore1\":0,\"awaySetScore2\":0,\"awaySetScore3\":10,\"awaySetScore4\":0,\"awaySetScore5\":0,\"homeDeciderScore1\":0,\"homeDeciderScore2\":0,\"homeDeciderScore3\":0,\"homeDeciderScore4\":0,\"homeDeciderScore5\":0,\"awayDeciderScore1\":0,\"awayDeciderScore2\":0,\"awayDeciderScore3\":0,\"awayDeciderScore4\":0,\"awayDeciderScore5\":0,\"homeTotalScore\":30,\"awayTotalScore\":0,\"homeCurrentScore\":null,\"awayCurrentScore\":null}}]}}";
+    // Test数据
+    private String TestData = "{\"result\":200,\"data\":{\"dates\":[\"2017-02-20\",\"2017-02-19\",\"2017-02-15\"],\"matchData\":[{\"matchId\":\"786811\",\"leagueId\":\"323417\",\"leagueName\":\"卡塔尔公开赛 \",\"roundName\":\"第一轮\",\"time\":\"08:00:00\",\"date\":\"2017-02-20\",\"homePlayerId\":\"319473\",\"homePlayerName\":\"西格蒙德\",\"homePlayerId2\":\"\",\"homePlayerName2\":\"\",\"awayPlayerId\":\"319494\",\"awayPlayerName\":\"普格\",\"awayPlayerId2\":\"\",\"awayPlayerName2\":\"\",\"matchStatus\":-1,\"server\":0,\"set\":0,\"matchScore\":{\"homeSetScore1\":0,\"homeSetScore2\":0,\"homeSetScore3\":0,\"homeSetScore4\":0,\"homeSetScore5\":0,\"awaySetScore1\":0,\"awaySetScore2\":0,\"awaySetScore3\":0,\"awaySetScore4\":0,\"awaySetScore5\":0,\"homeDeciderScore1\":0,\"homeDeciderScore2\":0,\"homeDeciderScore3\":0,\"homeDeciderScore4\":0,\"homeDeciderScore5\":0,\"awayDeciderScore1\":0,\"awayDeciderScore2\":0,\"awayDeciderScore3\":0,\"awayDeciderScore4\":0,\"awayDeciderScore5\":0,\"homeTotalScore\":0,\"awayTotalScore\":0,\"homeCurrentScore\":null,\"awayCurrentScore\":null}},{\"matchId\":\"786811\",\"leagueId\":\"323417\",\"leagueName\":\"卡塔尔公开赛 \",\"roundName\":\"第一轮\",\"time\":\"08:00:00\",\"date\":\"2017-02-20\",\"homePlayerId\":\"319473\",\"homePlayerName\":\"西格蒙德\",\"homePlayerId2\":\"\",\"homePlayerName2\":\"\",\"awayPlayerId\":\"319494\",\"awayPlayerName\":\"普格\",\"awayPlayerId2\":\"\",\"awayPlayerName2\":\"\",\"matchStatus\":-1,\"server\":0,\"set\":0,\"matchScore\":{\"homeSetScore1\":0,\"homeSetScore2\":0,\"homeSetScore3\":0,\"homeSetScore4\":0,\"homeSetScore5\":0,\"awaySetScore1\":0,\"awaySetScore2\":0,\"awaySetScore3\":0,\"awaySetScore4\":0,\"awaySetScore5\":0,\"homeDeciderScore1\":0,\"homeDeciderScore2\":0,\"homeDeciderScore3\":0,\"homeDeciderScore4\":0,\"homeDeciderScore5\":0,\"awayDeciderScore1\":0,\"awayDeciderScore2\":0,\"awayDeciderScore3\":0,\"awayDeciderScore4\":0,\"awayDeciderScore5\":0,\"homeTotalScore\":0,\"awayTotalScore\":0,\"homeCurrentScore\":null,\"awayCurrentScore\":null}},{\"matchId\":\"786811\",\"leagueId\":\"323417\",\"leagueName\":\"卡塔尔公开赛 \",\"roundName\":\"第一轮\",\"time\":\"08:00:00\",\"date\":\"2017-02-20\",\"homePlayerId\":\"319473\",\"homePlayerName\":\"西格蒙德\",\"homePlayerId2\":\"\",\"homePlayerName2\":\"\",\"awayPlayerId\":\"319494\",\"awayPlayerName\":\"普格\",\"awayPlayerId2\":\"\",\"awayPlayerName2\":\"\",\"matchStatus\":-1,\"server\":0,\"set\":0,\"matchScore\":{\"homeSetScore1\":0,\"homeSetScore2\":0,\"homeSetScore3\":0,\"homeSetScore4\":0,\"homeSetScore5\":0,\"awaySetScore1\":0,\"awaySetScore2\":0,\"awaySetScore3\":0,\"awaySetScore4\":0,\"awaySetScore5\":0,\"homeDeciderScore1\":0,\"homeDeciderScore2\":0,\"homeDeciderScore3\":0,\"homeDeciderScore4\":0,\"homeDeciderScore5\":0,\"awayDeciderScore1\":0,\"awayDeciderScore2\":0,\"awayDeciderScore3\":0,\"awayDeciderScore4\":0,\"awayDeciderScore5\":0,\"homeTotalScore\":0,\"awayTotalScore\":0,\"homeCurrentScore\":null,\"awayCurrentScore\":null}},{\"matchId\":\"786811\",\"leagueId\":\"323417\",\"leagueName\":\"卡塔尔公开赛 \",\"roundName\":\"第一轮\",\"time\":\"08:00:00\",\"date\":\"2017-02-20\",\"homePlayerId\":\"319473\",\"homePlayerName\":\"西格蒙德\",\"homePlayerId2\":\"\",\"homePlayerName2\":\"\",\"awayPlayerId\":\"319494\",\"awayPlayerName\":\"普格\",\"awayPlayerId2\":\"\",\"awayPlayerName2\":\"\",\"matchStatus\":-1,\"server\":0,\"set\":0,\"matchScore\":{\"homeSetScore1\":0,\"homeSetScore2\":0,\"homeSetScore3\":0,\"homeSetScore4\":0,\"homeSetScore5\":0,\"awaySetScore1\":0,\"awaySetScore2\":0,\"awaySetScore3\":0,\"awaySetScore4\":0,\"awaySetScore5\":0,\"homeDeciderScore1\":0,\"homeDeciderScore2\":0,\"homeDeciderScore3\":0,\"homeDeciderScore4\":0,\"homeDeciderScore5\":0,\"awayDeciderScore1\":0,\"awayDeciderScore2\":0,\"awayDeciderScore3\":0,\"awayDeciderScore4\":0,\"awayDeciderScore5\":0,\"homeTotalScore\":0,\"awayTotalScore\":0,\"homeCurrentScore\":null,\"awayCurrentScore\":null}},{\"matchId\":\"786811\",\"leagueId\":\"323417\",\"leagueName\":\"卡塔尔公开赛 \",\"roundName\":\"第一轮\",\"time\":\"08:00:00\",\"date\":\"2017-02-20\",\"homePlayerId\":\"319473\",\"homePlayerName\":\"西格蒙德\",\"homePlayerId2\":\"\",\"homePlayerName2\":\"\",\"awayPlayerId\":\"319494\",\"awayPlayerName\":\"普格\",\"awayPlayerId2\":\"\",\"awayPlayerName2\":\"\",\"matchStatus\":-1,\"server\":0,\"set\":0,\"matchScore\":{\"homeSetScore1\":0,\"homeSetScore2\":0,\"homeSetScore3\":0,\"homeSetScore4\":0,\"homeSetScore5\":0,\"awaySetScore1\":0,\"awaySetScore2\":0,\"awaySetScore3\":0,\"awaySetScore4\":0,\"awaySetScore5\":0,\"homeDeciderScore1\":0,\"homeDeciderScore2\":0,\"homeDeciderScore3\":0,\"homeDeciderScore4\":0,\"homeDeciderScore5\":0,\"awayDeciderScore1\":0,\"awayDeciderScore2\":0,\"awayDeciderScore3\":0,\"awayDeciderScore4\":0,\"awayDeciderScore5\":0,\"homeTotalScore\":0,\"awayTotalScore\":0,\"homeCurrentScore\":null,\"awayCurrentScore\":null}},{\"matchId\":\"786563\",\"leagueId\":\"323417\",\"leagueName\":\"卡塔1111尔公开赛 \",\"roundName\":\"第一轮\",\"time\":\"16:00:00\",\"date\":\"2017-02-20\",\"homePlayerId\":\"319426\",\"homePlayerName\":\"张啊啊啊帅\",\"homePlayerId2\":\"\",\"homePlayerName2\":\"\",\"awayPlayerId\":\"319578\",\"awayPlayerName\":\"巴波丝\",\"awayPlayerId2\":\"\",\"awayPlayerName2\":\"\",\"matchStatus\":0,\"server\":0,\"set\":0,\"matchScore\":{\"homeSetScore1\":0,\"homeSetScore2\":10,\"homeSetScore3\":0,\"homeSetScore4\":0,\"homeSetScore5\":0,\"awaySetScore1\":0,\"awaySetScore2\":0,\"awaySetScore3\":10,\"awaySetScore4\":0,\"awaySetScore5\":0,\"homeDeciderScore1\":0,\"homeDeciderScore2\":0,\"homeDeciderScore3\":0,\"homeDeciderScore4\":0,\"homeDeciderScore5\":0,\"awayDeciderScore1\":0,\"awayDeciderScore2\":0,\"awayDeciderScore3\":0,\"awayDeciderScore4\":0,\"awayDeciderScore5\":0,\"homeTotalScore\":30,\"awayTotalScore\":0,\"homeCurrentScore\":null,\"awayCurrentScore\":null}}]}}";
 
     @Override
     public void onRefresh() {
@@ -131,18 +136,27 @@ public class TennisBallTabFragment extends Fragment implements SwipeRefreshLayou
     }
 
     private void dateChooseShow() {
-        if (tennisDateChooseDialogFragment == null) {
-            tennisDateChooseDialogFragment = TennisDateChooseDialogFragment.newInstance(tennisBallBean.getData().getDates(), "2017-02-20", new TennisDateChooseDialogFragment.OnDateChooseListener() {
+//        if (tennisDateChooseDialogFragment == null) {
+            tennisDateChooseDialogFragment = TennisDateChooseDialogFragment.newInstance(tennisBallBean.getData().getDates(), currentData, new TennisDateChooseDialogFragment.OnDateChooseListener() {
                 @Override
                 public void onDateChoose(String date) {
-                    //  TODO 选择后，设置显示的日期及对应的数据
-
-                    ToastTools.showQuick(mContext, "选择了："+date);
+                    settingData(date);
+                    currentData = date;
                 }
             });
-        }
+//        }
         if (!tennisDateChooseDialogFragment.isVisible()) {
             tennisDateChooseDialogFragment.show(getChildFragmentManager(), "tennisDateChooseDialogFragment");
+        }
+    }
+
+    // 设置日期
+    private void settingData(String data){
+        currentData = data;
+        try {
+            tv_date.setText(data + " " + DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(data)));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

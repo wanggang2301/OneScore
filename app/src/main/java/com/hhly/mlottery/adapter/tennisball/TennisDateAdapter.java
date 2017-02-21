@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.util.DateUtil;
 
 import java.util.ArrayList;
 
@@ -57,7 +58,12 @@ public class TennisDateAdapter extends BaseAdapter {
         } else {
             viewHolder = (TennisDateAdapter.ViewHolder) convertView.getTag();
         }
-        viewHolder.mTextView.setText(mData.get(position));
+
+        try {
+            viewHolder.mTextView.setText(mData.get(position) + " " + DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(mData.get(position))));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (mCurrentData.equals(mData.get(position))) {
             // 设置背景颜色

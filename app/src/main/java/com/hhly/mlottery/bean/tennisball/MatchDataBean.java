@@ -25,6 +25,7 @@ public class MatchDataBean {
     private int server;
     private int set;
     private MatchScoreBean matchScore;
+    private boolean isFocus = false;
 
     public static class MatchScoreBean {
 
@@ -388,5 +389,13 @@ public class MatchDataBean {
 
     public void setMatchScore(MatchScoreBean matchScore) {
         this.matchScore = matchScore;
+    }
+
+    public boolean isFocus() {
+        return isFocus;
+    }
+
+    public void setFocus(boolean focus) {
+        isFocus = focus;
     }
 }

@@ -35,8 +35,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:textSize="@dimen/item_football_half_score"
-                    android:text="2017-2-21 周二" />
+                    android:textSize="@dimen/item_football_time"
+                    tools:text="2017-2-21 周二" />
 
             </LinearLayout>
 
