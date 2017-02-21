@@ -21,7 +21,6 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 
 import java.util.ArrayList;
@@ -82,19 +81,6 @@ public class InfoFragment extends Fragment {
         switchFragment(FOOTBALL);
 
     }
-
-    private void choiceMatchType() {
-        int matchChoiceType = PreferenceUtil.getInt("matchChoiceType", FOOTBALL);
-
-        if (matchChoiceType == FOOTBALL) {
-            tv_match_name.setText(getResources().getString(R.string.football_txt));
-            switchFragment(FOOTBALL);
-        } else {
-            tv_match_name.setText(getResources().getString(R.string.football_txt));
-            switchFragment(FOOTBALL);
-        }
-    }
-
 
 
     private void initEvent() {

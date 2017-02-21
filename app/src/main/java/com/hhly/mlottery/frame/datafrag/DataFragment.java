@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketballInformationSerachActivity;
 import com.hhly.mlottery.activity.FootballInformationSerachActivity;
+import com.hhly.mlottery.activity.SnookerInformationSerachActivity;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -181,7 +182,6 @@ public class DataFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.public_btn_set:
-
                 if (fragmentIndex == FOOTBALL) {
                     Intent intent = new Intent(mContext, FootballInformationSerachActivity.class);
                     startActivity(intent);
@@ -189,10 +189,9 @@ public class DataFragment extends Fragment implements View.OnClickListener {
                     Intent intent = new Intent(mContext, BasketballInformationSerachActivity.class);
                     startActivity(intent);
                 } else if (fragmentIndex == SNOOKER) {
-
+                    Intent intent = new Intent(mContext, SnookerInformationSerachActivity.class);
+                    startActivity(intent);
                 }
-
-
                 break;
         }
 

@@ -356,6 +356,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SnookerPlayerInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SnookerInformationSerachActivity"
             android:screenOrientation="portrait"></activity>
     </application>
 
