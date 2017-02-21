@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -69,10 +68,7 @@ public class SnookerRankAdapter extends BaseQuickAdapter<SnookerRankBean.WorldRa
         ll_sn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, w.getName() + "__" + w.getPlayerId(), Toast.LENGTH_SHORT).show();
-
                 Intent intent = new Intent(mContext, SnookerPlayerInfoActivity.class);
-
                 intent.putExtra("playerId", w.getPlayerId());
                 mContext.startActivity(intent);
             }
