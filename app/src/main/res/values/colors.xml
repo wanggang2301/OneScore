@@ -665,4 +665,7 @@
     <color name="product_answer_shape_color">#fff2ec</color>
     <!--多屏列表-->
     <color name="multiple_item_bg_color">#dff2ff</color>
+    <color name="snooker_rank_bg">#FAFDFF</color>
+    <color name="snooker_rank_txt">#838A9B</color>
+    <color name="snooker_rank_txt_top3">#F6A623</color>
 </resources>

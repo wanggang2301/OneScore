@@ -1,20 +1,17 @@
 package com.hhly.mlottery.util;
 
-import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
-import com.hhly.mlottery.bean.footballDetails.IntegralBean;
 import com.hhly.mlottery.config.BaseURLs;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TimeZone;
 
 public class AppConstants {
     /**
      * 是否是测试环境，true为测试，false为生产环境
      */
-    public static final boolean isTestEnv = false;
+    public static final boolean isTestEnv = true;
     /**
      * true是国际版|false内地版
      */
@@ -22,7 +19,7 @@ public class AppConstants {
     /**
      * true是纯净版|false完整版
      */
-    public static final boolean fullORsimple = true;
+    public static final boolean fullORsimple = false;
     /**
      * 是否是测试连接，测试连接用于阶段测试使用
      */

@@ -138,6 +138,7 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
         recyclerView.setAdapter(foreignInfomationAdapter);
         foreignInfomationAdapter.openLoadMore(0, true);
         foreignInfomationAdapter.setLoadingView(moreView);
+
         foreignInfomationAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
