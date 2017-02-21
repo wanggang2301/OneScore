@@ -1039,6 +1039,8 @@ public class BaseURLs {
     public final static String URL_SNOOKER_INFO_RANK = URL_API_HOST + "snookerWorldRanking.getWorldRankingPaging.do";
     //斯洛克资料库赛事
     public final static String URL_SNOOKER_INFO_MATCH = URL_API_HOST + "snookerData.findAppLeagueList.do";
+    //斯洛克球员信息
+    public final static String URL_SNOOKER_INFO_PLAYER_INFO_H5 = HTTP + HOST + URL_SPLITTER + "snookerData/playerInfo.html";
 
 
     /***********************************************************************************************************************/

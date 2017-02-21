@@ -38,6 +38,8 @@ public class SnookerPlayerInfoActivity extends Activity {
     private void initView() {
         tv_nopage = (TextView) findViewById(R.id.tv_nopage);
         mWebView = (ProgressWebView) findViewById(R.id.webview);
+
+        //url = BaseURLs.URL_SNOOKER_INFO_PLAYER_INFO_H5 + "?playId=" + playerId;
         url = "http://192.168.31.131:9000/snookerData/playerInfo.html?playId=" + playerId;
     }
 
