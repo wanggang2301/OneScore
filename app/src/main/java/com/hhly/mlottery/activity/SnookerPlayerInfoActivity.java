@@ -75,4 +75,12 @@ public class SnookerPlayerInfoActivity extends Activity {
 
         mWebView.loadUrl(url);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mWebView.removeAllViews();
+        mWebView.destroy();
+        mWebView = null;
+    }
 }

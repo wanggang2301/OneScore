@@ -18,7 +18,7 @@
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:src="@mipmap/counsel_depth" />
+            android:src="@mipmap/snooker_default" />
 
         <TextView
             android:id="@+id/snooker_race_name"
@@ -27,7 +27,7 @@
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/snooker_iv_logo"
             android:gravity="center_vertical"
-            android:text="世界競標賽"
+            android:text="世界锦标赛"
             android:textColor="#4a4a4a"
             android:textSize="@dimen/text_size_15" />
 
