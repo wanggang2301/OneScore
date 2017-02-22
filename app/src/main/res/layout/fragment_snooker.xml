@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <include layout="@layout/layout_header" />
+
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/snooker_tabs"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorHeight="2dp"
+            style="@style/MyCustomTabLayout"
+            app:tabTextAppearance="@style/MyTabLayoutTextAppearanceInverse"
+            app:tabSelectedTextColor="@color/white"/>
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/snooker_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v4.view.ViewPager>
+
+    </LinearLayout>
+</RelativeLayout>
