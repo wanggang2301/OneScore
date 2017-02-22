@@ -20,6 +20,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.snooker.SnookerRankAdapter;
 import com.hhly.mlottery.bean.snookerbean.SnookerRankBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
@@ -158,13 +159,13 @@ public class SnookerRankFragment extends Fragment implements ExactSwipeRefreshLa
     private void RequestData() {
         //BaseURLs.URL_SNOOKER_INFO_RANK
 
-        String url = "http://192.168.33.10:8080/mlottery/core/snookerWorldRanking.getWorldRankingPaging.do";
+       // String url = "http://192.168.33.10:8080/mlottery/core/snookerWorldRanking.getWorldRankingPaging.do";
 
         pageNum = 1;
         Map<String, String> map = new HashMap<>();
         map.put("pageNum", pageNum + "");
         map.put("pageSize", PAGE_SIZE + "");
-        VolleyContentFast.requestJsonByGet(url, map, new VolleyContentFast.ResponseSuccessListener<SnookerRankBean>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_SNOOKER_INFO_RANK, map, new VolleyContentFast.ResponseSuccessListener<SnookerRankBean>() {
             @Override
             public void onResponse(SnookerRankBean jsonObject) {
                 if (jsonObject != null) {
@@ -224,8 +225,8 @@ public class SnookerRankFragment extends Fragment implements ExactSwipeRefreshLa
         Map<String, String> map = new HashMap<>();
         map.put("pageNum", pageNum + "");
         map.put("pageSize", PAGE_SIZE + "");
-        String url = "http://192.168.33.10:8080/mlottery/core/snookerWorldRanking.getWorldRankingPaging.do";
-        VolleyContentFast.requestJsonByGet(url, map, new VolleyContentFast.ResponseSuccessListener<SnookerRankBean>() {
+      //  String url = "http://192.168.33.10:8080/mlottery/core/snookerWorldRanking.getWorldRankingPaging.do";
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_SNOOKER_INFO_RANK, map, new VolleyContentFast.ResponseSuccessListener<SnookerRankBean>() {
                     @Override
                     public void onResponse(SnookerRankBean jsonObject) {
                         if (jsonObject != null) {

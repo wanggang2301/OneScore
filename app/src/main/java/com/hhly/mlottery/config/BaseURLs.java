@@ -1042,6 +1042,9 @@ public class BaseURLs {
     //斯洛克球员信息
     public final static String URL_SNOOKER_INFO_PLAYER_INFO_H5 = HTTP + HOST + URL_SPLITTER + "snookerData/playerInfo.html";
 
+    //斯洛克模糊搜索
+    public final static String URL_SNOOKER_PLAYER_SEARCH = "/snookerWorldRanking.fuzzySearchWorldRanking.do";
+
 
     /***********************************************************************************************************************/
 
