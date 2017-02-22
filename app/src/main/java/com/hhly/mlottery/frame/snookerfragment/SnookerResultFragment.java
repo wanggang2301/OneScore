@@ -233,55 +233,12 @@ public class SnookerResultFragment extends Fragment implements SwipeRefreshLayou
                         mSnookerListAdapter = new SnookerListAdapter(mContext, allData);
                         mRecyclerView.setAdapter(mSnookerListAdapter);
                         mSnookerListAdapter.setDateOnClickListener(mDateOnClickListener);
-//                        mSnookerListAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
-//                            @Override
-//                            public void onItemClick(View view, String data) {
-//                                Toast.makeText(mContext, "点击进入详情 ** " + data , Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
                     } else {
                         updateAdapter();
                     }
                     setStatus(SHOW_STATUS_CURRENT_ONDATA);
                     return;
                 }
-//                if(isFirstLoadDate){
-////                    if (jsonData.getData().getResultsBattle() == null || jsonData.getData().getResultsBattle().size() == 0) {
-//                    if (jsonData.getData().getDate() == null || jsonData.getData().getDate().equals("")) {
-//                        setStatus(SHOW_STATUS_NO_DATA);
-//                        return;
-//                    }else{
-//
-//                    }
-//                }else{
-//                    if (jsonData.getData().getResultsBattle() == null || jsonData.getData().getResultsBattle().size() == 0) {
-//
-//                        allData = new ArrayList<>();
-//                        SnookerEventsBean riqiItem = new SnookerEventsBean();
-//                        riqiItem.setItemType(0);
-//                        riqiItem.setItemDate(jsonData.getData().getDate());
-//                        allData.add(riqiItem);
-//
-//                        if (mSnookerListAdapter == null) {
-//                            mSnookerListAdapter = new SnookerListAdapter(mContext, allData);
-//                            mRecyclerView.setAdapter(mSnookerListAdapter);
-//
-//                            mSnookerListAdapter.setDateOnClickListener(mDateOnClickListener);
-//                            mSnookerListAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
-//                                @Override
-//                                public void onItemClick(View view, String data) {
-//                                    Toast.makeText(mContext, "点击进入详情", Toast.LENGTH_SHORT).show();
-//                                }
-//                            });
-//
-//                        } else {
-//                            updateAdapter();
-//                        }
-//
-//                        setStatus(SHOW_STATUS_CURRENT_ONDATA);
-//                        return;
-//                    }
-//                }
                 L.d("qwer====>> " , jsonData.getData().getDate() + " <==> " + jsonData.getData().getResultsBattle().size());
                 //记录所有比赛的list 用于联赛分类
                 List<SnookerEventsBean> datalist = jsonData.getData().getResultsBattle();
@@ -340,7 +297,7 @@ public class SnookerResultFragment extends Fragment implements SwipeRefreshLayou
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.snooker_reloading_txt:
-                Toast.makeText(mContext, "点击了刷新···", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "点击了刷新···", Toast.LENGTH_SHORT).show();
                 setStatus(SHOW_STATUS_REFRESH_ONCLICK);
                 initData(currentDatePosition);
                 break;
@@ -365,7 +322,7 @@ public class SnookerResultFragment extends Fragment implements SwipeRefreshLayou
             @Override
             public void onClick(View v) {
                 if (isDataChick) {
-                    Toast.makeText(mContext, "点击日期选择", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "点击日期选择", Toast.LENGTH_SHORT).show();
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AlertDialog);
                     final AlertDialog alertDialog = builder.create();
                     LayoutInflater infla = LayoutInflater.from(getActivity());
@@ -392,19 +349,6 @@ public class SnookerResultFragment extends Fragment implements SwipeRefreshLayou
             }
         };
     }
-    /**
-     * 初始化7天的日期
-     *
-     * @param s
-     */
-//    private ScheduleDateAdapter mDateAdapter;
-//    private void initListDateAndWeek(String s, int position) {
-//        mDatelist = new ArrayList<ScheduleDate>();
-//        for (int i = 0; i < 7; i++) {
-//            mDatelist.add(new ScheduleDate(DateUtil.getDate(i, s), DateUtil.getWeekOfXinQi(DateUtil.parseDate(DateUtil.getDate(i, s)))));
-//        }
-//        mDateAdapter = new ScheduleDateAdapter(mDatelist, mContext, position);
-//    }
     /**
      * 更新数据
      */

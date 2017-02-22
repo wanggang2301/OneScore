@@ -171,9 +171,6 @@ public class SnookerScheduleFragment extends Fragment implements View.OnClickLis
         isDataChick = false;
 //        String url = "http://192.168.31.12:8080/mlottery/core/snookerMatch.getSnookerEvents.do";//http://192.168.31.12:8080/mlottery/core/snookerMatch.getSnookerEvents.do?lang=zh&date=2017-02-16
         Map<String ,String> mapUrl = new HashMap<>();
-//        if (isFirstLoadDate) {
-//        mapUrl.put("date" , "2017-02-18");
-//        }
         if (mCurrentDate != null) {
             List mDatelist = new ArrayList<String>();
             for (int i = 0; i < DATENUM; i++) {
@@ -216,52 +213,12 @@ public class SnookerScheduleFragment extends Fragment implements View.OnClickLis
                         mSnookerListAdapter = new SnookerListAdapter(mContext, allData);
                         mRecyclerView.setAdapter(mSnookerListAdapter);
                         mSnookerListAdapter.setDateOnClickListener(mDateOnClickListener);
-//                        mSnookerListAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
-//                            @Override
-//                            public void onItemClick(View view, String data) {
-//                                Toast.makeText(mContext, "点击进入详情", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
                     } else {
                         updateAdapter();
                     }
                     setStatus(SHOW_STATUS_CURRENT_ONDATA);
                     return;
                 }
-//                if(isFirstLoadDate){
-//                    if (jsonData.getData().getEventsBattle() == null || jsonData.getData().getEventsBattle().size() == 0) {
-//                        setStatus(SHOW_STATUS_NO_DATA);
-//                        return;
-//                    }
-//                }else{
-//                    if (jsonData.getData().getEventsBattle() == null || jsonData.getData().getEventsBattle().size() == 0) {
-//
-//                        allData = new ArrayList<>();
-//                        SnookerEventsBean riqiItem = new SnookerEventsBean();
-//                        riqiItem.setItemType(0);
-//                        riqiItem.setItemDate(jsonData.getData().getDate());
-//                        allData.add(riqiItem);
-//
-//                        if (mSnookerListAdapter == null) {
-//                            mSnookerListAdapter = new SnookerListAdapter(mContext, allData);
-//                            mRecyclerView.setAdapter(mSnookerListAdapter);
-//
-//                            mSnookerListAdapter.setDateOnClickListener(mDateOnClickListener);
-//                            mSnookerListAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
-//                                @Override
-//                                public void onItemClick(View view, String data) {
-//                                    Toast.makeText(mContext, "点击进入详情", Toast.LENGTH_SHORT).show();
-//                                }
-//                            });
-//
-//                        } else {
-//                            updateAdapter();
-//                        }
-//
-//                        setStatus(SHOW_STATUS_CURRENT_ONDATA);
-//                        return;
-//                    }
-//                }
                 L.d("qwer====>> " , jsonData.getData().getDate() + " <==> " + jsonData.getData().getEventsBattle().size());
                 //记录所有比赛的list 用于联赛分类
                 List<SnookerEventsBean> datalist = jsonData.getData().getEventsBattle();
@@ -288,13 +245,6 @@ public class SnookerScheduleFragment extends Fragment implements View.OnClickLis
                     allData.add(all);
                 }
 
-//                if (isFirstLoadDate) {
-//
-//                    mCurrentDate = jsonData.getData().getDate();
-//
-//                    initListDateAndWeek(mCurrentDate, position);
-//                    isFirstLoadDate = false;
-//                }
                 if (mSnookerListAdapter == null) {
                     mSnookerListAdapter = new SnookerListAdapter(mContext, allData);
                     mRecyclerView.setAdapter(mSnookerListAdapter);
@@ -347,7 +297,7 @@ public class SnookerScheduleFragment extends Fragment implements View.OnClickLis
             @Override
             public void onClick(View v) {
                 if (isDataChick) {
-                    Toast.makeText(mContext, "点击日期选择", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "点击日期选择", Toast.LENGTH_SHORT).show();
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AlertDialog);
                     final AlertDialog alertDialog = builder.create();
                     LayoutInflater infla = LayoutInflater.from(getActivity());
@@ -410,23 +360,4 @@ public class SnookerScheduleFragment extends Fragment implements View.OnClickLis
         super.onDestroyView();
         EventBus.getDefault().unregister(this);
     }
-    /*
-        1、旅行路线：昆明（1天）→大理（2—3天）→香格里拉（3—4天）→丽江（2—3天）→从丽江乘火车返回昆明再回家！
-            4.1 / 4.2 出发，广州==>昆明（机票折后 450上下），昆明住宿一晚（待一天）
-            4.3 昆明 ==> 大理 （64￥）火车约6.5h ，大理待两天
-            4.5 大理==》香格里拉 （汽车50￥ 9h）
-                香格里拉==》丽江 （巴士 约4h）三天左右
-            4.8 回昆明飞深圳。
-
-            昆明 【云南名族村，滇池，石林】
-            大理 【大理古城，苍山，洱海】
-            丽江 【丽江古城、泸沽湖、玉龙雪山】
-            香格里拉 【普达措公园，梅里雪山，虎跳峡等】
-
-        plan B
-            主玩 丽江香格里拉，昆明滇池、大理苍山+洱海 时间充裕些，放慢脚步、沉淀自我~！
-
-            经费预算：3k （住宿+交通+门票） 丽江香格里拉可考虑租车。
-
-     */
 }
