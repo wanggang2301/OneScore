@@ -222,9 +222,7 @@ public class BasketInformationFragment extends Fragment implements ExactSwipeRef
 
         mHandler.sendEmptyMessage(DATA_STATUS_LOADING);
         new Handler().postDelayed(mLoadingDataThread, 0);
-
     }
-
 
     private Handler mHandler = new Handler() {
         @Override
@@ -238,8 +236,6 @@ public class BasketInformationFragment extends Fragment implements ExactSwipeRef
                     ll_net_error.setVisibility(View.GONE);
                     mExactSwipeRefreshLayout.setRefreshing(true);
                     break;
-
-
                 case DATA_STATUS_NODATA_INTER:
                     ll_loading.setVisibility(View.GONE);
                     if (!mType.equals(HOT_MATCH) && !mType.equals(INTEL_MATCH)) {
@@ -260,13 +256,10 @@ public class BasketInformationFragment extends Fragment implements ExactSwipeRef
                     if (!mType.equals(HOT_MATCH) && !mType.equals(INTEL_MATCH)) {
                         radioGroup.setVisibility(View.VISIBLE);
                     }
-
                     mExactSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     expandableGridView.setVisibility(View.GONE);
-
                     ll_net_error.setVisibility(View.GONE);
                     ll_nodata_country.setVisibility(View.VISIBLE);
-
                     mExactSwipeRefreshLayout.setRefreshing(false);
                     break;
 
@@ -284,19 +277,15 @@ public class BasketInformationFragment extends Fragment implements ExactSwipeRef
                     mExactSwipeRefreshLayout.setRefreshing(false);
                     break;
 
-
                 case DATA_STATUS_SUCCESS_COUNTRY:
                     ll_loading.setVisibility(View.GONE);
                     if (!mType.equals(HOT_MATCH) && !mType.equals(INTEL_MATCH)) {
                         radioGroup.setVisibility(View.VISIBLE);
                     }
-
                     mExactSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     expandableGridView.setVisibility(View.VISIBLE);
-
                     ll_net_error.setVisibility(View.GONE);
                     ll_nodata_country.setVisibility(View.GONE);
-
                     mExactSwipeRefreshLayout.setRefreshing(false);
                     break;
 
@@ -307,7 +296,6 @@ public class BasketInformationFragment extends Fragment implements ExactSwipeRef
                     ll_net_error.setVisibility(View.VISIBLE);
                     mExactSwipeRefreshLayout.setRefreshing(false);
                     break;
-
             }
         }
     };
@@ -328,12 +316,9 @@ public class BasketInformationFragment extends Fragment implements ExactSwipeRef
         // String url = "http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHierarchy.do";
 
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<LeagueAllBean>() {
-
             @Override
             public void onResponse(LeagueAllBean json) {
-                L.d("wangg", json + "");
                 if (json != null) {
-
                     boolean speci = false;
                     boolean nation = false;
 
@@ -344,7 +329,6 @@ public class BasketInformationFragment extends Fragment implements ExactSwipeRef
                         for (int i = 0; i < size; i++) {
                             hotLeagues.add(new LeagueBean("", "", ""));
                         }
-
                         speci = true;
                     }
 
@@ -357,19 +341,14 @@ public class BasketInformationFragment extends Fragment implements ExactSwipeRef
                                     list.add(json.getNationalLeague().get(j + ROWNUM * t));
                                 }
                             }
-
                             interLeagues.add(list);
                         }
-
                         nation = true;
                     }
-
                     if (speci || nation) {
                         initViewData();
                     }
                 }
-
-
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
