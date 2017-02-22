@@ -1,14 +1,11 @@
 package com.hhly.mlottery.util;
 
-import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
-import com.hhly.mlottery.bean.footballDetails.IntegralBean;
 import com.hhly.mlottery.config.BaseURLs;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TimeZone;
 
 public class AppConstants {
     /**
@@ -30,7 +27,7 @@ public class AppConstants {
     /**
      * 判断是否上传奔溃日志到友盟
      */
-    public static final boolean isUploadCrash = false;
+    public static final boolean isUploadCrash = true;
 
     /**
      * 项目时区 8中国，7泰国、越南 ，0英语

@@ -37,6 +37,7 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.ScoresFragment;
 import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFilterEventBusEntity;
 import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFocusEventBusEntity;
+import com.hhly.mlottery.frame.scorefrag.FootBallScoreFragment;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.HotFocusUtils;
@@ -114,13 +115,27 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     private List<Match> feedAdapterLists; // 要展示的数据
 
     private boolean isLoadedData = false;
+    private static final String ISNEW_FRAMEWORK = "isnew_framework";
 
-    public static RollBallFragment newInstance(int index) {
+
+    private boolean isNewFrameWork;
+
+    public static RollBallFragment newInstance(int index, boolean isNewFramWork) {
         Bundle bundle = new Bundle();
         bundle.putInt(FRAGMENT_INDEX, index);
+        bundle.putBoolean(ISNEW_FRAMEWORK, isNewFramWork);
+
         RollBallFragment fragment = new RollBallFragment();
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            isNewFrameWork = getArguments().getBoolean(ISNEW_FRAMEWORK);
+        }
     }
 
     @Override
@@ -217,7 +232,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        L.d("qazwsx","滚球eventbus解除注册");
+        L.d("qazwsx", "滚球eventbus解除注册");
         EventBus.getDefault().unregister(this);
        /* if (eventBus != null) {
             eventBus.unregister(this);
@@ -249,10 +264,38 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     @Override
     public void onRefresh() {
         this.initData();
-        ((ScoresFragment) getParentFragment()).reconnectWebSocket();
+
+        if (isNewFrameWork) {
+            ((FootBallScoreFragment) getParentFragment()).reconnectWebSocket();
+        } else {
+            ((ScoresFragment) getParentFragment()).reconnectWebSocket();
+
+        }
     }
 
     public void onEventMainThread(ScoresFragment.FootballScoresWebSocketEntity entity) {
+        L.d("qazwsx", "滚球推送");
+
+        if (adapter == null) {
+            return;
+        }
+
+        String type = "";
+        try {
+            JSONObject jsonObject = new JSONObject(entity.text);
+            type = jsonObject.getString("type");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (!TextUtils.isEmpty(type)) {
+            Message msg = Message.obtain();
+            msg.obj = entity.text;
+            msg.arg1 = Integer.parseInt(type);
+            apiHandler.sendMessage(msg);
+        }
+    }
+
+    public void onEventMainThread(FootBallScoreFragment.FootballScoresWebSocketEntity entity) {
         L.d("qazwsx", "滚球推送");
 
         if (adapter == null) {

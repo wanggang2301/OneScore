@@ -1021,8 +1021,8 @@ public class BaseURLs {
 
 
     /*****************************************************************************************************************
-     *下面URL为HTML页面
-     *
+     * 下面URL为HTML页面
+     * <p>
      * 注意和接口区分URL拼接方式
      */
 
@@ -1037,6 +1037,18 @@ public class BaseURLs {
 
     //邀请码分享
     public final static String INVITED_ACTIVITY_URL = HTTP + HOST + URL_SPLITTER + "download_yqm.html";
+
+
+    /***
+     * 斯洛克url
+     */
+
+    //斯洛克资料库排名
+    public final static String URL_SNOOKER_INFO_RANK = URL_API_HOST + "snookerWorldRanking.getWorldRankingPaging.do";
+    //斯洛克资料库赛事
+    public final static String URL_SNOOKER_INFO_MATCH = URL_API_HOST + "snookerData.findAppLeagueList.do";
+    //斯洛克球员信息
+    public final static String URL_SNOOKER_INFO_PLAYER_INFO_H5 = HTTP + HOST + URL_SPLITTER + "snookerData/playerInfo.html";
 
 
     /***********************************************************************************************************************/

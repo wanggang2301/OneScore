@@ -20,6 +20,8 @@ import com.hhly.mlottery.adapter.InfoCenterAdapter;
 import com.hhly.mlottery.bean.infoCenterBean.InfoCenterBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.frame.infofrag.FootInfoCallBack;
+import com.hhly.mlottery.frame.infofrag.FootInfoShowSelectInfoCallBack;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
@@ -50,6 +52,11 @@ public class InfoCenterActivity extends BaseActivity implements View.OnClickList
     private ImageView iv_right;
     public FrameLayout fl_mask;
     private View emptyView;
+
+    public FootInfoCallBack footInfoCallBack;
+
+    public FootInfoShowSelectInfoCallBack footInfoShowSelectInfoCallBack;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,9 +101,9 @@ public class InfoCenterActivity extends BaseActivity implements View.OnClickList
                         mInfoCenterBean = jsonObject;
                         getCurrentDateInfoIndex();
 
-                        if(mInfoCenterBean.intelligences.get(currentIndexDate).list.size() == 0){
+                        if (mInfoCenterBean.intelligences.get(currentIndexDate).list.size() == 0) {
                             infoCenterAdapter.setEmptyView(emptyView);
-                        }else{
+                        } else {
                             infoCenterAdapter.getData().clear();
                             infoCenterAdapter.addData(mInfoCenterBean.intelligences.get(currentIndexDate).list);
                         }
@@ -104,7 +111,8 @@ public class InfoCenterActivity extends BaseActivity implements View.OnClickList
                         tv_data_content.setText(getCurrentDate(mInfoCenterBean.intelligences.get(currentIndexDate).date, mInfoCenterBean.intelligences.get(currentIndexDate).count));
 
                         mInfoCenterPW = new InfoCenterPW(mContext, mInfoCenterBean.intelligences, currentIndexDate);
-
+                        mInfoCenterPW.setFootInfoCallBack(footInfoCallBack);
+                        mInfoCenterPW.setFootInfoShowSelectInfoCallBack(footInfoShowSelectInfoCallBack);
                         mInfoCenterBean.intelligences.get(currentIndexDate).isSelect = true;
                     } else {
                         mRecyclerView.setVisibility(View.GONE);
@@ -168,7 +176,26 @@ public class InfoCenterActivity extends BaseActivity implements View.OnClickList
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
 
-        emptyView = View.inflate(this,R.layout.layout_nodata,null);
+        emptyView = View.inflate(this, R.layout.layout_nodata, null);
+
+
+        footInfoCallBack = new FootInfoCallBack() {
+            @Override
+            public void onClick(boolean b) {
+                if (b) {
+                    fl_mask.setVisibility(View.VISIBLE);
+                } else {
+                    fl_mask.setVisibility(View.GONE);
+                }
+            }
+        };
+
+        footInfoShowSelectInfoCallBack = new FootInfoShowSelectInfoCallBack() {
+            @Override
+            public void onClick(int i) {
+                showSelectInfo(i);
+            }
+        };
     }
 
     @Override

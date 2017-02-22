@@ -1,74 +1,68 @@
-package com.hhly.mlottery.frame.basketballframe;
+package com.hhly.mlottery.frame.scorefrag;
 
-import android.annotation.SuppressLint;
+
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.Spinner;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
-import com.hhly.mlottery.activity.BasketballInformationActivity;
 import com.hhly.mlottery.activity.BasketballSettingActivity;
-import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
-import com.hhly.mlottery.bean.focusAndPush.BasketballConcernListBean;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
+import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
+import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.PreferenceUtil;
-import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.BallSelectArrayAdapter;
+import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 /**
- * @author yixq
- * @ClassName: BasketScoresFragment
- * @Description: 篮球比分
+ *篮球比分
  */
-@SuppressLint("NewApi")
-public class BasketScoresFragment extends BaseWebSocketFragment implements View.OnClickListener {
+public class BasketBallScoreFragment extends BaseWebSocketFragment implements View.OnClickListener {
+
+    private final boolean isNewFrameWork = true;
+
+    private String[] mItems;
+    private View view;
+    private Context mContext;
+    private static final int FOOTBALL = 0;
+    private static final int BASKETBALL = 1;
+    private static final int SNOOKER = 2;
 
     private final int IMMEDIA_FRAGMENT = 0;
     private final int RESULT_FRAGMENT = 1;
     private final int SCHEDULE_FRAGMENT = 2;
-    private final int FOCUS_FRAGMENT = 3;
 
     private final static String TAG = "BasketScoresFragment";
     public static List<String> titles;
 
-    private View mView;
-    private Context mContext;
     private Intent mIntent;
 
-//    private int isLoad ;
-//    private ImageView mSetting;//设置按钮
-//    private ImageView mIb_back;//返回按钮
-//    private TextView mTittle; //标题头
-//    private ImageView mFilterImgBtn;// 筛选
-    /**
-     * 返回菜单
-     */
-    private ImageView mIb_back;// 返回菜单
 
     /**
      * 筛选
@@ -79,7 +73,6 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
         return mFilterImgBtn;
     }
 
-    private ImageView ivInfomation;
 
     /**
      * 设置
@@ -89,11 +82,6 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
     public static ImageView getmSetting() {
         return mSetting;
     }
-
-    /**
-     * 中间标题
-     */
-    private TextView mTittle;// 标题
 
 
     /**
@@ -105,108 +93,81 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
     private TabLayout mTabLayout;
     private PureViewPagerAdapter pureViewPagerAdapter;
     private List<Fragment> fragments;
-    private Spinner mSpinner;
-    private String[] mItems;
+    /**
+     * 判断是否来自关注页面
+     */
+    int mComeFromFocus = 0;
 
-    @SuppressLint("ValidFragment")
-    public BasketScoresFragment(Context context) {
-        this.mContext = context;
-    }
+    private LinearLayout d_header;
+    private LinearLayout ll_match_select;
 
-    public BasketScoresFragment() {
-    }
+    private TextView tv_match_name;
+    private ImageView iv_match;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.basketball");
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mContext = getActivity();
-        mView = View.inflate(mContext, R.layout.frage_new_basketball, null);
-        currentFragmentId = ((FootballActivity) mContext).basketCurrentPosition;
-        L.d("xxx", "篮球Fragment:currentFragmentId:" + currentFragmentId);
+        view = inflater.inflate(R.layout.fragment_basket_ball_score, container, false);
+
         initView();
+
         setupViewPager();
-        focusCallback();// 加载关注数
-        initEVent();
         initCurrentFragment(currentFragmentId);
-        return mView;
-    }
 
-    private void initEVent() {
-        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (mContext.getResources().getString(R.string.football_frame_txt).equals(mItems[position])) {// 选择足球
-                    ((FootballActivity) mContext).ly_tab_bar.setVisibility(View.VISIBLE);
-                    ((FootballActivity) mContext).switchFragment(0);
-                    closeWebSocket();
-                }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        initEvent();
+        return view;
     }
 
     private void initView() {
-        mViewPager = (ViewPager) mView.findViewById(R.id.pager);
-        //返回
-        mIb_back = (ImageView) mView.findViewById(R.id.public_img_back);
-        mIb_back.setOnClickListener(this);
+        mItems = getResources().getStringArray(R.array.bifen_select);
 
-        //标题头部
-        mTittle = (TextView) mView.findViewById(R.id.public_txt_title);
-        mTittle.setVisibility(View.GONE);
 
-        mSpinner = (Spinner) mView.findViewById(R.id.public_txt_left_spinner);
-        mSpinner.setVisibility(View.VISIBLE);
-        mItems = getResources().getStringArray(R.array.ball_select);
-        BallSelectArrayAdapter mAdapter = new BallSelectArrayAdapter(mContext, mItems);
-        mSpinner.setAdapter(mAdapter);
-        mSpinner.setSelection(1);
+        mViewPager = (ViewPager) view.findViewById(R.id.pager);
+
 
         // 筛选
-        mFilterImgBtn = (ImageView) mView.findViewById(R.id.public_btn_filter);
+        mFilterImgBtn = (ImageView) view.findViewById(R.id.public_btn_filter);
         mFilterImgBtn.setOnClickListener(this);
 
 
         //设置按钮
-        mSetting = (ImageView) mView.findViewById(R.id.public_btn_set);
+        mSetting = (ImageView) view.findViewById(R.id.public_btn_set);
         mSetting.setOnClickListener(this);
+        ll_match_select = (LinearLayout) view.findViewById(R.id.ll_match_select);
+        tv_match_name = (TextView) view.findViewById(R.id.tv_match_name);
+        iv_match = (ImageView) view.findViewById(R.id.iv_match);
+        d_header = (LinearLayout) view.findViewById(R.id.d_heasder);
+        tv_match_name.setText(getResources().getString(R.string.basketball_txt));
 
-
-        ivInfomation = (ImageView) mView.findViewById(R.id.public_btn_infomation);
-        ivInfomation.setVisibility(View.VISIBLE);
-        ivInfomation.setOnClickListener(this);
     }
 
     private void setupViewPager() {
-        mTabLayout = (TabLayout) mView.findViewById(R.id.sliding_tabs);
+        mTabLayout = (TabLayout) view.findViewById(R.id.sliding_tabs);
         titles = new ArrayList<>();
         titles.add(getString(R.string.foot_jishi_txt));
         titles.add(getString(R.string.foot_saiguo_txt));
         titles.add(getString(R.string.foot_saicheng_txt));
-        titles.add(getString(R.string.foot_guanzhu_txt));
 
         fragments = new ArrayList<>();
-        fragments.add(ImmedBasketballFragment.newInstance(IMMEDIA_FRAGMENT));
+        fragments.add(ImmedBasketballFragment.newInstance(IMMEDIA_FRAGMENT,isNewFrameWork));
         fragments.add(ResultBasketballFragment.newInstance(RESULT_FRAGMENT));
         fragments.add(ScheduleBasketballFragment.newInstance(SCHEDULE_FRAGMENT));
-        fragments.add(FocusBasketballFragment.newInstance(FOCUS_FRAGMENT));
 
         pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
         mViewPager.setAdapter(pureViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         mViewPager.setCurrentItem(currentFragmentId);
-        mViewPager.setOffscreenPageLimit(4);
+        mViewPager.setOffscreenPageLimit(titles.size());
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -230,14 +191,9 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
                             mFilterImgBtn.setVisibility(View.VISIBLE);
                             ((ScheduleBasketballFragment) fragments.get(position)).updateAdapter();
                             break;
-                        case FOCUS_FRAGMENT:
-                            mFilterImgBtn.setVisibility(View.GONE);
-//                            ((FocusBasketballFragment) fragments.get(position)).LoadData();
-                            break;
                     }
                 }
             }
-
 
             @Override
             public void onPageSelected(final int position) {
@@ -252,134 +208,37 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
 
     }
 
-    /**
-     * 刷新tab栏后的关注个数
-     */
-    public void focusCallback() {
-        String focusIds = PreferenceUtil.getString(FocusBasketballFragment.BASKET_FOCUS_IDS, "");
-        String[] arrayId = focusIds.split("[,]");
-        if (getActivity() != null) {
-            if ("".equals(focusIds) || arrayId.length == 0) {
-                mTabLayout.getTabAt(3).setText(getActivity().getResources().getString(R.string.foot_guanzhu_txt));
-            } else {
-                mTabLayout.getTabAt(3).setText(getActivity().getResources().getString(R.string.foot_guanzhu_txt) + "(" + arrayId.length + ")");
-            }
-        }
-
-    }
-
-    /**
-     * 请求关注列表。登录后跟刷新，都会请求
-     */
-    public void getBasketballUserConcern() {
-        //请求后台，及时更新关注赛事内容
-        String userId = "";
-        if (AppConstants.register != null && AppConstants.register.getData() != null && AppConstants.register.getData().getUser() != null) {
-            userId = AppConstants.register.getData().getUser().getUserId();
-        }
-        if (userId != null && userId != "") {
-            String url = " http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.findConcernVsThirdIds.do";
-            String deviceId = AppConstants.deviceToken;
-            //devicetoken 友盟。
-            String umengDeviceToken = PreferenceUtil.getString(AppConstants.uMengDeviceToken, "");
-            Map<String, String> params = new HashMap<>();
-            params.put("userId", userId);
-            params.put("deviceId", deviceId);
-//        params.put("deviceToken",umengDeviceToken);
-            VolleyContentFast.requestJsonByPost(BaseURLs.BASKET_FIND_MATCH, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
-                @Override
-                public void onResponse(BasketballConcernListBean jsonObject) {
-                    if (jsonObject != null) {
-                        if (jsonObject.getResult().equals("200")) {
-                            //将关注写入文件
-                            StringBuffer sb = new StringBuffer();
-                            for (String thirdId : jsonObject.getConcerns()) {
-                                if ("".equals(sb.toString())) {
-                                    sb.append(thirdId);
-                                } else {
-                                    sb.append("," + thirdId);
-                                }
-
-                            }
-                            PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS, sb.toString());
-                            focusCallback();
-                        }
-                    }
-
-                }
-            }, new VolleyContentFast.ResponseErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-
-
-                }
-            }, BasketballConcernListBean.class);
-
-        }
-
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
-
     }
 
-    @Override
-    protected void onTextResult(String text) {
-        ((ImmedBasketballFragment) fragments.get(0)).handleSocketMessage(text);
-//        ((FocusBasketballFragment) fragments.get(3)).handleSocketMessage(text);
-
-
-    }
-
-    @Override
-    protected void onConnectFail() {
-
-    }
-
-    @Override
-    protected void onDisconnected() {
-
-    }
-
-    @Override
-    protected void onConnected() {
-
-    }
 
     public void reconnectWebSocket() {
         connectWebSocket();
     }
 
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
+  /*  @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            if (mComeFromFocus == FocusBasketballFragment.TYPE_FOCUS) {
+                EventBus.getDefault().post(new BasketFocusEventBus());
+            }
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }*/
 
     @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.public_img_back:  //返回
-                MobclickAgent.onEvent(mContext, "Basketball_Exit");
-//                ((MainActivity) getActivity()).openLeftLayout();
-                getActivity().finish();
-                break;
             case R.id.public_btn_set:  //设置
                 currentFragmentId = mViewPager.getCurrentItem();
                 if (currentFragmentId == IMMEDIA_FRAGMENT) {
                     MobclickAgent.onEvent(mContext, "Basketball_Setting");
-//                String s = getAppVersionCode(mContext);
-                    mIntent = new Intent(getActivity(), BasketballSettingActivity.class);
-//                getParentFragment().startActivityForResult(mIntent, REQUEST_SETTINGCODE);
-//                getActivity().startActivityForResult(mIntent , REQUEST_SETTINGCODE);
+                    mIntent = new Intent(mContext, BasketballSettingActivity.class);
                     Bundle bundleset = new Bundle();
                     bundleset.putInt("currentfragment", IMMEDIA_FRAGMENT);
                     mIntent.putExtras(bundleset);
@@ -387,10 +246,7 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
                     getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
                 } else if (currentFragmentId == RESULT_FRAGMENT) {
                     MobclickAgent.onEvent(mContext, "Basketball_Setting");
-//                String s = getAppVersionCode(mContext);
-                    mIntent = new Intent(getActivity(), BasketballSettingActivity.class);
-//                getParentFragment().startActivityForResult(mIntent, REQUEST_SETTINGCODE);
-//                getActivity().startActivityForResult(mIntent , REQUEST_SETTINGCODE);
+                    mIntent = new Intent(mContext, BasketballSettingActivity.class);
                     Bundle bundleset = new Bundle();
                     bundleset.putInt("currentfragment", RESULT_FRAGMENT);
                     mIntent.putExtras(bundleset);
@@ -398,23 +254,9 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
                     getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
                 } else if (currentFragmentId == SCHEDULE_FRAGMENT) {
                     MobclickAgent.onEvent(mContext, "Basketball_Setting");
-//                String s = getAppVersionCode(mContext);
                     mIntent = new Intent(getActivity(), BasketballSettingActivity.class);
-//                getParentFragment().startActivityForResult(mIntent, REQUEST_SETTINGCODE);
-//                getActivity().startActivityForResult(mIntent , REQUEST_SETTINGCODE);
                     Bundle bundleset = new Bundle();
                     bundleset.putInt("currentfragment", SCHEDULE_FRAGMENT);
-                    mIntent.putExtras(bundleset);
-                    startActivity(mIntent);
-                    getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
-                } else if (currentFragmentId == FOCUS_FRAGMENT) {
-                    MobclickAgent.onEvent(mContext, "Basketball_Setting");
-//                String s = getAppVersionCode(mContext);
-                    mIntent = new Intent(getActivity(), BasketballSettingActivity.class);
-//                getParentFragment().startActivityForResult(mIntent, REQUEST_SETTINGCODE);
-//                getActivity().startActivityForResult(mIntent , REQUEST_SETTINGCODE);
-                    Bundle bundleset = new Bundle();
-                    bundleset.putInt("currentfragment", FOCUS_FRAGMENT);
                     mIntent.putExtras(bundleset);
                     startActivity(mIntent);
                     getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
@@ -430,9 +272,7 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
                         Intent intent = new Intent(getActivity(), BasketFiltrateActivity.class);
                         intent.putExtra("MatchAllFilterDatas", (Serializable) ImmedBasketballFragment.mAllFilter);//Serializable 序列化传值（所有联赛数据）
                         intent.putExtra("MatchChickedFilterDatas", (Serializable) ImmedBasketballFragment.mChickedFilter);//Serializable 序列化传值（选中的联赛数据）
-//                getParentFragment().startActivityForResult(intent, REQUEST_FILTERCODE);
                         intent.putExtra("currentfragment", IMMEDIA_FRAGMENT);
-//                    getActivity().startActivityForResult(intent,ImmedBasketballFragment.REQUEST_FILTERCODE);
                         startActivity(intent);
                         getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
                     } else if (ImmedBasketballFragment.getIsLoad() == 0) {
@@ -447,8 +287,6 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
                         Intent intent = new Intent(getActivity(), BasketFiltrateActivity.class);
                         intent.putExtra("MatchAllFilterDatas", (Serializable) ResultBasketballFragment.mAllFilter);//Serializable 序列化传值（所有联赛数据）
                         intent.putExtra("MatchChickedFilterDatas", (Serializable) ResultBasketballFragment.mChickedFilter);//Serializable 序列化传值（选中的联赛数据）
-//                getParentFragment().startActivityForResult(intent, REQUEST_FILTERCODE);
-//                    getActivity().startActivityForResult(intent, REQUEST_FILTERCODE);
                         Bundle bundle = new Bundle();
                         bundle.putInt("currentfragment", RESULT_FRAGMENT);
                         intent.putExtras(bundle);
@@ -466,8 +304,6 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
                         Intent intent = new Intent(getActivity(), BasketFiltrateActivity.class);
                         intent.putExtra("MatchAllFilterDatas", (Serializable) ScheduleBasketballFragment.mAllFilter);//Serializable 序列化传值（所有联赛数据）
                         intent.putExtra("MatchChickedFilterDatas", (Serializable) ScheduleBasketballFragment.mChickedFilter);//Serializable 序列化传值（选中的联赛数据）
-//                getParentFragment().startActivityForResult(intent, REQUEST_FILTERCODE);
-//                    getActivity().startActivityForResult(intent, REQUEST_FILTERCODE);
                         Bundle bundle = new Bundle();
                         bundle.putInt("currentfragment", SCHEDULE_FRAGMENT);
                         intent.putExtras(bundle);
@@ -481,18 +317,11 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
                     L.d("mBasketballType shaicheng >>>>>>>>>>>", "mBasketballType == >" + SCHEDULE_FRAGMENT);
                 }
                 break;
-
-
-            case R.id.public_btn_infomation:
-                Intent intent = new Intent(getActivity(), BasketballInformationActivity.class);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
-                break;
         }
     }
 
     /**
-     * 判断四个Fragment切换显示或隐藏的状态
+     * 判断3个Fragment切换显示或隐藏的状态
      */
     private boolean isImmediateFragment = false;
     private boolean isImmediate = false;
@@ -500,8 +329,6 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
     private boolean isResult = false;
     private boolean isScheduleFragment = false;
     private boolean isSchedule = false;
-    private boolean isFocusFragment = false;
-    private boolean isFocus = false;
 
     /**
      * 初始化当前显示的Fragment
@@ -519,14 +346,11 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
             case 2:
                 isScheduleFragment = true;
                 break;
-            case 3:
-                isFocusFragment = true;
-                break;
         }
     }
 
     /**
-     * 判断四个Fragment切换显示或隐藏的状态
+     * 判断3个Fragment切换显示或隐藏的状态
      *
      * @param position
      */
@@ -536,23 +360,14 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
                 isImmediateFragment = true;
                 isResultFragment = false;
                 isScheduleFragment = false;
-                isFocusFragment = false;
                 break;
             case RESULT_FRAGMENT:
                 isResultFragment = true;
                 isImmediateFragment = false;
                 isScheduleFragment = false;
-                isFocusFragment = false;
                 break;
             case SCHEDULE_FRAGMENT:
                 isScheduleFragment = true;
-                isResultFragment = false;
-                isImmediateFragment = false;
-                isFocusFragment = false;
-                break;
-            case FOCUS_FRAGMENT:
-                isFocusFragment = true;
-                isScheduleFragment = false;
                 isResultFragment = false;
                 isImmediateFragment = false;
                 break;
@@ -567,11 +382,6 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
                 MobclickAgent.onPageEnd("Basketball_ScheduleFragment");
                 isSchedule = false;
                 L.d("xxx", "ScheduleFragment>>>隐藏");
-            }
-            if (isFocus) {
-                MobclickAgent.onPageEnd("Basketball_FocusFragment");
-                isFocus = false;
-                L.d("xxx", "FocusFragment>>>隐藏");
             }
             MobclickAgent.onPageStart("Basketball_ImmediateFragment");
             isImmediate = true;
@@ -588,11 +398,6 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
                 isSchedule = false;
                 L.d("xxx", "ScheduleFragment>>>隐藏");
             }
-            if (isFocus) {
-                MobclickAgent.onPageEnd("Basketball_FocusFragment");
-                isFocus = false;
-                L.d("xxx", "FocusFragment>>>隐藏");
-            }
             MobclickAgent.onPageStart("Basketball_ResultFragment");
             isResult = true;
             L.d("xxx", "ResultFragment>>>显示");
@@ -608,64 +413,32 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
                 isResult = false;
                 L.d("xxx", "ResultFragment>>>隐藏");
             }
-            if (isFocus) {
-                MobclickAgent.onPageEnd("Basketball_FocusFragment");
-                isFocus = false;
-                L.d("xxx", "FocusFragment>>>隐藏");
-            }
+
             MobclickAgent.onPageStart("Basketball_ScheduleFragment");
             isSchedule = true;
             L.d("xxx", "ScheduleFragment>>>显示");
-        }
-        if (isFocusFragment) {
-            if (isImmediate) {
-                MobclickAgent.onPageEnd("Basketball_ImmediateFragment");
-                isImmediate = false;
-                L.d("xxx", "ImmediateFragment>>>隐藏");
-            }
-            if (isResult) {
-                MobclickAgent.onPageEnd("Basketball_ResultFragment");
-                isResult = false;
-                L.d("xxx", "ResultFragment>>>隐藏");
-            }
-            if (isSchedule) {
-                MobclickAgent.onPageEnd("Basketball_ScheduleFragment");
-                isSchedule = false;
-                L.d("xxx", "ScheduleFragment>>>隐藏");
-            }
-            MobclickAgent.onPageStart("Basketball_FocusFragment");
-            isFocus = true;
-            L.d("xxx", "FocusFragment>>>显示");
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mSpinner.setSelection(1);// 设置Spinner默认选择Item
-        if (((FootballActivity) mContext).fragmentIndex == 5) {
-            if (isImmediateFragment) {
-                MobclickAgent.onPageStart("Basketball_ImmediateFragment");
-                isImmediate = true;
-                L.d("xxx", "ImmediateFragment>>>显示");
-            }
-            if (isResultFragment) {
-                MobclickAgent.onPageStart("Basketball_ResultFragment");
-                isResult = true;
-                L.d("xxx", "ResultFragment>>>显示");
-            }
-            if (isScheduleFragment) {
-                MobclickAgent.onPageStart("Basketball_ScheduleFragment");
-                isSchedule = true;
-                L.d("xxx", "ScheduleFragment>>>显示");
-            }
-            if (isFocusFragment) {
-                MobclickAgent.onPageStart("Basketball_FocusFragment");
-                isFocus = true;
-                L.d("xxx", "FocusFragment>>>显示");
-            }
+        if (isImmediateFragment) {
+            MobclickAgent.onPageStart("Basketball_ImmediateFragment");
+            isImmediate = true;
+            L.d("xxx", "ImmediateFragment>>>显示");
         }
-        if (getActivity() != null && ((FootballActivity) mContext).fragmentIndex == FootballActivity.BASKET_FRAGMENT) {
+        if (isResultFragment) {
+            MobclickAgent.onPageStart("Basketball_ResultFragment");
+            isResult = true;
+            L.d("xxx", "ResultFragment>>>显示");
+        }
+        if (isScheduleFragment) {
+            MobclickAgent.onPageStart("Basketball_ScheduleFragment");
+            isSchedule = true;
+            L.d("xxx", "ScheduleFragment>>>显示");
+        }
+        if (getActivity() != null) {
             connectWebSocket();
         }
     }
@@ -688,28 +461,92 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
             isSchedule = false;
             L.d("xxx", "ScheduleFragment>>>隐藏");
         }
-        if (isFocus) {
-            MobclickAgent.onPageEnd("Basketball_FocusFragment");
-            isFocus = false;
-            L.d("xxx", "FocusFragment>>>隐藏");
-        }
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (hidden) {
-//            L.d("xxx", ">>>篮球>>>>hidden");
-            onPause();
-        } else {
-//            L.d("xxx", ">>>篮球>>>>show");
-            onResume();
-        }
     }
 
     @Override
     public void onStart() {
         super.onStart();
+    }
+
+
+    private void initEvent() {
+        ll_match_select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iv_match.setImageResource(R.mipmap.nav_icon_up);
+                backgroundAlpha(getActivity(), 0.5f);
+                popWindow(v);
+            }
+        });
+
 
     }
+
+    private void popWindow(final View v) {
+        final View mView = View.inflate(mContext, R.layout.pop_select, null);
+        // 创建ArrayAdapter对象
+        BallChoiceArrayAdapter mAdapter = new BallChoiceArrayAdapter(mContext, mItems, BASKETBALL);
+
+        ListView listview = (ListView) mView.findViewById(R.id.match_type);
+        listview.setAdapter(mAdapter);
+
+
+        final PopupWindow popupWindow = new PopupWindow(mView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindow.setFocusable(true);
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+
+        popupWindow.showAsDropDown(d_header);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // tv_match_name.setText(((TextView) view.findViewById(R.id.tv)).getText().toString());
+                // iv_match.setImageResource(R.mipmap.nav_icon_cbb);
+                EventBus.getDefault().post(new ScoreSwitchFg(0, position));
+
+                popupWindow.dismiss();
+            }
+        });
+
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                iv_match.setImageResource(R.mipmap.nav_icon_cbb);
+                backgroundAlpha(getActivity(), 1f);
+            }
+        });
+    }
+
+    /**
+     * 设置添加屏幕的背景透明度
+     *
+     * @param bgAlpha
+     */
+    public void backgroundAlpha(Activity context, float bgAlpha) {
+        WindowManager.LayoutParams lp = context.getWindow().getAttributes();
+        lp.alpha = bgAlpha;
+        context.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        context.getWindow().setAttributes(lp);
+    }
+
+
+    @Override
+    protected void onTextResult(String text) {
+        ((ImmedBasketballFragment) fragments.get(0)).handleSocketMessage(text);
+    }
+
+    @Override
+    protected void onConnectFail() {
+
+    }
+
+    @Override
+    protected void onDisconnected() {
+
+    }
+
+    @Override
+    protected void onConnected() {
+
+    }
+
 }

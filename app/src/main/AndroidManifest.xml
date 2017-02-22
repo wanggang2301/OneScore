@@ -41,10 +41,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
 
-            <!--<intent-filter>
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".activity.FiltrateMatchConfigActivity"
@@ -73,9 +75,15 @@
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation" />
 
         <!-- 内地版的key-begin -->
-        <meta-data android:name="UMENG_APPKEY" android:value="5625a606e0f55aad6700244f" />
-        <meta-data android:name="UMENG_MESSAGE_SECRET" android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
-        <meta-data android:name="UMENG_CHANNEL" android:value="BETA" />
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5625a606e0f55aad6700244f" />
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="BETA" />
         <!-- 内地版的key-end -->
 
         <activity
@@ -150,9 +158,6 @@
             android:name=".activity.FootballDatabaseDetailsActivity"
             android:screenOrientation="portrait" />
         <!-- 首页Activity -->
-        <activity
-            android:name=".activity.HomePagerActivity"
-            android:screenOrientation="portrait" />
         <!-- 首页用户设置选项 -->
         <activity
             android:name=".activity.HomeUserOptionsActivity"
@@ -322,11 +327,10 @@
         <activity
             android:name=".activity.MultiScreenViewingListActivity"
             android:screenOrientation="portrait" />
-
         <activity android:name=".activity.MultiScreenIntroduceActivity" />
         <activity android:name=".activity.MultiScreenViewActivity" />
         <activity android:name=".activity.MyFocusActivity" />
-        <!--袁天罡六合图片查看-->
+        <!-- 袁天罡六合图片查看 -->
         <activity
             android:name=".activity.LotteryHKInfoImageActivity"
             android:screenOrientation="portrait" />
@@ -334,7 +338,7 @@
             android:name=".activity.InvitedActivity"
             android:screenOrientation="portrait" />
 
-        <!--覆盖安装监听-->
+        <!-- 覆盖安装监听 -->
         <receiver
             android:name=".receiver.AppInstallReceiver"
             android:label="@string/app_name">
@@ -355,6 +359,16 @@
         <!--snooker test-->
         <activity android:name="com.hhly.mlottery.activity.SnookerTestAct"
             android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".activity.IndexActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SnookerPlayerInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SnookerInformationSerachActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

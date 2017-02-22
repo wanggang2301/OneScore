@@ -1071,7 +1071,6 @@
     <string name="please_login_first">请先登录</string>
 
 
-
     <!--模糊搜索-->
     <string name="fuzzy_search">请输入联赛名</string>
     <string name="not_find_search">对不起,找不到相关信息</string>
@@ -1258,7 +1257,6 @@
     <string name="avatar_settings">头像</string>
     <string name="photograph">拍照</string>
     <string name="picture_resource_does_not_exist">图片资源不存在</string>
-
 
 
     <string name="welcome_chart_room">欢迎进入聊天室!</string>
@@ -1524,11 +1522,6 @@
     <string name="please_invited">邀请码</string>
 
 
-
-
-
-
-
     <string name="multi_header_name">多屏观看</string>
     <string name="multi_add">添加</string>
     <string name="multi_dialog_text">您确认移除这场比赛吗?</string>
@@ -1567,4 +1560,13 @@
     <string name="home_lottery_info_tm_bo_b">蓝</string>
     <string name="home_lottery_info_image_desc">本站所有数据、资料仅供您参考，为避免遭受经济损失任何人不得用于非法用途，否则责任自负</string>
 
+    <string name="football_txt">足球</string>
+    <string name="basketball_txt">篮球</string>
+    <string name="snooker_txt">斯洛克</string>
+    <string name="tennisball_txt">网球</string>
+    <string name="football_ziliaoku">资料库</string>
+
+    <string name="sn_rank_name">姓名</string>
+    <string name="sn_rank_zjf">总积分</string>
+    <string name="sn_rank_zjj">总奖金</string>
 </resources>

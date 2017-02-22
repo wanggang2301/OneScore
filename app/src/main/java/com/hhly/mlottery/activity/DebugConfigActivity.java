@@ -5,8 +5,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -99,7 +103,6 @@ public class DebugConfigActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-
                 EditText ed = (EditText) findViewById(R.id.et_input);
                 String str = ed.getText().toString();
                 if (TextUtils.isEmpty(str)) {
@@ -112,18 +115,9 @@ public class DebugConfigActivity extends BaseActivity {
                 PreferenceUtil.commitString("DIY_INPUT", str);
 
                 System.exit(0);
+
             }
         });
     }
 
-/*
-    private void enterMultiScreenView() {
-        if (PreferenceUtil.getBoolean("introduce", true)) {
-            startActivity(new Intent(DebugConfigActivity.this, MultiScreenIntroduceActivity.class));
-
-            PreferenceUtil.commitBoolean("introduce", false);
-        } else {
-            startActivity(new Intent(DebugConfigActivity.this, MultiScreenViewingListActivity.class));
-        }
-    }*/
 }

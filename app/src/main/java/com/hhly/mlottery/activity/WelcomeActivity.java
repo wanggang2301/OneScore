@@ -6,7 +6,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
@@ -16,7 +15,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -179,7 +177,7 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
         //如果是已经启动了 是“YES”
         //如果本地保存的versionname等于应用的版本号（例：1.0.4）
         if (PreferenceUtil.getString("isFirst", "").equals("YES") && PreferenceUtil.getString("versionName", "").equals(mPackageInfo.versionName)) {
-            startActivity(new Intent(this, HomePagerActivity.class));
+            startActivity(new Intent(this, IndexActivity.class));
             this.finish();
         }
 

@@ -1557,5 +1557,12 @@
     <string name="copy_text3">参与一比分活动，赢取精彩好礼！</string>
     <string name="please_invited_number">请输入邀请码</string>
     <string name="please_invited">邀请码</string>
-
+    <string name="football_txt">足球</string>
+    <string name="basketball_txt">篮球</string>
+    <string name="snooker_txt">斯洛克</string>
+    <string name="tennisball_txt">网球</string>
+    <string name="football_ziliaoku">资料库</string>
+    <string name="sn_rank_name">姓名</string>
+    <string name="sn_rank_zjf">总积分</string>
+    <string name="sn_rank_zjj">总奖金</string>
 </resources>

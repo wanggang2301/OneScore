@@ -18,13 +18,10 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.PreferenceUtil;
-import com.hhly.mlottery.widget.MyScrollLayout;
 import com.hhly.mlottery.widget.OnViewChangeListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.R.id.list;
 
 /**
  * @author Tenney
@@ -37,7 +34,7 @@ public class WelcomeViewActivity extends BaseActivity implements OnViewChangeLis
     //private MyScrollLayout mScrollLayout;
     private Button startBtn;
     //开机引导页的几张动画
-  //  private RelativeLayout wel_layout_img1, wel_layout_img2, wel_layout_img3;
+    //  private RelativeLayout wel_layout_img1, wel_layout_img2, wel_layout_img3;
     private RelativeLayout wel_layout_img3;
     private ViewPager welcome_viewpager;
     private int[] imageView;//引导图集合
@@ -69,7 +66,7 @@ public class WelcomeViewActivity extends BaseActivity implements OnViewChangeLis
         welcome_viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-               // monitorPoint(position);
+                // monitorPoint(position);
                 // 3.当滑动到最后一个添加按钮点击进入，
                 if (position == imageView.length - 1) {
                     wel_layout_img3.setVisibility(View.VISIBLE);
@@ -92,7 +89,7 @@ public class WelcomeViewActivity extends BaseActivity implements OnViewChangeLis
      * 添加图片到view
      */
     private void addView() {
-       List<View> list= new ArrayList<View>();
+        List<View> list = new ArrayList<View>();
         // 将imageview添加到view
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewPager.LayoutParams.MATCH_PARENT, ViewPager.LayoutParams.MATCH_PARENT);
@@ -100,7 +97,7 @@ public class WelcomeViewActivity extends BaseActivity implements OnViewChangeLis
             ImageView iv = new ImageView(this);
             iv.setLayoutParams(params);
             iv.setScaleType(ImageView.ScaleType.FIT_XY);
-            ImageLoader.load(mContext,imageView[i]).into(iv);
+            ImageLoader.load(mContext, imageView[i]).into(iv);
 //            iv.setImageResource(imageView[i]);
             list.add(iv);
         }
@@ -121,42 +118,42 @@ public class WelcomeViewActivity extends BaseActivity implements OnViewChangeLis
             wel_layout_img2.setBackgroundResource(R.mipmap.welcome2);
             wel_layout_img3.setBackgroundResource(R.mipmap.welcome3);
         }*/
-        if (MyApp.isLanguage.equals("rTW")){
-            imageView = new int[]{ R.mipmap.welcome1, R.mipmap.welcome2,
+        if (MyApp.isLanguage.equals("rTW")) {
+            imageView = new int[]{R.mipmap.welcome1, R.mipmap.welcome2,
                     R.mipmap.welcome3};
-        }else if (MyApp.isLanguage.equals("rCN")) {
-             imageView = new int[]{ R.mipmap.welcome1,R.mipmap.welcome2,
+        } else if (MyApp.isLanguage.equals("rCN")) {
+            imageView = new int[]{R.mipmap.welcome1, R.mipmap.welcome2,
                     R.mipmap.welcome3};
         }
     }
 
 
-	private View.OnClickListener onClick = new View.OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			switch (v.getId()) {
-			case R.id.startBtn:
-				//第一次启动保存为yes
-				PreferenceUtil.commitString("isFirst", "YES");
-				//第一次启动的时候保存版本号
-				try {
-					// 得到应用程序的包信息对象
-                    PackageManager packageManager = getPackageManager();
-                    PackageInfo packageInfo = packageManager.getPackageInfo(getApplicationContext().getPackageName(), 0);
-					PreferenceUtil.commitString("versionName", packageInfo.versionName);
-				} catch (PackageManager.NameNotFoundException e) {
-					e.printStackTrace();
-					// 此异常不会发生
-				}
+    private View.OnClickListener onClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.startBtn:
+                    //第一次启动保存为yes
+                    PreferenceUtil.commitString("isFirst", "YES");
+                    //第一次启动的时候保存版本号
+                    try {
+                        // 得到应用程序的包信息对象
+                        PackageManager packageManager = getPackageManager();
+                        PackageInfo packageInfo = packageManager.getPackageInfo(getApplicationContext().getPackageName(), 0);
+                        PreferenceUtil.commitString("versionName", packageInfo.versionName);
+                    } catch (PackageManager.NameNotFoundException e) {
+                        e.printStackTrace();
+                        // 此异常不会发生
+                    }
 
-				startActivity(new Intent(WelcomeViewActivity.this, HomePagerActivity.class));
-				finish();
-				break;
-			default:
-				break;
-			}
-		}
-	};
+                    startActivity(new Intent(WelcomeViewActivity.this, IndexActivity.class));
+                    finish();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     /**
      * 屏蔽返回键的方法
@@ -186,6 +183,7 @@ public class WelcomeViewActivity extends BaseActivity implements OnViewChangeLis
         // TODO Auto-generated method stub
 
     }
+
     public class GuideViewAdapter extends PagerAdapter {
 
         private List<View> list;

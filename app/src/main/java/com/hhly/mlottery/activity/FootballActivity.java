@@ -28,7 +28,7 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 /****
- * @author wangg
+ * @author wanggANG
  * @name:FootballActivity
  * @describe:足球（比分、资讯、数据、视频、指数）
  */
@@ -81,7 +81,7 @@ public class FootballActivity extends BaseActivity {
         fragments.add(new InformationFragment());
         fragments.add(new NewVideoFragment());
         fragments.add(CPIFragment.newInstance());
-//        fragments.add(new BasketScoresFragment());
+      // fragments.add(new BasketScoresFragment());
     }
 
     private void initData() {
