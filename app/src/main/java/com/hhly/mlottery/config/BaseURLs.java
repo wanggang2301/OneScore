@@ -1011,6 +1011,15 @@ public class BaseURLs {
     // 邀请码
     public final static String INVITED_RUL = URL_API_HOST + "androidUserCenter.getInviteCode.do";
 
+    // 网球比分即时
+    public final static String TENNIS_IMMEDIATE_URL = URL_API_HOST + "tennisMatch.findLiveMatch.do";
+    // 网球比分赛果列表
+    public final static String TENNIS_RESULT_URL = URL_API_HOST + "tennisMatch.findFinishedMatch.do";
+    // 网球比分赛程列表
+    public final static String TENNIS_SCHEDULE_URL = URL_API_HOST + "tennisMatch.findScheduleMatch.do";
+    // 网球比分关注列表
+    public final static String TENNIS_FOCUS_URL = URL_API_HOST + "tennisMatch.connerns.do";
+
 
     /*****************************************************************************************************************
      *下面URL为HTML页面

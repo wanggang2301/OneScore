@@ -80,6 +80,9 @@ public class AppConstants {
     public static final String LOTTERY_HK_RED_KEY = "lottery_hk_red_key";// 香港开奖首页菜单
     public static final String RED_KEY_START = "red_key_start";
 
+    // 网球关注
+    public static final String TENNIS_BALL_FOCUS = "tennisBallFocus";
+
     // public static String i18n = "en";// 测试英文语言环境
 
     // 1至46个数字

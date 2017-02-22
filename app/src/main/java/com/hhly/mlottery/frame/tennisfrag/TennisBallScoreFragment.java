@@ -21,11 +21,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
-import com.hhly.mlottery.base.BaseWebSocketFragment;
-import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.frame.footframe.RollBallFragment;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 
 import java.util.ArrayList;
@@ -38,7 +34,7 @@ import de.greenrobot.event.EventBus;
  * Created by 107_tangrr on 2017/2/20 0020.
  */
 
-public class TennisBallScoreFragment extends BaseWebSocketFragment implements View.OnClickListener {
+public class TennisBallScoreFragment extends Fragment implements View.OnClickListener {
 
     private static final int FOOTBALL = 0;
     private static final int BASKETBALL = 1;
@@ -67,8 +63,6 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic("USER.topic.tennis.score");
         super.onCreate(savedInstanceState);
     }
 
@@ -122,16 +116,44 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
         titles.add(getString(R.string.foot_details_focus));
 
         fragments = new ArrayList<>();
-        fragments.add(TennisBallTabFragment.newInstance(TENNIS_IMMEDIATE));// 即时
+        fragments.add(TennisBallSocketFragment.newInstance(TENNIS_IMMEDIATE));// 即时
         fragments.add(TennisBallTabFragment.newInstance(TENNIS_RESULT));// 赛果
         fragments.add(TennisBallTabFragment.newInstance(TENNIS_SCHEDULE));// 赛程
-        fragments.add(TennisBallTabFragment.newInstance(TENNIS_FOCUS));// 关注
+        fragments.add(TennisBallSocketFragment.newInstance(TENNIS_FOCUS));// 关注
 
         pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
         mViewPager.setAdapter(pureViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         mViewPager.setOffscreenPageLimit(titles.size());
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position){
+                    case TENNIS_IMMEDIATE:
+                    case TENNIS_FOCUS:
+                        // 重新请求数据
+                        ((TennisBallSocketFragment)fragments.get(position)).refreshData();
+                        break;
+                    case TENNIS_RESULT:
+                    case TENNIS_SCHEDULE:
+                        // 刷新页面
+                        ((TennisBallTabFragment)fragments.get(position)).refreshData();
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
 
@@ -179,27 +201,6 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
 
     @Override
     public void onClick(View view) {
-
-    }
-
-    @Override
-    protected void onTextResult(String text) {
-        // 收到推送消息
-        L.d("xxx", "网球收到推送：" + text);
-    }
-
-    @Override
-    protected void onConnectFail() {
-
-    }
-
-    @Override
-    protected void onDisconnected() {
-
-    }
-
-    @Override
-    protected void onConnected() {
 
     }
 }
