@@ -331,30 +331,45 @@ public class BasketInformationFragment extends Fragment implements ExactSwipeRef
 
             @Override
             public void onResponse(LeagueAllBean json) {
+                L.d("wangg", json + "");
+                if (json != null) {
 
-                if (json.getSpecificLeague() != null && json.getSpecificLeague().size() > 0) {
-                    hotLeagues = json.getSpecificLeague();
+                    boolean speci = false;
+                    boolean nation = false;
 
-                    int size = hotLeagues.size() % ROWNUM == 0 ? 0 : ROWNUM - hotLeagues.size() % ROWNUM;
-                    for (int i = 0; i < size; i++) {
-                        hotLeagues.add(new LeagueBean("", "", ""));
-                    }
-                }
+                    if (json.getSpecificLeague() != null && json.getSpecificLeague().size() > 0) {
+                        hotLeagues = json.getSpecificLeague();
 
-                if (json.getNationalLeague() != null && json.getNationalLeague().size() > 0) {
-                    interLeagues = new ArrayList<>();
-                    for (int t = 0; t < Math.ceil((double) json.getNationalLeague().size() / ROWNUM); t++) {
-                        List<NationalLeague> list = new ArrayList<>();
-                        for (int j = 0; j < ROWNUM; j++) {
-                            if ((j + ROWNUM * t) < json.getNationalLeague().size()) {
-                                list.add(json.getNationalLeague().get(j + ROWNUM * t));
-                            }
+                        int size = hotLeagues.size() % ROWNUM == 0 ? 0 : ROWNUM - hotLeagues.size() % ROWNUM;
+                        for (int i = 0; i < size; i++) {
+                            hotLeagues.add(new LeagueBean("", "", ""));
                         }
 
-                        interLeagues.add(list);
+                        speci = true;
+                    }
+
+                    if (json.getNationalLeague() != null && json.getNationalLeague().size() > 0) {
+                        interLeagues = new ArrayList<>();
+                        for (int t = 0; t < Math.ceil((double) json.getNationalLeague().size() / ROWNUM); t++) {
+                            List<NationalLeague> list = new ArrayList<>();
+                            for (int j = 0; j < ROWNUM; j++) {
+                                if ((j + ROWNUM * t) < json.getNationalLeague().size()) {
+                                    list.add(json.getNationalLeague().get(j + ROWNUM * t));
+                                }
+                            }
+
+                            interLeagues.add(list);
+                        }
+
+                        nation = true;
+                    }
+
+                    if (speci || nation) {
+                        initViewData();
                     }
                 }
-                initViewData();
+
+
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
