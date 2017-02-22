@@ -1,6 +1,5 @@
 package com.hhly.mlottery.frame.snookerfragment;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,33 +11,25 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.adapter.ScheduleDateAdapter;
 import com.hhly.mlottery.adapter.snooker.SnookerListAdapter;
 import com.hhly.mlottery.bean.scheduleBean.ScheduleDate;
-import com.hhly.mlottery.bean.snookerbean.SnookerMatchOddsBean;
 import com.hhly.mlottery.bean.snookerbean.SnookerMatchScoreBean;
-import com.hhly.mlottery.bean.snookerbean.SnookerMatchesBean;
-import com.hhly.mlottery.bean.snookerbean.SnookerOddsSocketBean;
 import com.hhly.mlottery.bean.snookerbean.SnookerScoreSocketBean;
 import com.hhly.mlottery.bean.snookerbean.snookerschedulebean.SnookerEventsBean;
 import com.hhly.mlottery.bean.snookerbean.snookerschedulebean.SnookerOddsMatchBean;
 import com.hhly.mlottery.bean.snookerbean.snookerschedulebean.SnookerScheuleBean;
 import com.hhly.mlottery.bean.snookerbean.snookerschedulebean.SnookerSocketOddsBean;
-import com.hhly.mlottery.callback.DateOnClickListener;
 import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.ResultDateUtil;
 import com.hhly.mlottery.util.SnookerSettingEvent;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.LoadMoreRecyclerView;
@@ -48,9 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 
@@ -59,7 +48,7 @@ import static android.content.ContentValues.TAG;
 /**
  * Created by yixq on 2017/2/16.
  * mail：yixq@13322.com
- * describe:
+ * describe: snooker 即时列表
  */
 
 public class SnookerImmediateFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener{
@@ -253,7 +242,7 @@ public class SnookerImmediateFragment extends Fragment implements SwipeRefreshLa
             }
         }, 1000);
 
-        ((SnookerFragment)getParentFragment()).reconnectWebSocket();
+        ((SnookerListScoreFragment)getParentFragment()).reconnectWebSocket();
     }
 
     private List<ScheduleDate> mDateList; // 日期
@@ -279,7 +268,7 @@ public class SnookerImmediateFragment extends Fragment implements SwipeRefreshLa
     /**
      * 推送
      */
-    public void onEventMainThread(SnookerFragment.SnookerScoresWebSocketEntity eventData){
+    public void onEventMainThread(SnookerListScoreFragment.SnookerScoresWebSocketEntity eventData){
         if (mSnookerListAdapter == null) {
             return;
         }

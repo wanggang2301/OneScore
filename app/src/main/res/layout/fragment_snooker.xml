@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <include layout="@layout/layout_header" />
+        <include android:id="@+id/d_heasder"
+            layout="@layout/score_layout_header" />
 
 
         <android.support.design.widget.TabLayout

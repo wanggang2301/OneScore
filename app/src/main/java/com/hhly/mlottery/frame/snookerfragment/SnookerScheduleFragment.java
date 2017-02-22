@@ -49,7 +49,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by yixq on 2017/2/16.
  * mail：yixq@13322.com
- * describe:snooker 赛果fragment
+ * describe:snooker 赛程列表
  */
 
 public class SnookerScheduleFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {

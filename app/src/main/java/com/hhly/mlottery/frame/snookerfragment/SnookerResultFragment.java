@@ -68,7 +68,7 @@ import rx.functions.Func1;
 /**
  * Created by yixq on 2017/2/16.
  * mail：yixq@13322.com
- * describe:
+ * describe: snooker 赛果列表
  */
 
 public class SnookerResultFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener{

@@ -356,10 +356,6 @@
         <!--snooker 设置页-->
         <activity android:name=".activity.SnookerSettingActivity"
             android:screenOrientation="portrait"/>
-        <!--snooker test-->
-        <activity android:name="com.hhly.mlottery.activity.SnookerTestAct"
-            android:screenOrientation="portrait"/>
-
         <activity
             android:name=".activity.IndexActivity"
             android:screenOrientation="portrait" />

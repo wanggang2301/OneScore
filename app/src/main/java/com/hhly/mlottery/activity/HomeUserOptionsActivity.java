@@ -190,15 +190,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         }else {
             invited_red_dot_view.setVisibility(View.GONE);
         }
-
-        RelativeLayout snooker = (RelativeLayout)findViewById(R.id.rl_snooker);
-        snooker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeUserOptionsActivity.this , SnookerTestAct.class));
-                Toast.makeText(HomeUserOptionsActivity.this, "snooker页", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 
