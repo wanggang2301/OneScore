@@ -968,6 +968,14 @@ public class BaseURLs {
     public final static String SNOOKER_LIST_LOADMORE_URL = URL_API_HOST + "snookerMatch.getSnookerLeagues.do"; // http://m.1332255.com:81/mlottery/core/snookerMatch.getSnookerLeagues.do?dateLeaguesId=2016-11-20_125358,2016-11-19_125358
 
     /**
+     * 斯洛克 新版
+     */
+    public final static String SNOOKER_IMMEDIATE_URL = URL_API_HOST + "snookerMatch.getFirstSnookerMatch.do";//http://192.168.31.12:8080/mlottery/core/snookerMatch.getFirstSnookerMatch.do
+    public final static String SNOOKER_RESULT_URL = URL_API_HOST + "snookerMatch.getSnookerResults.do";//"http://192.168.31.12:8080/mlottery/core/snookerMatch.getSnookerResults.do"
+    public final static String SNOOKER_SCHEDULE_URL = URL_API_HOST + "snookerMatch.getSnookerEvents.do";//"http://192.168.31.12:8080/mlottery/core/snookerMatch.getSnookerEvents.do"
+
+
+    /**
      * 我的定制
      */
     //我的定制页

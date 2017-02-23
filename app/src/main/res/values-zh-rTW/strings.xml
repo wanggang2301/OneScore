@@ -1432,6 +1432,9 @@
     <string name="snooker_state_zong">總</string>
     <string name="snooker_state_single_double">單雙</string>
 
+    <string name="snooker_current_nodata">當前日期暫無比賽</string>
+    <string name="snooker_loading">數據加載中...</string>
+
     <!--我的定制-->
     <string name="custom_mine_cus">我的訂制</string>
     <string name="custom_list_cus">訂制列表</string>
