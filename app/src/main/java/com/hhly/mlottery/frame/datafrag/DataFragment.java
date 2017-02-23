@@ -105,6 +105,9 @@ public class DataFragment extends Fragment implements View.OnClickListener {
         } else if (matchChoiceType == BASKETBALL) {
             tv_match_name.setText(getResources().getString(R.string.basketball_txt));
             switchFragment(BASKETBALL);
+        } else if (matchChoiceType == SNOOKER) {
+            tv_match_name.setText(getResources().getString(R.string.snooker_txt));
+            switchFragment(SNOOKER);
         } else {
             tv_match_name.setText(getResources().getString(R.string.football_txt));
             switchFragment(FOOTBALL);
@@ -211,6 +214,9 @@ public class DataFragment extends Fragment implements View.OnClickListener {
                 } else if (matchChoiceType == BASKETBALL) {
                     tv_match_name.setText(getResources().getString(R.string.basketball_txt));
                     switchFragment(BASKETBALL);
+                } else if (matchChoiceType == SNOOKER) {
+                    tv_match_name.setText(getResources().getString(R.string.snooker_txt));
+                    switchFragment(SNOOKER);
                 } else {
                     tv_match_name.setText(getResources().getString(R.string.football_txt));
                     switchFragment(FOOTBALL);
