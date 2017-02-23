@@ -152,7 +152,7 @@ public class SnookerResultFragment extends Fragment implements SwipeRefreshLayou
         mCurrentNoData = (TextView) mView.findViewById(R.id.snooker_current_nodata);
 
         mRefresh = (ExactSwipeRefreshLayout) mView.findViewById(R.id.snooker_refresh_layout);
-        mRefresh.setColorSchemeResources(R.color.tabhost);
+        mRefresh.setColorSchemeResources(R.color.bg_header);
         mRefresh.setOnRefreshListener(this);
         mRefresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getActivity(), StaticValues.REFRASH_OFFSET_END));
     }
