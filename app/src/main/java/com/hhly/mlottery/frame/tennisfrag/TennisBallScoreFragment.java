@@ -53,7 +53,6 @@ public class TennisBallScoreFragment extends Fragment implements View.OnClickLis
     private PureViewPagerAdapter pureViewPagerAdapter;
     private List<Fragment> fragments;
     public static List<String> titles;
-    private int currentFragmentId = 0;
 
     private LinearLayout d_header;
     private LinearLayout ll_match_select;

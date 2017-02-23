@@ -8,11 +8,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.tennisball.MatchDataBean;
+import com.hhly.mlottery.callback.TennisFocusCallBack;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -23,6 +25,11 @@ import java.util.List;
 public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
 
     private int mType;
+    private TennisFocusCallBack tennisFocusCallBack;
+
+    public void setTennisFocusCallBack(TennisFocusCallBack callBack){
+        this.tennisFocusCallBack = callBack;
+    }
 
     public TennisBallScoreAdapter(int layoutResId, List<MatchDataBean> data, int type) {
         super(layoutResId, data);
@@ -136,13 +143,12 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
         final ImageView mView = baseViewHolder.getView(R.id.iv_match_focus);
         // 设置用户已关注的赛事
         if (FocusUtils.isTennisFocusId(matchDataBean.getMatchId())) {
-            mView.setImageResource(R.mipmap.tennis_focus_select);
             matchDataBean.setFocus(true);
+            mView.setImageResource(R.mipmap.tennis_focus_select);
         } else {
-            settingFocusStart(matchDataBean.getMatchStatus(), matchDataBean.isFocus(), mView);
             matchDataBean.setFocus(false);
+            settingFocusStart(matchDataBean.getMatchStatus(), matchDataBean.isFocus(), mView);
         }
-        L.d("xxxxx","notiDataSetChanger了！！");
         mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -155,14 +161,19 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
                     matchDataBean.setFocus(false);
 
                     if (mType == 3) {
-                        for (MatchDataBean dataBean : mData) {
+                        Iterator iterator = mData.iterator();
+                        while(iterator.hasNext()){
+                            MatchDataBean dataBean = (MatchDataBean) iterator.next();
                             if (dataBean.getMatchId().equals(matchDataBean.getMatchId())) {
-                                mData.remove(dataBean);
+                                iterator.remove();
                                 notifyDataSetChanged();
+                                if(mData.size() == 0 && tennisFocusCallBack != null){
+                                    tennisFocusCallBack.notifyDataRefresh();
+                                }
+                                break;
                             }
                         }
                     }
-
                 }
 
                 settingFocusStart(matchDataBean.getMatchStatus(), matchDataBean.isFocus(), mView);

@@ -93,7 +93,7 @@ public class MultipleListFootballAdapter extends RecyclerView.Adapter<RecyclerVi
 //        //将创建的View注册点击事件
 //        view.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void onClick(View v) {
+//            public void notifyDataSetChanged(View v) {
 //                if (mOnItemClickListener != null) {
 //                    mOnItemClickListener.onItemClick(v, (String) v.getTag());
 //                }

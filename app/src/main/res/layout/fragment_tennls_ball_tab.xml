@@ -1,50 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.hhly.mlottery.widget.ExactSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tennis_swipe_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
-        android:id="@+id/tennis_swipe_refresh"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/whitesmoke"
+        android:orientation="vertical">
 
+        <!--添加中间日期显示-->
         <LinearLayout
+            android:id="@+id/tennis_date_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/whitesmoke"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
-            <!--添加中间日期显示-->
-            <LinearLayout
-                android:id="@+id/tennis_date_content"
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="10dp">
+                android:src="@mipmap/tennis_score_date" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/tennis_score_date" />
-
-                <TextView
-                    android:id="@+id/tv_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="@dimen/item_football_time"
-                    tools:text="2017-2-21 周二" />
-
-            </LinearLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/tennis_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textSize="@dimen/item_football_time"
+                tools:text="2017-2-21 周二" />
 
         </LinearLayout>
-    </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
-</FrameLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/tennis_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+</com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
