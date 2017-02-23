@@ -142,7 +142,6 @@ public class SnookerInformationSerachActivity extends BaseActivity implements Vi
                                                 showpop(worldRankingListBeen, et_keyword.getText().toString());
                                             }
                                         }
-
                                     }
                                 });
                         return charSequence;
