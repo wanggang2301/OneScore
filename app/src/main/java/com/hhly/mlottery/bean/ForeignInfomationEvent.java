@@ -1,4 +1,4 @@
-package com.hhly.mlottery.callback;
+package com.hhly.mlottery.bean;
 
 /**
  * @author: Wangg
