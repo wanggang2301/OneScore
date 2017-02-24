@@ -21,7 +21,10 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
+import com.hhly.mlottery.base.BaseWebSocketFragment;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 
 import java.util.ArrayList;
@@ -34,7 +37,7 @@ import de.greenrobot.event.EventBus;
  * Created by 107_tangrr on 2017/2/20 0020.
  */
 
-public class TennisBallScoreFragment extends Fragment implements View.OnClickListener {
+public class TennisBallScoreFragment extends BaseWebSocketFragment {
 
     private static final int FOOTBALL = 0;
     private static final int BASKETBALL = 1;
@@ -62,6 +65,11 @@ public class TennisBallScoreFragment extends Fragment implements View.OnClickLis
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+//        setWebSocketUri(BaseURLs.WS_SERVICE);
+        setWebSocketUri("ws://192.168.33.7:61614");
+        setTopic("USER.topic.tennis.score");
+        setServerName("admin");
+        setServerPassword("admin");
         super.onCreate(savedInstanceState);
     }
 
@@ -134,16 +142,16 @@ public class TennisBallScoreFragment extends Fragment implements View.OnClickLis
 
             @Override
             public void onPageSelected(int position) {
-                switch (position){
+                switch (position) {
                     case TENNIS_IMMEDIATE:
                     case TENNIS_FOCUS:
                         // 重新请求数据
-                        ((TennisBallSocketFragment)fragments.get(position)).refreshData();
+                        ((TennisBallSocketFragment) fragments.get(position)).refreshData();
                         break;
                     case TENNIS_RESULT:
                     case TENNIS_SCHEDULE:
                         // 刷新页面
-                        ((TennisBallTabFragment)fragments.get(position)).refreshData();
+                        ((TennisBallTabFragment) fragments.get(position)).refreshData();
                         break;
                 }
             }
@@ -197,9 +205,25 @@ public class TennisBallScoreFragment extends Fragment implements View.OnClickLis
         context.getWindow().setAttributes(lp);
     }
 
+    @Override
+    protected void onTextResult(String text) {
+        L.d("xxxxx","网球推送消息： " + text);
+        ((TennisBallSocketFragment) fragments.get(TENNIS_IMMEDIATE)).socketDataChanged(text);
+        ((TennisBallSocketFragment) fragments.get(TENNIS_FOCUS)).socketDataChanged(text);
+    }
 
     @Override
-    public void onClick(View view) {
+    protected void onConnectFail() {
+
+    }
+
+    @Override
+    protected void onDisconnected() {
+
+    }
+
+    @Override
+    protected void onConnected() {
 
     }
 }

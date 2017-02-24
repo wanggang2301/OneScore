@@ -148,14 +148,17 @@ public class TennisBallTabFragment extends Fragment implements SwipeRefreshLayou
         mNoDataTextView.setVisibility(status == NOTO_DATA ? View.VISIBLE : View.GONE);
         swipeRefreshLayout.setRefreshing(status == LOADING);
         mErrorLayout.setVisibility(status == ERROR ? View.VISIBLE : View.GONE);
-        tennis_date_content.setVisibility(TextUtils.isEmpty(currentData) || status == ERROR ? View.GONE : View.VISIBLE);
+        tennis_date_content.setVisibility(status == ERROR ? View.GONE : View.VISIBLE);
     }
 
     private void initView() {
+        mEmptyView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
         tennis_date_content = (LinearLayout) mView.findViewById(R.id.tennis_date_content);
         tennis_recycler = (RecyclerView) mView.findViewById(R.id.tennis_recycler);
         tv_date = (TextView) mView.findViewById(R.id.tv_date);
         tv_date.setOnClickListener(this);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(OrientationHelper.VERTICAL);
         tennis_recycler.setLayoutManager(layoutManager);
@@ -170,8 +173,6 @@ public class TennisBallTabFragment extends Fragment implements SwipeRefreshLayou
     }
 
     private void initEmptyView() {
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-        mEmptyView.setLayoutParams(params);
         mErrorLayout = mEmptyView.findViewById(R.id.error_layout);
         mRefreshTextView = (TextView) mEmptyView.findViewById(R.id.reloading_txt);
         mNoDataTextView = (TextView) mEmptyView.findViewById(R.id.no_data_txt);
