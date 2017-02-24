@@ -1434,9 +1434,9 @@
 
 
 
-    <!--斯洛克-->
-    <string name="snooker_title">斯洛克</string>
-    <string name="snooker_setting_title">斯洛克设置</string>
+    <!--斯诺克-->
+    <string name="snooker_title">斯诺克</string>
+    <string name="snooker_setting_title">斯诺克设置</string>
     <string name="snooker_setting_alet">亚盘</string>
     <string name="snooker_setting_eur">欧赔</string>
     <string name="snooker_setting_asize">大小盘</string>
@@ -1559,7 +1559,7 @@
     <string name="please_invited">邀请码</string>
     <string name="football_txt">足球</string>
     <string name="basketball_txt">篮球</string>
-    <string name="snooker_txt">斯洛克</string>
+    <string name="snooker_txt">斯诺克</string>
     <string name="tennisball_txt">网球</string>
     <string name="football_ziliaoku">资料库</string>
     <string name="sn_rank_name">姓名</string>

@@ -658,6 +658,7 @@
     <color name="snooker_score_textcolor">#FFFFFF</color>
     <color name="snooker_odds_textcolor">#666666</color>
     <color name="snooker">#4a4a4a</color>
+    <color name="snooker_status">#0185E1</color>
 
 
     <color name="product_advice">#ff5c0b</color>

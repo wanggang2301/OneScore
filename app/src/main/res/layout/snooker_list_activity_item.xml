@@ -80,8 +80,9 @@
                     android:layout_height="0dp"
                     android:layout_weight="2"
                     android:gravity="center"
+                    android:lines="2"
+                    android:ellipsize="end"
                     android:textColor="@color/res_name_color"
-                    android:singleLine="true"
                     android:textSize="@dimen/text_size_12"
                     android:text="---"/>
             </LinearLayout>
@@ -102,6 +103,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:textSize="@dimen/text_size_12"
                         android:textColor="@color/snooker_fulltime_textcolor"
                         android:text="--"/>
                     <LinearLayout
@@ -209,7 +211,7 @@
                                     android:id="@+id/snooker_ptScore"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="999"
+                                    android:text="--"
                                     android:textSize="@dimen/text_size_10"
                                     />
                             </LinearLayout>
@@ -270,8 +272,9 @@
                     android:layout_height="0dp"
                     android:layout_weight="2"
                     android:gravity="center"
+                    android:lines="2"
+                    android:ellipsize="end"
                     android:textColor="@color/res_name_color"
-                    android:singleLine="true"
                     android:text="--"
                     android:textSize="@dimen/text_size_12"/>
             </LinearLayout>

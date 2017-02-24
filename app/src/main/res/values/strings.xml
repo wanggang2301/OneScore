@@ -1434,9 +1434,9 @@
     <string name="video_high_light">精彩瞬间</string>
     <string name="video_high_notice">精彩瞬间来啦</string>
 
-    <!--斯洛克-->
-    <string name="snooker_title">斯洛克</string>
-    <string name="snooker_setting_title">斯洛克设置</string>
+    <!--斯诺克-->
+    <string name="snooker_title">斯诺克</string>
+    <string name="snooker_setting_title">斯诺克设置</string>
     <string name="snooker_setting_alet">亚盘</string>
     <string name="snooker_setting_eur">欧赔</string>
     <string name="snooker_setting_asize">大小盘</string>
@@ -1562,7 +1562,7 @@
 
     <string name="football_txt">足球</string>
     <string name="basketball_txt">篮球</string>
-    <string name="snooker_txt">斯洛克</string>
+    <string name="snooker_txt">斯诺克</string>
     <string name="tennisball_txt">网球</string>
     <string name="football_ziliaoku">资料库</string>
 
