@@ -1550,4 +1550,10 @@
     <string name="sn_rank_zjj">總獎金</string>
     <string name="sn_player_search">請輸入球員名稱</string>
 
+    <!--斯诺克-->
+    <string name="snooker_qualifiers">資格賽</string>
+    <string name="snooker_match">正賽</string>
+    <string name="snooker_champion">歷屆冠軍</string>
+    <string name="snooker_tournament">賽事簡介</string>
+
 </resources>

@@ -161,6 +161,12 @@
         <item>@string/league_statistics_today_tab5</item>
     </string-array>
 
+    <string-array name="snooker_info_tabs">
+        <item>@string/snooker_qualifiers</item>
+        <item>@string/snooker_match</item>
+        <item>@string/snooker_champion</item>
+        <item>@string/snooker_tournament</item>
+    </string-array>
 
     <!--圆形-->
     <declare-styleable name="circleImageView">

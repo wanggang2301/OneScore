@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/4/12 0012.
@@ -18,11 +19,10 @@ public class InforPopuWindowdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
 
-    private ArrayList<String> list;
+    private List<String> list;
 
 
-
-    public InforPopuWindowdapter(Context context, ArrayList<String> list) {
+    public InforPopuWindowdapter(Context context, List<String> list) {
         super();
         this.inflater = LayoutInflater.from(context);
         this.list = list;
@@ -44,7 +44,8 @@ public class InforPopuWindowdapter extends BaseAdapter {
         // TODO Auto-generated method stub
         return 0;
     }
-    public void addData(ArrayList<String> lis){
+
+    public void addData(ArrayList<String> lis) {
         list.clear();
         list.addAll(lis);
         notifyDataSetChanged();
@@ -56,7 +57,7 @@ public class InforPopuWindowdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.list_item_popupwindow, null);
         }
-        TextView tv = (TextView)convertView.findViewById(R.id.tv_list_item);
+        TextView tv = (TextView) convertView.findViewById(R.id.tv_list_item);
         tv.setText(list.get(position));
         return convertView;
     }

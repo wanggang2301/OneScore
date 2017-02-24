@@ -1570,4 +1570,10 @@
     <string name="sn_rank_zjf">总积分</string>
     <string name="sn_rank_zjj">总奖金</string>
     <string name="sn_player_search">请输入球员名称</string>
+
+    <!--斯诺克-->
+    <string name="snooker_qualifiers">资格赛</string>
+    <string name="snooker_match">正赛</string>
+    <string name="snooker_champion">历届冠军</string>
+    <string name="snooker_tournament">赛事简介</string>
 </resources>
