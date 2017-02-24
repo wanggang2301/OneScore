@@ -204,7 +204,6 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
 //                String currentStatus = "1";
                 switch(currentStatus){
                     case "0":
-//                        viewHolderList.mSnookerStatus.setText("暂停");
                         viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_pause));
                         break;
                     case "1":
@@ -220,7 +219,7 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                         viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_resting));
                         break;
                     default:
-                        viewHolderList.mSnookerStatus.setText("待定 :" + DetailsData.getStatus()); // TODO********
+//                        viewHolderList.mSnookerStatus.setText("待定 :" + DetailsData.getStatus()); // TODO********
                         break;
 
                 }
@@ -261,10 +260,10 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                     if (alet) {
                         if (mOdds.getAsiaLet() == null) {
                             setOddsNull(viewHolderList.mSnookerOddsLeft , viewHolderList.mSnookerOddsMiddle , viewHolderList.mSnookerOddsRight);
-                        }else if(mOdds.getAsiaLet().getHb() == null){
+                        }else if(mOdds.getAsiaLet().getVINBET() == null){
                             setOddsNull(viewHolderList.mSnookerOddsLeft , viewHolderList.mSnookerOddsMiddle , viewHolderList.mSnookerOddsRight);
                         }else{
-                            SnookerOddsMatchBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean aletOdds = mOdds.getAsiaLet().getHb();
+                            SnookerOddsMatchBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean aletOdds = mOdds.getAsiaLet().getVINBET();
                             viewHolderList.mSnookerOddsLeft.setText(aletOdds.getLeftOdds());
                             viewHolderList.mSnookerOddsMiddle.setText(aletOdds.getHandicapValue());
                             viewHolderList.mSnookerOddsRight.setText(aletOdds.getRightOdds());
@@ -276,10 +275,10 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                     if (eur) {
                         if (mOdds.getOnlyWin() == null) {
                             setOddsNull(viewHolderList.mSnookerOddsLeft , viewHolderList.mSnookerOddsMiddle , viewHolderList.mSnookerOddsRight);
-                        }else if(mOdds.getOnlyWin().getHb() == null){
+                        }else if(mOdds.getOnlyWin().getVINBET() == null){
                             setOddsNull(viewHolderList.mSnookerOddsLeft , viewHolderList.mSnookerOddsMiddle , viewHolderList.mSnookerOddsRight);
                         }else{
-                            SnookerOddsMatchBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean eurOdds = mOdds.getOnlyWin().getHb();
+                            SnookerOddsMatchBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean eurOdds = mOdds.getOnlyWin().getVINBET();
                             viewHolderList.mSnookerOddsLeft.setText(eurOdds.getLeftOdds());
                             viewHolderList.mSnookerOddsMiddle.setText(mContext.getString(R.string.snooker_state_victory_defeat));
                             viewHolderList.mSnookerOddsRight.setText(eurOdds.getRightOdds());
@@ -291,10 +290,10 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                     if (asize) {
                         if (mOdds.getAsiaSize() == null) {
                             setOddsNull(viewHolderList.mSnookerOddsLeft , viewHolderList.mSnookerOddsMiddle , viewHolderList.mSnookerOddsRight);
-                        }else if(mOdds.getAsiaSize().getHb() == null){
+                        }else if(mOdds.getAsiaSize().getVINBET() == null){
                             setOddsNull(viewHolderList.mSnookerOddsLeft , viewHolderList.mSnookerOddsMiddle , viewHolderList.mSnookerOddsRight);
                         }else{
-                            SnookerOddsMatchBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean asizeOdds = mOdds.getAsiaSize().getHb();
+                            SnookerOddsMatchBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean asizeOdds = mOdds.getAsiaSize().getVINBET();
                             viewHolderList.mSnookerOddsLeft.setText(asizeOdds.getLeftOdds());
                             viewHolderList.mSnookerOddsMiddle.setText(mContext.getString(R.string.snooker_state_zong) + asizeOdds.getHandicapValue());
                             viewHolderList.mSnookerOddsRight.setText(asizeOdds.getRightOdds());
@@ -306,17 +305,17 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                     if (singleTwins) {
                         if (mOdds.getOneTwo() == null) {
                             setOddsNull(viewHolderList.mSnookerOddsLeft , viewHolderList.mSnookerOddsMiddle , viewHolderList.mSnookerOddsRight);
-                        }else if(mOdds.getOneTwo().getHb() == null){
-                            if (mOdds.getOneTwo().getLj() == null) {
+                        }else if(mOdds.getOneTwo().getVINBET() == null){
+                            if (mOdds.getOneTwo().getSBO() == null) {
                                 setOddsNull(viewHolderList.mSnookerOddsLeft , viewHolderList.mSnookerOddsMiddle , viewHolderList.mSnookerOddsRight);
                             }else{
-                                SnookerOddsMatchBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean onetwoLj = mOdds.getOneTwo().getLj();
+                                SnookerOddsMatchBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean onetwoLj = mOdds.getOneTwo().getSBO();
                                 viewHolderList.mSnookerOddsLeft.setText(onetwoLj.getLeftOdds());
                                 viewHolderList.mSnookerOddsMiddle.setText(mContext.getString(R.string.snooker_state_single_double));
                                 viewHolderList.mSnookerOddsRight.setText(onetwoLj.getRightOdds());
                             }
                         }else{
-                            SnookerOddsMatchBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean singleTwinsOdds = mOdds.getOneTwo().getHb();
+                            SnookerOddsMatchBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean singleTwinsOdds = mOdds.getOneTwo().getVINBET();
                             viewHolderList.mSnookerOddsLeft.setText(singleTwinsOdds.getLeftOdds());
                             viewHolderList.mSnookerOddsMiddle.setText(singleTwinsOdds.getHandicapValue());
                             viewHolderList.mSnookerOddsRight.setText(singleTwinsOdds.getRightOdds());

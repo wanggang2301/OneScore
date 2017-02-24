@@ -55,25 +55,27 @@ public class SnookerOddsMatchBean {
         /**
          * 赔率公司
          */
-        private SnookerMatchOddsDataBean lj;//利记
-        private SnookerMatchOddsDataBean hb;//浩博
+//        private SnookerMatchOddsDataBean lj;//利记
+//        private SnookerMatchOddsDataBean hb;//浩博
+        private SnookerMatchOddsDataBean SBO;//利记
+        private SnookerMatchOddsDataBean VINBET;//浩博
         private SnookerMatchOddsDataBean sb;//沙巴
         private SnookerMatchOddsDataBean xyy;//雪缘圆
 
-        public SnookerMatchOddsDataBean getLj() {
-            return lj;
+        public SnookerMatchOddsDataBean getSBO() {
+            return SBO;
         }
 
-        public void setLj(SnookerMatchOddsDataBean lj) {
-            this.lj = lj;
+        public void setSBO(SnookerMatchOddsDataBean SBO) {
+            this.SBO = SBO;
         }
 
-        public SnookerMatchOddsDataBean getHb() {
-            return hb;
+        public SnookerMatchOddsDataBean getVINBET() {
+            return VINBET;
         }
 
-        public void setHb(SnookerMatchOddsDataBean hb) {
-            this.hb = hb;
+        public void setVINBET(SnookerMatchOddsDataBean VINBET) {
+            this.VINBET = VINBET;
         }
 
         public SnookerMatchOddsDataBean getSb() {
