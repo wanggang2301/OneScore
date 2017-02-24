@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/home_default_icon_coloer"
     android:orientation="vertical"
-    tools:context="com.hhly.mlottery.frame.footframe.LeagueStatisticsTodayFragment">
+    tools:context="com.hhly.mlottery.frame.footballframe.LeagueStatisticsTodayFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

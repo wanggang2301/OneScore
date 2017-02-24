@@ -16,7 +16,7 @@ import com.hhly.mlottery.bean.basket.BasketMatchFilter;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
-import com.hhly.mlottery.frame.footframe.FiltrateMatchFragment;
+import com.hhly.mlottery.frame.footballframe.FiltrateMatchFragment;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MultipleBasketFilterListEvent;
 import com.hhly.mlottery.view.GrapeGridview;

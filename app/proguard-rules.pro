@@ -189,8 +189,10 @@
 ##模糊搜索
 -keep class com.hhly.mlottery.activity.FootballInformationSerachActivity{ *;}
 -keep class com.hhly.mlottery.activity.BasketballInformationSerachActivity{ *;}
+-keep class com.hhly.mlottery.activity.SnookerInformationSerachActivity{ *;}
 -keep class com.hhly.mlottery.callback.SearchService { *; }
 -keep class com.hhly.mlottery.callback.BasketSearchservice{ *; }
+-keep class com.hhly.mlottery.callback.SnookerSearchService{ *; }
 
 ##Glide
 -keep public class * implements com.bumptech.glide.module.GlideModule

@@ -19,7 +19,7 @@ import com.hhly.mlottery.bean.enums.StatusEnum;
 import com.hhly.mlottery.bean.oddsbean.OddsDataInfo;
 import com.hhly.mlottery.bean.oddsbean.OddsDetailsDataInfo;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.frame.footframe.OddsFragment;
+import com.hhly.mlottery.frame.footballframe.OddsFragment;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.EmptyView;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;

@@ -1,7 +1,6 @@
 package com.hhly.mlottery.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.scheduleBean.AsiaLet;
 import com.hhly.mlottery.bean.scheduleBean.AsiaSize;
@@ -21,7 +19,7 @@ import com.hhly.mlottery.bean.scheduleBean.ScheduleMatchOdd;
 import com.hhly.mlottery.callback.DateOnClickListener;
 import com.hhly.mlottery.callback.FocusMatchClickListener;
 import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
-import com.hhly.mlottery.frame.footframe.FocusFragment;
+import com.hhly.mlottery.frame.footballframe.FocusFragment;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.HandicapUtils;
 import com.hhly.mlottery.util.ImageLoader;

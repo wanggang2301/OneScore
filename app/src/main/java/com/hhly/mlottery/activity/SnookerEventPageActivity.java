@@ -22,6 +22,8 @@ import com.hhly.mlottery.bean.snookerbean.SnookerRefrshBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.snookerfrag.SnookerDataQualificationHeatFragement;
 import com.hhly.mlottery.frame.snookerfrag.SnookerDatabaseFragment;
+import com.hhly.mlottery.frame.snookerframe.SnookerDataQualificationHeatFragement;
+import com.hhly.mlottery.frame.snookerframe.SnookerDatabaseFragment;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.ArrayList;
@@ -101,7 +103,6 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
 
                     json.getData().getLeagueName();
 
-                    public_txt_title.setText(json.getData().getLeagueName());
 
                     mIsCurenDatas = json.getData().getCurrentSeason();
                     tv_right.setText(mIsCurenDatas);
@@ -189,7 +190,7 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         public_txt_title = (TextView) findViewById(R.id.public_txt_title);
-
+        public_txt_title.setText("世界锦标赛");
         findViewById(R.id.public_img_back).setOnClickListener(this);
         tabLayout = (TabLayout) findViewById(R.id.tab_Fragment);
         viewPager = (ViewPager) findViewById(R.id.vp_Fragment_pager);

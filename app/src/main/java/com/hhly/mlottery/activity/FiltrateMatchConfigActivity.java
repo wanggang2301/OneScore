@@ -17,10 +17,10 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.frame.footframe.FiltrateMatchFragment;
-import com.hhly.mlottery.frame.footframe.FiltrateMatchFragment.CheckedCupsCallback;
-import com.hhly.mlottery.frame.footframe.FiltrateStatusFragment;
-import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchFilterEventBusEntity;
+import com.hhly.mlottery.frame.footballframe.FiltrateMatchFragment;
+import com.hhly.mlottery.frame.footballframe.FiltrateMatchFragment.CheckedCupsCallback;
+import com.hhly.mlottery.frame.footballframe.FiltrateStatusFragment;
+import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFilterEventBusEntity;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
