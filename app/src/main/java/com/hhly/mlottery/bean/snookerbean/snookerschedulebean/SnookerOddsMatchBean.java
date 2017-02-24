@@ -57,8 +57,8 @@ public class SnookerOddsMatchBean {
          */
 //        private SnookerMatchOddsDataBean lj;//利记
 //        private SnookerMatchOddsDataBean hb;//浩博
-        private SnookerMatchOddsDataBean SBO;//利记
-        private SnookerMatchOddsDataBean VINBET;//浩博
+        private SnookerMatchOddsDataBean SBO;//浩博
+        private SnookerMatchOddsDataBean VINBET;//利记
         private SnookerMatchOddsDataBean sb;//沙巴
         private SnookerMatchOddsDataBean xyy;//雪缘圆
 
