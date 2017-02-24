@@ -90,7 +90,12 @@ public class SnookerResultFragment extends Fragment implements SwipeRefreshLayou
     private String mCurrentDate;
     private static int currentDatePosition = 0;//记录当前日期选择器中日期的位置
     private static final int DATENUM = 7;
-
+    /**
+     * 标记不同类型item
+     */
+    private int DATETYPE = 0;
+    private int LEAGUETYPE = 1;
+    private int MATCHTYPE = 2;
     //显示状态
     private static final int SHOW_STATUS_LOADING = 1;//加载中
     private static final int SHOW_STATUS_ERROR = 2;//加载失败
@@ -226,7 +231,7 @@ public class SnookerResultFragment extends Fragment implements SwipeRefreshLayou
 
                     allData = new ArrayList<>();
                     SnookerEventsBean riqiItem = new SnookerEventsBean();
-                    riqiItem.setItemType(0);
+                    riqiItem.setItemType(DATETYPE);
                     riqiItem.setItemDate(jsonData.getData().getDate());
                     allData.add(riqiItem);
                     if (mSnookerListAdapter == null) {
@@ -247,7 +252,7 @@ public class SnookerResultFragment extends Fragment implements SwipeRefreshLayou
                 allData = new ArrayList<>();
 
                 SnookerEventsBean riqiItem = new SnookerEventsBean();
-                riqiItem.setItemType(0);
+                riqiItem.setItemType(DATETYPE);
                 riqiItem.setItemDate(jsonData.getData().getDate());
                 allData.add(riqiItem);
 
@@ -255,13 +260,13 @@ public class SnookerResultFragment extends Fragment implements SwipeRefreshLayou
 
                     if (currentLeague.equals("") || !all.getLeagueName().equals(currentLeague)) {
                         SnookerEventsBean leagueName = new SnookerEventsBean();
-                        leagueName.setItemType(1);
+                        leagueName.setItemType(LEAGUETYPE);
                         leagueName.setItemLeaguesName(all.getLeagueName());
                         allData.add(leagueName);
                         currentLeague = all.getLeagueName();
                     }
 
-                    all.setItemType(2);
+                    all.setItemType(MATCHTYPE);
                     allData.add(all);
                 }
 

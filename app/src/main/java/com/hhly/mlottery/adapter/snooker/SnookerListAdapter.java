@@ -129,13 +129,11 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
             case 0:
                 //日期
                 ViewHolderDate viewHolderDate = (ViewHolderDate) holder;
-//                viewHolderDate.mSnookerDate.setText("2016-11-16 星期三" + position);
                 viewHolderDate.mSnookerDate.setText(DetailsData.getItemDate());
                 break;
             case 1:
                 //赛事
                 ViewHolderTitle viewHolderTitle = (ViewHolderTitle)holder;
-//                viewHolderTitle.mSnookerTitle.setText("2016年世界斯洛克英格兰公开赛 " + position);
                 viewHolderTitle.mSnookerTitle.setText(DetailsData.getItemLeaguesName());
                 break;
             case 2:
@@ -198,10 +196,6 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                     currentStatus = DetailsData.getMatchScore().getStatus();
                 }
 
-//                /**
-//                 * 假状态 1/3
-//                 */
-//                String currentStatus = "1";
                 switch(currentStatus){
                     case "0":
                         viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_pause));
@@ -219,7 +213,7 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                         viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_resting));
                         break;
                     default:
-//                        viewHolderList.mSnookerStatus.setText("待定 :" + DetailsData.getStatus()); // TODO********
+                        viewHolderList.mSnookerStatus.setText("--");
                         break;
 
                 }
@@ -231,11 +225,6 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                     viewHolderList.mSnookerScoreLeft.setText(DetailsData.getMatchScore().getPlayerOnewin());
                     viewHolderList.mSnookerScoreRight.setText(DetailsData.getMatchScore().getPlayerTwowin());
                 }
-//                /**
-//                 * 假状态 2/3
-//                 */
-//                viewHolderList.mSnookerScoreLeft.setText("10");
-//                viewHolderList.mSnookerScoreRight.setText("10");
 
                 /**
                  *  设置赔率初始化值
@@ -247,10 +236,6 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                 boolean noshow = PreferenceUtil.getBoolean(MyConstants.SNOOKER_NOTSHOW, false);//不显示
 
                 SnookerOddsMatchBean mOdds = DetailsData.getMatchOdds();
-//                /**
-//                 * 假状态 3/3
-//                 */
-//                setOddsNull(viewHolderList.mSnookerOddsLeft , viewHolderList.mSnookerOddsMiddle , viewHolderList.mSnookerOddsRight);
                 if (mOdds == null) {
                     setOddsNull(viewHolderList.mSnookerOddsLeft , viewHolderList.mSnookerOddsMiddle , viewHolderList.mSnookerOddsRight);
                 }else{
