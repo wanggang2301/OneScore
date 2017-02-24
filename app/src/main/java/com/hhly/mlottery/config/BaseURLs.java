@@ -142,7 +142,7 @@ public class BaseURLs {
     /*上传图片新URl*/
     public final static String NEW_URL_API_PHOST = HTTP + PHOST + URL_SPLITTER + "upload/";
     //视频直播
-    private final static String URL_MATCHVIDEO_DATA = "matchVideo.findVideoInfoApp.do";
+    private final static String  URL_MATCHVIDEO_DATA = "matchVideo.findVideoInfoApp.do";
 
     public final static String LANGUAGE_PARAM = "lang";
     public final static String TIMEZONE_PARAM = "timeZone";
