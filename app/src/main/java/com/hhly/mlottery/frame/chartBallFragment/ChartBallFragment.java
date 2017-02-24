@@ -312,18 +312,21 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     public void onResponse(ChartReceive receive) {
                         if (receive.getResult().equals("200")) {
                             mChartReceive = receive;
+
                             if (SLIDE_TYPE_MSG_ONE.equals(slideType)) {
                                 mHandler.sendEmptyMessage(SUCCESS_LOADING);
                             } else if (SLIDE_TYPE_MSG_HISTORY.equals(slideType)) {
                                 // 将数据添加到前面
-                                List<ChartReceive.DataBean.ChatHistoryBean> chatHistory = mChartReceive.getData().getChatHistory();
-
-                                historyBeen.addAll(0, chatHistory);
-                                mAdapter.notifyDataSetChanged();
+                                if (mChartReceive.getData().getChatHistory() != null) {
+                                    historyBeen.addAll(0, mChartReceive.getData().getChatHistory());
+                                    mAdapter.notifyDataSetChanged();
+                                }
                             } else if (SLIDE_TYPE_MSG_NEW.equals(slideType)) {
-                                historyBeen.addAll(mChartReceive.getData().getChatHistory());
-                                mAdapter.notifyDataSetChanged();
-                                sleepView();
+                                if (mChartReceive.getData().getChatHistory() != null) {
+                                    historyBeen.addAll(mChartReceive.getData().getChatHistory());
+                                    mAdapter.notifyDataSetChanged();
+                                    sleepView();
+                                }
                             }
                         } else {
                             if (SLIDE_TYPE_MSG_ONE.equals(slideType)) {
@@ -694,7 +697,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
             @Override
             public void run() {
                 synchronized (this) {
-                    L.d("xxxxx","滚球推送：" + text);
+                    L.d("xxxxx", "滚球推送：" + text);
                     System.out.println("xxxxx 滚球推送：" + text);
                     ChartRoom chartRoom = JSON.parseObject(text, ChartRoom.class);
 
