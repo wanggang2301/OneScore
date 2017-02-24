@@ -19,6 +19,7 @@ import com.hhly.mlottery.adapter.InforPopuWindowdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.bean.snookerbean.SnookerRaceHeadBean;
 import com.hhly.mlottery.bean.snookerbean.SnookerRefrshBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.snookerfrag.SnookerDataQualificationHeatFragement;
 import com.hhly.mlottery.frame.snookerfrag.SnookerDatabaseFragment;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -100,13 +101,19 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
 
                     json.getData().getLeagueName();
 
+                    public_txt_title.setText(json.getData().getLeagueName());
 
                     mIsCurenDatas = json.getData().getCurrentSeason();
                     tv_right.setText(mIsCurenDatas);
                     //获取赛季时
                     seasonList = json.getData().getSeasonList();
                     //获取赛事简介
-                    EventBus.getDefault().post(json.getData().getLeagueProfile());
+                    if (json.getData().getLeagueProfile()!=null){
+                        EventBus.getDefault().post(json.getData().getLeagueProfile());
+                    }else{
+                        EventBus.getDefault().post("nodata");
+                    }
+
 
 
                     tv_right.setVisibility(View.VISIBLE);
@@ -182,7 +189,7 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         public_txt_title = (TextView) findViewById(R.id.public_txt_title);
-        public_txt_title.setText("世界锦标赛");
+
         findViewById(R.id.public_img_back).setOnClickListener(this);
         tabLayout = (TabLayout) findViewById(R.id.tab_Fragment);
         viewPager = (ViewPager) findViewById(R.id.vp_Fragment_pager);

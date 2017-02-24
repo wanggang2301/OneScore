@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
     private String state;
     private int mMatchKind;
     private ChoseHeadInformationItemAdapter choseHeadInformationAdapter;
+    private ImageView iconfont;
 
 
     public PinnedHeaderExpandableAdapter(List<SnookerRaceListitemBean.DataBean.MatchListBean> matchList, List<List<String>> childDataList, Context mContext, SnookerPinnedHeaderExpandableListView explistview_live) {
@@ -38,7 +40,6 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         this.mGroupDataList = matchList;
         this.listView = explistview_live;
         inflater = LayoutInflater.from(this.mContext);
-
 
     }
 
@@ -157,13 +158,18 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         TextView snooker_right_name = (TextView) parentLayout.findViewById(R.id.snooker_right_name);
         //比赛详情
         TextView snooker_race_total_score = (TextView) parentLayout.findViewById(R.id.snooker_race_total_score);
-
-
-
+        //下拉
+        iconfont = (ImageView) parentLayout.findViewById(R.id.iconfont);
         live_item_day_tx.setText(mGroupDataList.get(groupPosition).getMatchDate());
         snooker_left_name.setText(mGroupDataList.get(groupPosition).getPlayerNameAcn());
         snooker_right_name.setText(mGroupDataList.get(groupPosition).getPlayerNameBcn());
         snooker_race_total_score.setText(mGroupDataList.get(groupPosition).getScore());
+  /*      parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iconfont.setImageResource(R.mipmap.iconfont_xiala_2);
+            }
+        });*/
 
         return parentLayout;
     }
