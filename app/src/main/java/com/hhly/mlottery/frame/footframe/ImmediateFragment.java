@@ -1274,6 +1274,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
     }
 
 
+
     //推送
     public void onEventMainThread(ScoresFragment.FootballScoresWebSocketEntity entity) {
         L.d("qazwsx", "即时比分推送");
@@ -1292,6 +1293,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
         if (!"".equals(type)) {
             Message msg = Message.obtain();
             msg.obj = entity.text;
+
             msg.arg1 = Integer.parseInt(type);
             mSocketHandler.sendMessage(msg);
         }
