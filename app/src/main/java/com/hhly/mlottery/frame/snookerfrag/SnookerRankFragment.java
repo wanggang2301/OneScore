@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame.snooker;
+package com.hhly.mlottery.frame.snookerfrag;
 
 
 import android.content.Context;

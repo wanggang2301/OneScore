@@ -19,8 +19,8 @@ import com.hhly.mlottery.adapter.InforPopuWindowdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.bean.snookerbean.SnookerRaceHeadBean;
 import com.hhly.mlottery.bean.snookerbean.SnookerRefrshBean;
-import com.hhly.mlottery.frame.snooker.SnookerDataQualificationHeatFragemnt;
-import com.hhly.mlottery.frame.snooker.SnookerDatabaseFragment;
+import com.hhly.mlottery.frame.snookerfrag.SnookerDataQualificationHeatFragement;
+import com.hhly.mlottery.frame.snookerfrag.SnookerDatabaseFragment;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.ArrayList;
@@ -197,7 +197,7 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
         mTabsAdapter = new TabsAdapter(fragmentManager);
         mTabsAdapter.setTitles(titles);
         mTabsAdapter.addFragments(SnookerDatabaseFragment.newInstance(QUALIFICATIONS),
-                SnookerDataQualificationHeatFragemnt.newInstance(RACE),
+                SnookerDataQualificationHeatFragement.newInstance(RACE),
                 SnookerDatabaseFragment.newInstance(SUCCESSIVE),
                 SnookerDatabaseFragment.newInstance(PROFILE)
         );

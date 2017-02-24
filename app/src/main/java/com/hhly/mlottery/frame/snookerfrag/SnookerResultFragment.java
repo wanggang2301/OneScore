@@ -1,11 +1,9 @@
-package com.hhly.mlottery.frame.snookerfragment;
+package com.hhly.mlottery.frame.snookerfrag;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -14,38 +12,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.SnookerSettingActivity;
 import com.hhly.mlottery.adapter.ScheduleDateAdapter;
 import com.hhly.mlottery.adapter.snooker.SnookerListAdapter;
-import com.hhly.mlottery.adapter.snooker.SnookerRecyclerAdapter;
-import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.scheduleBean.ScheduleDate;
-import com.hhly.mlottery.bean.snookerbean.SnookerLeaguesBean;
-import com.hhly.mlottery.bean.snookerbean.SnookerListBean;
-import com.hhly.mlottery.bean.snookerbean.SnookerMatchOddsBean;
-import com.hhly.mlottery.bean.snookerbean.SnookerMatchScoreBean;
-import com.hhly.mlottery.bean.snookerbean.SnookerMatchesBean;
-import com.hhly.mlottery.bean.snookerbean.SnookerOddsSocketBean;
-import com.hhly.mlottery.bean.snookerbean.SnookerScoreSocketBean;
-import com.hhly.mlottery.bean.snookerbean.SnookerSecondBean;
-import com.hhly.mlottery.bean.snookerbean.SnookerWaterfallMatchesBean;
 import com.hhly.mlottery.bean.snookerbean.snookerschedulebean.SnookerEventsBean;
 import com.hhly.mlottery.bean.snookerbean.snookerschedulebean.SnookerScheuleBean;
 import com.hhly.mlottery.callback.DateOnClickListener;
 import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
-import com.hhly.mlottery.listener.LoadMoreRecyclerOnScrollListener;
-import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.ResultDateUtil;
@@ -58,12 +39,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import de.greenrobot.event.EventBus;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 
 /**
  * Created by yixq on 2017/2/16.

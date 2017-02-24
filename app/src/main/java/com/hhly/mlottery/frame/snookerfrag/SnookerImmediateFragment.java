@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame.snookerfragment;
+package com.hhly.mlottery.frame.snookerfrag;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -28,6 +28,7 @@ import com.hhly.mlottery.bean.snookerbean.snookerschedulebean.SnookerSocketOddsB
 import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.frame.scorefrag.SnookerListScoreFragment;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.SnookerSettingEvent;

@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame.snookerfragment;
+package com.hhly.mlottery.frame.scorefrag;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -25,6 +25,9 @@ import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
+import com.hhly.mlottery.frame.snookerfrag.SnookerImmediateFragment;
+import com.hhly.mlottery.frame.snookerfrag.SnookerResultFragment;
+import com.hhly.mlottery.frame.snookerfrag.SnookerScheduleFragment;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 

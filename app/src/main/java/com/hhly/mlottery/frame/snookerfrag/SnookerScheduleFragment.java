@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame.snookerfragment;
+package com.hhly.mlottery.frame.snookerfrag;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -20,10 +20,7 @@ import android.widget.Toast;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.ScheduleDateAdapter;
 import com.hhly.mlottery.adapter.snooker.SnookerListAdapter;
-import com.hhly.mlottery.adapter.snooker.SnookerRecyclerAdapter;
 import com.hhly.mlottery.bean.scheduleBean.ScheduleDate;
-import com.hhly.mlottery.bean.snookerbean.SnookerLeaguesBean;
-import com.hhly.mlottery.bean.snookerbean.SnookerMatchesBean;
 import com.hhly.mlottery.bean.snookerbean.snookerschedulebean.SnookerEventsBean;
 import com.hhly.mlottery.bean.snookerbean.snookerschedulebean.SnookerScheuleBean;
 import com.hhly.mlottery.callback.DateOnClickListener;
@@ -37,7 +34,6 @@ import com.hhly.mlottery.util.SnookerSettingEvent;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.LoadMoreRecyclerView;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
-import com.sina.weibo.sdk.api.share.Base;
 
 import java.util.ArrayList;
 import java.util.HashMap;
