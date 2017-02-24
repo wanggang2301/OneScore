@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.snookerfrag;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.adapter.snooker.SnookerListAdapter;
 import com.hhly.mlottery.bean.scheduleBean.ScheduleDate;
 import com.hhly.mlottery.bean.snookerbean.SnookerMatchScoreBean;
@@ -65,7 +67,12 @@ public class SnookerImmediateFragment extends Fragment implements SwipeRefreshLa
 
     private List<SnookerEventsBean> allData;//页面所有数据
     private SnookerListAdapter mSnookerListAdapter;
-
+    /**
+     * 标记不同类型item
+     */
+    private int DATETYPE = 0;
+    private int LEAGUETYPE = 1;
+    private int MATCHTYPE = 2;
     //显示状态
     private static final int SHOW_STATUS_LOADING = 1;//加载中
     private static final int SHOW_STATUS_ERROR = 2;//加载失败
@@ -186,14 +193,14 @@ public class SnookerImmediateFragment extends Fragment implements SwipeRefreshLa
 
                     if (currentLeague.equals("") || !all.getLeagueName().equals(currentLeague)) {
                         SnookerEventsBean leagueName = new SnookerEventsBean();
-                        leagueName.setItemType(1);
+                        leagueName.setItemType(LEAGUETYPE);
                         leagueName.setItemLeaguesName(all.getLeagueName());
                         leagueName.setMatchId("-");//推送消息时候需要用到matchid 做对比
                         allData.add(leagueName);
                         currentLeague = all.getLeagueName();
                     }
 
-                    all.setItemType(2);
+                    all.setItemType(MATCHTYPE);
                     allData.add(all);
                 }
 
@@ -205,6 +212,10 @@ public class SnookerImmediateFragment extends Fragment implements SwipeRefreshLa
                         @Override
                         public void onItemClick(View view, String data) {
                             Toast.makeText(mContext, "点击进入详情 - " + data, Toast.LENGTH_SHORT).show();
+//                            Intent intent = new Intent(getActivity(), BasketDetailsActivityTest.class);
+//                            intent.putExtra("matchId" , data);
+//                            startActivity(intent);
+//                            getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
                         }
                     });
 
@@ -263,6 +274,15 @@ public class SnookerImmediateFragment extends Fragment implements SwipeRefreshLa
     public void onEventMainThread(SnookerSettingEvent snookerSettingEvent) {
 //        L.d("yxq=====> 设置页返回", "=======" + snookerSettingEvent.getmMsg());
 //        Toast.makeText(getContext(), snookerSettingEvent.getmMsg() + " = yxq----即时--", Toast.LENGTH_SHORT).show();
+        updateAdapter();
+    }
+
+    /**
+     * 详情页面返回
+     *
+     * @param id
+     */
+    public void onEventMainThread(String id) {
         updateAdapter();
     }
 
