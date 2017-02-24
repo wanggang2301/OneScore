@@ -2,6 +2,7 @@ package com.hhly.mlottery.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,21 +12,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
-import com.hhly.mlottery.bean.footballDetails.AnalyzeBean;
 import com.hhly.mlottery.bean.snookerbean.snookerDetail.SnookerAnalyzeBean;
+import com.hhly.mlottery.bean.snookerbean.snookerDetail.SnookerScoreSocketBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.snookerFragment.SnookerAnalyzeFragment;
 import com.hhly.mlottery.frame.snookerFragment.SnookerLetFragment;
-import com.hhly.mlottery.frame.snookerFragment.SnookerSizeFragment;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.ImageLoader;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
-import org.w3c.dom.Text;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -93,19 +96,25 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
     @BindView(R.id.layout_snooker_total_score)
     LinearLayout mTotalLayout; //点击弹出详细比分
 
+    public final static String ODDS_LET="2";
+    public final static String ODDS_SIZE="3";
+
 
     private TabsAdapter mTabsAdapter;
     private String Titles[];
     //fragment
     private SnookerAnalyzeFragment mAnalyzeFragment;
     private SnookerLetFragment mLetFragment;
-    private SnookerSizeFragment mSizeFragment;
+    private SnookerLetFragment mSizeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snooker_match_detail);
         ButterKnife.bind(this);
+
+        setWebSocketUri(BaseURLs.WS_SERVICE);
+        setTopic("USER.topic.snooker");
 
         initView();
         setListener();
@@ -120,8 +129,8 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
         mTabsAdapter.setTitles(Titles);
 
         mAnalyzeFragment=SnookerAnalyzeFragment.newInstance("","");
-        mLetFragment=SnookerLetFragment.newInstance("","");
-        mSizeFragment=SnookerSizeFragment.newInstance("","");
+        mLetFragment=SnookerLetFragment.newInstance("thirdId",ODDS_LET);
+        mSizeFragment=SnookerLetFragment.newInstance("",ODDS_SIZE);
 
         mTabsAdapter.addFragments(mAnalyzeFragment,mLetFragment,mSizeFragment);
 
@@ -193,9 +202,57 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
 
     }
 
+    Handler mWebSocketHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            L.e(TAG, "__handleMessage__");
+            L.e(TAG, "msg.arg1 = " + msg.arg1);
+            if (msg.arg1 == 300) {  // 比分推送
+                String ws_json = (String) msg.obj;
+                L.e(TAG, "ws_json_snooker_score = " + ws_json);
+                SnookerScoreSocketBean mSnookerScore = null;
+                try {
+                    mSnookerScore = JSON.parseObject(ws_json, SnookerScoreSocketBean.class);
+                } catch (Exception e) {
+                    ws_json = ws_json.substring(0, ws_json.length() - 1);
+                    mSnookerScore = JSON.parseObject(ws_json, SnookerScoreSocketBean.class);
+                }
+//                L.d("yxq=====>300走这里" , msg.arg1+"");
+                updateScore(mSnookerScore);
+            }
+        }
+    };
 
+    /**
+     * 比分更新
+     * @param mScoreData
+     */
+    private void updateScore(SnookerScoreSocketBean mScoreData){
+
+        SnookerScoreSocketBean.SnookerScoreDataBean scoreData = mScoreData.getData();
+        mHomeScore.setText(scoreData.getPoScore());
+        mGuestScore.setText(scoreData.getPtScore());
+        mHomeTotalScore.setText(scoreData.getPlayerOnewin());
+        mGuestTotalScore.setText(scoreData.getPlayerTwowin());
+
+
+    }
     @Override
     protected void onTextResult(String text) {
+        String type="";
+        try {
+            JSONObject jsonObject=new JSONObject(text);
+            type=jsonObject.getString("type");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if(!"".equals(type)){
+            Message msg=Message.obtain();
+            msg.obj=text;
+            msg.arg1=Integer.parseInt(type);
+            mWebSocketHandler.sendMessage(msg);
+        }
 
     }
 
@@ -213,6 +270,7 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
     protected void onConnected() {
 
     }
+
 
     @Override
     public void onRefresh() {

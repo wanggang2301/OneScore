@@ -40,7 +40,7 @@
                 android:layout_weight="2" />
 
             <TextView
-                android:id="@+id/plate_home_txt_id"
+                android:id="@+id/snooker_odds_title_home"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
@@ -50,7 +50,7 @@
                 android:textSize="13sp" />
 
             <TextView
-                android:id="@+id/plate_dish_txt_id"
+                android:id="@+id/snooker_odds_title_handicap"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
@@ -60,7 +60,7 @@
                 android:textSize="13sp" />
 
             <TextView
-                android:id="@+id/plate_guest_txt_id"
+                android:id="@+id/snooker_odds_title_guest"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
@@ -83,6 +83,7 @@
         android:background="@color/line_football_footer" />
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/snooker_odds_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
@@ -90,7 +91,7 @@
     </android.support.v7.widget.RecyclerView>
 
             <FrameLayout
-                android:id="@+id/fl_plate_networkError"
+                android:id="@+id/snooker_odds_networkError"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="gone">
@@ -130,7 +131,7 @@
                             android:textSize="@dimen/text_size_14" />
 
                         <TextView
-                            android:id="@+id/plate_reLoading"
+                            android:id="@+id/snooker_odds_reLoading"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/exp_refresh_txt"
@@ -141,7 +142,7 @@
             </FrameLayout>
             <!--暂无数据-->
             <FrameLayout
-                android:id="@+id/fl_plate_noData"
+                android:id="@+id/snooker_odds_noData"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="gone">
@@ -152,6 +153,22 @@
                     android:layout_gravity="center"
                     android:text="@string/nodata_txt" />
             </FrameLayout>
+
+    <!--内容加载进度条_正在加载中-->
+    <FrameLayout
+        android:id="@+id/snooker_odds_progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="50dp"
+        android:visibility="visible">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
 
 
 

@@ -46,20 +46,20 @@
                     android:textColor="@color/tabhost_unselected_text"/>
 
                 <TextView
-                    android:id="@+id/snooker_homeOdds1"
+                    android:id="@+id/snooker_homeOdds2"
                     style="@style/plateTableBg"
                     android:layout_weight="3"
                     tools:text="2.50"/>
 
                 <TextView
-                    android:id="@+id/snooker_handicap1"
+                    android:id="@+id/snooker_handicap2"
                     style="@style/plateTableBg"
                     android:layout_weight="4"
                     android:textColor="@color/tabhost_unselected_text"
                     tools:text="*平手"/>
 
                 <TextView
-                    android:id="@+id/snooker_guestOdds1"
+                    android:id="@+id/snooker_guestOdds2"
                     style="@style/plateTableBg"
                     android:layout_weight="3"
                     android:textColor="@color/tabhost_unselected_text"
@@ -83,21 +83,21 @@
                     android:textColor="@color/content_txt_dark_grad"/>
 
                 <TextView
-                    android:id="@+id/snooker_homeOdds2"
+                    android:id="@+id/snooker_homeOdds1"
                     style="@style/plateTableBg2"
                     android:layout_weight="3"
                     android:textColor="@color/content_txt_dark_grad"
                     tools:text="1.50"/>
 
                 <TextView
-                    android:id="@+id/snooker_handicap2"
+                    android:id="@+id/snooker_handicap1"
                     style="@style/plateTableBg2"
                     android:layout_weight="4"
                     android:textColor="@color/content_txt_dark_grad"
                     tools:text="*平手/两球半"/>
 
                 <TextView
-                    android:id="@+id/snooker_guestOdds2"
+                    android:id="@+id/snooker_guestOdds1"
                     style="@style/plateTableBg2"
                     android:layout_weight="3"
                     android:textColor="@color/content_txt_dark_grad"
@@ -110,7 +110,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="0.7"
-            android:src="@mipmap/plate_icon"/>
+            android:src="@mipmap/plate_icon"
+            android:visibility="invisible"
+            />
     </LinearLayout>
 
     <View

@@ -969,6 +969,8 @@ public class BaseURLs {
 
     //斯诺克头部跟分析页
     public final static String SNOOKER_ANALYZE_URL=URL_API_HOST+"snookerAnalysis.findAnalysisInfo.do";
+    //斯诺克亚盘界面
+    public final static String SNOOKER_ODDS_URL=URL_API_HOST+"snookerOdds.getSnookerOddsByMatchId.do";
     /**
      * 我的定制
      */
