@@ -45,7 +45,7 @@ public class SnookerMatchAdapter extends BaseQuickAdapter<SnookerMatchBean.DataB
             public void onClick(View v) {
 
                 Intent intent = new Intent(mContext, SnookerEventPageActivity.class);
-                intent.putExtra("leagueId ", dataBean.getLeagueId());
+                intent.putExtra("leagueId", dataBean.getLeagueId());
                 mContext.startActivity(intent);
 
 
