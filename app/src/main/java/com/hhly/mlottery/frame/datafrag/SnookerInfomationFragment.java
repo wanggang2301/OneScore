@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
-import com.hhly.mlottery.frame.snooker.SnookerMatchFragment;
-import com.hhly.mlottery.frame.snooker.SnookerRankFragment;
+import com.hhly.mlottery.frame.snookerfrag.SnookerMatchFragment;
+import com.hhly.mlottery.frame.snookerfrag.SnookerRankFragment;
 
 /**
  * @author wangg
