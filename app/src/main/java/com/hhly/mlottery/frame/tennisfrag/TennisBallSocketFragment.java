@@ -166,7 +166,7 @@ public class TennisBallSocketFragment extends Fragment implements SwipeRefreshLa
     // 设置页面显示状态
     private void setStatus(int status) {
         L.d("xxxxx", "socketFrag status:  " + status);
-        if(status == ERROR){
+        if(status == ERROR || (status == NOTO_DATA && type == 3)){
             mData.clear();
             mAdapter.notifyDataSetChanged();
         }
