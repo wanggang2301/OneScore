@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.snooker.SnookerMatchAdapter;
 import com.hhly.mlottery.bean.snookerbean.SnookerMatchBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
@@ -149,9 +150,9 @@ public class SnookerMatchFragment extends Fragment {
     private void RequestData() {
 
         //BaseURLs.URL_SNOOKER_INFO_MATCH
-        String url = "http://192.168.31.1:8080/mlottery/core/mlottery/snookerData.findAppLeagueList.do";
+       // String url = "http://192.168.31.1:8080/mlottery/core/mlottery/snookerData.findAppLeagueList.do";
 
-        VolleyContentFast.requestJsonByGet(url, null, new VolleyContentFast.ResponseSuccessListener<SnookerMatchBean>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_SNOOKER_INFO_MATCH, null, new VolleyContentFast.ResponseSuccessListener<SnookerMatchBean>() {
             @Override
             public void onResponse(SnookerMatchBean jsonObject) {
                 if (jsonObject != null) {
