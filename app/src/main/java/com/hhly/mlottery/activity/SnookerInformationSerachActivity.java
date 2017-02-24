@@ -16,6 +16,7 @@ import com.hhly.mlottery.bean.basket.infomation.SnookerPlayerBean;
 import com.hhly.mlottery.callback.SnookerSearchService;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.util.List;
@@ -91,7 +92,7 @@ public class SnookerInformationSerachActivity extends BaseActivity implements Vi
                 .map(new Func1<CharSequence, CharSequence>() {
                     @Override
                     public CharSequence call(CharSequence charSequence) {
-                        Observable<SnookerPlayerBean> observable = service.searchSnookerPlayer("zh", "丁");
+                        Observable<SnookerPlayerBean> observable = service.searchSnookerPlayer(VolleyContentFast.returenLanguage(), charSequence.toString());
                         observable.subscribeOn(Schedulers.io())
                                 //将 data 转换成 ArrayList<ArrayList<String>>
                                 .map(new Func1<SnookerPlayerBean, List<SnookerPlayerBean.WorldRankingListBean>>() {
