@@ -48,7 +48,6 @@ public class ForeignInfomationDetailsActivity extends BaseActivity implements Vi
     private void initData() {
         ForeignChatFragment foreignChatFragment = ForeignChatFragment.newInstance();
         foreignChatFragment.setOilBean(oilbean);
-
         CyUtils.addComment(foreignChatFragment, oilbean.getId() + "", oilbean.getContent(), true, true, getSupportFragmentManager(), R.id.scrollview);//添加评论碎片
     }
 
@@ -63,7 +62,6 @@ public class ForeignInfomationDetailsActivity extends BaseActivity implements Vi
                 finish();
                 break;
         }
-
     }
 
 

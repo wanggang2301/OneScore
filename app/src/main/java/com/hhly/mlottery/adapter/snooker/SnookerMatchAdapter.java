@@ -1,7 +1,6 @@
 package com.hhly.mlottery.adapter.snooker;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,7 +10,6 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.SnookerEventPageActivity;
 import com.hhly.mlottery.bean.snookerbean.SnookerMatchBean;
 
 import java.util.List;
@@ -43,13 +41,10 @@ public class SnookerMatchAdapter extends BaseQuickAdapter<SnookerMatchBean.DataB
         rl_match.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+/*
                 Intent intent = new Intent(mContext, SnookerEventPageActivity.class);
                 intent.putExtra("leagueId", dataBean.getLeagueId());
-                mContext.startActivity(intent);
-
-
-                // Toast.makeText(mContext, dataBean.getLeagueName() + "__" + dataBean.getLeagueId(), Toast.LENGTH_SHORT).show();
+                mContext.startActivity(intent);*/
             }
         });
     }
