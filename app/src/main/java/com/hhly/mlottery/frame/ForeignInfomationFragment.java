@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.ForeignInfomationAdapter;
-import com.hhly.mlottery.bean.UpdateInfo;
+import com.hhly.mlottery.bean.ForeignInfomationEvent;
 import com.hhly.mlottery.bean.foreigninfomation.ForeignInfomationBean;
 import com.hhly.mlottery.bean.foreigninfomation.OverseasInformationListBean;
 import com.hhly.mlottery.config.BaseURLs;
@@ -261,7 +261,7 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
     /**
      * 国外资讯由详情页退出时返回点赞数量更新列表数据源
      */
-    public void onEventMainThread(UpdateInfo.ForeignInfomationEvent foreignInfomationEvent) {
+    public void onEventMainThread(ForeignInfomationEvent foreignInfomationEvent) {
         int id = foreignInfomationEvent.getId();
         int tight = foreignInfomationEvent.getFavroite();
         Iterator<OverseasInformationListBean> iterator = mList.iterator();

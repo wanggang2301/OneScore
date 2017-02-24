@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.UpdateInfo;
+import com.hhly.mlottery.bean.ForeignInfomationEvent;
 import com.hhly.mlottery.bean.foreigninfomation.OverseasInformationListBean;
 import com.hhly.mlottery.frame.ForeignChatFragment;
 import com.hhly.mlottery.util.CyUtils;
@@ -59,7 +59,7 @@ public class ForeignInfomationDetailsActivity extends BaseActivity implements Vi
                 CyUtils.hideKeyBoard(this);
                 // setResult(2, new Intent().putExtra("cmt_sum", ChatFragment.cmt_sum));
                 MobclickAgent.onEvent(mContext, "ForeignInfomationDetailsActivity_Exit");
-                EventBus.getDefault().post(new UpdateInfo.ForeignInfomationEvent(oilbean.getId(), ForeignChatFragment.tightCount));
+                EventBus.getDefault().post(new ForeignInfomationEvent(oilbean.getId(), ForeignChatFragment.tightCount));
                 finish();
                 break;
         }
@@ -72,7 +72,7 @@ public class ForeignInfomationDetailsActivity extends BaseActivity implements Vi
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             CyUtils.hideKeyBoard(this);
             MobclickAgent.onEvent(mContext, "Football_CounselCommentActivity_Exit");
-            EventBus.getDefault().post(new UpdateInfo.ForeignInfomationEvent(oilbean.getId(), ForeignChatFragment.tightCount));
+            EventBus.getDefault().post(new ForeignInfomationEvent(oilbean.getId(), ForeignChatFragment.tightCount));
             finish();
             return true;
         }
