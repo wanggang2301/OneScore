@@ -25,7 +25,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="21dp"
-        android:background="@color/snooker_green"
+        android:background="@drawable/snooker_marquee_bg"
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:orientation="horizontal"
@@ -159,7 +159,7 @@
                 android:text="0"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:background="@color/snooker_green"
+                android:background="@drawable/snooker_score_left_bg"
                 />
             <TextView
                 android:id="@+id/snooker_guest_score"
@@ -169,7 +169,7 @@
                 android:textSize="16sp"
                 android:text="0"
                 android:gravity="center"
-                android:background="@color/white"
+                android:background="@drawable/snooker_score_right_bg"
                 android:textColor="@color/snooker_score_black"
                 />
         </LinearLayout>
