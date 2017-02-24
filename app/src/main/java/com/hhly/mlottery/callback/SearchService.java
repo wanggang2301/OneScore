@@ -13,5 +13,6 @@ import retrofit.http.Query;
  * @data: 2016/9/26 18:43
  */
 public interface SearchService {
-    @GET(BaseURLs.SEARCHMATCHLEAGUES) rx.Observable<FootBallSerachBean> searchProdcut(@Query("lang") String code, @Query("matchStr") String keyword);
+    @GET(BaseURLs.SEARCHMATCHLEAGUES)
+    rx.Observable<FootBallSerachBean> searchProdcut(@Query("lang") String code, @Query("matchStr") String keyword);
 }

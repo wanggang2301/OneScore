@@ -334,34 +334,36 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
 
             @Override
             public void onResponse(LeagueDataBase json) {
+                if (json != null) {
 
-                if (!"200".equals(json.getCode())) {
-                    mHandler.sendEmptyMessage(DATA_STATUS_ERROR);
-                    return;
-                }
-
-                if (json.getInternation() != null && json.getInternation().size() > 0) {
-                    internation = json.getInternation();
-                    int size = internation.size() % ROWNUM == 0 ? 0 : ROWNUM - internation.size() % ROWNUM;
-                    for (int i = 0; i < size; i++) {
-                        internation.add(new DataBaseBean("", "", "", ""));
+                    if (!"200".equals(json.getCode())) {
+                        mHandler.sendEmptyMessage(DATA_STATUS_ERROR);
+                        return;
                     }
-                }
 
-                if (json.getNation() != null && json.getNation().size() > 0) {
-                    nation = new ArrayList<>();
-                    for (int t = 0; t < Math.ceil((double) json.getNation().size() / ROWNUM); t++) {
-                        List<NationBean> list = new ArrayList<>();
-                        for (int j = 0; j < ROWNUM; j++) {
-                            if ((j + ROWNUM * t) < json.getNation().size()) {
-                                list.add(json.getNation().get(j + ROWNUM * t));
-                            }
+                    if (json.getInternation() != null && json.getInternation().size() > 0) {
+                        internation = json.getInternation();
+                        int size = internation.size() % ROWNUM == 0 ? 0 : ROWNUM - internation.size() % ROWNUM;
+                        for (int i = 0; i < size; i++) {
+                            internation.add(new DataBaseBean("", "", "", ""));
                         }
-
-                        nation.add(list);
                     }
+
+                    if (json.getNation() != null && json.getNation().size() > 0) {
+                        nation = new ArrayList<>();
+                        for (int t = 0; t < Math.ceil((double) json.getNation().size() / ROWNUM); t++) {
+                            List<NationBean> list = new ArrayList<>();
+                            for (int j = 0; j < ROWNUM; j++) {
+                                if ((j + ROWNUM * t) < json.getNation().size()) {
+                                    list.add(json.getNation().get(j + ROWNUM * t));
+                                }
+                            }
+
+                            nation.add(list);
+                        }
+                    }
+                    initViewData();
                 }
-                initViewData();
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override

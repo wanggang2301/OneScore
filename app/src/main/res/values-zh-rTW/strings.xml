@@ -1548,4 +1548,6 @@
     <string name="sn_rank_name">姓名</string>
     <string name="sn_rank_zjf">總積分</string>
     <string name="sn_rank_zjj">總獎金</string>
+    <string name="sn_player_search">請輸入球員名稱</string>
+
 </resources>
