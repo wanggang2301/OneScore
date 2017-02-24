@@ -145,6 +145,11 @@ public class TennisBallTabFragment extends Fragment implements SwipeRefreshLayou
     // 设置页面显示状态
     private void setStatus(int status) {
         L.d("xxxxx", "status:  " + status);
+        if(status == ERROR){
+            mData.clear();
+            mAdapter.notifyDataSetChanged();
+        }
+
         mNoDataTextView.setVisibility(status == NOTO_DATA ? View.VISIBLE : View.GONE);
         swipeRefreshLayout.setRefreshing(status == LOADING);
         mErrorLayout.setVisibility(status == ERROR ? View.VISIBLE : View.GONE);

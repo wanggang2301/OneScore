@@ -65,11 +65,8 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-//        setWebSocketUri(BaseURLs.WS_SERVICE);
-        setWebSocketUri("ws://192.168.33.7:61614");
+        setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.tennis.score");
-        setServerName("admin");
-        setServerPassword("admin");
         super.onCreate(savedInstanceState);
     }
 
@@ -82,6 +79,7 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment {
         initView();
         setupViewPager();
         initEvent();
+
         return mView;
     }
 
@@ -163,6 +161,11 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        connectWebSocket();
+    }
 
     private void popWindow(final View v) {
         final View mView = View.inflate(mContext, R.layout.pop_select, null);

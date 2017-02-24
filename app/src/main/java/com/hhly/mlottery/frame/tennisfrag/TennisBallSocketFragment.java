@@ -166,13 +166,16 @@ public class TennisBallSocketFragment extends Fragment implements SwipeRefreshLa
     // 设置页面显示状态
     private void setStatus(int status) {
         L.d("xxxxx", "socketFrag status:  " + status);
+        if(status == ERROR){
+            mData.clear();
+            mAdapter.notifyDataSetChanged();
+        }
         if (type == 3) {
             no_focus.setVisibility(status == NOTO_DATA ? View.VISIBLE : View.GONE);
         } else {
             mNoDataTextView.setVisibility(status == NOTO_DATA ? View.VISIBLE : View.GONE);
         }
         swipeRefreshLayout.setRefreshing(status == LOADING);
-//        tennis_recycler.setVisibility(status == SUCCESS ? View.VISIBLE : View.GONE);
         mErrorLayout.setVisibility(status == ERROR ? View.VISIBLE : View.GONE);
     }
 
