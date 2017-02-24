@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.AnalyzeBean;
 import com.hhly.mlottery.bean.footballDetails.RankAndGoal;
+import com.hhly.mlottery.bean.snookerbean.snookerDetail.SnookerAnalyzeBean;
+import com.hhly.mlottery.config.StaticValues;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +24,9 @@ public class AnalyzeRankAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
     private Context context;
-    private List<? extends RankAndGoal> mScoreRankList;
+    private List<SnookerAnalyzeBean.ProfessionDataEntity> mScoreRankList;
 
-    public AnalyzeRankAdapter(Context context, List<? extends RankAndGoal> mScoreRankList) {
+    public AnalyzeRankAdapter(Context context, List<SnookerAnalyzeBean.ProfessionDataEntity> mScoreRankList) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         if (mScoreRankList == null) {
@@ -64,105 +66,53 @@ public class AnalyzeRankAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        if (mScoreRankList.get(position) instanceof AnalyzeBean.ScoreRankEntity) {//积分排行
-            List<AnalyzeBean.ScoreRankEntity> list = (List<AnalyzeBean.ScoreRankEntity>) mScoreRankList;
-            AnalyzeBean.ScoreRankEntity entity = list.get(position);
-            AnalyzeBean.ScoreRankEntity.ObjEntity obj = list.get(position).getObj();
-
-            if (entity.getType() == 1) {
-                holder.title.setText(R.string.rank);
-                String[] s = obj.getHome().trim().split(" ");
-                String[] s1 = obj.getGuest().trim().split(" ");
-                String homeRank = s[s.length - 1];//不管是文字加数字还是纯数字，取到的都是数字
-                String guestRank = s1[s1.length - 1];
-                holder.home.setText(obj.getHome().equals("-2") ? "--" : obj.getHome());//没有数据就是--
-                holder.guest.setText(obj.getGuest().equals("-2") ? "--" : obj.getGuest());
-                int progress;
-                if (Integer.parseInt(homeRank) == 0 && Integer.parseInt(guestRank) == 0||obj.getHome().equals("-2")&&obj.getGuest().equals("-2")) {
-                    progress = 50;
-                }
-                else if(obj.getHome().equals("-2")){
-                    progress=0;
-                }
-                else if(obj.getGuest().equals("-2")){
-                    progress=100;
-                }
-                else {
-                    progress = Integer.parseInt(guestRank) * 100 / (Integer.parseInt(homeRank) + Integer.parseInt(guestRank));
-                }
-                holder.pro.setProgress(progress);
-            } else if (entity.getType() == 2) {
-
-
-                holder.title.setText(R.string.recordconstract);
-                holder.home.setText(obj.getH_win() + "" + context.getString(R.string.analyze_win) + obj.getH_equ() + ""
-                        + context.getString(R.string.analyze_equ) + obj.getH_defeat() + "" + context.getString(R.string.analyze_defeat));
-                holder.guest.setText(obj.getG_win() + "" + context.getString(R.string.analyze_win) + obj.getG_equ() + "" + context.getString(R.string.analyze_equ)
-                        + obj.getG_defeat() + "" + context.getString(R.string.analyze_defeat));
-                int progress;
-                if (obj.getH_total() == 0 && obj.getG_total() == 0) {
-                    progress = 50;
-                } else {
-                    progress = obj.getH_total() * 100 / (obj.getH_total() + obj.getG_total());
-                }
-
-                holder.pro.setProgress(progress);
-            } else {
-                holder.title.setText(R.string.homeguestconstract);
-                holder.home.setText(obj.getH_win() + "" + context.getString(R.string.analyze_win) + obj.getH_equ() + ""
-                        + context.getString(R.string.analyze_equ) + obj.getH_defeat() + "" + context.getString(R.string.analyze_defeat));
-                holder.guest.setText(obj.getG_win() + "" + context.getString(R.string.analyze_win) + obj.getG_equ() + "" + context.getString(R.string.analyze_equ)
-                        + obj.getG_defeat() + "" + context.getString(R.string.analyze_defeat));
-                int progress;
-                if (obj.getH_total() == 0 && obj.getG_total() == 0) {
-                    progress = 50;
-                } else {
-                    progress = obj.getH_total() * 100 / (obj.getH_total() + obj.getG_total());
-                }
-
-                holder.pro.setProgress(progress);
-            }
-
-        } else {//得失球
-            List<AnalyzeBean.GoalAndLossEntity> list = (List<AnalyzeBean.GoalAndLossEntity>) mScoreRankList;
-            AnalyzeBean.GoalAndLossEntity entity = list.get(position);
-            AnalyzeBean.GoalAndLossEntity.ObjEntity obj = list.get(position).getObj();
-            int progress;
-            if (Double.parseDouble(obj.getGuest()) == 0 && Double.parseDouble(obj.getHome()) == 0 || (obj.getHome().equals("-2") && obj.getGuest().equals("-2"))) {
-                progress = 50;
-            } else if (obj.getHome().equals("-2")) {//-2表示没有数据，用--显示
-                progress = 0;
-            } else if (obj.getGuest().equals("-2")) {
-                progress = 100;
-            } else {
-                progress = (int) (Double.parseDouble(obj.getHome()) * 100 / (Double.parseDouble(obj.getHome()) + Double.parseDouble(obj.getGuest())));
-            }
-
-            if (entity.getType() == 4) {
-                holder.title.setText(R.string.GoalsperGame);
-                holder.home.setText(obj.getHome().equals("-2") ? "--" : obj.getHome());
-                holder.guest.setText(obj.getGuest().equals("-2") ? "--" : obj.getGuest());
-
-                holder.pro.setProgress(progress);
-            } else if (entity.getType() == 5) {
-                holder.title.setText(R.string.homeguestconstract);
-                holder.home.setText(obj.getHome().equals("-2") ? "--" : obj.getHome());
-                holder.guest.setText(obj.getGuest().equals("-2") ? "--" : obj.getGuest());
-                holder.pro.setProgress(progress);
-            } else if (entity.getType() == 6) {
-                holder.title.setText(R.string.losspergame);
-                holder.home.setText(obj.getHome().equals("-2") ? "--" : obj.getHome());
-                holder.guest.setText(obj.getGuest().equals("-2") ? "--" : obj.getGuest());
-
-                holder.pro.setProgress(progress);
-            } else {
-                holder.title.setText(R.string.homeguestconstract);
-                holder.home.setText(obj.getHome().equals("-2") ? "--" : obj.getHome());
-                holder.guest.setText(obj.getGuest().equals("-2") ? "--" : obj.getGuest());
-
-                holder.pro.setProgress(progress);
-            }
+        SnookerAnalyzeBean.ProfessionDataEntity entity=mScoreRankList.get(position);
+        if(entity.getDataType().equals(StaticValues.BIRTH)){
+            holder.title.setText("生日");
+        }else if(entity.getDataType().equals(StaticValues.RANKING)){
+            holder.title.setText("世界排名");
         }
+        else if(entity.getDataType().equals(StaticValues.PRO_SEASON)){
+            holder.title.setText("职业赛季");
+        }
+        else if(entity.getDataType().equals(StaticValues.TOTAL_BONUS)){
+            holder.title.setText("总奖金");
+        }
+        else if(entity.getDataType().equals(StaticValues.FULLSCORE)){
+            holder.title.setText("147满分杆");
+        }
+        else if(entity.getDataType().equals(StaticValues.TOTAL_CHAMPION)){
+            holder.title.setText("冠军数");
+        }
+        else if(entity.getDataType().equals(StaticValues.HUNDRED_TIMES)){
+            holder.title.setText("破百数");
+        }
+        else if(entity.getDataType().equals(StaticValues.HUNDRED_PERCENT)){
+            holder.title.setText("破败率");
+        }
+        else if(entity.getDataType().equals(StaticValues.TOTAL_TIMES)){
+            holder.title.setText("总场数");
+        }
+        else if(entity.getDataType().equals(StaticValues.WIN)){
+            holder.title.setText("场胜数");
+        }
+        else if(entity.getDataType().equals(StaticValues.WIN_PERCENT)){
+            holder.title.setText("场胜率");
+        }
+        else if(entity.getDataType().equals(StaticValues.TOTAL_NUMBERS)){
+            holder.title.setText("总局数");
+        }
+        else if(entity.getDataType().equals(StaticValues.TOTAL_WINS)){
+            holder.title.setText("局胜数");
+        }
+        else if(entity.getDataType().equals(StaticValues.BOARD_WINS_PERSCENT)){
+            holder.title.setText("局胜率");
+        }
+
+
+
+        holder.home.setText(entity.getHomeData()==null?"0":entity.getHomeData());
+        holder.guest.setText(entity.getGuestData()==null?"0":entity.getGuestData());
         return convertView;
     }
 

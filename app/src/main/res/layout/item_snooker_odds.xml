@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <!--亚盘item-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:background="@color/line_football_footer"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/snooker_company_txt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:textColor="@color/res_name_color"
+            android:textSize="13sp"
+            tools:text="皇冠"/>
+
+        <TableLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:background="@color/line_football_footer">
+
+            <TableRow
+                android:id="@+id/plateTableRow"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="0.2dp"
+                android:layout_marginStart="0.2dp"
+                android:layout_weight="1">
+
+                <TextView
+                    style="@style/plateTableBg"
+                    android:layout_weight="2"
+                    android:text="即赔"
+                    android:textColor="@color/tabhost_unselected_text"/>
+
+                <TextView
+                    android:id="@+id/snooker_homeOdds1"
+                    style="@style/plateTableBg"
+                    android:layout_weight="3"
+                    tools:text="2.50"/>
+
+                <TextView
+                    android:id="@+id/snooker_handicap1"
+                    style="@style/plateTableBg"
+                    android:layout_weight="4"
+                    android:textColor="@color/tabhost_unselected_text"
+                    tools:text="*平手"/>
+
+                <TextView
+                    android:id="@+id/snooker_guestOdds1"
+                    style="@style/plateTableBg"
+                    android:layout_weight="3"
+                    android:textColor="@color/tabhost_unselected_text"
+                    tools:text="1.40"/>
+            </TableRow>
+
+
+            <TableRow
+                android:id="@+id/plateTableRow2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="0.2dp"
+                android:layout_marginStart="0.2dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/plateTableBg2"
+                    android:layout_weight="2"
+                    android:text="初赔"
+                    android:textColor="@color/content_txt_dark_grad"/>
+
+                <TextView
+                    android:id="@+id/snooker_homeOdds2"
+                    style="@style/plateTableBg2"
+                    android:layout_weight="3"
+                    android:textColor="@color/content_txt_dark_grad"
+                    tools:text="1.50"/>
+
+                <TextView
+                    android:id="@+id/snooker_handicap2"
+                    style="@style/plateTableBg2"
+                    android:layout_weight="4"
+                    android:textColor="@color/content_txt_dark_grad"
+                    tools:text="*平手/两球半"/>
+
+                <TextView
+                    android:id="@+id/snooker_guestOdds2"
+                    style="@style/plateTableBg2"
+                    android:layout_weight="3"
+                    android:textColor="@color/content_txt_dark_grad"
+                    tools:text="1.60"/>
+            </TableRow>
+        </TableLayout>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.7"
+            android:src="@mipmap/plate_icon"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:layout_marginBottom="12dp"
+        android:background="@color/line_football_footer"/>
+</LinearLayout>

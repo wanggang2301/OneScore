@@ -967,6 +967,8 @@ public class BaseURLs {
     public final static String SNOOKER_LIST_URL = URL_API_HOST + "snookerMatch.getFirstSnookerMatch.do";
     public final static String SNOOKER_LIST_LOADMORE_URL = URL_API_HOST + "snookerMatch.getSnookerLeagues.do"; // http://m.1332255.com:81/mlottery/core/snookerMatch.getSnookerLeagues.do?dateLeaguesId=2016-11-20_125358,2016-11-19_125358
 
+    //斯诺克头部跟分析页
+    public final static String SNOOKER_ANALYZE_URL=URL_API_HOST+"snookerAnalysis.findAnalysisInfo.do";
     /**
      * 我的定制
      */
@@ -1033,21 +1035,4 @@ public class BaseURLs {
 
     /***********************************************************************************************************************/
 
-    //                                                     _(\_/)
-    //                                                   ,((((^`\
-    //                                                  ((((  (6 \
-    //                                                ,((((( ,    \
-    //                            ,,,_              ,(((((  /"._  ,`,
-    //                           ((((\\ ,...       ,((((   /    `-.-'
-    //                           )))  ;'    `"'"'""((((   (
-    //                          (((  /            (((      \
-    //                           )) |                      |
-    //                          ((  |        .       '     |
-    //                          ))  \     _ '      `t   ,.')
-    //                          (   |   y;- -,-""'"-.\   \/
-    //                          )   / ./  ) /         `\  \
-    //                             |./   ( (           / /'
-    //                             ||     \\          //'|
-    //                             ||      \\       _//'||
-    //                             ||       ))     |_/  ||
 }

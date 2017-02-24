@@ -678,7 +678,7 @@
     <string name="football_detail_pre_title2">天气</string>
     <string name="football_detail_pre_title3">场地</string>
     <string name="football_detail_pre_title4">首发</string>
-    <!--分析界面-->
+    <!--斯诺克分析界面-->
     <string name="rank">球队排名</string>
     <string name="recordconstract">战绩对比</string>
     <string name="homeguestconstract">主客对比</string>
@@ -692,6 +692,7 @@
     <string name="opinion">本场观点</string>
     <string name="shuangfangjin">双方近</string>
     <string name="cijiaofeng">"次交锋,  "</string>
+    <string name="cibisai">"次比赛,"</string>
     <string name="analyze_win">胜</string>
     <string name="analyze_equ">平</string>
     <string name="analyze_defeat">负</string>
@@ -702,7 +703,7 @@
     <string name="analyze_date">日期</string>
     <string name="analyze_match">赛事</string>
     <string name="analyze_match_result">赛果</string>
-    <string name="zhuduijin">主队近</string>
+    <string name="zhuduijin">近</string>
     <string name="keduijin">客队近</string>
     <string name="nodata">暂无数据</string>
 
@@ -1071,7 +1072,6 @@
     <string name="please_login_first">请先登录</string>
 
 
-
     <!--模糊搜索-->
     <string name="fuzzy_search">请输入联赛名</string>
     <string name="not_find_search">对不起,找不到相关信息</string>
@@ -1258,7 +1258,6 @@
     <string name="avatar_settings">头像</string>
     <string name="photograph">拍照</string>
     <string name="picture_resource_does_not_exist">图片资源不存在</string>
-
 
 
     <string name="welcome_chart_room">欢迎进入聊天室!</string>
@@ -1521,11 +1520,6 @@
     <string name="please_invited">邀请码</string>
 
 
-
-
-
-
-
     <string name="multi_header_name">多屏观看</string>
     <string name="multi_add">添加</string>
     <string name="multi_dialog_text">您确认移除这场比赛吗?</string>
@@ -1563,5 +1557,9 @@
     <string name="home_lottery_info_tm_bo_g">绿</string>
     <string name="home_lottery_info_tm_bo_b">蓝</string>
     <string name="home_lottery_info_image_desc">本站所有数据、资料仅供您参考，为避免遭受经济损失任何人不得用于非法用途，否则责任自负</string>
+    <string name="snooker_player_compare">职业对比</string>
+    <string name="snooker_history_bettle">历史交锋</string>
+    <string name="snooker_player1">选手1近期战绩</string>
+    <string name="snooker_player2">选手2近期战绩</string>
 
 </resources>
