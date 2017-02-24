@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
-import com.hhly.mlottery.frame.footframe.FootballDatabaseFragment;
-import com.hhly.mlottery.frame.footframe.FootballDatabaseInterFragment;
+import com.hhly.mlottery.frame.footballframe.FootballDatabaseFragment;
+import com.hhly.mlottery.frame.footballframe.FootballDatabaseInterFragment;
 
 /**
  * 足球资料库

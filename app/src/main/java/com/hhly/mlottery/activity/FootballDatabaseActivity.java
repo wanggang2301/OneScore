@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
-import com.hhly.mlottery.frame.footframe.FootballDatabaseFragment;
-import com.hhly.mlottery.frame.footframe.FootballDatabaseInterFragment;
+import com.hhly.mlottery.frame.footballframe.FootballDatabaseFragment;
+import com.hhly.mlottery.frame.footballframe.FootballDatabaseInterFragment;
 import com.umeng.analytics.MobclickAgent;
 
 /**

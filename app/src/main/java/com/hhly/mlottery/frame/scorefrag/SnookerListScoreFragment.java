@@ -24,10 +24,9 @@ import com.hhly.mlottery.activity.SnookerSettingActivity;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
-import com.hhly.mlottery.frame.snookerfrag.SnookerImmediateFragment;
-import com.hhly.mlottery.frame.snookerfrag.SnookerResultFragment;
-import com.hhly.mlottery.frame.snookerfrag.SnookerScheduleFragment;
+import com.hhly.mlottery.frame.snookerframe.SnookerImmediateFragment;
+import com.hhly.mlottery.frame.snookerframe.SnookerResultFragment;
+import com.hhly.mlottery.frame.snookerframe.SnookerScheduleFragment;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 
