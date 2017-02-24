@@ -142,7 +142,7 @@ public class BaseURLs {
     /*上传图片新URl*/
     public final static String NEW_URL_API_PHOST = HTTP + PHOST + URL_SPLITTER + "upload/";
     //视频直播
-    private final static String URL_MATCHVIDEO_DATA = "matchVideo.findVideoInfoApp.do";
+    private final static String  URL_MATCHVIDEO_DATA = "matchVideo.findVideoInfoApp.do";
 
     public final static String LANGUAGE_PARAM = "lang";
     public final static String TIMEZONE_PARAM = "timeZone";
@@ -968,6 +968,14 @@ public class BaseURLs {
     public final static String SNOOKER_LIST_LOADMORE_URL = URL_API_HOST + "snookerMatch.getSnookerLeagues.do"; // http://m.1332255.com:81/mlottery/core/snookerMatch.getSnookerLeagues.do?dateLeaguesId=2016-11-20_125358,2016-11-19_125358
 
     /**
+     * 斯洛克 新版
+     */
+    public final static String SNOOKER_IMMEDIATE_URL = URL_API_HOST + "snookerMatch.getFirstSnookerMatch.do";//http://192.168.31.12:8080/mlottery/core/snookerMatch.getFirstSnookerMatch.do
+    public final static String SNOOKER_RESULT_URL = URL_API_HOST + "snookerMatch.getSnookerResults.do";//"http://192.168.31.12:8080/mlottery/core/snookerMatch.getSnookerResults.do"
+    public final static String SNOOKER_SCHEDULE_URL = URL_API_HOST + "snookerMatch.getSnookerEvents.do";//"http://192.168.31.12:8080/mlottery/core/snookerMatch.getSnookerEvents.do"
+
+
+    /**
      * 我的定制
      */
     //我的定制页
@@ -1013,8 +1021,8 @@ public class BaseURLs {
 
 
     /*****************************************************************************************************************
-     *下面URL为HTML页面
-     *
+     * 下面URL为HTML页面
+     * <p>
      * 注意和接口区分URL拼接方式
      */
 
@@ -1029,6 +1037,21 @@ public class BaseURLs {
 
     //邀请码分享
     public final static String INVITED_ACTIVITY_URL = HTTP + HOST + URL_SPLITTER + "download_yqm.html";
+
+
+    /***
+     * 斯洛克url
+     */
+
+    //斯洛克资料库排名
+    public final static String URL_SNOOKER_INFO_RANK = URL_API_HOST + "snookerWorldRanking.getWorldRankingPaging.do";
+    //斯洛克资料库赛事
+    public final static String URL_SNOOKER_INFO_MATCH = URL_API_HOST + "snookerData.findAppLeagueList.do";
+    //斯洛克球员信息
+    public final static String URL_SNOOKER_INFO_PLAYER_INFO_H5 = HTTP + HOST + URL_SPLITTER + "snookerData/playerInfo.html";
+
+    //斯洛克模糊搜索
+    public final static String URL_SNOOKER_PLAYER_SEARCH = "/snookerWorldRanking.fuzzySearchWorldRanking.do";
 
 
     /***********************************************************************************************************************/

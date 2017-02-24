@@ -1,14 +1,11 @@
 package com.hhly.mlottery.util;
 
-import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
-import com.hhly.mlottery.bean.footballDetails.IntegralBean;
 import com.hhly.mlottery.config.BaseURLs;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TimeZone;
 
 public class AppConstants {
     /**

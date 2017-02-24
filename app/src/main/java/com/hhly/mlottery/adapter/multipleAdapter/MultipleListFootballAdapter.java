@@ -20,15 +20,13 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.Match;
 import com.hhly.mlottery.bean.MatchOdd;
 import com.hhly.mlottery.callback.FocusMatchClickListener;
-import com.hhly.mlottery.frame.footframe.FocusFragment;
+import com.hhly.mlottery.frame.footballframe.FocusFragment;
 import com.hhly.mlottery.util.HandicapUtils;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Created by yixq on 2017/1/5.

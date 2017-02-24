@@ -7,12 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.hhly.mlottery.MyApp;
@@ -23,7 +21,7 @@ import com.hhly.mlottery.bean.focusAndPush.BasketballConcernListBean;
 import com.hhly.mlottery.bean.focusAndPush.ConcernBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
-import com.hhly.mlottery.frame.footframe.FocusFragment;
+import com.hhly.mlottery.frame.footballframe.FocusFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.L;
@@ -38,8 +36,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.greenrobot.event.EventBus;
-
-import static com.hhly.mlottery.R.id.focus_red_dot_view;
 
 /**
  * @ClassName: OneScoreGit

@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketballInformationSerachActivity;
 import com.hhly.mlottery.activity.FootballInformationSerachActivity;
+import com.hhly.mlottery.activity.SnookerInformationSerachActivity;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -60,10 +61,12 @@ public class DataFragment extends Fragment implements View.OnClickListener {
     private TextView tv_match_name;
     private ImageView iv_match;
 
+    private Activity mActivity;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_data, container, false);
-        mContext = getActivity();
+        mContext = mActivity;
         initView();
         initEvent();
         return mView;
@@ -86,7 +89,7 @@ public class DataFragment extends Fragment implements View.OnClickListener {
 
         fragments.add(new FootballInfomationFragment());
         fragments.add(new BasketballInfomationFragment());
-        // fragments.add(new SnookerInfomationFragment());
+        fragments.add(new SnookerInfomationFragment());
 
 
         /**
@@ -104,6 +107,9 @@ public class DataFragment extends Fragment implements View.OnClickListener {
         } else if (matchChoiceType == BASKETBALL) {
             tv_match_name.setText(getResources().getString(R.string.basketball_txt));
             switchFragment(BASKETBALL);
+        } else if (matchChoiceType == SNOOKER) {
+            tv_match_name.setText(getResources().getString(R.string.snooker_txt));
+            switchFragment(SNOOKER);
         } else {
             tv_match_name.setText(getResources().getString(R.string.football_txt));
             switchFragment(FOOTBALL);
@@ -181,7 +187,6 @@ public class DataFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.public_btn_set:
-
                 if (fragmentIndex == FOOTBALL) {
                     Intent intent = new Intent(mContext, FootballInformationSerachActivity.class);
                     startActivity(intent);
@@ -189,10 +194,9 @@ public class DataFragment extends Fragment implements View.OnClickListener {
                     Intent intent = new Intent(mContext, BasketballInformationSerachActivity.class);
                     startActivity(intent);
                 } else if (fragmentIndex == SNOOKER) {
-
+                    Intent intent = new Intent(mContext, SnookerInformationSerachActivity.class);
+                    startActivity(intent);
                 }
-
-
                 break;
         }
 
@@ -212,6 +216,9 @@ public class DataFragment extends Fragment implements View.OnClickListener {
                 } else if (matchChoiceType == BASKETBALL) {
                     tv_match_name.setText(getResources().getString(R.string.basketball_txt));
                     switchFragment(BASKETBALL);
+                } else if (matchChoiceType == SNOOKER) {
+                    tv_match_name.setText(getResources().getString(R.string.snooker_txt));
+                    switchFragment(SNOOKER);
                 } else {
                     tv_match_name.setText(getResources().getString(R.string.football_txt));
                     switchFragment(FOOTBALL);
@@ -219,6 +226,12 @@ public class DataFragment extends Fragment implements View.OnClickListener {
             }
         }
 
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
     }
 }
 

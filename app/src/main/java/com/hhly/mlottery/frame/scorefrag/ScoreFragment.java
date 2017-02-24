@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.scorefrag;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -42,7 +43,9 @@ public class ScoreFragment extends Fragment {
 
     private BasketBallScoreFragment basketBallScoreFragment;
 
-    private SnookerScoreFragment snookerScoreFragment;
+    private SnookerListScoreFragment snookerScoreFragment;
+
+    private Activity mActivity;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +56,7 @@ public class ScoreFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_score, container, false);
-        mContext = getActivity();
+        mContext = mActivity;
         initView();
         return mView;
     }
@@ -61,11 +64,11 @@ public class ScoreFragment extends Fragment {
     private void initView() {
         footBallScoreFragment = new FootBallScoreFragment();
         basketBallScoreFragment = new BasketBallScoreFragment();
-        // snookerScoreFragment = new SnookerScoreFragment();
+        snookerScoreFragment = new SnookerListScoreFragment();
 
         fragments.add(footBallScoreFragment);
         fragments.add(basketBallScoreFragment);
-        //  fragments.add(snookerScoreFragment);
+        fragments.add(snookerScoreFragment);
 
 
         /**
@@ -99,5 +102,11 @@ public class ScoreFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
     }
 }

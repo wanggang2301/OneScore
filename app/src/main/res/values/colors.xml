@@ -2,8 +2,6 @@
 <resources>
 
 
-
-
     <color name="selected_bg">#eeeeee</color>
     <!--足球二期颜色-->
     <color name="foot_integal_se">#ff5400</color>
@@ -659,10 +657,15 @@
     <color name="snooker_fulltime_textcolor">#FF0000</color>
     <color name="snooker_score_textcolor">#FFFFFF</color>
     <color name="snooker_odds_textcolor">#666666</color>
+    <color name="snooker">#4a4a4a</color>
 
 
     <color name="product_advice">#ff5c0b</color>
     <color name="product_answer_shape_color">#fff2ec</color>
     <!--多屏列表-->
     <color name="multiple_item_bg_color">#dff2ff</color>
+    <color name="snooker_rank_bg">#FAFDFF</color>
+    <color name="snooker_rank_txt">#838A9B</color>
+    <color name="snooker_rank_txt_top3">#F6A623</color>
+
 </resources>

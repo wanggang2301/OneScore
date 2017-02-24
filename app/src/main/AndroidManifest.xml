@@ -341,9 +341,25 @@
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
-
+        <!--snooker 列表页-->
+        <activity
+            android:name=".activity.SnookerListActivity"
+            android:screenOrientation="portrait" />
+        <!--snooker 设置页-->
+        <activity
+            android:name=".activity.SnookerSettingActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.IndexActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SnookerPlayerInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SnookerInformationSerachActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.SnookerEventPageActivity"
             android:screenOrientation="portrait"></activity>
     </application>
 

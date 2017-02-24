@@ -13,6 +13,8 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.snookerbean.SnookerMatchOddsBean;
 import com.hhly.mlottery.bean.snookerbean.SnookerMatchesBean;
+import com.hhly.mlottery.callback.DateOnClickListener;
+import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 
@@ -29,7 +31,23 @@ public class SnookerRecyclerAdapter extends BaseQuickAdapter<SnookerMatchesBean>
     private Context mContext;
     private List<SnookerMatchesBean> mData;
 
+    /**
+     * 赛事item click
+     */
+    private RecyclerViewItemClickListener mOnItemClickListener = null;
 
+    public void setmOnItemClickListener(RecyclerViewItemClickListener mOnItemClickListener) {
+        this.mOnItemClickListener = mOnItemClickListener;
+    }
+
+    /**
+     * 日期选择
+     */
+    private DateOnClickListener dateOnClickListener = null;
+
+    public void setDateOnClickListener(DateOnClickListener dateOnClickListener) {
+        this.dateOnClickListener = dateOnClickListener;
+    }
 
     public SnookerRecyclerAdapter(Context context ,List<SnookerMatchesBean> data){
         super(R.layout.snooker_list_activity_item, data);
@@ -71,6 +89,26 @@ public class SnookerRecyclerAdapter extends BaseQuickAdapter<SnookerMatchesBean>
                     view = LayoutInflater.from(mContext).inflate(R.layout.snooker_list_activity_item , parent , false);
                     holder = new ViewHolderList(view);
                 break;
+        }
+        if (viewType == 0) {
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (dateOnClickListener != null) {
+                        dateOnClickListener.onClick(view);
+                    }
+                }
+            });
+        }else if (viewType == 2) {
+            //将创建的View注册点击事件
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnItemClickListener != null) {
+                        mOnItemClickListener.onItemClick(v, (String) v.getTag());
+                    }
+                }
+            });
         }
 
         return holder;

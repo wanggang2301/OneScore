@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.cpifrag;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,7 +13,6 @@ import android.view.ViewGroup;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
-import com.hhly.mlottery.frame.scorefrag.SnookerScoreFragment;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
 
@@ -41,9 +41,8 @@ public class CpiFragment extends Fragment {
 
     private FootCpiFragment footCpiFragment;
 
-    private SnookerScoreFragment basketBallScoreFragment;
 
-    private SnookerScoreFragment snookerScoreFragment;
+    private Activity mActivity;
 
 
     @Override
@@ -55,22 +54,14 @@ public class CpiFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
         mView = inflater.inflate(R.layout.fragment_cpi2, container, false);
-        mContext = getActivity();
+        mContext = mActivity;
         initView();
         return mView;
     }
 
     private void initView() {
-        basketBallScoreFragment = new SnookerScoreFragment();
-        snookerScoreFragment = new SnookerScoreFragment();
-
         fragments.add(FootCpiFragment.newInstance());
-        //  fragments.add(basketBallScoreFragment);
-        //  fragments.add(snookerScoreFragment);
-
         switchFragment(FOOTBALL);
 
     }
@@ -96,5 +87,12 @@ public class CpiFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
     }
 }

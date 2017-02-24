@@ -8,31 +8,41 @@ package com.hhly.mlottery.bean.snookerbean;
 
 public class SnookerMatchScoreBean {
 
-//    leagueId: "125358",
-//    matchId: "569599",
-//    status: "3",
-//    playerOnewin: "2",
-//    playerTwowin: "0",
-//    poScore: "33",
-//    ptScore: "0",
+//    leagueId: "320973",
+//    matchId: "787038",
+//    status: "2",
+//    playerOnewin: "3",
+//    playerTwowin: "4",
+//    poScore: "7",
+//    ptScore: "84",
 //    poSingleShot: "",
 //    ptSingleShot: "0",
 //    ball: "2",
-//    poId: "348",
-//    ptId: "1369"
+//    poId: "319672",
+//    ptId: "320083",
+//    totalGames: "7"
 
-    private String leagueId;
-    private String matchId;
-    private String status;
-    private String playerOnewin;
-    private String playerTwowin;
-    private String poScore;
-    private String ptScore;
-    private String poSingleShot;
-    private String ptSingleShot;
-    private String ball;
-    private String poId;
-    private String ptId;
+    private String leagueId;//联赛id
+    private String matchId;//赛事id
+    private String status;//比赛状态:0休息中 1未开始2 完场3进行中
+    private String playerOnewin;//选手1胜场
+    private String playerTwowin;//选手2胜场
+    private String poScore;//选手1小分
+    private String ptScore;//选手2小分
+    private String poSingleShot;//选手1单杆得分
+    private String ptSingleShot;//选手2单杆得分
+    private String ball;//球权0没有 1选手一持球 2选手二持球
+    private String poId;//选手1Id
+    private String ptId;//选手2Id
+    private String totalGames;//总局数
+
+    public String getTotalGames() {
+        return totalGames;
+    }
+
+    public void setTotalGames(String totalGames) {
+        this.totalGames = totalGames;
+    }
 
     public String getLeagueId() {
         return leagueId;

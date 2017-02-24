@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
-import com.hhly.mlottery.frame.footframe.LeagueStatisticsTodayFragment;
+import com.hhly.mlottery.frame.footballframe.LeagueStatisticsTodayFragment;
 
 /**
  * @author: Wangg

@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.homefrag;
 
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -123,6 +124,8 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     public ProductListener mListener;
 
+    private Activity mActivity;
+
 
     /**
      * 跳转其他Activity 的requestcode
@@ -140,7 +143,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = getActivity();
+        mContext = mActivity;
 
         channelNumber = getAppMetaData(mContext, "UMENG_CHANNEL");// 获取渠道号
         getVersion();// 获取版本号
@@ -921,5 +924,12 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         } else if (resultCode == ProductAdviceActivity.RESULT_CODE) {
             getRequestData(2);
         }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
+
     }
 }

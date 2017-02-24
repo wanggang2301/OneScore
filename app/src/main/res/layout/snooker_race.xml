@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/snooker_race_fragemnt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/snooker_race_male_gridview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_snooker_bg">
+
+            <com.hhly.mlottery.widget.GrapeGridView
+                android:id="@+id/male_gridview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:columnWidth="0dp"
+                android:gravity="center"
+                android:numColumns="8"
+                android:scrollbars="none"
+                android:stretchMode="columnWidth" />
+            <!--   <android.support.v7.widget.RecyclerView
+                   android:id="@+id/header_view"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="10dp"
+                   android:background="@drawable/shape_snooker_bg"
+                   android:gravity="center" />-->
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/snooker_race_time_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="比赛时间" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="状态" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="选手" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="比分" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="选手" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="详细" />
+
+        </LinearLayout>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/live_swiperefreshlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <com.hhly.mlottery.view.SnookerPinnedHeaderExpandableListView
+                android:id="@+id/explistview_live"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cacheColorHint="#00000000"
+                android:choiceMode="singleChoice"
+                android:divider="@color/line_football_footer"
+                android:dividerHeight="0.2dp"
+                android:drawSelectorOnTop="false"
+                android:fastScrollEnabled="false"
+                android:footerDividersEnabled="true"
+                android:groupIndicator="@null"
+                android:scrollbars="vertical"
+                android:scrollingCache="true"
+                 />
+
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/live_swiperefreshlayout1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <ListView
+                android:id="@+id/header_item_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                />
+
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+
+        <TextView
+            android:id="@+id/live_no_data_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/nodata"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/live_error_ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/refresh" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/exp_net_status_txt"
+                android:textColor="@color/version"
+                android:textSize="@dimen/text_size_14" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dip"
+                    android:text="@string/exp__check_txt"
+                    android:textColor="@color/msg"
+                    android:textSize="@dimen/text_size_14" />
+
+                <TextView
+                    android:id="@+id/live_error_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/exp_refresh_txt"
+                    android:textColor="@color/exp_refresh"
+                    android:textSize="@dimen/text_size_14" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <!--赛事简介文本-->
+    <TextView
+        android:id="@+id/snooker_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:lineSpacingExtra="5dp"
+        android:textColor="@color/snooker"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+</LinearLayout>

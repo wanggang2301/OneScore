@@ -13,7 +13,7 @@ import com.hhly.mlottery.bean.scheduleBean.AsiaSize;
 import com.hhly.mlottery.bean.scheduleBean.Euro;
 import com.hhly.mlottery.bean.scheduleBean.SchMatch;
 import com.hhly.mlottery.bean.scheduleBean.ScheduleMatchOdd;
-import com.hhly.mlottery.frame.footframe.ScheduleFragment.SchFocusClickListener;
+import com.hhly.mlottery.frame.footballframe.ScheduleFragment.SchFocusClickListener;
 import com.hhly.mlottery.util.HandicapUtils;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;

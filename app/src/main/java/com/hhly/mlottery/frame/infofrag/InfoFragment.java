@@ -21,7 +21,6 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 
 import java.util.ArrayList;
@@ -50,11 +49,13 @@ public class InfoFragment extends Fragment {
     private TextView tv_match_name;
     private ImageView iv_match;
 
+    private Activity mActivity;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_info, container, false);
-        mContext = getActivity();
+        mContext = mActivity;
         initView();
         initEvent();
         return mView;
@@ -82,19 +83,6 @@ public class InfoFragment extends Fragment {
         switchFragment(FOOTBALL);
 
     }
-
-    private void choiceMatchType() {
-        int matchChoiceType = PreferenceUtil.getInt("matchChoiceType", FOOTBALL);
-
-        if (matchChoiceType == FOOTBALL) {
-            tv_match_name.setText(getResources().getString(R.string.football_txt));
-            switchFragment(FOOTBALL);
-        } else {
-            tv_match_name.setText(getResources().getString(R.string.football_txt));
-            switchFragment(FOOTBALL);
-        }
-    }
-
 
 
     private void initEvent() {
@@ -162,5 +150,11 @@ public class InfoFragment extends Fragment {
         fragmentManager = getChildFragmentManager();
         currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content_info, currentFragment, fragments.get
                 (position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, true);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
     }
 }
