@@ -100,6 +100,7 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
     private LinearLayout snooker_race_time_head;
     private String currentStage = "";
     private String mSeason = "";
+    private TextView live_pr_no_data_txt;
 
     public static SnookerDatabaseFragment newInstance(int type, String leagueId) {
         Bundle bundle = new Bundle();
@@ -134,7 +135,14 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
 
     //赛事简介数据传输
     public void onEventMainThread(String test) {
-        snooker_profile.setText("\t\t\t\t" + test);
+        if(test.equals("nodata")){
+            snooker_profile.setText(getResources().getString(R.string.nodata));
+            //live_pr_no_data_txt.setVisibility(View.VISIBLE);
+            snooker_profile.setVisibility(View.GONE);
+        }else{
+            //live_pr_no_data_txt.setVisibility(View.GONE);
+            snooker_profile.setText("\t\t\t\t" + test);
+        }
     }
 
     //赛事简介数据传输
@@ -246,7 +254,7 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
         String url = "http://m.1332255.com:81/mlottery/core/mlottery/snookerData.findPreviousWinners.do";
 
         final Map<String, String> map = new HashMap();
-        map.put("leagueId", "319655");
+        map.put("leagueId", mLeagueId);
 
         VolleyContentFast.requestJsonByPost(url, map, new VolleyContentFast.ResponseSuccessListener<SnookerSuccessBean>() {
 
@@ -349,8 +357,9 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
         live_error_ll = (LinearLayout) view.findViewById(R.id.live_error_ll);
         live_error_btn = (TextView) view.findViewById(R.id.live_error_btn);
         live_error_btn.setOnClickListener(this);
-        //暂无数据
-        live_no_data_txt = (TextView) view.findViewById(R.id.live_no_data_txt);
+        //赛事简介的暂无数据
+        live_pr_no_data_txt = (TextView) view.findViewById(R.id.live_pr_no_data_txt);
+
     }
 
 

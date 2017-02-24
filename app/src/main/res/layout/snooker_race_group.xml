@@ -86,12 +86,13 @@
             android:textColor="@color/res_name_color"
             android:textSize="@dimen/text_size_13" />
 
-        <TextView
+        <ImageView
+            android:id="@+id/iconfont"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="详细" />
+            android:src="@mipmap/iconfont_xiala_1" />
     </LinearLayout>
 </RelativeLayout>
