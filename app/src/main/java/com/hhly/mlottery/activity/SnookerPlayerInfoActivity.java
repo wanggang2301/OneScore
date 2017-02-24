@@ -17,6 +17,11 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.widget.ProgressWebView;
 
+/**
+ * 洛克球员信息
+ * wangg
+ */
+
 public class SnookerPlayerInfoActivity extends Activity {
     private ProgressWebView mWebView;
     private TextView tv_nopage;
