@@ -60,7 +60,9 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
     private ImageView ib_operate_more;
     private LinearLayout text_times_title1;
 
-    private String LEAGUEID = "";
+    // private String LEAGUEID = "";
+
+    private String leagueId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +72,7 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
 */
 
         if (getIntent().getExtras() != null) {
-            LEAGUEID = getIntent().getExtras().getString("leagueId");
+            leagueId = getIntent().getExtras().getString("leagueId");
         }
 
         initView();
@@ -84,7 +86,7 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
         String url = "http://m.1332255.com:81/mlottery/core/snookerData.findLeagueHeaderList.do";
 
         final Map<String, String> map = new HashMap();
-        map.put("leagueId", LEAGUEID);
+        map.put("leagueId", leagueId);
         map.put("season", "");//默认不填是当前数据
 
 
@@ -196,10 +198,10 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
 
         mTabsAdapter = new TabsAdapter(fragmentManager);
         mTabsAdapter.setTitles(titles);
-        mTabsAdapter.addFragments(SnookerDatabaseFragment.newInstance(QUALIFICATIONS),
-                SnookerDataQualificationHeatFragement.newInstance(RACE),
-                SnookerDatabaseFragment.newInstance(SUCCESSIVE),
-                SnookerDatabaseFragment.newInstance(PROFILE)
+        mTabsAdapter.addFragments(SnookerDatabaseFragment.newInstance(QUALIFICATIONS, leagueId),
+                SnookerDataQualificationHeatFragement.newInstance(RACE, leagueId),
+                SnookerDatabaseFragment.newInstance(SUCCESSIVE, leagueId),
+                SnookerDatabaseFragment.newInstance(PROFILE, leagueId)
         );
 
         viewPager.setOffscreenPageLimit(3);//设置预加载页面的个数。

@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.cpifrag;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -41,6 +42,8 @@ public class CpiFragment extends Fragment {
     private FootCpiFragment footCpiFragment;
 
 
+    private Activity mActivity;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,7 +55,7 @@ public class CpiFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_cpi2, container, false);
-        mContext = getActivity();
+        mContext = mActivity;
         initView();
         return mView;
     }
@@ -84,5 +87,12 @@ public class CpiFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
     }
 }

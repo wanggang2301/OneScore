@@ -96,10 +96,13 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
     private LinearLayout snooker_race_male_gridview;
     private String currentStage="";
     private String mSeason="";
+    private String mLeagueId;
 
-    public static SnookerDataQualificationHeatFragement newInstance(int type) {
+    public static SnookerDataQualificationHeatFragement newInstance(int type,String leagueId) {
         Bundle bundle = new Bundle();
         bundle.putInt(TYPE_PARM, type);
+        bundle.putString(PARAM_ID, leagueId);
+
         SnookerDataQualificationHeatFragement footballDatabaseFragment = new SnookerDataQualificationHeatFragement();
         footballDatabaseFragment.setArguments(bundle);
         return footballDatabaseFragment;
@@ -111,6 +114,8 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mType = getArguments().getInt(TYPE_PARM);
+            mLeagueId = getArguments().getString(PARAM_ID);
+
         }
         //注册EventBus
         EventBus.getDefault().register(this);
@@ -139,7 +144,7 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
         String url = "http://m.1332255.com:81/mlottery/core/snookerData.findLeagueMatchList.do";
 
         final Map<String, String> map = new HashMap();
-        map.put("leagueId", "319655");
+        map.put("leagueId", mLeagueId);
         map.put("season", season);//默认不填是当前数据
         map.put("firstTitle", "103");//102.资格赛 103.正赛
         map.put("secondTitle", secondTitle);//联赛列表
@@ -315,7 +320,6 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
         }
 
     }
-
 
     @Override
     public void onAttach(Context context) {

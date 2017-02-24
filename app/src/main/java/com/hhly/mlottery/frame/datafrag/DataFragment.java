@@ -61,10 +61,12 @@ public class DataFragment extends Fragment implements View.OnClickListener {
     private TextView tv_match_name;
     private ImageView iv_match;
 
+    private Activity mActivity;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_data, container, false);
-        mContext = getActivity();
+        mContext = mActivity;
         initView();
         initEvent();
         return mView;
@@ -224,6 +226,12 @@ public class DataFragment extends Fragment implements View.OnClickListener {
             }
         }
 
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
     }
 }
 
