@@ -19,8 +19,8 @@ import com.hhly.mlottery.adapter.InforPopuWindowdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.bean.snookerbean.SnookerRaceHeadBean;
 import com.hhly.mlottery.bean.snookerbean.SnookerRefrshBean;
-import com.hhly.mlottery.frame.snookerframe.SnookerDataQualificationHeatFragement;
-import com.hhly.mlottery.frame.snookerframe.SnookerDatabaseFragment;
+import com.hhly.mlottery.frame.scorefrag.SnookerDataQualificationHeatFragement;
+import com.hhly.mlottery.frame.scorefrag.SnookerDatabaseFragment;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.ArrayList;
