@@ -236,10 +236,10 @@ public class ScheduleInternationalAdapter extends CommonAdapter<SchMatch> {
 
 //		holder.getView(R.id.item_football_internationl_focus_btn).setOnClickListener(new View.OnClickListener() {
 //			@Override
-//			public void onClick(View v) {
+//			public void notifyDataSetChanged(View v) {
 //				// TODO Auto-generated method stub
 //				if (schfocusClickListener != null) {
-//					schfocusClickListener.onClick(v, match);
+//					schfocusClickListener.notifyDataSetChanged(v, match);
 //				}
 //			}
 //		});

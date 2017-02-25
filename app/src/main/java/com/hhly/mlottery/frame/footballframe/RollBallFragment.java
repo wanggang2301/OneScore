@@ -155,7 +155,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     protected void initListeners() {
 //        mUnconectionLayout.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void onClick(View v) {
+//            public void notifyDataSetChanged(View v) {
 //                startActivity(new Intent(Settings.ACTION_SETTINGS));
 //            }
 //        });

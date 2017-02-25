@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.frame.tennisfrag.TennisBallScoreFragment;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -43,6 +44,9 @@ public class ScoreFragment extends Fragment {
 
     private BasketBallScoreFragment basketBallScoreFragment;
 
+    private TennisBallScoreFragment tennisBallScoreFragment;
+
+    private SnookerScoreFragment snookerScoreFragment;
     private SnookerListScoreFragment snookerScoreFragment;
 
     private Activity mActivity;
@@ -65,10 +69,14 @@ public class ScoreFragment extends Fragment {
         footBallScoreFragment = new FootBallScoreFragment();
         basketBallScoreFragment = new BasketBallScoreFragment();
         snookerScoreFragment = new SnookerListScoreFragment();
+        tennisBallScoreFragment = new TennisBallScoreFragment();
+        // snookerScoreFragment = new SnookerScoreFragment();
 
         fragments.add(footBallScoreFragment);
         fragments.add(basketBallScoreFragment);
         fragments.add(snookerScoreFragment);
+        fragments.add(tennisBallScoreFragment);
+        //  fragments.add(snookerScoreFragment);
 
 
         /**

@@ -264,7 +264,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
     private void initEvent() {
       /*  public_btn_set.setOnClickListener(new View.OnClickListener() { // 登录跳转
             @Override
-            public void onClick(View v) {
+            public void notifyDataSetChanged(View v) {
                 startActivity(new Intent(HomePagerActivity.this, HomeUserOptionsActivity.class));
                 MobclickAgent.onEvent(mContext, "HomePagerUserSetting");
             }
