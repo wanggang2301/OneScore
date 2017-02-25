@@ -70,14 +70,11 @@ public class ScoreFragment extends Fragment {
         basketBallScoreFragment = new BasketBallScoreFragment();
         snookerScoreFragment = new SnookerListScoreFragment();
         tennisBallScoreFragment = new TennisBallScoreFragment();
-        // snookerScoreFragment = new SnookerScoreFragment();
 
         fragments.add(footBallScoreFragment);
         fragments.add(basketBallScoreFragment);
         fragments.add(snookerScoreFragment);
         fragments.add(tennisBallScoreFragment);
-        //  fragments.add(snookerScoreFragment);
-
 
         /**
          * 默认先选择足球
@@ -88,6 +85,7 @@ public class ScoreFragment extends Fragment {
 
 
     public void onEventMainThread(ScoreSwitchFg scoreSwitchFg) {
+
         switchFragment(scoreSwitchFg.getPosition());
     }
 

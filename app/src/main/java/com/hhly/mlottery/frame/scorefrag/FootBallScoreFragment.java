@@ -73,7 +73,6 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
      * 设置
      */
     private ImageView mSetImgBtn;// 设置
-    private ImageView public_btn_infomation;// 足球资料库
 
     private String[] mItems;
 
@@ -167,9 +166,10 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // tv_match_name.setText(((TextView) view.findViewById(R.id.tv)).getText().toString());
-                //  iv_match.setImageResource(R.mipmap.nav_icon_cbb);
-                EventBus.getDefault().post(new ScoreSwitchFg(0, position));
+
+                L.d("websocket123","足球关闭");
+                closeWebSocket();
+                EventBus.getDefault().post(new ScoreSwitchFg(position));
 
                 popupWindow.dismiss();
             }
@@ -195,6 +195,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         context.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         context.getWindow().setAttributes(lp);
     }
+
 
     private void setupViewPager() {
         mTabLayout = (TabLayout) view.findViewById(R.id.tabs);
@@ -465,7 +466,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
 
         // }
         //if (getActivity() != null && ((FootballActivity) mContext).fragmentIndex != FootballActivity.BASKET_FRAGMENT) {
-        L.d("qazwsx", "________connectWebSocket");
+        L.d("websocket123","足球打开");
         connectWebSocket();
         // }
     }
@@ -498,6 +499,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
 //            isFocus = false;
 //            L.d("xxx", "FocusFragment>>>隐藏");
 //        }
+
     }
 
     @Override
@@ -511,7 +513,6 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     public void onDestroy() {
         super.onDestroy();
         L.d(TAG, "football Fragment destroy..");
-        L.d("qazwsx", "________onDestroy");
 
         closeWebSocket();
     }
@@ -524,12 +525,6 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     @Override
     protected void onTextResult(String text) {
         L.d("qazwsx", "收到消息==" + text);
-       /* if (ImmediateFragment.imEventBus != null)
-            ImmediateFragment.imEventBus.post(new FootballScoresWebSocketEntity(text));
-        if (FocusFragment.focusEventBus != null)
-            FocusFragment.focusEventBus.post(new FootballScoresWebSocketEntity(text));
-        if (RollBallFragment.eventBus != null)
-            RollBallFragment.eventBus.post(new FootballScoresWebSocketEntity(text));*/
 
         EventBus.getDefault().post(new FootballScoresWebSocketEntity(text));
     }
@@ -545,35 +540,23 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         }
     }
 
-//    private void eventBusPost() {
-//        EventBus.getDefault().post(new ScoresMatchFocusEventBusEntity(0));
-//    }
 
     @Override
     protected void onConnectFail() {
         L.d(TAG, "__onConnectFail__");
-        L.d("qazwsx", "__onConnectFail__");
-//        ((RollBallFragment) fragments.get(0)).connectFail();
-//        ((ImmediateFragment) fragments.get(1)).connectFail();
-//        ((FocusFragment) fragments.get(4)).connectFail();
+
     }
 
     @Override
     protected void onDisconnected() {
         L.d(TAG, "__onDisconnected__");
-        L.d("qazwsx", "__onDisconnected__");
 
-//        ((RollBallFragment) fragments.get(0)).connectFail();
-//        ((ImmediateFragment) fragments.get(1)).connectFail();
-//        ((FocusFragment) fragments.get(4)).connectFail();
     }
 
     @Override
     protected void onConnected() {
         L.d(TAG, "__onConnected__");
-//        ((RollBallFragment) fragments.get(0)).connectSuccess();
-//        ((ImmediateFragment) fragments.get(1)).connectSuccess();
-//        ((FocusFragment) fragments.get(4)).connectSuccess();
+
     }
 
     public void reconnectWebSocket() {
@@ -588,7 +571,6 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     public void onDestroyView() {
         super.onDestroyView();
         L.d(TAG, "football Fragment destroy view..");
-        L.d("qazwsx", "________onDestroyView");
 
         EventBus.getDefault().unregister(this);
 
@@ -611,10 +593,8 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
      */
     public void onEventMainThread(ScoreFragmentWebSocketEntity scoreFragmentWebSocketEntity) {
         if (scoreFragmentWebSocketEntity.getFgIndex() == 0) {
-            L.d("qazwsx", "________比分==" + scoreFragmentWebSocketEntity.getFgIndex());
             connectWebSocket();
         } else {
-            L.d("qazwsx", "________其余==" + scoreFragmentWebSocketEntity.getFgIndex());
             closeWebSocket();
         }
     }

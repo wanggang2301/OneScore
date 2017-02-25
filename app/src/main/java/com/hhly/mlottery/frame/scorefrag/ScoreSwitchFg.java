@@ -18,18 +18,9 @@ public class ScoreSwitchFg {
     }
 
     private int position;
-    private int prePosition;
 
-    public int getPrePosition() {
-        return prePosition;
-    }
 
-    public void setPrePosition(int prePosition) {
-        this.prePosition = prePosition;
-    }
-
-    public ScoreSwitchFg(int prePosition, int position) {
-        this.prePosition = prePosition;
+    public ScoreSwitchFg(int position) {
         this.position = position;
     }
 }

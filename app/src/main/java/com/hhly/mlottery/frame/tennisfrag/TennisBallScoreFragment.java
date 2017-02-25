@@ -186,7 +186,9 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // tv_match_name.setText(((TextView) view.findViewById(R.id.tv)).getText().toString());
                 //  iv_match.setImageResource(R.mipmap.nav_icon_cbb);
-                EventBus.getDefault().post(new ScoreSwitchFg(0, position));
+                closeWebSocket();
+
+                EventBus.getDefault().post(new ScoreSwitchFg(position));
 
                 popupWindow.dismiss();
             }
@@ -210,7 +212,7 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment {
 
     @Override
     protected void onTextResult(String text) {
-        L.d("xxxxx","网球推送消息： " + text);
+        L.d("xxxxx", "网球推送消息： " + text);
         ((TennisBallSocketFragment) fragments.get(TENNIS_IMMEDIATE)).socketDataChanged(text);
         ((TennisBallSocketFragment) fragments.get(TENNIS_FOCUS)).socketDataChanged(text);
     }

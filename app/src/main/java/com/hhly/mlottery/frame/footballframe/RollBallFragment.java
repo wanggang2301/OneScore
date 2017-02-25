@@ -79,8 +79,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     private final static int VIEW_STATUS_SUCCESS = 3001;
     private final static int VIEW_STATUS_NET_ERROR = 4001;
     private final static int VIEW_STATUS_FLITER_NO_DATA = 5001;
-    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS = 6;
-    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_FAIL = 7;
+
 
     private final static int DELAY_REQUEST_API = 60 * 1000; // 10 min
     @BindView(R.id.recyclerView)
@@ -95,20 +94,13 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     ExactSwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.titleContainer)
     PercentRelativeLayout titleContainer;
-//    @BindView(R.id.unconection_layout)
-//    LinearLayout mUnconectionLayout;// 没有网络提示
 
-    //    private BorderDividerItemDecration dataDecration;
-    // public static EventBus eventBus;
     private ApiHandler apiHandler = new ApiHandler(this);
     private RollBallAdapter adapter;
-    //    private HappySocketClient socketClient;
     private LinearLayoutManager layoutManager;
     private Subscription subscription;
     private boolean resestTheLifeCycle;
     private boolean loadingMoreData;
-    //    private long checkoutWebsocketIsConnectedNow;
-//    private static long onNewMessageCount, onOldMessageCount;
     public LeagueCup[] checkedLeagueCup; // 记录筛选过的联赛
     public List<LeagueCup> leagueCupLists; // 全部联赛
     private List<Match> allDataLists; // 所有数据
@@ -153,12 +145,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
     @Override
     protected void initListeners() {
-//        mUnconectionLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void notifyDataSetChanged(View v) {
-//                startActivity(new Intent(Settings.ACTION_SETTINGS));
-//            }
-//        });
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private boolean moveToDown = false;
 
@@ -232,19 +218,12 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        L.d("qazwsx", "滚球eventbus解除注册");
         EventBus.getDefault().unregister(this);
-       /* if (eventBus != null) {
-            eventBus.unregister(this);
-            eventBus = null;
-        }*/
-        /*if (adapter != null && adapter.getSubscription() != null)
-            if (adapter.getSubscription().isUnsubscribed()) adapter.getSubscription().unsubscribe();*/
+
         if (subscription != null && subscription.isUnsubscribed()) subscription.unsubscribe();
         if (apiHandler != null) apiHandler.removeCallbacksAndMessages(null);
         if (adapter != null) adapter.getSharedPreperences().edit().clear().commit();
-//        this.restoreSocketClient();
-//        this.restoreSocketConnectedFieldCount();
+
     }
 
     @Override
@@ -274,7 +253,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     }
 
     public void onEventMainThread(ScoresFragment.FootballScoresWebSocketEntity entity) {
-        L.d("qazwsx", "滚球推送");
 
         if (adapter == null) {
             return;
@@ -296,7 +274,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     }
 
     public void onEventMainThread(FootBallScoreFragment.FootballScoresWebSocketEntity entity) {
-        L.d("qazwsx", "滚球推送");
+        L.d("gaiban", "滚球推送改版");
 
         if (adapter == null) {
             return;

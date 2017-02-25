@@ -147,7 +147,9 @@ public class SnookerListScoreFragment extends BaseWebSocketFragment implements V
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // tv_match_name.setText(((TextView) view.findViewById(R.id.tv)).getText().toString());
                 //  iv_match.setImageResource(R.mipmap.nav_icon_cbb);
-                EventBus.getDefault().post(new ScoreSwitchFg(0, position));
+                closeWebSocket();
+
+                EventBus.getDefault().post(new ScoreSwitchFg(position));
 
                 popupWindow.dismiss();
             }

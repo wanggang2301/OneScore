@@ -219,18 +219,6 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         connectWebSocket();
     }
 
-  /*  @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            if (mComeFromFocus == FocusBasketballFragment.TYPE_FOCUS) {
-                EventBus.getDefault().post(new BasketFocusEventBus());
-            }
-            finish();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }*/
-
     @Override
     public void onClick(View v) {
 
@@ -440,6 +428,8 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
             L.d("xxx", "ScheduleFragment>>>显示");
         }
         if (getActivity() != null) {
+            L.d("websocket123", "篮球打开");
+
             connectWebSocket();
         }
     }
@@ -462,6 +452,7 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
             isSchedule = false;
             L.d("xxx", "ScheduleFragment>>>隐藏");
         }
+
     }
 
     @Override
@@ -500,9 +491,12 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // tv_match_name.setText(((TextView) view.findViewById(R.id.tv)).getText().toString());
-                // iv_match.setImageResource(R.mipmap.nav_icon_cbb);
-                EventBus.getDefault().post(new ScoreSwitchFg(0, position));
+
+
+                L.d("websocket123", "篮球关闭");
+                closeWebSocket();
+
+                EventBus.getDefault().post(new ScoreSwitchFg(position));
 
                 popupWindow.dismiss();
             }
