@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -83,7 +82,6 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String TAG = "ImmediateFragment";
-    // private static Logger logger;
 
     public static final int REQUEST_FILTRATE_CODE = 0x10;
     public static final int REQUEST_SET_CODE = 0x11;
@@ -99,7 +97,6 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 
     private TextView mReloadTvBtn;// 重新加载按钮
 
-    private LinearLayout mUnconectionLayout;// 没有网络提示
     private ExactSwipeRefreshLayout mSwipeRefreshLayout;// 下拉刷新
 
     private LinearLayout mLoadingLayout;// 正在加载
@@ -146,24 +143,14 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
     private SoundPool mSoundPool;
     private HashMap<Integer, Integer> mSoundMap = new HashMap<>();
 
-    //  public static EventBus imEventBus;
-
 
     private static final String FRAGMENT_INDEX = "fragment_index";
     private static final String ISNEW_FRAMEWORK = "isnew_framework";
 
-    private TextView mFragmentView;
-
-    private int mCurIndex = -1;
     /**
      * 标志位，标志已经初始化完成
      */
     private boolean isPrepared;
-    /**
-     * 是否已被加载过一次，第二次就不再去请求数据了
-     */
-    private boolean mHasLoadedOnce;
-
 
     private RecyclerView mRecyclerView;
 
@@ -208,8 +195,6 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        L.d(TAG, "___onCreateView____");
-
         mView = inflater.inflate(R.layout.football_immediate, container, false);
 
         initMedia();
@@ -349,16 +334,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                     mNoDataLayout.setVisibility(View.VISIBLE);
                     mLoadDataStatus = LOAD_DATA_STATUS_SUCCESS;
                     break;
-//                case VIEW_STATUS_WEBSOCKET_CONNECT_FAIL:
-//                    if (mUnconectionLayout != null) {
-//                        mUnconectionLayout.setVisibility(View.VISIBLE);
-//                    }
-//                    break;
-//                case VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS:
-//                    if (mUnconectionLayout != null) {
-//                        mUnconectionLayout.setVisibility(View.GONE);
-//                    }
-//                    break;
+
                 default:
                     break;
             }
@@ -381,7 +357,6 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
                     return;
                 }
-                L.d("qazwsx", "即时比分请求数据");
                 mAllMatchs = jsonMatch.getImmediateMatch();// 获取所有赛程
                 mMatchs = new ArrayList<Match>();//
 
@@ -760,21 +735,6 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                 }
             }
         }
-
-        // for (Match match : mMatchs) {//显示的match
-        // if (match.getThirdId().equals(webSocketMatchOdd.getThirdId())) {
-        // //updateMatchOdd(match, data);
-        //
-        // break;
-        // }
-        // }
-
-        // if (targetMatch != null) {
-        // updateMatchOdd(targetMatch, data);
-        // updateListView(targetMatch);
-        // } else {
-        // webSocketMatchOdd.getThirdId());
-        // }
     }
 
     private void updateListViewItemStatus(WebSocketMatchStatus webSocketMatchStatus) {
@@ -785,14 +745,9 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
         synchronized (mAllMatchs) {
             for (Match match : mAllMatchs) {
                 if (match.getThirdId().equals(webSocketMatchStatus.getThirdId())) {
-                    // try {
-                    // targetMatch = (Match) match.clone();
-                    // match = targetMatch;// 改变引用
                     updateMatchStatus(match, data);// 会修改mMatch里面的引用
                     updateListView(match);
-                    // } catch (CloneNotSupportedException e) {
-                    // e.printStackTrace();
-                    // }
+
                     target[0] = match;
                     break;
                 }
@@ -801,7 +756,6 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 
         if (target[0] != null) {
             if ("-1".equals(target[0].getStatusOrigin()) || "-10".equals(target[0].getStatusOrigin()) || "-12".equals(target[0].getStatusOrigin()) || "-14".equals(target[0].getStatusOrigin())) {
-                // L.d(TAG, "1分钟后界面销毁");
 
                 new Handler().postDelayed(new Runnable() {// 五秒后把颜色修改回来
                     @Override
@@ -1222,13 +1176,11 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
     @Override
     public void onDestroy() {
         super.onDestroy();
-        L.d(TAG, "__onDestroy___");
     }
 
 
     @Override
     public void onRefresh() {
-        L.e(TAG, "__onRefresh___");
 
         mLoadHandler.post(mLoadingDataThread);
         if (isNewFrameWork) {
@@ -1245,39 +1197,13 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
     public class ImmediateNetStateReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context con, Intent arg1) {
-            L.d(TAG, "NetState ___ onReceive ");
-            L.d(TAG, "action  " + arg1.getAction());
-
             ConnectivityManager manager = (ConnectivityManager) con.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
-//            NetworkInfo gprs = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-//            NetworkInfo wifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-//            if (activeNetwork == null || !activeNetwork.isAvailable()) {
-//                if (mErrorLayout.getVisibility() != View.VISIBLE) {
-//                    mUnconectionLayout.setVisibility(View.VISIBLE);
-//                }
-//
-//                isWebSocketStart = false;
-//                if (mSocketClient != null) {
-//                    mSocketClient.close();
-//                }
-//                mSocketClient = null;
-//
-//            }
-//            else {
-//                if (!isStartInitData) {
-//                    mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-//                    initData();
-//                }
-//            }
         }
     }
 
 
-
     //推送
     public void onEventMainThread(ScoresFragment.FootballScoresWebSocketEntity entity) {
-        L.d("qazwsx", "即时比分推送");
         if (mAdapter == null) {
             return;
         }
@@ -1301,7 +1227,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 
     //推送
     public void onEventMainThread(FootBallScoreFragment.FootballScoresWebSocketEntity entity) {
-        L.d("qazwsx", "即时比分推送");
+        L.d("gaiban", "即时比分推送改版");
         if (mAdapter == null) {
             return;
         }
@@ -1321,17 +1247,6 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
             mSocketHandler.sendMessage(msg);
         }
     }
-
-//    public void connectFail() {
-//        mViewHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_FAIL);
-//    }
-//
-//    public void connectSuccess() {
-//        mViewHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS);
-//    }
-
-
-//    public static boolean isPause = false;
 
     @Override
     public void onPause() {

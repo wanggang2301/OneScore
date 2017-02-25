@@ -223,7 +223,7 @@ public class FootCpiFragment extends BaseWebSocketFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //tv_match_name.setText(((TextView) view.findViewById(R.id.tv)).getText().toString());
                // iv_match.setImageResource(R.mipmap.nav_icon_cbb);
-                EventBus.getDefault().post(new ScoreSwitchFg(0, position));
+                EventBus.getDefault().post(new ScoreSwitchFg(position));
 
                 popupWindow.dismiss();
             }

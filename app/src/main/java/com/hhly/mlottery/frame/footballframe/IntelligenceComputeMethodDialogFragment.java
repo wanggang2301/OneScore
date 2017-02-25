@@ -283,7 +283,7 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
         view.findViewById(R.id.compute)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void notifyDataSetChanged(View v) {
                         double history = StringFormatUtils.asDouble(mHistoryEditText.getText().toString());
                         double host = StringFormatUtils.asDouble(mHostEditText.getText().toString());
                         double guest = StringFormatUtils.asDouble(mGuestEditText.getText().toString());

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.frame.tennisfrag.TennisBallScoreFragment;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -30,6 +31,7 @@ public class ScoreFragment extends Fragment {
     private static final int FOOTBALL = 0;
     private static final int BASKETBALL = 1;
     private static final int SNOOKER = 2;
+    private static final int TENNIS = 3;
 
     private View mView;
     private Context mContext;
@@ -42,6 +44,8 @@ public class ScoreFragment extends Fragment {
     private FootBallScoreFragment footBallScoreFragment;
 
     private BasketBallScoreFragment basketBallScoreFragment;
+
+    private TennisBallScoreFragment tennisBallScoreFragment;
 
     private SnookerListScoreFragment snookerScoreFragment;
 
@@ -65,11 +69,12 @@ public class ScoreFragment extends Fragment {
         footBallScoreFragment = new FootBallScoreFragment();
         basketBallScoreFragment = new BasketBallScoreFragment();
         snookerScoreFragment = new SnookerListScoreFragment();
+        tennisBallScoreFragment = new TennisBallScoreFragment();
 
         fragments.add(footBallScoreFragment);
         fragments.add(basketBallScoreFragment);
         fragments.add(snookerScoreFragment);
-
+        fragments.add(tennisBallScoreFragment);
 
         /**
          * 默认先选择足球
@@ -80,6 +85,7 @@ public class ScoreFragment extends Fragment {
 
 
     public void onEventMainThread(ScoreSwitchFg scoreSwitchFg) {
+
         switchFragment(scoreSwitchFg.getPosition());
     }
 

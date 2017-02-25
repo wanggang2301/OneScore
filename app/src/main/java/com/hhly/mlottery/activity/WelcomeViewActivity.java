@@ -53,7 +53,7 @@ public class WelcomeViewActivity extends BaseActivity implements OnViewChangeLis
     private void initView() {
      /*   mScrollLayout = $(R.id.ScrollLayout);
         startBtn = $(R.id.startBtn);
-        startBtn.setOnClickListener(onClick);
+        startBtn.setOnClickListener(notifyDataSetChanged);
         mScrollLayout.SetOnViewChangeListener(this);
         wel_layout_img1 = $(R.id.wel_layout_img1);
         wel_layout_img2 = $(R.id.wel_layout_img2);*/

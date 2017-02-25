@@ -199,18 +199,23 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                 switch(currentStatus){
                     case "0":
                         viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_pause));
+                        viewHolderList.mSnookerStatus.setTextColor(mContext.getResources().getColor(R.color.snooker_status));
                         break;
                     case "1":
                         viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_no_start));
+                        viewHolderList.mSnookerStatus.setTextColor(mContext.getResources().getColor(R.color.snooker_odds_textcolor));
                         break;
                     case "2":
                         viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_over_game));
+                        viewHolderList.mSnookerStatus.setTextColor(mContext.getResources().getColor(R.color.snooker_fulltime_textcolor));
                         break;
                     case "3":
                         viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_have_ing));
+                        viewHolderList.mSnookerStatus.setTextColor(mContext.getResources().getColor(R.color.snooker_status));
                         break;
                     case "4":
                         viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_resting));
+                        viewHolderList.mSnookerStatus.setTextColor(mContext.getResources().getColor(R.color.snooker_status));
                         break;
                     default:
                         viewHolderList.mSnookerStatus.setText("--");

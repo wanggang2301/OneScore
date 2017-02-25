@@ -41,7 +41,7 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 /**
- *篮球比分
+ * 篮球比分
  */
 public class BasketBallScoreFragment extends BaseWebSocketFragment implements View.OnClickListener {
 
@@ -158,7 +158,7 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         titles.add(getString(R.string.foot_saicheng_txt));
 
         fragments = new ArrayList<>();
-        fragments.add(ImmedBasketballFragment.newInstance(IMMEDIA_FRAGMENT,isNewFrameWork));
+        fragments.add(ImmedBasketballFragment.newInstance(IMMEDIA_FRAGMENT, isNewFrameWork));
         fragments.add(ResultBasketballFragment.newInstance(RESULT_FRAGMENT));
         fragments.add(ScheduleBasketballFragment.newInstance(SCHEDULE_FRAGMENT));
 
@@ -211,24 +211,13 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
     @Override
     public void onDestroy() {
         super.onDestroy();
+        closeWebSocket();
     }
 
 
     public void reconnectWebSocket() {
         connectWebSocket();
     }
-
-  /*  @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            if (mComeFromFocus == FocusBasketballFragment.TYPE_FOCUS) {
-                EventBus.getDefault().post(new BasketFocusEventBus());
-            }
-            finish();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }*/
 
     @Override
     public void onClick(View v) {
@@ -439,6 +428,8 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
             L.d("xxx", "ScheduleFragment>>>显示");
         }
         if (getActivity() != null) {
+            L.d("websocket123", "篮球打开");
+
             connectWebSocket();
         }
     }
@@ -461,6 +452,7 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
             isSchedule = false;
             L.d("xxx", "ScheduleFragment>>>隐藏");
         }
+
     }
 
     @Override
@@ -499,9 +491,12 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // tv_match_name.setText(((TextView) view.findViewById(R.id.tv)).getText().toString());
-                // iv_match.setImageResource(R.mipmap.nav_icon_cbb);
-                EventBus.getDefault().post(new ScoreSwitchFg(0, position));
+
+
+                L.d("websocket123", "篮球关闭");
+                closeWebSocket();
+
+                EventBus.getDefault().post(new ScoreSwitchFg(position));
 
                 popupWindow.dismiss();
             }

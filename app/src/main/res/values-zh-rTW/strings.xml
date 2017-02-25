@@ -1414,9 +1414,9 @@
     <string name="video_high_notice">精彩瞬間來啦</string>
 
 
-    <!--斯洛克-->
-    <string name="snooker_title">斯洛克</string>
-    <string name="snooker_setting_title">斯洛克設置</string>
+    <!--斯諾克-->
+    <string name="snooker_title">斯諾克</string>
+    <string name="snooker_setting_title">斯諾克設置</string>
     <string name="snooker_setting_alet">亞盤</string>
     <string name="snooker_setting_eur">歐賠</string>
     <string name="snooker_setting_asize">大小盤</string>
@@ -1425,7 +1425,7 @@
 
     <string name="snooker_state_pause">暫停</string>
     <string name="snooker_state_no_start">未開賽</string>
-    <string name="snooker_state_over_game">結束</string>
+    <string name="snooker_state_over_game">完場</string>
     <string name="snooker_state_have_ing">進行中</string>
     <string name="snooker_state_resting">休息中</string>
     <string name="snooker_state_victory_defeat">勝負</string>
@@ -1542,7 +1542,7 @@
 
     <string name="football_txt">足球</string>
     <string name="basketball_txt">籃球</string>
-    <string name="snooker_txt">斯洛克</string>
+    <string name="snooker_txt">斯諾克</string>
     <string name="tennisball_txt">網球</string>
     <string name="football_ziliaoku">資料庫</string>
     <string name="sn_rank_name">姓名</string>
