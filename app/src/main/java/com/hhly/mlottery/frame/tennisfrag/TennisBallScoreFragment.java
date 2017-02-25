@@ -229,4 +229,10 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment {
     protected void onConnected() {
 
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        closeWebSocket();
+    }
 }

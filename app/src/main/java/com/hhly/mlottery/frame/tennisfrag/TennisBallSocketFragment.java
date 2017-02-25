@@ -216,6 +216,7 @@ public class TennisBallSocketFragment extends Fragment implements SwipeRefreshLa
 
     // webSocket
     public void socketDataChanged(final String text) {
+        L.d("xxxxx","收到了：type:" + type );
         new Thread() {
             @Override
             public void run() {
@@ -237,6 +238,7 @@ public class TennisBallSocketFragment extends Fragment implements SwipeRefreshLa
                             matchDataBean.getMatchScore().setHomeTotalScore(tennisSocketBean.getDataObj().getMatchScore().getHomeTotalScore());
                             matchDataBean.getMatchScore().setAwayTotalScore(tennisSocketBean.getDataObj().getMatchScore().getAwayTotalScore());
                         }
+                        L.d("xxxxx","收到了：刷新了MatchId:" + matchDataBean.getMatchId() );
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
