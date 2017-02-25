@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame.snookerframe;
+package com.hhly.mlottery.frame.scorefrag;
 
 import android.app.Activity;
 import android.content.Context;
@@ -25,6 +25,7 @@ import com.hhly.mlottery.adapter.snooker.PinnedHeaderExpandableAdapter;
 import com.hhly.mlottery.bean.snookerbean.SnookerRaceListitemBean;
 import com.hhly.mlottery.bean.snookerbean.SnookerRefrshBean;
 import com.hhly.mlottery.bean.videobean.NewMatchVideoinfo;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -141,7 +142,6 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
 
     private void upLeagueRace(String secondTitle, String season) {
 
-        String url = "http://m.1332255.com:81/mlottery/core/snookerData.findLeagueMatchList.do";
 
         final Map<String, String> map = new HashMap();
         map.put("leagueId", mLeagueId);
@@ -149,7 +149,7 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
         map.put("firstTitle", "103");//102.资格赛 103.正赛
         map.put("secondTitle", secondTitle);//联赛列表
 
-        VolleyContentFast.requestJsonByPost(url, map, new VolleyContentFast.ResponseSuccessListener<SnookerRaceListitemBean>() {
+        VolleyContentFast.requestJsonByPost(BaseURLs.SNOOKER_FINDLEAGUEMATCHLIST, map, new VolleyContentFast.ResponseSuccessListener<SnookerRaceListitemBean>() {
 
             @Override
             public void onResponse(SnookerRaceListitemBean json) {

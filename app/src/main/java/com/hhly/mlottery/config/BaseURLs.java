@@ -1052,6 +1052,12 @@ public class BaseURLs {
 
     //斯洛克模糊搜索
     public final static String URL_SNOOKER_PLAYER_SEARCH = "/snookerWorldRanking.fuzzySearchWorldRanking.do";
+    //斯诺克资料库赛事内页头部接口
+    public final static String SNOOKER_FINDLEAGUEHEADERLIST = URL_API_HOST + "snookerData.findLeagueHeaderList.do";
+    //斯诺克资料库赛事内页列表接口
+    public final static String SNOOKER_FINDLEAGUEMATCHLIST = URL_API_HOST + "snookerData.findLeagueMatchList.do";
+    //斯诺克资料库赛事内页历届冠军
+    public final static String SNOOKER_FINDPREVIOUSWINNERS= URL_API_HOST + "snookerData.findPreviousWinners.do";
 
 
     /***********************************************************************************************************************/
