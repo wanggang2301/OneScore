@@ -41,7 +41,7 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 /**
- *篮球比分
+ * 篮球比分
  */
 public class BasketBallScoreFragment extends BaseWebSocketFragment implements View.OnClickListener {
 
@@ -158,7 +158,7 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         titles.add(getString(R.string.foot_saicheng_txt));
 
         fragments = new ArrayList<>();
-        fragments.add(ImmedBasketballFragment.newInstance(IMMEDIA_FRAGMENT,isNewFrameWork));
+        fragments.add(ImmedBasketballFragment.newInstance(IMMEDIA_FRAGMENT, isNewFrameWork));
         fragments.add(ResultBasketballFragment.newInstance(RESULT_FRAGMENT));
         fragments.add(ScheduleBasketballFragment.newInstance(SCHEDULE_FRAGMENT));
 
@@ -211,6 +211,7 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
     @Override
     public void onDestroy() {
         super.onDestroy();
+        closeWebSocket();
     }
 
 

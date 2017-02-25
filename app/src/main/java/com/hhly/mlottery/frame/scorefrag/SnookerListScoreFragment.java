@@ -77,13 +77,14 @@ public class SnookerListScoreFragment extends BaseWebSocketFragment implements V
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_snooker , container , false);
+        mView = inflater.inflate(R.layout.fragment_snooker, container, false);
         initView();
         setViewpager();
         initEvent();
         return mView;
     }
-    private void initView(){
+
+    private void initView() {
         mItems = getResources().getStringArray(R.array.bifen_select);//切换标签
         //头部数据(隐藏筛选图标)
         ImageView filter = (ImageView) mView.findViewById(R.id.public_btn_filter);
@@ -103,7 +104,8 @@ public class SnookerListScoreFragment extends BaseWebSocketFragment implements V
         tv_match_name.setText(getResources().getString(R.string.snooker_txt));
 
     }
-    private void initEvent(){
+
+    private void initEvent() {
         ll_match_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,6 +115,7 @@ public class SnookerListScoreFragment extends BaseWebSocketFragment implements V
             }
         });
     }
+
     /**
      * 设置添加屏幕的背景透明度
      *
@@ -158,7 +161,8 @@ public class SnookerListScoreFragment extends BaseWebSocketFragment implements V
             }
         });
     }
-    private void setViewpager(){
+
+    private void setViewpager() {
 
         List<String> tabLists = new ArrayList<>();
         tabLists.add(getString(R.string.foot_jishi_txt));
@@ -170,22 +174,22 @@ public class SnookerListScoreFragment extends BaseWebSocketFragment implements V
         fragments.add(SnookerResultFragment.newInstance());
         fragments.add(SnookerScheduleFragment.newInstance());
 
-        mViewPagerAdapter = new PureViewPagerAdapter(fragments, tabLists , getChildFragmentManager());
+        mViewPagerAdapter = new PureViewPagerAdapter(fragments, tabLists, getChildFragmentManager());
 
         mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
                 if (positionOffsetPixels == 0) {
-                    switch (position){
+                    switch (position) {
                         case SNOOKER_IMMEDIA_FRAGMENT:
-                            ((SnookerImmediateFragment)fragments.get(position)).loadData();
+                            ((SnookerImmediateFragment) fragments.get(position)).loadData();
                             break;
                         case SNOOKER_RESULT_FRAGMENT:
-                            ((SnookerResultFragment)fragments.get(position)).loadData();
+                            ((SnookerResultFragment) fragments.get(position)).loadData();
                             break;
                         case SNOOKER_SCHEDULE_FRAGMENT:
-                            ((SnookerScheduleFragment)fragments.get(position)).loadData();
+                            ((SnookerScheduleFragment) fragments.get(position)).loadData();
                             break;
                     }
                 }
@@ -208,6 +212,7 @@ public class SnookerListScoreFragment extends BaseWebSocketFragment implements V
         mPager.setOffscreenPageLimit(tabLists.size());
 
     }
+
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
@@ -270,6 +275,12 @@ public class SnookerListScoreFragment extends BaseWebSocketFragment implements V
         super.onDestroyView();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        closeWebSocket();
+    }
+
     /**
      * 判断五个Fragment切换显示或隐藏的状态
      */
@@ -284,10 +295,11 @@ public class SnookerListScoreFragment extends BaseWebSocketFragment implements V
 
     /**
      * fragment 切换的显示隐藏状态判断
+     *
      * @param position
      */
-    private void isHindShow(int position){
-        switch(position){
+    private void isHindShow(int position) {
+        switch (position) {
             case SNOOKER_IMMEDIA_FRAGMENT:
                 isImmediateFragment = true;
                 isResultFragment = false;
@@ -383,6 +395,7 @@ public class SnookerListScoreFragment extends BaseWebSocketFragment implements V
         L.d("yxq", "收到消息==" + text);
         EventBus.getDefault().post(new SnookerScoresWebSocketEntity(text)); //收到的消息传到即时页面
     }
+
     public void reconnectWebSocket() {
         connectWebSocket();
     }
@@ -404,7 +417,7 @@ public class SnookerListScoreFragment extends BaseWebSocketFragment implements V
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.public_btn_set:
                 Intent intent = new Intent(getActivity(), SnookerSettingActivity.class);
                 startActivity(intent);

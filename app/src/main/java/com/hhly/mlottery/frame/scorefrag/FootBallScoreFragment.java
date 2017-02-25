@@ -94,6 +94,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
 
     private TextView tv_match_name;
     private ImageView iv_match;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setWebSocketUri(BaseURLs.WS_SERVICE);
@@ -136,7 +137,6 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     }
 
 
-
     private void initEvent() {
         ll_match_select.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,8 +167,8 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               // tv_match_name.setText(((TextView) view.findViewById(R.id.tv)).getText().toString());
-              //  iv_match.setImageResource(R.mipmap.nav_icon_cbb);
+                // tv_match_name.setText(((TextView) view.findViewById(R.id.tv)).getText().toString());
+                //  iv_match.setImageResource(R.mipmap.nav_icon_cbb);
                 EventBus.getDefault().post(new ScoreSwitchFg(0, position));
 
                 popupWindow.dismiss();
@@ -205,9 +205,9 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         titles.add(getString(R.string.foot_saicheng_txt));
 
         fragments = new ArrayList<>();
-        rollBallFragment = RollBallFragment.newInstance(ROLLBALL_FRAGMENT,isNewFrameWork);
+        rollBallFragment = RollBallFragment.newInstance(ROLLBALL_FRAGMENT, isNewFrameWork);
         fragments.add(rollBallFragment);
-        fragments.add(ImmediateFragment.newInstance(IMMEDIA_FRAGMENT,isNewFrameWork));
+        fragments.add(ImmediateFragment.newInstance(IMMEDIA_FRAGMENT, isNewFrameWork));
         fragments.add(ResultFragment.newInstance(RESULT_FRAGMENT));
         fragments.add(ScheduleFragment.newInstance(SCHEDULE_FRAGMENT));
 //        fragments.add(FocusFragment.newInstance(FOCUS_FRAGMENT));
@@ -513,6 +513,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         L.d(TAG, "football Fragment destroy..");
         L.d("qazwsx", "________onDestroy");
 
+        closeWebSocket();
     }
 
     /**
@@ -591,7 +592,9 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
 
         EventBus.getDefault().unregister(this);
 
+
     }
+
 
     @Override
     public void onDetach() {
