@@ -31,6 +31,7 @@ public class ScoreFragment extends Fragment {
     private static final int FOOTBALL = 0;
     private static final int BASKETBALL = 1;
     private static final int SNOOKER = 2;
+    private static final int TENNIS = 3;
 
     private View mView;
     private Context mContext;
@@ -46,7 +47,6 @@ public class ScoreFragment extends Fragment {
 
     private TennisBallScoreFragment tennisBallScoreFragment;
 
-    private SnookerScoreFragment snookerScoreFragment;
     private SnookerListScoreFragment snookerScoreFragment;
 
     private Activity mActivity;
