@@ -1425,7 +1425,7 @@
 
     <string name="snooker_state_pause">暫停</string>
     <string name="snooker_state_no_start">未開賽</string>
-    <string name="snooker_state_over_game">結束</string>
+    <string name="snooker_state_over_game">完場</string>
     <string name="snooker_state_have_ing">進行中</string>
     <string name="snooker_state_resting">休息中</string>
     <string name="snooker_state_victory_defeat">勝負</string>
