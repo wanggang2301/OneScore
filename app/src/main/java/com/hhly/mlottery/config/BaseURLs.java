@@ -50,30 +50,76 @@ public class BaseURLs {
     private static String HOST = getHost();
 
 
-    private static String getHost() {
+    /**
+     * 推送公网
+     */
 
+    private static String WS_HOST = getWsHost();
+
+    /**
+     * 内网
+     */
+    private final static String HTTP = "http://";
+
+    private final static String HTTPS = "https://";
+
+    private final static String URL_SPLITTER = "/";
+
+    private final static String WS = "ws://";
+
+
+    private static String getHost() {
         if (AppConstants.isTestEnv) {//开发不需要修改下面代码
             int url_config = PreferenceUtil.getInt(MyConstants.URL_HOME_CONFIG, DebugConfigActivity.URL_1332255);
 
-            if (url_config == DebugConfigActivity.URL_1332255) {
-                return "m.1332255.com:81";//测试环境
-            } else if (url_config == DebugConfigActivity.URL_242) {
-                return "192.168.10.242:8181";//开发环境。
-            } else if (url_config == DebugConfigActivity.URL_93) {
-                return "183.61.172.93:8096"; // 典哥新加
+            //开发环境。
+            if (url_config == DebugConfigActivity.URL_242) {
+                return "192.168.10.242:8181";
+
+                //测试环境
+            } else if (url_config == DebugConfigActivity.URL_1332255) {
+                return "m.1332255.com:81";
+
+                // 典哥新加测试环境2
+            } else if (url_config == DebugConfigActivity.URL_1332255_2) {
+                return "183.61.172.93:8096";
+
+                // 自定义环境地址
             } else if (url_config == DebugConfigActivity.DIY_INPUT) {
-                return PreferenceUtil.getString("DIY_INPUT", "m.13322.com"); // 自定义环境地址
+                return PreferenceUtil.getString("DIY_INPUT", "m.13322.com");
             } else {
                 return "m.13322.com";
             }
         }
-
         return "m.13322.com";//发布版本
-
     }
+
+
+    private static String getWsHost() {
+        //测试scoket链接数 ActiveMQ
+        //return "192.168.31.19:8061";
+        if (AppConstants.isTestEnv) {//开发不需要修改下面代码
+            int ws_config = PreferenceUtil.getInt(MyConstants.WS_HOME_CONFIG, DebugConfigActivity.WS_242);
+
+            if (ws_config == DebugConfigActivity.WS_242) {  //开发环境
+                return "192.168.10.242:61634";
+
+            } else if (ws_config == DebugConfigActivity.WS_1332255) {//测试环境
+                return "m.1332255.com:81/ws";
+
+            } else if (ws_config == DebugConfigActivity.DIY_INPUT) {//自定义环境
+                return "m.13322.com/ws";// 自定义
+            } else {
+                return "m.13322.com/ws";
+            }
+        }
+        return "m.13322.com/ws";//开发，发布改这里
+    }
+
     /*
     * 上传图片公网
-    * */
+    *
+    */
 
     private static String PHOST = getPHost();
 
@@ -94,42 +140,6 @@ public class BaseURLs {
 
 
     /**
-     * 内网
-     */
-    private final static String HTTP = "http://";
-
-    private final static String HTTPS = "https://";
-
-    private final static String URL_SPLITTER = "/";
-
-    private final static String WS = "ws://";
-    /**
-     * 推送公网
-     */
-
-    private static String WS_HOST = getWsHost();
-
-    private static String getWsHost() {
-
-        //测试scoket链接数 ActiveMQ
-        //return "192.168.31.19:8061";
-
-        if (AppConstants.isTestEnv) {//开发不需要修改下面代码
-            int ws_config = PreferenceUtil.getInt(MyConstants.WS_HOME_CONFIG, DebugConfigActivity.WS_242);
-            if (ws_config == DebugConfigActivity.WS_82) {
-                return "m.1332255.com:81/ws";
-            } else if (ws_config == DebugConfigActivity.WS_242) {
-                return "192.168.10.242:61634";
-            } else if (ws_config == DebugConfigActivity.DIY_INPUT) {
-                return PreferenceUtil.getString("DIY_INPUT", "m.13322.com/ws");// 自定义
-            } else {
-                return "m.13322.com/ws";
-            }
-        }
-        return "m.13322.com/ws";//开发，发布改这里
-    }
-
-    /**
      * 推送内网
      */
 
@@ -142,7 +152,7 @@ public class BaseURLs {
     /*上传图片新URl*/
     public final static String NEW_URL_API_PHOST = HTTP + PHOST + URL_SPLITTER + "upload/";
     //视频直播
-    private final static String  URL_MATCHVIDEO_DATA = "matchVideo.findVideoInfoApp.do";
+    private final static String URL_MATCHVIDEO_DATA = "matchVideo.findVideoInfoApp.do";
 
     public final static String LANGUAGE_PARAM = "lang";
     public final static String TIMEZONE_PARAM = "timeZone";
@@ -1066,7 +1076,7 @@ public class BaseURLs {
     //斯诺克资料库赛事内页列表接口
     public final static String SNOOKER_FINDLEAGUEMATCHLIST = URL_API_HOST + "snookerData.findLeagueMatchList.do";
     //斯诺克资料库赛事内页历届冠军
-    public final static String SNOOKER_FINDPREVIOUSWINNERS= URL_API_HOST + "snookerData.findPreviousWinners.do";
+    public final static String SNOOKER_FINDPREVIOUSWINNERS = URL_API_HOST + "snookerData.findPreviousWinners.do";
 
 
     /***********************************************************************************************************************/

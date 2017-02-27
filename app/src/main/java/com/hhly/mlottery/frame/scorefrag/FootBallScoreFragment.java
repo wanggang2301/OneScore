@@ -145,8 +145,6 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
                 popWindow(v);
             }
         });
-
-
     }
 
     private void popWindow(final View v) {
@@ -156,7 +154,6 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
 
         ListView listview = (ListView) mView.findViewById(R.id.match_type);
         listview.setAdapter(mAdapter);
-
 
         final PopupWindow popupWindow = new PopupWindow(mView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         popupWindow.setFocusable(true);

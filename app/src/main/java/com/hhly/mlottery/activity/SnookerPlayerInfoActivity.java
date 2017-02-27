@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.ProgressWebView;
 
 /**
@@ -25,7 +26,7 @@ import com.hhly.mlottery.widget.ProgressWebView;
 public class SnookerPlayerInfoActivity extends Activity {
     private ProgressWebView mWebView;
     private TextView tv_nopage;
-    private String url;
+    private String url = "";
     private String playerId;
     private ImageView back;
 
@@ -44,8 +45,11 @@ public class SnookerPlayerInfoActivity extends Activity {
         tv_nopage = (TextView) findViewById(R.id.tv_nopage);
         mWebView = (ProgressWebView) findViewById(R.id.webview);
         back = (ImageView) findViewById(R.id.snooker_player_back);
-        url = BaseURLs.URL_SNOOKER_INFO_PLAYER_INFO_H5 + "?lang=" + appendLanguage() + "&playerId=" + playerId + "&from=app";
-        // url = "http://192.168.31.131:9000/snookerData/playerInfo.html?lang=" + appendLanguage() + "&playId=" + playerId + "&from=app";
+        //url = BaseURLs.URL_SNOOKER_INFO_PLAYER_INFO_H5 + "?lang=" + appendLanguage() + "&playId=" + playerId + "&from=app";
+        url = "http://m.1332255.com:81/snookerData/playerInfo.html?lang=" + appendLanguage() + "&playId=" + playerId + "&from=app";
+
+        L.d("h5", url);
+
     }
 
 
