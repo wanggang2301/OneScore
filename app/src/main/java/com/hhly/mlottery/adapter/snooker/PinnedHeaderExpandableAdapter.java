@@ -1,6 +1,7 @@
 package com.hhly.mlottery.adapter.snooker;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
     private int mMatchKind;
     private ChoseHeadInformationItemAdapter choseHeadInformationAdapter;
     private ImageView iconfont;
+    private TextView live_item_day_tx;
 
 
     public PinnedHeaderExpandableAdapter(List<SnookerRaceListitemBean.DataBean.MatchListBean> matchList, List<List<String>> childDataList, Context mContext, SnookerPinnedHeaderExpandableListView explistview_live) {
@@ -151,7 +153,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
                              View convertView, ViewGroup parent) {
         RelativeLayout parentLayout = (RelativeLayout) View.inflate(mContext, R.layout.snooker_race_group, null);
         //日期
-        TextView live_item_day_tx = (TextView) parentLayout.findViewById(R.id.live_item_day_txt);
+        live_item_day_tx = (TextView) parentLayout.findViewById(R.id.live_item_day_txt);
         //左参赛人员
         TextView snooker_left_name = (TextView) parentLayout.findViewById(R.id.snooker_left_name);
         //有参赛人员
@@ -164,13 +166,11 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         snooker_left_name.setText(mGroupDataList.get(groupPosition).getPlayerNameAcn());
         snooker_right_name.setText(mGroupDataList.get(groupPosition).getPlayerNameBcn());
         snooker_race_total_score.setText(mGroupDataList.get(groupPosition).getScore());
-  /*      parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                iconfont.setImageResource(R.mipmap.iconfont_xiala_2);
-            }
-        });*/
-
+        if (isExpanded) {
+            iconfont.setImageResource(R.mipmap.iconfont_xiala_2);
+        } else {
+            iconfont.setImageResource(R.mipmap.iconfont_xiala_1);
+        }
         return parentLayout;
     }
 
@@ -267,7 +267,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
 
             textView = holder.getView(R.id.item1);
             head_item = holder.getView(R.id.head_item);
-            head_item.setText(position+1+"");
+            head_item.setText(position + 1 + "");
 
             textView.setText(s);
 

@@ -2,6 +2,7 @@ package com.hhly.mlottery.frame.scorefrag;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -13,8 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +32,7 @@ import com.hhly.mlottery.bean.videobean.NewMatchVideoinfo;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.SnookerPinnedHeaderExpandableListView;
 import com.hhly.mlottery.widget.GrapeGridView;
@@ -38,12 +43,13 @@ import java.util.List;
 import java.util.Map;
 
 import de.greenrobot.event.EventBus;
+import info.hoang8f.android.segmented.SegmentedGroup;
 
 /**
  * Created by yuely198 on 2017/2/23.
  */
 
-public class SnookerDataQualificationHeatFragement extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class SnookerDataQualificationHeatFragement extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, RadioGroup.OnCheckedChangeListener {
 
     /*标题，暂无数据*/
     private TextView live_no_data_txt;
@@ -94,12 +100,15 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
     private List<SnookerRaceListitemBean.DataBean.StageMapBean.StageInfoBean> stageInfo;
     private SnookerRaceListitemBean.DataBean.StageMapBean stageMap;
     private InformationDataAdapter informationDataAdapter;
-    private LinearLayout snooker_race_male_gridview;
-    private String currentStage="";
-    private String mSeason="";
+    private String currentStage = "";
+    private String mSeason = "";
     private String mLeagueId;
+    private TextView lay_agendafg;
+    private LinearLayout snooker_race_time_head;
+    private SegmentedGroup segmented5;
+    private HorizontalScrollView snooker_race_male_gridview;
 
-    public static SnookerDataQualificationHeatFragement newInstance(int type,String leagueId) {
+    public static SnookerDataQualificationHeatFragement newInstance(int type, String leagueId) {
         Bundle bundle = new Bundle();
         bundle.putInt(TYPE_PARM, type);
         bundle.putString(PARAM_ID, leagueId);
@@ -116,7 +125,6 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
         if (getArguments() != null) {
             mType = getArguments().getInt(TYPE_PARM);
             mLeagueId = getArguments().getString(PARAM_ID);
-
         }
         //注册EventBus
         EventBus.getDefault().register(this);
@@ -135,9 +143,10 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
 
     //赛事简介数据传输
     public void onEventMainThread(SnookerRefrshBean snookerRefrshBean) {
+        segmented5.removeAllViews();
         mSeason = snookerRefrshBean.getSeason();
-        upLeagueRace("", snookerRefrshBean.getSeason());
-        isAddHeadDatas=false;
+        //upLeagueRace("", snookerRefrshBean.getSeason());
+        isAddHeadDatas = false;
     }
 
     private void upLeagueRace(String secondTitle, String season) {
@@ -158,14 +167,13 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
                 }
                 if (json.getResult() == 200) {
 
-                    headDatas.clear();
                     //获取整体的头部数据
                     stageMap = json.getData().getStageMap();
                     //获取头部数据
                     stageInfo = json.getData().getStageMap().getStageInfo();
 
                     //获取默认的列赛列表头
-                    //currentStage = json.getData().getStageMap().getCurrentStageNum();
+                    currentStage = json.getData().getStageMap().getCurrentStageNum();
 
 
                     //获取子列表数据
@@ -176,6 +184,9 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
                         mSwipeRefreshLayout.setVisibility(View.GONE);
                         mSwipeRefreshLayout.setRefreshing(false);
                         snooker_race_male_gridview.setVisibility(View.GONE);
+                        snooker_race_time_head.setVisibility(View.GONE);
+                        lay_agendafg.setVisibility(View.GONE);
+                        // head_gridview.setVisibility(View.GONE);
                         return;
                     } else {
                         live_no_data_txt.setVisibility(View.GONE);
@@ -184,29 +195,31 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
                         explistview_live.setVisibility(View.VISIBLE);
                         mSwipeRefreshLayout.setRefreshing(false);
                         snooker_race_male_gridview.setVisibility(View.VISIBLE);
+                        snooker_race_time_head.setVisibility(View.VISIBLE);
+                        lay_agendafg.setVisibility(View.VISIBLE);
+                        // head_gridview.setVisibility(View.VISIBLE);
                     }
 
-                     if (stageInfo==null){
+                    if (stageInfo .size()==0) {
 
-                         snooker_race_male_gridview.setVisibility(View.GONE);
-                     }else {
+                        snooker_race_male_gridview.setVisibility(View.GONE);
+                    } else {
+                       if (!isAddHeadDatas){
 
-                         for (int i = 0; i < stageInfo.size(); i++) {
-                             //添加子头部数据
-                             headDatas.add(json.getData().getStageMap().getStageInfo().get(i).getStage());
-                         }
-                         if (!isAddHeadDatas) {
-                             choseHeadInformationAdapter = new ChoseHeadInformationAdapter(mContext, stageInfo, json.getData().getStageMap().getCurrentStageNum(), headDatas, R.layout.snooker_race_header_item);
-                             head_gridview.setAdapter(choseHeadInformationAdapter);
-                             isAddHeadDatas = true;
-                         }
-                     }
+                           for (int i = 0; i < stageInfo.size(); i++) {
+
+                               addButton(segmented5, stageInfo.get(i).getStage(), stageInfo.get(i).getNum());
+
+                           }
+                           isAddHeadDatas = true;
+                       }
+                    }
 
                     //获取子列表数据
                     for (int i = 0; i < json.getData().getMatchList().size(); i++) {
                         //获取默认赛季时间
-                        mSeason=json.getData().getMatchList().get(i).getSeason();
-                       // Log.i("aasdas>>>"," mSeason=="+mSeason);
+                        mSeason = json.getData().getMatchList().get(i).getSeason();
+                        // Log.i("aasdas>>>"," mSeason=="+mSeason);
                         //添加子view数据
                         childDataList.add(json.getData().getMatchList().get(i).getDetailedScoreList());
                     }
@@ -220,8 +233,9 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-
-
+                //head_gridview.setVisibility(View.GONE);
+                lay_agendafg.setVisibility(View.GONE);
+                snooker_race_time_head.setVisibility(View.GONE);
                 mSwipeRefreshLayout.setRefreshing(false);
                 mSwipeRefreshLayout.setVisibility(View.GONE);
                 explistview_live.setVisibility(View.GONE);
@@ -239,26 +253,30 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
         super.onViewCreated(view, savedInstanceState);
 
         mRecyclerView = (ListView) view.findViewById(R.id.header_item_view);
+        //头部滑动条目
+        snooker_race_male_gridview = (HorizontalScrollView) view.findViewById(R.id.snooker_race_male_gridview);
 
-        snooker_race_male_gridview = (LinearLayout) view.findViewById(R.id.snooker_race_male_gridview);
 
-        head_gridview = (GrapeGridView) view.findViewById(R.id.male_gridview);
+        segmented5 = (SegmentedGroup) view.findViewById(R.id.segmented5);
+        segmented5.setOnCheckedChangeListener(this);
 
-        head_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        segmented5.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                choseHeadInformationAdapter.setSeclection(position);
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-                currentStage=stageInfo.get(position).getNum()+"";
-                Log.i("aasdas>>>","  gridView currentStage=="+currentStage);
-                upLeagueRace(stageInfo.get(position).getNum() + "", mSeason);
 
-                choseHeadInformationAdapter.notifyDataSetChanged();
+                upLeagueRace(stageInfo.get(checkedId - 1).getNum() + "", mSeason);
+
             }
         });
+
         snooker_profile = (TextView) view.findViewById(R.id.snooker_profile);
 
-         upLeagueRace("", "");
+        upLeagueRace("", "");
+
+        //列表头部条目
+        snooker_race_time_head = (LinearLayout) view.findViewById(R.id.snooker_race_time_head);
 
         //级联列表listview
         explistview_live = (SnookerPinnedHeaderExpandableListView) view.findViewById(R.id.explistview_live);
@@ -281,8 +299,9 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
         live_error_ll = (LinearLayout) view.findViewById(R.id.live_error_ll);
         live_error_btn = (TextView) view.findViewById(R.id.live_error_btn);
         live_error_btn.setOnClickListener(this);
-        //暂无数据
-        live_no_data_txt = (TextView) view.findViewById(R.id.live_no_data_txt);
+
+        //头部列表线条
+        lay_agendafg = (TextView) view.findViewById(R.id.lay_agendafg);
     }
 
     /*下拉刷新*/
@@ -291,12 +310,12 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                   reFH();
+                reFH();
             }
         }, 500);
     }
 
-    public void reFH(){
+    public void reFH() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -309,7 +328,7 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.live_error_btn:
                 reFH();
                 break;
@@ -317,6 +336,19 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
                 break;
 
 
+        }
+
+    }
+
+    /*添加Radiobutton*/
+    private void addButton(SegmentedGroup group, String stage, String num) {
+        RadioButton radioButton = (RadioButton) mActivity.getLayoutInflater().inflate(R.layout.radio_button_item, null);
+        radioButton.setText(stage);
+        group.addView(radioButton);
+        group.updateBackground();
+        //默认选择
+        if (num.equals(currentStage)) {
+            radioButton.setChecked(true);
         }
 
     }
@@ -332,5 +364,10 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
         super.onDestroy();
         //注销EventBus
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+
     }
 }
