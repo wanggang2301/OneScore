@@ -114,6 +114,7 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
                     json.getData().getLeagueName();
 
                     public_txt_title.setText(json.getData().getLeagueName());
+                    public_txt_title.setVisibility(View.VISIBLE);
                     mIsCurenDatas = json.getData().getCurrentSeason();
                     tv_right.setText(mIsCurenDatas);
                     //获取赛季时
@@ -277,6 +278,7 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         public_txt_title = (TextView) findViewById(R.id.public_txt_title);
         public_txt_title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17); //SP
+        public_txt_title.setVisibility(View.GONE);
         findViewById(R.id.public_img_back).setOnClickListener(this);
 
         viewPager = (ViewPager) findViewById(R.id.vp_Fragment_pager);
