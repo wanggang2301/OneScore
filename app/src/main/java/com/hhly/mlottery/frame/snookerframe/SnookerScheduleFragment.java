@@ -252,18 +252,19 @@ public class SnookerScheduleFragment extends Fragment implements View.OnClickLis
                     mSnookerListAdapter = new SnookerListAdapter(mContext, allData);
                     mRecyclerView.setAdapter(mSnookerListAdapter);
                     mSnookerListAdapter.setDateOnClickListener(mDateOnClickListener);
-                    mSnookerListAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, String data) {
-                            Intent intent = new Intent(getActivity(), SnookerMatchDetail.class);
-                            intent.putExtra("matchId" , data);
-                            startActivity(intent);
-                            getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
-                        }
-                    });
+
                 } else {
                     updateAdapter();
                 }
+                mSnookerListAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, String data) {
+                        Intent intent = new Intent(getActivity(), SnookerMatchDetail.class);
+                        intent.putExtra("matchId" , data);
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
+                    }
+                });
                 setStatus(SHOW_STATUS_SUCCESS);
             }
         }, new VolleyContentFast.ResponseErrorListener() {
