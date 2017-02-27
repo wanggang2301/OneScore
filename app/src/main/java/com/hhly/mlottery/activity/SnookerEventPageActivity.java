@@ -35,8 +35,6 @@ import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 
-import static com.hhly.mlottery.R.id.mViewPager;
-
 
 /**
  * Created by yuely198 on 2017/2/13.
@@ -121,9 +119,9 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
                     //获取赛事简介
                     if (json.getData().getLeagueProfile() != null) {
 
-                        EventBus.getDefault().post(new SnookerNoDataBean(json.getData().getLeagueProfile(),false));
+                        EventBus.getDefault().post(new SnookerNoDataBean(json.getData().getLeagueProfile(), false));
                     } else {
-                        EventBus.getDefault().post(new SnookerNoDataBean("",true));
+                        EventBus.getDefault().post(new SnookerNoDataBean("", true));
                     }
                     tv_right.setVisibility(View.VISIBLE);
                     ib_operate_more.setVisibility(View.VISIBLE);
@@ -183,7 +181,7 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
                 view.findViewById(R.id.tv_list_item).setBackgroundColor(getResources().getColor(R.color.bg));
                 //显示选择的赛季数据
                 tv_right.setText(seasonList.get(postion));// 设置所选的item作为下拉框的标题
-                Log.i("aaaa","listView====="+postion);
+                Log.i("aaaa", "listView=====" + postion);
                 EventBus.getDefault().post(new SnookerRefrshBean(seasonList.get(postion).toString()));
                 // 弹框消失
                 popupWindow.dismiss();

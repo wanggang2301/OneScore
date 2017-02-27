@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
@@ -15,8 +15,7 @@
             android:id="@+id/snooker_race_male_gridview"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:scrollbars="none"
-            >
+            android:scrollbars="none">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -29,42 +28,13 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:orientation="horizontal"
-                    segmentedgroup:sc_tint_color="#0085e1"
-                    segmentedgroup:sc_checked_text_color="#ffffff">
+                    segmentedgroup:sc_checked_text_color="#ffffff"
+                    segmentedgroup:sc_tint_color="#0085e1">
 
                 </info.hoang8f.android.segmented.SegmentedGroup>
             </RelativeLayout>
 
         </HorizontalScrollView>
-
-<!--        <LinearLayout
-            android:id="@+id/snooker_race_male_gridview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/shape_snooker_bg">
-
-            <com.hhly.mlottery.widget.GrapeGridView
-                android:id="@+id/male_gridview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:columnWidth="0dp"
-                android:gravity="center"
-                android:numColumns="8"
-                android:scrollbars="none"
-                android:stretchMode="columnWidth" />
-            &lt;!&ndash;   <android.support.v7.widget.RecyclerView
-                   android:id="@+id/header_view"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="10dp"
-                   android:background="@drawable/shape_snooker_bg"
-                   android:gravity="center" />&ndash;&gt;
-
-        </LinearLayout>-->
 
 
         <LinearLayout
