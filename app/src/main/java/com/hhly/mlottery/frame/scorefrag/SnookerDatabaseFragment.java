@@ -25,6 +25,7 @@ import com.hhly.mlottery.bean.snookerbean.SnookerRaceListitemBean;
 import com.hhly.mlottery.bean.snookerbean.SnookerRefrshBean;
 import com.hhly.mlottery.bean.snookerbean.SnookerSuccessBean;
 import com.hhly.mlottery.bean.videobean.NewMatchVideoinfo;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -136,11 +137,11 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
     //赛事简介数据传输
     public void onEventMainThread(String test) {
         if(test.equals("nodata")){
-            snooker_profile.setText(getResources().getString(R.string.nodata));
-            //live_pr_no_data_txt.setVisibility(View.VISIBLE);
-            snooker_profile.setVisibility(View.GONE);
+             //snooker_profile.setText(getResources().getString(R.string.nodata));
+             live_pr_no_data_txt.setVisibility(View.VISIBLE);
+             snooker_profile.setVisibility(View.GONE);
         }else{
-            //live_pr_no_data_txt.setVisibility(View.GONE);
+            live_pr_no_data_txt.setVisibility(View.GONE);
             snooker_profile.setText("\t\t\t\t" + test);
         }
     }
@@ -164,15 +165,13 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
 
     private void upLeagueRace(String secondTitle, String season) {
 
-        String url = "http://m.1332255.com:81/mlottery/core/snookerData.findLeagueMatchList.do";
-
         final Map<String, String> map = new HashMap();
         map.put("leagueId", mLeagueId);
         map.put("season", season);//默认不填是当前数据
         map.put("firstTitle", "102");//102.资格赛 103.正赛
         map.put("secondTitle", secondTitle);//联赛列表
 
-        VolleyContentFast.requestJsonByPost(url, map, new VolleyContentFast.ResponseSuccessListener<SnookerRaceListitemBean>() {
+        VolleyContentFast.requestJsonByPost(BaseURLs.SNOOKER_FINDLEAGUEMATCHLIST, map, new VolleyContentFast.ResponseSuccessListener<SnookerRaceListitemBean>() {
 
             @Override
             public void onResponse(SnookerRaceListitemBean json) {
@@ -198,8 +197,10 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
                         mSwipeRefreshLayout.setRefreshing(false);
                         snooker_race_male_gridview.setVisibility(View.GONE);
                         snooker_race_time_head.setVisibility(View.GONE);
+                        live_pr_no_data_txt.setVisibility(View.GONE);
                         return;
                     } else {
+                        live_pr_no_data_txt.setVisibility(View.GONE);
                         live_no_data_txt.setVisibility(View.GONE);
                         live_error_ll.setVisibility(View.GONE);
                         mSwipeRefreshLayout.setVisibility(View.VISIBLE);
@@ -251,12 +252,10 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
 
     private void upSuccessive() {
 
-        String url = "http://m.1332255.com:81/mlottery/core/mlottery/snookerData.findPreviousWinners.do";
-
         final Map<String, String> map = new HashMap();
         map.put("leagueId", mLeagueId);
 
-        VolleyContentFast.requestJsonByPost(url, map, new VolleyContentFast.ResponseSuccessListener<SnookerSuccessBean>() {
+        VolleyContentFast.requestJsonByPost(BaseURLs.SNOOKER_FINDPREVIOUSWINNERS, map, new VolleyContentFast.ResponseSuccessListener<SnookerSuccessBean>() {
 
             @Override
             public void onResponse(SnookerSuccessBean json) {
@@ -279,7 +278,6 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
                         mSwipeRefreshLayout1.setRefreshing(false);
                         snooker_race_time_head.setVisibility(View.VISIBLE);
                     }
-
                     informationDataAdapter = new InformationDataAdapter(mContext, json.getData(), R.layout.snooker_race_group);
                     mRecyclerView.setAdapter(informationDataAdapter);
                 }

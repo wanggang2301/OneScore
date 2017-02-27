@@ -19,6 +19,7 @@ import com.hhly.mlottery.adapter.InforPopuWindowdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.bean.snookerbean.SnookerRaceHeadBean;
 import com.hhly.mlottery.bean.snookerbean.SnookerRefrshBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.scorefrag.SnookerDataQualificationHeatFragement;
 import com.hhly.mlottery.frame.scorefrag.SnookerDatabaseFragment;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -27,7 +28,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 import de.greenrobot.event.EventBus;
 
@@ -84,14 +84,13 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
     /*获取内页头部数据*/
     private void initData() {
 
-        String url = "http://m.1332255.com:81/mlottery/core/snookerData.findLeagueHeaderList.do";
 
         final Map<String, String> map = new HashMap();
         map.put("leagueId", leagueId);
-        map.put("season", "");//默认不填是当前数据
+        map.put("season", "");//默认不填為当前数据
 
 
-        VolleyContentFast.requestJsonByPost(url, map, new VolleyContentFast.ResponseSuccessListener<SnookerRaceHeadBean>() {
+        VolleyContentFast.requestJsonByPost(BaseURLs.SNOOKER_FINDLEAGUEHEADERLIST, map, new VolleyContentFast.ResponseSuccessListener<SnookerRaceHeadBean>() {
             @Override
             public void onResponse(SnookerRaceHeadBean json) {
                 if (json == null) {
@@ -112,8 +111,6 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
                     }else{
                         EventBus.getDefault().post("nodata");
                     }
-
-
 
                     tv_right.setVisibility(View.VISIBLE);
                     ib_operate_more.setVisibility(View.VISIBLE);
@@ -196,7 +193,7 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
         tv_right = (TextView) findViewById(R.id.tv_right);
         tv_right.setOnClickListener(this);
 
-        text_times_title1 = (LinearLayout) findViewById(R.id.text_times_title);
+        text_times_title1 = (LinearLayout) findViewById(R.id.text_times_title1);
         ib_operate_more = (ImageView) findViewById(R.id.ib_operate_more);
 
         String[] titles = getApplicationContext().getResources().getStringArray(R.array.snooker_info_tabs);
