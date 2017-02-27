@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +23,12 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
+import com.hhly.mlottery.bean.tennisball.TennisEventBus;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 
 import java.util.ArrayList;
@@ -68,6 +72,7 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment {
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.tennis.score");
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
     }
 
     @Nullable
@@ -129,7 +134,7 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment {
         pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
         mViewPager.setAdapter(pureViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         mViewPager.setOffscreenPageLimit(titles.size());
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -236,5 +241,18 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment {
     public void onDestroy() {
         super.onDestroy();
         closeWebSocket();
+        EventBus.getDefault().unregister(this);
+    }
+
+    public void onEventMainThread(TennisEventBus event) {
+        if("tennisFocus".equals(event.msg)){
+            String focusId = PreferenceUtil.getString(AppConstants.TENNIS_BALL_FOCUS, null);
+            if(!TextUtils.isEmpty(focusId)){
+                String[] focusIds = focusId.split(",");
+                mTabLayout.getTabAt(TENNIS_FOCUS).setText(getString(R.string.foot_details_focus) + "("+ focusIds.length +")");
+            }else{
+                mTabLayout.getTabAt(TENNIS_FOCUS).setText(getString(R.string.foot_details_focus));
+            }
+        }
     }
 }
