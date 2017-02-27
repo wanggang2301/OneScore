@@ -76,6 +76,7 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
     private String[] titles1;
     private List<Fragment> fragments;
     private List<String> titles2;
+    private String profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,17 +114,20 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
 
                     json.getData().getLeagueName();
 
+
+                    //获取赛事简介
+                    profile = json.getData().getLeagueProfile();
                     public_txt_title.setText(json.getData().getLeagueName());
+                    public_txt_title.setVisibility(View.VISIBLE);
                     mIsCurenDatas = json.getData().getCurrentSeason();
                     tv_right.setText(mIsCurenDatas);
                     //获取赛季时
                     seasonList = json.getData().getSeasonList();
                     //获取赛事简介
-                    if (json.getData().getLeagueProfile() != null) {
-
-                        EventBus.getDefault().post(new SnookerNoDataBean(json.getData().getLeagueProfile(), false));
+                    if (profile!= null) {
+                        EventBus.getDefault().post(new SnookerNoDataBean(profile));
                     } else {
-                        EventBus.getDefault().post(new SnookerNoDataBean("", true));
+                        EventBus.getDefault().post(new SnookerNoDataBean("nodata"));
                     }
                     tv_right.setVisibility(View.VISIBLE);
                     ib_operate_more.setVisibility(View.VISIBLE);
@@ -184,7 +188,7 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
                 //显示选择的赛季数据
                 tv_right.setText(seasonList.get(postion));// 设置所选的item作为下拉框的标题
                 Log.i("aaaa", "listView=====" + postion);
-                EventBus.getDefault().post(new SnookerRefrshBean(seasonList.get(postion).toString()));
+
                 // 弹框消失
                 popupWindow.dismiss();
                 popupWindow = null;
@@ -243,6 +247,7 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
                             break;
                         case PROFILE:
                             text_times_title1.setVisibility(View.GONE);
+
                             // mFilterImgBtn.setVisibility(View.VISIBLE);
                             // mSetImgBtn.setVisibility(View.VISIBLE);
                             // ((ScheduleFragment) fragments.get(position)).updateAdapter();
@@ -266,7 +271,7 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
         tabLayout.setupWithViewPager(viewPager);
         // mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
-        viewPager.setOffscreenPageLimit(1);
+        viewPager.setOffscreenPageLimit(3);
 
     }
 

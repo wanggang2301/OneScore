@@ -143,7 +143,9 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
 
     //赛事简介数据传输
     public void onEventMainThread(SnookerNoDataBean snookerNoDataBean) {
-        if (snookerNoDataBean.isNoData()) {
+
+        snooker_profile.setText("\t\t\t\t" + snookerNoDataBean.getNoData());
+        if (snookerNoDataBean.getNoData().equals("nodata")) {
             live_pr_no_data_txt.setVisibility(View.VISIBLE);
             snooker_profile.setVisibility(View.GONE);
         } else {
@@ -368,7 +370,7 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
             mSwipeRefreshLayout.setVisibility(View.GONE);
             mSwipeRefreshLayout1.setVisibility(View.VISIBLE);
             upSuccessive();
-        } else {
+        } else if(mType==PROFILE) {
             view.findViewById(R.id.snooker_race_fragemnt).setVisibility(View.GONE);
             snooker_profile.setVisibility(View.VISIBLE);
         }
@@ -440,9 +442,9 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
         group.addView(radioButton);
         group.updateBackground();
         //默认选择
-     /*   if (num.equals(currentStage)) {
+        if (num.equals(currentStage)) {
             radioButton.setChecked(true);
-        }*/
+        }
 
     }
 

@@ -273,7 +273,7 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
 
         //列表头部条目
         snooker_race_time_head = (LinearLayout) view.findViewById(R.id.snooker_race_time_head);
-
+       // snooker_race_time_head.set
         //级联列表listview
         explistview_live = (SnookerPinnedHeaderExpandableListView) view.findViewById(R.id.explistview_live);
         //设置悬浮头部VIEW
@@ -346,7 +346,6 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
         if (num.equals(currentStage)) {
             radioButton.setChecked(true);
         }
-
     }
 
     @Override
