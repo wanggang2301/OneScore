@@ -60,7 +60,8 @@ public class SnookerRankFragment extends Fragment implements ExactSwipeRefreshLa
     private FrameLayout fl_nodata;
     private LinearLayout ll_error;
 
-    public SnookerRankFragment() {}
+    public SnookerRankFragment() {
+    }
 
     public static SnookerRankFragment newInatance() {
         SnookerRankFragment snookerRankFragment = new SnookerRankFragment();
@@ -159,7 +160,7 @@ public class SnookerRankFragment extends Fragment implements ExactSwipeRefreshLa
     private void RequestData() {
         //BaseURLs.URL_SNOOKER_INFO_RANK
 
-       // String url = "http://192.168.33.10:8080/mlottery/core/snookerWorldRanking.getWorldRankingPaging.do";
+        // String url = "http://192.168.33.10:8080/mlottery/core/snookerWorldRanking.getWorldRankingPaging.do";
 
         pageNum = 1;
         Map<String, String> map = new HashMap<>();
@@ -225,7 +226,7 @@ public class SnookerRankFragment extends Fragment implements ExactSwipeRefreshLa
         Map<String, String> map = new HashMap<>();
         map.put("pageNum", pageNum + "");
         map.put("pageSize", PAGE_SIZE + "");
-      //  String url = "http://192.168.33.10:8080/mlottery/core/snookerWorldRanking.getWorldRankingPaging.do";
+        //  String url = "http://192.168.33.10:8080/mlottery/core/snookerWorldRanking.getWorldRankingPaging.do";
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_SNOOKER_INFO_RANK, map, new VolleyContentFast.ResponseSuccessListener<SnookerRankBean>() {
                     @Override
                     public void onResponse(SnookerRankBean jsonObject) {
@@ -238,6 +239,13 @@ public class SnookerRankFragment extends Fragment implements ExactSwipeRefreshLa
                                 loadmore_text.setText(mContext.getResources().getString(R.string.loading_data_txt));
                                 progressBar.setVisibility(View.VISIBLE);
                             }
+                        }
+                        L.d("ddddcc", jsonObject.getWorldRankingList() + "");
+
+
+                        if (jsonObject.getWorldRankingList() == null && jsonObject.getWorldRankingList().size() < 0) {
+                            L.d("ddddcc", "null");
+                            return;
                         }
 
                         worldRankingList.addAll(jsonObject.getWorldRankingList());
