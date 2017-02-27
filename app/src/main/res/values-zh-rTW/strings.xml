@@ -160,7 +160,7 @@
     <string name="statistics_txt">統計</string>
     <string name="trend_txt">走勢</string>
     <string name="data_statistics_txt">數據統計</string>
-    <string name="nodata_txt">沒有更多數據!</string>
+    <string name="nodata_txt">沒有更多數據</string>
     <string name="loading_data_txt">正在加載中...</string>
     <string name="not_start_txt">未開</string>
     <string name="not_start_short_txt">未</string>
