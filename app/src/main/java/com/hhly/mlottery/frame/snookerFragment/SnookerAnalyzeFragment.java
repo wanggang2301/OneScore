@@ -329,7 +329,7 @@ public class SnookerAnalyzeFragment extends Fragment implements View.OnClickList
 
         initView();//初始化加载的布局的listview等
 
-        if (analyzeBean.getBattleHistory() == null) { //历史对比
+        if (analyzeBean.getBattleHistory() == null||analyzeBean.getBattleHistory().size()==0) { //历史对比
             mNoHistoryBattle.setVisibility(View.VISIBLE);
             mHistoryBattle.setVisibility(View.GONE);
         } else {    ////历史对战
@@ -344,10 +344,13 @@ public class SnookerAnalyzeFragment extends Fragment implements View.OnClickList
 
             SnookerAnalyzeBean.SnookerStatisics historyBattle = analyzeBean.getBattleHistoryStatistics();
 
-            mHistoryText.setText(Html.fromHtml(setHistoryText(historyBattle)));//不同字不同颜色
+            if(historyBattle!=null){
+                mHistoryText.setText(Html.fromHtml(setHistoryText(historyBattle)));//不同字不同颜色
+            }
+
         }
 
-        if(analyzeBean.getPlayerRecent().getHome()==null){ //无主队近况
+        if(analyzeBean.getPlayerRecent().getHome()==null||analyzeBean.getPlayerRecent().getHome().size()==0){ //无主队近况
             mNoHomeRecentBattle.setVisibility(View.VISIBLE);
             mHomeRecentBattle.setVisibility(View.GONE);
         }else{
@@ -363,12 +366,15 @@ public class SnookerAnalyzeFragment extends Fragment implements View.OnClickList
 
             SnookerAnalyzeBean.SnookerStatisics homeRecent = analyzeBean.getPlayerRecent().getHomeStatisics();
                 //TODO：设置最近比赛信息1
-            mHomeText.setText(Html.fromHtml(setHomeRecentText(homeRecent)));
+            if(homeRecent!=null){
+                mHomeText.setText(Html.fromHtml(setHomeRecentText(homeRecent)));
+            }
+
         }
 
         //客队近况无比赛
 
-        if(analyzeBean.getPlayerRecent().getGuest()==null){
+        if(analyzeBean.getPlayerRecent().getGuest()==null||analyzeBean.getPlayerRecent().getGuest().size()==0){
             mGuestRecentBattle.setVisibility(View.GONE);
             mNoGuestRecentBattle.setVisibility(View.VISIBLE);
         }else{
@@ -385,7 +391,10 @@ public class SnookerAnalyzeFragment extends Fragment implements View.OnClickList
 
             SnookerAnalyzeBean.SnookerStatisics guestRecent = analyzeBean.getPlayerRecent().getGuestStatisics();
             //TODO：设置最近比赛信息2
-            mGuestText.setText(Html.fromHtml(setGuestRecentText(guestRecent)));
+            if(guestRecent!=null){
+                mGuestText.setText(Html.fromHtml(setGuestRecentText(guestRecent)));
+            }
+
         }
 
 

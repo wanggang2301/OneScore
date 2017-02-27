@@ -139,15 +139,18 @@ public class SnookerLetFragment extends Fragment implements View.OnClickListener
                 case VIEW_STATUS_SUCCESS:
                     mProgressBarLayout.setVisibility(View.GONE);
                     mExceptionLayout.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
                     break;
                 case VIEW_STATUS_NET_ERROR:
                     mProgressBarLayout.setVisibility(View.GONE);
                     mNodataLayout.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.GONE);
                     mExceptionLayout.setVisibility(View.VISIBLE);
                     break;
                 // 无数据界面
                 case VIEW_STATUS_NO_DATA:
                     mNodataLayout.setVisibility(View.VISIBLE);
+                    mRecyclerView.setVisibility(View.GONE);
                     break;
             }
         }
@@ -186,10 +189,16 @@ public class SnookerLetFragment extends Fragment implements View.OnClickListener
             public void onResponse(SnookerOddsBean jsonObject) {
 
                 if(jsonObject.getResult()==200){
-                    handler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
+
 
                     mData=jsonObject;
-                    loadData();
+                    if(mData.getListOdd()==null||mData.getListOdd().size()==0){
+                        handler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
+                    }else {
+                        handler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
+                        loadData();
+                    }
+
 
                 }
             }

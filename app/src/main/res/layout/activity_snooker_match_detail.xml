@@ -3,10 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/snooker_details_refresh_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <!--android:paddingTop="@dimen/status_bar_offset"-->
-    >
-
+    android:layout_height="match_parent"
+   >
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/coordinator_layout"
         android:layout_width="match_parent"
@@ -17,7 +15,6 @@
             android:id="@+id/snooker_details_appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/black"
             style="@style/isFitsSystemWindows"
             android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -27,10 +24,15 @@
                 android:layout_height="wrap_content"
                 app:contentScrim="@color/black">
 
-                <include layout="@layout/layout_snooker_header" />
+                <include
+                    layout="@layout/layout_snooker_header"
+                    style="@style/isFitsSystemWindows"
+                    >
+                    </include>
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/snooker_details_toolbar"
+                    style="@style/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:background="@color/transparency"
@@ -39,6 +41,20 @@
                     app:layout_scrollFlags="scroll|enterAlways"
                     app:popupTheme="@style/AppTheme.PopupOverlay">
 
+                    <!--状态栏-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <ImageView
+                            android:id="@+id/snooker_detail_back"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/back"
+                            android:padding="5dp"
+                            />
+                    </LinearLayout>
                 </android.support.v7.widget.Toolbar>
 
             </android.support.design.widget.CollapsingToolbarLayout>
