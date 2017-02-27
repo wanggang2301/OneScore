@@ -179,7 +179,7 @@ public class SnookerLetFragment extends Fragment implements View.OnClickListener
         handler.sendEmptyMessage(VIEW_STATUS_LOADING);
 
         Map<String,String> params=new HashMap<>();
-        params.put("thirdId","843968000");
+        params.put("thirdId",mThirdId);
         params.put("oddType",mOddsType);
         VolleyContentFast.requestJsonByGet(BaseURLs.SNOOKER_ODDS_URL,params, new VolleyContentFast.ResponseSuccessListener<SnookerOddsBean>() {
             @Override
