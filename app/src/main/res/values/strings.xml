@@ -1435,9 +1435,9 @@
     <string name="video_high_light">精彩瞬间</string>
     <string name="video_high_notice">精彩瞬间来啦</string>
 
-    <!--斯洛克-->
-    <string name="snooker_title">斯洛克</string>
-    <string name="snooker_setting_title">斯洛克设置</string>
+    <!--斯诺克-->
+    <string name="snooker_title">斯诺克</string>
+    <string name="snooker_setting_title">斯诺克设置</string>
     <string name="snooker_setting_alet">亚盘</string>
     <string name="snooker_setting_eur">欧赔</string>
     <string name="snooker_setting_asize">大小盘</string>
@@ -1446,12 +1446,15 @@
 
     <string name="snooker_state_pause">暂停</string>
     <string name="snooker_state_no_start">未开赛</string>
-    <string name="snooker_state_over_game">结束</string>
+    <string name="snooker_state_over_game">完场</string>
     <string name="snooker_state_have_ing">进行中</string>
     <string name="snooker_state_resting">休息中</string>
     <string name="snooker_state_victory_defeat">胜负</string>
     <string name="snooker_state_zong">总</string>
     <string name="snooker_state_single_double">单双</string>
+
+    <string name="snooker_current_nodata">当前日期暂无比赛</string>
+    <string name="snooker_loading">数据加载中...</string>
 
     <!--我的定制-->
     <string name="custom_mine_cus">我的订制</string>
@@ -1561,5 +1564,31 @@
     <string name="snooker_history_bettle">历史交锋</string>
     <string name="snooker_player1">选手1近期战绩</string>
     <string name="snooker_player2">选手2近期战绩</string>
+
+    <string name="football_txt">足球</string>
+    <string name="basketball_txt">篮球</string>
+    <string name="snooker_txt">斯诺克</string>
+    <string name="tennisball_txt">网球</string>
+    <string name="football_ziliaoku">资料库</string>
+
+    <string name="sn_rank_name">姓名</string>
+    <string name="sn_rank_zjf">总积分</string>
+    <string name="sn_rank_zjj">总奖金</string>
+    <string name="sn_player_search">请输入球员名称</string>
+
+    <!--斯诺克-->
+    <string name="snooker_qualifiers">资格赛</string>
+    <string name="snooker_match">正赛</string>
+    <string name="snooker_champion">历届冠军</string>
+    <string name="snooker_tournament">赛事简介</string>
+    <!--网球-->
+    <string name="tennis_match_p2">P2退赛</string>
+    <string name="tennis_match_p1">P1退赛</string>
+    <string name="tennis_match_dd">待定</string>
+    <string name="tennis_match_tc">推迟</string>
+    <string name="tennis_match_zd">中断</string>
+    <string name="tennis_match_over">完</string>
+    <string name="tennis_match_not_start">未开始</string>
+    <string name="tennis_match_join">进行中</string>
 
 </resources>

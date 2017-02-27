@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +42,7 @@ import java.util.List;
  * 作    者：longs@13322.com
  * 时    间：2016/6/21.
  */
-public class CPIFragment extends BaseWebSocketFragment  {
+public class CPIFragment extends BaseWebSocketFragment {
 
     private static final int startFilterRequestCode = 10086;
 
@@ -113,7 +112,7 @@ public class CPIFragment extends BaseWebSocketFragment  {
             @Override
             public void onClick(View v) {
                 if (getActivity() != null) {
-                    ((FootballActivity)getActivity()).eventBusPost();
+                    ((FootballActivity) getActivity()).eventBusPost();
                     getActivity().finish();
                 }
             }

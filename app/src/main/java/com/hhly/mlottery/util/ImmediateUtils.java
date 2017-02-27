@@ -18,7 +18,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.Match;
 import com.hhly.mlottery.bean.MatchOdd;
 import com.hhly.mlottery.callback.FocusClickListener;
-import com.hhly.mlottery.frame.footframe.FocusFragment;
+import com.hhly.mlottery.frame.footballframe.FocusFragment;
 import com.hhly.mlottery.util.adapter.ViewHolder;
 
 public class ImmediateUtils {

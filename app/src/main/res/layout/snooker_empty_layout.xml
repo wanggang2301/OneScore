@@ -48,6 +48,23 @@
                 android:textSize="@dimen/text_size_14"/>
         </LinearLayout>
     </LinearLayout>
+    <!--加载中-->
+    <LinearLayout
+        android:id="@+id/snooker_loading_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:id="@+id/snooker_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loading_txt"
+            android:textColor="@color/loading_txt_color" />
+    </LinearLayout>
     <!--暂无数据提示-->
     <TextView
         android:id="@+id/snooker_nodata_txt"

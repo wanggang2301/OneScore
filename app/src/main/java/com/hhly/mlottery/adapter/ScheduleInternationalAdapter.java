@@ -13,7 +13,7 @@ import com.hhly.mlottery.bean.scheduleBean.AsiaSize;
 import com.hhly.mlottery.bean.scheduleBean.Euro;
 import com.hhly.mlottery.bean.scheduleBean.SchMatch;
 import com.hhly.mlottery.bean.scheduleBean.ScheduleMatchOdd;
-import com.hhly.mlottery.frame.footframe.ScheduleFragment.SchFocusClickListener;
+import com.hhly.mlottery.frame.footballframe.ScheduleFragment.SchFocusClickListener;
 import com.hhly.mlottery.util.HandicapUtils;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -236,10 +236,10 @@ public class ScheduleInternationalAdapter extends CommonAdapter<SchMatch> {
 
 //		holder.getView(R.id.item_football_internationl_focus_btn).setOnClickListener(new View.OnClickListener() {
 //			@Override
-//			public void onClick(View v) {
+//			public void notifyDataSetChanged(View v) {
 //				// TODO Auto-generated method stub
 //				if (schfocusClickListener != null) {
-//					schfocusClickListener.onClick(v, match);
+//					schfocusClickListener.notifyDataSetChanged(v, match);
 //				}
 //			}
 //		});

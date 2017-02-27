@@ -40,7 +40,6 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
-
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -150,9 +149,6 @@
             android:name=".activity.FootballDatabaseDetailsActivity"
             android:screenOrientation="portrait" />
         <!-- 首页Activity -->
-        <activity
-            android:name=".activity.HomePagerActivity"
-            android:screenOrientation="portrait" />
         <!-- 首页用户设置选项 -->
         <activity
             android:name=".activity.HomeUserOptionsActivity"
@@ -322,17 +318,18 @@
         <activity
             android:name=".activity.MultiScreenViewingListActivity"
             android:screenOrientation="portrait" />
-
         <activity android:name=".activity.MultiScreenIntroduceActivity" />
         <activity android:name=".activity.MultiScreenViewActivity" />
         <activity android:name=".activity.MyFocusActivity" />
-        <!--袁天罡六合图片查看-->
+        <!-- 袁天罡六合图片查看 -->
         <activity
             android:name=".activity.LotteryHKInfoImageActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.InvitedActivity"
             android:screenOrientation="portrait" />
+
+        <!-- 覆盖安装监听 -->
         <!--斯诺克内页-->
         <activity android:name=".activity.SnookerMatchDetail"
             android:screenOrientation="portrait"/>
@@ -348,6 +345,26 @@
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
+        <!--snooker 列表页-->
+        <activity
+            android:name=".activity.SnookerListActivity"
+            android:screenOrientation="portrait" />
+        <!--snooker 设置页-->
+        <activity
+            android:name=".activity.SnookerSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.IndexActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SnookerPlayerInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SnookerInformationSerachActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.SnookerEventPageActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

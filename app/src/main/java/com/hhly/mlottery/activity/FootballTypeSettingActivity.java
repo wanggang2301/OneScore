@@ -8,7 +8,6 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,7 +20,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.frame.footframe.eventbus.ScoresMatchSettingEventBusEntity;
+import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchSettingEventBusEntity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;

@@ -31,10 +31,7 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.IsTestLoginBean;
 import com.hhly.mlottery.bean.account.Register;
-import com.hhly.mlottery.bean.focusAndPush.BasketballConcernListBean;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
-import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.util.AccessTokenKeeper;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
@@ -47,7 +44,6 @@ import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
-import com.hhly.mlottery.util.net.account.CustomEvent;
 import com.sina.weibo.sdk.auth.AuthInfo;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 import com.sina.weibo.sdk.auth.WeiboAuthListener;
@@ -74,7 +70,11 @@ import de.greenrobot.event.EventBus;
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener, TextWatcher {
 
-
+    /**
+     * 跳转其他Activity 的requestcode
+     */
+    public static final int REQUESTCODE_LOGIN = 100;
+    public static final int REQUESTCODE_LOGOUT = 110;
 
     private EditText et_username, et_password;
     private ImageView iv_eye;
@@ -287,7 +287,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 break;
             case R.id.tv_register: // 注册
                 MobclickAgent.onEvent(mContext, "RegisterActivity_Start");
-                startActivityForResult(new Intent(this, RegisterActivity.class), HomePagerActivity.REQUESTCODE_LOGIN);
+                startActivityForResult(new Intent(this, RegisterActivity.class), REQUESTCODE_LOGIN);
                 break;
             case R.id.iv_delete: // EditText 删除
                 MobclickAgent.onEvent(mContext, "LoginActivity_UserName_Delete");

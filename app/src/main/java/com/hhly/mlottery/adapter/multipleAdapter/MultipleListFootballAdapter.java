@@ -20,15 +20,13 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.Match;
 import com.hhly.mlottery.bean.MatchOdd;
 import com.hhly.mlottery.callback.FocusMatchClickListener;
-import com.hhly.mlottery.frame.footframe.FocusFragment;
+import com.hhly.mlottery.frame.footballframe.FocusFragment;
 import com.hhly.mlottery.util.HandicapUtils;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Created by yixq on 2017/1/5.
@@ -93,7 +91,7 @@ public class MultipleListFootballAdapter extends RecyclerView.Adapter<RecyclerVi
 //        //将创建的View注册点击事件
 //        view.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void onClick(View v) {
+//            public void notifyDataSetChanged(View v) {
 //                if (mOnItemClickListener != null) {
 //                    mOnItemClickListener.onItemClick(v, (String) v.getTag());
 //                }

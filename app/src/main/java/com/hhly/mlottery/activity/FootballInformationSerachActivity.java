@@ -36,20 +36,22 @@ import rx.schedulers.Schedulers;
 /**
  * @ClassName: OneScoreGit
  * @author:Administrator luyao
- * @Description:  足球资料库模糊搜索
+ * @Description: 足球资料库模糊搜索
  * @data: 2016/9/8 15:04
  */
-public class FootballInformationSerachActivity extends BaseActivity implements  View.OnClickListener {
+public class FootballInformationSerachActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String LEAGUEID = "league";
     private FootaballSerachAdapter basketballInforSerachAdapter;
     private EditText et_keyword;
     private ListView mTv_result;
     private TextView mNo_serach_tv;
-    private static final String SEARCHKEYWORD= "searchKeyword";
+    private static final String SEARCHKEYWORD = "searchKeyword";
     private ImageView mSearch_iv_delete;
-    public final static String LANGUAGE_SWITCHING="";
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    public final static String LANGUAGE_SWITCHING = "";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.serach_layout);
         initView();
@@ -121,7 +123,8 @@ public class FootballInformationSerachActivity extends BaseActivity implements  
                 return Observable.just("error result");
             }
         })
-              */  .observeOn(AndroidSchedulers.mainThread())
+              */
+                                .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(new Observer<List<FootballLeagueBean>>() {
                                     @Override
                                     public void onCompleted() {
@@ -164,8 +167,8 @@ public class FootballInformationSerachActivity extends BaseActivity implements  
 //                        return service.searchProdcut(VolleyContentFast.returenLanguage(), charSequence.toString());
 //                    }
 //                })
-                // .retryWhen(new RetryWithConnectivityIncremental(BasketballInformationSerachActivity.this, 5, 15, TimeUnit.MILLISECONDS))
-                // 网络操作在io线程
+        // .retryWhen(new RetryWithConnectivityIncremental(BasketballInformationSerachActivity.this, 5, 15, TimeUnit.MILLISECONDS))
+        // 网络操作在io线程
 
     }
 
@@ -190,7 +193,7 @@ public class FootballInformationSerachActivity extends BaseActivity implements  
         mTv_result.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if( null!=resultListBeen.get(position).getLeagueId()&&!resultListBeen.get(position).getLeagueId().isEmpty()) {
+                if (null != resultListBeen.get(position).getLeagueId() && !resultListBeen.get(position).getLeagueId().isEmpty()) {
                     Intent intent = new Intent(FootballInformationSerachActivity.this, FootballDatabaseDetailsActivity.class);
                     intent.putExtra(LEAGUEID, new DataBaseBean(resultListBeen.get(position).getKind(), resultListBeen.get(position).getLeagueId(), "", ""));//传递联赛ID
                     L.d("resulistBeen=====================" + resultListBeen.get(position).toString());
@@ -203,7 +206,7 @@ public class FootballInformationSerachActivity extends BaseActivity implements  
     /* * 数据处理 */
 
     private void showpop(final List<FootballLeagueBean> resultListBeen, String et_keyword) {
-        basketballInforSerachAdapter=new FootaballSerachAdapter(getApplicationContext(),resultListBeen,et_keyword);
+        basketballInforSerachAdapter = new FootaballSerachAdapter(getApplicationContext(), resultListBeen, et_keyword);
         mTv_result.setAdapter(basketballInforSerachAdapter);
         basketballInforSerachAdapter.notifyDataSetChanged();
         //点击监听
@@ -215,10 +218,10 @@ public class FootballInformationSerachActivity extends BaseActivity implements  
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.search_btn_back:
-                MobclickAgent.onEvent(mContext,"FootballInformationSerachActivity_exit");
+                MobclickAgent.onEvent(mContext, "FootballInformationSerachActivity_exit");
                 finish();
                 break;
 
@@ -230,7 +233,6 @@ public class FootballInformationSerachActivity extends BaseActivity implements  
                 break;
             default:
                 break;
-
 
 
         }

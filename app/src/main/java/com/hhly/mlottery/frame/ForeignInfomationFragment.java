@@ -17,9 +17,9 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.ForeignInfomationAdapter;
+import com.hhly.mlottery.bean.ForeignInfomationEvent;
 import com.hhly.mlottery.bean.foreigninfomation.ForeignInfomationBean;
 import com.hhly.mlottery.bean.foreigninfomation.OverseasInformationListBean;
-import com.hhly.mlottery.callback.ForeignInfomationEvent;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -138,6 +138,7 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
         recyclerView.setAdapter(foreignInfomationAdapter);
         foreignInfomationAdapter.openLoadMore(0, true);
         foreignInfomationAdapter.setLoadingView(moreView);
+
         foreignInfomationAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {

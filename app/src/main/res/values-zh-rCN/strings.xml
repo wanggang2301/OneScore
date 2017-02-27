@@ -1435,9 +1435,9 @@
 
 
 
-    <!--斯洛克-->
-    <string name="snooker_title">斯洛克</string>
-    <string name="snooker_setting_title">斯洛克设置</string>
+    <!--斯诺克-->
+    <string name="snooker_title">斯诺克</string>
+    <string name="snooker_setting_title">斯诺克设置</string>
     <string name="snooker_setting_alet">亚盘</string>
     <string name="snooker_setting_eur">欧赔</string>
     <string name="snooker_setting_asize">大小盘</string>
@@ -1446,12 +1446,15 @@
 
     <string name="snooker_state_pause">暂停</string>
     <string name="snooker_state_no_start">未开赛</string>
-    <string name="snooker_state_over_game">结束</string>
+    <string name="snooker_state_over_game">完场</string>
     <string name="snooker_state_have_ing">进行中</string>
     <string name="snooker_state_resting">休息中</string>
     <string name="snooker_state_victory_defeat">胜负</string>
     <string name="snooker_state_zong">总</string>
     <string name="snooker_state_single_double">单双</string>
+
+    <string name="snooker_current_nodata">当前日期暂无比赛</string>
+    <string name="snooker_loading">数据加载中...</string>
 
     <!--我的定制-->
     <string name="custom_mine_cus">我的订制</string>
@@ -1555,6 +1558,20 @@
     <string name="copy_text3">参与一比分活动，赢取精彩好礼！</string>
     <string name="please_invited_number">请输入邀请码</string>
     <string name="please_invited">邀请码</string>
+    <string name="football_txt">足球</string>
+    <string name="basketball_txt">篮球</string>
+    <string name="snooker_txt">斯诺克</string>
+    <string name="tennisball_txt">网球</string>
+    <string name="football_ziliaoku">资料库</string>
+    <string name="sn_rank_name">姓名</string>
+    <string name="sn_rank_zjf">总积分</string>
+    <string name="sn_rank_zjj">总奖金</string>
+    <string name="sn_player_search">请输入球员名称</string>
+    <!--斯诺克-->
+    <string name="snooker_qualifiers">资格赛</string>
+    <string name="snooker_match">正赛</string>
+    <string name="snooker_champion">历届冠军</string>
+    <string name="snooker_tournament">赛事简介</string>
     <!--snooker-->
     <string name="snooker_player_compare">职业对比</string>
     <string name="snooker_history_bettle">历史交锋</string>

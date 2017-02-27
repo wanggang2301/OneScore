@@ -7,8 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.bean.ForeignInfomationEvent;
 import com.hhly.mlottery.bean.foreigninfomation.OverseasInformationListBean;
-import com.hhly.mlottery.callback.ForeignInfomationEvent;
 import com.hhly.mlottery.frame.ForeignChatFragment;
 import com.hhly.mlottery.util.CyUtils;
 import com.umeng.analytics.MobclickAgent;
@@ -48,7 +48,6 @@ public class ForeignInfomationDetailsActivity extends BaseActivity implements Vi
     private void initData() {
         ForeignChatFragment foreignChatFragment = ForeignChatFragment.newInstance();
         foreignChatFragment.setOilBean(oilbean);
-
         CyUtils.addComment(foreignChatFragment, oilbean.getId() + "", oilbean.getContent(), true, true, getSupportFragmentManager(), R.id.scrollview);//添加评论碎片
     }
 
@@ -63,7 +62,6 @@ public class ForeignInfomationDetailsActivity extends BaseActivity implements Vi
                 finish();
                 break;
         }
-
     }
 
 

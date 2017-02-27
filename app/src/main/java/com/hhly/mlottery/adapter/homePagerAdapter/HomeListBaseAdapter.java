@@ -22,7 +22,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
-import com.hhly.mlottery.activity.HomePagerActivity;
+import com.hhly.mlottery.activity.IndexActivity;
 import com.hhly.mlottery.activity.NumbersActivity;
 import com.hhly.mlottery.activity.NumbersInfoBaseActivity;
 import com.hhly.mlottery.activity.ProductAdviceActivity;
@@ -1435,7 +1435,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         }
                     }
                     /*给首页菜单入口添加小圆点标记--------end--------------------*/
-                    mViewHolder.mViewPagerMenu.setAdapter(new FragmentStatePagerAdapter(((HomePagerActivity) mContext).getSupportFragmentManager()) {
+                    mViewHolder.mViewPagerMenu.setAdapter(new FragmentStatePagerAdapter(((IndexActivity) mContext).getSupportFragmentManager()) {
                         @Override
                         public Fragment getItem(int position) {
                             return fragmentList.get(position);

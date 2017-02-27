@@ -74,7 +74,7 @@ public class BasketballInforSerachAdapter extends BaseAdapter{
         //设置点击事件
         mTv.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void notifyDataSetChanged(View v) {
                 Intent intent = new Intent(mContext, BasketballDatabaseDetailsActivity.class);
                 intent.putExtra(LEAGUEID, resultListBeen.get(position).leagueId);//传递联赛ID
                 mContext.startActivity(intent);

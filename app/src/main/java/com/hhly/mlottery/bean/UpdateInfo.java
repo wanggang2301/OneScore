@@ -25,7 +25,4 @@ public class UpdateInfo {
 		this.url = url;
 	}
 
-	
-	
-	
 }

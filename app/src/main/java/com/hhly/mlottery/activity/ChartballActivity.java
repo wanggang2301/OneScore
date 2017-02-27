@@ -14,7 +14,6 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -29,28 +28,19 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.adapter.chartBallAdapter.ChartBallAdapter;
-import com.hhly.mlottery.bean.BarrageBean;
 import com.hhly.mlottery.bean.chart.ChartReceive;
-import com.hhly.mlottery.bean.chart.SendMessageBean;
-import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.chartBallFragment.EmojiFragment;
 import com.hhly.mlottery.frame.chartBallFragment.LocalFragment;
 import com.hhly.mlottery.adapter.football.BasePagerAdapter;
-import com.hhly.mlottery.frame.footframe.eventbus.ChartBallContentEntitiy;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.ToastTools;
-import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 import de.greenrobot.event.EventBus;
 import io.github.rockerhieu.emojicon.EmojiconEditText;

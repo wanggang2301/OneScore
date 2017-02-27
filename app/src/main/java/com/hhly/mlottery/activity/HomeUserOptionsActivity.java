@@ -7,12 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.hhly.mlottery.MyApp;
@@ -23,7 +21,7 @@ import com.hhly.mlottery.bean.focusAndPush.BasketballConcernListBean;
 import com.hhly.mlottery.bean.focusAndPush.ConcernBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
-import com.hhly.mlottery.frame.footframe.FocusFragment;
+import com.hhly.mlottery.frame.footballframe.FocusFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.L;
@@ -39,8 +37,6 @@ import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 
-import static com.hhly.mlottery.R.id.focus_red_dot_view;
-
 /**
  * @ClassName: OneScoreGit
  * @author:Administrator luyao
@@ -55,7 +51,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     private RelativeLayout rl_focus;
     private  View mFocus_RedDot; //关注红点
     /**我的关注红点*/
-    boolean mShowRedDot=true;
+    boolean mShowRedDot=false;
     boolean mInvitedShowRedDot=true;
     /*邀请码红点*/
     /**我的定制*/
@@ -175,7 +171,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 //        }
         /**我的关注红点*/
         mFocus_RedDot=findViewById(R.id.focus_red_dot_view);
-        mShowRedDot=PreferenceUtil.getBoolean(SHOW_RED,true);
+        mShowRedDot=PreferenceUtil.getBoolean(SHOW_RED,false);
         if(mShowRedDot){
             mFocus_RedDot.setVisibility(View.VISIBLE);
         }else {
@@ -186,7 +182,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         invited_red_dot_view = findViewById(R.id.invited_red_dot_view);
         mInvitedShowRedDot=PreferenceUtil.getBoolean(INVITED_SHOW_RED,true);
         if(mInvitedShowRedDot){
-            invited_red_dot_view.setVisibility(View.VISIBLE);
+            invited_red_dot_view.setVisibility(View.GONE);
         }else {
             invited_red_dot_view.setVisibility(View.GONE);
         }

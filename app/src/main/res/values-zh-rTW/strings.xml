@@ -1415,9 +1415,9 @@
     <string name="video_high_notice">精彩瞬間來啦</string>
 
 
-    <!--斯洛克-->
-    <string name="snooker_title">斯洛克</string>
-    <string name="snooker_setting_title">斯洛克設置</string>
+    <!--斯諾克-->
+    <string name="snooker_title">斯諾克</string>
+    <string name="snooker_setting_title">斯諾克設置</string>
     <string name="snooker_setting_alet">亞盤</string>
     <string name="snooker_setting_eur">歐賠</string>
     <string name="snooker_setting_asize">大小盤</string>
@@ -1426,12 +1426,15 @@
 
     <string name="snooker_state_pause">暫停</string>
     <string name="snooker_state_no_start">未開賽</string>
-    <string name="snooker_state_over_game">結束</string>
+    <string name="snooker_state_over_game">完場</string>
     <string name="snooker_state_have_ing">進行中</string>
     <string name="snooker_state_resting">休息中</string>
     <string name="snooker_state_victory_defeat">勝負</string>
     <string name="snooker_state_zong">總</string>
     <string name="snooker_state_single_double">單雙</string>
+
+    <string name="snooker_current_nodata">當前日期暫無比賽</string>
+    <string name="snooker_loading">數據加載中...</string>
 
     <!--我的定制-->
     <string name="custom_mine_cus">我的訂制</string>
@@ -1542,5 +1545,21 @@
     <string name="snooker_history_bettle">歷史交鋒</string>
     <string name="snooker_player1">選手1近期戰績</string>
     <string name="snooker_player2">選手2近期戰績</string>
+
+    <string name="football_txt">足球</string>
+    <string name="basketball_txt">籃球</string>
+    <string name="snooker_txt">斯諾克</string>
+    <string name="tennisball_txt">網球</string>
+    <string name="football_ziliaoku">資料庫</string>
+    <string name="sn_rank_name">姓名</string>
+    <string name="sn_rank_zjf">總積分</string>
+    <string name="sn_rank_zjj">總獎金</string>
+    <string name="sn_player_search">請輸入球員名稱</string>
+
+    <!--斯诺克-->
+    <string name="snooker_qualifiers">資格賽</string>
+    <string name="snooker_match">正賽</string>
+    <string name="snooker_champion">歷屆冠軍</string>
+    <string name="snooker_tournament">賽事簡介</string>
 
 </resources>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_sn"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+
+    <TextView
+        android:id="@+id/tv_sn_rank"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="排名"
+        android:textColor="@color/snooker_rank_txt" />
+
+    <TextView
+        android:id="@+id/tv_sn_name"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="姓名"
+        android:textColor="@color/snooker_rank_txt" />
+
+    <TextView
+        android:id="@+id/tv_sn_totalIntegral"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"
+        android:gravity="center"
+        android:text="总积分"
+        android:textColor="@color/snooker_rank_txt" />
+
+    <TextView
+        android:id="@+id/tv_sn_totalBonus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"
+        android:gravity="center"
+        android:text="总奖金"
+        android:textColor="@color/snooker_rank_txt" />
+
+
+</LinearLayout>

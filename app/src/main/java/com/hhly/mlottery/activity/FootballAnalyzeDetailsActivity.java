@@ -129,7 +129,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 setResult(Activity.RESULT_OK, null);
                 finish();
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
