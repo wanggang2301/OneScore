@@ -32,7 +32,7 @@ import java.util.List;
  * @desr 斯洛克赛事
  * @date 2017/02/17
  */
-public class SnookerMatchFragment extends Fragment {
+public class SnookerMatchFragment extends Fragment implements ExactSwipeRefreshLayout.OnRefreshListener {
 
     private static final int REQUEST_LOAD = 1;
     private static final int REQUEST_SUCESS = 2;
@@ -85,6 +85,7 @@ public class SnookerMatchFragment extends Fragment {
     private void initView() {
 
         refresh = (ExactSwipeRefreshLayout) mView.findViewById(R.id.refresh);
+        refresh.setOnRefreshListener(this);
         refresh.setColorSchemeResources(R.color.bg_header);
         refresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
         fl_nodata = (FrameLayout) mView.findViewById(R.id.fl_nodata);
@@ -150,7 +151,7 @@ public class SnookerMatchFragment extends Fragment {
     private void RequestData() {
 
         //BaseURLs.URL_SNOOKER_INFO_MATCH
-       // String url = "http://192.168.31.1:8080/mlottery/core/mlottery/snookerData.findAppLeagueList.do";
+        // String url = "http://192.168.31.1:8080/mlottery/core/mlottery/snookerData.findAppLeagueList.do";
 
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_SNOOKER_INFO_MATCH, null, new VolleyContentFast.ResponseSuccessListener<SnookerMatchBean>() {
             @Override
@@ -187,4 +188,8 @@ public class SnookerMatchFragment extends Fragment {
         recyclerView.setAdapter(mSnookerMatchAdapter);
     }
 
+    @Override
+    public void onRefresh() {
+        RequestData();
+    }
 }
