@@ -134,7 +134,7 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment {
         pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
         mViewPager.setAdapter(pureViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         mViewPager.setOffscreenPageLimit(titles.size());
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

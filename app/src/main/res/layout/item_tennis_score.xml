@@ -87,7 +87,7 @@
                         android:gravity="center_vertical"
                         android:lines="1"
                         android:textColor="@color/mdy_333"
-                        android:textSize="@dimen/number_title"
+                        android:textSize="@dimen/tennis_score_item"
                         tools:text="主队name" />
 
                     <TextView
@@ -99,7 +99,7 @@
                         android:gravity="center_vertical"
                         android:lines="1"
                         android:textColor="@color/mdy_333"
-                        android:textSize="@dimen/number_title"
+                        android:textSize="@dimen/tennis_score_item"
                         tools:text="主队2name" />
 
                 </LinearLayout>
@@ -195,7 +195,7 @@
                         android:gravity="center_vertical"
                         android:lines="1"
                         android:textColor="@color/mdy_333"
-                        android:textSize="@dimen/number_title"
+                        android:textSize="@dimen/tennis_score_item"
                         tools:text="客队name" />
 
                     <TextView
@@ -207,7 +207,7 @@
                         android:gravity="center_vertical"
                         android:lines="1"
                         android:textColor="@color/mdy_333"
-                        android:textSize="@dimen/number_title"
+                        android:textSize="@dimen/tennis_score_item"
                         tools:text="客队2name" />
 
                 </LinearLayout>
