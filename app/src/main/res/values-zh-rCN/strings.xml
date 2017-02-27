@@ -693,6 +693,7 @@
     <string name="opinion">本场观点</string>
     <string name="shuangfangjin">双方近</string>
     <string name="cijiaofeng">"次交锋,  "</string>
+    <string name="cibisai">"次比赛,"</string>
     <string name="analyze_win">胜</string>
     <string name="analyze_equ">平</string>
     <string name="analyze_defeat">负</string>
@@ -703,7 +704,7 @@
     <string name="analyze_date">日期</string>
     <string name="analyze_match">赛事</string>
     <string name="analyze_match_result">赛果</string>
-    <string name="zhuduijin">主队近</string>
+    <string name="zhuduijin">近</string>
     <string name="keduijin">客队近</string>
     <string name="nodata">暂无数据</string>
 
@@ -1571,4 +1572,10 @@
     <string name="snooker_match">正赛</string>
     <string name="snooker_champion">历届冠军</string>
     <string name="snooker_tournament">赛事简介</string>
+    <!--snooker-->
+    <string name="snooker_player_compare">职业对比</string>
+    <string name="snooker_history_bettle">历史交锋</string>
+    <string name="snooker_player1">选手1近期战绩</string>
+    <string name="snooker_player2">选手2近期战绩</string>
+
 </resources>

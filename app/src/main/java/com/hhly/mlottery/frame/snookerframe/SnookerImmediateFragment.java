@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.snookerframe;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.SnookerMatchDetail;
 import com.hhly.mlottery.adapter.snooker.SnookerListAdapter;
 import com.hhly.mlottery.bean.scheduleBean.ScheduleDate;
 import com.hhly.mlottery.bean.snookerbean.SnookerMatchScoreBean;
@@ -206,20 +208,18 @@ public class SnookerImmediateFragment extends Fragment implements SwipeRefreshLa
                     mSnookerListAdapter = new SnookerListAdapter(mContext, allData);
                     mRecyclerView.setAdapter(mSnookerListAdapter);
 
-                    mSnookerListAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, String data) {
-                            Toast.makeText(mContext, "点击进入详情 - " + data, Toast.LENGTH_SHORT).show();
-//                            Intent intent = new Intent(getActivity(), BasketDetailsActivityTest.class);
-//                            intent.putExtra("matchId" , data);
-//                            startActivity(intent);
-//                            getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
-                        }
-                    });
-
                 } else {
                     updateAdapter();
                 }
+                mSnookerListAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, String data) {
+                        Intent intent = new Intent(getActivity(), SnookerMatchDetail.class);
+                        intent.putExtra("matchId" , data);
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
+                    }
+                });
                 setStatus(SHOW_STATUS_SUCCESS);
             }
         }, new VolleyContentFast.ResponseErrorListener() {
