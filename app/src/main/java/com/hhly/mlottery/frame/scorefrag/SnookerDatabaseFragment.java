@@ -282,6 +282,7 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
                         mSwipeRefreshLayout1.setRefreshing(false);
                         snooker_race_time_head.setVisibility(View.GONE);
                         lay_agendafg.setVisibility(View.GONE);
+                        snooker_race_male_gridview.setVisibility(View.GONE);
                     } else {
                         live_no_data_txt.setVisibility(View.GONE);
                         live_error_ll.setVisibility(View.GONE);
@@ -290,6 +291,7 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
                         mSwipeRefreshLayout1.setRefreshing(false);
                         snooker_race_time_head.setVisibility(View.VISIBLE);
                         lay_agendafg.setVisibility(View.VISIBLE);
+                        snooker_race_male_gridview.setVisibility(View.GONE);
                     }
                     informationDataAdapter = new InformationDataAdapter(mContext, json.getData(), R.layout.snooker_race_group);
                     mRecyclerView.setAdapter(informationDataAdapter);
@@ -305,6 +307,7 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
                 mRecyclerView.setVisibility(View.GONE);
                 live_error_ll.setVisibility(View.VISIBLE);
                 live_no_data_txt.setVisibility(View.GONE);
+                snooker_race_male_gridview.setVisibility(View.GONE);
                 Toast.makeText(mContext, R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
 
             }

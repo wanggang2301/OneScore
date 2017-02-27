@@ -142,7 +142,6 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
         segmented5.removeAllViews();
         mSeason = snookerRefrshBean.getSeason();
         isAddHeadDatas = false;
-
         upLeagueRace("", snookerRefrshBean.getSeason());
     }
 
