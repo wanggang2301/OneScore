@@ -275,6 +275,7 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         public_txt_title = (TextView) findViewById(R.id.public_txt_title);
 
+
         findViewById(R.id.public_img_back).setOnClickListener(this);
 
         viewPager = (ViewPager) findViewById(R.id.vp_Fragment_pager);

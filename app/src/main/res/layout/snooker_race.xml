@@ -19,8 +19,7 @@
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center">
+                android:layout_height="match_parent">
 
                 <info.hoang8f.android.segmented.SegmentedGroup
                     android:id="@+id/segmented5"
@@ -28,6 +27,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:orientation="horizontal"
+                    android:layout_centerInParent="true"
                     segmentedgroup:sc_checked_text_color="#ffffff"
                     segmentedgroup:sc_tint_color="#0085e1">
 
