@@ -128,7 +128,7 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
 
 
     private void initView() {
-        Titles=new String[]{"分析","亚盘","大小球"};
+        Titles=new String[]{getResources().getString(R.string.basket_analyze),getResources().getString(R.string.basket_alet),getResources().getString(R.string.basket_asize)};
         mTabsAdapter=new TabsAdapter(getSupportFragmentManager());
         mTabsAdapter.setTitles(Titles);
 
