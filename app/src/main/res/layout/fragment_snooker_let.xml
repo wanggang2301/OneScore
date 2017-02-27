@@ -45,7 +45,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:gravity="center"
-                android:text="@string/odd_home_txt"
+                android:text="@string/snooker_odds_peilv"
                 android:textColor="@color/version"
                 android:textSize="13sp" />
 
@@ -65,7 +65,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:gravity="center"
-                android:text="@string/odd_guest_txt"
+                android:text="@string/snooker_odds_peilv"
                 android:textColor="@color/version"
                 android:textSize="13sp" />
         </LinearLayout>
@@ -145,7 +145,7 @@
                 android:id="@+id/snooker_odds_noData"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="wrap_content"

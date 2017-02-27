@@ -1572,6 +1572,7 @@
     <string name="snooker_match">正赛</string>
     <string name="snooker_champion">历届冠军</string>
     <string name="snooker_tournament">赛事简介</string>
+    <string name="snooker_odds_peilv">赔率</string>
     <!--snooker-->
     <string name="snooker_player_compare">职业对比</string>
     <string name="snooker_history_bettle">历史交锋</string>

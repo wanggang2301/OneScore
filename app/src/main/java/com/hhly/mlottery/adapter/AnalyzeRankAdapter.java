@@ -111,8 +111,8 @@ public class AnalyzeRankAdapter extends BaseAdapter {
 
 
 
-        holder.home.setText(entity.getHomeData()==null?"0":entity.getHomeData());
-        holder.guest.setText(entity.getGuestData()==null?"0":entity.getGuestData());
+        holder.home.setText(entity.getHomeData()==null?"--":entity.getHomeData());
+        holder.guest.setText(entity.getGuestData()==null?"--":entity.getGuestData());
         return convertView;
     }
 

@@ -1581,6 +1581,7 @@
     <string name="snooker_match">正赛</string>
     <string name="snooker_champion">历届冠军</string>
     <string name="snooker_tournament">赛事简介</string>
+    <string name="snooker_odds_peilv">赔率</string>
     <!--网球-->
     <string name="tennis_match_p2">P2退赛</string>
     <string name="tennis_match_p1">P1退赛</string>

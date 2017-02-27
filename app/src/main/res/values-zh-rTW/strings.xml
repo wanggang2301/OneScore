@@ -1561,5 +1561,6 @@
     <string name="snooker_match">正賽</string>
     <string name="snooker_champion">歷屆冠軍</string>
     <string name="snooker_tournament">賽事簡介</string>
+    <string name="snooker_odds_peilv">賠率</string>
 
 </resources>

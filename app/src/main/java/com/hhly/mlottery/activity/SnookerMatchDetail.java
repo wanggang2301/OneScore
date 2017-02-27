@@ -138,6 +138,7 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
 
         mTabsAdapter.addFragments(mAnalyzeFragment,mLetFragment,mSizeFragment);
 
+        mViewPager.setOffscreenPageLimit(3);
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 

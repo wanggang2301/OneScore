@@ -3,7 +3,6 @@
     android:id="@+id/basket_details_header_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="20dp"
     android:orientation="vertical">
 
 
