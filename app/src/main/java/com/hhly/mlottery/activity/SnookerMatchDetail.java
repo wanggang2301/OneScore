@@ -197,8 +197,8 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
         mGuestName.setText(matchInfoEntity.getGuestPlayer()==null?"":matchInfoEntity.getGuestPlayer());
 
 
-        ImageLoader.load(this,matchInfoEntity.getHomeAvatar(),R.mipmap.basket_default).into(mHomeIcon);
-        ImageLoader.load(this,matchInfoEntity.getGuestAvater(),R.mipmap.basket_default).into(mGuestIcon);
+        ImageLoader.load(this,matchInfoEntity.getHomeAvatar(),R.mipmap.snooker_detail_default).into(mHomeIcon);
+        ImageLoader.load(this,matchInfoEntity.getGuestAvater(),R.mipmap.snooker_detail_default).into(mGuestIcon);
 
     }
 
@@ -289,7 +289,7 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.snooker_detail_back:
-                finish();
+                this.finish();
                 break;
             case R.id.layout_snooker_immediate_score:
                 //弹出详细比分

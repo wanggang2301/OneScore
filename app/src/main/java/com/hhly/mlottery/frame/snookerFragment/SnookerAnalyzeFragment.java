@@ -260,6 +260,10 @@ public class SnookerAnalyzeFragment extends Fragment implements View.OnClickList
         mHistoryListView.setDivider(MyApp.getContext().getResources().getDrawable(R.color.transparency));
         mHomeRecentListView.setDivider(MyApp.getContext().getResources().getDrawable(R.color.transparency));
         mGuestRecentListView.setDivider(MyApp.getContext().getResources().getDrawable(R.color.transparency));
+        mGoalAndLossListView.setFocusable(false);
+        mHistoryListView.setFocusable(false);
+        mHomeRecentListView.setFocusable(false);
+        mGuestRecentListView.setFocusable(false);
 
         mHistoryText = (TextView) view.findViewById(R.id.analyze_history_text);
         mHomeText = (TextView) view.findViewById(R.id.analyze_homerecently_text);

@@ -89,7 +89,7 @@
                 android:id="@+id/snooker_home_icon"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@mipmap/basket_default"
+                android:src="@mipmap/snooker_detail_default"
                 android:layout_marginLeft="28dp"
                 />
             <TextView
@@ -115,7 +115,7 @@
                 android:id="@+id/snooker_guest_icon"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@mipmap/basket_default"
+                android:src="@mipmap/snooker_detail_default"
                 android:layout_marginRight="28dp"
                 android:layout_alignParentRight="true"
                 />
