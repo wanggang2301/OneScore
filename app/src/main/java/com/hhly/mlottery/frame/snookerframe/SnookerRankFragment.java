@@ -236,20 +236,21 @@ public class SnookerRankFragment extends Fragment implements ExactSwipeRefreshLa
                                 progressBar.setVisibility(View.GONE);
                                 return;
                             } else {
-                                loadmore_text.setText(mContext.getResources().getString(R.string.loading_data_txt));
-                                progressBar.setVisibility(View.VISIBLE);
+                                if (jsonObject.getWorldRankingList() == null || jsonObject.getWorldRankingList().size() <= 0) {
+                                    loadmore_text.setText(mContext.getResources().getString(R.string.nodata_txt));
+                                    progressBar.setVisibility(View.GONE);
+                                    return;
+                                } else {
+
+                                    loadmore_text.setText(mContext.getResources().getString(R.string.loading_data_txt));
+                                    progressBar.setVisibility(View.VISIBLE);
+
+                                    worldRankingList.addAll(jsonObject.getWorldRankingList());
+                                    mSnookerRankAdapter.notifyDataChangedAfterLoadMore(true);
+                                }
                             }
                         }
-                        L.d("ddddcc", jsonObject.getWorldRankingList() + "");
 
-
-                        if (jsonObject.getWorldRankingList() == null && jsonObject.getWorldRankingList().size() < 0) {
-                            L.d("ddddcc", "null");
-                            return;
-                        }
-
-                        worldRankingList.addAll(jsonObject.getWorldRankingList());
-                        mSnookerRankAdapter.notifyDataChangedAfterLoadMore(true);
                     }
                 }, new VolleyContentFast.ResponseErrorListener() {
                     @Override
