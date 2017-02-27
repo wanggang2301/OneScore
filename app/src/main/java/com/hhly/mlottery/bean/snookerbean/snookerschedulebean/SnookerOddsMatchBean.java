@@ -16,7 +16,7 @@ public class SnookerOddsMatchBean {
      */
     private SnookerMatchOddsDetailsBean oneTwo;//单双
     private SnookerMatchOddsDetailsBean asiaSize;//大小球
-    private SnookerMatchOddsDetailsBean onlyWin;//独赢
+    private SnookerMatchOddsDetailsBean onlyWin;//独赢(欧赔)
     private SnookerMatchOddsDetailsBean asiaLet;//亚盘
 
     public SnookerMatchOddsDetailsBean getOneTwo() {

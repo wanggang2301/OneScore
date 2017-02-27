@@ -17,8 +17,10 @@ import com.hhly.mlottery.bean.snookerbean.snookerschedulebean.SnookerEventsBean;
 import com.hhly.mlottery.bean.snookerbean.snookerschedulebean.SnookerOddsMatchBean;
 import com.hhly.mlottery.callback.DateOnClickListener;
 import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
+import com.hhly.mlottery.util.ResultDateUtil;
 
 import java.util.List;
 
@@ -130,6 +132,7 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                 //日期
                 ViewHolderDate viewHolderDate = (ViewHolderDate) holder;
                 viewHolderDate.mSnookerDate.setText(DetailsData.getItemDate());
+                viewHolderDate.mSnookerWeek.setText(ResultDateUtil.getWeekOfDate(DateUtil.parseDate(ResultDateUtil.getDate(0,DetailsData.getItemDate()))));
                 break;
             case 1:
                 //赛事
@@ -342,9 +345,12 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
 
     class ViewHolderDate extends BaseViewHolder{
         TextView mSnookerDate;
+        TextView mSnookerWeek;
+
         public ViewHolderDate(View itemView) {
             super(itemView);
             mSnookerDate = (TextView) itemView.findViewById(R.id.snooker_date);
+            mSnookerWeek = (TextView) itemView.findViewById(R.id.snooker_week);
         }
     }
     class ViewHolderList extends BaseViewHolder{

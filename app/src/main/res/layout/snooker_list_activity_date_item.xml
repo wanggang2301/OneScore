@@ -18,8 +18,16 @@
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:textColor="@color/colorAccent"
-        android:text="2016-11-16 星期三"
-
+        android:text="2016-11-16"
         />
+    <TextView
+        android:id="@+id/snooker_week"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:layout_marginLeft="3dp"
+        android:paddingLeft="5dp"
+        android:text="周四"
+        android:textSize="13dp"/>
 
 </LinearLayout>
