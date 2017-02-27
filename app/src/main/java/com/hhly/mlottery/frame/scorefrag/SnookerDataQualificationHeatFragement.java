@@ -2,18 +2,15 @@ package com.hhly.mlottery.frame.scorefrag;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.RotateAnimation;
-import android.widget.AdapterView;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -32,7 +29,6 @@ import com.hhly.mlottery.bean.videobean.NewMatchVideoinfo;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
-import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.SnookerPinnedHeaderExpandableListView;
 import com.hhly.mlottery.widget.GrapeGridView;
@@ -49,7 +45,7 @@ import info.hoang8f.android.segmented.SegmentedGroup;
  * Created by yuely198 on 2017/2/23.
  */
 
-public class SnookerDataQualificationHeatFragement extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, RadioGroup.OnCheckedChangeListener {
+public class SnookerDataQualificationHeatFragement extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     /*标题，暂无数据*/
     private TextView live_no_data_txt;
@@ -145,8 +141,9 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
     public void onEventMainThread(SnookerRefrshBean snookerRefrshBean) {
         segmented5.removeAllViews();
         mSeason = snookerRefrshBean.getSeason();
-        //upLeagueRace("", snookerRefrshBean.getSeason());
         isAddHeadDatas = false;
+
+        upLeagueRace("", snookerRefrshBean.getSeason());
     }
 
     private void upLeagueRace(String secondTitle, String season) {
@@ -200,19 +197,20 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
                         // head_gridview.setVisibility(View.VISIBLE);
                     }
 
-                    if (stageInfo .size()==0) {
+                    if (stageInfo.size() == 0) {
 
                         snooker_race_male_gridview.setVisibility(View.GONE);
                     } else {
-                       if (!isAddHeadDatas){
+                        if (!isAddHeadDatas) {
 
-                           for (int i = 0; i < stageInfo.size(); i++) {
+                            for (int i = 0; i < stageInfo.size(); i++) {
 
-                               addButton(segmented5, stageInfo.get(i).getStage(), stageInfo.get(i).getNum());
 
-                           }
-                           isAddHeadDatas = true;
-                       }
+                                addButton(segmented5, stageInfo.get(i).getStage(), stageInfo.get(i).getNum());
+
+                            }
+                            isAddHeadDatas = true;
+                        }
                     }
 
                     //获取子列表数据
@@ -258,7 +256,6 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
 
 
         segmented5 = (SegmentedGroup) view.findViewById(R.id.segmented5);
-        segmented5.setOnCheckedChangeListener(this);
 
 
         segmented5.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -266,7 +263,7 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
 
-                upLeagueRace(stageInfo.get(checkedId - 1).getNum() + "", mSeason);
+                upLeagueRace(stageInfo.get(group.indexOfChild(group.findViewById(checkedId))).getNum() + "", mSeason);
 
             }
         });
@@ -366,8 +363,4 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
         EventBus.getDefault().unregister(this);
     }
 
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-    }
 }

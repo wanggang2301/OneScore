@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -274,7 +276,7 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         public_txt_title = (TextView) findViewById(R.id.public_txt_title);
-
+        public_txt_title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17); //SP
         findViewById(R.id.public_img_back).setOnClickListener(this);
 
         viewPager = (ViewPager) findViewById(R.id.vp_Fragment_pager);
@@ -318,6 +320,14 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
 
         }
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
