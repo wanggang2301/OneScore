@@ -2,6 +2,7 @@ package com.hhly.mlottery.frame.snookerframe;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.SnookerMatchDetail;
 import com.hhly.mlottery.adapter.ScheduleDateAdapter;
 import com.hhly.mlottery.adapter.snooker.SnookerListAdapter;
 import com.hhly.mlottery.bean.scheduleBean.ScheduleDate;
@@ -255,7 +257,10 @@ public class SnookerResultFragment extends Fragment implements SwipeRefreshLayou
                     mSnookerListAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
                         @Override
                         public void onItemClick(View view, String data) {
-                            Toast.makeText(mContext, "点击进入详情 + " + data , Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getActivity(), SnookerMatchDetail.class);
+                            intent.putExtra("matchId" , data);
+                            startActivity(intent);
+                            getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
                         }
                     });
 

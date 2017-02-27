@@ -98,6 +98,7 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
 
     public final static String ODDS_LET="2";
     public final static String ODDS_SIZE="3";
+    private String mMatchId="1";
 
 
     private TabsAdapter mTabsAdapter;
@@ -116,6 +117,9 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.snooker");
 
+        if(getIntent()!=null){
+            mMatchId=getIntent().getExtras().getString("matchId");
+        }
         initView();
         setListener();
         initData();
@@ -128,9 +132,9 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
         mTabsAdapter=new TabsAdapter(getSupportFragmentManager());
         mTabsAdapter.setTitles(Titles);
 
-        mAnalyzeFragment=SnookerAnalyzeFragment.newInstance("","");
-        mLetFragment=SnookerLetFragment.newInstance("thirdId",ODDS_LET);
-        mSizeFragment=SnookerLetFragment.newInstance("",ODDS_SIZE);
+        mAnalyzeFragment=SnookerAnalyzeFragment.newInstance(mMatchId,"");
+        mLetFragment=SnookerLetFragment.newInstance(mMatchId,ODDS_LET);
+        mSizeFragment=SnookerLetFragment.newInstance(mMatchId,ODDS_SIZE);
 
         mTabsAdapter.addFragments(mAnalyzeFragment,mLetFragment,mSizeFragment);
 
@@ -149,7 +153,7 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
 
     private void initData() {
         Map<String, String> params = new HashMap<>();
-        params.put("matchId", "832136");
+        params.put("matchId", mMatchId);
         //  http://192.168.10.242:8181/mlottery/core/footBallMatch.matchAnalysis.do?thirdId=278222&lang=zh
         String url="http://192.168.31.162:8080/mlottery/core/snookerAnalysis.findAnalysisInfo.do";
 

@@ -287,7 +287,7 @@ public class SnookerAnalyzeFragment extends Fragment implements View.OnClickList
      */
     public void initData() {
         Map<String, String> params = new HashMap<>();
-        params.put("matchId", "832136");
+        params.put("matchId", mThirdId);
         //  http://192.168.10.242:8181/mlottery/core/footBallMatch.matchAnalysis.do?thirdId=278222&lang=zh
         String url="http://m.13322.com:81/mlottery/core/snookerAnalysis.findAnalysisInfo.do";
         VolleyContentFast.requestJsonByGet(BaseURLs.SNOOKER_ANALYZE_URL, params,
