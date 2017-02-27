@@ -41,7 +41,7 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment {
 
     private static final int FOOTBALL = 0;
     private static final int BASKETBALL = 1;
-    private static final int TENNLS = 2;
+    private static final int TENNLS = 3;
 
     private static final int TENNIS_IMMEDIATE = 0;
     private static final int TENNIS_RESULT = 1;
