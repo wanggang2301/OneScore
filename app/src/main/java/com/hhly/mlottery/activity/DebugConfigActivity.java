@@ -5,16 +5,13 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -26,11 +23,11 @@ public class DebugConfigActivity extends BaseActivity {
     public final static int URL_13322 = 1;
     public final static int URL_1332255 = 2;
     public final static int URL_242 = 5;
-    public final static int URL_93 = 7;
+    public final static int URL_1332255_2 = 7;
 
     public final static int WS_13322 = 3;
     public final static int WS_242 = 4;
-    public final static int WS_82 = 6;
+    public final static int WS_1332255 = 6;
     public final static int DIY_INPUT = 8;
 
 
@@ -42,27 +39,29 @@ public class DebugConfigActivity extends BaseActivity {
         MobclickAgent.openActivityDurationTrack(false);
 
         Button config_submit = (Button) findViewById(R.id.config_submit);
-        Button bt_ok = (Button) findViewById(R.id.bt_ok);
+        Button bt_zidingyi = (Button) findViewById(R.id.bt_zidingyi);
 
         //开发环境
-        findViewById(R.id.config_rb5).setOnClickListener(new OnClickListener() {
+        findViewById(R.id.config_kaifa).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((RadioGroup) findViewById(R.id.config_rg2)).check(R.id.config_rb3);
+                ((RadioGroup) findViewById(R.id.config_tuisong)).check(R.id.config_kaifa_ws);
             }
         });
+
         //测试环境
-        findViewById(R.id.config_rb1).setOnClickListener(new OnClickListener() {
+        findViewById(R.id.config_ceshi).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((RadioGroup) findViewById(R.id.config_rg2)).check(R.id.config_rb6);
+                ((RadioGroup) findViewById(R.id.config_tuisong)).check(R.id.config_ceshi_ws);
             }
         });
+
         //生产环境
-        findViewById(R.id.config_rb2).setOnClickListener(new OnClickListener() {
+        findViewById(R.id.config_shengchan).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((RadioGroup) findViewById(R.id.config_rg2)).check(R.id.config_rb4);
+                ((RadioGroup) findViewById(R.id.config_tuisong)).check(R.id.config_shengchan_ws);
             }
         });
 
@@ -70,36 +69,48 @@ public class DebugConfigActivity extends BaseActivity {
 
             @Override
             public void onClick(View v) {
-                RadioGroup config_rg1 = (RadioGroup) findViewById(R.id.config_rg1);
+                RadioGroup config_huanjing = (RadioGroup) findViewById(R.id.config_huanjing);
 
-                if (config_rg1.getCheckedRadioButtonId() == R.id.config_rb1) {
-                    PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, URL_1332255);
-                } else if (config_rg1.getCheckedRadioButtonId() == R.id.config_rb2) {
-                    PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, URL_13322);
-                } else if (config_rg1.getCheckedRadioButtonId() == R.id.config_rb5) {
+                if (config_huanjing.getCheckedRadioButtonId() == R.id.config_kaifa) {  //开发
                     PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, URL_242);
-                } else if (config_rg1.getCheckedRadioButtonId() == R.id.config_rb7) {
-                    PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, URL_93);
+
+                } else if (config_huanjing.getCheckedRadioButtonId() == R.id.config_ceshi) { //测试
+                    PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, URL_1332255);
+
+                } else if (config_huanjing.getCheckedRadioButtonId() == R.id.config_ceshi_2) {  //测试2
+                    PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, URL_1332255_2);
+
+                } else if (config_huanjing.getCheckedRadioButtonId() == R.id.config_shengchan) { //生产
+                    PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, URL_13322);
                 }
 
-                RadioGroup config_rg2 = (RadioGroup) findViewById(R.id.config_rg2);
-                if (config_rg2.getCheckedRadioButtonId() == R.id.config_rb3) {
+
+                RadioGroup config_tuisong = (RadioGroup) findViewById(R.id.config_tuisong);
+
+                //开发推送
+                if (config_tuisong.getCheckedRadioButtonId() == R.id.config_kaifa_ws) {
                     PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, WS_242);
-                } else if (config_rg2.getCheckedRadioButtonId() == R.id.config_rb4) {
+
+                    //测试推送
+                } else if (config_tuisong.getCheckedRadioButtonId() == R.id.config_ceshi_ws) {
+                    PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, WS_1332255);
+
+                    //生产推送
+                } else if (config_tuisong.getCheckedRadioButtonId() == R.id.config_shengchan_ws) {
                     PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, WS_13322);
-                } else if (config_rg2.getCheckedRadioButtonId() == R.id.config_rb6) {
-                    PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, WS_82);
                 }
 
                 startActivity(new Intent(DebugConfigActivity.this, WelcomeActivity.class));
-//                startActivity(new Intent(DebugConfigActivity.this, FootballActivity.class));
                 System.exit(0);
 
 
             }
         });
 
-        bt_ok.setOnClickListener(new OnClickListener() {
+
+        //自定义环境
+
+        bt_zidingyi.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -108,11 +119,18 @@ public class DebugConfigActivity extends BaseActivity {
                 if (TextUtils.isEmpty(str)) {
                     Toast.makeText(DebugConfigActivity.this, "不能为空！", Toast.LENGTH_SHORT).show();
                     return;
+
                 }
 
                 PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, DIY_INPUT);
                 PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, DIY_INPUT);
+
+
+                L.d("huanjing", str);
+
                 PreferenceUtil.commitString("DIY_INPUT", str);
+
+                startActivity(new Intent(DebugConfigActivity.this, WelcomeActivity.class));
 
                 System.exit(0);
 

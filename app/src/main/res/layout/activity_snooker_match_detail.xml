@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hhly.mlottery.widget.ExactSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/snooker_details_refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/snooker_details_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/isFitsSystemWindows"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentScrim="@color/black">
+
+                <include
+                    layout="@layout/layout_snooker_header"
+                    style="@style/isFitsSystemWindows"
+                    >
+                    </include>
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/snooker_details_toolbar"
+                    style="@style/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/transparency"
+                    app:contentInsetStart="0dp"
+                    app:layout_collapseMode="pin"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                    <!--状态栏-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <ImageView
+                            android:id="@+id/snooker_detail_back"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/back"
+                            android:padding="5dp"
+                            />
+                    </LinearLayout>
+                </android.support.v7.widget.Toolbar>
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/snooker_details_tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#eff3f4"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="#009d61"
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="#009d61"
+                app:tabTextColor="#4b4b4b" />
+        </android.support.design.widget.AppBarLayout>
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/snooker_details_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</com.hhly.mlottery.widget.ExactSwipeRefreshLayout>

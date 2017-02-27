@@ -3,19 +3,24 @@ package com.hhly.mlottery.adapter.tennisball;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.tennisball.MatchDataBean;
+import com.hhly.mlottery.bean.tennisball.TennisEventBus;
 import com.hhly.mlottery.callback.TennisFocusCallBack;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 
 import java.util.Iterator;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * desc:网球比分适配
@@ -27,7 +32,7 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
     private int mType;
     private TennisFocusCallBack tennisFocusCallBack;
 
-    public void setTennisFocusCallBack(TennisFocusCallBack callBack){
+    public void setTennisFocusCallBack(TennisFocusCallBack callBack) {
         this.tennisFocusCallBack = callBack;
     }
 
@@ -38,6 +43,10 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
 
     @Override
     protected void convert(BaseViewHolder baseViewHolder, final MatchDataBean matchDataBean) {
+
+        int homeTotal = matchDataBean.getMatchScore().getHomeTotalScore();
+        int awayTotal = matchDataBean.getMatchScore().getAwayTotalScore();
+
         // 联赛名
         baseViewHolder.setText(R.id.tv_match_name, matchDataBean.getLeagueName());
 
@@ -76,6 +85,50 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
                 baseViewHolder.setTextColor(R.id.tv_match_state, mContext.getResources().getColor(R.color.number_blue));
                 break;
         }
+
+        // TODO 设置胜利方旗帜
+        TextView tv_home_name = baseViewHolder.getView(R.id.tv_home_name);
+        TextView tv_home_name2 = baseViewHolder.getView(R.id.tv_home_name2);
+        TextView tv_guest_name = baseViewHolder.getView(R.id.tv_guest_name);
+        TextView tv_guest_name2 = baseViewHolder.getView(R.id.tv_guest_name2);
+        if(matchDataBean.getMatchStatus() == -1){
+            if (homeTotal > awayTotal) {
+                // 主队胜
+                tv_home_name.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.tennis_victory_icon, 0);
+                tv_home_name2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.tennis_victory_icon, 0);
+                tv_home_name.setCompoundDrawablePadding(DisplayUtil.px2dip(mContext,3));
+                tv_home_name2.setCompoundDrawablePadding(DisplayUtil.px2dip(mContext,3));
+                tv_home_name.setTextColor(mContext.getResources().getColor(R.color.number_green));
+                tv_home_name2.setTextColor(mContext.getResources().getColor(R.color.number_green));
+            } else if (homeTotal < awayTotal) {
+                // 客队胜
+                tv_guest_name.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.tennis_victory_icon, 0);
+                tv_guest_name2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.tennis_victory_icon, 0);
+                tv_guest_name.setCompoundDrawablePadding(DisplayUtil.px2dip(mContext,3));
+                tv_guest_name2.setCompoundDrawablePadding(DisplayUtil.px2dip(mContext,3));
+                tv_guest_name.setTextColor(mContext.getResources().getColor(R.color.number_green));
+                tv_guest_name2.setTextColor(mContext.getResources().getColor(R.color.number_green));
+            }else{
+                tv_home_name.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                tv_home_name2.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                tv_guest_name.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                tv_guest_name2.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                tv_home_name.setTextColor(mContext.getResources().getColor(R.color.mdy_333));
+                tv_home_name2.setTextColor(mContext.getResources().getColor(R.color.mdy_333));
+                tv_guest_name.setTextColor(mContext.getResources().getColor(R.color.mdy_333));
+                tv_guest_name2.setTextColor(mContext.getResources().getColor(R.color.mdy_333));
+            }
+        }else{
+            tv_home_name.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            tv_home_name2.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            tv_guest_name.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            tv_guest_name2.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            tv_home_name.setTextColor(mContext.getResources().getColor(R.color.mdy_333));
+            tv_home_name2.setTextColor(mContext.getResources().getColor(R.color.mdy_333));
+            tv_guest_name.setTextColor(mContext.getResources().getColor(R.color.mdy_333));
+            tv_guest_name2.setTextColor(mContext.getResources().getColor(R.color.mdy_333));
+        }
+
         // 时间
         String time = "";
         if (matchDataBean.getTime() != null) {
@@ -100,7 +153,7 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
             baseViewHolder.setText(R.id.tv_home_name2, matchDataBean.getHomePlayerName2());
             baseViewHolder.setText(R.id.tv_guest_name2, matchDataBean.getAwayPlayerName2());
         }
-        // 局数得分
+        // 局数得分和比分颜色
         if (matchDataBean.getMatchScore().getHomeSetScore1() == 0 && matchDataBean.getMatchScore().getAwaySetScore1() == 0) {
             baseViewHolder.setText(R.id.tv_home_score1, " ");
             baseViewHolder.setText(R.id.tv_guest_score1, " ");
@@ -108,6 +161,10 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
             baseViewHolder.setText(R.id.tv_home_score1, String.valueOf(matchDataBean.getMatchScore().getHomeSetScore1()));
             baseViewHolder.setText(R.id.tv_guest_score1, String.valueOf(matchDataBean.getMatchScore().getAwaySetScore1()));
         }
+
+        baseViewHolder.setTextColor(R.id.tv_home_score1, matchDataBean.getMatchScore().getHomeSetScore1() < matchDataBean.getMatchScore().getAwaySetScore1() ? mContext.getResources().getColor(R.color.mdy_999) : mContext.getResources().getColor(R.color.mdy_333));
+        baseViewHolder.setTextColor(R.id.tv_guest_score1, matchDataBean.getMatchScore().getHomeSetScore1() > matchDataBean.getMatchScore().getAwaySetScore1() ? mContext.getResources().getColor(R.color.mdy_999) : mContext.getResources().getColor(R.color.mdy_333));
+
         if (matchDataBean.getMatchScore().getHomeSetScore2() == 0 && matchDataBean.getMatchScore().getAwaySetScore2() == 0) {
             baseViewHolder.setText(R.id.tv_home_score2, " ");
             baseViewHolder.setText(R.id.tv_guest_score2, " ");
@@ -115,6 +172,10 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
             baseViewHolder.setText(R.id.tv_home_score2, String.valueOf(matchDataBean.getMatchScore().getHomeSetScore2()));
             baseViewHolder.setText(R.id.tv_guest_score2, String.valueOf(matchDataBean.getMatchScore().getAwaySetScore2()));
         }
+
+        baseViewHolder.setTextColor(R.id.tv_home_score2, matchDataBean.getMatchScore().getHomeSetScore2() < matchDataBean.getMatchScore().getAwaySetScore2() ? mContext.getResources().getColor(R.color.mdy_999) : mContext.getResources().getColor(R.color.mdy_333));
+        baseViewHolder.setTextColor(R.id.tv_guest_score2, matchDataBean.getMatchScore().getHomeSetScore2() > matchDataBean.getMatchScore().getAwaySetScore2() ? mContext.getResources().getColor(R.color.mdy_999) : mContext.getResources().getColor(R.color.mdy_333));
+
         if (matchDataBean.getMatchScore().getHomeSetScore3() == 0 && matchDataBean.getMatchScore().getAwaySetScore3() == 0) {
             baseViewHolder.setText(R.id.tv_home_score3, " ");
             baseViewHolder.setText(R.id.tv_guest_score3, " ");
@@ -122,6 +183,10 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
             baseViewHolder.setText(R.id.tv_home_score3, String.valueOf(matchDataBean.getMatchScore().getHomeSetScore3()));
             baseViewHolder.setText(R.id.tv_guest_score3, String.valueOf(matchDataBean.getMatchScore().getAwaySetScore3()));
         }
+
+        baseViewHolder.setTextColor(R.id.tv_home_score3, matchDataBean.getMatchScore().getHomeSetScore3() < matchDataBean.getMatchScore().getAwaySetScore3() ? mContext.getResources().getColor(R.color.mdy_999) : mContext.getResources().getColor(R.color.mdy_333));
+        baseViewHolder.setTextColor(R.id.tv_guest_score3, matchDataBean.getMatchScore().getHomeSetScore3() > matchDataBean.getMatchScore().getAwaySetScore3() ? mContext.getResources().getColor(R.color.mdy_999) : mContext.getResources().getColor(R.color.mdy_333));
+
         if (matchDataBean.getMatchScore().getHomeSetScore4() == 0 && matchDataBean.getMatchScore().getAwaySetScore4() == 0) {
             baseViewHolder.setText(R.id.tv_home_score4, " ");
             baseViewHolder.setText(R.id.tv_guest_score4, " ");
@@ -129,6 +194,10 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
             baseViewHolder.setText(R.id.tv_home_score4, String.valueOf(matchDataBean.getMatchScore().getHomeSetScore4()));
             baseViewHolder.setText(R.id.tv_guest_score4, String.valueOf(matchDataBean.getMatchScore().getAwaySetScore4()));
         }
+
+        baseViewHolder.setTextColor(R.id.tv_home_score4, matchDataBean.getMatchScore().getHomeSetScore4() < matchDataBean.getMatchScore().getAwaySetScore4() ? mContext.getResources().getColor(R.color.mdy_999) : mContext.getResources().getColor(R.color.mdy_333));
+        baseViewHolder.setTextColor(R.id.tv_guest_score4, matchDataBean.getMatchScore().getHomeSetScore4() > matchDataBean.getMatchScore().getAwaySetScore4() ? mContext.getResources().getColor(R.color.mdy_999) : mContext.getResources().getColor(R.color.mdy_333));
+
         if (matchDataBean.getMatchScore().getHomeSetScore5() == 0 && matchDataBean.getMatchScore().getAwaySetScore5() == 0) {
             baseViewHolder.setText(R.id.tv_home_score5, " ");
             baseViewHolder.setText(R.id.tv_guest_score5, " ");
@@ -136,6 +205,10 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
             baseViewHolder.setText(R.id.tv_home_score5, String.valueOf(matchDataBean.getMatchScore().getHomeSetScore5()));
             baseViewHolder.setText(R.id.tv_guest_score5, String.valueOf(matchDataBean.getMatchScore().getAwaySetScore5()));
         }
+
+        baseViewHolder.setTextColor(R.id.tv_home_score5, matchDataBean.getMatchScore().getHomeSetScore5() < matchDataBean.getMatchScore().getAwaySetScore5() ? mContext.getResources().getColor(R.color.mdy_999) : mContext.getResources().getColor(R.color.mdy_333));
+        baseViewHolder.setTextColor(R.id.tv_guest_score5, matchDataBean.getMatchScore().getHomeSetScore5() > matchDataBean.getMatchScore().getAwaySetScore5() ? mContext.getResources().getColor(R.color.mdy_999) : mContext.getResources().getColor(R.color.mdy_333));
+
         // 总得分
         baseViewHolder.setText(R.id.tv_home_count, String.valueOf(matchDataBean.getMatchScore().getHomeTotalScore()));
         baseViewHolder.setText(R.id.tv_guest_count, String.valueOf(matchDataBean.getMatchScore().getAwayTotalScore()));
@@ -162,12 +235,12 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
 
                     if (mType == 3) {
                         Iterator iterator = mData.iterator();
-                        while(iterator.hasNext()){
+                        while (iterator.hasNext()) {
                             MatchDataBean dataBean = (MatchDataBean) iterator.next();
                             if (dataBean.getMatchId().equals(matchDataBean.getMatchId())) {
                                 iterator.remove();
                                 notifyDataSetChanged();
-                                if(mData.size() == 0 && tennisFocusCallBack != null){
+                                if (mData.size() == 0 && tennisFocusCallBack != null) {
                                     tennisFocusCallBack.notifyDataRefresh();
                                 }
                                 break;
@@ -177,6 +250,9 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
                 }
 
                 settingFocusStart(matchDataBean.getMatchStatus(), matchDataBean.isFocus(), mView);
+
+                // 更改显示的关注数量
+                EventBus.getDefault().post(new TennisEventBus("tennisFocus"));
 
                 L.d("xxxxx", "关注id: " + PreferenceUtil.getString(AppConstants.TENNIS_BALL_FOCUS, ""));
             }

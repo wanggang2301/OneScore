@@ -63,7 +63,9 @@ public class SnookerRankAdapter extends BaseQuickAdapter<SnookerRankBean.WorldRa
         holder.setText(R.id.tv_sn_rank, w.getIndex() + "");
         holder.setText(R.id.tv_sn_name, w.getName() + "");
         holder.setText(R.id.tv_sn_totalIntegral, w.getTotalIntegral() + "");
-        holder.setText(R.id.tv_sn_totalBonus, w.getTotalBonus() + "");
+
+
+        holder.setText(R.id.tv_sn_totalBonus, "£ " + addDouHao(w.getTotalBonus() + ""));
 
         ll_sn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,4 +83,22 @@ public class SnookerRankAdapter extends BaseQuickAdapter<SnookerRankBean.WorldRa
     }
 
 
+    private String addDouHao(String value) {
+        StringBuilder sb = new StringBuilder(value);
+
+        int yushu = sb.length() % 3; // 余数
+        int count = sb.length() / 3;
+
+        if (yushu == 0) {
+            for (int i = count - 1; i > 0; i--) {
+                sb.insert(i * 3, ",");
+            }
+        } else {
+
+            for (int i = count - 1; i > -1; i--) {
+                sb.insert(i * 3 + yushu, ",");
+            }
+        }
+        return sb.toString();
+    }
 }

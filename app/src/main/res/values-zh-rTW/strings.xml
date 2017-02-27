@@ -160,7 +160,7 @@
     <string name="statistics_txt">統計</string>
     <string name="trend_txt">走勢</string>
     <string name="data_statistics_txt">數據統計</string>
-    <string name="nodata_txt">沒有更多數據!</string>
+    <string name="nodata_txt">沒有更多數據</string>
     <string name="loading_data_txt">正在加載中...</string>
     <string name="not_start_txt">未開</string>
     <string name="not_start_short_txt">未</string>
@@ -680,6 +680,7 @@
     <string name="opinion">本場觀點</string>
     <string name="shuangfangjin">雙方近</string>
     <string name="cijiaofeng">"次交鋒,  "</string>
+    <string name="cibisai">"次比賽,"</string>
     <string name="analyze_win">勝</string>
     <string name="analyze_equ">平</string>
     <string name="analyze_defeat">負</string>
@@ -768,7 +769,7 @@
 
     <string name="basket_unfiltrate">暫無賽事</string>
     <string name="basket_undata">暫無比賽</string>
-    <string name="zhuduijin">主隊近</string>
+    <string name="zhuduijin">近</string>
     <string name="keduijin">客隊近</string>
     <string name="nodata">暫無數據</string>
 
@@ -1539,6 +1540,11 @@
     <string name="home_lottery_info_tm_bo_g">綠</string>
     <string name="home_lottery_info_tm_bo_b">藍</string>
     <string name="home_lottery_info_image_desc">本站所有數據、資料僅供您參考，為避免遭受經濟損失任何人不得用於非法用途，否則責任自負</string>
+    <!--snooker-->
+    <string name="snooker_player_compare">職業對比</string>
+    <string name="snooker_history_bettle">歷史交鋒</string>
+    <string name="snooker_player1">選手1近期戰績</string>
+    <string name="snooker_player2">選手2近期戰績</string>
 
     <string name="football_txt">足球</string>
     <string name="basketball_txt">籃球</string>
@@ -1555,5 +1561,16 @@
     <string name="snooker_match">正賽</string>
     <string name="snooker_champion">歷屆冠軍</string>
     <string name="snooker_tournament">賽事簡介</string>
+    <string name="snooker_odds_peilv">賠率</string>
+
+    <!--网球-->
+    <string name="tennis_match_p2">P2退賽</string>
+    <string name="tennis_match_p1">P1退赛</string>
+    <string name="tennis_match_dd">待定</string>
+    <string name="tennis_match_tc">推遲</string>
+    <string name="tennis_match_zd">中斷</string>
+    <string name="tennis_match_over">完</string>
+    <string name="tennis_match_not_start">未開始</string>
+    <string name="tennis_match_join">進行中</string>
 
 </resources>

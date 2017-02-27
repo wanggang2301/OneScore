@@ -15,19 +15,19 @@
 
 
     <RadioGroup
-        android:id="@+id/config_rg1"
+        android:id="@+id/config_huanjing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <RadioButton
-            android:id="@+id/config_rb5"
+            android:id="@+id/config_kaifa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="开发环境：http://192.168.10.242:8181" />
 
         <RadioButton
-            android:id="@+id/config_rb1"
+            android:id="@+id/config_ceshi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="测试环境: http://m.1332255.com:81"
@@ -35,13 +35,13 @@
             />
 
         <RadioButton
-            android:id="@+id/config_rb7"
+            android:id="@+id/config_ceshi_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="测试环境2：http://183.61.172.93:8096" />
 
         <RadioButton
-            android:id="@+id/config_rb2"
+            android:id="@+id/config_shengchan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="生产环境：http://m.13322.com" />
@@ -59,25 +59,25 @@
 
 
     <RadioGroup
-        android:id="@+id/config_rg2"
+        android:id="@+id/config_tuisong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <RadioButton
-            android:id="@+id/config_rb3"
+            android:id="@+id/config_kaifa_ws"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="开发环境：ws://192.168.10.242:61634" />
 
         <RadioButton
-            android:id="@+id/config_rb6"
+            android:id="@+id/config_ceshi_ws"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="测试环境：ws://m.1332255.com:81/ws" />
 
         <RadioButton
-            android:id="@+id/config_rb4"
+            android:id="@+id/config_shengchan_ws"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="生产环境：ws://m.13322.com/ws" />
@@ -104,15 +104,14 @@
         android:id="@+id/et_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入环境地址" />
+        android:hint="请输入环境地址"
+        android:text="183.61.172.78:8091" />
 
     <Button
-        android:id="@+id/bt_ok"
+        android:id="@+id/bt_zidingyi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="自定义确定" />
-
-
 
 
 </LinearLayout>

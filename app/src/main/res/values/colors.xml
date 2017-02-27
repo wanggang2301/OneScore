@@ -134,7 +134,7 @@
     <color name="home_logo_color">#0085e1</color>
     <color name="home_dividing_line_red">#e45858</color>
     <color name="home_dividing_line_blue">#00aaee</color>
-    <color name="home_item_bg">#f5f5f5</color>
+    <color name="home_item_bg">#e8e8e8</color>
     <color name="home_user_options_bg">#f3f3f3</color>
     <color name="home_item_lottery_title">#4a4a4a</color>
     <color name="home_item_lottery_title_des">#9b9b9b</color>
@@ -672,4 +672,8 @@
     <color name="snooker_rank_txt">#838A9B</color>
     <color name="snooker_rank_txt_top3">#F6A623</color>
 
+
+    <!--斯诺克内页颜色-->
+    <color name="snooker_green">#164513</color>
+    <color name="snooker_score_black">#4a4a4a</color>
 </resources>
