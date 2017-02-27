@@ -219,9 +219,6 @@ public class SnookerRankFragment extends Fragment implements ExactSwipeRefreshLa
     //上拉加载更多
     private void pullUpLoadMoreData() {
         L.d("snooker", "pullUpLoadMoreData");
-
-        //        //BaseURLs.URL_SNOOKER_INFO_RANK
-
         pageNum++;
         Map<String, String> map = new HashMap<>();
         map.put("pageNum", pageNum + "");
