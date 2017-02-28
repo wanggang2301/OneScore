@@ -103,7 +103,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
             <com.hhly.mlottery.view.SnookerPinnedHeaderExpandableListView
                 android:id="@+id/explistview_live"
                 android:layout_width="match_parent"
@@ -119,25 +118,7 @@
                 android:scrollbars="vertical"
                 android:scrollingCache="true" />
 
-
         </android.support.v4.widget.SwipeRefreshLayout>
-
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/live_swiperefreshlayout1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
-
-            <ListView
-                android:id="@+id/header_item_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center" />
-
-
-        </android.support.v4.widget.SwipeRefreshLayout>
-
-
         <TextView
             android:id="@+id/live_no_data_txt"
             android:layout_width="match_parent"
@@ -148,7 +129,6 @@
             android:text="@string/nodata"
             android:textSize="20sp"
             android:visibility="gone" />
-
         <LinearLayout
             android:id="@+id/live_error_ll"
             android:layout_width="match_parent"

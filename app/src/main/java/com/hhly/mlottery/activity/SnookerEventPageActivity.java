@@ -27,6 +27,7 @@ import com.hhly.mlottery.bean.snookerbean.SnookerRaceHeadBean;
 import com.hhly.mlottery.bean.snookerbean.SnookerRefrshBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.scorefrag.SnookerDataQualificationHeatFragement;
+import com.hhly.mlottery.frame.scorefrag.SnookerDataSuccessFragment;
 import com.hhly.mlottery.frame.scorefrag.SnookerDatabaseFragment;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
@@ -214,7 +215,7 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
         fragments = new ArrayList<>();
         fragments.add(SnookerDatabaseFragment.newInstance(QUALIFICATIONS, leagueId));
         fragments.add(SnookerDataQualificationHeatFragement.newInstance(RACE, leagueId));
-        fragments.add(SnookerDatabaseFragment.newInstance(SUCCESSIVE, leagueId));
+        fragments.add(SnookerDataSuccessFragment.newInstance(SUCCESSIVE, leagueId));
         fragments.add(SnookerDatabaseFragment.newInstance(PROFILE, leagueId));
 
 

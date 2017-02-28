@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.snookerbean.SnookerRaceListitemBean;
+import com.hhly.mlottery.bean.snookerbean.SnookerSuccessBean;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
@@ -21,9 +22,13 @@ import com.hhly.mlottery.view.SnookerPinnedHeaderExpandableListView;
 
 import java.util.List;
 
-public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter implements SnookerPinnedHeaderExpandableListView.HeaderAdapter {
-    private List<SnookerRaceListitemBean.DataBean.MatchListBean> mGroupDataList;//父类view 数据
-    List<List<String>> mChildrenDataList;//子view数据
+/**
+ * Created by yuely198 on 2017/2/28.
+ */
+
+public class SnookerSuccessPinnedHeaderExpandleAdapter extends BaseExpandableListAdapter implements SnookerPinnedHeaderExpandableListView.HeaderAdapter {
+    private List<SnookerSuccessBean.DataBean> mGroupDataList;//父类view 数据
+    List<List<?>> mChildrenDataList;//子view数据
     private Context mContext;
     private SnookerPinnedHeaderExpandableListView listView;
     private LayoutInflater inflater;
@@ -31,12 +36,13 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
     //比赛的状态
     private String state;
     private int mMatchKind;
-    private ChoseHeadInformationItemAdapter choseHeadInformationAdapter;
     private ImageView iconfont;
     private TextView live_item_day_tx;
 
+    private SnookerSuccessPinnedHeaderExpandleAdapter.ChoseHeadInformationItemAdapter choseHeadInformationAdapter;
 
-    public PinnedHeaderExpandableAdapter(List<SnookerRaceListitemBean.DataBean.MatchListBean> matchList, List<List<String>> childDataList, Context mContext, SnookerPinnedHeaderExpandableListView explistview_live) {
+
+    public SnookerSuccessPinnedHeaderExpandleAdapter(List<SnookerSuccessBean.DataBean> matchList, List<List<?>> childDataList, Context mContext, SnookerPinnedHeaderExpandableListView explistview_live) {
         this.mChildrenDataList = childDataList;
         this.mContext = mContext;
         this.mGroupDataList = matchList;
@@ -79,7 +85,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         L.i("groupPosition", "groupPosition===" + groupPosition + "");
         L.i("groupPosition", "childPosition===" + childPosition + "");
 
-        Holder holder = null;
+          Holder holder = null;
         if (null == convertView) {
             convertView = createChildrenView();
             holder = new Holder();
@@ -93,7 +99,8 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             holder = (Holder) convertView.getTag();
         }
 
-        choseHeadInformationAdapter = new ChoseHeadInformationItemAdapter(mContext, mChildrenDataList.get(groupPosition), R.layout.snooker_race_child_item_tv);
+        Log.i("dasd", "datas.size()=====" + mChildrenDataList.get(groupPosition));
+        choseHeadInformationAdapter = new ChoseHeadInformationItemAdapter(mContext, (List<String>) mChildrenDataList.get(groupPosition), R.layout.snooker_race_child_item_tv);
 
         holder.gridview.setAdapter(choseHeadInformationAdapter);
 

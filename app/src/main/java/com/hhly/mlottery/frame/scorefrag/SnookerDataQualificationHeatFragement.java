@@ -250,14 +250,10 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        mRecyclerView = (ListView) view.findViewById(R.id.header_item_view);
         //头部滑动条目
         snooker_race_male_gridview = (HorizontalScrollView) view.findViewById(R.id.snooker_race_male_gridview);
 
-
         segmented5 = (SegmentedGroup) view.findViewById(R.id.segmented5);
-
 
         segmented5.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
