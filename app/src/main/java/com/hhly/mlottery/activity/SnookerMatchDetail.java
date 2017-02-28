@@ -1,5 +1,6 @@
 package com.hhly.mlottery.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -107,6 +108,7 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
     private SnookerAnalyzeFragment mAnalyzeFragment;
     private SnookerLetFragment mLetFragment;
     private SnookerLetFragment mSizeFragment;
+    private SnookerAnalyzeBean mAnalyzeBean=new SnookerAnalyzeBean();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,6 +150,8 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
     }
     private void setListener(){
         mBack.setOnClickListener(this);
+        mHomeIcon.setOnClickListener(this);
+        mGuestIcon.setOnClickListener(this);
         mScoreLayout.setOnClickListener(this);
         mTotalLayout.setOnClickListener(this);
     }
@@ -163,6 +167,7 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
             public void onResponse(SnookerAnalyzeBean analyzeBean) {
                 if(analyzeBean.getResult().equals("200")){
                     loadData(analyzeBean);
+                    mAnalyzeBean=analyzeBean;
 
                 }
 
@@ -285,6 +290,9 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
                 mRefreshLayout.setRefreshing(false);
                 //请求网络进行刷新
                 initData();
+                mAnalyzeFragment.initData();
+                mLetFragment.initData();
+                mSizeFragment.initData();
             }
         },1000);
 
@@ -300,6 +308,23 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
                 //弹出详细比分
                 break;
             case R.id.layout_snooker_total_score:
+
+                break;
+            case R.id.snooker_home_icon:
+                if(mAnalyzeBean.getMatchInfo()!=null&&mAnalyzeBean.getMatchInfo().getHomePlayId()!=null){
+                    Intent intent=new Intent(this,SnookerPlayerInfoActivity.class);
+                    intent.putExtra("playerId",mAnalyzeBean.getMatchInfo().getHomePlayId());
+                    startActivity(intent);
+
+                }
+
+                break;
+            case  R.id.snooker_guest_icon:
+                if(mAnalyzeBean.getMatchInfo()!=null&&mAnalyzeBean.getMatchInfo().getGuestPlayId()!=null){
+                    Intent intent=new Intent(this,SnookerPlayerInfoActivity.class);
+                    intent.putExtra("playerId",mAnalyzeBean.getMatchInfo().getGuestPlayId());
+                    startActivity(intent);
+                }
 
                 break;
         }
