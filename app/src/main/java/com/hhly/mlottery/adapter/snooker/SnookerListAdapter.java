@@ -214,7 +214,7 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                     case "1":
                         viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_no_start));
                         viewHolderList.mSnookerStatus.setTextColor(mContext.getResources().getColor(R.color.snooker_odds_textcolor));
-                        viewHolderList.mSnookerInning.setText("VS");
+                        viewHolderList.mSnookerInning.setText("(VS)");
                         viewHolderList.mPoscore.setText("0");
                         viewHolderList.mPtScore.setText("0");
                         viewHolderList.mSnookerScoreLeft.setText("0");
