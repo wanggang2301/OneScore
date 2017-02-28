@@ -149,31 +149,6 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                 viewHolderList.mSnookerTime.setText(DetailsData.getTime());
                 viewHolderList.mSnookerNameLeft.setText(DetailsData.getHomeTeam());
                 viewHolderList.mSnookerNameRight.setText(DetailsData.getGuestTeam());
-                if (DetailsData.getMatchScore() == null || DetailsData.getMatchScore().equals("")) {
-                    viewHolderList.mSnookerInning.setText("(-)");
-                }else{
-                    if (DetailsData.getMatchScore().getTotalGames() == null || DetailsData.getMatchScore().getTotalGames().equals("")) {
-                        viewHolderList.mSnookerInning.setText("(-)");
-                    }else{
-                        viewHolderList.mSnookerInning.setText("(" + DetailsData.getMatchScore().getTotalGames() + ")");
-                    }
-                }
-
-                if (DetailsData.getMatchScore() == null || DetailsData.getMatchScore().equals("")) {
-                    viewHolderList.mPoscore.setText("-");
-                    viewHolderList.mPtScore.setText("-");
-                }else{
-                    if (DetailsData.getMatchScore().getPoScore() == null || DetailsData.getMatchScore().getPoScore().equals("")) {
-                        viewHolderList.mPoscore.setText("-");
-                    }else{
-                        viewHolderList.mPoscore.setText(DetailsData.getMatchScore().getPoScore());
-                    }
-                    if (DetailsData.getMatchScore().getPtScore() == null || DetailsData.getMatchScore().getPtScore().equals("")) {
-                        viewHolderList.mPtScore.setText("-");
-                    }else{
-                        viewHolderList.mPtScore.setText(DetailsData.getMatchScore().getPtScore());
-                    }
-                }
 
                 /**
                  * 比赛状态
@@ -202,38 +177,177 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                 switch(currentStatus){
                     case "0":
                         viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_pause));
-                        viewHolderList.mSnookerStatus.setTextColor(mContext.getResources().getColor(R.color.snooker_status));
+                        viewHolderList.mSnookerStatus.setTextColor(mContext.getResources().getColor(R.color.snooker_fulltime_textcolor));
+                        if (DetailsData.getMatchScore() == null || DetailsData.getMatchScore().equals("")) {
+                            viewHolderList.mSnookerInning.setText("-");
+                        }else{
+                            if (DetailsData.getMatchScore().getTotalGames() == null || DetailsData.getMatchScore().getTotalGames().equals("")) {
+                                viewHolderList.mSnookerInning.setText("-");
+                            }else{
+                                viewHolderList.mSnookerInning.setText("(" + DetailsData.getMatchScore().getTotalGames() + ")");
+                            }
+                        }
+                        if (DetailsData.getMatchScore() == null || DetailsData.getMatchScore().equals("")) {
+                            viewHolderList.mPoscore.setText("-");
+                            viewHolderList.mPtScore.setText("-");
+                        }else{
+                            if (DetailsData.getMatchScore().getPoScore() == null || DetailsData.getMatchScore().getPoScore().equals("")) {
+                                viewHolderList.mPoscore.setText("-");
+                            }else{
+                                viewHolderList.mPoscore.setText(DetailsData.getMatchScore().getPoScore());
+                            }
+                            if (DetailsData.getMatchScore().getPtScore() == null || DetailsData.getMatchScore().getPtScore().equals("")) {
+                                viewHolderList.mPtScore.setText("-");
+                            }else{
+                                viewHolderList.mPtScore.setText(DetailsData.getMatchScore().getPtScore());
+                            }
+                        }
+                        if (DetailsData.getMatchScore() == null) {
+                            viewHolderList.mSnookerScoreLeft.setText("--");
+                            viewHolderList.mSnookerScoreRight.setText("--");
+                        }else{
+                            viewHolderList.mSnookerScoreLeft.setText(DetailsData.getMatchScore().getPlayerOnewin());
+
+                            viewHolderList.mSnookerScoreRight.setText(DetailsData.getMatchScore().getPlayerTwowin());
+                        }
                         break;
                     case "1":
                         viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_no_start));
                         viewHolderList.mSnookerStatus.setTextColor(mContext.getResources().getColor(R.color.snooker_odds_textcolor));
+                        viewHolderList.mSnookerInning.setText("VS");
+                        viewHolderList.mPoscore.setText("0");
+                        viewHolderList.mPtScore.setText("0");
+                        viewHolderList.mSnookerScoreLeft.setText("0");
+                        viewHolderList.mSnookerScoreRight.setText("0");
                         break;
                     case "2":
                         viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_over_game));
                         viewHolderList.mSnookerStatus.setTextColor(mContext.getResources().getColor(R.color.snooker_fulltime_textcolor));
+                        if (DetailsData.getMatchScore() == null || DetailsData.getMatchScore().equals("")) {
+                            viewHolderList.mSnookerInning.setText("-");
+                        }else{
+                            if (DetailsData.getMatchScore().getTotalGames() == null || DetailsData.getMatchScore().getTotalGames().equals("")) {
+                                viewHolderList.mSnookerInning.setText("-");
+                            }else{
+                                viewHolderList.mSnookerInning.setText("(" + DetailsData.getMatchScore().getTotalGames() + ")");
+                            }
+                        }
+                        if (DetailsData.getMatchScore() == null || DetailsData.getMatchScore().equals("")) {
+                            viewHolderList.mPoscore.setText("-");
+                            viewHolderList.mPtScore.setText("-");
+                        }else{
+                            if (DetailsData.getMatchScore().getPoScore() == null || DetailsData.getMatchScore().getPoScore().equals("")) {
+                                viewHolderList.mPoscore.setText("-");
+                            }else{
+                                viewHolderList.mPoscore.setText(DetailsData.getMatchScore().getPoScore());
+                            }
+                            if (DetailsData.getMatchScore().getPtScore() == null || DetailsData.getMatchScore().getPtScore().equals("")) {
+                                viewHolderList.mPtScore.setText("-");
+                            }else{
+                                viewHolderList.mPtScore.setText(DetailsData.getMatchScore().getPtScore());
+                            }
+                        }
+                        if (DetailsData.getMatchScore() == null) {
+                            viewHolderList.mSnookerScoreLeft.setText("--");
+                            viewHolderList.mSnookerScoreRight.setText("--");
+                        }else{
+                            viewHolderList.mSnookerScoreLeft.setText(DetailsData.getMatchScore().getPlayerOnewin());
+
+                            viewHolderList.mSnookerScoreRight.setText(DetailsData.getMatchScore().getPlayerTwowin());
+                        }
                         break;
                     case "3":
                         viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_have_ing));
-                        viewHolderList.mSnookerStatus.setTextColor(mContext.getResources().getColor(R.color.snooker_status));
+                        viewHolderList.mSnookerStatus.setTextColor(mContext.getResources().getColor(R.color.snooker_fulltime_textcolor));
+                        if (DetailsData.getMatchScore() == null || DetailsData.getMatchScore().equals("")) {
+                            viewHolderList.mSnookerInning.setText("-");
+                        }else{
+                            if (DetailsData.getMatchScore().getTotalGames() == null || DetailsData.getMatchScore().getTotalGames().equals("")) {
+                                viewHolderList.mSnookerInning.setText("-");
+                            }else{
+                                viewHolderList.mSnookerInning.setText("(" + DetailsData.getMatchScore().getTotalGames() + ")");
+                            }
+                        }
+
+                        if (DetailsData.getMatchScore() == null || DetailsData.getMatchScore().equals("")) {
+                            viewHolderList.mPoscore.setText("-");
+                            viewHolderList.mPtScore.setText("-");
+                        }else{
+                            if (DetailsData.getMatchScore().getPoScore() == null || DetailsData.getMatchScore().getPoScore().equals("")) {
+                                viewHolderList.mPoscore.setText("-");
+                            }else{
+                                viewHolderList.mPoscore.setText(DetailsData.getMatchScore().getPoScore());
+                            }
+                            if (DetailsData.getMatchScore().getPtScore() == null || DetailsData.getMatchScore().getPtScore().equals("")) {
+                                viewHolderList.mPtScore.setText("-");
+                            }else{
+                                viewHolderList.mPtScore.setText(DetailsData.getMatchScore().getPtScore());
+                            }
+                        }
+                        if (DetailsData.getMatchScore() == null) {
+                            viewHolderList.mSnookerScoreLeft.setText("--");
+                            viewHolderList.mSnookerScoreRight.setText("--");
+                        }else{
+                            viewHolderList.mSnookerScoreLeft.setText(DetailsData.getMatchScore().getPlayerOnewin());
+
+                            viewHolderList.mSnookerScoreRight.setText(DetailsData.getMatchScore().getPlayerTwowin());
+                        }
                         break;
                     case "4":
                         viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_resting));
-                        viewHolderList.mSnookerStatus.setTextColor(mContext.getResources().getColor(R.color.snooker_status));
+                        viewHolderList.mSnookerStatus.setTextColor(mContext.getResources().getColor(R.color.snooker_fulltime_textcolor));
+                        if (DetailsData.getMatchScore() == null || DetailsData.getMatchScore().equals("")) {
+                            viewHolderList.mSnookerInning.setText("-");
+                        }else{
+                            if (DetailsData.getMatchScore().getTotalGames() == null || DetailsData.getMatchScore().getTotalGames().equals("")) {
+                                viewHolderList.mSnookerInning.setText("-");
+                            }else{
+                                viewHolderList.mSnookerInning.setText("(" + DetailsData.getMatchScore().getTotalGames() + ")");
+                            }
+                        }
+                        if (DetailsData.getMatchScore() == null || DetailsData.getMatchScore().equals("")) {
+                            viewHolderList.mPoscore.setText("-");
+                            viewHolderList.mPtScore.setText("-");
+                        }else{
+                            if (DetailsData.getMatchScore().getPoScore() == null || DetailsData.getMatchScore().getPoScore().equals("")) {
+                                viewHolderList.mPoscore.setText("-");
+                            }else{
+                                viewHolderList.mPoscore.setText(DetailsData.getMatchScore().getPoScore());
+                            }
+                            if (DetailsData.getMatchScore().getPtScore() == null || DetailsData.getMatchScore().getPtScore().equals("")) {
+                                viewHolderList.mPtScore.setText("-");
+                            }else{
+                                viewHolderList.mPtScore.setText(DetailsData.getMatchScore().getPtScore());
+                            }
+                        }
+                        if (DetailsData.getMatchScore() == null) {
+                            viewHolderList.mSnookerScoreLeft.setText("--");
+                            viewHolderList.mSnookerScoreRight.setText("--");
+                        }else{
+                            viewHolderList.mSnookerScoreLeft.setText(DetailsData.getMatchScore().getPlayerOnewin());
+
+                            viewHolderList.mSnookerScoreRight.setText(DetailsData.getMatchScore().getPlayerTwowin());
+                        }
                         break;
                     default:
                         viewHolderList.mSnookerStatus.setText("--");
+                        viewHolderList.mSnookerInning.setText("-");
+                        viewHolderList.mPoscore.setText("-");
+                        viewHolderList.mPtScore.setText("-");
+                        viewHolderList.mSnookerScoreLeft.setText("-");
+                        viewHolderList.mSnookerScoreRight.setText("-");
                         break;
 
                 }
 
-                if (DetailsData.getMatchScore() == null) {
-                    viewHolderList.mSnookerScoreLeft.setText("--");
-                    viewHolderList.mSnookerScoreRight.setText("--");
-                }else{
-                    viewHolderList.mSnookerScoreLeft.setText(DetailsData.getMatchScore().getPlayerOnewin());
-
-                    viewHolderList.mSnookerScoreRight.setText(DetailsData.getMatchScore().getPlayerTwowin());
-                }
+//                if (DetailsData.getMatchScore() == null) {
+//                    viewHolderList.mSnookerScoreLeft.setText("--");
+//                    viewHolderList.mSnookerScoreRight.setText("--");
+//                }else{
+//                    viewHolderList.mSnookerScoreLeft.setText(DetailsData.getMatchScore().getPlayerOnewin());
+//
+//                    viewHolderList.mSnookerScoreRight.setText(DetailsData.getMatchScore().getPlayerTwowin());
+//                }
 
                 /**
                  *  设置赔率初始化值
@@ -300,10 +414,10 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                         if (mOdds.getOneTwo() == null) {
                             setOddsNull(viewHolderList.mSnookerOddsLeft , viewHolderList.mSnookerOddsMiddle , viewHolderList.mSnookerOddsRight);
                         }else if(mOdds.getOneTwo().getSBO() == null){
-                            if (mOdds.getOneTwo().getVINBET() == null) {
+                            if (mOdds.getOneTwo().getVinBet() == null) {
                                 setOddsNull(viewHolderList.mSnookerOddsLeft , viewHolderList.mSnookerOddsMiddle , viewHolderList.mSnookerOddsRight);
                             }else{
-                                SnookerOddsMatchBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean onetwoLj = mOdds.getOneTwo().getVINBET();
+                                SnookerOddsMatchBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean onetwoLj = mOdds.getOneTwo().getVinBet();
                                 viewHolderList.mSnookerOddsLeft.setText(onetwoLj.getLeftOdds());
                                 viewHolderList.mSnookerOddsMiddle.setText(mContext.getString(R.string.snooker_state_single_double));
                                 viewHolderList.mSnookerOddsRight.setText(onetwoLj.getRightOdds());

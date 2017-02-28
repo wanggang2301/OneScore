@@ -107,7 +107,6 @@ public class SnookerImmediateFragment extends Fragment implements SwipeRefreshLa
         return mView;
     }
     public void loadData(){
-//        Toast.makeText(mContext, "外部更新数据", Toast.LENGTH_SHORT).show();
         /**
          * tab切换时调用，即时页面需要重新请求数据（数据实时）
          */
@@ -234,7 +233,6 @@ public class SnookerImmediateFragment extends Fragment implements SwipeRefreshLa
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.snooker_reloading_txt:
-                Toast.makeText(mContext, "点击了刷新···", Toast.LENGTH_SHORT).show();
                 setStatus(SHOW_STATUS_REFRESH_ONCLICK);
                 initData();
                 break;
@@ -271,7 +269,6 @@ public class SnookerImmediateFragment extends Fragment implements SwipeRefreshLa
      */
     public void onEventMainThread(SnookerSettingEvent snookerSettingEvent) {
 //        L.d("yxq=====> 设置页返回", "=======" + snookerSettingEvent.getmMsg());
-//        Toast.makeText(getContext(), snookerSettingEvent.getmMsg() + " = yxq----即时--", Toast.LENGTH_SHORT).show();
         updateAdapter();
     }
 
@@ -429,21 +426,18 @@ public class SnookerImmediateFragment extends Fragment implements SwipeRefreshLa
      */
     private void updataOdds(SnookerSocketOddsBean mOddsData){
 //        L.d("yxq=====> 赔率更新" , "updataOdds()调用");
-        SnookerOddsMatchBean socketOddsData = mOddsData.getData().getMatchOdds();
         synchronized (allData){
             for (SnookerEventsBean match : allData) {
                 if (match.getMatchId().equals(mOddsData.getThirdId())) {
-
                     if (match.getMatchOdds() != null) {
-
                         SnookerOddsMatchBean currentOddsData =  match.getMatchOdds();
-                        updataOddsData(currentOddsData , socketOddsData);
+                        updataOddsData(currentOddsData , mOddsData);
                     }else{
                         /**
                          * MatchOdds 为null  即，无赔率==>有赔率情况处理
                          */
                         SnookerOddsMatchBean newCurrentOddsData =  new SnookerOddsMatchBean();
-                        updataOddsData(newCurrentOddsData , socketOddsData);//更新单条数据赔率
+                        updataOddsData(newCurrentOddsData , mOddsData);//更新单条数据赔率
                         match.setMatchOdds(newCurrentOddsData);//赋值，给为null的MatchOdds设值
                     }
                     updateAdapter();
@@ -455,20 +449,107 @@ public class SnookerImmediateFragment extends Fragment implements SwipeRefreshLa
     /**
      * 赔率更新（单条数据更新）
      */
-    private void updataOddsData(SnookerOddsMatchBean currentOddsData , SnookerOddsMatchBean socketOddsData){
+    private void updataOddsData(SnookerOddsMatchBean currentOddsData , SnookerSocketOddsBean socketOddsData){
 
-        if (socketOddsData.getAsiaLet() != null){
-            currentOddsData.setAsiaLet(socketOddsData.getAsiaLet());
+        if (socketOddsData.getData() != null) {
+
+            SnookerSocketOddsBean.SnookerDataBean sockerData = socketOddsData.getData();
+            if (sockerData.getPlayType() != null) {
+
+                switch (sockerData.getPlayType()){
+                    case "asiaSize"://大小球
+                        if (currentOddsData.getAsiaSize() == null) {
+                            currentOddsData.setAsiaSize(setNewOddsData());
+                        }
+                        setOddsData(currentOddsData.getAsiaSize() ,sockerData);
+                        break;
+                    case "asiaLet"://亚盘
+                        if (currentOddsData.getAsiaLet() == null) {
+                            currentOddsData.setAsiaLet(setNewOddsData());
+                        }
+                        setOddsData(currentOddsData.getAsiaLet() ,sockerData);
+                        break;
+                    case "oneTwo"://单双
+                        if (currentOddsData.getOneTwo() == null) {
+                            currentOddsData.setOneTwo(setNewOddsData());
+                        }
+                        setOddsData(currentOddsData.getOneTwo() ,sockerData);
+                        break;
+                    case "onlyWin"://独赢[欧赔]
+                        if (currentOddsData.getOnlyWin() == null) {
+                            currentOddsData.setOnlyWin(setNewOddsData());
+                        }
+                        setOddsData(currentOddsData.getOnlyWin() ,sockerData);
+                        break;
+                }
+            }
         }
-        if (socketOddsData.getAsiaSize() != null) {
-            currentOddsData.setAsiaSize(socketOddsData.getAsiaSize());
+    }
+
+    /**
+     * 处理赔率推送结构与原数据结构不一致
+     * @param currentOddsHandicap
+     * @param sockerData
+     */
+    private void setOddsData(SnookerOddsMatchBean.SnookerMatchOddsDetailsBean currentOddsHandicap , SnookerSocketOddsBean.SnookerDataBean sockerData){
+        if (sockerData.getCompany() != null) {
+            switch (sockerData.getCompany()){
+//                SB,SBO, IBC,ISN,VinBet
+                case "SBO"://浩博
+                    currentOddsHandicap.getSBO().setHandicap(sockerData.getPlayType());
+                    currentOddsHandicap.getSBO().setHandicapValue(sockerData.getHandicapValue());
+                    currentOddsHandicap.getSBO().setLeftOdds(sockerData.getLeftOdds());
+                    currentOddsHandicap.getSBO().setRightOdds(sockerData.getRightOdds());
+                    break;
+                case "VinBet"://利记
+                    currentOddsHandicap.getVinBet().setHandicap(sockerData.getPlayType());
+                    currentOddsHandicap.getVinBet().setHandicapValue(sockerData.getHandicapValue());
+                    currentOddsHandicap.getVinBet().setLeftOdds(sockerData.getLeftOdds());
+                    currentOddsHandicap.getVinBet().setRightOdds(sockerData.getRightOdds());
+                    break;
+                case "SB"://沙巴
+                    currentOddsHandicap.getSB().setHandicap(sockerData.getPlayType());
+                    currentOddsHandicap.getSB().setHandicapValue(sockerData.getHandicapValue());
+                    currentOddsHandicap.getSB().setLeftOdds(sockerData.getLeftOdds());
+                    currentOddsHandicap.getSB().setRightOdds(sockerData.getRightOdds());
+                    break;
+                case "xyy"://雪缘圆
+                    currentOddsHandicap.getXyy().setHandicap(sockerData.getPlayType());
+                    currentOddsHandicap.getXyy().setHandicapValue(sockerData.getHandicapValue());
+                    currentOddsHandicap.getXyy().setLeftOdds(sockerData.getLeftOdds());
+                    currentOddsHandicap.getXyy().setRightOdds(sockerData.getRightOdds());
+                    break;
+                case "IBC":
+                    currentOddsHandicap.getIBC().setHandicap(sockerData.getPlayType());
+                    currentOddsHandicap.getIBC().setHandicapValue(sockerData.getHandicapValue());
+                    currentOddsHandicap.getIBC().setLeftOdds(sockerData.getLeftOdds());
+                    currentOddsHandicap.getIBC().setRightOdds(sockerData.getRightOdds());
+                    break;
+                case "ISN":
+                    currentOddsHandicap.getISN().setHandicap(sockerData.getPlayType());
+                    currentOddsHandicap.getISN().setHandicapValue(sockerData.getHandicapValue());
+                    currentOddsHandicap.getISN().setLeftOdds(sockerData.getLeftOdds());
+                    currentOddsHandicap.getISN().setRightOdds(sockerData.getRightOdds());
+                    break;
+            }
         }
-        if (socketOddsData.getOneTwo() != null) {
-            currentOddsData.setOneTwo(socketOddsData.getOneTwo());
-        }
-        if (socketOddsData.getOnlyWin() != null) {
-            currentOddsData.setOnlyWin(socketOddsData.getOnlyWin());
-        }
+    }
+
+    /**
+     * 设置空值赔率（推送一些原来没有的赔率数据时处理）
+     * @return
+     */
+    private SnookerOddsMatchBean.SnookerMatchOddsDetailsBean setNewOddsData(){
+            SnookerOddsMatchBean.SnookerMatchOddsDetailsBean newAsiaSizeData = new SnookerOddsMatchBean.SnookerMatchOddsDetailsBean();
+            SnookerOddsMatchBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean newCompanyData = new SnookerOddsMatchBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean();
+            newAsiaSizeData.setSB(newCompanyData);
+            newAsiaSizeData.setSBO(newCompanyData);
+            newAsiaSizeData.setVinBet(newCompanyData);
+            newAsiaSizeData.setXyy(newCompanyData);
+            newAsiaSizeData.setIBC(newCompanyData);
+            newAsiaSizeData.setISN(newCompanyData);
+
+        return newAsiaSizeData;
     }
     @Override
     public void onDestroyView() {
