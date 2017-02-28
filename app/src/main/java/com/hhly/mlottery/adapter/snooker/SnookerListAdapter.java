@@ -231,6 +231,7 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                     viewHolderList.mSnookerScoreRight.setText("--");
                 }else{
                     viewHolderList.mSnookerScoreLeft.setText(DetailsData.getMatchScore().getPlayerOnewin());
+
                     viewHolderList.mSnookerScoreRight.setText(DetailsData.getMatchScore().getPlayerTwowin());
                 }
 

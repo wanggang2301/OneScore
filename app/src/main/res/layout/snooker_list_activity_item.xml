@@ -52,7 +52,7 @@
         <View
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
-            android:background="@color/buttom_centre"/>
+            android:background="@color/snooker_line"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -129,7 +129,8 @@
                                     android:id="@+id/snooker_poScore"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="---"
+                                    android:textColor="@color/snooker_score_textcolor"
+                                    android:text="--"
                                     android:textSize="@dimen/text_size_10"
                                     />
                             </LinearLayout>
@@ -156,7 +157,6 @@
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:gravity="center"
-                                    android:background="@mipmap/snooker_red_ball"
                                     android:textColor="@color/snooker_score_textcolor"
                                     android:textSize="@dimen/text_size_10"
                                     android:text="--"/>
@@ -188,7 +188,6 @@
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:gravity="center"
-                                    android:background="@mipmap/snooker_black_ball"
                                     android:textColor="@color/snooker_score_textcolor"
                                     android:textSize="@dimen/text_size_10"
                                     android:text="--"/>
@@ -212,6 +211,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="--"
+                                    android:textColor="@color/snooker_score_textcolor"
                                     android:textSize="@dimen/text_size_10"
                                     />
                             </LinearLayout>
