@@ -39,8 +39,8 @@ import butterknife.ButterKnife;
 
 public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRefreshLayout.OnRefreshListener,View.OnClickListener{
 
-    @BindView(R.id.snooker_details_toolbar)
-    Toolbar mToolbar;
+//    @BindView(R.id.snooker_details_toolbar)
+//    Toolbar mToolbar;
 
     @BindView(R.id.snooker_details_tab_layout)
     TabLayout mTabLayout;
@@ -229,7 +229,10 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
                     mSnookerScore = JSON.parseObject(ws_json, SnookerScoreSocketBean.class);
                 }
 //                L.d("yxq=====>300走这里" , msg.arg1+"");
-                updateScore(mSnookerScore);
+                if(mSnookerScore.getThirdId().equals(mMatchId)){
+                    updateScore(mSnookerScore);
+                }
+
             }
         }
     };

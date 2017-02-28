@@ -676,4 +676,5 @@
     <!--斯诺克内页颜色-->
     <color name="snooker_green">#164513</color>
     <color name="snooker_score_black">#4a4a4a</color>
+    <color name="snooker_header_black">#001800</color>
 </resources>

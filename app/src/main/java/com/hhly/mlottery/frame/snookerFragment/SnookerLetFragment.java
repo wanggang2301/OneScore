@@ -165,8 +165,13 @@ public class SnookerLetFragment extends Fragment implements View.OnClickListener
 
         if(mOddsType.equals(SnookerMatchDetail.ODDS_LET)){
             //标题
+            mHomeText.setText(getResources().getString(R.string.snooker_odds_peilv));
+            mGuestText.setText(getResources().getString(R.string.snooker_odds_peilv));
+
         }else if(mOddsType.equals(SnookerMatchDetail.ODDS_SIZE)){
 
+            mHomeText.setText(getResources().getString(R.string.odd_home_big_txt));
+            mGuestText.setText(getResources().getString(R.string.odd_guest_big_txt));
         }
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity());
         mAdapter=new SnookerOddsAdapter(mListOdds);
