@@ -31,6 +31,7 @@ import com.hhly.mlottery.bean.snookerbean.SnookerSuccessBean;
 import com.hhly.mlottery.bean.videobean.NewMatchVideoinfo;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -38,6 +39,7 @@ import com.hhly.mlottery.view.SnookerPinnedHeaderExpandableListView;
 import com.hhly.mlottery.widget.GrapeGridView;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -156,23 +158,14 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
 
     //赛事简介数据传输
     public void onEventMainThread(SnookerRefrshBean snookerRefrshBean) {
-        L.d("cvb", " pre segmented5.getChildCount()=" + segmented5.getChildCount());
-
         segmented5.removeAllViews();
-
-        L.d("cvb", " finish segmented5.getChildCount()=" + segmented5.getChildCount());
-
         isAddHeadDatas = false;
         upLeagueRace("", snookerRefrshBean.getSeason(), "onEventMainThread");
-
-
     }
 
     private void upLeagueRace(String secondTitle, String season, String s) {
 
-
-        Log.i("aaaa", "sadasdas=====" + s);
-
+        Log.i("aaaa", "listView=====" + mLeagueId);
         final Map<String, String> map = new HashMap();
         map.put("leagueId", mLeagueId);
         map.put("season", season);//默认不填是当前数据
@@ -187,7 +180,6 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
                     return;
                 }
                 if (json.getResult() == 200) {
-                    // stageInfo.clear();
                     //获取整体的头部数据
                     stageMap = json.getData().getStageMap();
                     //获取头部数据
@@ -218,12 +210,11 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
                         snooker_race_time_head.setVisibility(View.VISIBLE);
                         lay_agendafg.setVisibility(View.VISIBLE);
                     }
-                    if (stageInfo.size() == 0) {
 
+                    if (!CollectionUtils.notEmpty(stageInfo)) {
                         snooker_race_male_gridview.setVisibility(View.GONE);
                     } else {
                         if (!isAddHeadDatas) {
-                            Log.i("dasd", "stageInfo.size()" + stageInfo.size());
                             for (int i = 0; i < stageInfo.size(); i++) {
 
                                 addButton(segmented5, stageInfo.get(i).getStage(), stageInfo.get(i).getNum());
