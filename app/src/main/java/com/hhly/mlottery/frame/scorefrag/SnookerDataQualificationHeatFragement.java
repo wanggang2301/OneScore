@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -219,6 +220,7 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
                         // Log.i("aasdas>>>"," mSeason=="+mSeason);
                         //添加子view数据
                         childDataList.add(json.getData().getMatchList().get(i).getDetailedScoreList());
+
                     }
                     pheadapter = new PinnedHeaderExpandableAdapter(json.getData().getMatchList(), childDataList, mContext, explistview_live);
                     explistview_live.setAdapter(pheadapter);
@@ -261,7 +263,7 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-
+                childDataList.clear();
                 upLeagueRace(stageInfo.get(group.indexOfChild(group.findViewById(checkedId))).getNum() + "", mSeason);
 
             }

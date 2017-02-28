@@ -93,7 +93,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             holder = (Holder) convertView.getTag();
         }
 
-
+        Log.i("dasd", "datas.size()=====" + mChildrenDataList.get(groupPosition));
         choseHeadInformationAdapter = new ChoseHeadInformationItemAdapter(mContext, mChildrenDataList.get(groupPosition), R.layout.snooker_race_child_item_tv);
 
         holder.gridview.setAdapter(choseHeadInformationAdapter);
@@ -264,13 +264,10 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
 
         @Override
         public void newconvert(ViewHolder holder, String s, int position) {
-
             textView = holder.getView(R.id.item1);
             head_item = holder.getView(R.id.head_item);
             head_item.setText(position + 1 + "");
-
             textView.setText(s);
-
         }
 
         @Override

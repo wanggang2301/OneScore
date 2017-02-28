@@ -46,7 +46,7 @@ public class SnookerPlayerInfoActivity extends Activity {
         mWebView = (ProgressWebView) findViewById(R.id.webview);
         back = (ImageView) findViewById(R.id.snooker_player_back);
         url = BaseURLs.URL_SNOOKER_INFO_PLAYER_INFO_H5 + "?lang=" + appendLanguage() + "&playId=" + playerId + "&from=app";
-       // url = "http://m.1332255.com:81/snookerData/playerInfo.html?lang=" + appendLanguage() + "&playId=" + playerId + "&from=app";
+        // url = "http://m.1332255.com:81/snookerData/playerInfo.html?lang=" + appendLanguage() + "&playId=" + playerId + "&from=app";
 
         L.d("h5", url);
 
