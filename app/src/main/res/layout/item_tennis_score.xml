@@ -17,7 +17,7 @@
             android:id="@+id/tv_match_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="5.5"
+            android:layout_weight="6"
             android:ellipsize="end"
             android:lines="1"
             android:textColor="@color/mdy_666"
@@ -45,7 +45,7 @@
             android:id="@+id/tv_match_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.6"
             android:gravity="center"
             android:textColor="@color/mdy_999"
             tools:text="10:00" />
@@ -107,7 +107,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -215,7 +215,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -293,7 +293,7 @@
             android:id="@+id/iv_match_focus"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.6"
             android:src="@mipmap/tennis_focus_noto" />
 
     </LinearLayout>
