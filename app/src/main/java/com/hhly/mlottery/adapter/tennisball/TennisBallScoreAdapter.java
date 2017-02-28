@@ -86,7 +86,7 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
                 break;
         }
 
-        // TODO 设置胜利方旗帜
+        // 设置胜利方旗帜
         TextView tv_home_name = baseViewHolder.getView(R.id.tv_home_name);
         TextView tv_home_name2 = baseViewHolder.getView(R.id.tv_home_name2);
         TextView tv_guest_name = baseViewHolder.getView(R.id.tv_guest_name);
@@ -100,6 +100,11 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
                 tv_home_name2.setCompoundDrawablePadding(DisplayUtil.px2dip(mContext,3));
                 tv_home_name.setTextColor(mContext.getResources().getColor(R.color.number_green));
                 tv_home_name2.setTextColor(mContext.getResources().getColor(R.color.number_green));
+
+                tv_guest_name.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                tv_guest_name2.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                tv_guest_name.setTextColor(mContext.getResources().getColor(R.color.mdy_333));
+                tv_guest_name2.setTextColor(mContext.getResources().getColor(R.color.mdy_333));
             } else if (homeTotal < awayTotal) {
                 // 客队胜
                 tv_guest_name.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.tennis_victory_icon, 0);
@@ -108,6 +113,11 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
                 tv_guest_name2.setCompoundDrawablePadding(DisplayUtil.px2dip(mContext,3));
                 tv_guest_name.setTextColor(mContext.getResources().getColor(R.color.number_green));
                 tv_guest_name2.setTextColor(mContext.getResources().getColor(R.color.number_green));
+
+                tv_home_name.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                tv_home_name2.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                tv_home_name.setTextColor(mContext.getResources().getColor(R.color.mdy_333));
+                tv_home_name2.setTextColor(mContext.getResources().getColor(R.color.mdy_333));
             }else{
                 tv_home_name.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 tv_home_name2.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);

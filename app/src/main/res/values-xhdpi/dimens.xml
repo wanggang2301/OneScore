@@ -22,6 +22,7 @@
     
     
     <dimen name="number_title">14sp</dimen>
+    <dimen name="tennis_score_item">13sp</dimen>
     <dimen name="home_pager_title">15sp</dimen>
     <dimen name="home_pager_user_title">17sp</dimen>
     <dimen name="number_desc">12sp</dimen>
