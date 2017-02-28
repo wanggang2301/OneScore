@@ -180,19 +180,10 @@ public class PlayWebViewActivity extends BaseActivity implements View.OnClickLis
     };
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        MobclickAgent.onResume(this);
-//        MobclickAgent.onPageStart("PlayWebViewActivity");
-    }
-
     public void onPause() {//继承自Activity
         mWebView.reload();
         mWebView.destroy();
         super.onPause();
-//        MobclickAgent.onPause(this);
-//        MobclickAgent.onPageEnd("PlayWebViewActivity");
     }
 
     @Override

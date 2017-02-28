@@ -174,7 +174,7 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.rl_alet:
 			MobclickAgent.onEvent(mContext,"Basketball_Setting_Alet");
@@ -265,7 +265,7 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 		case R.id.tb_push:
 			PreferenceUtil.commitBoolean(MyConstants.BASKETBALL_PUSH_FOCUS, mTb_push.isChecked());
 
-			//TODO:把是否接受推送消息的状态传给服务器
+			// 把是否接受推送消息的状态传给服务器
 			if(mTb_push.isChecked()){
 				requestServer("true"); //接收推送
 			}else {
@@ -350,19 +350,5 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 		if (mRd_noshow.isChecked()) {
 			resultstring = getResources().getString(string.set_oddghide_txt);
 		}
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-//		MobclickAgent.onResume(this);
-//		MobclickAgent.onPageStart("BasketballSettingActivity");
-	}
-
-	@Override
-	public void onPause() {
-		super.onPause();
-//		MobclickAgent.onPause(this);
-//		MobclickAgent.onPageEnd("BasketballSettingActivity");
 	}
 }

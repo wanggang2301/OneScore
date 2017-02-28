@@ -231,23 +231,6 @@ public class WebActivity extends BaseActivity implements OnClickListener {
     }
 
     @Override
-    protected void onResume() {
-        mWebView.onResume();//继续播放视频
-        super.onResume();
-//        MobclickAgent.onResume(this);
-//        MobclickAgent.onPageStart("WebActivity");
-    }
-
-
-    @Override
-    public void onPause() {
-        mWebView.onPause();//暂停播放视频
-        super.onPause();
-//        MobclickAgent.onPause(this);
-//        MobclickAgent.onPageEnd("WebActivity");
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.public_img_back://返回

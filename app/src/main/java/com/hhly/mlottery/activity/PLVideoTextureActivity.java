@@ -12,6 +12,7 @@ import com.hhly.mlottery.widget.MediaController;
 import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.PLMediaPlayer;
 import com.pili.pldroid.player.widget.PLVideoTextureView;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  *  Created by mdy155 13/9/2016
@@ -70,6 +71,7 @@ public class PLVideoTextureActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPause(this);
         mToast = null;
         mVideoView.pause();
     }
@@ -77,6 +79,7 @@ public class PLVideoTextureActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
         mVideoView.start();
     }
 

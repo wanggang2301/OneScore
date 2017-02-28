@@ -48,9 +48,6 @@ public class ModifyPasswordActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void onResume() {
-        /**友盟页面统计*/
-//        MobclickAgent.onResume(this);
-//        MobclickAgent.onPageStart("RegisterActivity");
         super.onResume();
         et_password_old.setFocusable(true);
         et_password_old.setFocusableInTouchMode(true);

@@ -231,18 +231,4 @@ public class FiltrateMatchConfigActivity extends BaseActivity implements OnClick
     @Override
     public void onChange(LinkedList<String> checkedCups) {
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        MobclickAgent.onResume(this);
-//        MobclickAgent.onPageStart("FiltrateMatchConfigActivity");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-//        MobclickAgent.onPause(this);
-//        MobclickAgent.onPageEnd("FiltrateMatchConfigActivity");
-    }
 }
