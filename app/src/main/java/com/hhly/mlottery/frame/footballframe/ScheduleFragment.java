@@ -220,8 +220,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
         recyclerView.setLayoutManager(layoutManager);
 
 
-
-
         mNoDataLayout = (RelativeLayout) view.findViewById(R.id.football_schedule_unfocus_ll);
 
 
@@ -432,7 +430,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                     recyclerView.setAdapter(mAdapter);
                     mAdapter.setmFocusMatchClickListener(mFocusMatchClickListener);
                     mAdapter.setDateOnClickListener(mDateOnClickListener);
-
 
 
                     mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {

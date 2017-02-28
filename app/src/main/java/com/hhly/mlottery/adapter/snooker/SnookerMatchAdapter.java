@@ -36,9 +36,13 @@ public class SnookerMatchAdapter extends BaseQuickAdapter<SnookerMatchBean.DataB
     @Override
     protected void convert(BaseViewHolder holder, final SnookerMatchBean.DataBean dataBean) {
         RelativeLayout rl_match = (RelativeLayout) holder.getView(R.id.rl_match);
+
         if (dataBean.getLeagueLogo() != null) {
             Glide.with(mContext).load(dataBean.getLeagueLogo()).into((ImageView) holder.getView(R.id.snooker_iv_logo));
+        } else {
+            holder.setImageResource(R.id.snooker_iv_logo, R.mipmap.snooker_default);
         }
+
         holder.setText(R.id.snooker_race_name, dataBean.getLeagueName());
         rl_match.setOnClickListener(new View.OnClickListener() {
             @Override
