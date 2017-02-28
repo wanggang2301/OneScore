@@ -221,7 +221,7 @@ public class TennisBallSocketFragment extends Fragment implements SwipeRefreshLa
             @Override
             public void run() {
                 TennisSocketBean tennisSocketBean = JSON.parseObject(text, TennisSocketBean.class);
-                if (tennisSocketBean.getType() == 1) {
+                if (tennisSocketBean.getType() == 401) {
                     for (MatchDataBean matchDataBean : mData) {
                         if (matchDataBean.getMatchId().equals(tennisSocketBean.getDataObj().getMatchId())) {
                             matchDataBean.setMatchStatus(tennisSocketBean.getDataObj().getMatchStatus());
@@ -240,7 +240,7 @@ public class TennisBallSocketFragment extends Fragment implements SwipeRefreshLa
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    L.d("xxxxx","收到了：刷新了:");
+                                    L.d("xxxxx","收到了：刷新了!");
                                     mAdapter.notifyDataSetChanged();
                                 }
                             });
