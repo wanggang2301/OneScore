@@ -67,8 +67,8 @@ public class SnookerListScoreFragment extends BaseWebSocketFragment implements V
         /**
          * 推送  必须定义在 super.onCreate前面，否则 订阅不成功
          */
-//        setWebSocketUri("ws://192.168.10.242:61634");
-        setWebSocketUri(BaseURLs.WS_SERVICE);
+        setWebSocketUri("ws://192.168.10.242:61634");
+//        setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.snooker");
         super.onCreate(savedInstanceState);
 

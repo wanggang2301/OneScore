@@ -187,8 +187,8 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
                 view.findViewById(R.id.tv_list_item).setBackgroundColor(getResources().getColor(R.color.bg));
                 //显示选择的赛季数据
                 tv_right.setText(seasonList.get(postion));// 设置所选的item作为下拉框的标题
-                Log.i("aaaa", "listView=====" + postion);
 
+                EventBus.getDefault().post(new SnookerRefrshBean(seasonList.get(postion)));
                 // 弹框消失
                 popupWindow.dismiss();
                 popupWindow = null;

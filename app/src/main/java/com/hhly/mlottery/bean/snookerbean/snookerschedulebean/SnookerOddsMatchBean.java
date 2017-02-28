@@ -55,12 +55,13 @@ public class SnookerOddsMatchBean {
         /**
          * 赔率公司
          */
-//        private SnookerMatchOddsDataBean lj;//利记
-//        private SnookerMatchOddsDataBean hb;//浩博
+//        SB,SBO, IBC,ISN,VinBet
         private SnookerMatchOddsDataBean SBO;//浩博
-        private SnookerMatchOddsDataBean VINBET;//利记
-        private SnookerMatchOddsDataBean sb;//沙巴
+        private SnookerMatchOddsDataBean VinBet;//利记
+        private SnookerMatchOddsDataBean SB;//沙巴
         private SnookerMatchOddsDataBean xyy;//雪缘圆
+        private SnookerMatchOddsDataBean IBC;
+        private SnookerMatchOddsDataBean ISN;
 
         public SnookerMatchOddsDataBean getSBO() {
             return SBO;
@@ -70,20 +71,20 @@ public class SnookerOddsMatchBean {
             this.SBO = SBO;
         }
 
-        public SnookerMatchOddsDataBean getVINBET() {
-            return VINBET;
+        public SnookerMatchOddsDataBean getVinBet() {
+            return VinBet;
         }
 
-        public void setVINBET(SnookerMatchOddsDataBean VINBET) {
-            this.VINBET = VINBET;
+        public void setVinBet(SnookerMatchOddsDataBean vinBet) {
+            VinBet = vinBet;
         }
 
-        public SnookerMatchOddsDataBean getSb() {
-            return sb;
+        public SnookerMatchOddsDataBean getSB() {
+            return SB;
         }
 
-        public void setSb(SnookerMatchOddsDataBean sb) {
-            this.sb = sb;
+        public void setSB(SnookerMatchOddsDataBean SB) {
+            this.SB = SB;
         }
 
         public SnookerMatchOddsDataBean getXyy() {
@@ -92,6 +93,22 @@ public class SnookerOddsMatchBean {
 
         public void setXyy(SnookerMatchOddsDataBean xyy) {
             this.xyy = xyy;
+        }
+
+        public SnookerMatchOddsDataBean getIBC() {
+            return IBC;
+        }
+
+        public void setIBC(SnookerMatchOddsDataBean IBC) {
+            this.IBC = IBC;
+        }
+
+        public SnookerMatchOddsDataBean getISN() {
+            return ISN;
+        }
+
+        public void setISN(SnookerMatchOddsDataBean ISN) {
+            this.ISN = ISN;
         }
 
         public static class SnookerMatchOddsDataBean{
