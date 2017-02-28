@@ -16,10 +16,9 @@
         android:id="@+id/lay_agendafg"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:orientation="horizontal"
         android:layout_alignParentTop="true"
-        android:orientation="horizontal">
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -45,7 +44,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="0.6"
             android:gravity="center"
             android:text="完"
             android:textColor="@color/bp_disabled_day"
@@ -56,7 +55,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="1.4"
             android:gravity="center"
             android:text="特鲁姆普"
             android:textColor="@color/res_name_color"
@@ -80,7 +79,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="1.4"
             android:gravity="center"
             android:text="梁文博"
             android:textColor="@color/res_name_color"
@@ -91,7 +90,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="0.8"
             android:gravity="center"
             android:src="@mipmap/iconfont_xiala_1" />
     </LinearLayout>

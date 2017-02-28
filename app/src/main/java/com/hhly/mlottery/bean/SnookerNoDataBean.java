@@ -8,10 +8,11 @@ public class SnookerNoDataBean {
     private  String noData;
     boolean  isNoData;
 
-    public SnookerNoDataBean(String leagueProfile, boolean b) {
+    public SnookerNoDataBean(String leagueProfile) {
         this.noData=leagueProfile;
-        this.isNoData=b;
     }
+
+
 
     public boolean isNoData() {
         return isNoData;

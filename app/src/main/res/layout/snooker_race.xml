@@ -20,7 +20,7 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center">
+                >
 
                 <info.hoang8f.android.segmented.SegmentedGroup
                     android:id="@+id/segmented5"
