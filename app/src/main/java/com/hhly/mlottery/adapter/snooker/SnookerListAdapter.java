@@ -166,12 +166,20 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                     /**
                       情况①
                      */
-                    currentStatus = DetailsData.getStatus();
+                    if (DetailsData.getStatus() == null) {
+                        currentStatus = "null";
+                    }else{
+                        currentStatus = DetailsData.getStatus();
+                    }
                 }else{
                     /**
                       情况②
                      */
-                    currentStatus = DetailsData.getMatchScore().getStatus();
+                    if (DetailsData.getMatchScore().getStatus() == null) {
+                        currentStatus = "null";
+                    }else{
+                        currentStatus = DetailsData.getMatchScore().getStatus();
+                    }
                 }
 
                 switch(currentStatus){
