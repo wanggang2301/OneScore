@@ -1,7 +1,5 @@
 package com.hhly.mlottery.activity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -197,14 +195,5 @@ public class SnookerSettingActivity extends BaseActivity implements View.OnClick
         if(mNoShowRb.isChecked()){
             result = getResources().getString(R.string.snooker_setting_nos_show);
         }
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 }

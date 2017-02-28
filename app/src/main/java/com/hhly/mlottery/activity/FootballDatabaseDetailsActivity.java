@@ -160,23 +160,6 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
 
         headLayout = (LinearLayout) findViewById(R.id.football_database_details_header_layout);
 
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                isHindShow(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
         mRefreshLayout = (ExactSwipeRefreshLayout) findViewById(R.id.football_database_details_refresh_layout);
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
         mRefreshLayout.setOnRefreshListener(this);
@@ -287,75 +270,17 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         }, 1000);
 
     }
-    /**
-     * Fragment页面统计
-     */
-    private boolean isFragment0 = true;// 赛程
-    private boolean is0 = false;
-    private boolean isFragment1 = false;// 积分
-    private boolean is1 = false;
-    private boolean isFragment2 = false;
-    private boolean is2 = false;
-    private boolean isFragment3 = false;
-    private boolean is3 = false;
-    private boolean isFragment4 = false;
-    private boolean is4 = false;
-
-    private void isHindShow(int position) {
-        switch (position) {
-            case 0:// 赛程
-                isFragment0 = true;
-                isFragment1 = false;
-                break;
-            case 1:// 积分
-                isFragment0 = false;
-                isFragment1 = true;
-                break;
-        }
-        if (isFragment0) {
-            if (is1) {
-                MobclickAgent.onPageEnd("FootballDatabaseDetailsActivity_RankingFragment");
-                is1 = false;
-            }
-            MobclickAgent.onPageStart("FootballDatabaseDetailsActivity_ScheduleFragment");
-            is0 = true;
-        }
-        if (isFragment1) {
-            if (is0) {
-                MobclickAgent.onPageEnd("FootballDatabaseDetailsActivity_ScheduleFragment");
-                is0 = false;
-            }
-            MobclickAgent.onPageStart("FootballDatabaseDetailsActivity_RankingFragment");
-            is1 = true;
-        }
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
-        if (isFragment0) {
-            is0 = true;
-            MobclickAgent.onPageStart("FootballDatabaseDetailsActivity_ScheduleFragment");
-        }
-        if (isFragment1) {
-            is1 = true;
-            MobclickAgent.onPageStart("FootballDatabaseDetailsActivity_RankingFragment");
-        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
-        if (is0) {
-            is0 = false;
-            MobclickAgent.onPageEnd("FootballDatabaseDetailsActivity_ScheduleFragment");
-        }
-        if (is1) {
-            is1 = false;
-            MobclickAgent.onPageEnd("FootballDatabaseDetailsActivity_RankingFragment");
-        }
     }
 
 

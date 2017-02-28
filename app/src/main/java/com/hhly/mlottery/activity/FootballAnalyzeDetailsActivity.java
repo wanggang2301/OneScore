@@ -897,11 +897,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
     public void onRefresh() {
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -910,10 +905,5 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                 initData();
             }
         },500);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 }

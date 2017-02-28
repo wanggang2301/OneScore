@@ -183,9 +183,6 @@
             android:name=".activity.RegisterActivity"
             android:screenOrientation="portrait" />
         <!-- 用户中心界面 -->
-        <activity
-            android:name=".activity.AccountActivity"
-            android:screenOrientation="portrait" />
         <!-- 找回密码界面 -->
         <activity
             android:name=".activity.FindPassWordActivity"
@@ -199,9 +196,6 @@
             android:name=".activity.ModifyNicknameActivity"
             android:screenOrientation="portrait" />
         <!-- 头像图片放大 -->
-        <activity
-            android:name=".activity.EnlargePhotoActivity"
-            android:screenOrientation="portrait" />
         <!-- 修改密码界面 -->
         <activity
             android:name=".activity.ModifyPasswordActivity"
@@ -248,11 +242,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.BlackStatusBar.ColorGreen"
             android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".activity.InputActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/MyDialogStyleTop"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
             android:name=".activity.ChartballActivity"
             android:screenOrientation="portrait"
@@ -346,9 +335,6 @@
             </intent-filter>
         </receiver>
         <!--snooker 列表页-->
-        <activity
-            android:name=".activity.SnookerListActivity"
-            android:screenOrientation="portrait" />
         <!--snooker 设置页-->
         <activity
             android:name=".activity.SnookerSettingActivity"

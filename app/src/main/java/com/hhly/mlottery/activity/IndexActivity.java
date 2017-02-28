@@ -155,13 +155,6 @@ public class IndexActivity extends BaseActivity {
         super.onDestroy();
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
     private long mExitTime;// 退出程序...时间
 
 
@@ -179,10 +172,4 @@ public class IndexActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
 }
