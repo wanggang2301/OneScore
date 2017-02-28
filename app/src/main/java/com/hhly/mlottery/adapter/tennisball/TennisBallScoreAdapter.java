@@ -140,15 +140,15 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
         }
 
         // 时间
-        String time = "";
-        if (matchDataBean.getTime() != null) {
-            try {
-                time = matchDataBean.getTime().substring(0, matchDataBean.getTime().lastIndexOf(":"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        baseViewHolder.setText(R.id.tv_match_date, time);
+//        String time = "";
+//        if (matchDataBean.getTime() != null) {
+//            try {
+//                time = matchDataBean.getTime().substring(0, matchDataBean.getTime().lastIndexOf(":"));
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+        baseViewHolder.setText(R.id.tv_match_date, matchDataBean.getTime() == null ? " " : matchDataBean.getTime());
         // 主客队name
         baseViewHolder.setText(R.id.tv_home_name, matchDataBean.getHomePlayerName());
         baseViewHolder.setText(R.id.tv_guest_name, matchDataBean.getAwayPlayerName());
