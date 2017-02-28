@@ -238,11 +238,11 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                 /**
                  *  设置赔率初始化值
                  */
+                boolean noshow = PreferenceUtil.getBoolean(MyConstants.SNOOKER_NOTSHOW, false);//不显示
                 boolean alet = PreferenceUtil.getBoolean(MyConstants.SNOOKER_ALET, true); //亚盘 \ 标准盘
                 boolean eur = PreferenceUtil.getBoolean(MyConstants.SNOOKER_EURO, false);//欧赔 \ 独赢
                 boolean asize = PreferenceUtil.getBoolean(MyConstants.SNOOKER_ASIZE, false); //大小盘
                 boolean singleTwins = PreferenceUtil.getBoolean(MyConstants.SNOOKER_SINGLETWIN , false);//单双
-                boolean noshow = PreferenceUtil.getBoolean(MyConstants.SNOOKER_NOTSHOW, false);//不显示
 
                 SnookerOddsMatchBean mOdds = DetailsData.getMatchOdds();
                 if (mOdds == null) {
