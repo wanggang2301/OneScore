@@ -177,7 +177,7 @@ public class SnookerLetFragment extends Fragment implements View.OnClickListener
 
     }
 
-    private void initData(){
+    public void initData(){
 
         handler.sendEmptyMessage(VIEW_STATUS_LOADING);
 
