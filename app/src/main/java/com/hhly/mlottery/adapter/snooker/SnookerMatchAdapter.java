@@ -7,12 +7,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.SnookerEventPageActivity;
 import com.hhly.mlottery.bean.snookerbean.SnookerMatchBean;
+import com.hhly.mlottery.util.ImageLoader;
 
 import java.util.List;
 
@@ -38,7 +38,9 @@ public class SnookerMatchAdapter extends BaseQuickAdapter<SnookerMatchBean.DataB
         RelativeLayout rl_match = (RelativeLayout) holder.getView(R.id.rl_match);
 
         if (dataBean.getLeagueLogo() != null) {
-            Glide.with(mContext).load(dataBean.getLeagueLogo()).into((ImageView) holder.getView(R.id.snooker_iv_logo));
+            ImageLoader.load(mContext, dataBean.getLeagueLogo()).into((ImageView) holder.getView(R.id.snooker_iv_logo));
+
+            // Glide.with(mContext).load(dataBean.getLeagueLogo()).into((ImageView) holder.getView(R.id.snooker_iv_logo));
         } else {
             holder.setImageResource(R.id.snooker_iv_logo, R.mipmap.snooker_default);
         }
