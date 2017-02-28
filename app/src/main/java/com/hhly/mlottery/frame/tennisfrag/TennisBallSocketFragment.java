@@ -237,15 +237,15 @@ public class TennisBallSocketFragment extends Fragment implements SwipeRefreshLa
                             matchDataBean.getMatchScore().setAwaySetScore5(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore5());
                             matchDataBean.getMatchScore().setHomeTotalScore(tennisSocketBean.getDataObj().getMatchScore().getHomeTotalScore());
                             matchDataBean.getMatchScore().setAwayTotalScore(tennisSocketBean.getDataObj().getMatchScore().getAwayTotalScore());
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    L.d("xxxxx","收到了：刷新了:");
+                                    mAdapter.notifyDataSetChanged();
+                                }
+                            });
+                            break;
                         }
-                        L.d("xxxxx","收到了：刷新了MatchId:" + matchDataBean.getMatchId() );
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mAdapter.notifyDataSetChanged();
-                            }
-                        });
-                        return;
                     }
                 }
             }

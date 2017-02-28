@@ -123,7 +123,14 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment {
         titles.add(getString(R.string.foot_jishi_txt));
         titles.add(getString(R.string.foot_saiguo_txt));
         titles.add(getString(R.string.foot_saicheng_txt));
-        titles.add(getString(R.string.foot_details_focus));
+
+        String focusId = PreferenceUtil.getString(AppConstants.TENNIS_BALL_FOCUS, null);
+        if(!TextUtils.isEmpty(focusId)){
+            String[] focusIds = focusId.split(",");
+            titles.add(getString(R.string.foot_details_focus) + "("+ focusIds.length +")");
+        }else{
+            titles.add(getString(R.string.foot_details_focus));
+        }
 
         fragments = new ArrayList<>();
         fragments.add(TennisBallSocketFragment.newInstance(TENNIS_IMMEDIATE));// 即时
@@ -134,7 +141,7 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment {
         pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
         mViewPager.setAdapter(pureViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         mViewPager.setOffscreenPageLimit(titles.size());
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

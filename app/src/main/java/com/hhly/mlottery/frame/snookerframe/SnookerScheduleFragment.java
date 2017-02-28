@@ -204,7 +204,7 @@ public class SnookerScheduleFragment extends Fragment implements View.OnClickLis
                     initListDateAndWeek(mCurrentDate, position);
                     isFirstLoadDate = false;
                 }
-                if ((jsonData.getData().getResultsBattle() == null || jsonData.getData().getResultsBattle().size() == 0)
+                if ((jsonData.getData().getEventsBattle() == null || jsonData.getData().getEventsBattle().size() == 0)
                         && (jsonData.getData().getDate() != null && !jsonData.getData().getDate().equals(""))) {
 
                     allData = new ArrayList<>();

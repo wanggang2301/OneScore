@@ -66,14 +66,27 @@ public class AnalyzeRankAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+
+
+        int progress=50;
+
         SnookerAnalyzeBean.ProfessionDataEntity entity=mScoreRankList.get(position);
         if(entity.getDataType().equals(StaticValues.BIRTH)){
             holder.title.setText("生日");
         }else if(entity.getDataType().equals(StaticValues.RANKING)){
             holder.title.setText("世界排名");
+            if(entity.getHomeData()==null&&entity.getGuestData()==null){
+                progress=50;
+            }else if(entity.getHomeData()==null){ //主队为null。客队不为null
+                progress=0;
+            }else if(entity.getGuestData()==null){
+                progress=100;
+            }else {
+            }
         }
         else if(entity.getDataType().equals(StaticValues.PRO_SEASON)){
             holder.title.setText("职业赛季");
+
         }
         else if(entity.getDataType().equals(StaticValues.TOTAL_BONUS)){
             holder.title.setText("总奖金");
