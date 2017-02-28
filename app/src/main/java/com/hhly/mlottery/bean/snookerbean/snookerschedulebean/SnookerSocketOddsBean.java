@@ -59,7 +59,7 @@ public class SnookerSocketOddsBean {
 //        thirdId	569128
 //        time	21:00
 
-        private String dataType;
+
         private String date;
         private String delps;
         private List<SnookerOddsGamesBean> games;
@@ -74,6 +74,31 @@ public class SnookerSocketOddsBean {
         private String subLgName;
         private String thirdId;
         private String time;
+        /********************************新推送数据****************************************/
+//        changeTime	2016-10-26 16:23:09
+//        company	SBO
+//        dataType	1
+//        handicapValue	1.0
+//        isMainHandicap	0
+//        leftOdds	0.71
+//        matchId	546390
+//        playSeasonType	1
+//        playType	asiaSize
+//        rightOdds	1.2
+//        version	1
+
+        private String dataType;//赛事类型（1 ：单式 2 ：滚球 3 ：早餐 保留字段）        
+
+        private String changeTime;//赔率变动时间
+        private String company;//赔率公司
+        private String handicapValue;//盘口
+        private int isMainHandicap;//是否主盘  保留字段
+        private String matchId;//比赛ID
+        private String playSeasonType;//0=全场 1-N =1-N局
+        private String playType;//玩法(asiaSize(大小球), asiaLet(让球), oneTwo(单双), onlyWin(独赢);)
+        private String rightOdds;//客队
+        private String leftOdds;//主队
+        private int version;//保留字段 
 
         public String getDataType() {
             return dataType;
@@ -82,6 +107,90 @@ public class SnookerSocketOddsBean {
         public void setDataType(String dataType) {
             this.dataType = dataType;
         }
+
+        public String getChangeTime() {
+            return changeTime;
+        }
+
+        public void setChangeTime(String changeTime) {
+            this.changeTime = changeTime;
+        }
+
+        public String getCompany() {
+            return company;
+        }
+
+        public void setCompany(String company) {
+            this.company = company;
+        }
+
+        public String getHandicapValue() {
+            return handicapValue;
+        }
+
+        public void setHandicapValue(String handicapValue) {
+            this.handicapValue = handicapValue;
+        }
+
+        public int getIsMainHandicap() {
+            return isMainHandicap;
+        }
+
+        public void setIsMainHandicap(int isMainHandicap) {
+            this.isMainHandicap = isMainHandicap;
+        }
+
+        public String getLeftOdds() {
+            return leftOdds;
+        }
+
+        public void setLeftOdds(String leftOdds) {
+            this.leftOdds = leftOdds;
+        }
+
+        public String getMatchId() {
+            return matchId;
+        }
+
+        public void setMatchId(String matchId) {
+            this.matchId = matchId;
+        }
+
+        public String getPlaySeasonType() {
+            return playSeasonType;
+        }
+
+        public void setPlaySeasonType(String playSeasonType) {
+            this.playSeasonType = playSeasonType;
+        }
+
+        public String getPlayType() {
+            return playType;
+        }
+
+        public void setPlayType(String playType) {
+            this.playType = playType;
+        }
+
+        public String getRightOdds() {
+            return rightOdds;
+        }
+
+        public void setRightOdds(String rightOdds) {
+            this.rightOdds = rightOdds;
+        }
+
+        public int getVersion() {
+            return version;
+        }
+
+        public void setVersion(int version) {
+            this.version = version;
+        }
+
+        /*******************************新推送数据**********************************************/
+
+
 
         public String getDate() {
             return date;
