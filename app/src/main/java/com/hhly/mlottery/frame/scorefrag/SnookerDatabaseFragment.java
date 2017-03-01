@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.SnookerEventPageActivity;
 import com.hhly.mlottery.adapter.snooker.InformationDataAdapter;
 import com.hhly.mlottery.adapter.snooker.PinnedHeaderExpandableAdapter;
 import com.hhly.mlottery.bean.SnookerNoDataBean;
@@ -149,6 +150,7 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
     //赛事简介数据传输
     public void onEventMainThread(SnookerRefrshBean snookerRefrshBean) {
         segmented5.removeAllViews();
+        stageInfo.clear();
         isAddHeadDatas = false;
         upLeagueRace("", snookerRefrshBean.getSeason());
     }
@@ -333,7 +335,7 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
             case R.id.live_error_btn:
 
                 reFH();
-
+                ((SnookerEventPageActivity)mContext).initData();
                 break;
             default:
                 break;

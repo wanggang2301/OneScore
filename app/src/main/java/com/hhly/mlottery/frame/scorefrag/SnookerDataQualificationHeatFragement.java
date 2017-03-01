@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.SnookerEventPageActivity;
 import com.hhly.mlottery.adapter.InformationDataAdapter;
 import com.hhly.mlottery.adapter.snooker.ChoseHeadInformationAdapter;
 import com.hhly.mlottery.adapter.snooker.PinnedHeaderExpandableAdapter;
@@ -144,6 +145,7 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
     //赛事简介数据传输
     public void onEventMainThread(SnookerRefrshBean snookerRefrshBean) {
         segmented5.removeAllViews();
+        stageInfo.clear();
         mSeason = snookerRefrshBean.getSeason();
         isAddHeadDatas = false;
         upLeagueRace("", snookerRefrshBean.getSeason());
@@ -224,7 +226,7 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
                         childDataList.add(json.getData().getMatchList().get(i).getDetailedScoreList());
 
                     }
-                        pheadapter = new PinnedHeaderExpandableAdapter(json.getData().getMatchList(), childDataList, mContext, explistview_live);
+                        pheadapter = new PinnedHeaderExpandableAdapter(matchList, childDataList, mContext, explistview_live);
                         explistview_live.setAdapter(pheadapter);
                         pheadapter.notifyDataSetChanged();
                 }
@@ -262,7 +264,6 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
 
                 matchList.clear();
                 childDataList.clear();
-
                 upLeagueRace(stageInfo.get(group.indexOfChild(group.findViewById(checkedId))).getNum() + "", mSeason);
 
             }
@@ -328,6 +329,7 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
         switch (v.getId()) {
             case R.id.live_error_btn:
                 reFH();
+                ((SnookerEventPageActivity)mContext).initData();
                 break;
             default:
                 break;
