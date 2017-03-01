@@ -5,9 +5,9 @@
     android:useLevel="false" >
     <solid android:color="@color/white" />
     <padding
-        android:left="4dp"
+        android:left="3dp"
         android:top="1dp"
-        android:right="4dp"
+        android:right="3dp"
         android:bottom="1dp" />
     <solid
         android:color="#ffeea2" />

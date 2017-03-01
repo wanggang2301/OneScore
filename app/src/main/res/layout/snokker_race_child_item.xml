@@ -21,6 +21,7 @@
                 android:columnWidth="0dp"
                 android:scrollbars="none"
                 android:stretchMode="columnWidth"
+                android:listSelector="@android:color/transparent"
                 />
 
     </LinearLayout>

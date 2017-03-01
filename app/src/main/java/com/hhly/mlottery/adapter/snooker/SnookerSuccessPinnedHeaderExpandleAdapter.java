@@ -3,6 +3,7 @@ package com.hhly.mlottery.adapter.snooker;
 import android.content.Context;
 import android.util.Log;
 import android.util.SparseIntArray;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.snookerbean.SnookerRaceListitemBean;
+import com.hhly.mlottery.bean.snookerbean.SnookerSuccessBean;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
@@ -21,9 +23,13 @@ import com.hhly.mlottery.view.SnookerPinnedHeaderExpandableListView;
 
 import java.util.List;
 
-public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter implements SnookerPinnedHeaderExpandableListView.HeaderAdapter {
-    private List<SnookerRaceListitemBean.DataBean.MatchListBean> mGroupDataList;//父类view 数据
-    List<List<String>> mChildrenDataList;//子view数据
+/**
+ * Created by yuely198 on 2017/2/28.
+ */
+
+public class SnookerSuccessPinnedHeaderExpandleAdapter extends BaseExpandableListAdapter implements SnookerPinnedHeaderExpandableListView.HeaderAdapter {
+    private List<SnookerSuccessBean.DataBean> mGroupDataList;//父类view 数据
+    List<List<?>> mChildrenDataList;//子view数据
     private Context mContext;
     private SnookerPinnedHeaderExpandableListView listView;
     private LayoutInflater inflater;
@@ -31,12 +37,13 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
     //比赛的状态
     private String state;
     private int mMatchKind;
-    private ChoseHeadInformationItemAdapter choseHeadInformationAdapter;
     private ImageView iconfont;
     private TextView live_item_day_tx;
 
+    private SnookerSuccessPinnedHeaderExpandleAdapter.ChoseHeadInformationItemAdapter choseHeadInformationAdapter;
 
-    public PinnedHeaderExpandableAdapter(List<SnookerRaceListitemBean.DataBean.MatchListBean> matchList, List<List<String>> childDataList, Context mContext, SnookerPinnedHeaderExpandableListView explistview_live) {
+
+    public SnookerSuccessPinnedHeaderExpandleAdapter(List<SnookerSuccessBean.DataBean> matchList, List<List<?>> childDataList, Context mContext, SnookerPinnedHeaderExpandableListView explistview_live) {
         this.mChildrenDataList = childDataList;
         this.mContext = mContext;
         this.mGroupDataList = matchList;
@@ -79,7 +86,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         L.i("groupPosition", "groupPosition===" + groupPosition + "");
         L.i("groupPosition", "childPosition===" + childPosition + "");
 
-        Holder holder = null;
+          Holder holder = null;
         if (null == convertView) {
             convertView = createChildrenView();
             holder = new Holder();
@@ -93,7 +100,8 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             holder = (Holder) convertView.getTag();
         }
 
-        choseHeadInformationAdapter = new ChoseHeadInformationItemAdapter(mContext, mChildrenDataList.get(groupPosition), R.layout.snooker_race_child_item_tv);
+        Log.i("dasd", "datas.size()=====" + mChildrenDataList.get(groupPosition));
+        choseHeadInformationAdapter = new ChoseHeadInformationItemAdapter(mContext, (List<String>) mChildrenDataList.get(groupPosition), R.layout.snooker_race_child_item_tv);
 
         holder.gridview.setAdapter(choseHeadInformationAdapter);
 
@@ -159,9 +167,15 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         TextView snooker_right_name = (TextView) parentLayout.findViewById(R.id.snooker_right_name);
         //比赛详情
         TextView snooker_race_total_score = (TextView) parentLayout.findViewById(R.id.snooker_race_total_score);
+        //状态
+        TextView tv_agendafg_lv_score= (TextView) parentLayout.findViewById(R.id.tv_agendafg_lv_score);
         //下拉
         iconfont = (ImageView) parentLayout.findViewById(R.id.iconfont);
-        live_item_day_tx.setText(mGroupDataList.get(groupPosition).getMatchDate());
+        live_item_day_tx.setText(mGroupDataList.get(groupPosition).getSeason());
+        tv_agendafg_lv_score.setText(mGroupDataList.get(groupPosition).getMatchDate());
+        tv_agendafg_lv_score.setTextColor(mContext.getResources().getColor(R.color.res_name_color));
+        tv_agendafg_lv_score.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
+
         snooker_left_name.setText(mGroupDataList.get(groupPosition).getPlayerNameAcn());
         snooker_right_name.setText(mGroupDataList.get(groupPosition).getPlayerNameBcn());
         snooker_race_total_score.setText(mGroupDataList.get(groupPosition).getScore());
