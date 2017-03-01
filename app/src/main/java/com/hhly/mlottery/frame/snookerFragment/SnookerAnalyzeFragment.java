@@ -405,8 +405,10 @@ public class SnookerAnalyzeFragment extends Fragment implements View.OnClickList
 
         //得失球
         mGoalList = analyzeBean.getProfessionData();
-        mGoalAdapter = new AnalyzeRankAdapter(getActivity(), mGoalList);
-        mGoalAndLossListView.setAdapter(mGoalAdapter);
+        if(getActivity()!=null){
+            mGoalAdapter = new AnalyzeRankAdapter(getActivity(), mGoalList);
+            mGoalAndLossListView.setAdapter(mGoalAdapter);
+        }
         mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
 
     }
