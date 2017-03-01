@@ -91,13 +91,13 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
         TextView tv_home_name2 = baseViewHolder.getView(R.id.tv_home_name2);
         TextView tv_guest_name = baseViewHolder.getView(R.id.tv_guest_name);
         TextView tv_guest_name2 = baseViewHolder.getView(R.id.tv_guest_name2);
-        if(matchDataBean.getMatchStatus() == -1){
+        if (matchDataBean.getMatchStatus() == -1) {
             if (homeTotal > awayTotal) {
                 // 主队胜
                 tv_home_name.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.tennis_victory_icon, 0);
                 tv_home_name2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.tennis_victory_icon, 0);
-                tv_home_name.setCompoundDrawablePadding(DisplayUtil.px2dip(mContext,3));
-                tv_home_name2.setCompoundDrawablePadding(DisplayUtil.px2dip(mContext,3));
+                tv_home_name.setCompoundDrawablePadding(DisplayUtil.px2dip(mContext, 3));
+                tv_home_name2.setCompoundDrawablePadding(DisplayUtil.px2dip(mContext, 3));
                 tv_home_name.setTextColor(mContext.getResources().getColor(R.color.number_green));
                 tv_home_name2.setTextColor(mContext.getResources().getColor(R.color.number_green));
 
@@ -109,8 +109,8 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
                 // 客队胜
                 tv_guest_name.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.tennis_victory_icon, 0);
                 tv_guest_name2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.tennis_victory_icon, 0);
-                tv_guest_name.setCompoundDrawablePadding(DisplayUtil.px2dip(mContext,3));
-                tv_guest_name2.setCompoundDrawablePadding(DisplayUtil.px2dip(mContext,3));
+                tv_guest_name.setCompoundDrawablePadding(DisplayUtil.px2dip(mContext, 3));
+                tv_guest_name2.setCompoundDrawablePadding(DisplayUtil.px2dip(mContext, 3));
                 tv_guest_name.setTextColor(mContext.getResources().getColor(R.color.number_green));
                 tv_guest_name2.setTextColor(mContext.getResources().getColor(R.color.number_green));
 
@@ -118,7 +118,7 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
                 tv_home_name2.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 tv_home_name.setTextColor(mContext.getResources().getColor(R.color.mdy_333));
                 tv_home_name2.setTextColor(mContext.getResources().getColor(R.color.mdy_333));
-            }else{
+            } else {
                 tv_home_name.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 tv_home_name2.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 tv_guest_name.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
@@ -128,7 +128,7 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
                 tv_guest_name.setTextColor(mContext.getResources().getColor(R.color.mdy_333));
                 tv_guest_name2.setTextColor(mContext.getResources().getColor(R.color.mdy_333));
             }
-        }else{
+        } else {
             tv_home_name.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
             tv_home_name2.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
             tv_guest_name.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
@@ -140,15 +140,16 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
         }
 
         // 时间
-//        String time = "";
-//        if (matchDataBean.getTime() != null) {
-//            try {
-//                time = matchDataBean.getTime().substring(0, matchDataBean.getTime().lastIndexOf(":"));
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-        baseViewHolder.setText(R.id.tv_match_date, matchDataBean.getTime() == null ? " " : matchDataBean.getTime());
+        String data = "";
+        if (matchDataBean.getTime() != null) {
+            try {
+                data = matchDataBean.getDate().substring(matchDataBean.getDate().indexOf("-") + 1, matchDataBean.getDate().length());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        baseViewHolder.setText(R.id.tv_match_date, data);
+        baseViewHolder.setText(R.id.tv_match_time, matchDataBean.getTime() == null ? " " : matchDataBean.getTime());
         // 主客队name
         baseViewHolder.setText(R.id.tv_home_name, matchDataBean.getHomePlayerName());
         baseViewHolder.setText(R.id.tv_guest_name, matchDataBean.getAwayPlayerName());
