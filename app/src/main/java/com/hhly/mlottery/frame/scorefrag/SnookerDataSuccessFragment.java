@@ -203,9 +203,9 @@ public class SnookerDataSuccessFragment extends Fragment implements View.OnClick
 
             //日期
             snooker_day = (TextView) view.findViewById(R.id.snooker_day);
-            snooker_day.setText("赛季");
+            snooker_day.setText(R.string.basket_database_details_season);
             snooker_time = (TextView) view.findViewById(R.id.snooker_time);
-            snooker_time.setText("时间");
+            snooker_time.setText(R.string.snooker_game_time);
 
         }
 
