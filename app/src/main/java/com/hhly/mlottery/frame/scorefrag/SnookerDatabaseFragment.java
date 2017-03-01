@@ -101,6 +101,7 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
     private TextView live_pr_no_data_txt;
     private TextView lay_agendafg;
     private ScrollView snooker_scroll;
+    private List<SnookerRaceListitemBean.DataBean.MatchListBean> matchList;
 
     public static SnookerDatabaseFragment newInstance(int type, String leagueId) {
         Bundle bundle = new Bundle();
@@ -153,7 +154,6 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
     }
 
     private void upLeagueRace(String secondTitle, String season) {
-
         final Map<String, String> map = new HashMap();
         map.put("leagueId", mLeagueId);
         map.put("season", season);//默认不填是当前数据
@@ -168,6 +168,8 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
                     return;
                 }
                 if (json.getResult() == 200) {
+                    //获取头部数据
+                    matchList = json.getData().getMatchList();
                     //获取整体的头部数据
                     stageMap = json.getData().getStageMap();
                     //获取头部数据
@@ -219,7 +221,7 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
                         //添加子view数据
                         childDataList.add(json.getData().getMatchList().get(i).getDetailedScoreList());
                     }
-                    pheadapter = new PinnedHeaderExpandableAdapter(json.getData().getMatchList(), childDataList, mContext, explistview_live);
+                    pheadapter = new PinnedHeaderExpandableAdapter(matchList, childDataList, mContext, explistview_live);
                     explistview_live.setAdapter(pheadapter);
                     pheadapter.notifyDataSetChanged();
                 }
@@ -248,7 +250,8 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
         segmented5.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
+                matchList.clear();
+                childDataList.clear();
                 upLeagueRace(stageInfo.get(group.indexOfChild(group.findViewById(checkedId))).getNum() + "", mSeason);
 
             }

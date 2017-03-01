@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -66,6 +68,8 @@ public class AvatarSelectionActivity extends Activity implements View.OnClickLis
     private List<List<ChoseStartBean.DataBean.MaleBean>> maleDatas = new ArrayList<>();
     private ChoseFailStartManAdapter choseFailStartManAdapter;
     private ChoseFailStartWomanAdapter choseFailStartWomanAdapter;
+    private LinearLayout text_times_title1;
+    private ImageView ib_operate_more;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,6 +216,12 @@ public class AvatarSelectionActivity extends Activity implements View.OnClickLis
         listMaleDatasSaveUtils = new ListDatasSaveUtils(AvatarSelectionActivity.this, "Datas");
         setContentView(R.layout.avatar_selection_heade);
 
+        text_times_title1 = (LinearLayout) findViewById(R.id.text_times_title1);
+        text_times_title1.setVisibility(View.VISIBLE);
+        text_times_title1.setOnClickListener(this);
+        ib_operate_more = (ImageView) findViewById(R.id.ib_operate_more);
+        ib_operate_more.setVisibility(View.GONE);
+
         famle_gridview = (GridView) findViewById(R.id.famle_gridview);
         male_gridview = (GridView) findViewById(R.id.male_gridview);
         findViewById(R.id.public_img_back).setOnClickListener(this);
@@ -220,7 +230,6 @@ public class AvatarSelectionActivity extends Activity implements View.OnClickLis
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         tv_right = (TextView) findViewById(R.id.tv_right);
-        tv_right.setOnClickListener(this);
         tv_right.setVisibility(View.VISIBLE);
         tv_right.setText(getResources().getString(R.string.complete));
         //足球宝贝的个数
@@ -236,7 +245,7 @@ public class AvatarSelectionActivity extends Activity implements View.OnClickLis
             case R.id.public_img_back:
                 finish();
                 break;
-            case R.id.tv_right:
+            case R.id.text_times_title1:
                 //请求后台进行账户绑定
                 if (CupChicked != null) {
                     putPhotoUrl(CupChicked);
