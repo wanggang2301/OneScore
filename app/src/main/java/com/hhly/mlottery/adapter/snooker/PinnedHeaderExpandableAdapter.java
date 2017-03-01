@@ -1,7 +1,6 @@
 package com.hhly.mlottery.adapter.snooker;
 
 import android.content.Context;
-import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +41,9 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         this.mGroupDataList = matchList;
         this.listView = explistview_live;
         inflater = LayoutInflater.from(this.mContext);
+
+        L.d("dfg", "mGroupDataList==" + mGroupDataList.size());
+        L.d("dfg", "mChildrenDataList==" + childDataList.size());
 
     }
 
