@@ -232,10 +232,10 @@ public class SnookerAnalyzeFragment extends Fragment implements View.OnClickList
         mTitleHomeRecently = (AnalyzeTitle) view.findViewById(R.id.analyze_title_home_recently);
         mTitleGuestRecently = (AnalyzeTitle) view.findViewById(R.id.analyze_title_guest_recently);
 
-        mTitleGoal.setTitle(getString(R.string.snooker_player_compare));
-        mTitleHistory.setTitle(getString(R.string.snooker_history_bettle));
-        mTitleHomeRecently.setTitle(getString(R.string.snooker_player1));
-        mTitleGuestRecently.setTitle(getString(R.string.snooker_player2));
+        mTitleGoal.setTitle(getResources().getString(R.string.snooker_player_compare));
+        mTitleHistory.setTitle(getResources().getString(R.string.snooker_history_bettle));
+        mTitleHomeRecently.setTitle(getResources().getString(R.string.snooker_player1));
+        mTitleGuestRecently.setTitle(getResources().getString(R.string.snooker_player2));
 
         //网络异常及正在加载的控件，
         mProgressBarLayout = (RelativeLayout) view.findViewById(R.id.snooker_analyze_progressbar);

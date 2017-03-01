@@ -68,13 +68,54 @@ public class AnalyzeRankAdapter extends BaseAdapter {
         }
 
 
-        int progress=50;
+
 
         SnookerAnalyzeBean.ProfessionDataEntity entity=mScoreRankList.get(position);
         if(entity.getDataType().equals(StaticValues.BIRTH)){
-            holder.title.setText("生日");
+            holder.title.setText(R.string.snooker_analyze_birth);
         }else if(entity.getDataType().equals(StaticValues.RANKING)){
-            holder.title.setText("世界排名");
+            holder.title.setText(R.string.snooker_analyze_rank);
+
+        }
+        else if(entity.getDataType().equals(StaticValues.PRO_SEASON)){
+            holder.title.setText(R.string.snooker_analyze_season);
+
+        }
+        else if(entity.getDataType().equals(StaticValues.TOTAL_BONUS)){
+            holder.title.setText(R.string.snooker_analyze_bonus);
+        }
+        else if(entity.getDataType().equals(StaticValues.FULLSCORE)){
+            holder.title.setText(R.string.snooker_analyze_full_score);
+        }
+        else if(entity.getDataType().equals(StaticValues.TOTAL_CHAMPION)){
+            holder.title.setText(R.string.snooker_analyze_total_champion);
+        }
+        else if(entity.getDataType().equals(StaticValues.HUNDRED_TIMES)){
+            holder.title.setText(R.string.snooker_analyze_hundred_times);
+        }
+        else if(entity.getDataType().equals(StaticValues.HUNDRED_PERCENT)){
+            holder.title.setText(R.string.snooker_analyze_hundred_percent);
+        }
+        else if(entity.getDataType().equals(StaticValues.TOTAL_TIMES)){
+            holder.title.setText(R.string.snooker_analyze_total_times);
+        }
+        else if(entity.getDataType().equals(StaticValues.WIN)){
+            holder.title.setText(R.string.snooker_analyze_win);
+        }
+        else if(entity.getDataType().equals(StaticValues.WIN_PERCENT)){
+            holder.title.setText(R.string.snooker_analyze_win_percent);
+        }
+        else if(entity.getDataType().equals(StaticValues.TOTAL_NUMBERS)){
+            holder.title.setText(R.string.snooker_analyze_total_numbers);
+        }
+        else if(entity.getDataType().equals(StaticValues.TOTAL_WINS)){
+            holder.title.setText(R.string.snooker_analyze_total_wins);
+        }
+        else if(entity.getDataType().equals(StaticValues.BOARD_WINS_PERSCENT)){
+            holder.title.setText(R.string.snooker_analyze_wins_percent);
+        }
+        if(!entity.getDataType().equals(StaticValues.BIRTH)){ //非生日的状态下 。生日格式不知道。先不处理。
+            int progress=50;
             if(entity.getHomeData()==null&&entity.getGuestData()==null){
                 progress=50;
             }else if(entity.getHomeData()==null){ //主队为null。客队不为null
@@ -82,44 +123,11 @@ public class AnalyzeRankAdapter extends BaseAdapter {
             }else if(entity.getGuestData()==null){
                 progress=100;
             }else {
+                int home=Integer.parseInt(entity.getHomeData());
+                int guest=Integer.parseInt(entity.getGuestData());
+                progress=home*100/(home+guest);
             }
-        }
-        else if(entity.getDataType().equals(StaticValues.PRO_SEASON)){
-            holder.title.setText("职业赛季");
-
-        }
-        else if(entity.getDataType().equals(StaticValues.TOTAL_BONUS)){
-            holder.title.setText("总奖金");
-        }
-        else if(entity.getDataType().equals(StaticValues.FULLSCORE)){
-            holder.title.setText("147满分杆");
-        }
-        else if(entity.getDataType().equals(StaticValues.TOTAL_CHAMPION)){
-            holder.title.setText("冠军数");
-        }
-        else if(entity.getDataType().equals(StaticValues.HUNDRED_TIMES)){
-            holder.title.setText("破百数");
-        }
-        else if(entity.getDataType().equals(StaticValues.HUNDRED_PERCENT)){
-            holder.title.setText("破败率");
-        }
-        else if(entity.getDataType().equals(StaticValues.TOTAL_TIMES)){
-            holder.title.setText("总场数");
-        }
-        else if(entity.getDataType().equals(StaticValues.WIN)){
-            holder.title.setText("场胜数");
-        }
-        else if(entity.getDataType().equals(StaticValues.WIN_PERCENT)){
-            holder.title.setText("场胜率");
-        }
-        else if(entity.getDataType().equals(StaticValues.TOTAL_NUMBERS)){
-            holder.title.setText("总局数");
-        }
-        else if(entity.getDataType().equals(StaticValues.TOTAL_WINS)){
-            holder.title.setText("局胜数");
-        }
-        else if(entity.getDataType().equals(StaticValues.BOARD_WINS_PERSCENT)){
-            holder.title.setText("局胜率");
+            holder.pro.setProgress(progress);
         }
 
 

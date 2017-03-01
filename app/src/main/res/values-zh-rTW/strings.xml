@@ -1567,6 +1567,20 @@
     <string name="snooker_player">選手</string>
     <string name="snooker_score">比分</string>
     <string name="snooker_detailed">詳細</string>
+    <string name="snooker_analyze_birth">生日</string>
+    <string name="snooker_analyze_rank">世界排名</string>
+    <string name="snooker_analyze_season">職業排名</string>
+    <string name="snooker_analyze_bonus">總獎金</string>
+    <string name="snooker_analyze_full_score">147滿分桿</string>
+    <string name="snooker_analyze_total_champion">冠軍數</string>
+    <string name="snooker_analyze_hundred_times">破百數</string>
+    <string name="snooker_analyze_hundred_percent">破敗率</string>
+    <string name="snooker_analyze_total_times">總場數</string>
+    <string name="snooker_analyze_win">場勝數</string>
+    <string name="snooker_analyze_win_percent">場勝率</string>
+    <string name="snooker_analyze_total_numbers">總局數</string>
+    <string name="snooker_analyze_total_wins">局勝數</string>
+    <string name="snooker_analyze_wins_percent">局勝率</string>
 
     <!--网球-->
     <string name="tennis_match_p2">P2退賽</string>
