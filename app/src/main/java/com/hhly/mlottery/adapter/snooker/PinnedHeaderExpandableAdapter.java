@@ -18,7 +18,9 @@ import com.hhly.mlottery.util.adapter.ViewHolder;
 import com.hhly.mlottery.view.GrapeGridview;
 import com.hhly.mlottery.view.SnookerPinnedHeaderExpandableListView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter implements SnookerPinnedHeaderExpandableListView.HeaderAdapter {
     private List<SnookerRaceListitemBean.DataBean.MatchListBean> mGroupDataList;//父类view 数据
@@ -41,9 +43,6 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         this.mGroupDataList = matchList;
         this.listView = explistview_live;
         inflater = LayoutInflater.from(this.mContext);
-
-        L.d("dfg", "mGroupDataList==" + mGroupDataList.size());
-        L.d("dfg", "mChildrenDataList==" + childDataList.size());
 
     }
 
@@ -229,22 +228,22 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         ((TextView) header.findViewById(R.id.video_day)).setText(day);*/
     }
 
-    private SparseIntArray groupStatusMap = new SparseIntArray();
+    private Map<String, Integer> statueMap = new HashMap<>();
 
     //    @Override
 //    暂时注释，需要点击头部的时候打开
     public void setGroupClickStatus(int groupPosition, int status) {
-
-        groupStatusMap.put(groupPosition, status);
+        statueMap.put(String.valueOf(groupPosition), status);
     }
 
     @Override
     public int getGroupClickStatus(int groupPosition) {
-        if (groupStatusMap.keyAt(groupPosition) >= 0) {
-            return groupStatusMap.get(groupPosition);
-        } else {
-            return 0;
-        }
+
+        Integer integer = statueMap.get(String.valueOf(groupPosition));
+
+        if (integer == null) return 0;
+
+        return integer >= 0 ? integer : 0;
     }
 
     public class ChoseHeadInformationItemAdapter extends CommonAdapter<String> {

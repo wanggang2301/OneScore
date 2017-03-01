@@ -97,7 +97,7 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
 
 
     /*获取内页头部数据*/
-    private void initData() {
+    public void initData() {
 
 
         final Map<String, String> map = new HashMap();
