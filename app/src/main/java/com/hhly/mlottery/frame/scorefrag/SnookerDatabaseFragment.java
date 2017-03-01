@@ -103,6 +103,7 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
     private TextView lay_agendafg;
     private ScrollView snooker_scroll;
     private List<SnookerRaceListitemBean.DataBean.MatchListBean> matchList;
+    private String segmentDatas="";
 
     public static SnookerDatabaseFragment newInstance(int type, String leagueId) {
         Bundle bundle = new Bundle();
@@ -254,6 +255,7 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 matchList.clear();
                 childDataList.clear();
+                segmentDatas=stageInfo.get(group.indexOfChild(group.findViewById(checkedId))).getNum()+"";
                 upLeagueRace(stageInfo.get(group.indexOfChild(group.findViewById(checkedId))).getNum() + "", mSeason);
 
             }
@@ -321,7 +323,7 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
             @Override
             public void run() {
                 if (mType == QUALIFICATIONS) {
-                    upLeagueRace(currentStage, mSeason);
+                    upLeagueRace(segmentDatas, mSeason);
                 } else if (mType == SUCCESSIVE) {
 
                 }

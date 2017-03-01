@@ -107,6 +107,7 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
     private SegmentedGroup segmented5;
     private HorizontalScrollView snooker_race_male_gridview;
     private List<SnookerRaceListitemBean.DataBean.MatchListBean> matchList;
+    private String segmentDatas="";
 
 
     public static SnookerDataQualificationHeatFragement newInstance(int type, String leagueId) {
@@ -152,7 +153,7 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
     }
 
     private void upLeagueRace(String secondTitle, String season) {
-        Log.i("aasdas>>>"," mSeason=="+mLeagueId);
+        Log.i("aasdas>>>", " mSeason==" + mLeagueId);
         final Map<String, String> map = new HashMap();
         map.put("leagueId", mLeagueId);
         map.put("season", season);//默认不填是当前数据
@@ -226,9 +227,9 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
                         childDataList.add(json.getData().getMatchList().get(i).getDetailedScoreList());
 
                     }
-                        pheadapter = new PinnedHeaderExpandableAdapter(matchList, childDataList, mContext, explistview_live);
-                        explistview_live.setAdapter(pheadapter);
-                        pheadapter.notifyDataSetChanged();
+                    pheadapter = new PinnedHeaderExpandableAdapter(matchList, childDataList, mContext, explistview_live);
+                    explistview_live.setAdapter(pheadapter);
+                    pheadapter.notifyDataSetChanged();
                 }
 
             }
@@ -264,6 +265,8 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
 
                 matchList.clear();
                 childDataList.clear();
+                segmentDatas = stageInfo.get(group.indexOfChild(group.findViewById(checkedId))).getNum()+"";
+
                 upLeagueRace(stageInfo.get(group.indexOfChild(group.findViewById(checkedId))).getNum() + "", mSeason);
 
             }
@@ -275,7 +278,7 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
 
         //列表头部条目
         snooker_race_time_head = (LinearLayout) view.findViewById(R.id.snooker_race_time_head);
-       // snooker_race_time_head.set
+        // snooker_race_time_head.set
         //级联列表listview
         explistview_live = (SnookerPinnedHeaderExpandableListView) view.findViewById(R.id.explistview_live);
         //设置悬浮头部VIEW
@@ -317,7 +320,8 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                upLeagueRace(currentStage, mSeason);
+                upLeagueRace(segmentDatas, mSeason);
+                Log.i("adasd","刷新=="+segmentDatas);
                 //Log.i("aasdas>>>","re getNume=="+currentStage);
                 //Log.i("aasdas>>>","re mSeason mSeason=="+mSeason);
             }
@@ -329,7 +333,7 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
         switch (v.getId()) {
             case R.id.live_error_btn:
                 reFH();
-                ((SnookerEventPageActivity)mContext).initData();
+                ((SnookerEventPageActivity) mContext).initData();
                 break;
             default:
                 break;
