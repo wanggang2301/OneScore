@@ -113,8 +113,8 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-//        setWebSocketUri(BaseURLs.WS_SERVICE);
-        setWebSocketUri("ws://192.168.10.242:61634");
+        setWebSocketUri(BaseURLs.WS_SERVICE);
+//        setWebSocketUri("ws://192.168.10.242:61634");
         setTopic("USER.topic.snooker");
 
         super.onCreate(savedInstanceState);
