@@ -112,14 +112,16 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_snooker_match_detail);
-        ButterKnife.bind(this);
 
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.snooker");
 
         connectWebSocket(); //链接推送
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_snooker_match_detail);
+        ButterKnife.bind(this);
+
+
         if(getIntent()!=null){
             mMatchId=getIntent().getExtras().getString("matchId");
         }
@@ -349,5 +351,11 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
                 break;
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        closeWebSocket();
     }
 }
