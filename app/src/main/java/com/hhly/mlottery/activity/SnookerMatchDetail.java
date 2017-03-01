@@ -113,10 +113,10 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        setWebSocketUri(BaseURLs.WS_SERVICE);
+//        setWebSocketUri(BaseURLs.WS_SERVICE);
+        setWebSocketUri("ws://192.168.10.242:61634");
         setTopic("USER.topic.snooker");
 
-        connectWebSocket(); //链接推送
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snooker_match_detail);
         ButterKnife.bind(this);
@@ -186,7 +186,7 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
                     mAnalyzeBean=analyzeBean;
 
                 }
-
+                connectWebSocket(); //链接推送
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
@@ -269,6 +269,7 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
     }
     @Override
     protected void onTextResult(String text) {
+        L.d("yxq++++" , text);
         String type="";
         L.e("MatchDetail","tuisong ?");
         try {
