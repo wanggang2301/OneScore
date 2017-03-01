@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -99,6 +100,7 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
     private String mSeason = "";
     private TextView live_pr_no_data_txt;
     private TextView lay_agendafg;
+    private ScrollView snooker_scroll;
 
     public static SnookerDatabaseFragment newInstance(int type, String leagueId) {
         Bundle bundle = new Bundle();
@@ -134,10 +136,9 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
     //赛事简介数据传输
     public void onEventMainThread(SnookerNoDataBean snookerNoDataBean) {
 
-        snooker_profile.setText("\t\t\t\t" + snookerNoDataBean.getNoData());
         if (snookerNoDataBean.getNoData().equals("nodata")) {
             live_pr_no_data_txt.setVisibility(View.VISIBLE);
-            snooker_profile.setVisibility(View.GONE);
+            snooker_scroll.setVisibility(View.GONE);
         } else {
             live_pr_no_data_txt.setVisibility(View.GONE);
             snooker_profile.setText("\t\t\t\t" + snookerNoDataBean.getNoData());
@@ -253,6 +254,7 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
             }
         });
         snooker_profile = (TextView) view.findViewById(R.id.snooker_profile);
+        snooker_scroll = (ScrollView) view.findViewById(R.id.snooker_scroll);
 
         //级联列表listview
         explistview_live = (SnookerPinnedHeaderExpandableListView) view.findViewById(R.id.explistview_live);
@@ -276,7 +278,7 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
 
         } else if(mType==PROFILE) {
             view.findViewById(R.id.snooker_race_fragemnt).setVisibility(View.GONE);
-            snooker_profile.setVisibility(View.VISIBLE);
+            snooker_scroll.setVisibility(View.VISIBLE);
         }
         live_error_ll = (LinearLayout) view.findViewById(R.id.live_error_ll);
         live_error_btn = (TextView) view.findViewById(R.id.live_error_btn);
@@ -292,6 +294,7 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
 
         //赛事头部线条
         lay_agendafg = (TextView) view.findViewById(R.id.lay_agendafg);
+
 
     }
 

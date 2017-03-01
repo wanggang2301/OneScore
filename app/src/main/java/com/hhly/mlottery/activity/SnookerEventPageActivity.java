@@ -127,7 +127,7 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
                     //获取赛事简介
                     if (profile!= null) {
                         EventBus.getDefault().post(new SnookerNoDataBean(profile));
-                    } else {
+                    }else if(profile==null||profile.equals("")){
                         EventBus.getDefault().post(new SnookerNoDataBean("nodata"));
                     }
                     tv_right.setVisibility(View.VISIBLE);
@@ -289,9 +289,9 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
         viewPager = (ViewPager) findViewById(R.id.vp_Fragment_pager);
 
         tv_right = (TextView) findViewById(R.id.tv_right);
-        tv_right.setOnClickListener(this);
 
         text_times_title1 = (LinearLayout) findViewById(R.id.text_times_title1);
+        text_times_title1.setOnClickListener(this);
         ib_operate_more = (ImageView) findViewById(R.id.ib_operate_more);
 
  /*
@@ -319,9 +319,10 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
             case R.id.public_img_back:
                 finish();
                 break;
-            case R.id.tv_right:
+            case R.id.text_times_title1:
                 showPopuWindows(v);
                 break;
+
             default:
                 break;
 

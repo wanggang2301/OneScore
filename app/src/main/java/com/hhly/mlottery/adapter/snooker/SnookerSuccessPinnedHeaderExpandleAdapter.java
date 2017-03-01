@@ -3,6 +3,7 @@ package com.hhly.mlottery.adapter.snooker;
 import android.content.Context;
 import android.util.Log;
 import android.util.SparseIntArray;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -166,9 +167,15 @@ public class SnookerSuccessPinnedHeaderExpandleAdapter extends BaseExpandableLis
         TextView snooker_right_name = (TextView) parentLayout.findViewById(R.id.snooker_right_name);
         //比赛详情
         TextView snooker_race_total_score = (TextView) parentLayout.findViewById(R.id.snooker_race_total_score);
+        //状态
+        TextView tv_agendafg_lv_score= (TextView) parentLayout.findViewById(R.id.tv_agendafg_lv_score);
         //下拉
         iconfont = (ImageView) parentLayout.findViewById(R.id.iconfont);
-        live_item_day_tx.setText(mGroupDataList.get(groupPosition).getMatchDate());
+        live_item_day_tx.setText(mGroupDataList.get(groupPosition).getSeason());
+        tv_agendafg_lv_score.setText(mGroupDataList.get(groupPosition).getMatchDate());
+        tv_agendafg_lv_score.setTextColor(mContext.getResources().getColor(R.color.res_name_color));
+        tv_agendafg_lv_score.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
+
         snooker_left_name.setText(mGroupDataList.get(groupPosition).getPlayerNameAcn());
         snooker_right_name.setText(mGroupDataList.get(groupPosition).getPlayerNameBcn());
         snooker_race_total_score.setText(mGroupDataList.get(groupPosition).getScore());

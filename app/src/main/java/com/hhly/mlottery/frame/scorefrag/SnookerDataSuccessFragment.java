@@ -73,8 +73,10 @@ public class SnookerDataSuccessFragment extends Fragment implements View.OnClick
         private String currentStage = "";
         private TextView live_pr_no_data_txt;
         private TextView lay_agendafg;
+    private TextView snooker_day;
+    private TextView snooker_time;
 
-        public static SnookerDataSuccessFragment newInstance(int type, String leagueId) {
+    public static SnookerDataSuccessFragment newInstance(int type, String leagueId) {
             Bundle bundle = new Bundle();
             bundle.putInt(TYPE_PARM, type);
             bundle.putString(PARAM_ID, leagueId);
@@ -102,8 +104,6 @@ public class SnookerDataSuccessFragment extends Fragment implements View.OnClick
             mContext = mActivity;
             return view;
         }
-
-
         private void upLeagueRace() {
 
             final Map<String, String> map = new HashMap();
@@ -200,6 +200,12 @@ public class SnookerDataSuccessFragment extends Fragment implements View.OnClick
             live_pr_no_data_txt = (TextView) view.findViewById(R.id.live_pr_no_data_txt);
             //赛事头部线条
             lay_agendafg = (TextView) view.findViewById(R.id.lay_agendafg);
+
+            //日期
+            snooker_day = (TextView) view.findViewById(R.id.snooker_day);
+            snooker_day.setText("赛季");
+            snooker_time = (TextView) view.findViewById(R.id.snooker_time);
+            snooker_time.setText("时间");
 
         }
 
