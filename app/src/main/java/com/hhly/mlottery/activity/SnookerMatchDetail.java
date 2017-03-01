@@ -119,12 +119,15 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.snooker");
 
+        connectWebSocket(); //链接推送
         if(getIntent()!=null){
             mMatchId=getIntent().getExtras().getString("matchId");
         }
+
         initView();
         setListener();
         initData();
+
 
     }
 
@@ -154,6 +157,13 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
         mGuestIcon.setOnClickListener(this);
         mScoreLayout.setOnClickListener(this);
         mTotalLayout.setOnClickListener(this);
+        //首次進來可以刷新
+        mRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mRefreshLayout.setRefreshing(true);
+            }
+        });
     }
 
     private void initData() {
@@ -165,6 +175,10 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
         VolleyContentFast.requestJsonByGet(BaseURLs.SNOOKER_ANALYZE_URL,params, new VolleyContentFast.ResponseSuccessListener<SnookerAnalyzeBean>() {
             @Override
             public void onResponse(SnookerAnalyzeBean analyzeBean) {
+
+                if(mRefreshLayout.isRefreshing()){
+                    mRefreshLayout.setRefreshing(false);
+                }
                 if(analyzeBean.getResult().equals("200")){
                     loadData(analyzeBean);
                     mAnalyzeBean=analyzeBean;
@@ -220,7 +234,7 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
             L.e(TAG, "msg.arg1 = " + msg.arg1);
             if (msg.arg1 == 300) {  // 比分推送
                 String ws_json = (String) msg.obj;
-                L.e(TAG, "ws_json_snooker_score = " + ws_json);
+                L.e(TAG, "ws_json_snooker_scoredetail = " + ws_json);
                 SnookerScoreSocketBean mSnookerScore = null;
                 try {
                     mSnookerScore = JSON.parseObject(ws_json, SnookerScoreSocketBean.class);
@@ -254,6 +268,7 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
     @Override
     protected void onTextResult(String text) {
         String type="";
+        L.e("MatchDetail","tuisong ?");
         try {
             JSONObject jsonObject=new JSONObject(text);
             type=jsonObject.getString("type");
@@ -292,7 +307,9 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRe
             public void run() {
                 mRefreshLayout.setRefreshing(false);
                 //请求网络进行刷新
+                connectWebSocket();
                 initData();
+
                 mAnalyzeFragment.initData();
                 mLetFragment.initData();
                 mSizeFragment.initData();
