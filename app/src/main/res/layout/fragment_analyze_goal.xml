@@ -15,4 +15,8 @@
         >
 
     </com.hhly.mlottery.widget.NestedListView>
+    <include layout="@layout/analyze_nodata"
+        android:id="@+id/rank_nodata"
+        android:visibility="gone"
+        />
 </LinearLayout>

@@ -37,7 +37,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SnookerMatchDetail extends BaseWebSocketActivity implements SwipeRefreshLayout.OnRefreshListener,View.OnClickListener{
+public class SnookerMatchDetail extends BaseWebSocketActivity implements ExactSwipeRefreshLayout.OnRefreshListener,View.OnClickListener{
 
 //    @BindView(R.id.snooker_details_toolbar)
 //    Toolbar mToolbar;
