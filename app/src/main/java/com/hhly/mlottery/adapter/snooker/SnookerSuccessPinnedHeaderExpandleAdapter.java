@@ -1,8 +1,6 @@
 package com.hhly.mlottery.adapter.snooker;
 
 import android.content.Context;
-import android.util.Log;
-import android.util.SparseIntArray;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +19,9 @@ import com.hhly.mlottery.util.adapter.ViewHolder;
 import com.hhly.mlottery.view.GrapeGridview;
 import com.hhly.mlottery.view.SnookerPinnedHeaderExpandableListView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by yuely198 on 2017/2/28.
@@ -100,7 +100,6 @@ public class SnookerSuccessPinnedHeaderExpandleAdapter extends BaseExpandableLis
             holder = (Holder) convertView.getTag();
         }
 
-        Log.i("dasd", "datas.size()=====" + mChildrenDataList.get(groupPosition));
         choseHeadInformationAdapter = new ChoseHeadInformationItemAdapter(mContext, (List<String>) mChildrenDataList.get(groupPosition), R.layout.snooker_race_child_item_tv);
 
         holder.gridview.setAdapter(choseHeadInformationAdapter);
@@ -241,22 +240,22 @@ public class SnookerSuccessPinnedHeaderExpandleAdapter extends BaseExpandableLis
         ((TextView) header.findViewById(R.id.video_day)).setText(day);*/
     }
 
-    private SparseIntArray groupStatusMap = new SparseIntArray();
+    private Map<String, Integer> statueMap = new HashMap<>();
 
     //    @Override
 //    暂时注释，需要点击头部的时候打开
     public void setGroupClickStatus(int groupPosition, int status) {
-
-        groupStatusMap.put(groupPosition, status);
+        statueMap.put(String.valueOf(groupPosition), status);
     }
 
     @Override
     public int getGroupClickStatus(int groupPosition) {
-        if (groupStatusMap.keyAt(groupPosition) >= 0) {
-            return groupStatusMap.get(groupPosition);
-        } else {
-            return 0;
-        }
+
+        Integer integer = statueMap.get(String.valueOf(groupPosition));
+
+        if (integer == null) return 0;
+
+        return integer >= 0 ? integer : 0;
     }
 
     public class ChoseHeadInformationItemAdapter extends CommonAdapter<String> {
