@@ -249,6 +249,8 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
+
+                childDataList.clear();
                 upLeagueRace(stageInfo.get(group.indexOfChild(group.findViewById(checkedId))).getNum() + "", mSeason);
 
             }
