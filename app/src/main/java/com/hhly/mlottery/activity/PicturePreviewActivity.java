@@ -129,12 +129,6 @@ public class PicturePreviewActivity extends BaseActivity {
         // TODO Auto-generated method stub
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        // recycle();
-    }
-
     public void recycle() {
         if (zoomView != null && zoomView.getDrawable() != null) {
             BitmapDrawable bitmapDrawable = (BitmapDrawable) zoomView.getDrawable();

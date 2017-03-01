@@ -774,13 +774,6 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-//        MobclickAgent.onResume(this);
-//        MobclickAgent.onPageStart("BasketAnalyzeMoreRecordActivity");
-    }
-
-    @Override
     public void onRefresh() {
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -789,12 +782,5 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                 initData();
             }
         },500);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-//        MobclickAgent.onPause(this);
-//        MobclickAgent.onPageEnd("BasketAnalyzeMoreRecordActivity");
     }
 }

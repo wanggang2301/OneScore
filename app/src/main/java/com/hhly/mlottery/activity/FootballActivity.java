@@ -195,20 +195,8 @@ public class FootballActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-
     public void eventBusPost() {
         EventBus.getDefault().post(new ScoresMatchFocusEventBusEntity(0));
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
 }

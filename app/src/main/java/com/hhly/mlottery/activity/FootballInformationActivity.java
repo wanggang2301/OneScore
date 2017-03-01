@@ -116,24 +116,6 @@ public class FootballInformationActivity extends BaseActivity implements View.On
         //TabLayout加载viewpager
         mFragment_Tablayout.setupWithViewPager(mFragment_pager);
 
-        mFragment_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                /**判断两个Fragment切换显示或隐藏的状态 */
-                isHindShow(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
     }
 
     private Handler mViewHandler = new Handler() {
@@ -388,81 +370,15 @@ public class FootballInformationActivity extends BaseActivity implements View.On
         }
     }
 
-    /**
-     * 判断三个Fragment切换显示或隐藏的状态
-     *
-     */
-    private boolean isIntegralFragment = true;
-    private boolean isIntegral = false;
-    private boolean isAgendalFragment = false;
-    private boolean isAgendal = false;
-    /**
-     * 判断三个Fragment切换显示或隐藏的状态
-     *
-     * @param position
-     */
-    private void isHindShow(int position) {
-        switch (position) {
-            case 0:
-                isIntegralFragment = true;
-                isAgendalFragment = false;
-                break;
-            case 1:
-                isAgendalFragment = true;
-                isIntegralFragment = false;
-                break;
-        }
-        if (isIntegralFragment) {
-            if (isAgendal) {
-                MobclickAgent.onPageEnd("FootballInformationActivity_AgendalFragment");
-                isAgendal = false;
-                L.d("xxx", "AgendalFragment>>>隐藏");
-            }
-            MobclickAgent.onPageStart("FootballInformationActivity_IntegralFragment");
-            isIntegral = true;
-            L.d("xxx", "IntegralFragment>>>显示");
-        }
-        if (isAgendalFragment) {
-            if (isIntegral) {
-                MobclickAgent.onPageEnd("FootballInformationActivity_IntegralFragment");
-                isIntegral = false;
-                L.d("xxx", "IntegralFragment>>>隐藏");
-            }
-            MobclickAgent.onPageStart("FootballInformationActivity_AgendalFragment");
-            isAgendal = true;
-            L.d("xxx", "AgendalFragment>>>显示");
-        }
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
-        if (isIntegralFragment) {
-            MobclickAgent.onPageStart("FootballInformationActivity_IntegralFragment");
-            isIntegral = true;
-            L.d("xxx", "IntegralFragment>>>显示");
-        }
-        if (isAgendalFragment) {
-            MobclickAgent.onPageStart("FootballInformationActivity_AgendalFragment");
-            isAgendal = true;
-            L.d("xxx", "AgendalFragment>>>显示");
-        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
-        if (isIntegral) {
-            MobclickAgent.onPageEnd("FootballInformationActivity_IntegralFragment");
-            isIntegral = false;
-            L.d("xxx", "IntegralFragment>>>隐藏");
-        }
-        if (isAgendal) {
-            MobclickAgent.onPageEnd("FootballInformationActivity_AgendalFragment");
-            isAgendal = false;
-            L.d("xxx", "AgendalFragment>>>隐藏");
-        }
     }
 }

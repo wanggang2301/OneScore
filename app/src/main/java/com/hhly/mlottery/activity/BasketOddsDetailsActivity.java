@@ -334,18 +334,4 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
             }
         }
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        MobclickAgent.onResume(this);
-//        MobclickAgent.onPageStart("BasketOddsDetailsActivity");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-//        MobclickAgent.onPause(this);
-//        MobclickAgent.onPageEnd("BasketOddsDetailsActivity");
-    }
 }

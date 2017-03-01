@@ -28,6 +28,7 @@ import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.ViewPagerFixed;
 import com.hhly.mlottery.widget.ZoomViewPager;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -396,8 +397,8 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
 
     @Override
     protected void onPause() {
-        // TODO Auto-generated method stub
         super.onPause();
+        MobclickAgent.onPause(this);
         if (mVideoViewList.size() > 0) {
             if ((mVideoViewList.get(currentItem)) != null) {
                 if (mVideoViewList.get(currentItem) instanceof VideoView) {
@@ -415,7 +416,6 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
 
     @Override
     protected void onDestroy() {
-        // TODO Auto-generated method stub
         super.onDestroy();
         if (mVideoViewList.size() > 0) {
             if (mVideoViewList.get(currentItem) != null) {
@@ -430,8 +430,8 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
 
     @Override
     protected void onResume() {
-        // TODO Auto-generated method stub
         super.onResume();
+        MobclickAgent.onResume(this);
         L.d("wangg", "onResume");
         if (mVideoViewList.size() > 0) {
             if (mVideoViewList.get(currentItem) != null) {

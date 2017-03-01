@@ -345,13 +345,13 @@ public class SnookerImmediateFragment extends Fragment implements SwipeRefreshLa
     private void updataScore(SnookerScoreSocketBean mScoreData){
 //        L.d("yxq=====>比分更新" , "updataScore调用");
 
-        L.d("yxq=====>thirdId = " , mScoreData.getThirdId());
+//        L.d("yxq=====>thirdId = " , mScoreData.getThirdId());
 
         SnookerScoreSocketBean.SnookerScoreDataBean scoreData = mScoreData.getData();
 
         synchronized (allData){
             for (SnookerEventsBean match : allData) {
-                L.d("yxq=====>MatchId = " , match.getMatchId());
+//                L.d("yxq=====>MatchId = " , match.getMatchId());
                 if (match.getMatchId().equals(mScoreData.getThirdId())) {
                     if (match.getMatchScore() != null) {
                         SnookerMatchScoreBean matchData = match.getMatchScore();

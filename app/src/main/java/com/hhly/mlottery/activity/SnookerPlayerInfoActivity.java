@@ -15,8 +15,10 @@ import android.widget.TextView;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.ProgressWebView;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 洛克球员信息
@@ -137,5 +139,17 @@ public class SnookerPlayerInfoActivity extends Activity {
             lang = BaseURLs.LANGUAGE_SWITCHING_VI;
         }
         return lang.trim();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

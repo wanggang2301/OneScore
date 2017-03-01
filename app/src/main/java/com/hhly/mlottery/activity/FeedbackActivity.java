@@ -328,11 +328,4 @@ public class FeedbackActivity extends BaseActivity implements View.OnClickListen
             }
         }
     }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-//        MobclickAgent.onPause(this);
-//        MobclickAgent.onPageEnd("FeedbackActivity");
-    }
 }

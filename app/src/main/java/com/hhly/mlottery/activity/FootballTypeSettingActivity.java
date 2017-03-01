@@ -377,18 +377,4 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
         }
 
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        MobclickAgent.onResume(this);
-//        MobclickAgent.onPageStart("FootballTypeSettingActivity");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-//        MobclickAgent.onPause(this);
-//        MobclickAgent.onPageEnd("FootballTypeSettingActivity");
-    }
 }
