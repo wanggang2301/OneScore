@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,6 +96,8 @@ public class SnookerAnalyzeFragment extends Fragment implements View.OnClickList
      * 职业对比
      */
     private ListView mGoalAndLossListView;
+
+    private LinearLayout mRankNodata;
     /**
      * 历史对战的listview
      */
@@ -250,6 +253,7 @@ public class SnookerAnalyzeFragment extends Fragment implements View.OnClickList
      */
     private void initView() {
 //        mRankListView = (ListView) view.findViewById(R.id.analyze_rank_listview);
+        mRankNodata= (LinearLayout) view.findViewById(R.id.rank_nodata);
         mGoalAndLossListView = (ListView) view.findViewById(R.id.analyze_goal_listview);
         mHistoryListView = (ListView) view.findViewById(R.id.analyze_history_listview);
         mHomeRecentListView = (ListView) view.findViewById(R.id.analyze_homerecently_listview);
@@ -404,11 +408,19 @@ public class SnookerAnalyzeFragment extends Fragment implements View.OnClickList
 ////        mRankListView.setAdapter(mRankAdapter);
 
         //得失球
-        mGoalList = analyzeBean.getProfessionData();
-        if(getActivity()!=null){
-            mGoalAdapter = new AnalyzeRankAdapter(getActivity(), mGoalList);
-            mGoalAndLossListView.setAdapter(mGoalAdapter);
+        if(analyzeBean.getProfessionData()==null||analyzeBean.getProfessionData().size()==0){
+            mRankNodata.setVisibility(View.VISIBLE);
+            mGuestRecentListView.setVisibility(View.GONE);
+        }else {
+            mGoalList = analyzeBean.getProfessionData();
+            mRankNodata.setVisibility(View.GONE);
+            mGuestRecentListView.setVisibility(View.VISIBLE);
+            if(getActivity()!=null){
+                mGoalAdapter = new AnalyzeRankAdapter(getActivity(), mGoalList);
+                mGoalAndLossListView.setAdapter(mGoalAdapter);
+            }
         }
+
         mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
 
     }

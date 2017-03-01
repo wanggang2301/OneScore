@@ -4,6 +4,8 @@
     android:id="@+id/snooker_details_refresh_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activity.SnookerMatchDetail"
    >
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,11 +13,251 @@
         android:orientation="vertical"
         >
 
-        <include
-            layout="@layout/layout_snooker_header"
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/snooker_header_bg"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="@dimen/status_bar_offset"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <!--<include-->
+            <!--layout="@layout/layout_snooker_header"-->
+            <!--&gt;-->
+        <!--</include>-->
+        <!--状态栏-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             >
-        </include>
+            <ImageView
+                android:id="@+id/snooker_detail_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/back"
+                android:padding="5dp"
+                />
+        </LinearLayout>
+        <!--2016世界斯诺克英格兰公开赛-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/snooker_header_black"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="21dp"
+                android:background="@drawable/snooker_marquee_bg"
+
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:id="@+id/snooker_header_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:text=""
+                    />
+                <TextView
+                    android:id="@+id/snooker_header_round"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="10dp"
+                    android:text=""
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="21dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="8dp"
+                >
+                <TextView
+                    android:id="@+id/snooker_header_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/white"
+                    />
+                <TextView
+                    android:id="@+id/snooker_header_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="13dp"
+                    />
+
+            </LinearLayout>
+            <!--比分头像布局-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                >
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+
+                    >
+                    <ImageView
+                        android:id="@+id/snooker_home_icon"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@mipmap/snooker_detail_default"
+                        android:layout_marginLeft="28dp"
+                        />
+                    <TextView
+                        android:id="@+id/snooker_home_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:layout_gravity="center"
+                        android:textSize="13sp"
+                        />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_alignParentRight="true"
+                    >
+                    <ImageView
+                        android:id="@+id/snooker_guest_icon"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@mipmap/snooker_detail_default"
+                        android:layout_marginRight="28dp"
+                        android:layout_alignParentRight="true"
+                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_below="@id/snooker_guest_icon"
+                        >
+                        <TextView
+                            android:id="@+id/snooker_guest_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:singleLine="true"
+                            android:textColor="@color/white"
+                            android:layout_gravity="center"
+                            android:textSize="13sp"
+                            />
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+                <!--比分-->
+                <LinearLayout
+                    android:id="@+id/layout_snooker_immediate_score"
+                    android:layout_width="72dp"
+                    android:layout_height="36dp"
+                    android:orientation="horizontal"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="24dp"
+
+                    >
+                    <TextView
+                        android:id="@+id/snooker_home_score"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="16sp"
+                        android:text="0"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:background="@drawable/snooker_score_left_bg"
+                        />
+                    <TextView
+                        android:id="@+id/snooker_guest_score"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="16sp"
+                        android:text="0"
+                        android:gravity="center"
+                        android:background="@drawable/snooker_score_right_bg"
+                        android:textColor="@color/snooker_score_black"
+                        />
+                </LinearLayout>
+
+            </RelativeLayout>
+            <!--总比分-->
+            <LinearLayout
+                android:id="@+id/layout_snooker_total_score"
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center"
+                android:padding="6dp"
+                >
+                <TextView
+                    android:id="@+id/snooker_home_total_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:paddingRight="5dp"
+                    />
+                <TextView
+                    android:id="@+id/snooker_total_game"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(0)"
+                    android:textColor="@color/white"
+                    />
+                <TextView
+                    android:id="@+id/snooker_guest_total_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:paddingLeft="5dp"
+                    android:textColor="@color/white"
+                    />
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="13322.com"
+            android:textColor="@color/white"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="0dp"
+            />
+    </LinearLayout>
+    </LinearLayout>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/snooker_details_tab_layout"
@@ -33,9 +275,7 @@
             android:id="@+id/snooker_details_view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            />
     </LinearLayout>
-
-
 
 </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
