@@ -75,66 +75,100 @@ public class AnalyzeRankAdapter extends BaseAdapter {
             holder.title.setText(R.string.snooker_analyze_birth);
         }else if(entity.getDataType().equals(StaticValues.RANKING)){
             holder.title.setText(R.string.snooker_analyze_rank);
-
+            holder.pro.setProgress((100-setIntPercent(entity)));
         }
         else if(entity.getDataType().equals(StaticValues.PRO_SEASON)){
+
             holder.title.setText(R.string.snooker_analyze_season);
+            holder.pro.setProgress(setIntPercent(entity));
 
         }
         else if(entity.getDataType().equals(StaticValues.TOTAL_BONUS)){
             holder.title.setText(R.string.snooker_analyze_bonus);
+            holder.pro.setProgress(setIntPercent(entity));
         }
         else if(entity.getDataType().equals(StaticValues.FULLSCORE)){
             holder.title.setText(R.string.snooker_analyze_full_score);
+            holder.pro.setProgress(setIntPercent(entity));
         }
         else if(entity.getDataType().equals(StaticValues.TOTAL_CHAMPION)){
             holder.title.setText(R.string.snooker_analyze_total_champion);
+            holder.pro.setProgress(setIntPercent(entity));
         }
         else if(entity.getDataType().equals(StaticValues.HUNDRED_TIMES)){
             holder.title.setText(R.string.snooker_analyze_hundred_times);
+            holder.pro.setProgress(setIntPercent(entity));
         }
         else if(entity.getDataType().equals(StaticValues.HUNDRED_PERCENT)){
             holder.title.setText(R.string.snooker_analyze_hundred_percent);
+            holder.pro.setProgress(setDoublePercent(entity));
+
         }
         else if(entity.getDataType().equals(StaticValues.TOTAL_TIMES)){
             holder.title.setText(R.string.snooker_analyze_total_times);
+            holder.pro.setProgress(setIntPercent(entity));
         }
         else if(entity.getDataType().equals(StaticValues.WIN)){
             holder.title.setText(R.string.snooker_analyze_win);
+            holder.pro.setProgress(setIntPercent(entity));
         }
         else if(entity.getDataType().equals(StaticValues.WIN_PERCENT)){
             holder.title.setText(R.string.snooker_analyze_win_percent);
+            holder.pro.setProgress(setDoublePercent(entity));
+
         }
         else if(entity.getDataType().equals(StaticValues.TOTAL_NUMBERS)){
             holder.title.setText(R.string.snooker_analyze_total_numbers);
+            holder.pro.setProgress(setIntPercent(entity));
         }
         else if(entity.getDataType().equals(StaticValues.TOTAL_WINS)){
             holder.title.setText(R.string.snooker_analyze_total_wins);
+            holder.pro.setProgress(setIntPercent(entity));
         }
         else if(entity.getDataType().equals(StaticValues.BOARD_WINS_PERSCENT)){
             holder.title.setText(R.string.snooker_analyze_wins_percent);
+            holder.pro.setProgress(setDoublePercent(entity));
         }
-        if(!entity.getDataType().equals(StaticValues.BIRTH)){ //非生日的状态下 。生日格式不知道。先不处理。
-            int progress=50;
-            if(entity.getHomeData()==null&&entity.getGuestData()==null){
-                progress=50;
-            }else if(entity.getHomeData()==null){ //主队为null。客队不为null
-                progress=0;
-            }else if(entity.getGuestData()==null){
-                progress=100;
-            }else {
-                int home=Integer.parseInt(entity.getHomeData());
-                int guest=Integer.parseInt(entity.getGuestData());
-                progress=home*100/(home+guest);
-            }
-            holder.pro.setProgress(progress);
-        }
-
-
-
         holder.home.setText(entity.getHomeData()==null?"--":entity.getHomeData());
         holder.guest.setText(entity.getGuestData()==null?"--":entity.getGuestData());
         return convertView;
+    }
+    private int setIntPercent( SnookerAnalyzeBean.ProfessionDataEntity entity){
+
+        double progress=50;
+        if(entity.getHomeData()==null&&entity.getGuestData()==null){
+            progress=50;
+        }else if(entity.getHomeData()==null){ //主队为null。客队不为null
+            progress=0;
+        }else if(entity.getGuestData()==null){
+            progress=100;
+        }else {
+            double home=Double.parseDouble(entity.getHomeData());
+            double guest=Double.parseDouble(entity.getGuestData());
+            progress=home*100/(home+guest);
+        }
+        return (int)progress;
+
+    }
+
+    /**
+     * 帶%的
+     */
+    private int setDoublePercent( SnookerAnalyzeBean.ProfessionDataEntity entity){
+
+        double progress=50;
+        if(entity.getHomeData()==null&&entity.getGuestData()==null){
+            progress=50;
+        }else if(entity.getHomeData()==null){ //主队为null。客队不为null
+            progress=0;
+        }else if(entity.getGuestData()==null){
+            progress=100;
+        }else {
+            String guest[]=entity.getGuestData().split("%");
+            String home[]=entity.getHomeData().split("%");
+            progress=Double.parseDouble(home[0])*100/(Double.parseDouble(home[0])+Double.parseDouble(guest[0]));
+        }
+        return (int)progress;
     }
 
 
