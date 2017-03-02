@@ -21,6 +21,7 @@ import com.hhly.mlottery.frame.datafrag.DataFragment;
 import com.hhly.mlottery.frame.homefrag.HomeFragment;
 import com.hhly.mlottery.frame.infofrag.InfoFragment;
 import com.hhly.mlottery.frame.scorefrag.ScoreFragment;
+import com.hhly.mlottery.service.umengPushService;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
@@ -73,6 +74,7 @@ public class IndexActivity extends BaseActivity {
 
         initView();
         initData();
+        startService(new Intent(mContext, umengPushService.class));
     }
 
 

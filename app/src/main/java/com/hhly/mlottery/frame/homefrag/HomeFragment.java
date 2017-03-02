@@ -94,7 +94,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private ListView home_page_list;// 首页列表
     private HomeListBaseAdapter mListBaseAdapter;// ListView数据适配器
     private TextView public_txt_title;
-    public PushAgent mPushAgent;
 
     public HomePagerEntity mHomePagerEntity;// 首页实体对象
     private UpdateInfo mUpdateInfo;// 版本更新对象
@@ -107,9 +106,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private static final int REFRESH_ADVICE = 6;
     private static final String COMP_VER = "1"; // 完整版
     private static final String PURE_VER = "2"; // 纯净版
-
-    private String mPushType;// 推送类型
-    private String mThirdId;// id
 
     private String version;// 当前版本Name
     private String versionCode;// 当前版本Code
@@ -147,7 +143,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         channelNumber = getAppMetaData(mContext, "UMENG_CHANNEL");// 获取渠道号
         getVersion();// 获取版本号
-        pushData();
     }
 
 
@@ -158,7 +153,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         initData();
         initEvent();
-        getActivity().startService(new Intent(mContext, umengPushService.class));
         return mView;
     }
 
@@ -784,129 +778,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         } catch (Exception e) {
             L.d(e.getMessage());
         }
-    }
-
-    /**
-     * 接收推送消息
-     */
-    private void pushData() {
-
-        MobclickAgent.setDebugMode(AppConstants.isTestEnv);//测试的时候的数据需要设置debug模式
-        mPushAgent = PushAgent.getInstance(mContext);
-        mPushAgent.enable();// 开启推送
-        String device_token = UmengRegistrar.getRegistrationId(mContext);
-        PreferenceUtil.commitString(AppConstants.uMengDeviceToken, device_token); //存入友盟的deviceToken
-        mPushAgent.onAppStart();// 统计应用启动
-        pushMessageSkip();// 页面跳转处理
-
-        String device_id = DeviceInfo.getDeviceId(MyApp.getContext());
-
-    }
-
-
-    /**
-     * 处理推送消息和跳转处理
-     */
-    private void pushMessageSkip() {
-        Bundle mBundle = getActivity().getIntent().getExtras();// 获取推送key value
-        if (mBundle != null) {
-            mPushType = mBundle.getString("pushType");
-            mThirdId = mBundle.getString("thirdId");
-            L.d("xxx", "mPushType:" + mPushType);
-            L.d("xxx", "mThirdId:" + mThirdId);
-            if (!TextUtils.isEmpty(mPushType)) {
-                switch (mPushType) {
-                    case "lottery":// 彩票列表
-                        startActivity(new Intent(mContext, NumbersActivity.class));
-                        break;
-                    case "lotteryInfo":// 彩票详情页面
-                        if (!TextUtils.isEmpty(mThirdId)) {
-                            Intent lotteryIntent = new Intent(mContext, NumbersInfoBaseActivity.class);
-                            lotteryIntent.putExtra("numberName", mThirdId);
-                            startActivity(lotteryIntent);
-                        }
-                        break;
-                    case "football":// 足球列表
-                        startActivity(new Intent(mContext, FootballActivity.class));
-                        break;
-                    case "footballInfo":// 足球详情页面
-                        if (!TextUtils.isEmpty(mThirdId)) {
-                            Intent footIntent = new Intent(mContext, FootballMatchDetailActivity.class);
-                            footIntent.putExtra("currentFragmentId", -1);
-                            footIntent.putExtra("thirdId", mThirdId);
-
-
-                            startActivity(footIntent);
-                            L.d("xxx", "mThirdId: " + mThirdId);
-                        }
-                        break;
-                    case "dataInfo":// 资讯详情页面
-                        if (!TextUtils.isEmpty(mThirdId)) {
-                            getInformationByThirdId(mThirdId);// 资讯ID不为空，则请求接口相对应数据
-                        }
-                        break;
-                    case "basketball":// 篮球列表
-//                        Intent intent = new Intent(mContext, FootballActivity.class);
-//                        intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
-//                        mContext.startActivity(intent);
-                        Intent intent = new Intent(mContext, BasketballScoresActivity.class);
-                        mContext.startActivity(intent);
-                        break;
-                    case "basketballInfo":// 篮球详情页面
-                        if (!TextUtils.isEmpty(mThirdId)) {
-                            Intent basketIntent = new Intent(mContext, BasketDetailsActivityTest.class);
-                            basketIntent.putExtra("thirdId", mThirdId);
-                            startActivity(basketIntent);
-                        }
-                        break;
-                }
-
-                /***
-                 * 先注释
-                 */
-             /*   if (!isTaskRoot()) {// 如果当前界面启动了在跳转后把当前界面关掉，避免返回两次，启动了isTaskRoot（）=false
-                    this.finish();
-                }*/
-            }
-        }
-    }
-
-    /**
-     * 通过资讯Id获取相关资讯信息
-     */
-    private void getInformationByThirdId(String thirdId) {
-        Map<String, String> map = new HashMap<>();
-        map.put("infoId", thirdId);// 赛事Id
-        map.put("version", version);
-        map.put("versionCode", versionCode);
-        map.put("channelNumber", channelNumber);
-        VolleyContentFast.requestJsonByGet(BaseURLs.URL_INFORMATION_BY_THIRDID, map, new VolleyContentFast.ResponseSuccessListener<InformationBean>() {
-            @Override
-            public synchronized void onResponse(final InformationBean info) {
-                if (info != null) {
-                    if (info.getInfo() != null) {
-                        L.d("xxx", "推送资讯访问成功！");
-                        Intent intent = new Intent(mContext, WebActivity.class);
-                        intent.putExtra("key", info.getInfo().getInfoUrl());// URL
-                        intent.putExtra("imageurl", info.getInfo().getPicUrl());// 图片URl
-                        intent.putExtra("infoTypeName", info.getInfo().getInfoTypeName());// 资讯标题
-                        intent.putExtra("subtitle", info.getInfo().getSummary());// 分享副标题
-                        intent.putExtra("type", info.getInfo().getType());// 关系赛事类型
-                        intent.putExtra("thirdId", info.getInfo().getThirdId());// 关系赛事Id
-                        intent.putExtra("title", info.getInfo().getTitle());
-                        intent.putExtra("reqMethod", info.getInfo().getRelateMatch());// 是否关联赛事
-                        startActivity(intent);
-                    }
-                } else {
-                    L.d("xxx", "InformationBean==null>>>>");
-                }
-            }
-        }, new VolleyContentFast.ResponseErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                L.d("xxx", "推送资讯访问ERROR！");
-            }
-        }, InformationBean.class);
     }
 
     @Override
