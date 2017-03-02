@@ -11,7 +11,7 @@ public class AppConstants {
     /**
      * 是否是测试环境，true为测试，false为生产环境
      */
-    public static final boolean isTestEnv = false;
+    public static final boolean isTestEnv = true;
     /**
      * true是国际版|false内地版
      */
@@ -27,7 +27,7 @@ public class AppConstants {
     /**
      * 判断是否上传奔溃日志到友盟
      */
-    public static final boolean isUploadCrash = true;
+    public static final boolean isUploadCrash = false;
 
     /**
      * 项目时区 8中国，7泰国、越南 ，0英语
