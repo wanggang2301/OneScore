@@ -39,8 +39,8 @@ android {
         applicationId "com.hhly.mlottery"
         minSdkVersion 17
         targetSdkVersion 22
-        versionCode 28
-        versionName "1.2.5"
+        versionCode 29
+        versionName "1.2.6.0302"
         multiDexEnabled true
     }
 
