@@ -36,6 +36,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 1.2.3改版后的新首页
+ */
 public class IndexActivity extends BaseActivity {
 
     public final static int HOME_FRAGMENT = 0; //首页
