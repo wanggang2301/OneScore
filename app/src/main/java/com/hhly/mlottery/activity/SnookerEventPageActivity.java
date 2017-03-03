@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -118,6 +119,7 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
 
                     //获取赛事简介
                     profile = json.getData().getLeagueProfile();
+                    Log.i("sadasd","profile=="+profile);
                     public_txt_title.setText(json.getData().getLeagueName());
                     public_txt_title.setVisibility(View.VISIBLE);
                     mIsCurenDatas = json.getData().getCurrentSeason();
@@ -125,10 +127,10 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
                     //获取赛季时
                     seasonList = json.getData().getSeasonList();
                     //获取赛事简介
-                    if (profile!= null) {
-                        EventBus.getDefault().post(new SnookerNoDataBean(profile));
-                    }else if(profile==null||profile.equals("")){
+                    if (TextUtils.isEmpty(profile)||profile==null){
                         EventBus.getDefault().post(new SnookerNoDataBean("nodata"));
+                    }else{
+                        EventBus.getDefault().post(new SnookerNoDataBean(profile));
                     }
                     tv_right.setVisibility(View.VISIBLE);
                     ib_operate_more.setVisibility(View.VISIBLE);

@@ -221,6 +221,9 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
         baseViewHolder.setTextColor(R.id.tv_guest_score5, matchDataBean.getMatchScore().getHomeSetScore5() > matchDataBean.getMatchScore().getAwaySetScore5() ? mContext.getResources().getColor(R.color.mdy_999) : mContext.getResources().getColor(R.color.mdy_333));
 
         // 总得分
+        baseViewHolder.getView(R.id.tv_home_count).setVisibility(matchDataBean.getMatchStatus() == 0 ? View.INVISIBLE : View.VISIBLE);
+        baseViewHolder.getView(R.id.tv_guest_count).setVisibility(matchDataBean.getMatchStatus() == 0 ? View.INVISIBLE : View.VISIBLE);
+
         baseViewHolder.setText(R.id.tv_home_count, String.valueOf(matchDataBean.getMatchScore().getHomeTotalScore()));
         baseViewHolder.setText(R.id.tv_guest_count, String.valueOf(matchDataBean.getMatchScore().getAwayTotalScore()));
         // 关注
