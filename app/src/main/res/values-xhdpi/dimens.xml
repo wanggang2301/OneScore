@@ -44,6 +44,7 @@
     <dimen name="football_cardview_margin">2.5dp</dimen>
     <dimen name="home_pager_number_bg">27.5dp</dimen>
     <dimen name="home_pager_number_bjsc_x">22.5dp</dimen>
+    <dimen name="snooker_header">36dp</dimen>
 
 </resources>
 
