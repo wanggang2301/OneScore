@@ -911,6 +911,7 @@
         <item name="android:fitsSystemWindows">true</item>
     </style>
 
+    <style name="TitleTheme" parent="Theme.AppCompat.Light.NoActionBar"></style>
     <style name="toolbar">
         <item name="android:layout_marginTop">0dp</item>
     </style>

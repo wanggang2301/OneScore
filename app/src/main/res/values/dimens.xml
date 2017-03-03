@@ -11,6 +11,7 @@
     <dimen name="header_height_short">44dp</dimen>
 
     <dimen name="status_bar_offset">0dp</dimen>
+    <dimen name="snooker_header">60dp</dimen>
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>

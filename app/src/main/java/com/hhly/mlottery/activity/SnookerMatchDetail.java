@@ -39,8 +39,8 @@ import butterknife.ButterKnife;
 
 public class SnookerMatchDetail extends BaseWebSocketActivity implements ExactSwipeRefreshLayout.OnRefreshListener,View.OnClickListener{
 
-//    @BindView(R.id.snooker_details_toolbar)
-//    Toolbar mToolbar;
+    @BindView(R.id.snooker_details_toolbar)
+    Toolbar mToolbar;
 
     @BindView(R.id.snooker_details_tab_layout)
     TabLayout mTabLayout;
@@ -135,6 +135,7 @@ public class SnookerMatchDetail extends BaseWebSocketActivity implements ExactSw
 
 
     private void initView() {
+        setSupportActionBar(mToolbar);
         Titles=new String[]{getResources().getString(R.string.basket_analyze),getResources().getString(R.string.basket_alet),getResources().getString(R.string.basket_asize)};
         mTabsAdapter=new TabsAdapter(getSupportFragmentManager());
         mTabsAdapter.setTitles(Titles);

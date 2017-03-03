@@ -28,9 +28,9 @@
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
-    <!--<style name="MainTheme" parent="@android:style/Theme.Holo.Light.NoActionBar">
-        <item_share name="android:windowTranslucentStatus">true</item_share>
-    </style>-->
+    <style name="TitleTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
 
     <style name="isFitsSystemWindows">
         <item name="android:fitsSystemWindows">false</item>

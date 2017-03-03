@@ -4,6 +4,6 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="item_filtrate_match_text">9sp</dimen>
     <dimen name="football_cardview_margin">0.5dp</dimen>
-
+    <dimen name="snooker_header">60dp</dimen>
 </resources>
 

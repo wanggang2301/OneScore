@@ -3,5 +3,6 @@
 
     <dimen name="header_height">68dp</dimen>
     <dimen name="status_bar_offset">24dp</dimen>
+    <dimen name="snooker_header">36dp</dimen>
 
 </resources>
