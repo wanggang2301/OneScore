@@ -73,8 +73,8 @@ public class ScoreFragment extends Fragment {
 
         fragments.add(footBallScoreFragment);
         fragments.add(basketBallScoreFragment);
-        fragments.add(snookerScoreFragment);
-        fragments.add(tennisBallScoreFragment);
+        // fragments.add(snookerScoreFragment);
+        //fragments.add(tennisBallScoreFragment);
 
         /**
          * 默认先选择足球
