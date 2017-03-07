@@ -46,5 +46,9 @@
     <dimen name="home_pager_number_bjsc_x">22.5dp</dimen>
     <dimen name="snooker_header">36dp</dimen>
 
+    <dimen name="info_center_title">13sp</dimen>
+    <dimen name="info_center_desc">10sp</dimen>
+    <dimen name="info_center_value">20sp</dimen>
+
 </resources>
 
