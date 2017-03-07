@@ -630,9 +630,9 @@
     <string name="foot_guanzhu_txt">Favourite</string>
     <string name="foot_setting_txt">Settings</string>
     <!-- 下拉刷新 -->
-    <string name="pull_to_refresh_pull_label">Pull down to refresh</string>
-    <string name="pull_to_refresh_release_label">Loosen to refresh</string>
-    <string name="pull_to_refresh_refreshing_label">Loading&#8230;</string>
+    <string name="pull_to_refresh_pull_label" >Pull down to refresh</string>
+    <string name="pull_to_refresh_release_label" >Loosen to refresh</string>
+    <string name="pull_to_refresh_refreshing_label" >Loading&#8230;</string>
 
     <!-- 设置 -->
     <string name="set_sound_txt">Sound</string>
@@ -1036,6 +1036,7 @@
     <string name="basket_postpone">Postponed</string>
 
 
+
     <string name="basket_yesterday">Yesterday</string>
     <string name="basket_today">Today</string>
     <string name="basket_monday">Tomorrow</string>
@@ -1130,6 +1131,7 @@
     <string name="basket_odds_euro_details">1x2 Details</string>
     <string name="basket_odds_asiaLet_details">HDP Details</string>
     <string name="basket_odds_asiaSize_details">O/U Details</string>
+
 
 
     <!-- 足球资讯 -->
@@ -1235,15 +1237,7 @@
     <string name="odds_back_list">Return list</string>
     <string name="odds_equals">Average</string>
 
-    <string name="foot_event_penalty"></string>
-    <string name="foot_event_num_out"></string>
-    <string name="foot_event_num_in"></string>
 
-    <string name="share_summary_new"></string>
-    <string name="share_match_pre"></string>
-    <string name="share_match_live"></string>
-    <string name="share_match_over"></string>
-    <string name="share_match_live2"></string>
 
     <string name="more_setting">More settings</string>
     <string name="invited_prize">Prizes for inviting</string>
@@ -1277,10 +1271,10 @@
     <string name="football_database_details_chang">Matches</string>
     <string name="can_only_choose_a_picture">You can only select one image</string>
     <string name="confirm_the_selected_sex">Confirm save the modified personal information?</string>
-    <string name="chose_start_photo">Select player's image</string>
-    <string name="chose_start_text">Not only players' style with you；</string>
+    <string name="chose_start_photo">Select player is image</string>
+    <string name="chose_start_text">Not only player style with you；</string>
     <string name="only_chose_start_text">but also One Score。</string>
-    <string name="star_style">Players' style</string>
+    <string name="star_style">Player style</string>
     <string name="football_baby">Football babies</string>
     <string name="account_cannot_be_empty">Account or phone number cannot be empty</string>
     <string name="please_login_first">Please login first</string>
@@ -1290,7 +1284,7 @@
     <string name="chose_head_phot">Select image</string>
     <string name="complete">Complete</string>
     <string name="invited_number_noon">The invitation code does not exist</string>
-    <string name="choice_of_players_head">Select player's image</string>
+    <string name="choice_of_players_head">Select player is image</string>
     <string name="picture_resource_does_not_exist">Image resource does not exist</string>
     <string name="foreign_month">month(s) ago</string>
     <string name="foreign_day">day(s) ago</string>
@@ -1369,22 +1363,22 @@
     <string name="chart_ball_call_user_not">\@User does not exist</string>
     <string name="chart_ball_report_user_not">The reported user does not exist</string>
     <string name="chart_ball_banned">You have been banned by the room administrator for </string>
-    <string name="local_chitule">吃土了</string>
-    <string name="local_dacaipan">打裁判</string>
-    <string name="local_fubaila">腐败啦</string>
-    <string name="local_jinggaoni">警告你</string>
-    <string name="local_juyijing">菊一紧</string>
-    <string name="local_mengkuanle">懵圈了</string>
-    <string name="local_qiudatui">求大腿</string>
-    <string name="local_sesese">射射射</string>
-    <string name="local_shangtiantai">上天台</string>
-    <string name="local_shihuale">石化了</string>
-    <string name="local_shoumila">收米啦</string>
-    <string name="local_touzhele">偷着乐</string>
-    <string name="local_xihushuiya">西湖水呀</string>
-    <string name="local_yayajing">压压惊</string>
-    <string name="local_youqingguanlaoye">有请关老爷</string>
-    <string name="local_zailaiyijiao">再来一角</string>
+    <string name="local_chitule">Not have a bean</string>
+    <string name="local_dacaipan">Hit the referee</string>
+    <string name="local_fubaila">Extravagant</string>
+    <string name="local_jinggaoni">Warn you</string>
+    <string name="local_juyijing">Buttock-clenching</string>
+    <string name="local_mengkuanle">Muddled</string>
+    <string name="local_qiudatui">Beg for master</string>
+    <string name="local_sesese">Shoot shoot shoot</string>
+    <string name="local_shangtiantai">Going to the rooftop</string>
+    <string name="local_shihuale">Stunned</string>
+    <string name="local_shoumila">Come and collect</string>
+    <string name="local_touzhele">Happy secretly</string>
+    <string name="local_xihushuiya">Oh my god</string>
+    <string name="local_yayajing">Get over a shock</string>
+    <string name="local_youqingguanlaoye">Please welcome Lord Guan</string>
+    <string name="local_zailaiyijiao">One more dime</string>
     <string name="chart_ball_new_msg">New message</string>
     <string name="chart_ball_null_content">Have a talk</string>
     <string name="chart_ball_login_error">Login verification failed, please login again!</string>
@@ -1429,8 +1423,8 @@
     <string name="home_lottery_info_image_desc">All data and information on the site are for your reference only. In order to avoid economic losses, you shall not use them for any unlawful purpose, or you yourself have to shoulder your responsibility</string>
     <string name="snooker_player_compare">Professional comparison</string>
     <string name="snooker_history_bettle">Pre-competition</string>
-    <string name="snooker_player1">Player 1's recent achievements</string>
-    <string name="snooker_player2">Player 2's recent achievements</string>
+    <string name="snooker_player1">Player 1 is recent achievements</string>
+    <string name="snooker_player2">Player 2 is recent achievements</string>
     <string name="football_txt">Football</string>
     <string name="basketball_txt">Basketball</string>
     <string name="snooker_txt">Snooker</string>
@@ -1439,7 +1433,7 @@
     <string name="sn_rank_name">Name</string>
     <string name="sn_rank_zjf">Total points</string>
     <string name="sn_rank_zjj">Total prize money</string>
-    <string name="sn_player_search">Please enter player's name</string>
+    <string name="sn_player_search">Please enter player is name</string>
     <string name="snooker_qualifiers">Qualifiers</string>
     <string name="snooker_match">Finals</string>
     <string name="snooker_champion">Former champions</string>
@@ -1472,4 +1466,5 @@
     <string name="tennis_match_over">Finished</string>
     <string name="tennis_match_not_start">Pre-play</string>
     <string name="tennis_match_join">In-play</string>
+
 </resources>
