@@ -6,7 +6,6 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -14,9 +13,6 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.ShareBean;
 import com.hhly.mlottery.bean.numbersBean.LotteryInfoHKChartBean;
 import com.hhly.mlottery.frame.ShareFragment;
-import com.hhly.mlottery.util.DisplayUtil;
-import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.widget.ZoomViewPager;
 
 import java.util.ArrayList;
@@ -55,6 +51,7 @@ public class LotteryHKInfoImageActivity extends BaseActivity implements View.OnC
         findViewById(R.id.public_img_back).setOnClickListener(this);
         ImageView btn_set = (ImageView) findViewById(R.id.public_btn_set);
         btn_set.setOnClickListener(this);
+        btn_set.setVisibility(View.GONE);
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         public_txt_title = (TextView) findViewById(R.id.public_txt_title);
         iv_left = (ImageView) findViewById(R.id.iv_left);

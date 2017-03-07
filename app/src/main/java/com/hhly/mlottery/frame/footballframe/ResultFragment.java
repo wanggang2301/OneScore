@@ -28,7 +28,6 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.ResultMultiAdapter;
-import com.hhly.mlottery.adapter.ResultMultiInternationAdapter;
 import com.hhly.mlottery.adapter.ScheduleDateAdapter;
 import com.hhly.mlottery.bean.LeagueCup;
 import com.hhly.mlottery.bean.Match;
@@ -97,7 +96,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
     private static final String TAG = "ResultFragment";
 
     private ResultMultiAdapter mAdapter; // 普通版 adapter
-    private ResultMultiInternationAdapter mInternationAdapter;// 国际版 adapter
 
     private boolean isLoadedData = false;
     public static boolean isCheckedDefualt = true;// 默认全不选-- 筛选界面

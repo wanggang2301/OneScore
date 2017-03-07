@@ -258,7 +258,8 @@
             android:layout_height="match_parent"
             android:gravity="bottom|right"
             android:paddingBottom="112dp"
-            android:paddingRight="10dp">
+            android:paddingRight="10dp"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/tv_addMultiView"

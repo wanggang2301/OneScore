@@ -29,7 +29,6 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.ImmediateAdapter;
-import com.hhly.mlottery.adapter.ImmediateInternationalAdapter;
 import com.hhly.mlottery.bean.HotFocusLeagueCup;
 import com.hhly.mlottery.bean.ImmediateMatchs;
 import com.hhly.mlottery.bean.LeagueCup;
@@ -108,8 +107,6 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
     private Context mContext;
 
     private ImmediateAdapter mAdapter;
-
-    private ImmediateInternationalAdapter mInternationalAdapter;
 
     private List<Match> mAllMatchs;// 所有比赛
     private List<Match> mMatchs;// 显示的比赛
