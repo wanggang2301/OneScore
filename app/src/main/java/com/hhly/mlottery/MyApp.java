@@ -48,43 +48,37 @@ public class MyApp extends Application {
 
     @Override
     public void onCreate() {
-//        PushAgent pushAgent-
-        UmengMessageHandler handler = new UmengMessageHandler() {
-            @Override
-            public Notification getNotification(Context context, UMessage uMessage) {
-                return super.getNotification(context, uMessage);
-
-            }
-        };
         appcontext = this;
 
-//		CyUtils.initCy(this);
         // 初始化PreferenceUtil
         PreferenceUtil.init(this);
+
         //初始化获取语言环境
         mResources = appcontext.getResources();
         mConfiguration = mResources.getConfiguration();
         mDm = mResources.getDisplayMetrics();
         mLocale = mConfiguration.locale;
-        // 根据上次的语言设置，重新设置语言
-        switchLanguage(PreferenceUtil.getString("language", ""));
-        isLanguage = switchLanguage(PreferenceUtil.getString("language", ""));
-        // 捕获异常
-        CrashException crashException = CrashException.getInstance();
-        crashException.init(getApplicationContext());
 
-        VolleyContentFast.init(this);
-        //初始化畅言
-        CyUtils.initCy(this);
-        initUserInfo();
         // 获取当前包名
         isPackageName = this.getPackageName();
         // 设置时区
         settingTimeZone();
 
-        /**
-         * OkHttpFinal(此初始化只是简单赋值不会阻塞线程)
-         */
+        // 根据上次的语言设置，重新设置语言
+        isLanguage = switchLanguage(PreferenceUtil.getString("language", ""));
+
+        // 捕获异常
+        CrashException crashException = CrashException.getInstance();
+        crashException.init(getApplicationContext());
+
+        // 初始化Vollery
+        VolleyContentFast.init(this);
+
+        //初始化畅言
+        CyUtils.initCy(this);
+        initUserInfo();
+
+        // OkHttpFinal(此初始化只是简单赋值不会阻塞线程)
         OkHttpFinalConfiguration.Builder builder = new OkHttpFinalConfiguration.Builder();
         OkHttpFinal.getInstance().init(builder.build());
 
