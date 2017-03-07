@@ -118,7 +118,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="5dp">
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
 
             <RelativeLayout
                 android:id="@+id/rl_home"
@@ -134,7 +135,7 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingBottom="5dp"
-                    android:paddingTop="10dp">
+                    android:paddingTop="5dp">
 
                     <ImageView
                         android:id="@+id/home_icon"
@@ -185,7 +186,7 @@
                     android:layout_below="@id/ll_home"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingBottom="10dp"
+                    android:paddingBottom="5dp"
                     android:paddingTop="5dp">
 
                     <ImageView
@@ -245,14 +246,13 @@
 
             </RelativeLayout>
 
-
             <RelativeLayout
                 android:id="@+id/rl_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
                 android:paddingRight="60dp">
-
 
                 <LinearLayout
                     android:id="@+id/ll_home_score"
@@ -261,19 +261,15 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingBottom="5dp"
-                    android:paddingTop="10dp">
+                    android:paddingTop="5dp">
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginLeft="10dp"
-                        android:src="@mipmap/score_default"
-                        android:visibility="invisible"></ImageView>
+
 
                     <TextView
                         android:id="@+id/tv_home_half_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
                         android:text="0"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/item_football_half_score" />
@@ -283,35 +279,32 @@
                         android:id="@+id/tv_home_full_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
+                        android:layout_marginLeft="20dp"
+                        android:gravity="center_vertical"
+
                         android:text="0"
                         android:textColor="@color/red"
                         android:textSize="@dimen/item_football_full_score" />
 
-
                 </LinearLayout>
 
+
                 <LinearLayout
-                    android:id="@+id/ll_guest_score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/ll_home_score"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingBottom="10dp"
+                    android:paddingBottom="5dp"
                     android:paddingTop="5dp">
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginLeft="10dp"
-                        android:src="@mipmap/score_default"
-                        android:visibility="invisible"></ImageView>
+
 
                     <TextView
                         android:id="@+id/tv_guest_half_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
                         android:text="0"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/item_football_half_score" />
@@ -321,14 +314,13 @@
                         android:id="@+id/tv_guest_full_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
+                        android:layout_marginLeft="20dp"
+                        android:gravity="center_vertical"
                         android:text="0"
                         android:textColor="@color/red"
                         android:textSize="@dimen/item_football_full_score" />
 
-
                 </LinearLayout>
-
 
             </RelativeLayout>
 
