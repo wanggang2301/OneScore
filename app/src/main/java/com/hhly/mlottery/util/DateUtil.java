@@ -298,7 +298,7 @@ public class DateUtil {
         do {
             result = (Calendar) result.clone();
             result.add(Calendar.DATE, 1);
-        } while (result.get(Calendar.DAY_OF_WEEK) != 2);
+        } while (result.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY);
         return result;
     }
 

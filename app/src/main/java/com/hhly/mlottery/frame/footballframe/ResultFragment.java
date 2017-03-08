@@ -28,7 +28,6 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.ResultMultiAdapter;
-import com.hhly.mlottery.adapter.ResultMultiInternationAdapter;
 import com.hhly.mlottery.adapter.ScheduleDateAdapter;
 import com.hhly.mlottery.bean.LeagueCup;
 import com.hhly.mlottery.bean.Match;
@@ -42,9 +41,11 @@ import com.hhly.mlottery.callback.FocusMatchClickListener;
 import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.frame.ScoresFragment;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFilterEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchSettingEventBusEntity;
+import com.hhly.mlottery.frame.scorefrag.FootBallScoreFragment;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FocusUtils;
@@ -97,7 +98,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
     private static final String TAG = "ResultFragment";
 
     private ResultMultiAdapter mAdapter; // 普通版 adapter
-    private ResultMultiInternationAdapter mInternationAdapter;// 国际版 adapter
 
     private boolean isLoadedData = false;
     public static boolean isCheckedDefualt = true;// 默认全不选-- 筛选界面
@@ -133,6 +133,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
     //public static EventBus resultEventBus;
     private static final String FRAGMENT_INDEX = "fragment_index";
+    private static final String ENTRY_TYPE = "entryType";
 
     private static int currentDatePosition = 0;
 
@@ -151,6 +152,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
     private String teamLogoSuff;
 
+    private int mEntryType; // 标记入口 判断是从哪里进来的 (0:首页入口  1:新导航条入口)
 
     public static ResultFragment newInstance(String param1, String param2) {
         ResultFragment fragment = new ResultFragment();
@@ -161,11 +163,12 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
         return fragment;
     }
 
-    public static ResultFragment newInstance(int index) {
+    public static ResultFragment newInstance(int index , int entryType) {
 
 
         Bundle bundle = new Bundle();
         bundle.putInt(FRAGMENT_INDEX, index);
+        bundle.putInt(ENTRY_TYPE , entryType);
         ResultFragment fragment = new ResultFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -237,7 +240,9 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
         /**注册事件总线*/
         //  resultEventBus = new EventBus();
         // resultEventBus.register(this);
-
+        if (getArguments() != null) {
+            mEntryType = getArguments().getInt(ENTRY_TYPE);
+        }
         EventBus.getDefault().register(this);
     }
 
@@ -301,6 +306,11 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                     view.setTag(false);
                 }
 //                ((ScoresFragment) getParentFragment()).focusCallback();
+                if (mEntryType == 0) {
+                    ((ScoresFragment) getParentFragment()).firstFocusCallback();
+                }else if(mEntryType == 1){
+                    ((FootBallScoreFragment) getParentFragment()).focusCallback();
+                }
             }
         };
 
@@ -610,6 +620,11 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
             L.d("qazwsx", "赛程关注内页返回EventBus");
             updateAdapter();
 //            ((ScoresFragment) getParentFragment()).focusCallback();
+            if (mEntryType == 0) {
+                ((ScoresFragment) getParentFragment()).firstFocusCallback();
+            }else if(mEntryType == 1){
+                ((FootBallScoreFragment) getParentFragment()).focusCallback();
+            }
         }
     }
 

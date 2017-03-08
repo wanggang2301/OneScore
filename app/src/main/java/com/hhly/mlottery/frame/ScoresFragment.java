@@ -25,12 +25,14 @@ import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.LeagueCup;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.frame.footballframe.FocusFragment;
 import com.hhly.mlottery.frame.footballframe.ImmediateFragment;
 import com.hhly.mlottery.frame.footballframe.ResultFragment;
 import com.hhly.mlottery.frame.footballframe.RollBallFragment;
 import com.hhly.mlottery.frame.footballframe.ScheduleFragment;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoreFragmentWebSocketEntity;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -46,6 +48,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
 
 
     private final boolean isNewFrameWork = false;
+    private final int entryType = 0;
 
     private final int ROLLBALL_FRAGMENT = 0;
     private final int IMMEDIA_FRAGMENT = 1;
@@ -124,6 +127,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
         initView();
         setupViewPager();
 //        focusCallback();// 加载关注数
+        firstFocusCallback();
         initData();
 //        initEVent();
         setFootballLeagueStatisticsTodayClick();
@@ -159,6 +163,18 @@ public class ScoresFragment extends BaseWebSocketFragment {
         mSetImgBtn.setVisibility(View.VISIBLE);
     }
 
+    public void firstFocusCallback() {
+        String focusIds = PreferenceUtil.getString("focus_ids", "");
+        String[] arrayId = focusIds.split("[,]");
+        if (getActivity() != null) {
+            if ("".equals(focusIds) || arrayId.length == 0) {
+                mTabLayout.getTabAt(FOCUS_FRAGMENT).setText(getActivity().getResources().getString(R.string.foot_guanzhu_txt));
+            } else {
+                mTabLayout.getTabAt(FOCUS_FRAGMENT).setText(getActivity().getResources().getString(R.string.foot_guanzhu_txt) + "(" + arrayId.length + ")");
+            }
+        }
+    }
+
     private void setupViewPager() {
         mTabLayout = (TabLayout) view.findViewById(R.id.tabs);
         titles = new ArrayList<>();
@@ -166,14 +182,15 @@ public class ScoresFragment extends BaseWebSocketFragment {
         titles.add(getString(R.string.foot_jishi_txt));
         titles.add(getString(R.string.foot_saiguo_txt));
         titles.add(getString(R.string.foot_saicheng_txt));
+        titles.add(getString(R.string.foot_guanzhu_txt));
 
         fragments = new ArrayList<>();
-        rollBallFragment = RollBallFragment.newInstance(ROLLBALL_FRAGMENT,isNewFrameWork);
+        rollBallFragment = RollBallFragment.newInstance(ROLLBALL_FRAGMENT,isNewFrameWork,entryType);
         fragments.add(rollBallFragment);
-        fragments.add(ImmediateFragment.newInstance(IMMEDIA_FRAGMENT,isNewFrameWork));
-        fragments.add(ResultFragment.newInstance(RESULT_FRAGMENT));
-        fragments.add(ScheduleFragment.newInstance(SCHEDULE_FRAGMENT));
-//        fragments.add(FocusFragment.newInstance(FOCUS_FRAGMENT));
+        fragments.add(ImmediateFragment.newInstance(IMMEDIA_FRAGMENT,isNewFrameWork,entryType));
+        fragments.add(ResultFragment.newInstance(RESULT_FRAGMENT,entryType));
+        fragments.add(ScheduleFragment.newInstance(SCHEDULE_FRAGMENT,entryType));
+        fragments.add(FocusFragment.newInstance(FOCUS_FRAGMENT,entryType));
 
         pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
 
@@ -203,6 +220,13 @@ public class ScoresFragment extends BaseWebSocketFragment {
                             mFilterImgBtn.setVisibility(View.VISIBLE);
                             mSetImgBtn.setVisibility(View.VISIBLE);
                             ((ScheduleFragment) fragments.get(position)).updateAdapter();
+                            break;
+                        case FOCUS_FRAGMENT:
+                            mFilterImgBtn.setVisibility(View.INVISIBLE);
+                            mSetImgBtn.setVisibility(View.VISIBLE);
+                            ((FocusFragment) fragments.get(position)).reLoadData();
+                            break;
+                        case 5:
                             break;
                     }
                 }
@@ -375,6 +399,12 @@ public class ScoresFragment extends BaseWebSocketFragment {
                     Intent intent = new Intent(getActivity(), FootballTypeSettingActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putInt("currentFragmentId", SCHEDULE_FRAGMENT);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                } else if(currentFragmentId == FOCUS_FRAGMENT){
+                    Intent intent = new Intent(getActivity(), FootballTypeSettingActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("currentFragmentId", FOCUS_FRAGMENT);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }

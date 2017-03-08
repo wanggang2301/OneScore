@@ -10,8 +10,7 @@
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/coordinator_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/basket_details_appbar"
@@ -44,9 +43,8 @@
                     <com.hhly.mlottery.view.BarrageView
                         android:id="@+id/barrage_view"
                         android:layout_width="match_parent"
-                        android:paddingTop="30dp"
-                        android:layout_height="200dp">
-                    </com.hhly.mlottery.view.BarrageView>
+                        android:layout_height="200dp"
+                        android:paddingTop="30dp"></com.hhly.mlottery.view.BarrageView>
 
                 </FrameLayout>
 
@@ -65,10 +63,10 @@
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/basket_details_toolbar"
+                    style="@style/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:background="@color/transparency"
-                    style="@style/toolbar"
                     app:contentInsetStart="0dp"
                     app:layout_collapseMode="pin"
                     app:layout_scrollFlags="scroll|enterAlways"
@@ -126,7 +124,8 @@
             android:layout_height="match_parent"
             android:gravity="bottom|right"
             android:paddingBottom="112dp"
-            android:paddingRight="10dp">
+            android:paddingRight="10dp"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/tv_addMultiView"

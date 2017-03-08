@@ -111,5 +111,6 @@ public class LeagueStatisticsTodayActivity extends BaseActivity implements View.
         alertDialog.show();
         alertDialog.getWindow().setContentView(alertDialogView);
         alertDialog.setCanceledOnTouchOutside(true);
+
     }
 }

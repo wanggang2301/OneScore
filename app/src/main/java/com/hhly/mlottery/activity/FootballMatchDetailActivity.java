@@ -2142,6 +2142,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
 
         iv_share = mView.findViewById(R.id.football_item_share);
+        iv_share.setVisibility(View.GONE);
         iv_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
@@ -55,7 +56,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private String teamLogoPre;
 
     private String teamLogoSuff;
-
 
 
     /**
@@ -115,7 +115,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return dateViewHolder;
 
         } else {
-            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_football_new, viewGroup, false);
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_football, viewGroup, false);
             ScheduleViewHolder resultViewHolder = new ScheduleViewHolder(view);
 
             //将创建的View注册点击事件
@@ -148,7 +148,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int i) {
-        if (datas.size()<=0 || datas==null){
+        if (datas.size() <= 0 || datas == null) {
             return;
         }
 
@@ -171,30 +171,32 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 //客队url
                 final String guestlogourl = teamLogoPre + scheduleMatchDto.getSchmatchs().getGuestId().trim().trim() + teamLogoSuff;
 
-
-                //scheduleViewHolder.home_icon.setTag(homelogourl);
-                //scheduleViewHolder.guest_icon.setTag(guestlogourl);
-                //ImagaeLoader -- 加载图片
-                if(mContext!=null){
-                    ImageLoader.load(mContext,homelogourl,R.mipmap.score_default).into(scheduleViewHolder.home_icon);
-                    ImageLoader.load(mContext,guestlogourl,R.mipmap.score_default).into(scheduleViewHolder.guest_icon);
+                if (mContext != null) {
+                    ImageLoader.load(mContext, homelogourl, R.mipmap.score_default).into(scheduleViewHolder.home_icon);
+                    ImageLoader.load(mContext, guestlogourl, R.mipmap.score_default).into(scheduleViewHolder.guest_icon);
                 }
 
                 scheduleViewHolder.item_football_racename.setText(scheduleMatchDto.getSchmatchs().getRacename());
                 scheduleViewHolder.item_football_racename.setTextColor(Color.parseColor(scheduleMatchDto.getSchmatchs().getRaceColor()));
                 scheduleViewHolder.item_football_time.setText(scheduleMatchDto.getSchmatchs().getTime());
-                scheduleViewHolder.item_football_half_score.setVisibility(View.INVISIBLE);
+
+                scheduleViewHolder.rl_score.setVisibility(View.GONE);
+
+                // scheduleViewHolder.item_football_half_score.setVisibility(View.INVISIBLE);
                 scheduleViewHolder.keeptime.setVisibility(View.GONE);
                 scheduleViewHolder.item_football_frequency.setVisibility(View.GONE);
-                // scheduleViewHolder.item_football_right_mid_score.setVisibility(View.GONE);
                 scheduleViewHolder.item_football_home_yc.setVisibility(View.GONE);
                 scheduleViewHolder.item_football_home_rc.setVisibility(View.GONE);
                 scheduleViewHolder.item_football_guest_rc.setVisibility(View.GONE);
                 scheduleViewHolder.item_football_guest_yc.setVisibility(View.GONE);
 
                 scheduleViewHolder.item_football_hometeam.setText(scheduleMatchDto.getSchmatchs().getHometeam());
-                scheduleViewHolder.item_football_full_score.setText("VS");
-                scheduleViewHolder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.version));
+                // scheduleViewHolder.item_football_full_score.setText("VS");
+                // scheduleViewHolder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.version));
+
+                scheduleViewHolder.tv_match_type.setVisibility(View.VISIBLE);
+                scheduleViewHolder.tv_match_type.setTextColor(mContext.getResources().getColor(R.color.version));
+
 
                 scheduleViewHolder.item_football_guestteam.setText(scheduleMatchDto.getSchmatchs().getGuestteam());
 
@@ -324,15 +326,14 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         TextView item_football_racename;
         TextView item_football_time;
-        TextView item_football_half_score;
+        // TextView item_football_half_score;
         TextView item_football_frequency;
-        // TextView item_football_right_mid_score;
         TextView item_football_home_yc;
         TextView item_football_home_rc;
         TextView item_football_guest_rc;
         TextView item_football_guest_yc;
         TextView item_football_hometeam;
-        TextView item_football_full_score;
+        // TextView item_football_full_score;
         TextView item_football_guestteam;
         TextView item_football_left_odds;
         TextView item_football_handicap_value;
@@ -344,6 +345,18 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         ImageView home_icon;
         ImageView guest_icon;
 
+
+        TextView item_home_half_score;
+        TextView item_home_full_score;
+
+        TextView item_guest_half_score;
+        TextView item_guest_full_score;
+
+        TextView tv_match_type;
+
+        RelativeLayout rl_score;
+
+
         public ScheduleViewHolder(final View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.card_view);
@@ -351,19 +364,26 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             item_football_racename = (TextView) itemView.findViewById(R.id.item_football_racename);
             item_football_time = (TextView) itemView.findViewById(R.id.item_football_time);
-            item_football_half_score = (TextView) itemView.findViewById(R.id.item_football_half_score);
             item_football_frequency = (TextView) itemView.findViewById(R.id.item_football_frequency);
-            // item_football_right_mid_score = (TextView) itemView.findViewById(R.id.item_football_right_mid_score);
             item_football_home_yc = (TextView) itemView.findViewById(R.id.item_football_home_yc);
             item_football_home_rc = (TextView) itemView.findViewById(R.id.item_football_home_rc);
             item_football_guest_rc = (TextView) itemView.findViewById(R.id.item_football_guest_rc);
             item_football_guest_yc = (TextView) itemView.findViewById(R.id.item_football_guest_yc);
             item_football_hometeam = (TextView) itemView.findViewById(R.id.item_football_hometeam);
-            item_football_full_score = (TextView) itemView.findViewById(R.id.item_football_full_score);
             item_football_guestteam = (TextView) itemView.findViewById(R.id.item_football_guestteam);
             item_football_left_odds = (TextView) itemView.findViewById(R.id.item_football_left_odds);
             item_football_handicap_value = (TextView) itemView.findViewById(R.id.item_football_handicap_value);
             item_football_right_odds = (TextView) itemView.findViewById(R.id.item_football_right_odds);
+
+
+            item_home_half_score = (TextView) itemView.findViewById(R.id.tv_home_half_score);
+            item_home_full_score = (TextView) itemView.findViewById(R.id.tv_home_full_score);
+
+            item_guest_half_score = (TextView) itemView.findViewById(R.id.tv_guest_half_score);
+            item_guest_full_score = (TextView) itemView.findViewById(R.id.tv_guest_full_score);
+            tv_match_type = (TextView) itemView.findViewById(R.id.tv_match_type);
+            rl_score = (RelativeLayout) itemView.findViewById(R.id.rl_score);
+
 
             Iv_guangzhu = (ImageView) itemView.findViewById(R.id.Iv_guangzhu);
 

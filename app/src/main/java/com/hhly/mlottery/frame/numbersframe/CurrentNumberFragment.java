@@ -55,7 +55,7 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
     private boolean isOpenNumberStartHistory = false;// 获取彩种开奖状态
     private boolean isNextNumber = false;
 
-    private List<NumberCurrentInfo> numberlist;// 各种彩票开奖对象
+    private List<NumberCurrentInfo> numberlist = new ArrayList<>();// 各种彩票开奖对象
     private NumberDataUtils utils = new NumberDataUtils();
 
     private static final int STARTLOADING = 0;// 开始加载状态
@@ -96,11 +96,11 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mContext = getActivity();
-        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
+//        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
             mView = inflater.inflate(R.layout.numbers_current_page, container, false);// 国语
-        } else {
-            mView = inflater.inflate(R.layout.numbers_current_page_i18n, container, false);// 英语
-        }
+//        } else {
+//            mView = inflater.inflate(R.layout.numbers_current_page_i18n, container, false);// 英语
+//        }
 
         mNumberName = null;
         mNumberName = getArguments().getString("mNumberName");
@@ -202,12 +202,13 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
         VolleyContentFast.requestJsonByGet(AppConstants.numberHistoryURLs[0], new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
             @Override
             public synchronized void onResponse(final NumbersOpenBean jsonObject) {
-                if (null != jsonObject) {// 判断数据是否为空
+                if (null != jsonObject && jsonObject.getNumLotteryResults() != null) {// 判断数据是否为空
 
-                    numberlist = new ArrayList<NumberCurrentInfo>();
+                    numberlist.clear();
 
                     serverTime = jsonObject.getServerTime();
-                    numberlist = jsonObject.getNumLotteryResults();
+//                    numberlist = jsonObject.getNumLotteryResults();
+                    numberlist.addAll(jsonObject.getNumLotteryResults());
 
                     if (num == 1) {
                         // 发送自动刷新和手动刷新加载数据成功消息

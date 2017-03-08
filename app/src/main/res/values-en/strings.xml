@@ -1466,8 +1466,10 @@
     <string name="tennis_match_over">Finished</string>
     <string name="tennis_match_not_start">Pre-play</string>
     <string name="tennis_match_join">In-play</string>
-    <string name="basket_analyze_all_rank">全部排名>>></string>
+    <string name="basket_analyze_all_rank">All rankings>>></string>
     <string name="football_rfypl">Win Handicap under Make Spread</string>
-    <string name="football_odds_return_list">返回列表</string>
+    <string name="football_odds_return_list">Return list</string>
+
+
 
 </resources>
