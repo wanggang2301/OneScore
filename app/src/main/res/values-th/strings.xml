@@ -1171,26 +1171,6 @@
     <string name="home_number_desc_bonus">滾動獎池</string>
     <string name="home_number_desc_yi">億</string>
     <string name="home_number_desc_wan">萬</string>
-
-    <string name="home_lottery_info_open">開獎</string>
-    <string name="home_lottery_info_stat">統計</string>
-    <string name="home_lottery_info_chart">圖表</string>
-    <string name="home_lottery_info_start_title">走勢統計</string>
-    <string name="home_lottery_info_start_tab_tm">特碼出現</string>
-    <string name="home_lottery_info_start_tab_pm">平碼出現</string>
-    <string name="home_lottery_info_start_tab_notm">特碼未出現</string>
-    <string name="home_lottery_info_tm_zodiac_count">特碼生肖出現次數</string>
-    <string name="home_lottery_info_tm_count">特碼出現次數</string>
-    <string name="home_lottery_info_tm_mantissa_count">特碼尾號出現次數</string>
-    <string name="home_lottery_info_tm_bo_count">特碼波色出現次數</string>
-    <string name="home_lottery_info_pm_zodiac_count">平碼生肖出現次數</string>
-    <string name="home_lottery_info_pm_count">平碼出現次數</string>
-    <string name="home_lottery_info_pm_mantissa_count">平碼尾號出現次數</string>
-    <string name="home_lottery_info_pm_bo_count">平碼波色出現次數</string>
-    <string name="home_lottery_info_tm_not_zodiac_count">特碼生肖連續未出</string>
-    <string name="home_lottery_info_tm_not_count">特碼連續未出</string>
-    <string name="home_lottery_info_tm_not_mantissa_count">特碼尾號連續未出</string>
-    <string name="home_lottery_info_tm_not_bo_count">特碼波色連續未出</string>
     <string name="home_lottery_info_tm_bo_r"> แดง</string>
     <string name="home_lottery_info_tm_bo_g">เขียว</string>
     <string name="home_lottery_info_tm_bo_b">น้ำเงิน</string>
@@ -1611,13 +1591,37 @@
 
     <string name="foot_neterror_post_photo">เครือข่ายผิดปกติ การแก้ไขล้มเหลว โปรดลองใหม่อีกครั้ง</string>
 
+    <string name="home_lottery_info_open">เปิดรางวัล</string>
+    <string name="home_lottery_info_stat">สถิติ</string>
+    <string name="home_lottery_info_chart">แผนภาพ</string>
+    <string name="home_lottery_info_start_title">แนวโน้มสถิติ</string>
+    <string name="home_lottery_info_start_tab_tm"> แสดงรางวัลพิเศษ</string>
+    <string name="home_lottery_info_start_tab_pm">แสดงรางวัลธรรมดา</string>
+    <string name="home_lottery_info_start_tab_notm">ยังไม่แสดงรางวัลพิเศษ</string>
+    <string name="home_lottery_info_tm_zodiac_count">จำนวนครั้งที่แสดงรางวัลพิเศษนักษัตร</string>
+    <string name="home_lottery_info_tm_count"> จำนวนครั้งที่แสดงรางวัลพิเศษ</string>
+    <string name="home_lottery_info_tm_mantissa_count">จำนวนครั้งที่แสดงรางวัลเลขท้ายพิเศษ</string>
+    <string name="home_lottery_info_tm_bo_count">จำนวนครั้งที่แสดงกระดานสีรางวัลนักษัตร</string>
+    <string name="home_lottery_info_pm_zodiac_count">จำนวนครั้งที่แสดงรางวัลนักษัตร</string>
+    <string name="home_lottery_info_pm_count">จำนวนครั้งที่แสดงรางวัล</string>
+    <string name="home_lottery_info_pm_mantissa_count">จำนวนครั้งที่แสดงรางวัลเลขท้าย</string>
+    <string name="home_lottery_info_pm_bo_count">จำนวนครั้งที่แสดงกระดานสีรางวัล</string>
+    <string name="home_lottery_info_tm_not_zodiac_count"> รางวัลนักษัตรไม่ออกต่อเนื่อง</string>
+    <string name="home_lottery_info_tm_not_count"> รางวัลพิเศษไม่ออกต่อเนื่อง</string>
+    <string name="home_lottery_info_tm_not_mantissa_count">รางวัลเลขท้ายพิเศษไม่ออกต่อเนื่อง</string>
+    <string name="home_lottery_info_tm_not_bo_count">กระดานสีรางวัลพิเศษไม่ออกต่อเนื่อง</string>
+
+
 
     <string name="share_summary_new"></string>
     <string name="share_match_pre"></string>
     <string name="share_match_live"></string>
     <string name="share_match_over"></string>
     <string name="share_match_live2"></string>
-    <string name="basket_analyze_all_rank">全部排名>>></string>
+
+    <string name="basket_analyze_all_rank">การจัดอันดับทั้งหมด>>></string>
     <string name="football_rfypl">เปอร์เซ็นต์แต้มต่อของค่าน้ำที่ชนะ</string>
-    <string name="football_odds_return_list">返回列表</string>
+    <string name="football_odds_return_list">กลับไปยังรายการ</string>
+
+
 </resources>
