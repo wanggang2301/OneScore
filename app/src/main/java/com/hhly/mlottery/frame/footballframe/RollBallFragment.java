@@ -108,15 +108,17 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
     private boolean isLoadedData = false;
     private static final String ISNEW_FRAMEWORK = "isnew_framework";
+    private static final String ENTRY_TYPE = "entryType";
 
 
     private boolean isNewFrameWork;
+    private int mEntryType; // 标记入口 判断是从哪里进来的 (0:首页入口  1:新导航条入口)
 
-    public static RollBallFragment newInstance(int index, boolean isNewFramWork) {
+    public static RollBallFragment newInstance(int index, boolean isNewFramWork,int entryType) {
         Bundle bundle = new Bundle();
         bundle.putInt(FRAGMENT_INDEX, index);
         bundle.putBoolean(ISNEW_FRAMEWORK, isNewFramWork);
-
+        bundle.putInt(ENTRY_TYPE , entryType);
         RollBallFragment fragment = new RollBallFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -127,6 +129,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             isNewFrameWork = getArguments().getBoolean(ISNEW_FRAMEWORK);
+            mEntryType = getArguments().getInt(ENTRY_TYPE);
         }
     }
 
@@ -496,6 +499,11 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         if (scoresMatchFocusEventBusEntity.getFgIndex() == 0) {
             this.feedAdapter(feedAdapterLists);
 //            ((ScoresFragment) getParentFragment()).focusCallback();
+            if (mEntryType == 0) {
+                ((ScoresFragment) getParentFragment()).firstFocusCallback();
+            }else if(mEntryType == 1){
+                ((FootBallScoreFragment) getParentFragment()).focusCallback();
+            }
         }
     }
 

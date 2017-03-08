@@ -143,6 +143,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 
     private static final String FRAGMENT_INDEX = "fragment_index";
     private static final String ISNEW_FRAMEWORK = "isnew_framework";
+    private static final String ENTRY_TYPE = "entryType";
 
     /**
      * 标志位，标志已经初始化完成
@@ -158,6 +159,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 
     private String teamLogoSuff;
     private boolean isNewFrameWork;
+    private int mEntryType; // 标记入口 判断是从哪里进来的 (0:首页入口  1:新导航条入口)
 
 
     public static ImmediateFragment newInstance(String param1, String param2) {
@@ -170,10 +172,11 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
     }
 
 
-    public static ImmediateFragment newInstance(int index, boolean isNewFramWork) {
+    public static ImmediateFragment newInstance(int index, boolean isNewFramWork ,int entryType) {
         Bundle bundle = new Bundle();
         bundle.putInt(FRAGMENT_INDEX, index);
         bundle.putBoolean(ISNEW_FRAMEWORK, isNewFramWork);
+        bundle.putInt(ENTRY_TYPE , entryType);
         ImmediateFragment fragment = new ImmediateFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -185,6 +188,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 
         if (getArguments() != null) {
             isNewFrameWork = getArguments().getBoolean(ISNEW_FRAMEWORK);
+            mEntryType = getArguments().getInt(ENTRY_TYPE);
         }
 
         EventBus.getDefault().register(this);
@@ -257,6 +261,12 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                     view.setTag(false);
                 }
 //                ((ScoresFragment) getParentFragment()).focusCallback();
+                //private int mEntryType; // 标记入口 判断是从哪里进来的 (0:首页入口  1:新导航条入口)
+                if (mEntryType == 0) {
+                    ((ScoresFragment) getParentFragment()).firstFocusCallback();
+                }else if(mEntryType == 1){
+                    ((FootBallScoreFragment) getParentFragment()).focusCallback();
+                }
             }
         };
 
@@ -1145,6 +1155,11 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
         if (scoresMatchFocusEventBusEntity.getFgIndex() == 1) {
             updateAdapter();
 //            ((ScoresFragment) getParentFragment()).focusCallback();
+            if (mEntryType == 0) {
+                ((ScoresFragment) getParentFragment()).firstFocusCallback();
+            }else if(mEntryType == 1){
+                ((FootBallScoreFragment) getParentFragment()).focusCallback();
+            }
         }
     }
 
