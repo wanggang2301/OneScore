@@ -9,6 +9,18 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
+            android:id="@+id/football_immediate_swiperefreshlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+            <android.support.v7.widget.RecyclerView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/recyclerview_focus"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </android.support.v7.widget.RecyclerView>
+        </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
         <LinearLayout
             android:id="@+id/football_immediate_loading_ll"
             android:layout_width="match_parent"
@@ -22,42 +34,55 @@
                 android:text="@string/loading_txt"
                 android:textColor="@color/loading_txt_color" />
         </LinearLayout>
-
-        <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
-            android:id="@+id/football_immediate_swiperefreshlayout"
+            <!--<LinearLayout-->
+                <!--android:id="@+id/to_football_focus_ll"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="vertical"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:visibility="gone"-->
+                <!--&gt;-->
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:text="@string/no_focus"/>-->
+                <!--<TextView-->
+                    <!--android:id="@+id/to_football_focus"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:paddingTop="10dp"-->
+                    <!--android:textColor="@color/exp_refresh"-->
+                    <!--android:text="@string/to_focus_now"/>-->
+            <!--</LinearLayout>-->
+        <!--暂无数据提示-->
+        <TextView
+            android:id="@+id/football_focus_nodata_txt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
-            <android.support.v7.widget.RecyclerView
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/recyclerview_focus"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </android.support.v7.widget.RecyclerView>
-        </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
+            android:gravity="center"
+            android:text="@string/nodata"
+            android:textSize="@dimen/text_size_20"
+            android:visibility="gone"
+            />
+        <!--加载中-->
+        <LinearLayout
+            android:id="@+id/football_focus_loading_ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            >
 
-            <LinearLayout
-                android:id="@+id/to_football_focus_ll"
+            <TextView
+                android:id="@+id/snooker_loading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/no_focus"/>
-                <TextView
-                    android:id="@+id/to_football_focus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:paddingTop="10dp"
-                    android:textColor="@color/exp_refresh"
-                    android:text="@string/to_focus_now"/>
-            </LinearLayout>
+                android:text="@string/loading_txt"
+                android:textColor="@color/loading_txt_color" />
+        </LinearLayout>
 
         <include layout="@layout/network_exception"/>
     </FrameLayout>

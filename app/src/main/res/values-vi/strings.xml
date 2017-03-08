@@ -1608,4 +1608,8 @@
     <string name="share_match_over"></string>
     <string name="share_match_live2"></string>
 
+    <string name="basket_analyze_all_rank">全部排名>>></string>
+    <string name="football_rfypl">Tỷ lệ kèo chấp điếm</string>
+    <string name="football_odds_return_list">返回列表</string>
+
 </resources>

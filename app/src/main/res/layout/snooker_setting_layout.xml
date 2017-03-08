@@ -149,7 +149,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:text="单双"
+                    android:text="@string/snooker_state_single_double"
                     android:textColor="#333333"
                     android:textSize="@dimen/text_size_15"/>
 

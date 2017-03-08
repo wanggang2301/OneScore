@@ -120,6 +120,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/analyze_selected_right"
+                    android:singleLine="true"
                     android:text="@string/intelligent_same_game"/>
 
             </RadioGroup>

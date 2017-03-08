@@ -102,7 +102,7 @@ public class InvitedActivity extends BaseActivity implements View.OnClickListene
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         public_btn_save = (Button) findViewById(R.id.public_btn_save);
-        public_btn_save.setVisibility(View.VISIBLE);
+        public_btn_save.setVisibility(View.GONE);
         public_btn_save.setOnClickListener(this);
         public_btn_save.setText(R.string.foot_details_share);
         public_btn_save.setTextColor(getResources().getColor(R.color.white));

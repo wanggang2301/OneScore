@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +30,7 @@ import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ResultDateUtil;
 
 import java.util.List;
+
 
 /**
  * Created by asus1 on 2016/4/8.
@@ -119,7 +119,7 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             return dateViewHolder;
 
         } else {
-            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_football_new, viewGroup, false);
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_football, viewGroup, false);
             ResultViewHolder resultViewHolder = new ResultViewHolder(view);
 
             //将创建的View注册点击事件
@@ -152,7 +152,7 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        if (datas.size()<=0 || datas==null ){
+        if (datas.size() <= 0 || datas == null) {
             return;
         }
 
@@ -178,7 +178,7 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     handicap = 1;
                 }
 
-                convert((ResultMultiAdapter.ResultViewHolder) holder, resultMatchDto.getMatchs(), handicap);
+                convert((ResultViewHolder) holder, resultMatchDto.getMatchs(), handicap);
             }
         }
     }
@@ -219,15 +219,12 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         TextView item_football_racename;
         TextView item_football_time;
-        TextView item_football_half_score;
         TextView item_football_frequency;
-        // TextView item_football_right_mid_score;
         TextView item_football_home_yc;
         TextView item_football_home_rc;
         TextView item_football_guest_rc;
         TextView item_football_guest_yc;
         TextView item_football_hometeam;
-        TextView item_football_full_score;
         TextView item_football_guestteam;
         TextView item_football_left_odds;
         TextView item_football_handicap_value;
@@ -243,6 +240,16 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         ImageView guest_icon;
 
 
+        TextView item_home_half_score;
+        TextView item_home_full_score;
+
+        TextView item_guest_half_score;
+        TextView item_guest_full_score;
+
+        TextView tv_match_type;
+
+        RelativeLayout rl_score;
+
         public ResultViewHolder(final View itemView) {
             super(itemView);
 
@@ -252,21 +259,28 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             item_football_racename = (TextView) itemView.findViewById(R.id.item_football_racename);
             item_football_time = (TextView) itemView.findViewById(R.id.item_football_time);
-            item_football_half_score = (TextView) itemView.findViewById(R.id.item_football_half_score);
             item_football_frequency = (TextView) itemView.findViewById(R.id.item_football_frequency);
-            // item_football_right_mid_score = (TextView) itemView.findViewById(R.id.item_football_right_mid_score);
             item_football_home_yc = (TextView) itemView.findViewById(R.id.item_football_home_yc);
             item_football_home_rc = (TextView) itemView.findViewById(R.id.item_football_home_rc);
             item_football_guest_rc = (TextView) itemView.findViewById(R.id.item_football_guest_rc);
             item_football_guest_yc = (TextView) itemView.findViewById(R.id.item_football_guest_yc);
             item_football_hometeam = (TextView) itemView.findViewById(R.id.item_football_hometeam);
-            item_football_full_score = (TextView) itemView.findViewById(R.id.item_football_full_score);
             item_football_guestteam = (TextView) itemView.findViewById(R.id.item_football_guestteam);
             item_football_left_odds = (TextView) itemView.findViewById(R.id.item_football_left_odds);
             item_football_handicap_value = (TextView) itemView.findViewById(R.id.item_football_handicap_value);
             item_football_right_odds = (TextView) itemView.findViewById(R.id.item_football_right_odds);
             item_football_odds_layout = (RelativeLayout) itemView.findViewById(R.id.item_football_odds_layout);
             item_football_content_ll = (LinearLayout) itemView.findViewById(R.id.item_football_content_ll);
+
+
+            item_home_half_score = (TextView) itemView.findViewById(R.id.tv_home_half_score);
+            item_home_full_score = (TextView) itemView.findViewById(R.id.tv_home_full_score);
+
+            item_guest_half_score = (TextView) itemView.findViewById(R.id.tv_guest_half_score);
+            item_guest_full_score = (TextView) itemView.findViewById(R.id.tv_guest_full_score);
+            tv_match_type = (TextView) itemView.findViewById(R.id.tv_match_type);
+
+            rl_score = (RelativeLayout) itemView.findViewById(R.id.rl_score);
 
             Iv_guangzhu = (ImageView) itemView.findViewById(R.id.Iv_guangzhu);
             home_icon = (ImageView) itemView.findViewById(R.id.home_icon);
@@ -275,7 +289,7 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     }
 
-    private void convert(final ResultMultiAdapter.ResultViewHolder holder, final Match match, int handicap) {
+    private void convert(final ResultViewHolder holder, final Match match, int handicap) {
 
         if (match.getItemBackGroundColorId() == R.color.item_football_event_yellow) {
             holder.item_football_content_ll.setBackgroundResource(match.getItemBackGroundColorId());
@@ -302,32 +316,44 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         //客队url
         final String guestlogourl = teamLogoPre + match.getGuestId().trim().trim() + teamLogoSuff;
 
-
-        //holder.home_icon.setTag(homelogourl);
-        //older.guest_icon.setTag(guestlogourl);
-        //ImagaeLoader -- 加载图片
-        ImageLoader.load(mContext,homelogourl,R.mipmap.score_default).into(holder.home_icon);
-        ImageLoader.load(mContext,guestlogourl,R.mipmap.score_default).into(holder.guest_icon);
+        ImageLoader.load(mContext, homelogourl, R.mipmap.score_default).into(holder.home_icon);
+        ImageLoader.load(mContext, guestlogourl, R.mipmap.score_default).into(holder.guest_icon);
 
 
         holder.item_football_racename.setText(match.getRacename());
         holder.item_football_racename.setTextColor(Color.parseColor(match.getRaceColor()));
         holder.item_football_time.setText(match.getTime());
-        holder.item_football_half_score.setTextColor(mContext.getResources().getColor(R.color.text_about_color));
-        holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.text_about_color));
+        // holder.item_football_half_score.setTextColor(mContext.getResources().getColor(R.color.text_about_color));
+        // holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.text_about_color));
+
+
+        holder.rl_score.setVisibility(View.GONE);
+        holder.tv_match_type.setVisibility(View.GONE);
 
 
         if ("0".equals(match.getStatusOrigin())) {// 未开
-            holder.item_football_full_score.setText("VS");
+           /* holder.item_football_full_score.setText("VS");
 
             holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.content_txt_grad));
-            // holder.setFakeBoldText(R.id.item_football_full_score, false);
             holder.item_football_half_score.setVisibility(View.INVISIBLE);
+*/
+            holder.rl_score.setVisibility(View.GONE);
+            holder.tv_match_type.setVisibility(View.VISIBLE);
+
 
         } else if ("1".equals(match.getStatusOrigin())) {// 上半场
 
-            holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
-            holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
+            holder.rl_score.setVisibility(View.VISIBLE);
+            holder.tv_match_type.setVisibility(View.GONE);
+
+
+            holder.item_home_half_score.setVisibility(View.INVISIBLE);
+            holder.item_guest_half_score.setVisibility(View.INVISIBLE);
+            holder.item_home_full_score.setText(match.getHomeScore());
+            holder.item_guest_full_score.setText(match.getGuestScore());
+            holder.item_home_full_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+            holder.item_guest_full_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+
             try {
                 int keeptime = Integer.parseInt(match.getKeepTime());// 设置时间
                 if (keeptime > 45) {
@@ -344,12 +370,24 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
             }
             holder.keeptime.setVisibility(View.VISIBLE);
-            holder.item_football_half_score.setVisibility(View.INVISIBLE);
 
 
         } else if ("3".equals(match.getStatusOrigin())) {// 下半场
-            holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
-            holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
+            //  holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
+            //  holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
+
+            holder.rl_score.setVisibility(View.VISIBLE);
+            holder.tv_match_type.setVisibility(View.GONE);
+
+
+            holder.item_home_half_score.setVisibility(View.VISIBLE);
+            holder.item_guest_half_score.setVisibility(View.VISIBLE);
+
+            holder.item_home_full_score.setText(match.getHomeScore());
+            holder.item_guest_full_score.setText(match.getGuestScore());
+            holder.item_home_full_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+            holder.item_guest_full_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+
 
             try {
                 int keeptime = Integer.parseInt(match.getKeepTime());
@@ -362,8 +400,10 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
                 }
 
-                holder.item_football_half_score.setText("(" + match.getHomeHalfScore() + ":" + match.getGuestHalfScore() + ")");
-                holder.item_football_half_score.setVisibility(View.VISIBLE);
+
+                holder.item_home_half_score.setText(match.getHomeHalfScore());
+                holder.item_guest_half_score.setText(match.getGuestHalfScore());
+
 
             } catch (Exception e) {
 
@@ -373,92 +413,182 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             holder.keeptime.setVisibility(View.VISIBLE);
         } else if ("4".equals(match.getStatusOrigin())) {// 加时
-            holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
-            holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
+
+
+            holder.rl_score.setVisibility(View.VISIBLE);
+            holder.tv_match_type.setVisibility(View.GONE);
+
+
+            holder.item_home_half_score.setVisibility(View.VISIBLE);
+            holder.item_guest_half_score.setVisibility(View.VISIBLE);
+
+            holder.item_home_full_score.setText(match.getHomeScore());
+            holder.item_guest_full_score.setText(match.getGuestScore());
+            holder.item_home_full_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+            holder.item_guest_full_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+
+
+            holder.item_home_half_score.setText(match.getHomeHalfScore());
+            holder.item_guest_half_score.setText(match.getGuestHalfScore());
+
+
 
             holder.keeptime.setText(mContext.getString(R.string.immediate_status_overtime));
             holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
 
             holder.keeptime.setVisibility(View.VISIBLE);
 
-            holder.item_football_half_score.setText("(" + match.getHomeHalfScore() + ":" + match.getGuestHalfScore() + ")");
-            holder.item_football_half_score.setVisibility(View.VISIBLE);
 
         } else if ("5".equals(match.getStatusOrigin())) {// 点球
 
+            holder.rl_score.setVisibility(View.VISIBLE);
+            holder.tv_match_type.setVisibility(View.GONE);
 
-            holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
-            holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
+
+            holder.item_home_half_score.setVisibility(View.VISIBLE);
+            holder.item_guest_half_score.setVisibility(View.VISIBLE);
+
+            holder.item_home_full_score.setText(match.getHomeScore());
+            holder.item_guest_full_score.setText(match.getGuestScore());
+            holder.item_home_full_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+            holder.item_guest_full_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+
+
+            holder.item_home_half_score.setText(match.getHomeHalfScore());
+            holder.item_guest_half_score.setText(match.getGuestHalfScore());
+
+
+            //  holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
+            //  holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
 
             holder.keeptime.setText(mContext.getString(R.string.immediate_status_point));
             holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
 
             holder.keeptime.setVisibility(View.VISIBLE);
 
-            holder.item_football_half_score.setText("(" + match.getHomeHalfScore() + ":" + match.getGuestHalfScore() + ")");
-            holder.item_football_half_score.setVisibility(View.VISIBLE);
+            //  holder.item_football_half_score.setText("(" + match.getHomeHalfScore() + ":" + match.getGuestHalfScore() + ")");
+            //  holder.item_football_half_score.setVisibility(View.VISIBLE);
 
 
         } else if ("-1".equals(match.getStatusOrigin())) {// 完场
 
+            holder.rl_score.setVisibility(View.VISIBLE);
+            holder.tv_match_type.setVisibility(View.GONE);
 
-            holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
+
+            holder.item_home_half_score.setVisibility(View.VISIBLE);
+            holder.item_guest_half_score.setVisibility(View.VISIBLE);
+
+            holder.item_home_full_score.setText(match.getHomeScore());
+            holder.item_guest_full_score.setText(match.getGuestScore());
+            holder.item_home_full_score.setTextColor(mContext.getResources().getColor(R.color.red));
+            holder.item_guest_full_score.setTextColor(mContext.getResources().getColor(R.color.red));
+
+
+            holder.item_home_half_score.setText(match.getHomeHalfScore());
+            holder.item_guest_half_score.setText(match.getGuestHalfScore());
+
+
+          /*  holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
             holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.red));
             holder.item_football_full_score.setVisibility(View.VISIBLE);
 
             holder.item_football_half_score.setText("(" + match.getHomeHalfScore() + ":" + match.getGuestHalfScore() + ")");
             holder.item_football_half_score.setTextColor(mContext.getResources().getColor(R.color.red));
-            holder.item_football_half_score.setVisibility(View.VISIBLE);
+            holder.item_football_half_score.setVisibility(View.VISIBLE);*/
             holder.keeptime.setVisibility(View.GONE);
 
         } else if ("2".equals(match.getStatusOrigin())) {// 中场
-            holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
+
+            holder.rl_score.setVisibility(View.VISIBLE);
+            holder.tv_match_type.setVisibility(View.GONE);
+
+
+            holder.item_home_half_score.setVisibility(View.VISIBLE);
+            holder.item_guest_half_score.setVisibility(View.VISIBLE);
+
+            holder.item_home_full_score.setText(match.getHomeScore());
+            holder.item_guest_full_score.setText(match.getGuestScore());
+            holder.item_home_full_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+            holder.item_guest_full_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+
+            holder.item_home_half_score.setText(match.getHomeHalfScore());
+            holder.item_guest_half_score.setText(match.getGuestHalfScore());
+
+
+           /* holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
             holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
-            holder.item_football_full_score.setVisibility(View.VISIBLE);
+            holder.item_football_full_score.setVisibility(View.VISIBLE);*/
 
 
             holder.keeptime.setText(mContext.getString(R.string.immediate_status_midfield));
             holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
             holder.keeptime.setVisibility(View.VISIBLE);
+/*
 
             holder.item_football_half_score.setText("(" + match.getHomeHalfScore() + ":" + match.getGuestHalfScore() + ")");
             holder.item_football_half_score.setVisibility(View.VISIBLE);
+*/
 
 
         } else if ("-10".equals(match.getStatusOrigin())) {// 取消
-            holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
-            // holder.setFakeBoldText(R.id.item_football_full_score, false);
+
+
+            holder.rl_score.setVisibility(View.GONE);
+            holder.tv_match_type.setVisibility(View.VISIBLE);
+
+
+
+       /*     holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
             holder.item_football_full_score.setText("VS");
             holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.content_txt_grad));
-            holder.item_football_full_score.setVisibility(View.VISIBLE);
+            holder.item_football_full_score.setVisibility(View.VISIBLE);*/
 
 
             holder.keeptime.setVisibility(View.VISIBLE);
             holder.keeptime.setText(mContext.getString(R.string.immediate_status_cancel));
             holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
 
-            holder.item_football_half_score.setVisibility(View.INVISIBLE);
+            // holder.item_football_half_score.setVisibility(View.INVISIBLE);
 
 
         } else if ("-11".equals(match.getStatusOrigin())) {// 待定
-            holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
-            // holder.setFakeBoldText(R.id.item_football_full_score, false);
+
+            holder.rl_score.setVisibility(View.GONE);
+            holder.tv_match_type.setVisibility(View.VISIBLE);
+
+
+            // holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
             holder.keeptime.setText(mContext.getString(R.string.immediate_status_hold));
             holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
             holder.keeptime.setVisibility(View.VISIBLE);
-            holder.item_football_full_score.setText("VS");
+          /*  holder.item_football_full_score.setText("VS");
             holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.content_txt_grad));
             holder.item_football_full_score.setVisibility(View.VISIBLE);
 
 
-            holder.item_football_half_score.setVisibility(View.INVISIBLE);
+            holder.item_football_half_score.setVisibility(View.INVISIBLE);*/
 
         } else if ("-12".equals(match.getStatusOrigin())) {// 腰斩
             holder.keeptime.setText(mContext.getString(R.string.immediate_status_cut));
             holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
-            holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
+
+
+            holder.rl_score.setVisibility(View.VISIBLE);
+            holder.tv_match_type.setVisibility(View.GONE);
+
+
+            holder.item_home_half_score.setVisibility(View.INVISIBLE);
+            holder.item_guest_half_score.setVisibility(View.INVISIBLE);
+            holder.item_home_full_score.setText(match.getHomeScore());
+            holder.item_guest_full_score.setText(match.getGuestScore());
+            holder.item_home_full_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+            holder.item_guest_full_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+
+
+           /* holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
             holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
-            holder.item_football_full_score.setVisibility(View.VISIBLE);
+            holder.item_football_full_score.setVisibility(View.VISIBLE);*/
 
             holder.keeptime.setVisibility(View.VISIBLE);
 
@@ -467,11 +597,25 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             holder.keeptime.setText(mContext.getString(R.string.immediate_status_mesomere));
             holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
-            holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
-            holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
-            holder.item_football_full_score.setVisibility(View.VISIBLE);
-
             holder.keeptime.setVisibility(View.VISIBLE);
+
+
+            holder.rl_score.setVisibility(View.VISIBLE);
+            holder.tv_match_type.setVisibility(View.GONE);
+
+
+            holder.item_home_half_score.setVisibility(View.INVISIBLE);
+            holder.item_guest_half_score.setVisibility(View.INVISIBLE);
+            holder.item_home_full_score.setText(match.getHomeScore());
+            holder.item_guest_full_score.setText(match.getGuestScore());
+            holder.item_home_full_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+            holder.item_guest_full_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+
+
+
+          /*  holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
+            holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
+            holder.item_football_full_score.setVisibility(View.VISIBLE);*/
 
 
         } else if ("-14".equals(match.getStatusOrigin())) {// 推迟
@@ -479,17 +623,25 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             holder.keeptime.setText(mContext.getString(R.string.immediate_status_postpone));
             holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
-            holder.item_football_full_score.setText(match.getHomeScore() + "-" + match.getGuestScore());
-            holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
+
+
+            //  holder.item_football_full_score.setText(match.getHomeScore() + "-" + match.getGuestScore());
+            //   holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
 
             holder.keeptime.setVisibility(View.VISIBLE);
 
 
-            holder.item_football_full_score.setText("VS");
+            holder.rl_score.setVisibility(View.GONE);
+            holder.tv_match_type.setVisibility(View.VISIBLE);
+
+
+
+
+           /* holder.item_football_full_score.setText("VS");
             holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.content_txt_grad));
             holder.item_football_full_score.setVisibility(View.VISIBLE);
             holder.item_football_half_score.setVisibility(View.INVISIBLE);
-
+*/
 
         }
 
@@ -509,7 +661,9 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         if ("-10".equals(match.getStatusOrigin()) && "-11".equals(match.getStatusOrigin()) && "-14".equals(match.getStatusOrigin()) && !"0".equals(match.getStatusOrigin())
                 && (match.getHomeScore() == null || match.getGuestScore() == null)) {
-            holder.item_football_full_score.setText(Html.fromHtml("<span><b>0</b></span><span>-</span><span><b>0</b></span>"));
+            //  holder.item_football_full_score.setText(Html.fromHtml("<span><b>0</b></span><span>-</span><span><b>0</b></span>"));
+            holder.item_home_full_score.setText(0 + "");
+            holder.item_guest_full_score.setText(0 + "");
         }
 
         if ("1".equals(match.getStatusOrigin()) || "3".equals(match.getStatusOrigin())) {// 显示秒的闪烁
@@ -567,25 +721,33 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
 
         if ("3".equals(match.getStatusOrigin()) || "2".equals(match.getStatusOrigin())) {// 显示右上角上半场比分
+            holder.item_home_half_score.setText(match.getHomeHalfScore());
+            holder.item_guest_half_score.setText(match.getGuestHalfScore());
 
-            holder.item_football_half_score.setText("(" + match.getHomeHalfScore() + "-" + match.getGuestHalfScore() + ")");
-            holder.item_football_half_score.setVisibility(View.VISIBLE);
+            // holder.item_football_half_score.setText("(" + match.getHomeHalfScore() + "-" + match.getGuestHalfScore() + ")");
+            //holder.item_football_half_score.setVisibility(View.VISIBLE);
 
 
         } else if ("-12".equals(match.getStatusOrigin()) || "-13".equals(match.getStatusOrigin())) {// 中断和腰斩
             // 有中场比分显示中场比分
             if (match.getHomeHalfScore() != null && match.getGuestHalfScore() != null) {
-                holder.item_football_half_score.setText("(" + match.getHomeHalfScore() + "-" + match.getGuestHalfScore() + ")");
-                holder.item_football_half_score.setVisibility(View.VISIBLE);
+                //  holder.item_football_half_score.setText("(" + match.getHomeHalfScore() + "-" + match.getGuestHalfScore() + ")");
+                // holder.item_football_half_score.setVisibility(View.VISIBLE);
+
+                holder.item_home_half_score.setText(match.getHomeHalfScore());
+                holder.item_guest_half_score.setText(match.getGuestHalfScore());
+
             } else {
-                holder.item_football_half_score.setVisibility(View.INVISIBLE);
+                // holder.item_football_half_score.setVisibility(View.INVISIBLE);
+
+                holder.item_home_half_score.setVisibility(View.INVISIBLE);
+                holder.item_guest_half_score.setVisibility(View.INVISIBLE);
             }
         }
 
 
         if ("".equals(match.getHome_rc()) || "0".equals(match.getHome_rc()) || match.getHome_rc() == null) {
             holder.item_football_home_rc.setVisibility(View.GONE);
-            // holder.item_football_hometeam.set
         } else {
             holder.item_football_home_rc.setText(match.getHome_rc());
             holder.item_football_home_rc.setVisibility(View.VISIBLE);
