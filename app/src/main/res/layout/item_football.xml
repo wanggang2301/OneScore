@@ -118,13 +118,12 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="10dp"
             android:paddingTop="10dp">
 
             <RelativeLayout
                 android:id="@+id/rl_home"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="90dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp">
 
@@ -157,7 +156,7 @@
                     <TextView
                         android:id="@+id/item_football_home_yc"
                         android:layout_width="8dp"
-                        android:layout_height="12.5dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
                         android:background="@mipmap/card_yellow"
@@ -169,7 +168,7 @@
                     <TextView
                         android:id="@+id/item_football_home_rc"
                         android:layout_width="8dp"
-                        android:layout_height="12.5dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
                         android:background="@mipmap/card_red"
@@ -210,7 +209,7 @@
                     <TextView
                         android:id="@+id/item_football_guest_yc"
                         android:layout_width="8dp"
-                        android:layout_height="12.5dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
                         android:background="@mipmap/card_yellow"
@@ -222,7 +221,7 @@
                     <TextView
                         android:id="@+id/item_football_guest_rc"
                         android:layout_width="8dp"
-                        android:layout_height="12.5dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
                         android:background="@mipmap/card_red"
@@ -249,10 +248,11 @@
             <RelativeLayout
                 android:id="@+id/rl_score"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="90dp"
                 android:layout_alignParentRight="true"
                 android:gravity="center_vertical"
-                android:paddingRight="60dp">
+
+                android:paddingRight="50dp">
 
                 <LinearLayout
                     android:id="@+id/ll_home_score"
@@ -269,7 +269,7 @@
                         android:id="@+id/tv_home_half_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
                         android:text="0"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/item_football_half_score" />
@@ -279,9 +279,9 @@
                         android:id="@+id/tv_home_full_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="20dp"
-                        android:gravity="center_vertical"
-
+                        android:gravity="center"
                         android:text="0"
                         android:textColor="@color/red"
                         android:textSize="@dimen/item_football_full_score" />
@@ -300,29 +300,107 @@
 
 
 
+
                     <TextView
                         android:id="@+id/tv_guest_half_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
                         android:text="0"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/item_football_half_score" />
-
 
                     <TextView
                         android:id="@+id/tv_guest_full_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="20dp"
-                        android:gravity="center_vertical"
+                        android:gravity="center"
                         android:text="0"
                         android:textColor="@color/red"
                         android:textSize="@dimen/item_football_full_score" />
 
                 </LinearLayout>
-
             </RelativeLayout>
+
+            <!-- <RelativeLayout
+                 android:id="@+id/rl_score"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentRight="true"
+                 android:gravity="center_vertical"
+                 android:paddingRight="60dp">
+
+                 <LinearLayout
+                     android:id="@+id/ll_home_score"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:gravity="center_vertical"
+                     android:orientation="horizontal"
+                     android:paddingBottom="5dp"
+                     android:paddingTop="5dp">
+
+
+
+                     <TextView
+                         android:id="@+id/tv_home_half_score"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:gravity="center_vertical"
+                         android:text="0"
+                         android:textColor="@color/res_pl_color"
+                         android:textSize="@dimen/item_football_half_score" />
+
+
+                     <TextView
+                         android:id="@+id/tv_home_full_score"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_marginLeft="20dp"
+                         android:gravity="center_vertical"
+
+                         android:text="0"
+                         android:textColor="@color/red"
+                         android:textSize="@dimen/item_football_full_score" />
+
+                 </LinearLayout>
+
+
+                 <LinearLayout
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_below="@id/ll_home_score"
+                     android:gravity="center_vertical"
+                     android:orientation="horizontal"
+                     android:paddingBottom="5dp"
+                     android:paddingTop="5dp">
+
+
+
+                     <TextView
+                         android:id="@+id/tv_guest_half_score"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:gravity="center_vertical"
+                         android:text="0"
+                         android:textColor="@color/res_pl_color"
+                         android:textSize="@dimen/item_football_half_score" />
+
+
+                     <TextView
+                         android:id="@+id/tv_guest_full_score"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_marginLeft="20dp"
+                         android:gravity="center_vertical"
+                         android:text="0"
+                         android:textColor="@color/red"
+                         android:textSize="@dimen/item_football_full_score" />
+
+                 </LinearLayout>
+
+             </RelativeLayout>-->
 
 
             <RelativeLayout
