@@ -109,8 +109,6 @@
                     android:text="1.07"
                     android:textColor="@color/version"
                     android:textSize="@dimen/item_football_right_odds" />
-
-
             </RelativeLayout>
 
         </RelativeLayout>
