@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.config.BaseURLs;
@@ -151,7 +152,13 @@ public class BasketballScoresActivity extends BaseWebSocketActivity implements V
         pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getSupportFragmentManager());
         mViewPager.setAdapter(pureViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
+            mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+        }else{
+            mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        }
+
         mViewPager.setCurrentItem(currentFragmentId);
         mViewPager.setOffscreenPageLimit(titles.size());
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

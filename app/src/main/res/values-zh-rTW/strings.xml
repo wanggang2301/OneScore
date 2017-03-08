@@ -226,6 +226,9 @@
     <string name="asialet">亚赔</string>
     <string name="euro">欧赔</string>
     <string name="asiasize">大小球</string>
+    <string name="roll_asialet">亚</string>
+    <string name="roll_euro">欧</string>
+    <string name="roll_asiasize">大</string>
     <string name="oddgone">不显示</string>
     <string name="frame_video_ing_txt">視頻直播中</string>
     <string name="frame_home_video_txt">視頻直播</string>

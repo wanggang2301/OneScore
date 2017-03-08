@@ -21,6 +21,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
 import com.hhly.mlottery.activity.BasketballSettingActivity;
@@ -165,7 +166,13 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
         mViewPager.setAdapter(pureViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
+            mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+        }else{
+            mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        }
+
         mViewPager.setCurrentItem(currentFragmentId);
         mViewPager.setOffscreenPageLimit(titles.size());
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

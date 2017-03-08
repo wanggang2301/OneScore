@@ -733,9 +733,9 @@
 
 
     <!--指数-->
-    <string name="odd_plate_rb_txt">kèo châu Á</string>
+    <string name="odd_plate_rb_txt">HDP</string>
     <string name="odd_back">Quay trở lại danh sách</string>
-    <string name="odd_op_rb_txt">Tỷ lệ châu Âu</string>
+    <string name="odd_op_rb_txt">1X2</string>
     <string name="odd_company_txt">công ty</string>
     <string name="odd_home_txt">đội chủ</string>
     <string name="odd_dish_txt">kèo</string>
@@ -789,7 +789,7 @@
     <string name="sound4">Âm thanh4</string>
     <string name="asialet">Tỷ lệ châu Á</string>
     <string name="euro">Tỷ lệ châu Âu</string>
-    <string name="asiasize">Tài xỉu</string>
+    <string name="asiasize">O/U</string>
     <string name="oddgone">không hiện thị</string>
     <string name="about_product_msg_txt_simple">Tỷ số nhất là một sản chuyên gia tỷ số thể thao ,hiện tài tốc độ xuất tỷ số và phạt góc ưu tiên trong lĩnh vực cả thế giới.</string>
     <string name="frame_home_jieguo_txt">Giải thưởng sổ xố</string>
@@ -966,7 +966,7 @@
 
     <!-- 彩票 -->
     <string name="number_info_stopSell">hết giờ bán</string>
-    <string name="number_info_countDown">xổ số mới nhất</string>
+    <string name="number_info_countDown">xổ số mới nhất đếm ngược</string>
     <string name="number_info_countDown2">đếm ngược</string>
     <string name="number_save_success">lưu thành công</string>
     <string name="number_loading_txt">Đang cập nhật......</string>
@@ -1611,5 +1611,9 @@
     <string name="basket_analyze_all_rank">全部排名>>></string>
     <string name="football_rfypl">Tỷ lệ kèo chấp điếm</string>
     <string name="football_odds_return_list">返回列表</string>
+
+    <string name="roll_asialet">HDP</string>
+    <string name="roll_asiasize">O/U</string>
+    <string name="roll_euro">1X2</string>
 
 </resources>

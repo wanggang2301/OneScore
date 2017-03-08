@@ -940,7 +940,7 @@
     <!-- ล็อดเตอรี่ 彩票 -->
 
     <string name="number_info_stopSell">ปิดการขาย</string>
-    <string name="number_info_countDown">ล็อตเตอรี่ล่าสุด</string>
+    <string name="number_info_countDown">ล็อตเตอรี่ล่าสุด นับถอยหลัง</string>
     <string name="number_info_countDown2">นับถอยหลัง</string>
     <string name="number_save_success">บันทึกสำเร็จ</string>
     <string name="number_loading_txt">กำลังโหลด......</string>
@@ -1623,5 +1623,8 @@
     <string name="football_rfypl">เปอร์เซ็นต์แต้มต่อของค่าน้ำที่ชนะ</string>
     <string name="football_odds_return_list">กลับไปยังรายการ</string>
 
+    <string name="roll_asialet">HDP</string>
+    <string name="roll_asiasize">O/U</string>
+    <string name="roll_euro">1X2</string>
 
 </resources>

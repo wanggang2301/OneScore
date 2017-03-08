@@ -1616,5 +1616,8 @@
     <string name="football_rfypl">让分赢盘率</string>
     <string name="football_odds_return_list">返回列表</string>
 
+    <string name="roll_asialet">亚</string>
+    <string name="roll_euro">欧</string>
+    <string name="roll_asiasize">大</string>
 
 </resources>
