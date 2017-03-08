@@ -39,9 +39,12 @@
     </RadioGroup>
 
     <LinearLayout
+        android:layout_below="@+id/radio_group"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/radio_group"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:orientation="vertical">
 
 
@@ -70,7 +73,8 @@
                         android:padding="10dp"
                         android:text="@string/foot_event"
                         android:textColor="#3F5672"
-                        android:textSize="@dimen/text_size_13" />
+                        android:textSize="@dimen/text_size_13"
+                        android:id="@+id/textView11" />
 
                     <View
                         android:layout_width="match_parent"
@@ -130,7 +134,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:orientation="horizontal"
-                    android:paddingBottom="5dp"
+                    android:paddingBottom="10dp"
                     android:paddingTop="10dp">
 
                     <ImageView
@@ -151,23 +155,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:src="@mipmap/event_penalty" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="2dp"
-                        android:text="@string/foot_event_penalty"
-                        android:textColor="@color/res_pl_color"
-                        android:textSize="@dimen/text_size_10" />
-
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="6dp"
                         android:src="@mipmap/event_rc" />
 
                     <TextView
@@ -183,7 +171,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
 
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="6dp"
                         android:src="@mipmap/event_yc" />
 
                     <TextView
@@ -198,7 +186,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="6dp"
 
                         android:src="@mipmap/event_ytor" />
 
@@ -210,22 +198,20 @@
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/text_size_10" />
 
-                </LinearLayout>
 
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:orientation="horizontal"
                     android:paddingBottom="10dp"
-                    android:paddingTop="5dp">
-
-
+                    android:paddingTop="10dp">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="6dp"
 
                         android:src="@mipmap/event_player" />
 
@@ -241,7 +227,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="6dp"
 
                         android:src="@mipmap/event_corner" />
 
@@ -257,7 +243,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="6dp"
 
                         android:src="@mipmap/event_half" />
 
@@ -273,7 +259,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="6dp"
 
                         android:src="@mipmap/event_finish" />
 
@@ -702,6 +688,9 @@
                     android:id="@+id/ll_trend_main"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/fl_attackTrend_loading"
+                    android:layout_toRightOf="@+id/fl_attackTrend_loading"
                     android:orientation="vertical"
                     android:visibility="visible">
 
@@ -718,11 +707,14 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:paddingLeft="20dp">
+                            android:paddingLeft="5dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxEms="4"
+                                android:singleLine="true"
                                 android:text="@string/shoot_correct_txt"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/text_size_11" />
@@ -741,7 +733,7 @@
                                 android:layout_width="10dp"
                                 android:layout_height="1.5dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="15dp"
+                                android:layout_marginLeft="10dp"
                                 android:background="#C23531"
                                 android:gravity="center" />
 
@@ -759,7 +751,7 @@
                                 android:layout_width="10dp"
                                 android:layout_height="1.5dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="10dp"
+                                android:layout_marginLeft="5dp"
                                 android:background="@color/blue" />
 
                             <TextView
@@ -768,34 +760,6 @@
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="3dp"
                                 android:text="客队"
-                                android:textSize="@dimen/text_size_10" />
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="10dp"
-                                android:src="@mipmap/chart_goal" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="3dp"
-                                android:text="进球"
-                                android:textSize="@dimen/text_size_10" />
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="10dp"
-                                android:src="@mipmap/chart_corner" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="3dp"
-                                android:text="角球"
                                 android:textSize="@dimen/text_size_10" />
 
 
@@ -812,8 +776,44 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:src="@mipmap/chart_goal" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="3dp"
+                            android:text="@string/foot_event_goal"
+                            android:textSize="@dimen/text_size_10" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:src="@mipmap/chart_corner" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="3dp"
+                            android:text="@string/foot_event_corner"
+                            android:textSize="@dimen/text_size_10" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
                         android:background="@color/white"
                         android:orientation="vertical"
                         android:paddingBottom="5dp"
@@ -826,14 +826,18 @@
                             android:layout_marginTop="10dp"
                             android:background="@color/white"
                             android:orientation="horizontal"
-                            android:paddingLeft="20dp">
+                            android:paddingLeft="5dp">
 
                             <TextView
+                                android:id="@+id/textView10"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxEms="4"
+                                android:singleLine="true"
                                 android:text="@string/shoot_miss_txt"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/text_size_11" />
+                                android:textSize="@dimen/text_size_10" />
 
                             <TextView
                                 android:id="@+id/tv_shotAside"
@@ -849,7 +853,7 @@
                                 android:layout_width="10dp"
                                 android:layout_height="1.5dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="15dp"
+                                android:layout_marginLeft="10dp"
                                 android:background="#C23531"
                                 android:gravity="center" />>
 
@@ -865,7 +869,7 @@
                                 android:layout_width="10dp"
                                 android:layout_height="1.5dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="10dp"
+                                android:layout_marginLeft="5dp"
                                 android:background="@color/blue" />
 
                             <TextView
@@ -876,33 +880,6 @@
                                 android:text="客队"
                                 android:textSize="@dimen/text_size_10" />
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="10dp"
-                                android:src="@mipmap/chart_goal" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="3dp"
-                                android:text="进球"
-                                android:textSize="@dimen/text_size_10" />
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="10dp"
-                                android:src="@mipmap/chart_corner" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="3dp"
-                                android:text="角球"
-                                android:textSize="@dimen/text_size_10" />
 
                         </LinearLayout>
 
@@ -913,11 +890,44 @@
                             android:background="@color/white"
                             android:paddingLeft="10dp"></com.github.mikephil.charting.charts.LineChart>
                     </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:src="@mipmap/chart_goal" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="3dp"
+                            android:text="@string/foot_event_goal"
+                            android:textSize="@dimen/text_size_10" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:src="@mipmap/chart_corner" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="3dp"
+                            android:text="@string/foot_event_corner"
+                            android:textSize="@dimen/text_size_10" />
+
+                    </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
                         android:background="@color/white"
                         android:orientation="vertical"
                         android:paddingBottom="5dp"
@@ -930,11 +940,14 @@
                             android:layout_marginTop="10dp"
                             android:background="@color/white"
                             android:orientation="horizontal"
-                            android:paddingLeft="20dp">
+                            android:paddingLeft="5dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxEms="4"
+                                android:singleLine="true"
                                 android:text="@string/danger_attack_txt"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/text_size_11" />
@@ -946,14 +959,14 @@
                                 android:paddingLeft="3dp"
                                 android:text=""
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/text_size_11" />
+                                android:textSize="@dimen/text_size_10" />
 
 
                             <View
                                 android:layout_width="10dp"
                                 android:layout_height="1.5dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="15dp"
+                                android:layout_marginLeft="10dp"
                                 android:background="#C23531"
                                 android:gravity="center" />
 
@@ -969,7 +982,7 @@
                                 android:layout_width="10dp"
                                 android:layout_height="1.5dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="10dp"
+                                android:layout_marginLeft="5dp"
                                 android:background="@color/blue" />
 
                             <TextView
@@ -981,33 +994,6 @@
                                 android:textSize="@dimen/text_size_10" />
 
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="10dp"
-                                android:src="@mipmap/chart_goal" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="3dp"
-                                android:text="进球"
-                                android:textSize="@dimen/text_size_10" />
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="10dp"
-                                android:src="@mipmap/chart_corner" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="3dp"
-                                android:text="角球"
-                                android:textSize="@dimen/text_size_10" />
 
                         </LinearLayout>
 
@@ -1019,7 +1005,40 @@
                             android:paddingLeft="10dp"></com.github.mikephil.charting.charts.LineChart>
 
                     </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:src="@mipmap/chart_goal" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="3dp"
+                            android:text="@string/foot_event_goal"
+                            android:textSize="@dimen/text_size_10" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:src="@mipmap/chart_corner" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="3dp"
+                            android:text="@string/foot_event_corner"
+                            android:textSize="@dimen/text_size_10" />
+
+                    </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -1033,14 +1052,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="5dp"
                             android:background="@color/white"
                             android:orientation="horizontal"
-                            android:paddingLeft="20dp">
+                            android:paddingLeft="5dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxEms="4"
+                                android:singleLine="true"
                                 android:text="@string/shoot"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/text_size_11" />
@@ -1059,7 +1081,7 @@
                                 android:layout_width="10dp"
                                 android:layout_height="1.5dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="15dp"
+                                android:layout_marginLeft="10dp"
                                 android:background="#C23531"
                                 android:gravity="center" />
 
@@ -1075,7 +1097,7 @@
                                 android:layout_width="10dp"
                                 android:layout_height="1.5dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="10dp"
+                                android:layout_marginLeft="5dp"
                                 android:background="@color/blue" />
 
                             <TextView
@@ -1087,33 +1109,6 @@
                                 android:textSize="@dimen/text_size_10" />
 
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="10dp"
-                                android:src="@mipmap/chart_goal" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="3dp"
-                                android:text="进球"
-                                android:textSize="@dimen/text_size_10" />
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="10dp"
-                                android:src="@mipmap/chart_corner" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="3dp"
-                                android:text="角球"
-                                android:textSize="@dimen/text_size_10" />
 
                         </LinearLayout>
 
