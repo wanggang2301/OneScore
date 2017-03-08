@@ -63,7 +63,7 @@ public class BasketballInfomationFragment extends Fragment {
         viewpager.setOffscreenPageLimit(1);//设置预加载页面的个数。
         viewpager.setAdapter(mTabsAdapter);
         tabLayout.setupWithViewPager(viewpager);
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+//        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 }
