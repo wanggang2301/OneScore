@@ -412,6 +412,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/basket_analyze_has"
+                    android:singleLine="true"
                     android:textColor="@color/content_txt_light_grad"
                     android:textSize="@dimen/text_size_10"/>
 
@@ -439,6 +440,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/new_analyze_goal_differ"
+                    android:singleLine="true"
                     android:textColor="@color/content_txt_light_grad"
                     android:textSize="@dimen/text_size_10"/>
 
@@ -746,7 +748,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_toRightOf="@id/home_goal"
-                        android:text="球"
+                        android:text="@string/football_analyze_ball"
                         android:textColor="@color/odds_details"
                         android:textSize="@dimen/text_size_10"
                         />
@@ -788,7 +790,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_toEndOf="@id/guest_lose"
                         android:layout_toRightOf="@id/guest_lose"
-                        android:text="球"
+                        android:text="@string/football_analyze_ball"
                         android:textColor="@color/more_record"
                         android:textSize="@dimen/text_size_10"/>
                 </RelativeLayout>
@@ -837,7 +839,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_toRightOf="@id/home_lose"
-                        android:text="球"
+                        android:text="@string/football_analyze_ball"
                         android:textColor="@color/odds_details"
                         android:textSize="@dimen/text_size_10"
                         />
@@ -881,7 +883,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_toEndOf="@id/guest_goal"
                         android:layout_toRightOf="@id/guest_goal"
-                        android:text="球"
+                        android:text="@string/football_analyze_ball"
                         android:textColor="@color/more_record"
                         android:textSize="@dimen/text_size_10"/>
                 </RelativeLayout>

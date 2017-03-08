@@ -180,13 +180,13 @@ public class AnalyzeAsiaAdapter extends BaseAdapter{
                     List<NewAnalyzeBean.SizeTrendEntity.BattleHistoryEntity.TotListEntity> listLet=analyzeBean.getSizeTrend().getBattleHistory().getTotList();
                     for(int i=0;i<listLet.size();i++){
                         if(listLet.get(i).getTot()==0){ //第i场比赛 走
-                            tvList.get(i).setText("走");
+                            tvList.get(i).setText(mContext.getString(R.string.new_analyze_draw));
                             tvList.get(i).setTextColor(mContext.getResources().getColor(R.color.more_record));
                         }else if(listLet.get(i).getTot()==1){
-                            tvList.get(i).setText("大");
+                            tvList.get(i).setText(mContext.getString(R.string.basket_handicap_big));
                             tvList.get(i).setTextColor(mContext.getResources().getColor(R.color.football_analyze_win_color));
                         }else if(listLet.get(i).getTot()==2){
-                            tvList.get(i).setText("小");
+                            tvList.get(i).setText(mContext.getString(R.string.basket_handicap_small));
                             tvList.get(i).setTextColor(mContext.getResources().getColor(R.color.football_analyze_lose_color));
                         }
                     }

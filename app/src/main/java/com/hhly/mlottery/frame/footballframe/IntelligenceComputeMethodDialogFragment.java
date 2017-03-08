@@ -348,13 +348,13 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
         String unColoredMsg = String.format(Locale.getDefault(), messageString, history, home, guest);
         SpannableStringBuilder style = new SpannableStringBuilder(unColoredMsg);
 
-        style.setSpan(new ForegroundColorSpan(combatColor), messageString.indexOf("交"),
-                messageString.indexOf("交") + 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        style.setSpan(new ForegroundColorSpan(hostColor), messageString.indexOf("主"),
-                messageString.indexOf("主") + 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        style.setSpan(new ForegroundColorSpan(guestColor), messageString.indexOf("客"),
-                messageString.indexOf("客") + 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        mMessage.setText(style);
+//        style.setSpan(new ForegroundColorSpan(combatColor), messageString.indexOf("交"),
+//                messageString.indexOf("交") + 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        style.setSpan(new ForegroundColorSpan(hostColor), messageString.indexOf("主"),
+//                messageString.indexOf("主") + 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        style.setSpan(new ForegroundColorSpan(guestColor), messageString.indexOf("客"),
+//                messageString.indexOf("客") + 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mMessage.setText(unColoredMsg);
         setResult();
     }
 
