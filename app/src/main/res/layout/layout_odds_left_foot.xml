@@ -9,6 +9,6 @@
     android:gravity="center"
     android:paddingBottom="12dp"
     android:paddingTop="12dp"
-    android:text="返回列表"
+    android:text="@string/football_odds_return_list"
     android:textSize="@dimen/text_size_10"
     tools:layout_marginTop="100dp"/>

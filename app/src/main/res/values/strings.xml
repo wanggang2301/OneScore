@@ -1612,5 +1612,8 @@
     <string name="tennis_match_over">完</string>
     <string name="tennis_match_not_start">未开始</string>
     <string name="tennis_match_join">进行中</string>
+    <string name="basket_analyze_all_rank">全部排名>>></string>
+    <string name="football_rfypl">让分赢盘率</string>
+    <string name="football_odds_return_list">返回列表</string>
 
 </resources>

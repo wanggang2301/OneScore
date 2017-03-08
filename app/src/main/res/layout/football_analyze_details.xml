@@ -134,7 +134,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="胜率"
+                                    android:text="@string/winpro"
                                     android:layout_gravity="center"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/progress_score"/>
@@ -157,7 +157,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="大球率"
+                                    android:text="@string/new_analyze_daqiulv"
                                     android:layout_gravity="center"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/progress_score"/>
@@ -180,7 +180,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="让分赢盘率"
+                                    android:text="@string/football_rfypl"
                                     android:layout_gravity="center"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/progress_score"/>
@@ -370,7 +370,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="胜率"
+                                    android:text="@string/winpro"
                                     android:layout_gravity="center"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/progress_score"/>
@@ -393,7 +393,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="大球率"
+                                    android:text="@string/new_analyze_daqiulv"
                                     android:layout_gravity="center"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/progress_score"/>
@@ -416,7 +416,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="让分赢盘率"
+                                    android:text="@string/football_rfypl"
                                     android:layout_gravity="center"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/progress_score"/>
@@ -572,7 +572,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="胜率"
+                                    android:text="@string/winpro"
                                     android:layout_gravity="center"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/progress_score"/>
@@ -595,7 +595,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="大球率"
+                                    android:text="@string/new_analyze_daqiulv"
                                     android:layout_gravity="center"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/progress_score"/>
@@ -618,7 +618,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="让分赢盘率"
+                                    android:text="@string/football_rfypl"
                                     android:layout_gravity="center"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/progress_score"/>

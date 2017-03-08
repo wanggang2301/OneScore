@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -14,12 +15,12 @@
             android:id="@+id/tv_league_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingBottom="7dp"
             android:paddingLeft="10dp"
             android:paddingTop="7dp"
-            android:paddingBottom="7dp"
-            android:text="德甲 02:30"
             android:textColor="@color/res_name_color"
-            android:textSize="13sp" />
+            android:textSize="@dimen/info_center_title"
+            tools:text="德甲 02:30" />
     </LinearLayout>
 
     <RelativeLayout
@@ -48,21 +49,13 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
+                android:ellipsize="end"
+                android:lines="1"
+                android:maxEms="8"
                 android:paddingLeft="10dp"
-                android:text="索尔"
                 android:textColor="@color/listview_bg"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/tv_index_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:alpha="0.5"
-                android:paddingLeft="10dp"
-                android:text="大小盘指数"
-                android:textColor="@color/listview_bg"
-                android:textSize="13sp" />
+                android:textSize="@dimen/info_center_title"
+                tools:text="索尔" />
 
             <TextView
                 android:id="@+id/tv_guest_name"
@@ -70,11 +63,30 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:ellipsize="end"
+                android:lines="1"
+                android:maxEms="8"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:text="布雷斯特"
                 android:textColor="@color/listview_bg"
-                android:textSize="13sp" />
+                android:textSize="@dimen/info_center_title"
+                tools:text="布雷斯特" />
+
+            <TextView
+                android:id="@+id/tv_index_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_guest_name"
+                android:layout_alignBottom="@+id/tv_guest_name"
+                android:layout_centerHorizontal="true"
+                android:alpha="0.5"
+                android:ellipsize="end"
+                android:lines="1"
+                android:maxEms="10"
+                android:paddingLeft="10dp"
+                android:textColor="@color/listview_bg"
+                android:textSize="@dimen/info_center_title"
+                tools:text="大小盘指数" />
         </RelativeLayout>
 
         <TextView
@@ -84,9 +96,9 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:padding="10dp"
-            android:text="50%"
             android:textColor="@color/listview_bg"
-            android:textSize="20sp" />
+            android:textSize="@dimen/info_center_value"
+            tools:text="50%" />
 
         <TextView
             android:id="@+id/tv_home_flag"
@@ -95,21 +107,13 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxEms="16"
             android:padding="10dp"
-            android:text="半一盘上半场赢盘概率"
             android:textColor="@color/listview_bg"
-            android:textSize="10sp" />
-
-        <TextView
-            android:id="@+id/tv_guest_data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:padding="10dp"
-            android:text="50%"
-            android:textColor="@color/listview_bg"
-            android:textSize="20sp" />
+            android:textSize="@dimen/info_center_desc"
+            tools:text="半一盘上半场赢盘概率" />
 
         <TextView
             android:id="@+id/tv_guest_flag"
@@ -118,10 +122,26 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxEms="16"
             android:padding="10dp"
-            android:text="半一盘上半场赢盘概率"
             android:textColor="@color/listview_bg"
-            android:textSize="10sp" />
+            android:textSize="@dimen/info_center_desc"
+            tools:text="半一盘上半场赢盘概率" />
+
+        <TextView
+            android:id="@+id/tv_guest_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="@color/listview_bg"
+            android:textSize="@dimen/info_center_value"
+            tools:text="50%"
+            android:layout_alignBaseline="@+id/tv_home_data"
+            android:layout_alignBottom="@+id/tv_home_data"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
 
     <View

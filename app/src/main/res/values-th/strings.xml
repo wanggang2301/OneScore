@@ -616,22 +616,22 @@
     <string name="chart_ball_call_user_not">\@ไม่มีผู้ใช้</string>
     <string name="chart_ball_report_user_not"> ไม่มีผู้ใช้ที่ถูกรีพอร์ต</string>
     <string name="chart_ball_banned">คุณถูกผู้ดูแลแบนบทสนทนา，แบนบทสนทนาเป็นเวลา</string>
-    <string name="local_chitule"> กินแกลบแล้ว</string>
-    <string name="local_dacaipan"> ตัดสิน</string>
-    <string name="local_fubaila"> คอรัปชั่น</string>
-    <string name="local_jinggaoni"> เตือนคุณไว้</string>
-    <string name="local_juyijing"> หดรูตูด</string>
-    <string name="local_mengkuanle"> สับสน</string>
-    <string name="local_qiudatui">ร้องขอเทพ</string>
-    <string name="local_sesese">ยิงยิงยิง</string>
-    <string name="local_shangtiantai">จะโดดตึกแล้ว</string>
-    <string name="local_shihuale">เสียเงิน</string>
-    <string name="local_shoumila">รับเงิน</string>
-    <string name="local_touzhele"> แอบขำ</string>
-    <string name="local_xihushuiya">ร้องไห้</string>
-    <string name="local_yayajing"> ปลอบขวัญ</string>
-    <string name="local_youqingguanlaoye"> โปรดคุ้มครอง</string>
-    <string name="local_zailaiyijiao">เอามาอีก1สตางค์</string>
+    <string name="local_chitule">吃土了</string>
+    <string name="local_dacaipan">打裁判</string>
+    <string name="local_fubaila">腐败啦</string>
+    <string name="local_jinggaoni">警告你</string>
+    <string name="local_juyijing">菊一紧</string>
+    <string name="local_mengkuanle">懵圈了</string>
+    <string name="local_qiudatui">求大腿</string>
+    <string name="local_sesese">射射射</string>
+    <string name="local_shangtiantai">上天台</string>
+    <string name="local_shihuale">石化了</string>
+    <string name="local_shoumila">收米啦</string>
+    <string name="local_touzhele">偷着乐</string>
+    <string name="local_xihushuiya">西湖水呀</string>
+    <string name="local_yayajing">压压惊</string>
+    <string name="local_youqingguanlaoye">有请关老爷</string>
+    <string name="local_zailaiyijiao">再来一角</string>
     <string name="chart_ball_new_msg"> มีข้อความใหม่</string>
     <string name="chart_ball_null_content">แขกนั่งลงแล้วมาพูดคุยกัน</string>
     <string name="chart_ball_login_error">การตรวจสอบล็อกอินล้มเหลว，กรุณาล็อกอินใหม่อีกครั้ง!</string>
@@ -1610,4 +1610,14 @@
     <string name="basket_live">ถ่ายทอดสด</string>
 
     <string name="foot_neterror_post_photo">เครือข่ายผิดปกติ การแก้ไขล้มเหลว โปรดลองใหม่อีกครั้ง</string>
+
+
+    <string name="share_summary_new"></string>
+    <string name="share_match_pre"></string>
+    <string name="share_match_live"></string>
+    <string name="share_match_over"></string>
+    <string name="share_match_live2"></string>
+    <string name="basket_analyze_all_rank">全部排名>>></string>
+    <string name="football_rfypl">เปอร์เซ็นต์แต้มต่อของค่าน้ำที่ชนะ</string>
+    <string name="football_odds_return_list">返回列表</string>
 </resources>

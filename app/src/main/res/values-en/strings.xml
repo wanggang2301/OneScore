@@ -1,0 +1,1473 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <!--足球事件直播-->
+    <string name="foot_event">Event</string>
+    <string name="foot_trend">Trend</string>
+    <string name="foot_statictics">Statistics</string>
+    <string name="foot_event_goal">Goal</string>
+    <string name="foot_event_rc">Red Card</string>
+    <string name="foot_event_yc">Yellow Card</string>
+    <string name="foot_event_ytor">Two yellow cards and a red card</string>
+    <string name="foot_event_ychanger">Two yellow cards earn a red card</string>
+    <string name="foot_event_player">Substitution</string>
+    <string name="foot_event_corner">Corner</string>
+    <string name="foot_event_half">HT</string>
+    <string name="foot_event_finish">FT</string>
+    <string name="foot_event_di">No.</string>
+    <string name="foot_event_ge"></string>
+    <string name="foot_event_zhang"></string>
+    <string name="foot_event_nomatchstate">No matches state</string>
+    <string name="foot_event_in">In</string>
+    <string name="foot_event_out">Off</string>
+    <string name="foot_event_num">No.</string>
+    <string name="matchIsNotStart">Match not start yet</string>
+    <string name="goChat">Go to have a chat</string>
+    <string name="shot_nodata">No shot on target data.</string>
+    <string name="shotAside_nodata">No shot off target data.</string>
+    <string name="dangerAttackk_nodata">No dangerous attack data.</string>
+    <string name="attack_nodata">No attack data.</string>
+    <string name="time">Time(T)</string>
+
+
+    <!--Basketball Database-->
+    <string name="basket_info_hot">Hot</string>
+    <string name="basket_info_eur">Euro</string>
+    <string name="basket_info_america">America</string>
+    <string name="basket_info_asia">Asia</string>
+    <string name="basket_info_africa">Africa</string>
+    <string name="basket_info_inter">International</string>
+    <string name="basket_info_title">Basketball Database</string>
+    <string name="basket_info_zhouji">Intercontinental Events</string>
+    <string name="basket_info_country">International Events</string>
+
+    <string name="basket_info_zhouji2">International Events</string>
+    <string name="basket_info_shatan">Beach Events</string>
+
+    <string name="football_info_title">Football Database</string>
+    <string name="football_info_oceania">Oceania</string>
+
+
+    <!--Football Pages Revision(Running etc.)-->
+    <string name="foot_details_roolball">Running</string>
+    <string name="foot_details_talkball">Talk about Football</string>
+    <string name="foot_details_analyze">Analysis</string>
+    <string name="foot_details_odds">Odds</string>
+    <string name="foot_details_statistics">Live</string>
+
+    <string name="foot_details_time">Time</string>
+    <string name="foot_details_score">Score</string>
+    <string name="foot_details_home">Home Team</string>
+    <string name="foot_details_ball">Make Spread</string>
+    <string name="foot_details_guest">Away Team</string>
+
+    <string name="foot_details_livetitle">Live</string>
+    <string name="jipan">Live Handicap</string>
+    <string name="chupan">Initial Handicap</string>
+    <string name="alet_first">Initial HDP:</string>
+    <string name="asize_first">Initial Over/Under:</string>
+    <string name="eu_first">Initial 1x2:</string>
+    <string name="foot_details_live_tesxt">Live Texts:</string>
+    <string name="shoot">Attack</string>
+    <string name="foot_details_live_msg">Live coming soon!</string>
+    <string name="foot_details_focus">Follow</string>
+    <string name="foot_details_focused">Followed</string>
+    <string name="foot_details_share">Share</string>
+    <!--HDP-->
+    <string name="foot_odds_alet_left">Home Team</string>
+    <string name="foot_odds_alet_middle">Make Spread</string>
+    <string name="foot_odds_alet_right">Away Team</string>
+
+    <!--Over/Under-->
+    <string name="foot_odds_asize_left">Over</string>
+    <string name="foot_odds_asize_middle">Handicap</string>
+    <string name="foot_odds_asize_right">Under</string>
+
+
+    <!--1x2-->
+    <string name="foot_odds_eu_left">Win</string>
+    <string name="foot_odds_eu_middle">Draw</string>
+    <string name="foot_odds_eu_right">Lose</string>
+
+    <string name="errcode_unknown">Send, Back</string>
+    <string name="information_chdi_text">No.</string>
+    <string name="home_pager_ri">Day</string>
+    <string name="home_pager_yue">Month</string>
+    <string name="ball">Ball</string>
+    <string name="basket_loading_txt">Loading...</string>
+    <!--Detailed Football Analysis Page -->
+    <string name="football_analyze_equ">Draw</string>
+    <string name="football_analyze_win">Win</string>
+    <string name="football_analyze_lost">Lose</string>
+    <string name="football_analyze_jin">,Score</string>
+    <string name="football_analyze_shi">Miss</string>
+    <string name="football_analyze_ball">Ball</string>
+    <string name="football_analyze_winodds">Win Handicap</string>
+    <string name="football_analyze_bigball">,Over Probability</string>
+    <string name="football_analyze_let_points">,Win Handicap under Make Spread</string>
+    <string name="football_analyze_points">Win Handicap under Make Spread</string>
+    <string name="basket_details_talkable">Talk about Football</string>
+    <string name="football_win_draw_lose">Win/Draw/Lose</string>
+
+    <!--Basketball Database Details-->
+    <string name="basket_database_details_handicapname">Spread</string>
+    <string name="basket_database_details_bigsmallname">Over/Under Handicap</string>
+    <string name="basket_database_details_schedule">Schedule</string>
+    <string name="basket_database_details_stage">Stage</string>
+    <string name="basket_database_details_ranking">Ranking</string>
+    <string name="basket_database_details_season">Season</string>
+    <string name="basket_database_details_all">All</string>
+    <string name="basket_database_details_home">Home</string>
+    <string name="basket_database_details_guest">Away</string>
+    <string name="basket_database_details_runkingname">Ranking/Team</string>
+    <string name="basket_database_details_overgame">Finished</string>
+    <string name="basket_database_details_big">Over</string>
+    <string name="basket_database_details_dorw">Void</string>
+    <string name="basket_database_details_small">Under</string>
+
+    <string name="basket_database_details_up">Make Spread</string>
+    <string name="basket_database_details_down">Take Spread</string>
+    <string name="basket_database_details_yzs">W/D/L</string>
+
+    <string name="basket_database_details_ranking_title">Ranking/Team</string>
+    <string name="basket_database_details_match_num_title">Match</string>
+    <string name="basket_database_details_win_lose_title">Win/Lose</string>
+    <string name="basket_database_details_winrate_title">Win Handicap</string>
+    <string name="basket_database_details_win_offset_title">Game Behind</string>
+    <string name="basket_database_details_recent_title">Recent Form</string>
+
+    <string name="basket_database_details_statistic">Statistics</string>
+    <string name="basket_database_details_league_statistic">League Statistics</string>
+    <string name="basket_database_details_leagueMost">The Most of League</string>
+    <string name="basket_database_details_victory_defeat">Win/Lose Statistics</string>
+    <string name="basket_database_details_statistic_num">Matches</string>
+    <string name="basket_database_details_statistic_euro">1x2 Statistics</string>
+    <string name="basket_database_details_statistic_let">Spread Statistics</string>
+    <string name="basket_database_details_statistic_big_small">Over/Under Statistics</string>
+    <string name="basket_database_details_statistic_score">Points Statistics</string>
+    <string name="basket_database_details_statistic_num_score">Matches Statistics</string>
+    <string name="basket_database_details_statistic_all_score">Total Points</string>
+    <string name="basket_database_details_statistic_gp_num">Finished Matches</string>
+    <string name="basket_database_details_statistic_average">Average Points</string>
+
+    <string name="basket_database_details_statistic_home_win">Home Win :</string>
+    <string name="basket_database_details_statistic_guest_win">Away Win :</string>
+    <string name="basket_database_details_statistic_draw">Void :</string>
+    <string name="basket_database_details_statistic_euro_v1">The result consistent with 1x2 :</string>
+    <string name="basket_database_details_statistic_euro_v2">The result opposite to 1x2 :</string>
+    <string name="basket_database_details_statistic_big">Over :</string>
+    <string name="basket_database_details_statistic_small">Under :</string>
+    <string name="basket_database_details_statistic_gp">Finished :</string>
+    <string name="basket_database_details_statistic_nogp">Pre-play :</string>
+    <string name="basket_database_details_statistic_allgp">Total Matches :</string>
+
+    <string name="basket_database_details_leagueMost_strongestAttack">Strongest Attack</string>
+    <string name="basket_database_details_leagueMost_weakestAttack">Weakest Attack</string>
+    <string name="basket_database_details_leagueMost_strongestDefense">Strongest Defense</string>
+    <string name="basket_database_details_leagueMost_weakestDefense">Weakest Defense</string>
+    <string name="basket_database_details_leagueMost_all_score">Total Points :</string>
+    <string name="basket_database_details_leagueMost_avg_score">Points per Match :</string>
+
+    <string name="basket_database_details_leagueMost_allmatch">All</string>
+    <string name="basket_database_details_leagueMost_homematch">Home</string>
+    <string name="basket_database_details_leagueMost_guestmatch">Away</string>
+
+    <!--Football Database-->
+    <string name="football_database_details_integral">Points</string>
+    <string name="football_database_details_stage">Stage</string>
+
+    <string name="football_database_details_integral_num_title">Finished</string>
+    <string name="football_database_details_integral_win_draw_lose_title">Win/Draw/Lose</string>
+    <string name="football_database_details_integral_gain_loss_title">Gain/Miss</string>
+    <string name="football_database_details_integral_itnis_title">Goal Difference</string>
+
+    <!--Football Analysis Details-->
+    <string name="football_analyze_details">Analysis Details</string>
+    <string name="football_analyze_details_time">Time</string>
+    <string name="football_analyze_details_matchs">League</string>
+    <string name="football_analyze_details_game">Match</string>
+    <string name="football_analyze_details_win">Win</string>
+    <string name="football_analyze_details_lose">Lose</string>
+    <string name="chatball">Talk about Football</string>
+    <string name="succed_send">Send successfully</string>
+    <string name="succed_refresh">Refresh successfully</string>
+
+    <!--Fuzzy Search-->
+    <string name="fuzzy_search">Enter League Name</string>
+    <string name="not_find_search">Sorry, the relevant information could not be found.</string>
+    <string name="network_suck">Network ungelivable...</string>
+    <string name="find_search">Searching......</string>
+    <string name="skip">"Seconds | Skip"</string>
+    <!--1.1.2 begin-->
+    <string name="weixin_installed">Please install Wechat client first!</string>
+    <string name="Login_register">Login/Register</string>
+    <string name="personal_center">Personal Center</string>
+    <string name="social_account_login">Social account fast login</string>
+    <string name="forget_pwd">Forget password?</string>
+    <string name="next_step">Next</string>
+    <string name="find_pw">Find your password</string>
+    <string name="reset_password">Reset password</string>
+    <string name="reseting_password">Reseting password...</string>
+    <string name="reset_password_succ">Reset password successfully</string>
+    <string name="pic">Icon</string>
+    <string name="nickname">Nickname</string>
+    <string name="input_nickname">Enter nickname</string>
+    <string name="nickname_hint">A good name can make it easier for your friends to remember </string>
+    <string name="profile">Personl profile</string>
+    <string name="modify_nickname">Modify nickname</string>
+    <string name="modify_nickname_succ">Modify nickname successfully</string>
+    <string name="nickname_format">Nickname: 1-15 characters(no more than 7 Chinese words), consists of Chinese, English, numbers and characters</string>
+    <string name="modify_password">Modify password</string>
+    <string name="modifying_password">Modifying password...</string>
+    <string name="modifying_nickname">Modifying nickname...</string>
+    <string name="modify_password_succ">Modify password successfully</string>
+    <string name="modify_password_fail">Modify password failed</string>
+    <string name="input_password_old">Enter old password</string>
+    <string name="input_password_new">Enter new password(consists of 6-16 numbers and characters)</string>
+    <string name="input_password_new_no">Enter new password(consists of 6-16 numbers and characters)</string>
+    <string name="input_password_confirm">Please keep consistent with new password</string>
+    <string name="show_password">Show password</string>
+    <string name="old_pw">Old</string>
+    <string name="new_pw">New</string>
+    <string name="comfirm_pw">Confirm</string>
+    <string name="pw_not_same">The new password and confirmed password do not match</string>
+    <string name="pw_same_same">Cannot enter the same nickname as the original one</string>
+    <string name="name_invalid">Login expire,please login again</string>
+    <string name="account">Account</string>
+    <string name="pwd_format_just_length">Password length from 6 to 16 characters</string>
+    <string name="verify_time_limit">Transmission interval cannot be less than 60 seconds</string>
+    <string name="nickname_sensitive">Nickname contains sensitive words.</string>
+    <!--1.1.2 end-->
+
+    <!-- Login/Register end-->
+
+    <string name="frame_cpi_chupan_txt">Initial Handicap</string>
+    <string name="cpi_select_company">Select company</string>
+
+    <!--新版分析-->
+    <string name="new_analyze_goal_lose">Get/Miss</string>
+    <string name="new_analyze_goal_differ">Goal Difference</string>
+    <string name="new_analyze_integral">Points</string>
+    <string name="new_analyze_complete_table">Complete Stangdings>></string>
+    <string name="new_analyze_attack_defense">Attack and Defense</string>
+    <string name="new_analyze_bet">Over/Under Handicap:</string>
+    <string name="new_analyze_player_info">Player is Information</string>
+    <string name="new_analyze_recommend">Professional Recommendation</string>
+
+
+    <string name="immediate_status_end">End</string>
+    <string name="foot_rollball_txt">Running</string>
+    <string name="only_five_eachday">A phone number can send only 5 short messages per day.</string>
+    <string name="login_username">Enter account or register via a phone number</string>
+    <string name="server_busy">System busy</string>
+    <string name="forty_five_plus">45+</string>
+    <string name="ninety_plus">90+</string>
+    <string name="at_least_one_company">Select one company at least</string>
+
+    <string name="home_win_rate">Home Win Probability</string>
+    <string name="home_lose_rate">Home Lose Probability</string>
+    <string name="size_win_rate">Over Probability</string>
+    <string name="size_lose_rate">Under Probability</string>
+    <string name="asia_win_rate">Win Handicap Probability</string>
+    <string name="asia_lose_rate">Lose Handicap Probability</string>
+    <string name="title_big_data_predict">Big Data Preview</string>
+    <string name="diy_compute_method">DIY Algorithm</string>
+    <string name="foot_details_info">Information</string>
+    <string name="diy_custom_compute_method">DIY Customized Algorithm</string>
+    <string name="action_close">Close</string>
+    <string name="action_compute">Compute</string>
+    <string name="big_data_check_alert">Results cannot be computed, please enter reasonable numbers(0~1)</string>
+    <string name="diy_compute_method_message1">Probability=Clash Probability×%1$s+Home Win Probability×%2$s+Away Lose Handicap×%3$s</string>
+    <string name="diy_compute_method_message2">Probability=Clash Probability×%1$s+Home Probability×%2$s+Away Probability×%3$s</string>
+    <string name="diy_compute_method_message3">Probability=Clash Probability×%1$s+Home Win Probability×%2$s+Away Lose Handicap×%3$s</string>
+    <string name="diy_combat_rate">Clash Probability</string>
+    <string name="diy_host_rate">Home Probability</string>
+    <string name="diy_guest_rate">Away Probability</string>
+    <string name="insufficient_sampling">Sample insufficient</string>
+    <string name="probability">Probability</string>
+    <string name="percent_factor">Coeffcient Scale</string>
+    <string name="new_analyze_let">HDP Trend</string>
+    <string name="new_analyze_home">Home</string>
+    <string name="new_analyze_guest">Away</string>
+    <string name="new_analyze_win">Win</string>
+    <string name="new_analyze_draw">Void</string>
+    <string name="new_analyze_lose">Lose</string>
+    <string name="new_analyze_score">Score</string>
+    <string name="new_analyze_first_let">Initial Handicap</string>
+    <string name="new_analyze_result">Result</string>
+    <string name="new_analyze_more_messages"><![CDATA[More Information>>]]></string>
+    <string name="new_analyze_big_small_ball">Over/Under</string>
+    <string name="new_analyze_recent_compare">Comparison of recent record</string>
+    <string name="new_analyze_liangduijin">Both sides recent</string>
+    <string name="new_analyze_changjiaofeng">clashes</string>
+    <string name="new_analyze_ciyingpan">Win handicap times</string>
+    <string name="new_analyze_cishupan">Lose handicap times</string>
+    <string name="new_analyze_cizoupan">Void handicap times</string>
+    <string name="new_analyze_yingpanlv">Win handicap probability</string>
+    <string name="new_analyze_cidaqiu">Over times</string>
+    <string name="new_analyze_cixiaoqiu">Under times</string>
+    <string name="new_analyze_daqiulv">Over Probability</string>
+    <string name="intelligence_host_recent">Home recent record</string>
+    <string name="intelligence_guest_recent">Away recent record</string>
+    <string name="new_analyze_description">(Red scores represent the home team)</string>
+    <string name="new_analyze_recent_game">Recent 6 respective matches</string>
+    <string name="new_analyze_changci">Matches</string>
+    <string name="new_analyze_home_win_rate">Home Win Handicap Probability</string>
+    <string name="new_analyze_guest_win_rate">Away Win Handicap Probability</string>
+    <string name="analyze_draw_rate">Void</string>
+    <string name="new_analyze_size_draw_rate">Void</string>
+    <!--Information Analysis-->
+    <string name="intelligent_all_game">All Matches</string>
+    <string name="intelligent_same_game">Same Home&amp;Away</string>
+    <string name="intelligent_result">Result and Information of This Season</string>
+    <string name="intelligent_guest">Away</string>
+    <string name="intelligent_home">Home</string>
+    <string name="intelligent_full">FT</string>
+    <string name="intelligent_half">HT</string>
+    <string name="intelligent_goal">Goal, Goal Difference</string>
+    <string name="intelligent_season_handicap">Handicap Information of This Season</string>
+    <string name="intelligent_recent">Recent Matches Information</string>
+    <string name="intelligent_today_handicap">Handicap Information of Finished Today</string>
+    <string name="intelligent_win_rate">Win Handicap Probability</string>
+    <string name="intelligent_lose_rate">Lose Handicap Probability</string>
+    <string name="intelligent_big_rate">Over Probability</string>
+    <string name="intelligent_small_rate">Under Probability</string>
+    <string name="intelligent_goad_defference"><![CDATA[Goal Difference>1]]></string>
+    <string name="intellegent_lose_goal_def"><![CDATA[Minus goal Difference>1]]></string>
+    <string name="intelligent_first_goal_win">Score first and win probability</string>
+    <string name="intelligent_last_goal_win">Score later but win probability</string>
+    <string name="intelligent_no_goal_rate">No goals probability</string>
+    <string name="intelligent_win_num">Successively win matches</string>
+    <string name="intelligent_let_win">HDP successively win</string>
+    <string name="intelligent_continue_big">Successive Over</string>
+    <string name="intelligent_continue_small">Successive Under</string>
+    <string name="intelligent_rang">Make Spread</string>
+    <string name="intelligent_ball_win_rate">Win Handicap Probability</string>
+    <string name="intelligent_ball_lose_rate">Lose Handicap Probability</string>
+    <string name="intelligent_qiushenglv">Win Probability</string>
+    <string name="intelligent_qiupinglv">Draw Probability</string>
+    <string name="intelligent_qiufulv">Lose Probability</string>
+    <string name="version_update_title">Downloading the upgrade pack, please hold on...</string>
+
+    <string name="rong_comment">Comment</string>
+    <string name="rong_chart_room">Chat</string>
+    <string name="rong_chart_bg_pb">Transparency</string>
+
+    <!--Upload Icon-->
+    <string name="sd_card_not_exist">sd card does not exist</string>
+    <string name="install_the_gallery">Please install gallary first</string>
+    <string name="see_your_face">The image is too small to unable to see your peerless appearance.</string>
+    <string name="picture_put_failed">Upload image failed!</string>
+    <string name="save_file_not_found">Saved file path cannot be found!</string>
+    <string name="picture_save_failed">Save image failed!</string>
+    <string name="picture_put_success">Upload image successfully!</string>
+    <string name="picture_save">Image has been saved to:</string>
+    <string name="picture_save_telephone">Save to mobile phone</string>
+    <string name="chose_for_telephone">Select from mobile phone album</string>
+    <string name="avatar_settings">Icon</string>
+    <string name="photograph">Photograph</string>
+
+    <string name="welcome_chart_room">Welcome to the chat room!</string>
+    <string name="to_update_kindly_reminder">Warm tips</string>
+    <string name="kindly_reminder_comment">You are using the mobile data, continue to download?</string>
+    <string name="continue_download">Continue to downloade</string>
+
+    <string name="is_uploading">Uploading...</string>
+    <!--Information Center start-->
+    <string name="title_info_center">Information Center</string>
+    <string name="info_center_end_index">Finished Handicap Odds Today</string>
+    <string name="info_center_results_index">Results Odds</string>
+    <string name="info_center_size_disc_index">Over/Under Handicap Odds</string>
+    <string name="info_center_asian_plate_index">HDP Odds</string>
+    <string name="info_center_type1">Win Handicap Probability of This Season</string>
+    <string name="info_center_type2">Lose Handicap Probability of This Season</string>
+    <string name="info_center_type3">Win handicap in recently successive %1$s matches</string>
+    <string name="info_center_type4">Win handicap probability under %1$s handicap</string>
+    <string name="info_center_type5">Lose handicap probability under %1$s handicap</string>
+    <string name="info_center_type6">Over probability of this season</string>
+    <string name="info_center_type7">Under probability of this season</string>
+    <string name="info_center_type8">Over in recently successive %1$s matches</string>
+    <string name="info_center_type9">Under in recently successive %1$s matches</string>
+    <string name="info_center_type10">Over probability under %1$s handicap</string>
+    <string name="info_center_type11">Under probability under %1$s handicap</string>
+    <string name="info_center_type12">Recently %1$s winning streaks</string>
+    <string name="info_center_type13">Net win 2 or more goals matches probability</string>
+    <string name="info_center_type14">Net lose 2 or more goals matches probability</string>
+    <string name="info_center_type15">Score first and win probability</string>
+    <string name="info_center_type16">Miss first but win probability</string>
+    <string name="info_center_type17">0 goal matches probability</string>
+    <string name="info_center_type18">1st half win handicap probability</string>
+    <string name="info_center_type19">1st half lose handicap probability</string>
+    <string name="info_center_type20">1st half win handicap in successive %1$s matches</string>
+    <string name="info_center_type21">1st half win handicap probability under %1$s handicap</string>
+    <string name="info_center_type22">1st half lose handicap probability under %1$s handicap</string>
+    <string name="info_center_type23">1st half Over probability</string>
+    <string name="info_center_type24">1st half Under probability</string>
+    <string name="info_center_type25">1st half Over in successive %1$s matches</string>
+    <string name="info_center_type26">1st half Under in successive %1$s matches</string>
+    <string name="info_center_type27">1st half Over probability under %1$s handicap</string>
+    <string name="info_center_type28">1st half Under probability under %1$s handicap</string>
+    <string name="info_center_type29">1st half %1$s winning streaks</string>
+    <string name="info_center_other_type1">%1$s win handicap probability</string>
+    <string name="info_center_other_type2">%1$s lose handicap probability</string>
+    <string name="info_center_other_type3">Win handicap in successive %1$s matches</string>
+    <string name="info_center_other_type4">Win handicap probability under %1$s handicap</string>
+    <string name="info_center_other_type5">Lose handicap probability under %1$s handicap</string>
+    <string name="info_center_other_type6">%1$s Over probaibility</string>
+    <string name="info_center_other_type7">%1$s Under probability</string>
+    <string name="info_center_other_type8">Over in successive %1$s matches</string>
+    <string name="info_center_other_type9">Under in successive %1$s matches</string>
+    <string name="info_center_other_type10">Over probability under %1$s handicap</string>
+    <string name="info_center_other_type11">Under probability under %1$s handicap</string>
+    <string name="info_center_other_type12">%1$s%2$s winning streaks</string>
+    <string name="info_center_other_type13">Net win 2 or more goals matches probability</string>
+    <string name="info_center_other_type14">Net lose 2 or more goals matches probability</string>
+    <string name="info_center_other_type15">Score first and win probability</string>
+    <string name="info_center_other_type16">Miss first but win probability</string>
+    <string name="info_center_other_type17">0 goal matches probability</string>
+    <string name="info_center_other_type18">%1$s 1st half win handicap probability</string>
+    <string name="info_center_other_type19">%1$s 1st half lose handicap probability</string>
+    <string name="info_center_other_type20">1st half win handicap in successive %1$s matches</string>
+    <string name="info_center_other_type21">1st half win handicap probability under %1$s handicap</string>
+    <string name="info_center_other_type22">1st half lose handicap probability under %1$s handicap</string>
+    <string name="info_center_other_type23">%1$s 1st half Over probability</string>
+    <string name="info_center_other_type24">%1$s 1st half Under probability</string>
+    <string name="info_center_other_type25">1st half Over in successive %1$s matches</string>
+    <string name="info_center_other_type26">1st half Under in successive %1$s matches</string>
+    <string name="info_center_other_type27">1st half Over probability under %1$s handicap</string>
+    <string name="info_center_other_type28">1st half Under probability under %1$s handicap</string>
+    <string name="info_center_other_type29">1st half %1$s winning streak</string>
+    <string name="info_center_other_type30">Win handicap probability under %1$s handicap</string>
+    <string name="info_center_other_type31">Lose handicap probability under %1$s handicap</string>
+    <string name="info_center_other_type32">Over handicap probability under %1$s handicap</string>
+    <string name="info_center_other_type33">Under handicap probability under %1$s handicap</string>
+    <string name="info_center_other_type34">Win probability under %1$s handicap</string>
+    <string name="info_center_other_type35">Draw probability under %1$s handicap</string>
+    <string name="info_center_other_type36">Lose probability under %1$s handicap</string>
+    <string name="info_center_other_type37">1st half win handicap probability under %1$s handicap</string>
+    <string name="info_center_other_type38">1st half lose handicap probability under %1$s handicap</string>
+    <string name="info_center_other_type39">1st half Over probability under %1$s handicap</string>
+    <string name="info_center_other_type40">1st half Under probability under %1$s handicap</string>
+    <string name="info_center_other_type41">1st half win probability under %1$s handicap</string>
+    <string name="info_center_other_type42">1st half draw probability under %1$s handicap</string>
+    <string name="info_center_other_type43">1st half lose probability under %1$s handicap</string>
+    <string name="info_center_txt_def">Sample insufficient</string>
+    <!--Information Center end-->
+
+    <!--Matches Today Reminder-->
+    <string name="league_statistics_today_title">Matches Today Reminder</string>
+    <string name="league_statistics_today_tab1">Win/Draw/Lose</string>
+    <string name="league_statistics_today_tab2">HDP</string>
+    <string name="league_statistics_today_tab3">Over/Under Handicap</string>
+    <string name="league_statistics_today_tab4">HT HDP</string>
+    <string name="league_statistics_today_tab5">HT Over/Under</string>
+
+    <string name="league_statistics_today_date">Statistics Time：</string>
+    <string name="league_statistics_today_rank">Ranking</string>
+    <string name="league_statistics_today_race">League</string>
+    <string name="league_statistics_today_finish">Finished</string>
+    <string name="league_statistics_today_victor">Win</string>
+    <string name="league_statistics_today_flat">Draw</string>
+    <string name="league_statistics_today_loss">Lose</string>
+    <string name="league_statistics_today_win">Win</string>
+    <string name="league_statistics_today_failed">Lose</string>
+    <string name="league_statistics_today_go">Void</string>
+    <string name="league_statistics_today_big">Over</string>
+    <string name="league_statistics_today_small">Under</string>
+    <string name="league_statistics_today_tip1">*Tip: click the top of list</string>
+    <string name="league_statistics_today_tip2">Win, Draw, Lose</string>
+    <string name="league_statistics_today_tip3">；can sort</string>
+    <string name="league_statistics_today_notice">Instruction</string>
+    <string name="league_statistics_today_noticetitle">What is the league today reminder?</string>
+    <string name="league_statistics_today_noticetext">It is the ranking of all data in recent matches or a certain period of time for all leagues matches contained handicap today.</string>
+
+    <!--Live Video-->
+    <string name="direct_seedinging">Live</string>
+    <string name="baskball">Basketball</string>
+    <string name="comprehensive">Integration</string>
+    <string name="direct_seeding">Live</string>
+    <string name="download_error">Download failed!</string>
+    <string name="download_update">Update, please hold on...</string>
+    <string name="label_line" translatable="false">-</string>
+    <string name="login_no_weixin">Please install Wechat first!</string>
+    <string name="login_peak">Login busy, please try again later</string>
+    <string name="not_start_short_txt">No</string>
+    <string name="pwd_empty_new">Please enter password(consists of 6-16 numbers and characters)</string>
+    <string name="send_register_succ">Verification code has been sent, please kindly check it.</string>
+    <string name="username_original_pass_error">Please enter correct original password</string>
+
+
+    <!--分享-->
+    <string name="errcode_success">Send Successfully</string>
+    <string name="errcode_cancel">Undo Send</string>
+    <string name="errcode_deny">Rejected</string>
+    <string name="webchat">WeChat</string>
+    <string name="friends">Moments</string>
+    <string name="qq">QQ</string>
+    <string name="qzone">Qzone</string>
+    <string name="sina">Sina</string>
+    <string name="copy">Copy Link</string>
+    <string name="share_cancel">Cancel</string>
+    <string name="share_summary">One Score,updated the match information</string>
+    <string name="share_to_qq_app_name">One Score</string>
+    <string name="share_copy">Copy Link Successfully</string>
+    <string name="share_from">From One Score:</string>
+    <string name="share_uninstall_webchat">You have not installed the WeChat client-side</string>
+    <string name="weibosdk_demo_not_support_api_hint">You have not installed the Sina Weibo client-side</string>
+    <string name="share_uninstall_qq">You have not installed the QQ client-side</string>
+    <string name="share_recommend">Recommend</string>
+    <string name="share_summary_default">One Score, the professional football score live platform</string>
+    <string name="symbol_times" translatable="false">×</string>
+    <string name="symbol_plus" translatable="false">+</string>
+    <string name="symbol_equal" translatable="false">=</string>
+
+
+    <!--指数-->
+    <string name="odd_plate_rb_txt">HDP</string>
+    <string name="odd_back">Return list</string>
+    <string name="odd_op_rb_txt">1x2</string>
+    <string name="odd_company_txt">Company</string>
+    <string name="odd_home_txt">Home Team</string>
+    <string name="odd_dish_txt">O/U</string>
+    <string name="odd_dish_txt2">HDP</string>
+    <string name="odd_guest_txt">Away Team</string>
+    <string name="odd_time_txt">Time</string>
+    <!--欧赔-->
+    <string name="odd_home_op_txt">Home Win</string>
+    <string name="odd_dish_op_txt">Draw</string>
+    <string name="odd_guest_op_txt">Away Win</string>
+    <!--大小球-->
+    <string name="odd_home_big_txt">Over</string>
+    <string name="odd_dish_big_txt">Handicap</string>
+    <string name="odd_guest_big_txt">Under</string>
+    <!--足球比分二期-->
+    <string name="lineout_txt">Throw-in</string>
+    <string name="free_hit_txt">Dangerous Free Kick</string>
+    <string name="away_txt">Offside</string>
+    <string name="foul_txt">Foul</string>
+    <string name="trapping_txt">Save</string>
+    <string name="shoot_txt">Shoot</string>
+    <string name="match_data_txt">Match Data</string>
+    <string name="danger_attack_txt">Danger Attack</string>
+    <string name="shoot_correct_txt">Shot on target</string>
+    <string name="shoot_miss_txt">Shot off target</string>
+    <string name="live_text_txt">Live</string>
+    <string name="first_players_txt">Lineup</string>
+    <string name="statistics_txt">Statistics</string>
+    <string name="trend_txt">Trend</string>
+    <string name="data_statistics_txt">Data Statistics</string>
+    <string name="nodata_txt">No more data!</string>
+    <string name="loading_data_txt">Data loading...</string>
+    <string name="not_start_txt">Pre-play</string>
+    <string name="pause_txt">HT</string>
+    <string name="finish_txt">FT</string>
+    <string name="finished_txt">FT</string>
+    <string name="paused_txt">HT</string>
+    <string name="matchFinished_txt">Match finished, thank you for watching!</string>
+
+    <string name="fottball_home_jiashi">Overtime</string>
+    <string name="fottball_home_dianqiu">Penalty Kick</string>
+    <string name="fottball_home_quxiao">Cancel</string>
+    <string name="fottball_home_daiding">Undetermined</string>
+    <string name="fottball_home_yaozhan">Abandoned</string>
+    <string name="fottball_home_zhongduan">Interrupted</string>
+    <string name="fottball_home_tuichi">Postponed</string>
+    <string name="fottball_home_quxiaozhibo">Cancel Live</string>
+
+    <string name="sound1">Sound 1</string>
+    <string name="sound2">Sound 2</string>
+    <string name="sound3">Sound 3</string>
+    <string name="sound4">Silent</string>
+    <string name="asialet">HDP</string>
+    <string name="euro">1x2</string>
+    <string name="asiasize">O/U</string>
+    <string name="oddgone">Hide</string>
+    <string name="about_product_msg_txt_simple">One Score, focuses on the products of sports score all the time, having the industry-leading response speed on score and corner.</string>
+    <string name="frame_home_jieguo_txt">Lottery Draw</string>
+
+
+    <!--首发阵容 Start-->
+    <string name="firsPlayers_not">No Starting</string>
+    <string name="firsPlayers_rosters_homeTeam">Home List</string>
+    <string name="firsPlayers_rosters_visitingTeam">Away List</string>
+    <string name="homeTeam">Home Team 一</string>
+    <string name="guestTeam">Away Team 一</string>
+    <string name="homeBitmap">Home Team</string>
+    <string name="guestBitmap">Away Team</string>
+    <string name="attack">(Attack &amp; Defence)</string>
+    <string name="corner">(Corner)</string>
+    <string name="game_time">(Time)</string>
+    <!--首发阵容 End-->
+    <!--2期end-->
+    <string name="app_name">One Score</string>
+    <string name="menu_name">Menu</string>
+    <string name="action_settings">Settings</string>
+    <string name="drawer_open">Open drawer</string>
+    <string name="drawer_close">close_drawer</string>
+    <string name="tip">Select Date</string>
+    <string name="football">Football</string>
+    <string name="help">Help</string>
+    <string name="internet_error">Access Internet Failed.</string>
+    <string name="internet_exception">Network Anomaly</string>
+    <!-- 侧滑栏字体 -->
+    <string name="home_frame_txt">Home</string>
+    <string name="football_frame_txt">Football Score</string>
+    <string name="frame_home_video_txt">Live Video</string>
+    <string name="frame_video_ing_txt">on Live</string>
+    <string name="video_live_txt">Please select live channel</string>
+    <string name="live_txt">Live</string>
+    <string name="number_frame_txt">Lottery Draw</string>
+    <string name="car_frame_txt">Beijing Car Racing</string>
+    <string name="more_frame_txt">More Lotteries</string>
+    <string name="language_frame_txt">Switch Language</string>
+    <string name="version_update_txt">Version Update</string>
+    <string name="about_frame_txt">About Us</string>
+    <!-- 侧滑栏字体 -->
+    <string name="foot_jishi_txt">Live</string>
+    <string name="foot_saiguo_txt">Results</string>
+    <string name="foot_saicheng_txt">Schedule</string>
+    <string name="foot_guanzhu_txt">Favourite</string>
+    <string name="foot_setting_txt">Settings</string>
+    <!-- 下拉刷新 -->
+    <string name="pull_to_refresh_pull_label" >Pull down to refresh</string>
+    <string name="pull_to_refresh_release_label" >Loosen to refresh</string>
+    <string name="pull_to_refresh_refreshing_label" >Loading&#8230;</string>
+
+    <!-- 设置 -->
+    <string name="set_sound_txt">Sound</string>
+    <string name="set_sound1_txt">Sound 1</string>
+    <string name="set_sound2_txt">Sound 2</string>
+    <string name="set_sound3_txt">Sound 3</string>
+    <string name="set_nosound_txt">Silent</string>
+    <string name="set_asialet_txt">HDP</string>
+    <string name="set_euro_txt">1x2</string>
+    <string name="set_asiasize_txt">O/U</string>
+    <string name="set_oddghide_txt">Hide</string>
+    <string name="public_txt_title">Football Score</string>
+    <string name="set_home_txt">Home Goal Sound</string>
+    <string name="set_guest_txt">Away Goal Sound</string>
+    <string name="set_odd_txt">Odds Show</string>
+
+    <string name="set_txt">Football Settings</string>
+    <string name="set_tip_txt">Hint Setting</string>
+    <string name="set_goal_shake_txt">Goal Vibrate</string>
+    <string name="set_rc_shake_txt">Red Card Vibrate</string>
+    <string name="set_rc_sound_txt">Red Card Sound</string>
+    <string name="set_tip_focus_match_txt">Only hint favourite</string>
+    <string name="set_ext_txt">Other Settings</string>
+    <string name="set_odd_show_txt">Odds Show</string>
+    <string name="set_goal_txt">Goal</string>
+
+
+    <!-- 异常处理 -->
+    <string name="exp_net_status_txt">You current network is poor</string>
+    <string name="exp__check_txt">please check and</string>
+    <string name="exp_refresh_txt">refresh</string>
+    <!-- 赛程 -->
+
+    <string name="no_data_txt">No data!</string>
+    <string name="data_parsing_exp_txt">Data analysis abnormal!</string>
+    <string name="loading_txt">Loading......</string>
+    <string name="reload_txt">Reloading</string>
+
+    <!-- 即时 -->
+    <string name="immediate_no_data">0 match under your filtering conditions.</string>
+    <string name="immediate_no_match">No Match.</string>
+    <string name="immediate_status_overtime">Overtime</string>
+    <string name="immediate_status_point">Penalty Kick</string>
+    <string name="immediate_status_midfield">HT</string>
+    <string name="immediate_status_entertained">Entertained</string>
+    <string name="immediate_status_cancel">Cancel</string>
+    <string name="immediate_status_hold">Undetermined</string>
+    <string name="immediate_status_cut">Abandoned</string>
+    <string name="immediate_status_mesomere">Interrupted</string>
+    <string name="immediate_status_postpone">Postponed</string>
+    <string name="immediate_unconection">Current poor network...</string>
+
+    <string name="favourite">Favourite</string>
+    <string name="cancel_favourite">Cancel Favourite</string>
+
+    <!-- 足球筛选 -->
+    <string name="filtrate_match_top">Football Filtering</string>
+    <string name="filtrate_match_focal">Focus</string>
+    <string name="filtrate_match_hot">Hot</string>
+    <string name="filtrate_match_all">Select All</string>
+    <string name="filtrate_match_inverse">Inverse</string>
+    <string name="filtrate_match_submit">Confirm</string>
+    <string name="filtrate_match_hide">Hide</string>
+    <string name="filtrate_match_session">matches</string>
+    <string name="toast_data_loading">Data loading.</string>
+    <string name="hot_score_txt">Hot Matches</string>
+    <string name="other_score_txt">Other Matches</string>
+
+    <!-- 关注 -->
+    <string name="unfocus">No Favourite</string>
+    <string name="unfocus2">Slide left to favourite this match</string>
+
+    <!-- 关于我们 -->
+    <string name="about_relation_txt">Contact Us</string>
+    <string name="about_us_txt">About Us</string>
+    <string name="about_ver_update_txt">Version Update</string>
+    <string name="about_product_intro_txt">Product Brief</string>
+    <string name="about_product_msg_txt">One Score,focuses on the products of sports score and lottery draw all the time, having the industry-leading response speed on score and corner.</string>
+    <string name="about_pc_txt">PC</string>
+    <string name="about_pc_msg_txt">www.13322.com</string>
+    <string name="about_wap_txt">WAP</string>
+    <string name="about_wap_msg_txt">m.13322.com</string>
+    <string name="about_subscribe_txt">Subscription：live13322</string>
+    <string name="about_service_txt">Service：win13322</string>
+    <string name="about_cus_service_txt">Service:</string>
+    <string name="about_cus_number_txt"> 400-6776-550</string>
+    <string name="about_io_exp">IO Abnormal</string>
+    <string name="about_service_exp">Server Abnormal</string>
+    <string name="about_notice">Hint</string>
+    <string name="about_notice_msg">No new version</string>
+    <string name="about_soft_update">New Version Update</string>
+    <string name="about_update">Update</string>
+    <string name="about_later_update">Later</string>
+    <string name="about_confirm">Confirm</string>
+    <string name="about_cancel">Cancel</string>
+    <string name="about_net_failed">Network connect failed, please check the network settings!</string>
+    <!--资料库-->
+    <string name="information_customer_service">Customer Service&#160;： </string>
+
+    <string name="information_chround_text">Round</string>
+    <string name="information_integral_text">Standings</string>
+    <string name="information_agendal_text">Schedule</string>
+    <string name="information_agendal_group">Group</string>
+    <string name="information_football_title">Football Data</string>
+    <string name="information_integral_game">Match</string>
+    <string name="information_integral_win">W/D/L</string>
+    <string name="information_integral_get">Goal/Miss</string>
+    <string name="information_integral_goal">Net Win</string>
+    <string name="information_integral_minute">Pts</string>
+    <string name="information_football_integral">No points information</string>
+    <string name="information_agendal_title">Select Round</string>
+
+    <!-- 所有的标题 -->
+    <string name="frame_home_jishi_txt">Football Score</string>
+    <string name="frame_home_jiaodian_txt">Hot Matches</string>
+
+    <!-- 彩票 -->
+    <string name="number_info_stopSell">Stop Sell </string>
+    <string name="number_info_countDown">The latest lottery</string>
+    <string name="number_info_countDown2">Draw count down</string>
+    <string name="number_save_success">Save Successfully</string>
+    <string name="number_loading_txt">Loading......</string>
+    <string name="number_tltle_txt">Lottery Draw</string>
+    <string name="number_customize_title">Customize Lottery Type</string>
+    <string name="number_info_default">--</string>
+    <string name="number_isOpenNumber">In the lottery draw...</string>
+    <string name="number_loading_hint">Loading hard......</string>
+    <string name="number_net_error">Access to network failed!!!</string>
+    <string name="number_click_refresh">Refresh</string>
+    <string name="number_refresh">Access to network failed!!!</string>
+    <string name="number_bjsc_sum_no1no2">Sum of No.1 &amp; No.2</string>
+    <string name="number_bjsc_fz">Score</string>
+    <string name="number_bjsc_dx">O/U</string>
+    <string name="number_bjsc_da">Over</string>
+    <string name="number_bjsc_xiao">Under</string>
+    <string name="number_bjsc_ds">O/E</string>
+    <string name="number_bjsc_dan">Odd</string>
+    <string name="number_bjsc_suang">Even</string>
+    <string name="number_bjsc_he">Sum</string>
+    <string name="number_bjsc_jia">Poultry</string>
+    <string name="number_bjsc_ye">Beast</string>
+    <string name="number_bjsc_red">Red</string>
+    <string name="number_bjsc_green">Green</string>
+    <string name="number_bjsc_blue">Blue</string>
+    <string name="number_bjsc_longhu">Dragon &amp; Tiger</string>
+    <string name="number_bjsc_no1">Champion</string>
+    <string name="number_bjsc_no2">Runner-up</string>
+    <string name="number_bjsc_no3">No.3</string>
+    <string name="number_bjsc_no4">No.4</string>
+    <string name="number_bjsc_no5">No.5</string>
+    <string name="number_bjsc_long">Dragon</string>
+    <string name="number_bjsc_hu">Tiger</string>
+    <string name="number_bjsc_nu">Cow</string>
+    <string name="number_bjsc_ma">Horse</string>
+    <string name="number_bjsc_ya">Sheep</string>
+    <string name="number_bjsc_ji">Chook</string>
+    <string name="number_bjsc_gou">Dog</string>
+    <string name="number_bjsc_zhu">Pig</string>
+    <string name="number_bjsc_su">Rat</string>
+    <string name="number_bjsc_tu">Rabbit</string>
+    <string name="number_bjsc_se">Snake</string>
+    <string name="number_bjsc_hou">Monkey</string>
+    <string name="number_custom_ok">Have customized lottery</string>
+    <string name="number_custom_hint">Long-press to drag tag to rank</string>
+    <string name="number_custom_not">Have no customized lottery</string>
+    <string name="number_custom_click_more">Click to customize more lotteries</string>
+    <string name="number_custom_click_ok">Confirm</string>
+    <string name="number_custom_click_not">Reset</string>
+    <string name="number_tm_tm">Special Number</string>
+    <string name="number_tm_sx">Zodiac</string>
+    <string name="number_tm_jy">Poultry &amp; Beast</string>
+    <string name="number_tm_bs">Color</string>
+    <string name="number_tm_zf">Total Points</string>
+    <string name="number_tm_ws">Mantissa</string>
+    <string name="number_tm_no1">1st Goal</string>
+    <string name="number_tm_no2">2nd Goal</string>
+    <string name="number_tm_no3">3rd Goal</string>
+    <string name="number_tm_no4">4th Goal</string>
+
+    <string name="number_qxc_no1">No.1</string>
+    <string name="number_qxc_no2">No.2</string>
+    <string name="number_qxc_no3">No.3</string>
+    <string name="number_qxc_no4">No.4</string>
+    <string name="number_qxc_no5">No.5</string>
+    <string name="number_qxc_no6">No.6</string>
+    <string name="number_qxc_no7">No.7</string>
+
+    <string name="number_hk_hint">Mark Six Lottery</string>
+    <string name="number_hk_hint2">Draw Countdown</string>
+    <string name="number_qxc_hint">Seven-Color Lottery</string>
+    <string name="number_qxc_hint2">Draw Countdown</string>
+    <string name="number_hk_dd">d</string>
+    <string name="number_hk_hh">h</string>
+    <string name="number_hk_mm">m</string>
+    <string name="number_hk_ss">s</string>
+    <string name="number_hk_openjiang">Mark Six Lottery</string>
+    <string name="number_hk_openjiang_current">The Latest Lottery Draw</string>
+    <string name="number_hk_openjiang_history">The Past Lottery Draw</string>
+
+    <string name="number_cz_hk">Mark Six Lottery</string>
+
+    <string name="number_cz_cq_ssc">Chongqing Instant Lottery</string>
+    <string name="number_cz_jx_ssc">Jiangxi Instant Lottery</string>
+    <string name="number_cz_xj_ssc">Xinjiang Instant Lottery</string>
+    <string name="number_cz_yn_ssc">Yunnan Instant Lottery</string>
+    <string name="number_cz_qxc">Seven-Color Lottery</string>
+    <string name="number_cz_gd_syxw">Guangdong 11 select 5</string>
+    <string name="number_cz_gd_klsf">Guangdong Happy Lottery</string>
+    <string name="number_cz_hb_syxw">Hubei 11 select 5</string>
+    <string name="number_cz_ah_ks">Anhui Fast 3</string>
+    <string name="number_cz_hn_klsf">Hunan Happy Lottery</string>
+    <string name="number_cz_kl8">Happy 8</string>
+    <string name="number_cz_jl_ks">Jilin Fast 3</string>
+    <string name="number_cz_ln_xyxw">Liaoning 11 select 5</string>
+    <string name="number_cz_bj_sc">Beijing Car Racing</string>
+    <string name="number_cz_js_ks">Jiangsu Fast 3</string>
+    <string name="number_cz_ssl">Instant Happy</string>
+    <string name="number_cz_gx_ks">Guangxi Fast 3</string>
+    <string name="number_cz_xylc">Chongqing Lucky Farm</string>
+    <string name="number_cz_js_syxw">Jiangsu 11 select 5</string>
+    <string name="number_cz_jx_syxw">Jiangxi 11 select 5</string>
+    <string name="number_cz_sd_syxw">Shandong 11 select 5</string>
+    <string name="number_cz_tj_ssc">Tianjin Instant Lottery</string>
+    <!-- 描述信息 -->
+    <string name="number_code_desc_qxc">Lottery Draw at 20:30 on every Tuesday, Friday and Sunday</string>
+    <string name="number_code_desc_bj_sc">179 phases everyday, 1 phase per 5 minutes, 9:00-0:00</string>
+    <string name="number_code_desc_gd_klsf">84 phases everyday, 1 phase per 10 minutes, 9:00-23:00</string>
+    <string name="number_code_desc_hn_klsf">84 phases everyday, 1 phase per 10 minutes, 9:00-23:00</string>
+    <string name="number_code_desc_xylc">97 phases everyday, 1 phase per 10 minutes, 0:00-2:00 10:00-0:00</string>
+    <string name="number_code_desc_cq_ssc">Daytime 72 phases, 1 phase per 10 minutes; Night 48 phases, 1 phase per 5 minutes</string>
+    <string name="number_code_desc_xj_ssc">96 phases everyday, 1 phase per 10 minutes, 10:00-2:00</string>
+    <string name="number_code_desc_yn_ssc">72 phases everyday, 1 phase per 10 minutes, 10:00-21:50</string>
+    <string name="number_code_desc_tj_ssc">84 phases everyday, 1 phase per 10 minutes, 9:00-23:00</string>
+    <string name="number_code_desc_jx_ssc">84 phases everyday, 1 phase per 10 minutes, 9:00-23:00</string>
+    <string name="number_code_desc_gd_syxw">84 phases everyday, 1 phase per 10 minutes, 9:00-23:00</string>
+    <string name="number_code_desc_js_syxw">82 phases everyday, 1 phase per 10 minutes, 8:30-22:10</string>
+    <string name="number_code_desc_sd_syxw">78 phases everyday, 1 phase per 10 minutes,9:00-22:00</string>
+    <string name="number_code_desc_ah_ks">80 phases everyday, 1 phase per 10 minutes,8:30-22:00</string>
+    <string name="number_code_desc_js_ks">82 phases everyday, 1 phase per 10 minutes,8:30-22:00</string>
+    <string name="number_code_desc_gx_ks">78 phases everyday, 1 phase per 10 minutes,9:30-22:30</string>
+
+    <string name="number_code_di">Phase</string>
+    <string name="number_code_qi"></string>
+
+    <string name="number_7">Sunday</string>
+    <string name="number_1">Monday</string>
+    <string name="number_2">Tuesday</string>
+    <string name="number_3">Wednesday</string>
+    <string name="number_4">Thursday</string>
+    <string name="number_5">Friday</string>
+    <string name="number_6">Saturday</string>
+    <!-- 异常处理 -->
+    <string name="number_exp_net_status_txt">Your current network is poor</string>
+    <string name="number_exp__check_txt">Please check and</string>
+    <string name="number_exp_refresh_txt">Refresh</string>
+
+    <!-- 彩票 End-->
+
+    <string name="number_xq7">Sunday</string>
+    <string name="number_xq1">Monday</string>
+    <string name="number_xq2">Tuesday</string>
+    <string name="number_xq3">Wednesday</string>
+    <string name="number_xq4">Thursday</string>
+    <string name="number_xq5">Friday</string>
+    <string name="number_xq6">Saturday</string>
+
+
+    <string name="number_xinqi7">Sunday</string>
+    <string name="number_xinqi1">Monday</string>
+    <string name="number_xinqi2">Tuesday</string>
+    <string name="number_xinqi3">Wednesday</string>
+    <string name="number_xinqi4">Thursday</string>
+    <string name="number_xinqi5">Friday</string>
+    <string name="number_xinqi6">Saturday</string>
+
+
+    <!-- 代码中的添加 string -->
+
+    <string name="language_select_txt">Select Language</string>
+    <string name="public_btn_save">Save</string>
+    <!-- 简体中文 -->
+    <string name="china_txt">简体中文</string>
+    <!-- 繁体中文 -->
+    <string name="china_tw_txt">繁體中文</string>
+    <!-- 英语-->
+    <string name="china_en_txt">English</string>
+    <!-- 韩语 -->
+    <string name="china_ko_txt">한국어</string>
+    <!-- 印尼语 -->
+    <string name="china_id_txt">indonesia</string>
+    <!-- 泰语-->
+    <string name="china_th_txt">ภาษาไทย</string>
+    <!-- 越南语 -->
+    <string name="china_vi_txt">tiếng việt</string>
+
+
+    <string name="reload_the_txt">Reloading</string>
+
+
+    <!-- 首页足球状态 -->
+    <string name="frame_home_bjsaiche_txt">Beijing Car Racing</string>
+    <string name="frame_home_hkLHC_txt">Mark Six Lottery</string>
+    <string name="frame_home_lhckaijiang_txt">Lottery Draw</string>
+    <string name="fragme_home_shangbanchang_text">1st Half</string>
+    <string name="fragme_home_zhongchang_text">HT</string>
+    <string name="fragme_home_xiabanchang_text">2nd Half</string>
+    <string name="fragme_home_quxiao_text">Cancel</string>
+    <string name="fragme_home_daiding_text">Undetermined</string>
+    <string name="fragme_home_wanchang_text">FT</string>
+    <string name="fragme_home_yaozhan_text">Abandoned</string>
+    <string name="fragme_home_zhongduan_text">Interrupted</string>
+    <string name="fragme_home_tuichi_text">Postponed</string>
+    <string name="fragme_home_jiaqiu_text">Overtime</string>
+    <string name="fragme_home_dianqiu_text">Penalty Kick</string>
+    <string name="fragme_home_fengpan_text">Entertained</string>
+
+    <!-- 退出程序 -->
+    <string name="main_exit_text">Press again to exit</string>
+    <!-- 提示复制成功 -->
+    <string name="about_copy_success">Text Copied</string>
+
+    <string name="pre_stadium_weather_sunny">Sunny</string>
+    <string name="pre_stadium_weather_heavy_rain">Heavy Rain</string>
+    <string name="pre_stadium_weather_light_rain">Light Rain</string>
+    <string name="pre_stadium_weather_wind">Wind</string>
+    <string name="pre_stadium_weather_snow">Snow</string>
+
+    <string name="home_pager_current_date">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="tomorrow">Tomorrow</string>
+
+
+    <string name="developing">Coming soon</string>
+
+    <string name="football_detail_stadium_tab">Stadium</string>
+    <string name="football_detail_odds_tab">Odds</string>
+    <string name="football_detail_analyze_tab">Analysis</string>
+    <string name="goal">Goal per Match</string>
+    <string name="football_detail_pre_title1">Start Time</string>
+    <string name="football_detail_pre_title2">Weather</string>
+    <string name="football_detail_pre_title3">Stadium</string>
+    <string name="football_detail_pre_title4">Starting</string>
+    <!--分析界面-->
+    <string name="rank">Team Rank</string>
+    <string name="recordconstract">Standings Comparison</string>
+    <string name="homeguestconstract">H/A Comparison</string>
+    <string name="GoalsperGame">Goal per Match</string>
+    <string name="losspergame">Miss per Match</string>
+    <string name="ranking">Points Ranking</string>
+    <string name="goal_and_loss">Goal/Miss</string>
+    <string name="history_battle">Historical Fixtures</string>
+    <string name="home_recent">Home recent</string>
+    <string name="guest_recent">Away recent</string>
+    <string name="opinion">View in this match</string>
+    <string name="shuangfangjin">Two sides recent&#160;</string>
+    <string name="cijiaofeng">&#160;fixtures&#160;</string>
+    <string name="analyze_win">W</string>
+    <string name="analyze_equ">D</string>
+    <string name="analyze_defeat">L</string>
+    <string name="winpro">W%&#160;</string>
+    <string name="jin">Goal&#160;</string>
+    <string name="qiushi">&#160;Miss&#160;</string>
+
+    <string name="analyze_date">Date</string>
+    <string name="analyze_match">Matches</string>
+    <string name="analyze_match_result">Results</string>
+    <string name="zhuduijin">Home Recent&#160;</string>
+    <string name="keduijin">Away Recent&#160;</string>
+    <string name="nodata">No Data</string>
+
+    <!-- 篮球界面 -->
+    <string name="basket_left">Basketball Score</string>
+    <string name="basket_tittle">Basketball Score</string>
+    <string name="basket_setting_tittle">Basketball Settings</string>
+    <string name="basket_filtrate_tittle">Basketball Filtering</string>
+
+    <string name="basket_total">Total:</string>
+    <string name="basket_differ">Difference:</string>
+    <string name="basket_tv"> | </string>
+
+    <string name="basket_handicap_feng">Entertained</string>
+    <string name="basket_odds_asize">Total</string>
+    <string name="basket_odds_eur">W/L</string>
+    <string name="basket_odds_alet">Home Team</string>
+
+    <string name="basket_VS">VS</string>
+    <string name="basket_1st_half">1st half</string>
+    <string name="basket_1st">1st</string>
+    <string name="basket_2nd">2nd</string>
+    <string name="basket_2nd_half">2nd half</string>
+    <string name="basket_3rd">3rd</string>
+    <string name="basket_4th">4th</string>
+    <string name="basket_OT1">OT1</string>
+    <string name="basket_OT2">OT2</string>
+    <string name="basket_OT3">OT3</string>
+    <string name="basket_half_time">half time</string>
+
+    <string name="basket_undetermined">Undetermined</string>
+    <string name="basket_interrupt">Interrupted</string>
+    <string name="basket_cancel">Cancel</string>
+    <string name="basket_postpone">Postponed</string>
+
+
+
+    <string name="basket_yesterday">Yesterday</string>
+    <string name="basket_today">Today</string>
+    <string name="basket_monday">Tomorrow</string>
+
+    <!--篮球设置-->
+    <string name="basket_odd_setting">Odds Hint</string>
+    <string name="basket_scort_setting">Match Hint</string>
+    <string name="basket_analyze">Analysis</string>
+    <string name="basket_alet">HDP</string>
+    <string name="basket_eur">1x2</string>
+    <string name="basket_asize">O/U</string>
+    <string name="basket_noshow">No</string>
+    <string name="basket_all_score">Half/Full Time Total Points</string>
+    <string name="basket_differ_score">Total Points Difference</string>
+    <string name="basket_single_score">Quarter Score</string>
+    <string name="basket_ranking">Ranking</string>
+    <string name="basket_begin_game">Pre-play</string>
+
+    <string name="basket_hot_cup">Hot Matches</string>
+    <string name="basket_other_cup">Other Matches</string>
+    <string name="hor_data_info_txt">Hot News</string>
+    <string name="basket_hot">Hot</string>
+    <string name="basket_all_checked">Select All</string>
+    <string name="basket_negate">Inverse</string>
+    <string name="basket_reset">Reset</string>
+
+    <string name="basket_isok">Confirm</string>
+
+    <string name="basket_unfiltrate">No Match</string>
+    <string name="basket_undata">No Match</string>
+
+    <!--篮球详情-->
+
+    <!--分析-->
+    <string name="basket_analyze_sides">Both Sides Standings</string>
+    <string name="basket_analyze_history">Historical Fixture</string>
+    <string name="basket_analyze_recent">Recent Standings</string>
+    <string name="basket_analyze_fruture">Future Matches</string>
+    <string name="basket_analyze_more">More Standings >></string>
+    <string name="basket_analyze_points_ranking">Points Ranking</string>
+    <string name="basket_analyze_rank_team">Ranking/Team</string>
+    <string name="basket_analyze_has">Finished</string>
+    <string name="basket_analyze_win_lost">W/L</string>
+    <string name="basket_analyze_winodds">W%</string>
+    <string name="basket_analyze_recent_performance">Recent Performance</string>
+    <!--足球分析补充-->
+
+    <string name="basket_analyze_fruture_competition">Future Matches</string>
+    <string name="basket_analyze_event">Matches</string>
+    <string name="basket_analyze_date">Date</string>
+    <string name="basket_analyze_guest">Away</string>
+    <string name="basket_analyze_home">Home</string>
+    <string name="basket_analyze_score">Score</string>
+    <string name="basket_analyze_sizeof">O/U</string>
+    <string name="basket_analyze_let_points">Spread</string>
+    <string name="basket_analyze_interval">Interval</string>
+    <string name="basket_analyze_update">Update</string>
+    <string name="basket_analyze_guest_win">Away Win</string>
+    <string name="basket_analyze_dish">Handicap</string>
+    <string name="basket_analyze_home_win">Home Win</string>
+    <string name="basket_analyze_screen">Filtering</string>
+
+    <string name="basket_analyze_future">Future</string>
+    <string name="basket_analyze_field">matches</string>
+    <string name="basket_analyze_defult_text">--</string>
+    <string name="basket_analyze_win">Win</string>
+    <string name="basket_analyze_lost">Lose</string>
+    <string name="basket_analyze_recently">Recnetly</string>
+    <string name="basket_analyze_recently2">matches，</string>
+    <string name="basket_analyze_home_field">,Home</string>
+    <string name="basket_company">Company</string>
+    <string name="basket_analyze_day">Day</string>
+    <string name="basket_nodata">No Data</string>
+    <string name="basket_six_average_win_score">Avg score in 6 matches</string>
+    <string name="basket_six_average_lost_score">Avg loss in 6 matches</string>
+    <string name="all_rankings">All rankings>>>></string>
+
+    <string name="basket_handicap_big">Over</string>
+    <string name="basket_handicap_small">Under</string>
+    <string name="basket_handicap_zou">Draw</string>
+
+    <string name="basket_analyze_dialog_site">Stadium</string>
+    <string name="basket_analyze_dialog_num">matches</string>
+    <string name="basket_analyze_dialog_allgame">All</string>
+    <string name="basket_analyze_dialog_samegame">Same Home &amp; Away</string>
+    <string name="basket_analyze_dialog_six">6 matches</string>
+    <string name="basket_analyze_dialog_ten">10 matches</string>
+    <string name="basket_analyze_dialog_fifteen">15 matches</string>
+    <string name="basket_analyze_dialog_cancle">Cancel</string>
+    <string name="basket_analyze_dialog_ok">Confirm</string>
+
+    <string name="basket_odds_euro_details">1x2 Details</string>
+    <string name="basket_odds_asiaLet_details">HDP Details</string>
+    <string name="basket_odds_asiaSize_details">O/U Details</string>
+
+
+
+    <!-- 足球资讯 -->
+    <string name="foot_title">Football Information</string>
+    <string name="foot_zl_tipf">Already the 1st round</string>
+    <string name="foot_zl_tipl">Already the last round</string>
+    <string name="foot_tujian">Recommend</string>
+    <string name="foot_loadmore">Load more</string>
+    <string name="foot_loadingmore">Loading more...</string>
+    <string name="foot_nomoredata">No More Data</string>
+    <string name="foot_neterror">Network anomaly, please retry</string>
+    <string name="foot_datadetail">Check the detailed data</string>
+    <string name="foot_detailtitle">Information Details</string>
+    <string name="foot_erroraddress">Invalid Address</string>
+    <string name="basket_home_diyijie">Quarter 1</string>
+    <string name="basket_home_dierjie">Quarter 2</string>
+    <string name="basket_home_disanjie">Quarter 3</string>
+    <string name="basket_home_dishijie">Quarter 4</string>
+
+
+    <string name="football_score">Score</string>
+    <string name="football_news">Info</string>
+    <string name="football_data">Data</string>
+    <string name="football_video">Video</string>
+    <string name="football_cpi">Odds</string>
+    <string name="title_activity_web_counsel">WebCounselActivity</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--WebView H5-->
+    <string name="webview_check_info">Check detailed match data</string>
+    <string name="user_feedback">User Feedback</string>
+    <!--资讯评论-->
+    <string name="user_name">Visitor</string>
+    <string name="warn_nullcontent">Please input content first</string>
+    <string name="warn_submitfail">Send failed, please retry</string>
+    <string name="hint_content">I will comment</string>
+    <string name="comment_send">Send</string>
+    <string name="comment_title">All Messages</string>
+    <string name="comment_contentnull">No Comments</string>
+    <string name="toatalvisiable">Show All</string>
+
+    <!---->
+    <string name="feedback_submit">Submit</string>
+    <string name="feedback_edit_hint">Please input message contents</string>
+    <string name="feedback_toast_thx">Thanks for your feedback!</string>
+    <string name="feedback_submiting_txt">Submitting...</string>
+    <!--日期-->
+    <string name="data_date_txt">2015-2016</string>
+    <string name="data_date_txt1">2016-2017</string>
+
+
+    <!-- 登录注册 begin-->
+    <string name="my">User Center</string>
+    <string name="register">Register</string>
+    <string name="registering">Registering...</string>
+    <string name="login">Log in</string>
+    <string name="logining">Logging in...</string>
+    <string name="login_succ">Log in successfully</string>
+    <string name="login_fail">Log in failed</string>
+    <string name="pwd_format">Password consists of 6-20 letters, numbers, or underlines</string>
+    <string name="pwd_format_hint">6-20 characters (case sensitive)</string>
+    <string name="pwd_empty">Please enter password</string>
+    <string name="phone_empty">Please enter phone number</string>
+    <string name="login_int_username">Please enter a registered account</string>
+    <string name="phone_error">Please enter correct phone number</string>
+    <string name="verify_code">Please enter verification code</string>
+    <string name="verify_code_send">Send verification code</string>
+    <string name="logout">Log out</string>
+    <string name="logouting">Logging out...</string>
+    <string name="logout_fail">Log out failed</string>
+    <string name="logout_succ">Log out successfully</string>
+    <string name="resend">Resend</string>
+    <string name="register_fail">Register failed</string>
+    <string name="register_succ">Register successfully</string>
+    <string name="mail_format_error">E-mail format error</string>
+    <string name="mail_already_register">E-mail has been registered</string>
+    <string name="verify_code_error">Verification code error</string>
+    <string name="user_exist">User has  been activated</string>
+    <string name="verify_code_invalidate">Verification code invalid</string>
+    <string name="phone_already_exist">Phone number has been registered</string>
+    <string name="user_not_login">Not log in</string>
+    <string name="PHONE_FORMAT_ERROR">Phone number format error</string>
+    <string name="user_not_exist">User does not exist</string>
+    <string name="message_send_fail">Send verification code failed</string>
+    <string name="nickname_exist">Nickname already exists</string>
+    <string name="username_exist">Username already exists</string>
+    <string name="username_error">Log in account error</string>
+    <string name="get_qq_info_fail">Get QQ information failed</string>
+    <string name="GET_WEIBO_INFO_FAIL">Get Weibo information failed</string>
+    <string name="system_error">System error</string>
+    <string name="backstage_error">Server Error</string>
+    <string name="password_digits">_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVWXYZ</string>
+    <string name="realname_error">Realname error</string>
+    <string name="id_card_format_error">ID card format error</string>
+    <string name="password_error">Password error</string>
+    <string name="username_pass_error">Username or password error</string>
+    <string name="logout_check">Confirm to log out?</string>
+
+
+    <string name="home_pager_version_update">Ignore this version</string>
+
+    <string name="basket_info_load_data">Wait, get the data.</string>
+    <string name="odds_back_list">Return list</string>
+    <string name="odds_equals">Average</string>
+
+
+
+    <string name="more_setting">More settings</string>
+    <string name="invited_prize">Prizes for inviting</string>
+
+    <string name="basket_database_details_toast">Hold on, getting data</string>
+    <string name="basket_database_details_statistic_all_scoreA">Total goals</string>
+    <string name="basket_database_details_statistic_averageA">Average goals</string>
+    <string name="football_database_details_most_top_win">Win/Finished:</string>
+    <string name="football_database_details_most_top_draw">Draw/Finished:</string>
+    <string name="football_database_details_most_top_lost">Lose/Finished:</string>
+    <string name="football_database_details_most_top_avg">Win probability:</string>
+    <string name="football_database_details_most_score_avg">Goals per match:</string>
+    <string name="football_database_details_statistic_home_draw">Draw :</string>
+    <string name="football_database_details_statistic_all_num">Total goals :</string>
+    <string name="football_database_details_statistic_avg_num">Average :</string>
+    <string name="football_database_details_statistic_w_num">Win probability :</string>
+    <string name="football_database_details_statistic_d_num">Draw probability :</string>
+    <string name="football_database_details_statistic_l_num">Lose probability :</string>
+    <string name="football_database_details_statistic_w_avgnum">Win</string>
+    <string name="football_database_details_statistic_d_avgnum">Draw</string>
+    <string name="football_database_details_statistic_l_avgnum">Lose</string>
+    <string name="football_database_details_wdl_statistic">W/D/L statistics</string>
+    <string name="football_database_details_goal_statistic">Goals statistics</string>
+    <string name="football_database_details_big_small_statistic">Over/Under statistics</string>
+    <string name="football_database_details_home_score_avg">Home goals per match</string>
+    <string name="football_database_details_guest_score_avg">Away goals per match</string>
+    <string name="football_database_details_moreZero">Higher than 0.5</string>
+    <string name="football_database_details_moreOne">Higher than 1.5</string>
+    <string name="football_database_details_moreTwo">Higher than 2.5</string>
+    <string name="football_database_details_moreThree">Higher than 3.5</string>
+    <string name="football_database_details_chang">Matches</string>
+    <string name="can_only_choose_a_picture">You can only select one image</string>
+    <string name="confirm_the_selected_sex">Confirm save the modified personal information?</string>
+    <string name="chose_start_photo">Select player is image</string>
+    <string name="chose_start_text">Not only player style with you；</string>
+    <string name="only_chose_start_text">but also One Score。</string>
+    <string name="star_style">Player style</string>
+    <string name="football_baby">Football babies</string>
+    <string name="account_cannot_be_empty">Account or phone number cannot be empty</string>
+    <string name="please_login_first">Please login first</string>
+    <string name="man_sex">boy</string>
+    <string name="woman_sex">girl</string>
+    <string name="noon_sex">Secret</string>
+    <string name="chose_head_phot">Select image</string>
+    <string name="complete">Complete</string>
+    <string name="invited_number_noon">The invitation code does not exist</string>
+    <string name="choice_of_players_head">Select player is image</string>
+    <string name="picture_resource_does_not_exist">Image resource does not exist</string>
+    <string name="foreign_month">month(s) ago</string>
+    <string name="foreign_day">day(s) ago</string>
+    <string name="foreign_hour">hour(s) ago</string>
+    <string name="foreign_minites">minute(s) ago</string>
+    <string name="foreign_now">A moment ago</string>
+    <string name="foreign_writecmt">Review</string>
+    <string name="foreign_title">Foreign information</string>
+    <string name="push_type_goal">Goals</string>
+    <string name="push_red">Red cards</string>
+    <string name="push_shake">Vibrate</string>
+    <string name="push_sound">Sounds</string>
+    <string name="push_focus_match">Push following matches</string>
+    <string name="foreign_pic">The image has been saved to SD card folder</string>
+    <string name="basket_shoot">Shoot(%)</string>
+    <string name="basket_three_shoot">Three-Pointer(%)</string>
+    <string name="basket_free_shoot">Free throw(%)</string>
+    <string name="basket_rebound">Rebound</string>
+    <string name="basket_assist">Assist</string>
+    <string name="basket_steal">Steal</string>
+    <string name="basket_blockshoot">Block</string>
+    <string name="basket_foul">Foul</string>
+    <string name="basket_turnover">Turnover</string>
+    <string name="basket_player_qiuyuan">Player</string>
+    <string name="basket_player_time">Time</string>
+    <string name="basket_player_score">Points</string>
+    <string name="basket_player_shoot">Shoot</string>
+    <string name="basket_player_rebound">Rebound</string>
+    <string name="basket_player_assist">Assist</string>
+    <string name="basket_player_three">Three-Pointer</string>
+    <string name="basket_player_steal">Steal</string>
+    <string name="basket_player_blockshoot">Block</string>
+    <string name="basket_player_turnover">Turnover</string>
+    <string name="basket_player_foul">Foul</string>
+    <string name="basket_text_live">Live text</string>
+    <string name="basket_team_statictics">Team statistics</string>
+    <string name="basket_players_statictics">Player statistics</string>
+    <string name="basket_no_text_live">No live data</string>
+    <string name="basket_player_no_data">No statistics</string>
+    <string name="video_high_light_reminder_comment">You are using mobile data, continue to open?</string>
+    <string name="video_high_light_continue_open">Open</string>
+    <string name="video_high_light">Spontaneous moments</string>
+    <string name="video_high_notice">Spontaneous moments are coming</string>
+    <string name="snooker_title">Snooker</string>
+    <string name="snooker_setting_title">Snooker settings</string>
+    <string name="snooker_setting_alet">HDP</string>
+    <string name="snooker_setting_eur">1×2</string>
+    <string name="snooker_setting_asize">Over/Under</string>
+    <string name="snooker_setting_single_twins">Odd/Even</string>
+    <string name="snooker_setting_nos_show">No</string>
+    <string name="snooker_state_pause">Paused</string>
+    <string name="snooker_state_no_start">Pre-play</string>
+    <string name="snooker_state_over_game">Finished</string>
+    <string name="snooker_state_have_ing">In-play</string>
+    <string name="snooker_state_resting">Break</string>
+    <string name="snooker_state_victory_defeat">Win/Lose</string>
+    <string name="snooker_state_zong">Total</string>
+    <string name="snooker_state_single_double">Odd/Even</string>
+    <string name="snooker_current_nodata">No matches on the current date</string>
+    <string name="snooker_loading">Loading data...</string>
+    <string name="custom_mine_cus">My customization</string>
+    <string name="custom_list_cus">Customized list</string>
+    <string name="custom_no_cus">You have not customized any team/league</string>
+    <string name="custom_to_cus">Go to customize now</string>
+    <string name="custom_redact_cus">Edit</string>
+    <string name="custom_accomplish_cus">Complete</string>
+    <string name="custom_noevent_cus">No matches</string>
+    <string name="chart_ball_report_to_user">Reported person：</string>
+    <string name="chart_ball_report_user">Reporter：</string>
+    <string name="chart_ball_report_content">Reporting contents cannot be empty！</string>
+    <string name="chart_ball_online">person(s)</string>
+    <string name="chart_ball_call_me">\@you：</string>
+    <string name="chart_ball_call_ta">\@TA</string>
+    <string name="chart_ball_send_error">Send failed！</string>
+    <string name="chart_ball_loading_error">Load failed！</string>
+    <string name="chart_ball_call_user_not">\@User does not exist</string>
+    <string name="chart_ball_report_user_not">The reported user does not exist</string>
+    <string name="chart_ball_banned">You have been banned by the room administrator for </string>
+    <string name="local_chitule">吃土了</string>
+    <string name="local_dacaipan">打裁判</string>
+    <string name="local_fubaila">腐败啦</string>
+    <string name="local_jinggaoni">警告你</string>
+    <string name="local_juyijing">菊一紧</string>
+    <string name="local_mengkuanle">懵圈了</string>
+    <string name="local_qiudatui">求大腿</string>
+    <string name="local_sesese">射射射</string>
+    <string name="local_shangtiantai">上天台</string>
+    <string name="local_shihuale">石化了</string>
+    <string name="local_shoumila">收米啦</string>
+    <string name="local_touzhele">偷着乐</string>
+    <string name="local_xihushuiya">西湖水呀</string>
+    <string name="local_yayajing">压压惊</string>
+    <string name="local_youqingguanlaoye">有请关老爷</string>
+    <string name="local_zailaiyijiao">再来一角</string>
+    <string name="chart_ball_new_msg">New message</string>
+    <string name="chart_ball_null_content">Have a talk</string>
+    <string name="chart_ball_login_error">Login verification failed, please login again!</string>
+    <string name="chart_ball_hint_title">Say something...</string>
+    <string name="chart_ball_report_hint">Please enter the report contents</string>
+    <string name="chart_ball_report">Report</string>
+    <string name="home_expert_title">Expert column</string>
+    <string name="title_product_advice">Give some advice on product</string>
+    <string name="product_advice">Replies for product</string>
+    <string name="product_advice_load_more">Loading....</string>
+    <string name="more"><![CDATA[More>>]]></string>
+    <string name="nomoredatashangla">No more data...</string>
+    <string name="my_focus_basket">Basketball</string>
+    <string name="my_focus_football">Football</string>
+    <string name="no_focus">You have not followed any match</string>
+    <string name="to_focus_now">Follow now</string>
+    <string name="my_focus">My follow</string>
+    <string name="invite_friends">Invite friends</string>
+    <string name="copy_text">Copy to the clipboard</string>
+    <string name="invitation_code_acquisition_failed">Getting invitation code failed</string>
+    <string name="your_invitation_code">Your invitation code</string>
+    <string name="copy_tv">Copy</string>
+    <string name="copy_text2"> Enter invitation code, and One Score will issue gold coins afterwards</string>
+    <string name="copy_text3">Participate in the activities of One Score and win big bonus</string>
+    <string name="please_invited_number">Please enter invitation code</string>
+    <string name="please_invited">Invitation code</string>
+    <string name="multi_header_name">Multi-screen viewing</string>
+    <string name="multi_add">Add</string>
+    <string name="multi_dialog_text">Confirm to remove the match?</string>
+    <string name="multi_zhishao_text">Display at least one match！</string>
+    <string name="multi_enter_text">Click to enter</string>
+    <string name="multi_add_view_text">Add multi-screen</string>
+    <string name="multi_item_basket_name">Basketball</string>
+    <string name="multi_item_football_name">Football</string>
+    <string name="multi_item_clicks">Confirm</string>
+    <string name="multi_toast_clicks_match">Please select match</string>
+    <string name="multi_toast_upper_match">3 matches at most</string>
+
+    <string name="home_lottery_info_tm_bo_r">Red</string>
+    <string name="home_lottery_info_tm_bo_g">Green</string>
+    <string name="home_lottery_info_tm_bo_b">Blue</string>
+    <string name="home_lottery_info_image_desc">All data and information on the site are for your reference only. In order to avoid economic losses, you shall not use them for any unlawful purpose, or you yourself have to shoulder your responsibility</string>
+    <string name="snooker_player_compare">Professional comparison</string>
+    <string name="snooker_history_bettle">Pre-competition</string>
+    <string name="snooker_player1">Player 1 is recent achievements</string>
+    <string name="snooker_player2">Player 2 is recent achievements</string>
+    <string name="football_txt">Football</string>
+    <string name="basketball_txt">Basketball</string>
+    <string name="snooker_txt">Snooker</string>
+    <string name="tennisball_txt">Tennis</string>
+    <string name="football_ziliaoku">Database</string>
+    <string name="sn_rank_name">Name</string>
+    <string name="sn_rank_zjf">Total points</string>
+    <string name="sn_rank_zjj">Total prize money</string>
+    <string name="sn_player_search">Please enter player is name</string>
+    <string name="snooker_qualifiers">Qualifiers</string>
+    <string name="snooker_match">Finals</string>
+    <string name="snooker_champion">Former champions</string>
+    <string name="snooker_tournament">Match introduction</string>
+    <string name="snooker_odds_peilv">Odds</string>
+    <string name="snooker_game_time">Time</string>
+    <string name="snooker_state">Statue</string>
+    <string name="snooker_player">Player</string>
+    <string name="snooker_score">Scores</string>
+    <string name="snooker_detailed">Details</string>
+    <string name="snooker_analyze_birth">D.O.B</string>
+    <string name="snooker_analyze_rank">World ranking</string>
+    <string name="snooker_analyze_season">Professional season</string>
+    <string name="snooker_analyze_bonus">Total prize money</string>
+    <string name="snooker_analyze_full_score">147 break</string>
+    <string name="snooker_analyze_total_champion">Titles</string>
+    <string name="snooker_analyze_hundred_times">Century breaks</string>
+    <string name="snooker_analyze_hundred_percent">Century breaks%</string>
+    <string name="snooker_analyze_total_times">Total matches</string>
+    <string name="snooker_analyze_win">Winning matches</string>
+    <string name="snooker_analyze_win_percent">Winning matches%</string>
+    <string name="snooker_analyze_total_numbers">Total games</string>
+    <string name="snooker_analyze_total_wins">Winning games</string>
+    <string name="snooker_analyze_wins_percent">Winning games%</string>
+    <string name="tennis_match_p2">P2 withdraws</string>
+    <string name="tennis_match_p1">P1 withdraws</string>
+    <string name="tennis_match_dd">Undetermined</string>
+    <string name="tennis_match_tc">Postponed</string>
+    <string name="tennis_match_zd">Interrupted</string>
+    <string name="tennis_match_over">Finished</string>
+    <string name="tennis_match_not_start">Pre-play</string>
+    <string name="tennis_match_join">In-play</string>
+    <string name="basket_analyze_all_rank">全部排名>>></string>
+    <string name="football_rfypl">Win Handicap under Make Spread</string>
+    <string name="football_odds_return_list">返回列表</string>
+
+</resources>
