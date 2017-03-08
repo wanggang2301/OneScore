@@ -731,7 +731,7 @@
                             android:layout_gravity="center"
                             android:textSize="@dimen/text_size_12"
                             android:textColor="@color/black_details_textcolor"
-                            android:text="全部排名>>>"/>
+                            android:text="@string/basket_analyze_all_rank"/>
                     </LinearLayout>
                     <TextView
                         android:id="@+id/basket_analyze_nodata2"
