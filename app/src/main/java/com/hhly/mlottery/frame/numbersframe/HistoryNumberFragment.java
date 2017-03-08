@@ -117,11 +117,11 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
         mNumberName = null;
         mNumberName = getArguments().getString("mNumberName");
 
-        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
-            view = inflater.inflate(R.layout.numbers_history_page, container, false);// 国语
-        } else {
-            view = inflater.inflate(R.layout.numbers_history_page_i18n, container, false);// 英语
-        }
+//        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
+        view = inflater.inflate(R.layout.numbers_history_page, container, false);// 国语
+//        } else {
+//            view = inflater.inflate(R.layout.numbers_history_page_i18n, container, false);// 英语
+//        }
 
         initView();
         initIsOpenNumberData();// 获取彩种开奖状态
@@ -190,14 +190,12 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
         VolleyContentFast.requestJsonByGet(AppConstants.numberHistoryURLs[0], new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
             @Override
             public synchronized void onResponse(final NumbersOpenBean json) {
-                if (null != json) {// 判断数据是否为空
+                if (null != json && json.getNumLotteryResults() != null) {// 判断数据是否为空
 
-                    if (numberlist != null) {
-                        numberlist.clear();
-                    }
+                    numberlist.clear();
 
                     serverTime = json.getServerTime();// 获取服务器当前时间
-                    numberlist = json.getNumLotteryResults();
+                    numberlist.addAll(json.getNumLotteryResults());
 
                     if (num == 1) {
                         mHandler.sendEmptyMessage(ANEWREFRESH);
@@ -337,7 +335,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
                     left.setAlpha(1.0f);
                     iv_lottery_left.setAlpha(1.0f);
                 }
-                ((NumbersInfoBaseActivity)mContext).isHistoryPager = true;
+                ((NumbersInfoBaseActivity) mContext).isHistoryPager = true;
                 numberHistorySelect(arg2);// 显示指定期数号码开奖明细
 
             }

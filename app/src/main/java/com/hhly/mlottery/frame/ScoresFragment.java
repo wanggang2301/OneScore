@@ -205,7 +205,6 @@ public class ScoresFragment extends BaseWebSocketFragment {
                             mFilterImgBtn.setVisibility(View.VISIBLE);
                             mSetImgBtn.setVisibility(View.INVISIBLE);
 //                            ((RollBallFragment) fragments.get(position)).feedAdapter();
-                            L.d("yxq+++++++" , "进来了1");
                             break;
                         case IMMEDIA_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.VISIBLE);
@@ -225,7 +224,6 @@ public class ScoresFragment extends BaseWebSocketFragment {
                         case FOCUS_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.INVISIBLE);
                             mSetImgBtn.setVisibility(View.VISIBLE);
-                            L.d("yxq+++++++" , "进来了2");
                             ((FocusFragment) fragments.get(position)).reLoadData();
                             break;
                         case 5:

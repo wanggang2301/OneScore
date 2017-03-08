@@ -50,6 +50,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,7 +109,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     private ChartBallAdapter mAdapter;
     private ChartBallReportDialogFragment dialogFragment;
     private ChartReceive mChartReceive;
-    private List<ChartReceive.DataBean.ChatHistoryBean> historyBeen;
+    private List<ChartReceive.DataBean.ChatHistoryBean> historyBeen = new ArrayList<>();
     private LinearLayout ll_not_chart_image;
     private FrameLayout rl_chart_content;
     private TextView tv_online_count;// 在线人数
@@ -531,8 +532,8 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                 case SUCCESS_LOADING:
                     // 开启socket推送
                     connectWebSocket();
-
-                    historyBeen = mChartReceive.getData().getChatHistory();
+                    historyBeen.clear();
+                    historyBeen.addAll(mChartReceive.getData().getChatHistory());
                     if (historyBeen != null) {
                         if (historyBeen.size() != 0) {
                             if (historyBeen.size() < 2) {
