@@ -1608,7 +1608,7 @@
     <string name="home_lottery_info_pm_bo_count">จำนวนครั้งที่แสดงกระดานสีรางวัล</string>
     <string name="home_lottery_info_tm_not_zodiac_count"> รางวัลนักษัตรไม่ออกต่อเนื่อง</string>
     <string name="home_lottery_info_tm_not_count"> รางวัลพิเศษไม่ออกต่อเนื่อง</string>
-    <string name="home_lottery_info_tm_not_mantissa_count">รางวัลเลขท้ายพิเศษไม่ออกต่อเนื่อง</string>
+    <string name="home_lottery_info_tm_not_mantissa_count">รางวัลเลขท้ายพิเศษไม่ออกต่อเนื่อง</string  >
     <string name="home_lottery_info_tm_not_bo_count">กระดานสีรางวัลพิเศษไม่ออกต่อเนื่อง</string>
 
 
@@ -1622,6 +1622,9 @@
     <string name="basket_analyze_all_rank">การจัดอันดับทั้งหมด>>></string>
     <string name="football_rfypl">เปอร์เซ็นต์แต้มต่อของค่าน้ำที่ชนะ</string>
     <string name="football_odds_return_list">กลับไปยังรายการ</string>
-
+    <!--日期-->
+    <string name="return_yesterday">เมื่อวาน</string>
+    <string name="return_today">วันนี้</string>
+    <string name="return_tomorrow">พรุ่งนี้</string>
 
 </resources>

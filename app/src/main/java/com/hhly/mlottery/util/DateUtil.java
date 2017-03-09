@@ -448,11 +448,11 @@ public class DateUtil {
         long day = Long.valueOf(date.replaceAll("[-\\s:]", ""));
 
         if ((today - day) == 1) {
-            return "昨天";
+            return MyApp.getContext().getResources().getString(R.string.return_yesterday);
         } else if ((today - day) == -1) {
-            return "明天";
+            return MyApp.getContext().getResources().getString(R.string.return_tomorrow);
         } else if ((today - day) == 0) {
-            return "今天";
+            return MyApp.getContext().getResources().getString(R.string.return_today);
         }
         return "";
     }

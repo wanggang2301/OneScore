@@ -1616,5 +1616,8 @@
     <string name="football_rfypl">让分赢盘率</string>
     <string name="football_odds_return_list">返回列表</string>
 
-
+    <!--日期-->
+    <string name="return_yesterday">昨天</string>
+    <string name="return_today">今天</string>
+    <string name="return_tomorrow">明天</string>
 </resources>
