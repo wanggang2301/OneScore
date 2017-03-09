@@ -31,20 +31,13 @@ import cn.finalteam.okhttpfinal.OkHttpFinalConfiguration;
  * @date 2015-10-15 上午9:48:39
  */
 public class MyApp extends Application {
-    private static MyApp appcontext = null;
+    private static MyApp appcontext;
     public static Resources mResources;
     public static Configuration mConfiguration;
     public static DisplayMetrics mDm;
     public static Locale mLocale;
-    /**
-     * 获取语言
-     */
-    public static String isLanguage;
-
-    /**
-     * 获取当前包名
-     */
-    public static String isPackageName;
+    public static String isLanguage;   // 获取语言
+    public static String isPackageName;// 获取当前包名
 
     @Override
     public void onCreate() {
@@ -91,7 +84,9 @@ public class MyApp extends Application {
     private void settingTimeZone() {
         switch (isPackageName) {
             case AppConstants.PACKGER_NAME_ZH:// 国内版
-                AppConstants.timeZone = 8;
+//                AppConstants.timeZone = 8;
+                // TODO 暂时用
+                AppConstants.timeZone = 7;
                 break;
             case AppConstants.PACKGER_NAME_TH:// 泰国版
             case AppConstants.PACKGER_NAME_VN_HN:// 越南北版
@@ -221,6 +216,10 @@ public class MyApp extends Application {
                             language = "rEN";
                         }
                         break;
+                    default:
+                        // TODO 暂时用
+                        language = "rCN";
+                        break;
                 }
             }
 
@@ -273,7 +272,6 @@ public class MyApp extends Application {
      */
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        // TODO Auto-generated method stub
         super.onConfigurationChanged(newConfig);
         System.exit(0);
     }

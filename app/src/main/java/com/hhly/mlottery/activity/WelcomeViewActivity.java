@@ -108,23 +108,17 @@ public class WelcomeViewActivity extends BaseActivity implements OnViewChangeLis
 
     //判断是什么语言加载什么图片
     public void initImg() {
-        //如果是繁体语言环境
-       /* if (MyApp.isLanguage.equals("rTW")) {
-            wel_layout_img1.setBackgroundResource(R.mipmap.welcome1);
-            wel_layout_img2.setBackgroundResource(R.mipmap.welcome2);
-            wel_layout_img3.setBackgroundResource(R.mipmap.welcome3);
-        } else if (MyApp.isLanguage.equals("rCN")) {
-            wel_layout_img1.setBackgroundResource(R.mipmap.welcome1);
-            wel_layout_img2.setBackgroundResource(R.mipmap.welcome2);
-            wel_layout_img3.setBackgroundResource(R.mipmap.welcome3);
-        }*/
-        if (MyApp.isLanguage.equals("rTW")) {
-            imageView = new int[]{R.mipmap.welcome1, R.mipmap.welcome2,
-                    R.mipmap.welcome3};
-        } else if (MyApp.isLanguage.equals("rCN")) {
-            imageView = new int[]{R.mipmap.welcome1, R.mipmap.welcome2,
-                    R.mipmap.welcome3};
-        }
+
+        // TODO 暂时用
+        imageView = new int[]{R.mipmap.welcome1, R.mipmap.welcome2, R.mipmap.welcome3};
+
+//        if (MyApp.isLanguage.equals("rTW")) {
+//            imageView = new int[]{R.mipmap.welcome1, R.mipmap.welcome2,
+//                    R.mipmap.welcome3};
+//        } else if (MyApp.isLanguage.equals("rCN")) {
+//            imageView = new int[]{R.mipmap.welcome1, R.mipmap.welcome2,
+//                    R.mipmap.welcome3};
+//        }
     }
 
 
