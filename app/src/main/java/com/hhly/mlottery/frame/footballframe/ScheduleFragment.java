@@ -28,7 +28,6 @@ import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.ResultMultiAdapter;
 import com.hhly.mlottery.adapter.ScheduleAdapter;
 import com.hhly.mlottery.adapter.ScheduleDateAdapter;
-import com.hhly.mlottery.adapter.ScheduleInternationalAdapter;
 import com.hhly.mlottery.bean.LeagueCup;
 import com.hhly.mlottery.bean.scheduleBean.SchMatch;
 import com.hhly.mlottery.bean.scheduleBean.ScheduleCurrent;
@@ -100,7 +99,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     private LinearLayout mLoadingLayout;
 
     private ScheduleAdapter mAdapter;
-    private ScheduleInternationalAdapter internalAdapter;
 
     private ScheduleDateAdapter mDateAdapter;
     private Intent intent;
