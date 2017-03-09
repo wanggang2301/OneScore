@@ -112,7 +112,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     public static int getIsLoad() {
         return isLoad;
     }
-
+    public static final int TYPE_FOCUS = 3;
     /**
      * 关注事件EventBus
      */
@@ -123,8 +123,9 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     public static boolean requestSuccess = false;
     private static final String ISNEW_FRAMEWORK = "isnew_framework";
     private boolean isNewFrameWork;
+    private static final String BASKET_ENTRY_TYPE = "basketEntryType";//入口标记
 
-
+    private int mEntryType; // 标记入口 判断是从哪里进来的 (0:首页入口  1:新导航条入口)
     /**
      * 切换后更新显示的fragment
      *
@@ -142,10 +143,11 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
      * @param basketballType
      * @return
      */
-    public static ImmedBasketballFragment newInstance(int basketballType, boolean isNewFramWork) {
+    public static ImmedBasketballFragment newInstance(int basketballType, boolean isNewFramWork , int basketEntryType) {
         ImmedBasketballFragment fragment = new ImmedBasketballFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(PARAMS, basketballType);
+        bundle.putInt(BASKET_ENTRY_TYPE , basketEntryType);
         bundle.putBoolean(ISNEW_FRAMEWORK, isNewFramWork);
 
         fragment.setArguments(bundle);
@@ -159,7 +161,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
         if (getArguments() != null) {
             mBasketballType = 0;
             isNewFrameWork = getArguments().getBoolean(ISNEW_FRAMEWORK);
-
+            mEntryType = getArguments().getInt(BASKET_ENTRY_TYPE);
         }
         BasketImmedEventBus = new EventBus();
         BasketImmedEventBus.register(this);
@@ -417,8 +419,20 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                 } else {//关注->未关注
                     FocusUtils.deleteBasketFocusId(root.getThirdId());
                     v.setTag(false);
+                    if (mBasketballType == TYPE_FOCUS) {
+                        if (mEntryType == 0) {
+                            ((BasketballScoresActivity) getActivity()).basketFocusCallback();
+                        }else if(mEntryType == 1){
+                            ((BasketBallScoreFragment) getParentFragment()).focusCallback();
+                        }
+                    }
                 }
                 updateAdapter();//防止复用
+                if (mEntryType == 0) {
+                    ((BasketballScoresActivity) getActivity()).basketFocusCallback();
+                }else if(mEntryType == 1){
+                    ((BasketBallScoreFragment) getParentFragment()).focusCallback();
+                }
             }
         };
     }
@@ -987,5 +1001,10 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
      */
     public void onEventMainThread(String id) {
         updateAdapter();
+        if (mEntryType == 0) {
+            ((BasketballScoresActivity) getActivity()).basketFocusCallback();
+        }else if(mEntryType == 1){
+            ((BasketBallScoreFragment) getParentFragment()).focusCallback();
+        }
     }
 }

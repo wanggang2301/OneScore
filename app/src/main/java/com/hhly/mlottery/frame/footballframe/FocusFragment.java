@@ -20,6 +20,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -93,7 +94,7 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
 
     private ExactSwipeRefreshLayout mSwipeRefreshLayout;
 
-    private View mUnFocusLayout; //暂无关注界面
+    private RelativeLayout mUnFocusLayout; //暂无关注界面
 
     private Context mContext;
 
@@ -221,7 +222,7 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
         mReloadTvBtn = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
         mReloadTvBtn.setOnClickListener(this);
 
-        mUnFocusLayout = mView.findViewById(R.id.football_focus_nodata_txt);
+        mUnFocusLayout = (RelativeLayout)mView.findViewById(R.id.football_unfocus);
         mLoading = (LinearLayout)mView.findViewById(R.id.football_focus_loading_ll);
 
         mLoadingLayout = (LinearLayout) mView.findViewById(R.id.football_immediate_loading_ll);

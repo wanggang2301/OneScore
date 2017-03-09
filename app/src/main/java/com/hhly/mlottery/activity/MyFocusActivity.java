@@ -73,7 +73,7 @@ public class MyFocusActivity extends BaseActivity implements View.OnClickListene
         mImgBack.setOnClickListener(this);
         fragmentManager=getSupportFragmentManager();
         mFootballFocus=FocusFragment.newInstance("","");
-        mBasketballFocus= FocusBasketballFragment.newInstance(0);
+        mBasketballFocus= FocusBasketballFragment.newInstance(0 , 0);
         fragments.add(mBasketballFocus);
         fragments.add(mFootballFocus);
         switchFragment(0);

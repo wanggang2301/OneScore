@@ -31,6 +31,7 @@ import com.hhly.mlottery.bean.basket.BasketRoot;
 import com.hhly.mlottery.bean.basket.BasketRootBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.frame.scorefrag.BasketBallScoreFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -60,7 +61,7 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
 
     private static final String TAG = "ImmedBasketballFragment";
     private static final String PARAMS = "BASKET_PARAMS";
-
+    private static final String BASKET_ENTRY_TYPE = "basketEntryType";//入口标记
     private PinnedHeaderExpandableListView explistview;
 
     //筛选的数据
@@ -96,6 +97,7 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
 
     private BasketFocusClickListener mFocusClickListener; //关注点击监听
 
+    private int mEntryType; // 标记入口 判断是从哪里进来的 (0:首页入口  1:新导航条入口)
 
     private SwipeRefreshLayout mSwipeRefreshLayout; //下拉刷新
 
@@ -104,7 +106,7 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
     private boolean isFilter = false;  //是否赛选过
 
     public static int isLoad = -1;
-
+    public static final int TYPE_FOCUS = 3;
     /**
      * 关注事件EventBus
      */
@@ -125,10 +127,11 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
      * @param basketballType
      * @return
      */
-    public static ResultBasketballFragment newInstance(int basketballType) {
+    public static ResultBasketballFragment newInstance(int basketballType , int basketEntryType) {
         ResultBasketballFragment fragment = new ResultBasketballFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(PARAMS, basketballType);
+        bundle.putInt(BASKET_ENTRY_TYPE , basketEntryType);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -140,6 +143,7 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
         if (getArguments() != null) {
 //            mBasketballType = getArguments().getInt(PARAMS);
             mBasketballType = 1;
+            mEntryType = getArguments().getInt(BASKET_ENTRY_TYPE);
         }
         BasketResultEventBus = new EventBus();
         BasketResultEventBus.register(this);
@@ -384,8 +388,20 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
                     FocusUtils.deleteBasketFocusId(root.getThirdId());
                     v.setTag(false);
                     //判断 如果是关注页面
+                    if (mBasketballType == TYPE_FOCUS) {
+                        if (mEntryType == 0) {
+                            ((BasketballScoresActivity) getActivity()).basketFocusCallback();
+                        }else if(mEntryType == 1){
+                            ((BasketBallScoreFragment) getParentFragment()).focusCallback();
+                        }
+                    }
                 }
                 updateAdapter();//防止复用
+                if (mEntryType == 0) {
+                    ((BasketballScoresActivity) getActivity()).basketFocusCallback();
+                }else if(mEntryType == 1){
+                    ((BasketBallScoreFragment) getParentFragment()).focusCallback();
+                }
             }
         };
     }
@@ -587,6 +603,11 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
      */
     public void onEventMainThread(String id) {
         updateAdapter();
+        if (mEntryType == 0) {
+            ((BasketballScoresActivity) getActivity()).basketFocusCallback();
+        }else if(mEntryType == 1){
+            ((BasketBallScoreFragment) getParentFragment()).focusCallback();
+        }
     }
 
 }

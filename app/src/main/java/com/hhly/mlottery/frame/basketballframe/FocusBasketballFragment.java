@@ -40,6 +40,7 @@ import com.hhly.mlottery.bean.websocket.WebBasketOdds;
 import com.hhly.mlottery.bean.websocket.WebBasketOdds5;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.frame.scorefrag.BasketBallScoreFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -71,7 +72,7 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
 
     private static final String TAG = "FocusBasketballFragment";
     private static final String PARAMS = "BASKET_PARAMS";
-
+    private static final String BASKET_ENTRY_TYPE = "basketEntryType";//入口标记
     /**篮球关注id的key*/
     public final static String BASKET_FOCUS_IDS = "basket_focus_ids";
     /**点击去关注，到列表页传intent的key值*/
@@ -99,9 +100,10 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
     private RelativeLayout mbasketball_unfocus;//暂无关注图标
     private RelativeLayout mbasket_unfiltrate; //暂无赛选图标
 
+    private int mEntryType; // 标记入口 判断是从哪里进来的 (0:首页入口  1:新导航条入口)
 
     private LinearLayout mLoadingLayout;
-    private LinearLayout mNoDataLayout;
+    private RelativeLayout mNoDataLayout;
     private LinearLayout mErrorLayout;
     private TextView mReloadTvBtn;// 刷新 控件
 
@@ -149,10 +151,11 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
      * @param basketballType
      * @return
      */
-    public static FocusBasketballFragment newInstance(int basketballType) {
+    public static FocusBasketballFragment newInstance(int basketballType , int basketEntryType) {
         FocusBasketballFragment fragment = new FocusBasketballFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(PARAMS, basketballType);
+        bundle.putInt(BASKET_ENTRY_TYPE , basketEntryType);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -166,6 +169,7 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
         if (getArguments() != null) {
 //            mBasketballType = getArguments().getInt(PARAMS);
             mBasketballType = 3;
+            mEntryType = getArguments().getInt(BASKET_ENTRY_TYPE);
         }
 //        BasketFocusEventBus = new EventBus();
         EventBus.getDefault().register(this);
@@ -200,7 +204,20 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
         initData();
         return mView;
     }
-
+    Handler mLoadHandler = new Handler();
+    public void LoadData() {
+        mSwipeRefreshLayout.setRefreshing(true);
+        mLoadHandler.post(mRun);
+    }
+    /**
+     * 子线程 处理数据加载
+     */
+    private Runnable mRun = new Runnable() {
+        @Override
+        public void run() {
+            initData();
+        }
+    };
     /**
      * 初始化VIEW
      */
@@ -223,10 +240,7 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
         // 加载状态图标
         mLoadingLayout = (LinearLayout) mView.findViewById(R.id.basketball_immediate_loading);
 
-        mNoDataLayout = (LinearLayout) mView.findViewById(R.id.to_basket_focus_ll);
-
-        mNoDataLayout.setOnClickListener(this);
-
+        mNoDataLayout = (RelativeLayout)mView.findViewById(R.id.basketball_unfocus);
 
         mErrorLayout = (LinearLayout) mView.findViewById(R.id.basketball_immediate_error);
         mReloadTvBtn = (TextView) mView.findViewById(R.id.basketball_immediate_error_btn);
@@ -283,7 +297,11 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
                     mLoadingLayout.setVisibility(View.GONE);
                     mErrorLayout.setVisibility(View.GONE);
                     mNoDataLayout.setVisibility(View.VISIBLE);
-
+                    if (mEntryType == 0) {
+                        ((BasketballScoresActivity) getActivity()).basketFocusCallback();
+                    }else if(mEntryType == 1){
+                        ((BasketBallScoreFragment) getParentFragment()).focusCallback();
+                    }
                     return;
                 }
 
@@ -300,6 +318,12 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
                         PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS,sb.toString());
                     }
                 }
+                if (mEntryType == 0) {
+                    ((BasketballScoresActivity) getActivity()).basketFocusCallback();
+                }else if(mEntryType == 1){
+                    ((BasketBallScoreFragment) getParentFragment()).focusCallback();
+                }
+
                 if (mBasketballType != TYPE_FOCUS) { //非关注页面
                     mAllFilter = json.getMatchFilter();
                     // mChickedFilter = json.getMatchFilter();//默认选中全部 -->mChickedFilter不赋值 默认全不选
@@ -394,7 +418,11 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
                 mErrorLayout.setVisibility(View.GONE);
                 mNoDataLayout.setVisibility(View.GONE);
 
-
+                if (mEntryType == 0) {
+                    ((BasketballScoresActivity) getActivity()).basketFocusCallback();
+                }else if(mEntryType == 1){
+                    ((BasketBallScoreFragment) getParentFragment()).focusCallback();
+                }
 
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -518,13 +546,6 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
                 mSwipeRefreshLayout.setRefreshing(true);
                 mSwipeRefreshLayout.setVisibility(View.GONE);
                 initData();
-                break;
-            case R.id.to_basket_focus_ll:
-                if(getActivity()!=null){
-                    Intent intent=new Intent(getActivity(), BasketballScoresActivity.class);
-                    intent.putExtra(MY_BASKET_FOCUS,TYPE_FOCUS);
-                    startActivity(intent);
-                }
                 break;
             default:
                 break;
@@ -965,7 +986,20 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
      */
     public void onEventMainThread(BasketFocusEventBus eventBus) {
         L.e("EventBus","受到了");
-       request("");
+        request("");
+        if (mEntryType == 0) {
+            ((BasketballScoresActivity) getActivity()).basketFocusCallback();
+        }else if(mEntryType == 1){
+            ((BasketBallScoreFragment) getParentFragment()).focusCallback();
+        }
+//        //判断 关注页面重新请求 （详情中取消关注返回时关注页面跟着变化）
+//        if (mBasketballType == TYPE_FOCUS) {
+//            mLoadHandler.postDelayed(mRun, 0);
+//            ((BasketBallScoreFragment) getParentFragment()).focusCallback();
+//        } else {
+//            updateAdapter();
+//            ((BasketBallScoreFragment) getParentFragment()).focusCallback();
+//        }
     }
 
 }
