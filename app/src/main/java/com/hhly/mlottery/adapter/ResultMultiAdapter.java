@@ -837,8 +837,8 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         if (re > 0) {// 注意这是亚盘的
 
 
-                            holder.item_football_left_odds.setTextColor(mContext.getResources().getColor(R.color.white));
-                            holder.item_football_left_odds.setBackgroundResource(R.color.resultcol);
+                            holder.item_football_left_odds.setTextColor(mContext.getResources().getColor(R.color.transparent));
+                            holder.item_football_left_odds.setBackgroundResource(R.color.content_txt_light_grad);
                             holder.item_football_handicap_value.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
                             holder.item_football_handicap_value.setBackgroundResource(R.color.transparent);
                             holder.item_football_right_odds.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
@@ -849,8 +849,8 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                             holder.item_football_left_odds.setBackgroundResource(R.color.transparent);
                             holder.item_football_handicap_value.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
                             holder.item_football_handicap_value.setBackgroundResource(R.color.transparent);
-                            holder.item_football_right_odds.setTextColor(mContext.getResources().getColor(R.color.white));
-                            holder.item_football_right_odds.setBackgroundResource(R.color.resultcol);
+                            holder.item_football_right_odds.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
+                            holder.item_football_right_odds.setBackgroundResource(R.color.transparent);
                         } else {
 
                             holder.item_football_left_odds.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
@@ -955,8 +955,8 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         if (re > 0) {
 
 
-                            holder.item_football_left_odds.setTextColor(mContext.getResources().getColor(R.color.white));
-                            holder.item_football_left_odds.setBackgroundResource(R.color.resultcol);
+                            holder.item_football_left_odds.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
+                            holder.item_football_left_odds.setBackgroundResource(R.color.transparent);
                             holder.item_football_handicap_value.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
                             holder.item_football_handicap_value.setBackgroundResource(R.color.transparent);
                             holder.item_football_right_odds.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
@@ -969,8 +969,8 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                             holder.item_football_left_odds.setBackgroundResource(R.color.transparent);
                             holder.item_football_handicap_value.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
                             holder.item_football_handicap_value.setBackgroundResource(R.color.transparent);
-                            holder.item_football_right_odds.setTextColor(mContext.getResources().getColor(R.color.white));
-                            holder.item_football_right_odds.setBackgroundResource(R.color.resultcol);
+                            holder.item_football_right_odds.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
+                            holder.item_football_right_odds.setBackgroundResource(R.color.transparent);
 
 
                         } else {
@@ -1064,8 +1064,8 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         if (homeScore > guestScore) {
 
 
-                            holder.item_football_left_odds.setTextColor(mContext.getResources().getColor(R.color.white));
-                            holder.item_football_left_odds.setBackgroundResource(R.color.resultcol);
+                            holder.item_football_left_odds.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
+                            holder.item_football_left_odds.setBackgroundResource(R.color.transparent);
                             holder.item_football_handicap_value.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
                             holder.item_football_handicap_value.setBackgroundResource(R.color.transparent);
                             holder.item_football_right_odds.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
@@ -1077,15 +1077,15 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                             holder.item_football_left_odds.setBackgroundResource(R.color.transparent);
                             holder.item_football_handicap_value.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
                             holder.item_football_handicap_value.setBackgroundResource(R.color.transparent);
-                            holder.item_football_right_odds.setTextColor(mContext.getResources().getColor(R.color.white));
-                            holder.item_football_right_odds.setBackgroundResource(R.color.resultcol);
+                            holder.item_football_right_odds.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
+                            holder.item_football_right_odds.setBackgroundResource(R.color.transparent);
 
                         } else {
 
                             holder.item_football_left_odds.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
                             holder.item_football_left_odds.setBackgroundResource(R.color.transparent);
-                            holder.item_football_handicap_value.setTextColor(mContext.getResources().getColor(R.color.white));
-                            holder.item_football_handicap_value.setBackgroundResource(R.color.resultcol);
+                            holder.item_football_handicap_value.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
+                            holder.item_football_handicap_value.setBackgroundResource(R.color.transparent);
                             holder.item_football_right_odds.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
                             holder.item_football_right_odds.setBackgroundResource(R.color.transparent);
 
