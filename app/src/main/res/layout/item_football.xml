@@ -147,7 +147,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:ellipsize="end"
+                        android:maxEms="8"
+                        android:maxLines="1"
                         android:text="托特纳的时代"
+
                         android:textColor="@color/msg"
                         android:textSize="@dimen/item_football_hometeam" />
 
@@ -200,6 +204,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:ellipsize="end"
+                        android:maxEms="8"
+                        android:maxLines="1"
+
                         android:text="巴萨"
 
                         android:textColor="@color/msg"
@@ -289,8 +297,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/ll_home_score"
-                    android:gravity="center_vertical"
                     android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingBottom="5dp"
                     android:paddingTop="5dp">

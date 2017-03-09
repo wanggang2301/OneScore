@@ -92,12 +92,8 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         mLayoutInflater = LayoutInflater.from(context);
         this.datas = datas;
         this.mContext = context;
-
-
         this.teamLogoPre = teamLogoPre;
         this.teamLogoSuff = teamLogoSuff;
-
-
     }
 
 
@@ -107,7 +103,6 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (viewType == VIEW_DATE_INDEX) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_football_date_week, viewGroup, false);
             final DateViewHolder dateViewHolder = new DateViewHolder(view);
-
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -837,8 +832,8 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         if (re > 0) {// 注意这是亚盘的
 
 
-                            holder.item_football_left_odds.setTextColor(mContext.getResources().getColor(R.color.transparent));
-                            holder.item_football_left_odds.setBackgroundResource(R.color.content_txt_light_grad);
+                            holder.item_football_left_odds.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
+                            holder.item_football_left_odds.setBackgroundResource(R.color.transparent);
                             holder.item_football_handicap_value.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
                             holder.item_football_handicap_value.setBackgroundResource(R.color.transparent);
                             holder.item_football_right_odds.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
