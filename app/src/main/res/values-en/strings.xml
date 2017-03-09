@@ -1605,5 +1605,8 @@
     <string name="home_lottery_info_tm_not_mantissa_count">Extra last number consecutively miss</string>
     <string name="home_lottery_info_tm_not_bo_count">Extra number color consecutively miss</string>
 
+    <string name="basket_database_details_leagueMost_wintop">W/D/L most</string>
+
+    <string name="basket_handicap_bigorsmall">Over/Draw/Under</string>
 
 </resources>

@@ -1625,4 +1625,7 @@
     <string name="roll_euro">欧</string>
     <string name="roll_asiasize">大</string>
 
+    <string name="basket_handicap_bigorsmall">大/走/小</string>
+
+
 </resources>
