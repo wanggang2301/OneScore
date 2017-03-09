@@ -35,28 +35,28 @@
         <TextView
             android:id="@+id/t1"
             style="@style/WW_Width_0dp"
-            app:layout_widthPercent="65%" />
+            app:layout_widthPercent="63%" />
 
         <TextView
             android:id="@+id/t2"
             style="@style/WW_Width_0dp"
             android:layout_toRightOf="@id/t1"
-            android:text="亚"
+            android:text="@string/roll_asialet"
             app:layout_widthPercent="14%" />
 
         <TextView
             android:id="@+id/t3"
             style="@style/WW_Width_0dp"
             android:layout_toRightOf="@id/t2"
-            android:text="大"
+            android:text="@string/roll_asiasize"
             app:layout_widthPercent="13%" />
 
         <TextView
             android:id="@+id/t4"
             style="@style/WW_Width_0dp"
             android:layout_toRightOf="@id/t3"
-            android:text="欧"
-            app:layout_widthPercent="5%" />
+            android:text="@string/roll_euro"
+            app:layout_widthPercent="10%" />
     </android.support.percent.PercentRelativeLayout>
     <!--</android.support.design.widget.AppBarLayout>-->
 

@@ -184,6 +184,9 @@
     <string name="asialet">亚赔</string>
     <string name="euro">欧赔</string>
     <string name="asiasize">大小球</string>
+    <string name="roll_asialet">亚</string>
+    <string name="roll_euro">欧</string>
+    <string name="roll_asiasize">大</string>
     <string name="oddgone">不显示</string>
     <string name="about_product_msg_txt_simple">一比分，一直专注于体育比分的产品，目前比分、角球响应速度业内领先。</string>
     <string name="frame_home_jieguo_txt">彩票开奖</string>

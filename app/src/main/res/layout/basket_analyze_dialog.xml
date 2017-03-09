@@ -51,6 +51,7 @@
             android:layout_width="96dp"
             android:layout_height="29dp"
             android:text="@string/basket_analyze_dialog_samegame"
+            android:singleLine="true"
             android:button="@null"
             android:gravity="center"
             android:textColor="@color/basket_screen_text_color"

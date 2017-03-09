@@ -293,6 +293,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:text="@string/new_analyze_score"
+                        android:singleLine="true"
                         android:gravity="center"
                         style="@style/analyze_text_score"
                         />
@@ -301,6 +302,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:text="@string/new_analyze_first_let"
+                        android:singleLine="true"
                         android:gravity="center"
                         style="@style/analyze_text_score"
                         />
@@ -309,6 +311,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:text="@string/new_analyze_result"
+                        android:singleLine="true"
                         android:gravity="center"
                         style="@style/analyze_text_score"
                         />
@@ -388,6 +391,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="8dp"
+                        android:singleLine="true"
                         android:textSize="13sp"
                         android:text=""
                         android:textColor="@color/mdy_666"
@@ -437,6 +441,7 @@
                         android:layout_marginBottom="8dp"
                         android:textSize="13sp"
                         android:text=""
+                        android:singleLine="true"
                         android:textColor="@color/mdy_666"
                         />
                 </LinearLayout>
@@ -459,6 +464,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:text="@string/new_analyze_win"
+                        android:singleLine="true"
                         android:gravity="top"
                         android:textSize="@dimen/text_size_13"
                         android:textColor="@color/football_analyze_win_color"
@@ -467,6 +473,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:singleLine="true"
                         android:text="@string/new_analyze_draw"
                         android:gravity="center"
                         android:textSize="@dimen/text_size_13"
@@ -478,6 +485,7 @@
                         android:layout_weight="1"
                         android:text="@string/new_analyze_lose"
                         android:gravity="bottom"
+                        android:singleLine="true"
                         android:textSize="@dimen/text_size_13"
                         android:textColor="@color/football_analyze_lose_color"
                         />
@@ -531,6 +539,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:singleLine="true"
                         android:text="@string/new_analyze_lose"
                         android:gravity="top"
                         android:textSize="@dimen/text_size_13"
@@ -542,6 +551,7 @@
                         android:layout_weight="1"
                         android:text="@string/new_analyze_draw"
                         android:gravity="center"
+                        android:singleLine="true"
                         android:textSize="@dimen/text_size_13"
                         android:textColor="@color/more_record"
                         />
@@ -552,6 +562,7 @@
                         android:layout_weight="1"
                         android:text="@string/new_analyze_win"
                         android:gravity="bottom"
+                        android:singleLine="true"
                         android:textSize="@dimen/text_size_13"
                         android:textColor="@color/football_analyze_win_color"
                         />

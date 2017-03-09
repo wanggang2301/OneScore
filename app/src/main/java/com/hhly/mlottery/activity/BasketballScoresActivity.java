@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.config.BaseURLs;
@@ -21,6 +22,7 @@ import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
@@ -40,13 +42,14 @@ public class BasketballScoresActivity extends BaseWebSocketActivity implements V
     private final int IMMEDIA_FRAGMENT = 0;
     private final int RESULT_FRAGMENT = 1;
     private final int SCHEDULE_FRAGMENT = 2;
+    private final int FOCUS_FRAGMENT = 3;
 
     private final static String TAG = "BasketScoresFragment";
     public static List<String> titles;
 
     private Context mContext;
     private Intent mIntent;
-
+    private final int basketEntryType = 0;//标记入口（0：activity入口 1：fragment入口）
     /**
      * 返回菜单
      */
@@ -107,6 +110,7 @@ public class BasketballScoresActivity extends BaseWebSocketActivity implements V
         mContext = getApplicationContext();
         initView();
         setupViewPager();
+        basketFocusCallback();
         initCurrentFragment(currentFragmentId);
 
     }
@@ -142,16 +146,24 @@ public class BasketballScoresActivity extends BaseWebSocketActivity implements V
         titles.add(getString(R.string.foot_jishi_txt));
         titles.add(getString(R.string.foot_saiguo_txt));
         titles.add(getString(R.string.foot_saicheng_txt));
+        titles.add(getString(R.string.foot_guanzhu_txt));
 
         fragments = new ArrayList<>();
-        fragments.add(ImmedBasketballFragment.newInstance(IMMEDIA_FRAGMENT, isNewFrameWork));
-        fragments.add(ResultBasketballFragment.newInstance(RESULT_FRAGMENT));
-        fragments.add(ScheduleBasketballFragment.newInstance(SCHEDULE_FRAGMENT));
+        fragments.add(ImmedBasketballFragment.newInstance(IMMEDIA_FRAGMENT, isNewFrameWork , basketEntryType));
+        fragments.add(ResultBasketballFragment.newInstance(RESULT_FRAGMENT , basketEntryType));
+        fragments.add(ScheduleBasketballFragment.newInstance(SCHEDULE_FRAGMENT , basketEntryType));
+        fragments.add(FocusBasketballFragment.newInstance(FOCUS_FRAGMENT , basketEntryType));
 
         pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getSupportFragmentManager());
         mViewPager.setAdapter(pureViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
+            mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+        }else{
+            mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        }
+
         mViewPager.setCurrentItem(currentFragmentId);
         mViewPager.setOffscreenPageLimit(titles.size());
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -177,6 +189,10 @@ public class BasketballScoresActivity extends BaseWebSocketActivity implements V
                             mFilterImgBtn.setVisibility(View.VISIBLE);
                             ((ScheduleBasketballFragment) fragments.get(position)).updateAdapter();
                             break;
+                        case FOCUS_FRAGMENT:
+                            mFilterImgBtn.setVisibility(View.GONE);
+                            ((FocusBasketballFragment) fragments.get(position)).LoadData();
+                            break;
                     }
                 }
             }
@@ -190,6 +206,21 @@ public class BasketballScoresActivity extends BaseWebSocketActivity implements V
             public void onPageScrollStateChanged(int state) {
             }
         });
+
+    }
+    /**
+     * 刷新tab栏后的关注个数
+     */
+    public  void basketFocusCallback() {
+        String focusIds = PreferenceUtil.getString(FocusBasketballFragment.BASKET_FOCUS_IDS, "");
+        String[] arrayId = focusIds.split("[,]");
+        if(getApplicationContext()!=null){
+            if ("".equals(focusIds) || arrayId.length == 0) {
+                mTabLayout.getTabAt(3).setText(getApplicationContext().getResources().getString(R.string.foot_guanzhu_txt));
+            } else {
+                mTabLayout.getTabAt(3).setText(getApplicationContext().getString(R.string.foot_guanzhu_txt) + "(" + arrayId.length + ")");
+            }
+        }
 
     }
 
@@ -272,8 +303,19 @@ public class BasketballScoresActivity extends BaseWebSocketActivity implements V
                     mIntent.putExtras(bundleset);
                     startActivity(mIntent);
                     this.overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
-                }
+                } else if (currentFragmentId == FOCUS_FRAGMENT) {
+                    MobclickAgent.onEvent(mContext, "Basketball_Setting");
+//                String s = getAppVersionCode(mContext);
+                    mIntent = new Intent(getApplicationContext(), BasketballSettingActivity.class);
+//                getParentFragment().startActivityForResult(mIntent, REQUEST_SETTINGCODE);
+//                getActivity().startActivityForResult(mIntent , REQUEST_SETTINGCODE);
+                    Bundle bundleset = new Bundle();
+                    bundleset.putInt("currentfragment", FOCUS_FRAGMENT);
+                    mIntent.putExtras(bundleset);
+                    startActivity(mIntent);
 
+                    overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
+                }
                 break;
             case R.id.public_btn_filter: //筛选
 

@@ -21,6 +21,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
 import com.hhly.mlottery.activity.FootballTypeSettingActivity;
@@ -276,8 +277,12 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         });
         mViewPager.setAdapter(pureViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        // mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
+            mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+        }else{
+            mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        }
 
         mViewPager.setOffscreenPageLimit(titles.size());
     }

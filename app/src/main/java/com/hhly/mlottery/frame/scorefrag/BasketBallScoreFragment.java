@@ -21,16 +21,19 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
 import com.hhly.mlottery.activity.BasketballSettingActivity;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 import com.umeng.analytics.MobclickAgent;
 
@@ -57,12 +60,13 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
     private final int IMMEDIA_FRAGMENT = 0;
     private final int RESULT_FRAGMENT = 1;
     private final int SCHEDULE_FRAGMENT = 2;
+    private final int FOCUS_FRAGMENT = 3;
 
     private final static String TAG = "BasketScoresFragment";
     public static List<String> titles;
 
     private Intent mIntent;
-
+    private final int basketEntryType = 1;
 
     /**
      * 筛选
@@ -116,10 +120,9 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mContext = getActivity();
         view = inflater.inflate(R.layout.fragment_basket_ball_score, container, false);
-
         initView();
-
         setupViewPager();
+        focusCallback();// 加载关注数
         initCurrentFragment(currentFragmentId);
 
 
@@ -156,16 +159,24 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         titles.add(getString(R.string.foot_jishi_txt));
         titles.add(getString(R.string.foot_saiguo_txt));
         titles.add(getString(R.string.foot_saicheng_txt));
+        titles.add(getString(R.string.foot_guanzhu_txt));
 
         fragments = new ArrayList<>();
-        fragments.add(ImmedBasketballFragment.newInstance(IMMEDIA_FRAGMENT, isNewFrameWork));
-        fragments.add(ResultBasketballFragment.newInstance(RESULT_FRAGMENT));
-        fragments.add(ScheduleBasketballFragment.newInstance(SCHEDULE_FRAGMENT));
+        fragments.add(ImmedBasketballFragment.newInstance(IMMEDIA_FRAGMENT, isNewFrameWork ,basketEntryType));
+        fragments.add(ResultBasketballFragment.newInstance(RESULT_FRAGMENT , basketEntryType));
+        fragments.add(ScheduleBasketballFragment.newInstance(SCHEDULE_FRAGMENT , basketEntryType));
+        fragments.add(FocusBasketballFragment.newInstance(FOCUS_FRAGMENT , basketEntryType));
 
         pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
         mViewPager.setAdapter(pureViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
+            mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+        }else{
+            mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        }
+
         mViewPager.setCurrentItem(currentFragmentId);
         mViewPager.setOffscreenPageLimit(titles.size());
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -191,6 +202,10 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
                             mFilterImgBtn.setVisibility(View.VISIBLE);
                             ((ScheduleBasketballFragment) fragments.get(position)).updateAdapter();
                             break;
+                        case FOCUS_FRAGMENT:
+                            mFilterImgBtn.setVisibility(View.GONE);
+                            ((FocusBasketballFragment) fragments.get(position)).LoadData();
+                            break;
                     }
                 }
             }
@@ -207,7 +222,21 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         });
 
     }
+    /**
+     * 刷新tab栏后的关注个数
+     */
+    public  void focusCallback() {
+        String focusIds = PreferenceUtil.getString(FocusBasketballFragment.BASKET_FOCUS_IDS, "");
+        String[] arrayId = focusIds.split("[,]");
+        if(getActivity()!=null){
+            if ("".equals(focusIds) || arrayId.length == 0) {
+                mTabLayout.getTabAt(3).setText(getActivity().getResources().getString(R.string.foot_guanzhu_txt));
+            } else {
+                mTabLayout.getTabAt(3).setText(getActivity().getResources().getString(R.string.foot_guanzhu_txt) + "(" + arrayId.length + ")");
+            }
+        }
 
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -249,8 +278,18 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
                     mIntent.putExtras(bundleset);
                     startActivity(mIntent);
                     getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
+                } else if (currentFragmentId == FOCUS_FRAGMENT) {
+                    MobclickAgent.onEvent(mContext, "Basketball_Setting");
+//                String s = getAppVersionCode(mContext);
+                    mIntent = new Intent(getActivity(), BasketballSettingActivity.class);
+//                getParentFragment().startActivityForResult(mIntent, REQUEST_SETTINGCODE);
+//                getActivity().startActivityForResult(mIntent , REQUEST_SETTINGCODE);
+                    Bundle bundleset = new Bundle();
+                    bundleset.putInt("currentfragment", FOCUS_FRAGMENT);
+                    mIntent.putExtras(bundleset);
+                    startActivity(mIntent);
+                    getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
                 }
-
                 break;
             case R.id.public_btn_filter: //筛选
 
@@ -318,6 +357,8 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
     private boolean isResult = false;
     private boolean isScheduleFragment = false;
     private boolean isSchedule = false;
+    private boolean isFocusFragment = false;
+    private boolean isFocus = false;
 
     /**
      * 初始化当前显示的Fragment
@@ -335,6 +376,9 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
             case 2:
                 isScheduleFragment = true;
                 break;
+            case 3:
+                isFocusFragment = true;
+                break;
         }
     }
 
@@ -349,17 +393,27 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
                 isImmediateFragment = true;
                 isResultFragment = false;
                 isScheduleFragment = false;
+                isFocusFragment = false;
                 break;
             case RESULT_FRAGMENT:
                 isResultFragment = true;
                 isImmediateFragment = false;
                 isScheduleFragment = false;
+                isFocusFragment = false;
                 break;
             case SCHEDULE_FRAGMENT:
                 isScheduleFragment = true;
                 isResultFragment = false;
                 isImmediateFragment = false;
+                isFocusFragment = false;
                 break;
+            case FOCUS_FRAGMENT:
+                isFocusFragment = true;
+                isScheduleFragment = false;
+                isResultFragment = false;
+                isImmediateFragment = false;
+                break;
+
         }
         if (isImmediateFragment) {
             if (isResult) {
@@ -371,6 +425,11 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
                 MobclickAgent.onPageEnd("Basketball_ScheduleFragment");
                 isSchedule = false;
                 L.d("xxx", "ScheduleFragment>>>隐藏");
+            }
+            if (isFocus) {
+                MobclickAgent.onPageEnd("Basketball_FocusFragment");
+                isFocus = false;
+                L.d("xxx", "FocusFragment>>>隐藏");
             }
             MobclickAgent.onPageStart("Basketball_ImmediateFragment");
             isImmediate = true;
@@ -387,6 +446,11 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
                 isSchedule = false;
                 L.d("xxx", "ScheduleFragment>>>隐藏");
             }
+            if (isFocus) {
+                MobclickAgent.onPageEnd("Basketball_FocusFragment");
+                isFocus = false;
+                L.d("xxx", "FocusFragment>>>隐藏");
+            }
             MobclickAgent.onPageStart("Basketball_ResultFragment");
             isResult = true;
             L.d("xxx", "ResultFragment>>>显示");
@@ -402,10 +466,34 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
                 isResult = false;
                 L.d("xxx", "ResultFragment>>>隐藏");
             }
-
+            if (isFocus) {
+                MobclickAgent.onPageEnd("Basketball_FocusFragment");
+                isFocus = false;
+                L.d("xxx", "FocusFragment>>>隐藏");
+            }
             MobclickAgent.onPageStart("Basketball_ScheduleFragment");
             isSchedule = true;
             L.d("xxx", "ScheduleFragment>>>显示");
+        }
+        if (isFocusFragment) {
+            if (isImmediate) {
+                MobclickAgent.onPageEnd("Basketball_ImmediateFragment");
+                isImmediate = false;
+                L.d("xxx", "ImmediateFragment>>>隐藏");
+            }
+            if (isResult) {
+                MobclickAgent.onPageEnd("Basketball_ResultFragment");
+                isResult = false;
+                L.d("xxx", "ResultFragment>>>隐藏");
+            }
+            if (isSchedule) {
+                MobclickAgent.onPageEnd("Basketball_ScheduleFragment");
+                isSchedule = false;
+                L.d("xxx", "ScheduleFragment>>>隐藏");
+            }
+            MobclickAgent.onPageStart("Basketball_FocusFragment");
+            isFocus = true;
+            L.d("xxx", "FocusFragment>>>显示");
         }
     }
 
@@ -426,6 +514,11 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
             MobclickAgent.onPageStart("Basketball_ScheduleFragment");
             isSchedule = true;
             L.d("xxx", "ScheduleFragment>>>显示");
+        }
+        if (isFocusFragment) {
+            MobclickAgent.onPageStart("Basketball_FocusFragment");
+            isFocus = true;
+            L.d("xxx", "FocusFragment>>>显示");
         }
         if (getActivity() != null) {
             L.d("websocket123", "篮球打开");
@@ -451,6 +544,11 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
             MobclickAgent.onPageEnd("Basketball_ScheduleFragment");
             isSchedule = false;
             L.d("xxx", "ScheduleFragment>>>隐藏");
+        }
+        if (isFocus) {
+            MobclickAgent.onPageEnd("Basketball_FocusFragment");
+            isFocus = false;
+            L.d("xxx", "FocusFragment>>>隐藏");
         }
 
     }
@@ -543,5 +641,15 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
     protected void onConnected() {
 
     }
-
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) {
+//            L.d("xxx", ">>>篮球>>>>hidden");
+            onPause();
+        } else {
+//            L.d("xxx", ">>>篮球>>>>show");
+            onResume();
+        }
+    }
 }

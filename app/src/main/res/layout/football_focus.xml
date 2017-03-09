@@ -56,16 +56,32 @@
                     <!--android:textColor="@color/exp_refresh"-->
                     <!--android:text="@string/to_focus_now"/>-->
             <!--</LinearLayout>-->
-        <!--暂无数据提示-->
-        <TextView
-            android:id="@+id/football_focus_nodata_txt"
+        <!--暂无关注提示-->
+        <RelativeLayout
+            android:id="@+id/football_unfocus"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/nodata"
-            android:textSize="@dimen/text_size_20"
             android:visibility="gone"
-            />
+            >
+
+            <ImageView
+                android:id="@+id/football_image_unfocus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/unfocus_coffee" />
+
+            <TextView
+                android:id="@+id/football_focus_nodata_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/football_image_unfocus"
+                android:layout_centerHorizontal="true"
+                android:text="@string/unfocus"
+                android:textColor="@color/unfocus_text"
+                android:textSize="14sp"
+                android:gravity="center" />
+        </RelativeLayout>
         <!--加载中-->
         <LinearLayout
             android:id="@+id/football_focus_loading_ll"

@@ -35,6 +35,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/rb_left"
             android:checked="true"
+            android:singleLine="true"
             android:padding="8dp"
             android:text="@string/home_win_rate"/>
 
@@ -45,6 +46,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/rb_center"
             android:padding="8dp"
+            android:singleLine="true"
             android:text="@string/size_win_rate"/>
 
         <RadioButton
@@ -54,6 +56,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/rb_right"
             android:padding="8dp"
+            android:singleLine="true"
             android:text="@string/asia_win_rate"/>
 
     </RadioGroup>

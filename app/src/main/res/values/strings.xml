@@ -1620,4 +1620,8 @@
     <string name="return_yesterday">昨天</string>
     <string name="return_today">今天</string>
     <string name="return_tomorrow">明天</string>
+    <string name="roll_asialet">亚</string>
+    <string name="roll_euro">欧</string>
+    <string name="roll_asiasize">大</string>
+
 </resources>
