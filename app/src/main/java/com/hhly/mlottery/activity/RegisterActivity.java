@@ -76,10 +76,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
          switch (MyApp.isPackageName){
 
              case AppConstants.PACKGER_NAME_ZH:
-                 setContentView(R.layout.activity_overseas_register);
+                 setContentView(R.layout.activity_register);
                  break;
              case AppConstants.PACKGER_NAME_TH:
-                 setContentView(R.layout.activity_register);
+                 setContentView(R.layout.activity_overseas_register);
                  break;
              case AppConstants.PACKGER_NAME_VN:
                  setContentView(R.layout.activity_overseas_register);
