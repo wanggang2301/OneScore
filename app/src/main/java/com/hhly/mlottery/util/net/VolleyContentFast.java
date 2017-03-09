@@ -589,10 +589,14 @@ public class VolleyContentFast {
      * @param volleyError e
      */
     private static void isTimeOutError(VolleyError volleyError) {
-        if(volleyError instanceof TimeoutError){
-            MobclickAgent.reportError(mContext,"NO_RESPONSE_FROM_SERVER! \n IMEI:" + DeviceInfo.getDeviceId(mContext) +
-                    "\n USERID: " + PreferenceUtil.getString(AppConstants.SPKEY_USERID, "") + "\n" +
-                    volleyError);
+        try {
+            if(volleyError instanceof TimeoutError){
+                MobclickAgent.reportError(mContext,"NO_RESPONSE_FROM_SERVER! \n IMEI:" + DeviceInfo.getDeviceId(mContext) +
+                        "\n USERID: " + PreferenceUtil.getString(AppConstants.SPKEY_USERID, "") + "\n" +
+                        volleyError);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
