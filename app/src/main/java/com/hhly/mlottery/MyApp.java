@@ -31,20 +31,13 @@ import cn.finalteam.okhttpfinal.OkHttpFinalConfiguration;
  * @date 2015-10-15 上午9:48:39
  */
 public class MyApp extends Application {
-    private static MyApp appcontext = null;
+    private static MyApp appcontext;
     public static Resources mResources;
     public static Configuration mConfiguration;
     public static DisplayMetrics mDm;
     public static Locale mLocale;
-    /**
-     * 获取语言
-     */
-    public static String isLanguage;
-
-    /**
-     * 获取当前包名
-     */
-    public static String isPackageName;
+    public static String isLanguage;   // 获取语言
+    public static String isPackageName;// 获取当前包名
 
     @Override
     public void onCreate() {

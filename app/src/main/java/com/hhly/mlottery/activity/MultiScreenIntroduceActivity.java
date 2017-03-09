@@ -38,7 +38,7 @@ public class MultiScreenIntroduceActivity extends BaseActivity {
         setContentView(R.layout.activity_multi_screen_introduce);
         ButterKnife.bind(this);
 
-        PreferenceUtil.commitBoolean(AppConstants.ANIMATION_RED_KEY, true);// 记录红点功能
+//        PreferenceUtil.commitBoolean(AppConstants.ANIMATION_RED_KEY, true);// 记录红点功能
     }
 
     @OnClick(R.id.btn_enter)

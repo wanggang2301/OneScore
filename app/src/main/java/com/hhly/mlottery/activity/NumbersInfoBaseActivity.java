@@ -74,9 +74,9 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
             public_txt_spinner.setVisibility(View.GONE);
             settingTitle();
             getSupportFragmentManager().beginTransaction().replace(R.id.fl_other_content, new HKLotteryChartFragment()).commit();
-            if (!PreferenceUtil.getBoolean(AppConstants.LOTTERY_HK_RED_KEY, false)) {
-                PreferenceUtil.commitBoolean(AppConstants.LOTTERY_HK_RED_KEY, true);
-            }
+//            if (!PreferenceUtil.getBoolean(AppConstants.LOTTERY_HK_RED_KEY, false)) {
+//                PreferenceUtil.commitBoolean(AppConstants.LOTTERY_HK_RED_KEY, true);
+//            }
         }
     }
 
@@ -188,9 +188,9 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
                 hkLotteryStartFragment = new HKLotteryStartFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fl_other_content, hkLotteryStartFragment).commit();
 
-                if (!PreferenceUtil.getBoolean(AppConstants.LOTTERY_HK_RED_KEY, false)) {
-                    PreferenceUtil.commitBoolean(AppConstants.LOTTERY_HK_RED_KEY, true);
-                }
+//                if (!PreferenceUtil.getBoolean(AppConstants.LOTTERY_HK_RED_KEY, false)) {
+//                    PreferenceUtil.commitBoolean(AppConstants.LOTTERY_HK_RED_KEY, true);
+//                }
                 break;
             case R.id.rb_chart:
                 MobclickAgent.onEvent(mContext, "Lottery_Info_chart");
@@ -202,9 +202,9 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fl_other_content, new HKLotteryChartFragment()).commit();
 
-                if (!PreferenceUtil.getBoolean(AppConstants.LOTTERY_HK_RED_KEY, false)) {
-                    PreferenceUtil.commitBoolean(AppConstants.LOTTERY_HK_RED_KEY, true);
-                }
+//                if (!PreferenceUtil.getBoolean(AppConstants.LOTTERY_HK_RED_KEY, false)) {
+//                    PreferenceUtil.commitBoolean(AppConstants.LOTTERY_HK_RED_KEY, true);
+//                }
                 break;
         }
     }
