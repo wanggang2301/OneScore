@@ -48,8 +48,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     public static String TAG = "HomeUserOptionsActivity";
 
     /**我的关注*/
-    private RelativeLayout rl_focus;
-    private  View mFocus_RedDot; //关注红点
+//    private RelativeLayout rl_focus;
+//    private  View mFocus_RedDot; //关注红点
     /**我的关注红点*/
     boolean mShowRedDot=false;
     boolean mInvitedShowRedDot=true;
@@ -149,8 +149,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         rl_custom = (RelativeLayout)findViewById(R.id.rl_custom);
         rl_custom.setOnClickListener(this);
         //我的关注
-        rl_focus= (RelativeLayout) findViewById(R.id.rl_my_focus);
-        rl_focus.setOnClickListener(this);
+//        rl_focus= (RelativeLayout) findViewById(R.id.rl_my_focus);
+//        rl_focus.setOnClickListener(this);
 
         rl_language_frame = (RelativeLayout) findViewById(R.id.rl_language_frame);
         rl_language_frame.setOnClickListener(this);
@@ -170,13 +170,13 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 //            mRedDot.setVisibility(View.GONE);
 //        }
         /**我的关注红点*/
-        mFocus_RedDot=findViewById(R.id.focus_red_dot_view);
-        mShowRedDot=PreferenceUtil.getBoolean(SHOW_RED,false);
-        if(mShowRedDot){
-            mFocus_RedDot.setVisibility(View.VISIBLE);
-        }else {
-            mFocus_RedDot.setVisibility(View.GONE);
-        }
+//        mFocus_RedDot=findViewById(R.id.focus_red_dot_view);
+//        mShowRedDot=PreferenceUtil.getBoolean(SHOW_RED,false);
+//        if(mShowRedDot){
+//            mFocus_RedDot.setVisibility(View.VISIBLE);
+//        }else {
+//            mFocus_RedDot.setVisibility(View.GONE);
+//        }
         /*邀请码红点*/
 
         invited_red_dot_view = findViewById(R.id.invited_red_dot_view);
@@ -193,12 +193,12 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.rl_my_focus: //关注不需要登录
-                MobclickAgent.onEvent(HomeUserOptionsActivity.this, "MyFocusActivity");
-                    PreferenceUtil.commitBoolean(SHOW_RED,false);
-                    mFocus_RedDot.setVisibility(View.GONE);
-                    startActivity(new Intent(HomeUserOptionsActivity.this,MyFocusActivity.class));
-                break;
+//            case R.id.rl_my_focus: //关注不需要登录
+//                MobclickAgent.onEvent(HomeUserOptionsActivity.this, "MyFocusActivity");
+//                    PreferenceUtil.commitBoolean(SHOW_RED,false);
+//                    mFocus_RedDot.setVisibility(View.GONE);
+//                    startActivity(new Intent(HomeUserOptionsActivity.this,MyFocusActivity.class));
+//                break;
             case R.id.rl_custom:
                 if (CommonUtils.isLogin()) {
                     PreferenceUtil.commitBoolean("custom_red_dot" , false);
