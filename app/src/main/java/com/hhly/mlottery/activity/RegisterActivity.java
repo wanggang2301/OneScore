@@ -73,7 +73,27 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+         switch (MyApp.isPackageName){
+
+             case AppConstants.PACKGER_NAME_ZH:
+                 setContentView(R.layout.activity_register);
+                 break;
+             case AppConstants.PACKGER_NAME_TH:
+                 setContentView(R.layout.activity_overseas_register);
+                 break;
+             case AppConstants.PACKGER_NAME_VN:
+                 setContentView(R.layout.activity_overseas_register);
+                 break;
+             case AppConstants.PACKGER_NAME_VN_HN:
+                 setContentView(R.layout.activity_overseas_register);
+                 break;
+             case AppConstants.PACKGER_NAME_UK:
+                 setContentView(R.layout.activity_overseas_register);
+                 break;
+             default:
+                 break;
+         }
+
 
         initView();
         initData();

@@ -1197,26 +1197,25 @@
     <string name="home_number_desc_bonus">滾動獎池</string>
     <string name="home_number_desc_yi">億</string>
     <string name="home_number_desc_wan">萬</string>
-
-    <string name="home_lottery_info_open">開獎</string>
-    <string name="home_lottery_info_stat">統計</string>
-    <string name="home_lottery_info_chart">圖表</string>
-    <string name="home_lottery_info_start_title">走勢統計</string>
-    <string name="home_lottery_info_start_tab_tm">特碼出現</string>
-    <string name="home_lottery_info_start_tab_pm">平碼出現</string>
-    <string name="home_lottery_info_start_tab_notm">特碼未出現</string>
-    <string name="home_lottery_info_tm_zodiac_count">特碼生肖出現次數</string>
-    <string name="home_lottery_info_tm_count">特碼出現次數</string>
-    <string name="home_lottery_info_tm_mantissa_count">特碼尾號出現次數</string>
-    <string name="home_lottery_info_tm_bo_count">特碼波色出現次數</string>
-    <string name="home_lottery_info_pm_zodiac_count">平碼生肖出現次數</string>
-    <string name="home_lottery_info_pm_count">平碼出現次數</string>
-    <string name="home_lottery_info_pm_mantissa_count">平碼尾號出現次數</string>
-    <string name="home_lottery_info_pm_bo_count">平碼波色出現次數</string>
-    <string name="home_lottery_info_tm_not_zodiac_count">特碼生肖連續未出</string>
-    <string name="home_lottery_info_tm_not_count">特碼連續未出</string>
-    <string name="home_lottery_info_tm_not_mantissa_count">特碼尾號連續未出</string>
-    <string name="home_lottery_info_tm_not_bo_count">特碼波色連續未出</string>
+    <string name="home_lottery_info_open">Mở thưởng</string>
+    <string name="home_lottery_info_stat">Thống kê</string>
+    <string name="home_lottery_info_chart">Biểu đồ</string>
+    <string name="home_lottery_info_start_title">Biểu đồ thống kê</string>
+    <string name="home_lottery_info_start_tab_tm">Giải đặc biệt ra</string>
+    <string name="home_lottery_info_start_tab_pm">Giải thường ra</string>
+    <string name="home_lottery_info_start_tab_notm">Giải đặc biệt chưa ra</string>
+    <string name="home_lottery_info_tm_zodiac_count">Con giáp giải đặc ra</string>
+    <string name="home_lottery_info_tm_count">Số lần giải đặc biệt ra</string>
+    <string name="home_lottery_info_tm_mantissa_count">Số lần đuôi đặc biệt ra</string>
+    <string name="home_lottery_info_tm_bo_count">Số lần màu giải đặc biệt ra</string>
+    <string name="home_lottery_info_pm_zodiac_count">Số lần con giáp giải thường ra</string>
+    <string name="home_lottery_info_pm_count">Số lần giải thường ra</string>
+    <string name="home_lottery_info_pm_mantissa_count">Số lần đuôi giải thường ra</string>
+    <string name="home_lottery_info_pm_bo_count">Số lần màu giải thường ra</string>
+    <string name="home_lottery_info_tm_not_zodiac_count">Con giáp giải đặc biệt liên tiếp chưa ra</string>
+    <string name="home_lottery_info_tm_not_count">Giải đặc biệt liên tiếp chưa ra</string>
+    <string name="home_lottery_info_tm_not_mantissa_count">Đuôi giải đặc biệt liên tiếp chưa ra</string>
+    <string name="home_lottery_info_tm_not_bo_count">Màu giải đặc biệt liên tiếp chưa ra</string>
     <string name="home_lottery_info_tm_bo_r">Đỏ</string>
     <string name="home_lottery_info_tm_bo_g">Lục</string>
     <string name="home_lottery_info_tm_bo_b">Lam</string>
@@ -1532,6 +1531,7 @@
     <string name="pwd_format_hint">Vui lòng nhập vào 6-20 ký tự,phân biệt chữ to nhỏ .</string>
     <string name="pwd_empty">Nhập mật khẩu</string>
     <string name="phone_empty">Hãy nhập vào đăng ký tài khoản</string>
+    <string name="login_int_username">Hãy nhập vào đăng ký tài khoản</string>
     <string name="phone_error">Vui lòng nhập vào số di động chính xác</string>
     <string name="verify_code">Vui lòng nhập vào mã xác nhận</string>
     <string name="verify_code_send">Gửi mã xác nhận</string>
@@ -1608,9 +1608,17 @@
     <string name="share_match_over"></string>
     <string name="share_match_live2"></string>
 
-    <string name="basket_analyze_all_rank">全部排名>>></string>
+
+
+
+    <string name="basket_analyze_all_rank">Tất cả thứ hạng>>></string>
     <string name="football_rfypl">Tỷ lệ kèo chấp điếm</string>
-    <string name="football_odds_return_list">返回列表</string>
+    <string name="football_odds_return_list">Quay trở lại danh sách</string>
+
+    <!--日期-->
+    <string name="return_yesterday">Ngày hôm qua.</string>
+    <string name="return_today">Hôm nay</string>
+    <string name="return_tomorrow">Ngày mai.</string>
 
     <string name="roll_asialet">HDP</string>
     <string name="roll_asiasize">O/U</string>

@@ -1626,5 +1626,9 @@
     <string name="roll_asialet">HDP</string>
     <string name="roll_asiasize">O/U</string>
     <string name="roll_euro">1X2</string>
+    <!--日期-->
+    <string name="return_yesterday">เมื่อวาน</string>
+    <string name="return_today">วันนี้</string>
+    <string name="return_tomorrow">พรุ่งนี้</string>
 
 </resources>

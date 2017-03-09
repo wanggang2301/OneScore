@@ -84,7 +84,9 @@ public class MyApp extends Application {
     private void settingTimeZone() {
         switch (isPackageName) {
             case AppConstants.PACKGER_NAME_ZH:// 国内版
-                AppConstants.timeZone = 8;
+//                AppConstants.timeZone = 8;
+                // TODO 暂时用
+                AppConstants.timeZone = 7;
                 break;
             case AppConstants.PACKGER_NAME_TH:// 泰国版
             case AppConstants.PACKGER_NAME_VN_HN:// 越南北版

@@ -23,6 +23,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -140,6 +141,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private ImageView mLogin_sina;
     private ImageView mLogin_weixin;
     private boolean isCoustom;
+    private TextView tv_forgetpw;
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
@@ -253,7 +255,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         //第三方qq登录
         mLogin_qq = (ImageView) findViewById(R.id.login_qq);
         mLogin_qq.setOnClickListener(this);
-        findViewById(R.id.tv_forgetpw).setOnClickListener(this);
+        tv_forgetpw = (TextView) findViewById(R.id.tv_forgetpw);
+        tv_forgetpw.setOnClickListener(this);
+
         //第三方新浪微博登录
         mLogin_sina = (ImageView) findViewById(R.id.login_sina);
         mLogin_sina.setOnClickListener(this);
@@ -264,6 +268,26 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         //第三方登录图标显示
         mLogin_display = (LinearLayout) findViewById(R.id.login_display);
         mLogin_three = (LinearLayout) findViewById(R.id.login_three);
+
+        switch (MyApp.isPackageName){
+            case AppConstants.PACKGER_NAME_ZH:
+                tv_forgetpw.setVisibility(View.VISIBLE);
+                break;
+            case AppConstants.PACKGER_NAME_TH:
+                tv_forgetpw.setVisibility(View.GONE);
+                break;
+            case AppConstants.PACKGER_NAME_VN:
+                tv_forgetpw.setVisibility(View.GONE);
+                break;
+            case AppConstants.PACKGER_NAME_VN_HN:
+                tv_forgetpw.setVisibility(View.GONE);
+                break;
+            case AppConstants.PACKGER_NAME_UK:
+                tv_forgetpw.setVisibility(View.GONE);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
