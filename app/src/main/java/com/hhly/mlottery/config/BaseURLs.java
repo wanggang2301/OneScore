@@ -70,25 +70,26 @@ public class BaseURLs {
 
     private static String getHost() {
         if (AppConstants.isTestEnv) {//开发不需要修改下面代码
-            int url_config = PreferenceUtil.getInt(MyConstants.URL_HOME_CONFIG, DebugConfigActivity.URL_1332255);
+            int url_config = PreferenceUtil.getInt(MyConstants.URL_HOME_CONFIG, DebugConfigActivity.ZH_1332255);
 
-            //开发环境。
-            if (url_config == DebugConfigActivity.URL_242) {
-                return "192.168.10.242:8181";
-
-                //测试环境
-            } else if (url_config == DebugConfigActivity.URL_1332255) {
+            if (url_config == DebugConfigActivity.ZH_1332255) {
                 return "m.1332255.com:81";
-
-                // 典哥新加测试环境2
-            } else if (url_config == DebugConfigActivity.URL_1332255_2) {
-                return "183.61.172.93:8096";
-
-                // 自定义环境地址
-            } else if (url_config == DebugConfigActivity.DIY_INPUT) {
-                return PreferenceUtil.getString("DIY_INPUT", "m.13322.com");
-            } else {
+            } else if (url_config == DebugConfigActivity.TH_1332255) {
+                return "m.th.1332255.com:81";
+            } else if (url_config == DebugConfigActivity.VN_1332255) {
+                return "m.vn.1332255.com:81";
+            }else if (url_config == DebugConfigActivity.ZH_13322) {
                 return "m.13322.com";
+            }else if (url_config == DebugConfigActivity.TH_13322) {
+                return "m.th.13322.com";
+            }else if (url_config == DebugConfigActivity.VN_13322) {
+                return "m.vn.13322.com";
+            }else if (url_config == DebugConfigActivity.VN_13366) {
+                return "m.13366.com";
+            } else if (url_config == DebugConfigActivity.DIY_INPUT) {
+                return PreferenceUtil.getString("DIY_INPUT", "m.1332255.com:81");
+            } else {
+                return "m.1332255.com:81";
             }
         }
         return "m.13322.com";//发布版本
@@ -99,18 +100,26 @@ public class BaseURLs {
         //测试scoket链接数 ActiveMQ
         //return "192.168.31.19:8061";
         if (AppConstants.isTestEnv) {//开发不需要修改下面代码
-            int ws_config = PreferenceUtil.getInt(MyConstants.WS_HOME_CONFIG, DebugConfigActivity.WS_242);
+            int ws_config = PreferenceUtil.getInt(MyConstants.WS_HOME_CONFIG, DebugConfigActivity.WS_1332255_ZH);
 
-            if (ws_config == DebugConfigActivity.WS_242) {  //开发环境
-                return "192.168.10.242:61634";
-
-            } else if (ws_config == DebugConfigActivity.WS_1332255) {//测试环境
+            if (ws_config == DebugConfigActivity.WS_1332255_ZH) {
                 return "m.1332255.com:81/ws";
-
-            } else if (ws_config == DebugConfigActivity.DIY_INPUT) {//自定义环境
-                return "m.13322.com/ws";// 自定义
-            } else {
+            } else if (ws_config == DebugConfigActivity.WS_1332255_TH) {
+                return "m.th.1332255.com:81/ws";
+            }else if (ws_config == DebugConfigActivity.WS_1332255_VN) {
+                return "m.vn.1332255.com:81/ws";
+            }else if (ws_config == DebugConfigActivity.WS_13322_ZH) {
                 return "m.13322.com/ws";
+            } else if (ws_config == DebugConfigActivity.WS_13322_TH) {
+                return "m.th.13322.com/ws";
+            }else if (ws_config == DebugConfigActivity.WS_13322_VN) {
+                return "m.vn.13322.com/ws";
+            }else if (ws_config == DebugConfigActivity.WS_13366_VN) {
+                return "m.13366.com/ws";
+            } else if (ws_config == DebugConfigActivity.DIY_INPUT) {
+                return "m.1332255.com:81/ws";// 自定义
+            } else {
+                return "m.1332255.com:81/ws";
             }
         }
         return "m.13322.com/ws";//开发，发布改这里
@@ -125,13 +134,15 @@ public class BaseURLs {
 
     private static String getPHost() {
         if (AppConstants.isTestEnv) {//开发不需要修改下面代码
-            int url_config = PreferenceUtil.getInt(MyConstants.URL_HOME_CONFIG, DebugConfigActivity.URL_1332255);
+            int url_config = PreferenceUtil.getInt(MyConstants.URL_HOME_CONFIG, DebugConfigActivity.WS_1332255_ZH);
 
-            if (url_config == DebugConfigActivity.URL_1332255) {
+            if (url_config == DebugConfigActivity.WS_1332255_ZH) {
                 return "file.1332255.com:81";//测试环境
-            } else if (url_config == DebugConfigActivity.URL_242) {
-                return "192.168.10.242:8181";//开发环境。
-            } else {
+            }
+//            else if (url_config == DebugConfigActivity.URL_242) {
+//                return "192.168.10.242:8181";//开发环境。
+//            }
+            else {
                 return "file.13322.com";
             }
         }

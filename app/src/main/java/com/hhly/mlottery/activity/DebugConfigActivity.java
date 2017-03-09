@@ -20,14 +20,22 @@ public class DebugConfigActivity extends BaseActivity {
 
     private final static String TAG = "DebugConfigActivity";
 
-    public final static int URL_13322 = 1;
-    public final static int URL_1332255 = 2;
-    public final static int URL_242 = 5;
-    public final static int URL_1332255_2 = 7;
+    public final static int ZH_1332255 = 1;
+    public final static int TH_1332255 = 2;
+    public final static int VN_1332255 = 3;
+    public final static int ZH_13322 = 4;
+    public final static int TH_13322 = 5;
+    public final static int VN_13322 = 6;
+    public final static int VN_13366 = 7;
 
-    public final static int WS_13322 = 3;
-    public final static int WS_242 = 4;
-    public final static int WS_1332255 = 6;
+    public final static int WS_13322_ZH = 9;
+    public final static int WS_13322_TH = 10;
+    public final static int WS_13322_VN = 11;
+    public final static int WS_13366_VN = 12;
+    public final static int WS_1332255_ZH = 13;
+    public final static int WS_1332255_TH = 14;
+    public final static int WS_1332255_VN = 15;
+
     public final static int DIY_INPUT = 8;
 
 
@@ -41,27 +49,59 @@ public class DebugConfigActivity extends BaseActivity {
         Button config_submit = (Button) findViewById(R.id.config_submit);
         Button bt_zidingyi = (Button) findViewById(R.id.bt_zidingyi);
 
-        //开发环境
-        findViewById(R.id.config_kaifa).setOnClickListener(new OnClickListener() {
+        //国内测试环境
+        findViewById(R.id.config_ceshi_zh).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((RadioGroup) findViewById(R.id.config_tuisong)).check(R.id.config_kaifa_ws);
+                ((RadioGroup) findViewById(R.id.config_tuisong)).check(R.id.config_ws_zh);
             }
         });
 
-        //测试环境
-        findViewById(R.id.config_ceshi).setOnClickListener(new OnClickListener() {
+        //泰国测试环境
+        findViewById(R.id.config_ceshi_th).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((RadioGroup) findViewById(R.id.config_tuisong)).check(R.id.config_ceshi_ws);
+                ((RadioGroup) findViewById(R.id.config_tuisong)).check(R.id.config_ws_th);
             }
         });
 
-        //生产环境
+        //越南测试环境
+        findViewById(R.id.config_ceshi_vn).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((RadioGroup) findViewById(R.id.config_tuisong)).check(R.id.config_ws_vn);
+            }
+        });
+
+        //国内生产环境
         findViewById(R.id.config_shengchan).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((RadioGroup) findViewById(R.id.config_tuisong)).check(R.id.config_shengchan_ws);
+            }
+        });
+
+        //泰国生产环境
+        findViewById(R.id.config_shengchan_th).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((RadioGroup) findViewById(R.id.config_tuisong)).check(R.id.config_shengchan_ws_th);
+            }
+        });
+
+        //越南南生产环境
+        findViewById(R.id.config_shengchan_vn).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((RadioGroup) findViewById(R.id.config_tuisong)).check(R.id.config_shengchan_ws_vn);
+            }
+        });
+
+        //越南北生产环境
+        findViewById(R.id.config_shengchan_vn_hn).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((RadioGroup) findViewById(R.id.config_tuisong)).check(R.id.config_shengchan_ws_vn_hn);
             }
         });
 
@@ -71,33 +111,41 @@ public class DebugConfigActivity extends BaseActivity {
             public void onClick(View v) {
                 RadioGroup config_huanjing = (RadioGroup) findViewById(R.id.config_huanjing);
 
-                if (config_huanjing.getCheckedRadioButtonId() == R.id.config_kaifa) {  //开发
-                    PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, URL_242);
-
-                } else if (config_huanjing.getCheckedRadioButtonId() == R.id.config_ceshi) { //测试
-                    PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, URL_1332255);
-
-                } else if (config_huanjing.getCheckedRadioButtonId() == R.id.config_ceshi_2) {  //测试2
-                    PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, URL_1332255_2);
-
-                } else if (config_huanjing.getCheckedRadioButtonId() == R.id.config_shengchan) { //生产
-                    PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, URL_13322);
+                // URL环境
+                if (config_huanjing.getCheckedRadioButtonId() == R.id.config_ceshi_zh) {
+                    PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, ZH_1332255);
+                } else if (config_huanjing.getCheckedRadioButtonId() == R.id.config_ceshi_th) {
+                    PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, TH_1332255);
+                } else if (config_huanjing.getCheckedRadioButtonId() == R.id.config_ceshi_vn) {
+                    PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, VN_1332255);
+                } else if (config_huanjing.getCheckedRadioButtonId() == R.id.config_shengchan) {
+                    PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, ZH_13322);
+                } else if (config_huanjing.getCheckedRadioButtonId() == R.id.config_shengchan_th) {
+                    PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, TH_13322);
+                } else if (config_huanjing.getCheckedRadioButtonId() == R.id.config_shengchan_vn) {
+                    PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, VN_13322);
+                } else if (config_huanjing.getCheckedRadioButtonId() == R.id.config_shengchan_vn_hn) {
+                    PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, VN_13366);
                 }
 
 
                 RadioGroup config_tuisong = (RadioGroup) findViewById(R.id.config_tuisong);
 
-                //开发推送
-                if (config_tuisong.getCheckedRadioButtonId() == R.id.config_kaifa_ws) {
-                    PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, WS_242);
-
-                    //测试推送
-                } else if (config_tuisong.getCheckedRadioButtonId() == R.id.config_ceshi_ws) {
-                    PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, WS_1332255);
-
-                    //生产推送
-                } else if (config_tuisong.getCheckedRadioButtonId() == R.id.config_shengchan_ws) {
-                    PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, WS_13322);
+                // 推送环境
+                if (config_tuisong.getCheckedRadioButtonId() == R.id.config_ws_zh) {
+                    PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, WS_1332255_ZH);
+                } else if (config_tuisong.getCheckedRadioButtonId() == R.id.config_ws_th) {
+                    PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, WS_1332255_TH);
+                } else if (config_tuisong.getCheckedRadioButtonId() == R.id.config_ws_vn) {
+                    PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, WS_1332255_VN);
+                }else if (config_tuisong.getCheckedRadioButtonId() == R.id.config_shengchan_ws) {
+                    PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG,WS_13322_ZH );
+                }else if (config_tuisong.getCheckedRadioButtonId() == R.id.config_shengchan_ws_th) {
+                    PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG,WS_13322_TH );
+                }else if (config_tuisong.getCheckedRadioButtonId() == R.id.config_shengchan_ws_vn) {
+                    PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG,WS_13322_VN );
+                }else if (config_tuisong.getCheckedRadioButtonId() == R.id.config_shengchan_ws_vn_hn) {
+                    PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG,WS_13366_VN );
                 }
 
                 startActivity(new Intent(DebugConfigActivity.this, WelcomeActivity.class));

@@ -214,6 +214,10 @@ public class MyApp extends Application {
                             language = "rEN";
                         }
                         break;
+                    default:
+                        // TODO 暂时用
+                        language = "rCN";
+                        break;
                 }
             }
 
@@ -266,7 +270,6 @@ public class MyApp extends Application {
      */
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        // TODO Auto-generated method stub
         super.onConfigurationChanged(newConfig);
         System.exit(0);
     }
