@@ -1531,6 +1531,7 @@
     <string name="pwd_format_hint">Vui lòng nhập vào 6-20 ký tự,phân biệt chữ to nhỏ .</string>
     <string name="pwd_empty">Nhập mật khẩu</string>
     <string name="phone_empty">Hãy nhập vào đăng ký tài khoản</string>
+    <string name="login_int_username">Hãy nhập vào đăng ký tài khoản</string>
     <string name="phone_error">Vui lòng nhập vào số di động chính xác</string>
     <string name="verify_code">Vui lòng nhập vào mã xác nhận</string>
     <string name="verify_code_send">Gửi mã xác nhận</string>

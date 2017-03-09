@@ -1585,25 +1585,25 @@
     <string name="home_number_desc_yi">亿</string>
     <string name="home_number_desc_wan">万</string>
 
-    <string name="home_lottery_info_open">开奖</string>
-    <string name="home_lottery_info_stat">统计</string>
-    <string name="home_lottery_info_chart">图表</string>
-    <string name="home_lottery_info_start_title">走势统计</string>
-    <string name="home_lottery_info_start_tab_tm">特码出现</string>
-    <string name="home_lottery_info_start_tab_pm">平码出现</string>
-    <string name="home_lottery_info_start_tab_notm">特码未出现</string>
-    <string name="home_lottery_info_tm_zodiac_count">特码生肖出现次数</string>
-    <string name="home_lottery_info_tm_count">特码出现次数</string>
-    <string name="home_lottery_info_tm_mantissa_count">特码尾号出现次数</string>
-    <string name="home_lottery_info_tm_bo_count">特码波色出现次数</string>
-    <string name="home_lottery_info_pm_zodiac_count">平码生肖出现次数</string>
-    <string name="home_lottery_info_pm_count">平码出现次数</string>
-    <string name="home_lottery_info_pm_mantissa_count">平码尾号出现次数</string>
-    <string name="home_lottery_info_pm_bo_count">平码波色出现次数</string>
-    <string name="home_lottery_info_tm_not_zodiac_count">特码生肖连续未出</string>
-    <string name="home_lottery_info_tm_not_count">特码连续未出</string>
-    <string name="home_lottery_info_tm_not_mantissa_count">特码尾号连续未出</string>
-    <string name="home_lottery_info_tm_not_bo_count">特码波色连续未出</string>
+    <string name="home_lottery_info_open">Lottery Draw</string>
+    <string name="home_lottery_info_stat">Statistics</string>
+    <string name="home_lottery_info_chart">Chart</string>
+    <string name="home_lottery_info_start_title">Trend Statistics</string>
+    <string name="home_lottery_info_start_tab_tm">Extra number draw</string>
+    <string name="home_lottery_info_start_tab_pm">Drawn number draw</string>
+    <string name="home_lottery_info_start_tab_notm">Extra number miss</string>
+    <string name="home_lottery_info_tm_zodiac_count">Frequency of extra number zodiac</string>
+    <string name="home_lottery_info_tm_count">Frequency of extra number</string>
+    <string name="home_lottery_info_tm_mantissa_count">Frequency of extra last number</string>
+    <string name="home_lottery_info_tm_bo_count">Frequency of extra number color</string>
+    <string name="home_lottery_info_pm_zodiac_count">Frequency of drawn number zodiac</string>
+    <string name="home_lottery_info_pm_count">Frequency of drawn number</string>
+    <string name="home_lottery_info_pm_mantissa_count">Frequency of drawn last number</string>
+    <string name="home_lottery_info_pm_bo_count">Frequency of drawn number color</string>
+    <string name="home_lottery_info_tm_not_zodiac_count">Extra number zodiac consecutively miss</string>
+    <string name="home_lottery_info_tm_not_count">Extra number consecutively miss</string>
+    <string name="home_lottery_info_tm_not_mantissa_count">Extra last number consecutively miss</string>
+    <string name="home_lottery_info_tm_not_bo_count">Extra number color consecutively miss</string>
 
 
 </resources>
