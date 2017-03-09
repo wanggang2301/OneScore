@@ -120,7 +120,7 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
 
                 if (firstData.getTeamConcerns() == null || firstData.getTeamConcerns().size() == 0) {
                     viewHolderLeague.mNoData.setVisibility(View.VISIBLE);
-                    viewHolderLeague.mIsOpen.setVisibility(View.GONE);
+                    viewHolderLeague.mIsOpen.setVisibility(View.INVISIBLE);
                 } else {
                     viewHolderLeague.mNoData.setVisibility(View.GONE);
                     viewHolderLeague.mIsOpen.setVisibility(View.VISIBLE);
@@ -284,10 +284,10 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
         public ViewHolderLeague(View itemView) {
             super(itemView);
 
+            mIsOpen = (ImageView) itemView.findViewById(R.id.custom_item_isopen);
             mLeagueLogo = (ImageView) itemView.findViewById(R.id.custom_league_list_logo);
             mLeagueName = (TextView) itemView.findViewById(R.id.custom_league_name);
             mLeagueHotNum = (TextView) itemView.findViewById(R.id.custom_league_hot_num);
-            mIsOpen = (ImageView) itemView.findViewById(R.id.custom_item_isopen);
             mLeagueStar = (ImageView) itemView.findViewById(R.id.custom_league_star);
             mNoData = (TextView) itemView.findViewById(R.id.custon_league_nodata);
 
