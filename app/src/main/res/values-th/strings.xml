@@ -1631,7 +1631,7 @@
     <string name="return_today">วันนี้</string>
     <string name="return_tomorrow">พรุ่งนี้</string>
 
-    <string name="basket_handicap_bigorsmall">สูง/เสมอ/ต่ำ</string>
+    <string name="basket_handicap_bigorsmall">O/D/U</string>
 
 
 </resources>

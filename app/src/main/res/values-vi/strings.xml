@@ -1623,5 +1623,5 @@
     <string name="roll_asiasize">O/U</string>
     <string name="roll_euro">1X2</string>
 
-    <string name="basket_handicap_bigorsmall">tài/hòa/xỉu</string>
+    <string name="basket_handicap_bigorsmall">O/D/U</string>
 </resources>

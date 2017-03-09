@@ -1607,6 +1607,6 @@
 
     <string name="basket_database_details_leagueMost_wintop">W/D/L most</string>
 
-    <string name="basket_handicap_bigorsmall">Over/Draw/Under</string>
+    <string name="basket_handicap_bigorsmall">O/D/U</string>
 
 </resources>
