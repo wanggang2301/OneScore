@@ -1611,7 +1611,7 @@
     <string name="home_lottery_info_tm_not_mantissa_count">รางวัลเลขท้ายพิเศษไม่ออกต่อเนื่อง</string>
     <string name="home_lottery_info_tm_not_bo_count">กระดานสีรางวัลพิเศษไม่ออกต่อเนื่อง</string>
 
-
+    <string name="basket_database_details_leagueMost_wintop">ชนะเสมอแพ้มากที่สุด</string>
 
     <string name="share_summary_new"></string>
     <string name="share_match_pre"></string>
@@ -1630,5 +1630,8 @@
     <string name="return_yesterday">เมื่อวาน</string>
     <string name="return_today">วันนี้</string>
     <string name="return_tomorrow">พรุ่งนี้</string>
+
+    <string name="basket_handicap_bigorsmall">O/D/U</string>
+
 
 </resources>

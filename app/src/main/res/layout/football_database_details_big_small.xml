@@ -67,7 +67,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:paddingBottom="10dp"
                 android:paddingLeft="12dp"
@@ -97,10 +97,10 @@
                 <TextView
                     android:id="@+id/football_database_dzx"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="大/走/小"
+                    android:text="@string/basket_handicap_bigorsmall"
                     android:textColor="@color/black_details_ball_textcolor"
                     android:textSize="10sp"/>
 

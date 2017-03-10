@@ -229,6 +229,7 @@
     <string name="about_frame_txt">关于我们</string>
     <string name="more_setting">更多设置</string>
     <string name="invited_prize">邀请有奖</string>
+    <string name="login_int_username">请输入注册账号</string>
     <!-- 侧滑栏字体 -->
     <string name="foot_jishi_txt">即时</string>
     <string name="foot_saiguo_txt">赛果</string>
@@ -1623,5 +1624,8 @@
     <string name="roll_asialet">亚</string>
     <string name="roll_euro">欧</string>
     <string name="roll_asiasize">大</string>
+
+    <string name="basket_handicap_bigorsmall">大/走/小</string>
+
 
 </resources>
