@@ -51,7 +51,7 @@
             android:background="@drawable/bg_white_selector"
             android:gravity="center"
             android:padding="12dp"
-            android:text="取消"
+            android:text="@string/fragme_home_quxiao_text"
             android:textColor="@color/blue"
             android:textSize="16sp" />
     </LinearLayout>
