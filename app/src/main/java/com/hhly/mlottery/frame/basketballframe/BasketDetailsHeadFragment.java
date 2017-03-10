@@ -27,6 +27,7 @@ import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
 import com.hhly.mlottery.bean.websocket.DataEntity;
 import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
 import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.NetworkUtils;
@@ -326,7 +327,7 @@ public class BasketDetailsHeadFragment extends Fragment {
 
                     mVS.setText("VS");
                     if (mMatch.getMatchStatus() == PRE_MATCH) {
-                        mMatchState.setText(bean.getMatch().getDate() + "  " + bean.getMatch().getTime() + "   " + MyApp.getContext().getResources().getString(R.string.basket_begin_game));
+                        mMatchState.setText(DateUtil.convertDateToNation(bean.getMatch().getDate()) + "  " + bean.getMatch().getTime() + "   " + MyApp.getContext().getResources().getString(R.string.basket_begin_game));
                     } else if (mMatch.getMatchStatus() == DETERMINED) {
                         mMatchState.setText(R.string.basket_undetermined);
                     } else if (mMatch.getMatchStatus() == GAME_CANCLE) {
