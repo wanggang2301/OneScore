@@ -2321,7 +2321,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 return;
             }
             if (!StringUtils.isEmpty(startTime) && startTime.length() == 16) {
-                date.setText(startTime);
+                date.setText(DateUtil.convertDateToNationHM(startTime));
             } else {
                 date.setText("");//开赛时间
             }

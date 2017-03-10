@@ -25,6 +25,7 @@ import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
 import com.hhly.mlottery.bean.footballDetails.WebSocketRollballOdd;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.StringUtils;
@@ -532,7 +533,7 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
         }
         if (!StringUtils.isEmpty(startTime) && startTime.length() == 16) {
             pre_dataTime_txt.setText(startTime.substring(11, 16));
-            pre_dataDate_txt.setText(startTime.substring(0, 10));
+            pre_dataDate_txt.setText(DateUtil.convertDateToNation(startTime.substring(0, 10)));
         } else {
             pre_dataTime_txt.setText("");//开赛时间
             pre_dataDate_txt.setText("");

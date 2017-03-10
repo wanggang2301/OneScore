@@ -96,6 +96,20 @@ public class DateUtil {
         }
     }
 
+    /**
+     * 国际化日期格式
+     *
+     * @param date
+     * @return
+     */
+    public static String convertDateToNationHM(String date) {
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
+            return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm"), "yyyy-MM-dd HH:mm");
+        } else {
+            return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm"), "dd-MM-yyyy HH:mm");
+        }
+    }
+
 
     /**
      * 把毫秒转化成日期

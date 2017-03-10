@@ -154,7 +154,7 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         ResultMatchDto resultMatchDto = datas.get(position);
 
         if (holder instanceof DateViewHolder) {
-            ((DateViewHolder) holder).tv_date.setText(resultMatchDto.getDate());
+            ((DateViewHolder) holder).tv_date.setText(DateUtil.convertDateToNation(resultMatchDto.getDate()));
             ((DateViewHolder) holder).tv_week.setText(ResultDateUtil.getWeekOfDate(DateUtil.parseDate(ResultDateUtil.getDate(0, resultMatchDto.getDate()))));
 
         } else if (holder instanceof ResultViewHolder) {
@@ -425,7 +425,6 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             holder.item_home_half_score.setText(match.getHomeHalfScore());
             holder.item_guest_half_score.setText(match.getGuestHalfScore());
-
 
 
             holder.keeptime.setText(mContext.getString(R.string.immediate_status_overtime));
