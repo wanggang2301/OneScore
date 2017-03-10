@@ -352,12 +352,12 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
 
         setData(startDate, tv_date1, tv_week1);
         setData(endDate, tv_date2, tv_week2);
-        leagueStatisticsTodayRecyclerViewAdapter = new LeagueStatisticsTodayRecyclerViewAdapter(mContext, mLeagueStatisticsTodayChildBeans,handicap);
+        leagueStatisticsTodayRecyclerViewAdapter = new LeagueStatisticsTodayRecyclerViewAdapter(mContext, mLeagueStatisticsTodayChildBeans, handicap);
         recyclerView.setAdapter(leagueStatisticsTodayRecyclerViewAdapter);
     }
 
     private void setData(String date, TextView tv_date, TextView tv_week) {
-        tv_date.setText(DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd"), "yyyy-MM-dd"));
+        tv_date.setText(DateUtil.convertDateToNation(date));
         tv_week.setText(DateUtil.getWeekOfXinQi(DateUtil.parseDate(date, "yyyy-MM-dd")));
     }
 
@@ -423,9 +423,9 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
                     iv_flat.setBackgroundResource(R.mipmap.league_down);
                     isSortBigToSmall = false;
 
-                    if (handicap==0) {
+                    if (handicap == 0) {
                         Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayFlatBigToSmallComparator());
-                    }else {
+                    } else {
                         Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayLossBigToSmallComparator());
 
                     }
@@ -434,9 +434,9 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
                     iv_flat.setBackgroundResource(R.mipmap.league_up);
                     isSortBigToSmall = true;
 
-                    if (handicap==0) {
+                    if (handicap == 0) {
                         Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayFlatSmallToBigComparator());
-                    }else {
+                    } else {
                         Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayLossSmallToBigComparator());
 
                     }
@@ -469,18 +469,18 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
                 if (isSortBigToSmall) {
                     iv_loss.setBackgroundResource(R.mipmap.league_down);
                     isSortBigToSmall = false;
-                    if (handicap==0) {
+                    if (handicap == 0) {
                         Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayLossBigToSmallComparator());
-                    }else {
+                    } else {
                         Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayFlatBigToSmallComparator());
                     }
 
                 } else {
                     iv_loss.setBackgroundResource(R.mipmap.league_up);
                     isSortBigToSmall = true;
-                    if (handicap==0) {
+                    if (handicap == 0) {
                         Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayLossSmallToBigComparator());
-                    }else {
+                    } else {
                         Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayFlatSmallToBigComparator());
                     }
                 }

@@ -38,6 +38,8 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.oddfragment.CompanyChooseDialogFragment;
 import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
+import com.hhly.mlottery.util.DateUtil;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 
 import java.io.Serializable;
@@ -222,7 +224,7 @@ public class FootCpiFragment extends BaseWebSocketFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //tv_match_name.setText(((TextView) view.findViewById(R.id.tv)).getText().toString());
-               // iv_match.setImageResource(R.mipmap.nav_icon_cbb);
+                // iv_match.setImageResource(R.mipmap.nav_icon_cbb);
                 EventBus.getDefault().post(new ScoreSwitchFg(position));
 
                 popupWindow.dismiss();
@@ -321,8 +323,9 @@ public class FootCpiFragment extends BaseWebSocketFragment {
                 new DateChooseDialogFragment.OnDateChooseListener() {
                     @Override
                     public void onDateChoose(String date) {
+                        L.d("ffgghh", date);
                         choosenDate = date;
-                        mDateTextView.setText(date);
+                        mDateTextView.setText(DateUtil.convertDateToNation(date));
                         setRefreshing(true);
                         refreshAllChildFragments();
                     }
@@ -337,7 +340,10 @@ public class FootCpiFragment extends BaseWebSocketFragment {
     public void setCurrentDate(String currentDate) {
         this.currentDate = currentDate;
         if (TextUtils.isEmpty(choosenDate)) {
-            mDateTextView.setText(currentDate);
+
+            mDateTextView.setText(DateUtil.convertDateToNation(currentDate));
+
+
             if (!mDateLayout.isShown()) mDateLayout.setVisibility(View.VISIBLE);
             if (!mDateTextView.isShown()) mDateTextView.setVisibility(View.VISIBLE);
         }
