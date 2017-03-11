@@ -301,7 +301,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                     /**
                      * 外层 view数据
                      */
-                    mAllGroupdata.add(mMatchdata.get(i).getDate() + "," + week + "," + mMatchdata.get(i).getDiffDays() + "");
+                    mAllGroupdata.add(DateUtil.convertDateToNation(mMatchdata.get(i).getDate()) + "," + week + "," + mMatchdata.get(i).getDiffDays() + "");
                 }
 
                 /**

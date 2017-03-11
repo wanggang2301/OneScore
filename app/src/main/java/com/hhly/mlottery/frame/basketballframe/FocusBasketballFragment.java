@@ -303,7 +303,7 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
                      */
                     // groupDataList.add(mMatchdata.get(i).getDate() + "," + week);
                     // isToday.add(mMatchdata.get(i).getDiffDays());// 获得日期状态码（昨天 今天 明天）
-                    mAllGroupdata.add(mMatchdata.get(i).getDate() + "," + week + "," + mMatchdata.get(i).getDiffDays() + "");
+                    mAllGroupdata.add(DateUtil.convertDateToNation(mMatchdata.get(i).getDate()) + "," + week + "," + mMatchdata.get(i).getDiffDays() + "");
                 }
 
                 /**

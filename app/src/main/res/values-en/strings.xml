@@ -21,6 +21,9 @@
     <string name="foot_event_nomatchstate">No matches state</string>
     <string name="foot_event_in">In</string>
     <string name="foot_event_out">Off</string>
+    <string name="foot_event_num_pre">No.</string>
+    <string name="foot_event_num_out">off</string>
+    <string name="foot_event_num_in">in</string>
     <string name="foot_event_num">No.</string>
     <string name="matchIsNotStart">Match not start yet</string>
     <string name="goChat">Go to have a chat</string>

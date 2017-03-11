@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.scheduleBean.ScheduleDate;
+import com.hhly.mlottery.util.DateUtil;
 
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class ScheduleDateAdapter extends BaseAdapter {
         LayoutInflater _LayoutInflater = LayoutInflater.from(context);
         convertView = _LayoutInflater.inflate(R.layout.my_spinner_item, null);
         if (convertView != null) {
-            ((TextView) convertView.findViewById(R.id.tv_riqi)).setText(dList.get(position).getDate());
+            ((TextView) convertView.findViewById(R.id.tv_riqi)).setText(DateUtil.convertDateToNation(dList.get(position).getDate()));
             ((TextView) convertView.findViewById(R.id.tv_xingqi)).setText(dList.get(position).getWeek());
             if (position == currentDatePosition) {
                 convertView.setBackgroundColor(context.getResources().getColor(R.color.selected_bg));

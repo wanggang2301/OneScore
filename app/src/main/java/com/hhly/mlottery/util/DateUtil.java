@@ -81,6 +81,36 @@ public class DateUtil {
         return result;
     }
 
+
+    /**
+     * 国际化日期格式
+     *
+     * @param date
+     * @return
+     */
+    public static String convertDateToNation(String date) {
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
+            return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd"), "yyyy-MM-dd");
+        } else {
+            return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd"), "dd-MM-yyyy");
+        }
+    }
+
+    /**
+     * 国际化日期格式
+     *
+     * @param date
+     * @return
+     */
+    public static String convertDateToNationHM(String date) {
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
+            return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm"), "yyyy-MM-dd HH:mm");
+        } else {
+            return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm"), "dd-MM-yyyy HH:mm");
+        }
+    }
+
+
     /**
      * 把毫秒转化成日期
      *
@@ -145,11 +175,14 @@ public class DateUtil {
 
     /**
      * 转换为指日格式日期字符串
+     *
      * @param strdate
      * @return
      */
-    public static String getLotteryInfoDate(String strdate , String style) {
-        if(strdate == null){return null;}
+    public static String getLotteryInfoDate(String strdate, String style) {
+        if (strdate == null) {
+            return null;
+        }
         DateFormat d1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         DateFormat d2 = new SimpleDateFormat(style);
         try {
@@ -360,7 +393,9 @@ public class DateUtil {
      * 彩票专用，获取周几
      */
     public static String getLotteryWeekOfDate(Date dt) {
-        if(dt == null){return null;}
+        if (dt == null) {
+            return null;
+        }
         String[] weekDays = {MyApp.getContext().getResources().getString(R.string.number_7), MyApp.getContext().getResources().getString(R.string.number_1),
                 MyApp.getContext().getResources().getString(R.string.number_2), MyApp.getContext().getResources().getString(R.string.number_3),
                 MyApp.getContext().getResources().getString(R.string.number_4), MyApp.getContext().getResources().getString(R.string.number_5),

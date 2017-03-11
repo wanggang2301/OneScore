@@ -524,7 +524,6 @@
     <string name="multi_toast_upper_match">Tối đa chọn 3 trận</string>
 
 
-
     <!--足球分析详情页面 -->
     <string name="football_analyze_equ">H</string>
     <string name="football_analyze_win">T</string>
@@ -1595,11 +1594,13 @@
     <string name="odds_average">trung bình</string>
 
 
-
     <string name="foot_event_penalty"></string>
     <string name="foot_event_di"></string>
-    <string name="foot_event_num_out"></string>
-    <string name="foot_event_num_in"></string>
+
+
+    <string name="foot_event_num_pre">Số</string>
+    <string name="foot_event_num_out">ra sân</string>
+    <string name="foot_event_num_in">vào sân</string>
 
 
     <string name="share_summary_new"></string>

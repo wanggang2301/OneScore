@@ -278,7 +278,7 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
                     /**
                      * 外层 view数据
                      */
-                    mAllGroupdata.add(mMatchdata.get(i).getDate() + "," + week + "," + mMatchdata.get(i).getDiffDays() + "");
+                    mAllGroupdata.add(DateUtil.convertDateToNation(mMatchdata.get(i).getDate()) + "," + week + "," + mMatchdata.get(i).getDiffDays() + "");
                 }
 
                 /**

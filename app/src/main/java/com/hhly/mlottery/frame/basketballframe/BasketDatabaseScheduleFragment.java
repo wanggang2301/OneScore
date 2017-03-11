@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.BasketballDatabaseScheduleSectionAdapter;
 import com.hhly.mlottery.bean.basket.basketdatabase.MatchDay;
@@ -24,6 +25,7 @@ import com.hhly.mlottery.bean.basket.basketdatabase.ScheduledMatch;
 import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.CollectionUtils;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.LocaleFactory;
 import com.hhly.mlottery.util.ToastTools;
@@ -382,7 +384,12 @@ public class BasketDatabaseScheduleFragment extends Fragment {
     private void handleData(List<MatchDay> matchData) {
         if (CollectionUtils.notEmpty(matchData)) {
             for (MatchDay matchDay : matchData) {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd E", LocaleFactory.get());
+                SimpleDateFormat dateFormat;
+                if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
+                    dateFormat = new SimpleDateFormat("yyyy-MM-dd E", LocaleFactory.get());
+                } else {
+                    dateFormat = new SimpleDateFormat("MM-dd-yyyy E", LocaleFactory.get());
+                }
                 mSections.add(new BasketballDatabaseScheduleSectionAdapter
                         .Section(true, dateFormat.format(matchDay.getDay())));
                 for (ScheduledMatch match : matchDay.getDatas()) {

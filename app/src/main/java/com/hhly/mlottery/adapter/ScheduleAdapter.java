@@ -154,7 +154,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         final ScheduleMatchDto scheduleMatchDto = datas.get(i);
         if (holder instanceof DateViewHolder) {
-            ((DateViewHolder) holder).tv_date.setText(scheduleMatchDto.getDate());
+            ((DateViewHolder) holder).tv_date.setText(DateUtil.convertDateToNation(scheduleMatchDto.getDate()));
             ((DateViewHolder) holder).tv_week.setText(ResultDateUtil.getWeekOfDate(DateUtil.parseDate(ResultDateUtil.getDate(0, scheduleMatchDto.getDate()))));
 
         } else if (holder instanceof ScheduleViewHolder) {

@@ -21,8 +21,8 @@
 
             <TextView
                 android:id="@+id/rank"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
                 android:gravity="center"
                 android:textColor="@color/content_txt_dark_grad"
                 android:textSize="@dimen/text_size_13"

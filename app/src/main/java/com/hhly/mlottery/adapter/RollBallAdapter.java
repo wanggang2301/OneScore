@@ -307,8 +307,8 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
                     : "--"); // 中
 
             tvHandicapValue_YA_BLACK.setText(Integer.parseInt(data.getKeepTime()) < 89
-                    ? asiaLet.getLeftOdds().equals("-") ? "封" : asiaLet.getLeftOdds()
-                    : "封"); // 上
+                    ? asiaLet.getLeftOdds().equals("-") ? context.getResources().getString(R.string.basket_handicap_feng) : asiaLet.getLeftOdds()
+                    : context.getResources().getString(R.string.basket_handicap_feng)); // 上
 
             tvRightOdds_YA.setText(Integer.parseInt(data.getKeepTime()) < 89
                     ? asiaLet.getRightOdds().equals("-") ? "--" : asiaLet.getRightOdds()
@@ -316,7 +316,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
         } else {
             this.setText(tvLeftOdds_YA, tvHandicapValue_YA_BLACK, tvRightOdds_YA);
         }
-        if (tvHandicapValue_YA_BLACK.getText().equals("封")) { // 如果当前状态是封盘，那么改变条目的背景颜色及文字颜色
+        if (tvHandicapValue_YA_BLACK.getText().equals(context.getResources().getString(R.string.basket_handicap_feng))) { // 如果当前状态是封盘，那么改变条目的背景颜色及文字颜色
             tvHandicapValue_YA_BLACK.setBackgroundColor(context.getResources().getColor(R.color.item_background));
             tvHandicapValue_YA_BLACK.setTextColor(context.getResources().getColor(R.color.white));
             tvLeftOdds_YA.setTextColor(context.getResources().getColor(R.color.res_pl_color));
@@ -328,15 +328,15 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
                     ? asiaSize.getHandicapValue().equals("-") ? "--" : HandicapUtils.changeHandicapByBigLittleBall(asiaSize.getHandicapValue())
                     : "--"); // 中
             tvHandicapValue_DA_BLACK.setText(Integer.parseInt(data.getKeepTime()) < 89
-                    ? asiaSize.getLeftOdds().equals("-") ? "封" : asiaSize.getLeftOdds()
-                    : "封"); // 上
+                    ? asiaSize.getLeftOdds().equals("-") ? context.getResources().getString(R.string.basket_handicap_feng) : asiaSize.getLeftOdds()
+                    : context.getResources().getString(R.string.basket_handicap_feng)); // 上
             tvRightOdds_DA.setText(Integer.parseInt(data.getKeepTime()) < 89
                     ? asiaSize.getRightOdds().equals("-") ? "--" : asiaSize.getRightOdds()
                     : "--"); // 下
         } else {
             this.setText(tvLeftOdds_DA, tvHandicapValue_DA_BLACK, tvRightOdds_DA);
         }
-        if (tvHandicapValue_DA_BLACK.getText().equals("封")) { // 如果当前状态是封盘，那么改变条目的背景颜色及文字颜色
+        if (tvHandicapValue_DA_BLACK.getText().equals(context.getResources().getString(R.string.basket_handicap_feng))) { // 如果当前状态是封盘，那么改变条目的背景颜色及文字颜色
             tvHandicapValue_DA_BLACK.setBackgroundColor(context.getResources().getColor(R.color.item_background));
             tvHandicapValue_DA_BLACK.setTextColor(context.getResources().getColor(R.color.white));
             tvLeftOdds_DA.setTextColor(context.getResources().getColor(R.color.res_pl_color));
@@ -348,15 +348,15 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
                     ? euro.getMediumOdds().equals("-") ? "--" : euro.getMediumOdds()
                     : "--"); // 中
             tvMediumOdds_EU.setText(Integer.parseInt(data.getKeepTime()) < 89
-                    ? euro.getLeftOdds().equals("-") ? "封" : euro.getLeftOdds()
-                    : "封"); // 上
+                    ? euro.getLeftOdds().equals("-") ? context.getResources().getString(R.string.basket_handicap_feng) : euro.getLeftOdds()
+                    : context.getResources().getString(R.string.basket_handicap_feng)); // 上
             tvRightOdds_EU.setText(Integer.parseInt(data.getKeepTime()) < 89
                     ? euro.getRightOdds().equals("-") ? "--" : euro.getRightOdds()
                     : "--"); // 下
         } else {
             this.setText(tvLeftOdds_EU, tvMediumOdds_EU, tvRightOdds_EU);
         }
-        if (tvMediumOdds_EU.getText().equals("封")) { // 如果当前状态是封盘，那么改变条目的背景颜色及文字颜色
+        if (tvMediumOdds_EU.getText().equals(context.getResources().getString(R.string.basket_handicap_feng))) { // 如果当前状态是封盘，那么改变条目的背景颜色及文字颜色
             tvMediumOdds_EU.setBackgroundColor(context.getResources().getColor(R.color.item_background));
             tvMediumOdds_EU.setTextColor(context.getResources().getColor(R.color.white));
         }

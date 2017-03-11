@@ -22,6 +22,10 @@
     <string name="foot_event_in">ลงสนาม</string>
     <string name="foot_event_out">ออกจากสนาม</string>
     <string name="foot_event_num">หมายเลข</string>
+    <string name="foot_event_num_pre">หมายเลข</string>
+    <string name="foot_event_num_out">เปลี่ยนตัวออก</string>
+    <string name="foot_event_num_in">เปลี่ยนตัวเข้า</string>
+
     <string name="matchIsNotStart">ยังไม่เริ่มการแข่งขัน</string>
     <string name="goChat">ไปที่การแชท</string>
     <string name="shot_nodata">ไม่มีข้อมูลการยิงลูกเข้า</string>
