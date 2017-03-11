@@ -375,9 +375,9 @@
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:gravity="center"
-                        android:paddingTop="10dp"
+                        android:paddingTop="5dp"
                         android:orientation="vertical">
                         <com.hhly.mlottery.view.TextProgressBar
                             android:id="@+id/avg_progressbar"
@@ -389,14 +389,14 @@
                             />
                         <LinearLayout
                             android:layout_width="300dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:orientation="horizontal"
                             android:padding="10dp"
                             android:gravity="center">
 
                             <LinearLayout
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="25dp"
                                 android:layout_weight="1"
                                 android:gravity="center">
 
@@ -411,6 +411,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
+                                    android:singleLine="true"
                                     android:text="@string/football_database_details_home_score_avg"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"/>
@@ -418,7 +419,7 @@
 
                             <LinearLayout
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="25dp"
                                 android:layout_weight="1"
                                 android:gravity="center">
 
@@ -433,6 +434,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
+                                    android:singleLine="true"
                                     android:text="@string/football_database_details_guest_score_avg"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"/>
@@ -450,7 +452,7 @@
                 <!--大小球统计-->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
                     >
 
@@ -471,7 +473,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:gravity="center"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
@@ -510,7 +512,7 @@
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="5">
+                                android:layout_weight="4.5">
                                 <ProgressBar
                                     android:id="@+id/big_small_statistic_progressbar1"
                                     android:layout_width="match_parent"
@@ -526,6 +528,7 @@
                                     <!--style="@style/StyleProgressBarguest_statics" />-->
                             </LinearLayout>
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -561,7 +564,7 @@
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="5">
+                                android:layout_weight="4.5">
                                 <ProgressBar
                                     android:id="@+id/big_small_statistic_progressbar2"
                                     android:layout_width="match_parent"
@@ -607,7 +610,7 @@
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="5">
+                                android:layout_weight="4.5">
                                 <ProgressBar
                                     android:id="@+id/big_small_statistic_progressbar3"
                                     android:layout_width="match_parent"
@@ -653,7 +656,7 @@
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="5">
+                                android:layout_weight="4.5">
 
                                 <ProgressBar
                                     android:id="@+id/big_small_statistic_progressbar4"

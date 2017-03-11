@@ -7,4 +7,5 @@
           android:gravity="center"
           android:textColor="@color/selected_text_color"
           android:textSize="@dimen/text_size_13"
+          android:singleLine="true"
           tools:text="测试文本"/>
