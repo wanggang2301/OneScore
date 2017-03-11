@@ -18,6 +18,7 @@
         android:text="@string/chart_ball_call_ta"/>
 
     <View
+        android:id="@+id/view_line"
         android:layout_width="0.5dp"
         android:layout_height="match_parent"
         android:layout_marginBottom="13dp"

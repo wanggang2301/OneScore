@@ -255,6 +255,26 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
 
     private void showPopup(View v, final int index) {
         View popupView = View.inflate(mContext, R.layout.item_chart_ball_fragment_popup, null);
+
+        switch (MyApp.isPackageName){
+            case AppConstants.PACKGER_NAME_ZH:
+//                popupView.findViewById(R.id.view_line).setVisibility(View.VISIBLE);
+//                popupView.findViewById(R.id.tv_popup_jubao).setVisibility(View.VISIBLE);
+                // TODO 暂时用
+                popupView.findViewById(R.id.view_line).setVisibility(View.GONE);
+                popupView.findViewById(R.id.tv_popup_jubao).setVisibility(View.GONE);
+                break;
+            case AppConstants.PACKGER_NAME_TH:
+            case AppConstants.PACKGER_NAME_VN:
+            case AppConstants.PACKGER_NAME_VN_HN:
+            case AppConstants.PACKGER_NAME_UK:
+                popupView.findViewById(R.id.view_line).setVisibility(View.GONE);
+                popupView.findViewById(R.id.tv_popup_jubao).setVisibility(View.GONE);
+                break;
+            default:
+                break;
+        }
+
         mPopupWindow = new PopupWindow(popupView, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
         mPopupWindow.setTouchable(true);
         mPopupWindow.setOutsideTouchable(true);
