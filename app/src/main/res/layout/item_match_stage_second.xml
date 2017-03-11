@@ -9,4 +9,5 @@
           android:gravity="center"
           android:textColor="@color/stage_choose_text_color"
           android:textSize="@dimen/text_size_12"
+          android:singleLine="true"
           tools:text="测试文本"/>

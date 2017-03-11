@@ -784,6 +784,7 @@
                             android:gravity="center"
                             android:textSize="10sp"
                             android:textColor="#666666"
+                            android:singleLine="true"
                             android:text="@string/basket_database_details_statistic_all_score"/>
 
                         <TextView
@@ -801,6 +802,7 @@
                             android:gravity="center"
                             android:textSize="10sp"
                             android:textColor="#666666"
+                            android:singleLine="true"
                             android:text="@string/basket_database_details_statistic_gp_num"/>
 
                         <TextView
@@ -818,6 +820,7 @@
                             android:gravity="center"
                             android:textSize="10sp"
                             android:textColor="#666666"
+                            android:singleLine="true"
                             android:text="@string/basket_database_details_statistic_average"/>
                         <TextView
                             android:layout_width="0dp"
