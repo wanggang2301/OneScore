@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewAdapter;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
@@ -158,9 +159,15 @@ public class EventAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolde
                 // No:人名|No:人名(前上后下)
                 if (m.getPlayInfo() != null && !"".equals(m.getPlayInfo())) {
                     if (m.getPlayInfo().contains("|")) {
+
                         msg_left.setText(m.getPlayInfo().split("|")[0] + mContext.getResources().getString(R.string.foot_event_in) + m.getPlayInfo().split("|")[1] + mContext.getResources().getString(R.string.foot_event_out));
                     } else {
-                        msg_left.setText(m.getPlayInfo().split(":")[0] + mContext.getResources().getString(R.string.foot_event_num_in) + m.getPlayInfo().split(":")[1] + mContext.getResources().getString(R.string.foot_event_num_out));
+
+                        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
+                            msg_left.setText(m.getPlayInfo().split(":")[0] + mContext.getResources().getString(R.string.foot_event_num_in) + m.getPlayInfo().split(":")[1] + mContext.getResources().getString(R.string.foot_event_num_out));
+                        } else {
+                            msg_left.setText(mContext.getResources().getString(R.string.foot_event_num) + m.getPlayInfo().split(":")[0] + mContext.getResources().getString(R.string.foot_event_num_in) + mContext.getResources().getString(R.string.foot_event_num) + m.getPlayInfo().split(":")[1] + mContext.getResources().getString(R.string.foot_event_num_out));
+                        }
                     }
                 } else {
                     msg_left.setText(mContext.getResources().getString(R.string.foot_event_player));
@@ -173,7 +180,7 @@ public class EventAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolde
             } else if (YTORED.equals(m.getCode())) {
                 msg_left.setText(m.getPlayInfo() + mContext.getResources().getString(R.string.foot_event_ychanger));
                 iv_left.setImageResource(R.mipmap.event_ytor);
-            }else if (DIANQIU.equals(m.getCode())){
+            } else if (DIANQIU.equals(m.getCode())) {
 
                 msg_left.setText(m.getPlayInfo() + mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_ge));
                 iv_left.setImageResource(R.mipmap.event_penalty);
@@ -204,7 +211,11 @@ public class EventAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolde
                     if (m.getPlayInfo().contains("|")) {
                         msg_right.setText(m.getPlayInfo().split("|")[0] + mContext.getResources().getString(R.string.foot_event_in) + m.getPlayInfo().split("|")[1] + mContext.getResources().getString(R.string.foot_event_out));
                     } else {
-                        msg_right.setText(m.getPlayInfo().split(":")[0] + mContext.getResources().getString(R.string.foot_event_num_in) + m.getPlayInfo().split(":")[1] + mContext.getResources().getString(R.string.foot_event_num_out));
+                        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
+                            msg_left.setText(m.getPlayInfo().split(":")[0] + mContext.getResources().getString(R.string.foot_event_num_in) + m.getPlayInfo().split(":")[1] + mContext.getResources().getString(R.string.foot_event_num_out));
+                        } else {
+                            msg_left.setText(mContext.getResources().getString(R.string.foot_event_num) + m.getPlayInfo().split(":")[0] + mContext.getResources().getString(R.string.foot_event_num_in) + mContext.getResources().getString(R.string.foot_event_num) + m.getPlayInfo().split(":")[1] + mContext.getResources().getString(R.string.foot_event_num_out));
+                        }
                     }
                 } else {
                     msg_right.setText(mContext.getResources().getString(R.string.foot_event_player));
@@ -217,7 +228,7 @@ public class EventAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolde
             } else if (YTORED1.equals(m.getCode())) {
                 msg_right.setText(mContext.getResources().getString(R.string.foot_event_ychanger) + m.getPlayInfo());
                 iv_right.setImageResource(R.mipmap.event_ytor);
-            }else if (DIANQIU1.equals(m.getCode())){
+            } else if (DIANQIU1.equals(m.getCode())) {
                 msg_right.setText(mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_ge) + m.getPlayInfo());
                 iv_right.setImageResource(R.mipmap.event_penalty);
             }
