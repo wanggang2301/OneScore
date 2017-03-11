@@ -620,22 +620,22 @@
     <string name="chart_ball_call_user_not">\@ไม่มีผู้ใช้</string>
     <string name="chart_ball_report_user_not"> ไม่มีผู้ใช้ที่ถูกรีพอร์ต</string>
     <string name="chart_ball_banned">คุณถูกผู้ดูแลแบนบทสนทนา，แบนบทสนทนาเป็นเวลา</string>
-    <string name="local_chitule">吃土了</string>
-    <string name="local_dacaipan">打裁判</string>
-    <string name="local_fubaila">腐败啦</string>
-    <string name="local_jinggaoni">警告你</string>
-    <string name="local_juyijing">菊一紧</string>
-    <string name="local_mengkuanle">懵圈了</string>
-    <string name="local_qiudatui">求大腿</string>
-    <string name="local_sesese">射射射</string>
-    <string name="local_shangtiantai">上天台</string>
-    <string name="local_shihuale">石化了</string>
-    <string name="local_shoumila">收米啦</string>
-    <string name="local_touzhele">偷着乐</string>
-    <string name="local_xihushuiya">西湖水呀</string>
-    <string name="local_yayajing">压压惊</string>
-    <string name="local_youqingguanlaoye">有请关老爷</string>
-    <string name="local_zailaiyijiao">再来一角</string>
+    <string name="local_chitule"> กินแกลบแล้ว</string>
+    <string name="local_dacaipan"> ตัดสิน</string>
+    <string name="local_fubaila"> คอรัปชั่น</string>
+    <string name="local_jinggaoni"> เตือนคุณไว้</string>
+    <string name="local_juyijing"> หดรูตูด</string>
+    <string name="local_mengkuanle"> สับสน</string>
+    <string name="local_qiudatui">ร้องขอเทพ</string>
+    <string name="local_sesese">ยิงยิงยิง</string>
+    <string name="local_shangtiantai">จะโดดตึกแล้ว</string>
+    <string name="local_shihuale">เสียเงิน</string>
+    <string name="local_shoumila">รับเงิน</string>
+    <string name="local_touzhele"> แอบขำ</string>
+    <string name="local_xihushuiya">ร้องไห้</string>
+    <string name="local_yayajing"> ปลอบขวัญ</string>
+    <string name="local_youqingguanlaoye"> โปรดคุ้มครอง</string>
+    <string name="local_zailaiyijiao">เอามาอีก1สตางค์</string>
     <string name="chart_ball_new_msg"> มีข้อความใหม่</string>
     <string name="chart_ball_null_content">แขกนั่งลงแล้วมาพูดคุยกัน</string>
     <string name="chart_ball_login_error">การตรวจสอบล็อกอินล้มเหลว，กรุณาล็อกอินใหม่อีกครั้ง!</string>
@@ -771,7 +771,7 @@
     <string name="euro">1X2</string>
     <string name="asiasize">O/U</string>
     <string name="oddgone">ไม่แสดง</string>
-    <string name="about_product_msg_txt_simple">แอพวันสกอร์เป็นแอพที่มุ่งเน้นไปที่ผลฟุตบอลสด\nรวมถึงรายละเอียดระหว่างการเเข่งขัน ลูกเเตะมุม\nใบเหลือง ใบเเดง อัตเดตกันแบบวินาทีต่อวินาที\nเเละมีสกอร์อัตเดตที่รวดเร็ว ตอบสนองความต้อง\nการของผู้รับสารที่ต้องการผลบอลแบบสดๆ เพื่อ\nเป็นผู้นำด้านผลกีฬาสดอย่างเเท้จริง</string>
+    <string name="about_product_msg_txt_simple">แอพวันสกอร์เป็นแอพที่มุ่งเน้นไปที่ผลฟุตบอลสดรวมถึงรายละเอียดระหว่างการเเข่งขัน ลูกเเตะมุมใบเหลือง ใบเเดง อัตเดตกันแบบวินาทีต่อวินาทีเเละมีสกอร์อัตเดตที่รวดเร็ว ตอบสนองความต้องการของผู้รับสารที่ต้องการผลบอลแบบสดๆ เพื่อเป็นผู้นำด้านผลกีฬาสดอย่างเเท้จริง</string>
     <string name="frame_home_jieguo_txt">การออกผลล็อตเตอรี่</string>
 
 
@@ -901,7 +901,7 @@
     <string name="about_us_txt"> เกี่ยวกับเรา</string>
     <string name="about_ver_update_txt">อัพเดทรุ่นใหม่</string>
     <string name="about_product_intro_txt">การแนะนำโปรแกรม</string>
-    <string name="about_product_msg_txt">แอพวันสกอร์เป็นแอพที่มุ่งเน้นไปที่ผลฟุตบอลสด\nรวมถึงรายละเอียดระหว่างการเเข่งขัน ลูกเเตะมุม\nใบเหลือง ใบเเดง อัตเดตกันแบบวินาทีต่อวินาที\nเเละมีสกอร์อัตเดตที่รวดเร็ว ทันใจ ตอบสนอง\nความต้องการของผู้รับสารที่ต้องการผลบอล\nแบบสดๆ  เพื่อเป็นผู้นำด้านผลกีฬาสด\nอย่างเเท้จริง</string>
+    <string name="about_product_msg_txt">แอพวันสกอร์เป็นแอพที่มุ่งเน้นไปที่ผลฟุตบอลสดรวมถึงรายละเอียดระหว่างการเเข่งขัน ลูกเเตะมุมใบเหลือง ใบเเดง อัตเดตกันแบบวินาทีต่อวินาทีเเละมีสกอร์อัตเดตที่รวดเร็ว ทันใจ ตอบสนองความต้องการของผู้รับสารที่ต้องการผลบอลแบบสดๆ  เพื่อเป็นผู้นำด้านผลกีฬาสดอย่างเเท้จริง</string>
     <string name="about_pc_txt">PC คอมพิวเตอร์</string>
     <string name="about_pc_msg_txt">www.13322.com</string>
     <string name="about_wap_txt"> WAP โมบาย</string>
