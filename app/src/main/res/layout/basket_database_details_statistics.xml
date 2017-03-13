@@ -300,7 +300,7 @@
                             android:layout_gravity="center">
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
 
                                 <View
@@ -311,10 +311,11 @@
                                     />
 
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="120dp"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
                                     android:text="@string/basket_database_details_statistic_euro_v1"
+                                    android:singleLine="true"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"/>
                                 <TextView
@@ -339,10 +340,11 @@
                                     />
 
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="120dp"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
                                     android:text="@string/basket_database_details_statistic_euro_v2"
+                                    android:singleLine="true"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"/>
                                 <TextView
