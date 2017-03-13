@@ -137,54 +137,56 @@
             android:background="@color/linecolor" />
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/rl_custom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/channel_title_front"
-        android:clickable="true"
-        android:focusable="true">
+    <!--我的定制-->
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/rl_custom"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@color/channel_title_front"-->
+        <!--android:clickable="true"-->
+        <!--android:focusable="true"-->
+        <!--&gt;-->
 
-        <ImageView
-            android:id="@+id/custom_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:src="@mipmap/custom_logo" />
+        <!--<ImageView-->
+            <!--android:id="@+id/custom_img"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:src="@mipmap/custom_logo" />-->
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/custom_img"
-            android:padding="15dp">
+        <!--<RelativeLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_toRightOf="@+id/custom_img"-->
+            <!--android:padding="15dp">-->
 
-            <TextView
-                android:id="@+id/custom_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="@string/custom_mine_cus"
-                android:textColor="@color/res_name_color"
-                android:textSize="@dimen/home_pager_user_title" />
-            <!--<View-->
-            <!--android:id="@+id/custom_red_dot_view"-->
-            <!--android:layout_width="8dp"-->
-            <!--android:layout_height="8dp"-->
-            <!--android:background="@drawable/shape_red_dot"-->
-            <!--android:layout_toRightOf="@id/custom_txt"-->
-            <!--/>-->
-        </RelativeLayout>
+            <!--<TextView-->
+                <!--android:id="@+id/custom_txt"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:text="@string/custom_mine_cus"-->
+                <!--android:textColor="@color/res_name_color"-->
+                <!--android:textSize="@dimen/home_pager_user_title" />-->
+            <!--&lt;!&ndash;<View&ndash;&gt;-->
+            <!--&lt;!&ndash;android:id="@+id/custom_red_dot_view"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="8dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="8dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:background="@drawable/shape_red_dot"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_toRightOf="@id/custom_txt"&ndash;&gt;-->
+            <!--&lt;!&ndash;/>&ndash;&gt;-->
+        <!--</RelativeLayout>-->
 
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:paddingRight="15dp"
-            android:src="@mipmap/unconection_next" />
-    </RelativeLayout>
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:paddingRight="15dp"-->
+            <!--android:src="@mipmap/unconection_next" />-->
+    <!--</RelativeLayout>-->
     <!--分割线-->
     <LinearLayout
         android:layout_width="match_parent"

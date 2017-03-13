@@ -621,6 +621,7 @@
     <string name="football_database_details_most_top_lost">Thua/Thi đấu:</string>
     <string name="football_database_details_most_top_avg">Tỷ lệ thắng:</string>
     <string name="football_database_details_most_score_avg">TB bàn thắng:</string>
+    <string name="football_database_details_most_lost_score_avg">mất bàn TB</string>
     <string name="football_database_details_statistic_home_draw">Hòa trận :</string>
     <string name="football_database_details_statistic_all_num">Tổng bàn thắng :</string>
     <string name="football_database_details_statistic_avg_num">TB trận :</string>

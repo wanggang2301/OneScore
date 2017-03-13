@@ -1250,6 +1250,7 @@
     <string name="football_database_details_most_top_lost">Lose/Finished:</string>
     <string name="football_database_details_most_top_avg">Win probability:</string>
     <string name="football_database_details_most_score_avg">Goals per match:</string>
+    <string name="football_database_details_most_lost_score_avg">Miss per Match:</string>
     <string name="football_database_details_statistic_home_draw">Draw :</string>
     <string name="football_database_details_statistic_all_num">Total goals :</string>
     <string name="football_database_details_statistic_avg_num">Average :</string>

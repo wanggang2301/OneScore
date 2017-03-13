@@ -188,6 +188,7 @@
     <string name="football_database_details_most_top_lost"> แพ้/แข่งขันแล้ว:</string>
     <string name="football_database_details_most_top_avg"> อัตราชนะ:</string>
     <string name="football_database_details_most_score_avg">ค่าเฉลี่ยได้ประตูต่อสนาม:</string>
+    <string name="football_database_details_most_lost_score_avg">เฉลี่ยบอลพลาด</string>
     <string name="football_database_details_statistic_home_draw">เกมเสมอ: </string>
     <string name="football_database_details_statistic_all_num">จำนวนการได้ประตูทั้งหมด:</string>
     <string name="football_database_details_statistic_avg_num">ค่าเฉลี่ยต่อสนาม :</string>

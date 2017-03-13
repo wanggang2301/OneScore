@@ -54,8 +54,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     boolean mShowRedDot=false;
     boolean mInvitedShowRedDot=true;
     /*邀请码红点*/
-    /**我的定制*/
-    private RelativeLayout rl_custom;
+//    /**我的定制*/
+//    private RelativeLayout rl_custom;
     /**语言切换**/
     private RelativeLayout rl_language_frame;
     /**更多设置**/
@@ -145,9 +145,9 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             mTv_nickname.setText(R.string.Login_register);
             mUser_image.setImageResource(R.mipmap.center_head);
         }
-
-        rl_custom = (RelativeLayout)findViewById(R.id.rl_custom);
-        rl_custom.setOnClickListener(this);
+        //我的定制
+//        rl_custom = (RelativeLayout)findViewById(R.id.rl_custom);
+//        rl_custom.setOnClickListener(this);
         //我的关注
 //        rl_focus= (RelativeLayout) findViewById(R.id.rl_my_focus);
 //        rl_focus.setOnClickListener(this);
@@ -199,17 +199,18 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 //                    mFocus_RedDot.setVisibility(View.GONE);
 //                    startActivity(new Intent(HomeUserOptionsActivity.this,MyFocusActivity.class));
 //                break;
-            case R.id.rl_custom:
-                if (CommonUtils.isLogin()) {
-                    PreferenceUtil.commitBoolean("custom_red_dot" , false);
-//                    mRedDot.setVisibility(View.GONE);
-                    startActivity(new Intent(HomeUserOptionsActivity.this, CustomActivity.class));
-                }else{
-                    Intent intent = new Intent(this, LoginActivity.class);
-                    intent.putExtra("custom",true); //传 true  表示我的定制进入登录  完成后直接进入定制界面
-                    startActivity(intent);
-                }
-                break;
+
+//            case R.id.rl_custom: //定制
+//                if (CommonUtils.isLogin()) {
+//                    PreferenceUtil.commitBoolean("custom_red_dot" , false);
+////                    mRedDot.setVisibility(View.GONE);
+//                    startActivity(new Intent(HomeUserOptionsActivity.this, CustomActivity.class));
+//                }else{
+//                    Intent intent = new Intent(this, LoginActivity.class);
+//                    intent.putExtra("custom",true); //传 true  表示我的定制进入登录  完成后直接进入定制界面
+//                    startActivity(intent);
+//                }
+//                break;
             case R.id.rl_language_frame:// 语言切换
                 MobclickAgent.onEvent(HomeUserOptionsActivity.this, "LanguageChanger");
                 Intent intent = new Intent(HomeUserOptionsActivity.this, HomeLanguageActivity.class);
