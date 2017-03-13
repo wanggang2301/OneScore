@@ -374,7 +374,7 @@
     <string name="basket_player_blockshoot">Block</string>
     <string name="basket_player_turnover">Sai lầm</string>
     <string name="basket_player_foul">Phạm lỗi</string>
-    <string name="basket_text_live">Tường tuật</string>
+    <string name="basket_text_live">Tường thuật</string>
     <string name="basket_team_statictics">Thống kê đội bóng</string>
     <string name="basket_players_statictics">Thống kê cầu thủ</string>
     <string name="basket_no_text_live">Hiện không có số liệu trực tiếp</string>
