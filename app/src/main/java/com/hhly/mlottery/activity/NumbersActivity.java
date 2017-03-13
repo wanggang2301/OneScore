@@ -1245,7 +1245,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                         Dates2 = mNumberInfo.getNextTime().split(" ");
                     }
 
-                    holder.tv_numbers_time.setText(Dates2[0] + " " + weekDate2);
+                    holder.tv_numbers_time.setText(DateUtil.convertDateToNation(Dates2[0]) + " " + weekDate2);
                 } else {
 
                     // 显示当前期号和时间
@@ -1258,7 +1258,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                         Dates2 = mNumberInfo.getNextTime().split(" ");
                     }
 
-                    holder.tv_numbers_time.setText(Dates2[0] + " " + weekDate2);
+                    holder.tv_numbers_time.setText(DateUtil.convertDateToNation(Dates2[0]) + " " + weekDate2);
                 }
             }
 
@@ -1316,7 +1316,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
             }
         } else if("25".equals(mNumberInfo.getName()) || "26".equals(mNumberInfo.getName())){
             // 排3和排5显示日期
-            holder.tv_numbers_time.setText(Dates[0] + " " + weekDate);// 设置日期
+            holder.tv_numbers_time.setText(DateUtil.convertDateToNation(Dates[0]) + " " + weekDate);// 设置日期
             holder.ll_numbers_time.setVisibility(View.GONE);
         } else {
             String mTime = Dates[1] == null ? "" : Dates[1].substring(0, Dates[1].lastIndexOf(":"));
@@ -1337,7 +1337,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
      */
     private void settingTime(ViewHolder holder, String[] Dates, String weekDate, long CnumberTime, int resourcesName) {
 
-        holder.tv_numbers_time.setText(Dates[0] + " " + weekDate);// 设置日期
+        holder.tv_numbers_time.setText(DateUtil.convertDateToNation(Dates[0]) + " " + weekDate);// 设置日期
         holder.tv_number_time_name.setText(mContext.getResources().getString(resourcesName));
 
         long mTime = (CnumberTime / 1000 / 60 / 60);// 获取总共小时数
@@ -1397,7 +1397,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
         if (mNumberInfo.getNextTime() != null) {
             Dates2 = mNumberInfo.getNextTime().split(" ");
         }
-        holder.tv_numbers_time.setText(Dates2[0] + " " + weekDate2);
+        holder.tv_numbers_time.setText(DateUtil.convertDateToNation(Dates2[0]) + " " + weekDate2);
     }
 
     @Override

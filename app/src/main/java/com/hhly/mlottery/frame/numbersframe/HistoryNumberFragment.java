@@ -618,7 +618,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
                 }
 
 
-                holder.tv_time.setText(Dates[0] + " " + weekDate);// 设置日期
+                holder.tv_time.setText(DateUtil.convertDateToNation(Dates[0]) + " " + weekDate);// 设置日期
 
                 // 拆分开奖号码
                 if (!TextUtils.isEmpty(hkInfo.getNumbers())) {
@@ -701,7 +701,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
                 if ("6".equals(mNumberInfo.getName()) || "24".equals(mNumberInfo.getName()) || "28".equals(mNumberInfo.getName()) ||
                         "29".equals(mNumberInfo.getName()) || "25".equals(mNumberInfo.getName()) || "26".equals(mNumberInfo.getName())) {
 
-                    holder.tv_time.setText(Dates[0] + " " + weekDate);// 设置日期
+                    holder.tv_time.setText(DateUtil.convertDateToNation(Dates[0]) + " " + weekDate);// 设置日期
                 } else {
                     if (Dates[1] != null) {
                         String mTime = Dates[1].substring(0, Dates[1].lastIndexOf(":"));

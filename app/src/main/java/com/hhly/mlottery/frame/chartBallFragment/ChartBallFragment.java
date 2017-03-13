@@ -551,6 +551,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                                 if (currentTime - lastTime >= SHOW_TIME_LONG_FULL) {
                                     // 显示年月日
                                     historyBeen.get(i).setShowTime(currentTime - lastTime >= SHOW_TIME_LONG_FULL);
+                                    historyBeen.get(i).setTime(DateUtil.convertDateToNationHM(historyBeen.get(i).getTime()));
                                 } else if (currentTime - lastTime >= SHOW_TIME_LONG) {
                                     // 显示时分秒
                                     historyBeen.get(i).setShowTime(currentTime - lastTime >= SHOW_TIME_LONG);
@@ -730,6 +731,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                                         if (currentTime - lastTime >= SHOW_TIME_LONG_FULL) {
                                             // 显示年月日
                                             chartbean.setShowTime(currentTime - lastTime >= SHOW_TIME_LONG_FULL);
+                                            chartbean.setTime(DateUtil.convertDateToNationHM(chartRoom.getData().getTime()));
                                         } else if (currentTime - lastTime >= SHOW_TIME_LONG) {
                                             // 显示时分秒
                                             chartbean.setShowTime(currentTime - lastTime >= SHOW_TIME_LONG);
@@ -764,6 +766,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                                                 if (currentTime - lastTime >= SHOW_TIME_LONG_FULL) {
                                                     // 显示年月日
                                                     historyBeen.get(i).setShowTime(currentTime - lastTime >= SHOW_TIME_LONG_FULL);
+                                                    historyBeen.get(i).setTime(DateUtil.convertDateToNationHM(chartRoom.getData().getTime()));
                                                 } else if (currentTime - lastTime >= SHOW_TIME_LONG) {
                                                     // 显示时分秒
                                                     historyBeen.get(i).setShowTime(currentTime - lastTime >= SHOW_TIME_LONG);
