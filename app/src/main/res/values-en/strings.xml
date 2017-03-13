@@ -1612,5 +1612,6 @@
     <string name="basket_database_details_leagueMost_wintop">W/D/L most</string>
 
     <string name="basket_handicap_bigorsmall">O/D/U</string>
+    <string name="home_gender">Gender</string>
 
 </resources>
