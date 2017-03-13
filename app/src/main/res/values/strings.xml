@@ -324,7 +324,7 @@
     <string name="about_wap_msg_txt">m.13322.com</string>
     <string name="about_subscribe_txt">订阅号：live13322</string>
     <string name="about_service_txt">服务号：win13322</string>
-    <string name="about_cus_service_txt">客    服</string>
+    <string name="about_cus_service_txt">客    服 :</string>
     <string name="about_cus_number_txt"> 400-6776-550</string>
     <string name="about_io_exp">IO异常</string>
     <string name="about_service_exp">服务器异常</string>
