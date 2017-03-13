@@ -179,6 +179,20 @@
             android:orientation="vertical"
             >
                 <TextView
+                    android:id="@+id/basket_no_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/games_no_start"
+                    android:textColor="#999999"
+                    android:textSize="@dimen/text_size_12"
+                    android:paddingTop="5dp"
+                    android:paddingRight="8dp"
+                    android:paddingLeft="8dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    />
+                <TextView
                     android:id="@+id/basket_score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

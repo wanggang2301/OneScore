@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
+    <!--公共-->
+    <string name="games_no_start">Pre-play</string>
     <!--足球事件直播-->
     <string name="foot_event">Event</string>
     <string name="foot_trend">Trend</string>
