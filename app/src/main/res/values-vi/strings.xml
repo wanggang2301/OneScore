@@ -52,11 +52,11 @@
     <string name="foot_details_roolball">Nhảy kèo</string>
     <string name="foot_details_talkball">Thảo luận</string>
     <string name="foot_details_analyze">Phân tích</string>
-    <string name="foot_details_odds">Tỷ lệ</string>
+    <string name="foot_details_odds">Tỷ Lệ</string>
     <string name="foot_details_statistics">Trực tiếp</string>
 
     <string name="foot_details_time">Thời gian</string>
-    <string name="foot_details_score">Tỷ số</string>
+    <string name="foot_details_score">Tỷ Số</string>
     <string name="foot_details_home">Chủ nhà</string>
     <string name="foot_details_ball">Chấp</string>
     <string name="foot_details_guest">Đội khách</string>
@@ -118,7 +118,7 @@
     <string name="asia_lose_rate">Tỷ lệ thua kèo</string>
     <string name="title_big_data_predict">Dự đoán dữ liệu lớn</string>
     <string name="diy_compute_method">Cách tính DIY</string>
-    <string name="foot_details_info">Thông tin</string>
+    <string name="foot_details_info">Thông Tin</string>
     <string name="diy_custom_compute_method">Tự đặt cách tính DIY </string>
     <string name="action_close">Đóng</string>
     <string name="action_compute">Tính</string>
@@ -138,7 +138,7 @@
     <string name="new_analyze_win">Thắng</string>
     <string name="new_analyze_draw">Hòa</string>
     <string name="new_analyze_lose">Thua</string>
-    <string name="new_analyze_score">Tỷ số</string>
+    <string name="new_analyze_score">Tỷ Số</string>
     <string name="new_analyze_first_let">Kèo đầu</string>
     <string name="new_analyze_result">Kết quả</string>
     <string name="new_analyze_more_messages"><![CDATA[Thông tin khác >>]]></string>
@@ -456,7 +456,7 @@
     <string name="basketball_txt">Bóng rổ</string>
     <string name="snooker_txt">Snooker</string>
     <string name="tennisball_txt">Tennis</string>
-    <string name="football_ziliaoku">Kho dữ liệu</string>
+    <string name="football_ziliaoku">Kho Dữ Liệu</string>
     <string name="sn_rank_name">Họ tên</string>
     <string name="sn_rank_zjf">Tổng điểm</string>
     <string name="sn_rank_zjj">Tổng giải thưởng</string>
@@ -469,7 +469,7 @@
     <string name="snooker_game_time">Thời gian</string>
     <string name="snooker_state">Trạng thái</string>
     <string name="snooker_player">Tuyển thủ</string>
-    <string name="snooker_score">Tỷ số</string>
+    <string name="snooker_score">Tỷ Số</string>
     <string name="snooker_detailed">Chi tiết</string>
     <string name="snooker_analyze_birth">Ngày sinh</string>
     <string name="snooker_analyze_rank">Xếp hạng thế giới</string>
@@ -642,10 +642,10 @@
     <string name="football_database_details_chang">Trận</string>
 
     <!--足球分析详情-->
-    <string name="football_analyze_details">Phân tích</string>
+    <string name="football_analyze_details">Phân tích chi tiết</string>
     <string name="football_analyze_details_time">Thời gian</string>
     <string name="football_analyze_details_matchs">Giải đấu</string>
-    <string name="football_analyze_details_game">Trận đấu</string>
+    <string name="football_analyze_details_game">Tỷ số</string>
     <string name="football_analyze_details_win">Ăn</string>
     <string name="football_analyze_details_lose">Thua</string>
 
@@ -791,7 +791,7 @@
     <string name="asiasize">O/U</string>
     <string name="oddgone">không hiện thị</string>
     <string name="about_product_msg_txt_simple">Tỷ số nhất là một sản chuyên gia tỷ số thể thao ,hiện tài tốc độ xuất tỷ số và phạt góc ưu tiên trong lĩnh vực cả thế giới.</string>
-    <string name="frame_home_jieguo_txt">Giải thưởng sổ xố</string>
+    <string name="frame_home_jieguo_txt">Kết quả xổ số</string>
 
 
     <!--首发阵容 Start-->
@@ -807,7 +807,7 @@
     <string name="game_time">(thời gian)</string>
     <!--Đội hình hai biên End-->
     <!--thoeif kỳ 2 end-->
-    <string name="app_name">Tỷ số nhất</string>
+    <string name="app_name">TỶ SỐ NHẤT</string>
     <string name="menu_name">menu</string>
     <string name="action_settings">Settings</string>
     <string name="drawer_open">Open drawer</string>
@@ -818,7 +818,7 @@
     <string name="internet_error">Truy cập vào mạng thất bại</string>
     <string name="internet_exception">mạng lỗi</string>
     <!-- Phông chữ biên cạnh -->
-    <string name="home_frame_txt">trang chủ</string>
+    <string name="home_frame_txt">Trang Chủ</string>
     <string name="football_frame_txt">Tỷ số bống đá</string>
     <string name="frame_home_video_txt">Live</string>
     <string name="frame_video_ing_txt">Live</string>
@@ -928,9 +928,9 @@
     <string name="about_pc_msg_txt">www.13322.com</string>
     <string name="about_wap_txt">WAP</string>
     <string name="about_wap_msg_txt">m.13366.vn</string>
-    <string name="about_subscribe_txt">Số thuê bao：live13322</string>
+    <string name="about_subscribe_txt">Số đăng ký：live13322</string>
     <string name="about_service_txt">Số dịch vụ：win13322</string>
-    <string name="about_cus_service_txt">Nhười dịch vụ:</string>
+    <string name="about_cus_service_txt">Hỗ trợ khách hàng:</string>
     <string name="about_cus_number_txt"> 400-6776-550</string>
     <string name="about_io_exp">IO bất thường</string>
     <string name="about_service_exp">máy chủ ngoại lệ</string>
@@ -1305,7 +1305,7 @@
     <string name="developing">Vui lòng theo dõi</string>
 
     <string name="football_detail_stadium_tab">sân vận động</string>
-    <string name="football_detail_odds_tab">chỉ số</string>
+    <string name="football_detail_odds_tab">Tỷ Lệ</string>
     <string name="football_detail_analyze_tab">phân tích</string>
     <string name="goal">ghi bàn TB</string>
     <string name="football_detail_pre_title1">Thời gian</string>
@@ -1426,7 +1426,7 @@
     <string name="basket_analyze_date">ngày</string>
     <string name="basket_analyze_guest">sân khách</string>
     <string name="basket_analyze_home">sân chủ</string>
-    <string name="basket_analyze_score">tỷ số</string>
+    <string name="basket_analyze_score">Tỷ Số</string>
     <string name="basket_analyze_sizeof">tài xỉu</string>
     <string name="basket_analyze_let_points">chấp</string>
     <string name="basket_analyze_interval">cách</string>
@@ -1487,17 +1487,17 @@
     <string name="basket_home_dishijie">đoạn thứ4</string>
 
 
-    <string name="football_score">tỷ số</string>
+    <string name="football_score">Tỷ Số</string>
     <string name="football_news">tin tức</string>
     <string name="football_data">số liệu</string>
     <string name="football_video">video</string>
-    <string name="football_cpi">chỉ số</string>
+    <string name="football_cpi">Tỷ Lệ</string>
     <string name="title_activity_web_counsel">WebCounselActivity</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--WebView H5-->
     <string name="webview_check_info">Xem dữ liệu chi tiết trận đấu </string>
-    <string name="user_feedback">phản hồi người dùng</string>
+    <string name="user_feedback">Người dùng phản hồi</string>
     <!--资讯评论-->
     <string name="user_name">khách sử dụng</string>
     <string name="warn_nullcontent">Vui lòng nhập nội dung</string>
@@ -1509,8 +1509,8 @@
     <string name="toatalvisiable">Xem tất cả</string>
 
     <!---->
-    <string name="feedback_submit">đệ trình</string>
-    <string name="feedback_edit_hint">Vui lòng nhập nội dung bình luận</string>
+    <string name="feedback_submit">Gửi</string>
+    <string name="feedback_edit_hint">Mời nhập nội dung</string>
     <string name="feedback_toast_thx">Cảm ơn đã phản hồi!</string>
     <string name="feedback_submiting_txt">được gửi...</string>
     <!--ngày-->
@@ -1520,7 +1520,7 @@
 
     <!-- 登录注册 begin-->
     <string name="my">Trung tâm cá nhân</string>
-    <string name="register">đăng ký</string>
+    <string name="register">Đăng ký nhanh</string>
     <string name="registering">đang đăng ký...</string>
     <string name="login">Đăng nhập</string>
     <string name="logining">Đang đăng nhập...</string>
@@ -1529,7 +1529,7 @@
     <string name="pwd_format">Vui lòng nhập vào 6-20 ký tự,chữ /con số cả gạch dưới</string>
     <string name="pwd_format_hint">Vui lòng nhập vào 6-20 ký tự,phân biệt chữ to nhỏ .</string>
     <string name="pwd_empty">Nhập mật khẩu</string>
-    <string name="phone_empty">Hãy nhập vào đăng ký tài khoản</string>
+    <string name="phone_empty">Mời nhập số di động</string>
     <string name="login_int_username">Hãy nhập vào đăng ký tài khoản</string>
     <string name="phone_error">Vui lòng nhập vào số di động chính xác</string>
     <string name="verify_code">Vui lòng nhập vào mã xác nhận</string>
@@ -1612,7 +1612,7 @@
     <string name="basket_database_details_leagueMost_wintop">Th/H/B nhiều nhất</string>
 
     <string name="basket_analyze_all_rank">Tất cả thứ hạng>>></string>
-    <string name="football_rfypl">Tỷ lệ kèo chấp điếm</string>
+    <string name="football_rfypl">Tỷ lệ ăn kèo</string>
     <string name="football_odds_return_list">Quay trở lại danh sách</string>
 
     <!--日期-->
