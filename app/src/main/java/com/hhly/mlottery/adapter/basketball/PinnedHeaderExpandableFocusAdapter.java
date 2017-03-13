@@ -151,6 +151,7 @@ public class PinnedHeaderExpandableFocusAdapter extends BaseExpandableListAdapte
             holder.basket_home_all_score = (TextView) convertView.findViewById(R.id.basket_home_all_score);
 
             holder.basket_half_score = (TextView) convertView.findViewById(R.id.basket_half_score);
+            holder.basket_no_start = (TextView) convertView.findViewById(R.id.basket_no_start);
 
             /**
              * 适配4.1系统
@@ -539,7 +540,8 @@ public class PinnedHeaderExpandableFocusAdapter extends BaseExpandableListAdapte
                     holder.backetball_total.setVisibility(View.INVISIBLE);
                     holder.score_total.setVisibility(View.INVISIBLE);
                     holder.score_differ.setVisibility(View.INVISIBLE);
-                    holder.basket_score.setText(R.string.basket_VS);
+                    holder.basket_score.setText("");
+                    holder.basket_no_start.setVisibility(View.VISIBLE);
 //                    holder.basket_score.setBackgroundColor(Color.WHITE);// -------设置背景色 (防止背景复用比分)-------
                     holder.basket_guest_all_score.setText("");
                     holder.basket_home_all_score.setText("");
@@ -565,6 +567,7 @@ public class PinnedHeaderExpandableFocusAdapter extends BaseExpandableListAdapte
 //					holder.basket_all_score.setText(scoreguest + ":" + scorehome);
 //					holder.basket_all_score.setTextColor(Color.BLUE);
                     holder.basket_score.setText(":");
+                    holder.basket_no_start.setVisibility(View.GONE);
                     holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));//#0085E1
                     holder.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
                     holder.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
@@ -636,6 +639,7 @@ public class PinnedHeaderExpandableFocusAdapter extends BaseExpandableListAdapte
 //					holder.basket_all_score.setText(scoreguest + ":" + scorehome);
 //					holder.basket_all_score.setTextColor(Color.BLUE);
                     holder.basket_score.setText(":");
+                    holder.basket_no_start.setVisibility(View.GONE);
                     holder.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
                     holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
                     holder.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
@@ -711,6 +715,7 @@ public class PinnedHeaderExpandableFocusAdapter extends BaseExpandableListAdapte
 //					holder.basket_all_score.setText(scoreguest + ":" + scorehome);
 //					holder.basket_all_score.setTextColor(Color.BLUE);
                     holder.basket_score.setText(":");
+                    holder.basket_no_start.setVisibility(View.GONE);
                     holder.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
                     holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
                     holder.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
@@ -787,6 +792,7 @@ public class PinnedHeaderExpandableFocusAdapter extends BaseExpandableListAdapte
 //					holder.basket_all_score.setText(scoreguest + ":" + scorehome);
 //					holder.basket_all_score.setTextColor(Color.BLUE);
                     holder.basket_score.setText(":");
+                    holder.basket_no_start.setVisibility(View.GONE);
                     holder.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
                     holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
                     holder.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
@@ -863,6 +869,7 @@ public class PinnedHeaderExpandableFocusAdapter extends BaseExpandableListAdapte
 //					holder.basket_all_score.setText(scoreguest + ":" + scorehome);
 //					holder.basket_all_score.setTextColor(Color.BLUE);
                     holder.basket_score.setText(":");
+                    holder.basket_no_start.setVisibility(View.GONE);
                     holder.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
                     holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
                     holder.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
@@ -931,6 +938,7 @@ public class PinnedHeaderExpandableFocusAdapter extends BaseExpandableListAdapte
 //					holder.basket_all_score.setText(scoreguest + ":" + scorehome);
 //					holder.basket_all_score.setTextColor(Color.BLUE);
                     holder.basket_score.setText(":");
+                    holder.basket_no_start.setVisibility(View.GONE);
                     holder.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
                     holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
                     holder.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
@@ -999,6 +1007,7 @@ public class PinnedHeaderExpandableFocusAdapter extends BaseExpandableListAdapte
 //					holder.basket_all_score.setText(scoreguest + ":" + scorehome);
 //					holder.basket_all_score.setTextColor(Color.BLUE);
                     holder.basket_score.setText(":");
+                    holder.basket_no_start.setVisibility(View.GONE);
                     holder.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
                     holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
                     holder.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
@@ -1067,6 +1076,7 @@ public class PinnedHeaderExpandableFocusAdapter extends BaseExpandableListAdapte
 //					holder.basket_all_score.setText(scoreguest + ":" + scorehome);
 //					holder.basket_all_score.setTextColor(Color.BLUE);
                     holder.basket_score.setText(":");
+                    holder.basket_no_start.setVisibility(View.GONE);
                     holder.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
                     holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
                     holder.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
@@ -1131,6 +1141,7 @@ public class PinnedHeaderExpandableFocusAdapter extends BaseExpandableListAdapte
 //					holder.basket_all_score.setText(scoreguest + ":" + scorehome);
 //					holder.basket_all_score.setTextColor(Color.RED);
                     holder.basket_score.setText(":");
+                    holder.basket_no_start.setVisibility(View.GONE);
                     holder.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_over_score));
                     holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_over_score));
                     holder.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_over_score));
@@ -1154,7 +1165,8 @@ public class PinnedHeaderExpandableFocusAdapter extends BaseExpandableListAdapte
 
 //					holder.basket_all_score.setText("VS");
 //					holder.basket_all_score.setTextColor(Color.BLACK);
-                    holder.basket_score.setText(R.string.basket_VS);
+                    holder.basket_score.setText("");
+                    holder.basket_no_start.setVisibility(View.VISIBLE);
 //                    holder.basket_score.setBackgroundColor(Color.WHITE);// -------设置背景色 (防止背景复用比分)-------
                     holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_vs));
                     holder.basket_guest_all_score.setText("");
@@ -1177,6 +1189,8 @@ public class PinnedHeaderExpandableFocusAdapter extends BaseExpandableListAdapte
                     holder.backetball_differ.setVisibility(View.INVISIBLE);
                     holder.backetball_total.setVisibility(View.INVISIBLE);
                     holder.ongoing_time.setVisibility(View.GONE);
+                    holder.basket_score.setText("");
+                    holder.basket_no_start.setVisibility(View.GONE);
 //					holder.backetball_apos.setVisibility(View.GONE);
                     holder.basket_half_score.setVisibility(View.INVISIBLE);
                     holder.basket_guest_all_score.setText(childredata.getMatchScore().getGuestScore() + "");
@@ -1194,7 +1208,8 @@ public class PinnedHeaderExpandableFocusAdapter extends BaseExpandableListAdapte
 
 //					holder.basket_all_score.setText("VS");
 //					holder.basket_all_score.setTextColor(Color.BLACK);
-                    holder.basket_score.setText(R.string.basket_VS);
+                    holder.basket_score.setText("");
+                    holder.basket_no_start.setVisibility(View.VISIBLE);
 //                    holder.basket_score.setBackgroundColor(Color.WHITE);// -------设置背景色 (防止背景复用比分)-------
                     holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_vs));
                     holder.basket_guest_all_score.setText("");
@@ -1217,7 +1232,8 @@ public class PinnedHeaderExpandableFocusAdapter extends BaseExpandableListAdapte
 
 //					holder.basket_all_score.setText("VS");
 //					holder.basket_all_score.setTextColor(Color.BLACK);
-                    holder.basket_score.setText(R.string.basket_VS);
+                    holder.basket_score.setText("");
+                    holder.basket_no_start.setVisibility(View.VISIBLE);
 //                    holder.basket_score.setBackgroundColor(Color.WHITE);// -------设置背景色 (防止背景复用比分)-------
                     holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_vs));
                     holder.basket_guest_all_score.setText("");
@@ -1528,6 +1544,7 @@ public class PinnedHeaderExpandableFocusAdapter extends BaseExpandableListAdapte
         TextView tv_b;
 
         TextView backetball_apos; // 秒针
+        TextView basket_no_start; // 未开赛
 
     }
 
