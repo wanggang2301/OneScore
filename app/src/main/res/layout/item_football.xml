@@ -148,7 +148,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:ellipsize="end"
-                        android:maxEms="8"
+                        android:maxEms="6"
                         android:maxLines="1"
                         android:text="托特纳的时代"
 
@@ -205,7 +205,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:ellipsize="end"
-                        android:maxEms="8"
+                        android:maxEms="6"
                         android:maxLines="1"
 
                         android:text="巴萨"
@@ -245,7 +245,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:paddingRight="50dp"
-                    android:text="VS"
+                    android:text="@string/tennis_match_not_start"
                     android:textSize="@dimen/item_football_full_score"
                     android:visibility="gone" />
             </RelativeLayout>
