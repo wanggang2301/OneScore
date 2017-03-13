@@ -841,7 +841,7 @@
     <string name="foot_jishi_txt">Live</string>
     <string name="foot_saiguo_txt">Kết quả</string>
     <string name="foot_saicheng_txt">Lịch thi đấu</string>
-    <string name="foot_guanzhu_txt">Thích</string>
+    <string name="foot_guanzhu_txt">Theo dõi</string>
     <string name="foot_setting_txt">Cài đặt</string>
     <!-- Kéo xuống để làm mới -->
     <string name="pull_to_refresh_pull_label">Kéo xuống để làm mới</string>
@@ -1346,16 +1346,16 @@
     <string name="basket_left">Tỷ số bống rổ</string>
     <string name="basket_tittle">Tỷ số bống rổ</string>
     <string name="basket_setting_tittle">Cài đặt bóng rổ</string>
-    <string name="basket_filtrate_tittle">Chọn Bóng rổ</string>
+    <string name="basket_filtrate_tittle">Lọc bóng rổ</string>
 
-    <string name="basket_total">tổng:</string>
-    <string name="basket_differ">kém:</string>
+    <string name="basket_total">Tổng:</string>
+    <string name="basket_differ">H.số:</string>
     <string name="basket_tv"> | </string>
 
     <string name="basket_handicap_feng">đóng</string>
-    <string name="basket_odds_asize">tổng</string>
-    <string name="basket_odds_eur">kết quả</string>
-    <string name="basket_odds_alet">đội chủ</string>
+    <string name="basket_odds_asize">Tài xỉu</string>
+    <string name="basket_odds_eur">Thắng Bại</string>
+    <string name="basket_odds_alet">Chủ nhà</string>
 
     <string name="basket_VS">VS</string>
     <string name="basket_1st_half">1st half</string>
@@ -1380,28 +1380,28 @@
     <string name="basket_monday">ngày mai</string>
 
     <!--Cài đặt bóng rổ-->
-    <string name="basket_odd_setting">Nhắctỷ lệ</string>
-    <string name="basket_scort_setting">Nhắc nhở giải đấu </string>
+    <string name="basket_odd_setting">Thông báo tỷ lệ</string>
+    <string name="basket_scort_setting">Thông báo của trận đấu</string>
     <string name="basket_analyze">phân tích</string>
     <string name="basket_alet">Kèo châu Á</string>
     <string name="basket_eur">Tỷ lệ Châu Âu</string>
-    <string name="basket_asize">kèo tài xỉu</string>
-    <string name="basket_noshow">không</string>
-    <string name="basket_all_score">Tổng số HT/FT</string>
-    <string name="basket_differ_score">khoảng cách tông số</string>
-    <string name="basket_single_score">ghi số thời gian duy nhất</string>
+    <string name="basket_asize">Kèo Tài xỉu</string>
+    <string name="basket_noshow">Không</string>
+    <string name="basket_all_score">Tổng điểm nửa trận/cả trận</string>
+    <string name="basket_differ_score">Hiệu số tổng điểm</string>
+    <string name="basket_single_score">Điểm 1 hiệp</string>
     <string name="basket_ranking">Xếp hạng</string>
     <string name="basket_begin_game">bắt đầu</string>
 
     <string name="basket_hot_cup">Giải đấu hot</string>
     <string name="basket_other_cup">Giải đấu khác</string>
     <string name="hor_data_info_txt">tin nóng</string>
-    <string name="basket_hot">hót</string>
-    <string name="basket_all_checked">chọn hết</string>
+    <string name="basket_hot">Hot</string>
+    <string name="basket_all_checked">Chọn hết</string>
     <string name="basket_negate">Chọn ngược</string>
     <string name="basket_reset">Đạt lại</string>
 
-    <string name="basket_isok">xắc định</string>
+    <string name="basket_isok">Đồng ý</string>
 
     <string name="basket_unfiltrate">Tạm không có giải đấu</string>
     <string name="basket_undata">Tạm không có thi đấu</string>
@@ -1409,24 +1409,24 @@
     <!--篮球详情-->
 
     <!--分析-->
-    <string name="basket_analyze_sides">lịch sử thi đấu hai biên</string>
+    <string name="basket_analyze_sides">Thành tích 2 đội</string>
     <string name="basket_analyze_history">Lịch sử đối đầu</string>
     <string name="basket_analyze_recent">Thành tích gần đây</string>
-    <string name="basket_analyze_fruture">trận đấu sắp tới</string>
-    <string name="basket_analyze_more">nhiều thành tích >></string>
-    <string name="basket_analyze_points_ranking">BXH</string>
+    <string name="basket_analyze_fruture">Trận đấu sắp tới</string>
+    <string name="basket_analyze_more">Thành tích khác >></string>
+    <string name="basket_analyze_points_ranking">Bảng điểm</string>
     <string name="basket_analyze_rank_team">BXH/đội bóng</string>
     <string name="basket_analyze_has">đã đá</string>
     <string name="basket_analyze_win_lost">thắng/thua</string>
     <string name="basket_analyze_winodds">thắng %</string>
-    <string name="basket_analyze_recent_performance">thánh tích</string>
+    <string name="basket_analyze_recent_performance">Phong độ gần đây</string>
 
 
     <string name="basket_analyze_fruture_competition">trận đấu sắp tới</string>
     <string name="basket_analyze_event">giải đấu</string>
     <string name="basket_analyze_date">ngày</string>
-    <string name="basket_analyze_guest">sân khách</string>
-    <string name="basket_analyze_home">sân chủ</string>
+    <string name="basket_analyze_guest">Sân khách</string>
+    <string name="basket_analyze_home">Sân nhà</string>
     <string name="basket_analyze_score">tỷ số</string>
     <string name="basket_analyze_sizeof">tài xỉu</string>
     <string name="basket_analyze_let_points">chấp</string>
@@ -1435,16 +1435,16 @@
     <string name="basket_analyze_guest_win">khách thắng</string>
     <string name="basket_analyze_dish">kèo</string>
     <string name="basket_analyze_home_win">chủ thắng</string>
-    <string name="basket_analyze_screen">chọn</string>
+    <string name="basket_analyze_screen">Lọc</string>
 
     <string name="basket_analyze_future">tương lai</string>
     <string name="basket_analyze_field">vòng</string>
     <string name="basket_analyze_defult_text">--</string>
     <string name="basket_analyze_win">thắng</string>
-    <string name="basket_analyze_lost">thua</string>
+    <string name="basket_analyze_lost">bại</string>
     <string name="basket_analyze_recently">gần đây</string>
-    <string name="basket_analyze_recently2">sân，</string>
-    <string name="basket_analyze_home_field">,sân chủ</string>
+    <string name="basket_analyze_recently2">trận，</string>
+    <string name="basket_analyze_home_field">,Sân nhà</string>
     <string name="basket_company">công ty</string>
     <string name="basket_analyze_day">ngày</string>
     <string name="basket_nodata">tạm không có dữ liệu</string>
@@ -1455,15 +1455,15 @@
     <string name="basket_handicap_small">xỉu</string>
     <string name="basket_handicap_zou">hòa</string>
 
-    <string name="basket_analyze_dialog_site">sân vận động</string>
-    <string name="basket_analyze_dialog_num">số trận</string>
-    <string name="basket_analyze_dialog_allgame">tất cả</string>
-    <string name="basket_analyze_dialog_samegame">cùng một sân chủ/khách</string>
+    <string name="basket_analyze_dialog_site">Sân</string>
+    <string name="basket_analyze_dialog_num">Số trận</string>
+    <string name="basket_analyze_dialog_allgame">Cả 2</string>
+    <string name="basket_analyze_dialog_samegame">1 sân </string>
     <string name="basket_analyze_dialog_six">6 trận</string>
     <string name="basket_analyze_dialog_ten">10 trận</string>
     <string name="basket_analyze_dialog_fifteen">15 trận</string>
-    <string name="basket_analyze_dialog_cancle">hủy</string>
-    <string name="basket_analyze_dialog_ok">xắc định</string>
+    <string name="basket_analyze_dialog_cancle">Hủy</string>
+    <string name="basket_analyze_dialog_ok">Đồng ý</string>
 
     <string name="basket_odds_euro_details">chi tiết tỷ lệ</string>
     <string name="basket_odds_asiaLet_details">chi tiết kèo châu Á</string>
