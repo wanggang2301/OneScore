@@ -377,7 +377,7 @@
 
                                     <!-- 1.香港彩 -->
 
-                                    <include layout="@layout/number_hk_page" />
+                                    <include layout="@layout/number_hk_page_i18n" />
                                 </FrameLayout>
 
                                 <FrameLayout
