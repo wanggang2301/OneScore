@@ -102,6 +102,20 @@ public class DateUtil {
      * @param date
      * @return
      */
+    public static String convertDateToNationMD(String date) {
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
+            return DateUtil.format(DateUtil.parseDate(date, "MM-dd"), "MM-dd");
+        } else {
+            return DateUtil.format(DateUtil.parseDate(date, "MM-dd"), "dd-MM");
+        }
+    }
+
+    /**
+     * 国际化日期格式
+     *
+     * @param date
+     * @return
+     */
     public static String convertDateToNationHM(String date) {
         if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
             return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm"), "yyyy-MM-dd HH:mm");
@@ -441,7 +455,9 @@ public class DateUtil {
         TimeZone time = TimeZone.getTimeZone("GMT+8");// 默认国内版
         switch (MyApp.isPackageName) {
             case AppConstants.PACKGER_NAME_ZH:// 国内版
-                time = TimeZone.getTimeZone("GMT+8");
+//                time = TimeZone.getTimeZone("GMT+8");
+                // TODO 暂时用
+                time = TimeZone.getTimeZone("GMT+7");
                 break;
             case AppConstants.PACKGER_NAME_TH:// 泰国版
             case AppConstants.PACKGER_NAME_VN_HN:// 越南北版

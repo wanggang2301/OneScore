@@ -24,7 +24,7 @@ public class InfoCenterSelectAdapter extends BaseQuickAdapter<IntelligencesEntit
     @Override
     protected void convert(BaseViewHolder baseViewHolder, IntelligencesEntity intelligencesEntity) {
         baseViewHolder.setText(R.id.tv_pw_week, DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(intelligencesEntity.date)));
-        baseViewHolder.setText(R.id.tv_pw_date, intelligencesEntity.date.substring(5,intelligencesEntity.date.length()));
+        baseViewHolder.setText(R.id.tv_pw_date, DateUtil.convertDateToNationMD(intelligencesEntity.date.substring(5,intelligencesEntity.date.length())));
         baseViewHolder.setText(R.id.tv_pw_count, "(" + intelligencesEntity.count + ")");
 
         if(intelligencesEntity.isSelect){

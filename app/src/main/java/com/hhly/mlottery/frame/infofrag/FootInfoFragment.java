@@ -261,7 +261,7 @@ public class FootInfoFragment extends Fragment implements View.OnClickListener, 
             return null;
         }
         String weekDate = DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(date));
-        return date + " " + weekDate + "(" + count + ")";
+        return DateUtil.convertDateToNation(date) + " " + weekDate + "(" + count + ")";
     }
 
     @Override
