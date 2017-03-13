@@ -52,7 +52,7 @@
     <string name="foot_details_roolball">Nhảy kèo</string>
     <string name="foot_details_talkball">Thảo luận</string>
     <string name="foot_details_analyze">Phân tích</string>
-    <string name="foot_details_odds">Tỷ Lệ</string>
+    <string name="foot_details_odds">Tỷ lệ</string>
     <string name="foot_details_statistics">Trực tiếp</string>
 
     <string name="foot_details_time">Thời gian</string>
@@ -93,7 +93,7 @@
     <string name="new_analyze_goal_lose">Bàn T/B</string>
     <string name="new_analyze_goal_differ">Hiệu số bàn</string>
     <string name="new_analyze_integral">Điểm</string>
-    <string name="new_analyze_complete_table">BXH >></string>
+    <string name="new_analyze_complete_table">Bảng xếp hạng</string>
     <string name="new_analyze_attack_defense">So sanh công thủ</string>
     <string name="new_analyze_bet">Tài xỉu: </string>
     <string name="new_analyze_player_info">Thong tin cầu thủ</string>
@@ -351,7 +351,7 @@
     <string name="push_red">Thẻ đỏ</string>
     <string name="push_shake">Rung</string>
     <string name="push_sound">Âm báo</string>
-    <string name="push_focus_match">Push báo trận đấu quan tâm</string>
+    <string name="push_focus_match">Push báo trận đấu theo dõi</string>
     <!--墙外-->
     <string name="foreign_pic">Đã lưu ảnh vào folder thẻ SD</string>
     <string name="basket_shoot">Ném rổ(%)</string>
@@ -469,7 +469,7 @@
     <string name="snooker_game_time">Thời gian</string>
     <string name="snooker_state">Trạng thái</string>
     <string name="snooker_player">Tuyển thủ</string>
-    <string name="snooker_score">Tỷ Số</string>
+    <string name="snooker_score">Tỷ số</string>
     <string name="snooker_detailed">Chi tiết</string>
     <string name="snooker_analyze_birth">Ngày sinh</string>
     <string name="snooker_analyze_rank">Xếp hạng thế giới</string>
@@ -533,7 +533,7 @@
     <string name="football_analyze_ball">Bàn</string>
     <string name="football_analyze_winodds">Tỷ lệ thắng</string>
     <string name="football_analyze_bigball">,Tỷ lệ tài</string>
-    <string name="football_analyze_let_points">, Tỷ lệ kèo chấp điếm</string>
+    <string name="football_analyze_let_points">, Tỷ lệ ăn kèo</string>
     <string name="fragme_home_fengpan_text">Khóa</string>
     <string name="basket_loading_txt">Đang tải...</string>
 
@@ -867,7 +867,7 @@
     <string name="set_goal_shake_txt">Rung động khi có ghi bàn</string>
     <string name="set_rc_shake_txt">Rung động khi có thẻ đỏ</string>
     <string name="set_rc_sound_txt">Âm thanh khi có thẻ đỏ</string>
-    <string name="set_tip_focus_match_txt">Chỉ nhắc nhở giải đấu yêu thích</string>
+    <string name="set_tip_focus_match_txt">Chỉ thông báo giải đấu theo dõi</string>
     <string name="set_ext_txt">Cài đặt khác</string>
     <string name="set_odd_show_txt">hiển thị tỷ lệ</string>
     <string name="set_goal_txt">nghi bàn</string>
@@ -928,7 +928,7 @@
     <string name="about_pc_msg_txt">www.13322.com</string>
     <string name="about_wap_txt">WAP</string>
     <string name="about_wap_msg_txt">m.13366.vn</string>
-    <string name="about_subscribe_txt">Số đăng ký：live13322</string>
+    <string name="about_subscribe_txt">Số thuê bao：live13322</string>
     <string name="about_service_txt">Số dịch vụ：win13322</string>
     <string name="about_cus_service_txt">Hỗ trợ khách hàng:</string>
     <string name="about_cus_number_txt"> 400-6776-550</string>
@@ -1305,9 +1305,9 @@
     <string name="developing">Vui lòng theo dõi</string>
 
     <string name="football_detail_stadium_tab">sân vận động</string>
-    <string name="football_detail_odds_tab">Tỷ Lệ</string>
+    <string name="football_detail_odds_tab">chỉ số</string>
     <string name="football_detail_analyze_tab">phân tích</string>
-    <string name="goal">ghi bàn TB</string>
+    <string name="goal">TB bàn thắng</string>
     <string name="football_detail_pre_title1">Thời gian</string>
     <string name="football_detail_pre_title2">thời tiết</string>
     <string name="football_detail_pre_title3">sân </string>
@@ -1316,9 +1316,9 @@
     <string name="rank">BXH</string>
     <string name="recordconstract">so sánh kỉ lục</string>
     <string name="homeguestconstract">so sánh đội chủ/khách</string>
-    <string name="GoalsperGame">ghi bàn TB</string>
-    <string name="losspergame">mất bàn TB</string>
-    <string name="ranking">BXH</string>
+    <string name="GoalsperGame">TB bàn thắng</string>
+    <string name="losspergame">TB bàn thua</string>
+    <string name="ranking">Xếp hạng</string>
     <string name="goal_and_loss">ghi/mất bàn</string>
     <string name="history_battle">lịch sử thi đấu</string>
     <string name="home_recent">đội chủ gần đây</string>
@@ -1329,7 +1329,7 @@
     <string name="analyze_win">W</string>
     <string name="analyze_equ">D</string>
     <string name="analyze_defeat">L</string>
-    <string name="winpro">thăng%</string>
+    <string name="winpro">% Thắng</string>
     <string name="jin">ghi</string>
     <string name="qiushi">mất bàn</string>
     <string name="ball">goal</string>
@@ -1379,13 +1379,13 @@
     <string name="basket_monday">ngày mai</string>
 
     <!--Cài đặt bóng rổ-->
-    <string name="basket_odd_setting">Nhắctỷ lệ</string>
+    <string name="basket_odd_setting">Thông báo tỷ lệ</string>
     <string name="basket_scort_setting">Nhắc nhở giải đấu </string>
     <string name="basket_analyze">phân tích</string>
     <string name="basket_alet">Kèo châu Á</string>
     <string name="basket_eur">Tỷ lệ Châu Âu</string>
-    <string name="basket_asize">kèo tài xỉu</string>
-    <string name="basket_noshow">không</string>
+    <string name="basket_asize">Kèo tài xỉu</string>
+    <string name="basket_noshow">Không</string>
     <string name="basket_all_score">Tổng số HT/FT</string>
     <string name="basket_differ_score">khoảng cách tông số</string>
     <string name="basket_single_score">ghi số thời gian duy nhất</string>
@@ -1400,6 +1400,8 @@
     <string name="basket_negate">Chọn ngược</string>
     <string name="basket_reset">Đạt lại</string>
 
+
+
     <string name="basket_isok">xắc định</string>
 
     <string name="basket_unfiltrate">Tạm không có giải đấu</string>
@@ -1408,11 +1410,11 @@
     <!--篮球详情-->
 
     <!--分析-->
-    <string name="basket_analyze_sides">lịch sử thi đấu hai biên</string>
+    <string name="basket_analyze_sides">Thành tích 2 đội</string>
     <string name="basket_analyze_history">Lịch sử đối đầu</string>
     <string name="basket_analyze_recent">Thành tích gần đây</string>
-    <string name="basket_analyze_fruture">trận đấu sắp tới</string>
-    <string name="basket_analyze_more">nhiều thành tích >></string>
+    <string name="basket_analyze_fruture">Trận đấu sắp tới</string>
+    <string name="basket_analyze_more">Thành tích khác >></string>
     <string name="basket_analyze_points_ranking">BXH</string>
     <string name="basket_analyze_rank_team">BXH/đội bóng</string>
     <string name="basket_analyze_has">đã đá</string>
@@ -1612,7 +1614,7 @@
     <string name="basket_database_details_leagueMost_wintop">Th/H/B nhiều nhất</string>
 
     <string name="basket_analyze_all_rank">Tất cả thứ hạng>>></string>
-    <string name="football_rfypl">Tỷ lệ ăn kèo</string>
+    <string name="football_rfypl">% Ăn kèo</string>
     <string name="football_odds_return_list">Quay trở lại danh sách</string>
 
     <!--日期-->
