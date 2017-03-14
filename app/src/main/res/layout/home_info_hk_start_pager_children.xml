@@ -2178,7 +2178,7 @@
                     android:layout_height="30dp"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/activity_football_match_detail_teamname"
+                    android:textSize="@dimen/number_title"
                     android:background="@mipmap/home_menu_icon_def"
                     tools:text="49" />
 
@@ -2207,7 +2207,7 @@
                     android:layout_height="30dp"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/activity_football_match_detail_teamname"
+                    android:textSize="@dimen/number_title"
                     android:background="@mipmap/home_menu_icon_def"
                     tools:text="49" />
 
@@ -2236,7 +2236,7 @@
                     android:layout_height="30dp"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/activity_football_match_detail_teamname"
+                    android:textSize="@dimen/number_title"
                     android:background="@mipmap/home_menu_icon_def"
                     tools:text="49" />
 

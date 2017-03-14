@@ -822,7 +822,12 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 if (mDate.equals(homeBodysEntity.getDate())) {// 设置时间
                                     data_info_date01.setText(mContext.getResources().getString(R.string.home_pager_current_date) + " " + homeBodysEntity.getTime());
                                 } else {
-                                    data_info_date01.setText(DateUtil.getAssignDate(homeBodysEntity.getDate()) + " " + homeBodysEntity.getTime());
+                                    try {
+                                        data_info_date01.setText(DateUtil.convertDateToNationMD(DateUtil.getAssignDate(homeBodysEntity.getDate())) + " " + homeBodysEntity.getTime());
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                        data_info_date01.setText("");
+                                    }
                                 }
                             }
                             data_info_title01.setText(homeBodysEntity.getTitle());// 设置标题
