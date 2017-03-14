@@ -298,7 +298,7 @@
             android:text="@string/symbol_equal"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_size_18"
-            app:layout_widthPercent="25%"/>
+            app:layout_widthPercent="20%"/>
 
     </android.support.percent.PercentRelativeLayout>
 

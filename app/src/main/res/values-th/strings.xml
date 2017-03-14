@@ -1372,13 +1372,13 @@
 
     <!--分析-->
     <string name="basket_analyze_sides">ผลงานของทั้งสองฝ่าย</string>
-    <string name="basket_analyze_history">ผลงานการพบการ</string>
+    <string name="basket_analyze_history">ผลงานการพบกัน</string>
     <string name="basket_analyze_recent">ผลงานล่าสุด</string>
     <string name="basket_analyze_fruture">ตารางการแข่งล่วงหน้า</string>
-    <string name="basket_analyze_more">ดูเพิ่มเติม >></string>
+    <string name="basket_analyze_more">ข้อมูลอื่นๆ >></string>
     <string name="basket_analyze_points_ranking">อันดับคะแนน</string>
     <string name="basket_analyze_rank_team">อันดับ/ทีม</string>
-    <string name="basket_analyze_has">แข่งขันแล่ว</string>
+    <string name="basket_analyze_has">สนาม</string>
     <string name="basket_analyze_win_lost">ชนะ/แพ้</string>
     <string name="basket_analyze_winodds">ชนะ%</string>
     <string name="basket_analyze_recent_performance">สภาพการแข่งเกมล่าสุด</string>
