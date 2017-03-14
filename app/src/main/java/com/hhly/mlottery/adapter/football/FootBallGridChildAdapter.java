@@ -1,17 +1,16 @@
 package com.hhly.mlottery.adapter.football;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
 import com.hhly.mlottery.util.ImageLoader;
+import com.hhly.mlottery.util.StringUtils;
 
 import java.util.List;
 
@@ -24,7 +23,6 @@ public class FootBallGridChildAdapter extends BaseAdapter {
 
     private List<DataBaseBean> mList;
     private Context mContext;
-
 
 
     public FootBallGridChildAdapter(Context context, List<DataBaseBean> list) {
@@ -49,8 +47,10 @@ public class FootBallGridChildAdapter extends BaseAdapter {
             mViewHolder = (MatchViewHolder) convertView.getTag();
         }
 
-        if ("".equals(mList.get(position).getLgName().toString()) || mList.get(position).getLgName() == null) {
-            mViewHolder.icon.setImageDrawable(null);
+
+        if (StringUtils.isEmpty(mList.get(position).getLgName())) {
+
+            mViewHolder.icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.basket_info_default));
             mViewHolder.name.setText("");
 
         } else {
@@ -58,7 +58,7 @@ public class FootBallGridChildAdapter extends BaseAdapter {
             if (mList.get(position).getPic() == null || "".equals(mList.get(position).getPic())) {
                 mViewHolder.icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.basket_info_default));
             } else {
-                ImageLoader.load(mContext,mList.get(position).getPic(),R.mipmap.basket_info_default).into(mViewHolder.icon);
+                ImageLoader.load(mContext, mList.get(position).getPic(), R.mipmap.basket_info_default).into(mViewHolder.icon);
 
             }
 
