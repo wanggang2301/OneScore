@@ -246,7 +246,7 @@
                     android:layout_centerVertical="true"
                     android:paddingRight="50dp"
                     android:text="@string/tennis_match_not_start"
-                    android:textSize="@dimen/item_football_full_score"
+                    android:textSize="@dimen/item_football_time"
                     android:visibility="gone" />
             </RelativeLayout>
 
