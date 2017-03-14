@@ -537,7 +537,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         TextView mVideo_week= (TextView) parentLayout.findViewById(R.id.video_week);
         //今天or明天
         TextView mVideo_day = (TextView) parentLayout.findViewById(R.id.video_day);
-        live_item_day_tx.setText(mGroupDataList.get(groupPosition));
+        live_item_day_tx.setText(DateUtil.convertDateToNation(mGroupDataList.get(groupPosition)));
         mVideo_week.setText(ResultDateUtil.getWeekOfDate(DateUtil.parseDate(ResultDateUtil.getDate(0,mGroupDataList.get(groupPosition)))));
         mVideo_day.setText(DateUtil.getTodayorTomorrow(mGroupDataList.get(groupPosition)));
         return parentLayout;
@@ -592,7 +592,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         String groupData = this.mGroupDataList.get(groupPosition);
         String  date =ResultDateUtil.getWeekOfDate(DateUtil.parseDate(ResultDateUtil.getDate(0,mGroupDataList.get(groupPosition))));
         String day=DateUtil.getTodayorTomorrow(mGroupDataList.get(groupPosition));
-        ((TextView) header.findViewById(R.id.live_item_day_txt)).setText(groupData);
+        ((TextView) header.findViewById(R.id.live_item_day_txt)).setText(DateUtil.convertDateToNation(groupData));
         ((TextView) header.findViewById(R.id.video_week)).setText(date);
         ((TextView) header.findViewById(R.id.video_day)).setText(day);
     }
