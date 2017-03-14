@@ -94,9 +94,10 @@
                     android:layout_marginTop="10dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_size_13"
+                        android:singleLine="true"
                         android:textColor="@color/content_txt_black"
                         android:text="@string/basket_database_details_leagueMost_all_score"/>
                     <TextView
@@ -114,9 +115,10 @@
                     android:layout_marginTop="10dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_size_13"
+                        android:singleLine="true"
                         android:textColor="@color/content_txt_black"
                         android:text="@string/basket_database_details_leagueMost_avg_score"/>
                     <TextView

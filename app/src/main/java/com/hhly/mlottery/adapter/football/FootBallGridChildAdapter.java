@@ -49,7 +49,7 @@ public class FootBallGridChildAdapter extends BaseAdapter {
             mViewHolder = (MatchViewHolder) convertView.getTag();
         }
 
-        if ("".equals(mList.get(position).getLgName().toString()) || mList.get(position).getLgName() == null) {
+        if ("".equals(mList.get(position).getLgName()) || mList.get(position).getLgName() == null) {
             mViewHolder.icon.setImageDrawable(null);
             mViewHolder.name.setText("");
 

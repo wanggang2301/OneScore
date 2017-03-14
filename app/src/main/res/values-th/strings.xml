@@ -687,7 +687,7 @@
     <string name="jipan">ต่อรองทันที</string>
     <string name="login_no_weixin"> ไม่ได้ติดตั้งWechat กรุณาติดตั้งก่อนWechat!</string>
     <string name="login_peak"> เข้าสู่ระบบนานเกินไป กรุณาลองใหม่อีกครั้ง</string>
-    <string name="not_start_short_txt"> ไม่</string>
+    <string name="not_start_short_txt"> ยังไม่เริ่ม</string>
     <string name="pwd_empty_new"> กรุณากรอกรหัสผ่าน (โดย 6-16 ตัวเลขและตัวอักษร)</string>
     <string name="send_register_succ"> รหัสยืนยันได้ถูกส่ง กรุณาตรวจสอบ</string>
     <string name="share_cancel"> ยกเลิก</string>
