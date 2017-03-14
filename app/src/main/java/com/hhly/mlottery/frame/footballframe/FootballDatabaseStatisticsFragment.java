@@ -570,7 +570,7 @@ public class FootballDatabaseStatisticsFragment extends Fragment implements View
 
             ImageView mIcon= (ImageView)holder.getConvertView().findViewById(R.id.progress_statistic);
 
-            ImageLoader.load(mContext,basketDatabaseMostDat.getIcon(),R.mipmap.basket_default).into(mIcon);
+            ImageLoader.load(mContext,basketDatabaseMostDat.getIcon(),R.mipmap.score_default).into(mIcon);
         }
     }
 
