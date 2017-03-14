@@ -116,6 +116,21 @@ public class DateUtil {
      * @param date
      * @return
      */
+    public static String convertDateToNationYD(String date) {
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
+            return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM"), "yyyy-MM");
+        } else {
+            return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM"), "MM-yyyy");
+        }
+       // return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM"), "MM-yyyy");
+    }
+
+    /**
+     * 国际化日期格式
+     *
+     * @param date
+     * @return
+     */
     public static String convertDateToNationHM(String date) {
         if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
             return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm"), "yyyy-MM-dd HH:mm");

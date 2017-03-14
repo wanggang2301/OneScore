@@ -20,6 +20,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.basketdatabase.MatchStage;
 import com.hhly.mlottery.bean.basket.basketdatabase.ScheduleResult;
 import com.hhly.mlottery.util.CollectionUtils;
+import com.hhly.mlottery.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -201,7 +202,7 @@ public class LeagueMatchStageChooseDialogFragment extends DialogFragment {
             } else {
                 textView.setBackgroundResource(R.drawable.bg_item_match_stage_first_normal);
             }
-            textView.setText(matchStage.getStageName());
+            textView.setText(DateUtil.convertDateToNationYD(matchStage.getStageName()));
             if (mOnItemClickListener != null) {
                 textView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -230,7 +231,7 @@ public class LeagueMatchStageChooseDialogFragment extends DialogFragment {
             TextView textView = holder.getView(R.id.second_text);
 
             textView.setSelected(matchStage.isSelected());
-            textView.setText(matchStage.getStageName());
+            textView.setText(DateUtil.convertDateToNationYD(matchStage.getStageName()));
             if (mOnItemClickListener != null) {
                 textView.setOnClickListener(new View.OnClickListener() {
                     @Override
