@@ -46,6 +46,7 @@
                         android:background="@drawable/radio_button_left"
                         android:checked="true"
                         android:text="@string/basket_database_details_league_statistic"
+                        android:singleLine="true"
                         android:textSize="@dimen/text_size_15"/>
                     <!--联赛之最-->
                     <RadioButton
@@ -54,6 +55,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="match_parent"
+                        android:singleLine="true"
                         android:background="@drawable/radio_button_right"
                         android:text="@string/basket_database_details_leagueMost"
                         android:textSize="@dimen/text_size_15"
