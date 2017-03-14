@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.FootballAnaylzeHistoryRecent;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
 
@@ -35,7 +36,7 @@ public class FootballAnalyzeAdapter extends CommonAdapter<FootballAnaylzeHistory
 //        L.d("Position _----------------","Position + ==" +holder.getPosition()%2 + "");
 
         holder.setText(R.id.football_details_team_name, historyBean.getMatchType());
-        holder.setText(R.id.football_details_data , historyBean.getTime());
+        holder.setText(R.id.football_details_data , DateUtil.convertDateToNation(historyBean.getTime()));
 
         if (historyBean.isHomeGround()) {
             if (historyBean.getResult() == 1) {

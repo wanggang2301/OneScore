@@ -95,7 +95,13 @@ public class DateUtil {
             return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd"), "dd-MM-yyyy");
         }
     }
-
+    public static String convertDateToNationYY(String date){
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
+            return DateUtil.format(DateUtil.parseDate(date, "yy-MM-dd"), "yy-MM-dd");
+        } else {
+            return DateUtil.format(DateUtil.parseDate(date, "yy-MM-dd"), "dd-MM-yy");
+        }
+    }
     /**
      * 国际化日期格式
      *
