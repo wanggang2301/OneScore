@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.oddsbean.OddsDetailsDataInfo;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.HandicapUtils;
 import com.hhly.mlottery.widget.PinnedHeaderExpandableListView;
 
@@ -107,7 +108,7 @@ public class CpiDetailsAdatper extends BaseExpandableListAdapter implements Pinn
             String str = mGroupDataList.get(groupPosition);
             //截取年月日的后五位数
             str = str.substring(str.length() - 5, str.length());
-            holder.odds_details_timeAndscore_child_txt.setText(str + "\n" + model.getTime());
+            holder.odds_details_timeAndscore_child_txt.setText(DateUtil.convertDateToNationMD(str) + "\n" + model.getTime());
         }
 
         //判断是主队的数据
