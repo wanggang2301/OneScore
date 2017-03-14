@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.NumbersInfoBaseActivity;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
@@ -88,7 +89,7 @@ public class HKLotteryStartFragment extends Fragment implements SwipeRefreshLayo
         VolleyContentFast.requestJsonByGet(BaseURLs.LOTTERY_INFO_STARTIS_URL, null, new VolleyContentFast.ResponseSuccessListener<LotteryInfoHKStartBean>() {
             @Override
             public void onResponse(LotteryInfoHKStartBean jsonObject) {
-                if (jsonObject != null && jsonObject.getResult() == 200) {
+                if (jsonObject != null && jsonObject.getResult() == 200 && jsonObject.getData() != null) {
                     mData = jsonObject.getData();
                     mHandler.sendEmptyMessage(SUCCESS);
                 } else {
@@ -153,7 +154,13 @@ public class HKLotteryStartFragment extends Fragment implements SwipeRefreshLayo
                             adapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
                             mViewPager.setAdapter(adapter);
                             tabLayout.setupWithViewPager(mViewPager);
-                            tabLayout.setTabMode(TabLayout.MODE_FIXED);
+
+                            if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
+                                tabLayout.setTabMode(TabLayout.MODE_FIXED);
+                            } else {
+                                tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+                            }
+
                         }
 
                         @Override
@@ -191,163 +198,167 @@ public class HKLotteryStartFragment extends Fragment implements SwipeRefreshLayo
             boList.clear();
         }
 
-        switch (index) {
-            case 0: {
-                List<LotteryInfoHKStartBean.DataBean.FourThousandBean.ZodiacBean> zodiac = mData.getFourThousand().getZodiac();
-                for (LotteryInfoHKStartBean.DataBean.FourThousandBean.ZodiacBean zodiacBeanFourThousand : zodiac) {
-                    LotteryInfoDateBean bean = new LotteryInfoDateBean();
-                    bean.setCoedAppear(zodiacBeanFourThousand.getCoedAppear());
-                    bean.setCoedNotAppear(zodiacBeanFourThousand.getCoedNotAppear());
-                    bean.setNumberAppear(zodiacBeanFourThousand.getNumberAppear());
-                    bean.setKey(zodiacBeanFourThousand.getKey());
-                    zodiacList.add(bean);
+        try {
+            switch (index) {
+                case 0: {
+                    List<LotteryInfoHKStartBean.DataBean.FourThousandBean.ZodiacBean> zodiac = mData.getFourThousand().getZodiac();
+                    for (LotteryInfoHKStartBean.DataBean.FourThousandBean.ZodiacBean zodiacBeanFourThousand : zodiac) {
+                        LotteryInfoDateBean bean = new LotteryInfoDateBean();
+                        bean.setCoedAppear(zodiacBeanFourThousand.getCoedAppear());
+                        bean.setCoedNotAppear(zodiacBeanFourThousand.getCoedNotAppear());
+                        bean.setNumberAppear(zodiacBeanFourThousand.getNumberAppear());
+                        bean.setKey(zodiacBeanFourThousand.getKey());
+                        zodiacList.add(bean);
+                    }
+                    List<LotteryInfoHKStartBean.DataBean.FourThousandBean.NumberBean> number = mData.getFourThousand().getNumber();
+                    for (LotteryInfoHKStartBean.DataBean.FourThousandBean.NumberBean numberBeanFourThousand : number) {
+                        LotteryInfoDateBean bean = new LotteryInfoDateBean();
+                        bean.setCoedAppear(numberBeanFourThousand.getCoedAppear());
+                        bean.setCoedNotAppear(numberBeanFourThousand.getCoedNotAppear());
+                        bean.setNumberAppear(numberBeanFourThousand.getNumberAppear());
+                        bean.setKey(numberBeanFourThousand.getKey());
+                        numberList.add(bean);
+                    }
+                    List<LotteryInfoHKStartBean.DataBean.FourThousandBean.MantissaBean> mantissa = mData.getFourThousand().getMantissa();
+                    for (LotteryInfoHKStartBean.DataBean.FourThousandBean.MantissaBean mantissaBeanFourThousand : mantissa) {
+                        LotteryInfoDateBean bean = new LotteryInfoDateBean();
+                        bean.setCoedAppear(mantissaBeanFourThousand.getCoedAppear());
+                        bean.setCoedNotAppear(mantissaBeanFourThousand.getCoedNotAppear());
+                        bean.setNumberAppear(mantissaBeanFourThousand.getNumberAppear());
+                        bean.setKey(mantissaBeanFourThousand.getKey());
+                        mantissaList.add(bean);
+                    }
+                    List<LotteryInfoHKStartBean.DataBean.FourThousandBean.BoBean> bo = mData.getFourThousand().getBo();
+                    for (LotteryInfoHKStartBean.DataBean.FourThousandBean.BoBean boBeanFourThousand : bo) {
+                        LotteryInfoDateBean bean = new LotteryInfoDateBean();
+                        bean.setCoedAppear(boBeanFourThousand.getCoedAppear());
+                        bean.setCoedNotAppear(boBeanFourThousand.getCoedNotAppear());
+                        bean.setNumberAppear(boBeanFourThousand.getNumberAppear());
+                        bean.setKey(boBeanFourThousand.getKey());
+                        boList.add(bean);
+                    }
                 }
-                List<LotteryInfoHKStartBean.DataBean.FourThousandBean.NumberBean> number = mData.getFourThousand().getNumber();
-                for (LotteryInfoHKStartBean.DataBean.FourThousandBean.NumberBean numberBeanFourThousand : number) {
-                    LotteryInfoDateBean bean = new LotteryInfoDateBean();
-                    bean.setCoedAppear(numberBeanFourThousand.getCoedAppear());
-                    bean.setCoedNotAppear(numberBeanFourThousand.getCoedNotAppear());
-                    bean.setNumberAppear(numberBeanFourThousand.getNumberAppear());
-                    bean.setKey(numberBeanFourThousand.getKey());
-                    numberList.add(bean);
+                break;
+                case 1: {
+                    List<LotteryInfoHKStartBean.DataBean.OneThousandBean.ZodiacBeanOneThousand> zodiac = mData.getOneThousand().getZodiac();
+                    for (LotteryInfoHKStartBean.DataBean.OneThousandBean.ZodiacBeanOneThousand zodiacBeanOneThousand : zodiac) {
+                        LotteryInfoDateBean bean = new LotteryInfoDateBean();
+                        bean.setCoedAppear(zodiacBeanOneThousand.getCoedAppear());
+                        bean.setCoedNotAppear(zodiacBeanOneThousand.getCoedNotAppear());
+                        bean.setNumberAppear(zodiacBeanOneThousand.getNumberAppear());
+                        bean.setKey(zodiacBeanOneThousand.getKey());
+                        zodiacList.add(bean);
+                    }
+                    List<LotteryInfoHKStartBean.DataBean.OneThousandBean.NumberBeanOneThousand> number = mData.getOneThousand().getNumber();
+                    for (LotteryInfoHKStartBean.DataBean.OneThousandBean.NumberBeanOneThousand numberBeanOneThousand : number) {
+                        LotteryInfoDateBean bean = new LotteryInfoDateBean();
+                        bean.setCoedAppear(numberBeanOneThousand.getCoedAppear());
+                        bean.setCoedNotAppear(numberBeanOneThousand.getCoedNotAppear());
+                        bean.setNumberAppear(numberBeanOneThousand.getNumberAppear());
+                        bean.setKey(numberBeanOneThousand.getKey());
+                        numberList.add(bean);
+                    }
+                    List<LotteryInfoHKStartBean.DataBean.OneThousandBean.MantissaBeanOneThousand> mantissa = mData.getOneThousand().getMantissa();
+                    for (LotteryInfoHKStartBean.DataBean.OneThousandBean.MantissaBeanOneThousand mantissaBeanOneThousand : mantissa) {
+                        LotteryInfoDateBean bean = new LotteryInfoDateBean();
+                        bean.setCoedAppear(mantissaBeanOneThousand.getCoedAppear());
+                        bean.setCoedNotAppear(mantissaBeanOneThousand.getCoedNotAppear());
+                        bean.setNumberAppear(mantissaBeanOneThousand.getNumberAppear());
+                        bean.setKey(mantissaBeanOneThousand.getKey());
+                        mantissaList.add(bean);
+                    }
+                    List<LotteryInfoHKStartBean.DataBean.OneThousandBean.BoBeanOneThousand> bo = mData.getOneThousand().getBo();
+                    for (LotteryInfoHKStartBean.DataBean.OneThousandBean.BoBeanOneThousand boBeanOneThousand : bo) {
+                        LotteryInfoDateBean bean = new LotteryInfoDateBean();
+                        bean.setCoedAppear(boBeanOneThousand.getCoedAppear());
+                        bean.setCoedNotAppear(boBeanOneThousand.getCoedNotAppear());
+                        bean.setNumberAppear(boBeanOneThousand.getNumberAppear());
+                        bean.setKey(boBeanOneThousand.getKey());
+                        boList.add(bean);
+                    }
                 }
-                List<LotteryInfoHKStartBean.DataBean.FourThousandBean.MantissaBean> mantissa = mData.getFourThousand().getMantissa();
-                for (LotteryInfoHKStartBean.DataBean.FourThousandBean.MantissaBean mantissaBeanFourThousand : mantissa) {
-                    LotteryInfoDateBean bean = new LotteryInfoDateBean();
-                    bean.setCoedAppear(mantissaBeanFourThousand.getCoedAppear());
-                    bean.setCoedNotAppear(mantissaBeanFourThousand.getCoedNotAppear());
-                    bean.setNumberAppear(mantissaBeanFourThousand.getNumberAppear());
-                    bean.setKey(mantissaBeanFourThousand.getKey());
-                    mantissaList.add(bean);
+                break;
+                case 2: {
+                    List<LotteryInfoHKStartBean.DataBean.FiveHundredBean.ZodiacBeanFiveHundred> zodiac = mData.getFiveHundred().getZodiac();
+                    for (LotteryInfoHKStartBean.DataBean.FiveHundredBean.ZodiacBeanFiveHundred zodiacBeanFiveHunderd : zodiac) {
+                        LotteryInfoDateBean bean = new LotteryInfoDateBean();
+                        bean.setCoedAppear(zodiacBeanFiveHunderd.getCoedAppear());
+                        bean.setCoedNotAppear(zodiacBeanFiveHunderd.getCoedNotAppear());
+                        bean.setNumberAppear(zodiacBeanFiveHunderd.getNumberAppear());
+                        bean.setKey(zodiacBeanFiveHunderd.getKey());
+                        zodiacList.add(bean);
+                    }
+                    List<LotteryInfoHKStartBean.DataBean.FiveHundredBean.NumberBeanFiveHundred> number = mData.getFiveHundred().getNumber();
+                    for (LotteryInfoHKStartBean.DataBean.FiveHundredBean.NumberBeanFiveHundred numberBeanFiveHunderd : number) {
+                        LotteryInfoDateBean bean = new LotteryInfoDateBean();
+                        bean.setCoedAppear(numberBeanFiveHunderd.getCoedAppear());
+                        bean.setCoedNotAppear(numberBeanFiveHunderd.getCoedNotAppear());
+                        bean.setNumberAppear(numberBeanFiveHunderd.getNumberAppear());
+                        bean.setKey(numberBeanFiveHunderd.getKey());
+                        numberList.add(bean);
+                    }
+                    List<LotteryInfoHKStartBean.DataBean.FiveHundredBean.MantissaBeanFiveHundred> mantissa = mData.getFiveHundred().getMantissa();
+                    for (LotteryInfoHKStartBean.DataBean.FiveHundredBean.MantissaBeanFiveHundred mantissaBeanFiveHunderd : mantissa) {
+                        LotteryInfoDateBean bean = new LotteryInfoDateBean();
+                        bean.setCoedAppear(mantissaBeanFiveHunderd.getCoedAppear());
+                        bean.setCoedNotAppear(mantissaBeanFiveHunderd.getCoedNotAppear());
+                        bean.setNumberAppear(mantissaBeanFiveHunderd.getNumberAppear());
+                        bean.setKey(mantissaBeanFiveHunderd.getKey());
+                        mantissaList.add(bean);
+                    }
+                    List<LotteryInfoHKStartBean.DataBean.FiveHundredBean.BoBeanFiveHundred> bo = mData.getFiveHundred().getBo();
+                    for (LotteryInfoHKStartBean.DataBean.FiveHundredBean.BoBeanFiveHundred boBeanFiveHunderd : bo) {
+                        LotteryInfoDateBean bean = new LotteryInfoDateBean();
+                        bean.setCoedAppear(boBeanFiveHunderd.getCoedAppear());
+                        bean.setCoedNotAppear(boBeanFiveHunderd.getCoedNotAppear());
+                        bean.setNumberAppear(boBeanFiveHunderd.getNumberAppear());
+                        bean.setKey(boBeanFiveHunderd.getKey());
+                        boList.add(bean);
+                    }
                 }
-                List<LotteryInfoHKStartBean.DataBean.FourThousandBean.BoBean> bo = mData.getFourThousand().getBo();
-                for (LotteryInfoHKStartBean.DataBean.FourThousandBean.BoBean boBeanFourThousand : bo) {
-                    LotteryInfoDateBean bean = new LotteryInfoDateBean();
-                    bean.setCoedAppear(boBeanFourThousand.getCoedAppear());
-                    bean.setCoedNotAppear(boBeanFourThousand.getCoedNotAppear());
-                    bean.setNumberAppear(boBeanFourThousand.getNumberAppear());
-                    bean.setKey(boBeanFourThousand.getKey());
-                    boList.add(bean);
+                break;
+                case 3: {
+                    List<LotteryInfoHKStartBean.DataBean.OneHundredBean.ZodiacBeanOneHundred> zodiac = mData.getOneHundred().getZodiac();
+                    for (LotteryInfoHKStartBean.DataBean.OneHundredBean.ZodiacBeanOneHundred zodiacBeanOneHundred : zodiac) {
+                        LotteryInfoDateBean bean = new LotteryInfoDateBean();
+                        bean.setCoedAppear(zodiacBeanOneHundred.getCoedAppear());
+                        bean.setCoedNotAppear(zodiacBeanOneHundred.getCoedNotAppear());
+                        bean.setNumberAppear(zodiacBeanOneHundred.getNumberAppear());
+                        bean.setKey(zodiacBeanOneHundred.getKey());
+                        zodiacList.add(bean);
+                    }
+                    List<LotteryInfoHKStartBean.DataBean.OneHundredBean.NumberBeanOneHundred> number = mData.getOneHundred().getNumber();
+                    for (LotteryInfoHKStartBean.DataBean.OneHundredBean.NumberBeanOneHundred numberBeanOneHundred : number) {
+                        LotteryInfoDateBean bean = new LotteryInfoDateBean();
+                        bean.setCoedAppear(numberBeanOneHundred.getCoedAppear());
+                        bean.setCoedNotAppear(numberBeanOneHundred.getCoedNotAppear());
+                        bean.setNumberAppear(numberBeanOneHundred.getNumberAppear());
+                        bean.setKey(numberBeanOneHundred.getKey());
+                        numberList.add(bean);
+                    }
+                    List<LotteryInfoHKStartBean.DataBean.OneHundredBean.MantissaBeanOneHundred> mantissa = mData.getOneHundred().getMantissa();
+                    for (LotteryInfoHKStartBean.DataBean.OneHundredBean.MantissaBeanOneHundred mantissaBeanOneHundred : mantissa) {
+                        LotteryInfoDateBean bean = new LotteryInfoDateBean();
+                        bean.setCoedAppear(mantissaBeanOneHundred.getCoedAppear());
+                        bean.setCoedNotAppear(mantissaBeanOneHundred.getCoedNotAppear());
+                        bean.setNumberAppear(mantissaBeanOneHundred.getNumberAppear());
+                        bean.setKey(mantissaBeanOneHundred.getKey());
+                        mantissaList.add(bean);
+                    }
+                    List<LotteryInfoHKStartBean.DataBean.OneHundredBean.BoBeanOneHundred> bo = mData.getOneHundred().getBo();
+                    for (LotteryInfoHKStartBean.DataBean.OneHundredBean.BoBeanOneHundred boBeanOneHundred : bo) {
+                        LotteryInfoDateBean bean = new LotteryInfoDateBean();
+                        bean.setCoedAppear(boBeanOneHundred.getCoedAppear());
+                        bean.setCoedNotAppear(boBeanOneHundred.getCoedNotAppear());
+                        bean.setNumberAppear(boBeanOneHundred.getNumberAppear());
+                        bean.setKey(boBeanOneHundred.getKey());
+                        boList.add(bean);
+                    }
                 }
+                break;
             }
-            break;
-            case 1: {
-                List<LotteryInfoHKStartBean.DataBean.OneThousandBean.ZodiacBeanOneThousand> zodiac = mData.getOneThousand().getZodiac();
-                for (LotteryInfoHKStartBean.DataBean.OneThousandBean.ZodiacBeanOneThousand zodiacBeanOneThousand : zodiac) {
-                    LotteryInfoDateBean bean = new LotteryInfoDateBean();
-                    bean.setCoedAppear(zodiacBeanOneThousand.getCoedAppear());
-                    bean.setCoedNotAppear(zodiacBeanOneThousand.getCoedNotAppear());
-                    bean.setNumberAppear(zodiacBeanOneThousand.getNumberAppear());
-                    bean.setKey(zodiacBeanOneThousand.getKey());
-                    zodiacList.add(bean);
-                }
-                List<LotteryInfoHKStartBean.DataBean.OneThousandBean.NumberBeanOneThousand> number = mData.getOneThousand().getNumber();
-                for (LotteryInfoHKStartBean.DataBean.OneThousandBean.NumberBeanOneThousand numberBeanOneThousand : number) {
-                    LotteryInfoDateBean bean = new LotteryInfoDateBean();
-                    bean.setCoedAppear(numberBeanOneThousand.getCoedAppear());
-                    bean.setCoedNotAppear(numberBeanOneThousand.getCoedNotAppear());
-                    bean.setNumberAppear(numberBeanOneThousand.getNumberAppear());
-                    bean.setKey(numberBeanOneThousand.getKey());
-                    numberList.add(bean);
-                }
-                List<LotteryInfoHKStartBean.DataBean.OneThousandBean.MantissaBeanOneThousand> mantissa = mData.getOneThousand().getMantissa();
-                for (LotteryInfoHKStartBean.DataBean.OneThousandBean.MantissaBeanOneThousand mantissaBeanOneThousand : mantissa) {
-                    LotteryInfoDateBean bean = new LotteryInfoDateBean();
-                    bean.setCoedAppear(mantissaBeanOneThousand.getCoedAppear());
-                    bean.setCoedNotAppear(mantissaBeanOneThousand.getCoedNotAppear());
-                    bean.setNumberAppear(mantissaBeanOneThousand.getNumberAppear());
-                    bean.setKey(mantissaBeanOneThousand.getKey());
-                    mantissaList.add(bean);
-                }
-                List<LotteryInfoHKStartBean.DataBean.OneThousandBean.BoBeanOneThousand> bo = mData.getOneThousand().getBo();
-                for (LotteryInfoHKStartBean.DataBean.OneThousandBean.BoBeanOneThousand boBeanOneThousand : bo) {
-                    LotteryInfoDateBean bean = new LotteryInfoDateBean();
-                    bean.setCoedAppear(boBeanOneThousand.getCoedAppear());
-                    bean.setCoedNotAppear(boBeanOneThousand.getCoedNotAppear());
-                    bean.setNumberAppear(boBeanOneThousand.getNumberAppear());
-                    bean.setKey(boBeanOneThousand.getKey());
-                    boList.add(bean);
-                }
-            }
-            break;
-            case 2: {
-                List<LotteryInfoHKStartBean.DataBean.FiveHundredBean.ZodiacBeanFiveHundred> zodiac = mData.getFiveHundred().getZodiac();
-                for (LotteryInfoHKStartBean.DataBean.FiveHundredBean.ZodiacBeanFiveHundred zodiacBeanFiveHunderd : zodiac) {
-                    LotteryInfoDateBean bean = new LotteryInfoDateBean();
-                    bean.setCoedAppear(zodiacBeanFiveHunderd.getCoedAppear());
-                    bean.setCoedNotAppear(zodiacBeanFiveHunderd.getCoedNotAppear());
-                    bean.setNumberAppear(zodiacBeanFiveHunderd.getNumberAppear());
-                    bean.setKey(zodiacBeanFiveHunderd.getKey());
-                    zodiacList.add(bean);
-                }
-                List<LotteryInfoHKStartBean.DataBean.FiveHundredBean.NumberBeanFiveHundred> number = mData.getFiveHundred().getNumber();
-                for (LotteryInfoHKStartBean.DataBean.FiveHundredBean.NumberBeanFiveHundred numberBeanFiveHunderd : number) {
-                    LotteryInfoDateBean bean = new LotteryInfoDateBean();
-                    bean.setCoedAppear(numberBeanFiveHunderd.getCoedAppear());
-                    bean.setCoedNotAppear(numberBeanFiveHunderd.getCoedNotAppear());
-                    bean.setNumberAppear(numberBeanFiveHunderd.getNumberAppear());
-                    bean.setKey(numberBeanFiveHunderd.getKey());
-                    numberList.add(bean);
-                }
-                List<LotteryInfoHKStartBean.DataBean.FiveHundredBean.MantissaBeanFiveHundred> mantissa = mData.getFiveHundred().getMantissa();
-                for (LotteryInfoHKStartBean.DataBean.FiveHundredBean.MantissaBeanFiveHundred mantissaBeanFiveHunderd : mantissa) {
-                    LotteryInfoDateBean bean = new LotteryInfoDateBean();
-                    bean.setCoedAppear(mantissaBeanFiveHunderd.getCoedAppear());
-                    bean.setCoedNotAppear(mantissaBeanFiveHunderd.getCoedNotAppear());
-                    bean.setNumberAppear(mantissaBeanFiveHunderd.getNumberAppear());
-                    bean.setKey(mantissaBeanFiveHunderd.getKey());
-                    mantissaList.add(bean);
-                }
-                List<LotteryInfoHKStartBean.DataBean.FiveHundredBean.BoBeanFiveHundred> bo = mData.getFiveHundred().getBo();
-                for (LotteryInfoHKStartBean.DataBean.FiveHundredBean.BoBeanFiveHundred boBeanFiveHunderd : bo) {
-                    LotteryInfoDateBean bean = new LotteryInfoDateBean();
-                    bean.setCoedAppear(boBeanFiveHunderd.getCoedAppear());
-                    bean.setCoedNotAppear(boBeanFiveHunderd.getCoedNotAppear());
-                    bean.setNumberAppear(boBeanFiveHunderd.getNumberAppear());
-                    bean.setKey(boBeanFiveHunderd.getKey());
-                    boList.add(bean);
-                }
-            }
-            break;
-            case 3: {
-                List<LotteryInfoHKStartBean.DataBean.OneHundredBean.ZodiacBeanOneHundred> zodiac = mData.getOneHundred().getZodiac();
-                for (LotteryInfoHKStartBean.DataBean.OneHundredBean.ZodiacBeanOneHundred zodiacBeanOneHundred : zodiac) {
-                    LotteryInfoDateBean bean = new LotteryInfoDateBean();
-                    bean.setCoedAppear(zodiacBeanOneHundred.getCoedAppear());
-                    bean.setCoedNotAppear(zodiacBeanOneHundred.getCoedNotAppear());
-                    bean.setNumberAppear(zodiacBeanOneHundred.getNumberAppear());
-                    bean.setKey(zodiacBeanOneHundred.getKey());
-                    zodiacList.add(bean);
-                }
-                List<LotteryInfoHKStartBean.DataBean.OneHundredBean.NumberBeanOneHundred> number = mData.getOneHundred().getNumber();
-                for (LotteryInfoHKStartBean.DataBean.OneHundredBean.NumberBeanOneHundred numberBeanOneHundred : number) {
-                    LotteryInfoDateBean bean = new LotteryInfoDateBean();
-                    bean.setCoedAppear(numberBeanOneHundred.getCoedAppear());
-                    bean.setCoedNotAppear(numberBeanOneHundred.getCoedNotAppear());
-                    bean.setNumberAppear(numberBeanOneHundred.getNumberAppear());
-                    bean.setKey(numberBeanOneHundred.getKey());
-                    numberList.add(bean);
-                }
-                List<LotteryInfoHKStartBean.DataBean.OneHundredBean.MantissaBeanOneHundred> mantissa = mData.getOneHundred().getMantissa();
-                for (LotteryInfoHKStartBean.DataBean.OneHundredBean.MantissaBeanOneHundred mantissaBeanOneHundred : mantissa) {
-                    LotteryInfoDateBean bean = new LotteryInfoDateBean();
-                    bean.setCoedAppear(mantissaBeanOneHundred.getCoedAppear());
-                    bean.setCoedNotAppear(mantissaBeanOneHundred.getCoedNotAppear());
-                    bean.setNumberAppear(mantissaBeanOneHundred.getNumberAppear());
-                    bean.setKey(mantissaBeanOneHundred.getKey());
-                    mantissaList.add(bean);
-                }
-                List<LotteryInfoHKStartBean.DataBean.OneHundredBean.BoBeanOneHundred> bo = mData.getOneHundred().getBo();
-                for (LotteryInfoHKStartBean.DataBean.OneHundredBean.BoBeanOneHundred boBeanOneHundred : bo) {
-                    LotteryInfoDateBean bean = new LotteryInfoDateBean();
-                    bean.setCoedAppear(boBeanOneHundred.getCoedAppear());
-                    bean.setCoedNotAppear(boBeanOneHundred.getCoedNotAppear());
-                    bean.setNumberAppear(boBeanOneHundred.getNumberAppear());
-                    bean.setKey(boBeanOneHundred.getKey());
-                    boList.add(bean);
-                }
-            }
-            break;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
