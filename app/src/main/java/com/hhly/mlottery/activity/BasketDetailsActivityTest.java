@@ -412,7 +412,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                     }
                 }
             }
-
+//
             @Override
             public void onPageScrollStateChanged(int state) {
 
