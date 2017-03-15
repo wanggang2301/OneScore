@@ -32,7 +32,7 @@
     <string name="dangerAttackk_nodata">暂无危险进攻数据.</string>
     <string name="attack_nodata">暂无进攻数据.</string>
     <string name="time">时间(T)</string>
-
+    <string name="odds_equals">平均</string>
 
     <!--篮球资料库-->
     <string name="basket_info_hot">热门</string>

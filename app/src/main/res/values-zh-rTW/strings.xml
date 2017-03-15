@@ -33,7 +33,7 @@
     <string name="attack_nodata">暫無進攻數據.</string>
     <string name="time">時間(T)</string>
 
-
+    <string name="odds_equals">平均</string>
     <!--篮球资料库-->
     <string name="basket_info_hot">熱門</string>
     <string name="basket_info_eur">歐洲</string>

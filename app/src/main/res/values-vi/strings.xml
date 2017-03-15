@@ -1422,7 +1422,7 @@
     <string name="basket_analyze_win_lost">thắng/thua</string>
     <string name="basket_analyze_winodds">thắng %</string>
     <string name="basket_analyze_recent_performance">thánh tích</string>
-
+    <string name="odds_equals">trung bình</string>
 
     <string name="basket_analyze_fruture_competition">trận đấu sắp tới</string>
     <string name="basket_analyze_event">giải đấu</string>
