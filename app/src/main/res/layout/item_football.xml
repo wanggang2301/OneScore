@@ -124,7 +124,7 @@
                 android:layout_height="90dp"
                 android:gravity="center_vertical"
 
-                android:paddingLeft="10dp">
+                android:paddingLeft="5dp">
 
                 <LinearLayout
                     android:id="@+id/ll_home"
@@ -137,8 +137,8 @@
 
                     <ImageView
                         android:id="@+id/home_icon"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_marginLeft="10dp"
                         android:src="@mipmap/score_default" />
 
@@ -148,12 +148,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:ellipsize="end"
-                        android:maxEms="6"
+                        android:maxEms="10"
                         android:maxLines="1"
                         android:text="托特纳的时代"
 
                         android:textColor="@color/msg"
-                        android:textSize="@dimen/item_football_hometeam" />
+                        android:textSize="@dimen/item_football_half_score" />
 
 
                     <TextView
@@ -193,8 +193,8 @@
 
                     <ImageView
                         android:id="@+id/guest_icon"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_marginLeft="10dp"
                         android:src="@mipmap/score_default" />
 
@@ -205,13 +205,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:ellipsize="end"
-                        android:maxEms="6"
+                        android:maxEms="10"
                         android:maxLines="1"
 
                         android:text="巴萨"
 
                         android:textColor="@color/msg"
-                        android:textSize="@dimen/item_football_guestteam" />
+                        android:textSize="@dimen/item_football_half_score" />
 
                     <TextView
                         android:id="@+id/item_football_guest_yc"
@@ -246,7 +246,7 @@
                     android:layout_centerVertical="true"
                     android:paddingRight="50dp"
                     android:text="@string/tennis_match_not_start"
-                    android:textSize="@dimen/text_size_16"
+                    android:textSize="@dimen/item_football_time"
                     android:visibility="gone" />
             </RelativeLayout>
 
@@ -257,7 +257,7 @@
                 android:layout_alignParentRight="true"
                 android:gravity="center_vertical"
 
-                android:paddingRight="50dp">
+                android:paddingRight="30dp">
 
                 <LinearLayout
                     android:id="@+id/ll_home_score"

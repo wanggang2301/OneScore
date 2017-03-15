@@ -25,8 +25,8 @@
         android:id="@+id/titleContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:layout_marginTop="10dp"
         android:visibility="invisible"
         android:background="@drawable/selector_item_clickable"
         android:layout_below="@+id/unconection_layout"
@@ -35,28 +35,28 @@
         <TextView
             android:id="@+id/t1"
             style="@style/WW_Width_0dp"
-            app:layout_widthPercent="63%" />
+            app:layout_widthPercent="67%" />
 
         <TextView
             android:id="@+id/t2"
             style="@style/WW_Width_0dp"
             android:layout_toRightOf="@id/t1"
             android:text="@string/roll_asialet"
-            app:layout_widthPercent="14%" />
+            app:layout_widthPercent="12%" />
 
         <TextView
             android:id="@+id/t3"
             style="@style/WW_Width_0dp"
             android:layout_toRightOf="@id/t2"
             android:text="@string/roll_asiasize"
-            app:layout_widthPercent="13%" />
+            app:layout_widthPercent="12%" />
 
         <TextView
             android:id="@+id/t4"
             style="@style/WW_Width_0dp"
             android:layout_toRightOf="@id/t3"
             android:text="@string/roll_euro"
-            app:layout_widthPercent="10%" />
+            android:layout_width="wrap_content" />
     </android.support.percent.PercentRelativeLayout>
     <!--</android.support.design.widget.AppBarLayout>-->
 
