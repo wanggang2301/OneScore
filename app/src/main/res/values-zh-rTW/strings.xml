@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
+    <!--公共-->
+    <string name="games_no_start">未開始</string>
     <!--足球事件直播-->
     <string name="foot_event">事件</string>
     <string name="foot_trend">走勢</string>
@@ -1598,4 +1599,5 @@
     <string name="football_rfypl">讓分贏盤率</string>
     <string name="football_odds_return_list">返回列表</string>
 
+    <string name="home_gender">性别</string>
 </resources>

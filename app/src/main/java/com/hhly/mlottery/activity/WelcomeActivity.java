@@ -203,10 +203,10 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
         params.addBodyParameter("DN", DeviceInfo.getManufacturer());// 手机厂商
         params.addBodyParameter("DT", DeviceInfo.getModel());// 手机型号
         if (location != null) {// 如果获取到当前位置
-            double lat = location.getLatitude();
-            double lng = location.getLongitude();
-            params.addBodyParameter("LA", "" + lat);// 经度
-            params.addBodyParameter("LO", "" + lng);// 纬度
+            MyApp.LA = location.getLatitude();
+            MyApp.LO = location.getLongitude();
+            params.addBodyParameter("LA", "" + MyApp.LA);// 经度
+            params.addBodyParameter("LO", "" + MyApp.LO);// 纬度
         } else if (location == null) {// 如果当前位置没获取到
             params.addBodyParameter("LA", "");// 经度
             params.addBodyParameter("LO", "");// 纬度

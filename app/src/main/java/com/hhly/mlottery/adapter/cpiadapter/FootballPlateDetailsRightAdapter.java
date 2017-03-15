@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.oddsbean.OddsDetailsDataInfo;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.HandicapUtils;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
@@ -257,7 +258,7 @@ public class FootballPlateDetailsRightAdapter
         }
 
         public void bindData(String title) {
-            mTextView.setText(title);
+            mTextView.setText(DateUtil.convertDateToNation(title));
         }
     }
 }

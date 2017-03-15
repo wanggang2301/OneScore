@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -202,9 +203,9 @@ public class BasketDetailsHeadFragment extends Fragment {
         try {
             android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity(), R.style.AppThemeDialog);
             builder.setCancelable(false);// 设置对话框以外不可点击
-            builder.setTitle(getActivity().getResources().getString(R.string.to_update_kindly_reminder));// 提示标题
-            builder.setMessage(getActivity().getResources().getString(R.string.video_high_light_reminder_comment));// 提示内容
-            builder.setPositiveButton(getActivity().getResources().getString(R.string.video_high_light_continue_open), new DialogInterface.OnClickListener() {
+            builder.setTitle(MyApp.getContext().getResources().getString(R.string.to_update_kindly_reminder));// 提示标题
+            builder.setMessage(MyApp.getContext().getResources().getString(R.string.video_high_light_reminder_comment));// 提示内容
+            builder.setPositiveButton(MyApp.getContext().getResources().getString(R.string.video_high_light_continue_open), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
@@ -215,7 +216,7 @@ public class BasketDetailsHeadFragment extends Fragment {
                     startActivity(intent);
                 }
             });
-            builder.setNegativeButton(getActivity().getResources().getString(R.string.basket_analyze_dialog_cancle), new DialogInterface.OnClickListener() {
+            builder.setNegativeButton(MyApp.getContext().getResources().getString(R.string.basket_analyze_dialog_cancle), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
@@ -325,7 +326,9 @@ public class BasketDetailsHeadFragment extends Fragment {
                     mGuestScore.setText("");
                     mHomeScore.setText("");
 
-                    mVS.setText("VS");
+//                    mVS.setText("VS");
+                    mVS.setText(R.string.games_no_start);
+                    mVS.setTextSize(TypedValue.COMPLEX_UNIT_PX,MyApp.getContext().getResources().getDimension(R.dimen.text_size_12));
                     if (mMatch.getMatchStatus() == PRE_MATCH) {
                         mMatchState.setText(DateUtil.convertDateToNation(bean.getMatch().getDate()) + "  " + bean.getMatch().getTime() + "   " + MyApp.getContext().getResources().getString(R.string.basket_begin_game));
                     } else if (mMatch.getMatchStatus() == DETERMINED) {
@@ -362,6 +365,7 @@ public class BasketDetailsHeadFragment extends Fragment {
                     mSmallGuestScore.setText(score.getGuestScore() + "");
                     mSmallHomeScore.setText(score.getHomeScore() + "");
                     mVS.setText(":");
+                    mVS.setTextSize(TypedValue.COMPLEX_UNIT_PX,MyApp.getContext().getResources().getDimension(R.dimen.text_size_30));
                     if (score.getAddTime() == 3) {//三个加时
                         mLayoutOt3.setVisibility(View.VISIBLE);
                         mLayoutOt2.setVisibility(View.VISIBLE);
@@ -413,7 +417,7 @@ public class BasketDetailsHeadFragment extends Fragment {
                     setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);
                     setScore(score.getGuestScore(), mSmallGuestScore, score.getHomeScore(), mSmallHomeScore);
                     mVS.setText(":");
-
+                    mVS.setTextSize(TypedValue.COMPLEX_UNIT_PX,MyApp.getContext().getResources().getDimension(R.dimen.text_size_30));
                     mChartBallFragment.setClickableLikeBtn(true); //聊球可点赞
 
                     //设置比赛时间及状态
@@ -593,6 +597,7 @@ public class BasketDetailsHeadFragment extends Fragment {
                 mSmallHomeScore.setText(score.getHomeScore() + "");
                 mSmallHomeScore.setTextColor(getResources().getColor(R.color.score_color_white));
                 mVS.setText(":");
+                mVS.setTextSize(TypedValue.COMPLEX_UNIT_PX,MyApp.getContext().getResources().getDimension(R.dimen.text_size_30));
                 mTitleVS.setText(":");
                 if (score.getAddTime() == 3) {//三个加时
                     mLayoutOt3.setVisibility(View.VISIBLE);
@@ -653,6 +658,7 @@ public class BasketDetailsHeadFragment extends Fragment {
                 //不管是第几节都设置总比分.推送過來的話比分有变化要翻转
 
                 mVS.setText(":");
+                mVS.setTextSize(TypedValue.COMPLEX_UNIT_PX,MyApp.getContext().getResources().getDimension(R.dimen.text_size_30));
                 mTitleVS.setText(":");
 
                 if (mGuestNum != score.getGuestScore()) {

@@ -95,6 +95,41 @@ public class DateUtil {
             return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd"), "dd-MM-yyyy");
         }
     }
+    public static String convertDateToNationYY(String date){
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
+            return DateUtil.format(DateUtil.parseDate(date, "yy-MM-dd"), "yy-MM-dd");
+        } else {
+            return DateUtil.format(DateUtil.parseDate(date, "yy-MM-dd"), "dd-MM-yy");
+        }
+    }
+    /**
+     * 国际化日期格式
+     *
+     * @param date
+     * @return
+     */
+    public static String convertDateToNationMD(String date) {
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
+            return DateUtil.format(DateUtil.parseDate(date, "MM-dd"), "MM-dd");
+        } else {
+            return DateUtil.format(DateUtil.parseDate(date, "MM-dd"), "dd-MM");
+        }
+    }
+
+    /**
+     * 国际化日期格式
+     *
+     * @param date
+     * @return
+     */
+    public static String convertDateToNationYD(String date) {
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
+            return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM"), "yyyy-MM");
+        } else {
+            return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM"), "MM-yyyy");
+        }
+       // return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM"), "MM-yyyy");
+    }
 
     /**
      * 国际化日期格式
@@ -107,6 +142,20 @@ public class DateUtil {
             return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm"), "yyyy-MM-dd HH:mm");
         } else {
             return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm"), "dd-MM-yyyy HH:mm");
+        }
+    }
+
+    /**
+     * 国际化日期格式
+     *
+     * @param date
+     * @return
+     */
+    public static String convertDateToNationHMS(String date) {
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
+            return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm:ss"), "yyyy-MM-dd HH:mm:ss");
+        } else {
+            return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm:ss"), "dd-MM-yyyy HH:mm:ss");
         }
     }
 
@@ -441,7 +490,9 @@ public class DateUtil {
         TimeZone time = TimeZone.getTimeZone("GMT+8");// 默认国内版
         switch (MyApp.isPackageName) {
             case AppConstants.PACKGER_NAME_ZH:// 国内版
-                time = TimeZone.getTimeZone("GMT+8");
+//                time = TimeZone.getTimeZone("GMT+8");
+                // TODO 暂时用
+                time = TimeZone.getTimeZone("GMT+7");
                 break;
             case AppConstants.PACKGER_NAME_TH:// 泰国版
             case AppConstants.PACKGER_NAME_VN_HN:// 越南北版
@@ -453,7 +504,12 @@ public class DateUtil {
                 break;
         }
         TimeZone.setDefault(time);// 设置时区
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf;
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
+            sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        }else{
+            sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        }
         Date data = sdf.parse(nextTime);
         sdf.setTimeZone(TimeZone.getDefault());
         return data.getTime();

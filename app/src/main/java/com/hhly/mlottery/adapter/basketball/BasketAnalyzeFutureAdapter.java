@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketAnalyzeMoreFutureBean;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
@@ -27,7 +28,7 @@ public class BasketAnalyzeFutureAdapter extends CommonAdapter<BasketAnalyzeMoreF
     public void convert(ViewHolder holder, BasketAnalyzeMoreFutureBean historyBean) {
 
         holder.setText(R.id.basket_team_name ,historyBean.getLeagueName());
-        holder.setText(R.id.basket_data , historyBean.getDate());
+        holder.setText(R.id.basket_data , DateUtil.convertDateToNationYY(historyBean.getDate()));
         holder.setText(R.id.basket_guest_name , historyBean.getGuestTeam());
         holder.setText(R.id.basket_home_name , historyBean.getHomeTeam());
         holder.setText(R.id.basket_space , historyBean.getDiffDays() + mContext.getResources().getText(R.string.basket_analyze_day));

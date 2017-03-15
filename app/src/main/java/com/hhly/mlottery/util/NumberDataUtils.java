@@ -824,12 +824,12 @@ public class NumberDataUtils {
                     if (!"88".equals(numbers.get(7))) { // 如果下一期还未开出来，则显示当前和下一期期号
                         String weekDate = DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(mNumberInfo.getNextTime()));// 根据日期获取星期
                         String[] Dates = mNumberInfo.getNextTime().split(" ");
-                        tv_Currentnumber_time.setText(Dates[0] + " " + weekDate);// 显示日期和周
+                        tv_Currentnumber_time.setText(DateUtil.convertDateToNation(Dates[0]) + " " + weekDate);// 显示日期和周
                         tv_number_title.setText(context.getResources().getString(R.string.number_code_di) + mNumberInfo.getNextIssue() + context.getResources().getString(R.string.number_code_qi));
                     } else {
                         String weekDate = DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(mNumberInfo.getTime()));// 根据日期获取星期
                         String[] Dates = mNumberInfo.getTime().split(" ");
-                        tv_Currentnumber_time.setText(Dates[0] + " " + weekDate);// 显示日期和周
+                        tv_Currentnumber_time.setText(DateUtil.convertDateToNation(Dates[0]) + " " + weekDate);// 显示日期和周
                         tv_number_title.setText(context.getResources().getString(R.string.number_code_di) + mNumberInfo.getIssue() + context.getResources().getString(R.string.number_code_qi));
                     }
 
@@ -838,7 +838,7 @@ public class NumberDataUtils {
 
                     String weekDate = DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(mNumberInfo.getTime()));// 根据日期获取星期
                     String[] Dates = mNumberInfo.getTime().split(" ");
-                    tv_Currentnumber_time.setText(Dates[0] + " " + weekDate);// 显示日期和周
+                    tv_Currentnumber_time.setText(DateUtil.convertDateToNation(Dates[0]) + " " + weekDate);// 显示日期和周
                     tv_number_title.setText(context.getResources().getString(R.string.number_code_di) + mNumberInfo.getIssue() + context.getResources().getString(R.string.number_code_qi));
                 }
             } else if ("6".equals(mNumberInfo.getName()) || "24".equals(mNumberInfo.getName()) || "28".equals(mNumberInfo.getName()) ||
@@ -848,14 +848,14 @@ public class NumberDataUtils {
 
                     String weekDate = DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(mNumberInfo.getNextTime()));// 根据日期获取星期
                     String[] Dates = mNumberInfo.getNextTime().split(" ");
-                    tv_Currentnumber_time.setText(Dates[0] + " " + weekDate);// 显示日期和周
+                    tv_Currentnumber_time.setText(DateUtil.convertDateToNation(Dates[0]) + " " + weekDate);// 显示日期和周
                     tv_number_title.setText(context.getResources().getString(R.string.number_code_di) + mNumberInfo.getNextIssue() + context.getResources().getString(R.string.number_code_qi));
                 } else {
                     number_new_icon.setVisibility(View.VISIBLE);
 
                     String weekDate = DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(mNumberInfo.getTime()));// 根据日期获取星期
                     String[] Dates = mNumberInfo.getTime().split(" ");
-                    tv_Currentnumber_time.setText(Dates[0] + " " + weekDate);// 显示日期和周
+                    tv_Currentnumber_time.setText(DateUtil.convertDateToNation(Dates[0]) + " " + weekDate);// 显示日期和周
                     tv_number_title.setText(context.getResources().getString(R.string.number_code_di) + mNumberInfo.getIssue() + context.getResources().getString(R.string.number_code_qi));
                 }
             } else if ("30".equals(mNumberInfo.getName()) || "31".equals(mNumberInfo.getName()) || "32".equals(mNumberInfo.getName())) {
@@ -886,7 +886,7 @@ public class NumberDataUtils {
 
             if ("1".equals(mNumberInfo.getName()) || "6".equals(mNumberInfo.getName()) || "24".equals(mNumberInfo.getName()) || "28".equals(mNumberInfo.getName()) ||
                     "29".equals(mNumberInfo.getName()) || "25".equals(mNumberInfo.getName()) || "26".equals(mNumberInfo.getName())) {
-                tv_Currentnumber_time.setText(Dates[0] + " " + weekDate);
+                tv_Currentnumber_time.setText(DateUtil.convertDateToNation(Dates[0]) + " " + weekDate);
 
             } else {
                 String mTime = Dates[1].substring(0, Dates[1].lastIndexOf(":"));

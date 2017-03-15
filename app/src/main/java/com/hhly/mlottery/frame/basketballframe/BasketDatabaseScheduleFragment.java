@@ -360,9 +360,9 @@ public class BasketDatabaseScheduleFragment extends Fragment {
             if (matchStage.isHasSecondStage() && mResult.getSecondStageIndex() != null &&
                     mResult.getSecondStageIndex() != -1) {
                 MatchStage secondStage = matchStage.getStages().get(mResult.getSecondStageIndex());
-                mTitleTextView.setText(secondStage.getStageName());
+                mTitleTextView.setText(DateUtil.convertDateToNationYD(secondStage.getStageName()));
             } else {
-                mTitleTextView.setText(matchStage.getStageName());
+                mTitleTextView.setText(DateUtil.convertDateToNationYD(matchStage.getStageName()));
             }
         }
 

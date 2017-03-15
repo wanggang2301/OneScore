@@ -31,6 +31,7 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.oddfragment.CPIOddsFragment;
 import com.hhly.mlottery.frame.oddfragment.CompanyChooseDialogFragment;
 import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
+import com.hhly.mlottery.util.DateUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -248,7 +249,7 @@ public class CPIFragment extends BaseWebSocketFragment {
                     @Override
                     public void onDateChoose(String date) {
                         choosenDate = date;
-                        mDateTextView.setText(date);
+                        mDateTextView.setText(DateUtil.convertDateToNation(date));
                         setRefreshing(true);
                         refreshAllChildFragments();
                     }
@@ -263,7 +264,7 @@ public class CPIFragment extends BaseWebSocketFragment {
     public void setCurrentDate(String currentDate) {
         this.currentDate = currentDate;
         if (TextUtils.isEmpty(choosenDate)) {
-            mDateTextView.setText(currentDate);
+            mDateTextView.setText(DateUtil.convertDateToNation(currentDate));
             if (!mDateLayout.isShown()) mDateLayout.setVisibility(View.VISIBLE);
             if (!mDateTextView.isShown()) mDateTextView.setVisibility(View.VISIBLE);
         }

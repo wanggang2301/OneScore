@@ -591,9 +591,29 @@ public class VolleyContentFast {
     private static void isTimeOutError(VolleyError volleyError) {
         try {
             if(volleyError instanceof TimeoutError){
-                MobclickAgent.reportError(mContext,"NO_RESPONSE_FROM_SERVER! \n IMEI:" + DeviceInfo.getDeviceId(mContext) +
-                        "\n USERID: " + PreferenceUtil.getString(AppConstants.SPKEY_USERID, "") + "\n" +
-                        volleyError);
+                MobclickAgent.reportError(mContext,"NO_RESPONSE_FROM_SERVER! " +
+                        "\n USERID: " + PreferenceUtil.getString(AppConstants.SPKEY_USERID, "") +
+                        "\n IMEI:" + DeviceInfo.getDeviceId(mContext) +
+                        "\n IMSI:" + DeviceInfo.getSubscriberId(mContext) +
+                        "\n MODEL:" + DeviceInfo.getModel() +
+                        "\n MANUFACTURER:" + DeviceInfo.getManufacturer() +
+                        "\n OS_VERSION:" + DeviceInfo.getOSVersion() +
+                        "\n PSDN_IP:" + DeviceInfo.getPsdnIp() +
+                        "\n LA:" + MyApp.LA +
+                        "\n LO:" + MyApp.LO +
+                        "\n ERROR:" + volleyError);
+
+                L.d("xxxxx", "获取到的用户手机信息：" +
+                        "\n USERID: " + PreferenceUtil.getString(AppConstants.SPKEY_USERID, "") +
+                        "\n IMEI:" + DeviceInfo.getDeviceId(mContext) +
+                        "\n IMSI:" + DeviceInfo.getSubscriberId(mContext) +
+                        "\n MODEL:" + DeviceInfo.getModel() +
+                        "\n MANUFACTURER:" + DeviceInfo.getManufacturer() +
+                        "\n OS_VERSION:" + DeviceInfo.getOSVersion() +
+                        "\n PSDN_IP:" + DeviceInfo.getPsdnIp() +
+                        "\n LA:" + MyApp.LA +
+                        "\n LO:" + MyApp.LO +
+                        "\n ERROR:" + volleyError);
             }
         } catch (Exception e) {
             e.printStackTrace();

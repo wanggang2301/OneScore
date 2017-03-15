@@ -76,6 +76,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
          switch (MyApp.isPackageName){
 
              case AppConstants.PACKGER_NAME_ZH:
+                 //setContentView(R.layout.activity_overseas_register);
                  setContentView(R.layout.activity_register);
                  break;
              case AppConstants.PACKGER_NAME_TH:
@@ -196,6 +197,24 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 String passWord = et_password.getText().toString();
                 String verifyCode = et_verifycode.getText().toString();
 
+                if (AppConstants.isGOKeyboard){
+                    if (UiUtils.checkPassword(this, passWord)) {
+                        // 登录
+//                            UiUtils.toast(this,"register");
+                        register(userName, verifyCode, passWord);
+                    }
+                }else{
+                    if (UiUtils.isMobileNO(this, userName)) {
+                        if (UiUtils.checkVerifyCode(this, verifyCode)) {
+                            if (UiUtils.checkPassword(this, passWord)) {
+                                // 登录
+//                            UiUtils.toast(this,"register");
+                                register(userName, verifyCode, passWord);
+                            }
+                        }
+                    }
+                }
+/*
                 if (UiUtils.isMobileNO(this, userName)) {
                     if (UiUtils.checkVerifyCode(this, verifyCode)) {
                         if (UiUtils.checkPassword(this, passWord)) {
@@ -204,7 +223,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                             register(userName, verifyCode, passWord);
                         }
                     }
-                }
+                }*/
                 // TODO
                 break;
             case R.id.iv_delete: // EditText 删除
@@ -272,13 +291,18 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             Map<String, String> param = new HashMap<>();
             param.put("account", userName);
             param.put("password", MD5Util.getMD5(passWord));
-            param.put("registerType", RegisterType.PHONE);
+            if(AppConstants.isGOKeyboard){
+                param.put("registerType", RegisterType.USERNAME);
+            }else {
+                //邀请码
+                param.put("inviteCode", invited_number.getText().toString());
+                param.put("registerType", RegisterType.PHONE);
+            }
+           // param.put("registerType", RegisterType.USERNAME);
             param.put("smsCode", verifyCode);
 
             param.put("deviceToken", AppConstants.deviceToken);
 
-            //邀请码
-            param.put("inviteCode", invited_number.getText().toString());
             //以下添加的参数为修复恶意注册的bug所加。
             String sign = CommonUtils.getSign(userName, AppConstants.deviceToken, AppConstants.SIGN_KEY);
             param.put("sign",sign);

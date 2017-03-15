@@ -5,6 +5,7 @@ import android.text.Html;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketAnalyzeMoreRecentHistoryBean;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
@@ -32,7 +33,7 @@ public class BasketAnalyzeAdapter extends CommonAdapter<BasketAnalyzeMoreRecentH
 
 
         holder.setText(R.id.basket_details_team_name ,historyBean.getLeagueName());
-        holder.setText(R.id.basket_details_data , historyBean.getDate());
+        holder.setText(R.id.basket_details_data , DateUtil.convertDateToNationYY(historyBean.getDate()));
         holder.setText(R.id.basket_details_guest_name , historyBean.getGuestTeam());
 //        holder.setText(R.id.basket_details_team_name ,"乙蓝甲乙蓝甲乙蓝");
 //        holder.setText(R.id.basket_details_data , "16-03-31");

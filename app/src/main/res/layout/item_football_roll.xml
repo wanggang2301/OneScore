@@ -108,8 +108,6 @@
                     android:id="@+id/tvHomeTeam"
                     style="@style/item_rollball_MeasureSpec_EXACTLY"
                     android:layout_marginLeft="@dimen/activity_margin_half"
-                    android:ellipsize="end"
-                    android:lines="1"
                     android:maxEms="6"
                     tools:text="皇家马德里" />
 
@@ -345,8 +343,7 @@
                 android:layout_marginLeft="0.4dp"
                 android:ellipsize="end"
                 android:gravity="center"
-                android:maxLines="1"
-                android:maxWidth="65dp"
+                android:lines="1"
                 android:textColor="@color/orange"
                 android:textSize="@dimen/text_size_11"
                 tools:text="欧巴杯" />

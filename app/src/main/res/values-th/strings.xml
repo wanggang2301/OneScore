@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
+    <!--公共-->
+    <string name="games_no_start">ยังไม่เริ่ม</string>
     <!--足球事件直播-->
     <string name="foot_event">เหตุการณ์</string>
     <string name="foot_trend">แนวโน้ม</string>
@@ -686,7 +687,7 @@
     <string name="jipan">ต่อรองทันที</string>
     <string name="login_no_weixin"> ไม่ได้ติดตั้งWechat กรุณาติดตั้งก่อนWechat!</string>
     <string name="login_peak"> เข้าสู่ระบบนานเกินไป กรุณาลองใหม่อีกครั้ง</string>
-    <string name="not_start_short_txt"> ไม่</string>
+    <string name="not_start_short_txt"> ยังไม่เริ่ม</string>
     <string name="pwd_empty_new"> กรุณากรอกรหัสผ่าน (โดย 6-16 ตัวเลขและตัวอักษร)</string>
     <string name="send_register_succ"> รหัสยืนยันได้ถูกส่ง กรุณาตรวจสอบ</string>
     <string name="share_cancel"> ยกเลิก</string>
@@ -1371,13 +1372,13 @@
 
     <!--分析-->
     <string name="basket_analyze_sides">ผลงานของทั้งสองฝ่าย</string>
-    <string name="basket_analyze_history">ผลงานการพบการ</string>
+    <string name="basket_analyze_history">ผลงานการพบกัน</string>
     <string name="basket_analyze_recent">ผลงานล่าสุด</string>
     <string name="basket_analyze_fruture">ตารางการแข่งล่วงหน้า</string>
-    <string name="basket_analyze_more">ดูเพิ่มเติม >></string>
+    <string name="basket_analyze_more">ข้อมูลอื่นๆ >></string>
     <string name="basket_analyze_points_ranking">อันดับคะแนน</string>
     <string name="basket_analyze_rank_team">อันดับ/ทีม</string>
-    <string name="basket_analyze_has">แข่งขันแล่ว</string>
+    <string name="basket_analyze_has">สนาม</string>
     <string name="basket_analyze_win_lost">ชนะ/แพ้</string>
     <string name="basket_analyze_winodds">ชนะ%</string>
     <string name="basket_analyze_recent_performance">สภาพการแข่งเกมล่าสุด</string>
@@ -1637,5 +1638,5 @@
 
     <string name="basket_handicap_bigorsmall">O/D/U</string>
 
-
+    <string name="home_gender">เพศ</string>
 </resources>

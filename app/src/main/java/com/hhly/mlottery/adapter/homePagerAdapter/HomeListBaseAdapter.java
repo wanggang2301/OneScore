@@ -822,7 +822,12 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 if (mDate.equals(homeBodysEntity.getDate())) {// 设置时间
                                     data_info_date01.setText(mContext.getResources().getString(R.string.home_pager_current_date) + " " + homeBodysEntity.getTime());
                                 } else {
-                                    data_info_date01.setText(DateUtil.getAssignDate(homeBodysEntity.getDate()) + " " + homeBodysEntity.getTime());
+                                    try {
+                                        data_info_date01.setText(DateUtil.convertDateToNationMD(DateUtil.getAssignDate(homeBodysEntity.getDate())) + " " + homeBodysEntity.getTime());
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                        data_info_date01.setText("");
+                                    }
                                 }
                             }
                             data_info_title01.setText(homeBodysEntity.getTitle());// 设置标题
@@ -1083,12 +1088,18 @@ public class HomeListBaseAdapter extends BaseAdapter {
         if ("VS".equals(vs)) {
             score01_home_score.setText("");
             score01_guest_score.setText("");
+            score01_vs.setText(mContext.getResources().getString(R.string.tennis_match_not_start));
             Date curDate = new Date(System.currentTimeMillis());// 获取当前日期
             String mDate = DateUtil.formatDate(curDate);
             if (mDate.equals(homeBodysEntity.getDate())) {
                 score01_desc.setText(mContext.getResources().getString(R.string.home_pager_current_date) + " " + homeBodysEntity.getTime());
             } else {
-                score01_desc.setText(DateUtil.getAssignDate(homeBodysEntity.getDate()) + " " + homeBodysEntity.getTime());
+                try {
+                    score01_desc.setText(DateUtil.convertDateToNationMD(homeBodysEntity.getDate().substring(5, homeBodysEntity.getDate().length())) + " " + homeBodysEntity.getTime());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    score01_desc.setText("");
+                }
             }
         } else {
             score01_home_score.setText(homeBodysEntity.getHomeScore());
@@ -1096,8 +1107,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
             score01_guest_score.setText(homeBodysEntity.getGuestScore());
             score01_guest_score.setTextColor(color);
             score01_desc.setText(desc);
+            score01_vs.setText(vs);
         }
-        score01_vs.setText(vs);
         score01_vs.setTextColor(color);
     }
 
@@ -1500,10 +1511,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 } else {
                     mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
                 }
-                if(mContent.getLabType() == 7){
+                if (mContent.getLabType() == 7) {
                     mViewHolderOther.tv_title.setVisibility(View.GONE);
                     mViewHolderOther.view_title_split.setVisibility(View.GONE);
-                }else{
+                } else {
                     mViewHolderOther.tv_title.setVisibility(View.VISIBLE);
                     mViewHolderOther.view_title_split.setVisibility(View.VISIBLE);
                 }
@@ -1640,7 +1651,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
         TextView tv_expert_name03 = (TextView) view.findViewById(R.id.tv_expert_name03);
 
         int size = mHomePagerEntity.getHeadTitles().getContent().size();
-        if(size == 1){
+        if (size == 1) {
             ll_expert_name_item1.setVisibility(View.VISIBLE);
             ll_expert_name_item02.setVisibility(View.GONE);
             ll_expert_content1.setVisibility(View.VISIBLE);
@@ -1650,7 +1661,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 e.printStackTrace();
             }
             tv_expert_name1.setText(mHomePagerEntity.getHeadTitles().getContent().get(0).getTitle());
-        }else if(size ==2){
+        } else if (size == 2) {
             ll_expert_name_item1.setVisibility(View.VISIBLE);
             ll_expert_name_item02.setVisibility(View.GONE);
             ll_expert_content1.setVisibility(View.VISIBLE);
@@ -1667,7 +1678,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 e.printStackTrace();
             }
             tv_expert_name2.setText(mHomePagerEntity.getHeadTitles().getContent().get(1).getTitle());
-        }else if(size == 3){
+        } else if (size == 3) {
             ll_expert_name_item1.setVisibility(View.GONE);
             ll_expert_name_item02.setVisibility(View.VISIBLE);
             try {
@@ -1688,7 +1699,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 e.printStackTrace();
             }
             tv_expert_name03.setText(mHomePagerEntity.getHeadTitles().getContent().get(2).getTitle());
-        }else if(size >= 4){
+        } else if (size >= 4) {
             ll_expert_name_item1.setVisibility(View.VISIBLE);
             ll_expert_name_item02.setVisibility(View.GONE);
             ll_expert_content1.setVisibility(View.VISIBLE);

@@ -46,6 +46,7 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/radio_button_left"
                         android:checked="true"
+                        android:singleLine="true"
                         android:text="@string/basket_database_details_league_statistic"
                         android:textSize="@dimen/text_size_15"/>
                     <!--联赛之最-->
@@ -57,6 +58,7 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/radio_button_right"
                         android:text="@string/basket_database_details_leagueMost"
+                        android:singleLine="true"
                         android:textSize="@dimen/text_size_15"
                         />
                 </RadioGroup>
@@ -489,7 +491,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1.2"
+                                android:layout_weight="1.3"
                                 android:gravity="center"
                                 android:text="@string/football_database_details_moreZero"
                                 android:textSize="@dimen/text_size_11"/>
@@ -497,7 +499,7 @@
                                 android:id="@+id/big_small_statistic_avg1"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1.2"
+                                android:layout_weight="1"
                                 android:gravity="right"
                                 android:text="--"
                                 android:textSize="@dimen/text_size_11"/>
@@ -508,11 +510,12 @@
                                 android:layout_weight="1.2"
                                 android:gravity="right"
                                 android:text="--"
+                                android:singleLine="true"
                                 android:textSize="@dimen/text_size_11"/>
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="4.5">
+                                android:layout_weight="4">
                                 <ProgressBar
                                     android:id="@+id/big_small_statistic_progressbar1"
                                     android:layout_width="match_parent"
@@ -539,7 +542,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1.2"
+                                android:layout_weight="1.3"
                                 android:gravity="center"
                                 android:text="@string/football_database_details_moreOne"
                                 android:textSize="@dimen/text_size_11"/>
@@ -547,7 +550,7 @@
                                 android:id="@+id/big_small_statistic_avg2"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1.2"
+                                android:layout_weight="1"
                                 android:gravity="right"
                                 android:text="--"
                                 android:textSize="@dimen/text_size_11"/>
@@ -559,12 +562,13 @@
                                 android:layout_weight="1.2"
                                 android:gravity="right"
                                 android:text="--"
+                                android:singleLine="true"
                                 android:textSize="@dimen/text_size_11"/>
 
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="4.5">
+                                android:layout_weight="4">
                                 <ProgressBar
                                     android:id="@+id/big_small_statistic_progressbar2"
                                     android:layout_width="match_parent"
@@ -587,7 +591,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1.2"
+                                android:layout_weight="1.3"
                                 android:gravity="center"
                                 android:text="@string/football_database_details_moreTwo"
                                 android:textSize="@dimen/text_size_11"/>
@@ -595,7 +599,7 @@
                                 android:id="@+id/big_small_statistic_avg3"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1.2"
+                                android:layout_weight="1"
                                 android:gravity="right"
                                 android:text="--"
                                 android:textSize="@dimen/text_size_11"/>
@@ -606,11 +610,12 @@
                                 android:layout_weight="1.2"
                                 android:gravity="right"
                                 android:text="--"
+                                android:singleLine="true"
                                 android:textSize="@dimen/text_size_11"/>
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="4.5">
+                                android:layout_weight="4">
                                 <ProgressBar
                                     android:id="@+id/big_small_statistic_progressbar3"
                                     android:layout_width="match_parent"
@@ -633,7 +638,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1.2"
+                                android:layout_weight="1.3"
                                 android:gravity="center"
                                 android:text="@string/football_database_details_moreThree"
                                 android:textSize="@dimen/text_size_11"/>
@@ -641,7 +646,7 @@
                                 android:id="@+id/big_small_statistic_avg4"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1.2"
+                                android:layout_weight="1"
                                 android:gravity="right"
                                 android:text="--"
                                 android:textSize="@dimen/text_size_11"/>
@@ -652,11 +657,12 @@
                                 android:layout_weight="1.2"
                                 android:gravity="right"
                                 android:text="--"
+                                android:singleLine="true"
                                 android:textSize="@dimen/text_size_11"/>
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="4.5">
+                                android:layout_weight="4">
 
                                 <ProgressBar
                                     android:id="@+id/big_small_statistic_progressbar4"

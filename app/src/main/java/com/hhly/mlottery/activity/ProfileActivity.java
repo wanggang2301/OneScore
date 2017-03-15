@@ -236,7 +236,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     /*提示保存性别修改信息*/
     private void showDialog() {
 
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(ProfileActivity.this, R.style.AppThemeDialog);//  android.R.style.Theme_Material_Light_Dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this, R.style.AppThemeDialog);//  android.R.style.Theme_Material_Light_Dialog
         builder.setCancelable(false);// 设置对话框以外不可点击
         builder.setTitle("");// 提示标题
         builder.setMessage(R.string.confirm_the_selected_sex);// 提示内容
