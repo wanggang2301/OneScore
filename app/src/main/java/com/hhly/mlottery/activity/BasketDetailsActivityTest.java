@@ -315,7 +315,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             // 如果是泰语
             lang = BaseURLs.LANGUAGE_SWITCHING_TH;
         } else if (MyApp.isLanguage.equals("rVI")) {
-            // 如果是越南语
+            // 如果是越南语（）
             lang = BaseURLs.LANGUAGE_SWITCHING_VI;
         }
 
