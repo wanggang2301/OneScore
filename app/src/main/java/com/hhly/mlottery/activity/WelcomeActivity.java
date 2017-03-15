@@ -214,7 +214,7 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
             MyApp.LO = location.getLongitude();
             params.addBodyParameter("LA", "" + MyApp.LA);// 经度
             params.addBodyParameter("LO", "" + MyApp.LO);// 纬度
-        } else if (location == null) {// 如果当前位置没获取到
+        } else {// 如果当前位置没获取到
             params.addBodyParameter("LA", "");// 经度
             params.addBodyParameter("LO", "");// 纬度
         }
@@ -243,6 +243,7 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
                             mUmengInfo = JSONObject.parseObject(text, UmengInfo.class);
                             PreferenceUtil.commitString(AppConstants.TERID, mUmengInfo.getTERID());
 
+                            L.d("上传用户信息成功:" + responseInfo.toString());
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
