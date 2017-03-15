@@ -68,7 +68,7 @@ import de.greenrobot.event.EventBus;
 public class ImmedBasketballFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, ExpandableListView.OnChildClickListener {
 
 
-    private String ddd = "dcvsfsv";
+    private String ddd = "dcvsfsvfgh fg ";
 
 
     private static final String TAG = "ImmedBasketballFragment";
