@@ -294,6 +294,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
      *
      * @return
      */
+
     private String appendLanguage() {
         String lang = "zh";//默认中文
         if (MyApp.isLanguage.equals("rCN")) {
