@@ -242,10 +242,10 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         }
         EventBus.getDefault().register(this);
         setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic("USER.topic.basketball.score." + mThirdId + ".zh");
+        setTopic("USER.topic.basketball.score." + mThirdId + "."+appendLanguage());
 
         L.d("zxcvbn", "basketURL===" + BaseURLs.WS_SERVICE);
-        L.d("zxcvbn", "basketTopic===" + "USER.topic.basketball.score." + mThirdId + ".zh");
+        L.d("zxcvbn", "basketTopic===" + "USER.topic.basketball.score." + mThirdId + appendLanguage());
 
         L.d("wanggg", "getApplicationContext111=" + getApplicationContext());
 
@@ -439,6 +439,40 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         closePollingGifCount();
         EventBus.getDefault().unregister(this);
         closeWebSocket();
+    }
+
+    /**
+     * 根据选择语言，改变推送接口语言环境
+     *
+     * @return
+     */
+
+    private String appendLanguage() {
+        String lang = "zh";//默认中文
+        if (MyApp.isLanguage.equals("rCN")) {
+            // 如果是中文简体的语言环境
+            lang = BaseURLs.LANGUAGE_SWITCHING_CN;
+        } else if (MyApp.isLanguage.equals("rTW")) {
+            // 如果是中文繁体的语言环境
+            lang = BaseURLs.LANGUAGE_SWITCHING_TW;
+        } else if (MyApp.isLanguage.equals("rEN")) {
+            // 如果是英文环境
+            lang = BaseURLs.LANGUAGE_SWITCHING_EN;
+        } else if (MyApp.isLanguage.equals("rKO")) {
+            // 如果是韩语环境
+            lang = BaseURLs.LANGUAGE_SWITCHING_KO;
+        } else if (MyApp.isLanguage.equals("rID")) {
+            // 如果是印尼语
+            lang = BaseURLs.LANGUAGE_SWITCHING_ID;
+        } else if (MyApp.isLanguage.equals("rTH")) {
+            // 如果是泰语
+            lang = BaseURLs.LANGUAGE_SWITCHING_TH;
+        } else if (MyApp.isLanguage.equals("rVI")) {
+            // 如果是越南语（）
+            lang = BaseURLs.LANGUAGE_SWITCHING_VI;
+        }
+
+        return lang.trim();
     }
 
     @Override
