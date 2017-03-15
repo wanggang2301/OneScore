@@ -145,6 +145,20 @@ public class DateUtil {
         }
     }
 
+    /**
+     * 国际化日期格式
+     *
+     * @param date
+     * @return
+     */
+    public static String convertDateToNationHMS(String date) {
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
+            return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm:ss"), "yyyy-MM-dd HH:mm:ss");
+        } else {
+            return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm:ss"), "dd-MM-yyyy HH:mm:ss");
+        }
+    }
+
 
     /**
      * 把毫秒转化成日期
@@ -490,7 +504,12 @@ public class DateUtil {
                 break;
         }
         TimeZone.setDefault(time);// 设置时区
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf;
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
+            sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        }else{
+            sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        }
         Date data = sdf.parse(nextTime);
         sdf.setTimeZone(TimeZone.getDefault());
         return data.getTime();

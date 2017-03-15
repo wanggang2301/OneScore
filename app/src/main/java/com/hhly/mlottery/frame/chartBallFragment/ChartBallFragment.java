@@ -313,6 +313,13 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     public void onResponse(ChartReceive receive) {
                         if (receive.getResult().equals("200")) {
                             mChartReceive = receive;
+                            // 国际化日期格式
+                            if (mChartReceive.getData() != null && mChartReceive.getData().getChatHistory() != null) {
+                                for (int i = 0; i < mChartReceive.getData().getChatHistory().size(); i++) {
+                                    String time = mChartReceive.getData().getChatHistory().get(i).getTime();
+                                    mChartReceive.getData().getChatHistory().get(i).setTime(DateUtil.convertDateToNationHMS(time));
+                                }
+                            }
 
                             if (SLIDE_TYPE_MSG_ONE.equals(slideType)) {
                                 mHandler.sendEmptyMessage(SUCCESS_LOADING);
@@ -551,11 +558,10 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                                 if (currentTime - lastTime >= SHOW_TIME_LONG_FULL) {
                                     // 显示年月日
                                     historyBeen.get(i).setShowTime(currentTime - lastTime >= SHOW_TIME_LONG_FULL);
-                                    historyBeen.get(i).setTime(DateUtil.convertDateToNationHM(historyBeen.get(i).getTime()));
                                 } else if (currentTime - lastTime >= SHOW_TIME_LONG) {
                                     // 显示时分秒
                                     historyBeen.get(i).setShowTime(currentTime - lastTime >= SHOW_TIME_LONG);
-                                    historyBeen.get(i).setTime(DateUtil.getLotteryInfoDate(historyBeen.get(i).getTime(), "HH:mm:ss"));
+                                    historyBeen.get(i).setTime(historyBeen.get(i).getTime().split(" ")[1]);
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -606,8 +612,13 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                         tv_call_me.setVisibility(View.VISIBLE);
                     }
 
-                    historyBeen.add(chartbean);
-                    mAdapter.notifyDataSetChanged();
+                    try {
+                        historyBeen.add(chartbean);
+                        mAdapter.notifyDataSetChanged();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                     ll_not_chart_image.setVisibility(View.GONE);
                     rl_chart_content.setVisibility(View.VISIBLE);
 
@@ -703,6 +714,12 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     System.out.println("xxxxx 滚球推送：" + text);
                     ChartRoom chartRoom = JSON.parseObject(text, ChartRoom.class);
 
+                    // 国际化日期格式
+                    String time = "";
+                    if (chartRoom != null && chartRoom.getData() != null && chartRoom.getData().getTime() != null) {
+                        time = DateUtil.convertDateToNationHMS(chartRoom.getData().getTime());
+                    }
+
                     ChartReceive.DataBean.ChatHistoryBean chartbean = new ChartReceive.DataBean.ChatHistoryBean(chartRoom.getData().getMsgId(), chartRoom.getData().getMsgCode(), chartRoom.getData().getMessage(),
                             chartRoom.getData().getFromUser() == null ? new ChartReceive.DataBean.ChatHistoryBean.FromUserBean() : new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(chartRoom.getData().getFromUser().getUserId(), chartRoom.getData().getFromUser().getUserLogo(), chartRoom.getData().getFromUser().getUserNick()),
                             chartRoom.getData().getToUser() == null ? new ChartReceive.DataBean.ChatHistoryBean.ToUser() : new ChartReceive.DataBean.ChatHistoryBean.ToUser(chartRoom.getData().getToUser().getUserId(), chartRoom.getData().getToUser().getUserLogo(), chartRoom.getData().getToUser().getUserNick()),
@@ -731,11 +748,11 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                                         if (currentTime - lastTime >= SHOW_TIME_LONG_FULL) {
                                             // 显示年月日
                                             chartbean.setShowTime(currentTime - lastTime >= SHOW_TIME_LONG_FULL);
-                                            chartbean.setTime(DateUtil.convertDateToNationHM(chartRoom.getData().getTime()));
+                                            chartbean.setTime(time);
                                         } else if (currentTime - lastTime >= SHOW_TIME_LONG) {
                                             // 显示时分秒
                                             chartbean.setShowTime(currentTime - lastTime >= SHOW_TIME_LONG);
-                                            chartbean.setTime(DateUtil.getLotteryInfoDate(chartRoom.getData().getTime(), "HH:mm:ss"));
+                                            chartbean.setTime(time.split(" ")[1]);
                                         }
                                     }
                                 } catch (Exception e) {
@@ -757,7 +774,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                                     if (historyBeen.get(i).getMsgId() == null && historyBeen.get(i).getMessage().equals(chartRoom.getData().getMessage())) {
                                         historyBeen.get(i).setMsgId(chartRoom.getData().getMsgId());
                                         historyBeen.get(i).getToUser().setUserLogo(chartRoom.getData().getToUser() == null ? null : chartRoom.getData().getToUser().getUserLogo());
-                                        historyBeen.get(i).setTime(chartRoom.getData().getTime());
+                                        historyBeen.get(i).setTime(time);
 
                                         if (i != 0) {
                                             try {
@@ -766,11 +783,10 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                                                 if (currentTime - lastTime >= SHOW_TIME_LONG_FULL) {
                                                     // 显示年月日
                                                     historyBeen.get(i).setShowTime(currentTime - lastTime >= SHOW_TIME_LONG_FULL);
-                                                    historyBeen.get(i).setTime(DateUtil.convertDateToNationHM(chartRoom.getData().getTime()));
                                                 } else if (currentTime - lastTime >= SHOW_TIME_LONG) {
                                                     // 显示时分秒
                                                     historyBeen.get(i).setShowTime(currentTime - lastTime >= SHOW_TIME_LONG);
-                                                    historyBeen.get(i).setTime(DateUtil.getLotteryInfoDate(chartRoom.getData().getTime(), "HH:mm:ss"));
+                                                    historyBeen.get(i).setTime(time.split(" ")[1]);
                                                 }
                                             } catch (Exception e) {
                                                 e.printStackTrace();
