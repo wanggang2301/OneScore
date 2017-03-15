@@ -81,7 +81,7 @@ public class BasketOddsAdapter  extends BaseAdapter{
         if(mType.equals(EURO)){ //欧赔没有中间那一列盘口
             holder.handicap_layout.setVisibility(View.GONE);
         }
-        if(mType.equals(EURO)&&mOddsList.get(position).getCompany().equals("平均")){
+        if(mType.equals(EURO)&&mOddsList.get(position).getCompany().equals(context.getString(R.string.odds_equals))){
             holder.image_more.setVisibility(View.INVISIBLE);
         }else{
             holder.image_more.setVisibility(View.VISIBLE);

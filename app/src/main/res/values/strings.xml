@@ -307,7 +307,7 @@
     <string name="toast_data_loading">数据正在加载中。</string>
     <string name="hot_score_txt">热门赛事</string>
     <string name="other_score_txt">其他赛事</string>
-
+    <string name="odds_equals">平均</string>
     <!-- 关注 -->
     <string name="unfocus">暂无关注</string>
     <string name="unfocus2">左滑赛事，可关注该赛事</string>
