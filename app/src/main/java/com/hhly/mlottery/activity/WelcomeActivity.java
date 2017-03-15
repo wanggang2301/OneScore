@@ -91,7 +91,7 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         initView();
-        imageAD = (ImageView) findViewById(R.id.imageAD);
+
         mContext = this;
         mPackageManager = mContext.getPackageManager();
         try {
@@ -101,23 +101,31 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
             // 此异常不会发生
         }
 
-        // 获取经纬度
-        String serviceName = Context.LOCATION_SERVICE;
-        locationManager = (LocationManager) getSystemService(serviceName);
-        Criteria criteria = new Criteria();
-        criteria.setAccuracy(Criteria.ACCURACY_FINE);
-        criteria.setAltitudeRequired(false);
-        criteria.setBearingRequired(false);
-        criteria.setCostAllowed(true);
-        criteria.setPowerRequirement(Criteria.POWER_LOW);
-        String provider = locationManager.getBestProvider(criteria, true);
-        if (!TextUtils.isEmpty(provider)) {
-            location = locationManager.getLastKnownLocation(provider);
-        }
+        new Thread(){
+            @Override
+            public void run() {
 
-        // 获取经纬度end
+                // 获取经纬度
+                String serviceName = Context.LOCATION_SERVICE;
+                locationManager = (LocationManager) getSystemService(serviceName);
+                Criteria criteria = new Criteria();
+                criteria.setAccuracy(Criteria.ACCURACY_FINE);
+                criteria.setAltitudeRequired(false);
+                criteria.setBearingRequired(false);
+                criteria.setCostAllowed(true);
+                criteria.setPowerRequirement(Criteria.POWER_LOW);
+                String provider = locationManager.getBestProvider(criteria, true);
+                if (!TextUtils.isEmpty(provider)) {
+                    location = locationManager.getLastKnownLocation(provider);
+                }
 
-        getUmeng();
+                // 获取经纬度end
+
+                getUmeng();
+
+            }
+        }.start();
+
 
         if (AppConstants.isGOKeyboard) {
             ImageLoader.load(mContext,R.mipmap.welcome_tw).into(imageAD);
@@ -136,7 +144,6 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
                 ImageLoader.load(mContext,R.mipmap.welcome_tw).into(imageAD);
             }
         }
-
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -159,7 +166,7 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initView() {
-
+        imageAD = (ImageView) findViewById(R.id.imageAD);
         mTv_verycode = (TextView) findViewById(R.id.tv_verycode);
         mTv_verycode.setOnClickListener(this);
         mCount_down = (LinearLayout) findViewById(R.id.count_down);

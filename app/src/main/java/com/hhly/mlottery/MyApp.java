@@ -45,37 +45,44 @@ public class MyApp extends Application {
     public void onCreate() {
         appcontext = this;
 
-        // 初始化PreferenceUtil
-        PreferenceUtil.init(this);
+        // 子线程中做初始化操作，提升APP打开速度
+        new Thread(){
+            @Override
+            public void run() {
+                // 初始化PreferenceUtil
+                PreferenceUtil.init(appcontext);
 
-        //初始化获取语言环境
-        mResources = appcontext.getResources();
-        mConfiguration = mResources.getConfiguration();
-        mDm = mResources.getDisplayMetrics();
-        mLocale = mConfiguration.locale;
+                //初始化获取语言环境
+                mResources = appcontext.getResources();
+                mConfiguration = mResources.getConfiguration();
+                mDm = mResources.getDisplayMetrics();
+                mLocale = mConfiguration.locale;
 
-        // 获取当前包名
-        isPackageName = this.getPackageName();
-        // 设置时区
-        settingTimeZone();
+                // 获取当前包名
+                isPackageName = appcontext.getPackageName();
+                // 设置时区
+                settingTimeZone();
 
-        // 根据上次的语言设置，重新设置语言
-        isLanguage = switchLanguage(PreferenceUtil.getString("language", ""));
+                // 根据上次的语言设置，重新设置语言
+                isLanguage = switchLanguage(PreferenceUtil.getString("language", ""));
 
-        // 捕获异常
-        CrashException crashException = CrashException.getInstance();
-        crashException.init(getApplicationContext());
+                // 捕获异常
+                CrashException crashException = CrashException.getInstance();
+                crashException.init(getApplicationContext());
 
-        // 初始化Vollery
-        VolleyContentFast.init(this);
+                // 初始化Vollery
+                VolleyContentFast.init(appcontext);
 
-        //初始化畅言
-        CyUtils.initCy(this);
-        initUserInfo();
+                //初始化畅言
+                CyUtils.initCy(appcontext);
+                initUserInfo();
 
-        // OkHttpFinal(此初始化只是简单赋值不会阻塞线程)
-        OkHttpFinalConfiguration.Builder builder = new OkHttpFinalConfiguration.Builder();
-        OkHttpFinal.getInstance().init(builder.build());
+                // OkHttpFinal(此初始化只是简单赋值不会阻塞线程)
+                OkHttpFinalConfiguration.Builder builder = new OkHttpFinalConfiguration.Builder();
+                OkHttpFinal.getInstance().init(builder.build());
+
+            }
+        }.start();
 
         super.onCreate();
     }
