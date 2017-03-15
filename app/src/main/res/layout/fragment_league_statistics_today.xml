@@ -16,7 +16,7 @@
             android:id="@+id/fl_loading"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <ProgressBar
                 android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -64,9 +64,11 @@
                     android:textSize="@dimen/text_size_13" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp">
+
 
                     <LinearLayout
                         android:id="@+id/ll_riqi1"
@@ -133,8 +135,8 @@
                             android:textColor="@color/mdy_999"
                             android:textSize="@dimen/text_size_10" />
                     </LinearLayout>
-
                 </LinearLayout>
+
 
             </LinearLayout>
 
@@ -145,6 +147,7 @@
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:paddingBottom="5dp"
+
                 android:paddingTop="5dp"
                 android:weightSum="7">
 
@@ -195,9 +198,9 @@
                         android:id="@+id/tv_win"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="胜"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/text_size_10"
-                        tools:text="胜" />
+                        android:textSize="@dimen/text_size_10" />
 
                     <ImageView
                         android:id="@+id/iv_win"
@@ -224,9 +227,10 @@
                         android:id="@+id/tv_flat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+
+                        android:text="平"
                         android:textColor="@color/mdy_666"
-                        android:textSize="@dimen/text_size_10"
-                        tools:text="平" />
+                        android:textSize="@dimen/text_size_10" />
 
                     <ImageView
                         android:id="@+id/iv_flat"
@@ -253,9 +257,9 @@
                         android:id="@+id/tv_loss"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="负"
                         android:textColor="@color/mdy_666"
-                        android:textSize="@dimen/text_size_10"
-                        tools:text="负" />
+                        android:textSize="@dimen/text_size_10" />
 
                     <ImageView
                         android:id="@+id/iv_loss"
