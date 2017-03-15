@@ -144,6 +144,19 @@ public class DateUtil {
             return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm"), "dd-MM-yyyy HH:mm");
         }
     }
+    /**
+     * 国际化日期格式
+     *
+     * @param date
+     * @return
+     */
+    public static String convertDateToNationMDHM(String date) {
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
+            return DateUtil.format(DateUtil.parseDate(date, "MM-dd HH:mm"), "MM-dd HH:mm");
+        } else {
+            return DateUtil.format(DateUtil.parseDate(date, "MM-dd HH:mm"), "dd-MM HH:mm");
+        }
+    }
 
     /**
      * 国际化日期格式
@@ -158,7 +171,6 @@ public class DateUtil {
             return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm:ss"), "dd-MM-yyyy HH:mm:ss");
         }
     }
-
 
     /**
      * 把毫秒转化成日期
