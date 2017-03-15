@@ -940,7 +940,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
             mLoadingLayout.setVisibility(View.GONE);
         } else {
 
-            L.d("123", "childrenDataList = " + childrenDataList.size());
+            L.d("AAAA-1", "childrenDataList = " + childrenDataList.size());
             childrenDataList.clear();
             groupDataList.clear();
             for (List<BasketMatchBean> lists : mAllMatchdata) { // 遍历所有数据 得到筛选后的
@@ -985,7 +985,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
             mSwipeRefreshLayout.setRefreshing(false);
             mSwipeRefreshLayout.setVisibility(View.VISIBLE);
 
-            L.d("123", "childrenDataList >>>> = " + childrenDataList.size());
+            L.d("AAAA-2", "childrenDataList >>>> = " + childrenDataList.size());
             updateAdapter();
             // 设置打开全部日期内容
             for (int i = 0; i < groupDataList.size(); i++) {
