@@ -504,7 +504,12 @@ public class DateUtil {
                 break;
         }
         TimeZone.setDefault(time);// 设置时区
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf;
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
+            sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        }else{
+            sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        }
         Date data = sdf.parse(nextTime);
         sdf.setTimeZone(TimeZone.getDefault());
         return data.getTime();
