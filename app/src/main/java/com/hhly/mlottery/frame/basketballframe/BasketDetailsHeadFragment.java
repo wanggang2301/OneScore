@@ -365,7 +365,7 @@ public class BasketDetailsHeadFragment extends Fragment {
                     mSmallGuestScore.setText(score.getGuestScore() + "");
                     mSmallHomeScore.setText(score.getHomeScore() + "");
                     mVS.setText(":");
-                    mVS.setTextSize(TypedValue.COMPLEX_UNIT_PX,getResources().getDimension(R.dimen.text_size_30));
+                    mVS.setTextSize(TypedValue.COMPLEX_UNIT_PX,MyApp.getContext().getResources().getDimension(R.dimen.text_size_30));
                     if (score.getAddTime() == 3) {//三个加时
                         mLayoutOt3.setVisibility(View.VISIBLE);
                         mLayoutOt2.setVisibility(View.VISIBLE);
@@ -417,7 +417,7 @@ public class BasketDetailsHeadFragment extends Fragment {
                     setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);
                     setScore(score.getGuestScore(), mSmallGuestScore, score.getHomeScore(), mSmallHomeScore);
                     mVS.setText(":");
-                    mVS.setTextSize(TypedValue.COMPLEX_UNIT_PX,getResources().getDimension(R.dimen.text_size_30));
+                    mVS.setTextSize(TypedValue.COMPLEX_UNIT_PX,MyApp.getContext().getResources().getDimension(R.dimen.text_size_30));
                     mChartBallFragment.setClickableLikeBtn(true); //聊球可点赞
 
                     //设置比赛时间及状态
@@ -597,7 +597,7 @@ public class BasketDetailsHeadFragment extends Fragment {
                 mSmallHomeScore.setText(score.getHomeScore() + "");
                 mSmallHomeScore.setTextColor(getResources().getColor(R.color.score_color_white));
                 mVS.setText(":");
-                mVS.setTextSize(TypedValue.COMPLEX_UNIT_PX,getResources().getDimension(R.dimen.text_size_30));
+                mVS.setTextSize(TypedValue.COMPLEX_UNIT_PX,MyApp.getContext().getResources().getDimension(R.dimen.text_size_30));
                 mTitleVS.setText(":");
                 if (score.getAddTime() == 3) {//三个加时
                     mLayoutOt3.setVisibility(View.VISIBLE);
@@ -658,7 +658,7 @@ public class BasketDetailsHeadFragment extends Fragment {
                 //不管是第几节都设置总比分.推送過來的話比分有变化要翻转
 
                 mVS.setText(":");
-                mVS.setTextSize(TypedValue.COMPLEX_UNIT_PX,getResources().getDimension(R.dimen.text_size_30));
+                mVS.setTextSize(TypedValue.COMPLEX_UNIT_PX,MyApp.getContext().getResources().getDimension(R.dimen.text_size_30));
                 mTitleVS.setText(":");
 
                 if (mGuestNum != score.getGuestScore()) {
