@@ -203,9 +203,9 @@ public class BasketDetailsHeadFragment extends Fragment {
         try {
             android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity(), R.style.AppThemeDialog);
             builder.setCancelable(false);// 设置对话框以外不可点击
-            builder.setTitle(getActivity().getResources().getString(R.string.to_update_kindly_reminder));// 提示标题
-            builder.setMessage(getActivity().getResources().getString(R.string.video_high_light_reminder_comment));// 提示内容
-            builder.setPositiveButton(getActivity().getResources().getString(R.string.video_high_light_continue_open), new DialogInterface.OnClickListener() {
+            builder.setTitle(MyApp.getContext().getResources().getString(R.string.to_update_kindly_reminder));// 提示标题
+            builder.setMessage(MyApp.getContext().getResources().getString(R.string.video_high_light_reminder_comment));// 提示内容
+            builder.setPositiveButton(MyApp.getContext().getResources().getString(R.string.video_high_light_continue_open), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
@@ -216,7 +216,7 @@ public class BasketDetailsHeadFragment extends Fragment {
                     startActivity(intent);
                 }
             });
-            builder.setNegativeButton(getActivity().getResources().getString(R.string.basket_analyze_dialog_cancle), new DialogInterface.OnClickListener() {
+            builder.setNegativeButton(MyApp.getContext().getResources().getString(R.string.basket_analyze_dialog_cancle), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
@@ -328,7 +328,7 @@ public class BasketDetailsHeadFragment extends Fragment {
 
 //                    mVS.setText("VS");
                     mVS.setText(R.string.games_no_start);
-                    mVS.setTextSize(TypedValue.COMPLEX_UNIT_PX,getResources().getDimension(R.dimen.text_size_12));
+                    mVS.setTextSize(TypedValue.COMPLEX_UNIT_PX,MyApp.getContext().getResources().getDimension(R.dimen.text_size_12));
                     if (mMatch.getMatchStatus() == PRE_MATCH) {
                         mMatchState.setText(DateUtil.convertDateToNation(bean.getMatch().getDate()) + "  " + bean.getMatch().getTime() + "   " + MyApp.getContext().getResources().getString(R.string.basket_begin_game));
                     } else if (mMatch.getMatchStatus() == DETERMINED) {
