@@ -38,7 +38,6 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.oddfragment.CompanyChooseDialogFragment;
 import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
-import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 
@@ -64,7 +63,7 @@ public class FootCpiFragment extends BaseWebSocketFragment {
     private View mViewLnflater;
     private Context mContext;
     LinearLayout mDateLayout; // 日期布局
-    TextView mDateTextView; // 日期 TextView
+    //TextView mDateTextView; // 日期 TextView
 
     ImageView mCompanyButton, mFilterButton; // 公司和筛选按钮
 
@@ -134,7 +133,7 @@ public class FootCpiFragment extends BaseWebSocketFragment {
 
         // 显示时间的布局和 TextView
         mDateLayout = (LinearLayout) view.findViewById(R.id.public_date_layout);
-        mDateTextView = (TextView) view.findViewById(R.id.public_txt_date);
+      //  mDateTextView = (TextView) view.findViewById(R.id.public_txt_date);
         mDateLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -325,7 +324,7 @@ public class FootCpiFragment extends BaseWebSocketFragment {
                     public void onDateChoose(String date) {
                         L.d("ffgghh", date);
                         choosenDate = date;
-                        mDateTextView.setText(DateUtil.convertDateToNation(date));
+                       // mDateTextView.setText(DateUtil.convertDateToNation(date));
                         setRefreshing(true);
                         refreshAllChildFragments();
                     }
@@ -341,11 +340,11 @@ public class FootCpiFragment extends BaseWebSocketFragment {
         this.currentDate = currentDate;
         if (TextUtils.isEmpty(choosenDate)) {
 
-            mDateTextView.setText(DateUtil.convertDateToNation(currentDate));
+           // mDateTextView.setText(DateUtil.convertDateToNation(currentDate));
 
 
             if (!mDateLayout.isShown()) mDateLayout.setVisibility(View.VISIBLE);
-            if (!mDateTextView.isShown()) mDateTextView.setVisibility(View.VISIBLE);
+          //  if (!mDateTextView.isShown()) mDateTextView.setVisibility(View.VISIBLE);
         }
     }
 

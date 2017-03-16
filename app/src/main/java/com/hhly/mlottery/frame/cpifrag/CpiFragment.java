@@ -39,9 +39,6 @@ public class CpiFragment extends Fragment {
     private Fragment currentFragment;
     private List<Fragment> fragments = new ArrayList<>();
 
-    private FootCpiFragment footCpiFragment;
-
-
     private Activity mActivity;
 
 
