@@ -549,9 +549,7 @@ public class DateUtil {
         TimeZone time = TimeZone.getTimeZone("GMT+8");// 默认国内版
         switch (MyApp.isPackageName) {
             case AppConstants.PACKGER_NAME_ZH:// 国内版
-//                time = TimeZone.getTimeZone("GMT+8");
-                // TODO 暂时用
-                time = TimeZone.getTimeZone("GMT+7");
+                time = TimeZone.getTimeZone("GMT+8");
                 break;
             case AppConstants.PACKGER_NAME_TH:// 泰国版
             case AppConstants.PACKGER_NAME_VN_HN:// 越南北版

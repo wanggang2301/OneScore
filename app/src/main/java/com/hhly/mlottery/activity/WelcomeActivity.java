@@ -256,7 +256,6 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
                 }
             });
         } catch (JSONException e) {
-            // TODO: handle exception
 //			L.e("fastjson异常:"+e);
         }
     }

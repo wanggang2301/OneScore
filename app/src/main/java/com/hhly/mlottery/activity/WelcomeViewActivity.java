@@ -109,16 +109,8 @@ public class WelcomeViewActivity extends BaseActivity implements OnViewChangeLis
     //判断是什么语言加载什么图片
     public void initImg() {
 
-        // TODO 暂时用
         imageView = new int[]{R.mipmap.welcome1, R.mipmap.welcome2, R.mipmap.welcome3};
 
-//        if (MyApp.isLanguage.equals("rTW")) {
-//            imageView = new int[]{R.mipmap.welcome1, R.mipmap.welcome2,
-//                    R.mipmap.welcome3};
-//        } else if (MyApp.isLanguage.equals("rCN")) {
-//            imageView = new int[]{R.mipmap.welcome1, R.mipmap.welcome2,
-//                    R.mipmap.welcome3};
-//        }
     }
 
 
@@ -174,7 +166,6 @@ public class WelcomeViewActivity extends BaseActivity implements OnViewChangeLis
 
     @Override
     public void OnViewChange(int view) {
-        // TODO Auto-generated method stub
 
     }
 

@@ -489,7 +489,6 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     class poponDismissListener implements PopupWindow.OnDismissListener{
         @Override
         public void onDismiss() {
-            // TODO Auto-generated method stub
             backgroundAlpha(1f);
         }
     }

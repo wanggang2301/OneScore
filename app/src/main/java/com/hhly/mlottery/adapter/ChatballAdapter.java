@@ -80,7 +80,6 @@ public class ChatballAdapter extends BaseQuickAdapter<Comment> {
 
                     @Override
                     public void updateDrawState(TextPaint ds) {
-                        // TODO Auto-generated method stub
                         super.updateDrawState(ds);
 
                         ds.setColor(mActivity.getResources().getColor(R.color.colorPrimary));
@@ -93,7 +92,6 @@ public class ChatballAdapter extends BaseQuickAdapter<Comment> {
 
                     @Override
                     public void onClick(View arg0) {
-                        // TODO Auto-generated method stub
                         textView.setText(comment.content);
                         mStringList.add(DateUtil.transferLongToDate(comment.create_time));
 //                        ToastTools.showQuickCenter(mActivity, "position=" + position);

@@ -141,7 +141,6 @@ public class BaseActivity extends FragmentActivity {
 
     @Override
     protected void onResume() {
-        // TODO Auto-generated method stub
         super.onResume();
         if (AppConstants.isUploadCrash) {
             MobclickAgent.onResume(this);

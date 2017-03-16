@@ -530,7 +530,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 }
 
             } catch (Exception e) {
-                // TODO: handle exception
                 UiUtils.toast(LoginActivity.this, R.string.login_peak);
                 UiUtils.toast(mContext, "e>>" + e.toString());
 
