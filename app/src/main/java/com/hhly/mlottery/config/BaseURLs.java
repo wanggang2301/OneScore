@@ -1,5 +1,6 @@
 package com.hhly.mlottery.config;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.activity.DebugConfigActivity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.MyConstants;
@@ -78,13 +79,13 @@ public class BaseURLs {
                 return "m.th.1332255.com:81";
             } else if (url_config == DebugConfigActivity.VN_1332255) {
                 return "m.vn.1332255.com:81";
-            }else if (url_config == DebugConfigActivity.ZH_13322) {
+            } else if (url_config == DebugConfigActivity.ZH_13322) {
                 return "m.13322.com";
-            }else if (url_config == DebugConfigActivity.TH_13322) {
+            } else if (url_config == DebugConfigActivity.TH_13322) {
                 return "m.th.13322.com";
-            }else if (url_config == DebugConfigActivity.VN_13322) {
+            } else if (url_config == DebugConfigActivity.VN_13322) {
                 return "m.vn.13322.com";
-            }else if (url_config == DebugConfigActivity.VN_13366) {
+            } else if (url_config == DebugConfigActivity.VN_13366) {
                 return "m.13366.com";
             } else if (url_config == DebugConfigActivity.DIY_INPUT) {
                 return PreferenceUtil.getString("DIY_INPUT", "m.1332255.com:81");
@@ -92,7 +93,22 @@ public class BaseURLs {
                 return "m.1332255.com:81";
             }
         }
-        return "m.13322.com";//发布版本
+
+        // 正式环境域名
+        switch (MyApp.isPackageName) {
+            case AppConstants.PACKGER_NAME_ZH:
+                return "m.13322.com";
+            case AppConstants.PACKGER_NAME_TH:
+                return "m.th.13322.com";
+            case AppConstants.PACKGER_NAME_VN:
+                return "m.vn.13322.com";
+            case AppConstants.PACKGER_NAME_VN_HN:
+                return "m.13366.com";
+            case AppConstants.PACKGER_NAME_UK:
+                return "m.en.13322.com";
+            default:
+                return "m.13322.com";
+        }
     }
 
 
@@ -106,15 +122,15 @@ public class BaseURLs {
                 return "m.1332255.com:81/ws";
             } else if (ws_config == DebugConfigActivity.WS_1332255_TH) {
                 return "m.th.1332255.com:81/ws";
-            }else if (ws_config == DebugConfigActivity.WS_1332255_VN) {
+            } else if (ws_config == DebugConfigActivity.WS_1332255_VN) {
                 return "m.vn.1332255.com:81/ws";
-            }else if (ws_config == DebugConfigActivity.WS_13322_ZH) {
+            } else if (ws_config == DebugConfigActivity.WS_13322_ZH) {
                 return "m.13322.com/ws";
             } else if (ws_config == DebugConfigActivity.WS_13322_TH) {
                 return "m.th.13322.com/ws";
-            }else if (ws_config == DebugConfigActivity.WS_13322_VN) {
+            } else if (ws_config == DebugConfigActivity.WS_13322_VN) {
                 return "m.vn.13322.com/ws";
-            }else if (ws_config == DebugConfigActivity.WS_13366_VN) {
+            } else if (ws_config == DebugConfigActivity.WS_13366_VN) {
                 return "m.13366.com/ws";
             } else if (ws_config == DebugConfigActivity.DIY_INPUT) {
                 return "m.1332255.com:81/ws";// 自定义
@@ -122,7 +138,22 @@ public class BaseURLs {
                 return "m.1332255.com:81/ws";
             }
         }
-        return "m.13322.com/ws";//开发，发布改这里
+
+        // 正式环境推送域名
+        switch (MyApp.isPackageName) {
+            case AppConstants.PACKGER_NAME_ZH:
+                return "m.13322.com/ws";
+            case AppConstants.PACKGER_NAME_TH:
+                return "m.th.13322.com/ws";
+            case AppConstants.PACKGER_NAME_VN:
+                return "m.vn.13322.com/ws";
+            case AppConstants.PACKGER_NAME_VN_HN:
+                return "m.13366.com/ws";
+            case AppConstants.PACKGER_NAME_UK:
+                return "m.en.13322.com/ws";
+            default:
+                return "m.13322.com/ws";
+        }
     }
 
     /*
@@ -989,9 +1020,9 @@ public class BaseURLs {
     public final static String SNOOKER_LIST_LOADMORE_URL = URL_API_HOST + "snookerMatch.getSnookerLeagues.do"; // http://m.1332255.com:81/mlottery/core/snookerMatch.getSnookerLeagues.do?dateLeaguesId=2016-11-20_125358,2016-11-19_125358
 
     //斯诺克头部跟分析页
-    public final static String SNOOKER_ANALYZE_URL=URL_API_HOST+"snookerAnalysis.findAnalysisInfo.do";
+    public final static String SNOOKER_ANALYZE_URL = URL_API_HOST + "snookerAnalysis.findAnalysisInfo.do";
     //斯诺克亚盘界面
-    public final static String SNOOKER_ODDS_URL=URL_API_HOST+"snookerOdds.getSnookerOddsByMatchId.do";
+    public final static String SNOOKER_ODDS_URL = URL_API_HOST + "snookerOdds.getSnookerOddsByMatchId.do";
     /**
      * 斯洛克 新版
      */
