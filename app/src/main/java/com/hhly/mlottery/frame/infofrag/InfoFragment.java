@@ -75,7 +75,6 @@ public class InfoFragment extends Fragment {
         fragments.add(new FootInfoFragment());
         //fragments.add(new BasketInfoFragment());
         // fragments.add(new SnookerInfoFragment());
-
         /**
          * 默认先选择足球
          */
