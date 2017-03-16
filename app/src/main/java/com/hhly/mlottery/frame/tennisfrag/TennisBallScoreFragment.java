@@ -25,6 +25,7 @@ import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.tennisball.TennisEventBus;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
@@ -43,9 +44,9 @@ import de.greenrobot.event.EventBus;
 
 public class TennisBallScoreFragment extends BaseWebSocketFragment {
 
-    private static final int FOOTBALL = 0;
+   /* private static final int FOOTBALL = 0;
     private static final int BASKETBALL = 1;
-    private static final int TENNLS = 3;
+    private static final int TENNLS = 3;*/
 
     private static final int TENNIS_IMMEDIATE = 0;
     private static final int TENNIS_RESULT = 1;
@@ -125,10 +126,10 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment {
         titles.add(getString(R.string.foot_saicheng_txt));
 
         String focusId = PreferenceUtil.getString(AppConstants.TENNIS_BALL_FOCUS, null);
-        if(!TextUtils.isEmpty(focusId)){
+        if (!TextUtils.isEmpty(focusId)) {
             String[] focusIds = focusId.split(",");
-            titles.add(getString(R.string.foot_details_focus) + "("+ focusIds.length +")");
-        }else{
+            titles.add(getString(R.string.foot_details_focus) + "(" + focusIds.length + ")");
+        } else {
             titles.add(getString(R.string.foot_details_focus));
         }
 
@@ -182,7 +183,7 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment {
     private void popWindow(final View v) {
         final View mView = View.inflate(mContext, R.layout.pop_select, null);
         // 创建ArrayAdapter对象
-        BallChoiceArrayAdapter mAdapter = new BallChoiceArrayAdapter(mContext, mItems, TENNLS);
+        BallChoiceArrayAdapter mAdapter = new BallChoiceArrayAdapter(mContext, mItems, BallType.TENNLS);
 
         ListView listview = (ListView) mView.findViewById(R.id.match_type);
         listview.setAdapter(mAdapter);
@@ -252,12 +253,12 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment {
     }
 
     public void onEventMainThread(TennisEventBus event) {
-        if("tennisFocus".equals(event.msg)){
+        if ("tennisFocus".equals(event.msg)) {
             String focusId = PreferenceUtil.getString(AppConstants.TENNIS_BALL_FOCUS, null);
-            if(!TextUtils.isEmpty(focusId)){
+            if (!TextUtils.isEmpty(focusId)) {
                 String[] focusIds = focusId.split(",");
-                mTabLayout.getTabAt(TENNIS_FOCUS).setText(getString(R.string.foot_details_focus) + "("+ focusIds.length +")");
-            }else{
+                mTabLayout.getTabAt(TENNIS_FOCUS).setText(getString(R.string.foot_details_focus) + "(" + focusIds.length + ")");
+            } else {
                 mTabLayout.getTabAt(TENNIS_FOCUS).setText(getString(R.string.foot_details_focus));
             }
         }

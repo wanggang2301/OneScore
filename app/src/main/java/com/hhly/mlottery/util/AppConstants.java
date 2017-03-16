@@ -397,4 +397,5 @@ public class AppConstants {
         localMap.put("[有请关老爷]", R.mipmap.chart_ball_youqingguanlaoye);
         localMap.put("[再来一角]", R.mipmap.chart_ball_zailaiyijiao);
     }
+
 }

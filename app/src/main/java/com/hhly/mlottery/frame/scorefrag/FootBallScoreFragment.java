@@ -29,6 +29,7 @@ import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.LeagueCup;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.footballframe.FocusFragment;
 import com.hhly.mlottery.frame.footballframe.ImmediateFragment;
 import com.hhly.mlottery.frame.footballframe.ResultFragment;
@@ -53,9 +54,6 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     private final boolean isNewFrameWork = true;
     private final int entryType = 1;
 
-    private static final int FOOTBALL = 0;
-    private static final int BASKETBALL = 1;
-    private static final int SNOOKER = 2;
 
     private final int ROLLBALL_FRAGMENT = 0;
     private final int IMMEDIA_FRAGMENT = 1;
@@ -151,6 +149,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
             }
         }
     }
+
     private void initEvent() {
         ll_match_select.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,7 +164,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     private void popWindow(final View v) {
         final View mView = View.inflate(mContext, R.layout.pop_select, null);
         // 创建ArrayAdapter对象
-        BallChoiceArrayAdapter mAdapter = new BallChoiceArrayAdapter(mContext, mItems, FOOTBALL);
+        BallChoiceArrayAdapter mAdapter = new BallChoiceArrayAdapter(mContext, mItems, BallType.FOOTBALL);
 
         ListView listview = (ListView) mView.findViewById(R.id.match_type);
         listview.setAdapter(mAdapter);
@@ -179,7 +178,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                L.d("websocket123","足球关闭");
+                L.d("websocket123", "足球关闭");
                 closeWebSocket();
                 EventBus.getDefault().post(new ScoreSwitchFg(position));
 
@@ -219,12 +218,12 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         titles.add(getString(R.string.foot_guanzhu_txt));
 
         fragments = new ArrayList<>();
-        rollBallFragment = RollBallFragment.newInstance(ROLLBALL_FRAGMENT, isNewFrameWork , entryType);
+        rollBallFragment = RollBallFragment.newInstance(ROLLBALL_FRAGMENT, isNewFrameWork, entryType);
         fragments.add(rollBallFragment);
-        fragments.add(ImmediateFragment.newInstance(IMMEDIA_FRAGMENT, isNewFrameWork , entryType));
-        fragments.add(ResultFragment.newInstance(RESULT_FRAGMENT , entryType));
-        fragments.add(ScheduleFragment.newInstance(SCHEDULE_FRAGMENT , entryType));
-        fragments.add(FocusFragment.newInstance(FOCUS_FRAGMENT , entryType));
+        fragments.add(ImmediateFragment.newInstance(IMMEDIA_FRAGMENT, isNewFrameWork, entryType));
+        fragments.add(ResultFragment.newInstance(RESULT_FRAGMENT, entryType));
+        fragments.add(ScheduleFragment.newInstance(SCHEDULE_FRAGMENT, entryType));
+        fragments.add(FocusFragment.newInstance(FOCUS_FRAGMENT, entryType));
 
         pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
 
@@ -280,7 +279,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
 
         if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
             mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        }else{
+        } else {
             mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         }
 
@@ -429,7 +428,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
                     bundle.putInt("currentFragmentId", SCHEDULE_FRAGMENT);
                     intent.putExtras(bundle);
                     startActivity(intent);
-                } else if(currentFragmentId == FOCUS_FRAGMENT){
+                } else if (currentFragmentId == FOCUS_FRAGMENT) {
                     Intent intent = new Intent(getActivity(), FootballTypeSettingActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putInt("currentFragmentId", FOCUS_FRAGMENT);
@@ -498,7 +497,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         }
         // }
         //if (getActivity() != null && ((FootballActivity) mContext).fragmentIndex != FootballActivity.BASKET_FRAGMENT) {
-        L.d("websocket123","足球打开");
+        L.d("websocket123", "足球打开");
         connectWebSocket();
         // }
     }
