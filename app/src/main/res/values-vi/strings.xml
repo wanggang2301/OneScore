@@ -1200,7 +1200,7 @@
     <string name="home_lottery_info_open">Mở thưởng</string>
     <string name="home_lottery_info_stat">Thống kê</string>
     <string name="home_lottery_info_chart">Biểu đồ</string>
-    <string name="home_lottery_info_start_title">Biểu đồ thống kê</string>
+    <string name="home_lottery_info_start_title">Biểu đồ</string>
     <string name="home_lottery_info_start_tab_tm">Giải đặc biệt ra</string>
     <string name="home_lottery_info_start_tab_pm">Giải thường ra</string>
     <string name="home_lottery_info_start_tab_notm">Giải đặc biệt chưa ra</string>
