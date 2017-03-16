@@ -2288,6 +2288,18 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         if (isAddMultiViewHide) {
             tv_addMultiView.setVisibility(View.GONE);
         }
+
+
+        //跳转到足球资料库内页
+        mMatchTypeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FootballMatchDetailActivity.this, FootballDatabaseDetailsActivity.class);
+                //  intent.putExtra(LEAGUE, mList.get(position));
+                intent.putExtra("isIntegral", false);
+                startActivity(intent);
+            }
+        });
     }
 
 

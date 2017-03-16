@@ -10,11 +10,11 @@ import android.os.Parcelable;
  */
 public class DataBaseBean implements Parcelable {
 
-    private String kind;
-    private String leagueId;
-    private String lgName;
-    private String pic;
-    private String lgId;
+    private String kind;       //联赛类型
+    private String leagueId;    // 联赛id
+    private String lgName;     //联赛名
+    private String pic;      //联赛图标
+    private String lgId;     //背景图片
 
     public DataBaseBean() {
 
