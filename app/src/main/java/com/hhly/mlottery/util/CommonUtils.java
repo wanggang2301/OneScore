@@ -49,15 +49,15 @@ public class CommonUtils {
             PreferenceUtil.commitString(AppConstants.SPKEY_TOKEN, "");
             PreferenceUtil.commitString(AppConstants.SPKEY_LOGINACCOUNT, "");
             PreferenceUtil.commitString(AppConstants.HEADICON, "");
-            PreferenceUtil.commitString(AppConstants.SEX,"");
-          //PreferenceUtil.commitInt(AppConstants.SEX,0);
+            PreferenceUtil.commitString(AppConstants.SEX, "");
+            //PreferenceUtil.commitInt(AppConstants.SEX,0);
             AppConstants.register = new Register();
 
 
         } else {
             PreferenceUtil.commitString(AppConstants.SPKEY_USERID, register.getData().getUser().getUserId());
             PreferenceUtil.commitString(AppConstants.SPKEY_NICKNAME, register.getData().getUser().getNickName());
-            if(register.getData().getUser().getLoginAccount()!=null){
+            if (register.getData().getUser().getLoginAccount() != null) {
                 PreferenceUtil.commitString(AppConstants.SPKEY_LOGINACCOUNT, register.getData().getUser().getLoginAccount());
             }
             PreferenceUtil.commitString(AppConstants.HEADICON, register.getData().getUser().getHeadIcon());
@@ -70,15 +70,17 @@ public class CommonUtils {
         }
 
     }
+
     /**
      * 获取ip
+     *
      * @return
      */
-    public static  String getIpAddress() {
+    public static String getIpAddress() {
         try {
-            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
+            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
                 NetworkInterface intf = en.nextElement();
-                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
+                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
                     InetAddress inetAddress = enumIpAddr.nextElement();
                     if (!inetAddress.isLoopbackAddress()) {
                         return inetAddress.getHostAddress().toString();
@@ -152,11 +154,11 @@ public class CommonUtils {
             }
             PreferenceUtil.commitString(AppConstants.DEVICETOKEN, deviceToken);
         }
-        L.d(TAG,deviceToken+">>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<");
+        L.d(TAG, deviceToken + ">>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<");
         return deviceToken;
     }
 
-    public static String getToken(){
+    public static String getToken() {
         return PreferenceUtil.getString(AppConstants.SPKEY_TOKEN, "");
     }
 
@@ -402,6 +404,19 @@ public class CommonUtils {
             sb.append(base.charAt(number));
         }
         return sb.toString();
+    }
+
+    /**
+     * 判断国内还是国外
+     *
+     * @return
+     */
+
+    public static boolean isZH() {
+        if (MyApp.isPackageName.equals(AppConstants.PACKGER_NAME_ZH)) {
+            return true;
+        }
+        return false;
     }
 
 
