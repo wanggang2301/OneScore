@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
@@ -25,11 +26,6 @@ import de.greenrobot.event.EventBus;
  * 指数
  */
 public class CpiFragment extends Fragment {
-
-    private static final int FOOTBALL = 0;
-    private static final int BASKETBALL = 1;
-    private static final int SNOOKER = 2;
-
 
     private View mView;
     private Context mContext;
@@ -59,7 +55,7 @@ public class CpiFragment extends Fragment {
 
     private void initView() {
         fragments.add(FootCpiFragment.newInstance());
-        switchFragment(FOOTBALL);
+        switchFragment(BallType.FOOTBALL);
 
     }
 

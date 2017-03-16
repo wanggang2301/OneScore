@@ -28,6 +28,7 @@ import com.hhly.mlottery.activity.BasketballSettingActivity;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
@@ -53,9 +54,7 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
     private String[] mItems;
     private View view;
     private Context mContext;
-    private static final int FOOTBALL = 0;
-    private static final int BASKETBALL = 1;
-    private static final int SNOOKER = 2;
+
 
     private final int IMMEDIA_FRAGMENT = 0;
     private final int RESULT_FRAGMENT = 1;
@@ -162,10 +161,10 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         titles.add(getString(R.string.foot_guanzhu_txt));
 
         fragments = new ArrayList<>();
-        fragments.add(ImmedBasketballFragment.newInstance(IMMEDIA_FRAGMENT, isNewFrameWork ,basketEntryType));
-        fragments.add(ResultBasketballFragment.newInstance(RESULT_FRAGMENT , basketEntryType));
-        fragments.add(ScheduleBasketballFragment.newInstance(SCHEDULE_FRAGMENT , basketEntryType));
-        fragments.add(FocusBasketballFragment.newInstance(FOCUS_FRAGMENT , basketEntryType));
+        fragments.add(ImmedBasketballFragment.newInstance(IMMEDIA_FRAGMENT, isNewFrameWork, basketEntryType));
+        fragments.add(ResultBasketballFragment.newInstance(RESULT_FRAGMENT, basketEntryType));
+        fragments.add(ScheduleBasketballFragment.newInstance(SCHEDULE_FRAGMENT, basketEntryType));
+        fragments.add(FocusBasketballFragment.newInstance(FOCUS_FRAGMENT, basketEntryType));
 
         pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
         mViewPager.setAdapter(pureViewPagerAdapter);
@@ -173,7 +172,7 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
 
         if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
             mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        }else{
+        } else {
             mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         }
 
@@ -222,13 +221,14 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         });
 
     }
+
     /**
      * 刷新tab栏后的关注个数
      */
-    public  void focusCallback() {
+    public void focusCallback() {
         String focusIds = PreferenceUtil.getString(FocusBasketballFragment.BASKET_FOCUS_IDS, "");
         String[] arrayId = focusIds.split("[,]");
-        if(getActivity()!=null){
+        if (getActivity() != null) {
             if ("".equals(focusIds) || arrayId.length == 0) {
                 mTabLayout.getTabAt(3).setText(getActivity().getResources().getString(R.string.foot_guanzhu_txt));
             } else {
@@ -237,6 +237,7 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         }
 
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -575,7 +576,7 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
     private void popWindow(final View v) {
         final View mView = View.inflate(mContext, R.layout.pop_select, null);
         // 创建ArrayAdapter对象
-        BallChoiceArrayAdapter mAdapter = new BallChoiceArrayAdapter(mContext, mItems, BASKETBALL);
+        BallChoiceArrayAdapter mAdapter = new BallChoiceArrayAdapter(mContext, mItems, BallType.BASKETBALL);
 
         ListView listview = (ListView) mView.findViewById(R.id.match_type);
         listview.setAdapter(mAdapter);
@@ -641,6 +642,7 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
     protected void onConnected() {
 
     }
+
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);

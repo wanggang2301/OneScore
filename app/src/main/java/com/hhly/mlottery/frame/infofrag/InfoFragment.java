@@ -19,6 +19,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
@@ -31,9 +32,7 @@ import java.util.List;
  * wangg
  */
 public class InfoFragment extends Fragment {
-    private static final int FOOTBALL = 0;
-    private static final int BASKETBALL = 1;
-    private static final int SNOOKER = 2;
+
     private View mView;
     private Context mContext;
     private String[] mItems;
@@ -79,7 +78,7 @@ public class InfoFragment extends Fragment {
          * 默认先选择足球
          */
         tv_match_name.setText(getResources().getString(R.string.football_txt));
-        switchFragment(FOOTBALL);
+        switchFragment(BallType.FOOTBALL);
 
     }
 
