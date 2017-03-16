@@ -699,7 +699,7 @@
     <string name="pwd_format_just_length">Độ dài mật mã 6-16 ký tự</string>
     <string name="verify_time_limit">2 lần gửi không cách nhau không ít hơn 60 giây</string>
     <string name="nickname_sensitive">Biệt danh có từ ngữ nhạy cảm</string>
-    <string name="man_sex">Nam tử hán</string>
+    <string name="man_sex">Hảo hán</string>
     <string name="woman_sex">Mỹ nữ</string>
     <string name="noon_sex">Bí mật</string>
     <string name="chose_head_phot">Chọn ảnh đại diện</string>
