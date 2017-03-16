@@ -2,215 +2,224 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <include layout="@layout/layout_header"/>
+
     <LinearLayout
-        android:background="@color/white"
-        android:paddingTop="21dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
-        <TextView
-            android:gravity="center"
-            android:background="@color/white"
-            android:textSize="@dimen/text_size_15"
-            android:textColor="@color/res_time_color"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/chose_start_text"/>
-        <TextView
-            android:paddingTop="5dp"
-            android:background="@color/white"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_15"
-            android:textColor="@color/res_time_color"
-            android:text="@string/only_chose_start_text"/>
 
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="6">
-
+        <include layout="@layout/layout_header" />
 
         <LinearLayout
-            android:paddingTop="10dp"
-            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
-                android:background="@color/white"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingTop="21dp">
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="@string/chose_start_text"
+                android:textColor="@color/res_time_color"
+                android:textSize="@dimen/text_size_15" />
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:paddingLeft="5dp"
-                    android:paddingBottom="8dp"
-                    android:background="@color/white"
-                    android:textSize="@dimen/text_size_15"
-                    android:textColor="@color/res_name_color"
-                    android:text="@string/star_style"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:text="@string/only_chose_start_text"
+                android:textColor="@color/res_time_color"
+                android:textSize="@dimen/text_size_15" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:background="@color/white"
-                    android:textSize="@dimen/text_size_15"
-                    android:textColor="@color/res_name_color"
-                    android:text="("/>
-                <TextView
-                    android:id="@+id/start_male_size"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:background="@color/white"
-                    android:textSize="@dimen/text_size_15"
-                    android:textColor="@color/res_name_color"
-                    android:text="0"
-                    />
-                <TextView
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingTop="10dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
                     android:background="@color/white"
-                    android:textSize="@dimen/text_size_15"
-                    android:textColor="@color/res_name_color"
-                    android:text=")"/>
+                    android:orientation="horizontal">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:paddingBottom="8dp"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="8dp"
+                        android:text="@string/star_style"
+                        android:textColor="@color/res_name_color"
+                        android:textSize="@dimen/text_size_15" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text="("
+                        android:textColor="@color/res_name_color"
+                        android:textSize="@dimen/text_size_15" />
+
+                    <TextView
+                        android:id="@+id/start_male_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text="0"
+                        android:textColor="@color/res_name_color"
+                        android:textSize="@dimen/text_size_15" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text=")"
+                        android:textColor="@color/res_name_color"
+                        android:textSize="@dimen/text_size_15" />
+                </LinearLayout>
+
+                <com.hhly.mlottery.view.GrapeGridview
+                    android:id="@+id/male_gridview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:columnWidth="0dp"
+                    android:gravity="center"
+                    android:horizontalSpacing="7.5dp"
+                    android:numColumns="3"
+                    android:scrollbars="none"
+                    android:stretchMode="columnWidth"
+                    android:verticalSpacing="9dp"></com.hhly.mlottery.view.GrapeGridview>
+
+                <!-- <GridView
+                     android:id="@+id/filtrate_hot_gridview"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:numColumns="4"
+                     >
+
+                 </GridView>-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+
+                        android:paddingBottom="8dp"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="8dp"
+                        android:text="@string/football_baby"
+                        android:textColor="@color/res_name_color"
+                        android:textSize="@dimen/text_size_15" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text="("
+                        android:textColor="@color/res_name_color"
+                        android:textSize="@dimen/text_size_15" />
+
+                    <TextView
+                        android:id="@+id/start_famle_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text="0"
+                        android:textColor="@color/res_name_color"
+                        android:textSize="@dimen/text_size_15" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text=")"
+                        android:textColor="@color/res_name_color"
+                        android:textSize="@dimen/text_size_15" />
+                </LinearLayout>
+
+
+                <com.hhly.mlottery.view.GrapeGridview
+                    android:id="@+id/famle_gridview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:columnWidth="0dp"
+                    android:gravity="center"
+                    android:horizontalSpacing="7.5dp"
+                    android:numColumns="3"
+                    android:scrollbars="none"
+                    android:stretchMode="columnWidth"
+                    android:verticalSpacing="9dp"></com.hhly.mlottery.view.GrapeGridview>
             </LinearLayout>
+        </ScrollView>
+        <!--  <TextView
+              android:paddingLeft="10dp"
+              android:background="@color/white"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:textSize="@dimen/text_size_15"
+              android:textColor="@color/res_name_color"
+              android:text="球星风采(9) " />
 
-            <com.hhly.mlottery.view.GrapeGridview
-                android:id="@+id/male_gridview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:columnWidth="0dp"
-                android:gravity="center"
-                android:horizontalSpacing="7.5dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:numColumns="3"
-                android:scrollbars="none"
-                android:stretchMode="columnWidth"
-                android:verticalSpacing="9dp">
-            </com.hhly.mlottery.view.GrapeGridview>
+              <android.support.v7.widget.RecyclerView android:padding="15dp"
+              android:id="@+id/chose_head"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              ></android.support.v7.widget.RecyclerView>
+          <TextView
+              android:paddingLeft="10dp"
+              android:background="@color/white"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:textSize="@dimen/text_size_15"
+              android:textColor="@color/res_name_color"
+              android:text="足球宝贝(3) "
+              />
 
-            <!-- <GridView
-                 android:id="@+id/filtrate_hot_gridview"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:numColumns="4"
-                 >
-
-             </GridView>-->
-        <LinearLayout
-            android:background="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:paddingLeft="5dp"
-                android:textSize="@dimen/text_size_15"
-                android:textColor="@color/res_name_color"
-                android:text="@string/football_baby"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:background="@color/white"
-                android:textSize="@dimen/text_size_15"
-                android:textColor="@color/res_name_color"
-                android:text="("/>
-            <TextView
-                android:id="@+id/start_famle_size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:background="@color/white"
-                android:textSize="@dimen/text_size_15"
-                android:textColor="@color/res_name_color"
-                android:text="0"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:background="@color/white"
-                android:textSize="@dimen/text_size_15"
-                android:textColor="@color/res_name_color"
-                android:text=")"/>
-        </LinearLayout>
-
-
-            <com.hhly.mlottery.view.GrapeGridview
-                android:id="@+id/famle_gridview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:columnWidth="0dp"
-                android:gravity="center"
-                android:horizontalSpacing="7.5dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:numColumns="3"
-                android:scrollbars="none"
-                android:stretchMode="columnWidth"
-                android:verticalSpacing="9dp" >
-            </com.hhly.mlottery.view.GrapeGridview>
-        </LinearLayout>
-    </ScrollView>
-  <!--  <TextView
-        android:paddingLeft="10dp"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="@dimen/text_size_15"
-        android:textColor="@color/res_name_color"
-        android:text="球星风采(9) " />
-
-        <android.support.v7.widget.RecyclerView android:padding="15dp"
-        android:id="@+id/chose_head"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        ></android.support.v7.widget.RecyclerView>
-    <TextView
-        android:paddingLeft="10dp"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_size_15"
-        android:textColor="@color/res_name_color"
-        android:text="足球宝贝(3) "
-        />
-
-    <android.support.v7.widget.RecyclerView
-        android:padding="15dp"
-        android:id="@+id/chose_woman_head"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        ></android.support.v7.widget.RecyclerView>-->
-</LinearLayout>
+          <android.support.v7.widget.RecyclerView
+              android:padding="15dp"
+              android:id="@+id/chose_woman_head"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              ></android.support.v7.widget.RecyclerView>-->
+    </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

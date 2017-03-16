@@ -12,9 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!--addtjl添加中间日期显示-->
-
-        <!--addtjl end 添加中间日期显示-->
         <LinearLayout
             android:id="@+id/ll_match_select"
             android:layout_width="wrap_content"

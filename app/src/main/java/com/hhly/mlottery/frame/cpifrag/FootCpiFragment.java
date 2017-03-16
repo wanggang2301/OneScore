@@ -35,6 +35,7 @@ import com.hhly.mlottery.bean.enums.OddsTypeEnum;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.websocket.WebSocketCPIResult;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.oddfragment.CompanyChooseDialogFragment;
 import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
@@ -54,9 +55,9 @@ import de.greenrobot.event.EventBus;
 public class FootCpiFragment extends BaseWebSocketFragment {
 
 
-    private static final int FOOTBALL = 0;
-    private static final int BASKETBALL = 1;
-    private static final int SNOOKER = 2;
+    /*  private static final int FOOTBALL = 0;
+      private static final int BASKETBALL = 1;
+      private static final int SNOOKER = 2;*/
     private static final int startFilterRequestCode = 10086;
 
 
@@ -81,9 +82,6 @@ public class FootCpiFragment extends BaseWebSocketFragment {
     private String currentDate; // 当前日期
     private String choosenDate; // 选中日期
 
-//    private URI socketUri;
-//    private HappySocketClient socketClient; // WebSocket 客户端
-
     private LinearLayout d_header;
     private LinearLayout ll_match_select;
 
@@ -105,8 +103,7 @@ public class FootCpiFragment extends BaseWebSocketFragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mViewLnflater = inflater.inflate(R.layout.fragment_foot_cpi, container, false);
 
         mContext = getActivity();
@@ -133,7 +130,6 @@ public class FootCpiFragment extends BaseWebSocketFragment {
 
         // 显示时间的布局和 TextView
         mDateLayout = (LinearLayout) view.findViewById(R.id.public_date_layout);
-      //  mDateTextView = (TextView) view.findViewById(R.id.public_txt_date);
         mDateLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,7 +139,6 @@ public class FootCpiFragment extends BaseWebSocketFragment {
 
         // 右上角公司和联赛筛选
         mCompanyButton = (ImageView) view.findViewById(R.id.public_img_company);
-//        mCompanyButton.setVisibility(View.VISIBLE);
         mCompanyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,7 +146,6 @@ public class FootCpiFragment extends BaseWebSocketFragment {
             }
         });
         mFilterButton = (ImageView) view.findViewById(R.id.public_img_filter);
-//        mFilterButton.setVisibility(View.VISIBLE);
         mFilterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,13 +175,10 @@ public class FootCpiFragment extends BaseWebSocketFragment {
             @Override
             public void run() {
                 setRefreshing(true);
-//                refreshAllChildFragments();
             }
         });
 
         initEvent();
-
-//        startWebSocket();
         connectWebSocket();
     }
 
@@ -208,7 +199,7 @@ public class FootCpiFragment extends BaseWebSocketFragment {
     private void popWindow(final View v) {
         final View mView = View.inflate(mContext, R.layout.pop_select, null);
         // 创建ArrayAdapter对象
-        BallChoiceArrayAdapter mAdapter = new BallChoiceArrayAdapter(mContext, mItems, FOOTBALL);
+        BallChoiceArrayAdapter mAdapter = new BallChoiceArrayAdapter(mContext, mItems, BallType.FOOTBALL);
 
         ListView listview = (ListView) mView.findViewById(R.id.match_type);
         listview.setAdapter(mAdapter);
@@ -269,22 +260,6 @@ public class FootCpiFragment extends BaseWebSocketFragment {
         }
     }
 
-//    /**
-//     * 开启 webSocket
-//     */
-//    private void startWebSocket() {
-//        try {
-//            socketUri = new URI(BaseURLs.URL_CPI_SOCKET);
-//            socketClient = new HappySocketClient(socketUri, new Draft_17());
-//            socketClient.setSocketResponseCloseListener(this);
-//            socketClient.setSocketResponseErrorListener(this);
-//            socketClient.setSocketResponseMessageListener(this);
-//            socketClient.connect();
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     /**
      * 显示日期选择 dialog
      */
@@ -324,7 +299,7 @@ public class FootCpiFragment extends BaseWebSocketFragment {
                     public void onDateChoose(String date) {
                         L.d("ffgghh", date);
                         choosenDate = date;
-                       // mDateTextView.setText(DateUtil.convertDateToNation(date));
+                        // mDateTextView.setText(DateUtil.convertDateToNation(date));
                         setRefreshing(true);
                         refreshAllChildFragments();
                     }
@@ -339,12 +314,7 @@ public class FootCpiFragment extends BaseWebSocketFragment {
     public void setCurrentDate(String currentDate) {
         this.currentDate = currentDate;
         if (TextUtils.isEmpty(choosenDate)) {
-
-           // mDateTextView.setText(DateUtil.convertDateToNation(currentDate));
-
-
             if (!mDateLayout.isShown()) mDateLayout.setVisibility(View.VISIBLE);
-          //  if (!mDateTextView.isShown()) mDateTextView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -432,34 +402,6 @@ public class FootCpiFragment extends BaseWebSocketFragment {
         }
     }
 
-
-//    @Override
-//    public void onMessage(String message) {
-//        if (message.startsWith("CONNECTED")) {
-//            String id = "android" + DeviceInfo.getDeviceId(MyApp.getContext());
-//            id = MD5Util.getMD5(id);
-//            // USER.topic.indexcenter
-//            socketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.indexcenter" + "\n\n");
-//        } else if (message.startsWith("MESSAGE")) {
-//            final String jsonString = message.substring(message.indexOf("{"), message.lastIndexOf("}") + 1);
-//            mTabLayout.post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    handleMessage(jsonString);
-//                }
-//            });
-//        }
-//    }
-
-//    @Override
-//    public void onError(Exception exception) {
-//        exception.printStackTrace();
-//    }
-//
-//    @Override
-//    public void onClose(String message) {
-//        startWebSocket();
-//    }
 
     /**
      * 处理 websocket 传来的数据
