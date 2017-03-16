@@ -212,9 +212,9 @@ public class EventAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolde
                         msg_right.setText(m.getPlayInfo().split("|")[0] + mContext.getResources().getString(R.string.foot_event_in) + m.getPlayInfo().split("|")[1] + mContext.getResources().getString(R.string.foot_event_out));
                     } else {
                         if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
-                            msg_left.setText(m.getPlayInfo().split(":")[0] + mContext.getResources().getString(R.string.foot_event_num_in) + m.getPlayInfo().split(":")[1] + mContext.getResources().getString(R.string.foot_event_num_out));
+                            msg_right.setText(m.getPlayInfo().split(":")[0] + mContext.getResources().getString(R.string.foot_event_num_in) + m.getPlayInfo().split(":")[1] + mContext.getResources().getString(R.string.foot_event_num_out));
                         } else {
-                            msg_left.setText(mContext.getResources().getString(R.string.foot_event_num) + m.getPlayInfo().split(":")[0] + mContext.getResources().getString(R.string.foot_event_num_in) + mContext.getResources().getString(R.string.foot_event_num) + m.getPlayInfo().split(":")[1] + mContext.getResources().getString(R.string.foot_event_num_out));
+                            msg_right.setText(mContext.getResources().getString(R.string.foot_event_num) + m.getPlayInfo().split(":")[0] + mContext.getResources().getString(R.string.foot_event_num_in) + mContext.getResources().getString(R.string.foot_event_num) + m.getPlayInfo().split(":")[1] + mContext.getResources().getString(R.string.foot_event_num_out));
                         }
                     }
                 } else {
