@@ -67,7 +67,6 @@ import de.greenrobot.event.EventBus;
  */
 public class ImmedBasketballFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, ExpandableListView.OnChildClickListener {
 
-
     private static final String TAG = "ImmedBasketballFragment";
     private static final String PARAMS = "BASKET_PARAMS";
     private PinnedHeaderExpandableListView explistview;
