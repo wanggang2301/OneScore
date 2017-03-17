@@ -101,8 +101,7 @@ public class CPIOddsFragment2 extends Fragment {
                 parentFragment.refreshAllChildFragments();
             }
         });
-        RecyclerView.LayoutParams layoutParams =
-                new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT);
         mEmptyView.setLayoutParams(layoutParams);
         setStatus(StatusEnum.LOADING);

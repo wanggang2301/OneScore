@@ -13,4 +13,21 @@ public class BasketBallOddPresenter extends BasePresenter<BasketBallContract.Odd
     public BasketBallOddPresenter(BasketBallContract.OddView view) {
         super(view);
     }
+
+
+    @Override
+    public void showLoad() {
+        mView.showLoadView();
+    }
+
+
+    @Override
+    public void showRequestData() {
+        mView.showRequestDataView();
+    }
+
+    @Override
+    public void requestError() {
+        mView.onError();
+    }
 }

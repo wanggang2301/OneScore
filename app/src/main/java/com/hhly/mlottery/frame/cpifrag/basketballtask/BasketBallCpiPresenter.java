@@ -11,7 +11,6 @@ import com.hhly.mlottery.mvp.BasePresenter;
 
 public class BasketBallCpiPresenter extends BasePresenter<BasketBallContract.CpiView> implements BasketBallContract.CpiPresenter {
 
-
     public BasketBallCpiPresenter(BasketBallContract.CpiView view) {
         super(view);
         mView = view;
@@ -19,8 +18,7 @@ public class BasketBallCpiPresenter extends BasePresenter<BasketBallContract.Cpi
 
 
     @Override
-    public void switchFg() {
-        mView.switchFgView();
+    public void initFg() {
+        mView.initFgView();
     }
-
 }

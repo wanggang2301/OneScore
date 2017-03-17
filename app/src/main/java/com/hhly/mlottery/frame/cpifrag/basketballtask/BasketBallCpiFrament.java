@@ -7,6 +7,8 @@ import android.databinding.DataBindingUtil;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +17,17 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.Toast;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.bean.enums.OddsTypeEnum;
 import com.hhly.mlottery.databinding.FragmentBasketBallCpiBinding;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
@@ -33,9 +38,11 @@ import de.greenrobot.event.EventBus;
  */
 public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPresenter> implements BasketBallContract.CpiView {
 
+    FragmentBasketBallCpiBinding mBinding;
+
     private String[] mItems;
     private Activity mActivity;
-    FragmentBasketBallCpiBinding mBinding;
+    private List<BasketBallOddFragment> mFragments;
 
     public BasketBallCpiFrament() {
 
@@ -59,36 +66,81 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
         super.onViewCreated(view, savedInstanceState);
         mItems = getResources().getStringArray(R.array.zhishu_select);
         mPresenter = new BasketBallCpiPresenter(this);
-        mPresenter.switchFg();
+
+        //初始化头部View和事件
+        mPresenter.initFg();
     }
 
 
     @Override
-    public void switchFgView() {
-        Toast.makeText(mActivity, "ddd", Toast.LENGTH_SHORT).show();
-        initEvent();
+    public void initFgView() {
+        initClickEvent();
+        initViewPager();
     }
 
-
-    private void initEvent() {
+    private void initClickEvent() {
         mBinding.dHeasder.llMatchSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mBinding.dHeasder.ivMatch.setImageResource(R.mipmap.nav_icon_up);
                 backgroundAlpha(getActivity(), 0.5f);
-                popWindow(v);
+                popWindow();
+            }
+        });
+
+
+        //时间选择
+        mBinding.dHeasder.publicDateLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+        //公司选择
+        mBinding.dHeasder.publicImgCompany.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        //赛事筛选
+        mBinding.dHeasder.publicImgFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
 
-    private void popWindow(final View v) {
+
+    /**
+     * 初始化 ViewPager
+     */
+    private void initViewPager() {
+        mFragments = new ArrayList<>();
+        mFragments.add(BasketBallOddFragment.newInstance(OddsTypeEnum.PLATE));
+        mFragments.add(BasketBallOddFragment.newInstance(OddsTypeEnum.BIG));
+        mFragments.add(BasketBallOddFragment.newInstance(OddsTypeEnum.OP));
+        CPIPagerAdapter pagerAdapter = new CPIPagerAdapter(getChildFragmentManager());
+        mBinding.cpiViewpager.setOffscreenPageLimit(3);
+        mBinding.cpiViewpager.setAdapter(pagerAdapter);
+        mBinding.tabs.setupWithViewPager(mBinding.cpiViewpager);
+    }
+
+
+    /**
+     * 球类切换Dialog
+     */
+    private void popWindow() {
         final View mView = View.inflate(mActivity, R.layout.pop_select, null);
         // 创建ArrayAdapter对象
         BallChoiceArrayAdapter mAdapter = new BallChoiceArrayAdapter(mActivity, mItems, BallType.BASKETBALL);
 
         ListView listview = (ListView) mView.findViewById(R.id.match_type);
         listview.setAdapter(mAdapter);
-
-
         final PopupWindow popupWindow = new PopupWindow(mView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         popupWindow.setFocusable(true);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
@@ -105,7 +157,7 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-               // mBinding.dHeasder.iv_match.setImageResource(R.mipmap.nav_icon_cbb);
+                mBinding.dHeasder.ivMatch.setImageResource(R.mipmap.nav_icon_cbb);
                 backgroundAlpha(getActivity(), 1f);
             }
         });
@@ -123,10 +175,8 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
         context.getWindow().setAttributes(lp);
     }
 
-
     @Override
     public void onError() {
-
 
     }
 
@@ -134,6 +184,39 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
     public void onAttach(Context context) {
         super.onAttach(context);
         this.mActivity = (Activity) context;
+    }
 
+    /**
+     * ViewPager 适配器
+     */
+    class CPIPagerAdapter extends FragmentStatePagerAdapter {
+
+        public CPIPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public BasketBallOddFragment getItem(int position) {
+            return mFragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return getString(R.string.odd_plate_rb_txt);
+                case 1:
+                    return getString(R.string.asiasize);
+                case 2:
+                    return getString(R.string.odd_op_rb_txt);
+                default:
+                    return getString(R.string.odd_plate_rb_txt);
+            }
+        }
     }
 }

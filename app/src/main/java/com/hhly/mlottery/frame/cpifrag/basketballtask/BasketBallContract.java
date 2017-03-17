@@ -14,29 +14,27 @@ public interface BasketBallContract {
 
 
     interface CpiView extends IView {
-
-        void switchFgView();
-
-
+        void initFgView();
     }
 
     interface CpiPresenter extends IPresenter<BasketBallContract.CpiView> {
-
-        void switchFg();
-
+        void initFg();
     }
 
 
     //亚盘、大小球、欧赔
 
     interface OddView extends IView {
+        void showLoadView();
 
-
+        void showRequestDataView();
     }
 
     interface OddPresenter extends IPresenter<BasketBallContract.OddView> {
+        void showLoad();
 
+        void showRequestData();
+
+        void requestError();
     }
-
-
 }
