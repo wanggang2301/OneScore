@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.cpifrag.basketballtask.BasketBallCpiFrament;
+import com.hhly.mlottery.frame.cpifrag.footballtask.FootCpiFragment;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;

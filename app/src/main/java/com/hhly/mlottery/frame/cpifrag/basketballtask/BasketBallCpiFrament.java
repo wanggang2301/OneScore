@@ -3,28 +3,19 @@ package com.hhly.mlottery.frame.cpifrag.basketballtask;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.frame.BallType;
-import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.mvp.ViewFragment;
-import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
-
-import de.greenrobot.event.EventBus;
 
 /**
  * @author wangg
@@ -36,10 +27,10 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
     private String[] mItems;
     private Activity mActivity;
     private LinearLayout d_header;
-    private View mView;
     private TextView tv_match_name;
     private ImageView iv_match;
     private LinearLayout ll_match_select;
+    private View mView;
 
 
     public BasketBallCpiFrament() {
@@ -57,12 +48,15 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
 
 
         mView = inflater.inflate(R.layout.fragment_basket_ball_cpi, container, false);
-        d_header = (LinearLayout) mView.findViewById(R.id.d_heasder);
+      /*  d_header = (LinearLayout) mView.findViewById(R.id.d_heasder);
         tv_match_name = (TextView) mView.findViewById(R.id.tv_match_name);
         iv_match = (ImageView) mView.findViewById(R.id.iv_match);
         ll_match_select = (LinearLayout) mView.findViewById(R.id.ll_match_select);
 
         tv_match_name.setText(getResources().getString(R.string.basketball_txt));
+*/
+        // return mView;
+
 
         return mView;
     }
@@ -81,19 +75,19 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
     public void switchFgView() {
         Toast.makeText(mActivity, "ddd", Toast.LENGTH_SHORT).show();
 
-        initEvent();
+        //  initEvent();
     }
 
 
-    private void initEvent() {
-        ll_match_select.setOnClickListener(new View.OnClickListener() {
+    /*private void initEvent() {
+        *//*ll_match_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 iv_match.setImageResource(R.mipmap.nav_icon_up);
                 backgroundAlpha(getActivity(), 0.5f);
                 popWindow(v);
             }
-        });
+        });*//*
     }
 
     private void popWindow(final View v) {
@@ -126,6 +120,7 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
             }
         });
     }
+*/
 
     /**
      * 设置添加屏幕的背景透明度

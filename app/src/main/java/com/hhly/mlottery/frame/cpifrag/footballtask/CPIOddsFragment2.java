@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame.cpifrag;
+package com.hhly.mlottery.frame.cpifrag.footballtask;
 
 import android.content.Context;
 import android.content.Intent;
