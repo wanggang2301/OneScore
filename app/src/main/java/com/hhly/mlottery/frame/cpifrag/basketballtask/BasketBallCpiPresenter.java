@@ -20,15 +20,7 @@ public class BasketBallCpiPresenter extends BasePresenter<BasketBallContract.Cpi
 
     @Override
     public void switchFg() {
-
-
-
-
-
-
-
         mView.switchFgView();
-
     }
 
 }
