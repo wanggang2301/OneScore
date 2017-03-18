@@ -27,7 +27,6 @@ public class HttpMethods {
 
     private TaskDataService taskDataService;
 
-
     private Retrofit retrofit;
 
     private HttpMethods() {
