@@ -101,7 +101,7 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
             // 此异常不会发生
         }
 
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
 
@@ -126,24 +126,8 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
             }
         }.start();
 
-
-        if (AppConstants.isGOKeyboard) {
-            ImageLoader.load(mContext,R.mipmap.welcome_tw).into(imageAD);
-//            imageAD.setBackgroundResource(R.mipmap.welcome_tw);
-           /* if (MyApp.isLanguage.equals("rTW")) {
-                imageAD.setBackgroundResource(R.mipmap.welcome_tw);
-            } else {
-                imageAD.setBackgroundResource(R.mipmap.welcome_en);
-            }*/
-        } else {//如果是国内版
-            if (MyApp.isLanguage.equals("rCN")) {// 如果是中文简体
-//                imageAD.setBackgroundResource(R.mipmap.welcome);
-                ImageLoader.load(mContext,R.mipmap.welcome).into(imageAD);
-            } else if (MyApp.isLanguage.equals("rTW")) {
-//                imageAD.setBackgroundResource(R.mipmap.welcome_tw);
-                ImageLoader.load(mContext,R.mipmap.welcome_tw).into(imageAD);
-            }
-        }
+        // 设置开机页图片
+        ImageLoader.load(mContext, AppConstants.getBootPageId()).into(imageAD);
 
         new Handler().postDelayed(new Runnable() {
             @Override

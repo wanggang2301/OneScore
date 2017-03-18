@@ -36,7 +36,7 @@ public class MyApp extends Application {
     public static Configuration mConfiguration;
     public static DisplayMetrics mDm;
     public static Locale mLocale;
-    public static String isLanguage;   // 获取语言
+    public static String isLanguage = "";   // 获取语言
     public static String isPackageName;// 获取当前包名
     public static double LA;// 用户所在经度
     public static double LO;// 用户所在纬度
