@@ -14,7 +14,7 @@ import rx.Observable;
  */
 
 //http://m.1332255.com:81/mlottery/core/snookerWorldRanking.getWorldRankingPaging.do?lang=zh&timeZone=7&pageSize=30&pageNum=1
-public interface TaskDataService {
+public interface ApiService {
     @GET("mlottery/core/snookerWorldRanking.getWorldRankingPaging.do")
     Observable<SnookerRankBean> getIndexCenter(@Query("lang") String lang, @Query("timeZone") String timeZone, @Query("pageSize") String pageSize, @Query("pageNum") String pageNum);
 }

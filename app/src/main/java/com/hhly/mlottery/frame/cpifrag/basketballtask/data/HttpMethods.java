@@ -25,7 +25,7 @@ public class HttpMethods {
 
     private static final int DEFAULT_TIMEOUT = 5;
 
-    private TaskDataService taskDataService;
+    private ApiService apiService;
 
     private Retrofit retrofit;
 
@@ -40,12 +40,12 @@ public class HttpMethods {
                 .baseUrl(ENDPOINT)
                 .build();
 
-        taskDataService = retrofit.create(TaskDataService.class);
+        apiService = retrofit.create(ApiService.class);
     }
 
 
     public void getFootballDetailsData(Subscriber<SnookerRankBean> subscriber, String lang, String timeZone, String pageSize, String pageNum) {
-        taskDataService.getIndexCenter(lang, timeZone, pageSize, pageNum)
+        apiService.getIndexCenter(lang, timeZone, pageSize, pageNum)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
