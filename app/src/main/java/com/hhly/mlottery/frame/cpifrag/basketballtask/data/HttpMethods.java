@@ -17,6 +17,7 @@ import rx.schedulers.Schedulers;
  * @Name：HttpMethods
  * @Description:
  * @Created on:2017/3/17  15:53.
+ *
  */
 
 public class HttpMethods {
