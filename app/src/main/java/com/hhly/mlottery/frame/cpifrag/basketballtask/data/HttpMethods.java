@@ -62,5 +62,4 @@ public class HttpMethods {
     public static HttpMethods getInstance() {
         return SingletonHolder.INSTANCE;
     }
-
 }
