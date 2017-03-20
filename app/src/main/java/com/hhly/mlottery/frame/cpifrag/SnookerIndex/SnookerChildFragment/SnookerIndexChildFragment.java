@@ -1,5 +1,4 @@
-package com.hhly.mlottery.mvpui.SnookerIndex;
-
+package com.hhly.mlottery.frame.cpifrag.SnookerIndex.SnookerChildFragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,27 +9,22 @@ import android.view.ViewGroup;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.mvp.ViewFragment;
 
-
-public class SIndexFragment extends ViewFragment<SIndexContract.Presenter>implements SIndexContract.View {
+public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildContract.Presenter> implements SnookerIndexChildContract.View {
 
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
 
-    private String mParam1;
-    private String mParam2;
+    private String mType;
 
 
-    public SIndexFragment() {
+    public SnookerIndexChildFragment() {
         // Required empty public constructor
     }
 
-
-    public static SIndexFragment newInstance(String param1, String param2) {
-        SIndexFragment fragment = new SIndexFragment();
+    public static SnookerIndexChildFragment newInstance(String type) {
+        SnookerIndexChildFragment fragment = new SnookerIndexChildFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_PARAM1, type);
         fragment.setArguments(args);
         return fragment;
     }
@@ -39,8 +33,7 @@ public class SIndexFragment extends ViewFragment<SIndexContract.Presenter>implem
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mType = getArguments().getString(ARG_PARAM1);
         }
     }
 
@@ -48,16 +41,12 @@ public class SIndexFragment extends ViewFragment<SIndexContract.Presenter>implem
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sindex, container, false);
+        return inflater.inflate(R.layout.fragment_snooker_index_euro, container, false);
     }
+
 
     @Override
     public void onError() {
-
-    }
-
-    @Override
-    public void fangfa() {
 
     }
 }

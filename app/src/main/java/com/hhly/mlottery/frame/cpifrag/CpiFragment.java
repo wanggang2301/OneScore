@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SIndexFragment;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
@@ -62,6 +63,7 @@ public class CpiFragment extends Fragment {
 
     private void initView() {
         fragments.add(FootCpiFragment.newInstance());
+        fragments.add(SIndexFragment.newInstance("",""));
         switchFragment(FOOTBALL);
 
     }
