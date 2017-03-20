@@ -4,7 +4,6 @@ package com.hhly.mlottery.frame.cpifrag.basketballtask;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,21 +17,33 @@ import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.util.L;
 
 /**
- * A simple {@link Fragment} subclass.
+ * @author: wangg
+ * @des: 篮球指数赔率Fragment
+ * @date：2017/03/20 9:17
  */
 public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPresenter> implements BasketBallContract.OddView {
 
-
     FragmentBasketBallOddBinding mBinding;
+    private static final String ODD_TYPE = "ODD_TYPE";
+    private String type;
 
-    public BasketBallOddFragment() {
-    }
+    public BasketBallOddFragment() {}
 
     public static BasketBallOddFragment newInstance(@OddsTypeEnum.OddsType String type) {
         BasketBallOddFragment basketBallOddFragment = new BasketBallOddFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(ODD_TYPE, type);
+        basketBallOddFragment.setArguments(bundle);
         return basketBallOddFragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            type = getArguments().getString(ODD_TYPE, OddsTypeEnum.PLATE);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,7 +55,6 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter = new BasketBallOddPresenter(this);
-
         mBinding.btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,22 +62,18 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
                 mPresenter.showRequestData("zh", "7", "30", "1");
             }
         });
-
-
     }
 
     @Override
     public void showLoadView() {
         Toast.makeText(mActivity, "加载", Toast.LENGTH_SHORT).show();
         L.d("bingd", "加载中_____________");
-
     }
 
     @Override
     public void showRequestDataView(SnookerRankBean o) {
         Toast.makeText(mActivity, "成功", Toast.LENGTH_SHORT).show();
         L.d("bingd", "成功_____________" + o.getWorldRankingList().get(0).getName());
-
     }
 
     @Override
@@ -79,6 +85,5 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     public void onError() {
         Toast.makeText(mActivity, "出错", Toast.LENGTH_SHORT).show();
         L.d("bingd", "出错_____________");
-
     }
 }
