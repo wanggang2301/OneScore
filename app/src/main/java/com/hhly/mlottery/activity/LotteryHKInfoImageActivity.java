@@ -13,6 +13,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.ShareBean;
 import com.hhly.mlottery.bean.numbersBean.LotteryInfoHKChartBean;
 import com.hhly.mlottery.frame.ShareFragment;
+import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.widget.ZoomViewPager;
 
 import java.util.ArrayList;
@@ -51,7 +52,13 @@ public class LotteryHKInfoImageActivity extends BaseActivity implements View.OnC
         findViewById(R.id.public_img_back).setOnClickListener(this);
         ImageView btn_set = (ImageView) findViewById(R.id.public_btn_set);
         btn_set.setOnClickListener(this);
-        btn_set.setVisibility(View.GONE);
+
+        if (CommonUtils.isZH()) {
+            btn_set.setVisibility(View.VISIBLE);
+        } else {
+            btn_set.setVisibility(View.GONE);
+        }
+
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         public_txt_title = (TextView) findViewById(R.id.public_txt_title);
         iv_left = (ImageView) findViewById(R.id.iv_left);
@@ -63,14 +70,14 @@ public class LotteryHKInfoImageActivity extends BaseActivity implements View.OnC
         adapter = new PicAdapter();
         view_pager.setAdapter(adapter);
 
-        if(index != -1){
+        if (index != -1) {
             public_txt_title.setText(mData.get(index).getTitle() == null ? "" : mData.get(index).getTitle());// 设置图片标题
             view_pager.setCurrentItem(index);
 
-            if(index == 0){
+            if (index == 0) {
                 iv_left.setVisibility(View.GONE);
             }
-            if(index >= mData.size() -1){
+            if (index >= mData.size() - 1) {
                 iv_right.setVisibility(View.GONE);
             }
         }
@@ -87,15 +94,15 @@ public class LotteryHKInfoImageActivity extends BaseActivity implements View.OnC
 
                 index = position;
 
-                if(position <= 0){
+                if (position <= 0) {
                     iv_left.setVisibility(View.GONE);
-                }else{
+                } else {
                     iv_left.setVisibility(View.VISIBLE);
                 }
 
-                if(position >= mData.size() - 1){
+                if (position >= mData.size() - 1) {
                     iv_right.setVisibility(View.GONE);
-                }else{
+                } else {
                     iv_right.setVisibility(View.VISIBLE);
                 }
 
@@ -126,27 +133,27 @@ public class LotteryHKInfoImageActivity extends BaseActivity implements View.OnC
                 break;
             case R.id.iv_left:// 上一张
                 iv_right.setVisibility(View.VISIBLE);
-                if(index > 0){
+                if (index > 0) {
                     index--;
                     public_txt_title.setText(mData.get(index).getTitle() == null ? "" : mData.get(index).getTitle());// 设置图片标题
                     view_pager.setCurrentItem(index);
-                    if(index <= 0){
+                    if (index <= 0) {
                         iv_left.setVisibility(View.GONE);
                     }
-                }else {
+                } else {
                     iv_left.setVisibility(View.GONE);
                 }
                 break;
             case R.id.iv_right:// 下一张
                 iv_left.setVisibility(View.VISIBLE);
-                if(index < mData.size() - 1){
+                if (index < mData.size() - 1) {
                     index++;
                     public_txt_title.setText(mData.get(index).getTitle() == null ? "" : mData.get(index).getTitle());// 设置图片标题
                     view_pager.setCurrentItem(index);
-                    if(index >= mData.size() -1){
+                    if (index >= mData.size() - 1) {
                         iv_right.setVisibility(View.GONE);
                     }
-                }else{
+                } else {
                     iv_right.setVisibility(View.GONE);
                 }
                 break;

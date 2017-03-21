@@ -13,49 +13,7 @@
         android:layout_height="wrap_content">
 
         <!--addtjl添加中间日期显示-->
-        <LinearLayout
-            android:id="@+id/public_date_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:visibility="gone">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/cpi_date_img" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/public_txt_date"
-                    style="@style/RippleBackgroudBorderless"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:gravity="center"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:text="2016-4-7"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@color/white" />
-            </LinearLayout>
-
-        </LinearLayout>
         <!--addtjl end 添加中间日期显示-->
         <LinearLayout
             android:id="@+id/ll_match_select"
@@ -122,6 +80,54 @@
             android:scaleType="centerInside"
             android:src="@mipmap/cpi_company"
             android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/public_date_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@id/public_img_company"
+            android:layout_alignTop="@id/public_img_company"
+            android:layout_toLeftOf="@id/public_img_company"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingRight="12dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/cpi_date_img" />
+
+            <!-- <LinearLayout
+                 android:layout_width="wrap_content"
+                 android:layout_height="match_parent"
+                 android:layout_centerInParent="true"
+                 android:gravity="center"
+                 android:orientation="vertical">
+
+                 <TextView
+                     android:id="@+id/public_txt_date"
+                     style="@style/RippleBackgroudBorderless"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_centerInParent="true"
+                     android:gravity="center"
+                     android:paddingLeft="10dp"
+                     android:paddingRight="10dp"
+                     android:text="2016-4-7"
+                     android:textColor="@color/white"
+                     android:textSize="15sp" />
+
+                 <View
+                     android:layout_width="match_parent"
+                     android:layout_height="1dp"
+                     android:layout_marginLeft="10dp"
+                     android:layout_marginRight="10dp"
+                     android:background="@color/white" />
+             </LinearLayout>-->
+
+        </LinearLayout>
+
 
         <!--addtjl end 热门，公司，筛选-->
 

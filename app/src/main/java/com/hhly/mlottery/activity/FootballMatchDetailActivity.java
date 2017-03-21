@@ -55,6 +55,7 @@ import com.hhly.mlottery.frame.footballframe.IntelligenceFragment;
 import com.hhly.mlottery.frame.footballframe.OddsFragment;
 import com.hhly.mlottery.frame.footballframe.StatisticsFragment;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
+import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;
@@ -2142,7 +2143,13 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
 
         iv_share = mView.findViewById(R.id.football_item_share);
-        iv_share.setVisibility(View.GONE);
+
+        if (CommonUtils.isZH()) {
+            iv_share.setVisibility(View.VISIBLE);
+        } else {
+            iv_share.setVisibility(View.GONE);
+        }
+
         iv_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -2281,6 +2288,18 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         if (isAddMultiViewHide) {
             tv_addMultiView.setVisibility(View.GONE);
         }
+
+
+        //跳转到足球资料库内页
+        mMatchTypeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FootballMatchDetailActivity.this, FootballDatabaseDetailsActivity.class);
+                //  intent.putExtra(LEAGUE, mList.get(position));
+                intent.putExtra("isIntegral", false);
+                startActivity(intent);
+            }
+        });
     }
 
 

@@ -14,6 +14,7 @@ import com.hhly.mlottery.bean.ShareBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -21,6 +22,8 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.hhly.mlottery.R.id.public_btn_set;
 
 /**
  * Created by yuely198 on 2017/1/13.
@@ -100,9 +103,15 @@ public class InvitedActivity extends BaseActivity implements View.OnClickListene
         public_txt_title = (TextView) findViewById(R.id.public_txt_title);
         public_txt_title.setText(R.string.invite_friends);
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
-        findViewById(R.id.public_btn_set).setVisibility(View.GONE);
+        findViewById(public_btn_set).setVisibility(View.GONE);
         public_btn_save = (Button) findViewById(R.id.public_btn_save);
-        public_btn_save.setVisibility(View.GONE);
+
+        if (CommonUtils.isZH()) {
+            public_btn_save.setVisibility(View.VISIBLE);
+        } else {
+            public_btn_save.setVisibility(View.GONE);
+        }
+
         public_btn_save.setOnClickListener(this);
         public_btn_save.setText(R.string.foot_details_share);
         public_btn_save.setTextColor(getResources().getColor(R.color.white));

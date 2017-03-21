@@ -24,6 +24,7 @@ import com.hhly.mlottery.activity.SnookerSettingActivity;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.snookerframe.SnookerImmediateFragment;
 import com.hhly.mlottery.frame.snookerframe.SnookerResultFragment;
 import com.hhly.mlottery.frame.snookerframe.SnookerScheduleFragment;
@@ -58,8 +59,6 @@ public class SnookerListScoreFragment extends BaseWebSocketFragment implements V
     private TextView tv_match_name;
     private ImageView iv_match;
     private LinearLayout d_header;
-
-    private static final int SNOOKER = 2;//头部标签标记
     private String[] mItems;//头部标签集
 
     @Override
@@ -131,7 +130,7 @@ public class SnookerListScoreFragment extends BaseWebSocketFragment implements V
     private void popWindow(final View v) {
         final View mView = View.inflate(getActivity(), R.layout.pop_select, null);
         // 创建ArrayAdapter对象
-        BallChoiceArrayAdapter mAdapter = new BallChoiceArrayAdapter(getActivity(), mItems, SNOOKER);
+        BallChoiceArrayAdapter mAdapter = new BallChoiceArrayAdapter(getActivity(), mItems, BallType.SNOOKER);
 
         ListView listview = (ListView) mView.findViewById(R.id.match_type);
         listview.setAdapter(mAdapter);
