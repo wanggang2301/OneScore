@@ -1630,4 +1630,8 @@
     <string name="basket_handicap_bigorsmall">大/走/小</string>
 
     <string name="home_gender">性别</string>
+
+    <!--网球-->
+    <string name="tennis_setting_title">网球设置</string>
+
 </resources>

@@ -2,6 +2,7 @@ package com.hhly.mlottery.frame.tennisfrag;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,6 +22,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.TennisSettingActivity;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.tennisball.TennisEventBus;
@@ -42,7 +44,7 @@ import de.greenrobot.event.EventBus;
  * Created by 107_tangrr on 2017/2/20 0020.
  */
 
-public class TennisBallScoreFragment extends BaseWebSocketFragment {
+public class TennisBallScoreFragment extends BaseWebSocketFragment implements View.OnClickListener {
 
    /* private static final int FOOTBALL = 0;
     private static final int BASKETBALL = 1;
@@ -53,7 +55,7 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment {
     private static final int TENNIS_SCHEDULE = 2;
     private static final int TENNIS_FOCUS = 3;
 
-    private Context mContext;
+    private Activity mContext;
     private View mView;
     private String[] mItems;
     private ViewPager mViewPager;
@@ -76,10 +78,16 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment {
         EventBus.getDefault().register(this);
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = (Activity) context;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mContext = getActivity();
+
         mView = View.inflate(mContext, R.layout.fragment_tennls_ball_score, null);
 
         initView();
@@ -95,7 +103,8 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment {
         mViewPager = (ViewPager) mView.findViewById(R.id.viewpager);
 
         mView.findViewById(R.id.public_btn_filter).setVisibility(View.INVISIBLE);
-        mView.findViewById(R.id.public_btn_set).setVisibility(View.INVISIBLE);
+        mView.findViewById(R.id.public_btn_set).setVisibility(View.VISIBLE);
+        mView.findViewById(R.id.public_btn_set).setOnClickListener(this);
 
         ll_match_select = (LinearLayout) mView.findViewById(R.id.ll_match_select);
         tv_match_name = (TextView) mView.findViewById(R.id.tv_match_name);
@@ -197,8 +206,6 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // tv_match_name.setText(((TextView) view.findViewById(R.id.tv)).getText().toString());
-                //  iv_match.setImageResource(R.mipmap.nav_icon_cbb);
                 closeWebSocket();
 
                 EventBus.getDefault().post(new ScoreSwitchFg(position));
@@ -225,7 +232,7 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment {
 
     @Override
     protected void onTextResult(String text) {
-        L.d("xxxxx", "网球推送消息： " + text);
+        L.d("tennis", "网球推送消息： " + text);
         ((TennisBallSocketFragment) fragments.get(TENNIS_IMMEDIATE)).socketDataChanged(text);
         ((TennisBallSocketFragment) fragments.get(TENNIS_FOCUS)).socketDataChanged(text);
     }
@@ -253,6 +260,8 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment {
     }
 
     public void onEventMainThread(TennisEventBus event) {
+        L.d("tennis","event:" + event.msg);
+
         if ("tennisFocus".equals(event.msg)) {
             String focusId = PreferenceUtil.getString(AppConstants.TENNIS_BALL_FOCUS, null);
             if (!TextUtils.isEmpty(focusId)) {
@@ -261,6 +270,20 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment {
             } else {
                 mTabLayout.getTabAt(TENNIS_FOCUS).setText(getString(R.string.foot_details_focus));
             }
+        }else{
+            // TODO 指数选择
+
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.public_btn_set:
+                Intent intent = new Intent(mContext, TennisSettingActivity.class);
+                startActivity(intent);
+                mContext.overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
+                break;
         }
     }
 }

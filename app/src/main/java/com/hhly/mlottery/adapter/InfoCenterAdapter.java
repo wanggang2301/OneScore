@@ -28,49 +28,32 @@ public class InfoCenterAdapter extends BaseQuickAdapter<ListEntity> {
     @Override
     protected void convert(BaseViewHolder baseViewHolder, ListEntity listEntity) {
 
-        baseViewHolder.setText(R.id.tv_league_title, listEntity.leagueName + " " + listEntity.time);
+        baseViewHolder.setText(R.id.tv_league_title, listEntity.leagueName);
+        baseViewHolder.setText(R.id.tv_league_title_time, listEntity.time);
         baseViewHolder.setText(R.id.tv_home_name, listEntity.homeName);
         baseViewHolder.setText(R.id.tv_guest_name, listEntity.guestName);
         baseViewHolder.setText(R.id.tv_home_data, TextUtils.isEmpty(listEntity.homeData) ? "-" : listEntity.homeData);
         baseViewHolder.setText(R.id.tv_guest_data, TextUtils.isEmpty(listEntity.guestData) ? "-" : listEntity.guestData);
 
-//        if (!TextUtils.isEmpty(listEntity.homeData) && !TextUtils.isEmpty(listEntity.guestData)) {
-//            if (listEntity.homeData.contains("%") && listEntity.guestData.contains("%")) {
-//                double home = Double.parseDouble(listEntity.homeData.substring(0, listEntity.homeData.lastIndexOf("%")));
-//                double guest = Double.parseDouble(listEntity.guestData.substring(0, listEntity.guestData.lastIndexOf("%")));
-//                double value = home / (home + guest) * 100;
-//                baseViewHolder.setProgress(R.id.progressbar, (int) value);
-//            } else {
-//                double home = Double.parseDouble(listEntity.homeData);
-//                double guest = Double.parseDouble(listEntity.guestData);
-//                double value = home / (home + guest) * 100;
-//                baseViewHolder.setProgress(R.id.progressbar, (int) value);
-//            }
-//        } else {
-//            double home = Double.parseDouble(TextUtils.isEmpty(listEntity.homeData) ? "0" : listEntity.homeData);
-//            double guest = Double.parseDouble(TextUtils.isEmpty(listEntity.guestData) ? "0" : listEntity.guestData);
-//            double value = home / (home + guest) * 100;
-//            baseViewHolder.setProgress(R.id.progressbar, (int) value);
-//        }
-
         double home = 0;
         double guest = 0;
-        if (!TextUtils.isEmpty(listEntity.homeData)){
-            if(listEntity.homeData.contains("%")){
+        if (!TextUtils.isEmpty(listEntity.homeData)) {
+            if (listEntity.homeData.contains("%")) {
                 home = Double.parseDouble(listEntity.homeData.substring(0, listEntity.homeData.lastIndexOf("%")));
-            }else{
+            } else {
                 home = Double.parseDouble(listEntity.homeData);
             }
         }
-        if (!TextUtils.isEmpty(listEntity.guestData)){
-            if(listEntity.guestData.contains("%")){
+        if (!TextUtils.isEmpty(listEntity.guestData)) {
+            if (listEntity.guestData.contains("%")) {
                 guest = Double.parseDouble(listEntity.guestData.substring(0, listEntity.guestData.lastIndexOf("%")));
-            }else{
+            } else {
                 guest = Double.parseDouble(listEntity.guestData);
             }
         }
         double value = home / (home + guest) * 100;
         baseViewHolder.setProgress(R.id.progressbar, (int) value);
+        baseViewHolder.setProgress(R.id.progressbar_top, (int) value);
 
         switch (listEntity.indexType) {
             case 1:

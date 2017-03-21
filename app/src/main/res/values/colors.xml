@@ -634,6 +634,7 @@
     <color name="shape_stoke_color">#7c99d6</color>
     <color name="result_home_pro">#ff6a6a</color>
     <color name="result_guest_pro">#00Db1a</color>
+    <color name="info_text_title">#222222</color>
 
     <color name="database_win_color">#DD2F1C</color>
     <color name="database_lose_color">#21B11E</color>
