@@ -99,7 +99,6 @@ public class BasketIndexDetailsFragment extends ViewFragment<BasketIndexDetailsC
         fragments.add(BasketIndexDetailsChildFragment.newInstance());
         fragments.add(BasketIndexDetailsChildFragment.newInstance());
         fragments.add(BasketIndexDetailsChildFragment.newInstance());
-
         cpiDetailsFragmentAdapter = new CpiDetailsFragmentAdapter(getChildFragmentManager(), fragments);
         cpiDetailsViewpager.setOffscreenPageLimit(2);//设置预加载页面的个数。
         cpiDetailsViewpager.setAdapter(cpiDetailsFragmentAdapter);
