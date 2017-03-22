@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.cpifrag.basketballtask.data;
 
 import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
+import com.hhly.mlottery.bean.basket.index.BasketIndexDetailsBean;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -20,6 +21,11 @@ import rx.Observable;
 public interface ApiService {
     @GET("mlottery/core/basketballMatch.findIndexList.do")
     Observable<BasketIndexBean> getIndexCenter(@Query("lang") String lang, @Query("timeZone") String timeZone, @Query("date") String date, @Query("type") String type);
+
+
+    //comId=&lang=zh-TW&oddsType=asiaSize&thirdId=4432337&timeZone=8
+    @GET("mlottery/core/basketballDetail.findOddsTrendDetail.do")
+    Observable<BasketIndexDetailsBean> getIndexCenterDetails(@Query("lang") String lang, @Query("timeZone") String timeZone, @Query("comId") String comId, @Query("thirdId") String thirdId, @Query("oddsType") String oddsType);
 }
 
 

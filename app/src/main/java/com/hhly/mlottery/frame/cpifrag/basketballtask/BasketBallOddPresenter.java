@@ -24,10 +24,10 @@ public class BasketBallOddPresenter extends BasePresenter<BasketBallContract.Odd
 
 
     @Override
-    public void showRequestData(String lang, String timeZone, String date, String type) {
+    public void showRequestData( String date, String type) {
         mView.showLoadView();  //加载loadView
         iGetTaskSource = new GetTaskSource();
-        iGetTaskSource.getBasketIndexCenter(lang, timeZone, date, type, new OnTaskDataListener() {
+        iGetTaskSource.getBasketIndexCenter(date, type, new OnTaskDataListener.BasketIndex() {
             @Override
             public void getDataError() {
                 mView.onError();

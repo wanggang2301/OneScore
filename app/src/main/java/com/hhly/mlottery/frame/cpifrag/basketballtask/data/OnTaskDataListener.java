@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.cpifrag.basketballtask.data;
 
 import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
+import com.hhly.mlottery.bean.basket.index.BasketIndexDetailsBean;
 
 /**
  * @author: Wangg
@@ -13,9 +14,15 @@ public interface OnTaskDataListener {
 
     void getDataError();
 
-    void getDataSucess(BasketIndexBean o);
-
     void getNoData();
+
+    interface BasketIndex extends OnTaskDataListener {
+        void getDataSucess(BasketIndexBean o);
+    }
+
+    interface BasketIndexDetails extends OnTaskDataListener {
+        void getDataSucess(BasketIndexDetailsBean o);
+    }
 
 
 }

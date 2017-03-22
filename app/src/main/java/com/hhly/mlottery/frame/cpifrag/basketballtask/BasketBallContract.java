@@ -34,6 +34,6 @@ public interface BasketBallContract {
     }
 
     interface OddPresenter extends IPresenter<BasketBallContract.OddView> {
-        void showRequestData(String lang, String timeZone, String date, String type);
+        void showRequestData(String date, String type);
     }
 }

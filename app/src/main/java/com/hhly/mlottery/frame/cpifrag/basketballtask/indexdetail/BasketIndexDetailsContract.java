@@ -1,6 +1,6 @@
 package com.hhly.mlottery.frame.cpifrag.basketballtask.indexdetail;
 
-import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
+import com.hhly.mlottery.bean.basket.index.BasketIndexDetailsBean;
 import com.hhly.mlottery.mvp.IPresenter;
 import com.hhly.mlottery.mvp.IView;
 
@@ -14,7 +14,7 @@ import com.hhly.mlottery.mvp.IView;
 public interface BasketIndexDetailsContract {
 
     interface IndexDetailsView extends IView {
-         void initFgView();
+        void initFgView();
     }
 
     interface IndexDetailsPresenter extends IPresenter<BasketIndexDetailsContract.IndexDetailsView> {
@@ -27,13 +27,13 @@ public interface BasketIndexDetailsContract {
     interface IndexDetailsChildView extends IView {
         void showLoadView();
 
-        void showRequestDataView(BasketIndexBean o);
+        void showRequestDataView(BasketIndexDetailsBean o);
 
         void noData();
     }
 
     interface IndexDetailsChildPresenter extends IPresenter<BasketIndexDetailsContract.IndexDetailsChildView> {
-        void showRequestData(String lang, String timeZone, String date, String type);
+        void showRequestData(String comId, String thirdId, String oddsType);
     }
 
 }

@@ -1,7 +1,7 @@
 package com.hhly.mlottery.frame.cpifrag.basketballtask.data;
 
 import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
-import com.hhly.mlottery.bean.snookerbean.SnookerRankBean;
+import com.hhly.mlottery.bean.basket.index.BasketIndexDetailsBean;
 
 import rx.Subscriber;
 
@@ -14,8 +14,8 @@ import rx.Subscriber;
 
 public class GetTaskSource implements IGetTaskSource {
     @Override
-    public void getBasketIndexCenter(String lang, String timeZone, String date, String type, final OnTaskDataListener iGetTaskData) {
-        HttpMethods.getInstance().getFootballDetailsData(new Subscriber<BasketIndexBean>() {
+    public void getBasketIndexCenter(String date, String type, final OnTaskDataListener.BasketIndex iGetTaskData) {
+        HttpMethods.getInstance().getBasketIndexCenter(new Subscriber<BasketIndexBean>() {
             @Override
             public void onCompleted() {
 
@@ -40,6 +40,29 @@ public class GetTaskSource implements IGetTaskSource {
                     iGetTaskData.getDataError();
                 }
             }
-        }, lang, timeZone, date, type);
+        }, date, type);
+    }
+
+    @Override
+    public void getBasketIndexCenterDetails( String comId, String thirdId, String oddsType, final OnTaskDataListener.BasketIndexDetails iGetTaskData) {
+        HttpMethods.getInstance().getBasketIndexCenterDetails(new Subscriber<BasketIndexDetailsBean>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(BasketIndexDetailsBean basketIndexDetailsBean) {
+                iGetTaskData.getDataSucess(basketIndexDetailsBean);
+            }
+        }, comId, thirdId, oddsType);
+
     }
 }
+
+

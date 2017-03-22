@@ -127,7 +127,10 @@ public class CPIOddsFragment2 extends Fragment {
         mAdapter.setOnOddsClickListener(new CPIRecyclerListAdapter.OnOddsClickListener() {
             @Override
             public void onOddsClick(NewOddsInfo.AllInfoBean item, NewOddsInfo.AllInfoBean.ComListBean odds) {
+                //赔率公司(id,name,thirdId)
                 List<Map<String, String>> obList = item.toListViewParamList();
+
+
                 //点击指数页面，传值给详情界面
                 Intent intent = new Intent(getContext(), CpiDetailsActivity.class);
                 intent.putExtra("obListEntity", (Serializable) obList);   //两行赔率

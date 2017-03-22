@@ -1,6 +1,9 @@
 package com.hhly.mlottery.frame.cpifrag.basketballtask.data;
 
 import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
+import com.hhly.mlottery.bean.basket.index.BasketIndexDetailsBean;
+import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.concurrent.TimeUnit;
 
@@ -17,7 +20,6 @@ import rx.schedulers.Schedulers;
  * @Name：HttpMethods
  * @Description:
  * @Created on:2017/3/17  15:53.
- *
  */
 
 public class HttpMethods {
@@ -45,8 +47,17 @@ public class HttpMethods {
     }
 
 
-    public void getFootballDetailsData(Subscriber<BasketIndexBean> subscriber, String lang, String timeZone, String date, String type) {
-        apiService.getIndexCenter(lang, timeZone, date, type)
+    public void getBasketIndexCenter(Subscriber<BasketIndexBean> subscriber, String date, String type) {
+        apiService.getIndexCenter(appendLanguage(), timeZone(), date, type)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+
+    public void getBasketIndexCenterDetails(Subscriber<BasketIndexDetailsBean> subscriber, String comId, String thirdId, String oddsType) {
+        apiService.getIndexCenterDetails(appendLanguage(), timeZone(), comId, thirdId, oddsType)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -63,4 +74,24 @@ public class HttpMethods {
     public static HttpMethods getInstance() {
         return SingletonHolder.INSTANCE;
     }
+
+
+    /**
+     * 根据选择语言，改变推送接口语言环境
+     *
+     * @return
+     */
+    private String appendLanguage() {
+        return VolleyContentFast.returenLanguage();
+    }
+
+    /**
+     * 获取时区
+     *
+     * @return
+     */
+    private String timeZone() {
+        return AppConstants.timeZone + "";
+    }
+
 }

@@ -237,11 +237,15 @@ public class NewOddsInfo {
          */
         public ArrayList<Map<String, String>> toListViewParamList() {
             ArrayList<Map<String, String>> obList = new ArrayList<>();
+
+
             for (int m = 0; m < this.getComList().size(); m++) {
                 Map<String, String> obMap = new HashMap<>();
+
                 obMap.put("id", this.getComList().get(m).getComId());
                 obMap.put("name", this.getComList().get(m).getComName());
                 obMap.put("thirdid", matchInfo.getMatchId());
+
                 obList.add(obMap);
             }
             return obList;
