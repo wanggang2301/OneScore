@@ -75,43 +75,28 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
     private String[] mItems;
     private Activity mActivity;
     private List<BasketBallOddFragment> mFragments;
-
     private View mView;
-
-
     private BasketCompanyChooseDialogFragment mCompanyChooseDialogFragment; // 公司选择
     private DateChooseDialogFragment mDateChooseDialogFragment; // 日期选择
-
-
     //公司
-
     private ArrayList<BasketIndexBean.DataBean.CompanyBean> companyList;
-
     private LinkedList<String> filterLeagueList; // 过滤信息数据源
-
     private static final int startFilterRequestCode = 10086;
-
-
     private String currentDate; // 当前日期
     private String choosenDate; // 选中日期
 
-
-    public BasketBallCpiFrament() {
-
-    }
+    public BasketBallCpiFrament() {}
 
     public static BasketBallCpiFrament newInstace() {
         BasketBallCpiFrament basketBallCpiFrament = new BasketBallCpiFrament();
         return basketBallCpiFrament;
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_basket_ball_cpi, container, false);
         ButterKnife.bind(this, mView);
         tvMatchName.setText(getResources().getString(R.string.basketball_txt));
-
         return mView;
     }
 
@@ -120,19 +105,15 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
         super.onViewCreated(view, savedInstanceState);
         mItems = getResources().getStringArray(R.array.zhishu_select);
         mPresenter = new BasketBallCpiPresenter(this);
-
         //初始化头部View和事件
         mPresenter.initFg();
-
         companyList = new ArrayList<>();
     }
-
 
     @Override
     public void initFgView() {
         initViewPager();
     }
-
 
     /**
      * 初始化 ViewPager
@@ -148,7 +129,6 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
         tabs.setupWithViewPager(cpiViewpager);
     }
 
-
     /**
      * 获取公司列表
      *
@@ -158,11 +138,9 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
         return companyList;
     }
 
-
     public void showRightButton() {
         publicImgCompany.setVisibility(View.VISIBLE);
         publicImgFilter.setVisibility(View.VISIBLE);
-
     }
 
     /**
@@ -173,7 +151,6 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
         if (!mCompanyChooseDialogFragment.isVisible()) {
             mCompanyChooseDialogFragment.show(getChildFragmentManager(), "companyChooseDialog");
         }
-
     }
 
     /**

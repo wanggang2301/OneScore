@@ -83,11 +83,8 @@ public class CPIOddsFragment2 extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         // findViews
         mRecyclerView = (RecyclerView) view.findViewById(R.id.cpi_odds_recyclerView);
-
         initEmptyView();
-
         initRecyclerView();
-
         refreshData(null);
     }
 
