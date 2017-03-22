@@ -8,5 +8,5 @@ package com.hhly.mlottery.frame.cpifrag.basketballtask.data;
  */
 
 public interface IGetTaskSource {
-    void getBasketIndexCenter(String lang,String timeZone,String pageSize,String pageNum,OnTaskDataListener iGetTaskData);
+    void getBasketIndexCenter(String lang,String timeZone,String date,String type,OnTaskDataListener iGetTaskData);
 }

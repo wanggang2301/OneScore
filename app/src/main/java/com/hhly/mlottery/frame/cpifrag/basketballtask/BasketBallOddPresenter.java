@@ -1,6 +1,6 @@
 package com.hhly.mlottery.frame.cpifrag.basketballtask;
 
-import com.hhly.mlottery.bean.snookerbean.SnookerRankBean;
+import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
 import com.hhly.mlottery.frame.cpifrag.basketballtask.data.GetTaskSource;
 import com.hhly.mlottery.frame.cpifrag.basketballtask.data.IGetTaskSource;
 import com.hhly.mlottery.frame.cpifrag.basketballtask.data.OnTaskDataListener;
@@ -24,17 +24,17 @@ public class BasketBallOddPresenter extends BasePresenter<BasketBallContract.Odd
 
 
     @Override
-    public void showRequestData(String lang, String timeZone, String pageSize, String pageNum) {
+    public void showRequestData(String lang, String timeZone, String date, String type) {
         mView.showLoadView();  //加载loadView
         iGetTaskSource = new GetTaskSource();
-        iGetTaskSource.getBasketIndexCenter(lang, timeZone, pageSize, pageNum, new OnTaskDataListener() {
+        iGetTaskSource.getBasketIndexCenter(lang, timeZone, date, type, new OnTaskDataListener() {
             @Override
             public void getDataError() {
                 mView.onError();
             }
 
             @Override
-            public void getDataSucess(SnookerRankBean o) {
+            public void getDataSucess(BasketIndexBean o) {
                 mView.showRequestDataView(o);
             }
 

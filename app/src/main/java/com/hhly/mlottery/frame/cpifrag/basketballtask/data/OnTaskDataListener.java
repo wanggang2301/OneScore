@@ -1,6 +1,6 @@
 package com.hhly.mlottery.frame.cpifrag.basketballtask.data;
 
-import com.hhly.mlottery.bean.snookerbean.SnookerRankBean;
+import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
 
 /**
  * @author: Wangg
@@ -13,7 +13,7 @@ public interface OnTaskDataListener {
 
     void getDataError();
 
-    void getDataSucess(SnookerRankBean o);
+    void getDataSucess(BasketIndexBean o);
 
     void getNoData();
 

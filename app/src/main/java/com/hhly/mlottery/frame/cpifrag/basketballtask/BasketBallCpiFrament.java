@@ -3,32 +3,46 @@ package com.hhly.mlottery.frame.cpifrag.basketballtask;
 
 import android.app.Activity;
 import android.content.Context;
-import android.databinding.DataBindingUtil;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.enums.OddsTypeEnum;
-import com.hhly.mlottery.databinding.FragmentBasketBallCpiBinding;
+import com.hhly.mlottery.activity.BasketBallIndexFiltrateActivity;
+import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
+import com.hhly.mlottery.bean.enums.BasketOddsTypeEnum;
 import com.hhly.mlottery.frame.BallType;
+import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
+import com.hhly.mlottery.frame.oddfragment.basketoddframent.BasketCompanyChooseDialogFragment;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.mvp.ViewFragment;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -38,11 +52,49 @@ import de.greenrobot.event.EventBus;
  */
 public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPresenter> implements BasketBallContract.CpiView {
 
-    FragmentBasketBallCpiBinding mBinding;
-
+    @BindView(R.id.public_date_layout)
+    LinearLayout publicDateLayout;
+    @BindView(R.id.tv_match_name)
+    TextView tvMatchName;
+    @BindView(R.id.ll_match_select)
+    LinearLayout llMatchSelect;
+    @BindView(R.id.public_img_company)
+    ImageView publicImgCompany;
+    @BindView(R.id.tabs)
+    TabLayout tabs;
+    @BindView(R.id.cpi_viewpager)
+    ViewPager cpiViewpager;
+    @BindView(R.id.iv_match)
+    ImageView ivMatch;
+    @BindView(R.id.header_layout)
+    LinearLayout headerLayout;
+    @BindView(R.id.public_img_filter)
+    ImageView publicImgFilter;
+    @BindView(R.id.public_txt_date)
+    TextView publicTxtDate;
     private String[] mItems;
     private Activity mActivity;
     private List<BasketBallOddFragment> mFragments;
+
+    private View mView;
+
+
+    private BasketCompanyChooseDialogFragment mCompanyChooseDialogFragment; // 公司选择
+    private DateChooseDialogFragment mDateChooseDialogFragment; // 日期选择
+
+
+    //公司
+
+    private ArrayList<BasketIndexBean.DataBean.CompanyBean> companyList;
+
+    private LinkedList<String> filterLeagueList; // 过滤信息数据源
+
+    private static final int startFilterRequestCode = 10086;
+
+
+    private String currentDate; // 当前日期
+    private String choosenDate; // 选中日期
+
 
     public BasketBallCpiFrament() {
 
@@ -56,9 +108,11 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_basket_ball_cpi, container, false);
-        mBinding.dHeasder.tvMatchName.setText(getResources().getString(R.string.basketball_txt));
-        return mBinding.getRoot();
+        mView = inflater.inflate(R.layout.fragment_basket_ball_cpi, container, false);
+        ButterKnife.bind(this, mView);
+        tvMatchName.setText(getResources().getString(R.string.basketball_txt));
+
+        return mView;
     }
 
     @Override
@@ -69,50 +123,14 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
 
         //初始化头部View和事件
         mPresenter.initFg();
+
+        companyList = new ArrayList<>();
     }
 
 
     @Override
     public void initFgView() {
-        initClickEvent();
         initViewPager();
-    }
-
-    private void initClickEvent() {
-        mBinding.dHeasder.llMatchSelect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mBinding.dHeasder.ivMatch.setImageResource(R.mipmap.nav_icon_up);
-                backgroundAlpha(getActivity(), 0.5f);
-                popWindow();
-            }
-        });
-
-
-        //时间选择
-        mBinding.dHeasder.publicDateLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-
-        //公司选择
-        mBinding.dHeasder.publicImgCompany.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        //赛事筛选
-        mBinding.dHeasder.publicImgFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
 
@@ -121,13 +139,58 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
      */
     private void initViewPager() {
         mFragments = new ArrayList<>();
-        mFragments.add(BasketBallOddFragment.newInstance(OddsTypeEnum.PLATE));
-        mFragments.add(BasketBallOddFragment.newInstance(OddsTypeEnum.BIG));
-        mFragments.add(BasketBallOddFragment.newInstance(OddsTypeEnum.OP));
+        mFragments.add(BasketBallOddFragment.newInstance(BasketOddsTypeEnum.ASIALET));
+        mFragments.add(BasketBallOddFragment.newInstance(BasketOddsTypeEnum.ASIASIZE));
+        mFragments.add(BasketBallOddFragment.newInstance(BasketOddsTypeEnum.EURO));
         CPIPagerAdapter pagerAdapter = new CPIPagerAdapter(getChildFragmentManager());
-        mBinding.cpiViewpager.setOffscreenPageLimit(3);
-        mBinding.cpiViewpager.setAdapter(pagerAdapter);
-        mBinding.tabs.setupWithViewPager(mBinding.cpiViewpager);
+        cpiViewpager.setOffscreenPageLimit(3);
+        cpiViewpager.setAdapter(pagerAdapter);
+        tabs.setupWithViewPager(cpiViewpager);
+    }
+
+
+    /**
+     * 获取公司列表
+     *
+     * @return 公司列表
+     */
+    public ArrayList<BasketIndexBean.DataBean.CompanyBean> getCompanyList() {
+        return companyList;
+    }
+
+
+    public void showRightButton() {
+        publicImgCompany.setVisibility(View.VISIBLE);
+        publicImgFilter.setVisibility(View.VISIBLE);
+
+    }
+
+    /**
+     * 显示公司选择
+     */
+    public void showCompanyChooseDialog() {
+        maybeInitCompanyChooseDialog();
+        if (!mCompanyChooseDialogFragment.isVisible()) {
+            mCompanyChooseDialogFragment.show(getChildFragmentManager(), "companyChooseDialog");
+        }
+
+    }
+
+    /**
+     * 初始化公司选择Dialog
+     */
+    private void maybeInitCompanyChooseDialog() {
+        if (mCompanyChooseDialogFragment == null) {
+            mCompanyChooseDialogFragment = BasketCompanyChooseDialogFragment.newInstance(companyList,
+                    new BasketCompanyChooseDialogFragment.OnFinishSelectionListener() {
+                        @Override
+                        public void onFinishSelection() {
+                        /*    for (CPIOddsFragment2 fragment : mFragments) {
+                                fragment.updateFilterData();
+                            }*/
+                        }
+                    });
+        }
     }
 
 
@@ -145,7 +208,7 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
         popupWindow.setFocusable(true);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
 
-        popupWindow.showAsDropDown(mBinding.dHeasder.headerLayout);
+        popupWindow.showAsDropDown(headerLayout);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -157,7 +220,7 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                mBinding.dHeasder.ivMatch.setImageResource(R.mipmap.nav_icon_cbb);
+                ivMatch.setImageResource(R.mipmap.nav_icon_cbb);
                 backgroundAlpha(getActivity(), 1f);
             }
         });
@@ -184,6 +247,137 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
     public void onAttach(Context context) {
         super.onAttach(context);
         this.mActivity = (Activity) context;
+    }
+
+
+    /**
+     * 显示日期选择 dialog
+     */
+    private void showDateChooseDialog() {
+        maybeInitDateChooseDialog();
+        if (!mDateChooseDialogFragment.isVisible()) {
+            mDateChooseDialogFragment.show(getChildFragmentManager(), "dateChooseFragment");
+        }
+    }
+
+
+    /**
+     * 日期选择 Fragment 初始化
+     */
+    private void maybeInitDateChooseDialog() {
+        if (mDateChooseDialogFragment != null) return;
+        mDateChooseDialogFragment = DateChooseDialogFragment.newInstance(currentDate,
+                new DateChooseDialogFragment.OnDateChooseListener() {
+                    @Override
+                    public void onDateChoose(String date) {
+                        choosenDate = date;
+                        publicTxtDate.setText(DateUtil.convertDateToNation(date));
+                        setRefreshing(true);
+                        refreshAllChildFragments();
+                    }
+                });
+    }
+
+
+    /**
+     * 刷新所有子 fragment
+     */
+    public void refreshAllChildFragments() {
+//        mFragments.get(mViewPager.getCurrentItem()).refreshData(currentDate);
+        for (BasketBallOddFragment fragment : mFragments) {
+            // 未选日期的时候 choosenDate 为null，则请求当天数据
+            // 选择日期之后 choosenDate 为选择的日期，请求选择日期的数据
+            fragment.refreshData(choosenDate);
+        }
+    }
+
+
+    @OnClick({R.id.public_date_layout, R.id.iv_match, R.id.ll_match_select, R.id.public_img_company, R.id.public_img_filter})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.public_date_layout:
+                showDateChooseDialog();
+
+
+                break;
+            case R.id.iv_match:
+                break;
+            case R.id.ll_match_select:
+                ivMatch.setImageResource(R.mipmap.nav_icon_up);
+                backgroundAlpha(getActivity(), 0.5f);
+                popWindow();
+
+                break;
+            case R.id.public_img_company:
+
+                showCompanyChooseDialog();
+                break;
+
+            case R.id.public_img_filter:
+
+                Intent intent = new Intent(mActivity, BasketBallIndexFiltrateActivity.class);
+                intent.putExtra("fileterTags", (Serializable) getCurrentFragment().getFilterTagList());
+                intent.putExtra("linkedListChecked", filterLeagueList);
+                startActivityForResult(intent, startFilterRequestCode);
+
+                break;
+        }
+    }
+
+
+    public BasketBallOddFragment getCurrentFragment() {
+        return mFragments.get(cpiViewpager.getCurrentItem());
+    }
+
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode != startFilterRequestCode || resultCode != Activity.RESULT_CANCELED || data == null) {
+            return;
+        }
+        ArrayList<String> checkedIdList = (ArrayList<String>) data.getSerializableExtra("key");
+        if (filterLeagueList == null) filterLeagueList = new LinkedList<>();
+        filterLeagueList.clear();
+        filterLeagueList.addAll(checkedIdList);
+        for (BasketBallOddFragment fragment : mFragments) {
+            fragment.updateFilterData();
+        }
+    }
+
+
+    /**
+     * 设置当前日期
+     *
+     * @param currentDate currentDate, 形如 2016-06-23
+     */
+    public void setCurrentDate(String currentDate) {
+        this.currentDate = currentDate;
+        if (TextUtils.isEmpty(choosenDate)) {
+            publicTxtDate.setText(DateUtil.convertDateToNation(currentDate));
+            if (!publicDateLayout.isShown()) publicDateLayout.setVisibility(View.VISIBLE);
+            if (!publicTxtDate.isShown()) publicTxtDate.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * 设置刷新状态
+     *
+     * @param b 是否正在刷新
+     */
+    public void setRefreshing(boolean b) {
+        //mRefreshLayout.setRefreshing(b);
+    }
+
+
+    /**
+     * 获取过滤信息
+     *
+     * @return 过滤信息
+     */
+    public LinkedList<String> getFilterLeagueList() {
+        return filterLeagueList;
     }
 
     /**

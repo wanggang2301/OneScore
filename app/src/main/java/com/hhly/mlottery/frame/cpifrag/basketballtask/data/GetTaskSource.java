@@ -1,5 +1,6 @@
 package com.hhly.mlottery.frame.cpifrag.basketballtask.data;
 
+import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
 import com.hhly.mlottery.bean.snookerbean.SnookerRankBean;
 
 import rx.Subscriber;
@@ -13,8 +14,8 @@ import rx.Subscriber;
 
 public class GetTaskSource implements IGetTaskSource {
     @Override
-    public void getBasketIndexCenter(String lang, String timeZone, String pagesSize, String pageNum, final OnTaskDataListener iGetTaskData) {
-        HttpMethods.getInstance().getFootballDetailsData(new Subscriber<SnookerRankBean>() {
+    public void getBasketIndexCenter(String lang, String timeZone, String date, String type, final OnTaskDataListener iGetTaskData) {
+        HttpMethods.getInstance().getFootballDetailsData(new Subscriber<BasketIndexBean>() {
             @Override
             public void onCompleted() {
 
@@ -26,7 +27,7 @@ public class GetTaskSource implements IGetTaskSource {
             }
 
             @Override
-            public void onNext(SnookerRankBean o) {
+            public void onNext(BasketIndexBean o) {
                 if (o.getResult() == 200) {
                   /*  if (o.get() == null || "".equals(o.getData())) {
                         iGetTaskData.getNoData();
@@ -39,6 +40,6 @@ public class GetTaskSource implements IGetTaskSource {
                     iGetTaskData.getDataError();
                 }
             }
-        }, lang, timeZone, pagesSize, pageNum);
+        }, lang, timeZone, date, type);
     }
 }

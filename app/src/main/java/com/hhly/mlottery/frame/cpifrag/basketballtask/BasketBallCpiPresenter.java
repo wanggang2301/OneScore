@@ -16,7 +16,6 @@ public class BasketBallCpiPresenter extends BasePresenter<BasketBallContract.Cpi
         mView = view;
     }
 
-
     @Override
     public void initFg() {
         mView.initFgView();

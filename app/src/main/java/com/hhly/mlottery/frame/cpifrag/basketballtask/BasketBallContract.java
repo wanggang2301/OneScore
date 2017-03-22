@@ -1,6 +1,6 @@
 package com.hhly.mlottery.frame.cpifrag.basketballtask;
 
-import com.hhly.mlottery.bean.snookerbean.SnookerRankBean;
+import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
 import com.hhly.mlottery.mvp.IPresenter;
 import com.hhly.mlottery.mvp.IView;
 
@@ -28,12 +28,12 @@ public interface BasketBallContract {
     interface OddView extends IView {
         void showLoadView();
 
-        void showRequestDataView(SnookerRankBean o);
+        void showRequestDataView(BasketIndexBean o);
 
         void noData();
     }
 
     interface OddPresenter extends IPresenter<BasketBallContract.OddView> {
-        void showRequestData(String lang, String timeZone, String pageSize, String pageNum);
+        void showRequestData(String lang, String timeZone, String date, String type);
     }
 }

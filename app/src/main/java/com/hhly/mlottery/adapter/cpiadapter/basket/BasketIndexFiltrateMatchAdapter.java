@@ -1,21 +1,24 @@
-package com.hhly.mlottery.adapter.cpiadapter;
+package com.hhly.mlottery.adapter.cpiadapter.basket;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.Checkable;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
+import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
 
 import java.util.List;
 
 /**
- * Created by 103TJL on 2016/5/9.
- * 新版指数筛选
+ * @author: Wangg
+ * @Name：BasketIndexFiltrateMatchAdapter
+ * @Description:
+ * @Created on:2017/3/21  14:49.
  */
-public class CpiFiltrateMatchAdapter extends CommonAdapter<NewOddsInfo.FileterTagsBean> {
+
+public class BasketIndexFiltrateMatchAdapter extends CommonAdapter<BasketIndexBean.DataBean.FileterTagsBean> {
     private Context mContext;
 
     private List<String> mCheckedIds;
@@ -24,7 +27,7 @@ public class CpiFiltrateMatchAdapter extends CommonAdapter<NewOddsInfo.FileterTa
         this.mCheckedIds = mCheckedIds;
     }
 
-    public CpiFiltrateMatchAdapter(Context context, List<NewOddsInfo.FileterTagsBean> fileterTags, List<String> checkedIds, int layoutId) {
+    public BasketIndexFiltrateMatchAdapter(Context context, List<BasketIndexBean.DataBean.FileterTagsBean> fileterTags, List<String> checkedIds, int layoutId) {
         super(context, fileterTags, layoutId);
         mContext = context;
         mCheckedIds = checkedIds;
@@ -32,12 +35,9 @@ public class CpiFiltrateMatchAdapter extends CommonAdapter<NewOddsInfo.FileterTa
     }
 
     @Override
-    public void convert(ViewHolder holder, final NewOddsInfo.FileterTagsBean fileterTagsBean) {
-        holder.setText(R.id.item_cpi_filtrate_checkbox, fileterTagsBean.getLeagueName() + "[" + fileterTagsBean.getMatchsInLeague() + "]");
+    public void convert(ViewHolder holder, final BasketIndexBean.DataBean.FileterTagsBean fileterTagsBean) {
+        holder.setText(R.id.item_cpi_filtrate_checkbox, fileterTagsBean.getLeagueName() + "[" + fileterTagsBean.getCount() + "]");
         //设置联赛颜色
-        if (fileterTagsBean.getLeagueColor() != null) {
-            holder.setTextColorString(R.id.item_cpi_filtrate_checkbox, fileterTagsBean.getLeagueColor());
-        }
         if (mCheckedIds.contains(fileterTagsBean.getLeagueId())) {
             holder.setChecked(R.id.item_cpi_filtrate_checkbox, true);
         } else {
@@ -55,17 +55,15 @@ public class CpiFiltrateMatchAdapter extends CommonAdapter<NewOddsInfo.FileterTa
 
     }
 
-
     private OnItemClickListenerListener onItemClickListenerListener;
 
     public void setOnItemCheckedChangedListener(OnItemClickListenerListener onItemClickListenerListener) {
         this.onItemClickListenerListener = onItemClickListenerListener;
     }
 
-
     public interface OnItemClickListenerListener {
-        void onClick(View buttonView, boolean isChecked, NewOddsInfo.FileterTagsBean fileterTagsBean);
+        void onClick(View buttonView, boolean isChecked, BasketIndexBean.DataBean.FileterTagsBean fileterTagsBean);
     }
 
-
 }
+

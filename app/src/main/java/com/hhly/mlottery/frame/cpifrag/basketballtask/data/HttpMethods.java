@@ -1,6 +1,6 @@
 package com.hhly.mlottery.frame.cpifrag.basketballtask.data;
 
-import com.hhly.mlottery.bean.snookerbean.SnookerRankBean;
+import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
 
 import java.util.concurrent.TimeUnit;
 
@@ -45,8 +45,8 @@ public class HttpMethods {
     }
 
 
-    public void getFootballDetailsData(Subscriber<SnookerRankBean> subscriber, String lang, String timeZone, String pageSize, String pageNum) {
-        apiService.getIndexCenter(lang, timeZone, pageSize, pageNum)
+    public void getFootballDetailsData(Subscriber<BasketIndexBean> subscriber, String lang, String timeZone, String date, String type) {
+        apiService.getIndexCenter(lang, timeZone, date, type)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -102,7 +102,7 @@ public class CPIOddsFragment2 extends Fragment {
             }
         });
         RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT);
+                ViewGroup.LayoutParams.MATCH_PARENT);
         mEmptyView.setLayoutParams(layoutParams);
         setStatus(StatusEnum.LOADING);
     }
@@ -129,13 +129,12 @@ public class CPIOddsFragment2 extends Fragment {
         // 每个 Item 内部一条赔率的单击
         mAdapter.setOnOddsClickListener(new CPIRecyclerListAdapter.OnOddsClickListener() {
             @Override
-            public void onOddsClick(NewOddsInfo.AllInfoBean item,
-                                    NewOddsInfo.AllInfoBean.ComListBean odds) {
+            public void onOddsClick(NewOddsInfo.AllInfoBean item, NewOddsInfo.AllInfoBean.ComListBean odds) {
                 List<Map<String, String>> obList = item.toListViewParamList();
                 //点击指数页面，传值给详情界面
                 Intent intent = new Intent(getContext(), CpiDetailsActivity.class);
-                intent.putExtra("obListEntity", (Serializable) obList);
-                intent.putExtra("comId", odds.getComId());
+                intent.putExtra("obListEntity", (Serializable) obList);   //两行赔率
+                intent.putExtra("comId", odds.getComId());  //公司Id
                 intent.putExtra("positionNunber", item.getComList().indexOf(odds) + "");
                 intent.putExtra("stType", type);
                 getContext().startActivity(intent);
@@ -237,7 +236,11 @@ public class CPIOddsFragment2 extends Fragment {
      */
     private void filterAllInfo(NewOddsInfo.AllInfoBean allInfo) {
         NewOddsInfo.AllInfoBean clone = allInfo.clone();
+
+
+        //公司list
         List<NewOddsInfo.AllInfoBean.ComListBean> comList = clone.getComList();
+
         ListIterator<NewOddsInfo.AllInfoBean.ComListBean> iterator = comList.listIterator();
 
         // 不能直接粗暴的 remove，因为持有的是引用也会把 default 中的修改掉
@@ -451,7 +454,9 @@ public class CPIOddsFragment2 extends Fragment {
      * @param comListBean ComListBean
      * @return 是否显示
      */
-    private boolean isOddsShow(NewOddsInfo.AllInfoBean.ComListBean comListBean) {
+    private boolean
+
+    isOddsShow(NewOddsInfo.AllInfoBean.ComListBean comListBean) {
         boolean show = false;
         ArrayList<NewOddsInfo.CompanyBean> companyList = parentFragment.getCompanyList();
         if (companyList != null && companyList.size() > 0) {

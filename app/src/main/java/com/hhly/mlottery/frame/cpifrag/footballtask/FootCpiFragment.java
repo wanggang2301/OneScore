@@ -40,7 +40,6 @@ import com.hhly.mlottery.frame.oddfragment.CompanyChooseDialogFragment;
 import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.util.DateUtil;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 
 import java.io.Serializable;
@@ -248,9 +247,7 @@ public class FootCpiFragment extends BaseWebSocketFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode != startFilterRequestCode
-                || resultCode != Activity.RESULT_CANCELED
-                || data == null) {
+        if (requestCode != startFilterRequestCode || resultCode != Activity.RESULT_CANCELED || data == null) {
             return;
         }
         ArrayList<String> checkedIdList = (ArrayList<String>) data.getSerializableExtra("key");
@@ -299,7 +296,6 @@ public class FootCpiFragment extends BaseWebSocketFragment {
                 new DateChooseDialogFragment.OnDateChooseListener() {
                     @Override
                     public void onDateChoose(String date) {
-                        L.d("ffgghh", date);
                         choosenDate = date;
                         mDateTextView.setText(DateUtil.convertDateToNation(date));
                         setRefreshing(true);

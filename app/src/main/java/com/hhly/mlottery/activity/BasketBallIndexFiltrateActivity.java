@@ -1,5 +1,6 @@
 package com.hhly.mlottery.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.adapter.cpiadapter.CpiFiltrateMatchAdapter;
-import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
+import com.hhly.mlottery.adapter.cpiadapter.basket.BasketIndexFiltrateMatchAdapter;
+import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
 import com.hhly.mlottery.widget.GrapeGridView;
 
 import java.util.ArrayList;
@@ -18,13 +19,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by 103TJL on 2016/5/9.
- * 新版指数筛选
+ * @author: Wangg
+ * @Name：BasketBallIndexFiltrateActivity
+ * @Description:
+ * @Created on:2017/3/21  14:45.
  */
-public class CpiFiltrateActivity extends BaseActivity implements View.OnClickListener, CpiFiltrateMatchAdapter.OnItemClickListenerListener {
 
-    private CpiFiltrateMatchAdapter mCpiAdapterHot;
-    private CpiFiltrateMatchAdapter mCpiAdapterOther;
+public class BasketBallIndexFiltrateActivity extends Activity implements View.OnClickListener, BasketIndexFiltrateMatchAdapter.OnItemClickListenerListener {
+
+    private BasketIndexFiltrateMatchAdapter mCpiAdapterHot;
+    private BasketIndexFiltrateMatchAdapter mCpiAdapterOther;
     private ImageView public_img_back;// 筛选界面返回
     private Context mContext;
     private GrapeGridView cpiGridViewHot;
@@ -39,10 +43,10 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
     //选中的备份
     private LinkedList<String> mTempCheckIdsReset = new LinkedList<>();
     //所有联赛
-    private List<NewOddsInfo.FileterTagsBean> mFilterTagsList = new ArrayList<>();
+    private List<BasketIndexBean.DataBean.FileterTagsBean> mFilterTagsList = new ArrayList<>();
 
-    List<NewOddsInfo.FileterTagsBean> hotsTemp = new ArrayList<>();
-    List<NewOddsInfo.FileterTagsBean> normalTemp = new ArrayList<>();
+    List<BasketIndexBean.DataBean.FileterTagsBean> hotsTemp = new ArrayList<>();
+    List<BasketIndexBean.DataBean.FileterTagsBean> normalTemp = new ArrayList<>();
 
     private int allSize = 0;
     private int checkedSize = 0;
@@ -63,16 +67,13 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
         setContentView(R.layout.activity_cpi_filtrate);
         mContext = this;
         //全部的
-        mFilterTagsList =
-                (List<NewOddsInfo.FileterTagsBean>) getIntent().getSerializableExtra("fileterTags");
+        mFilterTagsList = (List<BasketIndexBean.DataBean.FileterTagsBean>) getIntent().getSerializableExtra("fileterTags");
         //选中的
-        ArrayList<String> checkedIdExtra =
-                (ArrayList<String>) getIntent().getSerializableExtra("linkedListChecked");
+        ArrayList<String> checkedIdExtra = (ArrayList<String>) getIntent().getSerializableExtra("linkedListChecked");
         //选中的备份
 
         mCheckedIds.clear();
-        if (checkedIdExtra != null)
-            mCheckedIds.addAll(checkedIdExtra);
+        if (checkedIdExtra != null) mCheckedIds.addAll(checkedIdExtra);
 
         initView();
         initData();
@@ -110,11 +111,11 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
             //如果没选中的
             for (int i = 0; i < mFilterTagsList.size(); i++) {
                 //所有场次
-                allSize += mFilterTagsList.get(i).getMatchsInLeague();
+                allSize += mFilterTagsList.get(i).getCount();
                 if (mFilterTagsList.get(i).isHot()) {
                     hotsTemp.add(mFilterTagsList.get(i));
                     mCheckedIds.add(mFilterTagsList.get(i).getLeagueId());
-                    checkedSize += mFilterTagsList.get(i).getMatchsInLeague();
+                    checkedSize += mFilterTagsList.get(i).getCount();
                 } else {
                     normalTemp.add(mFilterTagsList.get(i));
                 }
@@ -125,7 +126,7 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
             //如果有选中的
             for (int i = 0; i < mFilterTagsList.size(); i++) {
                 //所有场次
-                allSize += mFilterTagsList.get(i).getMatchsInLeague();
+                allSize += mFilterTagsList.get(i).getCount();
                 if (mFilterTagsList.get(i).isHot()) {
                     hotsTemp.add(mFilterTagsList.get(i));
                 } else {
@@ -133,7 +134,7 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
                 }
 
                 if (mCheckedIds.contains(mFilterTagsList.get(i).getLeagueId())) {
-                    checkedSize += mFilterTagsList.get(i).getMatchsInLeague();
+                    checkedSize += mFilterTagsList.get(i).getCount();
                 }
             }
             mTempCheckIdsReset.addAll(mCheckedIds);
@@ -143,11 +144,11 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
         setHideNumber();
 
         //热门赛事
-        mCpiAdapterHot = new CpiFiltrateMatchAdapter(mContext, hotsTemp, mCheckedIds, R.layout.item_cpi_filtrate);
+        mCpiAdapterHot = new BasketIndexFiltrateMatchAdapter(mContext, hotsTemp, mCheckedIds, R.layout.item_cpi_filtrate);
         mCpiAdapterHot.setOnItemCheckedChangedListener(this);
         cpiGridViewHot.setAdapter(mCpiAdapterHot);
         //其他赛事
-        mCpiAdapterOther = new CpiFiltrateMatchAdapter(mContext, normalTemp, mCheckedIds, R.layout.item_cpi_filtrate);
+        mCpiAdapterOther = new BasketIndexFiltrateMatchAdapter(mContext, normalTemp, mCheckedIds, R.layout.item_cpi_filtrate);
         mCpiAdapterOther.setOnItemCheckedChangedListener(this);
         cpiGridViewOther.setAdapter(mCpiAdapterOther);
 
@@ -186,7 +187,7 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
                     if (!tempCheckIds.contains(mFilterTagsList.get(i).getLeagueId())) {
                         mCheckedIds.add(mFilterTagsList.get(i).getLeagueId());
                         //选中的大小
-                        checkedSize += mFilterTagsList.get(i).getMatchsInLeague();
+                        checkedSize += mFilterTagsList.get(i).getCount();
                     }
                 }
                 updateAdapter();
@@ -227,10 +228,10 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
     private void setHideNumber() {
         checkedSize = 0;
 
-        for (NewOddsInfo.FileterTagsBean tagsBean : mFilterTagsList) {
+        for (BasketIndexBean.DataBean.FileterTagsBean tagsBean : mFilterTagsList) {
 
             if (mCheckedIds.contains(tagsBean.getLeagueId())) {
-                checkedSize += tagsBean.getMatchsInLeague();
+                checkedSize += tagsBean.getCount();
             }
         }
         cpi_filtrate_match_hide_number.setText("" + (allSize - checkedSize));
@@ -239,7 +240,7 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    public void onClick(View buttonView, boolean isChecked, NewOddsInfo.FileterTagsBean fileterTagsBean) {
+    public void onClick(View buttonView, boolean isChecked, BasketIndexBean.DataBean.FileterTagsBean fileterTagsBean) {
         if (isChecked) {
             mCheckedIds.add(fileterTagsBean.getLeagueId());
         } else {

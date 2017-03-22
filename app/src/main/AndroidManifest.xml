@@ -361,6 +361,13 @@
         <activity
             android:name=".activity.SnookerEventPageActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BasketBallIndexFiltrateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BasketIndexDetailsActivity"
+            android:label="@string/title_activity_basket_index_details"
+            android:theme="@style/AppTheme.NoActionBar.NoActionBar"></activity>
     </application>
 
 </manifest>
