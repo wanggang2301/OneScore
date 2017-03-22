@@ -23,13 +23,15 @@ public class BasketIndexDetailsChildPresenter extends BasePresenter<BasketIndexD
     }
 
     @Override
-    public void showRequestData(String timeZone, String comId, String thirdId, String oddsType) {
+    public void showRequestData(String comId, String thirdId, String oddsType) {
         iGetTaskSource = new GetTaskSource();
-        iGetTaskSource.getBasketIndexCenterDetails(timeZone, comId, thirdId, oddsType, new OnTaskDataListener.BasketIndexDetails() {
+        iGetTaskSource.getBasketIndexCenterDetails(comId, thirdId, oddsType, new OnTaskDataListener.BasketIndexDetails() {
             @Override
             public void getDataSucess(BasketIndexDetailsBean o) {
-
                 mView.showLoadView();
+                //对请求的数据自己做处理
+
+
 
 
                 mView.showRequestDataView(o);
@@ -37,9 +39,7 @@ public class BasketIndexDetailsChildPresenter extends BasePresenter<BasketIndexD
 
             @Override
             public void getDataError() {
-
                 mView.onError();
-
             }
 
             @Override

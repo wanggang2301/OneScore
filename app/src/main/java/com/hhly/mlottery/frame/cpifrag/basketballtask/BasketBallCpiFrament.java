@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.util.ArrayMap;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -78,14 +80,20 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
     private View mView;
     private BasketCompanyChooseDialogFragment mCompanyChooseDialogFragment; // 公司选择
     private DateChooseDialogFragment mDateChooseDialogFragment; // 日期选择
-    //公司
-    private ArrayList<BasketIndexBean.DataBean.CompanyBean> companyList;
+
+    //公司euro,asiaLet,asiaSize
+    private Map<String, List<BasketIndexBean.DataBean.CompanyBean>> companyMap;
+
+
     private LinkedList<String> filterLeagueList; // 过滤信息数据源
     private static final int startFilterRequestCode = 10086;
     private String currentDate; // 当前日期
     private String choosenDate; // 选中日期
 
-    public BasketBallCpiFrament() {}
+    private String oddType = BasketOddsTypeEnum.ASIALET;
+
+    public BasketBallCpiFrament() {
+    }
 
     public static BasketBallCpiFrament newInstace() {
         BasketBallCpiFrament basketBallCpiFrament = new BasketBallCpiFrament();
@@ -107,7 +115,8 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
         mPresenter = new BasketBallCpiPresenter(this);
         //初始化头部View和事件
         mPresenter.initFg();
-        companyList = new ArrayList<>();
+
+        companyMap = new ArrayMap<>();
     }
 
     @Override
@@ -127,6 +136,37 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
         cpiViewpager.setOffscreenPageLimit(3);
         cpiViewpager.setAdapter(pagerAdapter);
         tabs.setupWithViewPager(cpiViewpager);
+
+        cpiViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        oddType = BasketOddsTypeEnum.ASIALET;
+                        break;
+                    case 1:
+                        oddType = BasketOddsTypeEnum.ASIASIZE;
+                        break;
+
+                    case 2:
+                        oddType = BasketOddsTypeEnum.EURO;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
     }
 
     /**
@@ -134,8 +174,8 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
      *
      * @return 公司列表
      */
-    public ArrayList<BasketIndexBean.DataBean.CompanyBean> getCompanyList() {
-        return companyList;
+    public Map<String, List<BasketIndexBean.DataBean.CompanyBean>> getCompanyMap() {
+        return companyMap; //亚盘
     }
 
     public void showRightButton() {
@@ -157,17 +197,36 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
      * 初始化公司选择Dialog
      */
     private void maybeInitCompanyChooseDialog() {
-        if (mCompanyChooseDialogFragment == null) {
-            mCompanyChooseDialogFragment = BasketCompanyChooseDialogFragment.newInstance(companyList,
-                    new BasketCompanyChooseDialogFragment.OnFinishSelectionListener() {
-                        @Override
-                        public void onFinishSelection() {
-                        /*    for (CPIOddsFragment2 fragment : mFragments) {
+        mCompanyChooseDialogFragment = BasketCompanyChooseDialogFragment.newInstance((ArrayList<BasketIndexBean.DataBean.CompanyBean>) companyMap.get(oddType),
+                new BasketCompanyChooseDialogFragment.OnFinishSelectionListener() {
+                    @Override
+                    public void onFinishSelection() {
+                        //对公司的筛选
+
+                        switch (oddType) {
+                            case BasketOddsTypeEnum.ASIALET:
+                                mFragments.get(0).updateFilterData();
+                                break;
+                            case BasketOddsTypeEnum.ASIASIZE:
+                                mFragments.get(1).updateFilterData();
+                                break;
+                            case BasketOddsTypeEnum.EURO:
+                                mFragments.get(2).updateFilterData();
+                                break;
+
+                            default:
+                                break;
+                        }
+
+
+
+
+
+                           /* for (CPIOddsFragment2 fragment : mFragments) {
                                 fragment.updateFilterData();
                             }*/
-                        }
-                    });
-        }
+                    }
+                });
     }
 
 
@@ -269,16 +328,13 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
     }
 
 
-    @OnClick({R.id.public_date_layout, R.id.iv_match, R.id.ll_match_select, R.id.public_img_company, R.id.public_img_filter})
+    @OnClick({R.id.public_date_layout, R.id.ll_match_select, R.id.public_img_company, R.id.public_img_filter})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.public_date_layout:
                 showDateChooseDialog();
-
-
                 break;
-            case R.id.iv_match:
-                break;
+
             case R.id.ll_match_select:
                 ivMatch.setImageResource(R.mipmap.nav_icon_up);
                 backgroundAlpha(getActivity(), 0.5f);
@@ -286,12 +342,10 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
 
                 break;
             case R.id.public_img_company:
-
                 showCompanyChooseDialog();
                 break;
 
             case R.id.public_img_filter:
-
                 Intent intent = new Intent(mActivity, BasketBallIndexFiltrateActivity.class);
                 intent.putExtra("fileterTags", (Serializable) getCurrentFragment().getFilterTagList());
                 intent.putExtra("linkedListChecked", filterLeagueList);
@@ -314,6 +368,8 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
         if (requestCode != startFilterRequestCode || resultCode != Activity.RESULT_CANCELED || data == null) {
             return;
         }
+
+
         ArrayList<String> checkedIdList = (ArrayList<String>) data.getSerializableExtra("key");
         if (filterLeagueList == null) filterLeagueList = new LinkedList<>();
         filterLeagueList.clear();
@@ -321,6 +377,8 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
         for (BasketBallOddFragment fragment : mFragments) {
             fragment.updateFilterData();
         }
+
+
     }
 
 

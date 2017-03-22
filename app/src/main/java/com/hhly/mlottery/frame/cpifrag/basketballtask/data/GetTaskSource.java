@@ -29,12 +29,6 @@ public class GetTaskSource implements IGetTaskSource {
             @Override
             public void onNext(BasketIndexBean o) {
                 if (o.getResult() == 200) {
-                  /*  if (o.get() == null || "".equals(o.getData())) {
-                        iGetTaskData.getNoData();
-                    } else {
-                        iGetTaskData.getDataSucess(o);
-                    }*/
-
                     iGetTaskData.getDataSucess(o);
                 } else {
                     iGetTaskData.getDataError();

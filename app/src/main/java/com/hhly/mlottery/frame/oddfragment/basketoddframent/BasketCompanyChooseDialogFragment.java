@@ -14,9 +14,11 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.cpiadapter.basket.BasketCpiCompanyAdapter;
 import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
+import com.hhly.mlottery.util.ToastTools;
 
 import java.util.ArrayList;
 
@@ -60,14 +62,6 @@ public class BasketCompanyChooseDialogFragment extends DialogFragment {
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.alert_dialog);
 
-//        WindowManager.LayoutParams layoutParams = window.getAttributes();
-//
-//        layoutParams.height = (int) (DisplayUtil.getScreenHeight(getContext()) * 0.42);
-//        layoutParams.width = (int) (DisplayUtil.getScreenWidth(getContext()) * 0.54);
-//        layoutParams.gravity = Gravity.CENTER;
-//
-//        window.setAttributes(layoutParams);
-
         mTitleTextView = (TextView) dialog.findViewById(R.id.titleView);
         mTitleTextView.setText(R.string.odd_company_txt);
 
@@ -104,17 +98,26 @@ public class BasketCompanyChooseDialogFragment extends DialogFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 BasketIndexBean.DataBean.CompanyBean company = companyList.get(position);
-             /*   if (getCheckedNum() == 1 && company.isChecked()) {
+                if (getCheckedNum() == 1 && company.isChecked()) {
                     ToastTools.showQuick(MyApp.getContext(), getString(R.string.at_least_one_company));
                     return;
                 }
-
-                company.setIsChecked(!company.isChecked());*/
+                company.setChecked(!company.isChecked());
                 View selectedView = view.findViewById(R.id.item_img_checked);
                 selectedView.setSelected(!selectedView.isSelected());
             }
         });
     }
+
+
+    public int getCheckedNum() {
+        int checkedNum = 0;
+        for (BasketIndexBean.DataBean.CompanyBean company : companyList) {
+            if (company.isChecked()) checkedNum += 1;
+        }
+        return checkedNum;
+    }
+
 
     public static BasketCompanyChooseDialogFragment newInstance(ArrayList<BasketIndexBean.DataBean.CompanyBean> companyList,
                                                                 OnFinishSelectionListener listener) {

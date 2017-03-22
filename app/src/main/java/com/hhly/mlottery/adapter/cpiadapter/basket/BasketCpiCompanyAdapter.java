@@ -54,13 +54,13 @@ public class BasketCpiCompanyAdapter extends BaseAdapter {
         ListViewItem item;
         Context context = parent.getContext();
         if (convertView == null) {
-            convertView = LayoutInflater.from(context)
-                    .inflate(R.layout.item_dialog_company, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_dialog_company, parent, false);
             item = new ListViewItem(convertView);
             convertView.setTag(item);
         } else {
             item = (ListViewItem) convertView.getTag();
         }
+
         item.checkedTextView.setText(mCompanyBean.get(position).getComName());
         item.checkedTextView.setChecked(mCompanyBean.get(position).isChecked());
         item.checkedTextView.setTextColor(ContextCompat.getColor(context, R.color.msg));
@@ -70,6 +70,7 @@ public class BasketCpiCompanyAdapter extends BaseAdapter {
         } else {
             item.cpi_img_checked.setSelected(false);
         }
+
         return convertView;
     }
 

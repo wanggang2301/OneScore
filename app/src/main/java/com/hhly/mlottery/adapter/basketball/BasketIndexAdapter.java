@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
+import com.hhly.mlottery.bean.enums.BasketOddsTypeEnum;
 import com.hhly.mlottery.widget.IndexOddsItemView;
 
 import java.util.List;
@@ -24,6 +25,8 @@ import java.util.List;
 public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBean.AllInfoBean> {
 
     private List<BasketIndexBean.DataBean.AllInfoBean> list;
+
+    private Context mContext;
 
     private String type;
 
@@ -43,6 +46,7 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
     public BasketIndexAdapter(Context context, List<BasketIndexBean.DataBean.AllInfoBean> data, String type) {
         super(R.layout.item_index_basket, data);
         this.type = type;
+        mContext = context;
     }
 
 
@@ -80,6 +84,8 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
     private void bindOdds(BaseViewHolder holder, final BasketIndexBean.DataBean.AllInfoBean allInfoBean) {
         LinearLayout container = holder.getView(R.id.odds_container);
 
+        setTitleText(holder);
+
         container.removeAllViews();
         IndexOddsItemView indexOddsItemView = null;
         List<BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean> comList = allInfoBean.getMatchOdds();
@@ -100,7 +106,6 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
             }
 
 
-
             container.addView(indexOddsItemView);
         }
         // 最后一个隐藏底部分割线
@@ -119,9 +124,33 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
     }
 
 
-    //item_index_basket
+    /**
+     * 设置标题文字
+     */
+    private void setTitleText(BaseViewHolder holder) {
+        switch (type) {
+            case BasketOddsTypeEnum.ASIALET:
+                holder.setText(R.id.cpi_item_home_txt, mContext.getString(R.string.foot_odds_alet_left));
+                holder.setText(R.id.cpi_item_odds_txt, mContext.getString(R.string.foot_odds_alet_middle));
+                holder.setText(R.id.cpi_item_guest_txt, mContext.getString(R.string.foot_odds_alet_right));
+                break;
+            case BasketOddsTypeEnum.ASIASIZE:
+                holder.setText(R.id.cpi_item_home_txt, mContext.getString(R.string.foot_odds_asize_left));
+                holder.setText(R.id.cpi_item_odds_txt, mContext.getString(R.string.foot_odds_asize_middle));
+                holder.setText(R.id.cpi_item_guest_txt, mContext.getString(R.string.foot_odds_asize_right));
+                break;
+            case BasketOddsTypeEnum.EURO:
+                holder.setText(R.id.cpi_item_home_txt, mContext.getString(R.string.foot_odds_eu_left));
+                holder.setText(R.id.cpi_item_odds_txt, mContext.getString(R.string.foot_odds_eu_middle));
+                holder.setText(R.id.cpi_item_guest_txt, mContext.getString(R.string.foot_odds_eu_right));
+                break;
+        }
+
+
+        //item_index_basket
 
    /* public void addAll(List<BasketIndexBean.DataBean.AllInfoBean> infoBean) {
         list.addAll(infoBean);
     }*/
+    }
 }

@@ -212,6 +212,7 @@ public class CPIOddsFragment2 extends Fragment {
     public void updateFilterData() {
         filterData.clear();
         LinkedList<String> filterList = parentFragment.getFilterList();
+
         if (filterList != null) {
             for (NewOddsInfo.AllInfoBean allInfo : defaultData) {
                 if (filterList.indexOf(allInfo.getLeagueId()) >= 0) {
@@ -241,12 +242,16 @@ public class CPIOddsFragment2 extends Fragment {
         //公司list
         List<NewOddsInfo.AllInfoBean.ComListBean> comList = clone.getComList();
 
+        //单个公司
         ListIterator<NewOddsInfo.AllInfoBean.ComListBean> iterator = comList.listIterator();
 
+
         // 不能直接粗暴的 remove，因为持有的是引用也会把 default 中的修改掉
-        while (iterator.hasNext()) {
+        while (iterator.hasNext()) {  //遍历这个公司
             NewOddsInfo.AllInfoBean.ComListBean next = iterator.next();
+
             if (!isOddsShow(next)) {
+
                 iterator.remove();
             }
         }
@@ -457,10 +462,21 @@ public class CPIOddsFragment2 extends Fragment {
     private boolean
 
     isOddsShow(NewOddsInfo.AllInfoBean.ComListBean comListBean) {
+
+        //源数据列表中的一个公司
+
         boolean show = false;
+
+        //获取筛选的公司列表
         ArrayList<NewOddsInfo.CompanyBean> companyList = parentFragment.getCompanyList();
+
+
         if (companyList != null && companyList.size() > 0) {
+
             for (NewOddsInfo.CompanyBean company : companyList) {
+
+                //如果筛选的列表中的公司的被选中的和源数据中的公司Id相同
+
                 if (comListBean.getComId().equals(company.getComId()) && company.isChecked()) {
                     show = true;
                 }

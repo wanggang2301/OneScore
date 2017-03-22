@@ -26,14 +26,11 @@ public interface BasketIndexDetailsContract {
 
     interface IndexDetailsChildView extends IView {
         void showLoadView();
-
         void showRequestDataView(BasketIndexDetailsBean o);
-
         void noData();
     }
 
     interface IndexDetailsChildPresenter extends IPresenter<BasketIndexDetailsContract.IndexDetailsChildView> {
         void showRequestData(String comId, String thirdId, String oddsType);
     }
-
 }

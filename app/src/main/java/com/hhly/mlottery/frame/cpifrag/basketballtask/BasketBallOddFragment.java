@@ -38,6 +38,10 @@ import butterknife.ButterKnife;
 public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPresenter> implements BasketBallContract.OddView {
 
     private static final String ODD_TYPE = "ODD_TYPE";
+
+    //默认公司筛选选中头两家公司
+    private static final int DEFAULT_SELECTED_COMPANY = 2;
+
     @BindView(R.id.btn_test)
     Button btnTest;
     @BindView(R.id.cpi_odds_recyclerView)
@@ -54,10 +58,9 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
     private List<BasketIndexBean.DataBean.FileterTagsBean> fileterTagsBeanList;
 
-
     private List<BasketIndexBean.DataBean.AllInfoBean> sourceDataList; //源数据
-    private List<BasketIndexBean.DataBean.AllInfoBean> destinationDataList; //目标数据
 
+    private List<BasketIndexBean.DataBean.AllInfoBean> destinationDataList; //目标数据
 
     //过滤后的列表数据
     private List<BasketIndexBean.DataBean.AllInfoBean> fileterAllInfoBeanList;
@@ -93,12 +96,14 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         fileterAllInfoBeanList = new ArrayList<>();
+
         fileterTagsBeanList = new ArrayList<>();
 
         sourceDataList = new ArrayList<>();
-        destinationDataList = new ArrayList<>();
 
+        destinationDataList = new ArrayList<>();
 
         mPresenter = new BasketBallOddPresenter(this);
 
@@ -106,19 +111,20 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
             @Override
             public void onClick(View v) {
                 //显示数据
-                mPresenter.showRequestData("zh", "8", "", type);
+                mPresenter.showRequestData("", type);
             }
         });
 
+        mPresenter.showRequestData("", type);
 
         cpiOddsRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+
         mBasketIndexAdapter = new BasketIndexAdapter(mActivity, destinationDataList, type);
 
         mBasketIndexAdapter.setOnItemClickListener(new BasketIndexAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BasketIndexBean.DataBean.AllInfoBean allInfoBean) {
                 Intent intent = new Intent(mActivity, BasketDetailsActivityTest.class);
-
             }
         });
 
@@ -160,12 +166,14 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         sourceDataList.clear();
         sourceDataList.addAll(o.getData().getAllInfo());
 
-        updateFilterData();
 
+        //处理公司数据  请求到数据成功后已经将需要默认选择的公司数据处理好了
+        handleCompanyData(o.getData().getCompany());
         refreshDateView(o.getData().getCurrDate());
 
-        //处理公司数据
-        handleCompanyData(o.getData().getCompany());
+        updateFilterData();
+
+
     }
 
     /**
@@ -174,7 +182,7 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
      * @param date date, 形如 2016-06-21 可以为空
      */
     public void refreshData(String date) {
-        mPresenter.showRequestData("zh", "8", date, type);
+        mPresenter.showRequestData(date, type);
     }
 
 
@@ -203,10 +211,22 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
     private void handleCompanyData(List<BasketIndexBean.DataBean.CompanyBean> companyBeen) {
         parentFragment.showRightButton();
-        ArrayList<BasketIndexBean.DataBean.CompanyBean> companyList = parentFragment.getCompanyList();
-        if (companyList.isEmpty()) {
-            companyList.addAll(companyBeen);
+        // ArrayList<BasketIndexBean.DataBean.CompanyBean> companyList = parentFragment.getCompanyList(type);
+        //companyList.clear(); //清除以前的公司数据 因为公司数据各个赔率是单独的
+        //companyList.addAll(companyBeen);
+
+        L.d("comp", type + "_________" + companyBeen.size());
+
+        int size = companyBeen.size();
+        size = size < DEFAULT_SELECTED_COMPANY ? size : DEFAULT_SELECTED_COMPANY;
+
+        for (int i = 0; i < size; i++) {
+            companyBeen.get(i).setChecked(true);
         }
+
+
+        parentFragment.getCompanyMap().put(type, companyBeen);
+
     }
 
     public List<BasketIndexBean.DataBean.FileterTagsBean> getFilterTagList() {
@@ -222,6 +242,9 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
         //赛事的筛选
         LinkedList<String> filterLeagueList = parentFragment.getFilterLeagueList();
+
+        L.d("datasize", "sourceDataList前===" + sourceDataList.size() + "");
+
         if (filterLeagueList != null) {
             for (BasketIndexBean.DataBean.AllInfoBean allInfo : sourceDataList) {
                 if (filterLeagueList.indexOf(allInfo.getLeagueId()) >= 0) {
@@ -229,12 +252,16 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
                 }
             }
         } else {
-            for (BasketIndexBean.DataBean.AllInfoBean allInfo : sourceDataList) {
+            for (BasketIndexBean.DataBean.AllInfoBean allInfo : sourceDataList) {  //每一场赛事
                 if (allInfo.isHot()) {
                     filterAllInfo(allInfo);   //默认显示热门的比赛
                 }
             }
         }
+
+        L.d("datasize", "sourceDataList后===" + sourceDataList.size() + "");
+
+        L.d("datasize", "destinationDataList===" + destinationDataList.size() + "");
 
 
         mBasketIndexAdapter.notifyDataSetChanged();
@@ -249,26 +276,38 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     private void filterAllInfo(BasketIndexBean.DataBean.AllInfoBean allInfo) {
 
 
-        //先不管公司的筛选
-      /*  NewOddsInfo.AllInfoBean clone = allInfo.clone();
-        List<NewOddsInfo.AllInfoBean.ComListBean> comList = clone.getComList();
-        ListIterator<NewOddsInfo.AllInfoBean.ComListBean> iterator = comList.listIterator();
+        //获取各个赔率下的公司list
+        List<BasketIndexBean.DataBean.CompanyBean> companyList = parentFragment.getCompanyMap().get(type);
 
-        // 不能直接粗暴的 remove，因为持有的是引用也会把 default 中的修改掉
-        while (iterator.hasNext()) {
-            NewOddsInfo.AllInfoBean.ComListBean next = iterator.next();
-            if (!isOddsShow(next)) {
-                iterator.remove();
+        List<BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean> matchOddsBeanList = new ArrayList<>();   //每一场比赛的赔率公司
+
+        for (BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean matchOddsBean : allInfo.getMatchOdds()) {
+            for (BasketIndexBean.DataBean.CompanyBean companyBean : companyList) {
+                if (companyBean.isChecked() && companyBean.getComId().equals(matchOddsBean.getComId())) {
+                    matchOddsBeanList.add(matchOddsBean);
+                }
             }
-        }*/
+        }
 
 
-        destinationDataList.add(allInfo);
+        //防止对象复用
+        BasketIndexBean.DataBean.AllInfoBean allInfoBean = new BasketIndexBean.DataBean.AllInfoBean();
+        allInfoBean.setMatchOdds(matchOddsBeanList);
+        allInfoBean.setThirdId(allInfo.getThirdId());
+        allInfoBean.setHomeTeam(allInfo.getHomeTeam());
+        allInfoBean.setGuestTeam(allInfo.getGuestTeam());
+        allInfoBean.setLeagueId(allInfo.getLeagueId());
+        allInfoBean.setLeagueName(allInfo.getLeagueName());
+        allInfoBean.setLeagueColor(allInfo.getLeagueColor());
+        allInfoBean.setDate(allInfo.getDate());
+        allInfoBean.setTime(allInfo.getTime());
+        allInfoBean.setMatchStatus(allInfo.getMatchStatus());
+        allInfoBean.setHot(allInfo.isHot());
+        allInfoBean.setMatchResult(allInfo.getMatchResult());
 
-/*
-        if (comList.size() > 0) {
-            filterData.add(clone);
-        }*/
+
+        destinationDataList.add(allInfoBean);
+
     }
 
 
