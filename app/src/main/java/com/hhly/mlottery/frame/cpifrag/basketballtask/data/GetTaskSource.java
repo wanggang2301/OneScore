@@ -38,7 +38,7 @@ public class GetTaskSource implements IGetTaskSource {
     }
 
     @Override
-    public void getBasketIndexCenterDetails( String comId, String thirdId, String oddsType, final OnTaskDataListener.BasketIndexDetails iGetTaskData) {
+    public void getBasketIndexCenterDetails(String comId, String thirdId, String oddsType, final OnTaskDataListener.BasketIndexDetails iGetTaskData) {
         HttpMethods.getInstance().getBasketIndexCenterDetails(new Subscriber<BasketIndexDetailsBean>() {
             @Override
             public void onCompleted() {
@@ -47,12 +47,21 @@ public class GetTaskSource implements IGetTaskSource {
 
             @Override
             public void onError(Throwable e) {
+                iGetTaskData.getDataError();
 
             }
 
             @Override
             public void onNext(BasketIndexDetailsBean basketIndexDetailsBean) {
-                iGetTaskData.getDataSucess(basketIndexDetailsBean);
+
+                if (basketIndexDetailsBean != null && basketIndexDetailsBean.getOddsData() != null && basketIndexDetailsBean.getComLists() != null) {
+
+                    iGetTaskData.getDataSucess(basketIndexDetailsBean);
+
+                }else {
+                    iGetTaskData.getDataError();
+
+                }
             }
         }, comId, thirdId, oddsType);
 

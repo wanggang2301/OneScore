@@ -2,6 +2,7 @@ package com.hhly.mlottery.frame.cpifrag.basketballtask.indexdetail;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.bean.enums.BasketOddsTypeEnum;
 import com.hhly.mlottery.mvp.ViewFragment;
 
 import java.util.ArrayList;
@@ -51,9 +53,31 @@ public class BasketIndexDetailsFragment extends ViewFragment<BasketIndexDetailsC
     private List<Fragment> fragments;
     private CpiDetailsFragmentAdapter cpiDetailsFragmentAdapter;
 
-    public static BasketIndexDetailsFragment newInstance() {
+    private String thirdId, comId, oddType;
+
+
+    private static final String TAG = "IndexDetails";
+
+
+    public static BasketIndexDetailsFragment newInstance(String thirdId, String comId, String oddType) {
         BasketIndexDetailsFragment basketIndexDetailsFragment = new BasketIndexDetailsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("thirdId", thirdId);
+        bundle.putString("comId", comId);
+        bundle.putString("oddType", oddType);
+        basketIndexDetailsFragment.setArguments(bundle);
         return basketIndexDetailsFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            thirdId = getArguments().getString("thirdId");
+            comId = getArguments().getString("comId");
+            oddType = getArguments().getString("oddType");
+        }
     }
 
     @Override
@@ -94,15 +118,55 @@ public class BasketIndexDetailsFragment extends ViewFragment<BasketIndexDetailsC
 
     //初始化viewPager
     private void initViewPager() {
+
+
         fragments = new ArrayList<>();
         //亚盘
-        fragments.add(BasketIndexDetailsChildFragment.newInstance());
-        fragments.add(BasketIndexDetailsChildFragment.newInstance());
-        fragments.add(BasketIndexDetailsChildFragment.newInstance());
+
+        fragments.add(BasketIndexDetailsChildFragment.newInstance(thirdId, "", BasketOddsTypeEnum.ASIALET));
+        fragments.add(BasketIndexDetailsChildFragment.newInstance(thirdId, "", BasketOddsTypeEnum.ASIASIZE));
+        fragments.add(BasketIndexDetailsChildFragment.newInstance(thirdId, "", BasketOddsTypeEnum.EURO));
+
+
+        Bundle bundle = new Bundle();
+        bundle.putString("thirdId", thirdId);
+        bundle.putString("comId", comId);
+        bundle.putString("oddType", oddType);
+
+        switch (oddType) {
+            case BasketOddsTypeEnum.ASIALET:
+                fragments.get(0).setArguments(bundle);
+                break;
+
+            case BasketOddsTypeEnum.ASIASIZE:
+                fragments.get(1).setArguments(bundle);
+                break;
+
+            case BasketOddsTypeEnum.EURO:
+                fragments.get(2).setArguments(bundle);
+                break;
+        }
+
+
         cpiDetailsFragmentAdapter = new CpiDetailsFragmentAdapter(getChildFragmentManager(), fragments);
         cpiDetailsViewpager.setOffscreenPageLimit(2);//设置预加载页面的个数。
         cpiDetailsViewpager.setAdapter(cpiDetailsFragmentAdapter);
         //根据标识界面传过来的值默认选中那个界面
+
+        switch (oddType) {
+            case BasketOddsTypeEnum.ASIALET:
+                cpiDetailsViewpager.setCurrentItem(0);
+                break;
+
+            case BasketOddsTypeEnum.ASIASIZE:
+                cpiDetailsViewpager.setCurrentItem(1);
+                break;
+
+            case BasketOddsTypeEnum.EURO:
+                cpiDetailsViewpager.setCurrentItem(2);
+                break;
+        }
+
    /*     if ("palte".equals(stType)) {
             mViewPager.setCurrentItem(0);
         } else if ("big".equals(stType)) {
@@ -118,6 +182,7 @@ public class BasketIndexDetailsFragment extends ViewFragment<BasketIndexDetailsC
 
     class CpiDetailsFragmentAdapter extends FragmentPagerAdapter {
         private List<Fragment> mFragmentList;
+
         public CpiDetailsFragmentAdapter(FragmentManager fragmentManager, List<Fragment> fragmentList) {
             super(fragmentManager);
             this.mFragmentList = fragmentList;
@@ -127,6 +192,7 @@ public class BasketIndexDetailsFragment extends ViewFragment<BasketIndexDetailsC
         public Fragment getItem(int position) {
             return mFragmentList.get(position);
         }
+
         @Override
         public int getCount() {
             return mFragmentList.size();

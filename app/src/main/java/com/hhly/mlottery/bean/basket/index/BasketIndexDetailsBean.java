@@ -49,6 +49,7 @@ public class BasketIndexDetailsBean {
         private String handicapValue;
         private int handicapValueTrend;
 
+
         public String getUpdateTime() {
             return updateTime;
         }

@@ -107,10 +107,10 @@ public class CpiDetailsFragment extends Fragment {
         cpi_dish_details_txt_id = (TextView) mView.findViewById(R.id.cpi_dish_details_txt_id);
         cpi_guest_details_txt_id = (TextView) mView.findViewById(R.id.cpi_guest_details_txt_id);
         cpi_tails_left_listview = (ListView) mView.findViewById(R.id.cpi_tails_left_listview);
-        cpi_odds_tetails_right_listview =
-                (PinnedHeaderExpandableListView) mView.findViewById(R.id.cpi_odds_tetails_right_listview);
-        cpi_odds_tetails_right_listview
-                .setChildDivider(ContextCompat.getDrawable(mContext, R.color.line_football_footer));
+        cpi_odds_tetails_right_listview = (PinnedHeaderExpandableListView) mView.findViewById(R.id.cpi_odds_tetails_right_listview);
+        cpi_odds_tetails_right_listview.setChildDivider(ContextCompat.getDrawable(mContext, R.color.line_football_footer));
+
+
         if ("3".equals(mParam1)) {
             //大小球
             cpi_home_details_txt_id.setText(R.string.foot_odds_asize_left);
@@ -171,6 +171,11 @@ public class CpiDetailsFragment extends Fragment {
         });
     }
 
+
+
+
+
+
     private List<String> groupDataList = new ArrayList<>();//指数 博彩详情实体类（头部）
     private List<List<OddsDetailsDataInfo.DetailsEntity.DataDetailsEntity>> childDetailsList = new ArrayList<>();//指数 博彩详情实体类
 
@@ -205,7 +210,9 @@ public class CpiDetailsFragment extends Fragment {
 
                         for (int i = 0; i < groupListDetailsEntity.size(); i++) {
                             //循环添加父view数据(日期)
-                            groupDataList.add(groupListDetailsEntity.get(i).getDate());
+                            groupDataList.add(groupListDetailsEntity.get(i).getDate());   //足球里面的全部日期  现在篮球没有
+
+
                             //添加子view数据(拿子类的DetailsEntity)
                             childDetailsList.add(groupListDetailsEntity.get(i).getDetails());
                             //i=0的时候拿到第一条设置一个标识”初盘“

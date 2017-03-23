@@ -125,21 +125,18 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
             @Override
             public void onItemClick(BasketIndexBean.DataBean.AllInfoBean allInfoBean) {
                 Intent intent = new Intent(mActivity, BasketDetailsActivityTest.class);
+
             }
         });
 
         mBasketIndexAdapter.setOnOddIetmClickListener(new BasketIndexAdapter.onOddIetmClickListener() {
             @Override
-            public void onOddItemCLick(BasketIndexBean.DataBean.AllInfoBean allInfoBean, BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean item) {
-
-              /*  Intent intent = new Intent(mActivity, BasketIndexDetailsActivity.class);
-                intent.putExtra("obListEntity", (Serializable) obList);
-                intent.putExtra("comId", item.getComId());
-                intent.putExtra("positionNunber", item.get().indexOf(odds) + "");
-                intent.putExtra("stType", type);*/
+            public void onOddItemCLick(String thirdId, String comId) {
                 Intent intent = new Intent(mActivity, BasketIndexDetailsActivity.class);
+                intent.putExtra("thirdId", thirdId);
+                intent.putExtra("comId", comId);
+                intent.putExtra("oddType", type);
                 mActivity.startActivity(intent);
-
             }
         });
 

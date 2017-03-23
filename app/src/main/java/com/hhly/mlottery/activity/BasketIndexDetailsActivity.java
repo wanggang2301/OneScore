@@ -8,16 +8,34 @@ import com.hhly.mlottery.frame.cpifrag.basketballtask.indexdetail.BasketIndexDet
 
 public class BasketIndexDetailsActivity extends BaseActivity {
 
+    String thirdId;
+    String comId;
+    String oddType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+       /* if (getIntent() != null) {
+            thirdId = getIntent().getStringExtra("thirdId");
+            comId = getIntent().getStringExtra("comId");
+            oddType = getIntent().getStringExtra("oddType");
+        }*/
+
+
+        //测试
+        thirdId = "4432567";
+        comId = "2";
+        oddType = "asiaLet";
+
+
         setContentView(R.layout.activity_basket_index_details);
         BasketIndexDetailsFragment basketIndexDetailsFragment = (BasketIndexDetailsFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
 
         //  String taskId = getIntent().getStringExtra(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID);
 
         if (basketIndexDetailsFragment == null) {
-            basketIndexDetailsFragment = BasketIndexDetailsFragment.newInstance();
+            basketIndexDetailsFragment = BasketIndexDetailsFragment.newInstance(thirdId, comId, oddType);
 
          /*   if (getIntent().hasExtra(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID)) {
                 Bundle bundle = new Bundle();

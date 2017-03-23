@@ -99,7 +99,7 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
                 indexOddsItemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onOddIetmClickListener.onOddItemCLick(allInfoBean, item);
+                        onOddIetmClickListener.onOddItemCLick(allInfoBean.getThirdId(), item.getComId());
 
                     }
                 });
@@ -120,7 +120,7 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
     }
 
     public interface onOddIetmClickListener {
-        void onOddItemCLick(BasketIndexBean.DataBean.AllInfoBean allInfoBean, BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean item);
+        void onOddItemCLick(String thirdId, String comId);
     }
 
 
