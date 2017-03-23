@@ -169,7 +169,7 @@
                 android:groupIndicator="@null"
                 android:scrollbars="vertical"
                 android:scrollingCache="true"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
         </LinearLayout>
 

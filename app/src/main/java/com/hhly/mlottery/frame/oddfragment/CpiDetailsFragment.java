@@ -205,21 +205,16 @@ public class CpiDetailsFragment extends Fragment {
             public synchronized void onResponse(final OddsDetailsDataInfo json) {
                 if (json != null) {
                     groupListDetailsEntity = json.getDetails();
-
                     if (groupListDetailsEntity != null) {
-
                         for (int i = 0; i < groupListDetailsEntity.size(); i++) {
                             //循环添加父view数据(日期)
                             groupDataList.add(groupListDetailsEntity.get(i).getDate());   //足球里面的全部日期  现在篮球没有
-
-
                             //添加子view数据(拿子类的DetailsEntity)
                             childDetailsList.add(groupListDetailsEntity.get(i).getDetails());
                             //i=0的时候拿到第一条设置一个标识”初盘“
                             if (i == 0) {
                                 groupListDetailsEntity.get(i).getDetails().get(i).setSelectTag("tag");
                             }
-
                             // //倒序，排列子view的数据
                             Collections.reverse(groupListDetailsEntity.get(i).getDetails());
                         }
@@ -231,16 +226,12 @@ public class CpiDetailsFragment extends Fragment {
                         //判断主队的数据
                         for (int i = 0; i < childDetailsList.size(); i++) {
                             for (int j = 0; j < childDetailsList.get(i).size(); j++) {
-
                                 if (j == childDetailsList.get(i).size() - 1) {//一天里面的最后一个或者一天里面只有一个的那一个
-
                                     if ((i + 1) == childDetailsList.size()) {//如果第一天只有一个则不设置颜色
                                         continue;
                                     }
-
                                     OddsDetailsDataInfo.DetailsEntity.DataDetailsEntity currentModel = childDetailsList.get(i).get(j);
                                     OddsDetailsDataInfo.DetailsEntity.DataDetailsEntity nextModel = childDetailsList.get(i + 1).get(0);
-
                                     //设置主队
                                     setOddDetailColor(currentModel, currentModel.getHomeOdd(), nextModel.getHomeOdd(), 1);
                                     //设置客队

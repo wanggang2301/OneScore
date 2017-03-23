@@ -16,18 +16,18 @@ public class BasketIndexDetailsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-       /* if (getIntent() != null) {
+        if (getIntent() != null) {
             thirdId = getIntent().getStringExtra("thirdId");
             comId = getIntent().getStringExtra("comId");
             oddType = getIntent().getStringExtra("oddType");
-        }*/
+        }
 
 
-        //测试
+     /*   //测试
         thirdId = "4432567";
         comId = "2";
         oddType = "asiaLet";
-
+*/
 
         setContentView(R.layout.activity_basket_index_details);
         BasketIndexDetailsFragment basketIndexDetailsFragment = (BasketIndexDetailsFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);

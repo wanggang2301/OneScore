@@ -28,7 +28,6 @@ public class BasketIndexDetailsChildPresenter extends BasePresenter<BasketIndexD
         iGetTaskSource.getBasketIndexCenterDetails(comId, thirdId, oddsType, new OnTaskDataListener.BasketIndexDetails() {
             @Override
             public void getDataSucess(BasketIndexDetailsBean o) {
-                mView.showLoadView();
                 mView.showRequestDataView(o);
             }
 
@@ -40,12 +39,17 @@ public class BasketIndexDetailsChildPresenter extends BasePresenter<BasketIndexD
             @Override
             public void getNoData() {
 
-                mView.noData();
+                mView.noDataView();
             }
         });
 
     }
 
+
+    @Override
+    public void showLoad() {
+        mView.showLoadView();
+    }
 
     //只为点击公司获取赔率列表使用
     @Override
@@ -66,7 +70,7 @@ public class BasketIndexDetailsChildPresenter extends BasePresenter<BasketIndexD
             @Override
             public void getNoData() {
 
-                mView.noData();
+                mView.noDataView();
             }
         });
     }

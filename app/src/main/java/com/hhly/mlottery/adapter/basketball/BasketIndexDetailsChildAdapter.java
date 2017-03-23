@@ -22,10 +22,12 @@ import java.util.List;
 public class BasketIndexDetailsChildAdapter extends BaseQuickAdapter<BasketIndexDetailsBean.OddsDataBean> {
 
     private String oddType;
+    private Context mContext;
 
     public BasketIndexDetailsChildAdapter(Context context, List<BasketIndexDetailsBean.OddsDataBean> data, String oddType) {
         super(R.layout.item_odds_details_child, data);
         this.oddType = oddType;
+        this.mContext = context;
     }
 
     @Override
@@ -36,7 +38,7 @@ public class BasketIndexDetailsChildAdapter extends BaseQuickAdapter<BasketIndex
         baseViewHolder.setText(R.id.odds_details_guest_txt, oddsDataBean.getRightOdds());
 
         if (oddType.equals(BasketOddsTypeEnum.ASIALET)) {
-            baseViewHolder.setText(R.id.odds_details_dish_txt, HandicapUtils.changeHandicap(String.format("%.2f", oddsDataBean.getHandicapValue())));
+            baseViewHolder.setText(R.id.odds_details_dish_txt, HandicapUtils.changeHandicap(oddsDataBean.getHandicapValue()));
 
         } else if (oddType.equals(BasketOddsTypeEnum.ASIASIZE)) {
             baseViewHolder.setText(R.id.odds_details_dish_txt, HandicapUtils.changeHandicapByBigLittleBall(oddsDataBean.getHandicapValue() + ""));

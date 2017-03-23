@@ -35,6 +35,9 @@ import butterknife.ButterKnife;
 import static com.hhly.mlottery.R.id.cpi_dish_details_txt_id;
 import static com.hhly.mlottery.R.id.cpi_guest_details_txt_id;
 import static com.hhly.mlottery.R.id.cpi_home_details_txt_id;
+import static com.hhly.mlottery.R.id.cpi_right_fl_plate_loading;
+import static com.hhly.mlottery.R.id.cpi_right_fl_plate_networkError;
+import static com.hhly.mlottery.R.id.cpi_right_fl_plate_noData;
 import static com.hhly.mlottery.R.id.cpi_tails_left_listview;
 
 /**
@@ -45,13 +48,13 @@ import static com.hhly.mlottery.R.id.cpi_tails_left_listview;
 public class BasketIndexDetailsChildFragment extends ViewFragment<BasketIndexDetailsContract.IndexDetailsChildPresenter> implements BasketIndexDetailsContract.IndexDetailsChildView {
     @BindView(cpi_tails_left_listview)
     ListView cpiTailsLeftListview;
-    @BindView(R.id.cpi_right_fl_plate_loading)
+    @BindView(cpi_right_fl_plate_loading)
     FrameLayout cpiRightFlPlateLoading;
     @BindView(R.id.cpi_txt_reLoading)
     TextView cpiTxtReLoading;
-    @BindView(R.id.cpi_right_fl_plate_networkError)
+    @BindView(cpi_right_fl_plate_networkError)
     FrameLayout cpiRightFlPlateNetworkError;
-    @BindView(R.id.cpi_right_fl_plate_noData)
+    @BindView(cpi_right_fl_plate_noData)
     FrameLayout cpiRightFlPlateNoData;
     @BindView(cpi_home_details_txt_id)
     TextView cpiHomeDetailsTxtId;
@@ -65,6 +68,8 @@ public class BasketIndexDetailsChildFragment extends ViewFragment<BasketIndexDet
 
     private String thirdId, comId, oddType;
     private Activity mActivity;
+
+    private int positon = 0;  //从列表穿过来的公司在左侧的位置
 
     private OddDetailsLeftAdapter oddDetailsLeftAdapter;
     private BasketIndexDetailsChildAdapter basketIndexDetailsChildAdapter;
@@ -117,9 +122,6 @@ public class BasketIndexDetailsChildFragment extends ViewFragment<BasketIndexDet
 
     @Override
     public void showRequestDataView(BasketIndexDetailsBean b) {
-        L.d("child", "赔率数据====" + b.getOddsData().get(0).getLeftOdds());
-
-
         setRightOddTiTleName();
 
         //处理左边的公司数据
@@ -139,12 +141,18 @@ public class BasketIndexDetailsChildFragment extends ViewFragment<BasketIndexDet
 
     @Override
     public void showLoadView() {
+        cpiRightFlPlateNoData.setVisibility(View.GONE);
+        cpiRightFlPlateNetworkError.setVisibility(View.GONE);
+        cpiRightFlPlateLoading.setVisibility(View.VISIBLE);
+        cpiOddsTetailsRightRecyclerView.setVisibility(View.GONE);
+
         Toast.makeText(mActivity, "加载数据中。。。。。。。。。", Toast.LENGTH_SHORT).show();
 
     }
 
+
     @Override
-    public void noData() {
+    public void noDataView() {
 
     }
 
@@ -182,15 +190,14 @@ public class BasketIndexDetailsChildFragment extends ViewFragment<BasketIndexDet
      */
     private void handleLeftData(List<BasketIndexDetailsBean.ComListsBean> comListsBeen) {
 
-        List<Map<String, String>> obList = toListViewParamList(comListsBeen);
+        final List<Map<String, String>> obList = toListViewParamList(comListsBeen);
 
 
         oddDetailsLeftAdapter = new OddDetailsLeftAdapter(mActivity, obList);
         cpiTailsLeftListview.setAdapter(oddDetailsLeftAdapter);
         //根据传过去的postion更改选中的item选中背景
-        //   oddDetailsLeftAdapter.setSelect(comId);
-        // 指数详情右边数据
-        // RightData(mParamComId);
+
+        oddDetailsLeftAdapter.setSelect(positon);
 
         // 详情左边list点击事件
         cpiTailsLeftListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -199,16 +206,7 @@ public class BasketIndexDetailsChildFragment extends ViewFragment<BasketIndexDet
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //根据传过去的postion更改选中的item选中背景
                 oddDetailsLeftAdapter.setSelect(position);
-                //根据position获取list集合里面id
-             /*   stCompanId = mParam2List.get(position).get("id");
-                if (mCpiDetailsAdatper != null) {
-                    //切换指数详情右边listview之前刷新adapter
-                    //清除父类和子类view的数据，刷新 mOddsDetailsAdapter
-                    mCpiDetailsAdatper.clearData();
-                    //指数详情右边数据
-                    RightData(stCompanId);
-                }
-*/
+                mPresenter.getRequestComOddsData(obList.get(position).get("id"), thirdId, oddType);
 
             }
         });
@@ -217,8 +215,8 @@ public class BasketIndexDetailsChildFragment extends ViewFragment<BasketIndexDet
 
     //右边的数据需要接口切换请求
     private void handleRightData(List<BasketIndexDetailsBean.OddsDataBean> oddsDataBeanList) {
-        L.d("ddffgg",oddsDataBeanList.size()+"");
-        basketIndexDetailsChildAdapter = new BasketIndexDetailsChildAdapter(mActivity, oddsDataBeanList,oddType);
+        L.d("ddffgg", oddsDataBeanList.size() + "");
+        basketIndexDetailsChildAdapter = new BasketIndexDetailsChildAdapter(mActivity, oddsDataBeanList, oddType);
         cpiOddsTetailsRightRecyclerView.setAdapter(basketIndexDetailsChildAdapter);
 
     }
@@ -237,6 +235,11 @@ public class BasketIndexDetailsChildFragment extends ViewFragment<BasketIndexDet
             obMap.put("id", comListsBeen.get(i).getComId());
             obMap.put("name", comListsBeen.get(i).getComName());
             obMap.put("thirdid", thirdId);
+
+            if (comId.equals(comListsBeen.get(i).getComId())) {
+                positon = i;
+            }
+
             obList.add(obMap);
         }
         return obList;

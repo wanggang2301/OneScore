@@ -31,13 +31,15 @@ public interface BasketIndexDetailsContract {
 
         void getComOddsFromComId(BasketIndexDetailsBean o);
 
-        void noData();
+        void noDataView();
     }
 
     interface IndexDetailsChildPresenter extends IPresenter<BasketIndexDetailsContract.IndexDetailsChildView> {
         void showRequestData(String comId, String thirdId, String oddsType);
 
         void getRequestComOddsData(String comId, String thirdId, String oddsType);
+
+        void showLoad();
 
     }
 }
