@@ -31,6 +31,8 @@ public interface BasketIndexDetailsContract {
 
         void getComOddsFromComId(BasketIndexDetailsBean o);
 
+        void onErrorComOddFromComId();
+
         void noDataView();
     }
 

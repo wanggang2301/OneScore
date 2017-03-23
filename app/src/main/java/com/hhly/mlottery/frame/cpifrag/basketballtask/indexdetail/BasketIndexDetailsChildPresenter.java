@@ -42,7 +42,6 @@ public class BasketIndexDetailsChildPresenter extends BasePresenter<BasketIndexD
                 mView.noDataView();
             }
         });
-
     }
 
 
@@ -58,13 +57,12 @@ public class BasketIndexDetailsChildPresenter extends BasePresenter<BasketIndexD
         iGetTaskSource.getBasketIndexCenterDetails(comId, thirdId, oddsType, new OnTaskDataListener.BasketIndexDetails() {
             @Override
             public void getDataSucess(BasketIndexDetailsBean o) {
-                mView.showLoadView();
                 mView.getComOddsFromComId(o);
             }
 
             @Override
             public void getDataError() {
-                mView.onError();
+                mView.onErrorComOddFromComId();
             }
 
             @Override

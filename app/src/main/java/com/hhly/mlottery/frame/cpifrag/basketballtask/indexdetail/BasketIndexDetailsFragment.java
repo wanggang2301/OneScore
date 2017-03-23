@@ -24,9 +24,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.hhly.mlottery.R.id.public_btn_set;
-import static com.hhly.mlottery.R.id.public_img_back;
-import static com.hhly.mlottery.R.id.public_txt_left_title;
 
 /**
  * @author wangg
@@ -35,11 +32,11 @@ import static com.hhly.mlottery.R.id.public_txt_left_title;
  */
 public class BasketIndexDetailsFragment extends ViewFragment<BasketIndexDetailsContract.IndexDetailsPresenter> implements BasketIndexDetailsContract.IndexDetailsView {
 
-    @BindView(public_img_back)
+    @BindView(R.id.public_img_back)
     ImageView publicImgBack;
-    @BindView(public_txt_left_title)
+    @BindView(R.id.public_txt_left_title)
     TextView publicTxtLeftTitle;
-    @BindView(public_btn_set)
+    @BindView(R.id.public_btn_set)
     ImageView publicBtnSet;
     @BindView(R.id.public_btn_filter)
     ImageView publicBtnFilter;

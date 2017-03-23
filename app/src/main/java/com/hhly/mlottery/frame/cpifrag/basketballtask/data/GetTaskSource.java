@@ -48,19 +48,18 @@ public class GetTaskSource implements IGetTaskSource {
             @Override
             public void onError(Throwable e) {
                 iGetTaskData.getDataError();
-
             }
 
             @Override
             public void onNext(BasketIndexDetailsBean basketIndexDetailsBean) {
-
-                if (basketIndexDetailsBean != null && basketIndexDetailsBean.getOddsData() != null && basketIndexDetailsBean.getComLists() != null) {
-
-                    iGetTaskData.getDataSucess(basketIndexDetailsBean);
-
-                }else {
+                if (basketIndexDetailsBean != null && basketIndexDetailsBean.getComLists() != null) {
+                    if (basketIndexDetailsBean.getOddsData() != null) {
+                        iGetTaskData.getDataSucess(basketIndexDetailsBean);
+                    } else {
+                        iGetTaskData.getNoData();
+                    }
+                } else {
                     iGetTaskData.getDataError();
-
                 }
             }
         }, comId, thirdId, oddsType);
