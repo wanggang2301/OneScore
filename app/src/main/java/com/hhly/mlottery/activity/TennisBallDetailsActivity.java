@@ -18,7 +18,7 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity {
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.tennis.score");
 
-        setContentView(R.layout.tennis_details_activity);
+//        setContentView(R.layout.tennis_details_activity);
     }
 
     @Override
