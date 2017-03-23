@@ -354,6 +354,9 @@
         <!--网球设置页面-->
         <activity android:name=".activity.TennisSettingActivity"
             android:screenOrientation="portrait"/>
+        <!--网球内页-->
+        <activity android:name=".activity.TennisBallDetailsActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
