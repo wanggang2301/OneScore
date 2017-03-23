@@ -86,7 +86,7 @@ public class BaseURLs {
             } else if (url_config == DebugConfigActivity.VN_13322) {
                 return "m.vn.13322.com";
             } else if (url_config == DebugConfigActivity.VN_13366) {
-                return "m.13366.com";
+                return "m.13366.vn";
             } else if (url_config == DebugConfigActivity.DIY_INPUT) {
                 return PreferenceUtil.getString("DIY_INPUT", "m.1332255.com:81");
             } else {
@@ -103,7 +103,7 @@ public class BaseURLs {
             case AppConstants.PACKGER_NAME_VN:
                 return "m.vn.13322.com";
             case AppConstants.PACKGER_NAME_VN_HN:
-                return "m.13366.com";
+                return "m.13366.vn";
             case AppConstants.PACKGER_NAME_UK:
                 return "m.en.13322.com";
             default:
@@ -131,7 +131,7 @@ public class BaseURLs {
             } else if (ws_config == DebugConfigActivity.WS_13322_VN) {
                 return "m.vn.13322.com/ws";
             } else if (ws_config == DebugConfigActivity.WS_13366_VN) {
-                return "m.13366.com/ws";
+                return "m.13366.vn/ws";
             } else if (ws_config == DebugConfigActivity.DIY_INPUT) {
                 return "m.1332255.com:81/ws";// 自定义
             } else {
@@ -148,7 +148,7 @@ public class BaseURLs {
             case AppConstants.PACKGER_NAME_VN:
                 return "m.vn.13322.com/ws";
             case AppConstants.PACKGER_NAME_VN_HN:
-                return "m.13366.com/ws";
+                return "m.13366.vn/ws";
             case AppConstants.PACKGER_NAME_UK:
                 return "m.en.13322.com/ws";
             default:
