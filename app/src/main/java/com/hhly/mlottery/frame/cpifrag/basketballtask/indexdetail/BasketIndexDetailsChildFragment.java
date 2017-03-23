@@ -96,9 +96,8 @@ public class BasketIndexDetailsChildFragment extends ViewFragment<BasketIndexDet
             oddType = getArguments().getString("oddType");
         }
 
-        L.d(TAG, "________thirdId=" + thirdId);
-        L.d(TAG, "________comId=" + comId);
-        L.d(TAG, "________oddType=" + oddType);
+        L.d(TAG, "________thirdId=" + thirdId + "_comId=" + comId + "_oddType=" + oddType);
+
     }
 
     @Override
