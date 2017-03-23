@@ -53,7 +53,7 @@ public class BasketIndexDetailsFragment extends ViewFragment<BasketIndexDetailsC
     private String thirdId, comId, oddType;
 
 
-    private static final String TAG = "IndexDetails";
+    private final String TAG = this.getClass().getSimpleName();
 
 
     public static BasketIndexDetailsFragment newInstance(String thirdId, String comId, String oddType) {

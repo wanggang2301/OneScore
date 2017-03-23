@@ -38,7 +38,8 @@ import butterknife.ButterKnife;
  */
 public class BasketIndexDetailsChildFragment extends ViewFragment<BasketIndexDetailsContract.IndexDetailsChildPresenter> implements BasketIndexDetailsContract.IndexDetailsChildView {
 
-    private static final String TAG = BasketIndexDetailsChildFragment.class.getSimpleName();
+    private final String TAG = this.getClass().getSimpleName();
+
 
     @BindView(R.id.cpi_tails_left_listview)
     ListView cpiTailsLeftListview;
@@ -143,6 +144,9 @@ public class BasketIndexDetailsChildFragment extends ViewFragment<BasketIndexDet
         cpiRightFlPlateNetworkError.setVisibility(View.GONE);
         cpiRightFlPlateLoading.setVisibility(View.GONE);
         cpiOddsTetailsRightRecyclerView.setVisibility(View.VISIBLE);
+
+        L.d(TAG, "________加载数据成功01。。。");
+
     }
 
 
@@ -154,6 +158,8 @@ public class BasketIndexDetailsChildFragment extends ViewFragment<BasketIndexDet
         cpiRightFlPlateNetworkError.setVisibility(View.GONE);
         cpiRightFlPlateLoading.setVisibility(View.GONE);
         cpiOddsTetailsRightRecyclerView.setVisibility(View.VISIBLE);
+        L.d(TAG, "________加载数据成功02。。。");
+
     }
 
     @Override
