@@ -200,8 +200,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:paddingBottom="10dp"
-                        android:src="@mipmap/first_players_ball_park_bg" />
+                        android:paddingBottom="10dp" />
                 </LinearLayout>
             </RelativeLayout>
         </ScrollView>

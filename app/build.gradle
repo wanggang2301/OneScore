@@ -4,8 +4,8 @@ apply plugin: 'android-apt'
 android {
     signingConfigs {
     }
-    compileSdkVersion 23
-    buildToolsVersion '25.0.0'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
 
     dexOptions {
         incremental true
@@ -79,15 +79,8 @@ dependencies {
     compile files('libs/sina/weibosdkcore_release.jar')
     compile files('libs/pldroid-player-1.3.0.jar')
     compile files('libs/umeng-analytics-v6.0.9.jar')
-
     compile 'com.github.chrisbanes:PhotoView:1.3.0'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
-    compile 'com.android.support:support-v4:23.4.0'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:recyclerview-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
-    compile 'com.android.support:cardview-v7:23.4.0'
-    compile 'com.android.support:percent:23.4.0'
     compile 'com.alibaba:fastjson:1.2.29'
     compile 'eu.the4thfloor.volley:com.android.volley:2015.05.28'
     compile 'com.jiechic.library:xUtils:2.6.14'
@@ -113,6 +106,11 @@ dependencies {
     compile 'info.hoang8f:android-segmented:1.0.6'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
-    provided 'com.android.support:support-annotations:23.4.0'
 
+    compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'com.android.support:design:23.4.0'
+    compile 'com.android.support:cardview-v7:23.4.0'
+    compile 'com.android.support:percent:23.4.0'
 }

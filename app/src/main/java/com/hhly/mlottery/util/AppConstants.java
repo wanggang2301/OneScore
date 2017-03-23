@@ -256,11 +256,11 @@ public class AppConstants {
     /**
      * 首页热门赛事足球背景图片
      */
-    public static int[] homePageScoreFootBG = {R.mipmap.home_pager_score_football01_bg, R.mipmap.home_pager_score_football02_bg, R.mipmap.home_pager_score_football03_bg, R.mipmap.home_pager_score_football04_bg, R.mipmap.home_pager_score_football05_bg, R.mipmap.home_pager_score_football06_bg, R.mipmap.home_pager_score_football07_bg};
-    /**
-     * 首页热门赛事篮球背景图片
-     */
-    public static int[] homePageScoreBasketBG = {R.mipmap.home_pager_score_basketball01_bg, R.mipmap.home_pager_score_basketball02_bg};
+//    public static int[] homePageScoreFootBG = {R.mipmap.home_pager_score_football01_bg, R.mipmap.home_pager_score_football02_bg, R.mipmap.home_pager_score_football03_bg, R.mipmap.home_pager_score_football04_bg, R.mipmap.home_pager_score_football05_bg, R.mipmap.home_pager_score_football06_bg, R.mipmap.home_pager_score_football07_bg};
+//    /**
+//     * 首页热门赛事篮球背景图片
+//     */
+//    public static int[] homePageScoreBasketBG = {R.mipmap.home_pager_score_basketball01_bg, R.mipmap.home_pager_score_basketball02_bg};
     //防止用户恶意注册添加的sign字段。
     public static final String SIGN_KEY = "B2A7748BF1FCAF6326979E1B86DC0C60";
 
@@ -277,40 +277,40 @@ public class AppConstants {
     /**
      * emoji表情
      */
-    public static String[] emojiList = {
-            "\ue415", "\ue056", "\ue057", "\ue414",
-            "\ue405", "\ue106", "\ue418", "\ue417", "\ue40d",
-            "\ue40a", "\ue404", "\ue105", "\ue412", "\ue40e",
-            "\ue402", "\ue108", "\ue403", "\ue058", "\ue407",
-            "\ue401", "\ue40f", "\ue40b", "\ue406", "\ue413",
-            "\ue411", "\ue410", "\ue107", "\ue059", "\ue416",
-            "\ue408", "\ue40c", "\ue409", "\ue11a", "\ue10c",
-            "\ue32c", "\ue32a", "\ue32d", "\ue328", "\ue32b",
-            "\ue022", "\ue023", "\ue327", "\ue329", "\ue32e",
-            "\ue32f", "\ue335", "\ue334", "\ue021", "\ue337",
-            "\ue020", "\ue336", "\ue13c", "\ue330", "\ue331",
-            "\ue326", "\ue03e", "\ue11d", "\ue05a", "\ue00e",
-            "\ue421", "\ue420", "\ue00d", "\ue010", "\ue011",
-            "\ue41e", "\ue012", "\ue422", "\ue22e", "\ue22f",
-            "\ue231", "\ue230", "\ue427", "\ue41d", "\ue00f",
-            "\ue41f", "\ue14c", "\ue201", "\ue115", "\ue428",
-            "\ue51f", "\ue429", "\ue424", "\ue423", "\ue253",
-            "\ue426", "\ue111", "\ue425", "\ue31e", "\ue31f",
-            "\ue31d", "\ue001", "\ue002", "\ue005", "\ue004",
-            "\ue51a", "\ue519", "\ue518", "\ue515", "\ue516",
-            "\ue517", "\ue51b", "\ue152", "\ue04e", "\ue51c",
-            "\ue51e", "\ue11c", "\ue536", "\ue003", "\ue41c",
-            "\ue41b", "\ue419", "\ue41a", "\ue04a", "\ue04b",
-            "\ue049", "\ue048", "\ue04c", "\ue13d", "\ue443",
-            "\ue43e", "\ue04f", "\ue052", "\ue053", "\ue524",
-            "\ue52c", "\ue52a", "\ue531", "\ue050", "\ue527",
-            "\ue051", "\ue10b", "\ue52b", "\ue52f", "\ue528",
-            "\ue01a", "\ue134", "\ue530", "\ue529", "\ue526",
-            "\ue340", "\ue34d", "\ue339", "\ue147", "\ue343",
-            "\ue33c", "\ue33a", "\ue43f", "\ue34b", "\ue046",
-            "\ue345", "\ue346", "\ue348", "\ue347", "\ue34a",
-            "\ue349"
-    };
+//    public static String[] emojiList = {
+//            "\ue415", "\ue056", "\ue057", "\ue414",
+//            "\ue405", "\ue106", "\ue418", "\ue417", "\ue40d",
+//            "\ue40a", "\ue404", "\ue105", "\ue412", "\ue40e",
+//            "\ue402", "\ue108", "\ue403", "\ue058", "\ue407",
+//            "\ue401", "\ue40f", "\ue40b", "\ue406", "\ue413",
+//            "\ue411", "\ue410", "\ue107", "\ue059", "\ue416",
+//            "\ue408", "\ue40c", "\ue409", "\ue11a", "\ue10c",
+//            "\ue32c", "\ue32a", "\ue32d", "\ue328", "\ue32b",
+//            "\ue022", "\ue023", "\ue327", "\ue329", "\ue32e",
+//            "\ue32f", "\ue335", "\ue334", "\ue021", "\ue337",
+//            "\ue020", "\ue336", "\ue13c", "\ue330", "\ue331",
+//            "\ue326", "\ue03e", "\ue11d", "\ue05a", "\ue00e",
+//            "\ue421", "\ue420", "\ue00d", "\ue010", "\ue011",
+//            "\ue41e", "\ue012", "\ue422", "\ue22e", "\ue22f",
+//            "\ue231", "\ue230", "\ue427", "\ue41d", "\ue00f",
+//            "\ue41f", "\ue14c", "\ue201", "\ue115", "\ue428",
+//            "\ue51f", "\ue429", "\ue424", "\ue423", "\ue253",
+//            "\ue426", "\ue111", "\ue425", "\ue31e", "\ue31f",
+//            "\ue31d", "\ue001", "\ue002", "\ue005", "\ue004",
+//            "\ue51a", "\ue519", "\ue518", "\ue515", "\ue516",
+//            "\ue517", "\ue51b", "\ue152", "\ue04e", "\ue51c",
+//            "\ue51e", "\ue11c", "\ue536", "\ue003", "\ue41c",
+//            "\ue41b", "\ue419", "\ue41a", "\ue04a", "\ue04b",
+//            "\ue049", "\ue048", "\ue04c", "\ue13d", "\ue443",
+//            "\ue43e", "\ue04f", "\ue052", "\ue053", "\ue524",
+//            "\ue52c", "\ue52a", "\ue531", "\ue050", "\ue527",
+//            "\ue051", "\ue10b", "\ue52b", "\ue52f", "\ue528",
+//            "\ue01a", "\ue134", "\ue530", "\ue529", "\ue526",
+//            "\ue340", "\ue34d", "\ue339", "\ue147", "\ue343",
+//            "\ue33c", "\ue33a", "\ue43f", "\ue34b", "\ue046",
+//            "\ue345", "\ue346", "\ue348", "\ue347", "\ue34a",
+//            "\ue349"
+//    };
     /**
      * 本地个性化表情
      */
