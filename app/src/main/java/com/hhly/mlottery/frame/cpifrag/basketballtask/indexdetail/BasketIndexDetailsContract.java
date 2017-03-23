@@ -4,6 +4,8 @@ import com.hhly.mlottery.bean.basket.index.BasketIndexDetailsBean;
 import com.hhly.mlottery.mvp.IPresenter;
 import com.hhly.mlottery.mvp.IView;
 
+import java.util.List;
+
 /**
  * @author: Wangg
  * @Name：BasketIndexDetailsContract
@@ -27,21 +29,31 @@ public interface BasketIndexDetailsContract {
     interface IndexDetailsChildView extends IView {
         void showLoadView();
 
-        void showRequestDataView(BasketIndexDetailsBean o);
-
-        void getComOddsFromComId(BasketIndexDetailsBean o);
-
-        void onErrorComOddFromComId();
+/*
+        void onErrorComOddFromComId();*/
 
         void noDataView();
+
+        void showLeftListView();
+
+        void showRightRecyclerView();
+
+        void setTitle();
+
+        void showRequestSucess();
+
     }
 
     interface IndexDetailsChildPresenter extends IPresenter<BasketIndexDetailsContract.IndexDetailsChildView> {
         void showRequestData(String comId, String thirdId, String oddsType);
 
-        void getRequestComOddsData(String comId, String thirdId, String oddsType);
+        // void getRequestComOddsData(String comId, String thirdId, String oddsType);
 
         void showLoad();
+
+        List<BasketIndexDetailsBean.ComListsBean> getComLists();
+
+        List<BasketIndexDetailsBean.OddsDataBean> getOddsLists();
 
     }
 }

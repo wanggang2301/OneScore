@@ -95,6 +95,7 @@ public class BasketIndexDetailsChildFragment extends ViewFragment<BasketIndexDet
             comId = getArguments().getString("comId");
             oddType = getArguments().getString("oddType");
         }
+        currComId = comId;
 
         L.d(TAG, "________thirdId=" + thirdId + "_comId=" + comId + "_oddType=" + oddType);
 
@@ -115,51 +116,72 @@ public class BasketIndexDetailsChildFragment extends ViewFragment<BasketIndexDet
 
         //loading
         mPresenter.showLoad();
-        mPresenter.showRequestData(comId, thirdId, oddType);
+        // mPresenter.showRequestData(comId, thirdId, oddType);
+        mPresenter.showRequestData(currComId, thirdId, oddType);
 
         cpiTxtReLoading.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPresenter.showLoad();
-                if (isFirstRequest) {
-                    mPresenter.showRequestData(comId, thirdId, oddType);
-                } else {
-                    mPresenter.getRequestComOddsData(currComId, thirdId, oddType);
-                }
+                // if (isFirstRequest) { //首次请求
+                mPresenter.showRequestData(currComId, thirdId, oddType);
+                // } else {
+
+                // mPresenter.getRequestComOddsData(currComId, thirdId, oddType);
+                //  }
             }
         });
     }
 
     @Override
-    public void showRequestDataView(BasketIndexDetailsBean b) {
+    public void setTitle() {
 
         setRightOddTiTleName();
-        //处理左边的公司数据
-        handleLeftData(b.getComLists());
-        //处理右边的赔率数据
-        handleRightData(b.getOddsData());
+    }
 
-        cpiRightFlPlateNoData.setVisibility(View.GONE);
-        cpiRightFlPlateNetworkError.setVisibility(View.GONE);
-        cpiRightFlPlateLoading.setVisibility(View.GONE);
-        cpiOddsTetailsRightRecyclerView.setVisibility(View.VISIBLE);
-
+    @Override
+    public void showRequestSucess() {
         L.d(TAG, "________加载数据成功01。。。");
 
-    }
-
-
-    //只获取根据ComId请求过来的公司赔率列表
-    @Override
-    public void getComOddsFromComId(BasketIndexDetailsBean b) {
-        handleRightData(b.getOddsData());
         cpiRightFlPlateNoData.setVisibility(View.GONE);
         cpiRightFlPlateNetworkError.setVisibility(View.GONE);
         cpiRightFlPlateLoading.setVisibility(View.GONE);
         cpiOddsTetailsRightRecyclerView.setVisibility(View.VISIBLE);
-        L.d(TAG, "________加载数据成功02。。。");
-
     }
+
+
+    @Override
+    public void showLeftListView() {
+        final List<Map<String, String>> obList = toListViewParamList(mPresenter.getComLists());
+
+        oddDetailsLeftAdapter = new OddDetailsLeftAdapter(mActivity, obList);
+        cpiTailsLeftListview.setAdapter(oddDetailsLeftAdapter);
+        //根据传过去的postion更改选中的item选中背景
+
+        oddDetailsLeftAdapter.setSelect(currPositon);
+
+        // 详情左边list点击事件
+        cpiTailsLeftListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //根据传过去的postion更改选中的item选中背景
+                oddDetailsLeftAdapter.setSelect(position);
+                currComId = obList.get(position).get("id");
+                mPresenter.showLoad();
+
+                // mPresenter.getRequestComOddsData(obList.get(position).get("id"), thirdId, oddType);
+                mPresenter.showRequestData(obList.get(position).get("id"), thirdId, oddType);
+
+            }
+        });
+    }
+
+    @Override
+    public void showRightRecyclerView() {
+        basketIndexDetailsChildAdapter = new BasketIndexDetailsChildAdapter(mActivity, mPresenter.getOddsLists(), oddType);
+        cpiOddsTetailsRightRecyclerView.setAdapter(basketIndexDetailsChildAdapter);
+    }
+
 
     @Override
     public void showLoadView() {
@@ -194,7 +216,7 @@ public class BasketIndexDetailsChildFragment extends ViewFragment<BasketIndexDet
         isFirstRequest = true;
     }
 
-    @Override
+   /* @Override
     public void onErrorComOddFromComId() {
         cpiRightFlPlateNoData.setVisibility(View.GONE);
         cpiRightFlPlateNetworkError.setVisibility(View.VISIBLE);
@@ -202,7 +224,7 @@ public class BasketIndexDetailsChildFragment extends ViewFragment<BasketIndexDet
         cpiOddsTetailsRightRecyclerView.setVisibility(View.GONE);
 
         isFirstRequest = false;
-    }
+    }*/
 
     /**
      * 右边赔率列表标题名字
@@ -225,41 +247,6 @@ public class BasketIndexDetailsChildFragment extends ViewFragment<BasketIndexDet
             cpiDishDetailsTxtId.setText(R.string.foot_odds_eu_middle);
             cpiGuestDetailsTxtId.setText(R.string.foot_odds_eu_right);
         }
-    }
-
-
-    /**
-     * 新版详情左边的数据
-     */
-    private void handleLeftData(List<BasketIndexDetailsBean.ComListsBean> comListsBeen) {
-        final List<Map<String, String>> obList = toListViewParamList(comListsBeen);
-        oddDetailsLeftAdapter = new OddDetailsLeftAdapter(mActivity, obList);
-        cpiTailsLeftListview.setAdapter(oddDetailsLeftAdapter);
-        //根据传过去的postion更改选中的item选中背景
-
-        oddDetailsLeftAdapter.setSelect(currPositon);
-
-        // 详情左边list点击事件
-        cpiTailsLeftListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //根据传过去的postion更改选中的item选中背景
-                oddDetailsLeftAdapter.setSelect(position);
-                currComId = obList.get(position).get("id");
-                mPresenter.showLoad();
-
-                mPresenter.getRequestComOddsData(obList.get(position).get("id"), thirdId, oddType);
-
-            }
-        });
-    }
-
-
-    //右边的数据需要接口切换请求
-    private void handleRightData(List<BasketIndexDetailsBean.OddsDataBean> oddsDataBeanList) {
-        basketIndexDetailsChildAdapter = new BasketIndexDetailsChildAdapter(mActivity, oddsDataBeanList, oddType);
-        cpiOddsTetailsRightRecyclerView.setAdapter(basketIndexDetailsChildAdapter);
     }
 
 

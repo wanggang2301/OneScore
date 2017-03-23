@@ -5,6 +5,9 @@ import com.hhly.mlottery.frame.cpifrag.basketballtask.data.GetTaskSource;
 import com.hhly.mlottery.frame.cpifrag.basketballtask.data.IGetTaskSource;
 import com.hhly.mlottery.frame.cpifrag.basketballtask.data.OnTaskDataListener;
 import com.hhly.mlottery.mvp.BasePresenter;
+import com.hhly.mlottery.util.L;
+
+import java.util.List;
 
 /**
  * @author: Wangg
@@ -15,11 +18,27 @@ import com.hhly.mlottery.mvp.BasePresenter;
 
 public class BasketIndexDetailsChildPresenter extends BasePresenter<BasketIndexDetailsContract.IndexDetailsChildView> implements BasketIndexDetailsContract.IndexDetailsChildPresenter {
 
-
     private IGetTaskSource iGetTaskSource;
+
+    private boolean isFirstRequest = false;
+
+    private List<BasketIndexDetailsBean.ComListsBean> comListsBeanList;
+    private List<BasketIndexDetailsBean.OddsDataBean> oddsDataBeanList;
+
 
     public BasketIndexDetailsChildPresenter(BasketIndexDetailsContract.IndexDetailsChildView view) {
         super(view);
+    }
+
+
+    @Override
+    public List<BasketIndexDetailsBean.ComListsBean> getComLists() {
+        return comListsBeanList;
+    }
+
+    @Override
+    public List<BasketIndexDetailsBean.OddsDataBean> getOddsLists() {
+        return oddsDataBeanList;
     }
 
     @Override
@@ -28,17 +47,32 @@ public class BasketIndexDetailsChildPresenter extends BasePresenter<BasketIndexD
         iGetTaskSource.getBasketIndexCenterDetails(comId, thirdId, oddsType, new OnTaskDataListener.BasketIndexDetails() {
             @Override
             public void getDataSucess(BasketIndexDetailsBean o) {
-                mView.showRequestDataView(o);
+                comListsBeanList = o.getComLists();
+                oddsDataBeanList = o.getOddsData();
+
+                if (!isFirstRequest) {
+                    mView.setTitle();
+                    mView.showLeftListView();
+                    isFirstRequest = true;
+                    L.d("presenter", "____刷新左边listview");
+                }
+
+                L.d("presenter", "____刷新右边recyclerview");
+
+                mView.showRightRecyclerView();
+                mView.showRequestSucess();
+
+
             }
 
             @Override
             public void getDataError() {
                 mView.onError();
+                //isFirstRequest = false;
             }
 
             @Override
             public void getNoData() {
-
                 mView.noDataView();
             }
         });
@@ -50,14 +84,17 @@ public class BasketIndexDetailsChildPresenter extends BasePresenter<BasketIndexD
         mView.showLoadView();
     }
 
-    //只为点击公司获取赔率列表使用
+  /*  //只为点击公司获取赔率列表使用
     @Override
     public void getRequestComOddsData(String comId, String thirdId, String oddsType) {
         iGetTaskSource = new GetTaskSource();
         iGetTaskSource.getBasketIndexCenterDetails(comId, thirdId, oddsType, new OnTaskDataListener.BasketIndexDetails() {
             @Override
             public void getDataSucess(BasketIndexDetailsBean o) {
-                mView.getComOddsFromComId(o);
+                basketIndexDetailsBean = o;
+                mView.showRightRecyclerView();
+                mView.showRequestSucess();
+
             }
 
             @Override
@@ -67,9 +104,8 @@ public class BasketIndexDetailsChildPresenter extends BasePresenter<BasketIndexD
 
             @Override
             public void getNoData() {
-
                 mView.noDataView();
             }
         });
-    }
+    }*/
 }

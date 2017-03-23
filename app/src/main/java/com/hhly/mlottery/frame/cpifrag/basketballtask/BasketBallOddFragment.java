@@ -37,6 +37,8 @@ import butterknife.ButterKnife;
  */
 public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPresenter> implements BasketBallContract.OddView {
 
+    private final String TAG = this.getClass().getSimpleName();
+
     private static final String ODD_TYPE = "ODD_TYPE";
 
     //默认公司筛选选中头两家公司
@@ -88,7 +90,6 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_basket_ball_odd, container, false);
-
         ButterKnife.bind(this, mView);
         return mView;
     }
@@ -125,7 +126,6 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
             @Override
             public void onItemClick(BasketIndexBean.DataBean.AllInfoBean allInfoBean) {
                 Intent intent = new Intent(mActivity, BasketDetailsActivityTest.class);
-
             }
         });
 

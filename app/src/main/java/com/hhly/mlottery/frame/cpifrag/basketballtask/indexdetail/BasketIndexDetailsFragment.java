@@ -164,14 +164,6 @@ public class BasketIndexDetailsFragment extends ViewFragment<BasketIndexDetailsC
                 break;
         }
 
-   /*     if ("palte".equals(stType)) {
-            mViewPager.setCurrentItem(0);
-        } else if ("big".equals(stType)) {
-            mViewPager.setCurrentItem(1);
-        } else if ("op".equals(stType)) {
-            mViewPager.setCurrentItem(2);
-        }*/
-
         tabs.setupWithViewPager(cpiDetailsViewpager);
         //标记是否初始化
     }
