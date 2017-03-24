@@ -164,6 +164,8 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     public void showResponseDataView() {
         L.d(TAG, "请求数据成功_____________");
 
+
+
         BasketIndexBean b = mPresenter.getRequestData();
 
         //获取筛选的list
@@ -178,14 +180,14 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         //处理公司数据  请求到数据成功后已经将需要默认选择的公司数据处理好了
         handleCompanyData(b.getData().getCompany());
 
-
         refreshDateView(b.getData().getCurrDate());
         updateFilterData();
 
-        parentFragment.setRefreshHide();
         cpiOddsRecyclerView.setVisibility(View.VISIBLE);
         cpiRightFlPlateNetworkError.setVisibility(View.GONE);
         cpiRightFlPlateNoData.setVisibility(View.GONE);
+        parentFragment.setRefreshHide();
+
     }
 
     /**

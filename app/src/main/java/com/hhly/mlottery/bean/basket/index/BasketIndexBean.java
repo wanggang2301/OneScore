@@ -258,7 +258,18 @@ public class BasketIndexBean {
             private boolean hot;
             private String matchResult;
             private String matchType;
+            private String remainTime;
+
             private List<MatchOddsBean> matchOdds;
+
+            public String getRemainTime() {
+                return remainTime;
+            }
+
+            public void setRemainTime(String remainTime) {
+                this.remainTime = remainTime;
+            }
+
 
             public String getMatchType() {
                 return matchType;

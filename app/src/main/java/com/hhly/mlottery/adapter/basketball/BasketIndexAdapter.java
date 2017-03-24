@@ -32,6 +32,7 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
 
     private OnItemClickListener onItemClickListener;
 
+
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
@@ -61,8 +62,108 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
         baseViewHolder.setText(R.id.cpi_item_time_txt, allInfoBean.getTime());
         baseViewHolder.setText(R.id.cpi_host_team_txt, allInfoBean.getHomeTeam());
         baseViewHolder.setText(R.id.cpi_guest_team_txt, allInfoBean.getGuestTeam());
+        baseViewHolder.setText(R.id.cpi_item_remainTime_txt, allInfoBean.getRemainTime());
         baseViewHolder.setText(R.id.cpi_score_txt, allInfoBean.getMatchResult());
 
+        //allInfoBean.getMatchStatus()
+
+        //0:未开赛,1:一节,2:二节,5:1'OT，以此类推 -1:完场,-2:待定,-3:中断,-4:取消,-5:推迟,50中场
+
+        /**
+         * section ==2
+         * staus =1,2   1st half   status=3,4   2nd half
+         section =4
+
+         staus=1   1st   2  2nd  3 3rd  4  4th
+         *
+         *
+         */
+
+        int section = 2;
+
+        String statusTxt = "";
+
+        switch (allInfoBean.getMatchStatus()) {
+            case 0:
+                baseViewHolder.setText(R.id.cpi_score_txt, "");
+
+                statusTxt = mContext.getResources().getString(R.string.tennis_match_not_start);
+                break;
+            case 1:
+                if (section == 2) {
+                    statusTxt = "1st half";
+                } else {
+                    statusTxt = "1st";
+                }
+
+                break;
+            case 2:
+                if (section == 2) {
+                    statusTxt = "1st half";
+                } else {
+                    statusTxt = "2nd";
+                }
+                break;
+
+            case 3:
+
+                if (section == 2) {
+                    statusTxt = "2nd half";
+                } else {
+                    statusTxt = "2rd";
+
+                }
+
+
+                break;
+            case 4:
+                if (section == 2) {
+                    statusTxt = "2nd half";
+                } else {
+                    statusTxt = "4th";
+                }
+                break;
+            case 5:
+                statusTxt = "OT1";
+                break;
+            case 6:
+                statusTxt = "OT2";
+
+                break;
+            case 7:
+                statusTxt = "OT3";
+
+                break;
+            case -1:
+                statusTxt = mContext.getResources().getString(R.string.snooker_state_over_game);
+
+                break;
+            case -2:
+                statusTxt = mContext.getResources().getString(R.string.tennis_match_dd);
+                baseViewHolder.setText(R.id.cpi_score_txt, "");
+
+                break;
+            case -3:
+                statusTxt = mContext.getResources().getString(R.string.tennis_match_zd);
+                break;
+            case -4:
+                statusTxt = mContext.getResources().getString(R.string.basket_analyze_dialog_cancle);
+                baseViewHolder.setText(R.id.cpi_score_txt, "");
+
+                break;
+            case -5:
+                statusTxt = mContext.getResources().getString(R.string.tennis_match_tc);
+                baseViewHolder.setText(R.id.cpi_score_txt, "");
+
+                break;
+            case 50:
+                statusTxt = mContext.getResources().getString(R.string.paused_txt);
+                break;
+            default:
+                break;
+        }
+
+        baseViewHolder.setText(R.id.tv_tag, statusTxt);
 
         bindOdds(baseViewHolder, allInfoBean);
 
