@@ -28,13 +28,16 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketBallIndexFiltrateActivity;
 import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
 import com.hhly.mlottery.bean.enums.BasketOddsTypeEnum;
+import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
 import com.hhly.mlottery.frame.oddfragment.basketoddframent.BasketCompanyChooseDialogFragment;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.util.DateUtil;
+import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
+import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -52,7 +55,7 @@ import de.greenrobot.event.EventBus;
  * @des:篮球指数
  * @date:2017/3/16
  */
-public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPresenter> implements BasketBallContract.CpiView {
+public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPresenter> implements BasketBallContract.CpiView, ExactSwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.public_date_layout)
     LinearLayout publicDateLayout;
@@ -74,6 +77,8 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
     ImageView publicImgFilter;
     @BindView(R.id.public_txt_date)
     TextView publicTxtDate;
+    @BindView(R.id.cpi_refresh_layout)
+    ExactSwipeRefreshLayout cpiRefreshLayout;
     private String[] mItems;
     private Activity mActivity;
     private List<BasketBallOddFragment> mFragments;
@@ -112,6 +117,7 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mItems = getResources().getStringArray(R.array.zhishu_select);
+
         mPresenter = new BasketBallCpiPresenter(this);
         //初始化头部View和事件
         mPresenter.initFg();
@@ -128,6 +134,10 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
      * 初始化 ViewPager
      */
     private void initViewPager() {
+        cpiRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        cpiRefreshLayout.setOnRefreshListener(this);
+        cpiRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mActivity, StaticValues.REFRASH_OFFSET_END));
+
         mFragments = new ArrayList<>();
         mFragments.add(BasketBallOddFragment.newInstance(BasketOddsTypeEnum.ASIALET));
         mFragments.add(BasketBallOddFragment.newInstance(BasketOddsTypeEnum.ASIASIZE));
@@ -230,6 +240,22 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
     }
 
 
+    @Override
+    public void onRefresh() {
+        refreshAllChildFragments();
+    }
+
+
+    public void setRefreshHide() {
+        cpiRefreshLayout.setRefreshing(false);
+    }
+
+    public void setRefreshVisible() {
+        cpiRefreshLayout.setRefreshing(true);
+
+    }
+
+
     /**
      * 球类切换Dialog
      */
@@ -308,7 +334,6 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
                     public void onDateChoose(String date) {
                         choosenDate = date;
                         publicTxtDate.setText(DateUtil.convertDateToNation(date));
-                        setRefreshing(true);
                         refreshAllChildFragments();
                     }
                 });
@@ -394,15 +419,6 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
             if (!publicDateLayout.isShown()) publicDateLayout.setVisibility(View.VISIBLE);
             if (!publicTxtDate.isShown()) publicTxtDate.setVisibility(View.VISIBLE);
         }
-    }
-
-    /**
-     * 设置刷新状态
-     *
-     * @param b 是否正在刷新
-     */
-    public void setRefreshing(boolean b) {
-        //mRefreshLayout.setRefreshing(b);
     }
 
 

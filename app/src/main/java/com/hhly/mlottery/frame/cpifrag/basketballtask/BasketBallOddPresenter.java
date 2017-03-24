@@ -27,7 +27,6 @@ public class BasketBallOddPresenter extends BasePresenter<BasketBallContract.Odd
 
     @Override
     public void showRequestData(String date, String type) {
-        mView.showLoadView();  //加载loadView
         iGetTaskSource = new GetTaskSource();
         iGetTaskSource.getBasketIndexCenter(date, type, new OnTaskDataListener.BasketIndex() {
             @Override
@@ -37,8 +36,9 @@ public class BasketBallOddPresenter extends BasePresenter<BasketBallContract.Odd
 
             @Override
             public void getDataSucess(BasketIndexBean b) {
+
                 basketIndexBean = b;
-                mView.showRequestDataView();
+                mView.showResponseDataView();
             }
 
             @Override
@@ -50,6 +50,10 @@ public class BasketBallOddPresenter extends BasePresenter<BasketBallContract.Odd
 
     }
 
+    @Override
+    public void showLoad() {
+        mView.showLoadView();
+    }
 
     @Override
     public BasketIndexBean getRequestData() {

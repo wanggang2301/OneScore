@@ -162,6 +162,7 @@ public class FootCpiFragment extends BaseWebSocketFragment {
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+
                 refreshAllChildFragments();
                 connectWebSocket();
             }

@@ -11,7 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
@@ -44,10 +45,14 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     //默认公司筛选选中头两家公司
     private static final int DEFAULT_SELECTED_COMPANY = 2;
 
-    @BindView(R.id.btn_test)
-    Button btnTest;
     @BindView(R.id.cpi_odds_recyclerView)
     RecyclerView cpiOddsRecyclerView;
+    @BindView(R.id.cpi_txt_reLoading)
+    TextView cpiTxtReLoading;
+    @BindView(R.id.cpi_right_fl_plate_networkError)
+    FrameLayout cpiRightFlPlateNetworkError;
+    @BindView(R.id.cpi_right_fl_plate_noData)
+    FrameLayout cpiRightFlPlateNoData;
     private String type;
 
     private BasketIndexAdapter mBasketIndexAdapter;
@@ -103,25 +108,21 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
         mPresenter = new BasketBallOddPresenter(this);
 
-        btnTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //显示数据
-                mPresenter.showRequestData("", type);
-            }
-        });
 
+        mPresenter.showLoad();
         mPresenter.showRequestData("", type);
 
-        cpiOddsRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
 
+        cpiOddsRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         mBasketIndexAdapter = new BasketIndexAdapter(mActivity, destinationDataList, type);
 
+        cpiOddsRecyclerView.setAdapter(mBasketIndexAdapter);
+
+        //篮球内页跳转
         mBasketIndexAdapter.setOnItemClickListener(new BasketIndexAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BasketIndexBean.DataBean.AllInfoBean allInfoBean) {
                 Intent intent = new Intent(mActivity, BasketDetailsActivityTest.class);
-
                 intent.putExtra("thirdId", allInfoBean.getThirdId());
                 intent.putExtra("MatchStatus", allInfoBean.getMatchStatus());
                 intent.putExtra("leagueId", allInfoBean.getLeagueId());
@@ -132,6 +133,7 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
             }
         });
 
+        //篮球指数内页跳转
         mBasketIndexAdapter.setOnOddIetmClickListener(new BasketIndexAdapter.onOddIetmClickListener() {
             @Override
             public void onOddItemCLick(String thirdId, String comId) {
@@ -143,19 +145,23 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
             }
         });
 
-        cpiOddsRecyclerView.setAdapter(mBasketIndexAdapter);
     }
 
     @Override
     public void showLoadView() {
-        Toast.makeText(mActivity, "加载", Toast.LENGTH_SHORT).show();
-        L.d("bingd", "加载中_____________");
+        parentFragment.setRefreshVisible();
+        cpiOddsRecyclerView.setVisibility(View.GONE);
+        cpiRightFlPlateNetworkError.setVisibility(View.GONE);
+        cpiRightFlPlateNoData.setVisibility(View.GONE);
+
+        L.d(TAG, "加载中_____________");
 
     }
 
+
     @Override
-    public void showRequestDataView() {
-        Toast.makeText(mActivity, "成功", Toast.LENGTH_SHORT).show();
+    public void showResponseDataView() {
+        L.d(TAG, "请求数据成功_____________");
 
         BasketIndexBean b = mPresenter.getRequestData();
 
@@ -172,14 +178,19 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         refreshDateView(b.getData().getCurrDate());
         updateFilterData();
 
+        parentFragment.setRefreshHide();
+        cpiOddsRecyclerView.setVisibility(View.VISIBLE);
+        cpiRightFlPlateNetworkError.setVisibility(View.GONE);
+        cpiRightFlPlateNoData.setVisibility(View.GONE);
     }
 
     /**
-     * 刷新数据
+     * 日期切换刷新数据
      *
      * @param date date, 形如 2016-06-21 可以为空
      */
     public void refreshData(String date) {
+        L.d(TAG, "下拉刷新___________");
         mPresenter.showRequestData(date, type);
     }
 
@@ -191,7 +202,6 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         if (parentFragment.getCurrentFragment() == BasketBallOddFragment.this) {
             // 获取当前日期并返回给 CPINewFragment
             parentFragment.setCurrentDate(date);
-            parentFragment.setRefreshing(false);
         }
     }
 
@@ -199,12 +209,23 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     @Override
     public void noData() {
 
+        L.d(TAG, "没有数据_____________");
+
+        parentFragment.setRefreshHide();
+        cpiOddsRecyclerView.setVisibility(View.GONE);
+        cpiRightFlPlateNetworkError.setVisibility(View.GONE);
+        cpiRightFlPlateNoData.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onError() {
         Toast.makeText(mActivity, "出错", Toast.LENGTH_SHORT).show();
-        L.d("bingd", "出错_____________");
+        L.d(TAG, "请求出错_____________");
+
+        parentFragment.setRefreshHide();
+        cpiOddsRecyclerView.setVisibility(View.GONE);
+        cpiRightFlPlateNetworkError.setVisibility(View.VISIBLE);
+        cpiRightFlPlateNoData.setVisibility(View.GONE);
     }
 
     private void handleCompanyData(List<BasketIndexBean.DataBean.CompanyBean> companyBeen) {

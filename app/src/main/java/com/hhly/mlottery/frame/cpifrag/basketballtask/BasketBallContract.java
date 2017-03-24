@@ -28,7 +28,7 @@ public interface BasketBallContract {
     interface OddView extends IView {
         void showLoadView();
 
-        void showRequestDataView();
+        void showResponseDataView();
 
         void noData();
     }
@@ -37,6 +37,8 @@ public interface BasketBallContract {
         void showRequestData(String date, String type);
 
         BasketIndexBean getRequestData();
+
+        void showLoad();
 
     }
 }
