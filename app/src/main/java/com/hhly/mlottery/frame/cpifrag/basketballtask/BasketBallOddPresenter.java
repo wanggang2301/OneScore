@@ -18,13 +18,15 @@ public class BasketBallOddPresenter extends BasePresenter<BasketBallContract.Odd
 
     private IGetTaskSource iGetTaskSource;
 
+    private BasketIndexBean basketIndexBean;
+
     public BasketBallOddPresenter(BasketBallContract.OddView view) {
         super(view);
     }
 
 
     @Override
-    public void showRequestData( String date, String type) {
+    public void showRequestData(String date, String type) {
         mView.showLoadView();  //加载loadView
         iGetTaskSource = new GetTaskSource();
         iGetTaskSource.getBasketIndexCenter(date, type, new OnTaskDataListener.BasketIndex() {
@@ -34,8 +36,9 @@ public class BasketBallOddPresenter extends BasePresenter<BasketBallContract.Odd
             }
 
             @Override
-            public void getDataSucess(BasketIndexBean o) {
-                mView.showRequestDataView(o);
+            public void getDataSucess(BasketIndexBean b) {
+                basketIndexBean = b;
+                mView.showRequestDataView();
             }
 
             @Override
@@ -45,5 +48,11 @@ public class BasketBallOddPresenter extends BasePresenter<BasketBallContract.Odd
         });
 
 
+    }
+
+
+    @Override
+    public BasketIndexBean getRequestData() {
+        return basketIndexBean;
     }
 }

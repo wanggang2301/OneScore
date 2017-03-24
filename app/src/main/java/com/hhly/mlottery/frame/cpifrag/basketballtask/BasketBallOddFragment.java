@@ -58,14 +58,11 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
     private BasketBallCpiFrament parentFragment;
 
-    private List<BasketIndexBean.DataBean.FileterTagsBean> fileterTagsBeanList;
+    private List<BasketIndexBean.DataBean.FileterTagsBean> fileterMatchTypeList;
 
     private List<BasketIndexBean.DataBean.AllInfoBean> sourceDataList; //源数据
 
     private List<BasketIndexBean.DataBean.AllInfoBean> destinationDataList; //目标数据
-
-    //过滤后的列表数据
-    private List<BasketIndexBean.DataBean.AllInfoBean> fileterAllInfoBeanList;
 
 
     public BasketBallOddFragment() {
@@ -98,9 +95,7 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        fileterAllInfoBeanList = new ArrayList<>();
-
-        fileterTagsBeanList = new ArrayList<>();
+        fileterMatchTypeList = new ArrayList<>();
 
         sourceDataList = new ArrayList<>();
 
@@ -126,6 +121,14 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
             @Override
             public void onItemClick(BasketIndexBean.DataBean.AllInfoBean allInfoBean) {
                 Intent intent = new Intent(mActivity, BasketDetailsActivityTest.class);
+
+                intent.putExtra("thirdId", allInfoBean.getThirdId());
+                intent.putExtra("MatchStatus", allInfoBean.getMatchStatus());
+                intent.putExtra("leagueId", allInfoBean.getLeagueId());
+                intent.putExtra("matchType", allInfoBean.getMatchType());
+                intent.putExtra("isAddMultiViewHide", true);
+                mActivity.startActivity(intent);
+
             }
         });
 
@@ -151,25 +154,22 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     }
 
     @Override
-    public void showRequestDataView(BasketIndexBean o) {
+    public void showRequestDataView() {
         Toast.makeText(mActivity, "成功", Toast.LENGTH_SHORT).show();
-        L.d("bingd", "成功_____________" + o.getData().getCompany().get(0).getComName());
 
+        BasketIndexBean b = mPresenter.getRequestData();
 
         //获取筛选的list
-        fileterTagsBeanList.clear();
-        fileterTagsBeanList.addAll(o.getData().getFileterTags());
+        fileterMatchTypeList.clear();
+        fileterMatchTypeList.addAll(b.getData().getFileterTags());
 
         sourceDataList.clear();
-        sourceDataList.addAll(o.getData().getAllInfo());
-
+        sourceDataList.addAll(b.getData().getAllInfo());
 
         //处理公司数据  请求到数据成功后已经将需要默认选择的公司数据处理好了
-        handleCompanyData(o.getData().getCompany());
-        refreshDateView(o.getData().getCurrDate());
-
+        handleCompanyData(b.getData().getCompany());
+        refreshDateView(b.getData().getCurrDate());
         updateFilterData();
-
 
     }
 
@@ -208,26 +208,17 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
     private void handleCompanyData(List<BasketIndexBean.DataBean.CompanyBean> companyBeen) {
         parentFragment.showRightButton();
-        // ArrayList<BasketIndexBean.DataBean.CompanyBean> companyList = parentFragment.getCompanyList(type);
-        //companyList.clear(); //清除以前的公司数据 因为公司数据各个赔率是单独的
-        //companyList.addAll(companyBeen);
-
-        L.d("comp", type + "_________" + companyBeen.size());
 
         int size = companyBeen.size();
         size = size < DEFAULT_SELECTED_COMPANY ? size : DEFAULT_SELECTED_COMPANY;
-
         for (int i = 0; i < size; i++) {
             companyBeen.get(i).setChecked(true);
         }
-
-
         parentFragment.getCompanyMap().put(type, companyBeen);
-
     }
 
     public List<BasketIndexBean.DataBean.FileterTagsBean> getFilterTagList() {
-        return fileterTagsBeanList;
+        return fileterMatchTypeList;
     }
 
 

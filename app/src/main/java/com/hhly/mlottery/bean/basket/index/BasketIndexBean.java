@@ -257,7 +257,17 @@ public class BasketIndexBean {
             private int matchStatus;
             private boolean hot;
             private String matchResult;
+            private String matchType;
             private List<MatchOddsBean> matchOdds;
+
+            public String getMatchType() {
+                return matchType;
+            }
+
+            public void setMatchType(String matchType) {
+                this.matchType = matchType;
+            }
+
 
             public String getThirdId() {
                 return thirdId;

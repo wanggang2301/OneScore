@@ -28,6 +28,9 @@ public class HttpMethods {
 
     private static final int DEFAULT_TIMEOUT = 5;
 
+    //接口有分H5、android、IOS，在android环境下需要传入appType=1
+    private static final String APP_TYPE = "1";
+
     private ApiService apiService;
 
     private Retrofit retrofit;
@@ -48,7 +51,7 @@ public class HttpMethods {
 
 
     public void getBasketIndexCenter(Subscriber<BasketIndexBean> subscriber, String date, String type) {
-        apiService.getIndexCenter(appendLanguage(), timeZone(), date, type)
+        apiService.getIndexCenter(appendLanguage(), timeZone(), date, type, APP_TYPE)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -57,7 +60,7 @@ public class HttpMethods {
 
 
     public void getBasketIndexCenterDetails(Subscriber<BasketIndexDetailsBean> subscriber, String comId, String thirdId, String oddsType) {
-        apiService.getIndexCenterDetails(appendLanguage(), timeZone(), comId, thirdId, oddsType)
+        apiService.getIndexCenterDetails(appendLanguage(), timeZone(), comId, thirdId, oddsType, APP_TYPE)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

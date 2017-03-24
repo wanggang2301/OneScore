@@ -28,12 +28,15 @@ public interface BasketBallContract {
     interface OddView extends IView {
         void showLoadView();
 
-        void showRequestDataView(BasketIndexBean o);
+        void showRequestDataView();
 
         void noData();
     }
 
     interface OddPresenter extends IPresenter<BasketBallContract.OddView> {
         void showRequestData(String date, String type);
+
+        BasketIndexBean getRequestData();
+
     }
 }
