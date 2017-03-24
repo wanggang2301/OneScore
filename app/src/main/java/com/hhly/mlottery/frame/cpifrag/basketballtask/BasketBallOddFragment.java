@@ -168,6 +168,7 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
         //处理公司数据  请求到数据成功后已经将需要默认选择的公司数据处理好了
         handleCompanyData(b.getData().getCompany());
+
         refreshDateView(b.getData().getCurrDate());
         updateFilterData();
 
@@ -231,8 +232,6 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         //赛事的筛选
         LinkedList<String> filterLeagueList = parentFragment.getFilterLeagueList();
 
-        L.d("datasize", "sourceDataList前===" + sourceDataList.size() + "");
-
         if (filterLeagueList != null) {
             for (BasketIndexBean.DataBean.AllInfoBean allInfo : sourceDataList) {
                 if (filterLeagueList.indexOf(allInfo.getLeagueId()) >= 0) {
@@ -246,11 +245,6 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
                 }
             }
         }
-
-        L.d("datasize", "sourceDataList后===" + sourceDataList.size() + "");
-
-        L.d("datasize", "destinationDataList===" + destinationDataList.size() + "");
-
 
         mBasketIndexAdapter.notifyDataSetChanged();
         cpiOddsRecyclerView.scrollToPosition(0);
