@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
@@ -21,7 +23,7 @@ import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
  * Created by 107_tangrr on 2017/3/21 0021.
  */
 
-public class TennisBallDetailsActivity extends BaseWebSocketActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class TennisBallDetailsActivity extends BaseWebSocketActivity implements SwipeRefreshLayout.OnRefreshListener,View.OnClickListener {
 
     private final String TAG = "TennisBallDetailsActivity";
     private TabLayout tabLayout;
@@ -29,6 +31,7 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
     private ExactSwipeRefreshLayout refreshLayout;
     private TabsAdapter tabsAdapter;
     private String mThirdId;
+    private ImageView iv_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +70,14 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
         viewPager.setAdapter(tabsAdapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
+
+        findViewById(R.id.tennis_details_back).setOnClickListener(this);
     }
 
     @Override
     protected void onTextResult(String text) {
+        L.d(TAG,"网球内页推送：" + text);
+
 
     }
 
@@ -92,5 +99,20 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
     @Override
     public void onRefresh() {
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.tennis_details_back:
+                this.finish();
+                break;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // TODO 关闭webSocket
     }
 }

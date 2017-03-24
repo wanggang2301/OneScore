@@ -252,6 +252,11 @@
 
     <!--网球比分列表-->
     <color name="tennis_score_item">#fafdff</color>
+    <color name="tennis_details_table">#2b8637</color>
+    <color name="tennis_details_head_match_name">#3c9848</color>
+    <color name="tennis_details_head_bg">#b33c9848</color>
+    <color name="tennis_details_line_bg">#66f4fbff</color>
+
 
     <!-- 开奖详情第二列背景色 -->
     <color name="number_info_two_bg">#f5f5f5</color>
