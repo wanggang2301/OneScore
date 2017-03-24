@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/linecolor" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tennis_datails_integral_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="2"
+            android:textColor="@color/tennis_details_analysis_title"
+            android:textSize="@dimen/tennis_score_item"
+            tools:text="Name" />
+
+        <TextView
+            android:id="@+id/tennis_datails_integral_ranking"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/tennis_score_item"
+            tools:text="23" />
+
+        <TextView
+            android:id="@+id/tennis_datails_integral_ranking_old"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/tennis_score_item"
+            tools:text="123" />
+
+        <TextView
+            android:id="@+id/tennis_datails_integral_change"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/tennis_score_item"
+            tools:text="233" />
+
+        <TextView
+            android:id="@+id/tennis_datails_integral_total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/tennis_score_item"
+            tools:text="3343" />
+
+        <TextView
+            android:id="@+id/tennis_datails_integral_count"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/tennis_score_item"
+            tools:text="8" />
+
+    </LinearLayout>
+
+</LinearLayout>

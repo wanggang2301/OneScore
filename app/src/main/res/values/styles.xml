@@ -1091,7 +1091,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:ellipsize">end</item>
         <item name="android:lines">1</item>
-        <item name="android:textColor">@color/snooker_score_textcolor</item>
+        <item name="android:textColor">@color/res_time_color</item>
         <item name="android:textSize">@dimen/tennis_score_item</item>
     </style>
 
@@ -1099,10 +1099,11 @@
         <item name="android:layout_width">20dp</item>
         <item name="android:layout_height">20dp</item>
         <item name="android:layout_margin">1dp</item>
-        <item name="android:background">@drawable/tennis_datails_item</item>
+        <item name="android:background">@drawable/tennis_datails_fight_item</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/snooker_score_textcolor</item>
+        <item name="android:textColor">@color/res_time_color</item>
         <item name="android:textSize">@dimen/tennis_score_item</item>
     </style>
+
 
 </resources>

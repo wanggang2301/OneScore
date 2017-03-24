@@ -31,7 +31,6 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
     private ExactSwipeRefreshLayout refreshLayout;
     private TabsAdapter tabsAdapter;
     private String mThirdId;
-    private ImageView iv_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +97,7 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
 
     @Override
     public void onRefresh() {
-
+        // TODO 下拉刷新
     }
 
     @Override

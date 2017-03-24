@@ -256,6 +256,8 @@
     <color name="tennis_details_head_match_name">#3c9848</color>
     <color name="tennis_details_head_bg">#b33c9848</color>
     <color name="tennis_details_line_bg">#66f4fbff</color>
+    <color name="tennis_details_analysis_bg">#eef8f0</color>
+    <color name="tennis_details_analysis_title">#6aac44</color>
 
 
     <!-- 开奖详情第二列背景色 -->
