@@ -20,11 +20,18 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
+import com.hhly.mlottery.bean.snookerbean.snookerIndexBean.SnookerIndexBean;
+import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SnookerChildFragment.SnookerCompanyChooseDialogFragment;
 import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SnookerChildFragment.SnookerIndexChildFragment;
+import com.hhly.mlottery.frame.oddfragment.CompanyChooseDialogFragment;
+import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.mvp.ViewFragment;
+import com.hhly.mlottery.util.DateUtil;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
@@ -44,15 +51,34 @@ public class SIndexFragment extends ViewFragment<SIndexContract.Presenter>implem
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private ArrayList<SnookerIndexBean.CompanyEntity> companyList=new ArrayList<>(); // 公司数据源
 
     private String mParam1;
     private String mParam2;
 
+    /**
+     * 欧赔
+     */
+    public final static String ODDS_EURO = "14";
+    /**
+     * 亚盘
+     */
+    public final static String ODDS_LET = "3";
+    /**
+     * 大小球
+     */
+    public final static String ODDS_SIZE = "2";
+    /**
+     * 单双
+     */
+    public final static String SINGLE_DOUBLE="4";
     private View mView;
     @BindView(R.id.public_date_layout)
     LinearLayout mLiDateSelect;
 
+    /***
+     * 日期
+     */
     @BindView(R.id.public_txt_date)
     TextView mTextDateSelect;
 
@@ -83,6 +109,11 @@ public class SIndexFragment extends ViewFragment<SIndexContract.Presenter>implem
 
     private String[] mItems;
 
+    private DateChooseDialogFragment mDateChooseDialogFragment; // 日期选择
+    private SnookerCompanyChooseDialogFragment mCompanyChooseDialogFragment; // 公司选择
+
+    private String currentDate; // 当前日期
+    private String choosenDate; // 选中日期
     public SIndexFragment() {
         // Required empty public constructor
     }
@@ -120,7 +151,7 @@ public class SIndexFragment extends ViewFragment<SIndexContract.Presenter>implem
 
     private void initView() {
 
-        mTextMatch.setText("斯诺克");
+        mTextMatch.setText(getActivity().getString(R.string.snooker_txt));
         mRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -135,23 +166,44 @@ public class SIndexFragment extends ViewFragment<SIndexContract.Presenter>implem
             }
         });
         String mTitles[]={mActivity.getResources().getString(R.string.odd_plate_rb_txt),mActivity.getResources().getString(R.string.asiasize),
-                mActivity.getResources().getString(R.string.odd_op_rb_txt),"单双"};
+                mActivity.getResources().getString(R.string.odd_op_rb_txt), MyApp.getContext().getResources().getString(R.string.snooker_index_single_double)};
 
         mItems = getResources().getStringArray(R.array.zhishu_select);
 
         fragments=new ArrayList<>();
-        fragments.add( SnookerIndexChildFragment.newInstance("euro"));
-        fragments.add(SnookerIndexChildFragment.newInstance("asiasize"));
-        fragments.add(SnookerIndexChildFragment.newInstance("asialet"));
-        fragments.add(SnookerIndexChildFragment.newInstance("SingleDouble"));
+        fragments.add(SnookerIndexChildFragment.newInstance(ODDS_LET));
+        fragments.add(SnookerIndexChildFragment.newInstance(ODDS_SIZE));
+        fragments.add(SnookerIndexChildFragment.newInstance(ODDS_EURO));
+        fragments.add(SnookerIndexChildFragment.newInstance(SINGLE_DOUBLE));
 
 
-        mTabsAdapter=new TabsAdapter(getFragmentManager());
+        mTabsAdapter=new TabsAdapter(getChildFragmentManager());
         mTabsAdapter.setTitles(mTitles);
         mTabsAdapter.addFragments(fragments);
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
+        mViewPager.setOffscreenPageLimit(5);
+        mViewPager.post(new Runnable() {
+            @Override
+            public void run() {
+                setRefreshing(true);
+//                refreshAllChildFragments();
+            }
+        });
+
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        setRefreshing(false);
+                        refreshAllChildFragments();
+                    }
+                },1000);
+            }
+        });
     }
 
     private void setListener() {
@@ -160,14 +212,79 @@ public class SIndexFragment extends ViewFragment<SIndexContract.Presenter>implem
         mCompanySelect.setOnClickListener(this);
     }
 
+    /**
+     * 显示日期选择 dialog
+     */
+    private void showDateChooseDialog() {
+        maybeInitDateChooseDialog();
+        if (!mDateChooseDialogFragment.isVisible()) {
+            mDateChooseDialogFragment.show(getChildFragmentManager(), "dateChooseFragment");
+        }
+    }
+
+
+    /**
+     * 日期选择 Fragment 初始化
+     */
+    private void maybeInitDateChooseDialog() {
+        if (mDateChooseDialogFragment != null) return;
+        mDateChooseDialogFragment = DateChooseDialogFragment.newInstance(currentDate,
+                new DateChooseDialogFragment.OnDateChooseListener() {
+                    @Override
+                    public void onDateChoose(String date) {
+                        choosenDate = date;
+                        mTextDateSelect.setText(DateUtil.convertDateToNation(date));
+                        setRefreshing(true);
+                        refreshAllChildFragments();
+                    }
+                });
+    }
+
     private void initData() {
 
     }
+
+    /**
+     * 刷新每个子fragment
+     */
+    private void refreshAllChildFragments(){
+        for(Fragment childFragment :fragments){
+
+            ((SnookerIndexChildFragment)childFragment).refreshDate(choosenDate==null?currentDate:choosenDate);
+        }
+    }
+    /**
+     * 设置刷新状态
+     *
+     * @param b 是否正在刷新
+     */
+    public void setRefreshing(boolean b) {
+        mRefreshLayout.setRefreshing(b);
+    }
+
     @Override
     public void onError() {
 
     }
 
+    /**
+     * 获取公司列表
+     *
+     * @return 公司列表
+     */
+    public void setCompanyList(ArrayList<SnookerIndexBean.CompanyEntity> companyList) {
+        mCompanySelect.setVisibility(View.VISIBLE);
+        this.companyList.clear();
+        this.companyList.addAll(companyList); //保证操作的是同一数据源
+    }
+
+    /**
+     *获取公司列表
+     * @return
+     */
+    public List<SnookerIndexBean.CompanyEntity> getCompanyList(){
+        return companyList;
+    }
     /**
      * 弹出切换球类的下拉
      */
@@ -212,6 +329,33 @@ public class SIndexFragment extends ViewFragment<SIndexContract.Presenter>implem
     }
 
     /**
+     * 显示公司选择
+     */
+    public void showCompanyChooseDialog() {
+        maybeInitCompanyChooseDialog();
+        if (!mCompanyChooseDialogFragment.isVisible()) {
+            mCompanyChooseDialogFragment.show(getChildFragmentManager(), "companyChooseDialog");
+        }
+
+    }
+
+    /**
+     * 初始化公司选择Dialog
+     */
+    private void maybeInitCompanyChooseDialog() {
+        if (mCompanyChooseDialogFragment == null) {
+            mCompanyChooseDialogFragment = SnookerCompanyChooseDialogFragment.newInstance(companyList,
+                    new SnookerCompanyChooseDialogFragment.OnFinishSelectionListener() {
+                        @Override
+                        public void onFinishSelection() {
+                            for (Fragment childFragment : fragments) {
+                                ((SnookerIndexChildFragment)childFragment).updateFilterData();
+                            }
+                        }
+                    });
+        }
+    }
+    /**
      * 设置添加屏幕的背景透明度
      *
      * @param bgAlpha
@@ -227,14 +371,25 @@ public class SIndexFragment extends ViewFragment<SIndexContract.Presenter>implem
 
     }
 
+    /**
+     * 设置日期跟公司
+     */
+    public void setDateAndCompany(SnookerIndexBean bean){
+        currentDate=bean.getCurrDate();
+        mLiDateSelect.setVisibility(View.VISIBLE);
+        mCompanySelect.setVisibility(View.VISIBLE);
+        mTextDateSelect.setText(DateUtil.convertDateToNation(bean.getCurrDate()));
+    }
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.public_date_layout:
-
+            case R.id.public_date_layout: //日期选择
+                showDateChooseDialog();
                 break;
             case R.id.public_img_company:
-
+                showCompanyChooseDialog();
                 break;
             case R.id.ll_match_select: //切换比赛
                 switchMatch(v);

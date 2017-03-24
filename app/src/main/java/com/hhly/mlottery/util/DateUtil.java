@@ -547,4 +547,14 @@ public class DateUtil {
         }
         return "";
     }
+    /**
+     * 获取当前时间年月日
+     */
+    public static String getMomentDate(){
+        Date d = new Date();
+        System.out.println(d);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String dateNowStr = sdf.format(d);
+        return dateNowStr;
+    }
 }
