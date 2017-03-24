@@ -209,7 +209,6 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
     private void handleCompanyData(List<BasketIndexBean.DataBean.CompanyBean> companyBeen) {
         parentFragment.showRightButton();
-
         int size = companyBeen.size();
         size = size < DEFAULT_SELECTED_COMPANY ? size : DEFAULT_SELECTED_COMPANY;
         for (int i = 0; i < size; i++) {
@@ -228,7 +227,6 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
      */
     public void updateFilterData() {
         destinationDataList.clear();
-
         //赛事的筛选
         LinkedList<String> filterLeagueList = parentFragment.getFilterLeagueList();
 
@@ -256,8 +254,6 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
      * @param allInfo allInfoBean
      */
     private void filterAllInfo(BasketIndexBean.DataBean.AllInfoBean allInfo) {
-
-
         //获取各个赔率下的公司list
         List<BasketIndexBean.DataBean.CompanyBean> companyList = parentFragment.getCompanyMap().get(type);
 
@@ -270,7 +266,6 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
                 }
             }
         }
-
 
         //防止对象复用
         BasketIndexBean.DataBean.AllInfoBean allInfoBean = new BasketIndexBean.DataBean.AllInfoBean();
@@ -287,9 +282,7 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         allInfoBean.setHot(allInfo.isHot());
         allInfoBean.setMatchResult(allInfo.getMatchResult());
 
-
         destinationDataList.add(allInfoBean);
-
     }
 
 
