@@ -22,6 +22,7 @@ import com.hhly.mlottery.adapter.basketball.BasketIndexAdapter;
 import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
 import com.hhly.mlottery.bean.enums.BasketOddsTypeEnum;
 import com.hhly.mlottery.mvp.ViewFragment;
+import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.L;
 
 import java.util.ArrayList;
@@ -172,8 +173,11 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         sourceDataList.clear();
         sourceDataList.addAll(b.getData().getAllInfo());
 
+        parentFragment.showRightButton();
+
         //处理公司数据  请求到数据成功后已经将需要默认选择的公司数据处理好了
         handleCompanyData(b.getData().getCompany());
+
 
         refreshDateView(b.getData().getCurrDate());
         updateFilterData();
@@ -190,7 +194,7 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
      * @param date date, 形如 2016-06-21 可以为空
      */
     public void refreshData(String date) {
-        L.d(TAG, "下拉刷新___________");
+        L.d(TAG, "下拉刷新___________" + date + type);
         mPresenter.showRequestData(date, type);
     }
 
@@ -228,14 +232,33 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         cpiRightFlPlateNoData.setVisibility(View.GONE);
     }
 
-    private void handleCompanyData(List<BasketIndexBean.DataBean.CompanyBean> companyBeen) {
-        parentFragment.showRightButton();
-        int size = companyBeen.size();
+    private void handleCompanyData(List<BasketIndexBean.DataBean.CompanyBean> currList) {
+
+
+        int size = currList.size();
         size = size < DEFAULT_SELECTED_COMPANY ? size : DEFAULT_SELECTED_COMPANY;
         for (int i = 0; i < size; i++) {
-            companyBeen.get(i).setChecked(true);
+            currList.get(i).setChecked(true);
         }
-        parentFragment.getCompanyMap().put(type, companyBeen);
+
+        //记住上一次的公司结果
+        if (CollectionUtils.notEmpty(parentFragment.getCompanyMap().get(type))) {
+            List<BasketIndexBean.DataBean.CompanyBean> prelist = parentFragment.getCompanyMap().get(type);
+
+            for (BasketIndexBean.DataBean.CompanyBean companyBean : currList) {
+                for (BasketIndexBean.DataBean.CompanyBean d : prelist) {
+                    if (d.isChecked() && companyBean.getComId().equals(d.getComId())) {
+                        companyBean.setChecked(true);
+                        break;
+                    } else {
+                        companyBean.setChecked(false);
+                    }
+                }
+            }
+
+        }
+        parentFragment.getCompanyMap().put(type, currList);
+
     }
 
     public List<BasketIndexBean.DataBean.FileterTagsBean> getFilterTagList() {
@@ -248,9 +271,12 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
      */
     public void updateFilterData() {
         destinationDataList.clear();
-        //赛事的筛选
+
+        //赛事的筛选,获取父赛事的筛选结果
         LinkedList<String> filterLeagueList = parentFragment.getFilterLeagueList();
 
+
+        //第一次请求
         if (filterLeagueList != null) {
             for (BasketIndexBean.DataBean.AllInfoBean allInfo : sourceDataList) {
                 if (filterLeagueList.indexOf(allInfo.getLeagueId()) >= 0) {

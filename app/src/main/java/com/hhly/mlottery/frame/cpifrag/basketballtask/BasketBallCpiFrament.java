@@ -191,7 +191,9 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
     public void showRightButton() {
         publicImgCompany.setVisibility(View.VISIBLE);
         publicImgFilter.setVisibility(View.VISIBLE);
+
     }
+
 
     /**
      * 显示公司选择
@@ -227,14 +229,6 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
                             default:
                                 break;
                         }
-
-
-
-
-
-                           /* for (CPIOddsFragment2 fragment : mFragments) {
-                                fragment.updateFilterData();
-                            }*/
                     }
                 });
     }
@@ -334,6 +328,7 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
                     public void onDateChoose(String date) {
                         choosenDate = date;
                         publicTxtDate.setText(DateUtil.convertDateToNation(date));
+                        cpiRefreshLayout.setRefreshing(true);
                         refreshAllChildFragments();
                     }
                 });

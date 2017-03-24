@@ -2,6 +2,7 @@ package com.hhly.mlottery.frame.cpifrag.basketballtask.data;
 
 import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
 import com.hhly.mlottery.bean.basket.index.BasketIndexDetailsBean;
+import com.hhly.mlottery.util.CollectionUtils;
 
 import rx.Subscriber;
 
@@ -29,6 +30,12 @@ public class GetTaskSource implements IGetTaskSource {
             @Override
             public void onNext(BasketIndexBean o) {
                 if (o.getResult() == 200) {
+
+                    if (o == null || !CollectionUtils.notEmpty(o.getData().getAllInfo())) {
+                        iGetTaskData.getNoData();
+                        return;
+                    }
+
                     iGetTaskData.getDataSucess(o);
                 } else {
                     iGetTaskData.getDataError();
