@@ -45,7 +45,7 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
 
 
     public BasketIndexAdapter(Context context, List<BasketIndexBean.DataBean.AllInfoBean> data, String type) {
-        super(R.layout.item_index_basket, data);
+        super(R.layout.odd_test, data);
         this.type = type;
         mContext = context;
     }
@@ -85,7 +85,7 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
 
         switch (allInfoBean.getMatchStatus()) {
             case 0:
-                baseViewHolder.setText(R.id.cpi_score_txt, "");
+                baseViewHolder.setText(R.id.cpi_score_txt, "VS");
 
                 statusTxt = mContext.getResources().getString(R.string.tennis_match_not_start);
                 break;
@@ -140,7 +140,7 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
                 break;
             case -2:
                 statusTxt = mContext.getResources().getString(R.string.tennis_match_dd);
-                baseViewHolder.setText(R.id.cpi_score_txt, "");
+                baseViewHolder.setText(R.id.cpi_score_txt, "VS");
 
                 break;
             case -3:
@@ -148,12 +148,12 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
                 break;
             case -4:
                 statusTxt = mContext.getResources().getString(R.string.basket_analyze_dialog_cancle);
-                baseViewHolder.setText(R.id.cpi_score_txt, "");
+                baseViewHolder.setText(R.id.cpi_score_txt, "VS");
 
                 break;
             case -5:
                 statusTxt = mContext.getResources().getString(R.string.tennis_match_tc);
-                baseViewHolder.setText(R.id.cpi_score_txt, "");
+                baseViewHolder.setText(R.id.cpi_score_txt, "VS");
 
                 break;
             case 50:

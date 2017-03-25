@@ -146,6 +146,16 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
             }
         });
 
+
+        cpiTxtReLoading.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.showLoad();
+                parentFragment.refreshAllChildFragments();
+            }
+        });
+
+
     }
 
     @Override
@@ -163,7 +173,6 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     @Override
     public void showResponseDataView() {
         L.d(TAG, "请求数据成功_____________");
-
 
 
         BasketIndexBean b = mPresenter.getRequestData();
