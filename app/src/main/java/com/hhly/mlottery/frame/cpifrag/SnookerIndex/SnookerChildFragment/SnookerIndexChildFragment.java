@@ -12,19 +12,17 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.FootballAnalyzeDetailsActivity;
 import com.hhly.mlottery.activity.SnookerMatchDetail;
 import com.hhly.mlottery.adapter.snooker.SnookerIndexAdapter;
+import com.hhly.mlottery.bean.snookerbean.SnookerScoreSocketBean;
 import com.hhly.mlottery.bean.snookerbean.snookerIndexBean.SnookerIndexBean;
+import com.hhly.mlottery.bean.snookerbean.snookerschedulebean.SnookerSocketOddsBean;
 import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SIndexFragment;
 import com.hhly.mlottery.mvp.ViewFragment;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -212,4 +210,110 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
         mPresenter.filterCompany();
     }
 
+    /**
+     * 比分更新
+     * @param mScoreData
+     */
+    public void updataScore(SnookerScoreSocketBean mScoreData){
+        SnookerScoreSocketBean.SnookerScoreDataBean scoreData = mScoreData.getData();
+        synchronized (mPresenter.getData()){
+            for (SnookerIndexBean.AllInfoEntity match : mPresenter.getData()) {
+                if (match.getMatchInfo().getMatchId().equals(mScoreData.getThirdId())) {
+                    if (match.getMatchInfo() != null) {
+                        SnookerIndexBean.AllInfoEntity.MatchInfoEntity matchData = match.getMatchInfo();
+                        updataItemData(matchData , scoreData);
+                    }else{
+                        /**
+                         * 未开赛==>开赛 推送情况处理（状态更新）
+                         */
+                        SnookerIndexBean.AllInfoEntity.MatchInfoEntity newMatchData = new SnookerIndexBean.AllInfoEntity.MatchInfoEntity();
+                        updataItemData(newMatchData , scoreData);//更新单条状态
+                        match.setMatchInfo(newMatchData);//赋值，给为null的MatchScore设值
+                    }
+                    if (mAdapter != null) {
+                        mAdapter.notifyDataSetChanged();
+                    }
+                    break;
+                }
+            }
+        }
+    }
+    /**
+     * 更新单条item的内容
+     */
+    private void updataItemData(SnookerIndexBean.AllInfoEntity.MatchInfoEntity matchData , SnookerScoreSocketBean.SnookerScoreDataBean data){
+        String oneWin = "";
+        String towWin = "";
+        oneWin = data.getPlayerOnewin() == null ? "0" : data.getPlayerOnewin();
+        towWin = data.getPlayerTwowin() == null ? "0" : data.getPlayerTwowin();
+        matchData.setMatchResult(oneWin + ":" + towWin);
+
+        if (data.getStatus() != null) {
+            matchData.setMatchState(data.getStatus());
+        }
+    }
+    /**
+     * 赔率更新
+     * @param mOddsData
+     */
+    public void updataOdds(SnookerSocketOddsBean mOddsData){
+        synchronized (mPresenter.getData()){
+            for (SnookerIndexBean.AllInfoEntity match : mPresenter.getData()) {
+
+                if (match.getMatchInfo().getMatchId().equals(mOddsData.getThirdId())) {
+                    if (match.getComList() != null && match.getComList().size() != 0) {
+                        List<SnookerIndexBean.AllInfoEntity.ComListEntity>  comlist = match.getComList();
+                        updataOddsData(comlist , mOddsData);
+                    }else{
+                        /**
+                         * 无赔率==>有赔率情况处理
+                         */
+                        List<SnookerIndexBean.AllInfoEntity.ComListEntity>  newComlist = new ArrayList<>();
+                        updataOddsData(newComlist , mOddsData);
+                        match.setComList(newComlist);
+                    }
+                    if (mAdapter != null) {
+                        mAdapter.notifyDataSetChanged();
+                    }
+                    break;
+                }
+            }
+        }
+    }
+    /**
+     * 赔率更新（单条数据更新）
+     */
+    private void updataOddsData(List<SnookerIndexBean.AllInfoEntity.ComListEntity> currentOddsDataList, SnookerSocketOddsBean socketOddsData){
+
+        if (socketOddsData.getData() != null) {
+
+            SnookerSocketOddsBean.SnookerDataBean sockerData = socketOddsData.getData();
+
+            boolean isNewCompany = true;//true :没有相同过 收到新公司赔率
+            for (SnookerIndexBean.AllInfoEntity.ComListEntity currentOddsData : currentOddsDataList) {
+                if (currentOddsData.getComName().equals(sockerData.getCompany())) {
+                    isNewCompany = false;
+                    break;
+                }
+            }
+            if (isNewCompany) {//收到 原来没有的公司赔率
+                SnookerIndexBean.AllInfoEntity.ComListEntity newComlist = new SnookerIndexBean.AllInfoEntity.ComListEntity();
+                newComlist.setComName(sockerData.getCompany());
+                SnookerIndexBean.AllInfoEntity.ComListEntity.LevelEntity currlevel = new SnookerIndexBean.AllInfoEntity.ComListEntity.LevelEntity();
+                currlevel.setLeft(sockerData.getLeftOdds());
+                currlevel.setRight(sockerData.getRightOdds());
+                currlevel.setMiddle(sockerData.getHandicapValue());
+                newComlist.setCurrLevel(currlevel);
+                currentOddsDataList.add(newComlist);//添加新赔率
+            }else{
+                for (SnookerIndexBean.AllInfoEntity.ComListEntity currentOddsData : currentOddsDataList) {
+                    if (sockerData.getCompany().equals(currentOddsData.getComName())) {
+                        currentOddsData.getCurrLevel().setLeft(sockerData.getLeftOdds());
+                        currentOddsData.getCurrLevel().setRight(sockerData.getRightOdds());
+                        currentOddsData.getCurrLevel().setMiddle(sockerData.getHandicapValue());
+                    }
+                }
+            }
+        }
+    }
 }

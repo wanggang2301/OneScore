@@ -116,7 +116,7 @@ public class SnookerIndexChildPresenter extends BasePresenter<SnookerIndexChildC
         ArrayList<SnookerIndexBean.CompanyEntity> companyList = (ArrayList<SnookerIndexBean.CompanyEntity>) mView.getCompanyList();
         if (companyList != null && companyList.size() > 0) {
             for (SnookerIndexBean.CompanyEntity company : companyList) {
-                if (comListBean.getComId().equals(company.getComId()) && company.isChecked()) {
+                if (comListBean.getComName().equals(company.getComName()) && company.isChecked()) {
                     show = true;
                 }
             }
