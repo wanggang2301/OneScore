@@ -21,6 +21,8 @@ import com.hhly.mlottery.activity.BasketIndexDetailsActivity;
 import com.hhly.mlottery.adapter.basketball.BasketIndexAdapter;
 import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
 import com.hhly.mlottery.bean.enums.BasketOddsTypeEnum;
+import com.hhly.mlottery.bean.websocket.WebBasketMatch;
+import com.hhly.mlottery.bean.websocket.WebBasketOdds5;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.L;
@@ -306,6 +308,7 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         cpiOddsRecyclerView.scrollToPosition(0);
     }
 
+
     /**
      * 过滤单条信息
      *
@@ -343,6 +346,66 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         destinationDataList.add(allInfoBean);
     }
 
+
+    public void updatePushScoreAndStatus(WebBasketMatch mWebBasketMatch) {
+        updateSourceScoreAndStatus(mWebBasketMatch, true);  //源数据
+        updateSourceScoreAndStatus(mWebBasketMatch, false); //目标数据
+    }
+
+
+    private void updateSourceScoreAndStatus(WebBasketMatch mWebBasketMatch, boolean isSourceData) {
+        List<BasketIndexBean.DataBean.AllInfoBean> allInfoBeanList = getDataList(isSourceData);
+        if (allInfoBeanList == null) return;
+        for (BasketIndexBean.DataBean.AllInfoBean item : allInfoBeanList) {
+            if (item.getThirdId().equals(mWebBasketMatch.getThirdId())) {
+                item.setMatchStatus(Integer.parseInt(mWebBasketMatch.getData().get("matchStatus")));
+                item.setMatchResult(mWebBasketMatch.getData().get("homeScore") + ":" + mWebBasketMatch.getData().get("guestScore"));
+                item.setRemainTime(mWebBasketMatch.getData().get("remainTime"));
+
+                if (!isSourceData) {
+                    mBasketIndexAdapter.notifyItemChanged(allInfoBeanList.indexOf(item));
+                }
+            }
+        }
+    }
+
+
+    public void updatePushOdd(String thirdId, String oddType, WebBasketOdds5 odd) {
+        updateOdds(thirdId, oddType, odd, true);
+        updateOdds(thirdId, oddType, odd, false);
+
+    }
+
+    private void updateOdds(String thirdId, String oddType, WebBasketOdds5 odd, boolean isSourceData) {
+        List<BasketIndexBean.DataBean.AllInfoBean> allInfoBeanList = getDataList(isSourceData);
+        if (allInfoBeanList == null) return;
+        for (BasketIndexBean.DataBean.AllInfoBean item : allInfoBeanList) {
+            if (item.getThirdId().equals(thirdId)) {
+                if (oddType.equals(BasketOddsTypeEnum.ASIALET)) {
+
+
+
+
+
+                } else if (oddType.equals(BasketOddsTypeEnum.ASIASIZE)) {
+
+                } else if (oddType.equals(BasketOddsTypeEnum.EURO)) {
+
+                }
+
+
+                if (!isSourceData) {
+                    mBasketIndexAdapter.notifyItemChanged(allInfoBeanList.indexOf(item));
+                }
+            }
+        }
+    }
+
+
+    private List<BasketIndexBean.DataBean.AllInfoBean> getDataList(boolean isSourceData) {
+
+        return isSourceData ? sourceDataList : destinationDataList;
+    }
 
     @Override
     public void onAttach(Context context) {

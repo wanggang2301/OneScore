@@ -45,7 +45,7 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
 
 
     public BasketIndexAdapter(Context context, List<BasketIndexBean.DataBean.AllInfoBean> data, String type) {
-        super(R.layout.odd_test, data);
+        super(R.layout.item_index_basket, data);
         this.type = type;
         mContext = context;
     }
@@ -86,7 +86,8 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
         switch (allInfoBean.getMatchStatus()) {
             case 0:
                 baseViewHolder.setText(R.id.cpi_score_txt, "VS");
-
+                baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#222222"));
+                baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#222222"));
                 statusTxt = mContext.getResources().getString(R.string.tennis_match_not_start);
                 break;
             case 1:
@@ -95,6 +96,8 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
                 } else {
                     statusTxt = "1st";
                 }
+                baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#0090ff"));
+                baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#0090ff"));
 
                 break;
             case 2:
@@ -103,16 +106,20 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
                 } else {
                     statusTxt = "2nd";
                 }
+                baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#0090ff"));
+                baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#0090ff"));
+
                 break;
 
             case 3:
-
                 if (section == 2) {
                     statusTxt = "2nd half";
                 } else {
                     statusTxt = "2rd";
 
                 }
+                baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#0090ff"));
+                baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#0090ff"));
 
 
                 break;
@@ -122,42 +129,66 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
                 } else {
                     statusTxt = "4th";
                 }
+                baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#0090ff"));
+                baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#0090ff"));
+
                 break;
             case 5:
                 statusTxt = "OT1";
+                baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#0090ff"));
+                baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#0090ff"));
+
                 break;
             case 6:
                 statusTxt = "OT2";
+                baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#0090ff"));
+                baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#0090ff"));
 
                 break;
             case 7:
                 statusTxt = "OT3";
+                baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#0090ff"));
+                baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#0090ff"));
 
                 break;
             case -1:
                 statusTxt = mContext.getResources().getString(R.string.snooker_state_over_game);
+                baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#e40000"));
+                baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#e40000"));
 
                 break;
             case -2:
                 statusTxt = mContext.getResources().getString(R.string.tennis_match_dd);
                 baseViewHolder.setText(R.id.cpi_score_txt, "VS");
+                baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#222222"));
+                baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#222222"));
 
                 break;
             case -3:
                 statusTxt = mContext.getResources().getString(R.string.tennis_match_zd);
+                baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#e40000"));
+                baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#e40000"));
+
                 break;
             case -4:
                 statusTxt = mContext.getResources().getString(R.string.basket_analyze_dialog_cancle);
                 baseViewHolder.setText(R.id.cpi_score_txt, "VS");
+                baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#222222"));
+                baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#222222"));
 
                 break;
             case -5:
                 statusTxt = mContext.getResources().getString(R.string.tennis_match_tc);
                 baseViewHolder.setText(R.id.cpi_score_txt, "VS");
+                baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#222222"));
+                baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#222222"));
 
                 break;
             case 50:
                 statusTxt = mContext.getResources().getString(R.string.paused_txt);
+                baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#0090ff"));
+                baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#0090ff"));
+
                 break;
             default:
                 break;
@@ -167,7 +198,7 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
 
         bindOdds(baseViewHolder, allInfoBean);
 
-        baseViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+        baseViewHolder.getView(R.id.ll_match).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onItemClickListener != null) {
@@ -196,17 +227,13 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
             indexOddsItemView = new IndexOddsItemView(mContext);
             indexOddsItemView.bindData(item, type);
             if (onOddIetmClickListener != null) {
-
                 indexOddsItemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         onOddIetmClickListener.onOddItemCLick(allInfoBean.getThirdId(), item.getComId());
-
                     }
                 });
             }
-
-
             container.addView(indexOddsItemView);
         }
         // 最后一个隐藏底部分割线

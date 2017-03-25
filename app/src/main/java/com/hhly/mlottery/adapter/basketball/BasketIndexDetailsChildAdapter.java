@@ -1,6 +1,7 @@
 package com.hhly.mlottery.adapter.basketball;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -38,14 +39,17 @@ public class BasketIndexDetailsChildAdapter extends BaseQuickAdapter<BasketIndex
         baseViewHolder.setText(R.id.odds_details_guest_txt, oddsDataBean.getRightOdds());
 
         if (oddType.equals(BasketOddsTypeEnum.ASIALET)) {
+            baseViewHolder.getView(R.id.odds_details_dish_txt).setVisibility(View.VISIBLE);
+
             baseViewHolder.setText(R.id.odds_details_dish_txt, HandicapUtils.changeHandicap(oddsDataBean.getHandicapValue()));
 
         } else if (oddType.equals(BasketOddsTypeEnum.ASIASIZE)) {
+            baseViewHolder.getView(R.id.odds_details_dish_txt).setVisibility(View.VISIBLE);
+
             baseViewHolder.setText(R.id.odds_details_dish_txt, HandicapUtils.changeHandicapByBigLittleBall(oddsDataBean.getHandicapValue() + ""));
 
         } else if (oddType.equals(BasketOddsTypeEnum.EURO)) {
-            baseViewHolder.setText(R.id.odds_details_dish_txt, oddsDataBean.getHandicapValue());
-
+            baseViewHolder.getView(R.id.odds_details_dish_txt).setVisibility(View.GONE);
         }
 
 

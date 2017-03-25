@@ -24,16 +24,21 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketBallIndexFiltrateActivity;
+import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
 import com.hhly.mlottery.bean.enums.BasketOddsTypeEnum;
+import com.hhly.mlottery.bean.websocket.WebBasketMatch;
+import com.hhly.mlottery.bean.websocket.WebBasketOdds;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
 import com.hhly.mlottery.frame.oddfragment.basketoddframent.BasketCompanyChooseDialogFragment;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
-import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
@@ -55,7 +60,7 @@ import de.greenrobot.event.EventBus;
  * @des:篮球指数
  * @date:2017/3/16
  */
-public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPresenter> implements BasketBallContract.CpiView, ExactSwipeRefreshLayout.OnRefreshListener {
+public class BasketBallCpiFrament extends BaseWebSocketFragment implements ExactSwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.public_date_layout)
     LinearLayout publicDateLayout;
@@ -106,6 +111,13 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setWebSocketUri(BaseURLs.WS_SERVICE);
+        setTopic("USER.topic.basketball");
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_basket_ball_cpi, container, false);
         ButterKnife.bind(this, mView);
@@ -117,18 +129,15 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mItems = getResources().getStringArray(R.array.zhishu_select);
-
+/*
         mPresenter = new BasketBallCpiPresenter(this);
         //初始化头部View和事件
-        mPresenter.initFg();
+        mPresenter.initFg();*/
+        initViewPager();
 
         companyMap = new ArrayMap<>();
     }
 
-    @Override
-    public void initFgView() {
-        initViewPager();
-    }
 
     /**
      * 初始化 ViewPager
@@ -294,10 +303,6 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
         context.getWindow().setAttributes(lp);
     }
 
-    @Override
-    public void onError() {
-
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -458,5 +463,75 @@ public class BasketBallCpiFrament extends ViewFragment<BasketBallContract.CpiPre
                     return getString(R.string.odd_plate_rb_txt);
             }
         }
+    }
+
+    @Override
+    protected void onTextResult(final String text) {
+        tabs.post(new Runnable() {
+            @Override
+            public void run() {
+                handleMessage(text);
+            }
+        });
+    }
+
+    /**
+     * 处理 websocket 传来的数据
+     *
+     * @param jsonString jsonString
+     */
+    private void handleMessage(String jsonString) {
+        JSONObject jsonObject = JSON.parseObject(jsonString);
+        int type = jsonObject.getIntValue("type");
+        if (type == 100) {  //比分
+            updateTimeAndStatus(jsonString);
+        } else if (type == 101) { //赔率
+            updateOdds(jsonString);
+        }
+    }
+
+
+    private void updateTimeAndStatus(String jsonString) {
+        WebBasketMatch mWebBasketMatch = null;
+        try {
+            mWebBasketMatch = JSON.parseObject(jsonString, WebBasketMatch.class);
+        } catch (Exception e) {
+            jsonString = jsonString.substring(0, jsonString.length() - 1);
+            mWebBasketMatch = JSON.parseObject(jsonString, WebBasketMatch.class);
+        }
+
+        for (BasketBallOddFragment fragment : mFragments) {
+            fragment.updatePushScoreAndStatus(mWebBasketMatch);
+        }
+    }
+
+    private void updateOdds(String jsonString) {
+        WebBasketOdds mWebBasketOdds = null;
+        try {
+            mWebBasketOdds = JSON.parseObject(jsonString, WebBasketOdds.class);
+        } catch (Exception e) {
+            jsonString = jsonString.substring(0, jsonString.length() - 1);
+            mWebBasketOdds = JSON.parseObject(jsonString, WebBasketOdds.class);
+        }
+
+        mFragments.get(0).updatePushOdd(mWebBasketOdds.getThirdId(), BasketOddsTypeEnum.ASIALET, mWebBasketOdds.getData().getAsiaLet());
+        mFragments.get(1).updatePushOdd(mWebBasketOdds.getThirdId(), BasketOddsTypeEnum.ASIASIZE, mWebBasketOdds.getData().getAsiaSize());
+        mFragments.get(2).updatePushOdd(mWebBasketOdds.getThirdId(), BasketOddsTypeEnum.EURO, mWebBasketOdds.getData().getEuro());
+    }
+
+
+    @Override
+    protected void onConnected() {
+
+    }
+
+    @Override
+    protected void onConnectFail() {
+
+    }
+
+    @Override
+    protected void onDisconnected() {
+
     }
 }

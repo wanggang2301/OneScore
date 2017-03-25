@@ -232,19 +232,23 @@ public class BasketIndexDetailsChildFragment extends ViewFragment<BasketIndexDet
     private void setRightOddTiTleName() {
         if (BasketOddsTypeEnum.ASIALET.equals(oddType)) {
             //亚盘
+            cpiDishDetailsTxtId.setVisibility(View.VISIBLE);
+
             cpiHomeDetailsTxtId.setText(R.string.foot_odds_alet_left);
             cpiDishDetailsTxtId.setText(R.string.foot_odds_alet_middle);
             cpiGuestDetailsTxtId.setText(R.string.foot_odds_alet_right);
 
         } else if (BasketOddsTypeEnum.ASIASIZE.equals(oddType)) {
             //大小球
+            cpiDishDetailsTxtId.setVisibility(View.VISIBLE);
+
             cpiHomeDetailsTxtId.setText(R.string.foot_odds_asize_left);
             cpiDishDetailsTxtId.setText(R.string.foot_odds_asize_middle);
             cpiGuestDetailsTxtId.setText(R.string.foot_odds_asize_right);
         } else if (BasketOddsTypeEnum.EURO.equals(oddType)) {
             //欧赔
             cpiHomeDetailsTxtId.setText(R.string.foot_odds_eu_left);
-            cpiDishDetailsTxtId.setText(R.string.foot_odds_eu_middle);
+            cpiDishDetailsTxtId.setVisibility(View.GONE);
             cpiGuestDetailsTxtId.setText(R.string.foot_odds_eu_right);
         }
     }
