@@ -62,7 +62,13 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
         baseViewHolder.setText(R.id.cpi_item_time_txt, allInfoBean.getTime());
         baseViewHolder.setText(R.id.cpi_host_team_txt, allInfoBean.getHomeTeam());
         baseViewHolder.setText(R.id.cpi_guest_team_txt, allInfoBean.getGuestTeam());
-        baseViewHolder.setText(R.id.cpi_item_remainTime_txt, allInfoBean.getRemainTime());
+
+        if (allInfoBean.getRemainTime() == null) {
+            baseViewHolder.setText(R.id.cpi_item_remainTime_txt, "");
+        } else {
+            baseViewHolder.setText(R.id.cpi_item_remainTime_txt, allInfoBean.getRemainTime());
+        }
+
         baseViewHolder.setText(R.id.cpi_score_txt, allInfoBean.getMatchResult());
 
         //allInfoBean.getMatchStatus()
@@ -79,7 +85,7 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
          *
          */
 
-        int section = 2;
+        int section = 0;
 
         String statusTxt = "";
 
@@ -260,16 +266,21 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
             case BasketOddsTypeEnum.ASIALET:
                 holder.setText(R.id.cpi_item_home_txt, mContext.getString(R.string.foot_odds_alet_left));
                 holder.setText(R.id.cpi_item_odds_txt, mContext.getString(R.string.foot_odds_alet_middle));
+                holder.setVisible(R.id.cpi_item_odds_txt, true);
+
                 holder.setText(R.id.cpi_item_guest_txt, mContext.getString(R.string.foot_odds_alet_right));
                 break;
             case BasketOddsTypeEnum.ASIASIZE:
                 holder.setText(R.id.cpi_item_home_txt, mContext.getString(R.string.foot_odds_asize_left));
                 holder.setText(R.id.cpi_item_odds_txt, mContext.getString(R.string.foot_odds_asize_middle));
+                holder.setVisible(R.id.cpi_item_odds_txt, true);
+
                 holder.setText(R.id.cpi_item_guest_txt, mContext.getString(R.string.foot_odds_asize_right));
                 break;
             case BasketOddsTypeEnum.EURO:
                 holder.setText(R.id.cpi_item_home_txt, mContext.getString(R.string.foot_odds_eu_left));
                 holder.setText(R.id.cpi_item_odds_txt, mContext.getString(R.string.foot_odds_eu_middle));
+                holder.setVisible(R.id.cpi_item_odds_txt, false);
                 holder.setText(R.id.cpi_item_guest_txt, mContext.getString(R.string.foot_odds_eu_right));
                 break;
         }

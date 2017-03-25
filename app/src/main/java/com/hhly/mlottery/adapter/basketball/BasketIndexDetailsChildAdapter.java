@@ -39,17 +39,17 @@ public class BasketIndexDetailsChildAdapter extends BaseQuickAdapter<BasketIndex
         baseViewHolder.setText(R.id.odds_details_guest_txt, oddsDataBean.getRightOdds());
 
         if (oddType.equals(BasketOddsTypeEnum.ASIALET)) {
-            baseViewHolder.getView(R.id.odds_details_dish_txt).setVisibility(View.VISIBLE);
+            baseViewHolder.getView(R.id.odds_details_dish_layout).setVisibility(View.VISIBLE);
 
             baseViewHolder.setText(R.id.odds_details_dish_txt, HandicapUtils.changeHandicap(oddsDataBean.getHandicapValue()));
 
         } else if (oddType.equals(BasketOddsTypeEnum.ASIASIZE)) {
-            baseViewHolder.getView(R.id.odds_details_dish_txt).setVisibility(View.VISIBLE);
+            baseViewHolder.getView(R.id.odds_details_dish_layout).setVisibility(View.VISIBLE);
 
             baseViewHolder.setText(R.id.odds_details_dish_txt, HandicapUtils.changeHandicapByBigLittleBall(oddsDataBean.getHandicapValue() + ""));
 
         } else if (oddType.equals(BasketOddsTypeEnum.EURO)) {
-            baseViewHolder.getView(R.id.odds_details_dish_txt).setVisibility(View.GONE);
+            baseViewHolder.getView(R.id.odds_details_dish_layout).setVisibility(View.GONE);
         }
 
 

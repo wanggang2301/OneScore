@@ -76,6 +76,7 @@
                     android:layout_marginStart="10dp"
                     android:gravity="center|start"
                     android:text="10:30"
+                    android:textColor="#0090ff"
                     android:textSize="13sp" />
 
                 <TextView

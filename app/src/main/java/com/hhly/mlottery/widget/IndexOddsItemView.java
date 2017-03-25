@@ -33,6 +33,8 @@ public class IndexOddsItemView extends LinearLayout {
     TextView mDefaultCenter;
     TextView mDefaultRight;
 
+    LinearLayout ll_middle;
+
     View mDivider;
 
     int green;
@@ -48,13 +50,23 @@ public class IndexOddsItemView extends LinearLayout {
      */
     public void bindData(BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean data, String oddsType) {
 
+
         mCompanyName.setText(data.getComName());
 
-        //即时赔率
-        BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean.OddsDataBean currLevel = data.getOddsData().get(0);
-
+        BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean.OddsDataBean currLevel = null;
         //初始赔率
-        BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean.OddsDataBean preLevel = data.getOddsData().get(1);
+        BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean.OddsDataBean preLevel = null;
+        if (data.getOddsData().size() == 2) {
+            currLevel = data.getOddsData().get(0);
+            //初始赔率
+            preLevel = data.getOddsData().get(1);
+        } else if (data.getOddsData().size() == 1) {
+            currLevel = data.getOddsData().get(0);
+            preLevel = new BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean.OddsDataBean();
+        } else {
+            currLevel = new BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean.OddsDataBean();
+            preLevel = new BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean.OddsDataBean();
+        }
 
         // 左
         int leftUp = currLevel.getLeftOddsTrend();
@@ -101,16 +113,24 @@ public class IndexOddsItemView extends LinearLayout {
         }
 
         String currLevelMiddle = currLevel.getHandicapValue();
+
+
         String preLevelMiddle = preLevel.getHandicapValue();
         // 转换盘口
         if (BasketOddsTypeEnum.ASIALET.equals(oddsType)) {//亚盘
+            ll_middle.setVisibility(View.VISIBLE);
+
             mNowCenter.setText(HandicapUtils.changeHandicap(currLevelMiddle));
             mDefaultCenter.setText(HandicapUtils.changeHandicap(preLevelMiddle));
         } else if (BasketOddsTypeEnum.ASIASIZE.equals(oddsType)) {//大小
+            ll_middle.setVisibility(View.VISIBLE);
+
             mNowCenter.setText(HandicapUtils.changeHandicapByBigLittleBall(currLevelMiddle));
             mDefaultCenter.setText(HandicapUtils.changeHandicapByBigLittleBall(preLevelMiddle));
         } else if (BasketOddsTypeEnum.EURO.equals(oddsType)) {//欧赔
             //不用转换盘口
+
+            ll_middle.setVisibility(View.GONE);
             mNowCenter.setText(currLevelMiddle);
             mDefaultCenter.setText(preLevelMiddle);
         }
@@ -155,6 +175,9 @@ public class IndexOddsItemView extends LinearLayout {
         mDefaultLeft = (TextView) view.findViewById(R.id.cpi_item_list_home2_txt);
         mDefaultCenter = (TextView) view.findViewById(R.id.cpi_item_list_odds2_txt);
         mDefaultRight = (TextView) view.findViewById(R.id.cpi_item_list_guest2_txt);
+
+        ll_middle = (LinearLayout) view.findViewById(R.id.ll_middle);
+
 
         mDivider = view.findViewById(R.id.divider);
 

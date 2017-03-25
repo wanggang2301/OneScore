@@ -3,6 +3,7 @@ package com.hhly.mlottery.frame.cpifrag.basketballtask.data;
 import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
 import com.hhly.mlottery.bean.basket.index.BasketIndexDetailsBean;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.concurrent.TimeUnit;
@@ -94,6 +95,8 @@ public class HttpMethods {
      * @return
      */
     private String timeZone() {
+        L.d("timeZone", AppConstants.timeZone + "");
+
         return AppConstants.timeZone + "";
     }
 

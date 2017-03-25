@@ -255,10 +255,10 @@ public class BasketIndexBean {
             private String date;
             private String time;
             private int matchStatus;
+            private String remainTime;
             private boolean hot;
             private String matchResult;
             private String matchType;
-            private String remainTime;
 
             private List<MatchOddsBean> matchOdds;
 

@@ -379,25 +379,85 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     private void updateOdds(String thirdId, String oddType, WebBasketOdds5 odd, boolean isSourceData) {
         List<BasketIndexBean.DataBean.AllInfoBean> allInfoBeanList = getDataList(isSourceData);
         if (allInfoBeanList == null) return;
-        for (BasketIndexBean.DataBean.AllInfoBean item : allInfoBeanList) {
+
+        if (oddType.equals(BasketOddsTypeEnum.ASIALET)) {  //亚盘
+            setMatchOdds(thirdId, oddType, allInfoBeanList, odd, isSourceData);
+        } else if (oddType.equals(BasketOddsTypeEnum.ASIASIZE)) { //欧赔
+            // setMatchOdds(allInfoBeanList);
+
+        } else if (oddType.equals(BasketOddsTypeEnum.EURO)) {
+            //setMatchOdds(allInfoBeanList);
+        }
+
+    }
+
+
+    private void setMatchOdds(String thirdId, String oddType, List<BasketIndexBean.DataBean.AllInfoBean> allInfoBeanList, WebBasketOdds5 odd, boolean isSourceData) {
+        for (BasketIndexBean.DataBean.AllInfoBean item : allInfoBeanList) {  //循环赛事
             if (item.getThirdId().equals(thirdId)) {
-                if (oddType.equals(BasketOddsTypeEnum.ASIALET)) {
-
-
-
-
-
-                } else if (oddType.equals(BasketOddsTypeEnum.ASIASIZE)) {
-
-                } else if (oddType.equals(BasketOddsTypeEnum.EURO)) {
-
+                for (BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean m : item.getMatchOdds()) {  //遍历公司赔率
+                    setAsiaLet(m, odd);
                 }
-
-
                 if (!isSourceData) {
                     mBasketIndexAdapter.notifyItemChanged(allInfoBeanList.indexOf(item));
                 }
             }
+        }
+    }
+
+
+    private void setAsiaLet(BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean m, WebBasketOdds5 odd) {
+        switch (m.getComId()) {
+            case "1":
+                if (odd.getMacauslot() != null) {
+                    setOddNowValue(m, odd.getMacauslot().get("leftOdds"), odd.getMacauslot().get("rightOdds"), odd.getMacauslot().get("handicapValue"));
+                }
+                break;
+
+            case "2":
+                if (odd.getEasybets() != null) {
+                    setOddNowValue(m, odd.getEasybets().get("leftOdds"), odd.getEasybets().get("rightOdds"), odd.getEasybets().get("handicapValue"));
+                }
+                break;
+
+            case "3":
+                if (odd.getCrown() != null) {
+                    setOddNowValue(m, odd.getCrown().get("leftOdds"), odd.getCrown().get("rightOdds"), odd.getCrown().get("handicapValue"));
+                }
+                break;
+            case "8":
+                if (odd.getBet365() != null) {
+                    setOddNowValue(m, odd.getBet365().get("leftOdds"), odd.getBet365().get("rightOdds"), odd.getBet365().get("handicapValue"));
+                }
+                break;
+            case "9":
+                if (odd.getVcbet() != null) {
+                    setOddNowValue(m, odd.getVcbet().get("leftOdds"), odd.getVcbet().get("rightOdds"), odd.getVcbet().get("handicapValue"));
+                }
+                break;
+        }
+    }
+
+
+    private void setOddNowValue(BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean m, String left, String right, String handicap) {
+        m.getOddsData().get(0).setLeftOddsTrend(setOddTrend(Float.parseFloat(m.getOddsData().get(0).getLeftOdds()), Float.parseFloat(left)));
+        m.getOddsData().get(0).setLeftOdds(left);
+
+        m.getOddsData().get(0).setLeftOddsTrend(setOddTrend(Float.parseFloat(m.getOddsData().get(0).getRightOdds()), Float.parseFloat(right)));
+        m.getOddsData().get(0).setRightOdds(right);
+
+        m.getOddsData().get(0).setLeftOddsTrend(setOddTrend(Float.parseFloat(m.getOddsData().get(0).getHandicapValue()), Float.parseFloat(handicap)));
+        m.getOddsData().get(0).setHandicapValue(handicap);
+    }
+
+
+    private int setOddTrend(Float pre, Float curr) {
+        if (curr > pre) {
+            return 1;
+        } else if (curr == pre) {
+            return 0;
+        } else {
+            return -1;
         }
     }
 
