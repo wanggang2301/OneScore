@@ -58,6 +58,7 @@ public class SnookerIndexAdapter extends BaseQuickAdapter<SnookerIndexBean.AllIn
         if(mType.equals(SIndexFragment.ODDS_EURO)){
             home.setText(context.getString(R.string.odd_home_op_txt));
             guest.setText(context.getString(R.string.odd_guest_op_txt));
+            handicap.setVisibility(View.GONE);
         }else if(mType.equals(SIndexFragment.ODDS_LET)){ //亚盘
             home.setText(context.getString(R.string.odd_home_op_txt));
             handicap.setText(context.getString(R.string.odd_dish_txt));
@@ -68,6 +69,7 @@ public class SnookerIndexAdapter extends BaseQuickAdapter<SnookerIndexBean.AllIn
             guest.setText(context.getString(R.string.odd_guest_big_txt));
         }else if(mType.equals(SIndexFragment.SINGLE_DOUBLE)){ //单双
             home.setText(context.getString(R.string.number_bjsc_dan));
+            handicap.setVisibility(View.GONE);
             guest.setText(context.getString(R.string.number_bjsc_suang));
         }
 
