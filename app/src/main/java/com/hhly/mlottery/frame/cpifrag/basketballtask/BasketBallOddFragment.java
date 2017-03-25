@@ -381,10 +381,9 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         if (allInfoBeanList == null) return;
 
         if (oddType.equals(BasketOddsTypeEnum.ASIALET)) {  //亚盘
-            setMatchOdds(thirdId, oddType, allInfoBeanList, odd, isSourceData);
+            setMatchAsiaLetOdds(thirdId, oddType, allInfoBeanList, odd, isSourceData);
         } else if (oddType.equals(BasketOddsTypeEnum.ASIASIZE)) { //欧赔
-            // setMatchOdds(allInfoBeanList);
-
+            setMatchAsiaAsizeOdds(thirdId, oddType, allInfoBeanList, odd, isSourceData);
         } else if (oddType.equals(BasketOddsTypeEnum.EURO)) {
             //setMatchOdds(allInfoBeanList);
         }
@@ -392,7 +391,7 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     }
 
 
-    private void setMatchOdds(String thirdId, String oddType, List<BasketIndexBean.DataBean.AllInfoBean> allInfoBeanList, WebBasketOdds5 odd, boolean isSourceData) {
+    private void setMatchAsiaLetOdds(String thirdId, String oddType, List<BasketIndexBean.DataBean.AllInfoBean> allInfoBeanList, WebBasketOdds5 odd, boolean isSourceData) {
         for (BasketIndexBean.DataBean.AllInfoBean item : allInfoBeanList) {  //循环赛事
             if (item.getThirdId().equals(thirdId)) {
                 for (BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean m : item.getMatchOdds()) {  //遍历公司赔率
@@ -404,7 +403,6 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
             }
         }
     }
-
 
     private void setAsiaLet(BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean m, WebBasketOdds5 odd) {
         switch (m.getComId()) {
@@ -437,6 +435,75 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
                 break;
         }
     }
+
+
+    private void setMatchAsiaAsizeOdds(String thirdId, String oddType, List<BasketIndexBean.DataBean.AllInfoBean> allInfoBeanList, WebBasketOdds5 odd, boolean isSourceData) {
+        for (BasketIndexBean.DataBean.AllInfoBean item : allInfoBeanList) {  //循环赛事
+            if (item.getThirdId().equals(thirdId)) {
+                for (BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean m : item.getMatchOdds()) {  //遍历公司赔率
+                    setAsiaSize(m, odd);
+                }
+                if (!isSourceData) {
+                    mBasketIndexAdapter.notifyItemChanged(allInfoBeanList.indexOf(item));
+                }
+            }
+        }
+    }
+
+    private void setAsiaSize(BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean m, WebBasketOdds5 odd) {
+        switch (m.getComId()) {  //大小：macauslot（4），easybets（5），crown（CROWN）（6），bet365（11），vcbet（12）
+            case "4":
+                if (odd.getMacauslot() != null) {
+                    setOddNowValue(m, odd.getMacauslot().get("leftOdds"), odd.getMacauslot().get("rightOdds"), odd.getMacauslot().get("handicapValue"));
+                }
+                break;
+
+            case "5":
+                if (odd.getEasybets() != null) {
+                    setOddNowValue(m, odd.getEasybets().get("leftOdds"), odd.getEasybets().get("rightOdds"), odd.getEasybets().get("handicapValue"));
+                }
+                break;
+
+            case "6":
+                if (odd.getCrown() != null) {
+                    setOddNowValue(m, odd.getCrown().get("leftOdds"), odd.getCrown().get("rightOdds"), odd.getCrown().get("handicapValue"));
+                }
+                break;
+            case "11":
+                if (odd.getBet365() != null) {
+                    setOddNowValue(m, odd.getBet365().get("leftOdds"), odd.getBet365().get("rightOdds"), odd.getBet365().get("handicapValue"));
+                }
+                break;
+            case "12":
+                if (odd.getVcbet() != null) {
+                    setOddNowValue(m, odd.getVcbet().get("leftOdds"), odd.getVcbet().get("rightOdds"), odd.getVcbet().get("handicapValue"));
+                }
+                break;
+        }
+
+
+
+    }
+
+
+
+
+    private void setMatchEuroOdds(String thirdId, String oddType, List<BasketIndexBean.DataBean.AllInfoBean> allInfoBeanList, WebBasketOdds5 odd, boolean isSourceData) {
+        for (BasketIndexBean.DataBean.AllInfoBean item : allInfoBeanList) {  //循环赛事
+            if (item.getThirdId().equals(thirdId)) {
+                for (BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean m : item.getMatchOdds()) {  //遍历公司赔率
+                   // setAsiaLet(m, odd);
+                }
+                if (!isSourceData) {
+                    mBasketIndexAdapter.notifyItemChanged(allInfoBeanList.indexOf(item));
+                }
+            }
+        }
+    }
+
+
+
+
 
 
     private void setOddNowValue(BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean m, String left, String right, String handicap) {
