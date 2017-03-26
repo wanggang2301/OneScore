@@ -516,7 +516,6 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         }
     }
 
-
     private void setOddNowValue(BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean m, String left, String right, String handicap) {
         if (!StringUtils.isEmpty(left) && !StringUtils.isEmpty(right) && !StringUtils.isEmpty(handicap)) {
             if (m.getOddsData() != null && m.getOddsData().size() > 0) {

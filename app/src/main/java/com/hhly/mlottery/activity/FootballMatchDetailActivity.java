@@ -2300,11 +2300,14 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         mMatchTypeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FootballMatchDetailActivity.this, FootballDatabaseDetailsActivity.class);
+                /*Intent intent = new Intent(FootballMatchDetailActivity.this, FootballDatabaseDetailsActivity.class);
                 //  intent.putExtra(LEAGUE, mList.get(position));
                 intent.putExtra("isIntegral", false);
-                startActivity(intent);
+                startActivity(intent);*/
+
+              //  Toast.makeText(getApplicationContext(), "跳转到联赛", Toast.LENGTH_SHORT).show();
             }
+
         });
     }
 
