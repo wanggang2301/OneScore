@@ -13,8 +13,6 @@ public class SIndexPresenter extends BasePresenter<SIndexContract.View>implement
         super(view);
     }
 
-    @Override
-    public void fangfaf() {
 
-    }
+
 }

@@ -12,10 +12,10 @@ import com.hhly.mlottery.mvp.IView;
 public class SIndexContract {
 
     interface View extends IView{
-        void fangfa();
+
     }
 
     interface Presenter extends IPresenter<View>{
-        void fangfaf();
+
     }
 }
