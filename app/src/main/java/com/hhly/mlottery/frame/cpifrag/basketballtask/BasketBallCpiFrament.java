@@ -186,6 +186,11 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
             }
         });
 
+
+        //开启推送
+
+        //connectWebSocket();
+
     }
 
     /**
@@ -246,6 +251,7 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
     @Override
     public void onRefresh() {
         refreshAllChildFragments();
+        connectWebSocket();
     }
 
 
@@ -255,7 +261,6 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
 
     public void setRefreshVisible() {
         cpiRefreshLayout.setRefreshing(true);
-
     }
 
 
