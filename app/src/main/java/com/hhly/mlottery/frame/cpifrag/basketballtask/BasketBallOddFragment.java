@@ -322,11 +322,19 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         List<BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean> matchOddsBeanList = new ArrayList<>();   //每一场比赛的赔率公司
 
         for (BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean matchOddsBean : allInfo.getMatchOdds()) {
+
+            //欧赔特殊处理平均的赔率
+            if ("euro".equals(matchOddsBean.getComId())) {
+                matchOddsBeanList.add(matchOddsBean);
+            }
+
             for (BasketIndexBean.DataBean.CompanyBean companyBean : companyList) {
                 if (companyBean.isChecked() && companyBean.getComId().equals(matchOddsBean.getComId())) {
                     matchOddsBeanList.add(matchOddsBean);
                 }
             }
+
+
         }
 
         //防止对象复用
@@ -484,16 +492,24 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     }
 
 
-    //欧赔逻辑不清楚
+    //欧赔
     private void setMatchEuroOdds(String thirdId, List<BasketIndexBean.DataBean.AllInfoBean> allInfoBeanList, WebBasketOdds5 odd, boolean isSourceData) {
         for (BasketIndexBean.DataBean.AllInfoBean item : allInfoBeanList) {  //循环赛事
             if (item.getThirdId().equals(thirdId)) {
                 for (BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean m : item.getMatchOdds()) {  //遍历公司赔率
-
+                    setEuro(m, odd);
                 }
                 if (!isSourceData) {
                     mBasketIndexAdapter.notifyItemChanged(allInfoBeanList.indexOf(item));
                 }
+            }
+        }
+    }
+
+    private void setEuro(BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean m, WebBasketOdds5 odd) {
+        if ("euro".equals(m.getComId())) {
+            if (odd.getEuro() != null) {
+                setOddNowValue(m, odd.getEuro().get("leftOdds"), odd.getEuro().get("rightOdds"), odd.getEuro().get("handicapValue"));
             }
         }
     }
