@@ -372,9 +372,8 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
 
     public void updatePushOdd(String thirdId, String oddType, WebBasketOdds5 odd) {
-        updateOdds(thirdId, oddType, odd, true);
-        updateOdds(thirdId, oddType, odd, false);
-
+        updateOdds(thirdId, oddType, odd, true);  //更新源数据
+        updateOdds(thirdId, oddType, odd, false); //更新目标数据
     }
 
     private void updateOdds(String thirdId, String oddType, WebBasketOdds5 odd, boolean isSourceData) {
@@ -388,6 +387,7 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
                 setMatchAsiaAsizeOdds(thirdId, allInfoBeanList, odd, isSourceData);
                 break;
             case BasketOddsTypeEnum.EURO:
+                //欧赔暂时逻辑不清楚
 
                 break;
         }
@@ -414,13 +414,11 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
                     setOddNowValue(m, odd.getMacauslot().get("leftOdds"), odd.getMacauslot().get("rightOdds"), odd.getMacauslot().get("handicapValue"));
                 }
                 break;
-
             case "2":
                 if (odd.getEasybets() != null) {
                     setOddNowValue(m, odd.getEasybets().get("leftOdds"), odd.getEasybets().get("rightOdds"), odd.getEasybets().get("handicapValue"));
                 }
                 break;
-
             case "3":
                 if (odd.getCrown() != null) {
                     setOddNowValue(m, odd.getCrown().get("leftOdds"), odd.getCrown().get("rightOdds"), odd.getCrown().get("handicapValue"));
@@ -438,7 +436,6 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
                 break;
         }
     }
-
 
     //大小球
     private void setMatchAsiaAsizeOdds(String thirdId, List<BasketIndexBean.DataBean.AllInfoBean> allInfoBeanList, WebBasketOdds5 odd, boolean isSourceData) {
@@ -461,13 +458,11 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
                     setOddNowValue(m, odd.getMacauslot().get("leftOdds"), odd.getMacauslot().get("rightOdds"), odd.getMacauslot().get("handicapValue"));
                 }
                 break;
-
             case "5":
                 if (odd.getEasybets() != null) {
                     setOddNowValue(m, odd.getEasybets().get("leftOdds"), odd.getEasybets().get("rightOdds"), odd.getEasybets().get("handicapValue"));
                 }
                 break;
-
             case "6":
                 if (odd.getCrown() != null) {
                     setOddNowValue(m, odd.getCrown().get("leftOdds"), odd.getCrown().get("rightOdds"), odd.getCrown().get("handicapValue"));
