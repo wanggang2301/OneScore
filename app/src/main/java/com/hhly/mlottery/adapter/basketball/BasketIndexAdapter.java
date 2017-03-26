@@ -3,6 +3,8 @@ package com.hhly.mlottery.adapter.basketball;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -51,10 +53,6 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
     }
 
 
-    /* public BasketIndexAdapter(Context context) {
-        list = new ArrayList<>();
-    }*/
-
     @Override
     protected void convert(BaseViewHolder baseViewHolder, final BasketIndexBean.DataBean.AllInfoBean allInfoBean) {
         baseViewHolder.setText(R.id.cpi_item_leagueName_txt, allInfoBean.getLeagueName());
@@ -65,12 +63,15 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
 
         if (allInfoBean.getRemainTime() == null) {
             baseViewHolder.setText(R.id.cpi_item_remainTime_txt, "");
+            baseViewHolder.setText(R.id.cpi_item_seconds_txt, "");
         } else {
             baseViewHolder.setText(R.id.cpi_item_remainTime_txt, allInfoBean.getRemainTime());
+            baseViewHolder.setText(R.id.cpi_item_seconds_txt, "'");
         }
 
         baseViewHolder.setText(R.id.cpi_score_txt, allInfoBean.getMatchResult());
 
+        setSecondAnim(baseViewHolder.getView(R.id.cpi_item_seconds_txt));
         //allInfoBean.getMatchStatus()
 
         //0:未开赛,1:一节,2:二节,5:1'OT，以此类推 -1:完场,-2:待定,-3:中断,-4:取消,-5:推迟,50中场
@@ -284,12 +285,48 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
                 holder.setText(R.id.cpi_item_guest_txt, mContext.getString(R.string.foot_odds_eu_right));
                 break;
         }
+    }
+
+    /**
+     * 设置分钟动画效果
+     */
+
+    private void setSecondAnim(final View view) {
+        final AlphaAnimation hideAnim = new AlphaAnimation(0, 0);
+        hideAnim.setDuration(500);
+        final AlphaAnimation showAnim = new AlphaAnimation(1, 1);
+        showAnim.setDuration(500);
+        hideAnim.setAnimationListener(new AnimationListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                view.startAnimation(showAnim);
+            }
+        });
+        showAnim.setAnimationListener(new AnimationListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                view.startAnimation(hideAnim);
+            }
+        });
+        view.startAnimation(hideAnim);
+    }
 
 
-        //item_index_basket
+    abstract class AnimationListenerAdapter implements Animation.AnimationListener {
 
-   /* public void addAll(List<BasketIndexBean.DataBean.AllInfoBean> infoBean) {
-        list.addAll(infoBean);
-    }*/
+        @Override
+        public void onAnimationStart(Animation animation) {
+
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+
+        }
     }
 }
