@@ -380,15 +380,17 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     private void updateOdds(String thirdId, String oddType, WebBasketOdds5 odd, boolean isSourceData) {
         List<BasketIndexBean.DataBean.AllInfoBean> allInfoBeanList = getDataList(isSourceData);
         if (allInfoBeanList == null) return;
+        switch (oddType) {
+            case BasketOddsTypeEnum.ASIALET:
+                setMatchAsiaLetOdds(thirdId, allInfoBeanList, odd, isSourceData);
+                break;
+            case BasketOddsTypeEnum.ASIASIZE:
+                setMatchAsiaAsizeOdds(thirdId, allInfoBeanList, odd, isSourceData);
+                break;
+            case BasketOddsTypeEnum.EURO:
 
-        if (oddType.equals(BasketOddsTypeEnum.ASIALET)) {  //亚盘
-            setMatchAsiaLetOdds(thirdId, allInfoBeanList, odd, isSourceData);
-        } else if (oddType.equals(BasketOddsTypeEnum.ASIASIZE)) { //欧赔
-            setMatchAsiaAsizeOdds(thirdId, allInfoBeanList, odd, isSourceData);
-        } else if (oddType.equals(BasketOddsTypeEnum.EURO)) {
-            //setMatchOdds(allInfoBeanList);
+                break;
         }
-
     }
 
     //亚盘
