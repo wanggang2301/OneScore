@@ -26,6 +26,7 @@ import com.hhly.mlottery.bean.websocket.WebBasketOdds5;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -381,17 +382,17 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         if (allInfoBeanList == null) return;
 
         if (oddType.equals(BasketOddsTypeEnum.ASIALET)) {  //亚盘
-            setMatchAsiaLetOdds(thirdId, oddType, allInfoBeanList, odd, isSourceData);
+            setMatchAsiaLetOdds(thirdId, allInfoBeanList, odd, isSourceData);
         } else if (oddType.equals(BasketOddsTypeEnum.ASIASIZE)) { //欧赔
-            setMatchAsiaAsizeOdds(thirdId, oddType, allInfoBeanList, odd, isSourceData);
+            setMatchAsiaAsizeOdds(thirdId, allInfoBeanList, odd, isSourceData);
         } else if (oddType.equals(BasketOddsTypeEnum.EURO)) {
             //setMatchOdds(allInfoBeanList);
         }
 
     }
 
-
-    private void setMatchAsiaLetOdds(String thirdId, String oddType, List<BasketIndexBean.DataBean.AllInfoBean> allInfoBeanList, WebBasketOdds5 odd, boolean isSourceData) {
+    //亚盘
+    private void setMatchAsiaLetOdds(String thirdId, List<BasketIndexBean.DataBean.AllInfoBean> allInfoBeanList, WebBasketOdds5 odd, boolean isSourceData) {
         for (BasketIndexBean.DataBean.AllInfoBean item : allInfoBeanList) {  //循环赛事
             if (item.getThirdId().equals(thirdId)) {
                 for (BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean m : item.getMatchOdds()) {  //遍历公司赔率
@@ -405,7 +406,7 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     }
 
     private void setAsiaLet(BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean m, WebBasketOdds5 odd) {
-        switch (m.getComId()) {
+        switch (m.getComId()) {  //macauslot（1），easybets（2），crown（CROWN）（3），bet365（8），vcbet（9）
             case "1":
                 if (odd.getMacauslot() != null) {
                     setOddNowValue(m, odd.getMacauslot().get("leftOdds"), odd.getMacauslot().get("rightOdds"), odd.getMacauslot().get("handicapValue"));
@@ -437,7 +438,8 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     }
 
 
-    private void setMatchAsiaAsizeOdds(String thirdId, String oddType, List<BasketIndexBean.DataBean.AllInfoBean> allInfoBeanList, WebBasketOdds5 odd, boolean isSourceData) {
+    //大小球
+    private void setMatchAsiaAsizeOdds(String thirdId, List<BasketIndexBean.DataBean.AllInfoBean> allInfoBeanList, WebBasketOdds5 odd, boolean isSourceData) {
         for (BasketIndexBean.DataBean.AllInfoBean item : allInfoBeanList) {  //循环赛事
             if (item.getThirdId().equals(thirdId)) {
                 for (BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean m : item.getMatchOdds()) {  //遍历公司赔率
@@ -482,17 +484,15 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         }
 
 
-
     }
 
 
-
-
-    private void setMatchEuroOdds(String thirdId, String oddType, List<BasketIndexBean.DataBean.AllInfoBean> allInfoBeanList, WebBasketOdds5 odd, boolean isSourceData) {
+    //欧赔逻辑不清楚
+    private void setMatchEuroOdds(String thirdId, List<BasketIndexBean.DataBean.AllInfoBean> allInfoBeanList, WebBasketOdds5 odd, boolean isSourceData) {
         for (BasketIndexBean.DataBean.AllInfoBean item : allInfoBeanList) {  //循环赛事
             if (item.getThirdId().equals(thirdId)) {
                 for (BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean m : item.getMatchOdds()) {  //遍历公司赔率
-                   // setAsiaLet(m, odd);
+
                 }
                 if (!isSourceData) {
                     mBasketIndexAdapter.notifyItemChanged(allInfoBeanList.indexOf(item));
@@ -502,19 +502,20 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     }
 
 
-
-
-
-
     private void setOddNowValue(BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean m, String left, String right, String handicap) {
-        m.getOddsData().get(0).setLeftOddsTrend(setOddTrend(Float.parseFloat(m.getOddsData().get(0).getLeftOdds()), Float.parseFloat(left)));
-        m.getOddsData().get(0).setLeftOdds(left);
+        if (!StringUtils.isEmpty(left) && !StringUtils.isEmpty(right) && !StringUtils.isEmpty(handicap)) {
+            if (m.getOddsData() != null && m.getOddsData().size() > 0) {
 
-        m.getOddsData().get(0).setLeftOddsTrend(setOddTrend(Float.parseFloat(m.getOddsData().get(0).getRightOdds()), Float.parseFloat(right)));
-        m.getOddsData().get(0).setRightOdds(right);
+                m.getOddsData().get(0).setLeftOddsTrend(setOddTrend(Float.parseFloat(m.getOddsData().get(0).getLeftOdds()), Float.parseFloat(left)));
+                m.getOddsData().get(0).setLeftOdds(left);
 
-        m.getOddsData().get(0).setLeftOddsTrend(setOddTrend(Float.parseFloat(m.getOddsData().get(0).getHandicapValue()), Float.parseFloat(handicap)));
-        m.getOddsData().get(0).setHandicapValue(handicap);
+                m.getOddsData().get(0).setLeftOddsTrend(setOddTrend(Float.parseFloat(m.getOddsData().get(0).getRightOdds()), Float.parseFloat(right)));
+                m.getOddsData().get(0).setRightOdds(right);
+
+                m.getOddsData().get(0).setLeftOddsTrend(setOddTrend(Float.parseFloat(m.getOddsData().get(0).getHandicapValue()), Float.parseFloat(handicap)));
+                m.getOddsData().get(0).setHandicapValue(handicap);
+            }
+        }
     }
 
 
@@ -530,7 +531,6 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
 
     private List<BasketIndexBean.DataBean.AllInfoBean> getDataList(boolean isSourceData) {
-
         return isSourceData ? sourceDataList : destinationDataList;
     }
 
