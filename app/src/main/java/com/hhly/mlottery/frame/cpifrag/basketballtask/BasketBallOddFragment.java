@@ -46,6 +46,8 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
     private static final String ODD_TYPE = "ODD_TYPE";
 
+    private static final String EURO_AVERAGE = "euro";  //欧赔平均
+
     //默认公司筛选选中头两家公司
     private static final int DEFAULT_SELECTED_COMPANY = 2;
 
@@ -324,7 +326,7 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         for (BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean matchOddsBean : allInfo.getMatchOdds()) {
 
             //欧赔特殊处理平均的赔率
-            if ("euro".equals(matchOddsBean.getComId())) {
+            if (EURO_AVERAGE.equals(matchOddsBean.getComId())) {
                 matchOddsBeanList.add(matchOddsBean);
             }
 
@@ -507,7 +509,7 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     }
 
     private void setEuro(BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean m, WebBasketOdds5 odd) {
-        if ("euro".equals(m.getComId())) {
+        if (EURO_AVERAGE.equals(m.getComId())) {
             if (odd.getEuro() != null) {
                 setOddNowValue(m, odd.getEuro().get("leftOdds"), odd.getEuro().get("rightOdds"), odd.getEuro().get("handicapValue"));
             }
