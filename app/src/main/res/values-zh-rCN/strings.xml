@@ -1617,6 +1617,6 @@
     <string name="football_odds_return_list">返回列表</string>
     <string name="home_gender">性别</string>
     <string name="tennis_setting_title">网球设置</string>
-
+    <string name="tennis_datails_record_title">对手</string>
 
 </resources>

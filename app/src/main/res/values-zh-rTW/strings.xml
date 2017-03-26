@@ -1600,6 +1600,7 @@
     <string name="football_rfypl">讓分贏盤率</string>
     <string name="football_odds_return_list">返回列表</string>
     <string name="tennis_setting_title">網球設置</string>
+    <string name="tennis_datails_record_title">對手</string>
 
     <string name="home_gender">性别</string>
 </resources>

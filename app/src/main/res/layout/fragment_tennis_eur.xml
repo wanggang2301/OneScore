@@ -2,12 +2,63 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hhly.mlottery.frame.tennisfrag.datailsfrag.TennisEurFrag">
+    android:background="@color/linecolor"
+    tools:context="com.hhly.mlottery.frame.tennisfrag.datailsfrag.TennisPlateFrag">
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/tennis_datails_eur_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="欧赔" />
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.8"
+                android:gravity="center"
+                android:text="@string/basket_company"
+                android:textColor="@color/res_name_color"
+                android:textSize="@dimen/number_title" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5"
+                android:gravity="center"
+                android:text="@string/odd_home_op_txt"
+                android:textColor="@color/res_name_color"
+                android:textSize="@dimen/number_title" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5"
+                android:gravity="center"
+                android:text="@string/odd_guest_op_txt"
+                android:textColor="@color/res_name_color"
+                android:textSize="@dimen/number_title" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/tennis_datails_eur_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <include layout="@layout/network_exception" />
 
 </FrameLayout>

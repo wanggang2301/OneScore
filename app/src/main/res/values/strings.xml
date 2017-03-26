@@ -1635,5 +1635,6 @@
     <string name="tennis_setting_title">网球设置</string>
     <string name="tennis_datails_title_fight">交手记录</string>
     <string name="tennis_datails_title_data">数据对比</string>
+    <string name="tennis_datails_record_title">对手</string>
 
 </resources>

@@ -28,7 +28,7 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
     private final String TAG = "TennisBallDetailsActivity";
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private ExactSwipeRefreshLayout refreshLayout;
+    public ExactSwipeRefreshLayout refreshLayout;
     private TabsAdapter tabsAdapter;
     private String mThirdId;
 
