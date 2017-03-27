@@ -2312,6 +2312,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     }
 
 
+
     private void initPreData(MatchDetail mMatchDetail) {
 
         // if (flag) {
