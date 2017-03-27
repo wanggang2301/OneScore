@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -165,11 +167,9 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
     @Override
     public void showLoadView() {
-        parentFragment.setRefreshVisible();
-        cpiOddsRecyclerView.setVisibility(View.GONE);
-        cpiRightFlPlateNetworkError.setVisibility(View.GONE);
-        cpiRightFlPlateNoData.setVisibility(View.GONE);
 
+
+        mHandler.sendEmptyMessage(0);
         L.d(TAG, "加载中_____________");
 
     }
@@ -189,7 +189,6 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         sourceDataList.clear();
         sourceDataList.addAll(b.getData().getAllInfo());
 
-        parentFragment.showRightButton();
 
         //处理公司数据  请求到数据成功后已经将需要默认选择的公司数据处理好了
         handleCompanyData(b.getData().getCompany());
@@ -197,12 +196,51 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         refreshDateView(b.getData().getCurrDate());
         updateFilterData();
 
-        cpiOddsRecyclerView.setVisibility(View.VISIBLE);
-        cpiRightFlPlateNetworkError.setVisibility(View.GONE);
-        cpiRightFlPlateNoData.setVisibility(View.GONE);
-        parentFragment.setRefreshHide();
+        parentFragment.showRightButton();
+
+        mHandler.sendEmptyMessage(1);
 
     }
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    parentFragment.setRefreshVisible();
+                    cpiOddsRecyclerView.setVisibility(View.GONE);
+                    cpiRightFlPlateNetworkError.setVisibility(View.GONE);
+                    cpiRightFlPlateNoData.setVisibility(View.GONE);
+                    break;
+
+                case 1:
+                    cpiOddsRecyclerView.setVisibility(View.VISIBLE);
+                    cpiRightFlPlateNetworkError.setVisibility(View.GONE);
+                    cpiRightFlPlateNoData.setVisibility(View.GONE);
+                    parentFragment.setRefreshHide();
+                    break;
+
+                case 2:
+                    parentFragment.setRefreshHide();
+                    cpiOddsRecyclerView.setVisibility(View.GONE);
+                    cpiRightFlPlateNetworkError.setVisibility(View.GONE);
+                    cpiRightFlPlateNoData.setVisibility(View.VISIBLE);
+                    break;
+
+                case -1:
+                    parentFragment.setRefreshHide();
+                    cpiOddsRecyclerView.setVisibility(View.GONE);
+                    cpiRightFlPlateNetworkError.setVisibility(View.VISIBLE);
+                    cpiRightFlPlateNoData.setVisibility(View.GONE);
+                    break;
+
+
+                default:
+                    break;
+            }
+
+        }
+    };
 
     /**
      * 日期切换刷新数据
@@ -230,22 +268,16 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     public void noData() {
 
         L.d(TAG, "没有数据_____________");
+        mHandler.sendEmptyMessage(2);
 
-        parentFragment.setRefreshHide();
-        cpiOddsRecyclerView.setVisibility(View.GONE);
-        cpiRightFlPlateNetworkError.setVisibility(View.GONE);
-        cpiRightFlPlateNoData.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onError() {
         Toast.makeText(mActivity, "出错", Toast.LENGTH_SHORT).show();
         L.d(TAG, "请求出错_____________");
+        mHandler.sendEmptyMessage(-1);
 
-        parentFragment.setRefreshHide();
-        cpiOddsRecyclerView.setVisibility(View.GONE);
-        cpiRightFlPlateNetworkError.setVisibility(View.VISIBLE);
-        cpiRightFlPlateNoData.setVisibility(View.GONE);
     }
 
     private void handleCompanyData(List<BasketIndexBean.DataBean.CompanyBean> currList) {

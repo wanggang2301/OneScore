@@ -189,7 +189,7 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
 
         //开启推送
 
-        //connectWebSocket();
+        connectWebSocket();
 
     }
 

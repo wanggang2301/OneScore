@@ -41,6 +41,7 @@ import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MathchStatisInfo;
 import com.hhly.mlottery.bean.footballDetails.PreLiveText;
+import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
 import com.hhly.mlottery.bean.multiplebean.MultipleByValueBean;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumKeepTime;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumLiveTextEvent;
@@ -2300,18 +2301,23 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         mMatchTypeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent(FootballMatchDetailActivity.this, FootballDatabaseDetailsActivity.class);
-                //  intent.putExtra(LEAGUE, mList.get(position));
+
+              /*  private String kind;       //联赛类型
+                private String leagueId;    // 联赛id
+                private String lgName;     //联赛名
+                private String pic;      //联赛图标
+                private String lgId;     //背景图片*/
+
+                Intent intent = new Intent(FootballMatchDetailActivity.this, FootballDatabaseDetailsActivity.class);
+                intent.putExtra("league", new DataBaseBean());
                 intent.putExtra("isIntegral", false);
-                startActivity(intent);*/
+                startActivity(intent);
 
               //  Toast.makeText(getApplicationContext(), "跳转到联赛", Toast.LENGTH_SHORT).show();
             }
 
         });
     }
-
-
 
     private void initPreData(MatchDetail mMatchDetail) {
 
