@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.FragmentUtils;
+import com.tendcloud.tenddata.TCAgent;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class BaseActivity extends FragmentActivity {
      *
      * @param containerId
      */
-    protected void  setContainer(int containerId) {
+    protected void setContainer(int containerId) {
         this.containerId = containerId;
     }
 
@@ -130,17 +131,15 @@ public class BaseActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (AppConstants.isUploadCrash) {
-            MobclickAgent.onResume(this);
-        }
+        MobclickAgent.onResume(this);
+        TCAgent.onPageStart(this, getClass().getSimpleName());
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (AppConstants.isUploadCrash) {
-            MobclickAgent.onPause(this);
-        }
+        MobclickAgent.onPause(this);
+        TCAgent.onPageEnd(this, getClass().getSimpleName());
     }
 
     @Override
