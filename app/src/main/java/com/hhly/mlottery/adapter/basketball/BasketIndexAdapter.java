@@ -2,6 +2,7 @@ package com.hhly.mlottery.adapter.basketball;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -61,11 +62,12 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
         baseViewHolder.setText(R.id.cpi_host_team_txt, allInfoBean.getHomeTeam());
         baseViewHolder.setText(R.id.cpi_guest_team_txt, allInfoBean.getGuestTeam());
 
-        if (allInfoBean.getRemainTime() == null) {
+
+        if (TextUtils.isEmpty(allInfoBean.getRemainTime().toString()) || allInfoBean.getRemainTime().toString().equals("")) {
             baseViewHolder.setText(R.id.cpi_item_remainTime_txt, "");
             baseViewHolder.setText(R.id.cpi_item_seconds_txt, "");
         } else {
-            baseViewHolder.setText(R.id.cpi_item_remainTime_txt, allInfoBean.getRemainTime());
+            baseViewHolder.setText(R.id.cpi_item_remainTime_txt, allInfoBean.getRemainTime().toString());
             baseViewHolder.setText(R.id.cpi_item_seconds_txt, "'");
         }
 
@@ -86,7 +88,7 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
          *
          */
 
-        int section = 0;
+        // int section = 0;
 
         String statusTxt = "";
 
@@ -98,7 +100,7 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
                 statusTxt = mContext.getResources().getString(R.string.tennis_match_not_start);
                 break;
             case 1:
-                if (section == 2) {
+                if (allInfoBean.getSection() == 2) {
                     statusTxt = "1st half";
                 } else {
                     statusTxt = "1st";
@@ -108,7 +110,7 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
 
                 break;
             case 2:
-                if (section == 2) {
+                if (allInfoBean.getSection() == 2) {
                     statusTxt = "1st half";
                 } else {
                     statusTxt = "2nd";
@@ -119,7 +121,7 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
                 break;
 
             case 3:
-                if (section == 2) {
+                if (allInfoBean.getSection() == 2) {
                     statusTxt = "2nd half";
                 } else {
                     statusTxt = "2rd";
@@ -131,7 +133,7 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
 
                 break;
             case 4:
-                if (section == 2) {
+                if (allInfoBean.getSection() == 2) {
                     statusTxt = "2nd half";
                 } else {
                     statusTxt = "4th";

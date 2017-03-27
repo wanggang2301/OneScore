@@ -78,13 +78,13 @@ public class BaseURLs {
                 return "m.th.1332255.com:81";
             } else if (url_config == DebugConfigActivity.VN_1332255) {
                 return "m.vn.1332255.com:81";
-            }else if (url_config == DebugConfigActivity.ZH_13322) {
+            } else if (url_config == DebugConfigActivity.ZH_13322) {
                 return "m.13322.com";
-            }else if (url_config == DebugConfigActivity.TH_13322) {
+            } else if (url_config == DebugConfigActivity.TH_13322) {
                 return "m.th.13322.com";
-            }else if (url_config == DebugConfigActivity.VN_13322) {
+            } else if (url_config == DebugConfigActivity.VN_13322) {
                 return "m.vn.13322.com";
-            }else if (url_config == DebugConfigActivity.VN_13366) {
+            } else if (url_config == DebugConfigActivity.VN_13366) {
                 return "m.13366.com";
             } else if (url_config == DebugConfigActivity.DIY_INPUT) {
                 return PreferenceUtil.getString("DIY_INPUT", "m.1332255.com:81");
@@ -106,15 +106,15 @@ public class BaseURLs {
                 return "m.1332255.com:81/ws";
             } else if (ws_config == DebugConfigActivity.WS_1332255_TH) {
                 return "m.th.1332255.com:81/ws";
-            }else if (ws_config == DebugConfigActivity.WS_1332255_VN) {
+            } else if (ws_config == DebugConfigActivity.WS_1332255_VN) {
                 return "m.vn.1332255.com:81/ws";
-            }else if (ws_config == DebugConfigActivity.WS_13322_ZH) {
+            } else if (ws_config == DebugConfigActivity.WS_13322_ZH) {
                 return "m.13322.com/ws";
             } else if (ws_config == DebugConfigActivity.WS_13322_TH) {
                 return "m.th.13322.com/ws";
-            }else if (ws_config == DebugConfigActivity.WS_13322_VN) {
+            } else if (ws_config == DebugConfigActivity.WS_13322_VN) {
                 return "m.vn.13322.com/ws";
-            }else if (ws_config == DebugConfigActivity.WS_13366_VN) {
+            } else if (ws_config == DebugConfigActivity.WS_13366_VN) {
                 return "m.13366.com/ws";
             } else if (ws_config == DebugConfigActivity.DIY_INPUT) {
                 return "m.1332255.com:81/ws";// 自定义
@@ -167,6 +167,9 @@ public class BaseURLs {
 
     public final static String LANGUAGE_PARAM = "lang";
     public final static String TIMEZONE_PARAM = "timeZone";
+
+
+    public final static String URL_MVP_API_HOST = HTTP + HOST + URL_SPLITTER;
 
     /**
      * 繁体
@@ -989,9 +992,9 @@ public class BaseURLs {
     public final static String SNOOKER_LIST_LOADMORE_URL = URL_API_HOST + "snookerMatch.getSnookerLeagues.do"; // http://m.1332255.com:81/mlottery/core/snookerMatch.getSnookerLeagues.do?dateLeaguesId=2016-11-20_125358,2016-11-19_125358
 
     //斯诺克头部跟分析页
-    public final static String SNOOKER_ANALYZE_URL=URL_API_HOST+"snookerAnalysis.findAnalysisInfo.do";
+    public final static String SNOOKER_ANALYZE_URL = URL_API_HOST + "snookerAnalysis.findAnalysisInfo.do";
     //斯诺克亚盘界面
-    public final static String SNOOKER_ODDS_URL=URL_API_HOST+"snookerOdds.getSnookerOddsByMatchId.do";
+    public final static String SNOOKER_ODDS_URL = URL_API_HOST + "snookerOdds.getSnookerOddsByMatchId.do";
     /**
      * 斯洛克 新版
      */

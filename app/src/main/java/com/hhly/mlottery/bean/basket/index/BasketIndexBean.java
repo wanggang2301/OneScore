@@ -14,6 +14,7 @@ import java.util.List;
 
 public class BasketIndexBean {
 
+
     private int result;
     private DataBean data;
 
@@ -82,7 +83,6 @@ public class BasketIndexBean {
         }
 
         public static class FileterTagsBean implements Parcelable {
-
 
             private String leagueId;
             private boolean hot;
@@ -181,6 +181,7 @@ public class BasketIndexBean {
 
         public static class CompanyBean implements Parcelable {
 
+
             private String comId;
             private String comName;
             private boolean isChecked;
@@ -259,6 +260,15 @@ public class BasketIndexBean {
             private boolean hot;
             private String matchResult;
             private String matchType;
+            private int section;
+
+            public int getSection() {
+                return section;
+            }
+
+            public void setSection(int section) {
+                this.section = section;
+            }
 
             private List<MatchOddsBean> matchOdds;
 
@@ -268,15 +278,6 @@ public class BasketIndexBean {
 
             public void setRemainTime(String remainTime) {
                 this.remainTime = remainTime;
-            }
-
-
-            public String getMatchType() {
-                return matchType;
-            }
-
-            public void setMatchType(String matchType) {
-                this.matchType = matchType;
             }
 
 
@@ -352,6 +353,7 @@ public class BasketIndexBean {
                 this.matchStatus = matchStatus;
             }
 
+
             public boolean isHot() {
                 return hot;
             }
@@ -368,6 +370,14 @@ public class BasketIndexBean {
                 this.matchResult = matchResult;
             }
 
+            public String getMatchType() {
+                return matchType;
+            }
+
+            public void setMatchType(String matchType) {
+                this.matchType = matchType;
+            }
+
             public List<MatchOddsBean> getMatchOdds() {
                 return matchOdds;
             }
@@ -377,6 +387,7 @@ public class BasketIndexBean {
             }
 
             public static class MatchOddsBean {
+
 
                 private String oddsId;
                 private String comName;
@@ -417,7 +428,8 @@ public class BasketIndexBean {
 
                 public static class OddsDataBean {
 
-                    private String updateTime;
+
+                    private Object updateTime;
                     private String leftOdds;
                     private int leftOddsTrend;
                     private String rightOdds;
@@ -425,11 +437,11 @@ public class BasketIndexBean {
                     private String handicapValue;
                     private int handicapValueTrend;
 
-                    public String getUpdateTime() {
+                    public Object getUpdateTime() {
                         return updateTime;
                     }
 
-                    public void setUpdateTime(String updateTime) {
+                    public void setUpdateTime(Object updateTime) {
                         this.updateTime = updateTime;
                     }
 

@@ -351,8 +351,10 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         allInfoBean.setDate(allInfo.getDate());
         allInfoBean.setTime(allInfo.getTime());
         allInfoBean.setMatchStatus(allInfo.getMatchStatus());
+        allInfoBean.setRemainTime(allInfo.getRemainTime());
         allInfoBean.setHot(allInfo.isHot());
         allInfoBean.setMatchResult(allInfo.getMatchResult());
+        allInfoBean.setSection(allInfo.getSection());
 
         destinationDataList.add(allInfoBean);
     }

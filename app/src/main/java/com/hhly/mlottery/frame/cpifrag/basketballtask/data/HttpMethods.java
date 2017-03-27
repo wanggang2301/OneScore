@@ -2,6 +2,7 @@ package com.hhly.mlottery.frame.cpifrag.basketballtask.data;
 
 import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
 import com.hhly.mlottery.bean.basket.index.BasketIndexDetailsBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -25,7 +26,8 @@ import rx.schedulers.Schedulers;
 
 public class HttpMethods {
 
-    private static final String ENDPOINT = "http://m.1332255.com:81/";
+    // private static final String ENDPOINT = "http://m.1332255.com:81/";
+    private static final String ENDPOINT = BaseURLs.URL_MVP_API_HOST;
 
     private static final int DEFAULT_TIMEOUT = 5;
 
