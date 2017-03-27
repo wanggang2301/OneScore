@@ -63,16 +63,15 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
         baseViewHolder.setText(R.id.cpi_guest_team_txt, allInfoBean.getGuestTeam());
 
 
-        if (TextUtils.isEmpty(allInfoBean.getRemainTime().toString()) || allInfoBean.getRemainTime().toString().equals("")) {
+        if (TextUtils.isEmpty(allInfoBean.getRemainTime()) || allInfoBean.getRemainTime().equals("")) {
             baseViewHolder.setText(R.id.cpi_item_remainTime_txt, "");
             baseViewHolder.setText(R.id.cpi_item_seconds_txt, "");
         } else {
-            baseViewHolder.setText(R.id.cpi_item_remainTime_txt, allInfoBean.getRemainTime().toString());
+            baseViewHolder.setText(R.id.cpi_item_remainTime_txt, allInfoBean.getRemainTime());
             baseViewHolder.setText(R.id.cpi_item_seconds_txt, "'");
         }
 
         baseViewHolder.setText(R.id.cpi_score_txt, allInfoBean.getMatchResult());
-
         setSecondAnim(baseViewHolder.getView(R.id.cpi_item_seconds_txt));
         //allInfoBean.getMatchStatus()
 
