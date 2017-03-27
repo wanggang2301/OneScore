@@ -27,6 +27,9 @@ import java.util.List;
 
 public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBean.AllInfoBean> {
 
+    private static final String EURO_AVERAGE = "euro";  //欧赔平均
+
+
     private List<BasketIndexBean.DataBean.AllInfoBean> list;
 
     private Context mContext;
@@ -234,13 +237,15 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
         for (final BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean item : comList) {
             indexOddsItemView = new IndexOddsItemView(mContext);
             indexOddsItemView.bindData(item, type);
-            if (onOddIetmClickListener != null) {
-                indexOddsItemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onOddIetmClickListener.onOddItemCLick(allInfoBean.getThirdId(), item.getComId());
-                    }
-                });
+            if (!item.getComId().equals(EURO_AVERAGE)) {
+                if (onOddIetmClickListener != null) {
+                    indexOddsItemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            onOddIetmClickListener.onOddItemCLick(allInfoBean.getThirdId(), item.getComId());
+                        }
+                    });
+                }
             }
             container.addView(indexOddsItemView);
         }
