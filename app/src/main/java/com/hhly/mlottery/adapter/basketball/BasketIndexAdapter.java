@@ -62,8 +62,10 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
         baseViewHolder.setText(R.id.cpi_item_leagueName_txt, allInfoBean.getLeagueName());
         baseViewHolder.setTextColor(R.id.cpi_item_leagueName_txt, Color.parseColor(allInfoBean.getLeagueColor()));
         baseViewHolder.setText(R.id.cpi_item_time_txt, allInfoBean.getTime());
-        baseViewHolder.setText(R.id.cpi_host_team_txt, allInfoBean.getHomeTeam());
-        baseViewHolder.setText(R.id.cpi_guest_team_txt, allInfoBean.getGuestTeam());
+
+        //篮球客队在前主队在后
+        baseViewHolder.setText(R.id.cpi_host_team_txt, allInfoBean.getGuestTeam());
+        baseViewHolder.setText(R.id.cpi_guest_team_txt, allInfoBean.getHomeTeam());
 
 
         if (TextUtils.isEmpty(allInfoBean.getRemainTime()) || allInfoBean.getRemainTime().equals("")) {
