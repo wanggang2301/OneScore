@@ -43,6 +43,15 @@ public class MatchDetail implements Parcelable {
 
     private TeamInfo guestTeamInfo;
 
+    private Integer leagueType;
+
+    public Integer getLeagueType() {
+        return leagueType;
+    }
+
+    public void setLeagueType(Integer leagueType) {
+        this.leagueType = leagueType;
+    }
 
     public String getResult() {
         return result;
@@ -118,6 +127,7 @@ public class MatchDetail implements Parcelable {
     public MatchDetail(Parcel in) {
         result = in.readString();
         leagueId = in.readInt();
+        leagueType = in.readInt();
         matchType1 = in.readString();
         matchType2 = in.readString();
         matchStatus = in.readString();
@@ -150,6 +160,7 @@ public class MatchDetail implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(result);
         dest.writeInt(leagueId);
+        dest.writeInt(leagueType);
         dest.writeString(matchType1);
         dest.writeString(matchType2);
         dest.writeString(matchStatus);

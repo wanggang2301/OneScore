@@ -2301,19 +2301,18 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         mMatchTypeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-              /*  private String kind;       //联赛类型
-                private String leagueId;    // 联赛id
-                private String lgName;     //联赛名
-                private String pic;      //联赛图标
-                private String lgId;     //背景图片*/
+                /**
+                 public DataBaseBean(String kind, String leagueId, String pic, String lgName) {
+                 this.kind = kind;
+                 this.leagueId = leagueId;
+                 this.pic = pic;
+                 this.lgName = lgName;}
+                 */
 
                 Intent intent = new Intent(FootballMatchDetailActivity.this, FootballDatabaseDetailsActivity.class);
-                intent.putExtra("league", new DataBaseBean());
+                intent.putExtra("league", new DataBaseBean(mMatchDetail.getLeagueType() + "", mMatchDetail.getLeagueId() + "", "", ""));
                 intent.putExtra("isIntegral", false);
                 startActivity(intent);
-
-              //  Toast.makeText(getApplicationContext(), "跳转到联赛", Toast.LENGTH_SHORT).show();
             }
 
         });
