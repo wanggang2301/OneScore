@@ -41,6 +41,7 @@ import com.hhly.mlottery.frame.oddfragment.basketoddframent.BasketCompanyChooseD
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
@@ -188,7 +189,6 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
 
 
         //开启推送
-
         connectWebSocket();
 
     }
@@ -472,6 +472,8 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
 
     @Override
     protected void onTextResult(final String text) {
+        L.d("pushtext","____"+text);
+
         tabs.post(new Runnable() {
             @Override
             public void run() {

@@ -512,7 +512,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 JSONObject jo = JSON.parseObject(jsonString);
 
                 int ret = jo.getIntValue("ret");
-                System.out.println("json=" + String.valueOf(jo));
                 if (ret == 0) {
                     String openID = jo.getString("openid");
                     String accessToken = jo.getString("access_token");

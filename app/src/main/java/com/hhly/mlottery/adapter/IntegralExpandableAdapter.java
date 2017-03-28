@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.IntegralBean;
 import com.hhly.mlottery.util.ImageLoader;
@@ -127,7 +126,6 @@ public class IntegralExpandableAdapter extends BaseExpandableListAdapter impleme
         //名次
         holder.integral_ranking.setText((childPosition + 1) + "");
         if ("2".equals(leagueType)) {
-            System.out.print("leagueType=============" + leagueType);
             if (childPosition < 2) {
                 holder.integral_ranking.setTextColor(mContext.getResources().getColor(R.color.foot_integal_se));
             } else {
