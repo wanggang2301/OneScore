@@ -84,7 +84,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
     private String mCurrentSports = "";
     Handler mHandlerData = new Handler();
     private FootballDatabaseIntegralFragment mIntegralFragment;
-//    private FootballDatabaseScheduleFragment mScheduleFragment;
+    //    private FootballDatabaseScheduleFragment mScheduleFragment;
     private FootballDatabaseScheduleNewFragment mScheduleNewFragment;
     private FootballDatabaseBigSmallFragment mFootballDatabaseBigSmallFragment;
     private FootballDatabaseHandicapFragment mFootballDatabaseHandicapFragment;
@@ -107,20 +107,20 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
          * 第一次加载默认赛季数据，不需要season ==》（-1）
          */
 //        mScheduleFragment = FootballDatabaseScheduleFragment.newInstance(mLeague , null);//赛程
-        mScheduleNewFragment = FootballDatabaseScheduleNewFragment.newInstance(mLeague , null);//赛程
-        mIntegralFragment = FootballDatabaseIntegralFragment.newInstance(mLeague , null); //积分
-        mFootballDatabaseHandicapFragment = FootballDatabaseHandicapFragment.newInstance(mLeague.getLeagueId() ,mLeague.getKind(), "-1");//让分盘
-        mFootballDatabaseBigSmallFragment = FootballDatabaseBigSmallFragment.newInstance(mLeague.getLeagueId() ,mLeague.getKind(), "-1");//大小球
-        mFootballDatabaseStatisticsFragment = FootballDatabaseStatisticsFragment.newInstance(mLeague.getLeagueId() ,mLeague.getKind(), "-1");//统计
+        mScheduleNewFragment = FootballDatabaseScheduleNewFragment.newInstance(mLeague, null);//赛程
+        mIntegralFragment = FootballDatabaseIntegralFragment.newInstance(mLeague, null); //积分
+        mFootballDatabaseHandicapFragment = FootballDatabaseHandicapFragment.newInstance(mLeague.getLeagueId(), mLeague.getKind(), "-1");//让分盘
+        mFootballDatabaseBigSmallFragment = FootballDatabaseBigSmallFragment.newInstance(mLeague.getLeagueId(), mLeague.getKind(), "-1");//大小球
+        mFootballDatabaseStatisticsFragment = FootballDatabaseStatisticsFragment.newInstance(mLeague.getLeagueId(), mLeague.getKind(), "-1");//统计
 
 
         initView();
-        mHandlerData.postDelayed(mRun , 500);
+        mHandlerData.postDelayed(mRun, 500);
         setListener();
 
     }
 
-    private void initView(){
+    private void initView() {
         String[] titles = new String[]{
                 getString(R.string.basket_database_details_schedule),
                 getString(R.string.football_database_details_integral),
@@ -129,7 +129,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
                 getString(R.string.basket_database_details_statistic)
         };
 
-        toolbar = (Toolbar)findViewById(R.id.football_database_details_toolbar);
+        toolbar = (Toolbar) findViewById(R.id.football_database_details_toolbar);
         setSupportActionBar(toolbar);
 
         mIcon = (ImageView) findViewById(R.id.football_details_guest_icon);
@@ -147,7 +147,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         tabsAdapter = new TabsAdapter(getSupportFragmentManager());
         tabsAdapter.setTitles(titles);
         MDStatusBarCompat.setCollapsingToolbar(this, mCoordinatorLayout, appBarLayout, mBasketLayoutHeader, toolbar);
-        tabsAdapter.addFragments(mScheduleNewFragment,mIntegralFragment,mFootballDatabaseHandicapFragment,mFootballDatabaseBigSmallFragment,mFootballDatabaseStatisticsFragment);
+        tabsAdapter.addFragments(mScheduleNewFragment, mIntegralFragment, mFootballDatabaseHandicapFragment, mFootballDatabaseBigSmallFragment, mFootballDatabaseStatisticsFragment);
 
         mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
         mViewPager.setAdapter(tabsAdapter);
@@ -168,14 +168,14 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
 
     }
 
-    private void initData(){
+    private void initData() {
 
         // http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHeader.do?lang=zh&leagueId=2
 //        String url = "http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidFootballLeagueHeader.do";
         String url = BaseURLs.URL_FOOTBALL_DATABASE_HEADER;
         Map<String, String> params = new HashMap<>();
         params.put("leagueId", mLeague.getLeagueId());
-        params.put("type" , mLeague.getKind());
+        params.put("type", mLeague.getKind());
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<FootballDatabaseHeaderBean>() {
 
             @Override
@@ -207,8 +207,8 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
                         mLeagueName.setText(basketDatabaseBean.getLeagueName());
                     }
                     //图标
-                    ImageLoader.load(FootballDatabaseDetailsActivity.this,basketDatabaseBean.getLeagueLogo(),R.mipmap.score_default).into(mIcon);
-                    ImageLoader.load(FootballDatabaseDetailsActivity.this,basketDatabaseBean.getRandomBg(),R.color.colorPrimary).into(mBackground);
+                    ImageLoader.load(FootballDatabaseDetailsActivity.this, basketDatabaseBean.getLeagueLogo(), R.mipmap.score_default).into(mIcon);
+                    ImageLoader.load(FootballDatabaseDetailsActivity.this, basketDatabaseBean.getRandomBg(), R.color.colorPrimary).into(mBackground);
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -238,6 +238,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         }
         return super.onKeyDown(keyCode, event);
     }
+
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
         if (mCollapsingToolbarLayout.getHeight() + verticalOffset < mBasketLayoutHeader.getHeight()) {
@@ -284,13 +285,14 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
     }
 
 
-    private void setListener(){
+    private void setListener() {
         mBack.setOnClickListener(this);
         mCollect.setOnClickListener(this);
     }
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.football_database_details_back:
                 setResult(Activity.RESULT_OK);
                 finish();
@@ -303,6 +305,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
                 break;
         }
     }
+
     int currentDialogPosition = 0; // 当前选中的赛季（默认第一个）
     int currentPosition = 0; // 赛季选择过程中记录（点击确定后才赋值 ， 解决点击筛选不确定后再次进入赛季选择显示不一的情况）
 
