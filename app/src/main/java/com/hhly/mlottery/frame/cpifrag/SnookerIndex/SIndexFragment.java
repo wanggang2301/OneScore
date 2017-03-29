@@ -29,6 +29,7 @@ import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.snookerbean.SnookerScoreSocketBean;
 import com.hhly.mlottery.bean.snookerbean.snookerIndexBean.SnookerIndexBean;
 import com.hhly.mlottery.bean.snookerbean.snookerschedulebean.SnookerSocketOddsBean;
+import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SnookerChildFragment.SnookerCompanyChooseDialogFragment;
 import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SnookerChildFragment.SnookerIndexChildFragment;
 import com.hhly.mlottery.frame.oddfragment.CompanyChooseDialogFragment;
@@ -393,7 +394,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
     private void popWindow(final View v) {
         final View mView = View.inflate(getActivity(), R.layout.pop_select, null);
         // 创建ArrayAdapter对象
-        BallChoiceArrayAdapter mAdapter = new BallChoiceArrayAdapter(getActivity(), mItems, 1); //在第几个
+        BallChoiceArrayAdapter mAdapter = new BallChoiceArrayAdapter(getActivity(), mItems, BallType.SNOOKER); //在第几个
 
         ListView listview = (ListView) mView.findViewById(R.id.match_type);
         listview.setAdapter(mAdapter);
