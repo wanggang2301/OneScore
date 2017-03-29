@@ -71,8 +71,10 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
         iv_match = (ImageView) mView.findViewById(R.id.iv_match);
         d_header = (LinearLayout) mView.findViewById(R.id.d_heasder);
 
-        mView.findViewById(R.id.iv_screen_icon).setOnClickListener(this);
-        mView.findViewById(R.id.iv_serach_icon).setOnClickListener(this);
+//        mView.findViewById(R.id.iv_screen_icon).setOnClickListener(this);
+//        mView.findViewById(R.id.iv_serach_icon).setOnClickListener(this);
+        mView.findViewById(R.id.iv_screen_icon).setVisibility(View.INVISIBLE);
+        mView.findViewById(R.id.iv_serach_icon).setVisibility(View.INVISIBLE);
 
 
         fragments.add(new FootInfoFragment());

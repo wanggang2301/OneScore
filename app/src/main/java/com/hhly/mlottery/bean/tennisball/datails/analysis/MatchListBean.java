@@ -10,8 +10,8 @@ public class MatchListBean {
     private String startDate;
     private String startTime;
     private String leagueName;
-    private String role;
-    private String siteType;
+    private int role;
+    private int siteType;
     private PlayerBean homePlayer1;
     private PlayerBean homePlayer2;
     private PlayerBean guestPlayer1;
@@ -42,19 +42,19 @@ public class MatchListBean {
         this.leagueName = leagueName;
     }
 
-    public String getRole() {
+    public int getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(int role) {
         this.role = role;
     }
 
-    public String getSiteType() {
+    public int getSiteType() {
         return siteType;
     }
 
-    public void setSiteType(String siteType) {
+    public void setSiteType(int siteType) {
         this.siteType = siteType;
     }
 

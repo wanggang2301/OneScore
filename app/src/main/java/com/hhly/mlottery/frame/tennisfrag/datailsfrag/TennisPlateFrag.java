@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.tennisball.TennisDatailsPlateAdapter;
+import com.hhly.mlottery.util.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +58,8 @@ public class TennisPlateFrag extends Fragment {
         mView = inflater.inflate(R.layout.fragment_tennis_plate, container, false);
 
         initView();
+
+
 
         return mView;
     }

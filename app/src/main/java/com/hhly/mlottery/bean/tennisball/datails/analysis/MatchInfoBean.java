@@ -13,9 +13,9 @@ public class MatchInfoBean {
     private String startTime;
     private String startDate;
     private String roundName;
-    private String matchType;
+    private int matchType;
     private String dataType;
-    private String matchStatus;
+    private int matchStatus;
     private PlayerBean homePlayer1;
     private PlayerBean homePlayer2;
     private PlayerBean guestPlayer1;
@@ -78,11 +78,11 @@ public class MatchInfoBean {
         this.roundName = roundName;
     }
 
-    public String getMatchType() {
+    public int getMatchType() {
         return matchType;
     }
 
-    public void setMatchType(String matchType) {
+    public void setMatchType(int matchType) {
         this.matchType = matchType;
     }
 
@@ -94,11 +94,11 @@ public class MatchInfoBean {
         this.dataType = dataType;
     }
 
-    public String getMatchStatus() {
+    public int getMatchStatus() {
         return matchStatus;
     }
 
-    public void setMatchStatus(String matchStatus) {
+    public void setMatchStatus(int matchStatus) {
         this.matchStatus = matchStatus;
     }
 

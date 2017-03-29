@@ -238,7 +238,7 @@ public class TennisBallTabFragment extends Fragment implements SwipeRefreshLayou
     private void settingData(String data) {
         currentData = data;
         try {
-            tv_date.setText(data + " " + DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(data)));
+            tv_date.setText(DateUtil.convertDateToNation(data)+ " " + DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(data)));
         } catch (Exception e) {
             e.printStackTrace();
         }

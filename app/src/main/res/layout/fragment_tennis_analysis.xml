@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:padding="10dp"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <TextView
                         android:layout_width="0dp"
@@ -68,7 +68,7 @@
                         android:lines="1"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/tennis_score_item"
-                        tools:text="球员" />
+                        android:text="@string/basket_player_qiuyuan" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -79,7 +79,7 @@
                         android:lines="1"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/tennis_score_item"
-                        tools:text="排名" />
+                        android:text="@string/basket_ranking" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -90,7 +90,7 @@
                         android:lines="1"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/tennis_score_item"
-                        tools:text="原排名" />
+                        android:text="@string/tennis_datails_ranking_old" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -101,7 +101,7 @@
                         android:lines="1"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/tennis_score_item"
-                        tools:text="变化" />
+                        android:text="@string/tennis_datails_ranking_changer" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -112,7 +112,7 @@
                         android:lines="1"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/tennis_score_item"
-                        tools:text="总积分" />
+                        android:text="@string/sn_rank_zjf" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -123,9 +123,15 @@
                         android:lines="1"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/tennis_score_item"
-                        tools:text="参赛次数" />
+                        android:text="@string/tennis_datails_match_count" />
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_integral_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
 
             </LinearLayout>
 
@@ -149,12 +155,14 @@
                 android:id="@+id/ll_tennis_datails_content_fight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/linecolor"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tv_not_data_fight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="@string/basket_noshow"
@@ -163,15 +171,21 @@
                     android:visibility="visible" />
 
                 <TextView
-                    android:id="@+id/tv_not_data_desc"
+                    android:id="@+id/tv_fight_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="10dp"
                     android:textColor="@color/res_time_color"
                     android:textSize="@dimen/text_size_11"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     tools:text="双方近N次交峰，Name x胜x负，胜率：100%" />
+
+                <LinearLayout
+                    android:id="@+id/ll_fight_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
 
             </LinearLayout>
 
@@ -207,6 +221,12 @@
                     android:textColor="@color/res_time_color"
                     android:textSize="@dimen/item_football_half_score"
                     android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/ll_record_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
 
             </LinearLayout>
 
@@ -249,7 +269,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -335,7 +355,19 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/ll_data_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+
             </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="@color/linecolor" />
 
         </LinearLayout>
 

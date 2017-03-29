@@ -12,6 +12,7 @@ import com.hhly.mlottery.bean.tennisball.MatchDataBean;
 import com.hhly.mlottery.bean.tennisball.TennisEventBus;
 import com.hhly.mlottery.callback.TennisFocusCallBack;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.L;
@@ -148,7 +149,7 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
                 e.printStackTrace();
             }
         }
-        baseViewHolder.setText(R.id.tv_match_date, data);
+        baseViewHolder.setText(R.id.tv_match_date, DateUtil.convertDateToNationMD(data));
         baseViewHolder.setText(R.id.tv_match_time, matchDataBean.getTime() == null ? " " : matchDataBean.getTime());
         // 主客队name
         baseViewHolder.setText(R.id.tv_home_name, matchDataBean.getHomePlayerName());

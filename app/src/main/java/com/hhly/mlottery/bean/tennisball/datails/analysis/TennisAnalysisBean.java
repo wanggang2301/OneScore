@@ -7,7 +7,7 @@ import java.util.List;
  * Created by 107_tangrr on 2017/3/27 0027.
  */
 
-public class TennsiAnalysisBean {
+public class TennisAnalysisBean {
 
     private String result;
     private DataBean data;

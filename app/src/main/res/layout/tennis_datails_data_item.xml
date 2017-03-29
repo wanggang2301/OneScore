@@ -12,13 +12,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:gravity="center"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -47,18 +47,18 @@
         <TextView
             android:id="@+id/tennis_datails_data_pk"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:ellipsize="end"
             android:gravity="center"
             android:lines="2"
             android:textColor="@color/res_pl_color"
-            android:textSize="@dimen/number_desc"
+            android:textSize="@dimen/tennis_score_item"
             tools:text="一发成功率" />
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal">
 
