@@ -53,8 +53,7 @@ public class WebSocketCPIResult<T> {
     public static WebSocketCPIResult<WebSocketCPIResult.UpdateTimeAndStatus>
     getTimeAndStatusFromJson(String jsonString) {
         TypeReference<WebSocketCPIResult<WebSocketCPIResult.UpdateTimeAndStatus>> typeReference =
-                new TypeReference<WebSocketCPIResult<WebSocketCPIResult.UpdateTimeAndStatus>>() {
-                };
+                new TypeReference<WebSocketCPIResult<WebSocketCPIResult.UpdateTimeAndStatus>>() {};
         return JSON.parseObject(jsonString, typeReference);
     }
 

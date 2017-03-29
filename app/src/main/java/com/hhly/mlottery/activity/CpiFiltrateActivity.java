@@ -151,18 +151,6 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
         mCpiAdapterOther.setOnItemCheckedChangedListener(this);
         cpiGridViewOther.setAdapter(mCpiAdapterOther);
 
-//        cpiGridViewHot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//            }
-//        });
-//
-//        cpiGridViewOther.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//            }
-//        });
-
     }
 
     @Override

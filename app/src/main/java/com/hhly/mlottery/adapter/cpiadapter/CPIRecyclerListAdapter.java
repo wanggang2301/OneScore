@@ -282,6 +282,9 @@ public class CPIRecyclerListAdapter extends BaseQuickAdapter<NewOddsInfo.AllInfo
         CpiOddsItemView cpiOddsItemView = null;
         List<NewOddsInfo.AllInfoBean.ComListBean> comList = data.getComList();
         for (final NewOddsInfo.AllInfoBean.ComListBean item : comList) {
+
+
+            //在这里将不需要的公司过滤出去
             if (item.belongToShow(companies)) {
                 cpiOddsItemView = new CpiOddsItemView(mContext);
                 cpiOddsItemView.bindData(item, type);

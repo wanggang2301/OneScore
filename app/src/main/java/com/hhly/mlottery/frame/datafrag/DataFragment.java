@@ -23,6 +23,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketballInformationSerachActivity;
 import com.hhly.mlottery.activity.FootballInformationSerachActivity;
 import com.hhly.mlottery.activity.SnookerInformationSerachActivity;
+import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -31,15 +32,15 @@ import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.hhly.mlottery.frame.BallType.BASKETBALL;
+import static com.hhly.mlottery.frame.BallType.FOOTBALL;
+import static com.hhly.mlottery.frame.BallType.SNOOKER;
+
 /**
  * 资料库
  * wangg
  */
 public class DataFragment extends Fragment implements View.OnClickListener {
-
-    private static final int FOOTBALL = 0;
-    private static final int BASKETBALL = 1;
-    private static final int SNOOKER = 2;
 
 
     private ImageView publicBtnSet;
@@ -99,20 +100,20 @@ public class DataFragment extends Fragment implements View.OnClickListener {
     }
 
     private void choiceMatchType() {
-        int matchChoiceType = PreferenceUtil.getInt("matchChoiceType", FOOTBALL);
+        int matchChoiceType = PreferenceUtil.getInt("matchChoiceType", BallType.FOOTBALL);
 
-        if (matchChoiceType == FOOTBALL) {
+        if (matchChoiceType == BallType.FOOTBALL) {
             tv_match_name.setText(getResources().getString(R.string.football_txt));
-            switchFragment(FOOTBALL);
-        } else if (matchChoiceType == BASKETBALL) {
+            switchFragment(BallType.FOOTBALL);
+        } else if (matchChoiceType == BallType.BASKETBALL) {
             tv_match_name.setText(getResources().getString(R.string.basketball_txt));
-            switchFragment(BASKETBALL);
-        } else if (matchChoiceType == SNOOKER) {
+            switchFragment(BallType.BASKETBALL);
+        } else if (matchChoiceType == BallType.SNOOKER) {
             tv_match_name.setText(getResources().getString(R.string.snooker_txt));
-            switchFragment(SNOOKER);
+            switchFragment(BallType.SNOOKER);
         } else {
             tv_match_name.setText(getResources().getString(R.string.football_txt));
-            switchFragment(FOOTBALL);
+            switchFragment(BallType.FOOTBALL);
         }
     }
 

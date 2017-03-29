@@ -14,7 +14,7 @@
     <dimen name="item_football_guestteam">13sp</dimen>
     <dimen name="item_football_card">10sp</dimen>
     <dimen name="item_football_frequency">13sp</dimen>
-    <dimen name="item_football_full_score">25sp</dimen>
+    <dimen name="item_football_full_score">20sp</dimen>
     <dimen name="item_football_left_odds">13sp</dimen>
     <dimen name="item_football_handicap_value">13sp</dimen>
     <dimen name="item_football_right_odds">13sp</dimen>

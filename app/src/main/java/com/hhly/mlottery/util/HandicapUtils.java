@@ -53,6 +53,7 @@ public class HandicapUtils {
             } else if ((int) handicapF == 1) {
                 result.append("1.5");  //球半
             } else {
+
                 result.append(String.valueOf(numToCN((int) handicapF) + 0.5)); //球半
             }
         } else if (fractionalPart == 0.0f) {
@@ -67,12 +68,19 @@ public class HandicapUtils {
     }
 
     private static float numToCN(int num) {
-        String st = PreferenceUtil.getString("language", "rCN");
-        if ("rTW".equals(st)) {
-            return numTWs[num];
-        } else {
-            return numCNs[num];
+        L.d("pankou", num + "");
+
+        if (num <= 10) {
+            String st = PreferenceUtil.getString("language", "rCN");
+            if ("rTW".equals(st)) {
+                return numTWs[num];
+            } else {
+                return numCNs[num];
+            }
         }
+
+
+        return num;
 
     }
 

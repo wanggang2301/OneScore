@@ -103,6 +103,7 @@ public class CompanyChooseDialogFragment extends DialogFragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 NewOddsInfo.CompanyBean company = companyList.get(position);
                 if (getCheckedNum() == 1 && company.isChecked()) {
                     ToastTools.showQuick(MyApp.getContext(), getString(R.string.at_least_one_company));

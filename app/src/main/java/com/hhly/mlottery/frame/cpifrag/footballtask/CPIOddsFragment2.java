@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame.cpifrag;
+package com.hhly.mlottery.frame.cpifrag.footballtask;
 
 import android.content.Context;
 import android.content.Intent;
@@ -83,11 +83,8 @@ public class CPIOddsFragment2 extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         // findViews
         mRecyclerView = (RecyclerView) view.findViewById(R.id.cpi_odds_recyclerView);
-
         initEmptyView();
-
         initRecyclerView();
-
         refreshData(null);
     }
 
@@ -101,9 +98,8 @@ public class CPIOddsFragment2 extends Fragment {
                 parentFragment.refreshAllChildFragments();
             }
         });
-        RecyclerView.LayoutParams layoutParams =
-                new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT);
+        RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
         mEmptyView.setLayoutParams(layoutParams);
         setStatus(StatusEnum.LOADING);
     }
@@ -130,13 +126,15 @@ public class CPIOddsFragment2 extends Fragment {
         // 每个 Item 内部一条赔率的单击
         mAdapter.setOnOddsClickListener(new CPIRecyclerListAdapter.OnOddsClickListener() {
             @Override
-            public void onOddsClick(NewOddsInfo.AllInfoBean item,
-                                    NewOddsInfo.AllInfoBean.ComListBean odds) {
+            public void onOddsClick(NewOddsInfo.AllInfoBean item, NewOddsInfo.AllInfoBean.ComListBean odds) {
+                //赔率公司(id,name,thirdId)
                 List<Map<String, String>> obList = item.toListViewParamList();
+
+
                 //点击指数页面，传值给详情界面
                 Intent intent = new Intent(getContext(), CpiDetailsActivity.class);
-                intent.putExtra("obListEntity", (Serializable) obList);
-                intent.putExtra("comId", odds.getComId());
+                intent.putExtra("obListEntity", (Serializable) obList);   //两行赔率
+                intent.putExtra("comId", odds.getComId());  //公司Id
                 intent.putExtra("positionNunber", item.getComList().indexOf(odds) + "");
                 intent.putExtra("stType", type);
                 getContext().startActivity(intent);
@@ -214,6 +212,7 @@ public class CPIOddsFragment2 extends Fragment {
     public void updateFilterData() {
         filterData.clear();
         LinkedList<String> filterList = parentFragment.getFilterList();
+
         if (filterList != null) {
             for (NewOddsInfo.AllInfoBean allInfo : defaultData) {
                 if (filterList.indexOf(allInfo.getLeagueId()) >= 0) {
@@ -238,13 +237,21 @@ public class CPIOddsFragment2 extends Fragment {
      */
     private void filterAllInfo(NewOddsInfo.AllInfoBean allInfo) {
         NewOddsInfo.AllInfoBean clone = allInfo.clone();
+
+
+        //公司list
         List<NewOddsInfo.AllInfoBean.ComListBean> comList = clone.getComList();
+
+        //单个公司
         ListIterator<NewOddsInfo.AllInfoBean.ComListBean> iterator = comList.listIterator();
 
+
         // 不能直接粗暴的 remove，因为持有的是引用也会把 default 中的修改掉
-        while (iterator.hasNext()) {
+        while (iterator.hasNext()) {  //遍历这个公司
             NewOddsInfo.AllInfoBean.ComListBean next = iterator.next();
+
             if (!isOddsShow(next)) {
+
                 iterator.remove();
             }
         }
@@ -452,11 +459,24 @@ public class CPIOddsFragment2 extends Fragment {
      * @param comListBean ComListBean
      * @return 是否显示
      */
-    private boolean isOddsShow(NewOddsInfo.AllInfoBean.ComListBean comListBean) {
+    private boolean
+
+    isOddsShow(NewOddsInfo.AllInfoBean.ComListBean comListBean) {
+
+        //源数据列表中的一个公司
+
         boolean show = false;
+
+        //获取筛选的公司列表
         ArrayList<NewOddsInfo.CompanyBean> companyList = parentFragment.getCompanyList();
+
+
         if (companyList != null && companyList.size() > 0) {
+
             for (NewOddsInfo.CompanyBean company : companyList) {
+
+                //如果筛选的列表中的公司的被选中的和源数据中的公司Id相同
+
                 if (comListBean.getComId().equals(company.getComId()) && company.isChecked()) {
                     show = true;
                 }

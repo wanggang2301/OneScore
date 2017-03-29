@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.tennisfrag.TennisBallScoreFragment;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
@@ -26,12 +27,6 @@ import de.greenrobot.event.EventBus;
  * A simple {@link Fragment} subclass.
  */
 public class ScoreFragment extends Fragment {
-
-
-    private static final int FOOTBALL = 0;
-    private static final int BASKETBALL = 1;
-    private static final int SNOOKER = 2;
-    private static final int TENNIS = 3;
 
     private View mView;
     private Context mContext;
@@ -79,8 +74,8 @@ public class ScoreFragment extends Fragment {
         /**
          * 默认先选择足球
          */
-        switchFragment(FOOTBALL);
-        PreferenceUtil.commitInt("matchType", FOOTBALL);
+        switchFragment(BallType.FOOTBALL);
+        PreferenceUtil.commitInt("matchType", BallType.FOOTBALL);
     }
 
 

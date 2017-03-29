@@ -12,6 +12,9 @@ public class OddsDetailsDataInfo {
 
     private List<DetailsEntity> details;
 
+
+
+
     public int getCode() {
         return code;
     }

@@ -14,7 +14,6 @@ public class ExampleUnitTest {
 
     @Test
     public void testSubString() throws Exception {
-        String score = "90+";
-        System.out.println(score.substring(0, score.length()-1));
+
     }
 }

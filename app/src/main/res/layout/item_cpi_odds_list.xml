@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              tools:layout_marginTop="100dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:layout_marginTop="100dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
             android:layout_weight="1"
             android:gravity="center|start"
             android:textSize="13sp"
-            tools:text="浩博"/>
+            tools:text="浩博" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textSize="13sp"
-                tools:text="1.46"/>
+                tools:text="1.46" />
 
             <TextView
                 android:id="@+id/cpi_item_list_home2_txt"
@@ -45,10 +45,11 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textSize="13sp"
-                tools:text="1.23"/>
+                tools:text="1.23" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_middle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.5"
@@ -61,7 +62,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textSize="13sp"
-                tools:text="*2/2.5"/>
+                tools:text="*2/2.5" />
 
             <TextView
                 android:id="@+id/cpi_item_list_odds2_txt"
@@ -70,7 +71,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textSize="13sp"
-                tools:text="3.5/4"/>
+                tools:text="3.5/4" />
         </LinearLayout>
 
         <LinearLayout
@@ -85,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textSize="13sp"
-                tools:text="1.56"/>
+                tools:text="1.56" />
 
             <TextView
                 android:id="@+id/cpi_item_list_guest2_txt"
@@ -93,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textSize="13sp"
-                tools:text="1.20"/>
+                tools:text="1.20" />
 
         </LinearLayout>
 
@@ -103,6 +104,6 @@
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/homwe_grey"/>
+        android:background="@color/homwe_grey" />
 
 </LinearLayout>

@@ -13,6 +13,16 @@ public class MatchDetail implements Parcelable {
     //处理结果
     private String result;
 
+    private Integer leagueId;
+
+    public Integer getLeagueId() {
+        return leagueId;
+    }
+
+    public void setLeagueId(Integer leagueId) {
+        this.leagueId = leagueId;
+    }
+
     //赛事状态  0:未开, 1:上半场, 2:中场, 3:下半场, 4:加时, 5:点球, -1:完场, -10:取消, -11:待定, -12:腰斩,  -13:中断, -14:推迟
     private String matchStatus;
 
@@ -33,6 +43,15 @@ public class MatchDetail implements Parcelable {
 
     private TeamInfo guestTeamInfo;
 
+    private Integer leagueType;
+
+    public Integer getLeagueType() {
+        return leagueType;
+    }
+
+    public void setLeagueType(Integer leagueType) {
+        this.leagueType = leagueType;
+    }
 
     public String getResult() {
         return result;
@@ -107,6 +126,8 @@ public class MatchDetail implements Parcelable {
 
     public MatchDetail(Parcel in) {
         result = in.readString();
+        leagueId = in.readInt();
+        leagueType = in.readInt();
         matchType1 = in.readString();
         matchType2 = in.readString();
         matchStatus = in.readString();
@@ -138,6 +159,8 @@ public class MatchDetail implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(result);
+        dest.writeInt(leagueId);
+        dest.writeInt(leagueType);
         dest.writeString(matchType1);
         dest.writeString(matchType2);
         dest.writeString(matchStatus);
