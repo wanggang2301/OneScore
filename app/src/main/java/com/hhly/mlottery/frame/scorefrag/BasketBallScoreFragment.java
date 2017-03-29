@@ -33,6 +33,10 @@ import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
+import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketResultNewScoreFragment;
+import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketScheduleNewScoreFragment;
+import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketImmedNewScoreFragment;
+import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketballFocusNewFragment;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
@@ -161,10 +165,15 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         titles.add(getString(R.string.foot_guanzhu_txt));
 
         fragments = new ArrayList<>();
-        fragments.add(ImmedBasketballFragment.newInstance(IMMEDIA_FRAGMENT, isNewFrameWork, basketEntryType));
-        fragments.add(ResultBasketballFragment.newInstance(RESULT_FRAGMENT, basketEntryType));
-        fragments.add(ScheduleBasketballFragment.newInstance(SCHEDULE_FRAGMENT, basketEntryType));
-        fragments.add(FocusBasketballFragment.newInstance(FOCUS_FRAGMENT, basketEntryType));
+        fragments.add(BasketImmedNewScoreFragment.newInstance(IMMEDIA_FRAGMENT , isNewFrameWork ,basketEntryType));
+        fragments.add(BasketResultNewScoreFragment.newInstance(RESULT_FRAGMENT , basketEntryType));
+        fragments.add(BasketScheduleNewScoreFragment.newInstance(SCHEDULE_FRAGMENT ,basketEntryType));
+//        fragments.add(ImmedBasketballFragment.newInstance(IMMEDIA_FRAGMENT, isNewFrameWork ,basketEntryType));
+//        fragments.add(ResultBasketballFragment.newInstance(RESULT_FRAGMENT , basketEntryType));
+//        fragments.add(ScheduleBasketballFragment.newInstance(SCHEDULE_FRAGMENT , basketEntryType));
+//        fragments.add(FocusBasketballFragment.newInstance(FOCUS_FRAGMENT , basketEntryType));
+        fragments.add(BasketballFocusNewFragment.newInstance(FOCUS_FRAGMENT , basketEntryType));
+
 
         pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
         mViewPager.setAdapter(pureViewPagerAdapter);
@@ -189,21 +198,33 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
 
                 if (positionOffsetPixels == 0) {
                     switch (position) {
-                        case IMMEDIA_FRAGMENT:
+//                        case IMMEDIA_FRAGMENT:
+//                            mFilterImgBtn.setVisibility(View.VISIBLE);
+//                            ((ImmedBasketballFragment) fragments.get(position)).LoadData();
+//                            break;
+//                        case RESULT_FRAGMENT:
+//                            mFilterImgBtn.setVisibility(View.VISIBLE);
+//                            ((ResultBasketballFragment) fragments.get(position)).updateAdapter();
+//                            break;
+//                        case SCHEDULE_FRAGMENT:
+//                            mFilterImgBtn.setVisibility(View.VISIBLE);
+//                            ((ScheduleBasketballFragment) fragments.get(position)).updateAdapter();
+//                            break;
+                        case 0:
                             mFilterImgBtn.setVisibility(View.VISIBLE);
-                            ((ImmedBasketballFragment) fragments.get(position)).LoadData();
+                            ((BasketImmedNewScoreFragment) fragments.get(position)).LoadData();
                             break;
-                        case RESULT_FRAGMENT:
+                        case 1:
                             mFilterImgBtn.setVisibility(View.VISIBLE);
-                            ((ResultBasketballFragment) fragments.get(position)).updateAdapter();
+                            ((BasketResultNewScoreFragment) fragments.get(position)).updateAdapter();
                             break;
-                        case SCHEDULE_FRAGMENT:
+                        case 2:
                             mFilterImgBtn.setVisibility(View.VISIBLE);
-                            ((ScheduleBasketballFragment) fragments.get(position)).updateAdapter();
+                            ((BasketScheduleNewScoreFragment) fragments.get(position)).updateAdapter();
                             break;
                         case FOCUS_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.GONE);
-                            ((FocusBasketballFragment) fragments.get(position)).LoadData();
+                            ((BasketballFocusNewFragment) fragments.get(position)).LoadData();
                             break;
                     }
                 }
@@ -225,8 +246,8 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
     /**
      * 刷新tab栏后的关注个数
      */
-    public void focusCallback() {
-        String focusIds = PreferenceUtil.getString(FocusBasketballFragment.BASKET_FOCUS_IDS, "");
+    public  void focusCallback() {
+        String focusIds = PreferenceUtil.getString(BasketballFocusNewFragment.BASKET_FOCUS_IDS, "");
         String[] arrayId = focusIds.split("[,]");
         if (getActivity() != null) {
             if ("".equals(focusIds) || arrayId.length == 0) {
@@ -296,49 +317,49 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
 
                 currentFragmentId = mViewPager.getCurrentItem();
                 if (currentFragmentId == IMMEDIA_FRAGMENT) {
-                    if (ImmedBasketballFragment.getIsLoad() == 1) {
+                    if (BasketImmedNewScoreFragment.getIsLoad() == 1) {
                         MobclickAgent.onEvent(mContext, "Basketball_Filter");
                         Intent intent = new Intent(getActivity(), BasketFiltrateActivity.class);
-                        intent.putExtra("MatchAllFilterDatas", (Serializable) ImmedBasketballFragment.mAllFilter);//Serializable 序列化传值（所有联赛数据）
-                        intent.putExtra("MatchChickedFilterDatas", (Serializable) ImmedBasketballFragment.mChickedFilter);//Serializable 序列化传值（选中的联赛数据）
+                        intent.putExtra("MatchAllFilterDatas", (Serializable) BasketImmedNewScoreFragment.mAllFilter);//Serializable 序列化传值（所有联赛数据）
+                        intent.putExtra("MatchChickedFilterDatas", (Serializable) BasketImmedNewScoreFragment.mChickedFilter);//Serializable 序列化传值（选中的联赛数据）
                         intent.putExtra("currentfragment", IMMEDIA_FRAGMENT);
                         startActivity(intent);
                         getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
-                    } else if (ImmedBasketballFragment.getIsLoad() == 0) {
+                    } else if (BasketImmedNewScoreFragment.getIsLoad() == 0) {
                         Toast.makeText(mContext, getResources().getText(R.string.immediate_unconection), Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(mContext, getResources().getText(R.string.basket_loading_txt), Toast.LENGTH_SHORT).show();
                     }
                     L.d("mBasketballType jishi >>>>>>>>>>>", "mBasketballType == >" + IMMEDIA_FRAGMENT);
                 } else if (currentFragmentId == RESULT_FRAGMENT) {
-                    if (ResultBasketballFragment.isLoad == 1) {
+                    if (BasketResultNewScoreFragment.isLoad == 1) {
                         MobclickAgent.onEvent(mContext, "Basketball_Filter");
                         Intent intent = new Intent(getActivity(), BasketFiltrateActivity.class);
-                        intent.putExtra("MatchAllFilterDatas", (Serializable) ResultBasketballFragment.mAllFilter);//Serializable 序列化传值（所有联赛数据）
-                        intent.putExtra("MatchChickedFilterDatas", (Serializable) ResultBasketballFragment.mChickedFilter);//Serializable 序列化传值（选中的联赛数据）
+                        intent.putExtra("MatchAllFilterDatas", (Serializable) BasketResultNewScoreFragment.mAllFilter);//Serializable 序列化传值（所有联赛数据）
+                        intent.putExtra("MatchChickedFilterDatas", (Serializable) BasketResultNewScoreFragment.mChickedFilter);//Serializable 序列化传值（选中的联赛数据）
                         Bundle bundle = new Bundle();
                         bundle.putInt("currentfragment", RESULT_FRAGMENT);
                         intent.putExtras(bundle);
                         startActivity(intent);
                         getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
-                    } else if (ResultBasketballFragment.isLoad == 0) {
+                    } else if (BasketResultNewScoreFragment.isLoad == 0) {
                         Toast.makeText(mContext, getResources().getText(R.string.immediate_unconection), Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(mContext, getResources().getText(R.string.basket_loading_txt), Toast.LENGTH_SHORT).show();
                     }
                     L.d("mBasketballType shaiguo >>>>>>>>>>>", "mBasketballType == >" + RESULT_FRAGMENT);
                 } else if (currentFragmentId == SCHEDULE_FRAGMENT) {
-                    if (ScheduleBasketballFragment.isLoad == 1) {
+                    if (BasketScheduleNewScoreFragment.isLoad == 1) {
                         MobclickAgent.onEvent(mContext, "Basketball_Filter");
                         Intent intent = new Intent(getActivity(), BasketFiltrateActivity.class);
-                        intent.putExtra("MatchAllFilterDatas", (Serializable) ScheduleBasketballFragment.mAllFilter);//Serializable 序列化传值（所有联赛数据）
-                        intent.putExtra("MatchChickedFilterDatas", (Serializable) ScheduleBasketballFragment.mChickedFilter);//Serializable 序列化传值（选中的联赛数据）
+                        intent.putExtra("MatchAllFilterDatas", (Serializable) BasketScheduleNewScoreFragment.mAllFilter);//Serializable 序列化传值（所有联赛数据）
+                        intent.putExtra("MatchChickedFilterDatas", (Serializable) BasketScheduleNewScoreFragment.mChickedFilter);//Serializable 序列化传值（选中的联赛数据）
                         Bundle bundle = new Bundle();
                         bundle.putInt("currentfragment", SCHEDULE_FRAGMENT);
                         intent.putExtras(bundle);
                         startActivity(intent);
                         getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
-                    } else if (ScheduleBasketballFragment.isLoad == 0) {
+                    } else if (BasketScheduleNewScoreFragment.isLoad == 0) {
                         Toast.makeText(mContext, getResources().getText(R.string.immediate_unconection), Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(mContext, getResources().getText(R.string.basket_loading_txt), Toast.LENGTH_SHORT).show();
@@ -625,7 +646,7 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
 
     @Override
     protected void onTextResult(String text) {
-        ((ImmedBasketballFragment) fragments.get(0)).handleSocketMessage(text);
+        ((BasketImmedNewScoreFragment) fragments.get(0)).handleSocketMessage(text);
     }
 
     @Override

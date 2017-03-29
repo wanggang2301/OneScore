@@ -1602,4 +1602,5 @@
 
     <string name="home_gender">性别</string>
     <string name="snooker_index_single_double">单双</string>
+    <string name="score_ret">退賽</string>
 </resources>
