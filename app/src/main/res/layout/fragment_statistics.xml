@@ -718,7 +718,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:paddingLeft="10dp">
+                            android:paddingLeft="20dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -736,13 +736,6 @@
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/text_size_11" />
 
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
 
                             <View
                                 android:layout_width="10dp"
@@ -788,7 +781,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="3dp"
-                                android:text="@string/set_goal_txt"
+                                android:text="进球"
                                 android:textSize="@dimen/text_size_10" />
 
                             <ImageView
@@ -802,8 +795,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="3dp"
-                                android:text="@string/foot_event_corner"
+                                android:text="角球"
                                 android:textSize="@dimen/text_size_10" />
+
+
                         </LinearLayout>
 
                         <com.github.mikephil.charting.charts.LineChart
@@ -811,7 +806,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
                             android:background="@color/white"
-                            android:paddingLeft="10dp" />
+                            android:paddingLeft="10dp"></com.github.mikephil.charting.charts.LineChart>
 
                     </LinearLayout>
 
@@ -831,7 +826,7 @@
                             android:layout_marginTop="10dp"
                             android:background="@color/white"
                             android:orientation="horizontal"
-                            android:paddingLeft="10dp">
+                            android:paddingLeft="20dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -849,12 +844,6 @@
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/text_size_11" />
 
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
 
                             <View
                                 android:layout_width="10dp"
@@ -898,7 +887,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="3dp"
-                                android:text="@string/set_goal_txt"
+                                android:text="进球"
                                 android:textSize="@dimen/text_size_10" />
 
                             <ImageView
@@ -912,8 +901,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="3dp"
-                                android:text="@string/foot_event_corner"
+                                android:text="角球"
                                 android:textSize="@dimen/text_size_10" />
+
                         </LinearLayout>
 
                         <com.github.mikephil.charting.charts.LineChart
@@ -921,7 +911,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
                             android:background="@color/white"
-                            android:paddingLeft="10dp" />
+                            android:paddingLeft="10dp"></com.github.mikephil.charting.charts.LineChart>
                     </LinearLayout>
 
                     <LinearLayout
@@ -940,7 +930,7 @@
                             android:layout_marginTop="10dp"
                             android:background="@color/white"
                             android:orientation="horizontal"
-                            android:paddingLeft="10dp">
+                            android:paddingLeft="20dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -958,13 +948,6 @@
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/text_size_11" />
 
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
 
                             <View
                                 android:layout_width="10dp"
@@ -1033,7 +1016,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
                             android:background="@color/white"
-                            android:paddingLeft="10dp" />
+                            android:paddingLeft="10dp"></com.github.mikephil.charting.charts.LineChart>
 
                     </LinearLayout>
 
@@ -1053,7 +1036,7 @@
                             android:layout_marginTop="10dp"
                             android:background="@color/white"
                             android:orientation="horizontal"
-                            android:paddingLeft="10dp">
+                            android:paddingLeft="20dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -1071,13 +1054,6 @@
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/text_size_11" />
 
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
 
                             <View
                                 android:layout_width="10dp"
@@ -1122,7 +1098,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="3dp"
-                                android:text="@string/set_goal_txt"
+                                android:text="进球"
                                 android:textSize="@dimen/text_size_10" />
 
                             <ImageView
@@ -1136,8 +1112,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="3dp"
-                                android:text="@string/foot_event_corner"
+                                android:text="角球"
                                 android:textSize="@dimen/text_size_10" />
+
                         </LinearLayout>
 
                         <com.github.mikephil.charting.charts.LineChart

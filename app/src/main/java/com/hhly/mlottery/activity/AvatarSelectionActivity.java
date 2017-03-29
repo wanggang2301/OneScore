@@ -3,8 +3,6 @@ package com.hhly.mlottery.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -12,13 +10,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.ChoseFailStartManAdapter;
 import com.hhly.mlottery.adapter.ChoseFailStartWomanAdapter;
-import com.hhly.mlottery.adapter.ChoseStartWomanAdapter;
 import com.hhly.mlottery.adapter.ChoseStartManAdapter;
+import com.hhly.mlottery.adapter.ChoseStartWomanAdapter;
 import com.hhly.mlottery.bean.ChoseHeadStartBean;
 import com.hhly.mlottery.bean.ChoseStartBean;
 import com.hhly.mlottery.bean.account.Register;
@@ -39,11 +36,16 @@ import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 
+
 /**
  * Created by yuely198 on 2016/11/14.
  */
 
 public class AvatarSelectionActivity extends Activity implements View.OnClickListener {
+
+
+
+
 
     private TextView public_txt_title;
     private TextView tv_right;
@@ -74,6 +76,9 @@ public class AvatarSelectionActivity extends Activity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
 
 
         initView();

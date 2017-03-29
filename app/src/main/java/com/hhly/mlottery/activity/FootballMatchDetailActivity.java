@@ -41,6 +41,7 @@ import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MathchStatisInfo;
 import com.hhly.mlottery.bean.footballDetails.PreLiveText;
+import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
 import com.hhly.mlottery.bean.multiplebean.MultipleByValueBean;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumKeepTime;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumLiveTextEvent;
@@ -585,31 +586,37 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                             //获取完场事件直播
                             eventMatchTimeLiveList = new ArrayList<>();
-                            for (MatchTimeLiveBean m : mMatchDetail.getMatchInfo().getMatchTimeLive()) {
-                                if ("2".equals(m.getState()) && "1".equals(m.getCode())) {   //2在完场时间直播中为中场，中场加入中场比分halfScore  放在isHome字段位置
-                                    eventMatchTimeLiveList.add(new MatchTimeLiveBean(m.getTime(), m.getCode(), halfScore, m.getMsgId(), m.getState(), m.getPlayInfo(), m.getEnNum(), 0));
-                                } else {
-                                    eventMatchTimeLiveList.add(new MatchTimeLiveBean(m.getTime(), m.getCode(), m.isHome(), m.getMsgId(), m.getState(), m.getPlayInfo(), m.getEnNum(), 0));
+
+                            L.d("ssddff", "完场_______________");
+                            if (mMatchDetail.getMatchInfo().getMatchTimeLive() != null && mMatchDetail.getMatchInfo().getMatchTimeLive().size() > 0) {
+
+
+                                for (MatchTimeLiveBean m : mMatchDetail.getMatchInfo().getMatchTimeLive()) {
+                                    if ("2".equals(m.getState()) && "1".equals(m.getCode())) {   //2在完场时间直播中为中场，中场加入中场比分halfScore  放在isHome字段位置
+                                        eventMatchTimeLiveList.add(new MatchTimeLiveBean(m.getTime(), m.getCode(), halfScore, m.getMsgId(), m.getState(), m.getPlayInfo(), m.getEnNum(), 0));
+                                    } else {
+                                        eventMatchTimeLiveList.add(new MatchTimeLiveBean(m.getTime(), m.getCode(), m.isHome(), m.getMsgId(), m.getState(), m.getPlayInfo(), m.getEnNum(), 0));
+                                    }
                                 }
-                            }
-                            //99999999任意置值 加入完场状态
-                            eventMatchTimeLiveList.add(new MatchTimeLiveBean("99999999", "3", finishScore, "99999", "-1", "", "", 0));
-                            setScoreText(mMatchDetail.getHomeTeamInfo().getScore() + " : " + mMatchDetail.getGuestTeamInfo().getScore());
-                            setScoreClolor(getApplicationContext().getResources().getColor(R.color.score));
+                                //99999999任意置值 加入完场状态
+                                eventMatchTimeLiveList.add(new MatchTimeLiveBean("99999999", "3", finishScore, "99999", "-1", "", "", 0));
+                                setScoreText(mMatchDetail.getHomeTeamInfo().getScore() + " : " + mMatchDetail.getGuestTeamInfo().getScore());
+                                setScoreClolor(getApplicationContext().getResources().getColor(R.color.score));
 
 
-                            head_home_name.setText(matchDetail.getHomeTeamInfo().getName());
-                            head_guest_name.setText(matchDetail.getGuestTeamInfo().getName());
-                            head_score.setText(mMatchDetail.getHomeTeamInfo().getScore() + ":" + mMatchDetail.getGuestTeamInfo().getScore());
-                            mKeepTime = "5400000";//90分钟的毫秒数
-                            //是否显示精彩瞬间
-                            getCollectionCount();
+                                head_home_name.setText(matchDetail.getHomeTeamInfo().getName());
+                                head_guest_name.setText(matchDetail.getGuestTeamInfo().getName());
+                                head_score.setText(mMatchDetail.getHomeTeamInfo().getScore() + ":" + mMatchDetail.getGuestTeamInfo().getScore());
+                                mKeepTime = "5400000";//90分钟的毫秒数
+                                //是否显示精彩瞬间
+                                getCollectionCount();
 
-                            mDetailsRollballFragment.refreshMatch(matchDetail, DetailsRollballFragment.DETAILSROLLBALL_TYPE_ED);
+                                mDetailsRollballFragment.refreshMatch(matchDetail, DetailsRollballFragment.DETAILSROLLBALL_TYPE_ED);
 
 
 //                            mTalkAboutBallFragment.setClickableLikeBtn(false);
 
+                            }
 
                         } else if (ONLIVE.equals(mMatchDetail.getLiveStatus())) {//未完场头部
 
@@ -2294,14 +2301,22 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         mMatchTypeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /**
+                 public DataBaseBean(String kind, String leagueId, String pic, String lgName) {
+                 this.kind = kind;
+                 this.leagueId = leagueId;
+                 this.pic = pic;
+                 this.lgName = lgName;}
+                 */
+
                 Intent intent = new Intent(FootballMatchDetailActivity.this, FootballDatabaseDetailsActivity.class);
-                //  intent.putExtra(LEAGUE, mList.get(position));
+                intent.putExtra("league", new DataBaseBean(mMatchDetail.getLeagueType() + "", mMatchDetail.getLeagueId() + "", "", ""));
                 intent.putExtra("isIntegral", false);
                 startActivity(intent);
             }
+
         });
     }
-
 
     private void initPreData(MatchDetail mMatchDetail) {
 

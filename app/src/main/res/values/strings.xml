@@ -385,6 +385,7 @@
     <string name="number_bjsc_blue">蓝色</string>
     <string name="number_bjsc_longhu">龙虎</string>
     <string name="number_bjsc_no1">冠军</string>
+
     <string name="number_bjsc_no2">亚军</string>
     <string name="number_bjsc_no3">第三名</string>
     <string name="number_bjsc_no4">第四名</string>
@@ -1630,4 +1631,6 @@
     <string name="basket_handicap_bigorsmall">大/走/小</string>
 
     <string name="home_gender">性别</string>
+    <string name="title_activity_basket_index_details">BasketIndexDetailsActivity</string>
+    <string name="snooker_index_single_double">单双</string>
 </resources>

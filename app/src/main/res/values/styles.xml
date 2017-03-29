@@ -870,6 +870,7 @@
         <item name="android:textColor">@color/odds_radio_txt_color</item>
         <item name="android:textSize">@dimen/text_size_13</item>
     </style>
+
     <style name="my_focus_radio_button">
         <item name="android:layout_weight">1</item>
         <item name="android:button">@null</item>
@@ -912,6 +913,7 @@
     </style>
 
     <style name="TitleTheme" parent="Theme.AppCompat.Light.NoActionBar"></style>
+
     <style name="toolbar">
         <item name="android:layout_marginTop">0dp</item>
     </style>
@@ -1078,6 +1080,11 @@
         <item name="android:padding">2dp</item>
         <item name="android:text">@string/number_info_default</item>
         <item name="android:textSize">@dimen/number_title</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <!--彩票详情页 end -->

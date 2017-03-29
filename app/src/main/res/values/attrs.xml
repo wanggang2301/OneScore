@@ -104,6 +104,8 @@
     <!--指數-->
     <string-array name="zhishu_select">
         <item>@string/football_txt</item>
+        <item>@string/basketball_txt</item>
+        <item>@string/snooker_txt</item>
     </string-array>
     <!--資料庫-->
     <string-array name="ziliaoku_select">

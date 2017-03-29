@@ -231,6 +231,8 @@ public class BasketballScoresActivity extends BaseWebSocketActivity implements V
 
     @Override
     protected void onTextResult(String text) {
+        L.d("pushtext","篮球列表____"+text);
+
         ((ImmedBasketballFragment) fragments.get(0)).handleSocketMessage(text);
     }
 
