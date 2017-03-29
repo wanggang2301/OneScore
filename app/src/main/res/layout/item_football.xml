@@ -115,15 +115,13 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="10dp">
+            android:layout_height="match_parent">
 
             <RelativeLayout
                 android:id="@+id/rl_home"
                 android:layout_width="wrap_content"
-                android:layout_height="90dp"
+                android:layout_height="80dp"
                 android:gravity="center_vertical"
-
                 android:paddingLeft="10dp">
 
                 <LinearLayout
@@ -137,8 +135,8 @@
 
                     <ImageView
                         android:id="@+id/home_icon"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_marginLeft="10dp"
                         android:src="@mipmap/score_default" />
 
@@ -193,8 +191,8 @@
 
                     <ImageView
                         android:id="@+id/guest_icon"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_marginLeft="10dp"
                         android:src="@mipmap/score_default" />
 
@@ -243,20 +241,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
                     android:paddingRight="50dp"
+                    android:paddingTop="20dp"
                     android:text="@string/tennis_match_not_start"
-                    android:textSize="@dimen/text_size_16"
+                    android:textSize="@dimen/text_size_13"
                     android:visibility="gone" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_score"
                 android:layout_width="wrap_content"
-                android:layout_height="90dp"
+                android:layout_height="80dp"
                 android:layout_alignParentRight="true"
                 android:gravity="center_vertical"
-
                 android:paddingRight="50dp">
 
                 <LinearLayout
