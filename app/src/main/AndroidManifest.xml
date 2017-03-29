@@ -75,15 +75,9 @@
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation" />
 
         <!-- 内地版的key-begin -->
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="5625a606e0f55aad6700244f" />
-        <meta-data
-            android:name="UMENG_MESSAGE_SECRET"
-            android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="BETA" />
+        <meta-data android:name="UMENG_APPKEY" android:value="5625a606e0f55aad6700244f" />
+        <meta-data android:name="UMENG_MESSAGE_SECRET" android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
+        <meta-data android:name="UMENG_CHANNEL" android:value="BETA" />
         <!-- 内地版的key-end -->
 
         <activity
@@ -366,8 +360,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.BasketIndexDetailsActivity"
-            android:label="@string/title_activity_basket_index_details"
-            android:theme="@style/AppTheme.NoActionBar.NoActionBar"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.NoActionBar" />
     </application>
 
 </manifest>
