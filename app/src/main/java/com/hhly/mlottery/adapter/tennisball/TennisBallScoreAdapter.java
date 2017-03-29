@@ -16,6 +16,7 @@ import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 
 import java.util.Iterator;
@@ -85,6 +86,27 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
                 baseViewHolder.setText(R.id.tv_match_state, mContext.getResources().getString(R.string.tennis_match_join));
                 baseViewHolder.setTextColor(R.id.tv_match_state, mContext.getResources().getColor(R.color.number_blue));
                 break;
+        }
+
+        // 设置盘口，默认是亚盘指数
+        boolean alet = PreferenceUtil.getBoolean(MyConstants.TENNIS_ALET, true); //亚盘
+        boolean eur = PreferenceUtil.getBoolean(MyConstants.TENNIS_EURO, false);//欧赔
+        boolean noshow = PreferenceUtil.getBoolean(MyConstants.TENNIS_NOTSHOW, false);//不显示
+
+        if (matchDataBean.getMatchOdds() != null) {
+            if (alet && matchDataBean.getMatchOdds().getAsiaLet() != null) {
+                baseViewHolder.setText(R.id.tv_tennis_odds_l, matchDataBean.getMatchOdds().getAsiaLet().getL() == null ? "" : matchDataBean.getMatchOdds().getAsiaLet().getL());
+                baseViewHolder.setText(R.id.tv_tennis_odds_m, matchDataBean.getMatchOdds().getAsiaLet().getM() == null ? "" : matchDataBean.getMatchOdds().getAsiaLet().getM());
+                baseViewHolder.setText(R.id.tv_tennis_odds_r, matchDataBean.getMatchOdds().getAsiaLet().getR() == null ? "" : matchDataBean.getMatchOdds().getAsiaLet().getR());
+            } else if (eur && matchDataBean.getMatchOdds().getEuro() != null) {
+                baseViewHolder.setText(R.id.tv_tennis_odds_l, matchDataBean.getMatchOdds().getEuro().getL() == null ? "" : matchDataBean.getMatchOdds().getEuro().getL());
+                baseViewHolder.setText(R.id.tv_tennis_odds_m, matchDataBean.getMatchOdds().getEuro().getM() == null ? "" : matchDataBean.getMatchOdds().getEuro().getM());
+                baseViewHolder.setText(R.id.tv_tennis_odds_r, matchDataBean.getMatchOdds().getEuro().getR() == null ? "" : matchDataBean.getMatchOdds().getEuro().getR());
+            } else if (noshow) {
+                baseViewHolder.setText(R.id.tv_tennis_odds_l, "");
+                baseViewHolder.setText(R.id.tv_tennis_odds_m, "");
+                baseViewHolder.setText(R.id.tv_tennis_odds_r, "");
+            }
         }
 
         // 设置胜利方旗帜

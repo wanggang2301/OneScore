@@ -249,4 +249,11 @@ public class TennisBallTabFragment extends Fragment implements SwipeRefreshLayou
             mAdapter.notifyDataSetChanged();
         }
     }
+
+    // 指数变化
+    public void oddsChanger(){
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+        }
+    }
 }

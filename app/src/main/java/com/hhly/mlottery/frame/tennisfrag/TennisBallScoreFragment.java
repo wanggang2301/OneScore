@@ -31,6 +31,7 @@ import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 
@@ -46,14 +47,10 @@ import de.greenrobot.event.EventBus;
 
 public class TennisBallScoreFragment extends BaseWebSocketFragment implements View.OnClickListener {
 
-   /* private static final int FOOTBALL = 0;
-    private static final int BASKETBALL = 1;
-    private static final int TENNLS = 3;*/
-
-    private static final int TENNIS_IMMEDIATE = 0;
-    private static final int TENNIS_RESULT = 1;
-    private static final int TENNIS_SCHEDULE = 2;
-    private static final int TENNIS_FOCUS = 3;
+    private final int TENNIS_IMMEDIATE = 0;
+    private final int TENNIS_RESULT = 1;
+    private final int TENNIS_SCHEDULE = 2;
+    private final int TENNIS_FOCUS = 3;
 
     private Activity mContext;
     private View mView;
@@ -260,8 +257,10 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
     }
 
     public void onEventMainThread(TennisEventBus event) {
-        L.d("tennis","event:" + event.msg);
+        if (TextUtils.isEmpty(event.msg)) return;
+        L.d("tennis", "event:" + event.msg);
 
+        // 关注
         if ("tennisFocus".equals(event.msg)) {
             String focusId = PreferenceUtil.getString(AppConstants.TENNIS_BALL_FOCUS, null);
             if (!TextUtils.isEmpty(focusId)) {
@@ -270,9 +269,23 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
             } else {
                 mTabLayout.getTabAt(TENNIS_FOCUS).setText(getString(R.string.foot_details_focus));
             }
-        }else{
-            // TODO 指数选择
-
+        }
+        // 指数选择
+        else if("tennis_odds".equals(event.msg)){
+            for (int i = 0; i < fragments.size(); i++) {
+                switch (i) {
+                    case TENNIS_IMMEDIATE:
+                    case TENNIS_FOCUS:
+                        // 重新请求数据
+                        ((TennisBallSocketFragment) fragments.get(i)).oddsChanger();
+                        break;
+                    case TENNIS_RESULT:
+                    case TENNIS_SCHEDULE:
+                        // 刷新页面
+                        ((TennisBallTabFragment) fragments.get(i)).oddsChanger();
+                        break;
+                }
+            }
         }
     }
 

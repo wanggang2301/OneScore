@@ -271,4 +271,11 @@ public class TennisBallSocketFragment extends Fragment implements SwipeRefreshLa
             }
         }.start();
     }
+
+    // 指数变化
+    public void oddsChanger() {
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+        }
+    }
 }

@@ -32,7 +32,7 @@ public class TennisSettingActivity extends BaseActivity implements View.OnClickL
     private RadioButton mAletRb;
     private RadioButton mEurRb;
     private RadioButton mNoShowRb;
-    String result;
+    private final String TENNIS_ODDS = "tennis_odds";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +72,7 @@ public class TennisSettingActivity extends BaseActivity implements View.OnClickL
 
     }
 
-    public void setStatus(){
+    private void setStatus(){
         //设置默认初始化值
         boolean alet = PreferenceUtil.getBoolean(MyConstants.TENNIS_ALET, true); //亚盘
         boolean eur = PreferenceUtil.getBoolean(MyConstants.TENNIS_EURO, false);//欧赔
@@ -88,7 +88,7 @@ public class TennisSettingActivity extends BaseActivity implements View.OnClickL
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 
-            EventBus.getDefault().post(new TennisEventBus(result));
+            EventBus.getDefault().post(new TennisEventBus(TENNIS_ODDS));
 
             finish();
             overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
@@ -105,44 +105,31 @@ public class TennisSettingActivity extends BaseActivity implements View.OnClickL
                 mAletRb.setChecked(true);
                 mEurRb.setChecked(false);
                 mNoShowRb.setChecked(false);
-                save();
                 break;
             case R.id.rl_tennis_eur:
                 mAletRb.setChecked(false);
                 mEurRb.setChecked(true);
                 mNoShowRb.setChecked(false);
-                save();
                 break;
             case R.id.rl_tennis_noshow:
                 mAletRb.setChecked(false);
                 mEurRb.setChecked(false);
                 mNoShowRb.setChecked(true);
-                save();
                 break;
             case R.id.public_img_back:
-                EventBus.getDefault().post(new TennisEventBus(result));
+                EventBus.getDefault().post(new TennisEventBus(TENNIS_ODDS));
 
                 finish();
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
 
                 break;
         }
+        save();
     }
 
     private void save(){
-
         PreferenceUtil.commitBoolean(MyConstants.TENNIS_ALET , mAletRb.isChecked());
         PreferenceUtil.commitBoolean(MyConstants.TENNIS_EURO , mEurRb.isChecked());
         PreferenceUtil.commitBoolean(MyConstants.TENNIS_NOTSHOW , mNoShowRb.isChecked());
-
-        if (mAletRb.isChecked()) {
-            result = getResources().getString(R.string.snooker_setting_alet);
-        }
-        if(mEurRb.isChecked()){
-            result = getResources().getString(R.string.snooker_setting_eur);
-        }
-        if(mNoShowRb.isChecked()){
-            result = getResources().getString(R.string.snooker_setting_nos_show);
-        }
     }
 }
