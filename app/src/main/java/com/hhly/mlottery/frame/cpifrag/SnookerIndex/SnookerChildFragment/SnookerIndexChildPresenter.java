@@ -40,7 +40,6 @@ public class SnookerIndexChildPresenter extends BasePresenter<SnookerIndexChildC
         boolean isFirst=false;
         if(date.equals("")){ //第一次请求无地址
             date=DateUtil.getMomentDate();
-            date="2017-02-22";
             isFirst=true;
         }
 //        String url="http://m.1332255.com:81/mlottery/core/snookerOdds.getSnookerOddsByDate.do";
