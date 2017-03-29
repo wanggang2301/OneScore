@@ -1,4 +1,4 @@
-package com.hhly.mlottery.mvpui.SnookerIndex;
+package com.hhly.mlottery.frame.cpifrag.SnookerIndex;
 
 
 import com.hhly.mlottery.mvp.IPresenter;
@@ -12,10 +12,10 @@ import com.hhly.mlottery.mvp.IView;
 public class SIndexContract {
 
     interface View extends IView{
-        void fangfa();
+
     }
 
     interface Presenter extends IPresenter<View>{
-        void fangfaf();
+
     }
 }
