@@ -77,7 +77,6 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
     private List<BasketIndexBean.DataBean.AllInfoBean> destinationDataList; //目标数据
 
-
     public BasketBallOddFragment() {
     }
 
