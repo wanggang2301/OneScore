@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
 android {
     signingConfigs {
     }
@@ -86,15 +87,14 @@ dependencies {
     compile files('libs/pldroid-player-1.3.0.jar')
     compile files('libs/umeng-analytics-v6.0.9.jar')
 
-
     compile 'com.github.chrisbanes:PhotoView:1.3.0'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
-    compile 'com.android.support:support-v4:23.4.0'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:recyclerview-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
-    compile 'com.android.support:cardview-v7:23.4.0'
-    compile 'com.android.support:percent:23.4.0'
+    compile 'com.android.support:support-v4:25.3.0'
+    compile 'com.android.support:appcompat-v7:25.3.0'
+    compile 'com.android.support:recyclerview-v7:25.3.0'
+    compile 'com.android.support:design:25.3.0'
+    compile 'com.android.support:cardview-v7:25.3.0'
+    compile 'com.android.support:percent:25.3.0'
     compile 'com.alibaba:fastjson:1.2.12'
     compile 'eu.the4thfloor.volley:com.android.volley:2015.05.28'
     compile 'com.jiechic.library:xUtils:2.6.14'
@@ -122,6 +122,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-appindexing:9.8.0'
     compile 'info.hoang8f:android-segmented:1.0.6'
     compile 'com.google.dagger:dagger:2.4'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
     apt 'com.google.dagger:dagger-compiler:2.4'
