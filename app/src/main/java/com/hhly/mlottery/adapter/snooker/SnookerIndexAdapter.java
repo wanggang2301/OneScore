@@ -82,7 +82,7 @@ public class SnookerIndexAdapter extends BaseQuickAdapter<SnookerIndexBean.AllIn
      * 绑定赔率事件
      */
     private void bindOdds(BaseViewHolder holder,SnookerIndexBean.AllInfoEntity data){
-        LinearLayout container=holder.getView(R.id.snooker_odds_container);
+        LinearLayout container=holder.getView(R.id.odds_container);
         container.removeAllViews();
 //        CpiOddsItemView cpiOddsItemView = null;
 //        List<NewOddsInfo.AllInfoBean.ComListBean> comList = data.getComList();

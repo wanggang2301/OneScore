@@ -59,10 +59,9 @@ public class CpiFragment extends Fragment {
     private void initView() {
         fragments.add(FootCpiFragment.newInstance());
         fragments.add(BasketBallCpiFrament.newInstace());
-        switchFragment(BallType.FOOTBALL);
-        fragments.add(SIndexFragment.newInstance("",""));
-        switchFragment(FOOTBALL);
 
+        fragments.add(SIndexFragment.newInstance("",""));
+        switchFragment(BallType.FOOTBALL);
     }
 
     public void onEventMainThread(ScoreSwitchFg scoreSwitchFg) {
