@@ -60,7 +60,8 @@ public class CpiFragment extends Fragment {
         fragments.add(FootCpiFragment.newInstance());
         fragments.add(BasketBallCpiFrament.newInstace());
 
-        fragments.add(SIndexFragment.newInstance("",""));
+        fragments.add(SIndexFragment.newInstance(BallType.SNOOKER,""));
+        fragments.add(SIndexFragment.newInstance(BallType.TENNLS,""));
         switchFragment(BallType.FOOTBALL);
     }
 
