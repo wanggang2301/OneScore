@@ -279,6 +279,7 @@ public class BasketballFocusNewFragment extends BaseWebSocketFragment implements
         params.put("deviceId",deviceId);
         params.put("cancelThirdIds",thirdId);
 
+        String url = "http://192.168.10.242:8181/mlottery/core/androidBasketballMatch.findCancelAfterConcernList.do";//?lang=zh&timeZone=7&deviceId=868048029263480&userId=&cancelThirdIds=
         VolleyContentFast.requestJsonByGet(BaseURLs.BASKET_FOCUS, params, new VolleyContentFast.ResponseSuccessListener<BasketRoot>() {
             @Override
             public void onResponse(BasketRoot json) {
