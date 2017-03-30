@@ -354,37 +354,15 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         initEvent();
 
 
-        /***
-         * 足球内页头部ViewPager
-         */
 
-        mDetailsRollballFragment = DetailsRollballFragment.newInstance(mThirdId);
-
-        //分析
-        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, "", "");
-        //指数
-        mOddsFragment = OddsFragment.newInstance();
-        //统计
-        mStatisticsFragment = StatisticsFragment.newInstance();
-        // 情报
-        mIntelligenceFragment = IntelligenceFragment.newInstance(mThirdId);
-        // 聊球
-        mChartBallFragment = ChartBallFragment.newInstance(0, mThirdId);
-
-        mTabsAdapter.addFragments(mDetailsRollballFragment, mStatisticsFragment, mAnalyzeFragment, mIntelligenceFragment, mOddsFragment, mChartBallFragment);
-        mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
-        mViewPager.setAdapter(mTabsAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
-
-        mFootballLiveGotoChart = new FootballLiveGotoChart() {
-            @Override
-            public void onClick() {
-                mViewPager.setCurrentItem(TALKBALL_FG, false);
-            }
-        };
 
         mHandler.sendEmptyMessage(STARTLOADING);
-        loadData();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadData();
+            }
+        }, 5000);
     }
 
 
@@ -450,6 +428,35 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         barrage_switch.setOnClickListener(this);
 
         tv_addMultiView.setOnClickListener(this);
+
+        /***
+         * 足球内页头部ViewPager
+         */
+
+        mDetailsRollballFragment = DetailsRollballFragment.newInstance(mThirdId);
+
+        //分析
+        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, "", "");
+        //指数
+        mOddsFragment = OddsFragment.newInstance();
+        //统计
+        mStatisticsFragment = StatisticsFragment.newInstance();
+        // 情报
+        mIntelligenceFragment = IntelligenceFragment.newInstance(mThirdId);
+        // 聊球
+        mChartBallFragment = ChartBallFragment.newInstance(0, mThirdId);
+
+        mTabsAdapter.addFragments(mDetailsRollballFragment, mStatisticsFragment, mAnalyzeFragment, mIntelligenceFragment, mOddsFragment, mChartBallFragment);
+        mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
+        mViewPager.setAdapter(mTabsAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+
+        mFootballLiveGotoChart = new FootballLiveGotoChart() {
+            @Override
+            public void onClick() {
+                mViewPager.setCurrentItem(TALKBALL_FG, false);
+            }
+        };
     }
 
     public void onEventMainThread(BarrageBean barrageBean) {
