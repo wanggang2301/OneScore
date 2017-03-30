@@ -50,9 +50,6 @@
             </intent-filter>
             -->
         </activity>
-        <activity
-            android:name=".activity.FiltrateMatchConfigActivity"
-            android:screenOrientation="portrait" />
         <!-- 环境选择 -->
         <activity
             android:name=".activity.DebugConfigActivity"
