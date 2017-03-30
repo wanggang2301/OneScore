@@ -2,7 +2,6 @@ package com.hhly.mlottery;
 
 import android.app.ActivityManager;
 import android.app.Application;
-import android.app.Notification;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -16,8 +15,6 @@ import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DataBus;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.umeng.message.UmengMessageHandler;
-import com.umeng.message.entity.UMessage;
 
 import java.util.Locale;
 
@@ -46,7 +43,7 @@ public class MyApp extends Application {
         appcontext = this;
 
         // 子线程中做初始化操作，提升APP打开速度
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 // 初始化PreferenceUtil
@@ -109,6 +106,7 @@ public class MyApp extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
+
         MultiDex.install(this);// 解决友盟分析问题
     }
 

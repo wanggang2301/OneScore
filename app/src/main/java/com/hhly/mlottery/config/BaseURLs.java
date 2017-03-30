@@ -199,6 +199,9 @@ public class BaseURLs {
     public final static String LANGUAGE_PARAM = "lang";
     public final static String TIMEZONE_PARAM = "timeZone";
 
+
+    public final static String URL_MVP_API_HOST = HTTP + HOST + URL_SPLITTER;
+
     /**
      * 繁体
      */
