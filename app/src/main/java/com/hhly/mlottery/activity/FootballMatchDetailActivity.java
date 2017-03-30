@@ -353,16 +353,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         initView();
         initEvent();
 
-
-
-
         mHandler.sendEmptyMessage(STARTLOADING);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                loadData();
-            }
-        }, 5000);
+        loadData();
+
     }
 
 
