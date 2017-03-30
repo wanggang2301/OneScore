@@ -46,6 +46,8 @@ import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
+import com.hhly.mlottery.frame.footballframe.eventbus.BasketDetailsEventBusEntity;
+import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreSettingEventBusEntity;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -684,7 +686,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
      * @param basketBallDetails 推送过来消息封装的实体类
      */
     private void updateData(WebSocketBasketBallDetails basketBallDetails) {
-        mBasketDetailsHeadFragment.updateData(basketBallDetails, mChartBallFragment, mTitleGuest, mTitleHome, mTitleVS);
+        mBasketDetailsHeadFragment.updateData(basketBallDetails, mChartBallFragment);
     }
 
     /**
@@ -696,23 +698,13 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     }
 
     private void eventBusPost() {
-        if (ImmedBasketballFragment.BasketImmedEventBus != null) {
-            ImmedBasketballFragment.BasketImmedEventBus.post("");
-        }
         if (mCurrentId == IMMEDIA_FRAGMENT) {
-            if (ImmedBasketballFragment.BasketImmedEventBus != null) {
-                ImmedBasketballFragment.BasketImmedEventBus.post("");
-            }
+            EventBus.getDefault().post(new BasketDetailsEventBusEntity(mCurrentId +""));
         } else if (mCurrentId == RESULT_FRAGMENT) {
-            if (ResultBasketballFragment.BasketResultEventBus != null) {
-                ResultBasketballFragment.BasketResultEventBus.post("");
-            }
+            EventBus.getDefault().post(new BasketDetailsEventBusEntity(mCurrentId +""));
         } else if (mCurrentId == SCHEDULE_FRAGMENT) {
-            if (ScheduleBasketballFragment.BasketScheduleEventBus != null) {
-                ScheduleBasketballFragment.BasketScheduleEventBus.post("");
-            }
+            EventBus.getDefault().post(new BasketDetailsEventBusEntity(mCurrentId +""));
         } else if (mCurrentId == FOCUS_FRAGMENT) {
-
             EventBus.getDefault().post(new BasketFocusEventBus());
         } else if (mCurrentId == CUSTOM_FRAGMENT) {
             EventBus.getDefault().post(new CustomDetailsEvent(""));

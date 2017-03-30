@@ -1,5 +1,6 @@
 package com.hhly.mlottery.config;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.activity.DebugConfigActivity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.MyConstants;
@@ -85,14 +86,29 @@ public class BaseURLs {
             } else if (url_config == DebugConfigActivity.VN_13322) {
                 return "m.vn.13322.com";
             } else if (url_config == DebugConfigActivity.VN_13366) {
-                return "m.13366.com";
+                return "m.13366.vn";
             } else if (url_config == DebugConfigActivity.DIY_INPUT) {
                 return PreferenceUtil.getString("DIY_INPUT", "m.1332255.com:81");
             } else {
                 return "m.1332255.com:81";
             }
         }
-        return "m.13322.com";//发布版本
+
+        // 正式环境域名
+        switch (MyApp.isPackageName) {
+            case AppConstants.PACKGER_NAME_ZH:
+                return "m.13322.com";
+            case AppConstants.PACKGER_NAME_TH:
+                return "m.th.13322.com";
+            case AppConstants.PACKGER_NAME_VN:
+                return "m.vn.13322.com";
+            case AppConstants.PACKGER_NAME_VN_HN:
+                return "m.13366.vn";
+            case AppConstants.PACKGER_NAME_UK:
+                return "m.en.13322.com";
+            default:
+                return "m.13322.com";
+        }
     }
 
 
@@ -115,14 +131,29 @@ public class BaseURLs {
             } else if (ws_config == DebugConfigActivity.WS_13322_VN) {
                 return "m.vn.13322.com/ws";
             } else if (ws_config == DebugConfigActivity.WS_13366_VN) {
-                return "m.13366.com/ws";
+                return "m.13366.vn/ws";
             } else if (ws_config == DebugConfigActivity.DIY_INPUT) {
                 return "m.1332255.com:81/ws";// 自定义
             } else {
                 return "m.1332255.com:81/ws";
             }
         }
-        return "m.13322.com/ws";//开发，发布改这里
+
+        // 正式环境推送域名
+        switch (MyApp.isPackageName) {
+            case AppConstants.PACKGER_NAME_ZH:
+                return "m.13322.com/ws";
+            case AppConstants.PACKGER_NAME_TH:
+                return "m.th.13322.com/ws";
+            case AppConstants.PACKGER_NAME_VN:
+                return "m.vn.13322.com/ws";
+            case AppConstants.PACKGER_NAME_VN_HN:
+                return "m.13366.vn/ws";
+            case AppConstants.PACKGER_NAME_UK:
+                return "m.en.13322.com/ws";
+            default:
+                return "m.13322.com/ws";
+        }
     }
 
     /*
@@ -167,9 +198,6 @@ public class BaseURLs {
 
     public final static String LANGUAGE_PARAM = "lang";
     public final static String TIMEZONE_PARAM = "timeZone";
-
-
-    public final static String URL_MVP_API_HOST = HTTP + HOST + URL_SPLITTER;
 
     /**
      * 繁体
@@ -1095,8 +1123,6 @@ public class BaseURLs {
     public final static String SNOOKER_FINDLEAGUEMATCHLIST = URL_API_HOST + "snookerData.findLeagueMatchList.do";
     //斯诺克资料库赛事内页历届冠军
     public final static String SNOOKER_FINDPREVIOUSWINNERS = URL_API_HOST + "snookerData.findPreviousWinners.do";
-    //斯诺克指数接口
-    public final static String SNOOKER_INDEX_LIST=URL_API_HOST+"snookerOdds.getSnookerOddsByDate.do";
 
 
     /***********************************************************************************************************************/

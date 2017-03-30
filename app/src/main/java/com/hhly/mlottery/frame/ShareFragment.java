@@ -336,7 +336,7 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
                 final WXMediaMessage wxmsg = new WXMediaMessage(webpage);
                 wxmsg.title = mShareBean.getTitle();
                 wxmsg.description = mShareBean.getSummary();
-                Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.share_default);
+                Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher);
                 wxmsg.setThumbImage(bitmap);
                 SendMessageToWX.Req req = new SendMessageToWX.Req();
                 req.transaction = String.valueOf(System.currentTimeMillis());
@@ -414,7 +414,7 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
                 WeiboMultiMessage weiboMessage = new WeiboMultiMessage();
                 weiboMessage.textObject = getTextObj();
                 ImageObject imageObject = new ImageObject();
-                Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.share_default);
+                Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher);
                 imageObject.setImageObject(bitmap);
                 weiboMessage.imageObject = imageObject;
                 WebpageObject mediaObject = new WebpageObject();

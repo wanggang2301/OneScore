@@ -144,6 +144,19 @@ public class DateUtil {
             return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm"), "dd-MM-yyyy HH:mm");
         }
     }
+    /**
+     * 国际化日期格式
+     *
+     * @param date
+     * @return
+     */
+    public static String convertDateToNationMDHM(String date) {
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
+            return DateUtil.format(DateUtil.parseDate(date, "MM-dd HH:mm"), "MM-dd HH:mm");
+        } else {
+            return DateUtil.format(DateUtil.parseDate(date, "MM-dd HH:mm"), "dd-MM HH:mm");
+        }
+    }
 
     /**
      * 国际化日期格式
@@ -159,6 +172,52 @@ public class DateUtil {
         }
     }
 
+    /**
+     * 判断字符串是否为日期格式 yyyy-MM-dd
+     * @param s
+     * @return
+     */
+    public static boolean isValidDateYMD(String s)
+    {
+        // 指定日期格式为四位年/两位月份/两位日期，注意yyyy/MM/dd区分大小写；
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        // 设置lenient为false. 否则SimpleDateFormat会比较宽松地验证日期，比如2007/02/29会被接受，并转换成2007/03/01
+        dateFormat.setLenient(false);
+        try
+        {
+            dateFormat.parse(s);
+            return true;
+        }
+        catch (Exception e)
+        {
+            // 如果throw java.text.ParseException或者NullPointerException，就说明格式不对
+            return false;
+        }
+
+    }
+    /**
+     * 判断字符串是否为日期格式 MM-dd
+     * @param s
+     * @return
+     */
+    public static boolean isValidDateYM(String s)
+    {
+        // 指定日期格式为四位年/两位月份/两位日期，注意yyyy/MM/dd区分大小写；
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+        // 设置lenient为false. 否则SimpleDateFormat会比较宽松地验证日期，比如2007/02/29会被接受，并转换成2007/03/01
+        dateFormat.setLenient(false);
+        try
+        {
+            dateFormat.parse(s);
+            return true;
+        }
+        catch (Exception e)
+        {
+            // 如果throw java.text.ParseException或者NullPointerException，就说明格式不对
+            return false;
+        }
+
+    }
 
     /**
      * 把毫秒转化成日期
@@ -490,9 +549,7 @@ public class DateUtil {
         TimeZone time = TimeZone.getTimeZone("GMT+8");// 默认国内版
         switch (MyApp.isPackageName) {
             case AppConstants.PACKGER_NAME_ZH:// 国内版
-//                time = TimeZone.getTimeZone("GMT+8");
-                // TODO 暂时用
-                time = TimeZone.getTimeZone("GMT+7");
+                time = TimeZone.getTimeZone("GMT+8");
                 break;
             case AppConstants.PACKGER_NAME_TH:// 泰国版
             case AppConstants.PACKGER_NAME_VN_HN:// 越南北版
@@ -504,12 +561,7 @@ public class DateUtil {
                 break;
         }
         TimeZone.setDefault(time);// 设置时区
-        SimpleDateFormat sdf;
-        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
-            sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        }else{
-            sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date data = sdf.parse(nextTime);
         sdf.setTimeZone(TimeZone.getDefault());
         return data.getTime();

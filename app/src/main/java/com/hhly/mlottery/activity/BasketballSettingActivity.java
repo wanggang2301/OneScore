@@ -24,6 +24,10 @@ import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
+import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreImmedEventBusEntity;
+import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreResultEventBusEntity;
+import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreScheduleEventBusEntity;
+import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreSettingEventBusEntity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
@@ -70,7 +74,6 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.basketball_setting);
 		
@@ -214,13 +217,12 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 			Intent intent = new Intent();
 			intent.putExtra("resultType", resultstring);
 
-			if (mCurrentId==0){
-				ImmedBasketballFragment.BasketImmedEventBus.post(mCurrentId);
-			}else if (mCurrentId==1){
-				ResultBasketballFragment.BasketResultEventBus.post(mCurrentId);
-			}else if (mCurrentId==2){
-//				L.i("102","赛程发送");
-				ScheduleBasketballFragment.BasketScheduleEventBus.post(mCurrentId);
+			if (mCurrentId == 0) {
+				EventBus.getDefault().post(new BasketScoreSettingEventBusEntity(mCurrentId +""));
+			} else if (mCurrentId == 1) {
+				EventBus.getDefault().post(new BasketScoreSettingEventBusEntity(mCurrentId +""));
+			} else if (mCurrentId == 2) {
+				EventBus.getDefault().post(new BasketScoreSettingEventBusEntity(mCurrentId +""));
 			}else if (mCurrentId==3){
 //				FocusBasketballFragment.BasketFocusEventBus.post(mCurrentId);
 				EventBus.getDefault().post(new BasketFocusEventBus());
@@ -313,13 +315,12 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 			Intent intent = new Intent();
 			intent.putExtra("resultType", resultstring);
 
-			if (mCurrentId==0){
-				ImmedBasketballFragment.BasketImmedEventBus.post(mCurrentId);
-			}else if (mCurrentId==1){
-				ResultBasketballFragment.BasketResultEventBus.post(mCurrentId);
-			}else if (mCurrentId==2){
-//				L.i("102","赛程发送");
-				ScheduleBasketballFragment.BasketScheduleEventBus.post(mCurrentId);
+			if (mCurrentId == 0) {
+				EventBus.getDefault().post(new BasketScoreSettingEventBusEntity(mCurrentId +""));
+			} else if (mCurrentId == 1) {
+				EventBus.getDefault().post(new BasketScoreSettingEventBusEntity(mCurrentId +""));
+			} else if (mCurrentId == 2) {
+				EventBus.getDefault().post(new BasketScoreSettingEventBusEntity(mCurrentId +""));
 			}else if (mCurrentId==3){
 				EventBus.getDefault().post(new BasketFocusEventBus());
 			}

@@ -17,6 +17,9 @@ import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.frame.footballframe.FiltrateMatchFragment;
+import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreImmedEventBusEntity;
+import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreResultEventBusEntity;
+import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreScheduleEventBusEntity;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MultipleBasketFilterListEvent;
 import com.hhly.mlottery.view.GrapeGridview;
@@ -365,7 +368,6 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        // TODO Auto-generated method stub
         switch (v.getId()) {
             case R.id.public_img_back:// 关闭(返回)
                 MobclickAgent.onEvent(mContext, "Basketball_Filter_Exit");
@@ -387,17 +389,13 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
 
                 Map<String, Object> map = new HashMap<>();
                 map.put("checkedCupIds", mCupChicked);
-//                map.put("checkedDefualt", false); currentId
 
-//                if (currentId==0) {
-//                    EventBus.getDefault().post(new MultipleBasketFilterListEvent(map));
-//                }
                 if (currentId == 0) {
-                    ImmedBasketballFragment.BasketImmedEventBus.post(map);
+                    EventBus.getDefault().post(new BasketScoreImmedEventBusEntity(map));
                 } else if (currentId == 1) {
-                    ResultBasketballFragment.BasketResultEventBus.post(map);
+                    EventBus.getDefault().post(new BasketScoreResultEventBusEntity(map));
                 } else if (currentId == 2) {
-                    ScheduleBasketballFragment.BasketScheduleEventBus.post(map);
+                    EventBus.getDefault().post(new BasketScoreScheduleEventBusEntity(map));
                 } else if (currentId == 3) {
                     EventBus.getDefault().post(new MultipleBasketFilterListEvent(map));
                 }
