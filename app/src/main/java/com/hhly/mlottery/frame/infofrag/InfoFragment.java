@@ -22,6 +22,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ import java.util.List;
  * 情报页面
  * wangg
  */
-public class InfoFragment extends Fragment {
+public class InfoFragment extends Fragment implements View.OnClickListener{
 
     private View mView;
     private Context mContext;
@@ -69,6 +70,11 @@ public class InfoFragment extends Fragment {
         tv_match_name = (TextView) mView.findViewById(R.id.tv_match_name);
         iv_match = (ImageView) mView.findViewById(R.id.iv_match);
         d_header = (LinearLayout) mView.findViewById(R.id.d_heasder);
+
+//        mView.findViewById(R.id.iv_screen_icon).setOnClickListener(this);
+//        mView.findViewById(R.id.iv_serach_icon).setOnClickListener(this);
+        mView.findViewById(R.id.iv_screen_icon).setVisibility(View.INVISIBLE);
+        mView.findViewById(R.id.iv_serach_icon).setVisibility(View.INVISIBLE);
 
 
         fragments.add(new FootInfoFragment());
@@ -154,5 +160,22 @@ public class InfoFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+
+            // TODO 处理逻辑
+
+            case R.id.iv_screen_icon:
+                ToastTools.showQuick(mContext,"筛选!");
+
+                break;
+            case R.id.iv_serach_icon:
+                ToastTools.showQuick(mContext,"搜索!");
+                break;
+
+        }
     }
 }

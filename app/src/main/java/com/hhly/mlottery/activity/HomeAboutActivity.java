@@ -175,7 +175,7 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
                     isCheckVersion = false;
                     break;
                 case GET_INFO_SUCCESS:// 访问成功
-                    about_detail_progressbar.setVisibility(View.GONE);
+                    about_detail_progressbar.setVisibility(View.INVISIBLE);
                     isCheckVersion = true;
                     int serverVersion = Integer.parseInt(mUpdateInfo.getVersion()); // 取得服务器上的版本code
                     int currentVersion = Integer.parseInt(versionCode);// 获取当前版本code
@@ -187,7 +187,7 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
                     break;
                 case GET_INFO_ERROR:// 访问失败
                     isCheckVersion = true;
-                    about_detail_progressbar.setVisibility(View.GONE);
+                    about_detail_progressbar.setVisibility(View.INVISIBLE);
                     versionUpError(false);
                     break;
                 case DOWNLOAD_UPGRADE:

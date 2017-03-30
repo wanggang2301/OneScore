@@ -1,6 +1,8 @@
 package com.hhly.mlottery.frame.tennisfrag;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,13 +12,17 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
+import com.hhly.mlottery.activity.TennisBallDetailsActivity;
 import com.hhly.mlottery.adapter.tennisball.TennisBallScoreAdapter;
 import com.hhly.mlottery.bean.tennisball.MatchDataBean;
 import com.hhly.mlottery.bean.tennisball.TennisImmediatelyBean;
@@ -52,7 +58,7 @@ public class TennisBallSocketFragment extends Fragment implements SwipeRefreshLa
     private static final String TENNIS_TYPE = "tennis_type";
     private int type;
 
-    private Context mContext;
+    private Activity mContext;
     private View mView;
     private View mEmptyView;
     private View mErrorLayout;
@@ -84,11 +90,16 @@ public class TennisBallSocketFragment extends Fragment implements SwipeRefreshLa
         }
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = (Activity) context;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        mContext = getActivity();
         mView = View.inflate(mContext, R.layout.fragment_tennls_ball_tab, null);
         mEmptyView = View.inflate(mContext, R.layout.tennis_empty_layout, null);
 
@@ -112,6 +123,15 @@ public class TennisBallSocketFragment extends Fragment implements SwipeRefreshLa
             @Override
             public void onClick(View v) {
                 initData(0);
+            }
+        });
+
+        mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int i) {
+                Intent intent = new Intent(mContext, TennisBallDetailsActivity.class);
+                intent.putExtra("thirdId", mData.get(i).getMatchId());
+                getParentFragment().startActivityForResult(intent, 1);
             }
         });
     }
@@ -166,7 +186,7 @@ public class TennisBallSocketFragment extends Fragment implements SwipeRefreshLa
     // 设置页面显示状态
     private void setStatus(int status) {
         L.d("xxxxx", "socketFrag status:  " + status);
-        if(status == ERROR || status == NOTO_DATA ){
+        if (status == ERROR || status == NOTO_DATA) {
             mData.clear();
             mAdapter.notifyDataSetChanged();
         }
@@ -216,7 +236,7 @@ public class TennisBallSocketFragment extends Fragment implements SwipeRefreshLa
 
     // webSocket
     public void socketDataChanged(final String text) {
-        L.d("xxxxx","收到了：type:" + type );
+        L.d("xxxxx", "收到了：type:" + type);
         new Thread() {
             @Override
             public void run() {
@@ -237,10 +257,10 @@ public class TennisBallSocketFragment extends Fragment implements SwipeRefreshLa
                             matchDataBean.getMatchScore().setAwaySetScore5(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore5());
                             matchDataBean.getMatchScore().setHomeTotalScore(tennisSocketBean.getDataObj().getMatchScore().getHomeTotalScore());
                             matchDataBean.getMatchScore().setAwayTotalScore(tennisSocketBean.getDataObj().getMatchScore().getAwayTotalScore());
-                            getActivity().runOnUiThread(new Runnable() {
+                            mContext.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    L.d("xxxxx","收到了：刷新了!");
+                                    L.d("xxxxx", "收到了：刷新了!");
                                     mAdapter.notifyDataSetChanged();
                                 }
                             });
@@ -250,5 +270,12 @@ public class TennisBallSocketFragment extends Fragment implements SwipeRefreshLa
                 }
             }
         }.start();
+    }
+
+    // 指数变化
+    public void oddsChanger() {
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+        }
     }
 }

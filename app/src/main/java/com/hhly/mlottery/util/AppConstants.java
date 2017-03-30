@@ -24,10 +24,8 @@ public class AppConstants {
 
     // 是否是测试连接，测试连接用于阶段测试使用
 //    public static final boolean isTestLink = false;
-    /**
-     * 判断是否上传奔溃日志到友盟
-     */
-    public static final boolean isUploadCrash = false;
+     // 判断是否上传奔溃日志到友盟和TalkingData
+//    public static final boolean isUploadCrash = false;
 
 
     /**

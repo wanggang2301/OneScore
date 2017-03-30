@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.tennisfrag;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,7 +17,9 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.TennisBallDetailsActivity;
 import com.hhly.mlottery.adapter.tennisball.TennisBallScoreAdapter;
 import com.hhly.mlottery.bean.tennisball.MatchDataBean;
 import com.hhly.mlottery.bean.tennisball.TennisBallBean;
@@ -95,8 +98,19 @@ public class TennisBallTabFragment extends Fragment implements SwipeRefreshLayou
         initView();
         initEmptyView();
         initData();
-
+        initEvent();
         return mView;
+    }
+
+    private void initEvent() {
+        mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int i) {
+                Intent intent = new Intent(mContext, TennisBallDetailsActivity.class);
+                intent.putExtra("thirdId", mData.get(i).getMatchId());
+                getParentFragment().startActivityForResult(intent, 2);
+            }
+        });
     }
 
     private void initData() {
@@ -224,13 +238,20 @@ public class TennisBallTabFragment extends Fragment implements SwipeRefreshLayou
     private void settingData(String data) {
         currentData = data;
         try {
-            tv_date.setText(data + " " + DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(data)));
+            tv_date.setText(DateUtil.convertDateToNation(data)+ " " + DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(data)));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void refreshData() {
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    // 指数变化
+    public void oddsChanger(){
         if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();
         }
