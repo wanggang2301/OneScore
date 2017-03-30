@@ -40,10 +40,13 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
-            <!--<intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".activity.FiltrateMatchConfigActivity"
@@ -325,6 +328,11 @@
             android:screenOrientation="portrait" />
 
         <!-- 覆盖安装监听 -->
+        <!-- 斯诺克内页 -->
+        <activity
+            android:name=".activity.SnookerMatchDetail"
+            android:screenOrientation="portrait" />
+        <!-- 覆盖安装监听 -->
         <!--斯诺克内页-->
         <activity
             android:name=".activity.SnookerMatchDetail"
@@ -341,8 +349,8 @@
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
-        <!--snooker 列表页-->
-        <!--snooker 设置页-->
+        <!-- snooker 列表页 -->
+        <!-- snooker 设置页 -->
         <activity
             android:name=".activity.SnookerSettingActivity"
             android:screenOrientation="portrait" />
@@ -360,6 +368,14 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SnookerEventPageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BasketBallIndexFiltrateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BasketIndexDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.NoActionBar" />
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.FootballMatchActivity"

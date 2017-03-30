@@ -396,7 +396,7 @@ public class BasketDatabaseScheduleFragment extends Fragment {
                 if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
                     dateFormat = new SimpleDateFormat("yyyy-MM-dd E", LocaleFactory.get());
                 } else {
-                    dateFormat = new SimpleDateFormat("MM-dd-yyyy E", LocaleFactory.get());
+                    dateFormat = new SimpleDateFormat("dd-MM-yyyy E", LocaleFactory.get());
                 }
                 mSections.add(new BasketballDatabaseScheduleSectionAdapter
                         .Section(true, dateFormat.format(matchDay.getDay())));

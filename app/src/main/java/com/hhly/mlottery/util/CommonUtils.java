@@ -263,6 +263,9 @@ public class CommonUtils {
             case AccountResultCode.INVITED_NUMBER_NOON:
                 UiUtils.toast(MyApp.getInstance(), R.string.invited_number_noon);
                 break;
+            case AccountResultCode.ORIGINAL_PASSWORD_ERROR:
+                UiUtils.toast(MyApp.getInstance(), R.string.original_password_error);
+                break;
             default:
                 L.e(TAG, "未定义错误码 : rescode = " + rescode + " , defaultMessage = " + defaultMessage);
                 if (!TextUtils.isEmpty(defaultMessage)) {

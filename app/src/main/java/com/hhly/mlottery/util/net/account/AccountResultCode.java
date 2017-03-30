@@ -94,5 +94,6 @@ public interface AccountResultCode {
 
     /*邀请码不存在*/
     int INVITED_NUMBER_NOON=143;
-
+    /*原密码错误*/
+    int  ORIGINAL_PASSWORD_ERROR=94;
 }

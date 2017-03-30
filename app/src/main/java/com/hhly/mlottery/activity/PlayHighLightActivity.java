@@ -381,7 +381,6 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
 
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
-        // TODO Auto-generated method stub
         // 这里设置为true防止弹出对话框，屏蔽原始出错的处理
         return true;
     }

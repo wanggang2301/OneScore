@@ -16,6 +16,7 @@
     <string name="foot_event_corner">ลูกเตะมุม</string>
     <string name="foot_event_half">ครึ่งแรก</string>
     <string name="foot_event_finish">เต็มเวลา</string>
+    <string name="foot_event_penalty">ยิงลูกโทษ</string>
     <string name="foot_event_di">ลำดับที่</string>
     <string name="foot_event_ge"></string>
     <string name="foot_event_zhang">ใบ</string>
@@ -46,20 +47,20 @@
     <string name="foot_details_focus">ติดตาม</string>
     <string name="foot_details_focused">ติดตามแล้ว</string>
     <string name="foot_details_live_msg">ถ่ายทอดสดสถานการณ์จริงโปรดติดตาม!</string>
-    <string name="foot_details_roolball">สด</string>
+    <string name="foot_details_roolball">ข้อมูลแข่ง</string>
     <string name="foot_details_talkball">คุยเกี่ยวกับผล</string>
-    <string name="foot_details_odds">ดัชนี</string>
-    <string name="foot_details_statistics">ถ่ายทอดสด</string>
-    <string name="foot_details_analyze">วิเคราะห์</string>
+    <string name="foot_details_odds">อัตราต่อรอง</string>
+    <string name="foot_details_statistics">สถิติ</string>
+    <string name="foot_details_analyze">สถิติ</string>
     <string name="foot_details_time">เวลา</string>
-    <string name="foot_details_score">สกอร์</string>
+    <string name="foot_details_score">ผลบาส</string>
     <string name="foot_details_livetitle">รายงานถ่ายทอดสด</string>
     <string name="foot_details_share">แชร์</string>
     <string name="football_info_oceania">โอเชียเนีย</string>
     <string name="football_info_title">ฐานข้อมูลฟุตบอล</string>
     <string name="copy">คัดลอกลิ้งค์</string>
 
-    <string name="basket_info_hot">ฮอต</string>
+    <string name="basket_info_hot">ลีกดัง</string>
     <string name="basket_info_eur">ยุโรป</string>
     <string name="basket_info_america">อเมริกา</string>
     <string name="basket_info_asia">เอเชีย</string>
@@ -70,7 +71,7 @@
     <string name="basket_info_country">การแข่งขันในประเทศ</string>
 
     <string name="basket_info_zhouji2">การแข่งขันระหว่างประเทศ</string>
-    <string name="basket_info_shatan">การแข่งขันชายหาด</string>
+    <string name="basket_info_shatan">การแข่งขันฟุตบอลชายหาด</string>
     <string name="chupan">ก่อน</string>
 
     <!--亚盘ค่าน้ำแบบเอเชีย-->
@@ -101,22 +102,22 @@
     <string name="football_analyze_bigball">,เปอร์เซ็นต์แต้มสูง</string>
     <string name="football_analyze_let_points">,เปอร์เซ็นต์แต้มต่อของค่าน้ำที่ชนะ</string>
     <string name="football_analyze_points">เปอร์เซ็นต์แต้มต่อของค่าน้ำที่ชนะ</string>
-    <string name="basket_details_talkable">แชทบอล</string>
+    <string name="basket_details_talkable">แชทบาส</string>
     <string name="basket_loading_txt"> กำลังดาวน์โหลด...</string>
     <string name="football_win_draw_lose">ชนะ/เสมอ/แพ้</string>
 
     <!--篮球资料库详情รายละเอียดฐานข้อมูลบาสเกตบอล-->
-    <string name="basket_database_details_handicapname">ค่าน้ำของแต้มต่อ</string>
+    <string name="basket_database_details_handicapname">ค่าน้ำแต้มต่อ</string>
     <string name="basket_database_details_bigsmallname">ค่าน้ำแต้มสูงต่ำ</string>
     <string name="basket_database_details_schedule">ตารางการแข่งขัน</string>
     <string name="basket_database_details_stage">ขั้นตอน</string>
     <string name="basket_database_details_ranking">อันดับ</string>
-    <string name="basket_database_details_season">ฤดูการแข่งขัน</string>
+    <string name="basket_database_details_season">ฤดูกาลแข่งขัน</string>
     <string name="basket_database_details_all">ทั้งหมด</string>
     <string name="basket_database_details_home">ทีมเหย้า</string>
     <string name="basket_database_details_guest">ทีมเยือน</string>
     <string name="basket_database_details_runkingname">อันดับ/ทีม</string>
-    <string name="basket_database_details_overgame">แข่งขันแล่ว</string>
+    <string name="basket_database_details_overgame">แข่งขันแล้ว</string>
     <string name="basket_database_details_big">สูง</string>
     <string name="basket_database_details_dorw">เสมอ</string>
     <string name="basket_database_details_small">ต่ำ</string>
@@ -138,7 +139,7 @@
     <string name="basket_database_details_statistic_score">สถิติการได้คะแนน</string>
     <string name="basket_database_details_statistic_num_score">สถิติต่อสนาม</string>
     <string name="basket_database_details_statistic_all_score">คะแนนรวมทั้งหมด</string>
-    <string name="basket_database_details_statistic_gp_num">แข่งขันแล่ว</string>
+    <string name="basket_database_details_statistic_gp_num">แข่งขันแล้ว</string>
     <string name="basket_database_details_statistic_average">คะแนนเฉลี่ย</string>
 
     <string name="basket_database_details_statistic_all_scoreA">ได้ประตูทั้งหมด</string>
@@ -156,10 +157,10 @@
     <string name="basket_database_details_statistic_nogp">ไม่ได้แข่ง:</string>
     <string name="basket_database_details_statistic_allgp">รวมการแข่งขันต่อสนาม:</string>
 
-    <string name="basket_database_details_leagueMost_strongestAttack">การต่อสู้ที่แข็งแกร่งที่สุด</string>
-    <string name="basket_database_details_leagueMost_weakestAttack">การต่อสู้ที่อ่อนแอที่สุด</string>
-    <string name="basket_database_details_leagueMost_strongestDefense">การป้องกันที่แข็งแกร่งที่สุด</string>
-    <string name="basket_database_details_leagueMost_weakestDefense">การป้องกันอ่อนแอที่สุด</string>
+    <string name="basket_database_details_leagueMost_strongestAttack">ประตูรวมมากที่สุด</string>
+    <string name="basket_database_details_leagueMost_weakestAttack">ประตูรวมน้อยที่สุด</string>
+    <string name="basket_database_details_leagueMost_strongestDefense">เสียประตูน้อยที่สุด</string>
+    <string name="basket_database_details_leagueMost_weakestDefense">เสียประตูมากที่สุด</string>
     <string name="basket_database_details_leagueMost_all_score">คะแนนรวมทั้งหมด:</string>
     <string name="basket_database_details_leagueMost_avg_score">คะแนนเฉลี่ยต่อเกม:</string>
 
@@ -176,10 +177,10 @@
     <string name="basket_database_details_recent_title">สถานการณ์ล่าสุด</string>
 
     <!--足球资料库ฐานข้อมูลของฟุตบอล-->
-    <string name="football_database_details_integral">แต้ม</string>
+    <string name="football_database_details_integral">ผลบาส</string>
     <string name="football_database_details_stage">ขั้นตอน</string>
 
-    <string name="football_database_details_integral_num_title">แข่งขันแล่ว</string>
+    <string name="football_database_details_integral_num_title">แข่งขันแล้ว</string>
     <string name="football_database_details_integral_win_draw_lose_title">ชนะ/เสมอ/แพ้</string>
     <string name="football_database_details_integral_gain_loss_title">ได้/เสีย</string>
     <string name="football_database_details_integral_itnis_title">ผลต่างประตูได้เสีย</string>
@@ -211,14 +212,14 @@
 
 
     <!--足球分析详情รายละเอียดของการวิเคราะห์กีฬาฟุตบอล-->
-    <string name="football_analyze_details">รายละเอียดการวิเคราะห์</string>
+    <string name="football_analyze_details">ข้อมูลสถิติ</string>
     <string name="football_analyze_details_time">เวลา</string>
     <string name="football_analyze_details_matchs">ลีก</string>
     <string name="football_analyze_details_game">เกมแข่งขัน</string>
     <string name="football_analyze_details_win">ชนะ</string>
     <string name="football_analyze_details_lose">แพ้</string>
 
-    <string name="chatball">แชทบอล</string>
+    <string name="chatball">แชทบาส</string>
     <string name="succed_send">ส่งเรียบร้อยแล้ว</string>
     <string name="succed_refresh">การรีเฟรชสำเร็จเรียบร้อย</string>
 
@@ -281,7 +282,7 @@
     <!--新版分析วิเคราะห์รูปแบบใหม่-->
     <string name="new_analyze_goal_lose">ได้/เสียลูก</string>
     <string name="new_analyze_goal_differ">ประตูได้เสีย</string>
-    <string name="new_analyze_integral">แต้ม</string>
+    <string name="new_analyze_integral">ผลบาส</string>
     <string name="new_analyze_complete_table">ตารางคะแนนทั้งหมด>></string>
     <string name="new_analyze_attack_defense">การเปรียบเทียบป้องกันประตู</string>
     <string name="new_analyze_bet">การต่อรองคะแนนสูง-ต่ำ:</string>
@@ -289,7 +290,7 @@
     <string name="new_analyze_recommend">วิเคราะห์บอล</string>
 
     <string name="immediate_status_end">สิ้นสุด</string>
-    <string name="foot_rollball_txt">สด</string>
+    <string name="foot_rollball_txt">ข้อมูลแข่ง</string>
     <string name="only_five_eachday">ในทุกวันส่งข้อความได้เพียง 5 ครั้งต่อ 1 หมายเลขโทรศัพท์</string>
     <string name="original_password_error">รหัสผ่านเดิมไม่ถูกต้อง</string>
     <string name="login_username">กรุณาป้อนบัญชีหรือหมายเลขโทรศัพท์ที่ลงทะเบียน</string>
@@ -305,10 +306,10 @@
     <string name="size_lose_rate"> เปอร์เซนต์ต่ำ</string>
     <string name="asia_win_rate"> อัตราการชนะของค่าน้ำ</string>
     <string name="asia_lose_rate"> อัตราการแพ้ของค่าน้ำ</string>
-    <string name="title_big_data_predict"> การคาดการณ์ของฐานข้อมูลใหญ่</string>
+    <string name="title_big_data_predict">การคาดการณ์</string>
     <string name="diy_compute_method"> DIY วิธีการคำนวณ</string>
     <string name="diy_custom_compute_method">DIY วิธีการคำนวณโดยกำหนดเอง</string>
-    <string name="foot_details_info">ข่าวกรอง</string>
+    <string name="foot_details_info">ทรรศนะ</string>
     <string name="diy_compute_method_message1"> ความน่าจะเป็น= ความน่าจะเป็นของการปะทะกัน×%1$s+ เปอร์เซ็นต์ชัยชนะของทีมเหย้า×%2$s+ เปอร์เซนต์การแพ้ของทีมเยือน×%3$s</string>
     <string name="diy_compute_method_message2">ความน่าจะเป็น=ความน่าจะเป็นของการปะทะกัน×%1$s+ ความน่าจะเป็นของทีมเหย้า×%2$s+ ความน่าจะเป็นของทีมเยือน×%3$s</string>
     <string name="diy_compute_method_message3"> ความน่าจะเป็น=ความน่าจะเป็นของการปะทะกัน×%1$s+ เปอร์เซนต์ชนะทีมเหย้า×%2$s+ เปอร์เซนต์แพ้ทีมเยือน×%3$s</string>
@@ -332,7 +333,7 @@
     <string name="new_analyze_win"> ชนะ</string>
     <string name="new_analyze_draw">เสมอ</string>
     <string name="new_analyze_lose">แพ้</string>
-    <string name="new_analyze_score"> สกอร์</string>
+    <string name="new_analyze_score">ผลบาส</string>
     <string name="new_analyze_first_let"> ค่าน้ำเริ่มต้น</string>
     <string name="new_analyze_result"> ผลลัพธ์</string>
     <string name="new_analyze_more_messages"><![CDATA[ข้อความอื่นๆ>>]]></string>
@@ -415,7 +416,7 @@
     <string name="kindly_reminder_comment">คุณกำลังใช้อัตราการไหล คุณต้องการอัพโหลดต่อหรือไม่?</string>
     <string name="continue_download">ดาวน์โหลดต่อ</string>
     <!--情报中心 ศูนย์ข้อมูลข่าวสาร start-->
-    <string name="title_info_center"> ศูนย์ข้อมูลข่าวสาร</string>
+    <string name="title_info_center">ทรรศนะ</string>
     <string name="info_center_end_index"> ดัชนีการสิ้นสุดการแข่งขันของวันนี้</string>
     <string name="info_center_results_index"> ดัชนีผลการแข่งขัน</string>
     <string name="info_center_size_disc_index"> ดัชนีสูงต่ำ</string>
@@ -497,37 +498,37 @@
 
 
     <!--今日赛事提点การแจ้งเตือนเรื่องเหตุการณ์การแข่งขันวันนี้-->
-    <string name="league_statistics_today_title">ข้อมูลการแข่งขันวันนี้</string>
-    <string name="league_statistics_today_tab1">ชนะเสมอแพ้</string>
+    <string name="league_statistics_today_title">ลีกในวันนี้</string>
+    <string name="league_statistics_today_tab1">สถิติ</string>
     <string name="league_statistics_today_tab2">ค่าน้ำแบบเอเชีย</string>
-    <string name="league_statistics_today_tab3"> ค่าน้ำสูงต่ำ</string>
-    <string name="league_statistics_today_tab4"> ค่าน้ำแบบเอเชียในครึ่งแรก</string>
-    <string name="league_statistics_today_tab5"> อัตราสูงต่ำครึ่งแรก</string>
+    <string name="league_statistics_today_tab3">ค่าน้ำสูงต่ำ</string>
+    <string name="league_statistics_today_tab4">ค่าน้ำแบบเอเชียในครึ่งแรก</string>
+    <string name="league_statistics_today_tab5">อัตราสูงต่ำครึ่งแรก</string>
 
-    <string name="league_statistics_today_date"> ข้อมูลทางสถิติของเวลา : </string>
+    <string name="league_statistics_today_date">เวลาแข่ง: </string>
     <string name="league_statistics_today_rank">อันดับ</string>
     <string name="league_statistics_today_race"> ลีก</string>
-    <string name="league_statistics_today_finish">แข่งขันแล่ว</string>
-    <string name="league_statistics_today_victor"> ชนะ</string>
+    <string name="league_statistics_today_finish">แข่งขันแล้ว</string>
+    <string name="league_statistics_today_victor">ชนะ</string>
     <string name="league_statistics_today_flat">เสมอ</string>
-    <string name="league_statistics_today_loss"> แพ้พ่าย</string>
-    <string name="league_statistics_today_win"> ชนะ</string>
-    <string name="league_statistics_today_failed"> แพ้</string>
+    <string name="league_statistics_today_loss">แพ้</string>
+    <string name="league_statistics_today_win">ชนะ</string>
+    <string name="league_statistics_today_failed">แพ้</string>
     <string name="league_statistics_today_go">เสมอ</string>
     <string name="league_statistics_today_big">สูง</string>
     <string name="league_statistics_today_small">ต่ำ</string>
     <string name="league_statistics_today_tip1"> *หมายเหตุ: คลิกที่รายชื่อด้านบน</string>
-    <string name="league_statistics_today_tip2"> ชนะ, เสมอ, แพ้</string>
+    <string name="league_statistics_today_tip2">ชนะ, เสมอ, แพ้</string>
     <string name="league_statistics_today_tip3">,สามารถเรียงลำดับ</string>
     <string name="league_statistics_today_notice"> คำอธิบาย</string>
     <string name="league_statistics_today_noticetitle">อะไรคือการแจ้งเตือนของลีกในวันนี้? </string>
     <string name="league_statistics_today_noticetext"> รายการการเข้าร่วมการแข่งขันทั้งหมดในวันนี้ ข้อมูลต่างๆของการแข่งขันล่าสุดหรือการจัดอันดับในบางช่วงเวลา</string>
 
     <!--视频直播วิดีโอถ่ายทอดสด-->
-    <string name="direct_seedinging"> กำลังถ่ายทอดสด</string>
+    <string name="direct_seedinging">สถิติ</string>
     <string name="baskball">บาสเกตบอล</string>
     <string name="comprehensive"> รวม</string>
-    <string name="direct_seeding"> ถ่ายทอดสด</string>
+    <string name="direct_seeding">สถิติ</string>
     <string name="download_error"> การดาวน์โหลดล้มเหลว!</string>
     <string name="download_update"> กำลังปรับปรุง กรุณารอสักครู่...</string>
 
@@ -571,7 +572,7 @@
     <string name="basket_player_turnover">ผิดพลาด</string>
     <string name="basket_player_foul">ผิดกติกา</string>
     <string name="basket_text_live">ข้อความออกอากาศ</string>
-    <string name="basket_team_statictics">สถิติทีม</string>
+    <string name="basket_team_statictics">ประตูรวมมากที่สุด</string>
     <string name="basket_players_statictics">สถิติผู้เล่น</string>
     <string name="basket_no_text_live">ไม่มีข้อมูลถ่ายทอดสด</string>
     <string name="basket_player_no_data">ไม่มีข้อมูลสถิติ</string>
@@ -602,7 +603,7 @@
     <string name="snooker_loading">ข้อมูลกำลังโหลด...</string>
 
     <!--我的定制-->
-    <string name="custom_mine_cus">การสั่งซื้อของฉัน</string>
+    <string name="custom_mine_cus">ลงทะเบียน</string>
     <string name="custom_list_cus">ตารางการสั่งซื้อ</string>
     <string name="custom_no_cus"> คุณยังไม่สั่งซื้อทีมบอล/ลีก</string>
     <string name="custom_to_cus">สั่งซื้อทันที</string>
@@ -741,7 +742,7 @@
     <string name="danger_attack_txt">โจมตีอย่างน่ากลัว</string>
     <string name="shoot_correct_txt">ยิงตรงประตู</string>
     <string name="shoot_miss_txt">ยิงเอียงประตู</string>
-    <string name="live_text_txt">ถ่ายทอดสด</string>
+    <string name="live_text_txt">สถิติ</string>
     <string name="first_players_txt">ผู้เล่น</string>
     <string name="statistics_txt">สถิติ</string>
     <string name="trend_txt">แนวโน้ม</string>
@@ -805,7 +806,7 @@
     <string name="frame_home_video_txt">วิดีโอถ่ายทอดสด</string>
     <string name="frame_video_ing_txt">กำลังถ่ายทอดอยู่</string>
     <string name="video_live_txt">การเลือกช่องถ่ายทอดสด</string>
-    <string name="live_txt">ถ่ายทอดสด</string>
+    <string name="live_txt">สถิติ</string>
     <string name="number_frame_txt">การออกผลล็อตเตอรี่</string>
     <string name="car_frame_txt">การแข่งรถปังปิ่ง</string>
     <string name="more_frame_txt">ล็อตเตอรี่อื่น ๆ</string>
@@ -816,9 +817,9 @@
     <string name="invited_prize"> เชิญเพื่อน จะมีรางวัล</string>
     <string name="can_only_choose_a_picture"> ที่รัก, สามารถเลือกได้ 1 รูป</string>
     <!-- 侧滑栏字体 -->
-    <string name="foot_jishi_txt">เรียลไทม์</string>
-    <string name="foot_saiguo_txt">ผลบอล</string>
-    <string name="foot_saicheng_txt">ตารางบอล</string>
+    <string name="foot_jishi_txt">สถิติ</string>
+    <string name="foot_saiguo_txt">ผลบาส</string>
+    <string name="foot_saicheng_txt">ตารางบาส</string>
     <string name="foot_guanzhu_txt">เกมของฉัน</string>
     <string name="foot_setting_txt">การตั้งค่า</string>
     <!-- 下拉刷新 -->
@@ -883,9 +884,9 @@
     <!-- คัดเลือกเกมฟุตบอล足球筛选 -->
     <string name="filtrate_match_top">คัดเลือกเกมฟุตบอล</string>
     <string name="filtrate_match_focal">โฟกัส</string>
-    <string name="filtrate_match_hot">ยอดนิยม</string>
+    <string name="filtrate_match_hot">ลีกยอดนิยม</string>
     <string name="filtrate_match_all">เลือกทั้งหมด</string>
-    <string name="filtrate_match_inverse">เลือกผกผัน</string>
+    <string name="filtrate_match_inverse">ยกเลิก</string>
     <string name="filtrate_match_submit">ตกลง</string>
     <string name="filtrate_match_hide">ซ่อน</string>
     <string name="filtrate_match_session">เกม</string>
@@ -1268,8 +1269,8 @@
     <string name="developing">กรุณารอการแข่งขันต่อไป</string>
 
     <string name="football_detail_stadium_tab">รายงานการแข่งขัน</string>
-    <string name="football_detail_odds_tab">ออดซ</string>
-    <string name="football_detail_analyze_tab">วิเคราะห์</string>
+    <string name="football_detail_odds_tab">อัตราต่อรอง</string>
+    <string name="football_detail_analyze_tab">สถิติ</string>
     <string name="goal">เฉลี่ยบอลเข้า</string>
     <string name="football_detail_pre_title1">เวลาเริ่มแข่ง</string>
     <string name="football_detail_pre_title2">สภาพอากาศ</string>
@@ -1281,7 +1282,7 @@
     <string name="homeguestconstract">การเปรียบเทียบทีมเหย้าทีมเยือน</string>
     <string name="GoalsperGame">เฉลี่ยบอลเข้า</string>
     <string name="losspergame">เฉลี่ยบอลพลาด</string>
-    <string name="ranking">การจัดอันดับของคะแนนรวม</string>
+    <string name="ranking">สถิติรวม</string>
     <string name="goal_and_loss">บอลที่ได้และพลาด</string>
     <string name="history_battle">ผลงานการพบกันที่ผ่านมา</string>
     <string name="home_recent">สภาพทีมเหย้าล่าสุด</string>
@@ -1298,7 +1299,7 @@
     <string name="ball">บอล</string>
     <string name="analyze_date">วันที่</string>
     <string name="analyze_match">เกม</string>
-    <string name="analyze_match_result">ผลบอล</string>
+    <string name="analyze_match_result">ผลบาส</string>
     <string name="zhuduijin">ทีมเหย้า</string>
     <string name="keduijin">ทีมเยือน</string>
     <string name="nodata">ไม่มีข้อมูล</string>
@@ -1344,7 +1345,7 @@
     <!--篮球设置-->
     <string name="basket_odd_setting">เคล็ดลับออดซ</string>
     <string name="basket_scort_setting">เคล็ดลับของเกม</string>
-    <string name="basket_analyze">วิเคราะห์</string>
+    <string name="basket_analyze">สถิติ</string>
     <string name="basket_alet">HDP</string>
     <string name="basket_asize">O/U</string>
     <string name="basket_eur">1x2</string>
@@ -1360,7 +1361,7 @@
     <string name="hor_data_info_txt">ข่าวนิยม</string>
     <string name="basket_hot">เกมนิยม</string>
     <string name="basket_all_checked">เลือกทั้งหมด</string>
-    <string name="basket_negate">เลือกผกผัน</string>
+    <string name="basket_negate">ยกเลิก</string>
     <string name="basket_reset">รีเซ็ต</string>
 
     <string name="basket_isok">ยืนยัน</string>
@@ -1371,7 +1372,7 @@
     <!--篮球详情-->
 
     <!--分析-->
-    <string name="basket_analyze_sides">ผลงานของทั้งสองฝ่าย</string>
+    <string name="basket_analyze_sides">ผลงานการพบกันทั้งสองทีม</string>
     <string name="basket_analyze_history">ผลงานการพบกัน</string>
     <string name="basket_analyze_recent">ผลงานล่าสุด</string>
     <string name="basket_analyze_fruture">ตารางการแข่งล่วงหน้า</string>
@@ -1389,7 +1390,7 @@
     <string name="basket_analyze_date">วันที่</string>
     <string name="basket_analyze_guest">สนามเยือน</string>
     <string name="basket_analyze_home">สนามเหย้า</string>
-    <string name="basket_analyze_score">สกอร์</string>
+    <string name="basket_analyze_score">ผลบาส</string>
     <string name="basket_analyze_sizeof">O/U</string>
     <string name="basket_analyze_let_points">แต้มต่อ</string>
     <string name="basket_analyze_interval">ห่างกัน</string>
@@ -1397,7 +1398,7 @@
     <string name="basket_analyze_guest_win">ทีมเยือนชนะ</string>
     <string name="basket_analyze_dish">แฮนดิแคป</string>
     <string name="basket_analyze_home_win">ทีมเหย้าชนะ</string>
-    <string name="basket_analyze_screen">คัดเลือก</string>
+    <string name="basket_analyze_screen">เลือกลีก</string>
 
     <string name="basket_analyze_future">ในอนาคต</string>
     <string name="basket_analyze_field">เกม</string>
@@ -1434,7 +1435,7 @@
 
 
     <!-- 足球资讯 -->
-    <string name="foot_title">ข้อมูลฟุตบอล</string>
+    <string name="foot_title">ข่าวฟุตบอล</string>
     <string name="foot_zl_tipf">เป็นรอบที่หนึ่งแล้ว</string>
     <string name="foot_zl_tipl">เป็นรอบสุดท้ายแล้ว</string>
     <string name="foot_tujian">แนะนำ</string>
@@ -1451,11 +1452,11 @@
     <string name="basket_home_dishijie">ควอเตอร์ที่สี่</string>
 
 
-    <string name="football_score">สกอร์</string>
+    <string name="football_score">ผลบาส</string>
     <string name="football_news">ข่าว</string>
     <string name="football_data">ฐานข้อมูล</string>
     <string name="football_video">วิดีโอ</string>
-    <string name="football_cpi">ออดซ</string>
+    <string name="football_cpi">อัตราต่อรอง</string>
     <string name="title_activity_web_counsel">WebCounselActivity</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -1568,7 +1569,7 @@
     <string name="snooker_game_time">เวลา</string>
     <string name="snooker_state">สถานะ</string>
     <string name="snooker_player">ผู้เล่น</string>
-    <string name="snooker_score">สกอร์</string>
+    <string name="snooker_score">ผลบาส</string>
     <string name="snooker_detailed">รายละเอียด</string>
     <string name="snooker_analyze_birth">วันเกิด</string>
     <string name="snooker_analyze_rank">อันดับโลก</string>
@@ -1592,7 +1593,7 @@
     <string name="tennis_match_over">สิ้นสุด</string>
     <string name="tennis_match_not_start">ยังไม่เริ่ม</string>
     <string name="tennis_match_join">กำลังดำเนิน</string>
-    <string name="basket_live">ถ่ายทอดสด</string>
+    <string name="basket_live">สถิติ</string>
 
     <string name="foot_neterror_post_photo">เครือข่ายผิดปกติ การแก้ไขล้มเหลว โปรดลองใหม่อีกครั้ง</string>
 

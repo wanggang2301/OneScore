@@ -177,7 +177,9 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
 
                 scheduleViewHolder.item_football_racename.setText(scheduleMatchDto.getSchmatchs().getRacename());
-                scheduleViewHolder.item_football_racename.setTextColor(Color.parseColor(scheduleMatchDto.getSchmatchs().getRaceColor()));
+                if (scheduleMatchDto.getSchmatchs().getRaceColor() != null) {
+                    scheduleViewHolder.item_football_racename.setTextColor(Color.parseColor(scheduleMatchDto.getSchmatchs().getRaceColor()));
+                }
                 scheduleViewHolder.item_football_time.setText(scheduleMatchDto.getSchmatchs().getTime());
 
                 scheduleViewHolder.rl_score.setVisibility(View.GONE);

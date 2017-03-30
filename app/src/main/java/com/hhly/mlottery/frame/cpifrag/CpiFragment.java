@@ -13,6 +13,9 @@ import android.view.ViewGroup;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.frame.BallType;
+import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SIndexFragment;
+import com.hhly.mlottery.frame.cpifrag.basketballtask.BasketBallCpiFrament;
+import com.hhly.mlottery.frame.cpifrag.footballtask.FootCpiFragment;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
@@ -26,23 +29,18 @@ import de.greenrobot.event.EventBus;
  * 指数
  */
 public class CpiFragment extends Fragment {
-
     private View mView;
     private Context mContext;
-
     private int fragmentIndex = 0;
     private FragmentManager fragmentManager;
     private Fragment currentFragment;
     private List<Fragment> fragments = new ArrayList<>();
-
     private Activity mActivity;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
-
     }
 
     @Override
@@ -55,8 +53,9 @@ public class CpiFragment extends Fragment {
 
     private void initView() {
         fragments.add(FootCpiFragment.newInstance());
+        fragments.add(BasketBallCpiFrament.newInstace());
+        fragments.add(SIndexFragment.newInstance("",""));
         switchFragment(BallType.FOOTBALL);
-
     }
 
     public void onEventMainThread(ScoreSwitchFg scoreSwitchFg) {
@@ -80,7 +79,6 @@ public class CpiFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-
     }
 
     @Override

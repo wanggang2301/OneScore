@@ -55,12 +55,6 @@ public class HomeLanguageActivity extends BaseActivity implements View.OnClickLi
                 language_id_layout.setVisibility(View.GONE);
                 language_th_layout.setVisibility(View.GONE);
                 language_vi_layout.setVisibility(View.GONE);
-
-                // TODO 暂用
-                language_en_layout.setVisibility(View.VISIBLE);
-                language_th_layout.setVisibility(View.VISIBLE);
-                language_vi_layout.setVisibility(View.VISIBLE);
-
                 break;
             case AppConstants.PACKGER_NAME_TH:// 泰国版
                 language_china_layout.setVisibility(View.GONE);

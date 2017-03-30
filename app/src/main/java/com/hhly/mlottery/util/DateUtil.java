@@ -549,9 +549,7 @@ public class DateUtil {
         TimeZone time = TimeZone.getTimeZone("GMT+8");// 默认国内版
         switch (MyApp.isPackageName) {
             case AppConstants.PACKGER_NAME_ZH:// 国内版
-//                time = TimeZone.getTimeZone("GMT+8");
-                // TODO 暂时用
-                time = TimeZone.getTimeZone("GMT+7");
+                time = TimeZone.getTimeZone("GMT+8");
                 break;
             case AppConstants.PACKGER_NAME_TH:// 泰国版
             case AppConstants.PACKGER_NAME_VN_HN:// 越南北版
@@ -563,12 +561,7 @@ public class DateUtil {
                 break;
         }
         TimeZone.setDefault(time);// 设置时区
-        SimpleDateFormat sdf;
-        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
-            sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        }else{
-            sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date data = sdf.parse(nextTime);
         sdf.setTimeZone(TimeZone.getDefault());
         return data.getTime();
@@ -605,5 +598,15 @@ public class DateUtil {
             return MyApp.getContext().getResources().getString(R.string.return_today);
         }
         return "";
+    }
+    /**
+     * 获取当前时间年月日
+     */
+    public static String getMomentDate(){
+        Date d = new Date();
+        System.out.println(d);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String dateNowStr = sdf.format(d);
+        return dateNowStr;
     }
 }

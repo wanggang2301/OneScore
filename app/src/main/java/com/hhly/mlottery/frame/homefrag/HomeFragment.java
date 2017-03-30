@@ -468,7 +468,28 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         } else {
             map.put("versionType", COMP_VER);
         }
-        map.put("localeType", AppConstants.LOCALETYPE_ZH);// 国内版升级参数
+
+        // 各版本升级参数
+        switch (MyApp.isPackageName){
+            case AppConstants.PACKGER_NAME_ZH:
+                map.put("localeType", AppConstants.LOCALETYPE_ZH);
+                break;
+            case AppConstants.PACKGER_NAME_TH:
+                map.put("localeType", AppConstants.LOCALETYPE_TH);
+                break;
+            case AppConstants.PACKGER_NAME_VN:
+                map.put("localeType", AppConstants.LOCALETYPE_VN);
+                break;
+            case AppConstants.PACKGER_NAME_VN_HN:
+                map.put("localeType", AppConstants.LOCALETYPE_VN_HN);
+                break;
+            case AppConstants.PACKGER_NAME_UK:
+                map.put("localeType", AppConstants.LOCALETYPE_UK);
+                break;
+            default:
+                break;
+        }
+
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_VERSION_UPDATE, map, new DefaultRetryPolicy(2000, 1, 1), new VolleyContentFast.ResponseSuccessListener<UpdateInfo>() {
             @Override
             public synchronized void onResponse(final UpdateInfo json) {

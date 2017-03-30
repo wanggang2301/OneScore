@@ -1011,6 +1011,7 @@
     <string name="login_succ">登錄成功</string>
     <string name="login_no_weixin">沒有安裝微信,請先安裝微信!</string>
     <string name="login_peak">登錄高峰期,請稍後再試</string>
+    <string name="original_password_error">原密碼錯誤</string>
     <string name="pwd_empty_new">請輸入密碼(由6-16位數字和字符組成)</string>
     <string name="login_fail">登錄失敗</string>
     <string name="pwd_format">密碼格式爲6-16位數字和字符組成</string>
@@ -1600,5 +1601,6 @@
     <string name="football_odds_return_list">返回列表</string>
 
     <string name="home_gender">性别</string>
-    <string name="no_select_head">你還未選擇頭像</string>
+    <string name="snooker_index_single_double">单双</string>
+    <string name="score_ret">退賽</string>
 </resources>

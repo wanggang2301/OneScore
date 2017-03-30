@@ -12,7 +12,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -711,7 +710,6 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
             public void run() {
                 synchronized (this) {
                     L.d("xxxxx", "滚球推送：" + text);
-                    System.out.println("xxxxx 滚球推送：" + text);
                     ChartRoom chartRoom = JSON.parseObject(text, ChartRoom.class);
 
                     // 国际化日期格式

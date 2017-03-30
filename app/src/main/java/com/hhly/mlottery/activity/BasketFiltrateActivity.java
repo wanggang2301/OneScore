@@ -368,7 +368,6 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        // TODO Auto-generated method stub
         switch (v.getId()) {
             case R.id.public_img_back:// 关闭(返回)
                 MobclickAgent.onEvent(mContext, "Basketball_Filter_Exit");
