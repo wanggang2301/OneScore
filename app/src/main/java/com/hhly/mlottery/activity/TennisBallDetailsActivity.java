@@ -77,7 +77,7 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
             @Override
             public void run() {
                 try {
-                    sleep(3000);
+                    sleep(1000);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

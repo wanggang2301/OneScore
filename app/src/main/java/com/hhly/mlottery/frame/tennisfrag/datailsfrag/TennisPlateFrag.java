@@ -2,6 +2,7 @@ package com.hhly.mlottery.frame.tennisfrag.datailsfrag;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.fastjson.JSON;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.TennisCpiDetailsActivity;
 import com.hhly.mlottery.adapter.tennisball.TennisDatailsPlateAdapter;
+import com.hhly.mlottery.bean.tennisball.datails.odds.TennisDataBean;
+import com.hhly.mlottery.bean.tennisball.datails.odds.TennisOdds;
 import com.hhly.mlottery.util.L;
 
 import java.util.ArrayList;
@@ -22,6 +28,11 @@ import java.util.List;
  */
 public class TennisPlateFrag extends Fragment {
     private static final String TENNIS_DATAILS_THIRDID = "tennis_details_third_id";
+    private final String ARG_ODDTYPE = "oddType";
+    private final String ARG_THIRDID = "thirdId";
+    private final String ARG_INDEX = "index";
+    private final String ARG_LEFT_NAME = "leftName";
+    private final String ARG_COMPAN_NAME = "companName";
 
     private Activity mContext;
     private String mThirdId;
@@ -31,16 +42,18 @@ public class TennisPlateFrag extends Fragment {
     private View notDataView;
     private RecyclerView mRecyclerView;
 
-    private List<String> mData = new ArrayList<>();
+    private TennisOdds tennisOdds;
     private TennisDatailsPlateAdapter mAdapter;
+
+    private ArrayList<String> nameList = new ArrayList<>();
 
     public TennisPlateFrag() {
     }
 
-    public static TennisPlateFrag newInstance(String thirdid) {
+    public static TennisPlateFrag newInstance(String thirdId) {
         TennisPlateFrag fragment = new TennisPlateFrag();
         Bundle args = new Bundle();
-        args.putString(TENNIS_DATAILS_THIRDID, thirdid);
+        args.putString(TENNIS_DATAILS_THIRDID, thirdId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,10 +71,48 @@ public class TennisPlateFrag extends Fragment {
         mView = inflater.inflate(R.layout.fragment_tennis_plate, container, false);
 
         initView();
-
-
+        initData();
+        initEvent();
 
         return mView;
+    }
+
+    private void initEvent() {
+        mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int i) {
+                Intent intent = new Intent(mContext, TennisCpiDetailsActivity.class);
+                intent.putExtra(ARG_ODDTYPE, "1");
+                // TODO 获取真正的id
+                intent.putExtra(ARG_THIRDID, "848834591");
+                intent.putExtra(ARG_INDEX, i);
+                intent.putExtra(ARG_LEFT_NAME, nameList);
+                intent.putExtra(ARG_COMPAN_NAME, tennisOdds.getData().get(i).getName());
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void initData() {
+
+        tennisOdds = JSON.parseObject(getTestData(), TennisOdds.class);
+
+        // TODO 添加数据展示
+        if (tennisOdds != null && tennisOdds.getData() != null) {
+
+            nameList.clear();
+            for (int i = 0; i < tennisOdds.getData().size(); i++) {
+                // 添加所有公司name
+                nameList.add(tennisOdds.getData().get(i).getName());
+            }
+
+            mAdapter.addData(tennisOdds.getData());
+            mAdapter.notifyDataSetChanged();
+        } else {
+            // 暂无数据
+        }
+
+
     }
 
     private void initView() {
@@ -70,17 +121,7 @@ public class TennisPlateFrag extends Fragment {
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.tennis_datails_plate_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 
-        mData.add("test");
-        mData.add("test");
-        mData.add("test");
-        mData.add("test");
-        mData.add("test");
-        mData.add("test");
-        mData.add("test");
-        mData.add("test");
-        mData.add("test");
-
-        mAdapter = new TennisDatailsPlateAdapter(R.layout.fragment_tennis_plate_item,mData);
+        mAdapter = new TennisDatailsPlateAdapter(R.layout.fragment_tennis_plate_item, null);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -91,4 +132,7 @@ public class TennisPlateFrag extends Fragment {
         mContext = (Activity) context;
     }
 
+    private String getTestData() {
+        return "{\"result\":\"200\",\"data\":[{\"details\":[{\"time\":\"2017-03-29 15:18:49\",\"score\":null,\"homeOdd\":0.0,\"hand\":21.5,\"guestOdd\":0.0},{\"time\":\"2017-03-30 03:38:41\",\"score\":null,\"homeOdd\":0.88,\"hand\":21.5,\"guestOdd\":0.96}],\"name\":\"qt\"}]}";
+    }
 }

@@ -3,13 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="vertical"
     tools:context="com.hhly.mlottery.frame.tennisfrag.datailsfrag.TennisPlateFrag">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:background="@color/linecolor" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -128,5 +126,11 @@
 
         </LinearLayout>
     </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/linecolor" />
 
 </LinearLayout>
