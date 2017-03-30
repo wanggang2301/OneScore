@@ -29,23 +29,18 @@ import de.greenrobot.event.EventBus;
  * 指数
  */
 public class CpiFragment extends Fragment {
-
     private View mView;
     private Context mContext;
-
     private int fragmentIndex = 0;
     private FragmentManager fragmentManager;
     private Fragment currentFragment;
     private List<Fragment> fragments = new ArrayList<>();
-
     private Activity mActivity;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
-
     }
 
     @Override
@@ -59,10 +54,7 @@ public class CpiFragment extends Fragment {
     private void initView() {
         fragments.add(FootCpiFragment.newInstance());
         fragments.add(BasketBallCpiFrament.newInstace());
-
         fragments.add(SIndexFragment.newInstance("",""));
-        switchFragment(BallType.FOOTBALL);
-
         switchFragment(BallType.FOOTBALL);
     }
 
@@ -87,7 +79,6 @@ public class CpiFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-
     }
 
     @Override
