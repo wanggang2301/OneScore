@@ -16,6 +16,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -50,6 +51,7 @@ import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
 import com.hhly.mlottery.frame.footballframe.AnalyzeFragment;
+import com.hhly.mlottery.frame.footballframe.CompetitionAnalysisFragment;
 import com.hhly.mlottery.frame.footballframe.DetailsRollballFragment;
 import com.hhly.mlottery.frame.footballframe.IntelligenceFragment;
 import com.hhly.mlottery.frame.footballframe.OddsFragment;
@@ -109,12 +111,14 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private final static int ROLLBALL_FG = 0;
     private final static int LIVE_FG = 1;
-    private final static int ANALYZE_FG = 2;
-    private final static int STATISTICS_FG = 3;
-    private final static int ODDS_FG = 4;
-    private final static int TALKBALL_FG = 5;
+    private final static int ANALYZE_FG = 3;
+    private final static int MATCH_DE = 2;
+    private final static int STATISTICS_FG = 4;
+    private final static int ODDS_FG = 5;
+    private final static int TALKBALL_FG = 6;
     private int infoCenter = -1;// 情报中心中转标记
     private int chartBallView = -1;// 聊球界面转标记
+    private int matchDetails= -1;// 情报中心中转标记
 
     //事件直播
     //主队事件
@@ -236,6 +240,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private DetailsRollballFragment mDetailsRollballFragment; //滚球
 
     private AnalyzeFragment mAnalyzeFragment;  //分析
+    private CompetitionAnalysisFragment competitionAnalysisFragment;//竞彩
     private OddsFragment mOddsFragment;         //指数
 
     private StatisticsFragment mStatisticsFragment;  //统计
@@ -326,14 +331,17 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     boolean isAddMultiViewHide = false;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BUNDLE_PARAM_THIRDID, "1300");
+            matchDetails=getIntent().getExtras().getInt("match_details");
             currentFragmentId = getIntent().getExtras().getInt("currentFragmentId");
             infoCenter = getIntent().getExtras().getInt("info_center");
             isAddMultiViewHide = getIntent().getExtras().getBoolean("isAddMultiViewHide");
             chartBallView = getIntent().getExtras().getInt("chart_ball_view");
+
         }
         EventBus.getDefault().register(this);
 
@@ -361,6 +369,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         //分析
         mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, "", "");
+        //竞彩
+        competitionAnalysisFragment = CompetitionAnalysisFragment.newInstance(mThirdId);
         //指数
         mOddsFragment = OddsFragment.newInstance();
         //统计
@@ -370,8 +380,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         // 聊球
         mChartBallFragment = ChartBallFragment.newInstance(0, mThirdId);
 
-        mTabsAdapter.addFragments(mDetailsRollballFragment, mStatisticsFragment, mAnalyzeFragment, mIntelligenceFragment, mOddsFragment, mChartBallFragment);
-        mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
+        mTabsAdapter.addFragments(mDetailsRollballFragment, mStatisticsFragment, competitionAnalysisFragment,mAnalyzeFragment, mIntelligenceFragment, mOddsFragment, mChartBallFragment);
+        mViewPager.setOffscreenPageLimit(6);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
@@ -732,6 +742,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             } else if (infoCenter == 1) {
                 // 情报
                 mViewPager.setCurrentItem(STATISTICS_FG, false);
+            }  else if (matchDetails == 1) {
+                    // 竞彩
+                mViewPager.setCurrentItem(MATCH_DE, false);
             } else {
                 //赛前进入分析
                 mViewPager.setCurrentItem(ANALYZE_FG, false);
@@ -756,6 +769,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             } else if (infoCenter == 1) {
                 // 情报
                 mViewPager.setCurrentItem(STATISTICS_FG, false);
+            }  else if (matchDetails == 1) {
+                // 竞彩
+                mViewPager.setCurrentItem(MATCH_DE, false);
             } else {
                 mViewPager.setCurrentItem(ROLLBALL_FG, false);
             }

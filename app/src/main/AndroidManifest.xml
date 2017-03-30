@@ -72,9 +72,15 @@
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation" />
 
         <!-- 内地版的key-begin -->
-        <meta-data android:name="UMENG_APPKEY" android:value="5625a606e0f55aad6700244f" />
-        <meta-data android:name="UMENG_MESSAGE_SECRET" android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
-        <meta-data android:name="UMENG_CHANNEL" android:value="BETA" />
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5625a606e0f55aad6700244f" />
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="BETA" />
         <!-- 内地版的key-end -->
 
         <activity
@@ -320,8 +326,9 @@
 
         <!-- 覆盖安装监听 -->
         <!--斯诺克内页-->
-        <activity android:name=".activity.SnookerMatchDetail"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.SnookerMatchDetail"
+            android:screenOrientation="portrait" />
         <!--覆盖安装监听-->
         <receiver
             android:name=".receiver.AppInstallReceiver"
@@ -340,6 +347,9 @@
             android:name=".activity.SnookerSettingActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.FootballMatchSearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.IndexActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -347,10 +357,17 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SnookerInformationSerachActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SnookerEventPageActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FootballMatchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BasketBallMatchSearchActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

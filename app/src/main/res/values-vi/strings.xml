@@ -1629,4 +1629,5 @@
 
     <string name="basket_handicap_bigorsmall">O/D/U</string>
     <string name="home_gender">Giới tính</string>
+    <string name="no_select_head">Bạn vẫn chưa chọn hình đại diện</string>
 </resources>

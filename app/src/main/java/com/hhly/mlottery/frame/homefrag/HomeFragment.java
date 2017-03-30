@@ -38,6 +38,7 @@ import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketballScoresActivity;
 import com.hhly.mlottery.activity.DebugConfigActivity;
 import com.hhly.mlottery.activity.FootballActivity;
+import com.hhly.mlottery.activity.FootballMatchActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.activity.HomeUserOptionsActivity;
 import com.hhly.mlottery.activity.NumbersActivity;
@@ -729,7 +730,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     private void goToUserOptionsActivity() {
-        startActivityForResult(new Intent(mContext, HomeUserOptionsActivity.class), REQUESTCODE_LOGIN);
+        startActivityForResult(new Intent(mContext, FootballMatchActivity.class), REQUESTCODE_LOGIN);
     }
 
     /**

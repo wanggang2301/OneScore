@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketBallMatchSearchActivity;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
 import com.hhly.mlottery.activity.BasketballSettingActivity;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
@@ -71,6 +72,7 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
      * 筛选
      */
     public static ImageView mFilterImgBtn;// 筛选
+    private ImageView public_search_filter;
 
     public static ImageView getmFilterImgBtn() {
         return mFilterImgBtn;
@@ -150,6 +152,16 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         d_header = (LinearLayout) view.findViewById(R.id.d_heasder);
         tv_match_name.setText(getResources().getString(R.string.basketball_txt));
 
+        //搜索
+        public_search_filter = (ImageView) view.findViewById(R.id.public_search_filter);
+        public_search_filter.setVisibility(View.VISIBLE);
+        public_search_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, BasketBallMatchSearchActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setupViewPager() {

@@ -55,6 +55,7 @@
     <!--足球内页改版(滚球等)-->
     <string name="foot_details_roolball">滚球</string>
     <string name="foot_details_talkball">聊球</string>
+    <string name="foot_details_competition_analysis">竞彩</string>
     <string name="foot_details_analyze">分析</string>
     <string name="foot_details_odds">指数</string>
     <string name="foot_details_statistics">直播</string>
@@ -1629,4 +1630,6 @@
     <string name="basket_handicap_bigorsmall">大/走/小</string>
 
     <string name="home_gender">性别</string>
+
+    <string name="no_select_head">您还未选择头像</string>
 </resources>

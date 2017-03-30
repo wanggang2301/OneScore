@@ -1,0 +1,241 @@
+package com.hhly.mlottery.activity;
+
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.View;
+import android.widget.BaseAdapter;
+import android.widget.CursorAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
+
+import com.hhly.mlottery.R;
+import com.hhly.mlottery.adapter.BasketballMatchSearchAdapter;
+import com.hhly.mlottery.adapter.basketball.PinnedHeaderExpandableAdapter;
+import com.hhly.mlottery.bean.BasketballItemSearchBean;
+import com.hhly.mlottery.bean.BasketballSearchBean;
+import com.hhly.mlottery.bean.basket.BasketMatchBean;
+import com.hhly.mlottery.bean.basket.BasketMatchFilter;
+import com.hhly.mlottery.bean.basket.BasketRoot;
+import com.hhly.mlottery.bean.basket.BasketRootBean;
+import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
+import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
+import com.hhly.mlottery.util.DateUtil;
+import com.hhly.mlottery.util.FiltrateCupsMap;
+import com.hhly.mlottery.util.FocusUtils;
+import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.ResultDateUtil;
+import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.view.PinnedHeaderExpandableListView;
+import com.hhly.mlottery.view.RecordSQLiteOpenHelper;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by yuely198 on 2017/3/27.
+ */
+
+public class BasketBallMatchSearchActivity extends BaseActivity implements View.OnClickListener {
+
+    private static final String TAG = "ImmedBasketballFragment";
+    //内容数据
+    private List<BasketballItemSearchBean> mMatchdata = new ArrayList<>();//match的 内容(json)
+    private ImmedBasketballFragment.BasketFocusClickListener mFocusClickListener; //关注点击监听
+    public static int isLoad = -1;
+    private BasketFocusClickListener basketFocusClickListener;
+
+    public static int getIsLoad() {
+        return isLoad;
+    }
+
+    private static final String LEAGUEID = "league";
+    private BasketballMatchSearchAdapter basketballInforSerachAdapter;
+    private EditText et_keyword;
+    private RecyclerView explistview;
+    private TextView mNo_serach_tv;
+    private static final String SEARCHKEYWORD = "searchKeyword";
+    private ImageView mSearch_iv_delete;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_basketsearch);
+        initView();
+        initEvent();
+    }
+
+
+    private void initEvent() {
+
+        et_keyword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (!et_keyword.getText().toString().trim().isEmpty()) {
+
+                    explistview.setVisibility(View.VISIBLE);
+                    initData(et_keyword.getText().toString().trim());
+                    mSearch_iv_delete.setVisibility(View.VISIBLE);
+                }else{
+                    mSearch_iv_delete.setVisibility(View.GONE);
+                    explistview.setVisibility(View.GONE);
+                }
+
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+    }
+    // 定义关注监听
+    public interface BasketFocusClickListener {
+        void FocusOnClick(View view, BasketballItemSearchBean root);
+    }
+
+    /**
+     * 点击关注事件
+     */
+    public void fucusChicked() {
+        // 检查之前是否被选中
+        basketFocusClickListener = new BasketFocusClickListener() {
+            @Override
+            public void FocusOnClick(View view, BasketballItemSearchBean root) {
+                boolean isCheck = (Boolean) view.getTag();// 检查之前是否被选中
+
+                if (!isCheck) {//未关注->关注
+                    FocusUtils.addBasketFocusId(root.getThirdId());
+                    view.setTag(true);
+
+                } else {//关注->未关注
+                    FocusUtils.deleteBasketFocusId(root.getThirdId());
+                    view.setTag(false);
+
+                  BasketballScoresActivity.basketFocusCallback();
+
+                }
+            }
+        };
+
+
+
+    }
+
+
+
+    //请求加载数据
+    private void initData(String keyWord) {
+        Map<String, String> params = new HashMap<>();
+        params.put("searchKeyword", keyWord);//接口添加 version=xx 字段
+
+        VolleyContentFast.requestJsonByPost("http://m.13322.com/mlottery/core/IOSBasketballMatch.fuzzySearch.do", params, new VolleyContentFast.ResponseSuccessListener<BasketballSearchBean>() {
+            @Override
+            public void onResponse(BasketballSearchBean json) {
+
+                if (!json.getData().isEmpty()) {
+                    explistview.setVisibility(View.VISIBLE);
+                    mNo_serach_tv.setVisibility(View.GONE);
+                    mMatchdata = json.getData();
+                    basketballInforSerachAdapter = new BasketballMatchSearchAdapter(BasketBallMatchSearchActivity.this, mMatchdata);
+                    explistview.setAdapter(basketballInforSerachAdapter);
+                    basketballInforSerachAdapter.setmFocus(basketFocusClickListener);//设置关注
+
+                } else {
+                    explistview.setVisibility(View.GONE);
+                    mNo_serach_tv.setVisibility(View.VISIBLE);
+                    mNo_serach_tv.setText(R.string.not_find_search);
+
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            /**
+             * 加载失败
+             *
+             * @param exception
+             */
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                L.e(TAG, "exception.getErrorCode() = " + exception.getErrorCode());
+                explistview.setVisibility(View.GONE);
+                mNo_serach_tv.setVisibility(View.VISIBLE);
+                mNo_serach_tv.setText(R.string.network_suck);
+
+            }
+        }, BasketballSearchBean.class);
+        fucusChicked();//点击关注监听
+    }
+
+    private void initView() {
+
+
+
+
+        //搜索框
+        et_keyword = (EditText) findViewById(R.id.et_keyword);
+        //数据返回显示
+        explistview = (RecyclerView) findViewById(R.id.explistview);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(BasketBallMatchSearchActivity.this);
+        explistview.setLayoutManager(layoutManager);
+        //无数据显示
+        mNo_serach_tv = (TextView) findViewById(R.id.no_serach_tv);
+        //删除键
+        mSearch_iv_delete = (ImageView) findViewById(R.id.search_iv_delete);
+        mSearch_iv_delete.setOnClickListener(this);
+
+
+        //返回
+        findViewById(R.id.search_btn_back).setOnClickListener(this);
+
+    }
+
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+
+            case R.id.search_btn_back:
+                finish();
+                break;
+
+
+            case R.id.search_iv_delete:
+
+                et_keyword.setText("");
+
+                break;
+
+            default:
+                break;
+
+        }
+    }
+
+}

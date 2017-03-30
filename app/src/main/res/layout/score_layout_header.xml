@@ -50,7 +50,19 @@
             android:paddingTop="3dp"
             android:scaleType="centerInside"
             android:src="@mipmap/icon_config_btn" />
-
+        <ImageView
+            android:id="@+id/public_search_filter"
+            style="@style/RippleBackgroudBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/public_btn_set"
+            android:layout_alignTop="@+id/public_btn_set"
+            android:layout_toLeftOf="@+id/public_btn_filter"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:scaleType="centerInside"
+            android:visibility="gone"
+            android:src="@mipmap/info_search" />
         <ImageView
             android:id="@+id/public_btn_filter"
             style="@style/RippleBackgroudBorderless"

@@ -56,6 +56,7 @@
     <!--Football Pages Revision(Running etc.)-->
     <string name="foot_details_roolball">Running</string>
     <string name="foot_details_talkball">Talk about Football</string>
+    <string name="foot_details_competition_analysis">Competition_analysis</string>
     <string name="foot_details_analyze">Analysis</string>
     <string name="foot_details_odds">Odds</string>
     <string name="foot_details_statistics">Live</string>
@@ -1613,5 +1614,5 @@
 
     <string name="basket_handicap_bigorsmall">O/D/U</string>
     <string name="home_gender">Gender</string>
-
+    <string name="no_select_head">You have not selected image</string>
 </resources>
