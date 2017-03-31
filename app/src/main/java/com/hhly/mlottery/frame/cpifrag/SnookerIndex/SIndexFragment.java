@@ -58,8 +58,8 @@ import de.greenrobot.event.EventBus;
 
 public class SIndexFragment extends BaseWebSocketFragment implements SIndexContract.View,View.OnClickListener{
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    public static final String ARG_PARAM1 = "param1";
+    public static final String ARG_PARAM2 = "param2";
     private ArrayList<SnookerIndexBean.CompanyEntity> companyList=new ArrayList<>(); // 公司数据源
 
     private   int mBallType;
@@ -129,12 +129,12 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
     }
 
 
-    public static SIndexFragment newInstance(int param1, String param2) {
+    public static SIndexFragment newInstance() {
         SIndexFragment fragment = new SIndexFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+//        Bundle args = new Bundle();
+//        args.putInt(ARG_PARAM1, param1);
+//        args.putString(ARG_PARAM2, param2);
+//        fragment.setArguments(args);
         return fragment;
     }
 

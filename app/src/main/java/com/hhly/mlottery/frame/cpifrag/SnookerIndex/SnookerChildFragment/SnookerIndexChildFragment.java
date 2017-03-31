@@ -14,15 +14,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.CpiDetailsActivity;
+import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.activity.SnookerMatchDetail;
 import com.hhly.mlottery.adapter.snooker.SnookerIndexAdapter;
 import com.hhly.mlottery.bean.snookerbean.SnookerScoreSocketBean;
 import com.hhly.mlottery.bean.snookerbean.snookerIndexBean.SnookerIndexBean;
 import com.hhly.mlottery.bean.snookerbean.snookerschedulebean.SnookerSocketOddsBean;
+import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SIndexFragment;
 import com.hhly.mlottery.mvp.ViewFragment;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -30,7 +37,11 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private final String ARG_ODDTYPE = "oddType";
+    private final String ARG_THIRDID = "thirdId";
+    private final String ARG_INDEX = "index";
+    private final String ARG_LEFT_NAME = "leftName";
+    private final String ARG_COMPAN_NAME = "companName";
 
     private String mType; //亚盘大小球类型
     private int mBallType;//斯诺克网球
@@ -65,6 +76,7 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
     private SIndexFragment parentFragment;
     /**当前日期*/
     private String mDate="";
+
 
     public SnookerIndexChildFragment() {
         // Required empty public constructor
@@ -121,17 +133,45 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
             }
         });
 
-        mAdapter=new SnookerIndexAdapter(mPresenter.getData(),mActivity,mType);
+        mAdapter=new SnookerIndexAdapter(mPresenter.getData(),parentFragment.getCompanyList(),mActivity,mType,mBallType);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
+
+        // 每个 Item 内部一条赔率的单击
+        mAdapter.setOnOddsClickListener(new SnookerIndexAdapter.SnookerOddsOnClick() {
+            @Override
+            public void onOddsClick(SnookerIndexBean.AllInfoEntity item, SnookerIndexBean.AllInfoEntity.ComListEntity odds,List<String>companyList) {
+
+                if(mBallType== BallType.TENNLS){
+                    //点击指数页面，传值给详情界面
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    intent.putStringArrayListExtra(ARG_LEFT_NAME, (ArrayList<String>) companyList);   //两行赔率
+                    intent.putExtra(ARG_COMPAN_NAME, odds.getComName());  //公司Id
+                    intent.putExtra(ARG_INDEX, item.getComList().indexOf(odds) + "");
+                    intent.putExtra(ARG_ODDTYPE, 1);
+                    intent.putExtra(ARG_THIRDID,item.getLeagueId());
+                    getContext().startActivity(intent);
+                }
+
+
+            }
+        }
+        );
 
         mPresenter.refreshByDate("",mType,mBallType);
         mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
-                Intent intent=new Intent(getActivity(), SnookerMatchDetail.class);
-                intent.putExtra("matchId",mPresenter.getData().get(i).getMatchInfo().getMatchId());
-                getActivity().startActivity(intent);
+                if(mBallType==BallType.SNOOKER){
+                    Intent intent=new Intent(getActivity(), SnookerMatchDetail.class);
+                    intent.putExtra("matchId",mPresenter.getData().get(i).getMatchInfo().getMatchId());
+                    getActivity().startActivity(intent);
+                }
+               else if(mBallType==BallType.TENNLS){
+                    Intent intent=new Intent(getActivity(), SnookerMatchDetail.class);
+                    intent.putExtra("matchId",mPresenter.getData().get(i).getMatchInfo().getMatchId());
+                    getActivity().startActivity(intent);
+                }
             }
         });
 

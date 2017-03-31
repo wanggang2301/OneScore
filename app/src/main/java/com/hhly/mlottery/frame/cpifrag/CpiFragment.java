@@ -41,7 +41,8 @@ public class CpiFragment extends Fragment {
 
     private Activity mActivity;
 
-
+    Bundle arg1;
+    Bundle arg2;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +61,12 @@ public class CpiFragment extends Fragment {
     private void initView() {
         fragments.add(FootCpiFragment.newInstance());
         fragments.add(BasketBallCpiFrament.newInstace());
-        fragments.add(SIndexFragment.newInstance(2,""));
-        fragments.add(SIndexFragment.newInstance(3,""));
+        arg1=new Bundle();
+        arg2=new Bundle();
+        arg1.putInt("param1",BallType.SNOOKER);
+        arg2.putInt("param1",BallType.TENNLS);
+        fragments.add(SIndexFragment.newInstance());
+        fragments.add(SIndexFragment.newInstance());
         switchFragment(BallType.FOOTBALL);
     }
 
@@ -74,7 +79,14 @@ public class CpiFragment extends Fragment {
         fragmentIndex = position;// 当前fragment下标
         L.d("xxx", "当前Fragment下标：" + fragmentIndex);
         fragmentManager = getChildFragmentManager();
-        currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content_cpi, currentFragment, fragments.get(position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, true);
+        if(position==BallType.SNOOKER){
+            currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content_cpi, currentFragment, fragments.get(position).getClass(), arg1, false, fragments.get(position).getClass().getSimpleName() + position, true);
+        }else if(position==BallType.TENNLS){
+            currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content_cpi, currentFragment, fragments.get(position).getClass(), arg2, false, fragments.get(position).getClass().getSimpleName() + position, true);
+        }else {
+            currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content_cpi, currentFragment, fragments.get(position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, true);
+
+        }
     }
 
     @Override

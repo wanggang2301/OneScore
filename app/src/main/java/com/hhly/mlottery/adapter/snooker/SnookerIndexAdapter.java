@@ -20,6 +20,7 @@ import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SIndexFragment;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.SnookerIndexItemView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,14 +32,25 @@ public class SnookerIndexAdapter extends BaseQuickAdapter<SnookerIndexBean.AllIn
 
     Context context;
     private String mType;
+    private int mBallType;
     private TextView home;
     private TextView handicap;
     private TextView guest;
+    private SnookerOddsOnClick onOddsClickListener; // 赔率点击监听
+    List<SnookerIndexBean.CompanyEntity> companies;
 
-    public SnookerIndexAdapter(List<SnookerIndexBean.AllInfoEntity> data, Context context,String type) {
+    List<String> toDetailCompanies=new ArrayList<>();//传给详情页的公司
+
+    public SnookerIndexAdapter(List<SnookerIndexBean.AllInfoEntity> data,List<SnookerIndexBean.CompanyEntity> companies, Context context,String type,int ballType) {
         super(R.layout.item_snooker_index, data);
         this.context=context;
         mType=type;
+        this.companies=companies;
+        this.mBallType=ballType;
+    }
+
+    public void setOnOddsClickListener(SnookerOddsOnClick onOddsClickListener) {
+        this.onOddsClickListener = onOddsClickListener;
     }
 
     @Override
@@ -81,7 +93,7 @@ public class SnookerIndexAdapter extends BaseQuickAdapter<SnookerIndexBean.AllIn
     /**
      * 绑定赔率事件
      */
-    private void bindOdds(BaseViewHolder holder,SnookerIndexBean.AllInfoEntity data){
+    private void bindOdds(BaseViewHolder holder, final SnookerIndexBean.AllInfoEntity data){
         LinearLayout container=holder.getView(R.id.odds_container);
         container.removeAllViews();
 //        CpiOddsItemView cpiOddsItemView = null;
@@ -107,17 +119,25 @@ public class SnookerIndexAdapter extends BaseQuickAdapter<SnookerIndexBean.AllIn
 //        }
         SnookerIndexItemView itemView=null;
         List<SnookerIndexBean.AllInfoEntity.ComListEntity> comList=data.getComList();
-        for(SnookerIndexBean.AllInfoEntity.ComListEntity item : comList){
-            itemView=new SnookerIndexItemView(context);
-            itemView.bindData(item,mType);
-            container.addView(itemView);
-            //点击事件
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //
+        for(final SnookerIndexBean.AllInfoEntity.ComListEntity item : comList){
+            if(item.belongToShow(companies)){
+                toDetailCompanies.add(item.getComName());
+                itemView=new SnookerIndexItemView(context);
+                itemView.bindData(item,mType);
+                container.addView(itemView);
+                if(onOddsClickListener!=null){
+                    //点击事件
+                    itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //
+                            onOddsClickListener.onOddsClick(data,item,toDetailCompanies);
+                        }
+                    });
                 }
-            });
+            }
+
+
         }
         // 最后一个隐藏底部分割线
         if(itemView!=null){
@@ -130,7 +150,7 @@ public class SnookerIndexAdapter extends BaseQuickAdapter<SnookerIndexBean.AllIn
      * 赔率item的点击事件
      */
     public interface SnookerOddsOnClick{
-        void onOddsClick(SnookerIndexBean.AllInfoEntity allInfoEntity,SnookerIndexBean.AllInfoEntity.ComListEntity entity);
+        void onOddsClick(SnookerIndexBean.AllInfoEntity allInfoEntity,SnookerIndexBean.AllInfoEntity.ComListEntity entity,List<String>companyList);
     }
 
 }

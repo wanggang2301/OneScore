@@ -49,6 +49,7 @@ public class SnookerIndexChildPresenter extends BasePresenter<SnookerIndexChildC
             url=BaseURLs.SNOOKER_INDEX_LIST;
         }else{
             url="http://192.168.31.1:8080/mlottery/core/mlottery/tennisIndexData.findIndexDataList.do";
+//            url=BaseURLs.SNOOKER_INDEX_LIST;
         }
         Map<String,String> params=new HashMap<>();
         params.put("oddType",type);

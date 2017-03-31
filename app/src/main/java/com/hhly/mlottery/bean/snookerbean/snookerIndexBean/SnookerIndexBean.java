@@ -298,6 +298,25 @@ public class SnookerIndexBean {
             }
 
             /**
+             * 属于并且可显示
+             *
+             * @param company 公司
+             * @return 属于可显示的公司
+             */
+            public boolean belongToShow(CompanyEntity company) {
+                return this.comId.equals(company.comId) && company.isChecked;
+            }
+
+            public boolean belongToShow(List<CompanyEntity> companies) {
+                // 遍历
+                for (CompanyEntity company : companies) {
+                    // 属于其中一家公司即可
+                    if (this.belongToShow(company)) return true;
+                }
+                // 都不属于则不属于
+                return false;
+            }
+            /**
              * left : 1.23
              * middle : 1.5
              * right : 0.65
