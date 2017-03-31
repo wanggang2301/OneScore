@@ -3,6 +3,7 @@ package com.hhly.mlottery.frame.cpifrag.SnookerIndex.SnookerChildFragment;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.hhly.mlottery.bean.snookerbean.snookerIndexBean.SnookerIndexBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.mvp.BasePresenter;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -36,18 +37,24 @@ public class SnookerIndexChildPresenter extends BasePresenter<SnookerIndexChildC
     }
 
     @Override
-    public void refreshByDate(String date,String type) {
+    public void refreshByDate(String date,String type,int ballType) {
         boolean isFirst=false;
         if(date.equals("")){ //第一次请求无地址
             date=DateUtil.getMomentDate();
             isFirst=true;
         }
 //        String url="http://m.1332255.com:81/mlottery/core/snookerOdds.getSnookerOddsByDate.do";
+        String url="";
+        if(ballType== BallType.SNOOKER){
+            url=BaseURLs.SNOOKER_INDEX_LIST;
+        }else{
+            url="http://192.168.31.1:8080/mlottery/core/mlottery/tennisIndexData.findIndexDataList.do";
+        }
         Map<String,String> params=new HashMap<>();
         params.put("oddType",type);
         params.put("date",date);
         final boolean finalIsFirst = isFirst;
-        VolleyContentFast.requestJsonByGet(BaseURLs.SNOOKER_INDEX_LIST, params,new VolleyContentFast.ResponseSuccessListener<SnookerIndexBean>() {
+        VolleyContentFast.requestJsonByGet(url, params,new VolleyContentFast.ResponseSuccessListener<SnookerIndexBean>() {
             @Override
             public void onResponse(SnookerIndexBean jsonObject) {
                 if(jsonObject.getCode()!=200) mView.showNoData(NODATA);

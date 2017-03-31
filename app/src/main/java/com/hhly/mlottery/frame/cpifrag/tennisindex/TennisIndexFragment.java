@@ -116,6 +116,8 @@ public class TennisIndexFragment extends BaseWebSocketFragment implements View.O
     private List<Fragment> fragments;
 
     private String[] mItems;
+    private  static int mBallType;
+    String mTitles[];
 
     private DateChooseDialogFragment mDateChooseDialogFragment; // 日期选择
     private SnookerCompanyChooseDialogFragment mCompanyChooseDialogFragment; // 公司选择
@@ -133,16 +135,17 @@ public class TennisIndexFragment extends BaseWebSocketFragment implements View.O
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+        mBallType=Integer.parseInt(param1);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+//        if (getArguments() != null) {
+//            mBallType = Integer.parseInt(getArguments().getString(ARG_PARAM1));
+//            mParam2 = getArguments().getString(ARG_PARAM2);
+//        }
     }
 
     @Override
@@ -247,7 +250,7 @@ public class TennisIndexFragment extends BaseWebSocketFragment implements View.O
 
     private void initView() {
 
-        mTextMatch.setText(getActivity().getString(R.string.snooker_txt));
+
         mRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -261,17 +264,33 @@ public class TennisIndexFragment extends BaseWebSocketFragment implements View.O
                 },1000);
             }
         });
-        String mTitles[]={getActivity().getResources().getString(R.string.odd_plate_rb_txt),getActivity().getResources().getString(R.string.asiasize),
-                getActivity().getResources().getString(R.string.odd_op_rb_txt), MyApp.getContext().getResources().getString(R.string.snooker_index_single_double)};
+
+        L.e("AAA",mBallType+"df");
 
         mItems = getResources().getStringArray(R.array.zhishu_select);
 
         fragments=new ArrayList<>();
-        fragments.add(SnookerIndexChildFragment.newInstance(ODDS_LET));
-        fragments.add(SnookerIndexChildFragment.newInstance(ODDS_SIZE));
-        fragments.add(SnookerIndexChildFragment.newInstance(ODDS_EURO));
-        fragments.add(SnookerIndexChildFragment.newInstance(SINGLE_DOUBLE));
+        mTitles= new String[]{getActivity().getResources().getString(R.string.odd_plate_rb_txt), getActivity().getResources().getString(R.string.asiasize),
+                getActivity().getResources().getString(R.string.odd_op_rb_txt), MyApp.getContext().getResources().getString(R.string.snooker_index_single_double)};
 
+        if(mBallType==BallType.SNOOKER){
+            mTextMatch.setText(getActivity().getString(R.string.snooker_txt));
+            mTitles= new String[]{getActivity().getResources().getString(R.string.odd_plate_rb_txt), getActivity().getResources().getString(R.string.asiasize),
+                    getActivity().getResources().getString(R.string.odd_op_rb_txt), MyApp.getContext().getResources().getString(R.string.snooker_index_single_double)};
+
+            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_LET,mBallType));
+            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_SIZE,mBallType));
+            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_EURO,mBallType));
+            fragments.add(SnookerIndexChildFragment.newInstance(SINGLE_DOUBLE,mBallType));
+
+        }else if(mBallType==BallType.TENNLS){ //网球
+            mTextMatch.setText(getActivity().getString(R.string.tennisball_txt));
+            mTitles= new String[]{getActivity().getResources().getString(R.string.odd_plate_rb_txt), getActivity().getResources().getString(R.string.asiasize),
+                    getActivity().getResources().getString(R.string.odd_op_rb_txt)};
+            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_LET,mBallType));
+            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_SIZE,mBallType));
+            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_EURO,mBallType));
+        }
 
         mTabsAdapter=new TabsAdapter(getChildFragmentManager());
         mTabsAdapter.setTitles(mTitles);

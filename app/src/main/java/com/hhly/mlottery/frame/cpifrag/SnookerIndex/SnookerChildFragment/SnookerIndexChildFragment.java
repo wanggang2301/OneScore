@@ -29,9 +29,11 @@ import butterknife.ButterKnife;
 public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildContract.Presenter> implements SnookerIndexChildContract.View {
 
     private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
 
-    private String mType;
+    private String mType; //亚盘大小球类型
+    private int mBallType;//斯诺克网球
     private View mView;
 
     @BindView(R.id.snooker_index_recycler)
@@ -68,10 +70,11 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
         // Required empty public constructor
     }
 
-    public static SnookerIndexChildFragment newInstance(String type) {
+    public static SnookerIndexChildFragment newInstance(String type,int ballType) {
         SnookerIndexChildFragment fragment = new SnookerIndexChildFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, type);
+        args.putInt(ARG_PARAM2,ballType);
         fragment.setArguments(args);
         return fragment;
     }
@@ -87,6 +90,7 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mType = getArguments().getString(ARG_PARAM1);
+            mBallType=getArguments().getInt(ARG_PARAM2);
         }
         //TODO:改成dagger
         mPresenter=new SnookerIndexChildPresenter(this);
@@ -113,7 +117,7 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
             public void onClick(View v) {
                 mExceptionLayout.setVisibility(View.GONE);
                 mProgressBarLayout.setVisibility(View.VISIBLE);
-                mPresenter.refreshByDate(mDate,mType);
+                mPresenter.refreshByDate(mDate,mType,mBallType);
             }
         });
 
@@ -121,7 +125,7 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
 
-        mPresenter.refreshByDate("",mType);
+        mPresenter.refreshByDate("",mType,mBallType);
         mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
@@ -140,7 +144,7 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
      */
     public void refreshDate(String date){
         mDate=date;
-        mPresenter.refreshByDate(date,mType);
+        mPresenter.refreshByDate(date,mType,mBallType);
     }
 
     @Override

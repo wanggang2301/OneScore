@@ -130,7 +130,7 @@ public class SnookerIndexAdapter extends BaseQuickAdapter<SnookerIndexBean.AllIn
      * 赔率item的点击事件
      */
     public interface SnookerOddsOnClick{
-        void onOddsClich(SnookerIndexBean.AllInfoEntity allInfoEntity,SnookerIndexBean.AllInfoEntity.ComListEntity entity);
+        void onOddsClick(SnookerIndexBean.AllInfoEntity allInfoEntity,SnookerIndexBean.AllInfoEntity.ComListEntity entity);
     }
 
 }

@@ -62,7 +62,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
     private static final String ARG_PARAM2 = "param2";
     private ArrayList<SnookerIndexBean.CompanyEntity> companyList=new ArrayList<>(); // 公司数据源
 
-    private int mBallType;
+    private   int mBallType;
     private String mParam2;
 
     /**
@@ -263,31 +263,32 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
             }
         });
 
+        L.e("AAA",mBallType+"df");
 
         mItems = getResources().getStringArray(R.array.zhishu_select);
 
         fragments=new ArrayList<>();
+        mTitles= new String[]{getActivity().getResources().getString(R.string.odd_plate_rb_txt), getActivity().getResources().getString(R.string.asiasize),
+                getActivity().getResources().getString(R.string.odd_op_rb_txt), MyApp.getContext().getResources().getString(R.string.snooker_index_single_double)};
 
         if(mBallType==BallType.SNOOKER){
             mTextMatch.setText(getActivity().getString(R.string.snooker_txt));
             mTitles= new String[]{getActivity().getResources().getString(R.string.odd_plate_rb_txt), getActivity().getResources().getString(R.string.asiasize),
                      getActivity().getResources().getString(R.string.odd_op_rb_txt), MyApp.getContext().getResources().getString(R.string.snooker_index_single_double)};
 
+            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_LET,mBallType));
+            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_SIZE,mBallType));
+            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_EURO,mBallType));
+            fragments.add(SnookerIndexChildFragment.newInstance(SINGLE_DOUBLE,mBallType));
 
-            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_LET));
-            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_SIZE));
-            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_EURO));
-            fragments.add(SnookerIndexChildFragment.newInstance(SINGLE_DOUBLE));
-
-        }else{ //网球
+        }else if(mBallType==BallType.TENNLS){ //网球
             mTextMatch.setText(getActivity().getString(R.string.tennisball_txt));
             mTitles= new String[]{getActivity().getResources().getString(R.string.odd_plate_rb_txt), getActivity().getResources().getString(R.string.asiasize),
                     getActivity().getResources().getString(R.string.odd_op_rb_txt)};
+            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_LET,mBallType));
+            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_SIZE,mBallType));
+            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_EURO,mBallType));
         }
-
-
-
-
 
         mTabsAdapter=new TabsAdapter(getChildFragmentManager());
         mTabsAdapter.setTitles(mTitles);
@@ -409,7 +410,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
     private void popWindow(final View v) {
         final View mView = View.inflate(getActivity(), R.layout.pop_select, null);
         // 创建ArrayAdapter对象
-        BallChoiceArrayAdapter mAdapter = new BallChoiceArrayAdapter(getActivity(), mItems, BallType.SNOOKER); //在第几个
+        BallChoiceArrayAdapter mAdapter = new BallChoiceArrayAdapter(getActivity(), mItems, mBallType); //在第几个
 
         ListView listview = (ListView) mView.findViewById(R.id.match_type);
         listview.setAdapter(mAdapter);
