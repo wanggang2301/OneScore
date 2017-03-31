@@ -145,7 +145,7 @@ public class DebugConfigActivity extends BaseActivity {
                 }
 
                 startActivity(new Intent(DebugConfigActivity.this, WelcomeActivity.class));
-//                System.exit(0);
+                System.exit(0);
 
 
             }

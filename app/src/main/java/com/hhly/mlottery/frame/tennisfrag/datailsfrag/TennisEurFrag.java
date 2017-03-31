@@ -2,7 +2,7 @@ package com.hhly.mlottery.frame.tennisfrag.datailsfrag;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,30 +11,44 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.fastjson.JSON;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.TennisCpiDetailsActivity;
 import com.hhly.mlottery.adapter.tennisball.TennisDatailsEurAdapter;
-import com.hhly.mlottery.adapter.tennisball.TennisDatailsPlateAdapter;
-import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.bean.tennisball.datails.odds.TennisOdds;
+import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 网球内页欧赔
  */
 public class TennisEurFrag extends Fragment {
     private static final String TENNIS_DATAILS_THIRDID = "tennis_details_third_id";
+    private final String ARG_ODDTYPE = "oddType";
+    private final String ARG_THIRDID = "thirdId";
+    private final String ARG_INDEX = "index";
+    private final String ARG_LEFT_NAME = "leftName";
+    private final String ARG_COMPAN_NAME = "companName";
+    private final int LOADING = 1;
+    private final int SUCCESS = 2;
+    private final int ERROR = 3;
+    private final int NOTO_DATA = 4;
 
     private Activity mContext;
     private String mThirdId;
 
-    private View mView;
-    private View contentView;
-    private View notDataView;
+    private View mView, contentView, notDataView, ff_loading, ff_note_data;
     private RecyclerView mRecyclerView;
 
-    private List<String> mData = new ArrayList<>();
+    private TennisOdds tennisOdds;
     private TennisDatailsEurAdapter mAdapter;
+
+    private ArrayList<String> nameList = new ArrayList<>();
 
     public TennisEurFrag() {
     }
@@ -60,27 +74,78 @@ public class TennisEurFrag extends Fragment {
         mView = inflater.inflate(R.layout.fragment_tennis_eur, container, false);
 
         initView();
+        initData();
+        initEvent();
 
         return mView;
+    }
+
+    private void initEvent() {
+        mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int i) {
+                Intent intent = new Intent(mContext, TennisCpiDetailsActivity.class);
+                intent.putExtra(ARG_ODDTYPE, "2");
+                intent.putExtra(ARG_THIRDID, mThirdId);
+                intent.putExtra(ARG_INDEX, i);
+                intent.putExtra(ARG_LEFT_NAME, nameList);
+                intent.putExtra(ARG_COMPAN_NAME, tennisOdds.getData().get(i).getName());
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void initData() {
+
+        setStatus(LOADING);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("matchIds", mThirdId);
+        map.put("oddType", "2");
+
+        VolleyContentFast.requestJsonByGet(BaseURLs.TENNIS_DATAILS_ODDS_URL, map, new VolleyContentFast.ResponseSuccessListener<TennisOdds>() {
+            @Override
+            public void onResponse(TennisOdds json) {
+                tennisOdds = json;
+                if (tennisOdds != null && tennisOdds.getData() != null) {
+                    setStatus(SUCCESS);
+                    nameList.clear();
+                    for (int i = 0; i < tennisOdds.getData().size(); i++) {
+                        // 添加所有公司name
+                        nameList.add(tennisOdds.getData().get(i).getName());
+                    }
+                    mAdapter.addData(tennisOdds.getData());
+                    mAdapter.notifyDataSetChanged();
+                } else {
+                    setStatus(NOTO_DATA);
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                setStatus(ERROR);
+            }
+        }, TennisOdds.class);
+    }
+
+    // 设置页面显示状态
+    private void setStatus(int status) {
+        notDataView.setVisibility(status == ERROR ? View.VISIBLE : View.GONE);
+        contentView.setVisibility(status == SUCCESS ? View.VISIBLE : View.GONE);
+        ff_loading.setVisibility(status == LOADING ? View.VISIBLE : View.GONE);
+        ff_note_data.setVisibility(status == NOTO_DATA ? View.VISIBLE : View.GONE);
     }
 
     private void initView() {
         contentView = mView.findViewById(R.id.tennis_datails_eur_content);
         notDataView = mView.findViewById(R.id.network_exception_layout);
+        ff_loading = mView.findViewById(R.id.ff_loading);
+        ff_note_data = mView.findViewById(R.id.ff_note_data);
+
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.tennis_datails_eur_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 
-        mData.add("test");
-        mData.add("test");
-        mData.add("test");
-        mData.add("test");
-        mData.add("test");
-        mData.add("test");
-        mData.add("test");
-        mData.add("test");
-        mData.add("test");
-
-        mAdapter = new TennisDatailsEurAdapter(R.layout.fragment_tennis_eur_item, mData);
+        mAdapter = new TennisDatailsEurAdapter(R.layout.fragment_tennis_eur_item, null);
         mRecyclerView.setAdapter(mAdapter);
     }
 

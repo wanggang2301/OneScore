@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.TennisBallDetailsActivity;
 import com.hhly.mlottery.bean.tennisball.datails.analysis.DataCompareBean;
 import com.hhly.mlottery.bean.tennisball.datails.analysis.MatchListBean;
 import com.hhly.mlottery.bean.tennisball.datails.analysis.RankScoreBean;
@@ -23,6 +24,10 @@ import com.hhly.mlottery.util.DateUtil;
  */
 public class TennisAnalysisFrag extends Fragment implements View.OnClickListener {
     private static final String TENNIS_DATAILS_THIRDID = "tennis_details_third_id";
+    private final int LOADING = 1;
+    private final int SUCCESS = 2;
+    private final int ERROR = 3;
+    private final int NOTO_DATA = 4;
 
     private String mThirdId;
     private boolean isSingle;// 是否单人比赛
@@ -64,8 +69,6 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
 
         initView();
         initEvent();
-
-
         return mView;
     }
 
@@ -105,6 +108,12 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
         dataItemView();
     }
 
+    // 设置页面显示状态
+    public void setStatus(int status) {
+        notDataView.setVisibility(status == ERROR ? View.VISIBLE : View.GONE);
+        contentView.setVisibility(status == SUCCESS ? View.VISIBLE : View.GONE);
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -113,6 +122,7 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
 
     // 刷新数据
     public void updataChange(TennisAnalysisBean.DataBean data) {
+        setStatus(SUCCESS);
         setAnaylysisData(data);
     }
 
@@ -190,7 +200,7 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
 
         // 比赛类型： 1男子、2女子、3男双、4女双、5混双
         int matchType = data.getMatchInfo().getMatchType();
-        switch (matchType){
+        switch (matchType) {
             case 1:
             case 2:
                 isSingle = true;
@@ -382,13 +392,13 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
 
             for (int i = 0; i < data.getDataCompare().size(); i++) {
                 DataCompareBean dataCompareBean = data.getDataCompare().get(i);
-                if(dataCompareBean.getStatus() == 0){
+                if (dataCompareBean.getStatus() == 0) {
                     data_home_name.setText(dataCompareBean.getHome1() == null ? "" : dataCompareBean.getHome1());
                     data_guest_name.setText(dataCompareBean.getGuest1() == null ? "" : dataCompareBean.getGuest1());
-                    if(isSingle){
+                    if (isSingle) {
                         data_home_name2.setVisibility(View.GONE);
                         data_guest_name2.setVisibility(View.GONE);
-                    }else{
+                    } else {
                         data_home_name2.setVisibility(View.VISIBLE);
                         data_guest_name2.setVisibility(View.VISIBLE);
                         data_home_name2.setText(dataCompareBean.getHome2() == null ? "" : dataCompareBean.getHome2());
@@ -420,7 +430,7 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.network_exception_reload_btn:
-                // TODO 刷新
+                ((TennisBallDetailsActivity) mContext).onRefresh();
                 break;
         }
     }
