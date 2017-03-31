@@ -11,17 +11,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.TennisCpiDetailsActivity;
 import com.hhly.mlottery.adapter.tennisball.TennisDatailsPlateAdapter;
-import com.hhly.mlottery.bean.tennisball.datails.odds.TennisDataBean;
 import com.hhly.mlottery.bean.tennisball.datails.odds.TennisOdds;
-import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 网球内页亚盘
@@ -33,13 +33,15 @@ public class TennisPlateFrag extends Fragment {
     private final String ARG_INDEX = "index";
     private final String ARG_LEFT_NAME = "leftName";
     private final String ARG_COMPAN_NAME = "companName";
+    private final int LOADING = 1;
+    private final int SUCCESS = 2;
+    private final int ERROR = 3;
+    private final int NOTO_DATA = 4;
 
     private Activity mContext;
     private String mThirdId;
 
-    private View mView;
-    private View contentView;
-    private View notDataView;
+    private View mView, contentView, notDataView, ff_loading, ff_note_data;
     private RecyclerView mRecyclerView;
 
     private TennisOdds tennisOdds;
@@ -83,8 +85,7 @@ public class TennisPlateFrag extends Fragment {
             public void onItemClick(View view, int i) {
                 Intent intent = new Intent(mContext, TennisCpiDetailsActivity.class);
                 intent.putExtra(ARG_ODDTYPE, "1");
-                // TODO 获取真正的id
-                intent.putExtra(ARG_THIRDID, "848834591");
+                intent.putExtra(ARG_THIRDID, mThirdId);
                 intent.putExtra(ARG_INDEX, i);
                 intent.putExtra(ARG_LEFT_NAME, nameList);
                 intent.putExtra(ARG_COMPAN_NAME, tennisOdds.getData().get(i).getName());
@@ -95,34 +96,54 @@ public class TennisPlateFrag extends Fragment {
 
     private void initData() {
 
-        tennisOdds = JSON.parseObject(getTestData(), TennisOdds.class);
+        setStatus(LOADING);
 
-        // TODO 添加数据展示
-        if (tennisOdds != null && tennisOdds.getData() != null) {
+        Map<String, String> map = new HashMap<>();
+        map.put("matchIds", mThirdId);
 
-            nameList.clear();
-            for (int i = 0; i < tennisOdds.getData().size(); i++) {
-                // 添加所有公司name
-                nameList.add(tennisOdds.getData().get(i).getName());
+        VolleyContentFast.requestJsonByGet(BaseURLs.TENNIS_DATAILS_ODDS_URL, map, new VolleyContentFast.ResponseSuccessListener<TennisOdds>() {
+            @Override
+            public void onResponse(TennisOdds json) {
+                tennisOdds = json;
+                if (tennisOdds != null && tennisOdds.getData() != null) {
+                    setStatus(SUCCESS);
+                    nameList.clear();
+                    for (int i = 0; i < tennisOdds.getData().size(); i++) {
+                        // 添加所有公司name
+                        nameList.add(tennisOdds.getData().get(i).getName());
+                    }
+                    mAdapter.addData(tennisOdds.getData());
+                    mAdapter.notifyDataSetChanged();
+                } else {
+                    setStatus(NOTO_DATA);
+                }
             }
-
-            mAdapter.addData(tennisOdds.getData());
-            mAdapter.notifyDataSetChanged();
-        } else {
-            // 暂无数据
-        }
-
-
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                setStatus(ERROR);
+            }
+        }, TennisOdds.class);
     }
 
     private void initView() {
         contentView = mView.findViewById(R.id.tennis_datails_plate_content);
         notDataView = mView.findViewById(R.id.network_exception_layout);
+        ff_loading = mView.findViewById(R.id.ff_loading);
+        ff_note_data = mView.findViewById(R.id.ff_note_data);
+
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.tennis_datails_plate_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-
         mAdapter = new TennisDatailsPlateAdapter(R.layout.fragment_tennis_plate_item, null);
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    // 设置页面显示状态
+    private void setStatus(int status) {
+        notDataView.setVisibility(status == ERROR ? View.VISIBLE : View.GONE);
+        contentView.setVisibility(status == SUCCESS ? View.VISIBLE : View.GONE);
+        ff_loading.setVisibility(status == LOADING ? View.VISIBLE : View.GONE);
+        ff_note_data.setVisibility(status == NOTO_DATA ? View.VISIBLE : View.GONE);
     }
 
 
@@ -130,9 +151,5 @@ public class TennisPlateFrag extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = (Activity) context;
-    }
-
-    private String getTestData() {
-        return "{\"result\":\"200\",\"data\":[{\"details\":[{\"time\":\"2017-03-29 15:18:49\",\"score\":null,\"homeOdd\":0.0,\"hand\":21.5,\"guestOdd\":0.0},{\"time\":\"2017-03-30 03:38:41\",\"score\":null,\"homeOdd\":0.88,\"hand\":21.5,\"guestOdd\":0.96}],\"name\":\"qt\"}]}";
     }
 }

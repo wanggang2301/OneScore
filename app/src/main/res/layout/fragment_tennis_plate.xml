@@ -61,9 +61,10 @@
 
         </LinearLayout>
 
-        <View android:layout_width="match_parent"
+        <View
+            android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/linecolor"/>
+            android:background="@color/linecolor" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/tennis_datails_plate_recycler_view"
@@ -71,6 +72,31 @@
             android:layout_height="match_parent" />
 
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/ff_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/ff_note_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/nodata" />
+    </FrameLayout>
 
     <include layout="@layout/network_exception" />
 

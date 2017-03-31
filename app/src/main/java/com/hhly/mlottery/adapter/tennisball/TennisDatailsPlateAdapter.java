@@ -6,7 +6,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.tennisball.datails.odds.TennisDataBean;
-import com.hhly.mlottery.util.L;
 
 import java.util.List;
 

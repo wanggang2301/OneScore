@@ -22,7 +22,13 @@ import com.hhly.mlottery.frame.tennisfrag.datailsfrag.TennisPlateFrag;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.ToastTools;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.ErrorManager;
 
 /**
  * desc:网球内页
@@ -32,6 +38,7 @@ import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 public class TennisBallDetailsActivity extends BaseWebSocketActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private final String TAG = "TennisBallDetailsActivity";
+    private final int ERROR = 3;
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -41,9 +48,6 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
             tv_guest_total_score, tv_guest_name, tv_guest_name2, tv_home_score1, tv_home_score2, tv_home_score3,
             tv_home_score4, tv_home_score5, tv_guest_score1, tv_guest_score2, tv_guest_score3, tv_guest_score4, tv_guest_score5;
 
-    private TennisAnalysisBean tennsiAnalysis;
-    private TennisAnalysisBean.DataBean mData;
-
     private String mThirdId;
     private TennisAnalysisFrag tennisAnalysisFrag;
     private boolean isSingle;// 是否单人比赛
@@ -52,49 +56,46 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setWebSocketUri(BaseURLs.WS_SERVICE);
-//        setTopic("USER.topic.tennis.score");
-
+        setWebSocketUri(BaseURLs.WS_SERVICE);
+        setTopic("USER.topic.tennis.score");
         setContentView(R.layout.tennis_details_activity);
 
         mThirdId = getIntent().getStringExtra("thirdId");
-
-        L.d(TAG, "mThirdId: " + mThirdId);
 
         initView();
         initData();
     }
 
     private void initData() {
+        refreshLayout.setRefreshing(true);
 
-        tennsiAnalysis = JSON.parseObject(getTestData(), TennisAnalysisBean.class);
-        mData = tennsiAnalysis.getData();
+        Map<String, String> map = new HashMap<>();
+        map.put("matchIds", mThirdId);
 
-        L.d("Tennis", "赛事名：" + tennsiAnalysis.getData().getRecentMatch().getHomePlayerRecentMatch().getMatchList().get(0).getLeagueName());
-
-        // TODO 更新分析页面数据
-        new Thread(){
+        VolleyContentFast.requestJsonByGet(BaseURLs.TENNIS_DATAILS_URL, map, new VolleyContentFast.ResponseSuccessListener<TennisAnalysisBean>() {
             @Override
-            public void run() {
-                try {
-                    sleep(1000);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            tennisAnalysisFrag.updataChange(mData);
-                        }
-                    });
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            public void onResponse(TennisAnalysisBean json) {
+                refreshLayout.setRefreshing(false);
+                tennisAnalysisFrag.updataChange(json.getData());
+                setDataShow(json.getData());
             }
-        }.start();
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                refreshLayout.setRefreshing(false);
+                tennisAnalysisFrag.setStatus(ERROR);
+                ToastTools.showQuick(TennisBallDetailsActivity.this, getResources().getString(R.string.number_net_error));
+            }
+        }, TennisAnalysisBean.class);
 
-        // TODO 添加数据显示
+
+    }
+
+    // 设置数据展示
+    private void setDataShow(TennisAnalysisBean.DataBean mData) {
         // 比赛类型： 1男子、2女子、3男双、4女双、5混双
         int matchType = mData.getMatchInfo().getMatchType();
-        switch (matchType){
+        switch (matchType) {
             case 1:
             case 2:
                 isSingle = true;
@@ -259,7 +260,7 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
     @Override
     protected void onTextResult(String text) {
         L.d(TAG, "网球内页推送：" + text);
-
+        // TODO
 
     }
 
@@ -280,7 +281,7 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
 
     @Override
     public void onRefresh() {
-        // TODO 下拉刷新
+        initData();
     }
 
     @Override
@@ -295,11 +296,6 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // TODO 关闭webSocket
-    }
-
-    // 测试数据
-    private String getTestData() {
-        return "{\"result\":\"200\",\"data\":{\"recentMatch\":{\"homePlayerRecentMatch\":{\"playerFail\":0,\"playerWin\":3,\"totalTimes\":3,\"winRate\":\"100.00%\",\"matchList\":[{\"startDate\":\"2017-03-02\",\"startTime\":\"01:00\",\"leagueName\":\"迪拜公开赛(ATP)\",\"role\":\"10\",\"siteType\":\"11\",\"homePlayer1\":{\"name\":\"H.孔蒂宁\",\"id\":null},\"homePlayer2\":{\"name\":\"J·皮亚斯\",\"id\":null},\"guestPlayer1\":{\"name\":\"伊文斯\",\"id\":null},\"guestPlayer2\":{\"name\":\"G·穆勒\",\"id\":null},\"matchScore\":{\"homeSetScore1\":7,\"homeSetScore2\":6,\"homeSetScore3\":0,\"homeSetScore4\":0,\"homeSetScore5\":0,\"awaySetScore1\":6,\"awaySetScore2\":4,\"awaySetScore3\":0,\"awaySetScore4\":0,\"awaySetScore5\":0,\"homeTotalScore\":2,\"awayTotalScore\":0,\"homeCurrentScore\":null,\"awayCurrentScore\":null,\"currentTimes\":2}},{\"startDate\":\"2017-03-02\",\"startTime\":\"01:00\",\"leagueName\":\"迪拜公开赛(ATP)\",\"role\":\"3\",\"siteType\":\"11\",\"homePlayer1\":{\"name\":\"H.孔蒂宁\",\"id\":null},\"homePlayer2\":{\"name\":\"J·皮亚斯\",\"id\":null},\"guestPlayer1\":{\"name\":\"伊文斯\",\"id\":null},\"guestPlayer2\":{\"name\":\"G·穆勒\",\"id\":null},\"matchScore\":{\"homeSetScore1\":7,\"homeSetScore2\":6,\"homeSetScore3\":0,\"homeSetScore4\":0,\"homeSetScore5\":0,\"awaySetScore1\":6,\"awaySetScore2\":4,\"awaySetScore3\":0,\"awaySetScore4\":0,\"awaySetScore5\":0,\"homeTotalScore\":2,\"awayTotalScore\":0,\"homeCurrentScore\":null,\"awayCurrentScore\":null,\"currentTimes\":2}},{\"startDate\":\"2017-02-27\",\"startTime\":\"22:45\",\"leagueName\":\"迪拜公开赛(ATP)\",\"role\":\"10\",\"siteType\":\"11\",\"homePlayer1\":{\"name\":\"伊文斯\",\"id\":null},\"homePlayer2\":{\"name\":\"G·穆勒\",\"id\":null},\"guestPlayer1\":{\"name\":\"A.梅利\",\"id\":null},\"guestPlayer2\":{\"name\":\"泽蒙季奇\",\"id\":null},\"matchScore\":{\"homeSetScore1\":6,\"homeSetScore2\":7,\"homeSetScore3\":0,\"homeSetScore4\":0,\"homeSetScore5\":0,\"awaySetScore1\":1,\"awaySetScore2\":6,\"awaySetScore3\":0,\"awaySetScore4\":0,\"awaySetScore5\":0,\"homeTotalScore\":2,\"awayTotalScore\":0,\"homeCurrentScore\":null,\"awayCurrentScore\":null,\"currentTimes\":2}}]},\"guestPlayerRecentMatch\":{\"playerFail\":0,\"playerWin\":3,\"totalTimes\":3,\"winRate\":\"100.00%\",\"matchList\":[{\"startDate\":\"2017-02-27\",\"startTime\":\"22:45\",\"leagueName\":\"迪拜公开赛(ATP)\",\"role\":\"10\",\"siteType\":\"11\",\"homePlayer1\":{\"name\":\"伊文斯\",\"id\":null},\"homePlayer2\":{\"name\":\"G·穆勒\",\"id\":null},\"guestPlayer1\":{\"name\":\"A.梅利\",\"id\":null},\"guestPlayer2\":{\"name\":\"泽蒙季奇\",\"id\":null},\"matchScore\":{\"homeSetScore1\":6,\"homeSetScore2\":7,\"homeSetScore3\":0,\"homeSetScore4\":0,\"homeSetScore5\":0,\"awaySetScore1\":1,\"awaySetScore2\":6,\"awaySetScore3\":0,\"awaySetScore4\":0,\"awaySetScore5\":0,\"homeTotalScore\":2,\"awayTotalScore\":0,\"homeCurrentScore\":null,\"awayCurrentScore\":null,\"currentTimes\":2}},{\"startDate\":\"2014-12-30\",\"startTime\":\"22:30\",\"leagueName\":\"卡塔尔站(ATP)\",\"role\":\"10\",\"siteType\":\"11\",\"homePlayer1\":{\"name\":\"穆雷\",\"id\":null},\"homePlayer2\":{\"name\":\"泽蒙季奇\",\"id\":null},\"guestPlayer1\":{\"name\":\"布兰德斯\",\"id\":null},\"guestPlayer2\":{\"name\":\"梅耶尔\",\"id\":null},\"matchScore\":{\"homeSetScore1\":3,\"homeSetScore2\":7,\"homeSetScore3\":10,\"homeSetScore4\":0,\"homeSetScore5\":0,\"awaySetScore1\":6,\"awaySetScore2\":6,\"awaySetScore3\":8,\"awaySetScore4\":0,\"awaySetScore5\":0,\"homeTotalScore\":2,\"awayTotalScore\":1,\"homeCurrentScore\":null,\"awayCurrentScore\":null,\"currentTimes\":3}},{\"startDate\":\"2014-01-02\",\"startTime\":\"01:30\",\"leagueName\":\"卡塔尔站(ATP)\",\"role\":\"3\",\"siteType\":\"11\",\"homePlayer1\":{\"name\":\"A·皮亚\",\"id\":null},\"homePlayer2\":{\"name\":\"布鲁诺-苏雷斯\",\"id\":null},\"guestPlayer1\":{\"name\":\"穆雷\",\"id\":null},\"guestPlayer2\":{\"name\":\"泽蒙季奇\",\"id\":null},\"matchScore\":{\"homeSetScore1\":7,\"homeSetScore2\":6,\"homeSetScore3\":0,\"homeSetScore4\":0,\"homeSetScore5\":0,\"awaySetScore1\":6,\"awaySetScore2\":4,\"awaySetScore3\":0,\"awaySetScore4\":0,\"awaySetScore5\":0,\"homeTotalScore\":2,\"awayTotalScore\":0,\"homeCurrentScore\":null,\"awayCurrentScore\":null,\"currentTimes\":2}}]}},\"rankScore\":[{\"ranking\":\"61\",\"oldRanking\":\"61\",\"rankingChange\":\"0\",\"normalPlayerId\":\"321268\",\"playerName\":\"泽蒙季奇\",\"nationality\":\"塞尔维亚\",\"totalIntegral\":\"1300\",\"numberOfEntries\":\"24\"},{\"ranking\":\"153\",\"oldRanking\":\"153\",\"rankingChange\":\"0\",\"normalPlayerId\":\"319382\",\"playerName\":\"G·穆勒\",\"nationality\":\"卢森堡\",\"totalIntegral\":\"495\",\"numberOfEntries\":\"13\"}],\"dataCompare\":[{\"home1\":\"伊文斯\",\"home2\":\"G·穆勒\",\"guest1\":\"A.梅利\",\"guest2\":\"泽蒙季奇\",\"status\":0},{\"home1\":\"66%\",\"home2\":\"63%\",\"guest1\":\"56%\",\"guest2\":null,\"status\":1},{\"home1\":\"54%\",\"home2\":\"75%\",\"guest1\":\"75%\",\"guest2\":null,\"status\":2},{\"home1\":\"30%\",\"home2\":\"52%\",\"guest1\":\"52%\",\"guest2\":null,\"status\":3},{\"home1\":\"30%\",\"home2\":\"30%\",\"guest1\":\"43%\",\"guest2\":null,\"status\":4},{\"home1\":\"100%\",\"home2\":\"23%\",\"guest1\":\"42%\",\"guest2\":null,\"status\":5},{\"home1\":\"57%\",\"home2\":\"61%\",\"guest1\":\"69%\",\"guest2\":null,\"status\":6},{\"home1\":\"4\",\"home2\":\"16\",\"guest1\":\"9\",\"guest2\":null,\"status\":7},{\"home1\":\"5\",\"home2\":\"4\",\"guest1\":\"3\",\"guest2\":null,\"status\":8},{\"home1\":\"28\",\"home2\":\"36\",\"guest1\":\"28\",\"guest2\":null,\"status\":9},{\"home1\":\"15\",\"home2\":\"44\",\"guest1\":\"41\",\"guest2\":null,\"status\":10}],\"matchRecord\":{\"playerFail\":0,\"playerWin\":1,\"totalTimes\":1,\"winRate\":\"100.00%\",\"matchList\":[{\"startDate\":\"2017-02-27\",\"startTime\":\"22:45\",\"leagueName\":\"迪拜公开赛(ATP)\",\"role\":\"10\",\"siteType\":\"11\",\"homePlayer1\":{\"name\":\"伊文斯\",\"id\":null},\"homePlayer2\":{\"name\":\"G·穆勒\",\"id\":null},\"guestPlayer1\":{\"name\":\"A.梅利\",\"id\":null},\"guestPlayer2\":{\"name\":\"泽蒙季奇\",\"id\":null},\"matchScore\":{\"homeSetScore1\":6,\"homeSetScore2\":7,\"homeSetScore3\":0,\"homeSetScore4\":0,\"homeSetScore5\":0,\"awaySetScore1\":1,\"awaySetScore2\":6,\"awaySetScore3\":0,\"awaySetScore4\":0,\"awaySetScore5\":0,\"homeTotalScore\":2,\"awayTotalScore\":0,\"homeCurrentScore\":null,\"awayCurrentScore\":null,\"currentTimes\":2}}]},\"matchInfo\":{\"leagueId\":\"323442\",\"leagueName\":\"ATP迪拜公开赛\",\"matchId\":\"848814040\",\"matchName\":\"伊文斯/G·穆勒 VS A.梅利/泽蒙季奇\",\"startTime\":\"22:45:00\",\"startDate\":\"2017-02-27\",\"roundName\":\"第一轮\",\"matchType\":\"3\",\"dataType\":\"2\",\"matchStatus\":\"-1\",\"homePlayer1\":{\"name\":\"伊文斯\",\"id\":\"319381\"},\"homePlayer2\":{\"name\":\"G·穆勒\",\"id\":\"319382\"},\"guestPlayer1\":{\"name\":\"A.梅利\",\"id\":\"319521\"},\"guestPlayer2\":{\"name\":\"泽蒙季奇\",\"id\":\"321268\"},\"matchScore\":{\"homeSetScore1\":6,\"homeSetScore2\":7,\"homeSetScore3\":0,\"homeSetScore4\":0,\"homeSetScore5\":0,\"awaySetScore1\":1,\"awaySetScore2\":6,\"awaySetScore3\":0,\"awaySetScore4\":0,\"awaySetScore5\":0,\"homeTotalScore\":2,\"awayTotalScore\":0,\"homeCurrentScore\":null,\"awayCurrentScore\":null,\"currentTimes\":2}}}}";
+        closeWebSocket();
     }
 }
