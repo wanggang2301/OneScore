@@ -100,7 +100,7 @@
                 android:orientation="horizontal"
                 android:paddingBottom="3dp"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true">
+                android:layout_alignParentRight="true">
 
                 <TextView
                     android:id="@+id/basket_leftOdds"
@@ -492,7 +492,8 @@
                                 android:background="@mipmap/basket_default"/>
                             <TextView
                                 android:id="@+id/guest_name"
-                                android:layout_width="100dp"
+                                android:layout_width="wrap_content"
+                                android:maxWidth="100dp"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="10dp"
                                 android:layout_gravity="center"
@@ -506,6 +507,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="[西二]"
+                                android:paddingLeft="3dp"
                                 android:textColor="#999999"
                                 android:textSize="@dimen/text_size_10"/>
 
@@ -524,7 +526,8 @@
 
                             <TextView
                                 android:id="@+id/home_name"
-                                android:layout_width="100dp"
+                                android:layout_width="wrap_content"
+                                android:maxWidth="100dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:paddingLeft="10dp"
@@ -539,6 +542,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:text="[东栋二]"
+                                android:paddingLeft="3dp"
                                 android:textColor="#999999"
                                 android:textSize="@dimen/text_size_10"/>
 
@@ -791,7 +795,7 @@
                         android:layout_height="wrap_content"
                         android:background="@mipmap/iconfont_guanzhu"
                         android:layout_alignParentBottom="true"
-                        android:layout_alignParentEnd="true" />
+                        android:layout_alignParentRight="true" />
                 </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>
