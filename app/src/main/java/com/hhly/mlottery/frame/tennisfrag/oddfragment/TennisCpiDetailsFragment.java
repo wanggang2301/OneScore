@@ -156,7 +156,7 @@ public class TennisCpiDetailsFragment extends Fragment {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                L.d("tennis","详情左边list点击事件:" + position);
+                L.d("tennis", "详情左边list点击事件:" + position);
                 //根据传过去的postion更改选中的item选中背景
                 oddDetailsLeftAdapter.setSelect(position);
                 //根据position获取list集合里面id
@@ -196,11 +196,8 @@ public class TennisCpiDetailsFragment extends Fragment {
 
         myPostParams.put("matchIds", mThirdId);
 
-        // TODO 更换URL
-        String url = "http://192.168.31.64:8080/mlottery/core/tennisMatch.findContentOddsDetail.do";
-
         // 2、连接服务器
-        VolleyContentFast.requestJsonByGet(url, myPostParams, new VolleyContentFast.ResponseSuccessListener<TennisOddsDetailsDataInfo>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.TENNIS_DATAILS_ODDS_INFO_URL, myPostParams, new VolleyContentFast.ResponseSuccessListener<TennisOddsDetailsDataInfo>() {
             @Override
             public synchronized void onResponse(final TennisOddsDetailsDataInfo json) {
                 if (json != null && json.getData() != null) {
@@ -221,7 +218,7 @@ public class TennisCpiDetailsFragment extends Fragment {
 
                         //倒序，排列父view
                         Collections.reverse(groupDataList);
-//                            //倒序，排列子view
+                        //倒序，排列子view
                         Collections.reverse(childDetailsList);
                         //判断主队的数据
                         for (int i = 0; i < childDetailsList.size(); i++) {

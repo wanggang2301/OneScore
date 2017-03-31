@@ -94,12 +94,13 @@ public class TennisPlateFrag extends Fragment {
         });
     }
 
-    private void initData() {
+    public void initData() {
 
         setStatus(LOADING);
 
         Map<String, String> map = new HashMap<>();
         map.put("matchIds", mThirdId);
+        map.put("oddType", "1");
 
         VolleyContentFast.requestJsonByGet(BaseURLs.TENNIS_DATAILS_ODDS_URL, map, new VolleyContentFast.ResponseSuccessListener<TennisOdds>() {
             @Override

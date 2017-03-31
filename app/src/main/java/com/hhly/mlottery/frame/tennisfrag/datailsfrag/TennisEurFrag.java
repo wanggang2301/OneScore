@@ -85,7 +85,7 @@ public class TennisEurFrag extends Fragment {
             @Override
             public void onItemClick(View view, int i) {
                 Intent intent = new Intent(mContext, TennisCpiDetailsActivity.class);
-                intent.putExtra(ARG_ODDTYPE, "1");
+                intent.putExtra(ARG_ODDTYPE, "2");
                 intent.putExtra(ARG_THIRDID, mThirdId);
                 intent.putExtra(ARG_INDEX, i);
                 intent.putExtra(ARG_LEFT_NAME, nameList);
@@ -95,12 +95,13 @@ public class TennisEurFrag extends Fragment {
         });
     }
 
-    private void initData() {
+    public void initData() {
 
         setStatus(LOADING);
 
         Map<String, String> map = new HashMap<>();
         map.put("matchIds", mThirdId);
+        map.put("oddType", "2");
 
         VolleyContentFast.requestJsonByGet(BaseURLs.TENNIS_DATAILS_ODDS_URL, map, new VolleyContentFast.ResponseSuccessListener<TennisOdds>() {
             @Override

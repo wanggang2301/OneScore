@@ -1,16 +1,12 @@
 package com.hhly.mlottery.activity;
 
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v4.widget.TextViewCompat;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.bean.tennisball.datails.analysis.TennisAnalysisBean;
@@ -28,7 +24,6 @@ import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.ErrorManager;
 
 /**
  * desc:网球内页
@@ -50,6 +45,9 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
 
     private String mThirdId;
     private TennisAnalysisFrag tennisAnalysisFrag;
+    private TennisPlateFrag tennisPlateFrag;
+    private TennisEurFrag tennisEurFrag;
+
     private boolean isSingle;// 是否单人比赛
 
 
@@ -225,9 +223,12 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
                 getString(R.string.basket_eur)});
 
         tennisAnalysisFrag = TennisAnalysisFrag.newInstance(mThirdId);
+        tennisPlateFrag = TennisPlateFrag.newInstance(mThirdId);
+        tennisEurFrag = TennisEurFrag.newInstance(mThirdId);
+
         tabsAdapter.addFragments(tennisAnalysisFrag);
-        tabsAdapter.addFragments(TennisPlateFrag.newInstance(mThirdId));
-        tabsAdapter.addFragments(TennisEurFrag.newInstance(mThirdId));
+        tabsAdapter.addFragments(tennisPlateFrag);
+        tabsAdapter.addFragments(tennisEurFrag);
         viewPager.setAdapter(tabsAdapter);
         viewPager.setOffscreenPageLimit(3);
         tabLayout.setupWithViewPager(viewPager);
@@ -282,6 +283,8 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
     @Override
     public void onRefresh() {
         initData();
+        tennisPlateFrag.initData();
+        tennisEurFrag.initData();
     }
 
     @Override

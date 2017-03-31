@@ -26,31 +26,42 @@ public class TennisDatailsPlateAdapter extends BaseQuickAdapter<TennisDataBean> 
 
         baseViewHolder.setText(R.id.tennis_datails_plate_company_name, dataBean.getName() == null ? "" : dataBean.getName());
         if (dataBean.getDetails() != null) {
+            double firstHomeOdd = 0;
+            double firstGuestOdd = 0;
+            double nowHomeOdd = 0;
+            double nowGuestOdd = 0;
             for (int i = 0; i < dataBean.getDetails().size(); i++) {
-                double homeOdd = dataBean.getDetails().get(i).getHomeOdd();
-                double guestOdd = dataBean.getDetails().get(i).getGuestOdd();
                 double hand = dataBean.getDetails().get(i).getHand();
                 if (i == 0) {
                     // 初盘
-                    baseViewHolder.setText(R.id.tennis_datails_plate_first_zs, String.valueOf(homeOdd));
+                    firstHomeOdd = dataBean.getDetails().get(i).getHomeOdd();
+                    firstGuestOdd = dataBean.getDetails().get(i).getGuestOdd();
+                    baseViewHolder.setText(R.id.tennis_datails_plate_first_zs, String.valueOf(firstHomeOdd));
                     baseViewHolder.setText(R.id.tennis_datails_plate_first_pk, String.valueOf(hand));
-                    baseViewHolder.setText(R.id.tennis_datails_plate_first_ks, String.valueOf(guestOdd));
+                    baseViewHolder.setText(R.id.tennis_datails_plate_first_ks, String.valueOf(firstGuestOdd));
                 } else if (i == 1) {
                     // 即盘
-                    baseViewHolder.setText(R.id.tennis_datails_plate_now_zs, String.valueOf(homeOdd));
+                    nowHomeOdd = dataBean.getDetails().get(i).getHomeOdd();
+                    nowGuestOdd = dataBean.getDetails().get(i).getGuestOdd();
+                    baseViewHolder.setText(R.id.tennis_datails_plate_now_zs, String.valueOf(nowHomeOdd));
                     baseViewHolder.setText(R.id.tennis_datails_plate_now_pk, String.valueOf(hand));
-                    baseViewHolder.setText(R.id.tennis_datails_plate_now_ks, String.valueOf(guestOdd));
-                    if (homeOdd == guestOdd) {
-                        baseViewHolder.setTextColor(R.id.tennis_datails_plate_now_zs, ContextCompat.getColor(mContext, R.color.res_name_color));
-                        baseViewHolder.setTextColor(R.id.tennis_datails_plate_now_ks, ContextCompat.getColor(mContext, R.color.res_name_color));
-                    } else if (homeOdd > guestOdd) {
-                        baseViewHolder.setTextColor(R.id.tennis_datails_plate_now_zs, ContextCompat.getColor(mContext, R.color.number_red));
-                        baseViewHolder.setTextColor(R.id.tennis_datails_plate_now_ks, ContextCompat.getColor(mContext, R.color.number_green));
-                    } else {
-                        baseViewHolder.setTextColor(R.id.tennis_datails_plate_now_zs, ContextCompat.getColor(mContext, R.color.number_green));
-                        baseViewHolder.setTextColor(R.id.tennis_datails_plate_now_ks, ContextCompat.getColor(mContext, R.color.number_red));
-                    }
+                    baseViewHolder.setText(R.id.tennis_datails_plate_now_ks, String.valueOf(nowGuestOdd));
                 }
+            }
+
+            if (firstHomeOdd == nowHomeOdd) {
+                baseViewHolder.setTextColor(R.id.tennis_datails_plate_now_zs, ContextCompat.getColor(mContext, R.color.res_name_color));
+            } else if (firstHomeOdd > nowHomeOdd) {
+                baseViewHolder.setTextColor(R.id.tennis_datails_plate_now_zs, ContextCompat.getColor(mContext, R.color.number_red));
+            } else {
+                baseViewHolder.setTextColor(R.id.tennis_datails_plate_now_zs, ContextCompat.getColor(mContext, R.color.number_green));
+            }
+            if (firstGuestOdd == nowGuestOdd) {
+                baseViewHolder.setTextColor(R.id.tennis_datails_plate_now_ks, ContextCompat.getColor(mContext, R.color.res_name_color));
+            } else if (firstGuestOdd > nowGuestOdd) {
+                baseViewHolder.setTextColor(R.id.tennis_datails_plate_now_ks, ContextCompat.getColor(mContext, R.color.number_green));
+            } else {
+                baseViewHolder.setTextColor(R.id.tennis_datails_plate_now_ks, ContextCompat.getColor(mContext, R.color.number_red));
             }
         }
     }
