@@ -16,6 +16,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketOddsDetailsActivity;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.bean.snookerbean.snookerIndexBean.SnookerIndexBean;
+import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SIndexFragment;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.SnookerIndexItemView;
@@ -63,7 +64,8 @@ public class SnookerIndexAdapter extends BaseQuickAdapter<SnookerIndexBean.AllIn
         handicap=holder.getView(R.id.cpi_item_odds_txt);
         guest=holder.getView(R.id.cpi_item_guest_txt);
         holder.setText(R.id.cpi_item_time_txt,allInfoEntity.getMatchInfo().getOpenTime());
-        holder.setText(R.id.tv_tag,allInfoEntity.getMatchInfo().getMatchState()==null?"":allInfoEntity.getMatchInfo().getMatchState()); //状态
+        setStatus(holder,allInfoEntity);
+
         holder.setText(R.id.cpi_host_team_txt,allInfoEntity.getMatchInfo().getMatchHomeName());
         holder.setText(R.id.cpi_guest_team_txt,allInfoEntity.getMatchInfo().getMatchGuestName());
         holder.setText(R.id.cpi_score_txt,allInfoEntity.getMatchInfo().getMatchResult()==null?"VS":allInfoEntity.getMatchInfo().getMatchResult());
@@ -96,27 +98,7 @@ public class SnookerIndexAdapter extends BaseQuickAdapter<SnookerIndexBean.AllIn
     private void bindOdds(BaseViewHolder holder, final SnookerIndexBean.AllInfoEntity data){
         LinearLayout container=holder.getView(R.id.odds_container);
         container.removeAllViews();
-//        CpiOddsItemView cpiOddsItemView = null;
-//        List<NewOddsInfo.AllInfoBean.ComListBean> comList = data.getComList();
-//        for (final NewOddsInfo.AllInfoBean.ComListBean item : comList) {
-//            if (item.belongToShow(companies)) {
-//                cpiOddsItemView = new CpiOddsItemView(mContext);
-//                cpiOddsItemView.bindData(item, type);
-//                if (onOddsClickListener != null) {
-//                    cpiOddsItemView.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            onOddsClickListener.onOddsClick(data, item);
-//                        }
-//                    });
-//                }
-//                container.addView(cpiOddsItemView);
-//            }
-//        }
-//        // 最后一个隐藏底部分割线
-//        if (cpiOddsItemView != null) {
-//            cpiOddsItemView.hideDivider();
-//        }
+
         SnookerIndexItemView itemView=null;
         List<SnookerIndexBean.AllInfoEntity.ComListEntity> comList=data.getComList();
         for(final SnookerIndexBean.AllInfoEntity.ComListEntity item : comList){
@@ -143,6 +125,83 @@ public class SnookerIndexAdapter extends BaseQuickAdapter<SnookerIndexBean.AllIn
         // 最后一个隐藏底部分割线
         if(itemView!=null){
             itemView.hideDivider();
+        }
+
+    }
+
+    /**
+     * 设置比赛状态
+     * @param holder
+     * @param allInfoEntity
+     */
+    private void setStatus(BaseViewHolder holder, SnookerIndexBean.AllInfoEntity allInfoEntity){
+        String state;
+        if(allInfoEntity.getMatchInfo()!=null&&allInfoEntity.getMatchInfo().getMatchState()!=null){
+            state=allInfoEntity.getMatchInfo().getMatchState();
+            if(mBallType== BallType.TENNLS){
+                switch (state){
+                    case "-6": //p2退赛
+                        holder.setText(R.id.tv_tag,context.getString(R.string.tennis_match_p2));
+                        break;
+                    case "-5": //p1退赛
+                        holder.setText(R.id.tv_tag,context.getString(R.string.tennis_match_p1));
+                        break;
+                    case "-4": //待定
+                        holder.setText(R.id.tv_tag,context.getString(R.string.tennis_match_dd));
+                        break;
+                    case "-3": //推迟
+                        holder.setText(R.id.tv_tag,context.getString(R.string.tennis_match_tc));
+                        break;
+                    case "-2": //中断
+                        holder.setText(R.id.tv_tag,context.getString(R.string.tennis_match_zd));
+                        break;
+                    case "-1": //完
+                        holder.setText(R.id.tv_tag,context.getString(R.string.tennis_match_over));
+                        break;
+                    case "0": //未开始
+                        holder.setText(R.id.tv_tag,context.getString(R.string.tennis_match_not_start));
+                        break;
+                    default: //进行中
+                        holder.setText(R.id.tv_tag,context.getString(R.string.tennis_match_join));
+                        break;
+                }
+            }else if(mBallType==BallType.SNOOKER){
+                switch (state){
+//                    0 暂停
+//                    1 未开始
+//                    2 结束
+//                    3 进行中
+//                    4 休息中
+//                            -5 左退赛
+//                            -6 右退赛
+
+                    case "0":
+                        holder.setText(R.id.tv_tag,context.getString(R.string.snooker_state_pause));
+                        break;
+                    case "1":
+                        holder.setText(R.id.tv_tag,context.getString(R.string.snooker_state_no_start));
+                        break;
+                    case "2":
+                        holder.setText(R.id.tv_tag,context.getString(R.string.snooker_state_over_game));
+                        break;
+                    case "3":
+                        holder.setText(R.id.tv_tag,context.getString(R.string.snooker_state_have_ing));
+                        break;
+                    case "4":
+                        holder.setText(R.id.tv_tag,context.getString(R.string.snooker_state_resting));
+                        break;
+                    case "-5":
+                        holder.setText(R.id.tv_tag,context.getString(R.string.tennis_match_p1));
+                        break;
+                    case "-6":
+                        holder.setText(R.id.tv_tag,context.getString(R.string.tennis_match_p2));
+                        break;
+                    default:
+                        holder.setText(R.id.tv_tag,"");//不显示
+                        break;
+                }
+            }
+
         }
 
     }

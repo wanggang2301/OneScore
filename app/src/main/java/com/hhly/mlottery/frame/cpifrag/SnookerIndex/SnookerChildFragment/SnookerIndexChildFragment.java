@@ -46,7 +46,7 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
     private final String ARG_COMPAN_NAME = "companName";
 
     private String mType; //亚盘大小球类型
-    private int mTypeIndex;//类型对应的坐标
+    private String mTypeIndex;//类型对应的坐标
     private int mBallType;//斯诺克网球
     private View mView;
 
@@ -110,11 +110,11 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
         //TODO:改成dagger
         mPresenter=new SnookerIndexChildPresenter(this);
         if(mType.equals(SIndexFragment.ODDS_LET)){
-            mTypeIndex=0;
+            mTypeIndex=1+"";
         }else if(mType.equals(SIndexFragment.ODDS_SIZE)){
-            mTypeIndex=2;
+            mTypeIndex=3+"";
         }else if(mType.equals(SIndexFragment.ODDS_EURO)){
-            mTypeIndex=1;
+            mTypeIndex=2+"";
         }
 
     }

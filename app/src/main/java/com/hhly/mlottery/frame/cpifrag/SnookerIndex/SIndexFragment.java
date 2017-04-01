@@ -123,7 +123,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
     private DateChooseDialogFragment mDateChooseDialogFragment; // 日期选择
     private SnookerCompanyChooseDialogFragment mCompanyChooseDialogFragment; // 公司选择
 
-    private String currentDate; // 当前日期
+    private String currentDate=""; // 当前日期
     private String choosenDate; // 选中日期
     public SIndexFragment() {
         // Required empty public constructor
@@ -142,12 +142,17 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic("USER.topic.snooker");
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mBallType = getArguments().getInt(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+        if(mBallType==BallType.SNOOKER){
+            setWebSocketUri(BaseURLs.WS_SERVICE);
+            setTopic("USER.topic.snooker");
+        }else if(mBallType==BallType.TENNLS){
+            setWebSocketUri(BaseURLs.WS_SERVICE);
+            setTopic("USER.topic.snooker");
         }
     }
 
