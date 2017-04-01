@@ -217,6 +217,7 @@
 -keep class com.hhly.mlottery.activity.SnookerInformationSerachActivity{ *;}
 -keep class com.hhly.mlottery.callback.SearchService { *; }
 -keep class com.hhly.mlottery.callback.BasketSearchservice{ *; }
+-keep class com.hhly.mlottery.frame.cpifrag.basketballtask.data.ApiService{ *; }
 
 
 ##Glide
