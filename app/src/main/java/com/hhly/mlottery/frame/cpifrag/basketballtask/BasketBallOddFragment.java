@@ -361,10 +361,13 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         List<BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean> matchOddsBeanList = new ArrayList<>();   //每一场比赛的赔率公司
 
         for (BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean matchOddsBean : allInfo.getMatchOdds()) {
-
-            for (BasketIndexBean.DataBean.CompanyBean companyBean : companyList) {
-                if (companyBean.isChecked() && companyBean.getComId().equals(matchOddsBean.getComId())) {
-                    matchOddsBeanList.add(matchOddsBean);
+            if (CollectionUtils.notEmpty(companyList)) { //如果接口傻逼没有公司数据就全部显示不用过滤
+                matchOddsBeanList.add(matchOddsBean);
+            } else {
+                for (BasketIndexBean.DataBean.CompanyBean companyBean : companyList) {
+                    if (companyBean.isChecked() && companyBean.getComId().equals(matchOddsBean.getComId())) {
+                        matchOddsBeanList.add(matchOddsBean);
+                    }
                 }
             }
         }
