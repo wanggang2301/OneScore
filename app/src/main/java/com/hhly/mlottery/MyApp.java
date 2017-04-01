@@ -2,7 +2,6 @@ package com.hhly.mlottery;
 
 import android.app.ActivityManager;
 import android.app.Application;
-import android.app.Notification;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -14,13 +13,8 @@ import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CrashException;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DataBus;
-import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.tendcloud.tenddata.TCAgent;
-import com.tendcloud.tenddata.TalkingDataSMS;
-import com.umeng.message.UmengMessageHandler;
-import com.umeng.message.entity.UMessage;
 
 import java.util.Locale;
 
@@ -54,11 +48,11 @@ public class MyApp extends Application {
             public void run() {
 
                 // 初始化TalkingData统计
-                TCAgent.LOG_ON = true;
+              /*  TCAgent.LOG_ON = true;
                 TCAgent.init(appcontext, DeviceInfo.getAppMetaData(appcontext, "TD_APP_ID"), DeviceInfo.getAppMetaData(appcontext, "TD_CHANNEL_ID"));
                 // true: 开启自动捕获
                 TCAgent.setReportUncaughtExceptions(!AppConstants.isTestEnv);
-
+*/
                 // 初始化PreferenceUtil
                 PreferenceUtil.init(appcontext);
 

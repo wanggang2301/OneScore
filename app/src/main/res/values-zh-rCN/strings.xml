@@ -1670,6 +1670,5 @@
     <string name="tennis_datails_status8">双误</string>
     <string name="tennis_datails_status9">非受迫性失误</string>
     <string name="tennis_datails_status10">主动得分</string>
-    <string name="foot_event_num"></string>
-
+    <string name="foot_event_num">""</string>
 </resources>

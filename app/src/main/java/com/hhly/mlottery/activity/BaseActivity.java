@@ -9,10 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
-import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.AppManager;
 import com.hhly.mlottery.util.FragmentUtils;
-import com.tendcloud.tenddata.TCAgent;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -145,14 +142,14 @@ public class BaseActivity extends FragmentActivity {
         // TODO Auto-generated method stub
         super.onResume();
         MobclickAgent.onResume(this);
-        TCAgent.onPageStart(this, getClass().getSimpleName());
+      //  TCAgent.onPageStart(this, getClass().getSimpleName());
     }
 
     @Override
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
-        TCAgent.onPageEnd(this, getClass().getSimpleName());
+       // TCAgent.onPageEnd(this, getClass().getSimpleName());
     }
 
     @Override

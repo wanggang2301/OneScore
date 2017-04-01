@@ -432,11 +432,8 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             settingdata(viewHolderList, 0);
 
                             viewHolderList.score_data.setVisibility(View.INVISIBLE);
-                            viewHolderList.score_deffer_ll.setVisibility(View.GONE);
-                            viewHolderList.placeholder.setVisibility(View.GONE);
                             break;
                         case 1: //一节
-
                             viewHolderList.backetball_differ.setVisibility(View.VISIBLE);
                             viewHolderList.backetball_total.setVisibility(View.VISIBLE);
                             viewHolderList.score_differ.setVisibility(View.VISIBLE);
@@ -494,11 +491,8 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             setVisible(viewHolderList , DetailsData.getSection());
                             viewHolderList.guest_score_ot.setVisibility(View.GONE);
                             viewHolderList.home_score_ot.setVisibility(View.GONE);
-                            viewHolderList.score_deffer_ll.setVisibility(View.VISIBLE);
-                            viewHolderList.placeholder.setVisibility(View.VISIBLE);
                             break;
                         case 2: //二节
-
                             viewHolderList.backetball_differ.setVisibility(View.VISIBLE);
                             viewHolderList.backetball_total.setVisibility(View.VISIBLE);
                             viewHolderList.score_total.setVisibility(View.VISIBLE);
@@ -552,11 +546,8 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             setVisible(viewHolderList , DetailsData.getSection());
                             viewHolderList.guest_score_ot.setVisibility(View.GONE);
                             viewHolderList.home_score_ot.setVisibility(View.GONE);
-                            viewHolderList.score_deffer_ll.setVisibility(View.VISIBLE);
-                            viewHolderList.placeholder.setVisibility(View.VISIBLE);
                             break;
                         case 3: //三节
-
                             viewHolderList.backetball_differ.setVisibility(View.VISIBLE);
                             viewHolderList.backetball_total.setVisibility(View.VISIBLE);
                             viewHolderList.score_total.setVisibility(View.VISIBLE);
@@ -614,8 +605,6 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             setVisible(viewHolderList , DetailsData.getSection());
                             viewHolderList.guest_score_ot.setVisibility(View.GONE);
                             viewHolderList.home_score_ot.setVisibility(View.GONE);
-                            viewHolderList.score_deffer_ll.setVisibility(View.VISIBLE);
-                            viewHolderList.placeholder.setVisibility(View.VISIBLE);
                             break;
                         case 4: //四节
 
@@ -674,8 +663,6 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             setVisible(viewHolderList , DetailsData.getSection());
                             viewHolderList.guest_score_ot.setVisibility(View.GONE);
                             viewHolderList.home_score_ot.setVisibility(View.GONE);
-                            viewHolderList.score_deffer_ll.setVisibility(View.VISIBLE);
-                            viewHolderList.placeholder.setVisibility(View.VISIBLE);
                             break;
                         case 5: //加时1
 
@@ -732,8 +719,6 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             viewHolderList.home_score_ot.setText(DetailsData.getMatchScore().getHomeOt1()+"");
                             viewHolderList.guest_score_ot.setVisibility(View.VISIBLE);
                             viewHolderList.home_score_ot.setVisibility(View.VISIBLE);
-                            viewHolderList.score_deffer_ll.setVisibility(View.VISIBLE);
-                            viewHolderList.placeholder.setVisibility(View.VISIBLE);
                             break;
                         case 6: //加时2
 
@@ -788,11 +773,8 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             viewHolderList.home_score_ot.setText(DetailsData.getMatchScore().getHomeOt2()+"");
                             viewHolderList.guest_score_ot.setVisibility(View.VISIBLE);
                             viewHolderList.home_score_ot.setVisibility(View.VISIBLE);
-                            viewHolderList.score_deffer_ll.setVisibility(View.VISIBLE);
-                            viewHolderList.placeholder.setVisibility(View.VISIBLE);
                             break;
                         case 7: //加时3
-
                             viewHolderList.backetball_differ.setVisibility(View.VISIBLE);
                             viewHolderList.backetball_total.setVisibility(View.VISIBLE);
                             viewHolderList.score_total.setVisibility(View.VISIBLE);
@@ -844,8 +826,6 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             viewHolderList.home_score_ot.setText(DetailsData.getMatchScore().getHomeOt3()+"");
                             viewHolderList.guest_score_ot.setVisibility(View.VISIBLE);
                             viewHolderList.home_score_ot.setVisibility(View.VISIBLE);
-                            viewHolderList.score_deffer_ll.setVisibility(View.VISIBLE);
-                            viewHolderList.placeholder.setVisibility(View.VISIBLE);
                             break;
                         case 50: //中场
 
@@ -886,11 +866,8 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             setVisible(viewHolderList , DetailsData.getSection());
                             viewHolderList.guest_score_ot.setVisibility(View.GONE);
                             viewHolderList.home_score_ot.setVisibility(View.GONE);
-                            viewHolderList.score_deffer_ll.setVisibility(View.VISIBLE);
-                            viewHolderList.placeholder.setVisibility(View.VISIBLE);
                             break;
                         case -1: //完场
-
                             viewHolderList.backetball_differ.setVisibility(View.VISIBLE);
                             viewHolderList.backetball_total.setVisibility(View.VISIBLE);
                             viewHolderList.score_total.setVisibility(View.VISIBLE);
@@ -930,11 +907,8 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             setVisible(viewHolderList , DetailsData.getSection());
                             viewHolderList.guest_score_ot.setVisibility(View.GONE);
                             viewHolderList.home_score_ot.setVisibility(View.GONE);
-                            viewHolderList.score_deffer_ll.setVisibility(View.VISIBLE);
-                            viewHolderList.placeholder.setVisibility(View.VISIBLE);
                             break;
                         case -2: //待定
-
                             viewHolderList.backetball_differ.setVisibility(View.INVISIBLE);
                             viewHolderList.backetball_total.setVisibility(View.INVISIBLE);
                             viewHolderList.score_total.setVisibility(View.INVISIBLE);
@@ -952,11 +926,8 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             viewHolderList.ongoing_time.setVisibility(View.GONE);
                             settingdata(viewHolderList, -2);
                             viewHolderList.score_data.setVisibility(View.INVISIBLE);
-                            viewHolderList.score_deffer_ll.setVisibility(View.GONE);
-                            viewHolderList.placeholder.setVisibility(View.GONE);
                             break;
                         case -3: //中断
-
                             viewHolderList.backetball_differ.setVisibility(View.INVISIBLE);
                             viewHolderList.backetball_total.setVisibility(View.INVISIBLE);
                             viewHolderList.ongoing_time.setVisibility(View.GONE);
@@ -974,11 +945,8 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             setVisible(viewHolderList , DetailsData.getSection());
                             viewHolderList.guest_score_ot.setVisibility(View.GONE);
                             viewHolderList.home_score_ot.setVisibility(View.GONE);
-                            viewHolderList.score_deffer_ll.setVisibility(View.GONE);
-                            viewHolderList.placeholder.setVisibility(View.GONE);
                             break;
                         case -4: //取消
-
                             viewHolderList.backetball_differ.setVisibility(View.INVISIBLE);
                             viewHolderList.backetball_total.setVisibility(View.INVISIBLE);
                             viewHolderList.score_total.setVisibility(View.INVISIBLE);
@@ -1000,11 +968,8 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             setVisible(viewHolderList , DetailsData.getSection());
                             viewHolderList.guest_score_ot.setVisibility(View.GONE);
                             viewHolderList.home_score_ot.setVisibility(View.GONE);
-                            viewHolderList.score_deffer_ll.setVisibility(View.GONE);
-                            viewHolderList.placeholder.setVisibility(View.GONE);
                             break;
                         case -5: //推迟
-
                             viewHolderList.backetball_differ.setVisibility(View.INVISIBLE);
                             viewHolderList.backetball_total.setVisibility(View.INVISIBLE);
                             viewHolderList.score_total.setVisibility(View.INVISIBLE);
@@ -1022,8 +987,6 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             viewHolderList.ongoing_time.setVisibility(View.GONE);
                             settingdata(viewHolderList, -5);
                             viewHolderList.score_data.setVisibility(View.INVISIBLE);
-                            viewHolderList.score_deffer_ll.setVisibility(View.GONE);
-                            viewHolderList.placeholder.setVisibility(View.GONE);
                             break;
                         default:
                             break;
@@ -1306,8 +1269,6 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
         TextView home_score4;
         TextView guest_score_ot;//加时比分
         TextView home_score_ot;
-        private final LinearLayout score_deffer_ll;//总分分差显示
-        private final LinearLayout placeholder; //占位view
 
         public ViewHolderList(final View itemView) {
             super(itemView);
@@ -1349,8 +1310,6 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
             home_score3 = (TextView) itemView.findViewById(R.id.home_score3);
             home_score4 = (TextView) itemView.findViewById(R.id.home_score4);
             home_score_ot = (TextView) itemView.findViewById(R.id.home_score_ot);
-            score_deffer_ll = (LinearLayout)itemView.findViewById(R.id.score_deffer_ll);
-            placeholder = (LinearLayout)itemView.findViewById(R.id.placeholder_view);
         }
     }
 }
