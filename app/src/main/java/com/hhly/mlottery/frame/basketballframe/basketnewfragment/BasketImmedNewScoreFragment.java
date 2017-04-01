@@ -48,9 +48,7 @@ import com.hhly.mlottery.bean.websocket.WebBasketOdds5;
 import com.hhly.mlottery.callback.DateOnClickListener;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
-import com.hhly.mlottery.frame.footballframe.eventbus.BasketDetailsEventBusEntity;
-import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreImmedEventBusEntity;
-import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreSettingEventBusEntity;
+
 import com.hhly.mlottery.frame.scorefrag.BasketBallScoreFragment;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
