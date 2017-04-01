@@ -153,10 +153,13 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
 
                 /**
                  * 比赛状态
-                 3 进行中
                  0 暂停
                  1 未开始
                  2 结束
+                 3 进行中
+                 4 休息中
+                 -5 左退赛
+                 -6 右退赛
                  两种情况  ① MatchScore为null时，即 没有比分数据时，比赛状态去外层Status，
                           ② MatchScore不为为null时，即 有比分数据(进行中 或 完场)，比赛状态取MatchScore里面的 Status状态
                         （ps：由于推送时，更新的是MatchScore里面的状态，未开赛==>开赛MatchScore为null，会出现状态无法更新情况）
