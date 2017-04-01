@@ -12,7 +12,4 @@ public class SIndexPresenter extends BasePresenter<SIndexContract.View>implement
     public SIndexPresenter(SIndexContract.View view) {
         super(view);
     }
-
-
-
 }

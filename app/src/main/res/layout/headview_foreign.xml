@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_ll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -20,7 +19,7 @@
             android:id="@+id/civ_logo"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/about_logo" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -152,7 +151,7 @@
         android:layout_gravity="center_horizontal"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        tools:text="获得1314个赞" />
+        android:text="获得1314个赞" />
 
 
 </LinearLayout>

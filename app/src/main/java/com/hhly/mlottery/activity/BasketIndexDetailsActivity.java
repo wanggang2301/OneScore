@@ -6,8 +6,14 @@ import android.support.v4.app.FragmentTransaction;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.frame.cpifrag.basketballtask.indexdetail.BasketIndexDetailsFragment;
 
-public class BasketIndexDetailsActivity extends BaseActivity {
+/**
+ * @author: Wangg
+ * @name：xxx
+ * @description: xxx
+ * @created on:2017/3/30  10:40.
+ */
 
+public class BasketIndexDetailsActivity extends BaseActivity {
     String thirdId;
     String comId;
     String oddType;
@@ -51,5 +57,4 @@ public class BasketIndexDetailsActivity extends BaseActivity {
             }
         }
     }
-
 }

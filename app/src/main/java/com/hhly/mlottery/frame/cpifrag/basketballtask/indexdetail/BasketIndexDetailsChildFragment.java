@@ -234,25 +234,45 @@ public class BasketIndexDetailsChildFragment extends ViewFragment<BasketIndexDet
             //亚盘
             cpiDishDetailsTxtId.setVisibility(View.VISIBLE);
 
-            cpiHomeDetailsTxtId.setText(R.string.foot_odds_alet_left);
-            cpiDishDetailsTxtId.setText(R.string.foot_odds_alet_middle);
-            cpiGuestDetailsTxtId.setText(R.string.foot_odds_alet_right);
+            cpiHomeDetailsTxtId.setText(R.string.basket_analyze_guest_win);
+            cpiDishDetailsTxtId.setText(R.string.basket_analyze_dish);
+            cpiGuestDetailsTxtId.setText(R.string.basket_analyze_home_win);
 
         } else if (BasketOddsTypeEnum.ASIASIZE.equals(oddType)) {
             //大小球
             cpiDishDetailsTxtId.setVisibility(View.VISIBLE);
 
             cpiHomeDetailsTxtId.setText(R.string.foot_odds_asize_left);
-            cpiDishDetailsTxtId.setText(R.string.foot_odds_asize_middle);
+            cpiDishDetailsTxtId.setText(R.string.basket_analyze_dish);
             cpiGuestDetailsTxtId.setText(R.string.foot_odds_asize_right);
         } else if (BasketOddsTypeEnum.EURO.equals(oddType)) {
             //欧赔
-            cpiHomeDetailsTxtId.setText(R.string.foot_odds_eu_left);
+            cpiHomeDetailsTxtId.setText(R.string.basket_analyze_guest_win);
             cpiDishDetailsTxtId.setVisibility(View.GONE);
-            cpiGuestDetailsTxtId.setText(R.string.foot_odds_eu_right);
+            cpiGuestDetailsTxtId.setText(R.string.basket_analyze_home_win);
         }
     }
 
+
+  /*  OddsTypeEnum.ASIALET:
+            holder.setText(R.id.cpi_item_home_txt, mContext.getString(R.string.basket_analyze_guest_win));
+                holder.setText(R.id.cpi_item_odds_txt, mContext.getString(R.string.basket_analyze_dish));
+                holder.setVisible(R.id.cpi_item_odds_txt, true);
+                holder.setText(R.id.cpi_item_guest_txt, mContext.getString(R.string.basket_analyze_home_win));
+                break;
+            case BasketOddsTypeEnum.ASIASIZE:
+            holder.setText(R.id.cpi_item_home_txt, mContext.getString(R.string.foot_odds_asize_left));
+                holder.setText(R.id.cpi_item_odds_txt, mContext.getString(R.string.basket_analyze_dish));
+                holder.setVisible(R.id.cpi_item_odds_txt, true);
+                holder.setText(R.id.cpi_item_guest_txt, mContext.getString(R.string.foot_odds_asize_right));
+                break;
+            case BasketOddsTypeEnum.EURO:
+            holder.setText(R.id.cpi_item_home_txt, mContext.getString(R.string.basket_analyze_guest_win));
+                holder.setText(R.id.cpi_item_odds_txt, mContext.getString(R.string.basket_analyze_dish));
+                holder.setVisible(R.id.cpi_item_odds_txt, false);
+                holder.setText(R.id.cpi_item_guest_txt, mContext.getString(R.string.basket_analyze_home_win));
+                break;
+}*/
 
     /**
      * 转化为 Odds 需要的数据规格

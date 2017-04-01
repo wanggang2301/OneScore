@@ -186,6 +186,12 @@ public class BasketIndexBean {
             private String comName;
             private boolean isChecked;
 
+            public CompanyBean(String comId, String comName, boolean isChecked) {
+                this.comId = comId;
+                this.comName = comName;
+                this.isChecked = isChecked;
+            }
+
             public boolean isChecked() {
                 return isChecked;
             }

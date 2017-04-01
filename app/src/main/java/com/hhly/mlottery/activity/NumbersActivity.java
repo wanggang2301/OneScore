@@ -935,7 +935,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                     // 大乐透正在开奖中...
                     isDLTOpenNumberStartNF = numTime <= 0;
 
-                } else if ("30".equals(numberSortList.get(i).getName()) || "31".equals(numberSortList.get(i).getName()) || "32".equals(numberSortList.get(i).getName())) {
+                } else if("30".equals(numberSortList.get(i).getName()) || "31".equals(numberSortList.get(i).getName()) || "32".equals(numberSortList.get(i).getName())){
                     // 此三个彩种没有开奖状态
                     isOtherOpenNumberStartNF = false;
                 } else {// 其它彩种是否正在开奖中
@@ -1044,8 +1044,11 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
             public synchronized void onResponse(final NumbersOpenBean jsonObject) {
                 if (null != jsonObject) {// 判断数据是否为空
 
-                    numberlist.clear();
-                    numberlist.addAll(jsonObject.getNumLotteryResults());
+                    if (numberlist != null) {
+                        numberlist.clear();
+                        numberlist = null;
+                    }
+                    numberlist = jsonObject.getNumLotteryResults();
 
                     serverTime = null;
                     serverTime = jsonObject.getServerTime();
@@ -1132,9 +1135,9 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
             }
 
             // 显示开奖描述
-            if ("1".equals(mNumberInfo.getName())) {
+            if("1".equals(mNumberInfo.getName())){
                 holder.tv_number_desc.setVisibility(View.GONE);
-            } else {
+            }else{
                 holder.tv_number_desc.setVisibility(View.VISIBLE);
             }
 
@@ -1154,7 +1157,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
             NumberDataUtils.numberAddInfo(mContext, mNumberInfo, holder.ll_numbers_container, numbers, zodiacs, isHKOpenNumberStartNF, isQXCOpenNumberStartNF, isSSQOpenNumberStartNF, isQLCOpenNumberStartNF, isDLTOpenNumberStartNF, isNextNumber, 0, null);
 
             /** ----------------------------设置显示开奖描述信息-------------------------- */
-            NumberDataUtils.numberAddDesc(mContext, holder.tv_number_desc, mNumberInfo.getName());
+            NumberDataUtils.numberAddDesc(mContext,holder.tv_number_desc,mNumberInfo.getName());
 
             /** ----------------------------显示隐藏倒时计Item------------------------- */
             isCountdown(holder, mNumberInfo);
@@ -1311,7 +1314,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                 // 显示正在开奖中
                 showTheLottery(holder, mNumberInfo);
             }
-        } else if ("25".equals(mNumberInfo.getName()) || "26".equals(mNumberInfo.getName())) {
+        } else if("25".equals(mNumberInfo.getName()) || "26".equals(mNumberInfo.getName())){
             // 排3和排5显示日期
             holder.tv_numbers_time.setText(DateUtil.convertDateToNation(Dates[0]) + " " + weekDate);// 设置日期
             holder.ll_numbers_time.setVisibility(View.GONE);
