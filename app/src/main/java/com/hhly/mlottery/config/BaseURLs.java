@@ -797,6 +797,16 @@ public class BaseURLs {
     //篮球赔率界面
     public final static String URL_BASKET_ODDS = HTTP + HOST + URL_BASKET_PROJECT + URL_BASKET_FINDODDS;
 
+    /**
+     * 新版篮球列表接口
+     */
+    //即时接口   "http://192.168.10.242:8181/mlottery/core/basketballMatch.findNewLiveMatch.do"
+    public final static String URL_BASKET_NEW_IMMEDIATE = URL_BASKET_HTTP + HOST + URL_BASKET_PROJECT + "basketballMatch.findNewLiveMatch.do";
+    //赛果接口   "http://192.168.10.242:8181/mlottery/core/basketballMatch.findNewFinishedMatch.do";
+    public final static String URL_BASKET_NEW_RESULT = URL_BASKET_HTTP + HOST + URL_BASKET_PROJECT + "basketballMatch.findNewFinishedMatch.do";
+    //赛程接口   "http://192.168.10.242:8181/mlottery/core/basketballMatch.findNewScheduledMatch.do";
+    public final static String URL_BASKET_NEW_SCHEDULE = URL_BASKET_HTTP + HOST + URL_BASKET_PROJECT + "basketballMatch.findNewScheduledMatch.do";
+
     //篮球推送
 //	public final static String URL_BASKET_SOCKET = "ws://192.168.10.242:61634/ws";
 //	public final static String URL_BASKET_SOCKET = "ws://m.1332255.com/ws";

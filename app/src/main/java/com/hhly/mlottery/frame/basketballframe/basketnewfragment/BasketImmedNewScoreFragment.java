@@ -321,7 +321,7 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
 
 //        String url = "http://192.168.31.241:8080/mlottery/core/basketballMatch.findNewLiveMatch.do";//?lang=zh&timeZone=8 BaseURLs.URL_BASKET_IMMEDIATE
         String url = "http://192.168.10.242:8181/mlottery/core/basketballMatch.findNewLiveMatch.do";//?lang=zh&timeZone=8 BaseURLs.URL_BASKET_IMMEDIATE
-        VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_IMMEDIATE , params, new VolleyContentFast.ResponseSuccessListener<BasketNewRootBean>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_NEW_IMMEDIATE , params, new VolleyContentFast.ResponseSuccessListener<BasketNewRootBean>() {
             @Override
             public void onResponse(BasketNewRootBean json) {
 

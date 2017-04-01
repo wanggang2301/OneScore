@@ -145,318 +145,6 @@
                     android:textSize="@dimen/text_size_12"/>
             </LinearLayout>
         </RelativeLayout>
-        <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--&gt;-->
-
-
-            <!--<RelativeLayout-->
-                <!--android:id="@+id/rl_guanzhu"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_alignParentBottom="true"-->
-                <!--android:layout_alignParentRight="true">-->
-
-                <!--<ImageView-->
-                    <!--android:id="@+id/Iv_guangzhu"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentBottom="true"-->
-                    <!--android:background="@mipmap/football_nomal" />-->
-            <!--</RelativeLayout>-->
-
-            <!--<RelativeLayout-->
-                <!--android:id="@+id/rl_score"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="65dp"-->
-                <!--android:gravity="center_vertical"-->
-                <!--android:paddingRight="40dp"-->
-                <!--android:layout_alignParentTop="true"-->
-                <!--android:layout_alignParentEnd="true">-->
-
-                <!--<LinearLayout-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:orientation="horizontal"-->
-                    <!--&gt;-->
-                    <!--<LinearLayout-->
-                        <!--android:id="@+id/ll_single_score"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:orientation="vertical"-->
-                        <!--android:paddingTop="5dp"-->
-                        <!--android:paddingLeft="-5dp"-->
-                        <!--&gt;-->
-
-                        <!--<LinearLayout-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:gravity="center"-->
-                            <!--android:padding="8dp">-->
-                            <!--<TextView-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:textSize="@dimen/text_size_12"-->
-                                <!--android:text="30"/>-->
-                            <!--<TextView-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:paddingLeft="10dp"-->
-                                <!--android:textSize="@dimen/text_size_12"-->
-                                <!--android:text="30"/>-->
-                            <!--<TextView-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:paddingLeft="10dp"-->
-                                <!--android:textSize="@dimen/text_size_12"-->
-                                <!--android:text="30"/>-->
-                            <!--<TextView-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:paddingLeft="10dp"-->
-                                <!--android:textSize="@dimen/text_size_12"-->
-                                <!--android:text="30"/>-->
-                            <!--<TextView-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:paddingLeft="10dp"-->
-                                <!--android:textSize="@dimen/text_size_12"-->
-                                <!--android:text="30"/>-->
-                        <!--</LinearLayout>-->
-
-                        <!--<LinearLayout-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:gravity="center"-->
-                            <!--android:padding="8dp"-->
-                            <!--&gt;-->
-                            <!--<TextView-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:textSize="@dimen/text_size_12"-->
-                                <!--android:text="30"/>-->
-                            <!--<TextView-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:paddingLeft="10dp"-->
-                                <!--android:textSize="@dimen/text_size_12"-->
-                                <!--android:text="30"/>-->
-                            <!--<TextView-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:paddingLeft="10dp"-->
-                                <!--android:textSize="@dimen/text_size_12"-->
-                                <!--android:text="30"/>-->
-                            <!--<TextView-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:paddingLeft="10dp"-->
-                                <!--android:textSize="@dimen/text_size_12"-->
-                                <!--android:text="30"/>-->
-                            <!--<TextView-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:paddingLeft="10dp"-->
-                                <!--android:textSize="@dimen/text_size_12"-->
-                                <!--android:text="30"/>-->
-                        <!--</LinearLayout>-->
-                    <!--</LinearLayout>-->
-
-                    <!--<View-->
-                        <!--android:id="@+id/halving_line"-->
-                        <!--android:layout_width="0.5dp"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:background="@color/snooker_line"-->
-                        <!--android:layout_gravity="center_horizontal"-->
-                        <!--android:layout_toRightOf="@id/ll_single_score"-->
-                        <!--android:paddingTop="15dp"-->
-                        <!--/>-->
-                    <!--<LinearLayout-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:orientation="vertical"-->
-                        <!--android:paddingTop="5dp"-->
-                        <!--android:layout_toRightOf="@id/halving_line"-->
-                        <!--&gt;-->
-                        <!--<LinearLayout-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:gravity="center"-->
-                            <!--android:padding="8dp">-->
-                            <!--<TextView-->
-                                <!--android:id="@+id/basket_guest_all_score"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:textSize="@dimen/text_size_12"-->
-                                <!--android:text="30"/>-->
-                        <!--</LinearLayout>-->
-                        <!--<LinearLayout-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:gravity="center"-->
-                            <!--android:padding="8dp">-->
-                            <!--<TextView-->
-                                <!--android:id="@+id/basket_home_all_score"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:textSize="@dimen/text_size_12"-->
-                                <!--android:text="30"/>-->
-                        <!--</LinearLayout>-->
-                    <!--</LinearLayout>-->
-                <!--</LinearLayout>-->
-
-
-            <!--</RelativeLayout>-->
-
-            <!--<RelativeLayout-->
-                <!--android:id="@+id/rl_home"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="95dp"-->
-                <!--android:gravity="center_vertical"-->
-                <!--android:paddingLeft="5dp"-->
-                <!--android:layout_alignParentTop="true"-->
-                <!--android:layout_alignParentStart="true">-->
-
-                <!--<LinearLayout-->
-                    <!--android:id="@+id/ll_guest"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:gravity="center_vertical"-->
-                    <!--android:orientation="horizontal"-->
-                    <!--android:paddingBottom="5dp"-->
-                    <!--android:paddingTop="5dp">-->
-
-                    <!--<ImageView-->
-                        <!--android:id="@+id/guest_icon"-->
-                        <!--android:layout_width="20dp"-->
-                        <!--android:layout_height="20dp"-->
-                        <!--android:layout_marginLeft="10dp"-->
-                        <!--android:src="@mipmap/basket_default" />-->
-                    <!--<TextView-->
-                        <!--android:id="@+id/guest_name"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginLeft="10dp"-->
-                        <!--android:ellipsize="end"-->
-                        <!--android:maxEms="10"-->
-                        <!--android:maxLines="1"-->
-                        <!--android:text="托特纳的时代"-->
-                        <!--android:textColor="@color/msg"-->
-                        <!--android:textSize="@dimen/item_football_half_score" />-->
-
-                    <!--<TextView-->
-                        <!--android:id="@+id/basket_guest_Ranking"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:gravity="center"-->
-                        <!--android:text="[西二]"-->
-                        <!--android:textColor="#999999"-->
-                        <!--android:textSize="@dimen/text_size_10"/>-->
-                <!--</LinearLayout>-->
-
-
-                <!--<LinearLayout-->
-                    <!--android:id="@+id/ll_home"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_below="@id/ll_guest"-->
-                    <!--android:gravity="center_vertical"-->
-                    <!--android:orientation="horizontal"-->
-                    <!--android:paddingBottom="5dp"-->
-                    <!--android:paddingTop="5dp">-->
-
-                    <!--<ImageView-->
-                        <!--android:id="@+id/home_icon"-->
-                        <!--android:layout_width="20dp"-->
-                        <!--android:layout_height="20dp"-->
-                        <!--android:layout_marginLeft="10dp"-->
-                        <!--android:src="@mipmap/basket_default" />-->
-                    <!--<TextView-->
-                        <!--android:id="@+id/home_name"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginLeft="10dp"-->
-                        <!--android:ellipsize="end"-->
-                        <!--android:maxEms="10"-->
-                        <!--android:maxLines="1"-->
-                        <!--android:text="巴萨"-->
-                        <!--android:textColor="@color/msg"-->
-                        <!--android:textSize="@dimen/item_football_half_score" />-->
-                    <!--<TextView-->
-                        <!--android:id="@+id/basket_home_Ranking"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_gravity="center"-->
-                        <!--android:text="[东二]"-->
-                        <!--android:textColor="#999999"-->
-                        <!--android:textSize="@dimen/text_size_10"/>-->
-                <!--</LinearLayout>-->
-
-                <!--<LinearLayout-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:gravity="center"-->
-                    <!--android:layout_below="@id/ll_home"-->
-                    <!--android:padding="5dp">-->
-                    <!--<TextView-->
-                        <!--android:id="@+id/backetball_total"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="@string/basket_total"-->
-                        <!--android:textColor="#666666"-->
-                        <!--android:textSize="@dimen/text_size_12"/>-->
-                    <!--<TextView-->
-                        <!--android:id="@+id/backetball_score_total"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="145/145"-->
-                        <!--android:textColor="#666666"-->
-                        <!--android:textSize="@dimen/text_size_12"/>-->
-                    <!--<TextView-->
-                        <!--android:id="@+id/backetball_differ"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="@string/basket_differ"-->
-                        <!--android:paddingLeft="5dp"-->
-                        <!--android:textColor="#666666"-->
-                        <!--android:textSize="@dimen/text_size_12"/>-->
-                    <!--<TextView-->
-                        <!--android:id="@+id/backetball_score_differ"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="13"-->
-                        <!--android:paddingLeft="3dp"-->
-                        <!--android:textColor="#666666"-->
-                        <!--android:textSize="@dimen/text_size_12"/>-->
-
-                    <!--<TextView-->
-                        <!--android:id="@+id/basket_half_score"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_gravity="center_horizontal"-->
-                        <!--android:paddingLeft="10dp"-->
-                        <!--android:text="(100:100)"-->
-                        <!--android:textColor="#0085E1"-->
-                        <!--android:textSize="@dimen/text_size_12"-->
-                        <!--android:layout_below="@id/basket_score"-->
-                        <!--android:layout_centerHorizontal="true"/>-->
-                    <!--<TextView-->
-                        <!--android:id="@+id/basket_score"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_gravity="center_horizontal"-->
-                        <!--android:text=":"-->
-                        <!--android:textColor="#0085E1"-->
-                        <!--android:textSize="@dimen/text_size_12"-->
-                        <!--android:layout_marginTop="-3dp"-->
-                        <!--android:paddingRight="8dp"-->
-                        <!--android:paddingLeft="8dp"-->
-                        <!--android:layout_alignParentTop="true"-->
-                        <!--android:layout_centerHorizontal="true"/>-->
-                <!--</LinearLayout>-->
-            <!--</RelativeLayout>-->
-        <!--</RelativeLayout>-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -467,11 +155,11 @@
                 android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:paddingTop="5dp"
-                android:paddingLeft="10dp">
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical">
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -551,10 +239,11 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/score_deffer_ll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:padding="5dp"
+                    android:padding="3dp"
                     >
                     <TextView
                         android:id="@+id/backetball_total"
@@ -587,206 +276,288 @@
                         android:paddingLeft="3dp"
                         android:textColor="#666666"
                         android:textSize="@dimen/text_size_12"/>
-
-                    <!--<TextView-->
-                        <!--android:id="@+id/basket_half_score"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_gravity="center_horizontal"-->
-                        <!--android:paddingLeft="10dp"-->
-                        <!--android:text="(100:100)"-->
-                        <!--android:textColor="#0085E1"-->
-                        <!--android:textSize="@dimen/text_size_12"-->
-                        <!--android:layout_below="@id/basket_score"-->
-                        <!--android:layout_centerHorizontal="true"/>-->
-                    <!--<TextView-->
-                        <!--android:id="@+id/basket_score"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_gravity="center_horizontal"-->
-                        <!--android:text=":"-->
-                        <!--android:textColor="#0085E1"-->
-                        <!--android:textSize="@dimen/text_size_12"-->
-                        <!--android:layout_marginTop="-3dp"-->
-                        <!--android:paddingRight="8dp"-->
-                        <!--android:paddingLeft="8dp"-->
-                        <!--android:layout_alignParentTop="true"-->
-                        <!--android:layout_centerHorizontal="true"/>-->
                 </LinearLayout>
             </LinearLayout>
                 <RelativeLayout
                     android:id="@+id/relativeLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.1"
                     >
                     <LinearLayout
                         android:id="@+id/score_data"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:orientation="vertical"
                         android:layout_alignParentRight="true"
-                        android:paddingTop="10dp"
                         android:paddingRight="50dp"
+                        android:gravity="center_vertical"
                         >
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            >
-
+                            android:orientation="horizontal">
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
-                                >
+                                android:orientation="vertical">
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
-                                    android:paddingRight="5dp"
                                     >
-                                    <TextView
-                                        android:id="@+id/guest_score1"
-                                        android:layout_width="20dp"
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:gravity="center"
-                                        android:textSize="@dimen/text_size_12"
-                                        android:text="66"/>
-                                    <TextView
-                                        android:id="@+id/guest_score2"
-                                        android:layout_width="20dp"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:paddingLeft="5dp"
-                                        android:textSize="@dimen/text_size_12"
-                                        android:text="66"/>
-                                    <TextView
-                                        android:id="@+id/guest_score3"
-                                        android:layout_width="20dp"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:paddingLeft="5dp"
-                                        android:textSize="@dimen/text_size_12"
-                                        android:text="66"/>
-                                    <TextView
-                                        android:id="@+id/guest_score4"
-                                        android:layout_width="20dp"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:paddingLeft="5dp"
-                                        android:textSize="@dimen/text_size_12"
-                                        android:text="66"/>
-                                    <TextView
-                                        android:id="@+id/guest_score_ot"
-                                        android:layout_width="20dp"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:paddingLeft="5dp"
-                                        android:textSize="@dimen/text_size_12"
-                                        android:text="66"
-                                        android:visibility="gone"/>
+                                        android:padding="3dp"
+                                        >
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center"
+                                            >
+                                            <TextView
+                                                android:id="@+id/guest_score1"
+                                                android:layout_width="20dp"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:textSize="@dimen/text_size_12"
+                                                android:text="66"/>
+                                            <TextView
+                                                android:id="@+id/guest_score2"
+                                                android:layout_width="20dp"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:paddingLeft="5dp"
+                                                android:textSize="@dimen/text_size_12"
+                                                android:text="66"/>
+                                            <TextView
+                                                android:id="@+id/guest_score3"
+                                                android:layout_width="20dp"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:paddingLeft="5dp"
+                                                android:textSize="@dimen/text_size_12"
+                                                android:text="66"/>
+                                            <TextView
+                                                android:id="@+id/guest_score4"
+                                                android:layout_width="20dp"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:paddingLeft="5dp"
+                                                android:textSize="@dimen/text_size_12"
+                                                android:text="66"/>
+                                            <TextView
+                                                android:id="@+id/guest_score_ot"
+                                                android:layout_width="20dp"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:paddingLeft="5dp"
+                                                android:textSize="@dimen/text_size_12"
+                                                android:text="66"
+                                                android:visibility="gone"/>
+                                        </LinearLayout>
+                                        <ImageView
+                                        android:layout_width="1dp"
+                                        android:layout_height="20dp"
+                                        />
+                                    </LinearLayout>
                                 </LinearLayout>
-                                <View
-                                    android:id="@+id/halving_line"
-                                    android:layout_width="0.5dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/snooker_line"
-                                    android:layout_gravity="center_horizontal"
-                                    />
-                                <ImageView
-                                    android:layout_width="1dp"
-                                    android:layout_height="20dp"
-                                    />
-                                <TextView
-                                    android:id="@+id/basket_guest_all_score"
-                                    android:layout_width="25dp"
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
-                                    android:textSize="@dimen/text_size_12"
-                                    android:textColor="#0085E1"
-                                    android:paddingLeft="5dp"
-                                    android:text="666"/>
+                                    >
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:padding="3dp"
+                                        >
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center"
+                                            >
+                                            <TextView
+                                                android:id="@+id/home_score1"
+                                                android:layout_width="20dp"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:textSize="@dimen/text_size_12"
+                                                android:text="66"/>
+                                            <TextView
+                                                android:id="@+id/home_score2"
+                                                android:layout_width="20dp"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:paddingLeft="5dp"
+                                                android:textSize="@dimen/text_size_12"
+                                                android:text="66"/>
+                                            <TextView
+                                                android:id="@+id/home_score3"
+                                                android:layout_width="20dp"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:paddingLeft="5dp"
+                                                android:textSize="@dimen/text_size_12"
+                                                android:text="66"/>
+                                            <TextView
+                                                android:id="@+id/home_score4"
+                                                android:layout_width="20dp"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:paddingLeft="5dp"
+                                                android:textSize="@dimen/text_size_12"
+                                                android:text="66"/>
+                                            <TextView
+                                                android:id="@+id/home_score_ot"
+                                                android:layout_width="20dp"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:paddingLeft="5dp"
+                                                android:textSize="@dimen/text_size_12"
+                                                android:text="66"
+                                                android:visibility="gone"/>
+                                        </LinearLayout>
+                                        <ImageView
+                                        android:layout_width="1dp"
+                                        android:layout_height="20dp"
+                                        />
+                                    </LinearLayout>
+                                </LinearLayout>
                             </LinearLayout>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            >
+                            <View
+                                android:id="@+id/halving_line2"
+                                android:layout_width="0.5dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/snooker_line"
+                                android:layout_gravity="center_horizontal"
+                                />
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
+                                android:orientation="vertical"
                                 >
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:paddingRight="5dp"
-                                    >
+                                    android:padding="3dp"
+                                    android:gravity="center">
+                                    <ImageView
+                                        android:layout_width="1dp"
+                                        android:layout_height="20dp"
+                                        />
                                     <TextView
-                                        android:id="@+id/home_score1"
-                                        android:layout_width="20dp"
+                                        android:id="@+id/basket_guest_all_score"
+                                        android:layout_width="25dp"
                                         android:layout_height="wrap_content"
                                         android:gravity="center"
                                         android:textSize="@dimen/text_size_12"
-                                        android:text="66"/>
-                                    <TextView
-                                        android:id="@+id/home_score2"
-                                        android:layout_width="20dp"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:paddingLeft="5dp"
-                                        android:textSize="@dimen/text_size_12"
-                                        android:text="66"/>
-                                    <TextView
-                                        android:id="@+id/home_score3"
-                                        android:layout_width="20dp"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:paddingLeft="5dp"
-                                        android:textSize="@dimen/text_size_12"
-                                        android:text="66"/>
-                                    <TextView
-                                        android:id="@+id/home_score4"
-                                        android:layout_width="20dp"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:paddingLeft="5dp"
-                                        android:textSize="@dimen/text_size_12"
-                                        android:text="66"/>
-                                    <TextView
-                                        android:id="@+id/home_score_ot"
-                                        android:layout_width="20dp"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:paddingLeft="5dp"
-                                        android:textSize="@dimen/text_size_12"
-                                        android:text="66"
-                                        android:visibility="gone"/>
+                                        android:textColor="#0085E1"
+                                        android:text="666"/>
                                 </LinearLayout>
-                                <View
-                                    android:id="@+id/halving_line2"
-                                    android:layout_width="0.5dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/snooker_line"
-                                    android:layout_gravity="center_horizontal"
-                                    />
-                                <ImageView
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="3dp"
+                                    android:gravity="center"
+                                    >
+                                    <ImageView
                                     android:layout_width="1dp"
                                     android:layout_height="20dp"
                                     />
-                                <TextView
+                                    <TextView
                                     android:id="@+id/basket_home_all_score"
                                     android:layout_width="25dp"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:textSize="@dimen/text_size_12"
                                     android:textColor="#0085E1"
-                                    android:paddingLeft="5dp"
                                     android:text="666"/>
+                                </LinearLayout>
+
                             </LinearLayout>
+                            <!--<View-->
+                                <!--android:id="@+id/halving_line"-->
+                                <!--android:layout_width="0.5dp"-->
+                                <!--android:layout_height="match_parent"-->
+                                <!--android:background="@color/snooker_line"-->
+                                <!--android:layout_gravity="center_horizontal"-->
+                                <!--/>-->
+                            <!--<ImageView-->
+                                <!--android:layout_width="1dp"-->
+                                <!--android:layout_height="20dp"-->
+                                <!--/>-->
+                            <!--<TextView-->
+                                <!--android:id="@+id/basket_guest_all_score"-->
+                                <!--android:layout_width="25dp"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:gravity="center"-->
+                                <!--android:textSize="@dimen/text_size_12"-->
+                                <!--android:textColor="#0085E1"-->
+                                <!--android:paddingLeft="5dp"-->
+                                <!--android:text="666"/>-->
+
+                            <!--<View-->
+                                <!--android:id="@+id/halving_line2"-->
+                                <!--android:layout_width="0.5dp"-->
+                                <!--android:layout_height="match_parent"-->
+                                <!--android:background="@color/snooker_line"-->
+                                <!--android:layout_gravity="center_horizontal"-->
+                                <!--/>-->
+                            <!--<ImageView-->
+                                <!--android:layout_width="1dp"-->
+                                <!--android:layout_height="20dp"-->
+                                <!--/>-->
+                            <!--<TextView-->
+                                <!--android:id="@+id/basket_home_all_score"-->
+                                <!--android:layout_width="25dp"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:gravity="center"-->
+                                <!--android:textSize="@dimen/text_size_12"-->
+                                <!--android:textColor="#0085E1"-->
+                                <!--android:paddingLeft="5dp"-->
+                                <!--android:text="666"/>-->
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/placeholder_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="3dp"
+                            android:visibility="invisible"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textColor="#666666"
+                                android:textSize="@dimen/text_size_12"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:paddingLeft="3dp"
+                                android:textColor="#666666"
+                                android:textSize="@dimen/text_size_12"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:paddingLeft="8dp"
+                                android:textColor="#666666"
+                                android:textSize="@dimen/text_size_12"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:paddingLeft="3dp"
+                                android:textColor="#666666"
+                                android:textSize="@dimen/text_size_12"/>
                         </LinearLayout>
                     </LinearLayout>
                     <ImageView

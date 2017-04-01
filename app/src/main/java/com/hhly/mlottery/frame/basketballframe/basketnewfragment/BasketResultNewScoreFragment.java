@@ -300,7 +300,7 @@ public class BasketResultNewScoreFragment extends Fragment implements View.OnCli
         params.put("appType", "2");//接口添加 &appType=2 字段
 
         String url = "http://192.168.10.242:8181/mlottery/core/basketballMatch.findNewFinishedMatch.do";
-        VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_RESULT, params, new VolleyContentFast.ResponseSuccessListener<BasketNewRootBean>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_NEW_RESULT, params, new VolleyContentFast.ResponseSuccessListener<BasketNewRootBean>() {
             @Override
             public void onResponse(BasketNewRootBean json) {
 
