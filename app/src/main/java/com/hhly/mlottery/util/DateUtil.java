@@ -1,5 +1,7 @@
 package com.hhly.mlottery.util;
 
+import android.text.TextUtils;
+
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 
@@ -89,26 +91,25 @@ public class DateUtil {
      * @return
      */
     public static String convertDateToNation(String date) {
+        if(TextUtils.isEmpty(date)) return "";
         if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
             return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd"), "yyyy-MM-dd");
         } else {
             return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd"), "dd-MM-yyyy");
         }
     }
+
     public static String convertDateToNationYY(String date){
+        if(TextUtils.isEmpty(date)) return "";
         if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
             return DateUtil.format(DateUtil.parseDate(date, "yy-MM-dd"), "yy-MM-dd");
         } else {
             return DateUtil.format(DateUtil.parseDate(date, "yy-MM-dd"), "dd-MM-yy");
         }
     }
-    /**
-     * 国际化日期格式
-     *
-     * @param date
-     * @return
-     */
+
     public static String convertDateToNationMD(String date) {
+        if(TextUtils.isEmpty(date)) return "";
         if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
             return DateUtil.format(DateUtil.parseDate(date, "MM-dd"), "MM-dd");
         } else {
@@ -116,27 +117,15 @@ public class DateUtil {
         }
     }
 
-    /**
-     * 国际化日期格式
-     *
-     * @param date
-     * @return
-     */
     public static String convertDateToNationYD(String date) {
+        if(TextUtils.isEmpty(date)) return "";
         if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
             return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM"), "yyyy-MM");
         } else {
             return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM"), "MM-yyyy");
         }
-       // return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM"), "MM-yyyy");
     }
 
-    /**
-     * 国际化日期格式
-     *
-     * @param date
-     * @return
-     */
     public static String convertDateToNationHM(String date) {
         if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
             return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm"), "yyyy-MM-dd HH:mm");
@@ -144,12 +133,7 @@ public class DateUtil {
             return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm"), "dd-MM-yyyy HH:mm");
         }
     }
-    /**
-     * 国际化日期格式
-     *
-     * @param date
-     * @return
-     */
+
     public static String convertDateToNationMDHM(String date) {
         if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
             return DateUtil.format(DateUtil.parseDate(date, "MM-dd HH:mm"), "MM-dd HH:mm");
@@ -158,12 +142,6 @@ public class DateUtil {
         }
     }
 
-    /**
-     * 国际化日期格式
-     *
-     * @param date
-     * @return
-     */
     public static String convertDateToNationHMS(String date) {
         if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
             return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm:ss"), "yyyy-MM-dd HH:mm:ss");

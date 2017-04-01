@@ -2,6 +2,7 @@ package com.hhly.mlottery;
 
 import android.app.ActivityManager;
 import android.app.Application;
+import android.app.Notification;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -13,8 +14,13 @@ import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CrashException;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DataBus;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.tendcloud.tenddata.TCAgent;
+import com.tendcloud.tenddata.TalkingDataSMS;
+import com.umeng.message.UmengMessageHandler;
+import com.umeng.message.entity.UMessage;
 
 import java.util.Locale;
 
@@ -33,7 +39,7 @@ public class MyApp extends Application {
     public static Configuration mConfiguration;
     public static DisplayMetrics mDm;
     public static Locale mLocale;
-    public static String isLanguage;   // 获取语言
+    public static String isLanguage = "";   // 获取语言
     public static String isPackageName;// 获取当前包名
     public static double LA;// 用户所在经度
     public static double LO;// 用户所在纬度
@@ -42,37 +48,51 @@ public class MyApp extends Application {
     public void onCreate() {
         appcontext = this;
 
-        // 初始化PreferenceUtil
-        PreferenceUtil.init(this);
+        // 子线程中做初始化操作，提升APP打开速度
+        new Thread() {
+            @Override
+            public void run() {
 
-        //初始化获取语言环境
-        mResources = appcontext.getResources();
-        mConfiguration = mResources.getConfiguration();
-        mDm = mResources.getDisplayMetrics();
-        mLocale = mConfiguration.locale;
+                // 初始化TalkingData统计
+                TCAgent.LOG_ON = true;
+                TCAgent.init(appcontext, DeviceInfo.getAppMetaData(appcontext, "TD_APP_ID"), DeviceInfo.getAppMetaData(appcontext, "TD_CHANNEL_ID"));
+                // true: 开启自动捕获
+                TCAgent.setReportUncaughtExceptions(!AppConstants.isTestEnv);
 
-        // 获取当前包名
-        isPackageName = this.getPackageName();
-        // 设置时区
-        settingTimeZone();
+                // 初始化PreferenceUtil
+                PreferenceUtil.init(appcontext);
 
-        // 根据上次的语言设置，重新设置语言
-        isLanguage = switchLanguage(PreferenceUtil.getString("language", ""));
+                //初始化获取语言环境
+                mResources = appcontext.getResources();
+                mConfiguration = mResources.getConfiguration();
+                mDm = mResources.getDisplayMetrics();
+                mLocale = mConfiguration.locale;
 
-        // 捕获异常
-        CrashException crashException = CrashException.getInstance();
-        crashException.init(getApplicationContext());
+                // 获取当前包名
+                isPackageName = appcontext.getPackageName();
+                // 设置时区
+                settingTimeZone();
 
-        // 初始化Vollery
-        VolleyContentFast.init(this);
+                // 根据上次的语言设置，重新设置语言
+                isLanguage = switchLanguage(PreferenceUtil.getString("language", ""));
 
-        //初始化畅言
-        CyUtils.initCy(this);
-        initUserInfo();
+                // 捕获异常
+                CrashException crashException = CrashException.getInstance();
+                crashException.init(getApplicationContext());
 
-        // OkHttpFinal(此初始化只是简单赋值不会阻塞线程)
-        OkHttpFinalConfiguration.Builder builder = new OkHttpFinalConfiguration.Builder();
-        OkHttpFinal.getInstance().init(builder.build());
+                // 初始化Vollery
+                VolleyContentFast.init(appcontext);
+
+                //初始化畅言
+                CyUtils.initCy(appcontext);
+                initUserInfo();
+
+                // OkHttpFinal(此初始化只是简单赋值不会阻塞线程)
+                OkHttpFinalConfiguration.Builder builder = new OkHttpFinalConfiguration.Builder();
+                OkHttpFinal.getInstance().init(builder.build());
+
+            }
+        }.start();
 
         super.onCreate();
     }
@@ -83,9 +103,7 @@ public class MyApp extends Application {
     private void settingTimeZone() {
         switch (isPackageName) {
             case AppConstants.PACKGER_NAME_ZH:// 国内版
-//                AppConstants.timeZone = 8;
-                // TODO 暂时用
-                AppConstants.timeZone = 7;
+                AppConstants.timeZone = 8;
                 break;
             case AppConstants.PACKGER_NAME_TH:// 泰国版
             case AppConstants.PACKGER_NAME_VN_HN:// 越南北版
@@ -216,8 +234,6 @@ public class MyApp extends Application {
                         }
                         break;
                     default:
-                        // TODO 暂时用
-                        language = "rCN";
                         break;
                 }
             }

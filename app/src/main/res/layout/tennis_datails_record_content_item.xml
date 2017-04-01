@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:id="@+id/tv_analysis_record_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/text_size_11"
+            tools:text="2017-03-22" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_analysis_record_match_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/res_time_color"
+                android:textSize="@dimen/text_size_11"
+                tools:text="巴黎公开赛" />
+
+            <TextView
+                android:id="@+id/tv_analysis_record_match_start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/res_time_color"
+                android:textSize="@dimen/text_size_11"
+                tools:text="第二轮" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_analysis_record_field"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/text_size_11"
+            tools:text="草地" />
+
+        <TextView
+            android:id="@+id/tv_analysis_record_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/text_size_11"
+            tools:text="0-2" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_analysis_record_name"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:lines="1"
+                android:textColor="@color/res_time_color"
+                android:textSize="@dimen/text_size_11"
+                tools:text="Name" />
+
+            <TextView
+                android:id="@+id/tv_analysis_record_name2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:lines="1"
+                android:textColor="@color/res_time_color"
+                android:textSize="@dimen/text_size_11"
+                tools:text="Name2" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/linecolor" />
+
+</LinearLayout>

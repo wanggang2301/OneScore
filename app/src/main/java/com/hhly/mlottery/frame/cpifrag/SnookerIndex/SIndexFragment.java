@@ -29,6 +29,7 @@ import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.snookerbean.SnookerScoreSocketBean;
 import com.hhly.mlottery.bean.snookerbean.snookerIndexBean.SnookerIndexBean;
 import com.hhly.mlottery.bean.snookerbean.snookerschedulebean.SnookerSocketOddsBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SnookerChildFragment.SnookerCompanyChooseDialogFragment;
 import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SnookerChildFragment.SnookerIndexChildFragment;
@@ -139,6 +140,9 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+        setWebSocketUri(BaseURLs.WS_SERVICE);
+        setTopic("USER.topic.snooker");
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);

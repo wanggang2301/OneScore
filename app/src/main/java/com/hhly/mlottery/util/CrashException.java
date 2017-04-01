@@ -111,15 +111,15 @@ public class CrashException implements UncaughtExceptionHandler {
         collectDeviceInfo(mContext);
 
         //使用Toast来显示异常信息      
-        new Thread() {
-            @Override
-            public void run() {
-                Looper.prepare();
-//                Toast.makeText(mContext, "很抱歉,程序出现异常,即将退出.", Toast.LENGTH_SHORT).show();  
-                //UiUtils.reStart(mContext);//重新启动
-                Looper.loop();
-            }
-        }.start();
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                Looper.prepare();
+////                Toast.makeText(mContext, "很抱歉,程序出现异常,即将退出.", Toast.LENGTH_SHORT).show();
+//                //UiUtils.reStart(mContext);//重新启动
+//                Looper.loop();
+//            }
+//        }.start();
         //保存日志文件       
         saveCatchInfo2File(ex);
         return true;

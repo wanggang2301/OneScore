@@ -59,23 +59,29 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tv_tennis_odds_l"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/tennis_score_item"
+                    android:textColor="@color/res_pl_color"
                     tools:text="1.06" />
 
                 <TextView
+                    android:id="@+id/tv_tennis_odds_m"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="3dp"
-                    android:paddingRight="3dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:textColor="@color/res_name_color"
                     android:textSize="@dimen/tennis_score_item"
                     tools:text="*0.5/1" />
 
                 <TextView
+                    android:id="@+id/tv_tennis_odds_r"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/tennis_score_item"
+                    android:textColor="@color/res_pl_color"
                     tools:text="0.82" />
 
             </LinearLayout>
