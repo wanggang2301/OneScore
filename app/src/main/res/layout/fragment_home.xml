@@ -9,27 +9,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <!--首页列表展示控件-->
+        <ListView
+            android:id="@+id/home_page_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/score_color_white"
+            android:divider="@null"
+            android:listSelector="@color/transparency"
+            android:scrollbars="none" />
 
-            <!--首页列表展示控件-->
-            <ListView
-                android:id="@+id/home_page_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/score_color_white"
-                android:divider="@null"
-                android:listSelector="@color/transparency"
-                android:scrollbars="none" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@drawable/home_top_bg" />
-
-        </RelativeLayout>
     </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/home_top_bg" />
 
     <!--头部-->
     <RelativeLayout
