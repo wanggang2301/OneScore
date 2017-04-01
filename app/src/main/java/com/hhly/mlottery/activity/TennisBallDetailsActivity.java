@@ -91,6 +91,7 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
 
     // 设置数据展示
     private void setDataShow(TennisAnalysisBean.DataBean mData) {
+        if (mData == null || mData.getMatchInfo() == null) return;
         // 比赛类型： 1男子、2女子、3男双、4女双、5混双
         int matchType = mData.getMatchInfo().getMatchType();
         switch (matchType) {

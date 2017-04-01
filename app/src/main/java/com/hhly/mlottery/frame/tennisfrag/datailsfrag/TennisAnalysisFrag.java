@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -204,21 +208,35 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
     private void setAnaylysisData(TennisAnalysisBean.DataBean data) {
         if (data == null) return;
 
+        String homeName = "";
         // 比赛类型： 1男子、2女子、3男双、4女双、5混双
-        int matchType = data.getMatchInfo().getMatchType();
-        switch (matchType) {
-            case 1:
-            case 2:
-                isSingle = true;
-                break;
-            case 3:
-            case 4:
-            case 5:
-                isSingle = false;
-                break;
-            default:
-                isSingle = false;
-                break;
+        if (data.getMatchInfo() != null) {
+            int matchType = data.getMatchInfo().getMatchType();
+            switch (matchType) {
+                case 1:
+                case 2:
+                    isSingle = true;
+                    break;
+                case 3:
+                case 4:
+                case 5:
+                    isSingle = false;
+                    break;
+                default:
+                    isSingle = false;
+                    break;
+            }
+            if (data.getMatchInfo().getHomePlayer1() != null) {
+                if (isSingle) {
+                    homeName = data.getMatchInfo().getHomePlayer1().getName();
+                } else {
+                    String homePlayer2Name = "";
+                    if (data.getMatchInfo().getHomePlayer2() != null) {
+                        homePlayer2Name = "/" + data.getMatchInfo().getHomePlayer2().getName();
+                    }
+                    homeName = data.getMatchInfo().getHomePlayer1().getName() + homePlayer2Name;
+                }
+            }
         }
 
         if (ll_integral_content != null) {
@@ -232,13 +250,6 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
         }
         if (ll_data_content != null) {
             ll_data_content.removeAllViews();
-        }
-
-        String homeName;
-        if (isSingle) {
-            homeName = data.getMatchInfo().getHomePlayer1().getName();
-        } else {
-            homeName = data.getMatchInfo().getHomePlayer1().getName() + "/" + data.getMatchInfo().getHomePlayer2().getName();
         }
 
         // 积分排名
@@ -344,7 +355,8 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
                 String title = mContext.getResources().getString(R.string.tennis_datails_fight_title);
                 String titleDesc = String.format(title, data.getRecentMatch().getHomePlayerRecentMatch().getTotalTimes(), homeName, data.getRecentMatch().getHomePlayerRecentMatch().getPlayerWin(), data.getRecentMatch().getHomePlayerRecentMatch().getPlayerFail(), data.getRecentMatch().getHomePlayerRecentMatch().getWinRate());
                 record_title.setText(titleDesc);
-                if (data.getRecentMatch().getHomePlayerRecentMatch().getMatchList() == null && data.getRecentMatch().getHomePlayerRecentMatch().getMatchList().size() == 0) {
+
+                if (data.getRecentMatch().getHomePlayerRecentMatch().getMatchList() == null || data.getRecentMatch().getHomePlayerRecentMatch().getMatchList().size() == 0) {
                     ll_record_content.addView(recordNotDataView());
                 } else {
                     for (int i = 0; i < data.getRecentMatch().getHomePlayerRecentMatch().getMatchList().size(); i++) {
@@ -372,7 +384,8 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
                 String title = mContext.getResources().getString(R.string.tennis_datails_fight_title);
                 String titleDesc = String.format(title, data.getRecentMatch().getGuestPlayerRecentMatch().getTotalTimes(), homeName, data.getRecentMatch().getGuestPlayerRecentMatch().getPlayerWin(), data.getRecentMatch().getGuestPlayerRecentMatch().getPlayerFail(), data.getRecentMatch().getGuestPlayerRecentMatch().getWinRate());
                 record_title.setText(titleDesc);
-                if (data.getRecentMatch().getGuestPlayerRecentMatch().getMatchList() == null && data.getRecentMatch().getGuestPlayerRecentMatch().getMatchList().size() == 0) {
+
+                if (data.getRecentMatch().getGuestPlayerRecentMatch().getMatchList() == null || data.getRecentMatch().getGuestPlayerRecentMatch().getMatchList().size() == 0) {
                     ll_record_content.addView(recordNotDataView());
                 } else {
                     for (int i = 0; i < data.getRecentMatch().getGuestPlayerRecentMatch().getMatchList().size(); i++) {

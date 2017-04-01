@@ -155,7 +155,7 @@
                 android:id="@+id/ll_tennis_datails_content_fight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/linecolor"
+                android:background="@color/tennis_details_pager_bg"
                 android:orientation="vertical">
 
                 <TextView

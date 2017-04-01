@@ -261,6 +261,7 @@
     <color name="tennis_details_analysis_title_start">#c9c9c9</color>
     <color name="tennis_details_analysis_title_start2">#32b3f8</color>
     <color name="tennis_details_analysis_title_start3">#f75550</color>
+    <color name="tennis_details_pager_bg">#f7f7f8</color>
 
 
     <!-- 开奖详情第二列背景色 -->
