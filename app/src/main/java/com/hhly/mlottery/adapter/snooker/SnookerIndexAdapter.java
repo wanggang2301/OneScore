@@ -16,10 +16,12 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketOddsDetailsActivity;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.bean.snookerbean.snookerIndexBean.SnookerIndexBean;
+import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SIndexFragment;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.SnookerIndexItemView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,14 +33,25 @@ public class SnookerIndexAdapter extends BaseQuickAdapter<SnookerIndexBean.AllIn
 
     Context context;
     private String mType;
+    private int mBallType;
     private TextView home;
     private TextView handicap;
     private TextView guest;
+    private SnookerOddsOnClick onOddsClickListener; // 赔率点击监听
+    List<SnookerIndexBean.CompanyEntity> companies;
 
-    public SnookerIndexAdapter(List<SnookerIndexBean.AllInfoEntity> data, Context context,String type) {
+    List<String> toDetailCompanies=new ArrayList<>();//传给详情页的公司
+
+    public SnookerIndexAdapter(List<SnookerIndexBean.AllInfoEntity> data,List<SnookerIndexBean.CompanyEntity> companies, Context context,String type,int ballType) {
         super(R.layout.item_snooker_index, data);
         this.context=context;
         mType=type;
+        this.companies=companies;
+        this.mBallType=ballType;
+    }
+
+    public void setOnOddsClickListener(SnookerOddsOnClick onOddsClickListener) {
+        this.onOddsClickListener = onOddsClickListener;
     }
 
     @Override
@@ -51,7 +64,8 @@ public class SnookerIndexAdapter extends BaseQuickAdapter<SnookerIndexBean.AllIn
         handicap=holder.getView(R.id.cpi_item_odds_txt);
         guest=holder.getView(R.id.cpi_item_guest_txt);
         holder.setText(R.id.cpi_item_time_txt,allInfoEntity.getMatchInfo().getOpenTime());
-        holder.setText(R.id.tv_tag,allInfoEntity.getMatchInfo().getMatchState()==null?"":allInfoEntity.getMatchInfo().getMatchState()); //状态
+        setStatus(holder,allInfoEntity);
+
         holder.setText(R.id.cpi_host_team_txt,allInfoEntity.getMatchInfo().getMatchHomeName());
         holder.setText(R.id.cpi_guest_team_txt,allInfoEntity.getMatchInfo().getMatchGuestName());
         holder.setText(R.id.cpi_score_txt,allInfoEntity.getMatchInfo().getMatchResult()==null?"VS":allInfoEntity.getMatchInfo().getMatchResult());
@@ -81,43 +95,32 @@ public class SnookerIndexAdapter extends BaseQuickAdapter<SnookerIndexBean.AllIn
     /**
      * 绑定赔率事件
      */
-    private void bindOdds(BaseViewHolder holder,SnookerIndexBean.AllInfoEntity data){
+    private void bindOdds(BaseViewHolder holder, final SnookerIndexBean.AllInfoEntity data){
         LinearLayout container=holder.getView(R.id.odds_container);
         container.removeAllViews();
-//        CpiOddsItemView cpiOddsItemView = null;
-//        List<NewOddsInfo.AllInfoBean.ComListBean> comList = data.getComList();
-//        for (final NewOddsInfo.AllInfoBean.ComListBean item : comList) {
-//            if (item.belongToShow(companies)) {
-//                cpiOddsItemView = new CpiOddsItemView(mContext);
-//                cpiOddsItemView.bindData(item, type);
-//                if (onOddsClickListener != null) {
-//                    cpiOddsItemView.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            onOddsClickListener.onOddsClick(data, item);
-//                        }
-//                    });
-//                }
-//                container.addView(cpiOddsItemView);
-//            }
-//        }
-//        // 最后一个隐藏底部分割线
-//        if (cpiOddsItemView != null) {
-//            cpiOddsItemView.hideDivider();
-//        }
+
         SnookerIndexItemView itemView=null;
         List<SnookerIndexBean.AllInfoEntity.ComListEntity> comList=data.getComList();
-        for(SnookerIndexBean.AllInfoEntity.ComListEntity item : comList){
-            itemView=new SnookerIndexItemView(context);
-            itemView.bindData(item,mType);
-            container.addView(itemView);
-            //点击事件
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //
+        for(final SnookerIndexBean.AllInfoEntity.ComListEntity item : comList){
+            if(item.belongToShow(companies)){
+                toDetailCompanies.clear();
+                toDetailCompanies.add(item.getComName());
+                itemView=new SnookerIndexItemView(context);
+                itemView.bindData(item,mType);
+                container.addView(itemView);
+                if(onOddsClickListener!=null){
+                    //点击事件
+                    itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //
+                            onOddsClickListener.onOddsClick(data,item,toDetailCompanies);
+                        }
+                    });
                 }
-            });
+            }
+
+
         }
         // 最后一个隐藏底部分割线
         if(itemView!=null){
@@ -127,10 +130,87 @@ public class SnookerIndexAdapter extends BaseQuickAdapter<SnookerIndexBean.AllIn
     }
 
     /**
+     * 设置比赛状态
+     * @param holder
+     * @param allInfoEntity
+     */
+    private void setStatus(BaseViewHolder holder, SnookerIndexBean.AllInfoEntity allInfoEntity){
+        String state;
+        if(allInfoEntity.getMatchInfo()!=null&&allInfoEntity.getMatchInfo().getMatchState()!=null){
+            state=allInfoEntity.getMatchInfo().getMatchState();
+            if(mBallType== BallType.TENNLS){
+                switch (state){
+                    case "-6": //p2退赛
+                        holder.setText(R.id.tv_tag,context.getString(R.string.tennis_match_p2));
+                        break;
+                    case "-5": //p1退赛
+                        holder.setText(R.id.tv_tag,context.getString(R.string.tennis_match_p1));
+                        break;
+                    case "-4": //待定
+                        holder.setText(R.id.tv_tag,context.getString(R.string.tennis_match_dd));
+                        break;
+                    case "-3": //推迟
+                        holder.setText(R.id.tv_tag,context.getString(R.string.tennis_match_tc));
+                        break;
+                    case "-2": //中断
+                        holder.setText(R.id.tv_tag,context.getString(R.string.tennis_match_zd));
+                        break;
+                    case "-1": //完
+                        holder.setText(R.id.tv_tag,context.getString(R.string.tennis_match_over));
+                        break;
+                    case "0": //未开始
+                        holder.setText(R.id.tv_tag,context.getString(R.string.tennis_match_not_start));
+                        break;
+                    default: //进行中
+                        holder.setText(R.id.tv_tag,context.getString(R.string.tennis_match_join));
+                        break;
+                }
+            }else if(mBallType==BallType.SNOOKER){
+                switch (state){
+//                    0 暂停
+//                    1 未开始
+//                    2 结束
+//                    3 进行中
+//                    4 休息中
+//                            -5 左退赛
+//                            -6 右退赛
+
+                    case "0":
+                        holder.setText(R.id.tv_tag,context.getString(R.string.snooker_state_pause));
+                        break;
+                    case "1":
+                        holder.setText(R.id.tv_tag,context.getString(R.string.snooker_state_no_start));
+                        break;
+                    case "2":
+                        holder.setText(R.id.tv_tag,context.getString(R.string.snooker_state_over_game));
+                        break;
+                    case "3":
+                        holder.setText(R.id.tv_tag,context.getString(R.string.snooker_state_have_ing));
+                        break;
+                    case "4":
+                        holder.setText(R.id.tv_tag,context.getString(R.string.snooker_state_resting));
+                        break;
+                    case "-5":
+                        holder.setText(R.id.tv_tag,context.getString(R.string.tennis_match_p1));
+                        break;
+                    case "-6":
+                        holder.setText(R.id.tv_tag,context.getString(R.string.tennis_match_p2));
+                        break;
+                    default:
+                        holder.setText(R.id.tv_tag,"");//不显示
+                        break;
+                }
+            }
+
+        }
+
+    }
+
+    /**
      * 赔率item的点击事件
      */
     public interface SnookerOddsOnClick{
-        void onOddsClich(SnookerIndexBean.AllInfoEntity allInfoEntity,SnookerIndexBean.AllInfoEntity.ComListEntity entity);
+        void onOddsClick(SnookerIndexBean.AllInfoEntity allInfoEntity,SnookerIndexBean.AllInfoEntity.ComListEntity entity,List<String>companyList);
     }
 
 }

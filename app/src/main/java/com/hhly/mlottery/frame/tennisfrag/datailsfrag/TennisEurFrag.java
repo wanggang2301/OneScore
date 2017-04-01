@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.TennisCpiDetailsActivity;
@@ -27,7 +26,7 @@ import java.util.Map;
 /**
  * 网球内页欧赔
  */
-public class TennisEurFrag extends Fragment {
+public class TennisEurFrag extends Fragment implements View.OnClickListener{
     private static final String TENNIS_DATAILS_THIRDID = "tennis_details_third_id";
     private final String ARG_ODDTYPE = "oddType";
     private final String ARG_THIRDID = "thirdId";
@@ -106,16 +105,22 @@ public class TennisEurFrag extends Fragment {
         VolleyContentFast.requestJsonByGet(BaseURLs.TENNIS_DATAILS_ODDS_URL, map, new VolleyContentFast.ResponseSuccessListener<TennisOdds>() {
             @Override
             public void onResponse(TennisOdds json) {
-                tennisOdds = json;
-                if (tennisOdds != null && tennisOdds.getData() != null) {
-                    setStatus(SUCCESS);
-                    nameList.clear();
-                    for (int i = 0; i < tennisOdds.getData().size(); i++) {
-                        // 添加所有公司name
-                        nameList.add(tennisOdds.getData().get(i).getName());
+                if (json != null && json.getData() != null) {
+                    if (json.getData().size() == 0) {
+                        setStatus(NOTO_DATA);
+                    } else {
+                        setStatus(SUCCESS);
+                        nameList.clear();
+                        for (int i = 0; i < json.getData().size(); i++) {
+                            // 添加所有公司name
+                            nameList.add(json.getData().get(i).getName());
+                        }
+                        if (tennisOdds == null) {
+                            tennisOdds = json;
+                            mAdapter.addData(tennisOdds.getData());
+                        }
+                        mAdapter.notifyDataSetChanged();
                     }
-                    mAdapter.addData(tennisOdds.getData());
-                    mAdapter.notifyDataSetChanged();
                 } else {
                     setStatus(NOTO_DATA);
                 }
@@ -139,6 +144,7 @@ public class TennisEurFrag extends Fragment {
     private void initView() {
         contentView = mView.findViewById(R.id.tennis_datails_eur_content);
         notDataView = mView.findViewById(R.id.network_exception_layout);
+        mView.findViewById(R.id.network_exception_reload_btn).setOnClickListener(this);
         ff_loading = mView.findViewById(R.id.ff_loading);
         ff_note_data = mView.findViewById(R.id.ff_note_data);
 
@@ -153,5 +159,14 @@ public class TennisEurFrag extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = (Activity) context;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.network_exception_reload_btn:
+                initData();
+                break;
+        }
     }
 }

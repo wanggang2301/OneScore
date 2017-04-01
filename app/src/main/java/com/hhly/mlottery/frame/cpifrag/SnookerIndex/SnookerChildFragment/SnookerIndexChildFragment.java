@@ -14,24 +14,40 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.CpiDetailsActivity;
+import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.activity.SnookerMatchDetail;
+import com.hhly.mlottery.activity.TennisBallDetailsActivity;
+import com.hhly.mlottery.activity.TennisCpiDetailsActivity;
 import com.hhly.mlottery.adapter.snooker.SnookerIndexAdapter;
 import com.hhly.mlottery.bean.snookerbean.SnookerScoreSocketBean;
 import com.hhly.mlottery.bean.snookerbean.snookerIndexBean.SnookerIndexBean;
 import com.hhly.mlottery.bean.snookerbean.snookerschedulebean.SnookerSocketOddsBean;
+import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SIndexFragment;
 import com.hhly.mlottery.mvp.ViewFragment;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildContract.Presenter> implements SnookerIndexChildContract.View {
 
     private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+    private final String ARG_ODDTYPE = "oddType";
+    private final String ARG_THIRDID = "thirdId";
+    private final String ARG_INDEX = "index";
+    private final String ARG_LEFT_NAME = "leftName";
+    private final String ARG_COMPAN_NAME = "companName";
 
-
-    private String mType;
+    private String mType; //亚盘大小球类型
+    private String mTypeIndex;//类型对应的坐标
+    private int mBallType;//斯诺克网球
     private View mView;
 
     @BindView(R.id.snooker_index_recycler)
@@ -64,14 +80,16 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
     /**当前日期*/
     private String mDate="";
 
+
     public SnookerIndexChildFragment() {
         // Required empty public constructor
     }
 
-    public static SnookerIndexChildFragment newInstance(String type) {
+    public static SnookerIndexChildFragment newInstance(String type,int ballType) {
         SnookerIndexChildFragment fragment = new SnookerIndexChildFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, type);
+        args.putInt(ARG_PARAM2,ballType);
         fragment.setArguments(args);
         return fragment;
     }
@@ -87,9 +105,18 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mType = getArguments().getString(ARG_PARAM1);
+            mBallType=getArguments().getInt(ARG_PARAM2);
         }
         //TODO:改成dagger
         mPresenter=new SnookerIndexChildPresenter(this);
+        if(mType.equals(SIndexFragment.ODDS_LET)){
+            mTypeIndex=1+"";
+        }else if(mType.equals(SIndexFragment.ODDS_SIZE)){
+            mTypeIndex=3+"";
+        }else if(mType.equals(SIndexFragment.ODDS_EURO)){
+            mTypeIndex=2+"";
+        }
+
     }
 
     @Override
@@ -113,21 +140,49 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
             public void onClick(View v) {
                 mExceptionLayout.setVisibility(View.GONE);
                 mProgressBarLayout.setVisibility(View.VISIBLE);
-                mPresenter.refreshByDate(mDate,mType);
+                parentFragment.refreshAllChildFragments();
             }
         });
 
-        mAdapter=new SnookerIndexAdapter(mPresenter.getData(),mActivity,mType);
+        mAdapter=new SnookerIndexAdapter(mPresenter.getData(),parentFragment.getCompanyList(),mActivity,mType,mBallType);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
 
-        mPresenter.refreshByDate("",mType);
+        // 每个 Item 内部一条赔率的单击
+        mAdapter.setOnOddsClickListener(new SnookerIndexAdapter.SnookerOddsOnClick() {
+            @Override
+            public void onOddsClick(SnookerIndexBean.AllInfoEntity item, SnookerIndexBean.AllInfoEntity.ComListEntity odds,List<String>companyList) {
+
+                if(mBallType== BallType.TENNLS){
+                    //点击指数页面，传值给详情界面
+                    Intent intent = new Intent(getContext(), TennisCpiDetailsActivity.class);
+                    intent.putStringArrayListExtra(ARG_LEFT_NAME, (ArrayList<String>) companyList);   //两行赔率
+                    intent.putExtra(ARG_COMPAN_NAME, odds.getComName());  //公司Id
+                    intent.putExtra(ARG_INDEX, item.getComList().indexOf(odds) + "");
+                    intent.putExtra(ARG_ODDTYPE, mTypeIndex);
+                    intent.putExtra(ARG_THIRDID,item.getLeagueId());
+                    getContext().startActivity(intent);
+                }
+
+
+            }
+        }
+        );
+
+        mPresenter.refreshByDate("",mType,mBallType);
         mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
-                Intent intent=new Intent(getActivity(), SnookerMatchDetail.class);
-                intent.putExtra("matchId",mPresenter.getData().get(i).getMatchInfo().getMatchId());
-                getActivity().startActivity(intent);
+                if(mBallType==BallType.SNOOKER){
+                    Intent intent=new Intent(getActivity(), SnookerMatchDetail.class);
+                    intent.putExtra("matchId",mPresenter.getData().get(i).getMatchInfo().getMatchId());
+                    getActivity().startActivity(intent);
+                }
+               else if(mBallType==BallType.TENNLS){
+                    Intent intent=new Intent(getActivity(), TennisBallDetailsActivity.class);
+                    intent.putExtra("thirdId",mPresenter.getData().get(i).getMatchInfo().getMatchId());
+                    getActivity().startActivity(intent);
+                }
             }
         });
 
@@ -140,7 +195,7 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
      */
     public void refreshDate(String date){
         mDate=date;
-        mPresenter.refreshByDate(date,mType);
+        mPresenter.refreshByDate(date,mType,mBallType);
     }
 
     @Override

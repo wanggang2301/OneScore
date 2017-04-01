@@ -41,7 +41,7 @@ public class SnookerIndexChildContract {
 
         List<SnookerIndexBean.AllInfoEntity> getData();
 
-        void refreshByDate(String date,String type);
+        void refreshByDate(String date,String type,int ballType);
 
         void filterCompany();
 

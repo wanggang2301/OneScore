@@ -1,0 +1,16 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/basket_noshow"
+        android:textColor="@color/res_time_color"
+        android:textSize="@dimen/item_football_half_score"
+        android:visibility="visible" />
+
+</LinearLayout>

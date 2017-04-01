@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!--公共-->
     <string name="games_no_start">未开始</string>
     <!--足球事件直播-->
     <string name="foot_event">事件</string>
@@ -32,7 +30,6 @@
     <string name="dangerAttackk_nodata">暂无危险进攻数据.</string>
     <string name="attack_nodata">暂无进攻数据.</string>
     <string name="time">时间(T)</string>
-    <string name="odds_equals">平均</string>
 
     <!--篮球资料库-->
     <string name="basket_info_hot">热门</string>
@@ -44,13 +41,10 @@
     <string name="basket_info_title">篮球资料库</string>
     <string name="basket_info_zhouji">洲际赛事</string>
     <string name="basket_info_country">国家赛事</string>
-
     <string name="basket_info_zhouji2">国际赛事</string>
     <string name="basket_info_shatan">沙滩赛事</string>
-
     <string name="football_info_title">足球资料库</string>
     <string name="football_info_oceania">大洋洲</string>
-
 
     <!--足球内页改版(滚球等)-->
     <string name="foot_details_roolball">滚球</string>
@@ -58,7 +52,6 @@
     <string name="foot_details_analyze">分析</string>
     <string name="foot_details_odds">指数</string>
     <string name="foot_details_statistics">直播</string>
-
     <string name="foot_details_time">时间</string>
     <string name="foot_details_score">比分</string>
     <string name="foot_details_home">主队</string>
@@ -77,6 +70,7 @@
     <string name="foot_details_focus">关注</string>
     <string name="foot_details_focused">已关注</string>
     <string name="foot_details_share">分享</string>
+
     <!--亚盘-->
     <string name="foot_odds_alet_left">主队</string>
     <string name="foot_odds_alet_middle">让球</string>
@@ -122,6 +116,7 @@
     <string name="share_match_over">比赛后</string>
     <string name="share_match_live2">正在比赛中</string>
     <string name="share_match_browse">赛事一览</string>
+
 
     <!--指数-->
     <string name="odd_plate_rb_txt">亚盘</string>
@@ -185,9 +180,7 @@
     <string name="asialet">亚赔</string>
     <string name="euro">欧赔</string>
     <string name="asiasize">大小球</string>
-    <string name="roll_asialet">亚</string>
-    <string name="roll_euro">欧</string>
-    <string name="roll_asiasize">大</string>
+
     <string name="oddgone">不显示</string>
     <string name="about_product_msg_txt_simple">一比分，一直专注于体育比分的产品，目前比分、角球响应速度业内领先。</string>
     <string name="frame_home_jieguo_txt">彩票开奖</string>
@@ -231,7 +224,9 @@
     <string name="about_frame_txt">关于我们</string>
     <string name="more_setting">更多设置</string>
     <string name="invited_prize">邀请有奖</string>
+    <string name="login_int_username">请输入注册账号</string>
     <string name="can_only_choose_a_picture">亲，只能选择一张图片</string>
+
     <!-- 侧滑栏字体 -->
     <string name="foot_jishi_txt">即时</string>
     <string name="foot_saiguo_txt">赛果</string>
@@ -293,7 +288,6 @@
     <string name="immediate_status_mesomere">中断</string>
     <string name="immediate_status_postpone">推迟</string>
     <string name="immediate_unconection">当前数据不在实时更新状态，请下拉尝试连接或检查网络。</string>
-
     <string name="favourite">关注</string>
     <string name="cancel_favourite">取消关注</string>
 
@@ -309,7 +303,7 @@
     <string name="toast_data_loading">数据正在加载中。</string>
     <string name="hot_score_txt">热门赛事</string>
     <string name="other_score_txt">其他赛事</string>
-
+    <string name="odds_equals">平均</string>
     <!-- 关注 -->
     <string name="unfocus">暂无关注</string>
     <string name="unfocus2">左滑赛事，可关注该赛事</string>
@@ -326,7 +320,7 @@
     <string name="about_wap_msg_txt">m.13322.com</string>
     <string name="about_subscribe_txt">订阅号：live13322</string>
     <string name="about_service_txt">服务号：win13322</string>
-    <string name="about_cus_service_txt">客    服</string>
+    <string name="about_cus_service_txt">客    服 :</string>
     <string name="about_cus_number_txt"> 400-6776-550</string>
     <string name="about_io_exp">IO异常</string>
     <string name="about_service_exp">服务器异常</string>
@@ -597,7 +591,6 @@
     <string name="home_number_desc_yi">亿</string>
     <string name="home_number_desc_wan">万</string>
 
-
     <!-- 彩票 End-->
 
     <string name="number_xq7">周日</string>
@@ -683,7 +676,7 @@
     <string name="football_detail_pre_title2">天气</string>
     <string name="football_detail_pre_title3">场地</string>
     <string name="football_detail_pre_title4">首发</string>
-    <!--分析界面-->
+    <!--斯诺克分析界面-->
     <string name="rank">球队排名</string>
     <string name="recordconstract">战绩对比</string>
     <string name="homeguestconstract">主客对比</string>
@@ -1035,7 +1028,7 @@
     <string name="phone_error">请输入正确手机号码</string>
     <string name="verify_code">请输入验证码</string>
     <string name="verify_code_send">发送验证码</string>
-    <string name="logout">退出当前账号</string>
+    <string name="logout">退出当前账户</string>
     <string name="logouting">正在退出...</string>
     <string name="logout_fail">注销失败</string>
     <string name="logout_succ">退出成功</string>
@@ -1075,6 +1068,7 @@
     <string name="football_baby">足球宝贝</string>
     <string name="account_cannot_be_empty">账号或手机号不能为空</string>
     <string name="please_login_first">请先登录</string>
+
 
     <!--模糊搜索-->
     <string name="fuzzy_search">请输入联赛名</string>
@@ -1126,6 +1120,7 @@
     <string name="noon_sex">保密</string>
     <string name="chose_head_phot">选择头像</string>
     <string name="complete">完成</string>
+
     <!--1.1.2 end-->
 
 
@@ -1155,6 +1150,7 @@
     <string name="ninety_plus">90+</string>
     <string name="at_least_one_company">至少选择一家公司</string>
     <string name="invited_number_noon">邀请码不存在</string>
+
 
     <string name="home_win_rate">主胜率</string>
     <string name="home_lose_rate">主负率</string>
@@ -1260,6 +1256,7 @@
     <string name="avatar_settings">头像</string>
     <string name="photograph">拍照</string>
     <string name="picture_resource_does_not_exist">图片资源不存在</string>
+
 
     <string name="welcome_chart_room">欢迎进入聊天室!</string>
     <string name="to_update_kindly_reminder">温馨提示</string>
@@ -1427,18 +1424,13 @@
     <string name="basket_team_statictics">球队统计</string>
     <string name="basket_players_statictics">球员统计</string>
     <string name="basket_no_text_live">暂无直播数据</string>
-
     <string name="basket_player_no_data">暂无统计数据</string>
-
-
 
 
     <string name="video_high_light_reminder_comment">您正在使用移动数据，是否继续打开？</string>
     <string name="video_high_light_continue_open">打开</string>
     <string name="video_high_light">精彩瞬间</string>
     <string name="video_high_notice">精彩瞬间来啦</string>
-
-
 
     <!--斯诺克-->
     <string name="snooker_title">斯诺克</string>
@@ -1516,6 +1508,8 @@
     <string name="no_focus">您还未关注任何比赛</string>
     <string name="to_focus_now">马上去关注</string>
     <string name="my_focus">我的关注</string>
+
+
     <string name="multi_header_name">多屏观看</string>
     <string name="multi_add">添加</string>
     <string name="multi_dialog_text">您确认移除这场比赛吗?</string>
@@ -1568,10 +1562,12 @@
     <string name="snooker_txt">斯诺克</string>
     <string name="tennisball_txt">网球</string>
     <string name="football_ziliaoku">资料库</string>
+
     <string name="sn_rank_name">姓名</string>
     <string name="sn_rank_zjf">总积分</string>
     <string name="sn_rank_zjj">总奖金</string>
     <string name="sn_player_search">请输入球员名称</string>
+
     <!--斯诺克-->
     <string name="snooker_qualifiers">资格赛</string>
     <string name="snooker_match">正赛</string>
@@ -1615,6 +1611,17 @@
     <string name="basket_analyze_all_rank">全部排名>>></string>
     <string name="football_rfypl">让分赢盘率</string>
     <string name="football_odds_return_list">返回列表</string>
+
+    <!--日期-->
+    <string name="return_yesterday">昨天</string>
+    <string name="return_today">今天</string>
+    <string name="return_tomorrow">明天</string>
+    <string name="roll_asialet">亚</string>
+    <string name="roll_euro">欧</string>
+    <string name="roll_asiasize">大</string>
+
+    <string name="basket_handicap_bigorsmall">大/走/小</string>
+
     <string name="home_gender">性别</string>
     <string name="snooker_index_single_double">单双</string>
     <string name="score_ret">退赛</string>
@@ -1663,5 +1670,4 @@
     <string name="tennis_datails_status8">双误</string>
     <string name="tennis_datails_status9">非受迫性失误</string>
     <string name="tennis_datails_status10">主动得分</string>
-
 </resources>

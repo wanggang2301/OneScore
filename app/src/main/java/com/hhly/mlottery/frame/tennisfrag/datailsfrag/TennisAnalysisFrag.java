@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -150,10 +154,16 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
         return view;
     }
 
+    // 近期战绩itemView_TOP
     private View recordTopItemView() {
         View view = View.inflate(mContext, R.layout.tennis_datails_record_top_item, null);
         record_title = (TextView) view.findViewById(R.id.tennis_datails_analysis_record_top_title);
         return view;
+    }
+
+    // 近期战绩 无数据item
+    private View recordNotDataView() {
+        return View.inflate(mContext, R.layout.fragment_tennis_analysis_item, null);
     }
 
     // 交手记录itemView
@@ -198,21 +208,35 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
     private void setAnaylysisData(TennisAnalysisBean.DataBean data) {
         if (data == null) return;
 
+        String homeName = "";
         // 比赛类型： 1男子、2女子、3男双、4女双、5混双
-        int matchType = data.getMatchInfo().getMatchType();
-        switch (matchType) {
-            case 1:
-            case 2:
-                isSingle = true;
-                break;
-            case 3:
-            case 4:
-            case 5:
-                isSingle = false;
-                break;
-            default:
-                isSingle = false;
-                break;
+        if (data.getMatchInfo() != null) {
+            int matchType = data.getMatchInfo().getMatchType();
+            switch (matchType) {
+                case 1:
+                case 2:
+                    isSingle = true;
+                    break;
+                case 3:
+                case 4:
+                case 5:
+                    isSingle = false;
+                    break;
+                default:
+                    isSingle = false;
+                    break;
+            }
+            if (data.getMatchInfo().getHomePlayer1() != null) {
+                if (isSingle) {
+                    homeName = data.getMatchInfo().getHomePlayer1().getName();
+                } else {
+                    String homePlayer2Name = "";
+                    if (data.getMatchInfo().getHomePlayer2() != null) {
+                        homePlayer2Name = "/" + data.getMatchInfo().getHomePlayer2().getName();
+                    }
+                    homeName = data.getMatchInfo().getHomePlayer1().getName() + homePlayer2Name;
+                }
+            }
         }
 
         if (ll_integral_content != null) {
@@ -228,15 +252,8 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
             ll_data_content.removeAllViews();
         }
 
-        String homeName;
-        if (isSingle) {
-            homeName = data.getMatchInfo().getHomePlayer1().getName();
-        } else {
-            homeName = data.getMatchInfo().getHomePlayer1().getName() + "/" + data.getMatchInfo().getHomePlayer2().getName();
-        }
-
         // 积分排名
-        if (data.getRankScore() != null) {
+        if (data.getRankScore() != null && data.getRankScore().size() != 0) {
             integral_not_data.setVisibility(View.GONE);
             integral_title.setVisibility(View.VISIBLE);
             for (int i = 0; i < data.getRankScore().size(); i++) {
@@ -257,7 +274,7 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
         }
 
         // 交手记录
-        if (data.getMatchRecord() != null) {
+        if (data.getMatchRecord() != null && data.getMatchRecord().getMatchList() != null && data.getMatchRecord().getMatchList().size() != 0) {
             fight_not_data.setVisibility(View.GONE);
             fight_title.setVisibility(View.VISIBLE);
 
@@ -265,64 +282,62 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
             String titleDesc = String.format(title, data.getMatchRecord().getTotalTimes(), homeName, data.getMatchRecord().getPlayerWin(), data.getMatchRecord().getPlayerFail(), data.getMatchRecord().getWinRate());
             fight_title.setText(titleDesc);
 
-            if (data.getMatchRecord().getMatchList() != null) {
-                for (int i = 0; i < data.getMatchRecord().getMatchList().size(); i++) {
-                    ll_fight_content.addView(fightItemView());
-                    MatchListBean matchListBean = data.getMatchRecord().getMatchList().get(i);
-                    fight_match_name.setText((matchListBean.getLeagueName() == null ? "" : matchListBean.getLeagueName()) + " " + getRole(matchListBean.getRole()));
-                    fight_date.setText(matchListBean.getStartDate() == null ? "" : DateUtil.convertDateToNation(matchListBean.getStartDate()));
-                    fight_time.setText(matchListBean.getStartTime() == null ? "" : matchListBean.getStartTime());
-                    fight_field.setText(getSite(matchListBean.getSiteType()));
-                    fight_home_name.setText(matchListBean.getHomePlayer1().getName());
-                    fight_guest_name.setText(matchListBean.getGuestPlayer1().getName());
-                    fight_home_total_score.setText(String.valueOf(matchListBean.getMatchScore().getHomeTotalScore()));
-                    fight_guest_total_score.setText(String.valueOf(matchListBean.getMatchScore().getAwayTotalScore()));
-                    if (isSingle) {
-                        // 单人
-                        fight_home_name2.setVisibility(View.GONE);
-                        fight_guest_name2.setVisibility(View.GONE);
-                    } else {
-                        // 双人
-                        fight_home_name2.setVisibility(View.VISIBLE);
-                        fight_guest_name2.setVisibility(View.VISIBLE);
-                        fight_home_name2.setText(matchListBean.getHomePlayer2().getName());
-                        fight_guest_name2.setText(matchListBean.getGuestPlayer2().getName());
-                    }
-                    if (matchListBean.getMatchScore().getHomeSetScore1() == 0 && matchListBean.getMatchScore().getAwaySetScore1() == 0) {
-                        fight_home_score1.setText("");
-                        fight_guest_score1.setText("");
-                    } else {
-                        fight_home_score1.setText(String.valueOf(matchListBean.getMatchScore().getHomeSetScore1()));
-                        fight_guest_score1.setText(String.valueOf(matchListBean.getMatchScore().getAwaySetScore1()));
-                    }
-                    if (matchListBean.getMatchScore().getHomeSetScore2() == 0 && matchListBean.getMatchScore().getAwaySetScore2() == 0) {
-                        fight_home_score2.setText("");
-                        fight_guest_score2.setText("");
-                    } else {
-                        fight_home_score2.setText(String.valueOf(matchListBean.getMatchScore().getHomeSetScore2()));
-                        fight_guest_score2.setText(String.valueOf(matchListBean.getMatchScore().getAwaySetScore2()));
-                    }
-                    if (matchListBean.getMatchScore().getHomeSetScore3() == 0 && matchListBean.getMatchScore().getAwaySetScore3() == 0) {
-                        fight_home_score3.setText("");
-                        fight_guest_score3.setText("");
-                    } else {
-                        fight_home_score3.setText(String.valueOf(matchListBean.getMatchScore().getHomeSetScore3()));
-                        fight_guest_score3.setText(String.valueOf(matchListBean.getMatchScore().getAwaySetScore3()));
-                    }
-                    if (matchListBean.getMatchScore().getHomeSetScore4() == 0 && matchListBean.getMatchScore().getAwaySetScore4() == 0) {
-                        fight_home_score4.setText("");
-                        fight_guest_score4.setText("");
-                    } else {
-                        fight_home_score4.setText(String.valueOf(matchListBean.getMatchScore().getHomeSetScore4()));
-                        fight_guest_score4.setText(String.valueOf(matchListBean.getMatchScore().getAwaySetScore4()));
-                    }
-                    if (matchListBean.getMatchScore().getHomeSetScore5() == 0 && matchListBean.getMatchScore().getAwaySetScore5() == 0) {
-                        fight_home_score5.setText("");
-                        fight_guest_score5.setText("");
-                    } else {
-                        fight_home_score5.setText(String.valueOf(matchListBean.getMatchScore().getHomeSetScore5()));
-                        fight_guest_score5.setText(String.valueOf(matchListBean.getMatchScore().getAwaySetScore5()));
-                    }
+            for (int i = 0; i < data.getMatchRecord().getMatchList().size(); i++) {
+                ll_fight_content.addView(fightItemView());
+                MatchListBean matchListBean = data.getMatchRecord().getMatchList().get(i);
+                fight_match_name.setText((matchListBean.getLeagueName() == null ? "" : matchListBean.getLeagueName()) + " " + getRole(matchListBean.getRole()));
+                fight_date.setText(matchListBean.getStartDate() == null ? "" : DateUtil.convertDateToNation(matchListBean.getStartDate()));
+                fight_time.setText(matchListBean.getStartTime() == null ? "" : matchListBean.getStartTime());
+                fight_field.setText(getSite(matchListBean.getSiteType()));
+                fight_home_name.setText(matchListBean.getHomePlayer1().getName());
+                fight_guest_name.setText(matchListBean.getGuestPlayer1().getName());
+                fight_home_total_score.setText(String.valueOf(matchListBean.getMatchScore().getHomeTotalScore()));
+                fight_guest_total_score.setText(String.valueOf(matchListBean.getMatchScore().getAwayTotalScore()));
+                if (isSingle) {
+                    // 单人
+                    fight_home_name2.setVisibility(View.GONE);
+                    fight_guest_name2.setVisibility(View.GONE);
+                } else {
+                    // 双人
+                    fight_home_name2.setVisibility(View.VISIBLE);
+                    fight_guest_name2.setVisibility(View.VISIBLE);
+                    fight_home_name2.setText(matchListBean.getHomePlayer2().getName());
+                    fight_guest_name2.setText(matchListBean.getGuestPlayer2().getName());
+                }
+                if (matchListBean.getMatchScore().getHomeSetScore1() == 0 && matchListBean.getMatchScore().getAwaySetScore1() == 0) {
+                    fight_home_score1.setText("");
+                    fight_guest_score1.setText("");
+                } else {
+                    fight_home_score1.setText(String.valueOf(matchListBean.getMatchScore().getHomeSetScore1()));
+                    fight_guest_score1.setText(String.valueOf(matchListBean.getMatchScore().getAwaySetScore1()));
+                }
+                if (matchListBean.getMatchScore().getHomeSetScore2() == 0 && matchListBean.getMatchScore().getAwaySetScore2() == 0) {
+                    fight_home_score2.setText("");
+                    fight_guest_score2.setText("");
+                } else {
+                    fight_home_score2.setText(String.valueOf(matchListBean.getMatchScore().getHomeSetScore2()));
+                    fight_guest_score2.setText(String.valueOf(matchListBean.getMatchScore().getAwaySetScore2()));
+                }
+                if (matchListBean.getMatchScore().getHomeSetScore3() == 0 && matchListBean.getMatchScore().getAwaySetScore3() == 0) {
+                    fight_home_score3.setText("");
+                    fight_guest_score3.setText("");
+                } else {
+                    fight_home_score3.setText(String.valueOf(matchListBean.getMatchScore().getHomeSetScore3()));
+                    fight_guest_score3.setText(String.valueOf(matchListBean.getMatchScore().getAwaySetScore3()));
+                }
+                if (matchListBean.getMatchScore().getHomeSetScore4() == 0 && matchListBean.getMatchScore().getAwaySetScore4() == 0) {
+                    fight_home_score4.setText("");
+                    fight_guest_score4.setText("");
+                } else {
+                    fight_home_score4.setText(String.valueOf(matchListBean.getMatchScore().getHomeSetScore4()));
+                    fight_guest_score4.setText(String.valueOf(matchListBean.getMatchScore().getAwaySetScore4()));
+                }
+                if (matchListBean.getMatchScore().getHomeSetScore5() == 0 && matchListBean.getMatchScore().getAwaySetScore5() == 0) {
+                    fight_home_score5.setText("");
+                    fight_guest_score5.setText("");
+                } else {
+                    fight_home_score5.setText(String.valueOf(matchListBean.getMatchScore().getHomeSetScore5()));
+                    fight_guest_score5.setText(String.valueOf(matchListBean.getMatchScore().getAwaySetScore5()));
                 }
             }
         } else {
@@ -340,20 +355,25 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
                 String title = mContext.getResources().getString(R.string.tennis_datails_fight_title);
                 String titleDesc = String.format(title, data.getRecentMatch().getHomePlayerRecentMatch().getTotalTimes(), homeName, data.getRecentMatch().getHomePlayerRecentMatch().getPlayerWin(), data.getRecentMatch().getHomePlayerRecentMatch().getPlayerFail(), data.getRecentMatch().getHomePlayerRecentMatch().getWinRate());
                 record_title.setText(titleDesc);
-                for (int i = 0; i < data.getRecentMatch().getHomePlayerRecentMatch().getMatchList().size(); i++) {
-                    ll_record_content.addView(recordItemView());
-                    MatchListBean matchListBean = data.getRecentMatch().getHomePlayerRecentMatch().getMatchList().get(i);
-                    record_date.setText(matchListBean.getStartDate() == null ? "" : DateUtil.convertDateToNation(matchListBean.getStartDate()));
-                    record_match_name.setText(matchListBean.getLeagueName() == null ? "" : matchListBean.getLeagueName());
-                    record_match_start.setText(getRole(matchListBean.getRole()));
-                    record_field.setText(getSite(matchListBean.getSiteType()));
-                    record_score.setText(matchListBean.getMatchScore().getHomeTotalScore() + "-" + matchListBean.getMatchScore().getAwayTotalScore());
-                    record_name.setText(matchListBean.getGuestPlayer1().getName() == null ? "" : matchListBean.getGuestPlayer1().getName());
-                    if (isSingle) {
-                        record_name2.setVisibility(View.GONE);
-                    } else {
-                        record_name2.setVisibility(View.VISIBLE);
-                        record_name2.setText(matchListBean.getGuestPlayer2().getName() == null ? "" : matchListBean.getGuestPlayer2().getName());
+
+                if (data.getRecentMatch().getHomePlayerRecentMatch().getMatchList() == null || data.getRecentMatch().getHomePlayerRecentMatch().getMatchList().size() == 0) {
+                    ll_record_content.addView(recordNotDataView());
+                } else {
+                    for (int i = 0; i < data.getRecentMatch().getHomePlayerRecentMatch().getMatchList().size(); i++) {
+                        ll_record_content.addView(recordItemView());
+                        MatchListBean matchListBean = data.getRecentMatch().getHomePlayerRecentMatch().getMatchList().get(i);
+                        record_date.setText(matchListBean.getStartDate() == null ? "" : DateUtil.convertDateToNation(matchListBean.getStartDate()));
+                        record_match_name.setText(matchListBean.getLeagueName() == null ? "" : matchListBean.getLeagueName());
+                        record_match_start.setText(getRole(matchListBean.getRole()));
+                        record_field.setText(getSite(matchListBean.getSiteType()));
+                        record_score.setText(matchListBean.getMatchScore().getHomeTotalScore() + "-" + matchListBean.getMatchScore().getAwayTotalScore());
+                        record_name.setText(matchListBean.getGuestPlayer1().getName() == null ? "" : matchListBean.getGuestPlayer1().getName());
+                        if (isSingle) {
+                            record_name2.setVisibility(View.GONE);
+                        } else {
+                            record_name2.setVisibility(View.VISIBLE);
+                            record_name2.setText(matchListBean.getGuestPlayer2().getName() == null ? "" : matchListBean.getGuestPlayer2().getName());
+                        }
                     }
                 }
             }
@@ -364,20 +384,25 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
                 String title = mContext.getResources().getString(R.string.tennis_datails_fight_title);
                 String titleDesc = String.format(title, data.getRecentMatch().getGuestPlayerRecentMatch().getTotalTimes(), homeName, data.getRecentMatch().getGuestPlayerRecentMatch().getPlayerWin(), data.getRecentMatch().getGuestPlayerRecentMatch().getPlayerFail(), data.getRecentMatch().getGuestPlayerRecentMatch().getWinRate());
                 record_title.setText(titleDesc);
-                for (int i = 0; i < data.getRecentMatch().getGuestPlayerRecentMatch().getMatchList().size(); i++) {
-                    ll_record_content.addView(recordItemView());
-                    MatchListBean matchListBean = data.getRecentMatch().getGuestPlayerRecentMatch().getMatchList().get(i);
-                    record_date.setText(matchListBean.getStartDate() == null ? "" : DateUtil.convertDateToNation(matchListBean.getStartDate()));
-                    record_match_name.setText(matchListBean.getLeagueName() == null ? "" : matchListBean.getLeagueName());
-                    record_match_start.setText(getRole(matchListBean.getRole()));
-                    record_field.setText(getSite(matchListBean.getSiteType()));
-                    record_score.setText(matchListBean.getMatchScore().getHomeTotalScore() + "-" + matchListBean.getMatchScore().getAwayTotalScore());
-                    record_name.setText(matchListBean.getGuestPlayer1().getName() == null ? "" : matchListBean.getGuestPlayer1().getName());
-                    if (isSingle) {
-                        record_name2.setVisibility(View.GONE);
-                    } else {
-                        record_name2.setVisibility(View.VISIBLE);
-                        record_name2.setText(matchListBean.getGuestPlayer2().getName() == null ? "" : matchListBean.getGuestPlayer2().getName());
+
+                if (data.getRecentMatch().getGuestPlayerRecentMatch().getMatchList() == null || data.getRecentMatch().getGuestPlayerRecentMatch().getMatchList().size() == 0) {
+                    ll_record_content.addView(recordNotDataView());
+                } else {
+                    for (int i = 0; i < data.getRecentMatch().getGuestPlayerRecentMatch().getMatchList().size(); i++) {
+                        ll_record_content.addView(recordItemView());
+                        MatchListBean matchListBean = data.getRecentMatch().getGuestPlayerRecentMatch().getMatchList().get(i);
+                        record_date.setText(matchListBean.getStartDate() == null ? "" : DateUtil.convertDateToNation(matchListBean.getStartDate()));
+                        record_match_name.setText(matchListBean.getLeagueName() == null ? "" : matchListBean.getLeagueName());
+                        record_match_start.setText(getRole(matchListBean.getRole()));
+                        record_field.setText(getSite(matchListBean.getSiteType()));
+                        record_score.setText(matchListBean.getMatchScore().getHomeTotalScore() + "-" + matchListBean.getMatchScore().getAwayTotalScore());
+                        record_name.setText(matchListBean.getGuestPlayer1().getName() == null ? "" : matchListBean.getGuestPlayer1().getName());
+                        if (isSingle) {
+                            record_name2.setVisibility(View.GONE);
+                        } else {
+                            record_name2.setVisibility(View.VISIBLE);
+                            record_name2.setText(matchListBean.getGuestPlayer2().getName() == null ? "" : matchListBean.getGuestPlayer2().getName());
+                        }
                     }
                 }
             }
@@ -386,7 +411,7 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
         }
 
         // 数据对比
-        if (data.getDataCompare() != null) {
+        if (data.getDataCompare() != null && data.getDataCompare().size() != 0) {
             data_not_data.setVisibility(View.GONE);
             data_title.setVisibility(View.VISIBLE);
 

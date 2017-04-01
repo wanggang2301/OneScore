@@ -180,20 +180,8 @@ public class TennisCpiDetailsFragment extends Fragment {
     public void RightData(String comName) {
         mHandler.sendEmptyMessage(STARTLOADING);
         Map<String, String> myPostParams = new HashMap<>();
-        if ("1".equals(oddType)) {
-            //亚盘
-            myPostParams.put("oddCompany", comName);
-            myPostParams.put("oddType", oddType);
-        } else if ("3".equals(oddType)) {
-            //大小
-            myPostParams.put("oddCompany", comName);
-            myPostParams.put("oddType", oddType);
-        } else if ("2".equals(oddType)) {
-            //欧赔
-            myPostParams.put("oddCompany", comName);
-            myPostParams.put("oddType", oddType);
-        }
-
+        myPostParams.put("oddCompany", comName);
+        myPostParams.put("oddType", oddType);
         myPostParams.put("matchIds", mThirdId);
 
         // 2、连接服务器
