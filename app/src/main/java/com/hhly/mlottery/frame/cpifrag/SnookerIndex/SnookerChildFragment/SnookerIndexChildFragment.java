@@ -17,6 +17,8 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiDetailsActivity;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.activity.SnookerMatchDetail;
+import com.hhly.mlottery.activity.TennisBallDetailsActivity;
+import com.hhly.mlottery.activity.TennisCpiDetailsActivity;
 import com.hhly.mlottery.adapter.snooker.SnookerIndexAdapter;
 import com.hhly.mlottery.bean.snookerbean.SnookerScoreSocketBean;
 import com.hhly.mlottery.bean.snookerbean.snookerIndexBean.SnookerIndexBean;
@@ -44,6 +46,7 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
     private final String ARG_COMPAN_NAME = "companName";
 
     private String mType; //亚盘大小球类型
+    private int mTypeIndex;//类型对应的坐标
     private int mBallType;//斯诺克网球
     private View mView;
 
@@ -106,6 +109,14 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
         }
         //TODO:改成dagger
         mPresenter=new SnookerIndexChildPresenter(this);
+        if(mType.equals(SIndexFragment.ODDS_LET)){
+            mTypeIndex=0;
+        }else if(mType.equals(SIndexFragment.ODDS_SIZE)){
+            mTypeIndex=2;
+        }else if(mType.equals(SIndexFragment.ODDS_EURO)){
+            mTypeIndex=1;
+        }
+
     }
 
     @Override
@@ -129,7 +140,7 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
             public void onClick(View v) {
                 mExceptionLayout.setVisibility(View.GONE);
                 mProgressBarLayout.setVisibility(View.VISIBLE);
-                mPresenter.refreshByDate(mDate,mType,mBallType);
+                parentFragment.refreshAllChildFragments();
             }
         });
 
@@ -144,11 +155,11 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
 
                 if(mBallType== BallType.TENNLS){
                     //点击指数页面，传值给详情界面
-                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    Intent intent = new Intent(getContext(), TennisCpiDetailsActivity.class);
                     intent.putStringArrayListExtra(ARG_LEFT_NAME, (ArrayList<String>) companyList);   //两行赔率
                     intent.putExtra(ARG_COMPAN_NAME, odds.getComName());  //公司Id
                     intent.putExtra(ARG_INDEX, item.getComList().indexOf(odds) + "");
-                    intent.putExtra(ARG_ODDTYPE, 1);
+                    intent.putExtra(ARG_ODDTYPE, mTypeIndex);
                     intent.putExtra(ARG_THIRDID,item.getLeagueId());
                     getContext().startActivity(intent);
                 }
@@ -168,8 +179,8 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
                     getActivity().startActivity(intent);
                 }
                else if(mBallType==BallType.TENNLS){
-                    Intent intent=new Intent(getActivity(), SnookerMatchDetail.class);
-                    intent.putExtra("matchId",mPresenter.getData().get(i).getMatchInfo().getMatchId());
+                    Intent intent=new Intent(getActivity(), TennisBallDetailsActivity.class);
+                    intent.putExtra("thirdId",mPresenter.getData().get(i).getMatchInfo().getMatchId());
                     getActivity().startActivity(intent);
                 }
             }

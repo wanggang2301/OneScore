@@ -364,7 +364,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
     /**
      * 刷新每个子fragment
      */
-    private void refreshAllChildFragments(){
+    public void refreshAllChildFragments(){
         for(Fragment childFragment :fragments){
 
             ((SnookerIndexChildFragment)childFragment).refreshDate(choosenDate==null?currentDate:choosenDate);

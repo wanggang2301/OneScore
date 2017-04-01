@@ -121,6 +121,7 @@ public class SnookerIndexAdapter extends BaseQuickAdapter<SnookerIndexBean.AllIn
         List<SnookerIndexBean.AllInfoEntity.ComListEntity> comList=data.getComList();
         for(final SnookerIndexBean.AllInfoEntity.ComListEntity item : comList){
             if(item.belongToShow(companies)){
+                toDetailCompanies.clear();
                 toDetailCompanies.add(item.getComName());
                 itemView=new SnookerIndexItemView(context);
                 itemView.bindData(item,mType);
