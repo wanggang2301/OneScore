@@ -24,7 +24,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.UpdateInfo;
 import com.hhly.mlottery.config.BaseURLs;
@@ -331,28 +330,7 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
         } else {
             map.put("versionType", COMP_VER);
         }
-
-        // 各版本升级参数
-        switch (MyApp.isPackageName){
-            case AppConstants.PACKGER_NAME_ZH:
-                map.put("localeType", AppConstants.LOCALETYPE_ZH);
-                break;
-            case AppConstants.PACKGER_NAME_TH:
-                map.put("localeType", AppConstants.LOCALETYPE_TH);
-                break;
-            case AppConstants.PACKGER_NAME_VN:
-                map.put("localeType", AppConstants.LOCALETYPE_VN);
-                break;
-            case AppConstants.PACKGER_NAME_VN_HN:
-                map.put("localeType", AppConstants.LOCALETYPE_VN_HN);
-                break;
-            case AppConstants.PACKGER_NAME_UK:
-                map.put("localeType", AppConstants.LOCALETYPE_UK);
-                break;
-            default:
-                break;
-        }
-
+        map.put("localeType", AppConstants.LOCALETYPE_ZH);// 国内版升级参数
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_VERSION_UPDATE, map, new VolleyContentFast.ResponseSuccessListener<UpdateInfo>() {
             @Override
             public synchronized void onResponse(final UpdateInfo json) {

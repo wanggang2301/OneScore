@@ -84,17 +84,17 @@
                 android:textSize="11dp"
                 android:visibility="visible" />
 
-            <!--<RadioButton-->
-                <!--android:id="@+id/rb_chart"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="1"-->
-                <!--android:button="@null"-->
-                <!--android:drawableTop="@drawable/home_lottery_info_menu_chart"-->
-                <!--android:gravity="center"-->
-                <!--android:text="@string/home_lottery_info_chart"-->
-                <!--android:textColor="@drawable/frag__base_selector_color"-->
-                <!--android:textSize="11dp" />-->
+            <RadioButton
+                android:id="@+id/rb_chart"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/home_lottery_info_menu_chart"
+                android:gravity="center"
+                android:text="@string/home_lottery_info_chart"
+                android:textColor="@drawable/frag__base_selector_color"
+                android:textSize="11dp" />
         </RadioGroup>
     </LinearLayout>
 

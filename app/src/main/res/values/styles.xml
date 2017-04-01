@@ -772,7 +772,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:text">-</item>
         <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:textSize">@dimen/text_size_11</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
     </style>
 
     <style name="MW_White">
@@ -787,7 +787,6 @@
     <style name="WW_Width_0dp">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/text_size_12</item>
     </style>
 
     <style name="item_rollball_MeasureSpec_EXACTLY">
@@ -798,7 +797,7 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:textColor">@color/res_name_color</item>
-        <item name="android:textSize">@dimen/number_desc</item>
+        <item name="android:textSize">@dimen/info_center_title</item>
     </style>
 
     <style name="Md.Card" parent="CardView">

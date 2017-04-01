@@ -174,6 +174,7 @@ public class PLVideoTextureActivity extends AppCompatActivity {
                     showToastTips("unknown error !");
                     break;
             }
+            // Todo pls handle the error status here, retry or call finish()
             finish();
             // If you want to retry, do like this:
             // mVideoView.setVideoPath(mVideoPath);

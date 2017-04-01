@@ -277,6 +277,7 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
 
     @Override
     public void onCheckedChanged(CompoundButton button, boolean isChecked) {
+        // TODO Auto-generated method stub
 
         switch (button.getId()) {
             case R.id.sb_goal:

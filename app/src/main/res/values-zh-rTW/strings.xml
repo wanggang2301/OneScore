@@ -33,7 +33,7 @@
     <string name="attack_nodata">暫無進攻數據.</string>
     <string name="time">時間(T)</string>
 
-    <string name="odds_equals">平均</string>
+
     <!--篮球资料库-->
     <string name="basket_info_hot">熱門</string>
     <string name="basket_info_eur">歐洲</string>
@@ -64,6 +64,7 @@
     <string name="foot_details_home">主隊</string>
     <string name="foot_details_ball">讓球</string>
     <string name="foot_details_guest">客隊</string>
+    <string name="foot_event_num">No.</string>
 
 
     <string name="foot_details_livetitle">實況直播</string>
@@ -133,10 +134,7 @@
     <string name="odd_dish_txt">盤口</string>
     <string name="odd_guest_txt">客隊</string>
     <string name="odd_time_txt">时间</string>
-    <string name="symbol_times" translatable="false">×</string>
-    <string name="symbol_plus" translatable="false">+</string>
-    <string name="symbol_equal" translatable="false">=</string>
-    <string name="label_line" translatable="false">-</string>
+
     <!--欧赔-->
     <string name="odd_home_op_txt">主勝</string>
     <string name="odd_dish_op_txt">平局</string>
@@ -1011,7 +1009,6 @@
     <string name="login_succ">登錄成功</string>
     <string name="login_no_weixin">沒有安裝微信,請先安裝微信!</string>
     <string name="login_peak">登錄高峰期,請稍後再試</string>
-    <string name="original_password_error">原密碼錯誤</string>
     <string name="pwd_empty_new">請輸入密碼(由6-16位數字和字符組成)</string>
     <string name="login_fail">登錄失敗</string>
     <string name="pwd_format">密碼格式爲6-16位數字和字符組成</string>
@@ -1602,4 +1599,11 @@
 
     <string name="home_gender">性别</string>
     <string name="snooker_index_single_double">单双</string>
+
+    <string name="login_int_username"></string>
+
+    <string name="basket_handicap_bigorsmall"></string>
+    <string name="return_yesterday"></string>
+    <string name="return_tomorrow"></string>
+    <string name="return_today"></string>
 </resources>

@@ -543,7 +543,7 @@ public class BasketDetailsHeadFragment extends Fragment {
         mApos.startAnimation(anim1);
     }
 
-    public void updateData(WebSocketBasketBallDetails basketBallDetails, ChartBallFragment mChartBallFragment) {
+    public void updateData(WebSocketBasketBallDetails basketBallDetails, ChartBallFragment mChartBallFragment, TextView mTitleGuest, TextView mTitleHome, TextView mTitleVS) {
         DataEntity score = basketBallDetails.getData();
 
         switch (score.getMatchStatus()) {
@@ -590,15 +590,15 @@ public class BasketDetailsHeadFragment extends Fragment {
                 mHome4.setText(score.getHome4() + "");
                 mHome4.setTextColor(getResources().getColor(R.color.score_color_white));
 
-//                mTitleHome.setText(score.getHomeScore() + "");
-//                mTitleGuest.setText(score.getGuestScore() + "");
+                mTitleHome.setText(score.getHomeScore() + "");
+                mTitleGuest.setText(score.getGuestScore() + "");
                 mSmallGuestScore.setText(score.getGuestScore() + "");
                 mSmallGuestScore.setTextColor(getResources().getColor(R.color.score_color_white));
                 mSmallHomeScore.setText(score.getHomeScore() + "");
                 mSmallHomeScore.setTextColor(getResources().getColor(R.color.score_color_white));
                 mVS.setText(":");
                 mVS.setTextSize(TypedValue.COMPLEX_UNIT_PX,MyApp.getContext().getResources().getDimension(R.dimen.text_size_30));
-//                mTitleVS.setText(":");
+                mTitleVS.setText(":");
                 if (score.getAddTime() == 3) {//三个加时
                     mLayoutOt3.setVisibility(View.VISIBLE);
                     mLayoutOt2.setVisibility(View.VISIBLE);
@@ -659,7 +659,7 @@ public class BasketDetailsHeadFragment extends Fragment {
 
                 mVS.setText(":");
                 mVS.setTextSize(TypedValue.COMPLEX_UNIT_PX,MyApp.getContext().getResources().getDimension(R.dimen.text_size_30));
-//                mTitleVS.setText(":");
+                mTitleVS.setText(":");
 
                 if (mGuestNum != score.getGuestScore()) {
                     scoreAnimation(mGuestScore);
@@ -675,8 +675,8 @@ public class BasketDetailsHeadFragment extends Fragment {
 //                L.d("score.getHomeScore()>>>>...>>>" + score.getHomeScore());
                 setScore(score.getGuestScore(), mSmallGuestScore, score.getHomeScore(), mSmallHomeScore);
 
-//                mTitleHome.setText(score.getHomeScore() + "");
-//                mTitleGuest.setText(score.getGuestScore() + "");
+                mTitleHome.setText(score.getHomeScore() + "");
+                mTitleGuest.setText(score.getGuestScore() + "");
 
 
                 //设置比赛时间及状态

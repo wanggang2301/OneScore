@@ -182,6 +182,31 @@
 -keepattributes Exceptions
 -dontwarn okio.**
 
+
+##retrofit2
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+
+##okhttp3
+-dontwarn com.squareup.okhttp3.**
+-keep class com.squareup.okhttp3.** { *;}
+-dontwarn okio.**
+
+
+-dontwarn sun.misc.**
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+   long producerIndex;
+   long consumerIndex;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode producerNode;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode consumerNode;
+}
+
+
+
 ## 视频播放
 -keep class com.pili.pldroid.player.** { *; }
 -keep class tv.danmaku.ijk.media.player.** {*;}
@@ -192,7 +217,7 @@
 -keep class com.hhly.mlottery.activity.SnookerInformationSerachActivity{ *;}
 -keep class com.hhly.mlottery.callback.SearchService { *; }
 -keep class com.hhly.mlottery.callback.BasketSearchservice{ *; }
--keep class com.hhly.mlottery.callback.SnookerSearchService{ *; }
+
 
 ##Glide
 -keep public class * implements com.bumptech.glide.module.GlideModule

@@ -39,9 +39,6 @@ import com.hhly.mlottery.bean.websocket.WebBasketOdds;
 import com.hhly.mlottery.bean.websocket.WebBasketOdds5;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
-import com.hhly.mlottery.frame.footballframe.eventbus.BasketDetailsEventBusEntity;
-import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreImmedEventBusEntity;
-import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreSettingEventBusEntity;
 import com.hhly.mlottery.frame.scorefrag.BasketBallScoreFragment;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -118,6 +115,10 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
 
     public static final int TYPE_FOCUS = 3;
     /**
+     * 关注事件EventBus
+     */
+    public static EventBus BasketImmedEventBus;
+    /**
      * 请求关注列表后的返回结果
      */
     public static boolean requestSuccess = false;
@@ -164,7 +165,8 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
             isNewFrameWork = getArguments().getBoolean(ISNEW_FRAMEWORK);
             mEntryType = getArguments().getInt(BASKET_ENTRY_TYPE);
         }
-        EventBus.getDefault().register(this);
+        BasketImmedEventBus = new EventBus();
+        BasketImmedEventBus.register(this);
 
     }
 
@@ -332,8 +334,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                                 for (String groupdata : mAllGroupdata) {
                                     String[] weekdatas = groupdata.split(",");
                                     String datas = weekdatas[0];
-                                    String currData = DateUtil.convertDateToNation(checkedMatchs.get(0).getDate());//国际化后比较日期
-                                    if (currData.equals(datas)) {
+                                    if (checkedMatchs.get(0).getDate().equals(datas)) {
                                         groupDataList.add(groupdata);//赛选后的日期list
                                         break;
                                     }
@@ -519,7 +520,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
         }
 
         adapter.updateDatas(childrenDataList, groupDataList);
-        L.d("AAAAA-yxq----" , "childrenDataList.size = " + childrenDataList.size() + " ** groupDataList.size = " + groupDataList.size());
         adapter.notifyDataSetChanged();
         //设置打开全部日期内容
 //        for (int i = 0; i < groupDataList.size(); i++) {
@@ -881,7 +881,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     @Override
     public void onDestroy() { //销毁
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
         L.d(TAG, "__onDestroy___");
     }
 
@@ -892,7 +891,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     /**
      * 设置返回
      */
-    public void onEventMainThread(BasketScoreSettingEventBusEntity currentFragmentId) {
+    public void onEventMainThread(Integer currentFragmentId) {
         updateAdapter();
         L.d("设置返回 ", "000000");
         /**
@@ -925,12 +924,11 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     /**
      * 筛选返回
      */
-    public void onEventMainThread(BasketScoreImmedEventBusEntity basketScoreImmedEventBusEntity) {
-//        L.d("AAAAA-++++++--", "checkedIds.length");
-        Map<String, Object> map = basketScoreImmedEventBusEntity.getMap();
+    public void onEventMainThread(Map<String, Object> map) {
+        L.d("AAAAA-++++++--", "checkedIds.length");
         String[] checkedIds = (String[]) ((List) map.get(BasketFiltrateActivity.CHECKED_CUPS_IDS)).toArray(new String[]{});
 
-        L.d("AAAAA-yxq-----------------", "checkedIds.length = " + checkedIds.length + "");
+        L.d("AAAAA------------------", checkedIds.length + "");
 //        String[] checkedIds = (String[]) map.getCharSequenceArrayExtra(BasketFiltrateActivity.CHECKED_CUPS_IDS);// 返回数据是选择后的id字符串数组，数据类型String
         isFilter = true;
 
@@ -944,7 +942,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
             mLoadingLayout.setVisibility(View.GONE);
         } else {
 
-            L.d("AAAAA-yxq----", "childrenDataList = " + childrenDataList.size());
+            L.d("123", "childrenDataList = " + childrenDataList.size());
             childrenDataList.clear();
             groupDataList.clear();
             for (List<BasketMatchBean> lists : mAllMatchdata) { // 遍历所有数据 得到筛选后的
@@ -963,15 +961,12 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                         checkedMatchs.add(matchBean);
                     }
                 }
-                L.d("AAAAA-yxq----", "checkedMatchs.size = " + checkedMatchs.size());
-                L.d("AAAAA-yxq----", "AchildrenDataList.size = " + childrenDataList.size());
                 if (checkedMatchs.size() != 0) {
                     childrenDataList.add(checkedMatchs);
                     for (String groupdata : mAllGroupdata) {
                         String[] weekdatas = groupdata.split(",");
                         String datas = weekdatas[0];
-                        String currData = DateUtil.convertDateToNation(checkedMatchs.get(0).getDate());//国际化后比较日期
-                        if (currData.equals(datas)) {
+                        if (checkedMatchs.get(0).getDate().equals(datas)) {
                             groupDataList.add(groupdata);
                             break;
                         }
@@ -992,16 +987,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
             mSwipeRefreshLayout.setRefreshing(false);
             mSwipeRefreshLayout.setVisibility(View.VISIBLE);
 
-            L.d("AAAAA-yxq---", "childrenDataList >>>> = " + childrenDataList.size());
-//            int a = 0;
-//            int b = 0;
-//            for (List<BasketMatchBean> lists : childrenDataList) {
-//                a++;
-//                for (BasketMatchBean lis : lists) {
-//                    b++;
-//                }
-//            }
-//            L.d("AAAAA-yxqA---", "a = " + a + "b" + b);
+            L.d("123", "childrenDataList >>>> = " + childrenDataList.size());
             updateAdapter();
             // 设置打开全部日期内容
             for (int i = 0; i < groupDataList.size(); i++) {
@@ -1015,7 +1001,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
      *
      * @param id
      */
-    public void onEventMainThread(BasketDetailsEventBusEntity id) {
+    public void onEventMainThread(String id) {
         updateAdapter();
         if (mEntryType == 0) {
             ((BasketballScoresActivity) getActivity()).basketFocusCallback();

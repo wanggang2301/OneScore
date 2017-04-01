@@ -261,7 +261,7 @@ public class InfoCenterActivity extends BaseActivity implements View.OnClickList
             return null;
         }
         String weekDate = DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(date));
-        return DateUtil.convertDateToNation(date) + " " + weekDate + "(" + count + ")";
+        return date + " " + weekDate + "(" + count + ")";
     }
 
     @Override

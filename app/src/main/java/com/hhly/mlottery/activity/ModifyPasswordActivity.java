@@ -136,20 +136,9 @@ public class ModifyPasswordActivity extends BaseActivity implements View.OnClick
                         String url = BaseURLs.URL_CHANGEPASSWORD;
                         Map<String, String> param = new HashMap<>();
                         param.put("account", PreferenceUtil.getString(AppConstants.SPKEY_LOGINACCOUNT,""));
+                        param.put("accountType", AccountType.TYPE_PHONE);
                         param.put("oldPassword", MD5Util.getMD5(pwOld));
                         param.put("newPassword", MD5Util.getMD5(pwNew));
-
-                        switch (MyApp.isPackageName) {
-                            case AppConstants.PACKGER_NAME_ZH:// 国内版
-                                param.put("accountType", AccountType.TYPE_PHONE);
-                                break;
-                            case AppConstants.PACKGER_NAME_TH:// 泰国版
-                            case AppConstants.PACKGER_NAME_VN_HN:// 越南北版
-                            case AppConstants.PACKGER_NAME_VN:// 越南南版
-                            case AppConstants.PACKGER_NAME_UK:// 英文版
-                                param.put("accountType", AccountType.TYPE_NAME);
-                                break;
-                        }
 
                         VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<BaseBean>() {
                             @Override

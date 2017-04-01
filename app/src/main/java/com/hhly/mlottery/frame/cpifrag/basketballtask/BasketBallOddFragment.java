@@ -160,8 +160,6 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
                 parentFragment.refreshAllChildFragments();
             }
         });
-
-
     }
 
     @Override
@@ -352,22 +350,21 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         //获取各个赔率下的公司list
         List<BasketIndexBean.DataBean.CompanyBean> companyList = parentFragment.getCompanyMap().get(type);
 
+        //备注: 欧赔平均必须显示  单独处理一下
+        if (type.equals(BasketOddsTypeEnum.EURO)) {
+            companyList.add(new BasketIndexBean.DataBean.CompanyBean("euro", "平均", true));
+        }
+
+
         List<BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean> matchOddsBeanList = new ArrayList<>();   //每一场比赛的赔率公司
 
         for (BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean matchOddsBean : allInfo.getMatchOdds()) {
-
-            //欧赔特殊处理平均的赔率
-            if (EURO_AVERAGE.equals(matchOddsBean.getComId())) {
-                matchOddsBeanList.add(matchOddsBean);
-            }
 
             for (BasketIndexBean.DataBean.CompanyBean companyBean : companyList) {
                 if (companyBean.isChecked() && companyBean.getComId().equals(matchOddsBean.getComId())) {
                     matchOddsBeanList.add(matchOddsBean);
                 }
             }
-
-
         }
 
         //防止对象复用
@@ -403,7 +400,9 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         for (BasketIndexBean.DataBean.AllInfoBean item : allInfoBeanList) {
             if (item.getThirdId().equals(mWebBasketMatch.getThirdId())) {
                 item.setMatchStatus(Integer.parseInt(mWebBasketMatch.getData().get("matchStatus")));
-                item.setMatchResult(mWebBasketMatch.getData().get("homeScore") + ":" + mWebBasketMatch.getData().get("guestScore"));
+
+                //备注：篮球比分   客队分数:主队分数
+                item.setMatchResult(mWebBasketMatch.getData().get("guestScore") + ":" + mWebBasketMatch.getData().get("homeScore"));
                 item.setRemainTime(mWebBasketMatch.getData().get("remainTime"));
 
                 if (!isSourceData) {
@@ -415,8 +414,10 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
 
     public void updatePushOdd(String thirdId, String oddType, WebBasketOdds5 odd) {
-        updateOdds(thirdId, oddType, odd, true);  //更新源数据
-        updateOdds(thirdId, oddType, odd, false); //更新目标数据
+        if (odd != null) {
+            updateOdds(thirdId, oddType, odd, true);  //更新源数据
+            updateOdds(thirdId, oddType, odd, false); //更新目标数据
+        }
     }
 
     private void updateOdds(String thirdId, String oddType, WebBasketOdds5 odd, boolean isSourceData) {

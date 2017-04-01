@@ -472,7 +472,7 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
 
     @Override
     protected void onTextResult(final String text) {
-        L.d("pushtext","____"+text);
+        L.d("pushtext", "____" + text);
 
         tabs.post(new Runnable() {
             @Override
@@ -493,6 +493,9 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
         if (type == 100) {  //比分
             updateTimeAndStatus(jsonString);
         } else if (type == 101) { //赔率
+
+            L.d("ddffggg", "赔率推送数据==" + jsonString);
+
             updateOdds(jsonString);
         }
     }

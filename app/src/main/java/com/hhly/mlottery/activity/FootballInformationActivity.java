@@ -311,6 +311,7 @@ public class FootballInformationActivity extends BaseActivity implements View.On
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View view, int postion, long arg3) {
+                // TODO Auto-generated method stub
                 MobclickAgent.onEvent(mContext,"Football_InformationFragment_Date");
                 //获取选择下标数据
                 mIsCurenDatas = mListDatas.get(postion);

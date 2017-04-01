@@ -231,7 +231,7 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
         // 设置用户已关注的赛事
         if (FocusUtils.isTennisFocusId(matchDataBean.getMatchId())) {
             matchDataBean.setFocus(true);
-            mView.setImageResource(R.mipmap.football_focus);
+            mView.setImageResource(R.mipmap.tennis_focus_select);
         } else {
             matchDataBean.setFocus(false);
             settingFocusStart(matchDataBean.getMatchStatus(), matchDataBean.isFocus(), mView);
@@ -275,10 +275,9 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
 
     private void settingFocusStart(int status, boolean isFocus, ImageView view) {
         if (isFocus) {
-            view.setImageResource(R.mipmap.football_focus);
+            view.setImageResource(R.mipmap.tennis_focus_select);
         } else {
-//            view.setImageResource(status == 0 ? R.mipmap.tennis_focus_noto : R.mipmap.tennis_focus_blue);
-            view.setImageResource(R.mipmap.football_nomal);
+            view.setImageResource(status == 0 ? R.mipmap.tennis_focus_noto : R.mipmap.tennis_focus_blue);
         }
     }
 }

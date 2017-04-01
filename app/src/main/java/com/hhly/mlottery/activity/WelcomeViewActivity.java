@@ -16,7 +16,6 @@ import android.widget.RelativeLayout;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.widget.OnViewChangeListener;
@@ -32,21 +31,21 @@ import java.util.List;
  */
 public class WelcomeViewActivity extends BaseActivity implements OnViewChangeListener {
 
+    //private MyScrollLayout mScrollLayout;
     private Button startBtn;
+    //开机引导页的几张动画
+    //  private RelativeLayout wel_layout_img1, wel_layout_img2, wel_layout_img3;
     private RelativeLayout wel_layout_img3;
     private ViewPager welcome_viewpager;
-
-    // 引导图集合
-    private int[] imageView;
+    private int[] imageView;//引导图集合
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcomeview);
-
-        imageView = AppConstants.getGuidePage();
         initView();
+        initImg();
         addView();
 
     }
@@ -107,6 +106,22 @@ public class WelcomeViewActivity extends BaseActivity implements OnViewChangeLis
 
     }
 
+    //判断是什么语言加载什么图片
+    public void initImg() {
+
+        // TODO 暂时用
+        imageView = new int[]{R.mipmap.welcome1, R.mipmap.welcome2, R.mipmap.welcome3};
+
+//        if (MyApp.isLanguage.equals("rTW")) {
+//            imageView = new int[]{R.mipmap.welcome1, R.mipmap.welcome2,
+//                    R.mipmap.welcome3};
+//        } else if (MyApp.isLanguage.equals("rCN")) {
+//            imageView = new int[]{R.mipmap.welcome1, R.mipmap.welcome2,
+//                    R.mipmap.welcome3};
+//        }
+    }
+
+
     private View.OnClickListener onClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -140,11 +155,17 @@ public class WelcomeViewActivity extends BaseActivity implements OnViewChangeLis
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_HOME:
+                return true;
             case KeyEvent.KEYCODE_BACK:
+                return true;
             case KeyEvent.KEYCODE_CALL:
+                return true;
             case KeyEvent.KEYCODE_SYM:
+                return true;
             case KeyEvent.KEYCODE_VOLUME_DOWN:
+                return true;
             case KeyEvent.KEYCODE_VOLUME_UP:
+                return true;
             case KeyEvent.KEYCODE_STAR:
                 return true;
         }
@@ -153,6 +174,7 @@ public class WelcomeViewActivity extends BaseActivity implements OnViewChangeLis
 
     @Override
     public void OnViewChange(int view) {
+        // TODO Auto-generated method stub
 
     }
 

@@ -185,7 +185,7 @@ public class LotteryHKInfoImageActivity extends BaseActivity implements View.OnC
             PhotoView photo_view = (PhotoView) view.findViewById(R.id.photo_view);
 
             try {
-                Glide.with(mContext).load(mData.get(position).getLotteryImg()).into(photo_view);
+                Glide.with(mContext).load(mData.get(position).getLotteryImg()).error(R.mipmap.impage_loading_error).into(photo_view);
             } catch (Exception e) {
                 e.printStackTrace();
             }

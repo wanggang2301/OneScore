@@ -1,371 +1,317 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/football_cardview_margin"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginTop="@dimen/football_cardview_margin"
-    android:clickable="true"
-    app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="0.5dp">
+    android:layout_height="120dp"
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:background="@color/tennis_score_item"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_match_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textColor="@color/mdy_666"
+            tools:text="ATP克里姆林杯 决赛" />
+
+        <TextView
+            android:id="@+id/tv_match_state"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            tools:text="未开赛" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/tennis_score_item"
-            android:orientation="horizontal"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp">
+            android:layout_weight="0.6"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_match_name"
+                android:id="@+id/tv_match_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:lines="1"
-                android:textColor="@color/mdy_666"
-                android:textSize="@dimen/home_pager_title"
-                tools:text="ATP克里姆林杯 决赛" />
-
-            <TextView
-                android:id="@+id/tv_match_state"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
                 android:gravity="center"
-                android:lines="1"
-                android:paddingLeft="5dp"
-                android:textSize="@dimen/home_pager_title"
-                tools:text="未开赛" />
+                android:textColor="@color/mdy_999"
+                tools:text="03-01" />
 
-            <!--盘口-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="right|center_vertical"
-                android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_match_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/mdy_999"
+                tools:text="10:00" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/tennis_score_item"
-                    tools:text="1.06" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="3dp"
-                    android:paddingRight="3dp"
-                    android:textSize="@dimen/tennis_score_item"
-                    tools:text="*0.5/1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/tennis_score_item"
-                    tools:text="0.82" />
-
-            </LinearLayout>
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/linecolor" />
+
+        <!--主客队比分-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <!--日期-->
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.3"
                     android:orientation="vertical"
                     android:padding="5dp">
 
                     <TextView
-                        android:id="@+id/tv_match_date"
+                        android:id="@+id/tv_home_name"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textColor="@color/mdy_999"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:lines="1"
+                        android:textColor="@color/mdy_333"
                         android:textSize="@dimen/tennis_score_item"
-                        tools:text="03-01" />
+                        tools:text="主队name" />
 
                     <TextView
-                        android:id="@+id/tv_match_time"
+                        android:id="@+id/tv_home_name2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textColor="@color/mdy_999"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:lines="1"
+                        android:textColor="@color/mdy_333"
                         android:textSize="@dimen/tennis_score_item"
-                        tools:text="10:00" />
+                        tools:text="主队2name" />
 
                 </LinearLayout>
 
-                <View
-                    android:layout_width="0.5dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/linecolor" />
-
-                <!--主客队比分-->
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingRight="15dp">
+                    android:layout_weight="1.5"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                    <TextView
+                        android:id="@+id/tv_home_score1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:gravity="center"
+                        android:lines="1"
+                        tools:text="1" />
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1.5"
-                            android:orientation="vertical"
-                            android:padding="5dp">
-
-                            <TextView
-                                android:id="@+id/tv_home_name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:ellipsize="end"
-                                android:gravity="center_vertical"
-                                android:lines="1"
-                                android:textColor="@color/mdy_333"
-                                android:textSize="@dimen/tennis_score_item"
-                                tools:text="主队name" />
-
-                            <TextView
-                                android:id="@+id/tv_home_name2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:ellipsize="end"
-                                android:gravity="center_vertical"
-                                android:lines="1"
-                                android:textColor="@color/mdy_333"
-                                android:textSize="@dimen/tennis_score_item"
-                                tools:text="主队2name" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/tv_home_score1"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:lines="1"
-                                tools:text="1" />
-
-                            <TextView
-                                android:id="@+id/tv_home_score2"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:lines="1"
-                                tools:text="2" />
-
-                            <TextView
-                                android:id="@+id/tv_home_score3"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:lines="1"
-                                tools:text="3" />
-
-                            <TextView
-                                android:id="@+id/tv_home_score4"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:lines="1"
-                                tools:text="4" />
-
-                            <TextView
-                                android:id="@+id/tv_home_score5"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:lines="1"
-                                tools:text="5" />
-
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/tv_home_count"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.2"
-                            android:gravity="center"
-                            android:lines="1"
-                            android:textColor="@color/number_red"
-                            tools:text="0" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                    <TextView
+                        android:id="@+id/tv_home_score2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:gravity="center"
+                        android:lines="1"
+                        tools:text="2" />
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1.5"
-                            android:orientation="vertical"
-                            android:padding="5dp">
+                    <TextView
+                        android:id="@+id/tv_home_score3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:lines="1"
+                        tools:text="3" />
 
-                            <TextView
-                                android:id="@+id/tv_guest_name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:ellipsize="end"
-                                android:gravity="center_vertical"
-                                android:lines="1"
-                                android:textColor="@color/mdy_333"
-                                android:textSize="@dimen/tennis_score_item"
-                                tools:text="客队name" />
+                    <TextView
+                        android:id="@+id/tv_home_score4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:lines="1"
+                        tools:text="4" />
 
-                            <TextView
-                                android:id="@+id/tv_guest_name2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:ellipsize="end"
-                                android:gravity="center_vertical"
-                                android:lines="1"
-                                android:textColor="@color/mdy_333"
-                                android:textSize="@dimen/tennis_score_item"
-                                tools:text="客队2name" />
+                    <TextView
+                        android:id="@+id/tv_home_score5"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:lines="1"
+                        tools:text="5" />
 
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/tv_guest_score1"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:lines="1"
-                                tools:text="1" />
-
-                            <TextView
-                                android:id="@+id/tv_guest_score2"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:lines="1"
-                                tools:text="2" />
-
-                            <TextView
-                                android:id="@+id/tv_guest_score3"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:lines="1"
-                                tools:text="3" />
-
-                            <TextView
-                                android:id="@+id/tv_guest_score4"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:lines="1"
-                                tools:text="4" />
-
-                            <TextView
-                                android:id="@+id/tv_guest_score5"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:lines="1"
-                                tools:text="5" />
-
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/tv_guest_count"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.2"
-                            android:gravity="center"
-                            android:lines="1"
-                            android:textColor="@color/number_red"
-                            tools:text="30" />
-
-                    </LinearLayout>
 
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/tv_home_count"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="0.3"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:textColor="@color/number_red"
+                    tools:text="0" />
 
             </LinearLayout>
-            <!--关注-->
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true">
 
-                <ImageView
-                    android:id="@+id/iv_match_focus"
-                    android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.3"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/tv_guest_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:lines="1"
+                        android:textColor="@color/mdy_333"
+                        android:textSize="@dimen/tennis_score_item"
+                        tools:text="客队name" />
+
+                    <TextView
+                        android:id="@+id/tv_guest_name2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:lines="1"
+                        android:textColor="@color/mdy_333"
+                        android:textSize="@dimen/tennis_score_item"
+                        tools:text="客队2name" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_guest_score1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:lines="1"
+                        tools:text="1" />
+
+                    <TextView
+                        android:id="@+id/tv_guest_score2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:lines="1"
+                        tools:text="2" />
+
+                    <TextView
+                        android:id="@+id/tv_guest_score3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:lines="1"
+                        tools:text="3" />
+
+                    <TextView
+                        android:id="@+id/tv_guest_score4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:lines="1"
+                        tools:text="4" />
+
+                    <TextView
+                        android:id="@+id/tv_guest_score5"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:lines="1"
+                        tools:text="5" />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_guest_count"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:background="@mipmap/football_nomal" />
-            </RelativeLayout>
-        </RelativeLayout>
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="0.3"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:textColor="@color/number_red"
+                    tools:text="30" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/linecolor" />
+
+        <ImageView
+            android:id="@+id/iv_match_focus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:src="@mipmap/tennis_focus_noto" />
+
     </LinearLayout>
 
-</android.support.v7.widget.CardView>
+</LinearLayout>

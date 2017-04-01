@@ -677,7 +677,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             View scoreView = getScoreView();
                             scoreViewList.add(scoreView);
                             if ("13".equals(homeBodysEntity.getJumpAddr())) {// 足球比分
-                                score01_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_foot_def_bg));// 设置背景图片
+                                score01_icon.setImageDrawable(mContext.getResources().getDrawable(AppConstants.homePageScoreFootBG[j % AppConstants.homePageScoreFootBG.length]));// 设置背景图片
                                 switch (homeBodysEntity.getStatusOrigin()) {
                                     case "-1":// 完场
                                         settingScoreItemData(homeBodysEntity, mContext.getResources().getColor(R.color.score_red), "—", mContext.getResources().getString(R.string.fragme_home_wanchang_text));
@@ -734,7 +734,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                     e.printStackTrace();
                                 }
                             } else if ("20".equals(homeBodysEntity.getJumpAddr())) {// 篮球比分
-                                score01_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_basket_def_bg));// 设置背景图片
+                                score01_icon.setImageDrawable(mContext.getResources().getDrawable(AppConstants.homePageScoreBasketBG[j % AppConstants.homePageScoreBasketBG.length]));// 设置背景图片
                                 switch (homeBodysEntity.getMatchStatus()) {
                                     //比赛状态 0:未开赛,1:一节,2:二节,5:1'OT，以此类推，-1:完场,-2:待定,-3:中断,-4:取消,-5:推迟,50中场
                                     case 0:// 未开赛

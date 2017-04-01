@@ -33,7 +33,7 @@ public class MyApp extends Application {
     public static Configuration mConfiguration;
     public static DisplayMetrics mDm;
     public static Locale mLocale;
-    public static String isLanguage = "";   // 获取语言
+    public static String isLanguage;   // 获取语言
     public static String isPackageName;// 获取当前包名
     public static double LA;// 用户所在经度
     public static double LO;// 用户所在纬度
@@ -42,44 +42,37 @@ public class MyApp extends Application {
     public void onCreate() {
         appcontext = this;
 
-        // 子线程中做初始化操作，提升APP打开速度
-        new Thread() {
-            @Override
-            public void run() {
-                // 初始化PreferenceUtil
-                PreferenceUtil.init(appcontext);
+        // 初始化PreferenceUtil
+        PreferenceUtil.init(this);
 
-                //初始化获取语言环境
-                mResources = appcontext.getResources();
-                mConfiguration = mResources.getConfiguration();
-                mDm = mResources.getDisplayMetrics();
-                mLocale = mConfiguration.locale;
+        //初始化获取语言环境
+        mResources = appcontext.getResources();
+        mConfiguration = mResources.getConfiguration();
+        mDm = mResources.getDisplayMetrics();
+        mLocale = mConfiguration.locale;
 
-                // 获取当前包名
-                isPackageName = appcontext.getPackageName();
-                // 设置时区
-                settingTimeZone();
+        // 获取当前包名
+        isPackageName = this.getPackageName();
+        // 设置时区
+        settingTimeZone();
 
-                // 根据上次的语言设置，重新设置语言
-                isLanguage = switchLanguage(PreferenceUtil.getString("language", ""));
+        // 根据上次的语言设置，重新设置语言
+        isLanguage = switchLanguage(PreferenceUtil.getString("language", ""));
 
-                // 捕获异常
-                CrashException crashException = CrashException.getInstance();
-                crashException.init(getApplicationContext());
+        // 捕获异常
+        CrashException crashException = CrashException.getInstance();
+        crashException.init(getApplicationContext());
 
-                // 初始化Vollery
-                VolleyContentFast.init(appcontext);
+        // 初始化Vollery
+        VolleyContentFast.init(this);
 
-                //初始化畅言
-                CyUtils.initCy(appcontext);
-                initUserInfo();
+        //初始化畅言
+        CyUtils.initCy(this);
+        initUserInfo();
 
-                // OkHttpFinal(此初始化只是简单赋值不会阻塞线程)
-                OkHttpFinalConfiguration.Builder builder = new OkHttpFinalConfiguration.Builder();
-                OkHttpFinal.getInstance().init(builder.build());
-
-            }
-        }.start();
+        // OkHttpFinal(此初始化只是简单赋值不会阻塞线程)
+        OkHttpFinalConfiguration.Builder builder = new OkHttpFinalConfiguration.Builder();
+        OkHttpFinal.getInstance().init(builder.build());
 
         super.onCreate();
     }
@@ -90,7 +83,9 @@ public class MyApp extends Application {
     private void settingTimeZone() {
         switch (isPackageName) {
             case AppConstants.PACKGER_NAME_ZH:// 国内版
-                AppConstants.timeZone = 8;
+//                AppConstants.timeZone = 8;
+                // TODO 暂时用
+                AppConstants.timeZone = 7;
                 break;
             case AppConstants.PACKGER_NAME_TH:// 泰国版
             case AppConstants.PACKGER_NAME_VN_HN:// 越南北版
@@ -106,7 +101,6 @@ public class MyApp extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-
         MultiDex.install(this);// 解决友盟分析问题
     }
 
@@ -222,6 +216,8 @@ public class MyApp extends Application {
                         }
                         break;
                     default:
+                        // TODO 暂时用
+                        language = "rCN";
                         break;
                 }
             }

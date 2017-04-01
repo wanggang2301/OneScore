@@ -84,10 +84,11 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
 
         /**
          * section ==2
-         * staus =1,2   1st half   status=3,4   2nd half
+         *  staus =1,2   1st half   status=3,4   2nd half
+         *
          section =4
 
-         staus=1   1st   2  2nd  3 3rd  4  4th
+         staus=1   1st   status  2  2nd  3 3rd  4  4th
          *
          *
          */
@@ -95,30 +96,39 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
         // int section = 0;
 
         String statusTxt = "";
+        String sectionTxt = "";
 
         switch (allInfoBean.getMatchStatus()) {
             case 0:
                 baseViewHolder.setText(R.id.cpi_score_txt, "VS");
                 baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#222222"));
                 baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#222222"));
+                baseViewHolder.setText(R.id.cpi_item_remainTime_txt, "");
+                baseViewHolder.setText(R.id.cpi_item_seconds_txt, "");
                 statusTxt = mContext.getResources().getString(R.string.tennis_match_not_start);
                 break;
             case 1:
                 if (allInfoBean.getSection() == 2) {
-                    statusTxt = "1st half";
-                } else {
-                    statusTxt = "1st";
+                    sectionTxt = "1st half";
+                } else if (allInfoBean.getSection() == 4) {
+                    sectionTxt = "1st";
                 }
+
+                baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt + " " + allInfoBean.getRemainTime());
+                baseViewHolder.setText(R.id.cpi_item_seconds_txt, "'");
                 baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#0090ff"));
                 baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#0090ff"));
 
                 break;
             case 2:
                 if (allInfoBean.getSection() == 2) {
-                    statusTxt = "1st half";
-                } else {
-                    statusTxt = "2nd";
+                    sectionTxt = "1st half";
+                } else if (allInfoBean.getSection() == 4) {
+                    sectionTxt = "2nd";
                 }
+
+                baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt + " " + allInfoBean.getRemainTime());
+                baseViewHolder.setText(R.id.cpi_item_seconds_txt, "'");
                 baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#0090ff"));
                 baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#0090ff"));
 
@@ -126,40 +136,54 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
 
             case 3:
                 if (allInfoBean.getSection() == 2) {
-                    statusTxt = "2nd half";
-                } else {
-                    statusTxt = "2rd";
+                    sectionTxt = "2nd half";
+                } else if (allInfoBean.getSection() == 4) {
+                    sectionTxt = "3rd";
 
                 }
+
+                baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt + " " + allInfoBean.getRemainTime());
+                baseViewHolder.setText(R.id.cpi_item_seconds_txt, "'");
                 baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#0090ff"));
                 baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#0090ff"));
-
 
                 break;
             case 4:
                 if (allInfoBean.getSection() == 2) {
-                    statusTxt = "2nd half";
-                } else {
-                    statusTxt = "4th";
+                    sectionTxt = "2nd half";
+                } else if (allInfoBean.getSection() == 4) {
+                    sectionTxt = "4th";
                 }
+
+                baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt + " " + allInfoBean.getRemainTime());
+                baseViewHolder.setText(R.id.cpi_item_seconds_txt, "'");
                 baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#0090ff"));
                 baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#0090ff"));
 
                 break;
             case 5:
-                statusTxt = "OT1";
+                sectionTxt = "OT1";
+
+                baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt + " " + allInfoBean.getRemainTime());
+                baseViewHolder.setText(R.id.cpi_item_seconds_txt, "'");
                 baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#0090ff"));
                 baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#0090ff"));
 
                 break;
             case 6:
-                statusTxt = "OT2";
+                sectionTxt = "OT2";
+
+                baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt + " " + allInfoBean.getRemainTime());
+                baseViewHolder.setText(R.id.cpi_item_seconds_txt, "'");
                 baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#0090ff"));
                 baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#0090ff"));
 
                 break;
             case 7:
-                statusTxt = "OT3";
+                sectionTxt = "OT3";
+
+                baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt + " " + allInfoBean.getRemainTime());
+                baseViewHolder.setText(R.id.cpi_item_seconds_txt, "'");
                 baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#0090ff"));
                 baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#0090ff"));
 
@@ -168,6 +192,8 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
                 statusTxt = mContext.getResources().getString(R.string.snooker_state_over_game);
                 baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#e40000"));
                 baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#e40000"));
+                baseViewHolder.setText(R.id.cpi_item_remainTime_txt, "");
+                baseViewHolder.setText(R.id.cpi_item_seconds_txt, "");
 
                 break;
             case -2:
@@ -175,12 +201,15 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
                 baseViewHolder.setText(R.id.cpi_score_txt, "VS");
                 baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#222222"));
                 baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#222222"));
-
+                baseViewHolder.setText(R.id.cpi_item_remainTime_txt, "");
+                baseViewHolder.setText(R.id.cpi_item_seconds_txt, "");
                 break;
             case -3:
                 statusTxt = mContext.getResources().getString(R.string.tennis_match_zd);
                 baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#e40000"));
                 baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#e40000"));
+                baseViewHolder.setText(R.id.cpi_item_remainTime_txt, "");
+                baseViewHolder.setText(R.id.cpi_item_seconds_txt, "");
 
                 break;
             case -4:
@@ -188,6 +217,8 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
                 baseViewHolder.setText(R.id.cpi_score_txt, "VS");
                 baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#222222"));
                 baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#222222"));
+                baseViewHolder.setText(R.id.cpi_item_remainTime_txt, "");
+                baseViewHolder.setText(R.id.cpi_item_seconds_txt, "");
 
                 break;
             case -5:
@@ -195,13 +226,16 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
                 baseViewHolder.setText(R.id.cpi_score_txt, "VS");
                 baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#222222"));
                 baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#222222"));
+                baseViewHolder.setText(R.id.cpi_item_remainTime_txt, "");
+                baseViewHolder.setText(R.id.cpi_item_seconds_txt, "");
 
                 break;
             case 50:
                 statusTxt = mContext.getResources().getString(R.string.paused_txt);
                 baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#0090ff"));
                 baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#0090ff"));
-
+                baseViewHolder.setText(R.id.cpi_item_remainTime_txt, "");
+                baseViewHolder.setText(R.id.cpi_item_seconds_txt, "");
                 break;
             default:
                 break;
@@ -273,24 +307,23 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
     private void setTitleText(BaseViewHolder holder) {
         switch (type) {
             case BasketOddsTypeEnum.ASIALET:
-                holder.setText(R.id.cpi_item_home_txt, mContext.getString(R.string.foot_odds_alet_left));
-                holder.setText(R.id.cpi_item_odds_txt, mContext.getString(R.string.foot_odds_alet_middle));
+                holder.setText(R.id.cpi_item_home_txt, mContext.getString(R.string.basket_analyze_guest_win));
+                holder.setText(R.id.cpi_item_odds_txt, mContext.getString(R.string.basket_analyze_dish));
                 holder.setVisible(R.id.cpi_item_odds_txt, true);
 
-                holder.setText(R.id.cpi_item_guest_txt, mContext.getString(R.string.foot_odds_alet_right));
+                holder.setText(R.id.cpi_item_guest_txt, mContext.getString(R.string.basket_analyze_home_win));
                 break;
             case BasketOddsTypeEnum.ASIASIZE:
                 holder.setText(R.id.cpi_item_home_txt, mContext.getString(R.string.foot_odds_asize_left));
                 holder.setText(R.id.cpi_item_odds_txt, mContext.getString(R.string.foot_odds_asize_middle));
                 holder.setVisible(R.id.cpi_item_odds_txt, true);
-
                 holder.setText(R.id.cpi_item_guest_txt, mContext.getString(R.string.foot_odds_asize_right));
                 break;
             case BasketOddsTypeEnum.EURO:
-                holder.setText(R.id.cpi_item_home_txt, mContext.getString(R.string.foot_odds_eu_left));
-                holder.setText(R.id.cpi_item_odds_txt, mContext.getString(R.string.foot_odds_eu_middle));
+                holder.setText(R.id.cpi_item_home_txt, mContext.getString(R.string.basket_analyze_guest_win));
+                holder.setText(R.id.cpi_item_odds_txt, mContext.getString(R.string.basket_analyze_dish));
                 holder.setVisible(R.id.cpi_item_odds_txt, false);
-                holder.setText(R.id.cpi_item_guest_txt, mContext.getString(R.string.foot_odds_eu_right));
+                holder.setText(R.id.cpi_item_guest_txt, mContext.getString(R.string.basket_analyze_home_win));
                 break;
         }
     }

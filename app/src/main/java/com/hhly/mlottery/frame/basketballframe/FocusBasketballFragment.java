@@ -324,8 +324,7 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
                             for (String groupdata : mAllGroupdata) {
                                 String[] weekdatas = groupdata.split(",");
                                 String datas = weekdatas[0];
-                                String currData = DateUtil.convertDateToNation(checkedMatchs.get(0).getDate());//国际化后比较日期
-                                if (currData.equals(datas)) {
+                                if (checkedMatchs.get(0).getDate().equals(datas)) {
                                     groupDataList.add(groupdata);//赛选后的日期list
                                     break;
                                 }

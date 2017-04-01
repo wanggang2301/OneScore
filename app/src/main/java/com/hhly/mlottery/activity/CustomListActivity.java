@@ -415,7 +415,7 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
                         }
                     }
                 } else {// 否则为最内层（赛事层）比赛的点击事件这里写
-                    // ***************************************************
+                    // TODO***************************************************
                 }
             }
         });
