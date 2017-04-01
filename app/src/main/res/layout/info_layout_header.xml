@@ -37,7 +37,9 @@
                 android:src="@mipmap/nav_icon_cbb" />
         </LinearLayout>
 
+
         <ImageView
+            android:id="@+id/iv_screen_icon"
             style="@style/RippleBackgroudBorderless"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -47,8 +49,20 @@
             android:paddingRight="12dp"
             android:paddingTop="3dp"
             android:scaleType="centerInside"
-            android:src="@mipmap/icon_config_btn"
-            android:visibility="invisible" />
+            android:src="@mipmap/cpi_filtrate" />
+
+        <ImageView
+            android:id="@+id/iv_serach_icon"
+            style="@style/RippleBackgroudBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/iv_screen_icon"
+            android:layout_alignTop="@id/iv_screen_icon"
+            android:layout_toLeftOf="@id/iv_screen_icon"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/info_search" />
 
     </RelativeLayout>
 

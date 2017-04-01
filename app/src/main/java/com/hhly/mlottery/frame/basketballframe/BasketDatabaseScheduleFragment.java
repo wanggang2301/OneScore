@@ -360,9 +360,17 @@ public class BasketDatabaseScheduleFragment extends Fragment {
             if (matchStage.isHasSecondStage() && mResult.getSecondStageIndex() != null &&
                     mResult.getSecondStageIndex() != -1) {
                 MatchStage secondStage = matchStage.getStages().get(mResult.getSecondStageIndex());
-                mTitleTextView.setText(DateUtil.convertDateToNationYD(secondStage.getStageName()));
+                if (DateUtil.isValidDateYMD(secondStage.getStageName()) || DateUtil.isValidDateYM(secondStage.getStageName())) {
+                    mTitleTextView.setText(DateUtil.convertDateToNationYD(secondStage.getStageName()));
+                }else{
+                    mTitleTextView.setText(secondStage.getStageName());
+                }
             } else {
-                mTitleTextView.setText(DateUtil.convertDateToNationYD(matchStage.getStageName()));
+                if (DateUtil.isValidDateYMD(matchStage.getStageName()) || DateUtil.isValidDateYM(matchStage.getStageName())) {
+                    mTitleTextView.setText(DateUtil.convertDateToNationYD(matchStage.getStageName()));
+                }else{
+                    mTitleTextView.setText(matchStage.getStageName());
+                }
             }
         }
 
@@ -388,7 +396,7 @@ public class BasketDatabaseScheduleFragment extends Fragment {
                 if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
                     dateFormat = new SimpleDateFormat("yyyy-MM-dd E", LocaleFactory.get());
                 } else {
-                    dateFormat = new SimpleDateFormat("MM-dd-yyyy E", LocaleFactory.get());
+                    dateFormat = new SimpleDateFormat("dd-MM-yyyy E", LocaleFactory.get());
                 }
                 mSections.add(new BasketballDatabaseScheduleSectionAdapter
                         .Section(true, dateFormat.format(matchDay.getDay())));

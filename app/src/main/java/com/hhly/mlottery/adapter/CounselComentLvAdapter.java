@@ -117,7 +117,6 @@ public class CounselComentLvAdapter extends BaseAdapter {
 
                     @Override
                     public void updateDrawState(TextPaint ds) {
-                        // TODO Auto-generated method stub
                         super.updateDrawState(ds);
 
                         ds.setColor(mActivity.getResources().getColor(R.color.colorPrimary));
@@ -130,7 +129,6 @@ public class CounselComentLvAdapter extends BaseAdapter {
 
                     @Override
                     public void onClick(View arg0) {
-                        // TODO Auto-generated method stub
                         textView.setText(mInfosList.get(position).content);
                         mStringList.add(DateUtil.transferLongToDate(mInfosList.get(position).create_time));
 //                        ToastTools.showQuickCenter(mActivity, "position=" + position);

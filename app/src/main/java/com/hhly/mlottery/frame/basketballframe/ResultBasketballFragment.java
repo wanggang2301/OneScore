@@ -31,6 +31,9 @@ import com.hhly.mlottery.bean.basket.BasketRoot;
 import com.hhly.mlottery.bean.basket.BasketRootBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.frame.footballframe.eventbus.BasketDetailsEventBusEntity;
+import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreResultEventBusEntity;
+import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreSettingEventBusEntity;
 import com.hhly.mlottery.frame.scorefrag.BasketBallScoreFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
@@ -108,11 +111,6 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
     public static int isLoad = -1;
     public static final int TYPE_FOCUS = 3;
     /**
-     * 关注事件EventBus
-     */
-    public static EventBus BasketResultEventBus;
-
-    /**
      * 切换后更新显示的fragment
      * @param hidden
      */
@@ -141,12 +139,10 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-//            mBasketballType = getArguments().getInt(PARAMS);
             mBasketballType = 1;
             mEntryType = getArguments().getInt(BASKET_ENTRY_TYPE);
         }
-        BasketResultEventBus = new EventBus();
-        BasketResultEventBus.register(this);
+        EventBus.getDefault().register(this);
     }
 
     /**
@@ -288,7 +284,7 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
                     for (List<BasketMatchBean> lists : mAllMatchdata) { // 遍历所有数据 得到筛选后的
                         List<BasketMatchBean> checkedMatchs = new ArrayList<>();
                         for (BasketMatchBean matchBean : lists) {
-                            for (String checkedId : FiltrateCupsMap.basketImmedateCups) {
+                            for (String checkedId : FiltrateCupsMap.resultCups) {
                                 if (matchBean.getLeagueId().equals(checkedId)) {
                                     checkedMatchs.add(matchBean);
                                 }
@@ -299,7 +295,8 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
                             for (String groupdata : mAllGroupdata) {
                                 String[] weekdatas = groupdata.split(",");
                                 String datas = weekdatas[0];
-                                if (checkedMatchs.get(0).getDate().equals(datas)) {
+                                String currData = DateUtil.convertDateToNation(checkedMatchs.get(0).getDate());//国际化后比较日期
+                                if (currData.equals(datas)) {
                                     groupDataList.add(groupdata);//赛选后的日期list
                                     break;
                                 }
@@ -414,6 +411,12 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
         mLoadHandler.postDelayed(mRun, 0);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
     /**
      * list点击事件
      */
@@ -493,7 +496,7 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
     /**
      * 设置返回
      */
-    public void onEventMainThread(Integer currentFragmentId) {
+    public void onEventMainThread(BasketScoreSettingEventBusEntity currentFragmentId) {
         updateAdapter();
         L.d("设置返回 " , "000000");
         /**
@@ -525,7 +528,8 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
     /**
      * 筛选返回
      */
-    public void onEventMainThread(Map<String,Object> map) {
+    public void onEventMainThread(BasketScoreResultEventBusEntity basketScoreResultEventBusEntity) {
+        Map<String, Object> map = basketScoreResultEventBusEntity.getMap();
         L.d("AAAAA-++++++--" ,"checkedIds.length");
         String[] checkedIds = (String[])((List)map.get(BasketFiltrateActivity.CHECKED_CUPS_IDS)).toArray(new String[]{});
 
@@ -533,7 +537,7 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
 //        String[] checkedIds = (String[]) map.getCharSequenceArrayExtra(BasketFiltrateActivity.CHECKED_CUPS_IDS);// 返回数据是选择后的id字符串数组，数据类型String
         isFilter = true;
 
-        FiltrateCupsMap.basketImmedateCups = checkedIds;
+        FiltrateCupsMap.resultCups = checkedIds;
         if (checkedIds.length == 0) {
             List<BasketMatchFilter> noCheckedFilters = new ArrayList<>();
             mChickedFilter = noCheckedFilters;//筛选0场后，再次进入赛选页面 显示已选中0场（全部不选中）
@@ -567,7 +571,8 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
                     for (String groupdata : mAllGroupdata) {
                         String[] weekdatas = groupdata.split(",");
                         String datas = weekdatas[0];
-                        if (checkedMatchs.get(0).getDate().equals(datas)) {
+                        String currData = DateUtil.convertDateToNation(checkedMatchs.get(0).getDate());//国际化后比较日期
+                        if (currData.equals(datas)) {
                             groupDataList.add(groupdata);
                             break;
                         }
@@ -601,7 +606,7 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
      * 详情页面返回
      * @param id
      */
-    public void onEventMainThread(String id) {
+    public void onEventMainThread(BasketDetailsEventBusEntity id) {
         updateAdapter();
         if (mEntryType == 0) {
             ((BasketballScoresActivity) getActivity()).basketFocusCallback();

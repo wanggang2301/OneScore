@@ -258,11 +258,8 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
 
         switch (MyApp.isPackageName){
             case AppConstants.PACKGER_NAME_ZH:
-//                popupView.findViewById(R.id.view_line).setVisibility(View.VISIBLE);
-//                popupView.findViewById(R.id.tv_popup_jubao).setVisibility(View.VISIBLE);
-                // TODO 暂时用
-                popupView.findViewById(R.id.view_line).setVisibility(View.GONE);
-                popupView.findViewById(R.id.tv_popup_jubao).setVisibility(View.GONE);
+                popupView.findViewById(R.id.view_line).setVisibility(View.VISIBLE);
+                popupView.findViewById(R.id.tv_popup_jubao).setVisibility(View.VISIBLE);
                 break;
             case AppConstants.PACKGER_NAME_TH:
             case AppConstants.PACKGER_NAME_VN:

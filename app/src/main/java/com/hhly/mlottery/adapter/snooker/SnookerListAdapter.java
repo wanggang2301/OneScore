@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -186,6 +187,7 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                     case "0":
                         viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_pause));
                         viewHolderList.mSnookerStatus.setTextColor(mContext.getResources().getColor(R.color.snooker_fulltime_textcolor));
+                        viewHolderList.mSnookerStatus.setVisibility(View.VISIBLE);
                         if (DetailsData.getMatchScore() == null || DetailsData.getMatchScore().equals("")) {
                             viewHolderList.mSnookerInning.setText("-");
                         }else{
@@ -227,10 +229,12 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                         }
                         viewHolderList.mSnookerScoreLeft.setTextColor(mContext.getResources().getColor(R.color.snooker_score_textcolor));
                         viewHolderList.mSnookerScoreRight.setTextColor(mContext.getResources().getColor(R.color.snooker_score_textcolor));
+                        setRETstatus(viewHolderList , false);
                         break;
                     case "1":
                         viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_no_start));
                         viewHolderList.mSnookerStatus.setTextColor(mContext.getResources().getColor(R.color.snooker_odds_textcolor));
+                        viewHolderList.mSnookerStatus.setVisibility(View.VISIBLE);
                         viewHolderList.mSnookerInning.setText("(VS)");
                         viewHolderList.mPoscore.setText("0");
                         viewHolderList.mPtScore.setText("0");
@@ -238,10 +242,12 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                         viewHolderList.mSnookerScoreRight.setText("0");
                         viewHolderList.mSnookerScoreLeft.setTextColor(mContext.getResources().getColor(R.color.snooker_score_textcolor));
                         viewHolderList.mSnookerScoreRight.setTextColor(mContext.getResources().getColor(R.color.snooker_score_textcolor));
+                        setRETstatus(viewHolderList , false);
                         break;
                     case "2":
                         viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_over_game));
                         viewHolderList.mSnookerStatus.setTextColor(mContext.getResources().getColor(R.color.snooker_fulltime_textcolor));
+                        viewHolderList.mSnookerStatus.setVisibility(View.VISIBLE);
                         if (DetailsData.getMatchScore() == null || DetailsData.getMatchScore().equals("")) {
                             viewHolderList.mSnookerInning.setText("-");
                         }else{
@@ -306,11 +312,12 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                                 viewHolderList.mSnookerScoreRight.setTextColor(mContext.getResources().getColor(R.color.snooker_score_textcolor));
                             }
                         }
-
+                        setRETstatus(viewHolderList , false);
                         break;
                     case "3":
                         viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_have_ing));
                         viewHolderList.mSnookerStatus.setTextColor(mContext.getResources().getColor(R.color.snooker_fulltime_textcolor));
+                        viewHolderList.mSnookerStatus.setVisibility(View.VISIBLE);
                         if (DetailsData.getMatchScore() == null || DetailsData.getMatchScore().equals("")) {
                             viewHolderList.mSnookerInning.setText("-");
                         }else{
@@ -353,10 +360,12 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                         }
                         viewHolderList.mSnookerScoreLeft.setTextColor(mContext.getResources().getColor(R.color.snooker_score_textcolor));
                         viewHolderList.mSnookerScoreRight.setTextColor(mContext.getResources().getColor(R.color.snooker_score_textcolor));
+                        setRETstatus(viewHolderList , false);
                         break;
                     case "4":
                         viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_resting));
                         viewHolderList.mSnookerStatus.setTextColor(mContext.getResources().getColor(R.color.snooker_fulltime_textcolor));
+                        viewHolderList.mSnookerStatus.setVisibility(View.VISIBLE);
                         if (DetailsData.getMatchScore() == null || DetailsData.getMatchScore().equals("")) {
                             viewHolderList.mSnookerInning.setText("-");
                         }else{
@@ -398,9 +407,67 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                         }
                         viewHolderList.mSnookerScoreLeft.setTextColor(mContext.getResources().getColor(R.color.snooker_score_textcolor));
                         viewHolderList.mSnookerScoreRight.setTextColor(mContext.getResources().getColor(R.color.snooker_score_textcolor));
+                        setRETstatus(viewHolderList , false);
+                        break;
+                    case "-5":
+                    case "-6":
+                        viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_resting));
+                        viewHolderList.mSnookerStatus.setTextColor(mContext.getResources().getColor(R.color.snooker_fulltime_textcolor));
+                        viewHolderList.mSnookerStatus.setVisibility(View.GONE);
+                        if (DetailsData.getMatchScore() == null || DetailsData.getMatchScore().equals("")) {
+                            viewHolderList.mSnookerInning.setText("-");
+                        }else{
+                            if (DetailsData.getMatchScore().getTotalGames() == null || DetailsData.getMatchScore().getTotalGames().equals("")) {
+                                viewHolderList.mSnookerInning.setText("-");
+                            }else{
+                                viewHolderList.mSnookerInning.setText("(" + DetailsData.getMatchScore().getTotalGames() + ")");
+                            }
+                        }
+                        if (DetailsData.getMatchScore() == null || DetailsData.getMatchScore().equals("")) {
+                            viewHolderList.mPoscore.setText("-");
+                            viewHolderList.mPtScore.setText("-");
+                        }else{
+                            if (DetailsData.getMatchScore().getPoScore() == null || DetailsData.getMatchScore().getPoScore().equals("")) {
+                                viewHolderList.mPoscore.setText("-");
+                            }else{
+                                viewHolderList.mPoscore.setText(DetailsData.getMatchScore().getPoScore());
+                            }
+                            if (DetailsData.getMatchScore().getPtScore() == null || DetailsData.getMatchScore().getPtScore().equals("")) {
+                                viewHolderList.mPtScore.setText("-");
+                            }else{
+                                viewHolderList.mPtScore.setText(DetailsData.getMatchScore().getPtScore());
+                            }
+                        }
+                        if (DetailsData.getMatchScore() == null) {
+                            viewHolderList.mSnookerScoreLeft.setText("--");
+                            viewHolderList.mSnookerScoreRight.setText("--");
+                        }else{
+                            if (DetailsData.getMatchScore().getPlayerOnewin() == null || DetailsData.getMatchScore().getPlayerOnewin().equals("")) {
+                                viewHolderList.mSnookerScoreLeft.setText("--");
+                            }else{
+                                viewHolderList.mSnookerScoreLeft.setText(DetailsData.getMatchScore().getPlayerOnewin());
+                            }
+                            if (DetailsData.getMatchScore().getPlayerTwowin() == null || DetailsData.getMatchScore().getPlayerTwowin().equals("")) {
+                                viewHolderList.mSnookerScoreRight.setText("--");
+                            }else{
+                                viewHolderList.mSnookerScoreRight.setText(DetailsData.getMatchScore().getPlayerTwowin());
+                            }
+                        }
+                        viewHolderList.mSnookerScoreLeft.setTextColor(mContext.getResources().getColor(R.color.snooker_score_textcolor));
+                        viewHolderList.mSnookerScoreRight.setTextColor(mContext.getResources().getColor(R.color.snooker_score_textcolor));
+
+                        if (currentStatus.equals("-5")) {
+                            viewHolderList.mGuestRET.setText("");
+                            viewHolderList.mHomeRET.setText(mContext.getResources().getString(R.string.score_ret));
+                        }else if(currentStatus.equals("-6")){
+                            viewHolderList.mGuestRET.setText(mContext.getResources().getString(R.string.score_ret));
+                            viewHolderList.mHomeRET.setText("");
+                        }
+                        setRETstatus(viewHolderList , true);
                         break;
                     default:
                         viewHolderList.mSnookerStatus.setText("--");
+                        viewHolderList.mSnookerStatus.setVisibility(View.VISIBLE);
                         viewHolderList.mSnookerInning.setText("-");
                         viewHolderList.mPoscore.setText("-");
                         viewHolderList.mPtScore.setText("-");
@@ -408,6 +475,7 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                         viewHolderList.mSnookerScoreRight.setText("-");
                         viewHolderList.mSnookerScoreLeft.setTextColor(mContext.getResources().getColor(R.color.snooker_score_textcolor));
                         viewHolderList.mSnookerScoreRight.setTextColor(mContext.getResources().getColor(R.color.snooker_score_textcolor));
+                        setRETstatus(viewHolderList , false);
                         break;
 
                 }
@@ -540,6 +608,27 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
             mSnookerWeek = (TextView) itemView.findViewById(R.id.snooker_week);
         }
     }
+
+    /**
+     * 退赛提示（退赛不显示赔率盘口）
+     * @param holderlist
+     * @param isRET 是否退赛
+     */
+    private void setRETstatus(ViewHolderList holderlist , boolean isRET){
+
+        if (isRET){
+            holderlist.mPlaceholderitemView.setVisibility(View.GONE);
+            holderlist.mOddsShow.setVisibility(View.GONE);
+            holderlist.mHomeRET.setVisibility(View.VISIBLE);
+            holderlist.mGuestRET.setVisibility(View.VISIBLE);
+        }else{
+            holderlist.mPlaceholderitemView.setVisibility(View.VISIBLE);
+            holderlist.mOddsShow.setVisibility(View.VISIBLE);
+            holderlist.mHomeRET.setVisibility(View.GONE);
+            holderlist.mGuestRET.setVisibility(View.GONE);
+        }
+
+    }
     class ViewHolderList extends BaseViewHolder{
         private final CardView cardView;
         private final TextView mSnookerRound;
@@ -555,6 +644,10 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
         private final TextView mSnookerOddsRight;
         private final TextView mPoscore;
         private final TextView mPtScore;
+        private final View mPlaceholderitemView;
+        private final LinearLayout mOddsShow;
+        private final TextView mHomeRET;
+        private final TextView mGuestRET;
 
         public ViewHolderList(View itemView) {
             super(itemView);
@@ -572,6 +665,12 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
             mSnookerOddsRight = (TextView) itemView.findViewById(R.id.snooker_odds_right);
             mPoscore = (TextView)itemView.findViewById(R.id.snooker_poScore);
             mPtScore = (TextView)itemView.findViewById(R.id.snooker_ptScore);
+
+            //新增状态
+            mPlaceholderitemView =  itemView.findViewById(R.id.placeholder_view);
+            mOddsShow = (LinearLayout) itemView.findViewById(R.id.odds_show);
+            mHomeRET = (TextView) itemView.findViewById(R.id.home_ret);
+            mGuestRET = (TextView)  itemView.findViewById(R.id.guest_ret);
         }
     }
 

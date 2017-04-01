@@ -63,4 +63,9 @@ public interface MyConstants {
 	String SNOOKER_ASIZE = "snooker_asize";// 大小盘
 	String SNOOKER_SINGLETWIN = "snooker_single_twin";//单双
 	String SNOOKER_NOTSHOW = "snooker_noShow";// 不显示
+
+	//网球 设置页
+	String TENNIS_ALET = "tennis_alet";// 亚盘
+	String TENNIS_EURO = "tennis_euro";// 欧赔
+	String TENNIS_NOTSHOW = "tennis_noShow";// 不显示
 }

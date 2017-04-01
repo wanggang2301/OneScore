@@ -29,7 +29,7 @@ public class BasketMatchBean {
     private String matchStatus;//
     private String homeRanking;//
     private String guestRanking;//
-    private int section;
+    private int section; //区分比赛类型[2:只有上下半场的比赛 4:有四节的比赛]
 
     private String guestTeamId; //	467
     private String homeTeamId; //	2233
@@ -42,6 +42,15 @@ public class BasketMatchBean {
     private boolean isGuestAnim;
 
     private boolean isBasketChicks = false; //标记item是否被选中(默认未选中)
+    private int itemType;// recycleview 区分item类型的type
+
+    public int getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(int itemType) {
+        this.itemType = itemType;
+    }
 
     public boolean isBasketChicks() {
         return isBasketChicks;

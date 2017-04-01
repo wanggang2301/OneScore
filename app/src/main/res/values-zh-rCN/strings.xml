@@ -32,7 +32,7 @@
     <string name="dangerAttackk_nodata">暂无危险进攻数据.</string>
     <string name="attack_nodata">暂无进攻数据.</string>
     <string name="time">时间(T)</string>
-
+    <string name="odds_equals">平均</string>
 
     <!--篮球资料库-->
     <string name="basket_info_hot">热门</string>
@@ -1025,6 +1025,7 @@
     <string name="login_succ">登录成功</string>
     <string name="login_no_weixin">没有安装微信,请先安装微信!</string>
     <string name="login_peak">登录高峰期,请稍后再试</string>
+    <string name="original_password_error">原密码错误</string>
     <string name="login_fail">登录失败</string>
     <string name="pwd_format">密码格式为6-16位数字和字符组成</string>
     <string name="pwd_format_hint">6-16位字符,区分大小写</string>
@@ -1616,4 +1617,51 @@
     <string name="football_odds_return_list">返回列表</string>
     <string name="home_gender">性别</string>
     <string name="snooker_index_single_double">单双</string>
+    <string name="score_ret">退赛</string>
+    <string name="tennis_setting_title">网球设置</string>
+    <string name="tennis_datails_title_fight">交手记录</string>
+    <string name="tennis_datails_title_data">数据对比</string>
+    <string name="tennis_datails_record_title">对手</string>
+
+    <string name="tennis_datails_fight_title">双方近%1$d次交峰，%2$s %3$d胜%4$d负，胜率：%5$s。</string>
+    <string name="tennis_datails_ranking_old">原排名</string>
+    <string name="tennis_datails_ranking_changer">变化</string>
+    <string name="tennis_datails_match_count">参赛次数</string>
+    <string name="tennis_datails_role1">上半区</string>
+    <string name="tennis_datails_role2">下半区</string>
+    <string name="tennis_datails_role3">八强</string>
+    <string name="tennis_datails_role4">四强</string>
+    <string name="tennis_datails_role5">决赛</string>
+    <string name="tennis_datails_role6">1/4区</string>
+    <string name="tennis_datails_role7">2/4区</string>
+    <string name="tennis_datails_role8">3/4区</string>
+    <string name="tennis_datails_role9">4/4区</string>
+    <string name="tennis_datails_role10">第一轮</string>
+    <string name="tennis_datails_role11">第二轮</string>
+    <string name="tennis_datails_role12">第三轮</string>
+    <string name="tennis_datails_role13">第四轮</string>
+    <string name="tennis_datails_role14">轮次</string>
+    <string name="tennis_datails_site1">硬地</string>
+    <string name="tennis_datails_site2">室外硬地</string>
+    <string name="tennis_datails_site3">室内硬地</string>
+    <string name="tennis_datails_site4">草地</string>
+    <string name="tennis_datails_site5">室外草地</string>
+    <string name="tennis_datails_site6">室内草地</string>
+    <string name="tennis_datails_site7">红土</string>
+    <string name="tennis_datails_site8">室外红土</string>
+    <string name="tennis_datails_site9">室内红土</string>
+    <string name="tennis_datails_site10">蓝土</string>
+    <string name="tennis_datails_site11">室外蓝土</string>
+    <string name="tennis_datails_site12">室内蓝土</string>
+    <string name="tennis_datails_status1">一发成功率</string>
+    <string name="tennis_datails_status2">一发得分率</string>
+    <string name="tennis_datails_status3">二发得分率</string>
+    <string name="tennis_datails_status4">接发球得分率</string>
+    <string name="tennis_datails_status5">破发率</string>
+    <string name="tennis_datails_status6">上网成功率</string>
+    <string name="tennis_datails_status7">ACE球</string>
+    <string name="tennis_datails_status8">双误</string>
+    <string name="tennis_datails_status9">非受迫性失误</string>
+    <string name="tennis_datails_status10">主动得分</string>
+
 </resources>

@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.basketdetails.OddsDataEntity;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
 
@@ -35,7 +36,8 @@ public class BasketOddsDetailsAdapter extends CommonAdapter<OddsDataEntity> {
     @Override
     public void convert(ViewHolder holder, OddsDataEntity oddBean) {
 
-            holder.setText(R.id.basket_odds_details_time , oddBean.getUpdateTime());
+//            holder.setText(R.id.basket_odds_details_time , oddBean.getUpdateTime());
+            holder.setText(R.id.basket_odds_details_time , DateUtil.convertDateToNationMDHM(oddBean.getUpdateTime()));
 
         //holder.setText(R.id.basket_odds_details_guestwin , oddBean.getLeftOdds());
 //        holder.setText(R.id.basket_odds_details_homewin , oddBean.getRightOdds());

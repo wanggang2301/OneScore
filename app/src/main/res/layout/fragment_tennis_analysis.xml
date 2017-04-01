@@ -1,0 +1,378 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/linecolor"
+    tools:context="com.hhly.mlottery.frame.tennisfrag.datailsfrag.TennisAnalysisFrag">
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/tennis_datails_analysis_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="@color/linecolor" />
+
+            <!--积分排名-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/tennis_details_analysis_bg"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/ranking"
+                android:textColor="@color/tennis_details_analysis_title"
+                android:textSize="@dimen/item_football_half_score" />
+
+            <LinearLayout
+                android:id="@+id/ll_tennis_datails_content_integral"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_not_data_integral"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/basket_noshow"
+                    android:textColor="@color/res_time_color"
+                    android:textSize="@dimen/item_football_half_score"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/ll_tennis_datails_title_integral"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="1"
+                        android:textColor="@color/res_pl_color"
+                        android:textSize="@dimen/tennis_score_item"
+                        android:text="@string/basket_player_qiuyuan" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="1"
+                        android:textColor="@color/res_pl_color"
+                        android:textSize="@dimen/tennis_score_item"
+                        android:text="@string/basket_ranking" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="1"
+                        android:textColor="@color/res_pl_color"
+                        android:textSize="@dimen/tennis_score_item"
+                        android:text="@string/tennis_datails_ranking_old" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="1"
+                        android:textColor="@color/res_pl_color"
+                        android:textSize="@dimen/tennis_score_item"
+                        android:text="@string/tennis_datails_ranking_changer" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="1"
+                        android:textColor="@color/res_pl_color"
+                        android:textSize="@dimen/tennis_score_item"
+                        android:text="@string/sn_rank_zjf" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="1"
+                        android:textColor="@color/res_pl_color"
+                        android:textSize="@dimen/tennis_score_item"
+                        android:text="@string/tennis_datails_match_count" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_integral_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="@color/linecolor" />
+
+            <!--交手记录-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/tennis_details_analysis_bg"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/tennis_datails_title_fight"
+                android:textColor="@color/tennis_details_analysis_title"
+                android:textSize="@dimen/item_football_half_score" />
+
+            <LinearLayout
+                android:id="@+id/ll_tennis_datails_content_fight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/linecolor"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_not_data_fight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/basket_noshow"
+                    android:textColor="@color/res_time_color"
+                    android:textSize="@dimen/item_football_half_score"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_fight_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:textColor="@color/res_time_color"
+                    android:textSize="@dimen/text_size_11"
+                    android:visibility="visible"
+                    tools:text="双方近N次交峰，Name x胜x负，胜率：100%" />
+
+                <LinearLayout
+                    android:id="@+id/ll_fight_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="@color/linecolor" />
+
+            <!--近期战绩-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/tennis_details_analysis_bg"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/basket_analyze_recent"
+                android:textColor="@color/tennis_details_analysis_title"
+                android:textSize="@dimen/item_football_half_score" />
+
+            <LinearLayout
+                android:id="@+id/ll_tennis_datails_content_record"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_not_data_record"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/basket_noshow"
+                    android:textColor="@color/res_time_color"
+                    android:textSize="@dimen/item_football_half_score"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/ll_record_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="@color/linecolor" />
+
+            <!--数据对比-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/tennis_details_analysis_bg"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/tennis_datails_title_data"
+                android:textColor="@color/tennis_details_analysis_title"
+                android:textSize="@dimen/item_football_half_score" />
+
+            <LinearLayout
+                android:id="@+id/ll_tennis_datails_content_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_not_data_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/basket_noshow"
+                    android:textColor="@color/res_time_color"
+                    android:textSize="@dimen/item_football_half_score"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/ll_tennis_datails_title_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tennis_datails_home_name"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:lines="2"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="3dp"
+                            android:textColor="@color/tennis_details_analysis_title"
+                            android:textSize="@dimen/tennis_score_item"
+                            tools:text="HomeName1" />
+
+                        <TextView
+                            android:id="@+id/tennis_datails_home_name2"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:lines="2"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="3dp"
+                            android:textColor="@color/tennis_details_analysis_title"
+                            android:textSize="@dimen/tennis_score_item"
+                            tools:text="HomeName2" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="PK"
+                        android:textColor="@color/number_red"
+                        android:textSize="@dimen/info_center_value" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tennis_datails_guest_name"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:lines="2"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="3dp"
+                            android:textColor="@color/tennis_details_analysis_title"
+                            android:textSize="@dimen/tennis_score_item"
+                            tools:text="GuestName1" />
+
+                        <TextView
+                            android:id="@+id/tennis_datails_guest_name2"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:lines="2"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="3dp"
+                            android:textColor="@color/tennis_details_analysis_title"
+                            android:textSize="@dimen/tennis_score_item"
+                            tools:text="GuestName2" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_data_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="@color/linecolor" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <include layout="@layout/network_exception" />
+
+</FrameLayout>

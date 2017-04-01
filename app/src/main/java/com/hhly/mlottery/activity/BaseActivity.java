@@ -1,6 +1,5 @@
 package com.hhly.mlottery.activity;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,8 +9,8 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.AppManager;
 import com.hhly.mlottery.util.FragmentUtils;
+import com.tendcloud.tenddata.TCAgent;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -24,7 +23,6 @@ import java.util.List;
  * @date 2015-10-16 下午4:18:43
  */
 public class BaseActivity extends FragmentActivity {
-    public ProgressDialog pd;
 
     public static String TAG = "BaseFragmentActivity";
 
@@ -38,24 +36,15 @@ public class BaseActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//		// 初始化PreferenceUtil
-//		PreferenceUtil.init(this);
-//		// 根据上次的语言设置，重新设置语言
-//		switchLanguage(PreferenceUtil.getString("language", "rCN"));
         mContext = this;
         // 设置背景
         View view = this.getWindow().getDecorView(); // getDecorView
         // 获得window最顶层的View
         view.setBackgroundColor(Color.WHITE);// 设置全局背景颜色
 
-//        AppManager.getAppManager().addActivity(this);
-        pd = new ProgressDialog(this);
-        pd.setMessage("玩命加载中...");
-        pd.setCanceledOnTouchOutside(false);
         if (savedInstanceState != null) {
             currentPosition = savedInstanceState.getInt("currentPosition");
         }
-
     }
 
     /**
@@ -76,7 +65,7 @@ public class BaseActivity extends FragmentActivity {
      *
      * @param containerId
      */
-    protected void  setContainer(int containerId) {
+    protected void setContainer(int containerId) {
         this.containerId = containerId;
     }
 
@@ -141,19 +130,16 @@ public class BaseActivity extends FragmentActivity {
 
     @Override
     protected void onResume() {
-        // TODO Auto-generated method stub
         super.onResume();
-        if (AppConstants.isUploadCrash) {
-            MobclickAgent.onResume(this);
-        }
+        MobclickAgent.onResume(this);
+        TCAgent.onPageStart(this, getClass().getSimpleName());
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (AppConstants.isUploadCrash) {
-            MobclickAgent.onPause(this);
-        }
+        MobclickAgent.onPause(this);
+        TCAgent.onPageEnd(this, getClass().getSimpleName());
     }
 
     @Override

@@ -30,21 +30,43 @@
         <ImageView
             android:id="@+id/iv_left"
             android:layout_width="10dp"
-            android:layout_height="15dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginRight="5dp"
             android:src="@mipmap/rc" />
 
-        <TextView
-            android:id="@+id/tv_time"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="15dp"
-            android:layout_gravity="center"
-            android:background="@drawable/live_text_time"
-            android:gravity="center_horizontal"
-            android:text="time"
-            android:textColor="#fff"
-            android:textSize="@dimen/text_size_10" />
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/live_text_time"
+                android:gravity="center_horizontal"
+                android:text="time"
+                android:textColor="#fff"
+                android:textSize="@dimen/text_size_10" />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_above="@id/tv_time"
+                android:layout_centerHorizontal="true"
+                android:background="#dddddd"
+                android:textColor="@color/red" />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tv_time"
+                android:layout_centerHorizontal="true"
+                android:background="#dddddd"
+                android:textColor="@color/red" />
+
+        </RelativeLayout>
 
         <ImageView
             android:id="@+id/iv_right"
@@ -70,7 +92,7 @@
     <TextView
         android:id="@+id/line"
         android:layout_width="1dp"
-        android:layout_height="25dp"
+        android:layout_height="15dp"
         android:layout_gravity="center_horizontal"
         android:background="#dddddd"
         android:textColor="@color/red"

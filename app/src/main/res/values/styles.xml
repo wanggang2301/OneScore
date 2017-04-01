@@ -772,7 +772,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:text">-</item>
         <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:textSize">@dimen/text_size_12</item>
+        <item name="android:textSize">@dimen/text_size_11</item>
     </style>
 
     <style name="MW_White">
@@ -787,6 +787,7 @@
     <style name="WW_Width_0dp">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
     </style>
 
     <style name="item_rollball_MeasureSpec_EXACTLY">
@@ -797,7 +798,7 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:textColor">@color/res_name_color</item>
-        <item name="android:textSize">@dimen/info_center_title</item>
+        <item name="android:textSize">@dimen/number_desc</item>
     </style>
 
     <style name="Md.Card" parent="CardView">
@@ -1087,5 +1088,27 @@
     </style>
 
     <!--彩票详情页 end -->
+
+    <!--网球内页-->
+    <style name="tennis_datails_head_name">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:lines">1</item>
+        <item name="android:textColor">@color/res_time_color</item>
+        <item name="android:textSize">@dimen/tennis_score_item</item>
+    </style>
+
+    <style name="tennis_datails_head_score">
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:layout_margin">1dp</item>
+        <item name="android:background">@drawable/tennis_datails_fight_item</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/res_time_color</item>
+        <item name="android:textSize">@dimen/tennis_score_item</item>
+    </style>
+
 
 </resources>

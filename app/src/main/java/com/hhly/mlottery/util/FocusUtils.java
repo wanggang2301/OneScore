@@ -8,6 +8,7 @@ import com.hhly.mlottery.bean.focusAndPush.CancelConcernBean;
 import com.hhly.mlottery.bean.focusAndPush.ConcernBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
+import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketballFocusNewFragment;
 import com.hhly.mlottery.frame.footballframe.FocusFragment;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.message.UmengRegistrar;
@@ -97,7 +98,7 @@ public class FocusUtils {
                             sb.append("," + thirdId);
                         }
                     }
-                    PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS, sb.toString());
+                    PreferenceUtil.commitString(BasketballFocusNewFragment.BASKET_FOCUS_IDS, sb.toString());
                 }
 
             }
@@ -245,11 +246,11 @@ public class FocusUtils {
      * @param thirdId
      */
     public static void addBasketFocusId(String thirdId) {
-        String focusIds = PreferenceUtil.getString(FocusBasketballFragment.BASKET_FOCUS_IDS, "");
+        String focusIds = PreferenceUtil.getString(BasketballFocusNewFragment.BASKET_FOCUS_IDS, "");
         if ("".equals(focusIds)) {
-            PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS, thirdId);
+            PreferenceUtil.commitString(BasketballFocusNewFragment.BASKET_FOCUS_IDS, thirdId);
         } else {
-            PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS, focusIds + "," + thirdId);
+            PreferenceUtil.commitString(BasketballFocusNewFragment.BASKET_FOCUS_IDS, focusIds + "," + thirdId);
         }
         //TODO:把用户id,deviceId,deviceToken 传给服务器
         String deviceId = AppConstants.deviceToken;
@@ -294,7 +295,7 @@ public class FocusUtils {
      * @param thirdId
      */
     public static void deleteBasketFocusId(String thirdId) {
-        String focusIds = PreferenceUtil.getString(FocusBasketballFragment.BASKET_FOCUS_IDS, "");
+        String focusIds = PreferenceUtil.getString(BasketballFocusNewFragment.BASKET_FOCUS_IDS, "");
         String[] idArray = focusIds.split("[,]");
         StringBuffer sb = new StringBuffer();
         for (String id : idArray) {
@@ -307,7 +308,7 @@ public class FocusUtils {
 
             }
         }
-        PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS, sb.toString());
+        PreferenceUtil.commitString(BasketballFocusNewFragment.BASKET_FOCUS_IDS, sb.toString());
 
         String deviceId = AppConstants.deviceToken;
         String userId = "";
@@ -341,7 +342,7 @@ public class FocusUtils {
      * @return true已关注，false还没关注
      */
     public static boolean isBasketFocusId(String thirdId) {
-        String focusIds = PreferenceUtil.getString(FocusBasketballFragment.BASKET_FOCUS_IDS, "");
+        String focusIds = PreferenceUtil.getString(BasketballFocusNewFragment.BASKET_FOCUS_IDS, "");
 
         if ("".equals(focusIds)) {
             return false;
