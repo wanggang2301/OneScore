@@ -16,11 +16,11 @@ public class BasketScoreSettingEventBusEntity {
         this.mIndex = index;
     }
 
-    public String getmIndex() {
-        return mIndex;
-    }
-
     public void setmIndex(String mIndex) {
         this.mIndex = mIndex;
+    }
+
+    public String getmIndex() {
+        return mIndex;
     }
 }
