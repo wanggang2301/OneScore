@@ -352,12 +352,6 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         //获取各个赔率下的公司list
         List<BasketIndexBean.DataBean.CompanyBean> companyList = parentFragment.getCompanyMap().get(type);
 
-   /*     //备注: 欧赔平均必须显示  单独处理一下
-        if (type.equals(BasketOddsTypeEnum.EURO)) {
-            companyList.add(new BasketIndexBean.DataBean.CompanyBean("euro", "平均", true));
-        }*/
-
-
         List<BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean> matchOddsBeanList = new ArrayList<>();   //每一场比赛的赔率公司
 
         for (BasketIndexBean.DataBean.AllInfoBean.MatchOddsBean matchOddsBean : allInfo.getMatchOdds()) {
