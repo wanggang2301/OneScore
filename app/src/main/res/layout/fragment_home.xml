@@ -8,15 +8,27 @@
         android:id="@+id/home_page_swiperefreshlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!--首页列表展示控件-->
-        <ListView
-            android:id="@+id/home_page_list"
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/score_color_white"
-            android:divider="@null"
-            android:listSelector="@color/transparency"
-            android:scrollbars="none" />
+            android:layout_height="match_parent">
+
+            <!--首页列表展示控件-->
+            <ListView
+                android:id="@+id/home_page_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/score_color_white"
+                android:divider="@null"
+                android:listSelector="@color/transparency"
+                android:scrollbars="none" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/home_top_bg" />
+
+        </RelativeLayout>
     </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
 
     <!--头部-->
@@ -29,10 +41,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
+            android:alpha="0"
             android:background="@color/colorPrimary"
             android:gravity="center"
-            android:alpha="0"
-            android:paddingTop="30dp"
+            android:paddingTop="20dp"
             android:text="@string/app_name"
             android:textColor="@color/white"
             android:textSize="18sp" />
@@ -45,7 +57,7 @@
             android:layout_centerVertical="true"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
-            android:paddingTop="30dp"
+            android:paddingTop="20dp"
             android:scaleType="centerInside"
             android:src="@mipmap/logout" />
 

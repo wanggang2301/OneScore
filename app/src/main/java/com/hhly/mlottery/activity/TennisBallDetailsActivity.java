@@ -149,8 +149,8 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
                 tv_start.setTextColor(getResources().getColor(R.color.tennis_details_analysis_title_start));
                 break;
             default:
-                tv_start.setText(getString(R.string.tennis_match_not_start));
-                tv_start.setTextColor(getResources().getColor(R.color.tennis_details_analysis_title_start));
+                tv_start.setText(getString(R.string.tennis_match_join));
+                tv_start.setTextColor(getResources().getColor(R.color.tennis_details_analysis_title_start2));
                 break;
         }
 
