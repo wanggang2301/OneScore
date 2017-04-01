@@ -139,7 +139,6 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
                     sectionTxt = "2nd half";
                 } else if (allInfoBean.getSection() == 4) {
                     sectionTxt = "3rd";
-
                 }
 
                 baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt + " " + allInfoBean.getRemainTime());
