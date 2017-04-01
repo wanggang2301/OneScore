@@ -29,6 +29,8 @@ import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.snookerbean.SnookerScoreSocketBean;
 import com.hhly.mlottery.bean.snookerbean.snookerIndexBean.SnookerIndexBean;
 import com.hhly.mlottery.bean.snookerbean.snookerschedulebean.SnookerSocketOddsBean;
+import com.hhly.mlottery.bean.tennisball.TennisSocketBean;
+import com.hhly.mlottery.bean.tennisball.TennisSocketOddsBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SnookerChildFragment.SnookerCompanyChooseDialogFragment;
@@ -152,7 +154,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
             setTopic("USER.topic.snooker");
         }else if(mBallType==BallType.TENNLS){
             setWebSocketUri(BaseURLs.WS_SERVICE);
-            setTopic("USER.topic.snooker");
+            setTopic("USER.topic.tennis.oddindex");
         }
     }
 
@@ -195,7 +197,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
             super.handleMessage(msg);
             L.e(TAG, "__handleMessage__");
             L.e(TAG, "msg.arg1 = " + msg.arg1);
-            if (msg.arg1 == 300) {  // 比分推送
+            if (msg.arg1 == 300) {  // 斯诺克比分推送
                 String ws_json = (String) msg.obj;
                 L.e(TAG, "ws_json_snooker_score = " + ws_json);
                 SnookerScoreSocketBean mSnookerScore = null;
@@ -207,10 +209,24 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
                 }
                 if (mSnookerScore.getData() != null) {
                     for (int i = 0; i < fragments.size(); i++) {
-                        ((SnookerIndexChildFragment) fragments.get(i)).updataScore(mSnookerScore);
+                        ((SnookerIndexChildFragment) fragments.get(i)).updateScore(mSnookerScore);
                     }
                 }
-            }else if (msg.arg1 == 301) {  // 赔率推送
+            }else if(msg.arg1==404){  //网球比分推送
+                String ws_json= (String) msg.obj;
+                TennisSocketBean mTennisScore;
+                try {
+                    mTennisScore = JSON.parseObject(ws_json , TennisSocketBean.class);
+                } catch (Exception e) {
+                    ws_json = ws_json.substring(0, ws_json.length() - 1);
+                    mTennisScore = JSON.parseObject(ws_json , TennisSocketBean.class);
+                }
+                if (mTennisScore.getDataObj() != null) {
+                    for (int i = 0; i < fragments.size(); i++) {
+                        ((SnookerIndexChildFragment) fragments.get(i)).updateTennisScore(mTennisScore);
+                    }
+                }
+            }else if (msg.arg1 == 301) {  // 斯诺克赔率推送
                 String ws_json = (String) msg.obj;
                 L.e(TAG, "ws_json_snooker_odds = " + ws_json);
                 SnookerSocketOddsBean mSnookerOdds = null;
@@ -227,18 +243,47 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
                     switch (oddsData.getPlayType()){
 
                         case "asiaLet"://亚盘
-                            ((SnookerIndexChildFragment) fragments.get(0)).updataOdds(mSnookerOdds);
+                            ((SnookerIndexChildFragment) fragments.get(0)).updateOdds(mSnookerOdds);
                             break;
                         case "asiaSize"://大小球
-                            ((SnookerIndexChildFragment) fragments.get(1)).updataOdds(mSnookerOdds);
+                            ((SnookerIndexChildFragment) fragments.get(1)).updateOdds(mSnookerOdds);
                             break;
 
                         case "onlyWin"://独赢[欧赔]
-                            ((SnookerIndexChildFragment) fragments.get(2)).updataOdds(mSnookerOdds);
+                            ((SnookerIndexChildFragment) fragments.get(2)).updateOdds(mSnookerOdds);
                             break;
                         case "oneTwo"://单双
-                            ((SnookerIndexChildFragment) fragments.get(3)).updataOdds(mSnookerOdds);
+                            ((SnookerIndexChildFragment) fragments.get(3)).updateOdds(mSnookerOdds);
                             break;
+                    }
+                }
+            }else if(msg.arg1==403){ //网球赔率推送
+                String ws_json = (String) msg.obj;
+                L.e(TAG, "ws_json_snooker_odds = " + ws_json);
+                TennisSocketOddsBean mSnookerOdds = null;
+                try {
+                    mSnookerOdds = JSON.parseObject(ws_json , TennisSocketOddsBean.class);
+                } catch (Exception e) {
+                    ws_json = ws_json.substring(0, ws_json.length() - 1);
+                    mSnookerOdds = JSON.parseObject(ws_json , TennisSocketOddsBean.class);
+                }
+
+                if (mSnookerOdds.getDataObj() != null) {
+
+                    TennisSocketOddsBean.DataObjBean oddsData = mSnookerOdds.getDataObj();
+                    switch (oddsData.getGameType()){
+
+                        case 1://亚盘
+                            ((SnookerIndexChildFragment) fragments.get(0)).updateTennisOdds(mSnookerOdds);
+                            break;
+                        case 3://大小球
+                            ((SnookerIndexChildFragment) fragments.get(1)).updateTennisOdds(mSnookerOdds);
+                            break;
+
+                        case 2://独赢[欧赔]
+                            ((SnookerIndexChildFragment) fragments.get(2)).updateTennisOdds(mSnookerOdds);
+                            break;
+
                     }
                 }
             }
@@ -271,8 +316,6 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
                 },1000);
             }
         });
-
-        L.e("AAA",mBallType+"df");
 
         mItems = getResources().getStringArray(R.array.zhishu_select);
 
