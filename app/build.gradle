@@ -120,7 +120,6 @@ dependencies {
     compile 'com.google.android.gms:play-services-appindexing:9.8.0'
     compile 'info.hoang8f:android-segmented:1.0.6'
     compile 'com.google.dagger:dagger:2.4'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
     apt 'com.google.dagger:dagger-compiler:2.4'
