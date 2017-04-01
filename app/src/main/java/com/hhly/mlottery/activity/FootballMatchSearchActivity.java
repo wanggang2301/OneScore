@@ -37,23 +37,25 @@ import rx.schedulers.Schedulers;
 
 /**
  * Created by yuely198 on 2017/3/23.
+ * 足球比分列表搜索
  */
 
-public class FootballMatchSearchActivity extends BaseActivity implements  View.OnClickListener {
+public class FootballMatchSearchActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String LEAGUEID = "league";
     private FootballMatchSearchAdapter basketballInforSerachAdapter;
     private EditText et_keyword;
     private RecyclerView mTv_result;
     private TextView mNo_serach_tv;
-    private static final String SEARCHKEYWORD= "searchKeyword";
+    private static final String SEARCHKEYWORD = "searchKeyword";
     private ImageView mSearch_iv_delete;
 
     private FocusMatchClickListener mFocusClickListener;// 关注点击事件
 
     public static final int REQUEST_DETAIL_CODE = 0x12;
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_match_layout);
         initView();
@@ -71,39 +73,39 @@ public class FootballMatchSearchActivity extends BaseActivity implements  View.O
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .debounce(600, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                 .filter(new Func1<CharSequence, Boolean>() {
-                    @Override public Boolean call(CharSequence charSequence) {
+                    @Override
+                    public Boolean call(CharSequence charSequence) {
                         // 清空搜索出来的结构
                         //tv_result.setText("");
                         //当 EditText 中文字大于0的时候
-                        if(charSequence.length() > 0){
+                        if (charSequence.length() > 0) {
                             //有数据显示删除键
                             mSearch_iv_delete.setVisibility(View.VISIBLE);
                             mNo_serach_tv.setVisibility(View.VISIBLE);
                             mNo_serach_tv.setText(R.string.find_search);
                             return true;
-                        }else{
+                        } else {
                             mNo_serach_tv.setVisibility(View.GONE);
-                            if (basketballInforSerachAdapter!=null){
+                            if (basketballInforSerachAdapter != null) {
                                 //无搜索  隐藏删除键
                                 mSearch_iv_delete.setVisibility(View.GONE);
                                 // basketballInforSerachAdapter.clearData();
-
                             }
-
                             return false;
                         }
 //                        return charSequence.length() > 0;
                     }
                 })
-                .map(new Func1<CharSequence,CharSequence >() {
+                .map(new Func1<CharSequence, CharSequence>() {
                     @Override
                     public CharSequence call(CharSequence charSequence) {
-                        Observable<FootballSearchBean> observable=
+                        Observable<FootballSearchBean> observable =
                                 service.searchProdcut(VolleyContentFast.returenLanguage(), charSequence.toString());
                         observable.subscribeOn(Schedulers.io())
                                 //将 data 转换成 ArrayList<ArrayList<String>>
                                 .map(new Func1<FootballSearchBean, List<BallMatchItemsBean>>() {
-                                    @Override public List<BallMatchItemsBean> call(FootballSearchBean data) {
+                                    @Override
+                                    public List<BallMatchItemsBean> call(FootballSearchBean data) {
 
                                         return data.getBallMatchItems();
                                     }
@@ -113,40 +115,13 @@ public class FootballMatchSearchActivity extends BaseActivity implements  View.O
                                     @Override
                                     public Boolean call(List<BallMatchItemsBean> resultListBeen) {
 
-                                        return  resultListBeen.size() >= 0;
+                                        return resultListBeen.size() >= 0;
                                     }
 
                                 })
 
-                                // 发生错误后不要调用 onError，而是转到 onErrorResumeNext
-   /*             .onErrorResumeNext((Observable<? extends List<BasketSerach.ResultListBean>>) new Func1<Throwable, Observable<String>>() {
-                @Override public Observable<String> call(Throwable throwable) {
-                return Observable.just("error result");
-            }
-        })*/
                                 .observeOn(AndroidSchedulers.mainThread())
-                                /*.subscribe(new Action1<List<LeagueBean>>() {
-                                    @Override
-                                    public void call(List<LeagueBean> resultListBeen) {
-                                        //设置适配数据
-                                        if (resultListBeen != null) {
-                                            if (resultListBeen.isEmpty()) {
-                                                //搜索详情
-                                                //UiUtils.toast(MyApp.getInstance(), "找不到相关信息!");
-                                                mNo_serach_tv.setText(R.string.not_find_search);
-                                                mTv_result.setVisibility(View.GONE);
-                                                mNo_serach_tv.setVisibility(View.VISIBLE);
 
-                                            } else {
-                                                mTv_result.setVisibility(View.VISIBLE);
-                                                mNo_serach_tv.setVisibility(View.GONE);
-                                                showpop(resultListBeen, et_keyword.getText().toString());
-                                            }
-                                            // showpop(resultListBeen);
-                                        }
-                                    }
-
-                                });*/
                                 .subscribe(new Observer<List<BallMatchItemsBean>>() {
                                     @Override
                                     public void onCompleted() {
@@ -183,14 +158,6 @@ public class FootballMatchSearchActivity extends BaseActivity implements  View.O
                     }
                 })
                 .subscribe();
-           /*     .switchMap(new Func1<CharSequence, Observable<BasketSerach>>() {
-                    @Override public Observable<BasketSerach> call(CharSequence charSequence) {
-                        // 搜索
-                        return service.searchProdcut(VolleyContentFast.returenLanguage(), charSequence.toString());
-                    }
-                })*/
-        // .retryWhen(new RetryWithConnectivityIncremental(BasketballInformationSerachActivity.this, 5, 15, TimeUnit.MILLISECONDS))
-
 
     }
 
@@ -219,24 +186,13 @@ public class FootballMatchSearchActivity extends BaseActivity implements  View.O
                 boolean isCheck = (Boolean) view.getTag();// 检查之前是否被选中
                 if (!isCheck) {// 插入数据
                     FocusUtils.addFocusId(third);
-                    // ((TextView) view).setText(R.string.cancel_favourite);
                     ((ImageView) view).setImageResource(R.mipmap.football_focus);
-
                     view.setTag(true);
                 } else {// 删除
                     FocusUtils.deleteFocusId(third);
-                    //  ((TextView) view).setText(R.string.favourite);
                     ((ImageView) view).setImageResource(R.mipmap.football_nomal);
-
                     view.setTag(false);
                 }
-//                ((ScoresFragment) getParentFragment()).focusCallback();
-                //private int mEntryType; // 标记入口 判断是从哪里进来的 (0:首页入口  1:新导航条入口)
-           /*     if (mEntryType == 0) {
-                    ((ScoresFragment) getParentFragment()).firstFocusCallback();
-                }else if(mEntryType == 1){
-                    ((FootBallScoreFragment) getParentFragment()).focusCallback();
-                }*/
             }
         };
     }
@@ -249,7 +205,7 @@ public class FootballMatchSearchActivity extends BaseActivity implements  View.O
     /* * 数据处理 */
 
     private void showpop(final List<BallMatchItemsBean> resultListBeen, String et_keyword) {
-        basketballInforSerachAdapter=new FootballMatchSearchAdapter(getApplicationContext(),resultListBeen,"http://pic.13322.com/icons/teams/100/",".png");
+        basketballInforSerachAdapter = new FootballMatchSearchAdapter(getApplicationContext(), resultListBeen, "http://pic.13322.com/icons/teams/100/", ".png");
         basketballInforSerachAdapter.setmFocusMatchClickListener(mFocusClickListener);
         mTv_result.setAdapter(basketballInforSerachAdapter);
         basketballInforSerachAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
@@ -273,7 +229,7 @@ public class FootballMatchSearchActivity extends BaseActivity implements  View.O
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.search_btn_back:
                 finish();
@@ -289,14 +245,7 @@ public class FootballMatchSearchActivity extends BaseActivity implements  View.O
                 break;
 
 
-
         }
     }
-/*
-    interface SearchService {
-        //@GET("/sug") Observable<Data> searchProdcut(@Query("code") String code, @Query("q") String keyword);
-        @GET(BaseURLs.FUZZYSEARCH) rx.Observable<BasketSerach> searchProdcut(@Query("lang") String code, @Query(SEARCHKEYWORD) String keyword);
-    }*/
-
 
 }

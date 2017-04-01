@@ -26,6 +26,10 @@ import com.hhly.mlottery.bean.BallMatchItemsBean;
 import com.hhly.mlottery.bean.BasketballItemSearchBean;
 import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
+import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketImmedNewScoreFragment;
+import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketResultNewScoreFragment;
+import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketScheduleNewScoreFragment;
+import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketballFocusNewFragment;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -46,6 +50,8 @@ public class BasketballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerV
     private BasketballItemSearchBean.MatchOddsBean MatchOdds;
     private ImmediaViewHolder holder;
     private View view;
+    private int mFocusType;
+
 
     public BasketballMatchSearchAdapter(Context mContext, List<BasketballItemSearchBean> mMatchdata) {
         mLayoutInflater = LayoutInflater.from(mContext);
@@ -53,20 +59,32 @@ public class BasketballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerV
         this.mContext = mContext;
     }
 
+    private BasketBallMatchSearchActivity.BasketFocusClickListener mFocus; //关注监听回掉
+
+    public void setmFocus(BasketBallMatchSearchActivity.BasketFocusClickListener mFocus) {
+        this.mFocus = mFocus;
+    }
 
     /**
      * 赛事item click
      */
-    private RecyclerViewItemClickListener mOnItemClickListener = null;
+    public interface OnRecycleItemClickListener {
+        void onItemClick(View view, BasketballItemSearchBean currData);
+    }
 
-    public void setmOnItemClickListener(RecyclerViewItemClickListener mOnItemClickListener) {
+    /**
+     * 赛事item click
+     */
+    private OnRecycleItemClickListener mOnItemClickListener = null;
+
+    public void setmOnItemClickListener(OnRecycleItemClickListener mOnItemClickListener) {
         this.mOnItemClickListener = mOnItemClickListener;
     }
 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.basketball_details_item, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.basketball_score_list_item, parent, false);
         holder = new ImmediaViewHolder(view);
         //将创建的View注册点击事件
      /*   view.setOnClickListener(new View.OnClickListener() {
@@ -86,56 +104,51 @@ public class BasketballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerV
      */
 
     static class ImmediaViewHolder extends RecyclerView.ViewHolder {
+        CardView card_view;
         ImageView home_icon; //主队图标
         ImageView guest_icon; //客队图标
-
         ImageView mIv_guangzhu;//关注 星星
-
         TextView matches_name; //联赛名称
         TextView game_time; //比赛时间
         TextView st_time; //第几节
         TextView ongoing_time; // 单节时间
-
         TextView score_total;// 半全场比分
         TextView score_differ;//比分差
-
         TextView home_name;// 主队名称
         TextView guest_name;//客队名称
-
         TextView home_Ranking; //主队赛区
         TextView guest_Ranking; //客队赛区
-
         TextView basket_guest_all_score;
-        TextView basket_score;
+        //        TextView basket_score;
         TextView basket_home_all_score;
-
-        TextView basket_half_score;// 主客队半场比分
-
+        //        TextView basket_half_score;// 主客队半场比分
         TextView basket_leftOdds;// 赔率 左
         TextView basket_rightOdds;// 赔率 右
         TextView basket_handicap;// 赔率盘口
-
         TextView backetball_total;//总
         TextView backetball_differ;//差
-
         TextView tv_a; // 赔率分割线
         TextView tv_b;
-
         TextView backetball_apos; // 秒针
-        TextView basket_no_start; // 未开赛
-
+        //        TextView basket_no_start; // 未开赛
+        LinearLayout score_data;//比分显示部分
+        TextView guest_score1;//单节比分
+        TextView guest_score2;
+        TextView guest_score3;
+        TextView guest_score4;
+        TextView home_score1;
+        TextView home_score2;
+        TextView home_score3;
+        TextView home_score4;
+        TextView guest_score_ot;//加时比分
+        TextView home_score_ot;
 
         public ImmediaViewHolder(final View itemView) {
             super(itemView);
-             home_icon = (ImageView) itemView.findViewById(R.id.home_icon);
-//			holder.home_icon.setTag(childrenDataList.get(groupPosition).get(childPosition).getHomeLogoUrl());//url 标记
-
+            card_view = (CardView) itemView.findViewById(R.id.basket_card_view);
+            home_icon = (ImageView) itemView.findViewById(R.id.home_icon);
             guest_icon = (ImageView) itemView.findViewById(R.id.guest_icon);
-//			holder.guest_icon.setTag(childrenDataList.get(groupPosition).get(childPosition).getGuestLogoUrl());//url 标记
-
             mIv_guangzhu = (ImageView) itemView.findViewById(R.id.Iv_guangzhu);
-
-
             matches_name = (TextView) itemView.findViewById(R.id.backetball_matches_name);
             game_time = (TextView) itemView.findViewById(R.id.backetball_game_time);
             st_time = (TextView) itemView.findViewById(R.id.backetball_st_time);
@@ -144,48 +157,32 @@ public class BasketballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerV
             score_differ = (TextView) itemView.findViewById(R.id.backetball_score_differ);
             home_name = (TextView) itemView.findViewById(R.id.home_name);
             guest_name = (TextView) itemView.findViewById(R.id.guest_name);
-
             home_Ranking = (TextView) itemView.findViewById(R.id.basket_home_Ranking);
             guest_Ranking = (TextView) itemView.findViewById(R.id.basket_guest_Ranking);
-
             basket_guest_all_score = (TextView) itemView.findViewById(R.id.basket_guest_all_score);
-            basket_score = (TextView) itemView.findViewById(R.id.basket_score);
+//            basket_score = (TextView) itemView.findViewById(R.id.basket_score);
             basket_home_all_score = (TextView) itemView.findViewById(R.id.basket_home_all_score);
-
-            basket_half_score = (TextView) itemView.findViewById(R.id.basket_half_score);
-
-            basket_no_start = (TextView) itemView.findViewById(R.id.basket_no_start);
-
-            /**
-             * 适配4.1系统
-             */
-            int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-            if (currentapiVersion == 16) {
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.setMargins(105, 65, 0, 0);
-                basket_half_score.setLayoutParams(params);
-
-                RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params2.setMargins(120, 0, 10, 0);
-//                holder.basket_score.setGravity(1);
-                basket_score.setLayoutParams(params2);
-
-                RelativeLayout.LayoutParams params3 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params3.setMargins(55, 0, 0, 0);
-                basket_guest_all_score.setLayoutParams(params3);
-            }
+//            basket_half_score = (TextView) itemView.findViewById(R.id.basket_half_score);
+//            basket_no_start = (TextView) itemView.findViewById(R.id.basket_no_start);
             basket_leftOdds = (TextView) itemView.findViewById(R.id.basket_leftOdds);
             basket_rightOdds = (TextView) itemView.findViewById(R.id.basket_rightOdds);
             basket_handicap = (TextView) itemView.findViewById(R.id.basket_handicap);
-
             backetball_differ = (TextView) itemView.findViewById(R.id.backetball_differ);
             backetball_total = (TextView) itemView.findViewById(R.id.backetball_total);
-
             tv_a = (TextView) itemView.findViewById(R.id.tv_a);
             tv_b = (TextView) itemView.findViewById(R.id.tv_b);
-
             backetball_apos = (TextView) itemView.findViewById(R.id.backetball_apos);
-
+            score_data = (LinearLayout) itemView.findViewById(R.id.score_data);
+            guest_score1 = (TextView) itemView.findViewById(R.id.guest_score1);
+            guest_score2 = (TextView) itemView.findViewById(R.id.guest_score2);
+            guest_score3 = (TextView) itemView.findViewById(R.id.guest_score3);
+            guest_score4 = (TextView) itemView.findViewById(R.id.guest_score4);
+            guest_score_ot = (TextView) itemView.findViewById(R.id.guest_score_ot);
+            home_score1 = (TextView) itemView.findViewById(R.id.home_score1);
+            home_score2 = (TextView) itemView.findViewById(R.id.home_score2);
+            home_score3 = (TextView) itemView.findViewById(R.id.home_score3);
+            home_score4 = (TextView) itemView.findViewById(R.id.home_score4);
+            home_score_ot = (TextView) itemView.findViewById(R.id.home_score_ot);
 
         }
 
@@ -197,26 +194,28 @@ public class BasketballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerV
 
         convert((BasketballMatchSearchAdapter.ImmediaViewHolder) holder, match);
     }
+/*
 
     private BasketBallMatchSearchActivity.BasketFocusClickListener mFocus; //关注监听回掉
     public void setmFocus(BasketBallMatchSearchActivity.BasketFocusClickListener mFocus) {
         this.mFocus = mFocus;
     }
+*/
 
     //处理数据
-    private void convert(final ImmediaViewHolder holder, final BasketballItemSearchBean childredata) {
+    private void convert(final ImmediaViewHolder viewHolderList, final BasketballItemSearchBean DetailsData) {
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, BasketDetailsActivityTest.class);
-                intent.putExtra(BasketDetailsActivityTest.BASKET_THIRD_ID, childredata.getThirdId());//跳转到详情
-                intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_STATUS, childredata.getMatchStatus());//跳转到详情
+                intent.putExtra(BasketDetailsActivityTest.BASKET_THIRD_ID, DetailsData.getThirdId());//跳转到详情
+                intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_STATUS, DetailsData.getMatchStatus());//跳转到详情
                 //用getActivity().startActivityForResult();不走onActivityResult ;
 //        startActivityForResult(intent, REQUEST_DETAILSCODE);
                 intent.putExtra("currentfragment", 0);
-                intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_LEAGUEID,childredata.getLeagueId());
-                intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_MATCHTYPE,1);
+                intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_LEAGUEID, DetailsData.getLeagueId());
+                intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_MATCHTYPE, 1);
                 mContext.startActivity(intent);
             }
         });
@@ -226,34 +225,33 @@ public class BasketballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerV
          */
         String focusIds = PreferenceUtil.getString("basket_focus_ids", "");
         String[] Ids = focusIds.split("[,]");
-        holder.mIv_guangzhu.setBackgroundResource(R.mipmap.iconfont_guanzhu);
-        holder.mIv_guangzhu.setTag(false);
+        viewHolderList.mIv_guangzhu.setBackgroundResource(R.mipmap.iconfont_guanzhu);
+        viewHolderList.mIv_guangzhu.setTag(false);
         for (String id : Ids) {
-            if (id.equals(childredata.getThirdId())) {
-                holder.mIv_guangzhu.setBackgroundResource(R.mipmap.iconfont_guanzhu_hover);
-                holder.mIv_guangzhu.setTag(true);
+            if (id.equals(DetailsData.getThirdId())) {
+                viewHolderList.mIv_guangzhu.setBackgroundResource(R.mipmap.iconfont_guanzhu_hover);
+                Log.i("sds", "我进来了");
+                viewHolderList.mIv_guangzhu.setTag(true);
                 break;
             }
         }
-        holder.mIv_guangzhu.setOnClickListener(new View.OnClickListener() {
+        viewHolderList.mIv_guangzhu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mFocus != null) {
-                    mFocus.FocusOnClick(v, childredata);
+                    mFocus.FocusOnClick(v, DetailsData);
                 }
             }
         });
 
-        holder.basket_guest_all_score.setTag(childredata.getThirdId());
-        holder.basket_home_all_score.setTag(childredata.getThirdId());
-        ImageLoader.load(mContext, null, R.mipmap.basket_default).into(holder.home_icon);
-        ImageLoader.load(mContext, null, R.mipmap.basket_default).into(holder.guest_icon);
-
+        viewHolderList.basket_guest_all_score.setTag(DetailsData.getThirdId());
+        viewHolderList.basket_home_all_score.setTag(DetailsData.getThirdId());
+        ImageLoader.load(mContext, null, R.mipmap.basket_default).into(viewHolderList.home_icon);
+        ImageLoader.load(mContext, null, R.mipmap.basket_default).into(viewHolderList.guest_icon);
 
         //赔率设置
-        MatchOdds = childredata.getMatchOdds();
+        MatchOdds = DetailsData.getMatchOdds();
         if (MatchOdds != null) {
-
             boolean asize = PreferenceUtil.getBoolean(MyConstants.BASKETBALL_rbSizeBall, false); //大小球
             boolean eur = PreferenceUtil.getBoolean(MyConstants.BASKETBALL_RBOCOMPENSATE, false);//欧赔
             boolean alet = PreferenceUtil.getBoolean(MyConstants.BASKETBALL_RBSECOND, true); //亚盘
@@ -267,106 +265,105 @@ public class BasketballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerV
                     BasketballItemSearchBean.MatchOddsBean.AsiaSizeBean.CrownBean mAsize = MatchOdds.getAsiaSize().getCrown();
 
                     if (mAsize == null) {
-                        holder.basket_leftOdds.setText("");
-                        holder.basket_rightOdds.setText("");
-                        holder.basket_handicap.setText("");
-                        holder.tv_a.setText("");
-                        holder.tv_b.setText("");
+                        viewHolderList.basket_leftOdds.setText("");
+                        viewHolderList.basket_rightOdds.setText("");
+                        viewHolderList.basket_handicap.setText("");
+                        viewHolderList.tv_a.setText("");
+                        viewHolderList.tv_b.setText("");
                     } else if (mAsize != null) {
 
                         if (mAsize.getLeftOdds() != null && mAsize.getRightOdds() != null && mAsize.getHandicapValue() != null) {
                             if (mAsize.getLeftOdds().equals("-") || mAsize.getRightOdds().equals("-") || mAsize.getHandicapValue().equals("-")) {
-                                holder.basket_leftOdds.setText("");
-                                holder.basket_rightOdds.setText("");
-                                holder.basket_handicap.setText(R.string.basket_handicap_feng);
-                                holder.tv_a.setText("");
-                                holder.tv_b.setText("");
+                                viewHolderList.basket_leftOdds.setText("");
+                                viewHolderList.basket_rightOdds.setText("");
+                                viewHolderList.basket_handicap.setText(R.string.basket_handicap_feng);
+                                viewHolderList.tv_a.setText("");
+                                viewHolderList.tv_b.setText("");
                             } else {
-                                holder.basket_leftOdds.setText(mAsize.getLeftOdds());
-                                holder.basket_rightOdds.setText(mAsize.getRightOdds());
-                                holder.basket_handicap.setText(mContext.getString(R.string.basket_odds_asize) + mAsize.getHandicapValue());
-                                holder.tv_a.setText("|");
-                                holder.tv_b.setText("|");
+                                viewHolderList.basket_leftOdds.setText(mAsize.getLeftOdds());
+                                viewHolderList.basket_rightOdds.setText(mAsize.getRightOdds());
+                                viewHolderList.basket_handicap.setText(mContext.getString(R.string.basket_odds_asize) + mAsize.getHandicapValue());
+                                viewHolderList.tv_a.setText("|");
+                                viewHolderList.tv_b.setText("|");
                             }
                         } else {
-                            holder.basket_leftOdds.setText("");
-                            holder.basket_rightOdds.setText("");
-                            holder.basket_handicap.setText("");
-                            holder.tv_a.setText("");
-                            holder.tv_b.setText("");
+                            viewHolderList.basket_leftOdds.setText("");
+                            viewHolderList.basket_rightOdds.setText("");
+                            viewHolderList.basket_handicap.setText("");
+                            viewHolderList.tv_a.setText("");
+                            viewHolderList.tv_b.setText("");
                         }
                     }
                 } else {
-                    holder.basket_leftOdds.setText("");
-                    holder.basket_rightOdds.setText("");
-                    holder.basket_handicap.setText("");
-                    holder.tv_a.setText("");
-                    holder.tv_b.setText("");
+                    viewHolderList.basket_leftOdds.setText("");
+                    viewHolderList.basket_rightOdds.setText("");
+                    viewHolderList.basket_handicap.setText("");
+                    viewHolderList.tv_a.setText("");
+                    viewHolderList.tv_b.setText("");
                 }
             } else {
-                holder.basket_leftOdds.setText("");
-                holder.basket_rightOdds.setText("");
-                holder.basket_handicap.setText("");
-                holder.tv_a.setText("");
-                holder.tv_b.setText("");
+                viewHolderList.basket_leftOdds.setText("");
+                viewHolderList.basket_rightOdds.setText("");
+                viewHolderList.basket_handicap.setText("");
+                viewHolderList.tv_a.setText("");
+                viewHolderList.tv_b.setText("");
             }
 
+            /**
+             * 不显示
+             */
             if (noshow) {
-                holder.basket_leftOdds.setText("");
-                holder.basket_rightOdds.setText("");
-                holder.basket_handicap.setText("");
-                holder.tv_a.setText("");
-                holder.tv_b.setText("");
+                viewHolderList.basket_leftOdds.setText("");
+                viewHolderList.basket_rightOdds.setText("");
+                viewHolderList.basket_handicap.setText("");
+                viewHolderList.tv_a.setText("");
+                viewHolderList.tv_b.setText("");
             }
         } else if (MatchOdds == null) {
-            holder.basket_leftOdds.setText("");
-            holder.basket_rightOdds.setText("");
-            holder.basket_handicap.setText("");
-            holder.tv_a.setText("");
-            holder.tv_b.setText("");
+            viewHolderList.basket_leftOdds.setText("");
+            viewHolderList.basket_rightOdds.setText("");
+            viewHolderList.basket_handicap.setText("");
+            viewHolderList.tv_a.setText("");
+            viewHolderList.tv_b.setText("");
         }
-
-
         //比分数据设置
-        if (childredata.getLeagueName() != null) {
-            holder.matches_name.setText(childredata.getLeagueName());
-            holder.matches_name.setTextColor(Color.parseColor(childredata.getLeagueColor()));
+        if (DetailsData.getLeagueName() != null) {
+            viewHolderList.matches_name.setText(DetailsData.getLeagueName());
+            viewHolderList.matches_name.setTextColor(Color.parseColor(DetailsData.getLeagueColor()));
         }
-
-        holder.game_time.setText(childredata.getTime());
+        viewHolderList.game_time.setText(DetailsData.getTime());
         /**
          * 去除两端的空格，trim()；  防止-->  "XX   ..."情况
          */
-        if (childredata.getHomeTeam() != null) {
-            holder.home_name.setText(childredata.getHomeTeam().trim());
+        if (DetailsData.getHomeTeam() != null) {
+            viewHolderList.home_name.setText(DetailsData.getHomeTeam().trim());
         } else {
-            holder.home_name.setText("--");
+            viewHolderList.home_name.setText("--");
         }
-        if (childredata.getGuestTeam() != null) {
-            holder.guest_name.setText(childredata.getGuestTeam().trim());
+        if (DetailsData.getGuestTeam() != null) {
+            viewHolderList.guest_name.setText(DetailsData.getGuestTeam().trim());
         } else {
-            holder.guest_name.setText("--");
+            viewHolderList.guest_name.setText("--");
         }
 
+        Integer score = Integer.parseInt(String.valueOf(DetailsData.getMatchStatus()));
 
-        Integer score = Integer.parseInt(String.valueOf(childredata.getMatchStatus()));
-
-        if (String.valueOf(childredata.getMatchStatus()) != null) {
+        if (DetailsData.getMatchStatus() != null) {
 
             int scorehome;
             int scoreguest;
             int scorehomehalf;
             int scoreguesthalf;
 
-            if (childredata.getMatchScore() != null) {
-                if (childredata.getMatchScore().getRemainTime() == null) {
-//                    holder.ongoing_time.setText("进行中");
-                    holder.ongoing_time.setText("");
+            if (DetailsData.getMatchScore() != null) {
+                if (DetailsData.getMatchScore().getRemainTime() == null) {
+//                    viewHolderList.ongoing_time.setText("进行中");
+                    viewHolderList.ongoing_time.setText("");
                 } else {
-                    holder.ongoing_time.setText(childredata.getMatchScore().getRemainTime());
+                    viewHolderList.ongoing_time.setText(DetailsData.getMatchScore().getRemainTime());
                 }
             } else {
-                holder.ongoing_time.setText("");
+                viewHolderList.ongoing_time.setText("");
             }
 
             //0:未开赛,1:一节,2:二节,5:1'OT，以此类推 -1:完场,-2:待定,-3:中断,-4:取消,-5:推迟,50中场
@@ -378,749 +375,561 @@ public class BasketballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerV
                 scoreguesthalf = 0;
             } else {
 
-                if (childredata.getMatchScore() == null) {
+                if (DetailsData.getMatchScore() == null) {
                     scorehome = 0;
                     scoreguest = 0;
                     scorehomehalf = 0;
                     scoreguesthalf = 0;
                 } else {
 
-                    scorehome = childredata.getMatchScore().getHomeScore();//主队分数
-                    scoreguest = childredata.getMatchScore().getGuestScore();//客队分数
+                    scorehome = DetailsData.getMatchScore().getHomeScore();//主队分数
+                    scoreguest = DetailsData.getMatchScore().getGuestScore();//客队分数
 
-                    if (childredata.getSection() == 2) { // 只有两节比赛的情况
-                        scorehomehalf = childredata.getMatchScore().getHome1();//主队半场得分
-                        scoreguesthalf = childredata.getMatchScore().getGuest1();//客队半场得分
+                    if (DetailsData.getSection() == 2) { // 只有两节比赛的情况
+                        scorehomehalf = DetailsData.getMatchScore().getHome1();//主队半场得分
+                        scoreguesthalf = DetailsData.getMatchScore().getGuest1();//客队半场得分
                     } else {
-                        scorehomehalf = childredata.getMatchScore().getHome1() + childredata.getMatchScore().getHome2();//主队半场得分
-                        scoreguesthalf = childredata.getMatchScore().getGuest1() + childredata.getMatchScore().getGuest2();//客队半场得分
+                        scorehomehalf = DetailsData.getMatchScore().getHome1() + DetailsData.getMatchScore().getHome2();//主队半场得分
+                        scoreguesthalf = DetailsData.getMatchScore().getGuest1() + DetailsData.getMatchScore().getGuest2();//客队半场得分
                     }
                 }
             }
 
             switch (score) {
                 case 0: //未开赛
+                    viewHolderList.backetball_differ.setVisibility(View.INVISIBLE);
+                    viewHolderList.backetball_total.setVisibility(View.INVISIBLE);
+                    viewHolderList.score_total.setVisibility(View.INVISIBLE);
+                    viewHolderList.score_differ.setVisibility(View.INVISIBLE);
+//                            viewHolderList.basket_score.setText("");
+//                            viewHolderList.basket_no_start.setVisibility(View.VISIBLE);
+                    viewHolderList.basket_guest_all_score.setText("");
+                    viewHolderList.basket_home_all_score.setText("");
+                    viewHolderList.basket_guest_all_score.setVisibility(View.GONE);
+                    viewHolderList.basket_home_all_score.setVisibility(View.GONE);
+//                            viewHolderList.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_vs));
+//                            viewHolderList.basket_half_score.setVisibility(View.INVISIBLE);
+                    viewHolderList.ongoing_time.setVisibility(View.GONE);
+                    viewHolderList.st_time.setText(R.string.games_no_start);
+                    viewHolderList.st_time.setTextColor(mContext.getResources().getColor(R.color.basket_score_gray));
+                    settingdata(viewHolderList, 0);
 
-                    holder.backetball_differ.setVisibility(View.INVISIBLE);
-                    holder.backetball_total.setVisibility(View.INVISIBLE);
-                    holder.score_total.setVisibility(View.INVISIBLE);
-                    holder.score_differ.setVisibility(View.INVISIBLE);
-                    holder.basket_score.setText("");
-                    holder.basket_no_start.setVisibility(View.VISIBLE);
-//                    holder.basket_score.setBackgroundColor(Color.WHITE);// -------设置背景色 (防止背景复用比分)-------
-                    holder.basket_guest_all_score.setText("");
-                    holder.basket_home_all_score.setText("");
-                    holder.basket_guest_all_score.setVisibility(View.GONE);
-                    holder.basket_home_all_score.setVisibility(View.GONE);
-//					holder.basket_score.setTextColor(Color.BLACK);
-//                    holder.basket_score.setTextColor(Color.parseColor("#666666"));
-                    holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_vs));
-                    holder.basket_half_score.setVisibility(View.INVISIBLE);
-                    holder.ongoing_time.setVisibility(View.GONE);
-//					holder.backetball_apos.setVisibility(View.GONE);
-                    holder.st_time.setText("");
-                    settingdata(holder, 0);
-
+                    viewHolderList.score_data.setVisibility(View.INVISIBLE);
                     break;
                 case 1: //一节
+                    viewHolderList.backetball_differ.setVisibility(View.VISIBLE);
+                    viewHolderList.backetball_total.setVisibility(View.VISIBLE);
+                    viewHolderList.score_differ.setVisibility(View.VISIBLE);
+                    viewHolderList.score_total.setVisibility(View.VISIBLE);
+//                            viewHolderList.basket_score.setText(":");
+//                            viewHolderList.basket_no_start.setVisibility(View.GONE);
+//                            viewHolderList.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));//#0085E1
+                    viewHolderList.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+                    viewHolderList.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+                    viewHolderList.basket_guest_all_score.setVisibility(View.VISIBLE);
+                    viewHolderList.basket_home_all_score.setVisibility(View.VISIBLE);
 
-                    holder.backetball_differ.setVisibility(View.VISIBLE);
-                    holder.backetball_total.setVisibility(View.VISIBLE);
-                    holder.score_differ.setVisibility(View.VISIBLE);
-                    holder.score_total.setVisibility(View.VISIBLE);
+                    if (DetailsData.getMatchScore() != null) {
 
-//					holder.basket_all_score.setText(scoreguest + ":" + scorehome);
-//					holder.basket_all_score.setTextColor(Color.BLUE);
-                    holder.basket_score.setText(":");
-                    holder.basket_no_start.setVisibility(View.GONE);
-                    holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));//#0085E1
-                    holder.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-                    holder.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-                    holder.basket_guest_all_score.setVisibility(View.VISIBLE);
-                    holder.basket_home_all_score.setVisibility(View.VISIBLE);
-
-                    if (childredata.getMatchScore() != null) {
-
-                        holder.score_total.setText(scorehome + scoreguest + "");
-//                    holder.score_differ.setText(Math.abs(scorehome - scoreguest) + "");
+                        viewHolderList.score_total.setText(scorehome + scoreguest + "");
                         if (scorehome - scoreguest > 0) {
-                            holder.score_differ.setText("" + (scorehome - scoreguest)); // 不取绝对值
+                            viewHolderList.score_differ.setText("" + (scorehome - scoreguest)); // 不取绝对值
                         } else {
-                            holder.score_differ.setText(scorehome - scoreguest + "");
+                            viewHolderList.score_differ.setText(scorehome - scoreguest + "");
                         }
 
-//                        holder.basket_guest_all_score.setText(scoreguest + "");
-//                        holder.basket_home_all_score.setText(scorehome + "");
-////                        startAnima(childredata, score, holder);
+                        viewHolderList.basket_guest_all_score.setText(DetailsData.getMatchScore().getGuestScore() + "");
+                        viewHolderList.basket_home_all_score.setText(DetailsData.getMatchScore().getHomeScore() + "");
 
-  /*                      if (childredata.isHomeAnim()) {
-                            scoreAnimation(holder.basket_home_all_score, childredata.getMatchScore().getHomeScore() + ""); //启动动画 客队
-                            childredata.setIsHomeAnim(false);
-                        }
-//                        else{
-////                            holder.basket_home_all_score.setText(childredata.getMatchScore().getHomeScore() + "");
-//                        }
-                        if (childredata.isGuestAnim()) {
-                            scoreAnimation(holder.basket_guest_all_score, childredata.getMatchScore().getGuestScore() + ""); //启动动画 主队
-                            childredata.setIsGuestAnim(false);
-                        }*/
-//                        else{
-////                            holder.basket_guest_all_score.setText(childredata.getMatchScore().getGuestScore() + "");
-//                        }
-
-                        holder.basket_guest_all_score.setText(childredata.getMatchScore().getGuestScore() + "");
-                        holder.basket_home_all_score.setText(childredata.getMatchScore().getHomeScore() + "");
-
-                        holder.basket_half_score.setVisibility(View.VISIBLE);
-                        holder.basket_half_score.setText("(" + childredata.getMatchScore().getGuest1() + ":" + childredata.getMatchScore().getHome1() + ")");
-                        if (childredata.getSection() == 2) {
-                            holder.st_time.setText(R.string.basket_1st_half);
+//                                viewHolderList.basket_half_score.setVisibility(View.VISIBLE);
+//                                viewHolderList.basket_half_score.setText("(" + DetailsData.getMatchScore().getGuest1() + ":" + DetailsData.getMatchScore().getHome1() + ")");
+                        if (DetailsData.getSection() == 2) {
+                            viewHolderList.st_time.setText(R.string.basket_1st_half);
                         } else {
-                            holder.st_time.setText(R.string.basket_1st);
+                            viewHolderList.st_time.setText(R.string.basket_1st);
                         }
-                        holder.ongoing_time.setVisibility(View.VISIBLE);
-                        holder.backetball_apos.setVisibility(View.VISIBLE);
+                        viewHolderList.st_time.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
+                        viewHolderList.ongoing_time.setVisibility(View.VISIBLE);
+                        viewHolderList.backetball_apos.setVisibility(View.VISIBLE);
                     } else {
-                        holder.score_total.setText("--");
-                        holder.score_differ.setText("--");
-                        holder.basket_guest_all_score.setText("--");
-                        holder.basket_home_all_score.setText("--");
+                        viewHolderList.score_total.setText("--");
+                        viewHolderList.score_differ.setText("--");
+                        viewHolderList.basket_guest_all_score.setText("--");
+                        viewHolderList.basket_home_all_score.setText("--");
 
-                        holder.basket_half_score.setText("");
-//                        holder.basket_half_score.setVisibility(View.GONE);
-                        holder.ongoing_time.setVisibility(View.GONE);
-                        holder.backetball_apos.setVisibility(View.GONE);
+//                                viewHolderList.basket_half_score.setText("");
+                        viewHolderList.ongoing_time.setVisibility(View.GONE);
+                        viewHolderList.backetball_apos.setVisibility(View.GONE);
                     }
-//					holder.backetball_apos.setVisibility(View.VISIBLE);
-                    settingdata(holder, 1);
+                    settingdata(viewHolderList, 1);
+                    viewHolderList.score_data.setVisibility(View.VISIBLE);
+                    setSingleScore(viewHolderList, DetailsData.getMatchScore());
+                    setVisible(viewHolderList, DetailsData.getSection());
+                    viewHolderList.guest_score_ot.setVisibility(View.GONE);
+                    viewHolderList.home_score_ot.setVisibility(View.GONE);
                     break;
                 case 2: //二节
-
-                    holder.backetball_differ.setVisibility(View.VISIBLE);
-                    holder.backetball_total.setVisibility(View.VISIBLE);
-                    holder.score_total.setVisibility(View.VISIBLE);
-                    holder.score_differ.setVisibility(View.VISIBLE);
-
-//					holder.basket_all_score.setText(scoreguest + ":" + scorehome);
-//					holder.basket_all_score.setTextColor(Color.BLUE);
-                    holder.basket_score.setText(":");
-                    holder.basket_no_start.setVisibility(View.GONE);
-                    holder.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-                    holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-                    holder.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-                    holder.basket_guest_all_score.setVisibility(View.VISIBLE);
-                    holder.basket_home_all_score.setVisibility(View.VISIBLE);
-
-                    if (childredata.getMatchScore() != null) {
-
-                        holder.score_total.setText(scorehome + scoreguest + "");
-//                    holder.score_differ.setText(Math.abs(scorehome - scoreguest) + "");
+                    viewHolderList.backetball_differ.setVisibility(View.VISIBLE);
+                    viewHolderList.backetball_total.setVisibility(View.VISIBLE);
+                    viewHolderList.score_total.setVisibility(View.VISIBLE);
+                    viewHolderList.score_differ.setVisibility(View.VISIBLE);
+//                            viewHolderList.basket_score.setText(":");
+//                            viewHolderList.basket_no_start.setVisibility(View.GONE);
+                    viewHolderList.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+//                            viewHolderList.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+                    viewHolderList.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+                    viewHolderList.basket_guest_all_score.setVisibility(View.VISIBLE);
+                    viewHolderList.basket_home_all_score.setVisibility(View.VISIBLE);
+                    if (DetailsData.getMatchScore() != null) {
+                        viewHolderList.score_total.setText(scorehome + scoreguest + "");
                         if (scorehome - scoreguest > 0) {
-                            holder.score_differ.setText("" + (scorehome - scoreguest)); // 不取绝对值
+                            viewHolderList.score_differ.setText("" + (scorehome - scoreguest)); // 不取绝对值
                         } else {
-                            holder.score_differ.setText(scorehome - scoreguest + "");
+                            viewHolderList.score_differ.setText(scorehome - scoreguest + "");
                         }
 
-//                        holder.basket_guest_all_score.setText(scoreguest + "");
-//                        holder.basket_home_all_score.setText(scorehome + "");
-////                        startAnima(childredata, score, holder);
-/*
-                        if (childredata.isHomeAnim()) {
-                            scoreAnimation(holder.basket_home_all_score, childredata.getMatchScore().getHomeScore() + ""); //启动动画 客队
-                            childredata.setIsHomeAnim(false);
-                        }
-//                        else{
-////                            holder.basket_home_all_score.setText(childredata.getMatchScore().getHomeScore() + "");
-//                        }
-                        if (childredata.isGuestAnim()) {
-                            scoreAnimation(holder.basket_guest_all_score, childredata.getMatchScore().getGuestScore() + ""); //启动动画 主队
-                            childredata.setIsGuestAnim(false);
-                        }*/
-//                        else{
-////                            holder.basket_guest_all_score.setText(childredata.getMatchScore().getGuestScore() + "");
-//                        }
-
-                        holder.basket_guest_all_score.setText(childredata.getMatchScore().getGuestScore() + "");
-                        holder.basket_home_all_score.setText(childredata.getMatchScore().getHomeScore() + "");
-
-                        holder.basket_half_score.setVisibility(View.VISIBLE);
-                        if (childredata.getSection() == 2) {
-                            holder.st_time.setText(R.string.basket_1st_half);
+                        viewHolderList.basket_guest_all_score.setText(DetailsData.getMatchScore().getGuestScore() + "");
+                        viewHolderList.basket_home_all_score.setText(DetailsData.getMatchScore().getHomeScore() + "");
+//                                viewHolderList.basket_half_score.setVisibility(View.VISIBLE);
+                        if (DetailsData.getSection() == 2) {
+                            viewHolderList.st_time.setText(R.string.basket_1st_half);
                         } else {
-                            holder.st_time.setText(R.string.basket_2nd);
+                            viewHolderList.st_time.setText(R.string.basket_2nd);
                         }
-//                    holder.st_time.setText("2nd");
-                        holder.basket_half_score.setText("(" + childredata.getMatchScore().getGuest2() + ":" + childredata.getMatchScore().getHome2() + ")");
-
-                        holder.ongoing_time.setVisibility(View.VISIBLE);
-                        holder.backetball_apos.setVisibility(View.VISIBLE);
-
+//                                viewHolderList.basket_half_score.setText("(" + DetailsData.getMatchScore().getGuest2() + ":" + DetailsData.getMatchScore().getHome2() + ")");
+                        viewHolderList.st_time.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
+                        viewHolderList.ongoing_time.setVisibility(View.VISIBLE);
+                        viewHolderList.backetball_apos.setVisibility(View.VISIBLE);
                     } else {
-                        holder.score_total.setText("--");
-                        holder.score_differ.setText("--");
-                        holder.basket_guest_all_score.setText("--");
-                        holder.basket_home_all_score.setText("--");
-
-                        holder.basket_half_score.setText("");
-//                        holder.basket_half_score.setVisibility(View.GONE);
-                        holder.ongoing_time.setVisibility(View.GONE);
-                        holder.backetball_apos.setVisibility(View.GONE);
+                        viewHolderList.score_total.setText("--");
+                        viewHolderList.score_differ.setText("--");
+                        viewHolderList.basket_guest_all_score.setText("--");
+                        viewHolderList.basket_home_all_score.setText("--");
+//                                viewHolderList.basket_half_score.setText("");
+                        viewHolderList.ongoing_time.setVisibility(View.GONE);
+                        viewHolderList.backetball_apos.setVisibility(View.GONE);
                     }
-
-//					holder.backetball_apos.setVisibility(View.VISIBLE);
-                    settingdata(holder, 2);
+                    settingdata(viewHolderList, 2);
+                    viewHolderList.score_data.setVisibility(View.VISIBLE);
+                    setSingleScore(viewHolderList, DetailsData.getMatchScore());
+                    setVisible(viewHolderList, DetailsData.getSection());
+                    viewHolderList.guest_score_ot.setVisibility(View.GONE);
+                    viewHolderList.home_score_ot.setVisibility(View.GONE);
                     break;
                 case 3: //三节
+                    viewHolderList.backetball_differ.setVisibility(View.VISIBLE);
+                    viewHolderList.backetball_total.setVisibility(View.VISIBLE);
+                    viewHolderList.score_total.setVisibility(View.VISIBLE);
+                    viewHolderList.score_differ.setVisibility(View.VISIBLE);
+//                            viewHolderList.basket_score.setText(":");
+//                            viewHolderList.basket_no_start.setVisibility(View.GONE);
+                    viewHolderList.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+//                            viewHolderList.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+                    viewHolderList.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+                    viewHolderList.basket_guest_all_score.setVisibility(View.VISIBLE);
+                    viewHolderList.basket_home_all_score.setVisibility(View.VISIBLE);
 
-                    holder.backetball_differ.setVisibility(View.VISIBLE);
-                    holder.backetball_total.setVisibility(View.VISIBLE);
-                    holder.score_total.setVisibility(View.VISIBLE);
-                    holder.score_differ.setVisibility(View.VISIBLE);
-
-//					holder.basket_all_score.setText(scoreguest + ":" + scorehome);
-//					holder.basket_all_score.setTextColor(Color.BLUE);
-                    holder.basket_score.setText(":");
-                    holder.basket_no_start.setVisibility(View.GONE);
-                    holder.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-                    holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-                    holder.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-                    holder.basket_guest_all_score.setVisibility(View.VISIBLE);
-                    holder.basket_home_all_score.setVisibility(View.VISIBLE);
-
-                    if (childredata.getMatchScore() != null) {
-
-                        holder.score_total.setText((scorehomehalf + scoreguesthalf) + "/" + (scorehome + scoreguest));
-//                    holder.score_differ.setText(Math.abs(scorehome - scoreguest) + "");
+                    if (DetailsData.getMatchScore() != null) {
+                        viewHolderList.score_total.setText((scorehomehalf + scoreguesthalf) + "/" + (scorehome + scoreguest));
                         if (scorehome - scoreguest > 0) {
-                            holder.score_differ.setText("" + (scorehome - scoreguest)); // 不取绝对值
+                            viewHolderList.score_differ.setText("" + (scorehome - scoreguest)); // 不取绝对值
                         } else {
-                            holder.score_differ.setText(scorehome - scoreguest + "");
+                            viewHolderList.score_differ.setText(scorehome - scoreguest + "");
                         }
 
-//                        holder.basket_guest_all_score.setText(scoreguest + "");
-//                        holder.basket_home_all_score.setText(scorehome + "");
-////                        startAnima(childredata, score, holder);
-/*
-                        if (childredata.isHomeAnim()) {
-                            scoreAnimation(holder.basket_home_all_score, childredata.getMatchScore().getHomeScore() + ""); //启动动画 客队
-                            childredata.setIsHomeAnim(false);
-                        }
-//                        else{
-////                            holder.basket_home_all_score.setText(childredata.getMatchScore().getHomeScore() + "");
-//                        }
-                        if (childredata.isGuestAnim()) {
-                            scoreAnimation(holder.basket_guest_all_score, childredata.getMatchScore().getGuestScore() + ""); //启动动画 主队
-                            childredata.setIsGuestAnim(false);
-                        }*/
-//                        else{
-////                            holder.basket_guest_all_score.setText(childredata.getMatchScore().getGuestScore() + "");
-//                        }
+                        viewHolderList.basket_guest_all_score.setText(DetailsData.getMatchScore().getGuestScore() + "");
+                        viewHolderList.basket_home_all_score.setText(DetailsData.getMatchScore().getHomeScore() + "");
 
-                        holder.basket_guest_all_score.setText(childredata.getMatchScore().getGuestScore() + "");
-                        holder.basket_home_all_score.setText(childredata.getMatchScore().getHomeScore() + "");
-
-                        holder.basket_half_score.setVisibility(View.VISIBLE);
-                        if (childredata.getSection() == 2) {
-                            holder.st_time.setText(R.string.basket_2nd_half);
-                            holder.basket_half_score.setText("(" + childredata.getMatchScore().getGuest3() + ":" + childredata.getMatchScore().getHome3() + ")");
+//                                viewHolderList.basket_half_score.setVisibility(View.VISIBLE);
+                        if (DetailsData.getSection() == 2) {
+                            viewHolderList.st_time.setText(R.string.basket_2nd_half);
+//                                    viewHolderList.basket_half_score.setText("(" + DetailsData.getMatchScore().getGuest3() + ":" + DetailsData.getMatchScore().getHome3() + ")");
                         } else {
-                            holder.st_time.setText(R.string.basket_3rd);
-                            holder.basket_half_score.setText("(" + childredata.getMatchScore().getGuest3() + ":" + childredata.getMatchScore().getHome3() + ")");
+                            viewHolderList.st_time.setText(R.string.basket_3rd);
+//                                    viewHolderList.basket_half_score.setText("(" + DetailsData.getMatchScore().getGuest3() + ":" + DetailsData.getMatchScore().getHome3() + ")");
                         }
-
-//                    holder.basket_half_score.setText("(" + childredata.getMatchScore().getGuest3() + ":" + childredata.getMatchScore().getHome3() + ")");
-//                    holder.st_time.setText("3rd");
-                        holder.ongoing_time.setVisibility(View.VISIBLE);
-                        holder.backetball_apos.setVisibility(View.VISIBLE);
+                        viewHolderList.st_time.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
+                        viewHolderList.ongoing_time.setVisibility(View.VISIBLE);
+                        viewHolderList.backetball_apos.setVisibility(View.VISIBLE);
                     } else {
-                        holder.score_total.setText("--");
-                        holder.score_differ.setText("--");
-                        holder.basket_guest_all_score.setText("--");
-                        holder.basket_home_all_score.setText("--");
+                        viewHolderList.score_total.setText("--");
+                        viewHolderList.score_differ.setText("--");
+                        viewHolderList.basket_guest_all_score.setText("--");
+                        viewHolderList.basket_home_all_score.setText("--");
 
-                        holder.basket_half_score.setText("");
-//                        holder.basket_half_score.setVisibility(View.GONE);
-                        holder.ongoing_time.setVisibility(View.GONE);
-                        holder.backetball_apos.setVisibility(View.GONE);
+//                                viewHolderList.basket_half_score.setText("");
+                        viewHolderList.ongoing_time.setVisibility(View.GONE);
+                        viewHolderList.backetball_apos.setVisibility(View.GONE);
                     }
-
-//					holder.backetball_apos.setVisibility(View.VISIBLE);
-                    settingdata(holder, 3);
+                    settingdata(viewHolderList, 3);
+                    viewHolderList.score_data.setVisibility(View.VISIBLE);
+                    setSingleScore(viewHolderList, DetailsData.getMatchScore());
+                    setVisible(viewHolderList, DetailsData.getSection());
+                    viewHolderList.guest_score_ot.setVisibility(View.GONE);
+                    viewHolderList.home_score_ot.setVisibility(View.GONE);
                     break;
                 case 4: //四节
 
-                    holder.backetball_differ.setVisibility(View.VISIBLE);
-                    holder.backetball_total.setVisibility(View.VISIBLE);
-                    holder.score_total.setVisibility(View.VISIBLE);
-                    holder.score_differ.setVisibility(View.VISIBLE);
-
-//					holder.basket_all_score.setText(scoreguest + ":" + scorehome);
-//					holder.basket_all_score.setTextColor(Color.BLUE);
-                    holder.basket_score.setText(":");
-                    holder.basket_no_start.setVisibility(View.GONE);
-                    holder.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-                    holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-                    holder.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-                    holder.basket_guest_all_score.setVisibility(View.VISIBLE);
-                    holder.basket_home_all_score.setVisibility(View.VISIBLE);
-
-                    if (childredata.getMatchScore() != null) {
-
-                        holder.score_total.setText((scorehomehalf + scoreguesthalf) + "/" + (scorehome + scoreguest));
-//                    holder.score_differ.setText(Math.abs(scorehome - scoreguest) + "");
+                    viewHolderList.backetball_differ.setVisibility(View.VISIBLE);
+                    viewHolderList.backetball_total.setVisibility(View.VISIBLE);
+                    viewHolderList.score_total.setVisibility(View.VISIBLE);
+                    viewHolderList.score_differ.setVisibility(View.VISIBLE);
+//                            viewHolderList.basket_score.setText(":");
+//                            viewHolderList.basket_no_start.setVisibility(View.GONE);
+                    viewHolderList.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+//                            viewHolderList.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+                    viewHolderList.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+                    viewHolderList.basket_guest_all_score.setVisibility(View.VISIBLE);
+                    viewHolderList.basket_home_all_score.setVisibility(View.VISIBLE);
+                    if (DetailsData.getMatchScore() != null) {
+                        viewHolderList.score_total.setText((scorehomehalf + scoreguesthalf) + "/" + (scorehome + scoreguest));
                         if (scorehome - scoreguest > 0) {
-                            holder.score_differ.setText("" + (scorehome - scoreguest)); // 不取绝对值
+                            viewHolderList.score_differ.setText("" + (scorehome - scoreguest)); // 不取绝对值
                         } else {
-                            holder.score_differ.setText(scorehome - scoreguest + "");
+                            viewHolderList.score_differ.setText(scorehome - scoreguest + "");
                         }
 
-//                        holder.basket_guest_all_score.setText(scoreguest + "");
-//                        holder.basket_home_all_score.setText(scorehome + "");
-////                        startAnima(childredata, score, holder);
-/*
-                        if (childredata.isHomeAnim()) {
-                            scoreAnimation(holder.basket_home_all_score, childredata.getMatchScore().getHomeScore() + ""); //启动动画 客队
-                            childredata.setIsHomeAnim(false);
-                        }
-//                        else{
-////                            holder.basket_home_all_score.setText(childredata.getMatchScore().getHomeScore() + "");
-//                        }
-                        if (childredata.isGuestAnim()) {
-                            scoreAnimation(holder.basket_guest_all_score, childredata.getMatchScore().getGuestScore() + ""); //启动动画 主队
-                            childredata.setIsGuestAnim(false);
-                        }*/
-//                        else{
-////                            holder.basket_guest_all_score.setText(childredata.getMatchScore().getGuestScore() + "");
-//                        }
-
-                        holder.basket_guest_all_score.setText(childredata.getMatchScore().getGuestScore() + "");
-                        holder.basket_home_all_score.setText(childredata.getMatchScore().getHomeScore() + "");
-
-                        holder.basket_half_score.setVisibility(View.VISIBLE);
-                        holder.basket_half_score.setText("(" + childredata.getMatchScore().getGuest4() + ":" + childredata.getMatchScore().getHome4() + ")");
-
-                        if (childredata.getSection() == 2) {
-                            holder.st_time.setText(R.string.basket_2nd_half);
-                            holder.basket_half_score.setText("(" + childredata.getMatchScore().getGuest3() + ":" + childredata.getMatchScore().getHome3() + ")");
+                        viewHolderList.basket_guest_all_score.setText(DetailsData.getMatchScore().getGuestScore() + "");
+                        viewHolderList.basket_home_all_score.setText(DetailsData.getMatchScore().getHomeScore() + "");
+//                                viewHolderList.basket_half_score.setVisibility(View.VISIBLE);
+//                                viewHolderList.basket_half_score.setText("(" + DetailsData.getMatchScore().getGuest4() + ":" + DetailsData.getMatchScore().getHome4() + ")");
+                        if (DetailsData.getSection() == 2) {
+                            viewHolderList.st_time.setText(R.string.basket_2nd_half);
+//                                    viewHolderList.basket_half_score.setText("(" + DetailsData.getMatchScore().getGuest3() + ":" + DetailsData.getMatchScore().getHome3() + ")");
                         } else {
-                            holder.st_time.setText(R.string.basket_4th);
-                            holder.basket_half_score.setText("(" + childredata.getMatchScore().getGuest4() + ":" + childredata.getMatchScore().getHome4() + ")");
+                            viewHolderList.st_time.setText(R.string.basket_4th);
+//                                    viewHolderList.basket_half_score.setText("(" + DetailsData.getMatchScore().getGuest4() + ":" + DetailsData.getMatchScore().getHome4() + ")");
                         }
-//                    holder.st_time.setText("4th");
-                        holder.ongoing_time.setVisibility(View.VISIBLE);
-                        holder.backetball_apos.setVisibility(View.VISIBLE);
+                        viewHolderList.st_time.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
+                        viewHolderList.ongoing_time.setVisibility(View.VISIBLE);
+                        viewHolderList.backetball_apos.setVisibility(View.VISIBLE);
                     } else {
-                        holder.score_total.setText("--");
-                        holder.score_differ.setText("--");
-                        holder.basket_guest_all_score.setText("--");
-                        holder.basket_home_all_score.setText("--");
-
-                        holder.basket_half_score.setText("");
-//                        holder.basket_half_score.setVisibility(View.GONE);
-                        holder.ongoing_time.setVisibility(View.GONE);
-                        holder.backetball_apos.setVisibility(View.GONE);
+                        viewHolderList.score_total.setText("--");
+                        viewHolderList.score_differ.setText("--");
+                        viewHolderList.basket_guest_all_score.setText("--");
+                        viewHolderList.basket_home_all_score.setText("--");
+//                                viewHolderList.basket_half_score.setText("");
+                        viewHolderList.ongoing_time.setVisibility(View.GONE);
+                        viewHolderList.backetball_apos.setVisibility(View.GONE);
                     }
-
-//					holder.backetball_apos.setVisibility(View.VISIBLE);
-                    settingdata(holder, 4);
+                    settingdata(viewHolderList, 4);
+                    viewHolderList.score_data.setVisibility(View.VISIBLE);
+                    setSingleScore(viewHolderList, DetailsData.getMatchScore());
+                    setVisible(viewHolderList, DetailsData.getSection());
+                    viewHolderList.guest_score_ot.setVisibility(View.GONE);
+                    viewHolderList.home_score_ot.setVisibility(View.GONE);
                     break;
                 case 5: //加时1
 
-                    holder.backetball_differ.setVisibility(View.VISIBLE);
-                    holder.backetball_total.setVisibility(View.VISIBLE);
-                    holder.score_total.setVisibility(View.VISIBLE);
-                    holder.score_differ.setVisibility(View.VISIBLE);
-
-//					holder.basket_all_score.setText(scoreguest + ":" + scorehome);
-//					holder.basket_all_score.setTextColor(Color.BLUE);
-                    holder.basket_score.setText(":");
-                    holder.basket_no_start.setVisibility(View.GONE);
-                    holder.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-                    holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-                    holder.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-                    holder.basket_guest_all_score.setVisibility(View.VISIBLE);
-                    holder.basket_home_all_score.setVisibility(View.VISIBLE);
-
-                    if (childredata.getMatchScore() != null) {
-
-                        holder.score_total.setText((scorehomehalf + scoreguesthalf) + "/" + (scorehome + scoreguest));
-//                    holder.score_differ.setText(Math.abs(scorehome - scoreguest) + "");
+                    viewHolderList.backetball_differ.setVisibility(View.VISIBLE);
+                    viewHolderList.backetball_total.setVisibility(View.VISIBLE);
+                    viewHolderList.score_total.setVisibility(View.VISIBLE);
+                    viewHolderList.score_differ.setVisibility(View.VISIBLE);
+//                            viewHolderList.basket_score.setText(":");
+//                            viewHolderList.basket_no_start.setVisibility(View.GONE);
+                    viewHolderList.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+//                            viewHolderList.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+                    viewHolderList.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+                    viewHolderList.basket_guest_all_score.setVisibility(View.VISIBLE);
+                    viewHolderList.basket_home_all_score.setVisibility(View.VISIBLE);
+                    if (DetailsData.getMatchScore() != null) {
+                        viewHolderList.score_total.setText((scorehomehalf + scoreguesthalf) + "/" + (scorehome + scoreguest));
                         if (scorehome - scoreguest > 0) {
-                            holder.score_differ.setText("" + (scorehome - scoreguest)); // 不取绝对值
+                            viewHolderList.score_differ.setText("" + (scorehome - scoreguest)); // 不取绝对值
                         } else {
-                            holder.score_differ.setText(scorehome - scoreguest + "");
+                            viewHolderList.score_differ.setText(scorehome - scoreguest + "");
                         }
 
-//                        holder.basket_guest_all_score.setText(scoreguest + "");
-//                        holder.basket_home_all_score.setText(scorehome + "");
-////                        startAnima(childredata, score, holder);
 
-                /*        if (childredata.isHomeAnim()) {
-                            scoreAnimation(holder.basket_home_all_score, childredata.getMatchScore().getHomeScore() + ""); //启动动画 客队
-                            childredata.setIsHomeAnim(false);
-                        }
-//                        else{
-////                            holder.basket_home_all_score.setText(childredata.getMatchScore().getHomeScore() + "");
-//                        }
-                        if (childredata.isGuestAnim()) {
-                            scoreAnimation(holder.basket_guest_all_score, childredata.getMatchScore().getGuestScore() + ""); //启动动画 主队
-                            childredata.setIsGuestAnim(false);
-                        }*/
-//                        else{
-////                            holder.basket_guest_all_score.setText(childredata.getMatchScore().getGuestScore() + "");
-//                        }
+                        viewHolderList.basket_guest_all_score.setText(DetailsData.getMatchScore().getGuestScore() + "");
+                        viewHolderList.basket_home_all_score.setText(DetailsData.getMatchScore().getHomeScore() + "");
 
-                        holder.basket_guest_all_score.setText(childredata.getMatchScore().getGuestScore() + "");
-                        holder.basket_home_all_score.setText(childredata.getMatchScore().getHomeScore() + "");
-
-                        holder.basket_half_score.setVisibility(View.VISIBLE);
-                        holder.basket_half_score.setText("(" + childredata.getMatchScore().getGuestOt1() + ":" + childredata.getMatchScore().getHomeOt1() + ")");
-                        holder.st_time.setText(R.string.basket_OT1);
-                        holder.ongoing_time.setVisibility(View.VISIBLE);
-                        holder.backetball_apos.setVisibility(View.VISIBLE);
+//                                viewHolderList.basket_half_score.setVisibility(View.VISIBLE);
+//                                viewHolderList.basket_half_score.setText("(" + DetailsData.getMatchScore().getGuestOt1() + ":" + DetailsData.getMatchScore().getHomeOt1() + ")");
+                        viewHolderList.st_time.setText(R.string.basket_OT1);
+                        viewHolderList.ongoing_time.setVisibility(View.VISIBLE);
+                        viewHolderList.backetball_apos.setVisibility(View.VISIBLE);
                     } else {
-                        holder.score_total.setText("--");
-                        holder.score_differ.setText("--");
-                        holder.basket_guest_all_score.setText("--");
-                        holder.basket_home_all_score.setText("--");
-
-                        holder.basket_half_score.setText("");
-//                        holder.basket_half_score.setVisibility(View.GONE);
-                        holder.ongoing_time.setVisibility(View.GONE);
-                        holder.backetball_apos.setVisibility(View.GONE);
+                        viewHolderList.score_total.setText("--");
+                        viewHolderList.score_differ.setText("--");
+                        viewHolderList.basket_guest_all_score.setText("--");
+                        viewHolderList.basket_home_all_score.setText("--");
+//                                viewHolderList.basket_half_score.setText("");
+                        viewHolderList.ongoing_time.setVisibility(View.GONE);
+                        viewHolderList.backetball_apos.setVisibility(View.GONE);
                     }
-
-//					holder.backetball_apos.setVisibility(View.VISIBLE);
-                    settingdata(holder, 5);
+                    settingdata(viewHolderList, 5);
+                    viewHolderList.st_time.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
+                    viewHolderList.score_data.setVisibility(View.VISIBLE);
+                    setSingleScore(viewHolderList, DetailsData.getMatchScore());
+                    setVisible(viewHolderList, DetailsData.getSection());
+                    viewHolderList.guest_score_ot.setText(DetailsData.getMatchScore().getGuestOt1() + "");//加时比分
+                    viewHolderList.home_score_ot.setText(DetailsData.getMatchScore().getHomeOt1() + "");
+                    viewHolderList.guest_score_ot.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score_ot.setVisibility(View.VISIBLE);
                     break;
                 case 6: //加时2
 
-                    holder.backetball_differ.setVisibility(View.VISIBLE);
-                    holder.backetball_total.setVisibility(View.VISIBLE);
-                    holder.score_total.setVisibility(View.VISIBLE);
-                    holder.score_differ.setVisibility(View.VISIBLE);
-
-//					holder.basket_all_score.setText(scoreguest + ":" + scorehome);
-//					holder.basket_all_score.setTextColor(Color.BLUE);
-                    holder.basket_score.setText(":");
-                    holder.basket_no_start.setVisibility(View.GONE);
-                    holder.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-                    holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-                    holder.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-                    holder.basket_guest_all_score.setVisibility(View.VISIBLE);
-                    holder.basket_home_all_score.setVisibility(View.VISIBLE);
-
-                    if (childredata.getMatchScore() != null) {
-
-                        holder.score_total.setText((scorehomehalf + scoreguesthalf) + "/" + (scorehome + scoreguest));
-//                    holder.score_differ.setText(Math.abs(scorehome - scoreguest) + "");
+                    viewHolderList.backetball_differ.setVisibility(View.VISIBLE);
+                    viewHolderList.backetball_total.setVisibility(View.VISIBLE);
+                    viewHolderList.score_total.setVisibility(View.VISIBLE);
+                    viewHolderList.score_differ.setVisibility(View.VISIBLE);
+//                            viewHolderList.basket_score.setText(":");
+//                            viewHolderList.basket_no_start.setVisibility(View.GONE);
+                    viewHolderList.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+//                            viewHolderList.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+                    viewHolderList.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+                    viewHolderList.basket_guest_all_score.setVisibility(View.VISIBLE);
+                    viewHolderList.basket_home_all_score.setVisibility(View.VISIBLE);
+                    if (DetailsData.getMatchScore() != null) {
+                        viewHolderList.score_total.setText((scorehomehalf + scoreguesthalf) + "/" + (scorehome + scoreguest));
                         if (scorehome - scoreguest > 0) {
-                            holder.score_differ.setText("" + (scorehome - scoreguest)); // 不取绝对值
+                            viewHolderList.score_differ.setText("" + (scorehome - scoreguest)); // 不取绝对值
                         } else {
-                            holder.score_differ.setText(scorehome - scoreguest + "");
+                            viewHolderList.score_differ.setText(scorehome - scoreguest + "");
                         }
 
-//                        holder.basket_guest_all_score.setText(scoreguest + "");
-//                        holder.basket_home_all_score.setText(scorehome + "");
-////                        startAnima(childredata, score, holder);
-
-                  /*      if (childredata.isHomeAnim()) {
-                            scoreAnimation(holder.basket_home_all_score, childredata.getMatchScore().getHomeScore() + ""); //启动动画 客队
-                            childredata.setIsHomeAnim(false);
-                        }
-//                        else{
-////                            holder.basket_home_all_score.setText(childredata.getMatchScore().getHomeScore() + "");
-//                        }
-                        if (childredata.isGuestAnim()) {
-                            scoreAnimation(holder.basket_guest_all_score, childredata.getMatchScore().getGuestScore() + ""); //启动动画 主队
-                            childredata.setIsGuestAnim(false);
-                        }*/
-//                        else{
-////                            holder.basket_guest_all_score.setText(childredata.getMatchScore().getGuestScore() + "");
-//                        }
-
-                        holder.basket_guest_all_score.setText(childredata.getMatchScore().getGuestScore() + "");
-                        holder.basket_home_all_score.setText(childredata.getMatchScore().getHomeScore() + "");
-
-                        holder.basket_half_score.setVisibility(View.VISIBLE);
-                        holder.basket_half_score.setText("(" + childredata.getMatchScore().getGuestOt2() + ":" + childredata.getMatchScore().getHomeOt2() + ")");
-                        holder.st_time.setText(R.string.basket_OT2);
-                        holder.ongoing_time.setVisibility(View.VISIBLE);
-                        holder.backetball_apos.setVisibility(View.VISIBLE);
+                        viewHolderList.basket_guest_all_score.setText(DetailsData.getMatchScore().getGuestScore() + "");
+                        viewHolderList.basket_home_all_score.setText(DetailsData.getMatchScore().getHomeScore() + "");
+//                                viewHolderList.basket_half_score.setVisibility(View.VISIBLE);
+//                                viewHolderList.basket_half_score.setText("(" + DetailsData.getMatchScore().getGuestOt2() + ":" + DetailsData.getMatchScore().getHomeOt2() + ")");
+                        viewHolderList.st_time.setText(R.string.basket_OT2);
+                        viewHolderList.ongoing_time.setVisibility(View.VISIBLE);
+                        viewHolderList.backetball_apos.setVisibility(View.VISIBLE);
                     } else {
-                        holder.score_total.setText("--");
-                        holder.score_differ.setText("--");
-                        holder.basket_guest_all_score.setText("--");
-                        holder.basket_home_all_score.setText("--");
-
-                        holder.basket_half_score.setText("");
-//                        holder.basket_half_score.setVisibility(View.GONE);
-                        holder.ongoing_time.setVisibility(View.GONE);
-                        holder.backetball_apos.setVisibility(View.GONE);
+                        viewHolderList.score_total.setText("--");
+                        viewHolderList.score_differ.setText("--");
+                        viewHolderList.basket_guest_all_score.setText("--");
+                        viewHolderList.basket_home_all_score.setText("--");
+//                                viewHolderList.basket_half_score.setText("");
+                        viewHolderList.ongoing_time.setVisibility(View.GONE);
+                        viewHolderList.backetball_apos.setVisibility(View.GONE);
                     }
-
-//					holder.backetball_apos.setVisibility(View.VISIBLE);
-                    settingdata(holder, 6);
+                    settingdata(viewHolderList, 6);
+                    viewHolderList.st_time.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
+                    viewHolderList.score_data.setVisibility(View.VISIBLE);
+                    setSingleScore(viewHolderList, DetailsData.getMatchScore());
+                    setVisible(viewHolderList, DetailsData.getSection());
+                    viewHolderList.guest_score_ot.setText(DetailsData.getMatchScore().getGuestOt2() + "");//加时比分
+                    viewHolderList.home_score_ot.setText(DetailsData.getMatchScore().getHomeOt2() + "");
+                    viewHolderList.guest_score_ot.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score_ot.setVisibility(View.VISIBLE);
                     break;
                 case 7: //加时3
-
-                    holder.backetball_differ.setVisibility(View.VISIBLE);
-                    holder.backetball_total.setVisibility(View.VISIBLE);
-                    holder.score_total.setVisibility(View.VISIBLE);
-                    holder.score_differ.setVisibility(View.VISIBLE);
-
-//					holder.basket_all_score.setText(scoreguest + ":" + scorehome);
-//					holder.basket_all_score.setTextColor(Color.BLUE);
-                    holder.basket_score.setText(":");
-                    holder.basket_no_start.setVisibility(View.GONE);
-                    holder.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-                    holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-                    holder.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-                    holder.basket_guest_all_score.setVisibility(View.VISIBLE);
-                    holder.basket_home_all_score.setVisibility(View.VISIBLE);
-
-                    if (childredata.getMatchScore() != null) {
-
-                        holder.score_total.setText((scorehomehalf + scoreguesthalf) + "/" + (scorehome + scoreguest));
-//                    holder.score_differ.setText(Math.abs(scorehome - scoreguest) + "");
+                    viewHolderList.backetball_differ.setVisibility(View.VISIBLE);
+                    viewHolderList.backetball_total.setVisibility(View.VISIBLE);
+                    viewHolderList.score_total.setVisibility(View.VISIBLE);
+                    viewHolderList.score_differ.setVisibility(View.VISIBLE);
+//                            viewHolderList.basket_score.setText(":");
+//                            viewHolderList.basket_no_start.setVisibility(View.GONE);
+                    viewHolderList.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+//                            viewHolderList.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+                    viewHolderList.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+                    viewHolderList.basket_guest_all_score.setVisibility(View.VISIBLE);
+                    viewHolderList.basket_home_all_score.setVisibility(View.VISIBLE);
+                    if (DetailsData.getMatchScore() != null) {
+                        viewHolderList.score_total.setText((scorehomehalf + scoreguesthalf) + "/" + (scorehome + scoreguest));
                         if (scorehome - scoreguest > 0) {
-                            holder.score_differ.setText("" + (scorehome - scoreguest)); // 不取绝对值
+                            viewHolderList.score_differ.setText("" + (scorehome - scoreguest)); // 不取绝对值
                         } else {
-                            holder.score_differ.setText(scorehome - scoreguest + "");
+                            viewHolderList.score_differ.setText(scorehome - scoreguest + "");
                         }
 
-//                        holder.basket_guest_all_score.setText(scoreguest + "");
-//                        holder.basket_home_all_score.setText(scorehome + "");
-////                        startAnima(childredata, score, holder);
-/*
-                        if (childredata.isHomeAnim()) {
-                            scoreAnimation(holder.basket_home_all_score, childredata.getMatchScore().getHomeScore() + ""); //启动动画 客队
-                            childredata.setIsHomeAnim(false);
-                        }
-//                        else{
-////                            holder.basket_home_all_score.setText(childredata.getMatchScore().getHomeScore() + "");
-//                        }
-                        if (childredata.isGuestAnim()) {
-                            scoreAnimation(holder.basket_guest_all_score, childredata.getMatchScore().getGuestScore() + ""); //启动动画 主队
-                            childredata.setIsGuestAnim(false);
-                        }*/
-//                        else{
-////                            holder.basket_guest_all_score.setText(childredata.getMatchScore().getGuestScore() + "");
-//                        }
-
-                        holder.basket_guest_all_score.setText(childredata.getMatchScore().getGuestScore() + "");
-                        holder.basket_home_all_score.setText(childredata.getMatchScore().getHomeScore() + "");
-
-                        holder.basket_half_score.setVisibility(View.VISIBLE);
-                        holder.basket_half_score.setText("(" + childredata.getMatchScore().getGuestOt3() + ":" + childredata.getMatchScore().getHomeOt3() + ")");
-                        holder.st_time.setText(R.string.basket_OT3);
-                        holder.ongoing_time.setVisibility(View.VISIBLE);
-                        holder.backetball_apos.setVisibility(View.VISIBLE);
+                        viewHolderList.basket_guest_all_score.setText(DetailsData.getMatchScore().getGuestScore() + "");
+                        viewHolderList.basket_home_all_score.setText(DetailsData.getMatchScore().getHomeScore() + "");
+//                                viewHolderList.basket_half_score.setVisibility(View.VISIBLE);
+//                                viewHolderList.basket_half_score.setText("(" + DetailsData.getMatchScore().getGuestOt3() + ":" + DetailsData.getMatchScore().getHomeOt3() + ")");
+                        viewHolderList.st_time.setText(R.string.basket_OT3);
+                        viewHolderList.ongoing_time.setVisibility(View.VISIBLE);
+                        viewHolderList.backetball_apos.setVisibility(View.VISIBLE);
                     } else {
-                        holder.score_total.setText("--");
-                        holder.score_differ.setText("--");
-                        holder.basket_guest_all_score.setText("--");
-                        holder.basket_home_all_score.setText("--");
-
-                        holder.basket_half_score.setText("");
-//                        holder.basket_half_score.setVisibility(View.GONE);
-                        holder.ongoing_time.setVisibility(View.GONE);
-                        holder.backetball_apos.setVisibility(View.GONE);
+                        viewHolderList.score_total.setText("--");
+                        viewHolderList.score_differ.setText("--");
+                        viewHolderList.basket_guest_all_score.setText("--");
+                        viewHolderList.basket_home_all_score.setText("--");
+//                                viewHolderList.basket_half_score.setText("");
+                        viewHolderList.ongoing_time.setVisibility(View.GONE);
+                        viewHolderList.backetball_apos.setVisibility(View.GONE);
                     }
-
-//					holder.backetball_apos.setVisibility(View.VISIBLE);
-                    settingdata(holder, 7);
+                    settingdata(viewHolderList, 7);
+                    viewHolderList.st_time.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
+                    viewHolderList.score_data.setVisibility(View.VISIBLE);
+                    setSingleScore(viewHolderList, DetailsData.getMatchScore());
+                    setVisible(viewHolderList, DetailsData.getSection());
+                    viewHolderList.guest_score_ot.setText(DetailsData.getMatchScore().getGuestOt3() + "");//加时比分
+                    viewHolderList.home_score_ot.setText(DetailsData.getMatchScore().getHomeOt3() + "");
+                    viewHolderList.guest_score_ot.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score_ot.setVisibility(View.VISIBLE);
                     break;
                 case 50: //中场
 
-                    holder.backetball_differ.setVisibility(View.VISIBLE);
-                    holder.backetball_total.setVisibility(View.VISIBLE);
-                    holder.score_total.setVisibility(View.VISIBLE);
-                    holder.score_differ.setVisibility(View.VISIBLE);
-
-//					holder.basket_all_score.setText(scoreguest + ":" + scorehome);
-//					holder.basket_all_score.setTextColor(Color.BLUE);
-                    holder.basket_score.setText(":");
-                    holder.basket_no_start.setVisibility(View.GONE);
-                    holder.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-                    holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-                    holder.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-                    holder.basket_guest_all_score.setVisibility(View.VISIBLE);
-                    holder.basket_home_all_score.setVisibility(View.VISIBLE);
-
-                    if (childredata.getMatchScore() != null) {
-
-                        holder.score_total.setText((scorehomehalf + scoreguesthalf) + "/" + (scorehome + scoreguest));
-//                    holder.score_differ.setText(Math.abs(scorehome - scoreguest) + "");
+                    viewHolderList.backetball_differ.setVisibility(View.VISIBLE);
+                    viewHolderList.backetball_total.setVisibility(View.VISIBLE);
+                    viewHolderList.score_total.setVisibility(View.VISIBLE);
+                    viewHolderList.score_differ.setVisibility(View.VISIBLE);
+//                            viewHolderList.basket_score.setText(":");
+//                            viewHolderList.basket_no_start.setVisibility(View.GONE);
+                    viewHolderList.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+//                            viewHolderList.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+                    viewHolderList.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
+                    viewHolderList.basket_guest_all_score.setVisibility(View.VISIBLE);
+                    viewHolderList.basket_home_all_score.setVisibility(View.VISIBLE);
+                    if (DetailsData.getMatchScore() != null) {
+                        viewHolderList.score_total.setText((scorehomehalf + scoreguesthalf) + "/" + (scorehome + scoreguest));
                         if (scorehome - scoreguest > 0) {
-                            holder.score_differ.setText("" + (scorehome - scoreguest)); // 不取绝对值
+                            viewHolderList.score_differ.setText("" + (scorehome - scoreguest)); // 不取绝对值
                         } else {
-                            holder.score_differ.setText(scorehome - scoreguest + "");
+                            viewHolderList.score_differ.setText(scorehome - scoreguest + "");
                         }
-
-                        holder.basket_guest_all_score.setText(childredata.getMatchScore().getGuestScore() + "");
-                        holder.basket_home_all_score.setText(childredata.getMatchScore().getHomeScore() + "");
-
-                        holder.basket_half_score.setVisibility(View.INVISIBLE);
-//					holder.basket_half_score.setText("(" + childredata.getMatchScore().getGuest2() + ":" + childredata.getMatchScore().getHome2() + ")");
-                        holder.st_time.setText(R.string.basket_half_time);
-
+                        viewHolderList.basket_guest_all_score.setText(DetailsData.getMatchScore().getGuestScore() + "");
+                        viewHolderList.basket_home_all_score.setText(DetailsData.getMatchScore().getHomeScore() + "");
+//                                viewHolderList.basket_half_score.setVisibility(View.INVISIBLE);
+                        viewHolderList.st_time.setText(R.string.basket_half_time);
                     } else {
-                        holder.score_total.setText("--");
-                        holder.score_differ.setText("--");
-                        holder.basket_guest_all_score.setText("--");
-                        holder.basket_home_all_score.setText("--");
-                        holder.basket_half_score.setVisibility(View.GONE);
+                        viewHolderList.score_total.setText("--");
+                        viewHolderList.score_differ.setText("--");
+                        viewHolderList.basket_guest_all_score.setText("--");
+                        viewHolderList.basket_home_all_score.setText("--");
+//                                viewHolderList.basket_half_score.setVisibility(View.GONE);
                     }
-
-                    holder.ongoing_time.setVisibility(View.GONE);
-//					holder.backetball_apos.setVisibility(View.GONE);
-                    settingdata(holder, 50);
+                    viewHolderList.ongoing_time.setVisibility(View.GONE);
+                    settingdata(viewHolderList, 50);
+                    viewHolderList.st_time.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
+                    viewHolderList.score_data.setVisibility(View.VISIBLE);
+                    setSingleScore(viewHolderList, DetailsData.getMatchScore());
+                    setVisible(viewHolderList, DetailsData.getSection());
+                    viewHolderList.guest_score_ot.setVisibility(View.GONE);
+                    viewHolderList.home_score_ot.setVisibility(View.GONE);
                     break;
                 case -1: //完场
-
-                    holder.backetball_differ.setVisibility(View.VISIBLE);
-                    holder.backetball_total.setVisibility(View.VISIBLE);
-                    holder.score_total.setVisibility(View.VISIBLE);
-                    holder.score_differ.setVisibility(View.VISIBLE);
+                    viewHolderList.backetball_differ.setVisibility(View.VISIBLE);
+                    viewHolderList.backetball_total.setVisibility(View.VISIBLE);
+                    viewHolderList.score_total.setVisibility(View.VISIBLE);
+                    viewHolderList.score_differ.setVisibility(View.VISIBLE);
 
                     //当借口无数据时 显示“--”
-                    if (childredata.getMatchScore() != null) {
-                        holder.score_total.setText((scorehomehalf + scoreguesthalf) + "/" + (scorehome + scoreguest));
-//                        holder.score_differ.setText(Math.abs(scorehome - scoreguest) + "");
+                    if (DetailsData.getMatchScore() != null) {
+                        viewHolderList.score_total.setText((scorehomehalf + scoreguesthalf) + "/" + (scorehome + scoreguest));
                         if (scorehome - scoreguest > 0) {
-                            holder.score_differ.setText("" + (scorehome - scoreguest)); // 不取绝对值
+                            viewHolderList.score_differ.setText("" + (scorehome - scoreguest)); // 不取绝对值
                         } else {
-                            holder.score_differ.setText(scorehome - scoreguest + "");
+                            viewHolderList.score_differ.setText(scorehome - scoreguest + "");
                         }
-
-                        holder.basket_guest_all_score.setText(childredata.getMatchScore().getGuestScore() + "");
-                        holder.basket_home_all_score.setText(childredata.getMatchScore().getHomeScore() + "");
+                        viewHolderList.basket_guest_all_score.setText(DetailsData.getMatchScore().getGuestScore() + "");
+                        viewHolderList.basket_home_all_score.setText(DetailsData.getMatchScore().getHomeScore() + "");
                     } else {
-                        holder.score_total.setText("--");
-                        holder.score_differ.setText("--");
-                        holder.basket_guest_all_score.setText("--");
-                        holder.basket_home_all_score.setText("--");
+                        viewHolderList.score_total.setText("--");
+                        viewHolderList.score_differ.setText("--");
+                        viewHolderList.basket_guest_all_score.setText("--");
+                        viewHolderList.basket_home_all_score.setText("--");
                     }
+//                            viewHolderList.basket_score.setText(":");
+//                            viewHolderList.basket_no_start.setVisibility(View.GONE);
+                    viewHolderList.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_over_score));
+//                            viewHolderList.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_over_score));
+                    viewHolderList.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_over_score));
+                    viewHolderList.basket_guest_all_score.setVisibility(View.VISIBLE);
+                    viewHolderList.basket_home_all_score.setVisibility(View.VISIBLE);
+//                            viewHolderList.basket_half_score.setVisibility(View.INVISIBLE);
+                    viewHolderList.st_time.setText(R.string.snooker_state_over_game);
+                    viewHolderList.st_time.setTextColor(mContext.getResources().getColor(R.color.basket_over_score));
+                    viewHolderList.ongoing_time.setVisibility(View.GONE);
+                    settingdata(viewHolderList, -1);
 
-//					holder.basket_all_score.setText(scoreguest + ":" + scorehome);
-//					holder.basket_all_score.setTextColor(Color.RED);
-                    holder.basket_score.setText(":");
-                    holder.basket_no_start.setVisibility(View.GONE);
-                    holder.basket_guest_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_over_score));
-                    holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_over_score));
-                    holder.basket_home_all_score.setTextColor(mContext.getResources().getColor(R.color.basket_over_score));
-                    holder.basket_guest_all_score.setVisibility(View.VISIBLE);
-                    holder.basket_home_all_score.setVisibility(View.VISIBLE);
-
-                    holder.basket_half_score.setVisibility(View.INVISIBLE);
-//					holder.basket_half_score.setText("(" + childredata.getMatchScore().getGuest4() + ":" + childredata.getMatchScore().getHome4() + ")");
-//					holder.st_time.setVisibility(View.GONE);
-                    holder.st_time.setText("");
-                    holder.ongoing_time.setVisibility(View.GONE);
-//					holder.backetball_apos.setVisibility(View.GONE);
-                    settingdata(holder, -1);
+                    viewHolderList.score_data.setVisibility(View.VISIBLE);
+                    setSingleScore(viewHolderList, DetailsData.getMatchScore());
+                    setVisible(viewHolderList, DetailsData.getSection());
+                    viewHolderList.guest_score_ot.setVisibility(View.GONE);
+                    viewHolderList.home_score_ot.setVisibility(View.GONE);
                     break;
                 case -2: //待定
-
-                    holder.backetball_differ.setVisibility(View.INVISIBLE);
-                    holder.backetball_total.setVisibility(View.INVISIBLE);
-                    holder.score_total.setVisibility(View.INVISIBLE);
-                    holder.score_differ.setVisibility(View.INVISIBLE);
-
-//					holder.basket_all_score.setText("VS");
-//					holder.basket_all_score.setTextColor(Color.BLACK);
-                    holder.basket_score.setText("");
-                    holder.basket_no_start.setVisibility(View.VISIBLE);
-//                    holder.basket_score.setBackgroundColor(Color.WHITE);// -------设置背景色 (防止背景复用比分)-------
-                    holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_vs));
-                    holder.basket_guest_all_score.setText("");
-                    holder.basket_home_all_score.setText("");
-                    holder.basket_guest_all_score.setVisibility(View.GONE);
-                    holder.basket_home_all_score.setVisibility(View.GONE);
-//					holder.basket_guest_all_score.setText(scoreguest);
-//					holder.basket_home_all_score.setText(scorehome);
-//					holder.basket_guest_all_score.setTextColor(Color.RED);
-//					holder.basket_home_all_score.setTextColor(Color.RED);
-
-                    holder.basket_half_score.setVisibility(View.INVISIBLE);
-                    holder.st_time.setText(R.string.basket_undetermined);
-                    holder.ongoing_time.setVisibility(View.GONE);
-//					holder.backetball_apos.setVisibility(View.GONE);
-                    settingdata(holder, -2);
+                    viewHolderList.backetball_differ.setVisibility(View.INVISIBLE);
+                    viewHolderList.backetball_total.setVisibility(View.INVISIBLE);
+                    viewHolderList.score_total.setVisibility(View.INVISIBLE);
+                    viewHolderList.score_differ.setVisibility(View.INVISIBLE);
+//                            viewHolderList.basket_score.setText("");
+//                            viewHolderList.basket_no_start.setVisibility(View.VISIBLE);
+//                            viewHolderList.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_vs));
+                    viewHolderList.basket_guest_all_score.setText("");
+                    viewHolderList.basket_home_all_score.setText("");
+                    viewHolderList.basket_guest_all_score.setVisibility(View.GONE);
+                    viewHolderList.basket_home_all_score.setVisibility(View.GONE);
+//                            viewHolderList.basket_half_score.setVisibility(View.INVISIBLE);
+                    viewHolderList.st_time.setText(R.string.basket_undetermined);
+                    viewHolderList.st_time.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));//#0085E1
+                    viewHolderList.ongoing_time.setVisibility(View.GONE);
+                    settingdata(viewHolderList, -2);
+                    viewHolderList.score_data.setVisibility(View.INVISIBLE);
                     break;
                 case -3: //中断
-
-                    holder.backetball_differ.setVisibility(View.INVISIBLE);
-                    holder.backetball_total.setVisibility(View.INVISIBLE);
-                    holder.ongoing_time.setVisibility(View.GONE);
-                    holder.basket_score.setText("");
-                    holder.basket_no_start.setVisibility(View.GONE);
-//					holder.backetball_apos.setVisibility(View.GONE);
-                    holder.basket_half_score.setVisibility(View.INVISIBLE);
-                    holder.basket_guest_all_score.setText(childredata.getMatchScore().getGuestScore() + "");
-                    holder.basket_home_all_score.setText(childredata.getMatchScore().getHomeScore() + "");
+                    viewHolderList.backetball_differ.setVisibility(View.INVISIBLE);
+                    viewHolderList.backetball_total.setVisibility(View.INVISIBLE);
+                    viewHolderList.ongoing_time.setVisibility(View.GONE);
+//                            viewHolderList.basket_score.setText("");
+//                            viewHolderList.basket_no_start.setVisibility(View.GONE);
+//                            viewHolderList.basket_half_score.setVisibility(View.INVISIBLE);
+                    viewHolderList.basket_guest_all_score.setText(DetailsData.getMatchScore().getGuestScore() + "");
+                    viewHolderList.basket_home_all_score.setText(DetailsData.getMatchScore().getHomeScore() + "");
                     //TODO--------********************************
-                    holder.st_time.setText(R.string.basket_interrupt);
-                    settingdata(holder, -3);
+                    viewHolderList.st_time.setText(R.string.basket_interrupt);
+                    viewHolderList.st_time.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));//#0085E1
+                    settingdata(viewHolderList, -3);
+                    viewHolderList.score_data.setVisibility(View.VISIBLE);
+                    setSingleScore(viewHolderList, DetailsData.getMatchScore());
+                    setVisible(viewHolderList, DetailsData.getSection());
+                    viewHolderList.guest_score_ot.setVisibility(View.GONE);
+                    viewHolderList.home_score_ot.setVisibility(View.GONE);
                     break;
                 case -4: //取消
-
-                    holder.backetball_differ.setVisibility(View.INVISIBLE);
-                    holder.backetball_total.setVisibility(View.INVISIBLE);
-                    holder.score_total.setVisibility(View.INVISIBLE);
-                    holder.score_differ.setVisibility(View.INVISIBLE);
-
-//					holder.basket_all_score.setText("VS");
-//					holder.basket_all_score.setTextColor(Color.BLACK);
-                    holder.basket_score.setText("");
-                    holder.basket_no_start.setVisibility(View.VISIBLE);
-//                    holder.basket_score.setBackgroundColor(Color.WHITE);// -------设置背景色 (防止背景复用比分)-------
-                    holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_vs));
-                    holder.basket_guest_all_score.setText("");
-                    holder.basket_home_all_score.setText("");
-                    holder.basket_guest_all_score.setVisibility(View.GONE);
-                    holder.basket_home_all_score.setVisibility(View.GONE);
-
-                    holder.basket_half_score.setVisibility(View.INVISIBLE);
-                    holder.st_time.setText(R.string.basket_cancel);
-                    holder.ongoing_time.setVisibility(View.GONE);
-//					holder.backetball_apos.setVisibility(View.GONE);
-                    settingdata(holder, -4);
+                    viewHolderList.backetball_differ.setVisibility(View.INVISIBLE);
+                    viewHolderList.backetball_total.setVisibility(View.INVISIBLE);
+                    viewHolderList.score_total.setVisibility(View.INVISIBLE);
+                    viewHolderList.score_differ.setVisibility(View.INVISIBLE);
+//                            viewHolderList.basket_score.setText("");
+//                            viewHolderList.basket_no_start.setVisibility(View.VISIBLE);
+//                            viewHolderList.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_vs));
+                    viewHolderList.basket_guest_all_score.setText("");
+                    viewHolderList.basket_home_all_score.setText("");
+                    viewHolderList.basket_guest_all_score.setVisibility(View.GONE);
+                    viewHolderList.basket_home_all_score.setVisibility(View.GONE);
+//                            viewHolderList.basket_half_score.setVisibility(View.INVISIBLE);
+                    viewHolderList.st_time.setText(R.string.basket_cancel);
+                    viewHolderList.st_time.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));//#0085E1
+                    viewHolderList.ongoing_time.setVisibility(View.GONE);
+                    settingdata(viewHolderList, -4);
+                    viewHolderList.score_data.setVisibility(View.VISIBLE);
+                    setSingleScore(viewHolderList, DetailsData.getMatchScore());
+                    setVisible(viewHolderList, DetailsData.getSection());
+                    viewHolderList.guest_score_ot.setVisibility(View.GONE);
+                    viewHolderList.home_score_ot.setVisibility(View.GONE);
                     break;
                 case -5: //推迟
-
-                    holder.backetball_differ.setVisibility(View.INVISIBLE);
-                    holder.backetball_total.setVisibility(View.INVISIBLE);
-                    holder.score_total.setVisibility(View.INVISIBLE);
-                    holder.score_differ.setVisibility(View.INVISIBLE);
-
-//					holder.basket_all_score.setText("VS");
-//					holder.basket_all_score.setTextColor(Color.BLACK);
-                    holder.basket_score.setText("");
-                    holder.basket_no_start.setVisibility(View.VISIBLE);
-//                    holder.basket_score.setBackgroundColor(Color.WHITE);// -------设置背景色 (防止背景复用比分)-------
-                    holder.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_vs));
-                    holder.basket_guest_all_score.setText("");
-                    holder.basket_home_all_score.setText("");
-                    holder.basket_guest_all_score.setVisibility(View.GONE);
-                    holder.basket_home_all_score.setVisibility(View.GONE);
-
-                    holder.basket_half_score.setVisibility(View.INVISIBLE);
-                    holder.st_time.setText(R.string.basket_postpone);
-                    holder.ongoing_time.setVisibility(View.GONE);
-//					holder.backetball_apos.setVisibility(View.GONE);
-                    settingdata(holder, -5);
+                    viewHolderList.backetball_differ.setVisibility(View.INVISIBLE);
+                    viewHolderList.backetball_total.setVisibility(View.INVISIBLE);
+                    viewHolderList.score_total.setVisibility(View.INVISIBLE);
+                    viewHolderList.score_differ.setVisibility(View.INVISIBLE);
+//                            viewHolderList.basket_score.setText("");
+//                            viewHolderList.basket_no_start.setVisibility(View.VISIBLE);
+//                            viewHolderList.basket_score.setTextColor(mContext.getResources().getColor(R.color.basket_vs));
+                    viewHolderList.basket_guest_all_score.setText("");
+                    viewHolderList.basket_home_all_score.setText("");
+                    viewHolderList.basket_guest_all_score.setVisibility(View.GONE);
+                    viewHolderList.basket_home_all_score.setVisibility(View.GONE);
+//                            viewHolderList.basket_half_score.setVisibility(View.INVISIBLE);
+                    viewHolderList.st_time.setText(R.string.basket_postpone);
+                    viewHolderList.st_time.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
+                    viewHolderList.ongoing_time.setVisibility(View.GONE);
+                    settingdata(viewHolderList, -5);
+                    viewHolderList.score_data.setVisibility(View.INVISIBLE);
                     break;
                 default:
                     break;
             }
         }
 
-        if (score > 0 && score < 8 && childredata.getMatchScore() != null && childredata.getMatchScore().getRemainTime() != null) {// 显示秒的闪烁
-            holder.backetball_apos.setText("\'");
-            holder.backetball_apos.setVisibility(View.VISIBLE);
-
+        if (score > 0 && score < 8 && DetailsData.getMatchScore() != null && DetailsData.getMatchScore().getRemainTime() != null) {// 显示秒的闪烁
+            viewHolderList.backetball_apos.setText("\'");
+            viewHolderList.backetball_apos.setVisibility(View.VISIBLE);
             final AlphaAnimation anim1 = new AlphaAnimation(1, 1);
             anim1.setDuration(500);
             final AlphaAnimation anim2 = new AlphaAnimation(0, 0);
@@ -1136,7 +945,7 @@ public class BasketballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerV
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    holder.backetball_apos.startAnimation(anim2);
+                    viewHolderList.backetball_apos.startAnimation(anim2);
                 }
             });
             anim2.setAnimationListener(new Animation.AnimationListener() {
@@ -1150,20 +959,26 @@ public class BasketballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerV
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    holder.backetball_apos.startAnimation(anim1);
+                    viewHolderList.backetball_apos.startAnimation(anim1);
                 }
             });
-            holder.backetball_apos.startAnimation(anim1);
-            // }
+            viewHolderList.backetball_apos.startAnimation(anim1);
         } else {
-            holder.backetball_apos.setText("");
-            holder.backetball_apos.setVisibility(View.VISIBLE);
-//			holder.backetball_apos.cancelAnimation(R.id.backetball_apos);
+            viewHolderList.backetball_apos.setText("");
+            viewHolderList.backetball_apos.setVisibility(View.VISIBLE);
         }
+        //将创建的View注册点击事件
+        viewHolderList.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnItemClickListener != null) {
+                    mOnItemClickListener.onItemClick(v, DetailsData);
+                }
+            }
+        });
 
 
     }
-
 
     //设置界面score
     public void settingdata(ImmediaViewHolder holder, int score) {
@@ -1172,30 +987,16 @@ public class BasketballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerV
         boolean differscore = PreferenceUtil.getBoolean(MyConstants.SCORE_DIFFERENCE, true);//总分差
         boolean singscore = PreferenceUtil.getBoolean(MyConstants.SINGLE_SCORE, true); //单节比分
         boolean ranking = PreferenceUtil.getBoolean(MyConstants.HOST_RANKING, true);//排名
-
-        //Integer score = Integer.parseInt(data.getMatchStatus());
-
-        //0:未开赛,1:一节,2:二节,5:1'OT，以此类推 -1:完场,-2:待定,-3:中断,-4:取消,-5:推迟,50中场
+        // 0:未开赛,1:一节,2:二节,5:1'OT，以此类推 -1:完场,-2:待定,-3:中断,-4:取消,-5:推迟,50中场
         if (fullscore) {
-
             if (score == 0 || score == -2 || score == -3 || score == -4 || score == -5) {
-//                holder.basket_guest_all_score.setVisibility(View.GONE);
-//                holder.basket_score.setVisibility(View.VISIBLE);
-//                holder.basket_home_all_score.setVisibility(View.GONE);
                 holder.backetball_total.setVisibility(View.GONE);
                 holder.score_total.setVisibility(View.GONE);
-
             } else {
-//                holder.basket_guest_all_score.setVisibility(View.VISIBLE);
-//                holder.basket_score.setVisibility(View.VISIBLE);
-//                holder.basket_home_all_score.setVisibility(View.VISIBLE);
                 holder.backetball_total.setVisibility(View.VISIBLE);
                 holder.score_total.setVisibility(View.VISIBLE);
             }
         } else {
-//            holder.basket_guest_all_score.setVisibility(View.INVISIBLE);
-//            holder.basket_score.setVisibility(View.INVISIBLE);
-//            holder.basket_home_all_score.setVisibility(View.INVISIBLE);
             holder.backetball_total.setVisibility(View.GONE);
             holder.score_total.setVisibility(View.GONE);
         }
@@ -1214,23 +1015,49 @@ public class BasketballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerV
         }
         if (singscore) {
             if (score == 0 || score == -2 || score == -3 || score == -4 || score == -5 || score == -1 || score == 50) {
-                holder.basket_half_score.setVisibility(View.INVISIBLE);
+//                holder.basket_half_score.setVisibility(View.INVISIBLE);
             } else {
-                holder.basket_half_score.setVisibility(View.VISIBLE);
+//                holder.basket_half_score.setVisibility(View.VISIBLE);
             }
         } else {
-            holder.basket_half_score.setVisibility(View.INVISIBLE);
-        }
-        if (ranking) {
-            holder.guest_Ranking.setVisibility(View.VISIBLE);
-            holder.home_Ranking.setVisibility(View.VISIBLE);
-        } else {
-            holder.guest_Ranking.setVisibility(View.INVISIBLE);
-            holder.home_Ranking.setVisibility(View.INVISIBLE);
+//            holder.basket_half_score.setVisibility(View.INVISIBLE);
         }
 
+    }
 
+    private void setSingleScore(ImmediaViewHolder viewHolderList, BasketballItemSearchBean.MatchScoreBean matchScore) {
+        if (matchScore != null) {
+            viewHolderList.guest_score1.setText(matchScore.getGuest1() + "");
+            viewHolderList.guest_score2.setText(matchScore.getGuest2() + "");
+            viewHolderList.guest_score3.setText(matchScore.getGuest3() + "");
+            viewHolderList.guest_score4.setText(matchScore.getGuest4() + "");
+            viewHolderList.home_score1.setText(matchScore.getHome1() + "");
+            viewHolderList.home_score2.setText(matchScore.getHome2() + "");
+            viewHolderList.home_score3.setText(matchScore.getHome3() + "");
+            viewHolderList.home_score4.setText(matchScore.getHome4() + "");
+        }
+    }
 
+    private void setVisible(ImmediaViewHolder viewHolderList, int section) {
+        if (section == 2) {
+            viewHolderList.guest_score1.setVisibility(View.VISIBLE);
+            viewHolderList.guest_score2.setVisibility(View.INVISIBLE);
+            viewHolderList.guest_score3.setVisibility(View.VISIBLE);
+            viewHolderList.guest_score4.setVisibility(View.INVISIBLE);
+            viewHolderList.home_score1.setVisibility(View.VISIBLE);
+            viewHolderList.home_score2.setVisibility(View.INVISIBLE);
+            viewHolderList.home_score3.setVisibility(View.VISIBLE);
+            viewHolderList.home_score4.setVisibility(View.INVISIBLE);
+        } else if (section == 4) {
+            viewHolderList.guest_score1.setVisibility(View.VISIBLE);
+            viewHolderList.guest_score2.setVisibility(View.VISIBLE);
+            viewHolderList.guest_score3.setVisibility(View.VISIBLE);
+            viewHolderList.guest_score4.setVisibility(View.VISIBLE);
+            viewHolderList.home_score1.setVisibility(View.VISIBLE);
+            viewHolderList.home_score2.setVisibility(View.VISIBLE);
+            viewHolderList.home_score3.setVisibility(View.VISIBLE);
+            viewHolderList.home_score4.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

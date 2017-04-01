@@ -37,15 +37,24 @@ public class BasketballItemSearchBean {
         private String leagueColor;
         private String date;
         private String time;
-        private int matchStatus;
+        private String matchStatus;
         private MatchScoreBean matchScore;
         private MatchOddsBean matchOdds;
         private int section;
         private String homeTeamId;
         private String guestTeamId;
         private Object textLive;
+        private Integer matchType;//	30951
 
-        public String getThirdId() {
+    public Integer getMatchType() {
+        return matchType;
+    }
+
+    public void setMatchType(Integer matchType) {
+        this.matchType = matchType;
+    }
+
+    public String getThirdId() {
             return thirdId;
         }
 
@@ -109,11 +118,11 @@ public class BasketballItemSearchBean {
             this.time = time;
         }
 
-        public int getMatchStatus() {
+        public String getMatchStatus() {
             return matchStatus;
         }
 
-        public void setMatchStatus(int matchStatus) {
+        public void setMatchStatus(String matchStatus) {
             this.matchStatus = matchStatus;
         }
 

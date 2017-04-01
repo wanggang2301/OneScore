@@ -1128,7 +1128,9 @@ public class BaseURLs {
     public final static String SNOOKER_FINDPREVIOUSWINNERS = URL_API_HOST + "snookerData.findPreviousWinners.do";
     //斯诺克指数接口
     public final static String SNOOKER_INDEX_LIST=URL_API_HOST+"snookerOdds.getSnookerOddsByDate.do";
+    //篮球比分搜索
 
+    public final static String IOSBASKETBALLMATCH=URL_API_HOST+"IOSBasketballMatch.fuzzySearch.do";
 
     /***********************************************************************************************************************/
 

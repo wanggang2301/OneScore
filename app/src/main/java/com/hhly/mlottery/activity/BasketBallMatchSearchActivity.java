@@ -30,6 +30,7 @@ import com.hhly.mlottery.adapter.BasketballMatchSearchAdapter;
 import com.hhly.mlottery.adapter.basketball.PinnedHeaderExpandableAdapter;
 import com.hhly.mlottery.bean.BasketballItemSearchBean;
 import com.hhly.mlottery.bean.BasketballSearchBean;
+import com.hhly.mlottery.bean.FoucsBean;
 import com.hhly.mlottery.bean.basket.BasketMatchBean;
 import com.hhly.mlottery.bean.basket.BasketMatchFilter;
 import com.hhly.mlottery.bean.basket.BasketRoot;
@@ -37,6 +38,7 @@ import com.hhly.mlottery.bean.basket.BasketRootBean;
 import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
+import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketScheduleNewScoreFragment;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.FocusUtils;
@@ -51,8 +53,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by yuely198 on 2017/3/27.
+ * 篮球比分搜索
  */
 
 public class BasketBallMatchSearchActivity extends BaseActivity implements View.OnClickListener {
@@ -60,7 +65,7 @@ public class BasketBallMatchSearchActivity extends BaseActivity implements View.
     private static final String TAG = "ImmedBasketballFragment";
     //内容数据
     private List<BasketballItemSearchBean> mMatchdata = new ArrayList<>();//match的 内容(json)
-    private ImmedBasketballFragment.BasketFocusClickListener mFocusClickListener; //关注点击监听
+    private BasketScheduleNewScoreFragment.BasketFocusClickListener mFocusClickListener; //关注点击监听
     public static int isLoad = -1;
     private BasketFocusClickListener basketFocusClickListener;
 
@@ -102,12 +107,13 @@ public class BasketBallMatchSearchActivity extends BaseActivity implements View.
                     explistview.setVisibility(View.VISIBLE);
                     initData(et_keyword.getText().toString().trim());
                     mSearch_iv_delete.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     mSearch_iv_delete.setVisibility(View.GONE);
                     explistview.setVisibility(View.GONE);
                 }
 
             }
+
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -115,6 +121,7 @@ public class BasketBallMatchSearchActivity extends BaseActivity implements View.
         });
 
     }
+
     // 定义关注监听
     public interface BasketFocusClickListener {
         void FocusOnClick(View view, BasketballItemSearchBean root);
@@ -133,39 +140,52 @@ public class BasketBallMatchSearchActivity extends BaseActivity implements View.
                 if (!isCheck) {//未关注->关注
                     FocusUtils.addBasketFocusId(root.getThirdId());
                     view.setTag(true);
-
+                    ((ImageView) view).setImageResource(R.mipmap.football_focus);
                 } else {//关注->未关注
                     FocusUtils.deleteBasketFocusId(root.getThirdId());
                     view.setTag(false);
-
-                  BasketballScoresActivity.basketFocusCallback();
-
+                    ((ImageView) view).setImageResource(R.mipmap.football_nomal);
+                    //((BasketballScoresActivity)mContext).basketFocusCallback();
+                    EventBus.getDefault().post(new FoucsBean("foucs"));
                 }
             }
         };
 
 
-
     }
-
 
 
     //请求加载数据
     private void initData(String keyWord) {
         Map<String, String> params = new HashMap<>();
         params.put("searchKeyword", keyWord);//接口添加 version=xx 字段
-
-        VolleyContentFast.requestJsonByPost("http://m.13322.com/mlottery/core/IOSBasketballMatch.fuzzySearch.do", params, new VolleyContentFast.ResponseSuccessListener<BasketballSearchBean>() {
+        VolleyContentFast.requestJsonByPost(BaseURLs.IOSBASKETBALLMATCH, params, new VolleyContentFast.ResponseSuccessListener<BasketballSearchBean>() {
             @Override
             public void onResponse(BasketballSearchBean json) {
+
 
                 if (!json.getData().isEmpty()) {
                     explistview.setVisibility(View.VISIBLE);
                     mNo_serach_tv.setVisibility(View.GONE);
                     mMatchdata = json.getData();
+
                     basketballInforSerachAdapter = new BasketballMatchSearchAdapter(BasketBallMatchSearchActivity.this, mMatchdata);
                     explistview.setAdapter(basketballInforSerachAdapter);
                     basketballInforSerachAdapter.setmFocus(basketFocusClickListener);//设置关注
+                    basketballInforSerachAdapter.setmOnItemClickListener(new BasketballMatchSearchAdapter.OnRecycleItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, BasketballItemSearchBean currData) {
+
+                            Intent intent = new Intent(BasketBallMatchSearchActivity.this, BasketDetailsActivityTest.class);
+                            intent.putExtra(BasketDetailsActivityTest.BASKET_THIRD_ID, currData.getThirdId());//跳转到详情
+                            intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_STATUS, currData.getMatchStatus());//跳转到详情
+                            intent.putExtra("currentfragment", 0);
+                            intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_LEAGUEID, currData.getLeagueId());
+                            intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_MATCHTYPE, currData.getMatchType());
+                            startActivity(intent);
+                        }
+                    });
+
 
                 } else {
                     explistview.setVisibility(View.GONE);
@@ -195,8 +215,6 @@ public class BasketBallMatchSearchActivity extends BaseActivity implements View.
     private void initView() {
 
 
-
-
         //搜索框
         et_keyword = (EditText) findViewById(R.id.et_keyword);
         //数据返回显示
@@ -214,7 +232,6 @@ public class BasketBallMatchSearchActivity extends BaseActivity implements View.
         findViewById(R.id.search_btn_back).setOnClickListener(this);
 
     }
-
 
 
     @Override

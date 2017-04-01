@@ -333,10 +333,7 @@
             android:name=".activity.SnookerMatchDetail"
             android:screenOrientation="portrait" />
         <!-- 覆盖安装监听 -->
-        <!--斯诺克内页-->
-        <activity
-            android:name=".activity.SnookerMatchDetail"
-            android:screenOrientation="portrait" />
+
         <!--覆盖安装监听-->
         <receiver
             android:name=".receiver.AppInstallReceiver"
