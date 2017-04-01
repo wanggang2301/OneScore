@@ -187,6 +187,8 @@
 -keep class tv.danmaku.ijk.media.player.** {*;}
 
 ##模糊搜索
+
+-keep class com.hhly.mlottery.activity.FootballMatchSearchActivity{ *;}
 -keep class com.hhly.mlottery.activity.FootballInformationSerachActivity{ *;}
 -keep class com.hhly.mlottery.activity.BasketballInformationSerachActivity{ *;}
 -keep class com.hhly.mlottery.activity.SnookerInformationSerachActivity{ *;}
