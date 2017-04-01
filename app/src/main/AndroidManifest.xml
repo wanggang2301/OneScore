@@ -387,6 +387,9 @@
         <activity
             android:name=".activity.TennisBallDetailsActivity"
             android:screenOrientation="portrait" />
+        <!--网球指数详情-->
+        <activity android:name=".activity.TennisCpiDetailsActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

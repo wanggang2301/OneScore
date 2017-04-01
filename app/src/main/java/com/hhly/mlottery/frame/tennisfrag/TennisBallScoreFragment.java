@@ -276,12 +276,10 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
                 switch (i) {
                     case TENNIS_IMMEDIATE:
                     case TENNIS_FOCUS:
-                        // 重新请求数据
                         ((TennisBallSocketFragment) fragments.get(i)).oddsChanger();
                         break;
                     case TENNIS_RESULT:
                     case TENNIS_SCHEDULE:
-                        // 刷新页面
                         ((TennisBallTabFragment) fragments.get(i)).oddsChanger();
                         break;
                 }

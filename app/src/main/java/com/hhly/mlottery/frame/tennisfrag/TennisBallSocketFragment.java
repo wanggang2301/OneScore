@@ -5,14 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -21,18 +19,21 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.activity.TennisBallDetailsActivity;
 import com.hhly.mlottery.adapter.tennisball.TennisBallScoreAdapter;
+import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.tennisball.MatchDataBean;
 import com.hhly.mlottery.bean.tennisball.TennisImmediatelyBean;
+import com.hhly.mlottery.bean.tennisball.TennisOddsInfoBean;
 import com.hhly.mlottery.bean.tennisball.TennisSocketBean;
+import com.hhly.mlottery.bean.tennisball.TennisSocketOddsBean;
 import com.hhly.mlottery.callback.TennisFocusCallBack;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
@@ -47,7 +48,7 @@ import java.util.Map;
  * Created by 107_tangrr on 2017/2/20 0020.
  */
 
-public class TennisBallSocketFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class TennisBallSocketFragment extends BaseWebSocketFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final int LOADING = 1;
     private static final int SUCCESS = 2;
@@ -84,16 +85,12 @@ public class TennisBallSocketFragment extends Fragment implements SwipeRefreshLa
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        setWebSocketUri(BaseURLs.WS_SERVICE);
+        setTopic("USER.topic.tennis.odd");
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             type = getArguments().getInt(TENNIS_TYPE);
         }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mContext = (Activity) context;
     }
 
     @Nullable
@@ -107,6 +104,7 @@ public class TennisBallSocketFragment extends Fragment implements SwipeRefreshLa
         initEmptyView();
         initData(0);
         initEvent();
+
         return mView;
     }
 
@@ -169,6 +167,7 @@ public class TennisBallSocketFragment extends Fragment implements SwipeRefreshLa
                         setStatus(NOTO_DATA);
                     } else {
                         setStatus(SUCCESS);
+                        connectWebSocket();
                         mAdapter.notifyDataSetChanged();
                     }
                 } else {
@@ -260,8 +259,10 @@ public class TennisBallSocketFragment extends Fragment implements SwipeRefreshLa
                             mContext.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    L.d("xxxxx", "收到了：刷新了!");
-                                    mAdapter.notifyDataSetChanged();
+                                    if (mAdapter != null) {
+                                        L.d("xxxxx", "收到了：刷新了!");
+                                        mAdapter.notifyDataSetChanged();
+                                    }
                                 }
                             });
                             break;
@@ -277,5 +278,65 @@ public class TennisBallSocketFragment extends Fragment implements SwipeRefreshLa
         if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    protected void onTextResult(String text) {
+        L.d("tennis", "网球赔率推送：" + text);
+        if (TextUtils.isEmpty(text)) return;
+        TennisSocketOddsBean oddsBean = JSON.parseObject(text, TennisSocketOddsBean.class);
+        // 402 比分列表赔率主题，403 指数赔率列表
+        if (oddsBean != null && oddsBean.getType() == 402) {
+            boolean alet = PreferenceUtil.getBoolean(MyConstants.TENNIS_ALET, true); //亚盘
+            boolean eur = PreferenceUtil.getBoolean(MyConstants.TENNIS_EURO, false);//欧赔
+            //  1 亚盘 ，2 欧赔 ，3 大小球
+            int gameType = oddsBean.getDataObj().getGameType();
+            for (int i = 0; i < mData.size(); i++) {
+                if (mData.get(i).getMatchId().equals(oddsBean.getDataObj().getMatchId())) {
+                    if (alet && gameType == 1) {
+                        TennisOddsInfoBean asiaLet = mData.get(i).getMatchOdds().getAsiaLet();
+                        asiaLet.setL(oddsBean.getDataObj().getMatchOdd().getL());
+                        asiaLet.setM(oddsBean.getDataObj().getMatchOdd().getM());
+                        asiaLet.setR(oddsBean.getDataObj().getMatchOdd().getR());
+                    } else if (eur && gameType == 2) {
+                        TennisOddsInfoBean euro = mData.get(i).getMatchOdds().getEuro();
+                        euro.setL(oddsBean.getDataObj().getMatchOdd().getL());
+                        euro.setM(oddsBean.getDataObj().getMatchOdd().getM());
+                        euro.setR(oddsBean.getDataObj().getMatchOdd().getR());
+                    }
+                    if (mAdapter != null) {
+                        mAdapter.notifyDataSetChanged();
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onConnectFail() {
+
+    }
+
+    @Override
+    protected void onDisconnected() {
+
+    }
+
+    @Override
+    protected void onConnected() {
+
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = (Activity) context;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        closeWebSocket();
     }
 }
