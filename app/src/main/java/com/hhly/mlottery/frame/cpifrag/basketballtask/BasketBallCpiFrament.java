@@ -472,7 +472,6 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
 
     @Override
     protected void onTextResult(final String text) {
-        L.d("pushtext", "____" + text);
 
         tabs.post(new Runnable() {
             @Override
@@ -491,10 +490,12 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
         JSONObject jsonObject = JSON.parseObject(jsonString);
         int type = jsonObject.getIntValue("type");
         if (type == 100) {  //比分
+            L.d("pushtextscore", "比分推送数据==" + jsonString);
+
             updateTimeAndStatus(jsonString);
         } else if (type == 101) { //赔率
 
-            L.d("ddffggg", "赔率推送数据==" + jsonString);
+            L.d("pushtextstatus", "赔率推送数据==" + jsonString);
 
             updateOdds(jsonString);
         }
@@ -543,5 +544,11 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
     @Override
     protected void onDisconnected() {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        closeWebSocket();
     }
 }
