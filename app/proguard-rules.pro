@@ -38,16 +38,13 @@
 
 # rx
 -dontwarn sun.misc.**
-
 -keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
    long producerIndex;
    long consumerIndex;
 }
-
 -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
     rx.internal.util.atomic.LinkedQueueNode producerNode;
 }
-
 -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
     rx.internal.util.atomic.LinkedQueueNode consumerNode;
 }
@@ -149,6 +146,12 @@
 #retrofit
 -keep public class retrofit.appengine.** { *; }
 -dontwarn retrofit.appengine.**
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+-dontwarn retrofit.**
+-keep class retrofit.** { *; }
 
 #畅言
 -keep public class com.sohu.cyan.** { *; }
@@ -174,10 +177,6 @@
 -dontwarn okio.**
 #--------------- END: okio ----------
 
-#retrofit
--dontwarn retrofit.**
--keep class retrofit.** { *; }
-
 -keepattributes Signature
 -keepattributes Exceptions
 -dontwarn okio.**
@@ -202,3 +201,27 @@
   **[] $VALUES;
   public *;
 }
+
+## butterknife
+-keep class butterknife.** { *; }
+-dontwarn butterknife.internal.**
+-keep class **$$ViewBinder { *; }
+-keepclasseswithmembernames class * {
+    @butterknife.* <fields>;
+}
+-keepclasseswithmembernames class * {
+    @butterknife.* <methods>;
+}
+
+##-----TalkingData统计 begin-----
+-dontwarn com.tendcloud.tenddata.**
+-keep class com.tendcloud.** {*;}
+-keep public class com.tendcloud.tenddata.** { public protected *;}
+-keepclassmembers class com.tendcloud.tenddata.**{
+public void *(***);
+}
+-keep class com.talkingdata.sdk.TalkingDataSDK {public *;}
+-keep class com.apptalkingdata.** {*;}
+-keep class dice.** {*; }
+-dontwarn dice.**
+##-----TalkingData统计 end-----

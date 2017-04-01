@@ -1087,6 +1087,13 @@ public class BaseURLs {
     // 网球比分关注列表
     public final static String TENNIS_FOCUS_URL = URL_API_HOST + "tennisMatch.connerns.do";
 
+    // 网球内页 头部和分析
+    public final static String TENNIS_DATAILS_URL = URL_API_HOST + "tennisMatch.findContentAnalysis.do";
+    // 网球内页 赔率指数接口
+    public final static String TENNIS_DATAILS_ODDS_URL = URL_API_HOST + "tennisMatch.findContentOdds.do";
+    // 网球内页 赔率公司指数详情接口
+    public final static String TENNIS_DATAILS_ODDS_INFO_URL = URL_API_HOST + "tennisMatch.findContentOddsDetail.do";
+
 
     /*****************************************************************************************************************
      * 下面URL为HTML页面

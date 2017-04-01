@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tennis_datails_analysis_record_top_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textColor="@color/res_time_color"
+        android:textSize="@dimen/text_size_11"
+        android:visibility="visible"
+        tools:text="双方近N次交峰，Name x胜x负，胜率：100%，赢盘率：40.00%。" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/linecolor"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/foot_details_time"
+            android:textColor="@color/res_pl_color"
+            android:textSize="@dimen/tennis_score_item" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:text="@string/analyze_match"
+            android:textColor="@color/res_pl_color"
+            android:textSize="@dimen/tennis_score_item" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:gravity="center"
+            android:text="@string/basket_analyze_dialog_site"
+            android:textColor="@color/res_pl_color"
+            android:textSize="@dimen/tennis_score_item" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:gravity="center"
+            android:text="@string/football_score"
+            android:textColor="@color/res_pl_color"
+            android:textSize="@dimen/tennis_score_item" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="@string/tennis_datails_record_title"
+            android:textColor="@color/res_pl_color"
+            android:textSize="@dimen/tennis_score_item" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -25,7 +25,38 @@ public class MatchDataBean {
     private int server;
     private int set;
     private MatchScoreBean matchScore;
+    private MatchOddsBean matchOdds;
     private boolean isFocus;
+
+    public static class MatchOddsBean{
+        private TennisOddsInfoBean asiaSize;
+        private TennisOddsInfoBean euro;
+        private TennisOddsInfoBean asiaLet;
+
+        public TennisOddsInfoBean getAsiaSize() {
+            return asiaSize;
+        }
+
+        public void setAsiaSize(TennisOddsInfoBean asiaSize) {
+            this.asiaSize = asiaSize;
+        }
+
+        public TennisOddsInfoBean getEuro() {
+            return euro;
+        }
+
+        public void setEuro(TennisOddsInfoBean euro) {
+            this.euro = euro;
+        }
+
+        public TennisOddsInfoBean getAsiaLet() {
+            return asiaLet;
+        }
+
+        public void setAsiaLet(TennisOddsInfoBean asiaLet) {
+            this.asiaLet = asiaLet;
+        }
+    }
 
     public static class MatchScoreBean {
 
@@ -245,6 +276,14 @@ public class MatchDataBean {
         public void setAwayCurrentScore(String awayCurrentScore) {
             this.awayCurrentScore = awayCurrentScore;
         }
+    }
+
+    public MatchOddsBean getMatchOdds() {
+        return matchOdds;
+    }
+
+    public void setMatchOdds(MatchOddsBean matchOdds) {
+        this.matchOdds = matchOdds;
     }
 
     public String getMatchId() {

@@ -1089,4 +1089,26 @@
 
     <!--彩票详情页 end -->
 
+    <!--网球内页-->
+    <style name="tennis_datails_head_name">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:lines">1</item>
+        <item name="android:textColor">@color/res_time_color</item>
+        <item name="android:textSize">@dimen/tennis_score_item</item>
+    </style>
+
+    <style name="tennis_datails_head_score">
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:layout_margin">1dp</item>
+        <item name="android:background">@drawable/tennis_datails_fight_item</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/res_time_color</item>
+        <item name="android:textSize">@dimen/tennis_score_item</item>
+    </style>
+
+
 </resources>

@@ -23,6 +23,7 @@ import com.hhly.mlottery.frame.infofrag.InfoFragment;
 import com.hhly.mlottery.frame.scorefrag.ScoreFragment;
 import com.hhly.mlottery.service.umengPushService;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -68,7 +69,7 @@ public class IndexActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         mContext = IndexActivity.this;
         setContentView(R.layout.activity_index);
-        channelNumber = getAppMetaData(mContext, "UMENG_CHANNEL");// 获取渠道号
+        channelNumber = DeviceInfo.getAppMetaData(mContext, "UMENG_CHANNEL");// 获取渠道号
         getVersion();
         pushData();
 
@@ -201,33 +202,6 @@ public class IndexActivity extends BaseActivity {
 
 
     /**
-     * 获取application中指定的meta-data
-     *
-     * @return 如果没有获取成功(没有对应值，或者异常)，则返回值为空
-     */
-    private String getAppMetaData(Context ctx, String key) {
-        if (ctx == null || TextUtils.isEmpty(key)) {
-            return null;
-        }
-        String resultData = null;
-        try {
-            PackageManager packageManager = ctx.getPackageManager();
-            if (packageManager != null) {
-                ApplicationInfo applicationInfo = packageManager.getApplicationInfo(ctx.getPackageName(), PackageManager.GET_META_DATA);
-                if (applicationInfo != null) {
-                    if (applicationInfo.metaData != null) {
-                        resultData = applicationInfo.metaData.getString(key);
-                    }
-                }
-
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            L.d(e.getMessage());
-        }
-        return resultData;
-    }
-
-    /**
      * 获取版本号
      */
     private void getVersion() {
@@ -259,7 +233,7 @@ public class IndexActivity extends BaseActivity {
         mPushAgent.onAppStart();// 统计应用启动
         pushMessageSkip();// 页面跳转处理
 
-        L.d("xxx","device_token: " + device_token);
+        L.d("xxx", "device_token: " + device_token);
 //        String device_id = DeviceInfo.getDeviceId(MyApp.getContext());
 
     }

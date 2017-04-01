@@ -23,13 +23,13 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/tennis_score_date" />
+                android:padding="5dp"
+                android:src="@mipmap/football_date" />
 
             <TextView
                 android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
                 android:textSize="@dimen/item_football_time"
                 tools:text="2017-2-21 周二" />
 

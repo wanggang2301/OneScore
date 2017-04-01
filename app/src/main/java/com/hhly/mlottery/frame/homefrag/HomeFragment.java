@@ -22,9 +22,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,19 +36,10 @@ import com.alibaba.fastjson.JSON;
 import com.android.volley.DefaultRetryPolicy;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.BasketDetailsActivityTest;
-import com.hhly.mlottery.activity.BasketballScoresActivity;
 import com.hhly.mlottery.activity.DebugConfigActivity;
-import com.hhly.mlottery.activity.FootballActivity;
-import com.hhly.mlottery.activity.FootballMatchActivity;
-import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.activity.HomeUserOptionsActivity;
-import com.hhly.mlottery.activity.NumbersActivity;
-import com.hhly.mlottery.activity.NumbersInfoBaseActivity;
 import com.hhly.mlottery.activity.ProductAdviceActivity;
-import com.hhly.mlottery.activity.WebActivity;
 import com.hhly.mlottery.adapter.homePagerAdapter.HomeListBaseAdapter;
-import com.hhly.mlottery.bean.InformationBean;
 import com.hhly.mlottery.bean.UpdateInfo;
 import com.hhly.mlottery.bean.homepagerentity.HomeBodysEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
@@ -56,17 +49,13 @@ import com.hhly.mlottery.bean.homepagerentity.HomePagerEntity;
 import com.hhly.mlottery.callback.ProductListener;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
-import com.hhly.mlottery.service.umengPushService;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
-import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.message.PushAgent;
-import com.umeng.message.UmengRegistrar;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -90,11 +79,11 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private View mView;
 
     private Context mContext;// 上下文
-    private ImageView public_btn_set;// 登录图标
+    private ImageView iv_home_pic;// 登录图标
     private SwipeRefreshLayout mSwipeRefreshLayout;// 下拉刷新
     private ListView home_page_list;// 首页列表
     private HomeListBaseAdapter mListBaseAdapter;// ListView数据适配器
-    private TextView public_txt_title;
+    private TextView tv_home_name;
 
     public HomePagerEntity mHomePagerEntity;// 首页实体对象
     private UpdateInfo mUpdateInfo;// 版本更新对象
@@ -162,23 +151,17 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
      * 初始化布局
      */
     private void initView() {
-        ImageView public_img_back = (ImageView) mView.findViewById(R.id.public_img_back);
-        public_img_back.setVisibility(View.GONE);
-        ImageView public_btn_filter = (ImageView) mView.findViewById(R.id.public_btn_filter);
-        public_btn_filter.setVisibility(View.GONE);
 
-        public_btn_set = (ImageView) mView.findViewById(R.id.public_btn_set);
-        public_btn_set.setVisibility(View.VISIBLE);
+        iv_home_pic = (ImageView) mView.findViewById(R.id.iv_home_pic);
+        iv_home_pic.setOnClickListener(this);
+
         if (CommonUtils.isLogin()) {
-            public_btn_set.setImageResource(R.mipmap.login);
+            iv_home_pic.setImageResource(R.mipmap.login);
         } else {
-            public_btn_set.setImageResource(R.mipmap.logout);
+            iv_home_pic.setImageResource(R.mipmap.logout);
         }
-        public_btn_set.setOnClickListener(this);
 
-        // public_btn_set.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_user_setting));// 设置登录图标
-
-        public_txt_title = (TextView) mView.findViewById(R.id.public_txt_title);
+        tv_home_name = (TextView) mView.findViewById(R.id.tv_home_name);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.home_page_swiperefreshlayout);// 下拉刷新
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
@@ -213,7 +196,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private void initEvent() {
 
         if (AppConstants.isTestEnv) {
-            public_txt_title.setOnClickListener(new View.OnClickListener() {
+            tv_home_name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     long currentTime = System.currentTimeMillis();
@@ -230,6 +213,59 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 }
             });
         }
+
+        home_page_list.setOnScrollListener(new AbsListView.OnScrollListener() {
+            private SparseArray recordSp = new SparseArray(0);
+            private int mCurrentfirstVisibleItem = 0;
+
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+                mCurrentfirstVisibleItem = firstVisibleItem;
+                View firstView = view.getChildAt(0);
+                if (null != firstView) {
+                    ItemRecod itemRecord = (ItemRecod) recordSp.get(firstVisibleItem);
+                    if (null == itemRecord) {
+                        itemRecord = new ItemRecod();
+                    }
+                    itemRecord.height = firstView.getHeight();
+                    itemRecord.top = firstView.getTop();
+                    recordSp.append(firstVisibleItem, itemRecord);
+                    int h = getScrollY();//滚动距离
+
+                    if (h <= 100) {
+                        tv_home_name.setAlpha(h / 100f);
+                    }else{
+                        tv_home_name.setAlpha(1);
+                    }
+                }
+            }
+
+            private int getScrollY() {
+                int height = 0;
+                for (int i = 0; i < mCurrentfirstVisibleItem; i++) {
+                    ItemRecod itemRecod = (ItemRecod) recordSp.get(i);
+                    height += itemRecod.height;
+                }
+                ItemRecod itemRecod = (ItemRecod) recordSp.get(mCurrentfirstVisibleItem);
+                if (null == itemRecod) {
+                    itemRecod = new ItemRecod();
+                }
+                return height - itemRecod.top;
+            }
+
+            class ItemRecod {
+                int height = 0;
+                int top = 0;
+            }
+        });
+
+
     }
 
     /**
@@ -470,7 +506,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         }
 
         // 各版本升级参数
-        switch (MyApp.isPackageName){
+        switch (MyApp.isPackageName) {
             case AppConstants.PACKGER_NAME_ZH:
                 map.put("localeType", AppConstants.LOCALETYPE_ZH);
                 break;
@@ -740,7 +776,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.public_btn_set:
+            case R.id.iv_home_pic:
                 MobclickAgent.onEvent(mContext, "HomePager_User_Info_Start");
                 goToUserOptionsActivity();
                 break;
@@ -751,7 +787,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     private void goToUserOptionsActivity() {
-        startActivityForResult(new Intent(mContext, FootballMatchActivity.class), REQUESTCODE_LOGIN);
+        startActivityForResult(new Intent(mContext, HomeUserOptionsActivity.class), REQUESTCODE_LOGIN);
     }
 
     /**
@@ -809,10 +845,10 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             if (requestCode == REQUESTCODE_LOGIN) {
                 // 登录成功返回
                 L.d(TAG, "登录成功");
-                public_btn_set.setImageResource(R.mipmap.login);
+                iv_home_pic.setImageResource(R.mipmap.login);
             } else if (requestCode == REQUESTCODE_LOGOUT) {
                 L.d(TAG, "注销成功");
-                public_btn_set.setImageResource(R.mipmap.logout);
+                iv_home_pic.setImageResource(R.mipmap.logout);
             }
         } else if (resultCode == ProductAdviceActivity.RESULT_CODE) {
             getRequestData(2);

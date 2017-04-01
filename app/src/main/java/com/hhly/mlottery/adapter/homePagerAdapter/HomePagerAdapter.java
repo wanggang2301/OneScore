@@ -113,7 +113,7 @@ public class HomePagerAdapter extends PagerAdapter {
                     len = mHomePagerEntity.getBanners().getContent().size();
                 }
                 for (int i = 0; i < len; i++) {
-                    mTopHolder.ll_point.getChildAt(i).setEnabled(i == position % len ? true : false);
+                    mTopHolder.ll_point.getChildAt(i).setEnabled(i == position % len);
                 }
             }
 
@@ -141,7 +141,7 @@ public class HomePagerAdapter extends PagerAdapter {
             if (i != 0) {
                 lp.leftMargin = dp;
             }
-            view.setEnabled(i == 0 ? true : false);
+            view.setEnabled(i == 0);
             view.setBackgroundResource(R.drawable.v_lunbo_point_selector);
             view.setLayoutParams(lp);
             mTopHolder.ll_point.addView(view);
@@ -515,7 +515,7 @@ public class HomePagerAdapter extends PagerAdapter {
                                 {
                                     Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                     intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.ONE));
-                                    intent.putExtra("index",1);
+                                    intent.putExtra("index", 1);
                                     mContext.startActivity(intent);
                                 }
                                 break;

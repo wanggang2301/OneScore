@@ -14,8 +14,11 @@ import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CrashException;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DataBus;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.tendcloud.tenddata.TCAgent;
+import com.tendcloud.tenddata.TalkingDataSMS;
 import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.entity.UMessage;
 
@@ -46,9 +49,16 @@ public class MyApp extends Application {
         appcontext = this;
 
         // 子线程中做初始化操作，提升APP打开速度
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
+
+                // 初始化TalkingData统计
+                TCAgent.LOG_ON = true;
+                TCAgent.init(appcontext, DeviceInfo.getAppMetaData(appcontext, "TD_APP_ID"), DeviceInfo.getAppMetaData(appcontext, "TD_CHANNEL_ID"));
+                // true: 开启自动捕获
+                TCAgent.setReportUncaughtExceptions(!AppConstants.isTestEnv);
+
                 // 初始化PreferenceUtil
                 PreferenceUtil.init(appcontext);
 
