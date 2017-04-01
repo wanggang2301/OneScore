@@ -16,11 +16,11 @@ public class BasketScoreResultEventBusEntity {
         this.map = mapData;
     }
 
-    public Map<String, Object> getMap() {
-        return map;
-    }
-
     public void setMap(Map<String, Object> map) {
         this.map = map;
+    }
+
+    public Map<String, Object> getMap() {
+        return map;
     }
 }
