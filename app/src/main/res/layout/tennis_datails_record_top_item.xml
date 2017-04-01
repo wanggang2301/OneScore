@@ -56,7 +56,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.6"
+            android:layout_weight="0.7"
             android:gravity="center"
             android:text="@string/football_score"
             android:textColor="@color/res_pl_color"
@@ -65,7 +65,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.5"
+            android:layout_weight="1.4"
             android:gravity="center"
             android:text="@string/tennis_datails_record_title"
             android:textColor="@color/res_pl_color"
