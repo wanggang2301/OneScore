@@ -110,41 +110,47 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
 
         tv_match_name.setText(mData.getMatchInfo().getLeagueName());
         tv_date.setText(DateUtil.convertDateToNation(mData.getMatchInfo().getStartDate()));
-        tv_time.setText(mData.getMatchInfo().getStartTime());
+        String time = "";
+        try {
+            time = mData.getMatchInfo().getStartTime().substring(0, mData.getMatchInfo().getStartTime().lastIndexOf(":"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        tv_time.setText(time);
 
         // -6 P2退赛,-5 P1退赛,-4 待定,-3 推迟,-2 中断,-1 完,0 未开始,>0 进行中
         switch (mData.getMatchInfo().getMatchStatus()) {
             case -6:
                 tv_start.setText(getString(R.string.tennis_match_p2));
-                tv_start.setTextColor(getResources().getColor(R.color.number_blue));
+                tv_start.setTextColor(getResources().getColor(R.color.tennis_details_analysis_title_start2));
                 break;
             case -5:
                 tv_start.setText(getString(R.string.tennis_match_p1));
-                tv_start.setTextColor(getResources().getColor(R.color.number_blue));
+                tv_start.setTextColor(getResources().getColor(R.color.tennis_details_analysis_title_start2));
                 break;
             case -4:
                 tv_start.setText(getString(R.string.tennis_match_dd));
-                tv_start.setTextColor(getResources().getColor(R.color.number_blue));
+                tv_start.setTextColor(getResources().getColor(R.color.tennis_details_analysis_title_start2));
                 break;
             case -3:
                 tv_start.setText(getString(R.string.tennis_match_tc));
-                tv_start.setTextColor(getResources().getColor(R.color.number_blue));
+                tv_start.setTextColor(getResources().getColor(R.color.tennis_details_analysis_title_start2));
                 break;
             case -2:
                 tv_start.setText(getString(R.string.tennis_match_zd));
-                tv_start.setTextColor(getResources().getColor(R.color.number_blue));
+                tv_start.setTextColor(getResources().getColor(R.color.tennis_details_analysis_title_start2));
                 break;
             case -1:
                 tv_start.setText(getString(R.string.tennis_match_over));
-                tv_start.setTextColor(getResources().getColor(R.color.number_red));
+                tv_start.setTextColor(getResources().getColor(R.color.tennis_details_analysis_title_start3));
                 break;
             case 0:
                 tv_start.setText(getString(R.string.tennis_match_not_start));
-                tv_start.setTextColor(getResources().getColor(R.color.mdy_666));
+                tv_start.setTextColor(getResources().getColor(R.color.tennis_details_analysis_title_start));
                 break;
             default:
-                tv_start.setText(getString(R.string.tennis_match_not_start));
-                tv_start.setTextColor(getResources().getColor(R.color.mdy_666));
+                tv_start.setText(getString(R.string.tennis_match_join));
+                tv_start.setTextColor(getResources().getColor(R.color.tennis_details_analysis_title_start2));
                 break;
         }
 

@@ -105,15 +105,17 @@ public class TennisPlateFrag extends Fragment {
         VolleyContentFast.requestJsonByGet(BaseURLs.TENNIS_DATAILS_ODDS_URL, map, new VolleyContentFast.ResponseSuccessListener<TennisOdds>() {
             @Override
             public void onResponse(TennisOdds json) {
-                tennisOdds = json;
-                if (tennisOdds != null && tennisOdds.getData() != null) {
+                if (json != null && json.getData() != null) {
                     setStatus(SUCCESS);
                     nameList.clear();
-                    for (int i = 0; i < tennisOdds.getData().size(); i++) {
+                    for (int i = 0; i < json.getData().size(); i++) {
                         // 添加所有公司name
-                        nameList.add(tennisOdds.getData().get(i).getName());
+                        nameList.add(json.getData().get(i).getName());
                     }
-                    mAdapter.addData(tennisOdds.getData());
+                    if (tennisOdds == null) {
+                        tennisOdds = json;
+                        mAdapter.addData(tennisOdds.getData());
+                    }
                     mAdapter.notifyDataSetChanged();
                 } else {
                     setStatus(NOTO_DATA);
