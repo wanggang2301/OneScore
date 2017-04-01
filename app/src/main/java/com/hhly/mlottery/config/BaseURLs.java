@@ -1086,6 +1086,8 @@ public class BaseURLs {
     public final static String TENNIS_SCHEDULE_URL = URL_API_HOST + "tennisMatch.findScheduleMatch.do";
     // 网球比分关注列表
     public final static String TENNIS_FOCUS_URL = URL_API_HOST + "tennisMatch.connerns.do";
+    //网球指数列表接口
+    public final static String TENNIS_INDEX_LIST=URL_API_HOST+"tennisIndexData.findIndexDataList.do";
 
     // 网球内页 头部和分析
     public final static String TENNIS_DATAILS_URL = URL_API_HOST + "tennisMatch.findContentAnalysis.do";

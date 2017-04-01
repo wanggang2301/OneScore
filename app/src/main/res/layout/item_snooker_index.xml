@@ -76,6 +76,7 @@
                     android:layout_marginStart="10dp"
                     android:gravity="center|start"
                     android:text="10:30"
+                    android:visibility="gone"
                     android:textColor="#0090ff"
                     android:textSize="13sp" />
 
@@ -85,6 +86,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center|start"
                     android:text="'"
+                    android:visibility="gone"
                     android:textColor="@color/colorPrimary" />
 
 

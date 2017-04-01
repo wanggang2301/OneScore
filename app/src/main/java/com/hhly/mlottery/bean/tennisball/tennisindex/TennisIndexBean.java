@@ -1,4 +1,4 @@
-package com.hhly.mlottery.bean.snookerbean.snookerIndexBean;
+package com.hhly.mlottery.bean.tennisball.tennisindex;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -11,15 +11,15 @@ import java.util.List;
  * 作    者：mady@13322.com
  * 时    间：2017/3/20
  */
-public class SnookerIndexBean {
+public class TennisIndexBean {
 
 
     /**
      * currDate : 2017-02-27
      * company : [{"comId":"3","comName":"SB"},{"comId":"31","comName":"SBO"},{"comId":"38","comName":"IBC"},{"comId":"44","comName":"ISN"},{"comId":"45","comName":"VinBet"}]
      * code : 200
-            * allInfo : [{"leagueName":"Championship League Group 7","leagueId":"320977","leagueColor":null,"hot":false,"matchInfo":{"matchId":"848814045","matchHomeName":"约翰·希金斯","matchGuestName":"迈克尔·霍尔特","matchResult":null,"openTime":" 20:00","matchState":null},"comList":[{"comId":"31","comName":"SBO","currLevel":{"left":"1.23","middle":"1.5","right":"0.65"},"preLevel":{"left":"1.23","middle":"1.5","right":"0.65"}}]},{"leagueName":"Championship League Group 7","leagueId":"320977","leagueColor":null,"hot":false,"matchInfo":{"matchId":"848814046","matchHomeName":"迈克尔·霍尔特","matchGuestName":"格雷姆·多特","matchResult":null,"openTime":" 23:00","matchState":null},"comList":[{"comId":"31","comName":"SBO","currLevel":{"left":"1.63","middle":"1.5","right":"0.45"},"preLevel":{"left":"1.63","middle":"1.5","right":"0.45"}}]}]
-            */
+     * allInfo : [{"leagueName":"Championship League Group 7","leagueId":"320977","leagueColor":null,"hot":false,"matchInfo":{"matchId":"848814045","matchHomeName":"约翰·希金斯","matchGuestName":"迈克尔·霍尔特","matchResult":null,"openTime":" 20:00","matchState":null},"comList":[{"comId":"31","comName":"SBO","currLevel":{"left":"1.23","middle":"1.5","right":"0.65"},"preLevel":{"left":"1.23","middle":"1.5","right":"0.65"}}]},{"leagueName":"Championship League Group 7","leagueId":"320977","leagueColor":null,"hot":false,"matchInfo":{"matchId":"848814046","matchHomeName":"迈克尔·霍尔特","matchGuestName":"格雷姆·多特","matchResult":null,"openTime":" 23:00","matchState":null},"comList":[{"comId":"31","comName":"SBO","currLevel":{"left":"1.63","middle":"1.5","right":"0.45"},"preLevel":{"left":"1.63","middle":"1.5","right":"0.45"}}]}]
+     */
 
     private String currDate;
     private int code;
@@ -297,25 +297,6 @@ public class SnookerIndexBean {
                 }
             }
 
-            /**
-             * 属于并且可显示
-             *
-             * @param company 公司
-             * @return 属于可显示的公司
-             */
-            public boolean belongToShow(CompanyEntity company) {
-                return this.comId.equals(company.comId) && company.isChecked;
-            }
-
-            public boolean belongToShow(List<CompanyEntity> companies) {
-                // 遍历
-                for (CompanyEntity company : companies) {
-                    // 属于其中一家公司即可
-                    if (this.belongToShow(company)) return true;
-                }
-                // 都不属于则不属于
-                return false;
-            }
             /**
              * left : 1.23
              * middle : 1.5
