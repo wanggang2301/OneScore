@@ -61,18 +61,20 @@ public class BasketIndexDetailsChildPresenter extends BasePresenter<BasketIndexD
 
                 mView.showRightRecyclerView();
                 mView.showRequestSucess();
-
-
             }
 
             @Override
             public void getDataError() {
+                mView.setTitle();
+
                 mView.onError();
                 //isFirstRequest = false;
             }
 
             @Override
             public void getNoData() {
+                mView.setTitle();
+
                 mView.noDataView();
             }
         });

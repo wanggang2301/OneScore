@@ -129,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:gravity="center"
-                    android:text="@string/odd_home_txt"
+                    android:text="@string/basket_analyze_guest_win"
                     android:textColor="@color/version"
                     android:textSize="@dimen/text_size_10" />
 
@@ -149,7 +149,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:gravity="center"
-                    android:text="@string/odd_guest_txt"
+                    android:text="@string/basket_analyze_home_win"
                     android:textColor="@color/version"
                     android:textSize="@dimen/text_size_10" />
 
