@@ -217,15 +217,6 @@ public class AppConstants {
     public static Register register = null;
     // ============= account end ==============
 
-
-    /**
-     * 首页热门赛事足球背景图片
-     */
-    public static int[] homePageScoreFootBG = {R.mipmap.home_pager_score_football01_bg, R.mipmap.home_pager_score_football02_bg, R.mipmap.home_pager_score_football03_bg, R.mipmap.home_pager_score_football04_bg, R.mipmap.home_pager_score_football05_bg, R.mipmap.home_pager_score_football06_bg, R.mipmap.home_pager_score_football07_bg};
-    /**
-     * 首页热门赛事篮球背景图片
-     */
-    public static int[] homePageScoreBasketBG = {R.mipmap.home_pager_score_basketball01_bg, R.mipmap.home_pager_score_basketball02_bg};
     //防止用户恶意注册添加的sign字段。
     public static final String SIGN_KEY = "B2A7748BF1FCAF6326979E1B86DC0C60";
 
