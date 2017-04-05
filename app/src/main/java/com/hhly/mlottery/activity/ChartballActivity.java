@@ -61,21 +61,21 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
     private ImageView iv_gallery;
     private InputMethodManager inputMethodManager;
     private RelativeLayout rl_local;
-    private RelativeLayout rl_emoji;
+//    private RelativeLayout rl_emoji;
     private ViewPager view_pager_local;
-    private ViewPager view_pager_emoji;
+//    private ViewPager view_pager_emoji;
     List<Fragment> localFragments = new ArrayList<>();
-    List<Fragment> emojiFragments = new ArrayList<>();
+//    List<Fragment> emojiFragments = new ArrayList<>();
 
     private final static int LOCAL_PAGER_SIZE = 10;
-    private final static int EMOJI_PAGER_SIZE = 20;
+//    private final static int EMOJI_PAGER_SIZE = 20;
     private LinearLayout local_point;
-    private LinearLayout emoji_point;
+//    private LinearLayout emoji_point;
     private int localPagerSize;
-    private int emojiPagerSize;
+//    private int emojiPagerSize;
 
     private LinearLayout ll_local_content;
-    private LinearLayout ll_emoji_content;
+//    private LinearLayout ll_emoji_content;
     private final static String MATCH_THIRD_ID = "thirdId";
     private String mThirdId;
     private String callName;// @昵称
@@ -84,7 +84,6 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_chartball_layout);
         /**当前评论小窗口不统计*/
         MobclickAgent.openActivityDurationTrack(false);
 
@@ -174,24 +173,24 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
             }
         });
 
-        view_pager_emoji.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                for (int i = 0; i < emojiPagerSize; i++) {
-                    emoji_point.getChildAt(i).setEnabled(i == position % emojiPagerSize ? true : false);
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+//        view_pager_emoji.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                for (int i = 0; i < emojiPagerSize; i++) {
+//                    emoji_point.getChildAt(i).setEnabled(i == position % emojiPagerSize ? true : false);
+//                }
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
 
     }
 
@@ -224,19 +223,19 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
         localPagerAdapter.addFragments(localFragments);
         view_pager_local.setAdapter(localPagerAdapter);
 
-        BasePagerAdapter emojiPagerAdapter = new BasePagerAdapter(getSupportFragmentManager());
-        emojiPagerSize = AppConstants.emojiList.length % EMOJI_PAGER_SIZE == 0 ? AppConstants.emojiList.length / EMOJI_PAGER_SIZE : AppConstants.emojiList.length / EMOJI_PAGER_SIZE + 1;
-        for (int i = 0; i < emojiPagerSize; i++) {
-            ArrayList<String> emojilist = new ArrayList<>();
-            int startIndex = i * EMOJI_PAGER_SIZE;
-            int endIndex = (i + 1) * EMOJI_PAGER_SIZE <= AppConstants.emojiList.length ? (i + 1) * EMOJI_PAGER_SIZE : AppConstants.emojiList.length;
-            for (int j = startIndex; j < endIndex; j++) {
-                emojilist.add(AppConstants.emojiList[j]);
-            }
-            emojiFragments.add(EmojiFragment.newInstance(emojilist));
-        }
-        emojiPagerAdapter.addFragments(emojiFragments);
-        view_pager_emoji.setAdapter(emojiPagerAdapter);
+//        BasePagerAdapter emojiPagerAdapter = new BasePagerAdapter(getSupportFragmentManager());
+//        emojiPagerSize = AppConstants.emojiList.length % EMOJI_PAGER_SIZE == 0 ? AppConstants.emojiList.length / EMOJI_PAGER_SIZE : AppConstants.emojiList.length / EMOJI_PAGER_SIZE + 1;
+//        for (int i = 0; i < emojiPagerSize; i++) {
+//            ArrayList<String> emojilist = new ArrayList<>();
+//            int startIndex = i * EMOJI_PAGER_SIZE;
+//            int endIndex = (i + 1) * EMOJI_PAGER_SIZE <= AppConstants.emojiList.length ? (i + 1) * EMOJI_PAGER_SIZE : AppConstants.emojiList.length;
+//            for (int j = startIndex; j < endIndex; j++) {
+//                emojilist.add(AppConstants.emojiList[j]);
+//            }
+//            emojiFragments.add(EmojiFragment.newInstance(emojilist));
+//        }
+//        emojiPagerAdapter.addFragments(emojiFragments);
+//        view_pager_emoji.setAdapter(emojiPagerAdapter);
 
         // 添加小圆点
         local_point.removeAllViews();
@@ -254,21 +253,21 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
                 local_point.addView(view);
             }
         }
-        emoji_point.removeAllViews();
-        if (emojiPagerSize >= 2) {
-            int dp = DisplayUtil.dip2px(mContext, 5);// 添加小圆点
-            for (int i = 0; i < emojiPagerSize; i++) {
-                View view = new View(mContext);
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(dp, dp);
-                if (i != 0) {
-                    lp.leftMargin = dp;
-                }
-                view.setEnabled(i == 0);
-                view.setBackgroundResource(R.drawable.v_lunbo_point_selector);
-                view.setLayoutParams(lp);
-                emoji_point.addView(view);
-            }
-        }
+//        emoji_point.removeAllViews();
+//        if (emojiPagerSize >= 2) {
+//            int dp = DisplayUtil.dip2px(mContext, 5);// 添加小圆点
+//            for (int i = 0; i < emojiPagerSize; i++) {
+//                View view = new View(mContext);
+//                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(dp, dp);
+//                if (i != 0) {
+//                    lp.leftMargin = dp;
+//                }
+//                view.setEnabled(i == 0);
+//                view.setBackgroundResource(R.drawable.v_lunbo_point_selector);
+//                view.setLayoutParams(lp);
+//                emoji_point.addView(view);
+//            }
+//        }
     }
 
     private void initWindow() {
@@ -300,14 +299,14 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
         findViewById(R.id.iv_select_icon).setSelected(true);
         findViewById(R.id.iv_select_emoji).setOnClickListener(this);
         ll_local_content = (LinearLayout) findViewById(R.id.ll_local_content);
-        ll_emoji_content = (LinearLayout) findViewById(R.id.ll_emoji_content);
+//        ll_emoji_content = (LinearLayout) findViewById(R.id.ll_emoji_content);
         rl_local = (RelativeLayout) findViewById(R.id.rl_local);
-        rl_emoji = (RelativeLayout) findViewById(R.id.rl_emoji);
+//        rl_emoji = (RelativeLayout) findViewById(R.id.rl_emoji);
 
         view_pager_local = (ViewPager) findViewById(R.id.view_pager_local);
-        view_pager_emoji = (ViewPager) findViewById(R.id.view_pager_emoji);
+//        view_pager_emoji = (ViewPager) findViewById(R.id.view_pager_emoji);
         local_point = (LinearLayout) findViewById(R.id.local_point);
-        emoji_point = (LinearLayout) findViewById(R.id.emoji_point);
+//        emoji_point = (LinearLayout) findViewById(R.id.emoji_point);
     }
 
     @Override
@@ -369,20 +368,20 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
                 ll_gallery_content.setVisibility(View.VISIBLE);
                 break;
 
-            case R.id.iv_select_icon:// 显示自定义表情
-            case R.id.ll_local_content:
-                rl_local.setVisibility(View.VISIBLE);
-                rl_emoji.setVisibility(View.GONE);
-                ll_local_content.setBackgroundResource(R.color.white);
-                ll_emoji_content.setBackgroundResource(R.color.home_item_bg);
-                break;
-            case R.id.iv_select_emoji:// 显示emoji表情
-            case R.id.ll_emoji_content:
-                rl_local.setVisibility(View.GONE);
-                rl_emoji.setVisibility(View.VISIBLE);
-                ll_local_content.setBackgroundResource(R.color.home_item_bg);
-                ll_emoji_content.setBackgroundResource(R.color.white);
-                break;
+//            case R.id.iv_select_icon:// 显示自定义表情
+//            case R.id.ll_local_content:
+//                rl_local.setVisibility(View.VISIBLE);
+//                rl_emoji.setVisibility(View.GONE);
+//                ll_local_content.setBackgroundResource(R.color.white);
+//                ll_emoji_content.setBackgroundResource(R.color.home_item_bg);
+//                break;
+//            case R.id.iv_select_emoji:// 显示emoji表情
+//            case R.id.ll_emoji_content:
+//                rl_local.setVisibility(View.GONE);
+//                rl_emoji.setVisibility(View.VISIBLE);
+//                ll_local_content.setBackgroundResource(R.color.home_item_bg);
+//                ll_emoji_content.setBackgroundResource(R.color.white);
+//                break;
         }
 
     }

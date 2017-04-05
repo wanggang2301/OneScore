@@ -15,6 +15,7 @@ import com.hhly.mlottery.frame.CPIFragment;
 import com.hhly.mlottery.frame.CounselFragment;
 import com.hhly.mlottery.frame.NewVideoFragment;
 import com.hhly.mlottery.frame.ScoresFragment;
+import com.hhly.mlottery.frame.VideoFragemnt;
 import com.hhly.mlottery.frame.footballframe.InformationFragment;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.util.AppConstants;
@@ -79,7 +80,7 @@ public class FootballActivity extends BaseActivity {
         fragments.add(new ScoresFragment());
         fragments.add(new CounselFragment());
         fragments.add(new InformationFragment());
-        fragments.add(new NewVideoFragment());
+        fragments.add(new VideoFragemnt());
         fragments.add(CPIFragment.newInstance());
       // fragments.add(new BasketScoresFragment());
     }

@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
@@ -267,13 +266,14 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     public void noData() {
 
         L.d(TAG, "没有数据_____________");
+        fileterMatchTypeList.clear();
+
         mHandler.sendEmptyMessage(2);
 
     }
 
     @Override
     public void onError() {
-        Toast.makeText(mActivity, "出错", Toast.LENGTH_SHORT).show();
         L.d(TAG, "请求出错_____________");
         mHandler.sendEmptyMessage(-1);
 
@@ -309,6 +309,7 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     }
 
     public List<BasketIndexBean.DataBean.FileterTagsBean> getFilterTagList() {
+
         return fileterMatchTypeList;
     }
 
@@ -322,10 +323,12 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         //赛事的筛选,获取父赛事的筛选结果
         LinkedList<String> filterLeagueList = parentFragment.getFilterLeagueList();
 
+        L.d("xxxccc", "欧赔2==" + sourceDataList.size());
 
         //第一次请求
         if (filterLeagueList != null) {
             for (BasketIndexBean.DataBean.AllInfoBean allInfo : sourceDataList) {
+
                 if (filterLeagueList.indexOf(allInfo.getLeagueId()) >= 0) {
                     filterAllInfo(allInfo);
                 }

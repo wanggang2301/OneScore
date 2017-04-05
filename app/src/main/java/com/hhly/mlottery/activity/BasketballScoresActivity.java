@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
+import com.hhly.mlottery.bean.FoucsBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.BasketFocusEventBus;
 import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
@@ -116,6 +117,8 @@ public class BasketballScoresActivity extends BaseWebSocketActivity implements V
         setupViewPager();
         basketFocusCallback();
         initCurrentFragment(currentFragmentId);
+        EventBus.getDefault().register(this);
+
 
     }
 
@@ -228,9 +231,15 @@ public class BasketballScoresActivity extends BaseWebSocketActivity implements V
 
     }
 
+    public void onEventMainThread(FoucsBean register){
+
+         basketFocusCallback();
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -426,6 +435,8 @@ public class BasketballScoresActivity extends BaseWebSocketActivity implements V
         super.onPause();
         MobclickAgent.onPause(this);
     }
+
+
 
     @Override
     public void onStart() {

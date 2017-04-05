@@ -255,7 +255,7 @@ public class AvatarSelectionActivity extends Activity implements View.OnClickLis
                 if (CupChicked != null) {
                     putPhotoUrl(CupChicked);
                 } else if (CupChicked == null) {
-                    UiUtils.toast(getApplicationContext(), "您还未选择头像");
+                    UiUtils.toast(getApplicationContext(), R.string.no_select_head);
                 }
                 break;
             default:
