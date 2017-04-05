@@ -84,7 +84,6 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_chartball_layout);
         /**当前评论小窗口不统计*/
         MobclickAgent.openActivityDurationTrack(false);
 

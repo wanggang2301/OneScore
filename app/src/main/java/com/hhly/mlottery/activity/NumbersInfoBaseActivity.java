@@ -74,9 +74,6 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
             public_txt_spinner.setVisibility(View.GONE);
             settingTitle();
             getSupportFragmentManager().beginTransaction().replace(R.id.fl_other_content, new HKLotteryChartFragment()).commit();
-//            if (!PreferenceUtil.getBoolean(AppConstants.LOTTERY_HK_RED_KEY, false)) {
-//                PreferenceUtil.commitBoolean(AppConstants.LOTTERY_HK_RED_KEY, true);
-//            }
         }
     }
 
