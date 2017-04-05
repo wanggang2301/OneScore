@@ -1,5 +1,6 @@
 package com.hhly.mlottery.util;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
@@ -20,6 +21,33 @@ public class AppConstants {
      * true是纯净版|false完整版
      */
     public static final boolean fullORsimple = false;
+
+
+    /**
+     * 开机页
+     */
+    public static final int getBootPageId() {
+
+        switch (MyApp.isLanguage) {
+            case "rCN":
+                return R.mipmap.welcome;
+            case "rTW":
+                return R.mipmap.welcome_tw;
+//            case "rEN":
+//            case "rTH":
+//            case "rVI":
+            default:
+                return R.mipmap.welcome;
+        }
+    }
+
+    /**
+     * 引导页
+     */
+    public static final int[] getGuidePage() {
+
+        return new int[]{R.mipmap.welcome1, R.mipmap.welcome2, R.mipmap.welcome3};
+    }
 
 
     /**
@@ -216,6 +244,7 @@ public class AppConstants {
      */
     public static Register register = null;
     // ============= account end ==============
+
 
     //防止用户恶意注册添加的sign字段。
     public static final String SIGN_KEY = "B2A7748BF1FCAF6326979E1B86DC0C60";
