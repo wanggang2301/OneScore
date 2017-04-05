@@ -61,8 +61,6 @@ public class BasketIndexDetailsChildPresenter extends BasePresenter<BasketIndexD
 
                 mView.showRightRecyclerView();
                 mView.showRequestSucess();
-
-
             }
 
             @Override
