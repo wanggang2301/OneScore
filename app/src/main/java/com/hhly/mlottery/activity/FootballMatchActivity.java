@@ -155,12 +155,12 @@ public class FootballMatchActivity extends BaseActivity implements View.OnClickL
         Map<String, String> params = new HashMap<>();
         params.put("searchKeyword", "奧巴杜魯");//接口添加 version=xx 字段
         // 请求网络数据
-        VolleyContentFast.requestJsonByPost("http://m.13322.com/mlottery/core/IOSBasketballMatch.fuzzySearch.do",params,new VolleyContentFast.ResponseSuccessListener<BasketballSearchBean>() {
+        VolleyContentFast.requestJsonByPost("http://m.13322.com/mlottery/core/IOSBasketballMatch.fuzzySearch.do",params,new VolleyContentFast.ResponseSuccessListener<InfoCenterBean>() {
             @Override
-            public void onResponse(BasketballSearchBean jsonObject) {
+            public void onResponse(InfoCenterBean jsonObject) {
 
-                //Log.i("sdas","asdas"+ jsonObject.getData().get(0).getMatchOdds().getAsiaSize().getCrown().getHandicap());
-               /* mSwipeRefreshLayout.setRefreshing(false);
+
+                mSwipeRefreshLayout.setRefreshing(false);
                 if (jsonObject != null) {
 
                     if (jsonObject.result == 200) {
@@ -185,11 +185,11 @@ public class FootballMatchActivity extends BaseActivity implements View.OnClickL
 
                         mTitleTextView.setText(getCurrentDate(mInfoCenterBean.intelligences.get(currentIndexDate).date, mInfoCenterBean.intelligences.get(currentIndexDate).count));
 
-                 *//*       mInfoCenterPW = new InfoCenterPW((Activity) mContext, mInfoCenterBean.intelligences, currentIndexDate);
+            /*            mInfoCenterPW = new InfoCenterPW((Activity) mContext, mInfoCenterBean.intelligences, currentIndexDate);
                         mInfoCenterPW.setFootInfoCallBack(footInfoCallBack);
                         mInfoCenterPW.setFootInfoShowSelectInfoCallBack(footInfoShowSelectInfoCallBack);
+*/
 
-*//*
                         mInfoCenterBean.intelligences.get(currentIndexDate).isSelect = true;
                     } else {
                         mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
@@ -197,7 +197,7 @@ public class FootballMatchActivity extends BaseActivity implements View.OnClickL
                     }
                 } else {
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
-                }*/
+                }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
@@ -206,7 +206,7 @@ public class FootballMatchActivity extends BaseActivity implements View.OnClickL
                 Log.i("sdas","asdas"+exception);
 
             }
-        }, BasketballSearchBean.class);
+        }, InfoCenterBean.class);
     }
 
 
