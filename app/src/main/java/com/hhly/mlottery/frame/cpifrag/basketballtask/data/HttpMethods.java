@@ -54,6 +54,8 @@ public class HttpMethods {
 
 
     public void getBasketIndexCenter(Subscriber<BasketIndexBean> subscriber, String date, String type) {
+        L.d("canshu", "语言=" + appendLanguage() + "____时区=" + timeZone() + "____时间=" + date);
+
         apiService.getIndexCenter(appendLanguage(), timeZone(), date, type, APP_TYPE)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
