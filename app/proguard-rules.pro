@@ -216,6 +216,8 @@
 -keep class com.hhly.mlottery.activity.SnookerInformationSerachActivity{ *;}
 -keep class com.hhly.mlottery.callback.SearchService { *; }
 -keep class com.hhly.mlottery.callback.BasketSearchservice{ *; }
+
+##篮球指数
 -keep class com.hhly.mlottery.frame.cpifrag.basketballtask.data.ApiService{ *; }
 
 
