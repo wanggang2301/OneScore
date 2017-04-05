@@ -416,12 +416,18 @@
         <activity
             android:name=".activity.TennisCpiDetailsActivity"
             android:screenOrientation="portrait" />
-            android:screenOrientation="portrait" />
+        android:screenOrientation="portrait" />
         <activity
             android:name=".activity.FootballMatchActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.BasketBallMatchSearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CounselActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.VideoActivity"
             android:screenOrientation="portrait" />
 
     </application>

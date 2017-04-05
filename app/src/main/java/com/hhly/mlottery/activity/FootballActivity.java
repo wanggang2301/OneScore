@@ -13,8 +13,6 @@ import android.widget.RadioGroup;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.frame.CPIFragment;
 import com.hhly.mlottery.frame.CounselFragment;
-import com.hhly.mlottery.frame.NewVideoFragment;
-import com.hhly.mlottery.frame.ScoresFragment;
 import com.hhly.mlottery.frame.VideoFragemnt;
 import com.hhly.mlottery.frame.footballframe.InformationFragment;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
@@ -77,7 +75,6 @@ public class FootballActivity extends BaseActivity {
     private void initView() {
         ly_tab_bar = (LinearLayout) findViewById(R.id.ly_tab_bar);
         mRadioGroup = (RadioGroup) findViewById(R.id.mRadioGroup);
-        fragments.add(new ScoresFragment());
         fragments.add(new CounselFragment());
         fragments.add(new InformationFragment());
         fragments.add(new VideoFragemnt());

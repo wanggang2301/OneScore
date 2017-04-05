@@ -43,7 +43,6 @@ import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.callback.RequestHostFocusCallBack;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
-import com.hhly.mlottery.frame.ScoresFragment;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFilterEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchSettingEventBusEntity;
@@ -172,11 +171,11 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
     }
 
 
-    public static ImmediateFragment newInstance(int index, boolean isNewFramWork ,int entryType) {
+    public static ImmediateFragment newInstance(int index, boolean isNewFramWork, int entryType) {
         Bundle bundle = new Bundle();
         bundle.putInt(FRAGMENT_INDEX, index);
         bundle.putBoolean(ISNEW_FRAMEWORK, isNewFramWork);
-        bundle.putInt(ENTRY_TYPE , entryType);
+        bundle.putInt(ENTRY_TYPE, entryType);
         ImmediateFragment fragment = new ImmediateFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -263,8 +262,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 //                ((ScoresFragment) getParentFragment()).focusCallback();
                 //private int mEntryType; // 标记入口 判断是从哪里进来的 (0:首页入口  1:新导航条入口)
                 if (mEntryType == 0) {
-                    ((ScoresFragment) getParentFragment()).firstFocusCallback();
-                }else if(mEntryType == 1){
+                } else if (mEntryType == 1) {
                     ((FootBallScoreFragment) getParentFragment()).focusCallback();
                 }
             }
@@ -1156,8 +1154,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
             updateAdapter();
 //            ((ScoresFragment) getParentFragment()).focusCallback();
             if (mEntryType == 0) {
-                ((ScoresFragment) getParentFragment()).firstFocusCallback();
-            }else if(mEntryType == 1){
+            } else if (mEntryType == 1) {
                 ((FootBallScoreFragment) getParentFragment()).focusCallback();
             }
         }
@@ -1198,7 +1195,6 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
         if (isNewFrameWork) {
             ((FootBallScoreFragment) getParentFragment()).reconnectWebSocket();
         } else {
-            ((ScoresFragment) getParentFragment()).reconnectWebSocket();
 
         }
 
@@ -1213,29 +1209,6 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
         }
     }
 
-
-    //推送
-    public void onEventMainThread(ScoresFragment.FootballScoresWebSocketEntity entity) {
-        if (mAdapter == null) {
-            return;
-        }
-
-        String type = "";
-        try {
-            JSONObject jsonObject = new JSONObject(entity.text);
-            type = jsonObject.getString("type");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        if (!"".equals(type)) {
-            Message msg = Message.obtain();
-            msg.obj = entity.text;
-
-            msg.arg1 = Integer.parseInt(type);
-            mSocketHandler.sendMessage(msg);
-        }
-    }
 
     //推送
     public void onEventMainThread(FootBallScoreFragment.FootballScoresWebSocketEntity entity) {
