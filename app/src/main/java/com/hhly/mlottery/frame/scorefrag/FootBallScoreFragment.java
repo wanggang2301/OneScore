@@ -36,6 +36,7 @@ import com.hhly.mlottery.frame.footballframe.ResultFragment;
 import com.hhly.mlottery.frame.footballframe.RollBallFragment;
 import com.hhly.mlottery.frame.footballframe.ScheduleFragment;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoreFragmentWebSocketEntity;
+import com.hhly.mlottery.activity.FootballMatchSearchActivity;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
@@ -95,6 +96,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
 
     private TextView tv_match_name;
     private ImageView iv_match;
+    private ImageView public_search_filter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -136,6 +138,10 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         d_header = (LinearLayout) view.findViewById(R.id.d_heasder);
 
         tv_match_name.setText(getResources().getString(R.string.football_txt));
+        //搜索
+        public_search_filter = (ImageView) view.findViewById(R.id.public_search_filter);
+        public_search_filter.setVisibility(View.VISIBLE);
+
     }
 
     public void focusCallback() {
@@ -288,7 +294,13 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
 
 
     private void initData() {
-
+        public_search_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, FootballMatchSearchActivity.class);
+                startActivity(intent);
+            }
+        });
         mFilterImgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

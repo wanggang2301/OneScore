@@ -1,0 +1,1633 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--公共-->
+    <string name="games_no_start">Chưa thi đấu</string>
+    <!--足球事件直播-->
+    <string name="foot_event">Diễn biến</string>
+    <string name="foot_trend">Biểu đồ</string>
+    <string name="foot_statictics">Thống kê</string>
+    <string name="foot_event_goal">Bàn thắng</string>
+    <string name="foot_event_rc">Thẻ đỏ</string>
+    <string name="foot_event_yc">Thẻ vàng</string>
+    <string name="foot_event_ytor">2 vàng 1 đỏ </string>
+    <string name="foot_event_ychanger">2 vàng thành 1 đỏ </string>
+    <string name="foot_event_player">Thay người</string>
+    <string name="foot_event_corner">Góc </string>
+    <string name="foot_event_half">Hết H1</string>
+    <string name="foot_event_finish">Cả trận</string>
+    <string name="foot_event_ge">Bàn thứ %1$s</string>
+    <string name="foot_event_zhang">Thẻ thứ %1$s</string>
+    <string name="foot_event_nomatchstate">Hiện không có diễn biến trận đấu</string>
+    <string name="foot_event_in">Hiệp 1</string>
+    <string name="foot_event_out">Hiệp 2</string>
+    <string name="foot_event_num">No.</string>
+    <string name="matchIsNotStart">Trận đấu chưa bắt đầu</string>
+    <string name="goChat">Đi thảo luận chơi</string>
+    <string name="shot_nodata">Hiện không có số liệu sút trúng gôn.</string>
+    <string name="shotAside_nodata">Hiện không có số liệu sút lệch gôn.</string>
+    <string name="dangerAttackk_nodata">Hiện không có số liệu tấn công nguy hiểm.</string>
+    <string name="attack_nodata">Hiện không có số liệu tấn công nguy hiểm.</string>
+    <string name="time">Thời gian (T)</string>
+
+
+    <!--篮球资料库-->
+    <string name="basket_info_hot">Hot</string>
+    <string name="basket_info_eur">Châu Âu</string>
+    <string name="basket_info_america">Châu Mỹ</string>
+    <string name="basket_info_asia">Châu Á</string>
+    <string name="basket_info_africa">Châu Phi</string>
+    <string name="basket_info_inter">Quốc tế</string>
+    <string name="basket_info_title">Bóng rổ </string>
+    <string name="basket_info_zhouji">Châu lục </string>
+    <string name="basket_info_country">Quốc gia </string>
+
+    <string name="basket_info_zhouji2">Quốc tế </string>
+    <string name="basket_info_shatan">Bãi biển </string>
+
+    <string name="football_info_title">Bóng đá </string>
+    <string name="football_info_oceania">Châu Đại Dương</string>
+
+
+    <!--足球内页改版(滚球等)-->
+    <string name="foot_details_roolball">Nhảy kèo</string>
+    <string name="foot_details_talkball">Thảo luận</string>
+    <string name="foot_details_analyze">Phân tích</string>
+    <string name="foot_details_odds">Tỷ lệ</string>
+    <string name="foot_details_statistics">Trực tiếp</string>
+
+    <string name="foot_details_time">Thời gian</string>
+    <string name="foot_details_score">Tỷ Số</string>
+    <string name="foot_details_home">Chủ nhà</string>
+    <string name="foot_details_ball">Chấp</string>
+    <string name="foot_details_guest">Đội khách</string>
+
+    <string name="foot_details_livetitle">Diễn biến trực tiếp</string>
+    <string name="jipan">Kèo live</string>
+    <string name="chupan">Kèo đầu</string>
+    <string name="alet_first">Kèo Á đầu: </string>
+    <string name="asize_first">Tài xỉu đầu: </string>
+    <string name="eu_first">Tỷ lệ Âu đầu: </string>
+    <string name="foot_details_live_tesxt">Tường thuật: </string>
+    <string name="shoot">Tấn công</string>
+    <string name="foot_details_live_msg">Kính mong đón chờ trực tiếp diễn biến !</string>
+    <string name="foot_details_focus">Quan tâm </string>
+    <string name="foot_details_focused">Đã quan tâm</string>
+    <string name="foot_details_share">Chia sẻ</string>
+    <!--亚盘-->
+    <string name="foot_odds_alet_left">Chủ nhà</string>
+    <string name="foot_odds_alet_middle">Chấp</string>
+    <string name="foot_odds_alet_right">Đội khách</string>
+
+    <!--大小-->
+    <string name="foot_odds_asize_left">Tài</string>
+    <string name="foot_odds_asize_middle">Kèo</string>
+    <string name="foot_odds_asize_right">Xỉu</string>
+
+
+    <!--欧赔-->
+    <string name="foot_odds_eu_left">Thắng</string>
+    <string name="foot_odds_eu_middle">Hòa</string>
+    <string name="foot_odds_eu_right">Bại</string>
+
+    <!--新版分析-->
+    <string name="new_analyze_goal_lose">Bàn T/B</string>
+    <string name="new_analyze_goal_differ">Hiệu số bàn</string>
+    <string name="new_analyze_integral">Điểm</string>
+    <string name="new_analyze_complete_table">Bảng xếp hạng</string>
+    <string name="new_analyze_attack_defense">So sanh công thủ</string>
+    <string name="new_analyze_bet">Tài xỉu: </string>
+    <string name="new_analyze_player_info">Thong tin cầu thủ</string>
+    <string name="new_analyze_recommend">Chia sẻ tâm đắc</string>
+
+
+    <string name="immediate_status_end">Hết</string>
+    <string name="foot_rollball_txt">Nhảy kèo</string>
+    <string name="only_five_eachday">1 số di động chỉ được gửi 5 tin một ngày</string>
+    <string name="login_username">Mời nhập số tài khoản hoặc số di động</string>
+    <string name="server_busy">Hệ thống bận</string>
+    <string name="forty_five_plus">45+</string>
+    <string name="ninety_plus">90+</string>
+    <string name="at_least_one_company">Chọn ít nhất 1 nhà cái</string>
+    <string name="invited_number_noon">Code mời không tồn tại</string>
+
+    <string name="home_win_rate">Tỷ lệ Chủ thắng</string>
+    <string name="home_lose_rate">Tỷ lệ Chủ thua</string>
+    <string name="size_win_rate">Tỷ lệ tài</string>
+    <string name="size_lose_rate">Tỷ lệ xỉu</string>
+    <string name="asia_win_rate">Tỷ lệ thắng kèo</string>
+    <string name="asia_lose_rate">Tỷ lệ thua kèo</string>
+    <string name="title_big_data_predict">Dự đoán dữ liệu lớn</string>
+    <string name="diy_compute_method">Cách tính DIY</string>
+    <string name="foot_details_info">Thông Tin</string>
+    <string name="diy_custom_compute_method">Tự đặt cách tính DIY </string>
+    <string name="action_close">Đóng</string>
+    <string name="action_compute">Tính</string>
+    <string name="big_data_check_alert">Không thể tính kết quả, mời nhập số hợp lệ (0~1)</string>
+    <string name="diy_compute_method_message1">Xác suất = Xác suất đối đầu x %1$s + Xác suất Chủ thắng x %2$s + Xác suất Khách thắng x %3$s</string>
+    <string name="diy_compute_method_message2">Xác suất = Xác suất đối đầu x %1$s + Xác suất Chủ nhà x %2$s + Xác suất Đội khách x %3$s</string>
+    <string name="diy_compute_method_message3">Xác suất = Xác suất đối đầu x %1$s + Xác suất Chủ thắng x %2$s + Xác suất Khách thua x %3$s</string>
+    <string name="diy_combat_rate">Xác suất đối đầu</string>
+    <string name="diy_host_rate">Xác suất Chủ nhà</string>
+    <string name="diy_guest_rate">Xác suất Đội khách</string>
+    <string name="insufficient_sampling">Không đủ mẫu</string>
+    <string name="probability">Xác suất</string>
+    <string name="percent_factor">Nhân tố tỷ lệ</string>
+    <string name="new_analyze_let">Biểu đồ kèo Á</string>
+    <string name="new_analyze_home">Sân nhà</string>
+    <string name="new_analyze_guest">Sân khách</string>
+    <string name="new_analyze_win">Thắng</string>
+    <string name="new_analyze_draw">Hòa</string>
+    <string name="new_analyze_lose">Thua</string>
+    <string name="new_analyze_score">Tỷ Số</string>
+    <string name="new_analyze_first_let">Kèo đầu</string>
+    <string name="new_analyze_result">Kết quả</string>
+    <string name="new_analyze_more_messages"><![CDATA[Thông tin khác >>]]></string>
+    <string name="new_analyze_big_small_ball">Tài xỉu</string>
+    <string name="new_analyze_recent_compare">So sánh gần đây</string>
+    <string name="new_analyze_liangduijin">2 đội gần đây</string>
+    <string name="new_analyze_changjiaofeng">Đối đầu lịch sử</string>
+    <string name="new_analyze_ciyingpan"> lần thắng kèo</string>
+    <!--“1 次赢盘”=”1 lần thắng kèo”-->
+    <string name="new_analyze_cishupan"> lần thua kèo</string>
+    <string name="new_analyze_cizoupan"> lần hòa kèo</string>
+    <string name="new_analyze_yingpanlv"> Tỷ lệ thắng kèo</string>
+    <string name="new_analyze_cidaqiu"> lần tài</string>
+    <string name="new_analyze_cixiaoqiu"> lần xỉu</string>
+    <string name="new_analyze_daqiulv"> Tỷ lệ tài</string>
+    <string name="intelligence_host_recent">Chủ nhà gần đây</string>
+    <string name="intelligence_guest_recent">Đội khách gần đây</string>
+    <string name="new_analyze_description">(Màu đỏ là Chủ nhà) </string>
+    <string name="new_analyze_recent_game">6 trận gần đây của 2 đội</string>
+    <string name="new_analyze_changci"> trận</string>
+    <string name="new_analyze_home_win_rate">Tỷ lệ Chủ nhà thắng kèo</string>
+    <string name="new_analyze_guest_win_rate">Tỷ lệ Đội khách thắng kèo</string>
+    <string name="analyze_draw_rate">Hòa koef</string>
+    <string name="new_analyze_size_draw_rate">Hòa  Kèo</string>
+    <!--情报分析-->
+    <string name="intelligent_all_game">Tất cả trận đấu</string>
+    <string name="intelligent_same_game">Sân nhà/khách tương tự</string>
+    <string name="intelligent_result">Kết quả trận đấu mùa này</string>
+    <string name="intelligent_guest">Đội khách</string>
+    <string name="intelligent_home">Chủ nhà</string>
+    <string name="intelligent_full">Cả trận</string>
+    <string name="intelligent_half">H1</string>
+    <string name="intelligent_goal">Bàn thắng, Hiệu số</string>
+    <string name="intelligent_season_handicap">Thông tin kèo mùa này</string>
+    <string name="intelligent_recent">Thông tin trận đấu gần đây</string>
+    <string name="intelligent_today_handicap">Thông tin kèo trận đấu kết thúc hôm nay</string>
+    <string name="intelligent_win_rate">Tỷ lệ thắng kèo</string>
+    <string name="intelligent_lose_rate">Tỷ lệ thua kèo</string>
+    <string name="intelligent_big_rate">Tỷ lệ tài</string>
+    <string name="intelligent_small_rate">Tỷ lệ xỉu</string>
+    <string name="intelligent_goad_defference"><![CDATA[Hiệu số bàn thắng >1]]></string>
+    <string name="intellegent_lose_goal_def"><![CDATA[Hiệu số bàn thua >1]]></string>
+    <string name="intelligent_first_goal_win">Xác suất thắng sau khi dẫn trước</string>
+    <string name="intelligent_last_goal_win">Xác suất thắng sau khi bị dẫn trước</string>
+    <string name="intelligent_no_goal_rate">Xác xuất 0 bàn thắng</string>
+    <string name="intelligent_win_num">Thắng liên tiếp</string>
+    <string name="intelligent_let_win">Thắng kèo Á liên tiếp</string>
+    <string name="intelligent_continue_big">Tài liên tiếp</string>
+    <string name="intelligent_continue_small">Xỉu liên tiếp</string>
+    <string name="intelligent_rang">Chấp</string>
+    <string name="intelligent_ball_win_rate">Tỷ lệ thắng</string>
+    <string name="intelligent_ball_lose_rate">Tỷ lệ thua</string>
+    <string name="intelligent_qiushenglv">Tỷ lệ thắng</string>
+    <string name="intelligent_qiupinglv">Tỷ lệ hòa</string>
+    <string name="intelligent_qiufulv">Tỷ lệ hòa</string>
+    <string name="version_update_title">Đang tải gói nâng cấp, kính mong chờ đợi...</string>
+
+    <string name="rong_comment">Bình luận</string>
+    <string name="rong_chart_room">Thảo luận</string>
+    <string name="rong_chart_bg_pb">Độ trong suốt</string>
+
+    <!--头像上传-->
+    <string name="sd_card_not_exist">Không có thẻ SD</string>
+    <string name="install_the_gallery">Hãy cài đặt kho ảnh trước</string>
+    <string name="see_your_face">Ảnh quá nhỏ không thể thấy rõ được nhan sắc tuyệt trần của bạn</string>
+    <string name="picture_put_failed">Tải ảnh lên thất bại!</string>
+    <string name="save_file_not_found">Không tìm thấy đường dẫn lưu trữ !</string>
+    <string name="picture_save_failed">Lưu ảnh thất bại !</string>
+    <string name="picture_put_success">Tải ảnh lên thành công !</string>
+    <string name="picture_save">Ảnh đã được lưu vào: </string>
+    <string name="picture_save_telephone">Lưu vào di động</string>
+    <string name="chose_for_telephone">Chọn từ album di động</string>
+    <string name="choice_of_players_head">Chọn avatar ngôi sao</string>
+    <string name="avatar_settings">Ảnh đại diện</string>
+    <string name="photograph">Chụp ảnh</string>
+    <string name="picture_resource_does_not_exist">Nguồn ảnh không tồn tại</string>
+
+    <string name="welcome_chart_room">Chào mừng đến với phòng thảo luận !</string>
+    <string name="to_update_kindly_reminder">Vui lòng lưu ý</string>
+    <string name="kindly_reminder_comment">Bạn đang sử dụng dữ liệu di động, có tiếp tục tải không ?</string>
+    <string name="continue_download">Tiếp tục tải</string>
+
+    <string name="is_uploading">Đang nỗ lực tải lên..........</string>
+    <!--情报中心 start-->
+    <string name="title_info_center">Trung tâm thông tin</string>
+    <string name="info_center_end_index">kèo trận đấu kết thúc hôm nay</string>
+    <string name="info_center_results_index">Tỷ số</string>
+    <string name="info_center_size_disc_index">Tài xỉu</string>
+    <string name="info_center_asian_plate_index">Kèo Á</string>
+    <string name="info_center_type1">Xác suất thắng kèo mùa này</string>
+    <string name="info_center_type2">Xác suất thua kèo mùa này</string>
+    <string name="info_center_type3">Thắng kèo %1$s trận liên tiếp gần đây</string>
+    <string name="info_center_type4">Xác suất thắng kèo %1$s</string>
+    <string name="info_center_type5">Xác suất thua kèo %1$s</string>
+    <string name="info_center_type6">Xác suất tài mùa này</string>
+    <string name="info_center_type7">Xác suất xỉu mùa này</string>
+    <string name="info_center_type8">Tài liên tiếp %1$s trận gần đây</string>
+    <string name="info_center_type9">Xỉu liên tiếp %1$s trận gần đây</string>
+    <string name="info_center_type10">Xác suất Tài kèo %1$s</string>
+    <string name="info_center_type11">Xác suất Xỉu kèo %1$s </string>
+    <string name="info_center_type12">Thắng %1$s liên tiếp gần đây</string>
+    <string name="info_center_type13">Xác suất số trận thắng cách biệt 2 bàn trở lên</string>
+    <string name="info_center_type14">Xác suất số trận thua cách biệt 2 bàn trở lên</string>
+    <string name="info_center_type15">Xác suất thắng sau khi dẫn bàn trước</string>
+    <string name="info_center_type16">Xác suất thắng sau khi bị dẫn trước</string>
+    <string name="info_center_type17">Xác suất số trận 0 bàn thắng</string>
+    <string name="info_center_type18">Xác suất thắng kèo H1</string>
+    <string name="info_center_type19">Xác suất thua kèo H1</string>
+    <string name="info_center_type20">%1$s trận liên tiếp thắng kèo H1</string>
+    <string name="info_center_type21">Xác suất thắng kèo %1$s H1</string>
+    <string name="info_center_type22">Xác suất thua kèo %1$s H1</string>
+    <string name="info_center_type23">Xác suất tài H1</string>
+    <string name="info_center_type24">Xác suất xỉu H1</string>
+    <string name="info_center_type25">%1$s trận Tài liên tiếp H1</string>
+    <string name="info_center_type26">%1$s trận Xỉu liên tiếp H1</string>
+    <string name="info_center_type27">Xác suất Tài H1 kèo %1$s</string>
+    <string name="info_center_type28">Xác suất Xỉu H1 kèo %1$s</string>
+    <string name="info_center_type29">%1$s  thắng liên tiếp H1</string>
+    <string name="info_center_other_type1">Xác suất thắng kèo %1$s</string>
+    <string name="info_center_other_type2">Xác suất thua kèo %1$s</string>
+    <string name="info_center_other_type3">Thắng kèo liên tiếp %1$s trận</string>
+    <string name="info_center_other_type4">Xác suất thắng kèo %1$s</string>
+    <string name="info_center_other_type5">Xác suất thua kèo %1$s</string>
+    <string name="info_center_other_type6">Xác suất Tài %1$s</string>
+    <string name="info_center_other_type7">Xác suất Xỉu %1$s</string>
+    <string name="info_center_other_type8">Tài liên tiếp %1$s trận</string>
+    <string name="info_center_other_type9">Xỉu liên tiếp %1$s trận</string>
+    <string name="info_center_other_type10">Xác suất Tài kèo %1$s</string>
+    <string name="info_center_other_type11">Xác suất xỉu kèo %1$s</string>
+    <string name="info_center_other_type12">Thắng liên tiếp %2$s %1$s</string>
+    <string name="info_center_other_type13">Xác suất số trận thắng cách biệt 2 bàn trở lên</string>
+    <string name="info_center_other_type14">Xác suất số trận thua cách biệt 2 bàn trở lên</string>
+    <string name="info_center_other_type15">Xác suất thắng chung cuộc sau khi dẫn trước</string>
+    <string name="info_center_other_type16">Xác suất thắng chung cuộc sau khi bị dẫn trước</string>
+    <string name="info_center_other_type17">Xác suất số trận 0 bàn thắng</string>
+    <string name="info_center_other_type18">Xác suất thắng kèo H1 %1$s</string>
+    <string name="info_center_other_type19">Xác suất thua kèo H1 %1$s</string>
+    <string name="info_center_other_type20">%1$s  trận liên tiếp thắng kèo H1</string>
+    <string name="info_center_other_type21">Xác suất thắng kèo %1$s H1</string>
+    <string name="info_center_other_type22">Xác suất thua kèo %1$s H1</string>
+    <string name="info_center_other_type23">Xác suất Tài H1 kèo %1$s</string>
+    <string name="info_center_other_type24">Xác suất Xỉu H1 kèo %1$s</string>
+    <string name="info_center_other_type25">%1$s trận liên tiếp Tài H1</string>
+    <string name="info_center_other_type26">%1$s trận liên tiếp Xỉu H1</string>
+    <string name="info_center_other_type27">Xác suất Tài H1 kèo %1$s</string>
+    <string name="info_center_other_type28">Xác suất Xỉu H1 kèo %1$s</string>
+    <string name="info_center_other_type29">%1$s thắng liên tiếp H1</string>
+    <string name="info_center_other_type30">Xác suất thắng kèo %1$s</string>
+    <string name="info_center_other_type31">Xác suất thua kèo %1$s</string>
+    <string name="info_center_other_type32">Xác suất Tài kèo %1$s</string>
+    <string name="info_center_other_type33">Xác suất Xỉu kèo %1$s</string>
+    <string name="info_center_other_type34">Xác suất thắng kèo %1$s</string>
+    <string name="info_center_other_type35">Xác suất hòa kèo %1$s</string>
+    <string name="info_center_other_type36">Xác suất thua kèo %1$s</string>
+    <string name="info_center_other_type37">Xác suất thắng kèo H1 kèo %1$s</string>
+    <string name="info_center_other_type38">Xác suất thua kèo H1 kèo %1$s</string>
+    <string name="info_center_other_type39">Xác suất Tài H1 kèo %1$s</string>
+    <string name="info_center_other_type40">Xác suất Xỉu H1 kèo %1$s</string>
+    <string name="info_center_other_type41">Xác suất thắng H1 kèo %1$s</string>
+    <string name="info_center_other_type42">Xác suất hòa H1 kèo %1$s</string>
+    <string name="info_center_other_type43">Xác suất thua H1 kèo %1$s</string>
+    <string name="info_center_txt_def">Không đủ mẫu lấy</string>
+    <!--情报中心 end-->
+
+    <!--今日赛事提点-->
+    <string name="league_statistics_today_title">Thí điểm trận đấu hôm nay</string>
+    <string name="league_statistics_today_tab1">T/H/B</string>
+    <string name="league_statistics_today_tab2">Kèo Á</string>
+    <string name="league_statistics_today_tab3">Tài Xỉu</string>
+    <string name="league_statistics_today_tab4">Kèo Á H1</string>
+    <string name="league_statistics_today_tab5">Tãi Xỉu H1</string>
+
+    <string name="league_statistics_today_date">Thời gian thống kê số liệu: </string>
+    <string name="league_statistics_today_rank">Xếp hạng</string>
+    <string name="league_statistics_today_race">Giải đấu</string>
+    <string name="league_statistics_today_finish">Đã thi đấu</string>
+    <string name="league_statistics_today_victor">T</string>
+    <string name="league_statistics_today_flat">H</string>
+    <string name="league_statistics_today_loss">B</string>
+    <string name="league_statistics_today_win">Ăn</string>
+    <string name="league_statistics_today_failed">Thua</string>
+    <string name="league_statistics_today_go">Hòa</string>
+    <string name="league_statistics_today_big">Tài</string>
+    <string name="league_statistics_today_small">Xỉu</string>
+    <string name="league_statistics_today_tip1">*Vui lòng lưu ý: Ấn vào phần đầu của danh sách</string>
+    <string name="league_statistics_today_tip2">T/H/B</string>
+    <string name="league_statistics_today_tip3">; Có thể sắp xếp</string>
+    <string name="league_statistics_today_notice">Chú thích</string>
+    <string name="league_statistics_today_noticetitle">Thí điểm giải đấu hôm nay là gì ?</string>
+    <string name="league_statistics_today_noticetext">Là xếp hạng của tất cả giải đấu, số liệu các hạng mục của các trận đấu có kèo hôm nay trong các trận đấu gần đây hoặc trong một khoảng thời gian nào đó.</string>
+
+    <!--视频直播-->
+    <string name="direct_seedinging">Đang Live</string>
+    <string name="baskball">Bóng rổ</string>
+    <string name="comprehensive">Tổng hợp</string>
+    <string name="direct_seeding">Live</string>
+    <string name="download_error">Tải thất bại !</string>
+    <string name="download_update">Đang cập nhật, Xin chờ trong giây lát...</string>
+
+    <!--墙外资讯-->
+    <string name="foreign_month"> tháng trước</string>
+    <string name="foreign_day"> ngày trươc</string>
+    <string name="foreign_hour"> giờ trước</string>
+    <string name="foreign_minites"> phút trước</string>
+    <string name="foreign_now">Vừa xong</string>
+    <string name="foreign_writecmt">Bình luận</string>
+    <string name="foreign_title">Tin nước ngoài</string>
+
+    <string name="push_type_goal">Bàn thắng</string>
+    <string name="push_red">Thẻ đỏ</string>
+    <string name="push_shake">Rung</string>
+    <string name="push_sound">Âm báo</string>
+    <string name="push_focus_match">Push báo trận đấu theo dõi</string>
+    <!--墙外-->
+    <string name="foreign_pic">Đã lưu ảnh vào folder thẻ SD</string>
+    <string name="basket_shoot">Ném rổ(%)</string>
+    <string name="basket_three_shoot">3 điểm(%)</string>
+    <string name="basket_free_shoot">Ném phạt(%)</string>
+    <string name="basket_rebound">Rebound</string>
+    <string name="basket_assist">Assist</string>
+    <string name="basket_steal">Steal</string>
+    <string name="basket_blockshoot">Block</string>
+    <string name="basket_foul">Phạm lỗi</string>
+    <string name="basket_turnover">Sai lầm</string>
+    <string name="basket_player_qiuyuan">Cầu thủ</string>
+    <string name="basket_player_time">Thời gian</string>
+    <string name="basket_player_score">Điểm</string>
+    <string name="basket_player_shoot">Ném rổ</string>
+    <string name="basket_player_rebound">Rebound</string>
+    <string name="basket_player_assist">Assist</string>
+    <string name="basket_player_three">3 điểm</string>
+    <string name="basket_player_steal">Steal</string>
+    <string name="basket_player_blockshoot">Block</string>
+    <string name="basket_player_turnover">Sai lầm</string>
+    <string name="basket_player_foul">Phạm lỗi</string>
+    <string name="basket_text_live">Tường tuật</string>
+    <string name="basket_team_statictics">Thống kê đội bóng</string>
+    <string name="basket_players_statictics">Thống kê cầu thủ</string>
+    <string name="basket_no_text_live">Hiện không có số liệu trực tiếp</string>
+    <string name="basket_player_no_data">Hiện không có số liệu thống kê</string>
+
+    <string name="video_high_light_reminder_comment">Bạn đang sử dụng dữ liệu di động, có tiếp tục mở không ？</string>
+    <string name="video_high_light_continue_open">Mở</string>
+    <string name="video_high_light">Highlight</string>
+    <string name="video_high_notice">Highlight</string>
+
+    <!--斯诺克-->
+    <string name="snooker_title">Snooker</string>
+    <string name="snooker_setting_title">Thiết lập Snooker</string>
+    <string name="snooker_setting_alet">Á</string>
+    <string name="snooker_setting_eur">Âu</string>
+    <string name="snooker_setting_asize">Tài Xỉu</string>
+    <string name="snooker_setting_single_twins">Chẵn Lẻ</string>
+    <string name="snooker_setting_nos_show">Không</string>
+    <string name="snooker_state_pause">Tạm dừng</string>
+    <string name="snooker_state_no_start">Chưa thi đấu</string>
+    <string name="snooker_state_over_game">Kết thúc</string>
+    <string name="snooker_state_have_ing">Đang thi đấu</string>
+    <string name="snooker_state_resting">Đang nghỉ</string>
+    <string name="snooker_state_victory_defeat">Thắng bại</string>
+    <string name="snooker_state_zong">Tổng</string>
+    <string name="snooker_state_single_double">Chẵn lẻ</string>
+    <string name="snooker_current_nodata">Ngày này không có trận đấu nào</string>
+    <string name="snooker_loading">Đang tải dữ liệu …</string>
+    <string name="custom_mine_cus">Cài đặt của tôi</string>
+    <string name="custom_list_cus">Danh sách cài đặt</string>
+    <string name="custom_no_cus">Bạn chưa cài đặt bất kỳ cầu thu/giải đấu nào</string>
+    <string name="custom_to_cus">Cài đặt ngay</string>
+    <string name="custom_redact_cus">Sửa</string>
+    <string name="custom_accomplish_cus">Hoàn thành</string>
+    <string name="custom_noevent_cus">Hiện không có giải nào</string>
+    <string name="chart_ball_report_to_user">Người bị báo cáo：</string>
+    <string name="chart_ball_report_user">Người báo cáo:</string>
+    <string name="chart_ball_report_content">Nội dung báo cáo không được trống！</string>
+    <string name="chart_ball_online">Người</string>
+    <string name="chart_ball_call_me">\@bạn：</string>
+    <string name="chart_ball_call_ta">\@người khác</string>
+    <string name="chart_ball_send_error">Gửi thất bại !！</string>
+    <string name="chart_ball_loading_error">Tải thất bại !</string>
+    <string name="chart_ball_call_user_not">\@người dùng không tồn tại</string>
+    <string name="chart_ball_report_user_not">người bị báo cáo không tồn tại</string>
+    <string name="chart_ball_banned">Bạn đã bị Admin cấm nói chuyện, thời gian</string>
+    <string name="local_chitule">Cạp đất mà ăn</string>
+    <string name="local_dacaipan">Oánh trọng tài</string>
+    <string name="local_fubaila">Sa đọa</string>
+    <string name="local_jinggaoni">Cảnh cáo</string>
+    <string name="local_juyijing">Căng hậu môn</string>
+    <string name="local_mengkuanle">Đơ luôn</string>
+    <string name="local_qiudatui">Cầu cứu Thánh</string>
+    <string name="local_sesese">Bắn Bắn Bắn</string>
+    <string name="local_shangtiantai">Nhảy lầu</string>
+    <string name="local_shihuale">Hóa thạch rồi</string>
+    <string name="local_shoumila">Thu xiền</string>
+    <string name="local_touzhele">Tự sướng</string>
+    <string name="local_xihushuiya">Khóc thành sông</string>
+    <string name="local_yayajing">Lấy lại bình tĩnh</string>
+    <string name="local_youqingguanlaoye">Kính mời Quan lão gia</string>
+    <string name="local_zailaiyijiao">Một xu nữa</string>
+    <string name="chart_ball_new_msg">Có tin mới</string>
+    <string name="chart_ball_null_content">Khách quan ngồi xuống nói chuyện đi mà</string>
+    <string name="chart_ball_login_error">Kiểm nghiệm đăng nhập thất bại, mời thử lại !</string>
+    <string name="chart_ball_hint_title">Nói gì đi ...</string>
+    <string name="chart_ball_report_hint">Mời nhập nội dung báo cáo</string>
+    <string name="chart_ball_report">Báo cáo</string>
+    <string name="title_product_advice">Góp ý cho sản phẩm</string>
+    <string name="product_advice">Sản phẩm trả lời</string>
+    <string name="product_advice_load_more">Đang tải ....</string>
+    <string name="more">Xem thêm</string>
+    <string name="nomoredatashangla">Đã hết dữ liệu …</string>
+    <string name="snooker_player_compare">So sánh sự nghiệp</string>
+    <string name="snooker_history_bettle">Lịch sử đối đầu</string>
+    <string name="snooker_player1">Thành tích gần đây tuyển thủ 1</string>
+    <string name="snooker_player2">Thành tích gần đây tuyển thủ 2</string>
+    <string name="football_txt">Bóng đá</string>
+    <string name="basketball_txt">Bóng rổ</string>
+    <string name="snooker_txt">Snooker</string>
+    <string name="tennisball_txt">Tennis</string>
+    <string name="football_ziliaoku">Kho Dữ Liệu</string>
+    <string name="sn_rank_name">Họ tên</string>
+    <string name="sn_rank_zjf">Tổng điểm</string>
+    <string name="sn_rank_zjj">Tổng giải thưởng</string>
+    <string name="sn_player_search">Nhập tên cơ thủ</string>
+    <string name="snooker_qualifiers">Giải tư cách</string>
+    <string name="snooker_match">Giải chính</string>
+    <string name="snooker_champion">Vô địch	</string>
+    <string name="snooker_tournament">Giới thiệu giải đấu</string>
+    <string name="snooker_odds_peilv">Tỷ lệ ăn</string>
+    <string name="snooker_game_time">Thời gian</string>
+    <string name="snooker_state">Trạng thái</string>
+    <string name="snooker_player">Tuyển thủ</string>
+    <string name="snooker_score">Tỷ số</string>
+    <string name="snooker_detailed">Chi tiết</string>
+    <string name="snooker_analyze_birth">Ngày sinh</string>
+    <string name="snooker_analyze_rank">Xếp hạng thế giới</string>
+    <string name="snooker_analyze_season">Giải chuyên nghiệp</string>
+    <string name="snooker_analyze_bonus">Tổng giải thưởng</string>
+    <string name="snooker_analyze_full_score">147 Break</string>
+    <string name="snooker_analyze_total_champion">Vô địch</string>
+    <string name="snooker_analyze_hundred_times">Century Break</string>
+    <string name="snooker_analyze_hundred_percent">Tỷ lệ Century Break</string>
+    <string name="snooker_analyze_total_times">Tổng thi đấu</string>
+    <string name="snooker_analyze_win">Thắng trận</string>
+    <string name="snooker_analyze_win_percent">Tỷ lệ thắng trận</string>
+    <string name="snooker_analyze_total_numbers">Tổng Game</string>
+    <string name="snooker_analyze_total_wins">Thắng Game</string>
+    <string name="snooker_analyze_wins_percent">Tỷ lệ thắng Game</string>
+    <string name="tennis_match_p2">P2 bỏ cuộc</string>
+    <string name="tennis_match_p1">P1 bỏ cuộc</string>
+    <string name="tennis_match_dd">Đang chờ</string>
+    <string name="tennis_match_tc">Hoãn</string>
+    <string name="tennis_match_zd">Ngừng</string>
+    <string name="tennis_match_over">Kết thúc</string>
+    <string name="tennis_match_not_start">Chưa thi đấu</string>
+    <string name="tennis_match_join">Đang thi đấu</string>
+
+
+    <string name="my_focus_basket">Bóng rổ</string>
+    <string name="my_focus_football">Bóng đá</string>
+    <string name="no_focus">Bạn chưa quan tâm trận đấu nào</string>
+    <string name="to_focus_now">Lưu quan tâm ngay</string>
+    <string name="my_focus">Mục quan tâm của tôi</string>
+
+    <!--邀请码页面-->
+    <string name="invite_friends">Mời bạn bè</string>
+    <string name="copy_text">Đã copy vào clipboard</string>
+    <string name="invitation_code_acquisition_failed">Thu thập code mời thất bại</string>
+    <string name="your_invitation_code">Code mời của bạn</string>
+    <string name="copy_tv">Copy</string>
+    <string name="copy_text2"> Nhập code mời, Tỷ Số Nhất sẽ phân phát Gold</string>
+    <string name="copy_text3">Tham gia sự kiện Tỷ Số Nhất, nhận được nhiều phần quà đặc sắc！</string>
+    <string name="please_invited_number">Mời nhập code mời</string>
+    <string name="please_invited">Code mời</string>
+    <string name="multi_header_name">Xem nhiều màn hình</string>
+    <string name="multi_add">Thêm</string>
+    <string name="multi_dialog_text">Bạn đồng ý xóa bỏ trận đấu này không ?</string>
+    <string name="multi_zhishao_text">Ít nhất hiển thị 1 trận đấu！</string>
+    <string name="multi_enter_text">Vào</string>
+    <string name="multi_add_view_text">Thêm màn hình</string>
+    <string name="multi_item_basket_name">Bóng rổ</string>
+    <string name="multi_item_football_name">Bóng đá</string>
+    <string name="multi_item_clicks">Đồng ý</string>
+    <string name="multi_toast_clicks_match">Mời chọn trận đấu</string>
+    <string name="multi_toast_upper_match">Tối đa chọn 3 trận</string>
+
+
+    <!--足球分析详情页面 -->
+    <string name="football_analyze_equ">H</string>
+    <string name="football_analyze_win">T</string>
+    <string name="football_analyze_lost">B</string>
+    <string name="football_analyze_jin">, Bàn thắng</string>
+    <string name="football_analyze_shi">Bàn thua</string>
+    <string name="football_analyze_ball">Bàn</string>
+    <string name="football_analyze_winodds">Tỷ lệ thắng</string>
+    <string name="football_analyze_bigball">,Tỷ lệ tài</string>
+    <string name="football_analyze_let_points">, Tỷ lệ ăn kèo</string>
+    <string name="fragme_home_fengpan_text">Khóa</string>
+    <string name="basket_loading_txt">Đang tải...</string>
+
+    <!--足球分析补充-->
+    <string name="football_win_draw_lose">T/H/B</string>
+    <string name="basket_details_talkable">Thảo luận</string>
+
+    <!--篮球资料库详情-->
+    <string name="basket_database_details_handicapname">Kèo chấp điểm</string>
+    <string name="basket_database_details_bigsmallname">Tài xỉu</string>
+    <string name="basket_database_details_schedule">Lịch</string>
+    <string name="basket_database_details_stage">Giai đoạn</string>
+    <string name="basket_database_details_ranking">Xếp hạng</string>
+    <string name="basket_database_details_season">Mùa giải</string>
+    <string name="basket_database_details_all">Tất cả</string>
+    <string name="basket_database_details_home">Sân nhà</string>
+    <string name="basket_database_details_guest">Sân khách</string>
+    <string name="basket_database_details_runkingname">XH/Đội</string>
+    <string name="basket_database_details_overgame">Đã thi đấu</string>
+    <string name="basket_database_details_big">Tài</string>
+    <string name="basket_database_details_dorw">Hòa</string>
+    <string name="basket_database_details_small">Xỉu</string>
+
+    <string name="basket_database_details_up">Kèo trên</string>
+    <string name="basket_database_details_down">Kèo dưới</string>
+    <string name="basket_database_details_yzs">W/D/L</string>
+    <string name="basket_database_details_toast">Đang thu thập dữ liệu</string>
+
+    <string name="basket_database_details_ranking_title">XH/Đội</string>
+    <string name="basket_database_details_match_num_title">Trận</string>
+    <string name="basket_database_details_win_lose_title">T/B</string>
+    <string name="basket_database_details_winrate_title">Tỷ lệ thắng</string>
+    <string name="basket_database_details_win_offset_title">Hiệu số thắng</string>
+    <string name="basket_database_details_recent_title">Gần đây</string>
+
+    <string name="basket_database_details_statistic">Thống kê</string>
+    <string name="basket_database_details_league_statistic">Thống kê giải đấu</string>
+    <string name="basket_database_details_leagueMost">Hạng mục Top</string>
+    <string name="basket_database_details_victory_defeat">Thống kê thắng bại</string>
+    <string name="basket_database_details_statistic_num">Số trận</string>
+    <string name="basket_database_details_statistic_euro">Thống kê tỷ lệ Âu</string>
+    <string name="basket_database_details_statistic_let">Thống kê chấp điểm</string>
+    <string name="basket_database_details_statistic_big_small">Thống kê tài xỉu</string>
+    <string name="basket_database_details_statistic_score">Thống kê điểm ghi</string>
+    <string name="basket_database_details_statistic_num_score">Thống kê trận</string>
+    <string name="basket_database_details_statistic_all_score">Tổng điểm ghi</string>
+    <string name="basket_database_details_statistic_gp_num">Số trận đã thi đấu</string>
+    <string name="basket_database_details_statistic_average">TB điểm ghi</string>
+
+    <string name="basket_database_details_statistic_all_scoreA">Tổng bàn thắng</string>
+    <string name="basket_database_details_statistic_averageA">TB bàn thắng</string>
+
+    <string name="basket_database_details_statistic_home_win">Chủ thắng: </string>
+    <string name="basket_database_details_statistic_guest_win">Khách thắng: </string>
+    <string name="basket_database_details_statistic_draw">Hòa: </string>
+    <string name="basket_database_details_statistic_euro_v1">Kết quả như tỷ lệ Âu: </string>
+    <string name="basket_database_details_statistic_euro_v2">Kết quả khác tỷ lệ Âu: </string>
+    <string name="basket_database_details_statistic_big">Tài: </string>
+    <string name="basket_database_details_statistic_small">Xỉu: </string>
+    <string name="basket_database_details_statistic_gp">Đã thi đấu: </string>
+    <string name="basket_database_details_statistic_nogp">Chưa thi đấu: </string>
+    <string name="basket_database_details_statistic_allgp">Tổng số trận: </string>
+
+    <string name="basket_database_details_leagueMost_strongestAttack">Công mạnh nhất</string>
+    <string name="basket_database_details_leagueMost_weakestAttack">Công yếu nhất</string>
+    <string name="basket_database_details_leagueMost_strongestDefense">Thủ mạnh nhất</string>
+    <string name="basket_database_details_leagueMost_weakestDefense">Thủ yếu nhất</string>
+    <string name="basket_database_details_leagueMost_all_score">Tổng điểm ghi:</string>
+    <string name="basket_database_details_leagueMost_avg_score">TB điểm ghi trận:</string>
+
+    <string name="basket_database_details_leagueMost_allmatch">Tất cả</string>
+    <string name="basket_database_details_leagueMost_homematch">Sân nhà</string>
+    <string name="basket_database_details_leagueMost_guestmatch">Sân khách</string>
+
+    <!--足球资料库-->
+    <string name="football_database_details_integral">Điểm</string>
+    <string name="football_database_details_stage">Giai đoạn</string>
+
+    <string name="football_database_details_integral_num_title">Đã thi đấu</string>
+    <string name="football_database_details_integral_win_draw_lose_title">T/H/B</string>
+    <string name="football_database_details_integral_gain_loss_title">bàn T/B</string>
+    <string name="football_database_details_integral_itnis_title">Hiệu số bàn thắng</string>
+    <string name="football_database_details_most_top_win">Thắng/Thi đấu:</string>
+    <string name="football_database_details_most_top_draw">Hòa/Thi đấu:</string>
+    <string name="football_database_details_most_top_lost">Thua/Thi đấu:</string>
+    <string name="football_database_details_most_top_avg">Tỷ lệ thắng:</string>
+    <string name="football_database_details_most_score_avg">TB bàn thắng:</string>
+    <string name="football_database_details_statistic_home_draw">Hòa trận :</string>
+    <string name="football_database_details_statistic_all_num">Tổng bàn thắng :</string>
+    <string name="football_database_details_statistic_avg_num">TB trận :</string>
+    <string name="football_database_details_statistic_w_num">Tỷ lệ thắng :</string>
+    <string name="football_database_details_statistic_d_num">Tỷ lệ hòa :</string>
+    <string name="football_database_details_statistic_l_num">Tỷ lệ thua :</string>
+    <string name="football_database_details_statistic_w_avgnum">Thắng</string>
+    <string name="football_database_details_statistic_d_avgnum">Hòa</string>
+    <string name="football_database_details_statistic_l_avgnum">Thua</string>
+    <string name="football_database_details_wdl_statistic">Thống kê T/H/B</string>
+    <string name="football_database_details_goal_statistic">Thống kê bàn thắng</string>
+    <string name="football_database_details_big_small_statistic">Thống kê tài xỉu</string>
+    <string name="football_database_details_home_score_avg">TB bàn thắng sân nhà</string>
+    <string name="football_database_details_guest_score_avg">TB bàn thắng sân khách</string>
+    <string name="football_database_details_moreZero">Hơn 0.5</string>
+    <string name="football_database_details_moreOne">Hơn 1.5</string>
+    <string name="football_database_details_moreTwo">Hơn 2.5</string>
+    <string name="football_database_details_moreThree">Hơn 3.5</string>
+    <string name="football_database_details_chang">Trận</string>
+
+    <!--足球分析详情-->
+    <string name="football_analyze_details">Phân tích chi tiết</string>
+    <string name="football_analyze_details_time">Thời gian</string>
+    <string name="football_analyze_details_matchs">Giải đấu</string>
+    <string name="football_analyze_details_game">Tỷ số</string>
+    <string name="football_analyze_details_win">Ăn</string>
+    <string name="football_analyze_details_lose">Thua</string>
+
+    <string name="chatball">Thảo luận</string>
+    <string name="succed_send">Gửi thành công</string>
+    <string name="succed_refresh">Cập nhật thành công</string>
+
+    <!--模糊搜索-->
+    <string name="fuzzy_search">Mời nhập tên giải đấu</string>
+    <string name="not_find_search">Rất tiếc không tìm thấy thông tin liên quan</string>
+    <string name="network_suck">Đường truyền không tốt ......</string>
+    <string name="find_search">Đang tìm ......</string>
+    <string name="skip">"giây | Bỏ qua"</string>
+    <!--1.1.2 begin-->
+    <string name="weixin_installed">Hãy cài đặt Wechat trước !</string>
+    <string name="Login_register">Đăng nhập/Đăng ký</string>
+    <string name="personal_center">Cá nhân</string>
+    <string name="social_account_login">Đăng nhập nhanh bằng tài khoản mạng xã hội</string>
+    <string name="forget_pwd">Quên mật mã ?</string>
+    <string name="next_step">Bước sau</string>
+    <string name="find_pw">Tìm lại mật mã</string>
+    <string name="reset_password">Đặt lại mật mã</string>
+    <string name="reseting_password">Đang đặt lại mật mã ...</string>
+    <string name="reset_password_succ">Đặt lại mật mã thành công</string>
+    <string name="pic">Ảnh đại diện</string>
+    <string name="nickname">Biệt danh</string>
+    <string name="input_nickname">Mời nhập biệt danh</string>
+    <string name="nickname_hint">Tên hay bạn bè sẽ dễ nhớ đến bạn hơn</string>
+    <string name="profile">Hồ sơ cá nhân</string>
+    <string name="modify_nickname">Đổi tên</string>
+    <string name="modify_nickname_succ">Sửa biệt danh thành công</string>
+    <string name="nickname_format">Biệt danh: gồm 1-15 ký tự Anh, Trung(không quá 5 chữ tiếng Trung), số và ký hiệu</string>
+    <string name="modify_password">Sửa mật mã</string>
+    <string name="modifying_password">Đang sửa mật mã ...</string>
+    <string name="modifying_nickname">Đang sửa biệt danh ...</string>
+    <string name="modify_password_succ">Sửa mật mã thành công</string>
+    <string name="modify_password_fail">Sửa mật mã thất bại</string>
+    <string name="input_password_old">Mời nhập mật mã cũ</string>
+    <string name="input_password_new">Mời nhập mật mã mới (gồm 6-16 ký tự số, chữ và ký hiệu)</string>
+    <string name="input_password_new_no">Mời nhập mật mã mới (gồm 6-16 ký tự số, chữ và ký hiệu)</string>
+    <string name="input_password_confirm">Hãy để mật mã mới giống nhau</string>
+    <string name="show_password">Hiện mật mã</string>
+    <string name="old_pw">Cũ</string>
+    <string name="new_pw">Mới</string>
+    <string name="comfirm_pw">Đồng ý</string>
+    <string name="pw_not_same">Mật mã mới và mật mã xác nhật không giống nhau</string>
+    <string name="pw_same_same">Không được giống với biệt danh cũ</string>
+    <string name="name_invalid">Đăng nhập hết hiệu lực, mời đăng nhập lại</string>
+    <string name="account">Tài khoản</string>
+    <string name="pwd_format_just_length">Độ dài mật mã 6-16 ký tự</string>
+    <string name="verify_time_limit">2 lần gửi không cách nhau không ít hơn 60 giây</string>
+    <string name="nickname_sensitive">Biệt danh có từ ngữ nhạy cảm</string>
+    <string name="man_sex">Hảo hán</string>
+    <string name="woman_sex">Mỹ nữ</string>
+    <string name="noon_sex">Bí mật</string>
+    <string name="chose_head_phot">Chọn ảnh đại diện</string>
+    <string name="complete">Hoàn thành</string>
+    <!--1.1.2 end-->
+
+    <string name="yesterday">Hôm qua</string>
+    <string name="tomorrow">Ngày mai</string>
+
+
+    <!--分享-->
+    <string name="errcode_success">gửi thành công</string>
+    <string name="errcode_cancel"> hủy gửi</string>
+    <string name="errcode_deny">gửi bị từ chối</string>
+    <string name="webchat">webchat</string>
+    <string name="friends">vòng bạn bè</string>
+    <string name="qq">QQ</string>
+    <string name="qzone">qzone</string>
+    <string name="sina">Sina</string>
+    <string name="copy">copy liên kết</string>
+    <string name="share_cancel">hủy</string>
+    <string name="share_summary">Tỷ Số Nhất,báo tình hình giải đấu mới nhất</string>
+    <string name="share_to_qq_app_name">Tỷ Số Nhất</string>
+    <string name="share_copy">copy liên kết thành công</string>
+    <string name="share_from">Tỷ Số Nhất chia sẻ:</string>
+    <string name="share_uninstall_webchat">Bạn chưa cài đặt APP webchat</string>
+    <string name="weibosdk_demo_not_support_api_hint">Bạn chưa cài đặt APP Weibo Sina</string>
+    <string name="share_uninstall_qq">Bạn chưa cài đặt APP QQ</string>
+    <string name="share_recommend">Tỷ lệ</string>
+    <string name="share_summary_default">Tỷ Số Nhất, chuyên tỷ số bóng đá</string>
+
+
+    <!--指数-->
+    <string name="odd_plate_rb_txt">HDP</string>
+    <string name="odd_back">Quay trở lại danh sách</string>
+    <string name="odd_op_rb_txt">1X2</string>
+    <string name="odd_company_txt">công ty</string>
+    <string name="odd_home_txt">đội chủ</string>
+    <string name="odd_dish_txt">kèo</string>
+    <string name="odd_guest_txt">đội khách</string>
+    <string name="odd_time_txt">thời gian</string>
+    <!--tỷ lệ châu Âu-->
+    <string name="odd_home_op_txt">chủ thắng</string>
+    <string name="odd_dish_op_txt">hòa</string>
+    <string name="odd_guest_op_txt">khách thắng</string>
+    <!--Tài xỉu-->
+    <string name="odd_home_big_txt">tài</string>
+    <string name="odd_dish_big_txt">kèo</string>
+    <string name="odd_guest_big_txt">xỉu</string>
+    <!--tỷ số bống đá giai kỳ thứ 2-->
+    <string name="lineout_txt">bàn biên</string>
+    <string name="free_hit_txt">Đá phạt nguy hiểm</string>
+    <string name="away_txt">Việt vị</string>
+    <string name="foul_txt">Phạm lỗi</string>
+    <string name="trapping_txt">Blaze</string>
+    <string name="shoot_txt">Sút bóng</string>
+    <string name="match_data_txt">số liệu giải đấu</string>
+    <string name="danger_attack_txt">Tấn công nguy hiểm</string>
+    <string name="shoot_correct_txt">Sút trúng</string>
+    <string name="shoot_miss_txt">Thủng lưới</string>
+    <string name="live_text_txt">Live</string>
+    <string name="first_players_txt">đội hình</string>
+    <string name="statistics_txt">thống kê</string>
+    <string name="trend_txt">xu hướng</string>
+    <string name="data_statistics_txt">dữ liệu thống kê</string>
+    <string name="nodata_txt">không còn nhiều số liệu!</string>
+    <string name="loading_data_txt">đang tài...</string>
+    <string name="not_start_txt">chưa bắt đầu</string>
+    <string name="pause_txt">Tiền vệ</string>
+    <string name="finish_txt">kết thúc</string>
+    <string name="finished_txt">kết thúc</string>
+    <string name="paused_txt">Tiền vệ</string>
+    <string name="matchFinished_txt">Live đã kết thúc,cảm ơn bạn đẫ xem!</string>
+
+    <string name="fottball_home_jiashi">ngoài giờ</string>
+    <string name="fottball_home_dianqiu">Phạt bóng</string>
+    <string name="fottball_home_quxiao">hủy</string>
+    <string name="fottball_home_daiding">chưa quyết định</string>
+    <string name="fottball_home_yaozhan">Tạm dừng</string>
+    <string name="fottball_home_zhongduan">Gián đoạn</string>
+    <string name="fottball_home_tuichi">Hoãn lại</string>
+    <string name="fottball_home_quxiaozhibo">hủy trực tuyến</string>
+
+    <string name="sound1">Âm thanh 1</string>
+    <string name="sound2">Âm thanh2</string>
+    <string name="sound3">Âm thanh3</string>
+    <string name="sound4">Âm thanh4</string>
+    <string name="asialet">Tỷ lệ châu Á</string>
+    <string name="euro">Tỷ lệ châu Âu</string>
+    <string name="asiasize">O/U</string>
+    <string name="oddgone">không hiện thị</string>
+    <string name="about_product_msg_txt_simple">Tỷ số nhất là một sản chuyên gia tỷ số thể thao ,hiện tài tốc độ xuất tỷ số và phạt góc ưu tiên trong lĩnh vực cả thế giới.</string>
+    <string name="frame_home_jieguo_txt">Kết quả xổ số</string>
+
+
+    <!--首发阵容 Start-->
+    <string name="firsPlayers_not">Tạm chưa có đội hình</string>
+    <string name="firsPlayers_rosters_homeTeam">Đội hình đội chủ</string>
+    <string name="firsPlayers_rosters_visitingTeam">Đội hình đội khách</string>
+    <string name="homeTeam">đội chủ 一</string>
+    <string name="guestTeam">đội khách 一</string>
+    <string name="homeBitmap">đội chủ </string>
+    <string name="guestBitmap">đội khách</string>
+    <string name="attack">(công phòng)</string>
+    <string name="corner">(Phạt góc)</string>
+    <string name="game_time">(thời gian)</string>
+    <!--Đội hình hai biên End-->
+    <!--thoeif kỳ 2 end-->
+    <string name="app_name">TỶ SỐ NHẤT</string>
+    <string name="menu_name">menu</string>
+    <string name="action_settings">Settings</string>
+    <string name="drawer_open">Open drawer</string>
+    <string name="drawer_close">close_drawer</string>
+    <string name="tip">chọn nhày</string>
+    <string name="football">bống đá</string>
+    <string name="help">giúp đỡ</string>
+    <string name="internet_error">Truy cập vào mạng thất bại</string>
+    <string name="internet_exception">mạng lỗi</string>
+    <!-- Phông chữ biên cạnh -->
+    <string name="home_frame_txt">Trang Chủ</string>
+    <string name="football_frame_txt">Tỷ số bống đá</string>
+    <string name="frame_home_video_txt">Live</string>
+    <string name="frame_video_ing_txt">Live</string>
+    <string name="video_live_txt">xin chọn khênh live</string>
+    <string name="live_txt">live</string>
+    <string name="number_frame_txt">giải thưởng</string>
+    <string name="car_frame_txt">Đua xe Bắc Kinh</string>
+    <string name="more_frame_txt">về nhiều sổ xố</string>
+    <string name="language_frame_txt">Ngôn ngữ</string>
+    <string name="version_update_txt">Cập nhật phiên bản </string>
+    <string name="about_frame_txt">Về chúng tôi</string>
+    <string name="more_setting">Thiết lập khác</string>
+    <string name="invited_prize">Mời bạn bè có thưởng</string>
+    <string name="can_only_choose_a_picture">Chỉ được chọn 1 tấm ảnh</string>
+    <string name="foot_neterror_post_photo">Sự cố internet Sửa thất bại Hãy thử lại</string>
+    <string name="cibisai">"Lần thi đấu,"</string>
+    <string name="basket_live">Live</string>
+    <!-- Phông chữ biên cạnh -->
+    <string name="foot_jishi_txt">Live</string>
+    <string name="foot_saiguo_txt">Kết quả</string>
+    <string name="foot_saicheng_txt">Lịch thi đấu</string>
+    <string name="foot_guanzhu_txt">Thích</string>
+    <string name="foot_setting_txt">Cài đặt</string>
+    <!-- Kéo xuống để làm mới -->
+    <string name="pull_to_refresh_pull_label">Kéo xuống để làm mới</string>
+    <string name="pull_to_refresh_release_label">Nới lỏng để làm mới</string>
+    <string name="pull_to_refresh_refreshing_label">đang tài &#8230;</string>
+
+    <!-- cài đặt -->
+    <string name="set_sound_txt">Âm thanh</string>
+    <string name="set_sound1_txt">Âm thanh1</string>
+    <string name="set_sound2_txt">Âm thanh2</string>
+    <string name="set_sound3_txt">Âm thanh3</string>
+    <string name="set_nosound_txt">Im lặng</string>
+    <string name="set_asialet_txt">Kèo châu Á</string>
+    <string name="set_euro_txt">Tỷ lệ Châu âu</string>
+    <string name="set_asiasize_txt">Kèo tài xỉu</string>
+    <string name="set_oddghide_txt">Không hiển thị</string>
+    <string name="public_txt_title">Tỷ số bống đá</string>
+    <string name="set_home_txt">Âm thanh khi đội nhà ghi bàn</string>
+    <string name="set_guest_txt">Âm thanh khi đội khách ghi bàn</string>
+    <string name="set_odd_txt">hiển thị tỷ lệ</string>
+
+    <string name="set_txt">Cài đặt bống đá</string>
+    <string name="set_tip_txt">Cài đặt nhắc nhở</string>
+    <string name="set_goal_shake_txt">Rung động khi có ghi bàn</string>
+    <string name="set_rc_shake_txt">Rung động khi có thẻ đỏ</string>
+    <string name="set_rc_sound_txt">Âm thanh khi có thẻ đỏ</string>
+    <string name="set_tip_focus_match_txt">Chỉ thông báo giải đấu theo dõi</string>
+    <string name="set_ext_txt">Cài đặt khác</string>
+    <string name="set_odd_show_txt">hiển thị tỷ lệ</string>
+    <string name="set_goal_txt">nghi bàn</string>
+
+
+    <!-- sử lý bất thượng -->
+    <string name="exp_net_status_txt">mạng của bạn hiện không tốt</string>
+    <string name="exp__check_txt">vui lòng kiểm tra sau</string>
+    <string name="exp_refresh_txt">làm mới</string>
+    <!-- Lịch trận đấu -->
+
+    <string name="no_data_txt">không có số liệu！</string>
+    <string name="data_parsing_exp_txt">phân tích số liêu bất thường！</string>
+    <string name="loading_txt">đang tài......</string>
+    <string name="reload_txt">tài lại </string>
+
+    <!-- Live -->
+    <string name="immediate_no_data">Cuộc giải đáu theo yêu cầu bạn chọn là có 0 trận</string>
+    <string name="immediate_no_match">Tạm không có giải đấu。</string>
+    <string name="immediate_status_overtime">nhoài thêm</string>
+    <string name="immediate_status_point">phạt</string>
+    <string name="immediate_status_midfield">tiền vệ</string>
+    <string name="immediate_status_entertained">đóng</string>
+    <string name="immediate_status_cancel">hủy</string>
+    <string name="immediate_status_hold">Chưa quyết định</string>
+    <string name="immediate_status_cut">Tạm dừng</string>
+    <string name="immediate_status_mesomere">Gián đoạn</string>
+    <string name="immediate_status_postpone">Hoãn lại</string>
+    <string name="immediate_unconection">Không có mạng ...</string>
+
+    <string name="favourite">Thích</string>
+    <string name="cancel_favourite">Hủy </string>
+
+    <!-- Chọn bống đá -->
+    <string name="filtrate_match_top">Chọn bống đá</string>
+    <string name="filtrate_match_focal">tiêu điểm</string>
+    <string name="filtrate_match_hot">Hot</string>
+    <string name="filtrate_match_all">chọn tất cả</string>
+    <string name="filtrate_match_inverse">Chọn ngược</string>
+    <string name="filtrate_match_submit">xác định</string>
+    <string name="filtrate_match_hide">Ẩn</string>
+    <string name="filtrate_match_session">trận</string>
+    <string name="toast_data_loading">Đang cập nhật</string>
+    <string name="hot_score_txt">Giải đấu hot</string>
+    <string name="other_score_txt">Giải đấu khác</string>
+
+    <!-- yeu thích -->
+    <string name="unfocus">tạm không có thích</string>
+    <string name="unfocus2">Trượt để quan tâm giải này</string>
+
+    <!-- 关于我们 -->
+    <string name="about_relation_txt">Liên hệ chúng tôi</string>
+    <string name="about_us_txt">Về chúng tôi</string>
+    <string name="about_ver_update_txt">Cập nhật phiên bản </string>
+    <string name="about_product_intro_txt">Giới thiệu sản phẩm</string>
+    <string name="about_product_msg_txt">Tỷ số nhất-sản phẩm chuyên kết quả bóng đá và giải thưởng xổ sổ,kết quả bóng đá và  giải thưởng  nhanh nhất.Đứng đầu trong lĩnh vực này</string>
+    <string name="about_pc_txt">PC</string>
+    <string name="about_pc_msg_txt">www.13322.com</string>
+    <string name="about_wap_txt">WAP</string>
+    <string name="about_wap_msg_txt">m.13366.vn</string>
+    <string name="about_subscribe_txt">Số thuê bao：live13322</string>
+    <string name="about_service_txt">Số dịch vụ：win13322</string>
+    <string name="about_cus_service_txt">Hỗ trợ khách hàng:</string>
+    <string name="about_cus_number_txt"> 400-6776-550</string>
+    <string name="about_io_exp">IO bất thường</string>
+    <string name="about_service_exp">máy chủ ngoại lệ</string>
+    <string name="about_notice">Nhắc </string>
+    <string name="about_notice_msg">Tạm không có phiên bản mới </string>
+    <string name="about_soft_update">Cập nhật phiên bản </string>
+    <string name="about_update">  Cập nhật</string>
+    <string name="about_later_update">Tải sau đây</string>
+    <string name="about_confirm">OK</string>
+    <string name="about_cancel">Hủy</string>
+    <string name="about_net_failed">Không có mạng ,vui lòng kiểm tra và cập nhật</string>
+    <!--Kho dữ liệu-->
+    <string name="information_customer_service">Dịch vụ khách hàng：</string>
+    <string name="information_integral_match">league match</string>
+    <string name="information_chdi_text">vòng thứ</string>
+    <string name="information_chround_text"></string>
+    <string name="information_integral_text">BXH</string>
+    <string name="information_agendal_text">Lịch thi đấu</string>
+    <string name="information_agendal_group">đội</string>
+    <string name="information_football_title">dữ liệu bống đá</string>
+    <string name="information_integral_game">Match</string>
+    <string name="information_integral_win">W/D/L</string>
+    <string name="information_integral_get">Goal/Miss</string>
+    <string name="information_integral_goal">Net Win</string>
+    <string name="information_integral_minute">Pts</string>
+    <string name="information_football_integral">tạm không có xếp hạng</string>
+    <string name="information_agendal_title">chọn vòng</string>
+
+    <!-- Tất cả các tiêu đề -->
+    <string name="frame_home_jishi_txt">Tỷ số bống đá</string>
+    <string name="frame_home_jiaodian_txt">Giải đấu hot</string>
+
+    <!-- 彩票 -->
+    <string name="number_info_stopSell">hết giờ bán</string>
+    <string name="number_info_countDown">xổ số mới nhất đếm ngược</string>
+    <string name="number_info_countDown2">đếm ngược</string>
+    <string name="number_save_success">lưu thành công</string>
+    <string name="number_loading_txt">Đang cập nhật......</string>
+    <string name="number_tltle_txt">giải thưởng</string>
+    <string name="number_customize_title">Đặt xổ số</string>
+    <string name="number_info_default">--</string>
+    <string name="number_isOpenNumber">Đang giải thưởng...</string>
+    <string name="number_loading_hint">Đang cập nhật nhanh......</string>
+    <string name="number_net_error">Không có mạng！！！</string>
+    <string name="number_click_refresh">Làm mới</string>
+    <string name="number_refresh">Không có mạng！！！</string>
+    <string name="number_bjsc_sum_no1no2">Số thứ 1 cộng số thứ 2</string>
+    <string name="number_bjsc_fz">Diểm</string>
+    <string name="number_bjsc_dx">Tài xỉu</string>
+    <string name="number_bjsc_da">Tài xỉu</string>
+    <string name="number_bjsc_xiao">xỉu</string>
+    <string name="number_bjsc_ds">Chẵn/Lẻ</string>
+    <string name="number_bjsc_dan">Chẵn</string>
+    <string name="number_bjsc_suang">Lẻ</string>
+    <string name="number_bjsc_he">Tổng</string>
+    <string name="number_bjsc_jia">Gia cầm</string>
+    <string name="number_bjsc_ye">Dã thú</string>
+    <string name="number_bjsc_red">Đỏ</string>
+    <string name="number_bjsc_green">Xanh lá cây</string>
+    <string name="number_bjsc_blue">Xanh dương </string>
+    <string name="number_bjsc_longhu">Rồng Hổ</string>
+    <string name="number_bjsc_no1">Quán quân</string>
+    <string name="number_bjsc_no2">Á quân</string>
+    <string name="number_bjsc_no3">Thứ 3</string>
+    <string name="number_bjsc_no4">Thứ 4</string>
+    <string name="number_bjsc_no5">Thứ 5</string>
+    <string name="number_bjsc_long">Rồng</string>
+    <string name="number_bjsc_hu">Hổ</string>
+    <string name="number_bjsc_nu">Bò</string>
+    <string name="number_bjsc_ma">Ngựa</string>
+    <string name="number_bjsc_ya">Cừu</string>
+    <string name="number_bjsc_ji">Gà</string>
+    <string name="number_bjsc_gou">Chó</string>
+    <string name="number_bjsc_zhu">Lợn</string>
+    <string name="number_bjsc_su">Chuột</string>
+    <string name="number_bjsc_tu">Thỏ</string>
+    <string name="number_bjsc_se">Rắn</string>
+    <string name="number_bjsc_hou">Khỉ</string>
+    <string name="number_custom_ok">Đã đặt xổ số</string>
+    <string name="number_custom_hint">nhấn lâu để kéo các tab đặt hàng</string>
+    <string name="number_custom_not">chưa đặt xổ số</string>
+    <string name="number_custom_click_more">Click để đặt thêm</string>
+    <string name="number_custom_click_ok">OK</string>
+    <string name="number_custom_click_not">đặt lại</string>
+    <string name="number_tm_tm">Số đặt biệt</string>
+    <string name="number_tm_sx">Zodiac</string>
+    <string name="number_tm_jy">Gia cầm / Dã thú</string>
+    <string name="number_tm_bs">Màu sắc</string>
+    <string name="number_tm_zf">Tổng</string>
+    <string name="number_tm_ws">Số đuôi</string>
+    <string name="number_tm_no1">Goal thứ 1</string>
+    <string name="number_tm_no2">Goal thứ 2</string>
+    <string name="number_tm_no3">Goal thứ 3</string>
+    <string name="number_tm_no4">Goal thứ 4</string>
+
+    <string name="number_qxc_no1">Vị thứ 1</string>
+    <string name="number_qxc_no2">Vị thứ 2</string>
+    <string name="number_qxc_no3">Vị thứ 3</string>
+    <string name="number_qxc_no4">Vị thứ 4</string>
+    <string name="number_qxc_no5">Vị thứ 5</string>
+    <string name="number_qxc_no6">Vị thứ 6</string>
+    <string name="number_qxc_no7">Vị thứ 7</string>
+
+    <string name="number_hk_hint">Xổ số HongKong</string>
+    <string name="number_hk_hint2">đếm ngược</string>
+    <string name="number_qxc_hint">Xổ số bảy sao</string>
+    <string name="number_qxc_hint2">đếm ngược</string>
+    <string name="number_hk_dd">ngày</string>
+    <string name="number_hk_hh">giờ</string>
+    <string name="number_hk_mm">phút</string>
+    <string name="number_hk_ss">giây</string>
+    <string name="number_hk_openjiang">Xổ số HongKong</string>
+    <string name="number_hk_openjiang_current">xổ số mới nhất</string>
+    <string name="number_hk_openjiang_history">xổ số lịch sử</string>
+
+    <string name="number_cz_hk">Xổ số HongKong</string>
+    <string name="number_cz_cq_ssc">Xổ số liên tục Trùng Khánh</string>
+    <string name="number_cz_jx_ssc">Xổ số liên tục Giang Tây</string>
+    <string name="number_cz_xj_ssc">Xổ số liên tục Tân Cương</string>
+    <string name="number_cz_yn_ssc">Xổ số liên tục Vân Nam</string>
+    <string name="number_cz_qxc">Xổ số bảy sao</string>
+    <string name="number_cz_gd_syxw">11 chọn 5 Quảng Đông</string>
+    <string name="number_cz_gd_klsf">Xổ số vui Quảng Đông</string>
+    <string name="number_cz_hb_syxw">11 chọn 5 Hồ Bắc</string>
+    <string name="number_cz_ah_ks">Nhanh 3 An Huy</string>
+    <string name="number_cz_hn_klsf">Xổ số vui Hồ Nam</string>
+    <string name="number_cz_kl8">thưởng vui 8</string>
+    <string name="number_cz_jl_ks">Nhanh 3 Cát Lâm</string>
+    <string name="number_cz_ln_xyxw">11 chọn 5 Liêu Ninh</string>
+    <string name="number_cz_bj_sc">Đua xe Bắc Kinh</string>
+    <string name="number_cz_js_ks">Nhanh 3 Giang Tô</string>
+    <string name="number_cz_ssl">Vui liên tục</string>
+    <string name="number_cz_gx_ks">Nhanh 3 Quảng Tây</string>
+    <string name="number_cz_xylc">Nông trừơng may Trùng Khánh</string>
+    <string name="number_cz_js_syxw">11 chọn 5 Giang Tô</string>
+    <string name="number_cz_jx_syxw">11 chọn 5 Giang Tây</string>
+    <string name="number_cz_sd_syxw">11 chọn 5 Sơn Đông</string>
+    <string name="number_cz_tj_ssc">Xổ số liên tục Thiên Cân</string>
+    <string name="number_cz_ssq">雙色球</string>
+    <string name="number_cz_pl3">排列三</string>
+    <string name="number_cz_pl5">排列五</string>
+    <string name="number_cz_f3d">福彩3D</string>
+    <string name="number_cz_qlc">七樂彩</string>
+    <string name="number_cz_dlt">大樂透</string>
+    <string name="number_cz_sfc">勝負彩</string>
+    <string name="number_cz_lcbqc">六場半全場</string>
+    <string name="number_cz_scjq">4場進球</string>
+    <string name="number_item_name">壹鍵查詢開獎結果</string>
+    <string name="number_item_name_desc">快速 便捷 準確</string>
+    <!-- tin tức mô tả -->
+    <string name="number_code_desc_qxc">Mỗi tuần 20:30 thứ ba,sáu,chủ nhật giải thường</string>
+    <string name="number_code_desc_bj_sc">Mõi ngày 179 kỳ,5 phút một kỳ,9:00~00:00</string>
+    <string name="number_code_desc_gd_klsf">Mõi ngày 84 kỳ,10 phút một kỳ，9:00-23:00</string>
+    <string name="number_code_desc_hn_klsf">Mõi ngày 84 kỳ,10 phút một kỳ,9:00-23:00</string>
+    <string name="number_code_desc_xylc">Mõi ngày 97 kỳ,10 phút một kỳ,0:00-2:00 10:00-0:00</string>
+    <string name="number_code_desc_cq_ssc">Ban ngày có 72 kỳ,10 phút một kỳ :buổi tối 48 kỳ,5 phút một kỳ</string>
+    <string name="number_code_desc_xj_ssc">Mõi ngày 96 kỳ,10 phút một kỳ,10:00-2:00</string>
+    <string name="number_code_desc_yn_ssc">Mõi ngày 72 kỳ,10 phút một kỳ,10:00-21:50</string>
+    <string name="number_code_desc_tj_ssc">Mõi ngày 84 kỳ,10 phút một kỳ,9:00-23:00</string>
+    <string name="number_code_desc_jx_ssc">Mõi ngày 84 kỳ,10 phút một kỳ,9:00-23:00</string>
+    <string name="number_code_desc_gd_syxw">Mõi ngày 84 kỳ,10 phút một kỳ,9:00-23:00</string>
+    <string name="number_code_desc_js_syxw">Mõi ngày 82 kỳ,10 phút một kỳ,，8:30-22:10</string>
+    <string name="number_code_desc_sd_syxw">Mõi ngày 78 kỳ,10 phút một kỳ,9:00-22:00</string>
+    <string name="number_code_desc_ah_ks">Mõi ngày 80 kỳ,10 phút một kỳ,8:30-22:00</string>
+    <string name="number_code_desc_js_ks">Mõi ngày 82 kỳ,10 phút một kỳ,8:30-22:00</string>
+    <string name="number_code_desc_gx_ks">Mõi ngày 78 kỳ,10 phút một kỳ,9:30-22:30</string>
+    <string name="number_code_desc_ssq">每週二、四、日21:15開獎</string>
+    <string name="number_code_desc_dlt">每週一、三、六20:30開獎</string>
+    <string name="number_code_desc_qlc">每週一、三、五21:15開獎</string>
+    <string name="number_code_desc_f3d">每日20:30開獎</string>
+    <string name="number_code_desc_pl3">每日20:30開獎</string>
+    <string name="number_code_desc_pl5">每日20:30開獎</string>
+
+    <string name="number_code_di">thứ</string>
+    <string name="number_code_qi">kỳ</string>
+
+    <string name="number_7">Chủ nhật</string>
+    <string name="number_1">Thứ hai</string>
+    <string name="number_2">Thứ ba</string>
+    <string name="number_3">Thứ tư</string>
+    <string name="number_4">Thứ năm</string>
+    <string name="number_5">Thứ sáu</string>
+    <string name="number_6">Thứ bày</string>
+    <!-- Xử lý sự bất thường -->
+    <string name="number_exp_net_status_txt">Không có mạng </string>
+    <string name="number_exp__check_txt">Vui lòng kiểm tra</string>
+    <string name="number_exp_refresh_txt"> cập nhật</string>
+
+    <string name="number_ssq_hqtj">紅球統計</string>
+    <string name="number_ssq_lqtj">藍球統計</string>
+    <string name="number_ssq_kd">跨度</string>
+    <string name="number_ssq_job">奇偶比</string>
+    <string name="number_ssq_dxb">大小比</string>
+    <string name="number_ssq_zhb">質合比</string>
+    <string name="number_ssq_qjb">區間比</string>
+    <string name="number_bonus_type">¥</string>
+
+    <string name="number_info_sc_round">場次</string>
+    <string name="number_info_vs">對陣</string>
+    <string name="number_info_start_time">開賽時間</string>
+    <string name="number_info_sale">本期銷量：</string>
+    <string name="number_info_bonus_sum">獎金滾存：</string>
+    <string name="number_info_prize">獎項</string>
+    <string name="number_info_bonus_1">一等獎</string>
+    <string name="number_info_bonus_1_1">其中：一等獎複式投注</string>
+    <string name="number_info_bonus_2">二等獎</string>
+    <string name="number_info_bonus_3">三等獎</string>
+    <string name="number_info_bonus_4">四等獎</string>
+    <string name="number_info_bonus_5">五等獎</string>
+    <string name="number_info_bonus_6">六等獎</string>
+    <string name="number_info_bonus_6_1">其中：六等獎複式投注</string>
+    <string name="number_info_count">中獎注數(注)</string>
+    <string name="number_info_bonus">單注獎金(元)</string>
+    <string name="number_info_condition">中獎條件</string>
+    <string name="number_info_full_6">全對</string>
+    <string name="number_info_full_8">8隊全對</string>
+    <string name="number_info_full_9">9場全對</string>
+    <string name="number_info_full_14">14場全對</string>
+    <string name="number_info_full_wrong1">錯1場</string>
+    <string name="number_info_full">全</string>
+    <string name="number_info_half">半</string>
+    <string name="number_info_result">彩果</string>
+    <string name="number_info_qj">區間</string>
+    <string name="number_info_jo">奇偶</string>
+    <string name="number_info_j">奇</string>
+    <string name="number_info_o">偶</string>
+    <string name="number_info_dx">大小</string>
+    <string name="number_info_boll_red">紅球</string>
+    <string name="number_info_comprehensive">綜合</string>
+    <string name="number_info_value_sum">和值</string>
+    <string name="number_info_name_sfssc">勝負十四場</string>
+    <string name="number_info_name_rxjc">任選9場</string>
+    <string name="number_info_basic">基本</string>
+    <string name="number_info_basic_add">追加</string>
+
+    <string name="number_info_pl3_desc1">直選：所選號碼與開獎號碼按位數全部相同</string>
+    <string name="number_info_pl3_desc2">組三：開獎號碼中有[對子]，且包含任選號中</string>
+    <string name="number_info_pl3_desc3">組六：三個開獎號碼[均不相同]，且包含任選號中</string>
+    <string name="number_info_pl3_count1">直選</string>
+    <string name="number_info_pl3_count2">組三</string>
+    <string name="number_info_pl3_count3">組六</string>
+    <string name="number_info_pl5_count">排列五直選</string>
+
+    <string name="number_info_front">前</string>
+    <string name="number_info_center">中</string>
+    <string name="number_info_after">後</string>
+
+    <string name="number_info_wx_j">金</string>
+    <string name="number_info_wx_m">木</string>
+    <string name="number_info_wx_s">水</string>
+    <string name="number_info_wx_h">火</string>
+    <string name="number_info_wx_t">土</string>
+    <string name="number_info_fw_E">東</string>
+    <string name="number_info_fw_S">南</string>
+    <string name="number_info_fw_W">西</string>
+    <string name="number_info_fw_N">北</string>
+    <string name="number_info_fw_Z">中</string>
+    <string name="number_info_wx">五行</string>
+    <string name="number_info_fw">方位</string>
+    <string name="number_info_boll_blue">藍球</string>
+    <string name="number_info_region_front">前區</string>
+    <string name="number_info_region_after">後區</string>
+    <string name="home_number_desc_bonus">滾動獎池</string>
+    <string name="home_number_desc_yi">億</string>
+    <string name="home_number_desc_wan">萬</string>
+    <string name="home_lottery_info_open">Mở thưởng</string>
+    <string name="home_lottery_info_stat">Thống kê</string>
+    <string name="home_lottery_info_chart">Biểu đồ</string>
+    <string name="home_lottery_info_start_title">Biểu đồ</string>
+    <string name="home_lottery_info_start_tab_tm">Giải đặc biệt ra</string>
+    <string name="home_lottery_info_start_tab_pm">Giải thường ra</string>
+    <string name="home_lottery_info_start_tab_notm">Giải đặc biệt chưa ra</string>
+    <string name="home_lottery_info_tm_zodiac_count">Con giáp giải đặc ra</string>
+    <string name="home_lottery_info_tm_count">Số lần giải đặc biệt ra</string>
+    <string name="home_lottery_info_tm_mantissa_count">Số lần đuôi đặc biệt ra</string>
+    <string name="home_lottery_info_tm_bo_count">Số lần màu giải đặc biệt ra</string>
+    <string name="home_lottery_info_pm_zodiac_count">Số lần con giáp giải thường ra</string>
+    <string name="home_lottery_info_pm_count">Số lần giải thường ra</string>
+    <string name="home_lottery_info_pm_mantissa_count">Số lần đuôi giải thường ra</string>
+    <string name="home_lottery_info_pm_bo_count">Số lần màu giải thường ra</string>
+    <string name="home_lottery_info_tm_not_zodiac_count">Con giáp giải đặc biệt liên tiếp chưa ra</string>
+    <string name="home_lottery_info_tm_not_count">Giải đặc biệt liên tiếp chưa ra</string>
+    <string name="home_lottery_info_tm_not_mantissa_count">Đuôi giải đặc biệt liên tiếp chưa ra</string>
+    <string name="home_lottery_info_tm_not_bo_count">Màu giải đặc biệt liên tiếp chưa ra</string>
+    <string name="home_lottery_info_tm_bo_r">Đỏ</string>
+    <string name="home_lottery_info_tm_bo_g">Lục</string>
+    <string name="home_lottery_info_tm_bo_b">Lam</string>
+    <string name="home_lottery_info_image_desc">Toàn bộ hồ sơ, dữ liệu website này chỉ cung cấp tham khảo, để tránh gây tổn hại kinh tế, không cá nhân nào được sử dụng với mục đích phi pháp, nếu không sẽ hoàn toàn tự chịu trách nhiệm</string>
+
+    <string name="number_ssq_hint">雙色球開獎倒計時：</string>
+    <string name="number_ssq_hint2"></string>
+    <string name="number_qlc_hint">七樂彩開獎倒計時：</string>
+    <string name="number_qlc_hint2"></string>
+    <string name="number_dlt_hint">大樂透開獎倒計時：</string>
+    <string name="number_dlt_hint2"></string>
+
+    <!-- 彩票 End-->
+
+    <string name="number_xq7">Chủ nhật</string>
+    <string name="number_xq1">Thứ hai</string>
+    <string name="number_xq2">Thứ ba</string>
+    <string name="number_xq3">Thứ tư</string>
+    <string name="number_xq4">Thứ năm</string>
+    <string name="number_xq5">Thứ sáu</string>
+    <string name="number_xq6">Thứ bày</string>
+
+
+    <string name="number_xinqi7">Chủ nhật</string>
+    <string name="number_xinqi1">Thứ hai</string>
+    <string name="number_xinqi2">Thứ ba</string>
+    <string name="number_xinqi3">Thứ tư</string>
+    <string name="number_xinqi4">Thứ năm</string>
+    <string name="number_xinqi5">Thứ sáu</string>
+    <string name="number_xinqi6">Thứ bảy</string>
+
+
+    <!-- 代码中的添加 string -->
+
+    <string name="language_select_txt">Chọn ngôn ngữ</string>
+    <string name="public_btn_save">Lưu</string>
+    <!-- 简体中文 -->
+    <string name="china_txt">简体中文</string>
+    <!-- 繁体中文 -->
+    <string name="china_tw_txt">繁體中文</string>
+    <!-- 英语-->
+    <string name="china_en_txt">English</string>
+    <!-- 韩语 -->
+    <string name="china_ko_txt">한국어</string>
+    <!-- 印尼语 -->
+    <string name="china_id_txt">indonesia</string>
+    <!-- 泰语-->
+    <string name="china_th_txt">ภาษาไทย</string>
+    <!-- 越南语 -->
+    <string name="china_vi_txt">tiếng việt</string>
+
+
+    <string name="reload_the_txt">Cập nhật lại</string>
+
+
+    <!-- 首页足球状态 -->
+    <string name="frame_home_bjsaiche_txt">Đua xe Bắc Kinh</string>
+    <string name="frame_home_hkLHC_txt">Xổ số HongKong</string>
+    <string name="frame_home_lhckaijiang_txt">giải thưởng</string>
+    <string name="fragme_home_shangbanchang_text">Hiệp 1</string>
+    <string name="fragme_home_zhongchang_text">Nửa trận</string>
+    <string name="fragme_home_xiabanchang_text">Hiệp 2</string>
+    <string name="fragme_home_quxiao_text">Hủy</string>
+    <string name="fragme_home_daiding_text">Chưa quyết định</string>
+    <string name="fragme_home_wanchang_text">kết thúc</string>
+    <string name="fragme_home_yaozhan_text">Tạm dừng</string>
+    <string name="fragme_home_zhongduan_text">Gián đoạn</string>
+    <string name="fragme_home_tuichi_text">Hoãn</string>
+    <string name="fragme_home_jiaqiu_text">ngoài giờ</string>
+    <string name="fragme_home_dianqiu_text">phạt bống</string>
+
+
+    <!-- Thoát khỏi  -->
+    <string name="main_exit_text">Nhấn một lần nữa để thoát khỏi </string>
+    <!-- nhăc copy thành công -->
+    <string name="about_copy_success">văn bản đã copy</string>
+
+    <string name="pre_stadium_weather_sunny">nắng</string>
+    <string name="pre_stadium_weather_heavy_rain">mưa to</string>
+    <string name="pre_stadium_weather_light_rain">mưa con</string>
+    <string name="pre_stadium_weather_wind">gió</string>
+    <string name="pre_stadium_weather_snow">tuyết</string>
+    <string name="home_pager_ri">ngày</string>
+    <string name="home_pager_yue">tháng</string>
+    <string name="home_pager_current_date">hôm nay</string>
+
+
+    <string name="developing">Vui lòng theo dõi</string>
+
+    <string name="football_detail_stadium_tab">sân vận động</string>
+    <string name="football_detail_odds_tab">chỉ số</string>
+    <string name="football_detail_analyze_tab">phân tích</string>
+    <string name="goal">TB bàn thắng</string>
+    <string name="football_detail_pre_title1">Thời gian</string>
+    <string name="football_detail_pre_title2">thời tiết</string>
+    <string name="football_detail_pre_title3">sân </string>
+    <string name="football_detail_pre_title4">đầu tiên</string>
+    <!--trang phân tích-->
+    <string name="rank">BXH</string>
+    <string name="recordconstract">so sánh kỉ lục</string>
+    <string name="homeguestconstract">so sánh đội chủ/khách</string>
+    <string name="GoalsperGame">TB bàn thắng</string>
+    <string name="losspergame">TB bàn thua</string>
+    <string name="ranking">Xếp hạng</string>
+    <string name="goal_and_loss">ghi/mất bàn</string>
+    <string name="history_battle">lịch sử thi đấu</string>
+    <string name="home_recent">đội chủ gần đây</string>
+    <string name="guest_recent">đội khách gần đây</string>
+    <string name="opinion">quan điểm trận đấu này</string>
+    <string name="shuangfangjin">gần hai biên</string>
+    <string name="cijiaofeng">"lần gặp ,  "</string>
+    <string name="analyze_win">W</string>
+    <string name="analyze_equ">D</string>
+    <string name="analyze_defeat">L</string>
+    <string name="winpro">% Thắng</string>
+    <string name="jin">ghi</string>
+    <string name="qiushi">mất bàn</string>
+    <string name="ball">goal</string>
+    <string name="analyze_date">ngày</string>
+    <string name="analyze_match">giải đấu</string>
+    <string name="analyze_match_result">kết quả</string>
+    <string name="zhuduijin">đội chủ gần</string>
+    <string name="keduijin">đội khách gần</string>
+    <string name="nodata">tạm không có số liệu</string>
+
+
+    <!-- 篮球界面 -->
+    <string name="basket_left">Tỷ số bống rổ</string>
+    <string name="basket_tittle">Tỷ số bống rổ</string>
+    <string name="basket_setting_tittle">Cài đặt bóng rổ</string>
+    <string name="basket_filtrate_tittle">Chọn Bóng rổ</string>
+
+    <string name="basket_total">tổng:</string>
+    <string name="basket_differ">kém:</string>
+    <string name="basket_tv"> | </string>
+
+    <string name="basket_handicap_feng">đóng</string>
+    <string name="basket_odds_asize">tổng</string>
+    <string name="basket_odds_eur">kết quả</string>
+    <string name="basket_odds_alet">đội chủ</string>
+
+    <string name="basket_VS">VS</string>
+    <string name="basket_1st_half">1st half</string>
+    <string name="basket_1st">1st</string>
+    <string name="basket_2nd">2nd</string>
+    <string name="basket_2nd_half">2nd half</string>
+    <string name="basket_3rd">3rd</string>
+    <string name="basket_4th">4th</string>
+    <string name="basket_OT1">OT1</string>
+    <string name="basket_OT2">OT2</string>
+    <string name="basket_OT3">OT3</string>
+    <string name="basket_half_time">half time</string>
+
+    <string name="basket_undetermined">chưa quyết định</string>
+    <string name="basket_interrupt">Gián đoạn</string>
+    <string name="basket_cancel">Hủy</string>
+    <string name="basket_postpone"> Hoãn lại</string>
+
+
+    <string name="basket_yesterday">hôm qua</string>
+    <string name="basket_today">hôm nay</string>
+    <string name="basket_monday">ngày mai</string>
+
+    <!--Cài đặt bóng rổ-->
+    <string name="basket_odd_setting">Thông báo tỷ lệ</string>
+    <string name="basket_scort_setting">Nhắc nhở giải đấu </string>
+    <string name="basket_analyze">phân tích</string>
+    <string name="basket_alet">Kèo châu Á</string>
+    <string name="basket_eur">Tỷ lệ Châu Âu</string>
+    <string name="basket_asize">Kèo tài xỉu</string>
+    <string name="basket_noshow">Không</string>
+    <string name="basket_all_score">Tổng số HT/FT</string>
+    <string name="basket_differ_score">khoảng cách tông số</string>
+    <string name="basket_single_score">ghi số thời gian duy nhất</string>
+    <string name="basket_ranking">Xếp hạng</string>
+    <string name="basket_begin_game">bắt đầu</string>
+
+    <string name="basket_hot_cup">Giải đấu hot</string>
+    <string name="basket_other_cup">Giải đấu khác</string>
+    <string name="hor_data_info_txt">tin nóng</string>
+    <string name="basket_hot">hót</string>
+    <string name="basket_all_checked">chọn hết</string>
+    <string name="basket_negate">Chọn ngược</string>
+    <string name="basket_reset">Đạt lại</string>
+
+
+
+    <string name="basket_isok">xắc định</string>
+
+    <string name="basket_unfiltrate">Tạm không có giải đấu</string>
+    <string name="basket_undata">Tạm không có thi đấu</string>
+
+    <!--篮球详情-->
+
+    <!--分析-->
+    <string name="basket_analyze_sides">Thành tích 2 đội</string>
+    <string name="basket_analyze_history">Lịch sử đối đầu</string>
+    <string name="basket_analyze_recent">Thành tích gần đây</string>
+    <string name="basket_analyze_fruture">Trận đấu sắp tới</string>
+    <string name="basket_analyze_more">Thành tích khác >></string>
+    <string name="basket_analyze_points_ranking">BXH</string>
+    <string name="basket_analyze_rank_team">BXH/đội bóng</string>
+    <string name="basket_analyze_has">đã đá</string>
+    <string name="basket_analyze_win_lost">thắng/thua</string>
+    <string name="basket_analyze_winodds">thắng %</string>
+    <string name="basket_analyze_recent_performance">thánh tích</string>
+    <string name="odds_equals">trung bình</string>
+
+    <string name="basket_analyze_fruture_competition">trận đấu sắp tới</string>
+    <string name="basket_analyze_event">giải đấu</string>
+    <string name="basket_analyze_date">ngày</string>
+    <string name="basket_analyze_guest">sân khách</string>
+    <string name="basket_analyze_home">sân chủ</string>
+    <string name="basket_analyze_score">Tỷ Số</string>
+    <string name="basket_analyze_sizeof">tài xỉu</string>
+    <string name="basket_analyze_let_points">chấp</string>
+    <string name="basket_analyze_interval">cách</string>
+    <string name="basket_analyze_update">làm mới</string>
+    <string name="basket_analyze_guest_win">khách thắng</string>
+    <string name="basket_analyze_dish">kèo</string>
+    <string name="basket_analyze_home_win">chủ thắng</string>
+    <string name="basket_analyze_screen">chọn</string>
+
+    <string name="basket_analyze_future">tương lai</string>
+    <string name="basket_analyze_field">vòng</string>
+    <string name="basket_analyze_defult_text">--</string>
+    <string name="basket_analyze_win">thắng</string>
+    <string name="basket_analyze_lost">thua</string>
+    <string name="basket_analyze_recently">gần đây</string>
+    <string name="basket_analyze_recently2">sân，</string>
+    <string name="basket_analyze_home_field">,sân chủ</string>
+    <string name="basket_company">công ty</string>
+    <string name="basket_analyze_day">ngày</string>
+    <string name="basket_nodata">tạm không có dữ liệu</string>
+    <string name="basket_six_average_win_score">6trận trung bình ghi bàn</string>
+    <string name="basket_six_average_lost_score">6trận trung bình mất bàn</string>
+
+    <string name="basket_handicap_big">tài</string>
+    <string name="basket_handicap_small">xỉu</string>
+    <string name="basket_handicap_zou">hòa</string>
+
+    <string name="basket_analyze_dialog_site">sân vận động</string>
+    <string name="basket_analyze_dialog_num">số trận</string>
+    <string name="basket_analyze_dialog_allgame">tất cả</string>
+    <string name="basket_analyze_dialog_samegame">cùng một sân chủ/khách</string>
+    <string name="basket_analyze_dialog_six">6 trận</string>
+    <string name="basket_analyze_dialog_ten">10 trận</string>
+    <string name="basket_analyze_dialog_fifteen">15 trận</string>
+    <string name="basket_analyze_dialog_cancle">hủy</string>
+    <string name="basket_analyze_dialog_ok">xắc định</string>
+
+    <string name="basket_odds_euro_details">chi tiết tỷ lệ</string>
+    <string name="basket_odds_asiaLet_details">chi tiết kèo châu Á</string>
+    <string name="basket_odds_asiaSize_details">chi tiết kaof tài xỉu</string>
+
+
+    <!-- 足球资讯 -->
+    <string name="foot_title">Tin Tức Bóng Đá</string>
+    <string name="foot_zl_tipf">đây đã là vòng đầu tiên </string>
+    <string name="foot_zl_tipl">ây đã là vòng cuối cùng</string>
+    <string name="foot_tujian">Tỷ lệ</string>
+    <string name="foot_loadmore">cập nhật them</string>
+    <string name="foot_loadingmore">đang cập nhật them...</string>
+    <string name="foot_nomoredata">không có nhiều dữ liệu</string>
+    <string name="foot_neterror">Bất thường mạng, xin vui lòng thử lại</string>
+    <string name="foot_datadetail">xem dữ liệu chi tiết</string>
+    <string name="foot_detailtitle">dữ liệu chi tiết</string>
+    <string name="foot_erroraddress">địa chỉ không hợp lệ</string>
+    <string name="basket_home_diyijie">đoạn thứ 1</string>
+    <string name="basket_home_dierjie">đoạn thứ2</string>
+    <string name="basket_home_disanjie">đoạn thứ3</string>
+    <string name="basket_home_dishijie">đoạn thứ4</string>
+
+
+    <string name="football_score">Tỷ Số</string>
+    <string name="football_news">tin tức</string>
+    <string name="football_data">số liệu</string>
+    <string name="football_video">video</string>
+    <string name="football_cpi">Tỷ Lệ</string>
+    <string name="title_activity_web_counsel">WebCounselActivity</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--WebView H5-->
+    <string name="webview_check_info">Xem dữ liệu chi tiết trận đấu </string>
+    <string name="user_feedback">Người dùng phản hồi</string>
+    <!--资讯评论-->
+    <string name="user_name">khách sử dụng</string>
+    <string name="warn_nullcontent">Vui lòng nhập nội dung</string>
+    <string name="warn_submitfail">Gửi thất bại, xin vui lòng thử lại</string>
+    <string name="hint_content">Tôi có bình luận</string>
+    <string name="comment_send">gửi</string>
+    <string name="comment_title">Tất cả các bình luận</string>
+    <string name="comment_contentnull">tạm không có bình luận</string>
+    <string name="toatalvisiable">Xem tất cả</string>
+
+    <!---->
+    <string name="feedback_submit">Gửi</string>
+    <string name="feedback_edit_hint">Mời nhập nội dung</string>
+    <string name="feedback_toast_thx">Cảm ơn đã phản hồi!</string>
+    <string name="feedback_submiting_txt">được gửi...</string>
+    <!--ngày-->
+    <string name="data_date_txt">2015-2016</string>
+    <string name="data_date_txt1">2016-2017</string>
+
+
+    <!-- 登录注册 begin-->
+    <string name="my">Trung tâm cá nhân</string>
+    <string name="register">Đăng ký nhanh</string>
+    <string name="registering">đang đăng ký...</string>
+    <string name="login">Đăng nhập</string>
+    <string name="logining">Đang đăng nhập...</string>
+    <string name="login_succ">Đăng nhập thành công</string>
+    <string name="login_fail">Đăng nhập thất bại</string>
+    <string name="pwd_format">Vui lòng nhập vào 6-20 ký tự,chữ /con số cả gạch dưới</string>
+    <string name="pwd_format_hint">Vui lòng nhập vào 6-20 ký tự,phân biệt chữ to nhỏ .</string>
+    <string name="pwd_empty">Nhập mật khẩu</string>
+    <string name="phone_empty">Mời nhập số di động</string>
+    <string name="login_int_username">Hãy nhập vào đăng ký tài khoản</string>
+    <string name="phone_error">Vui lòng nhập vào số di động chính xác</string>
+    <string name="verify_code">Vui lòng nhập vào mã xác nhận</string>
+    <string name="verify_code_send">Gửi mã xác nhận</string>
+    <string name="logout"> đăng xuất</string>
+    <string name="logouting">đăng thoát...</string>
+    <string name="logout_fail"> thoát thất bại</string>
+    <string name="logout_succ"> thoát thành công</string>
+    <string name="resend">gửi lại</string>
+    <string name="register_fail">đăng ký thất bại</string>
+    <string name="register_succ">đăng ký thành công</string>
+    <string name="mail_format_error">E-mail lỗi định dạng</string>
+    <string name="mail_already_register">E-mail đã từng đăng ký</string>
+    <string name="verify_code_error">Mã xác nhân lỗi</string>
+    <string name="user_exist">tài khoản đã kích hoạt</string>
+    <string name="verify_code_invalidate">Mã xác nhận đã hết hạn</string>
+    <string name="phone_already_exist">số di động đã đăng ký</string>
+    <string name="user_not_login">chưa đăng nhập tài khoản</string>
+    <string name="PHONE_FORMAT_ERROR">số di động không hợp lệ</string>
+    <string name="user_not_exist">tài khoản tồn tại </string>
+    <string name="message_send_fail">gửi mã xác nhận thất bại</string>
+    <string name="nickname_exist">biệt danh nhân viên đã tồn tại</string>
+    <string name="username_exist">tài khoản đã tồn tại</string>
+    <string name="username_error">Đăng nhập tài khoản lỗi</string>
+    <string name="get_qq_info_fail">Đọc thông tin qq khách thất bại</string>
+    <string name="GET_WEIBO_INFO_FAIL">Đọc thông tin Weibo khách thất bại</string>
+    <string name="system_error">lỗi hệ thống</string>
+    <string name="realname_error">Tên thật Lỗi</string>
+    <string name="id_card_format_error">định dạng ID có lỗi</string>
+    <string name="password_error">mật khẩu lỗi</string>
+    <string name="username_pass_error">Tên đăng nhập hoặc mật khẩu lỗi</string>
+    <string name="logout_check">Xác nhận đăng xuất?</string>
+    <string name="confirm_the_selected_sex">Đồng ý lưu thay đổi thông tin cá nhân?</string>
+    <string name="chose_start_photo">Chọn avatar ngôi sao</string>
+    <string name="chose_start_text">Đồng hành cùng bạn không chỉ có ngôi sao phong cách；</string>
+    <string name="only_chose_start_text">Còn có Tỷ Số Nhất。</string>
+    <string name="star_style">Phong cách ngôi sao</string>
+    <string name="football_baby">Baby Bóng đá</string>
+    <string name="account_cannot_be_empty">Tài khoản hoặc số di động không được trống</string>
+    <string name="please_login_first">Hãy đăng nhập trước</string>
+
+    <!-- 登录注册 end-->
+
+    <string name="home_pager_version_update">Bỏ qua phiên bản này</string>
+    <string name="cpi_select_company">Chọn tên công ty</string>
+    <string name="frame_cpi_chupan_txt">Đầu</string>
+    <string name="backstage_error">Lỗi hệ thống oss</string>
+    <string name="symbol_times" translatable="false">×</string>
+    <string name="symbol_plus" translatable="false">+</string>
+    <string name="symbol_equal" translatable="false">=</string>
+    <string name="not_start_short_txt">No</string>
+    <string name="all_rankings">Xếp hạng tất cả>>>></string>
+    <string name="basket_info_load_data">Xin đợi trong giây lát, đang thu thập số liệu</string>
+    <string name="football_analyze_points">Tỷ lệ thắng kèo chấp điểm</string>
+    <string name="login_no_weixin">Chưa cài đặt Wechat, mời cài đặt Wechat !</string>
+    <string name="login_peak">Đăng nhập trong giờ cao điểm, hãy thử lại sau</string>
+    <string name="original_password_error">Mật mã cũ sai</string>
+    <string name="pwd_empty_new">Mời nhập mật mã (gồm 6-16 ký tự số, chữ và ký hiệu)</string>
+    <string name="send_register_succ">Đã gửi mã xác minh, hãy chú ý kiểm tra</string>
+    <string name="username_original_pass_error">Mời nhập chính xác mật mã cũ</string>
+    <string name="label_line" translatable="false">-</string>
+    <string name="odds_average">trung bình</string>
+
+
+    <string name="foot_event_penalty">Hình phạt</string>
+    <string name="foot_event_di"></string>
+
+
+    <string name="foot_event_num_pre">Số</string>
+    <string name="foot_event_num_out">ra sân</string>
+    <string name="foot_event_num_in">vào sân</string>
+
+
+    <string name="share_summary_new"></string>
+    <string name="share_match_pre"></string>
+    <string name="share_match_live"></string>
+    <string name="share_match_over"></string>
+    <string name="share_match_live2"></string>
+
+    <string name="basket_database_details_leagueMost_wintop">Th/H/B nhiều nhất</string>
+
+    <string name="basket_analyze_all_rank">Tất cả thứ hạng>>></string>
+    <string name="football_rfypl">% Ăn kèo</string>
+    <string name="football_odds_return_list">Quay trở lại danh sách</string>
+
+    <!--日期-->
+    <string name="return_yesterday">Ngày hôm qua.</string>
+    <string name="return_today">Hôm nay</string>
+    <string name="return_tomorrow">Ngày mai.</string>
+
+    <string name="roll_asialet">HDP</string>
+    <string name="roll_asiasize">O/U</string>
+    <string name="roll_euro">1X2</string>
+
+    <string name="basket_handicap_bigorsmall">O/D/U</string>
+    <string name="home_gender">Giới tính</string>
+    <string name="no_select_head">Bạn vẫn chưa chọn hình đại diện</string>
+</resources>

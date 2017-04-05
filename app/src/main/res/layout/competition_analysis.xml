@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_marginBottom="13dp"
+        android:layout_marginTop="13dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <RadioButton
+            android:id="@+id/live_event"
+            style="@style/odds_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="-0.25dp"
+            android:background="@drawable/radio_button_left"
+            android:checked="true"
+            android:text="胜平负"
+            android:textColor="@drawable/info_text_color" />
+
+        <RadioButton
+            android:id="@+id/live_statistics"
+            style="@style/odds_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="-0.25dp"
+            android:background="@drawable/radio_button_right"
+            android:checked="false"
+            android:text="让球胜平负"
+            android:textColor="@drawable/info_text_color" />
+    </RadioGroup>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/number_tab_solid_all"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="#fffef1">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="变化时间"
+                android:textColor="@color/item_background"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/compe_give"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="让球"
+                android:textColor="@color/item_background"
+                android:textSize="12sp"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:id="@+id/compe_win"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="胜"
+                android:textColor="@color/item_background"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/compe_draw"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="平"
+                android:textColor="@color/item_background"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/compe_defeat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="负"
+                android:textColor="@color/item_background"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/item_match_jingcai" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/item_match_jingcai" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nested_scroll_view_event"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                android:visibility="visible" />
+        </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
+
+
+    <!--
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="30dp "
+            android:layout_marginRight="30dp"
+            android:background="@color/line_football_footer" />
+        -->
+</LinearLayout>
