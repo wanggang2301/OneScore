@@ -377,6 +377,10 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
 
             case R.id.public_img_filter:
                 Intent intent = new Intent(mActivity, BasketBallIndexFiltrateActivity.class);
+
+                L.d("tagsss", "数量2==" + getCurrentFragment().getFilterTagList().size());
+
+
                 intent.putExtra("fileterTags", (Serializable) getCurrentFragment().getFilterTagList());
                 intent.putExtra("linkedListChecked", filterLeagueList);
                 startActivityForResult(intent, startFilterRequestCode);
