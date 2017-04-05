@@ -194,6 +194,7 @@
 -keep class com.hhly.mlottery.callback.SearchService { *; }
 -keep class com.hhly.mlottery.callback.BasketSearchservice{ *; }
 -keep class com.hhly.mlottery.callback.SnookerSearchService{ *; }
+-keep class com.hhly.mlottery.callback.FootballMatchSearchService{ *; }
 
 ##Glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
