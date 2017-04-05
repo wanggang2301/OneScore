@@ -77,6 +77,8 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
     private List<BasketIndexBean.DataBean.AllInfoBean> destinationDataList; //目标数据
 
+    private int section = 0;
+
     public BasketBallOddFragment() {
     }
 
@@ -404,7 +406,6 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         for (BasketIndexBean.DataBean.AllInfoBean item : allInfoBeanList) {
             if (item.getThirdId().equals(mWebBasketMatch.getThirdId())) {
                 item.setMatchStatus(Integer.parseInt(mWebBasketMatch.getData().get("matchStatus")));
-                item.setSection(Integer.parseInt(mWebBasketMatch.getData().get("section")));
 
                 //备注：篮球比分   客队分数:主队分数
                 item.setMatchResult(mWebBasketMatch.getData().get("guestScore") + ":" + mWebBasketMatch.getData().get("homeScore"));
