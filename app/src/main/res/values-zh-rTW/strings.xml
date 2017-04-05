@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!--公共-->
-    <string name="games_no_start">未開始</string>
+    <string name="games_no_start">未开始</string>
     <!--足球事件直播-->
     <string name="foot_event">事件</string>
     <string name="foot_trend">走勢</string>
@@ -33,7 +31,6 @@
     <string name="attack_nodata">暫無進攻數據.</string>
     <string name="time">時間(T)</string>
 
-    <string name="odds_equals">平均</string>
     <!--篮球资料库-->
     <string name="basket_info_hot">熱門</string>
     <string name="basket_info_eur">歐洲</string>
@@ -44,12 +41,9 @@
     <string name="basket_info_title">籃球資料庫</string>
     <string name="basket_info_zhouji">洲際賽事</string>
     <string name="basket_info_country">國家賽事</string>
-
     <string name="basket_info_zhouji2">國際賽事</string>
     <string name="basket_info_shatan">沙灘賽事</string>
-
     <string name="football_info_title">足球資料庫</string>
-
     <string name="football_info_oceania">大洋洲</string>
 
     <!--足球内页改版(滚球等)-->
@@ -58,13 +52,11 @@
     <string name="foot_details_analyze">分析</string>
     <string name="foot_details_odds">指數</string>
     <string name="foot_details_statistics">直播</string>
-
     <string name="foot_details_time">時間</string>
     <string name="foot_details_score">比分</string>
     <string name="foot_details_home">主隊</string>
     <string name="foot_details_ball">讓球</string>
     <string name="foot_details_guest">客隊</string>
-
 
     <string name="foot_details_livetitle">實況直播</string>
     <string name="jipan">即盤</string>
@@ -94,7 +86,6 @@
     <string name="foot_odds_eu_left">勝</string>
     <string name="foot_odds_eu_middle">平</string>
     <string name="foot_odds_eu_right">負</string>
-
 
     <!--分享-->
     <string name="errcode_success">發送成功</string>
@@ -180,6 +171,19 @@
     <string name="fottball_home_tuichi">推遲</string>
     <string name="fottball_home_quxiaozhibo">取消直播</string>
 
+    <string name="sound1">声音1</string>
+    <string name="sound2">声音2</string>
+    <string name="sound3">声音3</string>
+    <string name="sound4">无</string>
+    <string name="asialet">亚赔</string>
+    <string name="euro">欧赔</string>
+    <string name="asiasize">大小球</string>
+
+    <string name="oddgone">不显示</string>
+    <string name="about_product_msg_txt_simple">壹比分，一直專注於體育比分的產品，目前比分、角球響應速度業內領先。</string>
+    <string name="frame_home_jieguo_txt">彩票開獎</string>
+
+
     <!--首发阵容 Start-->
     <string name="firsPlayers_not">暫無首發</string>
     <string name="firsPlayers_rosters_homeTeam">主隊名單</string>
@@ -206,6 +210,10 @@
     <!-- 侧滑栏字体 -->
     <string name="home_frame_txt">首頁</string>
     <string name="football_frame_txt">足球比分</string>
+    <string name="frame_home_video_txt">視頻直播</string>
+    <string name="frame_video_ing_txt">視頻直播中</string>
+    <string name="video_live_txt">請選擇直播頻道</string>
+    <string name="live_txt">直播</string>
     <string name="number_frame_txt">彩票開獎</string>
     <string name="car_frame_txt">北京賽車</string>
     <string name="more_frame_txt">更多彩票</string>
@@ -215,52 +223,44 @@
     <string name="more_setting">更多設定</string>
     <string name="invited_prize">邀請有獎</string>
     <string name="can_only_choose_a_picture">親，只能選擇一張圖片</string>
+
+
+
     <string name="foot_jishi_txt">即時</string>
     <string name="foot_saiguo_txt">賽果</string>
     <string name="foot_saicheng_txt">賽程</string>
     <string name="foot_guanzhu_txt">關注</string>
     <string name="foot_setting_txt">設置</string>
-    <string name="sound1">声音1</string>
-    <string name="sound2">声音2</string>
-    <string name="sound3">声音3</string>
-    <string name="sound4">无</string>
-    <string name="asialet">亚赔</string>
-    <string name="euro">欧赔</string>
-    <string name="asiasize">大小球</string>
-    <string name="roll_asialet">亚</string>
-    <string name="roll_euro">欧</string>
-    <string name="roll_asiasize">大</string>
-    <string name="oddgone">不显示</string>
-    <string name="frame_video_ing_txt">視頻直播中</string>
-    <string name="frame_home_video_txt">視頻直播</string>
-    <string name="video_live_txt">請選擇直播頻道</string>
-    <string name="live_txt">直播</string>
-    <!-- 所有的标题 -->
-    <string name="frame_home_jishi_txt">足球比分</string>
-    <string name="frame_home_jieguo_txt">彩票開獎</string>
-    <string name="frame_home_jiaodian_txt">熱門賽事</string>
-    <string name="language_select_txt">語種選擇</string>
-    <string name="public_btn_save">保存</string>
-    <!-- 简体中文 -->
-    <string name="china_txt">简体中文</string>
-    <!-- 繁体中文 -->
-    <string name="china_tw_txt">繁體中文</string>
-    <!-- 英语-->
-    <string name="china_en_txt">English</string>
-    <!-- 韩语 -->
-    <string name="china_ko_txt">한국어</string>
-    <!-- 印尼语 -->
-    <string name="china_id_txt">Indonesia</string>
-    <!-- 泰语-->
-    <string name="china_th_txt">ภาษาไทย</string>
-    <!-- 越南语 -->
-    <string name="china_vi_txt">Tiếng Việt</string>
-    <string name="loading_txt">正在加載中......</string>
-    <string name="reload_the_txt">重新加載</string>
     <!-- 下拉刷新 -->
     <string name="pull_to_refresh_pull_label">向下拉動可以刷新</string>
     <string name="pull_to_refresh_release_label">鬆開可以刷新</string>
     <string name="pull_to_refresh_refreshing_label">加載中&#8230;</string>
+
+
+    <!-- 设置 -->
+    <string name="set_sound_txt">聲音</string>
+    <string name="set_sound1_txt">聲音1</string>
+    <string name="set_sound2_txt">聲音2</string>
+    <string name="set_sound3_txt">聲音3</string>
+    <string name="set_nosound_txt">無聲</string>
+    <string name="set_asialet_txt">亞盤</string>
+    <string name="set_euro_txt">歐賠</string>
+    <string name="set_asiasize_txt">大小球</string>
+    <string name="set_oddghide_txt">不顯示</string>
+    <string name="public_txt_title">足球比分</string>
+    <string name="set_home_txt">主隊進球聲</string>
+    <string name="set_guest_txt">客隊進球聲</string>
+    <string name="set_odd_txt">賠率顯示</string>
+
+    <string name="set_txt">足球設置</string>
+    <string name="set_tip_txt">提示設置</string>
+    <string name="set_goal_shake_txt">進球震動</string>
+    <string name="set_rc_shake_txt">紅牌震動</string>
+    <string name="set_rc_sound_txt">紅牌聲音</string>
+    <string name="set_tip_focus_match_txt">僅提示關注賽事</string>
+    <string name="set_ext_txt">其他設置</string>
+    <string name="set_odd_show_txt">賠率顯示</string>
+    <string name="set_goal_txt">進球</string>
 
     <!-- 异常处理 -->
     <string name="exp_net_status_txt">您當前的網絡不給力</string>
@@ -270,7 +270,7 @@
 
     <string name="no_data_txt">沒有更多數據！</string>
     <string name="data_parsing_exp_txt">數據解析異常！</string>
-
+    <string name="loading_txt">正在加載中......</string>
     <string name="reload_txt">重新加載</string>
 
     <!-- 即时 -->
@@ -287,7 +287,6 @@
     <string name="immediate_status_mesomere">中断</string>
     <string name="immediate_status_postpone">推遲</string>
     <string name="immediate_unconection">當前數據不在實時更新狀態，請下拉嘗試連接或檢查網絡。</string>
-
     <string name="favourite">關注</string>
     <string name="cancel_favourite">取消關注</string>
 
@@ -303,6 +302,7 @@
     <string name="toast_data_loading">數據正在加載中。</string>
     <string name="hot_score_txt">熱門賽事</string>
     <string name="other_score_txt">其他賽事</string>
+    <string name="odds_equals">平均</string>
     <!-- 关注 -->
     <string name="unfocus">暫無關注</string>
     <string name="unfocus2">左滑賽事，可關注該賽事</string>
@@ -313,7 +313,6 @@
     <string name="about_ver_update_txt">版本更新</string>
     <string name="about_product_intro_txt">產品簡介</string>
     <string name="about_product_msg_txt">壹比分，一直專注於體育比分的產品，目前比分、角球響應速度業內領先。</string>
-    <string name="about_product_msg_txt_simple">壹比分，一直專注於體育比分的產品，目前比分、角球響應速度業內領先。</string>
     <string name="about_pc_txt">PC電腦端</string>
     <string name="about_pc_msg_txt">www.13322.com</string>
     <string name="about_wap_txt">WAP手機端</string>
@@ -348,6 +347,11 @@
     <string name="information_integral_minute">分</string>
     <string name="information_football_integral">暫無積分信息</string>
     <string name="information_agendal_title">選擇輪次</string>
+
+
+    <string name="frame_home_jishi_txt">足球比分</string>
+    <string name="frame_home_jiaodian_txt">熱門賽事</string>
+
     <!-- 彩票 -->
     <string name="number_info_stopSell">截止銷售</string>
     <string name="number_info_countDown">最新開獎倒計時：</string>
@@ -434,6 +438,7 @@
     <string name="number_hk_openjiang">香港開獎</string>
     <string name="number_hk_openjiang_current">最新開獎</string>
     <string name="number_hk_openjiang_history">往期開獎</string>
+
     <string name="number_cz_hk">香港開獎</string>
     <string name="number_cz_cq_ssc">重慶時時彩</string>
     <string name="number_cz_jx_ssc">江西時時彩</string>
@@ -492,6 +497,9 @@
     <string name="number_code_desc_pl3">每日20:30開獎</string>
     <string name="number_code_desc_pl5">每日20:30開獎</string>
 
+    <string name="number_code_di">第</string>
+    <string name="number_code_qi">期</string>
+
     <string name="number_7">週日</string>
     <string name="number_1">週一</string>
     <string name="number_2">週二</string>
@@ -499,9 +507,6 @@
     <string name="number_4">週四</string>
     <string name="number_5">週五</string>
     <string name="number_6">週六</string>
-    <!-- 代码中的添加 string -->
-    <string name="number_code_di">第</string>
-    <string name="number_code_qi">期</string>
     <!-- 异常处理 -->
     <string name="number_exp_net_status_txt">您當前的網絡不給力</string>
     <string name="number_exp__check_txt">請檢查后</string>
@@ -594,6 +599,8 @@
     <string name="number_xq4">週四</string>
     <string name="number_xq5">週五</string>
     <string name="number_xq6">週六</string>
+
+
     <string name="number_xinqi7">週日</string>
     <string name="number_xinqi1">週一</string>
     <string name="number_xinqi2">週二</string>
@@ -603,32 +610,30 @@
     <string name="number_xinqi6">週六</string>
 
 
-    <!-- 设置 -->
-    <string name="set_sound_txt">聲音</string>
-    <string name="set_sound1_txt">聲音1</string>
-    <string name="set_sound2_txt">聲音2</string>
-    <string name="set_sound3_txt">聲音3</string>
-    <string name="set_nosound_txt">無聲</string>
-    <string name="set_asialet_txt">亞盤</string>
-    <string name="set_euro_txt">歐賠</string>
-    <string name="set_asiasize_txt">大小球</string>
-    <string name="set_oddghide_txt">不顯示</string>
-    <string name="public_txt_title">足球比分</string>
-    <string name="set_home_txt">主隊進球聲</string>
-    <string name="set_guest_txt">客隊進球聲</string>
-    <string name="set_odd_txt">賠率顯示</string>
-    <string name="set_txt">足球設置</string>
-    <string name="set_tip_txt">提示設置</string>
-    <string name="set_goal_shake_txt">進球震動</string>
-    <string name="set_rc_shake_txt">紅牌震動</string>
-    <string name="set_rc_sound_txt">紅牌聲音</string>
-    <string name="set_tip_focus_match_txt">僅提示關注賽事</string>
-    <string name="set_ext_txt">其他設置</string>
-    <string name="set_odd_show_txt">賠率顯示</string>
-    <string name="set_goal_txt">進球</string>
+
+    <!-- 所有的标题 -->
+
+    <string name="language_select_txt">語種選擇</string>
+    <string name="public_btn_save">保存</string>
+    <!-- 简体中文 -->
+    <string name="china_txt">简体中文</string>
+    <!-- 繁体中文 -->
+    <string name="china_tw_txt">繁體中文</string>
+    <!-- 英语-->
+    <string name="china_en_txt">English</string>
+    <!-- 韩语 -->
+    <string name="china_ko_txt">한국어</string>
+    <!-- 印尼语 -->
+    <string name="china_id_txt">Indonesia</string>
+    <!-- 泰语-->
+    <string name="china_th_txt">ภาษาไทย</string>
+    <!-- 越南语 -->
+    <string name="china_vi_txt">Tiếng Việt</string>
+
+    <string name="reload_the_txt">重新加載</string>
+
 
     <!-- 首页足球状态 -->
-
     <string name="fragme_home_shangbanchang_text">上半場</string>
     <string name="fragme_home_zhongchang_text">中場</string>
     <string name="fragme_home_xiabanchang_text">下半場</string>
@@ -1450,7 +1455,6 @@
     <string name="custom_accomplish_cus">完成</string>
     <string name="custom_noevent_cus">暫無賽事</string>
 
-
     <string name="chart_ball_report_to_user">被舉報人：</string>
     <string name="chart_ball_report_user">舉報人：</string>
     <string name="chart_ball_report_content">舉報內容不能為空！</string>
@@ -1497,16 +1501,7 @@
     <string name="no_focus">您還未關注任何比賽</string>
     <string name="to_focus_now">馬上去關注</string>
     <string name="my_focus">我的關注</string>
-    <!--邀请码页面-->
-    <string name="invite_friends">邀請好友</string>
-    <string name="copy_text">已複製到粘貼板</string>
-    <string name="invitation_code_acquisition_failed">邀請碼獲取失敗</string>
-    <string name="your_invitation_code">您的邀請碼</string>
-    <string name="copy_tv">複製</string>
-    <string name="copy_text2">輸入邀請碼，一比分後續會發放金幣</string>
-    <string name="copy_text3">參與一比分活動，贏取精彩好禮！</string>
-    <string name="please_invited_number">請輸入邀請碼</string>
-    <string name="please_invited">邀請碼</string>
+
 
     <string name="multi_header_name">多屏觀看</string>
     <string name="multi_add">添加</string>
@@ -1545,12 +1540,16 @@
     <string name="home_lottery_info_tm_bo_g">綠</string>
     <string name="home_lottery_info_tm_bo_b">藍</string>
     <string name="home_lottery_info_image_desc">本站所有數據、資料僅供您參考，為避免遭受經濟損失任何人不得用於非法用途，否則責任自負</string>
-    <!--snooker-->
-    <string name="snooker_player_compare">職業對比</string>
-    <string name="snooker_history_bettle">歷史交鋒</string>
-    <string name="snooker_player1">選手1近期戰績</string>
-    <string name="snooker_player2">選手2近期戰績</string>
-
+    <!--邀请码页面-->
+    <string name="invite_friends">邀請好友</string>
+    <string name="copy_text">已複製到粘貼板</string>
+    <string name="invitation_code_acquisition_failed">邀請碼獲取失敗</string>
+    <string name="your_invitation_code">您的邀請碼</string>
+    <string name="copy_tv">複製</string>
+    <string name="copy_text2">輸入邀請碼，一比分後續會發放金幣</string>
+    <string name="copy_text3">參與一比分活動，贏取精彩好禮！</string>
+    <string name="please_invited_number">請輸入邀請碼</string>
+    <string name="please_invited">邀請碼</string>
     <string name="football_txt">足球</string>
     <string name="basketball_txt">籃球</string>
     <string name="snooker_txt">斯諾克</string>
@@ -1587,6 +1586,11 @@
     <string name="snooker_analyze_total_wins">局勝數</string>
     <string name="snooker_analyze_wins_percent">局勝率</string>
 
+    <string name="snooker_player_compare">職業對比</string>
+    <string name="snooker_history_bettle">歷史交鋒</string>
+    <string name="snooker_player1">選手1近期戰績</string>
+    <string name="snooker_player2">選手2近期戰績</string>
+
     <!--网球-->
     <string name="tennis_match_p2">P2退賽</string>
     <string name="tennis_match_p1">P1退赛</string>
@@ -1599,14 +1603,25 @@
     <string name="basket_analyze_all_rank">全部排名>>></string>
     <string name="football_rfypl">讓分贏盤率</string>
     <string name="football_odds_return_list">返回列表</string>
-    <string name="tennis_setting_title">網球設置</string>
-    <string name="tennis_datails_record_title">對手</string>
-    <string name="tennis_datails_title_fight">交手记录</string>
-    <string name="tennis_datails_title_data">数据对比</string>
+
+    <!--日期-->
+    <string name="return_yesterday">昨天</string>
+    <string name="return_today">今天</string>
+    <string name="return_tomorrow">明天</string>
+    <string name="roll_asialet">亞</string>
+    <string name="roll_euro">歐</string>
+    <string name="roll_asiasize">大</string>
+
+    <string name="basket_handicap_bigorsmall">大/走/小</string>
 
     <string name="home_gender">性别</string>
     <string name="snooker_index_single_double">单双</string>
     <string name="score_ret">退賽</string>
+    <string name="tennis_setting_title">網球設置</string>
+    <string name="tennis_datails_title_fight">交手记录</string>
+    <string name="tennis_datails_title_data">数据对比</string>
+    <string name="tennis_datails_record_title">對手</string>
+
     <string name="tennis_datails_fight_title">雙方近%1$d次交峰，%2$s %3$d勝%4$d負，勝率：%5$s。</string>
     <string name="tennis_datails_ranking_old">原排名</string>
     <string name="tennis_datails_ranking_changer">變化</string>
@@ -1647,5 +1662,5 @@
     <string name="tennis_datails_status8">雙誤</string>
     <string name="tennis_datails_status9">非受迫性失誤</string>
     <string name="tennis_datails_status10">主動得分</string>
-
+    <string name="foot_event_num">""</string>
 </resources>

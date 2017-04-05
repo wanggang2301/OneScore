@@ -401,7 +401,7 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
                         }
                     }
                 }else{// 否则为最内层（赛事层）比赛的点击事件这里写
-                    // ***************************************************
+                    // TODO***************************************************
 
                     CustomMineThirdDataBean parent = (CustomMineThirdDataBean) mData.get(position);
                     Intent intent = new Intent(CustomActivity.this, BasketDetailsActivityTest.class);

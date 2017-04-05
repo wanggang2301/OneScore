@@ -84,7 +84,6 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_chartball_layout);
         /**当前评论小窗口不统计*/
         MobclickAgent.openActivityDurationTrack(false);
 
@@ -298,7 +297,7 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
         iv_gallery.setOnClickListener(this);
         findViewById(R.id.iv_select_icon).setOnClickListener(this);
         findViewById(R.id.iv_select_icon).setSelected(true);
-//        findViewById(R.id.iv_select_emoji).setOnClickListener(this);
+        findViewById(R.id.iv_select_emoji).setOnClickListener(this);
         ll_local_content = (LinearLayout) findViewById(R.id.ll_local_content);
 //        ll_emoji_content = (LinearLayout) findViewById(R.id.ll_emoji_content);
         rl_local = (RelativeLayout) findViewById(R.id.rl_local);
@@ -369,13 +368,13 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
                 ll_gallery_content.setVisibility(View.VISIBLE);
                 break;
 
-            case R.id.iv_select_icon:// 显示自定义表情
-            case R.id.ll_local_content:
-                rl_local.setVisibility(View.VISIBLE);
+//            case R.id.iv_select_icon:// 显示自定义表情
+//            case R.id.ll_local_content:
+//                rl_local.setVisibility(View.VISIBLE);
 //                rl_emoji.setVisibility(View.GONE);
-                ll_local_content.setBackgroundResource(R.color.white);
+//                ll_local_content.setBackgroundResource(R.color.white);
 //                ll_emoji_content.setBackgroundResource(R.color.home_item_bg);
-                break;
+//                break;
 //            case R.id.iv_select_emoji:// 显示emoji表情
 //            case R.id.ll_emoji_content:
 //                rl_local.setVisibility(View.GONE);

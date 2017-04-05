@@ -202,11 +202,7 @@ public class LeagueMatchStageChooseDialogFragment extends DialogFragment {
             } else {
                 textView.setBackgroundResource(R.drawable.bg_item_match_stage_first_normal);
             }
-            if(DateUtil.isValidDateYMD(matchStage.getStageName()) || DateUtil.isValidDateYM(matchStage.getStageName())){
-                textView.setText(DateUtil.convertDateToNationYD(matchStage.getStageName()));
-            }else{
-                textView.setText(matchStage.getStageName());
-            }
+            textView.setText(DateUtil.convertDateToNationYD(matchStage.getStageName()));
             if (mOnItemClickListener != null) {
                 textView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -235,11 +231,7 @@ public class LeagueMatchStageChooseDialogFragment extends DialogFragment {
             TextView textView = holder.getView(R.id.second_text);
 
             textView.setSelected(matchStage.isSelected());
-            if(DateUtil.isValidDateYMD(matchStage.getStageName()) || DateUtil.isValidDateYM(matchStage.getStageName())){
-                textView.setText(DateUtil.convertDateToNationYD(matchStage.getStageName()));
-            }else{
-                textView.setText(matchStage.getStageName());
-            }
+            textView.setText(DateUtil.convertDateToNationYD(matchStage.getStageName()));
             if (mOnItemClickListener != null) {
                 textView.setOnClickListener(new View.OnClickListener() {
                     @Override

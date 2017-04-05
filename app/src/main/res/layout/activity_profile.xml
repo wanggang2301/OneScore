@@ -1,14 +1,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/profile_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/whitesmoke"
-    android:orientation="vertical">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@color/whitesmoke"
+              android:orientation="vertical"
+              android:id="@+id/profile_main"
+    >
 
 
-    <include layout="@layout/layout_header" />
+    <include layout="@layout/layout_header"/>
 
     <!-- 修改头像-->
     <RelativeLayout
@@ -17,7 +18,8 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:minHeight="60dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
 
         <TextView
@@ -28,7 +30,8 @@
             android:layout_centerVertical="true"
             android:src="@mipmap/person"
             android:text="@string/pic"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            />
 
 
         <com.hhly.mlottery.view.CircleImageView
@@ -41,34 +44,37 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
 
-            android:layout_toLeftOf="@+id/tv_head"
+           android:layout_toLeftOf="@+id/tv_head"
             android:src="@mipmap/center_head"
+            app:civ_border_width="2dp"
             app:civ_border_color="@color/light"
-            app:civ_border_width="2dp" />
+            />
 
 
         <ImageView
             android:id="@+id/tv_head"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:src="@mipmap/plate_icon" />
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/plate_icon"
+            />
 
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/line_football_footer" />
+        android:background="@color/line_football_footer"
+        />
 
 
     <RelativeLayout
+        android:layout_marginTop="30dp"
         android:id="@+id/account_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:background="@color/white"
         android:minHeight="60dp"
         android:orientation="horizontal">
@@ -81,7 +87,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="@string/account"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            />
 
         <TextView
             android:id="@+id/tv_account_real"
@@ -92,7 +99,8 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="25dp"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            />
 
     </RelativeLayout>
 
@@ -100,7 +108,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/line_football_footer" />
+        android:background="@color/line_football_footer"
+        />
 
     <RelativeLayout
         android:id="@+id/account_sex"
@@ -118,103 +127,84 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="@string/home_gender"
-            android:textSize="15sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_centerVertical="true"
+            android:textSize="15sp"
+            />
+        <ImageView
+            android:layout_marginLeft="30dp"
             android:layout_toRightOf="@+id/tv_sex"
-            android:orientation="horizontal">
+            android:id="@+id/man_sex"
+            style="@style/login_textview_account_center_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/default_man_sex"
+            />
+        <TextView
+            android:paddingLeft="10dp"
+            android:id="@+id/text_man"
+            android:layout_toRightOf="@+id/man_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/man_sex"
+            android:textColor="@color/res_pl_color"
+            android:textSize="13sp"
+            />
+        <ImageView
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@+id/text_man"
+            android:id="@+id/woman_sex"
+            style="@style/login_textview_account_center_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/default_woman_sex"
+            />
+        <TextView
+            android:paddingLeft="10dp"
+            android:id="@+id/text_woman"
+            android:layout_toRightOf="@+id/woman_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/woman_sex"
+            android:textColor="@color/res_pl_color"
+            android:textSize="13sp"
+            />
+        <ImageView
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@+id/text_woman"
+            android:id="@+id/noon_sex"
+            style="@style/login_textview_account_center_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/default_noon_sex"
+            />
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:id="@+id/text_noon"
+            android:layout_toRightOf="@+id/noon_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/noon_sex"
+            android:textSize="13sp"
+            />
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_toRightOf="@+id/tv_sex"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/man_sex"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:src="@mipmap/default_man_sex" />
-
-                <TextView
-                    android:paddingLeft="10dp"
-                    android:id="@+id/text_man"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/man_sex"
-                    android:textColor="@color/res_pl_color"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-
-                    android:id="@+id/woman_sex"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/default_woman_sex" />
-
-                <TextView
-                    android:paddingLeft="10dp"
-                    android:id="@+id/text_woman"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:text="@string/woman_sex"
-                    android:textColor="@color/res_pl_color"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/noon_sex"
-                    style="@style/login_textview_account_center_margin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:src="@mipmap/default_noon_sex" />
-
-                <TextView
-                    android:paddingLeft="10dp"
-                    android:id="@+id/text_noon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:text="@string/noon_sex"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-
-            <TextView
-                android:id="@+id/tv_account_sex"
-                style="@style/login_textview_account_center_gray"
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:gravity="center"
-                android:textColor="@color/res_pl_color"
-                android:textSize="15sp" />
-
-
-        </LinearLayout>
-
+        <TextView
+            android:paddingLeft="10dp"
+            android:id="@+id/tv_account_sex"
+            style="@style/login_textview_account_center_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="25dp"
+            android:textColor="@color/res_pl_color"
+            android:textSize="15sp"
+            />
 
     </RelativeLayout>
 
@@ -222,7 +212,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/line_football_footer" />
+        android:background="@color/line_football_footer"
+        />
 
     <RelativeLayout
         android:id="@+id/rl_nickname"
@@ -241,7 +232,8 @@
             android:layout_centerVertical="true"
             android:src="@mipmap/person"
             android:text="@string/nickname"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            />
 
         <TextView
 
@@ -254,7 +246,8 @@
             android:layout_toLeftOf="@+id/image_login"
             android:src="@mipmap/person"
             android:text=""
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            />
 
 
         <ImageView
@@ -264,14 +257,16 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:src="@mipmap/plate_icon" />
+            android:src="@mipmap/plate_icon"
+            />
 
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/line_football_footer" />
+        android:background="@color/line_football_footer"
+        />
 
     <RelativeLayout
         android:id="@+id/rl_modifypass"
@@ -289,7 +284,8 @@
             android:layout_centerVertical="true"
             android:src="@mipmap/person"
             android:text="@string/modify_password"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -297,7 +293,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:src="@mipmap/plate_icon" />
+            android:src="@mipmap/plate_icon"
+            />
 
     </RelativeLayout>
 

@@ -2,7 +2,6 @@ package com.hhly.mlottery;
 
 import android.app.ActivityManager;
 import android.app.Application;
-import android.app.Notification;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -18,9 +17,6 @@ import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.tendcloud.tenddata.TCAgent;
-import com.tendcloud.tenddata.TalkingDataSMS;
-import com.umeng.message.UmengMessageHandler;
-import com.umeng.message.entity.UMessage;
 
 import java.util.Locale;
 

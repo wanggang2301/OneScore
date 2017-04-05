@@ -1,12 +1,15 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'com.neenbedankt.android-apt'
-
+apply plugin: 'me.tatarka.retrolambda'
 android {
     signingConfigs {
     }
     compileSdkVersion 25
     buildToolsVersion '25.0.2'
+
+    aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false
 
     dexOptions {
         incremental true
@@ -41,7 +44,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 30
-        versionName "1.2.8.0330"
+        versionName "1.2.8.0405"
         multiDexEnabled true
     }
 
@@ -70,13 +73,13 @@ repositories {
 }
 
 dependencies {
+
     // TalkingData统计
     compile files('libs/TalkingData_AppAnalytics_Android_SDK_V2.3.62.jar')
     // 友盟统计
     compile files('libs/umeng-analytics-v6.0.9.jar')
     // 友盟推送
     compile(name: 'PushSDK-release', ext: 'aar')
-
     compile files('libs/microlog4android-1.0.0.jar')
     compile files('libs/eventbus.jar')
     compile files('libs/CySDK.jar')
@@ -118,7 +121,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
     apt 'com.google.dagger:dagger-compiler:2.4'
-
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:recyclerview-v7:23.4.0'
@@ -126,6 +128,5 @@ dependencies {
     compile 'com.android.support:cardview-v7:23.4.0'
     compile 'com.android.support:percent:23.4.0'
     provided 'com.android.support:support-annotations:23.4.0'
-
-
+    compile 'com.google.android:multidex:0.1'
 }

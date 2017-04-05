@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!--公共-->
     <string name="games_no_start">未开始</string>
     <!--足球事件直播-->
     <string name="foot_event">事件</string>
@@ -33,7 +31,6 @@
     <string name="attack_nodata">暂无进攻数据.</string>
     <string name="time">时间(T)</string>
 
-
     <!--篮球资料库-->
     <string name="basket_info_hot">热门</string>
     <string name="basket_info_eur">欧洲</string>
@@ -44,13 +41,10 @@
     <string name="basket_info_title">篮球资料库</string>
     <string name="basket_info_zhouji">洲际赛事</string>
     <string name="basket_info_country">国家赛事</string>
-
     <string name="basket_info_zhouji2">国际赛事</string>
     <string name="basket_info_shatan">沙滩赛事</string>
-
     <string name="football_info_title">足球资料库</string>
     <string name="football_info_oceania">大洋洲</string>
-
 
     <!--足球内页改版(滚球等)-->
     <string name="foot_details_roolball">滚球</string>
@@ -58,7 +52,6 @@
     <string name="foot_details_analyze">分析</string>
     <string name="foot_details_odds">指数</string>
     <string name="foot_details_statistics">直播</string>
-
     <string name="foot_details_time">时间</string>
     <string name="foot_details_score">比分</string>
     <string name="foot_details_home">主队</string>
@@ -187,6 +180,7 @@
     <string name="asialet">亚赔</string>
     <string name="euro">欧赔</string>
     <string name="asiasize">大小球</string>
+
     <string name="oddgone">不显示</string>
     <string name="about_product_msg_txt_simple">一比分，一直专注于体育比分的产品，目前比分、角球响应速度业内领先。</string>
     <string name="frame_home_jieguo_txt">彩票开奖</string>
@@ -231,6 +225,8 @@
     <string name="more_setting">更多设置</string>
     <string name="invited_prize">邀请有奖</string>
     <string name="login_int_username">请输入注册账号</string>
+    <string name="can_only_choose_a_picture">亲，只能选择一张图片</string>
+
     <!-- 侧滑栏字体 -->
     <string name="foot_jishi_txt">即时</string>
     <string name="foot_saiguo_txt">赛果</string>
@@ -1064,7 +1060,6 @@
     <string name="username_pass_error">登录名或者密码错误</string>
     <string name="username_original_pass_error">请输入正确的原始密码</string>
     <string name="logout_check">确认退出登录?</string>
-    <string name="can_only_choose_a_picture">亲，只能选择一张图片</string>
     <string name="confirm_the_selected_sex">确认保存修改的个人信息?</string>
     <string name="chose_start_photo">选择球星头像</string>
     <string name="chose_start_text">伴随你的，不仅有球星的风采；</string>
@@ -1404,7 +1399,6 @@
     <!--墙外-->
 
     <string name="foreign_pic">已保存图片到SD卡文件夹下</string>
-    <!--篮球球队统计-->
     <string name="basket_shoot">投篮(%)</string>
     <string name="basket_three_shoot">三分(%)</string>
     <string name="basket_free_shoot">罚球(%)</string>
@@ -1514,16 +1508,6 @@
     <string name="no_focus">您还未关注任何比赛</string>
     <string name="to_focus_now">马上去关注</string>
     <string name="my_focus">我的关注</string>
-    <!--邀请码页面-->
-    <string name="invite_friends">邀请好友</string>
-    <string name="copy_text">已复制到粘贴板</string>
-    <string name="invitation_code_acquisition_failed">邀请码获取失败</string>
-    <string name="your_invitation_code">您的邀请码</string>
-    <string name="copy_tv">复制</string>
-    <string name="copy_text2"> 输入邀请码，一比分后续会发放金币</string>
-    <string name="copy_text3">参与一比分活动，赢取精彩好礼！</string>
-    <string name="please_invited_number">请输入邀请码</string>
-    <string name="please_invited">邀请码</string>
 
 
     <string name="multi_header_name">多屏观看</string>
@@ -1563,11 +1547,16 @@
     <string name="home_lottery_info_tm_bo_g">绿</string>
     <string name="home_lottery_info_tm_bo_b">蓝</string>
     <string name="home_lottery_info_image_desc">本站所有数据、资料仅供您参考，为避免遭受经济损失任何人不得用于非法用途，否则责任自负</string>
-    <string name="snooker_player_compare">职业对比</string>
-    <string name="snooker_history_bettle">历史交锋</string>
-    <string name="snooker_player1">选手1近期战绩</string>
-    <string name="snooker_player2">选手2近期战绩</string>
-
+    <!--邀请码页面-->
+    <string name="invite_friends">邀请好友</string>
+    <string name="copy_text">已复制到粘贴板</string>
+    <string name="invitation_code_acquisition_failed">邀请码获取失败</string>
+    <string name="your_invitation_code">您的邀请码</string>
+    <string name="copy_tv">复制</string>
+    <string name="copy_text2"> 输入邀请码，一比分后续会发放金币</string>
+    <string name="copy_text3">参与一比分活动，赢取精彩好礼！</string>
+    <string name="please_invited_number">请输入邀请码</string>
+    <string name="please_invited">邀请码</string>
     <string name="football_txt">足球</string>
     <string name="basketball_txt">篮球</string>
     <string name="snooker_txt">斯诺克</string>
@@ -1604,7 +1593,11 @@
     <string name="snooker_analyze_total_numbers">总局数</string>
     <string name="snooker_analyze_total_wins">局胜数</string>
     <string name="snooker_analyze_wins_percent">局胜率</string>
-
+    <!--snooker-->
+    <string name="snooker_player_compare">职业对比</string>
+    <string name="snooker_history_bettle">历史交锋</string>
+    <string name="snooker_player1">选手1近期战绩</string>
+    <string name="snooker_player2">选手2近期战绩</string>
 
     <!--网球-->
     <string name="tennis_match_p2">P2退赛</string>
@@ -1632,8 +1625,6 @@
     <string name="home_gender">性别</string>
     <string name="snooker_index_single_double">单双</string>
     <string name="score_ret">退赛</string>
-
-    <!--网球-->
     <string name="tennis_setting_title">网球设置</string>
     <string name="tennis_datails_title_fight">交手记录</string>
     <string name="tennis_datails_title_data">数据对比</string>
@@ -1679,6 +1670,5 @@
     <string name="tennis_datails_status8">双误</string>
     <string name="tennis_datails_status9">非受迫性失误</string>
     <string name="tennis_datails_status10">主动得分</string>
-
-
+    <string name="foot_event_num">""</string>
 </resources>

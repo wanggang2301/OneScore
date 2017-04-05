@@ -1,11 +1,11 @@
 package com.hhly.mlottery.frame.footballframe;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -248,6 +248,10 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
 
     private TextView goChart;
 
+    private boolean isCreateView = false;
+
+    private Activity mActivity;
+
 
     public static StatisticsFragment newInstance() {
         StatisticsFragment fragment = new StatisticsFragment();
@@ -255,11 +259,10 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
     }
 
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_statistics, container, false);
-        mContext = getActivity();
+        mContext = mActivity;
         initView();
         L.d("112233", "初始化View");
         return mView;
@@ -509,6 +512,8 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         eventType = livestatus;
 
         if ("0".equals(livestatus)) {
+            L.d("112233", "tttt");
+
             ll_nodata.setVisibility(View.VISIBLE);
             // mNestedScrollView_event.setVisibility(View.GONE);
             recyclerView.setVisibility(View.GONE);
@@ -516,6 +521,8 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
 
             mNestedScrollView_trend.setVisibility(View.GONE);
         } else if ("1".equals(livestatus) || "-1".equals(livestatus)) {   //-1代表完场  1代表直播中
+            L.d("112233", "vvvvvvvvvv");
+
             ll_nodata.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
             mNestedScrollView_trend.setVisibility(View.VISIBLE);
@@ -1574,4 +1581,9 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
 
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
+    }
 }

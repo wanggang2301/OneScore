@@ -224,6 +224,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         }
                     }
                 }*/
+                // TODO
                 break;
             case R.id.iv_delete: // EditText 删除
                 MobclickAgent.onEvent(mContext, "RegisterActivity_UserName_Delete");

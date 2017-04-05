@@ -122,9 +122,11 @@ public class PicturePreviewActivity extends BaseActivity {
     }
 
     protected void nextPicture() {
+        // TODO Auto-generated method stub
     }
 
     protected void prePicture() {
+        // TODO Auto-generated method stub
     }
 
     public void recycle() {

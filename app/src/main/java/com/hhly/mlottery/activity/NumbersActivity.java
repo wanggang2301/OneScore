@@ -50,7 +50,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
     private SwipeRefreshLayout mSwipeRefreshLayout;// 下拉刷新
     private LinearLayout ll_numbers_startLoading;// 开始加载
     private LinearLayout ll_numbers_errorLoading;// 加载失败
-    private List<NumberCurrentInfo> numberlist = new ArrayList<NumberCurrentInfo>();// 各种彩票开奖对象
+    private List<NumberCurrentInfo> numberlist = new ArrayList<>();// 各种彩票开奖对象
     private TextView reLoading;// 重新加载数据
 
     // private int[] sorts = new int[] { 1, 6, 15, 8, 11, 19, 2, 4, 5, 23, 3, 7,

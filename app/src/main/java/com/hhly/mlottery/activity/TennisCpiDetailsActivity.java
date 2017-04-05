@@ -83,6 +83,8 @@ public class TennisCpiDetailsActivity extends BaseActivity implements View.OnCli
 
         //亚盘
         fragments.add(TennisCpiDetailsFragment.newInstance("1", thirdId, index, nameList, comName));
+        //大小球
+        fragments.add(TennisCpiDetailsFragment.newInstance("3", thirdId, index, nameList, comName));
         //欧赔
         fragments.add(TennisCpiDetailsFragment.newInstance("2", thirdId, index, nameList, comName));
 
@@ -92,8 +94,10 @@ public class TennisCpiDetailsActivity extends BaseActivity implements View.OnCli
         //根据标识界面传过来的值默认选中那个界面
         if ("1".equals(oddType)) {
             mViewPager.setCurrentItem(0);
-        } else if ("2".equals(oddType)) {
+        } else if ("3".equals(oddType)) {
             mViewPager.setCurrentItem(1);
+        } else if ("2".equals(oddType)) {
+            mViewPager.setCurrentItem(2);
         }
 
         mTabLayout.setupWithViewPager(mViewPager);
@@ -108,12 +112,11 @@ public class TennisCpiDetailsActivity extends BaseActivity implements View.OnCli
             case R.id.cpi_match_detail_tab1:
                 mViewPager.setCurrentItem(0);
                 break;
-//            case R.id.cpi_match_detail_tab2:
-//                mViewPager.setCurrentItem(1);
-//                break;
-            case R.id.cpi_match_detail_tab3:
+            case R.id.cpi_match_detail_tab2:
                 mViewPager.setCurrentItem(1);
-
+                break;
+            case R.id.cpi_match_detail_tab3:
+                mViewPager.setCurrentItem(2);
                 break;
             default:
                 break;
@@ -145,9 +148,9 @@ public class TennisCpiDetailsActivity extends BaseActivity implements View.OnCli
             switch (position) {
                 case 0:
                     return getString(R.string.odd_plate_rb_txt);
-//                case 1:
-//                    return getString(R.string.asiasize);
                 case 1:
+                    return getString(R.string.asiasize);
+                case 2:
                     return getString(R.string.odd_op_rb_txt);
                 default:
                     return getString(R.string.odd_plate_rb_txt);

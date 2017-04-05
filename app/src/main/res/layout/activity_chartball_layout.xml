@@ -95,28 +95,28 @@
 
             </RelativeLayout>
 
-            <!--<RelativeLayout-->
-                <!--android:id="@+id/rl_emoji"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:visibility="gone">-->
+            <RelativeLayout
+                android:id="@+id/rl_emoji"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
 
-                <!--<android.support.v4.view.ViewPager-->
-                    <!--android:id="@+id/view_pager_emoji"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent" />-->
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/view_pager_emoji"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
-                <!--&lt;!&ndash;点&ndash;&gt;-->
-                <!--<LinearLayout-->
-                    <!--android:id="@+id/emoji_point"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentBottom="true"-->
-                    <!--android:layout_marginBottom="10dp"-->
-                    <!--android:gravity="center_horizontal"-->
-                    <!--android:orientation="horizontal" />-->
+                <!--点-->
+                <LinearLayout
+                    android:id="@+id/emoji_point"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal" />
 
-            <!--</RelativeLayout>-->
+            </RelativeLayout>
 
         </FrameLayout>
 
@@ -145,23 +145,24 @@
                     android:src="@mipmap/chart_ball_local_icon" />
             </LinearLayout>
 
-            <!--<LinearLayout-->
-                <!--android:id="@+id/ll_emoji_content"-->
-                <!--android:layout_width="60dp"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:background="@color/home_item_bg"-->
-                <!--android:clickable="true"-->
-                <!--android:focusable="true"-->
-                <!--android:focusableInTouchMode="true"-->
-                <!--android:gravity="center"-->
-                <!--android:orientation="vertical">-->
+            <LinearLayout
+                android:id="@+id/ll_emoji_content"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:background="@color/home_item_bg"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:visibility="gone"
+                android:orientation="vertical">
 
-                <!--<ImageView-->
-                    <!--android:id="@+id/iv_select_emoji"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:src="@mipmap/chart_ball_emoji_icon" />-->
-            <!--</LinearLayout>-->
+                <ImageView
+                    android:id="@+id/iv_select_emoji"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/chart_ball_emoji_icon" />
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>

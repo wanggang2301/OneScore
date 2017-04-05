@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_ll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -103,6 +102,7 @@
 
         <TextView
             android:id="@+id/tv_tight"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -151,7 +151,7 @@
         android:layout_gravity="center_horizontal"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        tools:text="获得1314个赞" />
+        android:text="获得1314个赞" />
 
 
 </LinearLayout>
