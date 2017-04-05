@@ -131,11 +131,11 @@
                 android:id="@+id/ll_local_content"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:gravity="center"
+                android:background="@color/white"
                 android:clickable="true"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:background="@color/white"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <ImageView
@@ -149,11 +149,12 @@
                 android:id="@+id/ll_emoji_content"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:gravity="center"
+                android:background="@color/home_item_bg"
                 android:clickable="true"
                 android:focusable="true"
-                android:background="@color/home_item_bg"
                 android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <ImageView
