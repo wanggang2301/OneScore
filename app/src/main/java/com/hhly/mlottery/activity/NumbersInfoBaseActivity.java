@@ -74,9 +74,6 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
             public_txt_spinner.setVisibility(View.GONE);
             settingTitle();
             getSupportFragmentManager().beginTransaction().replace(R.id.fl_other_content, new HKLotteryChartFragment()).commit();
-//            if (!PreferenceUtil.getBoolean(AppConstants.LOTTERY_HK_RED_KEY, false)) {
-//                PreferenceUtil.commitBoolean(AppConstants.LOTTERY_HK_RED_KEY, true);
-//            }
         }
     }
 
@@ -120,11 +117,11 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
         fl_numberContext_info = (FrameLayout) findViewById(R.id.fl_numberContext_info);
         fl_other_content = (FrameLayout) findViewById(R.id.fl_other_content);
         findViewById(R.id.rb_open_lottery).setOnClickListener(this);
-        if (index == 1) {
-            ((RadioButton) findViewById(R.id.rb_chart)).setChecked(true);
-        } else {
+//        if (index == 1) {
+//            ((RadioButton) findViewById(R.id.rb_chart)).setChecked(true);
+//        } else {
             ((RadioButton) findViewById(R.id.rb_open_lottery)).setChecked(true);
-        }
+//        }
         findViewById(R.id.rb_statistics).setOnClickListener(this);
         findViewById(R.id.rb_chart).setOnClickListener(this);
         public_txt_spinner = (AppCompatSpinner) findViewById(R.id.public_txt_spinner);
@@ -192,20 +189,20 @@ public class NumbersInfoBaseActivity extends BaseActivity implements OnClickList
 //                    PreferenceUtil.commitBoolean(AppConstants.LOTTERY_HK_RED_KEY, true);
 //                }
                 break;
-            case R.id.rb_chart:
-                MobclickAgent.onEvent(mContext, "Lottery_Info_chart");
-                fl_numberContext_info.setVisibility(View.GONE);
-                public_btn_set.setVisibility(View.GONE);
-                fl_other_content.setVisibility(View.VISIBLE);
-                public_txt_spinner.setVisibility(View.GONE);
-                settingTitle();
-
-                getSupportFragmentManager().beginTransaction().replace(R.id.fl_other_content, new HKLotteryChartFragment()).commit();
-
-//                if (!PreferenceUtil.getBoolean(AppConstants.LOTTERY_HK_RED_KEY, false)) {
-//                    PreferenceUtil.commitBoolean(AppConstants.LOTTERY_HK_RED_KEY, true);
-//                }
-                break;
+//            case R.id.rb_chart:
+//                MobclickAgent.onEvent(mContext, "Lottery_Info_chart");
+//                fl_numberContext_info.setVisibility(View.GONE);
+//                public_btn_set.setVisibility(View.GONE);
+//                fl_other_content.setVisibility(View.VISIBLE);
+//                public_txt_spinner.setVisibility(View.GONE);
+//                settingTitle();
+//
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fl_other_content, new HKLotteryChartFragment()).commit();
+//
+////                if (!PreferenceUtil.getBoolean(AppConstants.LOTTERY_HK_RED_KEY, false)) {
+////                    PreferenceUtil.commitBoolean(AppConstants.LOTTERY_HK_RED_KEY, true);
+////                }
+//                break;
         }
     }
 }

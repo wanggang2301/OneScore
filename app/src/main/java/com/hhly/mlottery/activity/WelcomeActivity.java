@@ -91,7 +91,7 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         initView();
-        imageAD = (ImageView) findViewById(R.id.imageAD);
+
         mContext = this;
         mPackageManager = mContext.getPackageManager();
         try {
@@ -101,42 +101,33 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
             // 此异常不会发生
         }
 
-        // 获取经纬度
-        String serviceName = Context.LOCATION_SERVICE;
-        locationManager = (LocationManager) getSystemService(serviceName);
-        Criteria criteria = new Criteria();
-        criteria.setAccuracy(Criteria.ACCURACY_FINE);
-        criteria.setAltitudeRequired(false);
-        criteria.setBearingRequired(false);
-        criteria.setCostAllowed(true);
-        criteria.setPowerRequirement(Criteria.POWER_LOW);
-        String provider = locationManager.getBestProvider(criteria, true);
-        if (!TextUtils.isEmpty(provider)) {
-            location = locationManager.getLastKnownLocation(provider);
-        }
+        new Thread() {
+            @Override
+            public void run() {
 
-        // 获取经纬度end
+                // 获取经纬度
+                String serviceName = Context.LOCATION_SERVICE;
+                locationManager = (LocationManager) getSystemService(serviceName);
+                Criteria criteria = new Criteria();
+                criteria.setAccuracy(Criteria.ACCURACY_FINE);
+                criteria.setAltitudeRequired(false);
+                criteria.setBearingRequired(false);
+                criteria.setCostAllowed(true);
+                criteria.setPowerRequirement(Criteria.POWER_LOW);
+                String provider = locationManager.getBestProvider(criteria, true);
+                if (!TextUtils.isEmpty(provider)) {
+                    location = locationManager.getLastKnownLocation(provider);
+                }
 
-        getUmeng();
+                // 获取经纬度end
 
-        if (AppConstants.isGOKeyboard) {
-            ImageLoader.load(mContext,R.mipmap.welcome_tw).into(imageAD);
-//            imageAD.setBackgroundResource(R.mipmap.welcome_tw);
-           /* if (MyApp.isLanguage.equals("rTW")) {
-                imageAD.setBackgroundResource(R.mipmap.welcome_tw);
-            } else {
-                imageAD.setBackgroundResource(R.mipmap.welcome_en);
-            }*/
-        } else {//如果是国内版
-            if (MyApp.isLanguage.equals("rCN")) {// 如果是中文简体
-//                imageAD.setBackgroundResource(R.mipmap.welcome);
-                ImageLoader.load(mContext,R.mipmap.welcome).into(imageAD);
-            } else if (MyApp.isLanguage.equals("rTW")) {
-//                imageAD.setBackgroundResource(R.mipmap.welcome_tw);
-                ImageLoader.load(mContext,R.mipmap.welcome_tw).into(imageAD);
+                getUmeng();
+
             }
-        }
+        }.start();
 
+        // 设置开机页图片
+        ImageLoader.load(mContext, AppConstants.getBootPageId()).into(imageAD);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -159,7 +150,7 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initView() {
-
+        imageAD = (ImageView) findViewById(R.id.imageAD);
         mTv_verycode = (TextView) findViewById(R.id.tv_verycode);
         mTv_verycode.setOnClickListener(this);
         mCount_down = (LinearLayout) findViewById(R.id.count_down);
@@ -207,7 +198,7 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
             MyApp.LO = location.getLongitude();
             params.addBodyParameter("LA", "" + MyApp.LA);// 经度
             params.addBodyParameter("LO", "" + MyApp.LO);// 纬度
-        } else if (location == null) {// 如果当前位置没获取到
+        } else {// 如果当前位置没获取到
             params.addBodyParameter("LA", "");// 经度
             params.addBodyParameter("LO", "");// 纬度
         }
@@ -236,6 +227,7 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
                             mUmengInfo = JSONObject.parseObject(text, UmengInfo.class);
                             PreferenceUtil.commitString(AppConstants.TERID, mUmengInfo.getTERID());
 
+                            L.d("上传用户信息成功:" + responseInfo.toString());
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -248,7 +240,6 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
                 }
             });
         } catch (JSONException e) {
-            // TODO: handle exception
 //			L.e("fastjson异常:"+e);
         }
     }

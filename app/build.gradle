@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'android-apt'
+
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 android {
@@ -44,7 +44,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 30
-        versionName "1.2.8.0330"
+        versionName "1.2.8.0405"
         multiDexEnabled true
     }
 
@@ -75,7 +75,7 @@ repositories {
 dependencies {
 
     // TalkingData统计
-
+    compile files('libs/TalkingData_AppAnalytics_Android_SDK_V2.3.62.jar')
     // 友盟统计
     compile files('libs/umeng-analytics-v6.0.9.jar')
     // 友盟推送
@@ -129,5 +129,4 @@ dependencies {
     compile 'com.android.support:percent:23.4.0'
     provided 'com.android.support:support-annotations:23.4.0'
     compile 'com.google.android:multidex:0.1'
-    compile files('libs/TalkingData_AppAnalytics_Android_SDK_V2.3.62.jar')
 }

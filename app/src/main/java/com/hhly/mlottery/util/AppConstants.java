@@ -1,5 +1,6 @@
 package com.hhly.mlottery.util;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
@@ -15,16 +16,39 @@ public class AppConstants {
     /**
      * true是国际版|false内地版
      */
-    public static final boolean isGOKeyboard = true;
+    public static final boolean isGOKeyboard = false;
     /**
      * true是纯净版|false完整版
      */
     public static final boolean fullORsimple = false;
 
-     // 是否是测试连接，测试连接用于阶段测试使用
-//    public static final boolean isTestLink = false;
-     // 判断是否上传奔溃日志到友盟和TalkingData
-//    public static final boolean isUploadCrash = false;
+
+    /**
+     * 开机页
+     */
+    public static final int getBootPageId() {
+
+        switch (MyApp.isLanguage) {
+            case "rCN":
+                return R.mipmap.welcome;
+            case "rTW":
+                return R.mipmap.welcome_tw;
+//            case "rEN":
+//            case "rTH":
+//            case "rVI":
+            default:
+                return R.mipmap.welcome;
+        }
+    }
+
+    /**
+     * 引导页
+     */
+    public static final int[] getGuidePage() {
+
+        return new int[]{R.mipmap.welcome1, R.mipmap.welcome2, R.mipmap.welcome3};
+    }
+
 
     /**
      * 项目时区 8中国，7泰国、越南 ，0英语
@@ -51,28 +75,6 @@ public class AppConstants {
     public static final String PACKGER_NAME_VN_HN = "vn.hn.hhly.mlottery"; // 越南北包名
     public static final String PACKGER_NAME_VN = "vn.hhly.mlottery";       // 越南南包名
     public static final String PACKGER_NAME_UK = "uk.hhly.mlottery";       // 英文版包名
-
-//    public static String ACCESS_LINK = "";// API
-//    public static String USER_AGENT = "";
-//    public static String AccessKey = "";
-//    public static String DeviceKey = "";
-//    public static String VersionNumber = "version=1.0&";// 接口版本号
-//    public static String TerminalType = "terminalType=2&";// 终端类型1盒子2安卓手机3是IOS
-//    public static String mac = "mac=1111111&";
-//    public static String PlayType = "playType=1&";// 播放类型//playType 1 点播|2
-    // 直播时移|3回看
-//    public static String EpisodeId = "episodeId=1&";// 第几集
-//    public static String PlayTypeTwo = "playType=2&";// 直播
-//    public static String SearchType = "searchType=0&";// 搜索类型
-
-    // 融云环境KEY
-//    public static String APPKEY_RONGYUN = "";
-//    public static String APPSECRET_RONGYUN = "";
-
-    // 红点功能key
-//    public static final String ANIMATION_RED_KEY = "animation_red_key";// 多屏动画首页菜单
-//    public static final String LOTTERY_HK_RED_KEY = "lottery_hk_red_key";// 香港开奖首页菜单
-//    public static final String RED_KEY_START = "red_key_start";
 
     // 网球关注
     public static final String TENNIS_BALL_FOCUS = "tennisBallFocus";
@@ -178,9 +180,6 @@ public class AppConstants {
             BaseURLs.URL_SCJQDetailedResults // 32 4场进球
     };
 
-    // 香港彩和七星彩的下一期开奖URL
-//    public static String[] nextNumberOpenURL = {BaseURLs.URL_LHCNextAndNewResults, BaseURLs.URL_QXCCNextAndNewResults};
-
     // 香港彩正在开奖中的动画效果gif
     public static int[] numberHKOpenGIF = {R.mipmap.number_anim_yell1, R.mipmap.number_anim_yell2, R.mipmap.number_anim_yell3, R.mipmap.number_anim_yell4, R.mipmap.number_anim_yell5,
             R.mipmap.number_anim_yell6, R.mipmap.number_anim_yell6, R.mipmap.number_anim_yell7};
@@ -188,31 +187,6 @@ public class AppConstants {
     // 香港彩正在开奖中的动画效果gif
     public static int[] numberQXCOpenGIF = {R.mipmap.number_anim_red1, R.mipmap.number_anim_red2, R.mipmap.number_anim_red3, R.mipmap.number_anim_red4, R.mipmap.number_anim_blue1,
             R.mipmap.number_anim_blue2, R.mipmap.number_anim_blue3};
-
-    // public static String VERSION_NAME = "";
-    // public static int VERSION_CODE = 0;
-    // public static String PACKAGE_NAME = "";
-    // public static String CHANNEL_NAME = "1000001";
-    // public static String TQ_VERSION = "tq2.1";
-    // 服务器API版本
-//    public static String CHAONENG_API_TECH = "http://183.61.172.82:8096/mlottery/core/";// API内网
-//    public static String CHAONENG_API_PUBLISH = "http://183.61.172.82:8096/mlottery/core/";// API公网
-
-//    static {
-//        if (isTestLink) {
-//            ACCESS_LINK = CHAONENG_API_TECH;
-//        } else {
-//            ACCESS_LINK = CHAONENG_API_PUBLISH;
-//        }
-//
-//        if (isGOKeyboard) {
-//            APPKEY_RONGYUN = "bmdehs6pddeds";
-//            APPSECRET_RONGYUN = "2gFKWZMbtEj7";
-//        } else {
-//            APPKEY_RONGYUN = "ik1qhw0919m8p";
-//            APPSECRET_RONGYUN = "oyHzmKPlNKG";
-//        }
-//    }
 
     // 首页跳转key_value
     public static final String FOTTBALL_KEY = "football";// 足球界面跳转Key
@@ -272,14 +246,6 @@ public class AppConstants {
     // ============= account end ==============
 
 
-    /**
-     * 首页热门赛事足球背景图片
-     */
-    public static int[] homePageScoreFootBG = {R.mipmap.home_pager_score_football01_bg, R.mipmap.home_pager_score_football02_bg, R.mipmap.home_pager_score_football03_bg, R.mipmap.home_pager_score_football04_bg, R.mipmap.home_pager_score_football05_bg, R.mipmap.home_pager_score_football06_bg, R.mipmap.home_pager_score_football07_bg};
-    /**
-     * 首页热门赛事篮球背景图片
-     */
-    public static int[] homePageScoreBasketBG = {R.mipmap.home_pager_score_basketball01_bg, R.mipmap.home_pager_score_basketball02_bg};
     //防止用户恶意注册添加的sign字段。
     public static final String SIGN_KEY = "B2A7748BF1FCAF6326979E1B86DC0C60";
 
@@ -293,48 +259,6 @@ public class AppConstants {
      */
     public static final String TERID = "terid";
 
-     // 临时测试数据
-//    public static String getTestData() {
-//        return "{\"menus\":{\"content\":[{\"jumpType\":2,\"jumpAddr\":\"13\",\"title\":\"足球比分\",\"picUrl\":\"http://m.1332255.com:81/news/upload/shortcut/4353f490e7e64fecb1f23053a7a2dd2d.png\",\"reqMethod\":\"post\",\"labSeq\":null},{\"jumpType\":2,\"jumpAddr\":\"20\",\"title\":\"篮球比分\",\"picUrl\":\"http://m.1332255.com:81/news/upload/shortcut/1c2169649f04436881c822541fa9fa9f.png\",\"reqMethod\":\"post\",\"labSeq\":null},{\"jumpType\":2,\"jumpAddr\":\"30\",\"title\":\"彩票开奖\",\"picUrl\":\"http://m.1332255.com:81/news/upload/shortcut/b1c8f2ab927c48468d0eb5f351ca1f3c.png\",\"reqMethod\":\"post\",\"labSeq\":null},{\"jumpType\":2,\"jumpAddr\":\"11\",\"title\":\"足球数据\",\"picUrl\":\"http://m.1332255.com:81/news/upload/shortcut/5003439a83c14d8098d97af0ac6601b1.png\",\"reqMethod\":\"post\",\"labSeq\":null},{\"jumpType\":2,\"jumpAddr\":\"10\",\"title\":\"足球指数\",\"picUrl\":\"http://m.1332255.com:81/news/upload/shortcut/09bae0ba205b400c912f0901f24156b1.png\",\"reqMethod\":\"post\",\"labSeq\":null},{\"jumpType\":2,\"jumpAddr\":\"12\",\"title\":\"体育资讯\",\"picUrl\":\"http://m.1332255.com:81/news/upload/shortcut/4b4495f76a194b68a5e0ca1f4c00b5cf.png\",\"reqMethod\":\"post\",\"labSeq\":null},{\"jumpType\":2,\"jumpAddr\":\"19\",\"title\":\"联赛统计\",\"picUrl\":\"http://m.1332255.com:81/news/upload/shortcut/8d6d884b1fcd42ac9cea7860e122b7c8.png\",\"reqMethod\":\"post\",\"labSeq\":null},{\"jumpType\":1,\"jumpAddr\":\"http://mobile.game1.1332255.com/h5/index?comment=false&share=false&loginTrace=android\",\"title\":\"游戏竞猜\",\"picUrl\":\"http://m.1332255.com:81/news/upload/shortcut/0c67c7184c874df89ab3fdd7d5acb52f.png\",\"reqMethod\":\"post\",\"labSeq\":null}],\"result\":200},\"result\":200,\"isAudit\":false,\"otherLists\":[{\"content\":{\"labType\":1,\"bodys\":[{\"jumpType\":2,\"jumpAddr\":\"13\",\"thirdId\":\"392907\",\"racename\":\"澳洲甲\",\"raceId\":\"273\",\"raceColor\":\"#FF7000\",\"date\":\"2016-11-25\",\"time\":\"15:50\",\"homeId\":20394,\"hometeam\":\"西悉尼流浪者\",\"guestId\":2914,\"guestteam\":\"布里斯班狮吼\",\"statusOrigin\":\"-1\",\"homeScore\":1,\"guestScore\":1,\"homeHalfScore\":0,\"guestHalfScore\":1,\"homeLogoUrl\":\"http://pic.13322.com/icons/teams/100/20394.png\",\"guestLogoUrl\":\"http://pic.13322.com/icons/teams/100/2914.png\",\"totalupdLike\":0}]},\"result\":200},{\"content\":{\"labType\":3,\"bodys\":[{\"jumpType\":2,\"jumpAddr\":\"31\",\"name\":\"1\",\"issue\":\"2016134\",\"numbers\":\"42,06,37,02,24,23#32\",\"picUrl\":\"http://m.1332255.com:81/news/upload/lottery/bca9174be1934bf79c77645f854e174b.png\",\"zodiac\":\"兔,兔,猴,羊,鸡,狗#牛\"}]},\"result\":200},{\"content\":{\"labType\":7,\"bodys\":[{\"jumpType\":0,\"jumpAddr\":null,\"title\":\"一键查询开奖结果\",\"titlePic\":\"开奖查询头部图片URL\",\"detail1\":\"快速\",\"detail2\":\"便捷\",\"detail3\":\"准确\",\"lottery\":[{\"jumpType\":2,\"jumpAddr\":\"328\",\"name\":\"30\",\"issue\":\"2016181\",\"numbers\":\"--,--,--,--,--,--,--,--,--,--,--,--,--,--\",\"picUrl\":\"http://m.1332255.com:81/news/upload/lottery/27a5e1ebde3e42f79912a29a1fa61308.png\",\"jackpot\":null},{\"jumpType\":2,\"jumpAddr\":\"324\",\"name\":\"24\",\"issue\":\"2016139\",\"numbers\":\"08,12,15,20,23,27#15\",\"picUrl\":\"http://m.1332255.com:81/news/upload/lottery/daf7f80b4b0b4ef2b50c44db28f49379.png\",\"jackpot\":\"854651325\"},{\"jumpType\":2,\"jumpAddr\":\"325\",\"name\":\"29\",\"issue\":\"2016138\",\"numbers\":\"12,13,16,29,35#05,11\",\"picUrl\":\"http://m.1332255.com:81/news/upload/lottery/7fff28b955de414b9c7dce728286e8e3.png\",\"jackpot\":\"5000000\"},{\"jumpType\":2,\"jumpAddr\":\"326\",\"name\":\"25\",\"issue\":\"2016320\",\"numbers\":\"6,6,5\",\"picUrl\":\"http://m.1332255.com:81/news/upload/lottery/38c0f80476bb40879bd98b1078927553.png\",\"jackpot\":null},{\"jumpType\":2,\"jumpAddr\":\"327\",\"name\":\"26\",\"issue\":\"2016320\",\"numbers\":\"6,6,5,6,6\",\"picUrl\":\"http://m.1332255.com:81/news/upload/lottery/ba8e21b3aad84432b5bcf00a49a67634.png\",\"jackpot\":null}]}]},\"result\":200}],\"banners\":{\"content\":[{\"jumpType\":1,\"jumpAddr\":\"http://m.13322.com/active/act/footerGame/index.html?comment=false&share=true&loginTrace=android\",\"picUrl\":\"http://m.1332255.com:81/news/upload/picAdvert/8700e2a1d016440fa48f1cc699c41348.jpg\",\"title\":\"国足\",\"labSeq\":null}],\"result\":200}}";
-//    }
-
-    /**
-     * emoji表情
-     */
-    public static String[] emojiList = {
-            "\ue415", "\ue056", "\ue057", "\ue414",
-            "\ue405", "\ue106", "\ue418", "\ue417", "\ue40d",
-            "\ue40a", "\ue404", "\ue105", "\ue412", "\ue40e",
-            "\ue402", "\ue108", "\ue403", "\ue058", "\ue407",
-            "\ue401", "\ue40f", "\ue40b", "\ue406", "\ue413",
-            "\ue411", "\ue410", "\ue107", "\ue059", "\ue416",
-            "\ue408", "\ue40c", "\ue409", "\ue11a", "\ue10c",
-            "\ue32c", "\ue32a", "\ue32d", "\ue328", "\ue32b",
-            "\ue022", "\ue023", "\ue327", "\ue329", "\ue32e",
-            "\ue32f", "\ue335", "\ue334", "\ue021", "\ue337",
-            "\ue020", "\ue336", "\ue13c", "\ue330", "\ue331",
-            "\ue326", "\ue03e", "\ue11d", "\ue05a", "\ue00e",
-            "\ue421", "\ue420", "\ue00d", "\ue010", "\ue011",
-            "\ue41e", "\ue012", "\ue422", "\ue22e", "\ue22f",
-            "\ue231", "\ue230", "\ue427", "\ue41d", "\ue00f",
-            "\ue41f", "\ue14c", "\ue201", "\ue115", "\ue428",
-            "\ue51f", "\ue429", "\ue424", "\ue423", "\ue253",
-            "\ue426", "\ue111", "\ue425", "\ue31e", "\ue31f",
-            "\ue31d", "\ue001", "\ue002", "\ue005", "\ue004",
-            "\ue51a", "\ue519", "\ue518", "\ue515", "\ue516",
-            "\ue517", "\ue51b", "\ue152", "\ue04e", "\ue51c",
-            "\ue51e", "\ue11c", "\ue536", "\ue003", "\ue41c",
-            "\ue41b", "\ue419", "\ue41a", "\ue04a", "\ue04b",
-            "\ue049", "\ue048", "\ue04c", "\ue13d", "\ue443",
-            "\ue43e", "\ue04f", "\ue052", "\ue053", "\ue524",
-            "\ue52c", "\ue52a", "\ue531", "\ue050", "\ue527",
-            "\ue051", "\ue10b", "\ue52b", "\ue52f", "\ue528",
-            "\ue01a", "\ue134", "\ue530", "\ue529", "\ue526",
-            "\ue340", "\ue34d", "\ue339", "\ue147", "\ue343",
-            "\ue33c", "\ue33a", "\ue43f", "\ue34b", "\ue046",
-            "\ue345", "\ue346", "\ue348", "\ue347", "\ue34a",
-            "\ue349"
-    };
     /**
      * 本地个性化表情
      */
@@ -356,24 +280,6 @@ public class AppConstants {
             R.mipmap.chart_ball_chitule,
             R.mipmap.chart_ball_xihushuiya
     };
-//    public static String[] localIconName = {
-//            MyApp.getContext().getResources().getString(R.string.local_juyijing),
-//            MyApp.getContext().getResources().getString(R.string.local_shihuale),
-//            MyApp.getContext().getResources().getString(R.string.local_zailaiyijiao),
-//            MyApp.getContext().getResources().getString(R.string.local_mengkuanle),
-//            MyApp.getContext().getResources().getString(R.string.local_yayajing),
-//            MyApp.getContext().getResources().getString(R.string.local_dacaipan),
-//            MyApp.getContext().getResources().getString(R.string.local_jinggaoni),
-//            MyApp.getContext().getResources().getString(R.string.local_sesese),
-//            MyApp.getContext().getResources().getString(R.string.local_qiudatui),
-//            MyApp.getContext().getResources().getString(R.string.local_youqingguanlaoye),
-//            MyApp.getContext().getResources().getString(R.string.local_fubaila),
-//            MyApp.getContext().getResources().getString(R.string.local_shoumila),
-//            MyApp.getContext().getResources().getString(R.string.local_touzhele),
-//            MyApp.getContext().getResources().getString(R.string.local_shangtiantai),
-//            MyApp.getContext().getResources().getString(R.string.local_chitule),
-//            MyApp.getContext().getResources().getString(R.string.local_xihushuiya)
-//    };
 
     public static Map<String, Integer> localMap = new HashMap<>();
 

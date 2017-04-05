@@ -93,6 +93,7 @@
                 android:drawableTop="@drawable/home_lottery_info_menu_chart"
                 android:gravity="center"
                 android:text="@string/home_lottery_info_chart"
+                android:visibility="gone"
                 android:textColor="@drawable/frag__base_selector_color"
                 android:textSize="11dp" />
         </RadioGroup>
