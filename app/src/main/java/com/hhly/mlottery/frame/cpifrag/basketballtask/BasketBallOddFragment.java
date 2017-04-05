@@ -266,6 +266,8 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     public void noData() {
 
         L.d(TAG, "没有数据_____________");
+        fileterMatchTypeList.clear();
+
         mHandler.sendEmptyMessage(2);
 
     }
@@ -307,6 +309,7 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     }
 
     public List<BasketIndexBean.DataBean.FileterTagsBean> getFilterTagList() {
+
         return fileterMatchTypeList;
     }
 
@@ -320,10 +323,12 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         //赛事的筛选,获取父赛事的筛选结果
         LinkedList<String> filterLeagueList = parentFragment.getFilterLeagueList();
 
+        L.d("xxxccc", "欧赔2==" + sourceDataList.size());
 
         //第一次请求
         if (filterLeagueList != null) {
             for (BasketIndexBean.DataBean.AllInfoBean allInfo : sourceDataList) {
+
                 if (filterLeagueList.indexOf(allInfo.getLeagueId()) >= 0) {
                     filterAllInfo(allInfo);
                 }
