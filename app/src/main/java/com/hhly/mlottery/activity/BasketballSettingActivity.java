@@ -14,8 +14,6 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.hhly.mlottery.R;
-import com.hhly.mlottery.R.string;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.BasketFocusEventBus;
 import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreSettingEventBusEntity;
