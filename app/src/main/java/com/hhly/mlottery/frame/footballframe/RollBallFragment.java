@@ -249,31 +249,10 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         if (isNewFrameWork) {
             ((FootBallScoreFragment) getParentFragment()).reconnectWebSocket();
         } else {
-            ((ScoresFragment) getParentFragment()).reconnectWebSocket();
 
         }
     }
 
-    public void onEventMainThread(ScoresFragment.FootballScoresWebSocketEntity entity) {
-
-        if (adapter == null) {
-            return;
-        }
-
-        String type = "";
-        try {
-            JSONObject jsonObject = new JSONObject(entity.text);
-            type = jsonObject.getString("type");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        if (!TextUtils.isEmpty(type)) {
-            Message msg = Message.obtain();
-            msg.obj = entity.text;
-            msg.arg1 = Integer.parseInt(type);
-            apiHandler.sendMessage(msg);
-        }
-    }
 
     public void onEventMainThread(FootBallScoreFragment.FootballScoresWebSocketEntity entity) {
         L.d("gaiban", "滚球推送改版");
@@ -499,7 +478,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
             this.feedAdapter(feedAdapterLists);
 //            ((ScoresFragment) getParentFragment()).focusCallback();
             if (mEntryType == 0) {
-                ((ScoresFragment) getParentFragment()).firstFocusCallback();
             }else if(mEntryType == 1){
                 ((FootBallScoreFragment) getParentFragment()).focusCallback();
             }

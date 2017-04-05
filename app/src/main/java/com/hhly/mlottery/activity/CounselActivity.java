@@ -215,7 +215,7 @@ public class CounselActivity extends BaseActivity implements View.OnClickListene
         mViewPager.setAdapter(mCounselFragmentAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mViewPager.setOffscreenPageLimit(1);
-        mViewPager.setCurrentItem(((FootballActivity) mContext).infoPagerLabel);
+        //mViewPager.setCurrentItem(((FootballActivity) mContext).infoPagerLabel);
         mTabLayout.setTabsFromPagerAdapter(mCounselFragmentAdapter);
     }
 

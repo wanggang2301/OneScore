@@ -23,7 +23,6 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
-import com.hhly.mlottery.activity.BasketballScoresActivity;
 import com.hhly.mlottery.activity.BasketballSettingActivity;
 import com.hhly.mlottery.adapter.basketball.PinnedHeaderExpandableAdapter;
 import com.hhly.mlottery.bean.basket.BasketAllOddBean;
@@ -423,7 +422,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                     v.setTag(false);
                     if (mBasketballType == TYPE_FOCUS) {
                         if (mEntryType == 0) {
-                            ((BasketballScoresActivity) getActivity()).basketFocusCallback();
                         } else if (mEntryType == 1) {
                             ((BasketBallScoreFragment) getParentFragment()).focusCallback();
                         }
@@ -431,7 +429,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                 }
                 updateAdapter();//防止复用
                 if (mEntryType == 0) {
-                    ((BasketballScoresActivity) getActivity()).basketFocusCallback();
                 } else if (mEntryType == 1) {
                     ((BasketBallScoreFragment) getParentFragment()).focusCallback();
                 }
@@ -449,7 +446,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
         if (isNewFrameWork) {
             ((BasketBallScoreFragment) getParentFragment()).reconnectWebSocket();
         } else {
-            ((BasketballScoresActivity) getActivity()).reconnectWebSocket();
         }
     }
 
@@ -1004,7 +1000,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     public void onEventMainThread(String id) {
         updateAdapter();
         if (mEntryType == 0) {
-            ((BasketballScoresActivity) getActivity()).basketFocusCallback();
         } else if (mEntryType == 1) {
             ((BasketBallScoreFragment) getParentFragment()).focusCallback();
         }

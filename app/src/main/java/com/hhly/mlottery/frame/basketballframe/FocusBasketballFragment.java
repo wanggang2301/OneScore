@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,9 +21,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
-import com.hhly.mlottery.activity.BasketballScoresActivity;
 import com.hhly.mlottery.activity.BasketballSettingActivity;
-import com.hhly.mlottery.activity.MyFocusActivity;
 import com.hhly.mlottery.adapter.basketball.PinnedHeaderExpandableFocusAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.basket.BasketAllOddBean;
@@ -49,7 +46,6 @@ import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ResultDateUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.util.net.account.CustomEvent;
 import com.hhly.mlottery.view.PinnedHeaderExpandableListView;
 import com.umeng.analytics.MobclickAgent;
 
@@ -256,7 +252,6 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
                     mErrorLayout.setVisibility(View.GONE);
                     mNoDataLayout.setVisibility(View.VISIBLE);
                     if (mEntryType == 0) {
-                        ((BasketballScoresActivity) getActivity()).basketFocusCallback();
                     }else if(mEntryType == 1){
                         ((BasketBallScoreFragment) getParentFragment()).focusCallback();
                     }
@@ -275,7 +270,6 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
                     }
                 }
                 if (mEntryType == 0) {
-                    ((BasketballScoresActivity) getActivity()).basketFocusCallback();
                 }else if(mEntryType == 1){
                     ((BasketBallScoreFragment) getParentFragment()).focusCallback();
                 }
@@ -371,7 +365,6 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
                 mErrorLayout.setVisibility(View.GONE);
                 mNoDataLayout.setVisibility(View.GONE);
                 if (mEntryType == 0) {
-                    ((BasketballScoresActivity) getActivity()).basketFocusCallback();
                 }else if(mEntryType == 1){
                     ((BasketBallScoreFragment) getParentFragment()).focusCallback();
                 }
@@ -930,9 +923,7 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
     public void onEventMainThread(BasketFocusEventBus eventBus) {
         L.e("EventBus","受到了");
         request("");
-        if (mEntryType == 0) {
-            ((BasketballScoresActivity) getActivity()).basketFocusCallback();
-        }else if(mEntryType == 1){
+        if (mEntryType == 0) {}else if(mEntryType == 1){
             ((BasketBallScoreFragment) getParentFragment()).focusCallback();
         }
     }

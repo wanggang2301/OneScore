@@ -255,7 +255,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                 }
 //                ((ScoresFragment) getParentFragment()).focusCallback();
                 if (mEntryType == 0) {
-                    ((ScoresFragment) getParentFragment()).firstFocusCallback();
                 }else if(mEntryType == 1){
                     ((FootBallScoreFragment) getParentFragment()).focusCallback();
                 }
@@ -637,7 +636,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
             updateAdapter();
 //            ((ScoresFragment) getParentFragment()).focusCallback();
             if (mEntryType == 0) {
-                ((ScoresFragment) getParentFragment()).firstFocusCallback();
             }else if(mEntryType == 1){
                 ((FootBallScoreFragment) getParentFragment()).focusCallback();
             }

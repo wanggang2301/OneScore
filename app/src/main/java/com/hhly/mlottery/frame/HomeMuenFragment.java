@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.BasketballInformationActivity;
 import com.hhly.mlottery.activity.CounselActivity;
 import com.hhly.mlottery.activity.InfoCenterActivity;
 import com.hhly.mlottery.activity.LeagueStatisticsTodayActivity;
@@ -75,23 +74,27 @@ public class HomeMuenFragment extends Fragment {
      * 过滤跳数据
      */
     private void filterData() {
-        Iterator<HomeContentEntity> iterator = mData.iterator();
-        while (iterator.hasNext()) {
-            String jumpAddr = iterator.next().getJumpAddr();
-            switch (jumpAddr) {
-                case "10":// 足球指数
-                case "11":// 足球数据
-                case "13":// 足球比分
-                case "20":// 篮球即时比分
-                case "21":// 篮球赛果
-                case "22":// 篮球赛程
-                case "23":// 篮球关注
-                case "24":// 篮球资讯
-                case "350":// 彩票资讯
-                case "80":// 多屏动画列表
-                    iterator.remove();
-                    break;
+        try {
+            Iterator<HomeContentEntity> iterator = mData.iterator();
+            while (iterator.hasNext()) {
+                String jumpAddr = iterator.next().getJumpAddr();
+                switch (jumpAddr) {
+                    case "10":// 足球指数
+                    case "11":// 足球数据
+                    case "13":// 足球比分
+                    case "20":// 篮球即时比分
+                    case "21":// 篮球赛果
+                    case "22":// 篮球赛程
+                    case "23":// 篮球关注
+                    case "24":// 篮球资讯
+                    case "350":// 彩票资讯
+                    case "80":// 多屏动画列表
+                        iterator.remove();
+                        break;
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -227,8 +230,8 @@ public class HomeMuenFragment extends Fragment {
                                             //Toast.makeText(mContext, "篮球资讯", Toast.LENGTH_SHORT).show();
                                             break;
                                         case "25":// 篮球资料库
-                                            mContext.startActivity(new Intent(mContext, BasketballInformationActivity.class));
-                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Info");
+                                          /*  mContext.startActivity(new Intent(mContext, BasketballInformationActivity.class));
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Info");*/
                                             break;
                                         case "30":// 彩票开奖
                                             mContext.startActivity(new Intent(mContext, NumbersActivity.class));

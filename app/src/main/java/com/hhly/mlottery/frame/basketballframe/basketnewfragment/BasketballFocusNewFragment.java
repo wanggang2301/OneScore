@@ -1,6 +1,5 @@
 package com.hhly.mlottery.frame.basketballframe.basketnewfragment;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -16,8 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -26,10 +23,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
-import com.hhly.mlottery.activity.BasketballScoresActivity;
-import com.hhly.mlottery.activity.BasketballSettingActivity;
 import com.hhly.mlottery.adapter.basketball.BasketballScoreListAdapter;
-import com.hhly.mlottery.adapter.basketball.PinnedHeaderExpandableFocusAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.basket.BasketAllOddBean;
 import com.hhly.mlottery.bean.basket.BasketMatchBean;
@@ -42,7 +36,6 @@ import com.hhly.mlottery.bean.websocket.WebBasketAllOdds;
 import com.hhly.mlottery.bean.websocket.WebBasketMatch;
 import com.hhly.mlottery.bean.websocket.WebBasketOdds;
 import com.hhly.mlottery.bean.websocket.WebBasketOdds5;
-import com.hhly.mlottery.callback.DateOnClickListener;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.basketballframe.BasketFocusEventBus;
@@ -50,12 +43,9 @@ import com.hhly.mlottery.frame.scorefrag.BasketBallScoreFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
-import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
-import com.hhly.mlottery.util.ResultDateUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.view.PinnedHeaderExpandableListView;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
@@ -293,7 +283,6 @@ public class BasketballFocusNewFragment extends BaseWebSocketFragment implements
                     }
                     setStatus(SHOW_STATUS_NO_DATA);
                     if (mEntryType == 0) {
-                        ((BasketballScoresActivity) getActivity()).basketFocusCallback();
                     }else if(mEntryType == 1){
                         ((BasketBallScoreFragment) getParentFragment()).focusCallback();
                     }
@@ -312,7 +301,6 @@ public class BasketballFocusNewFragment extends BaseWebSocketFragment implements
                     }
                 }
                 if (mEntryType == 0) {
-                    ((BasketballScoresActivity) getActivity()).basketFocusCallback();
                 }else if(mEntryType == 1){
                     ((BasketBallScoreFragment) getParentFragment()).focusCallback();
                 }
@@ -375,7 +363,6 @@ public class BasketballFocusNewFragment extends BaseWebSocketFragment implements
 
                 setStatus(SHOW_STATUS_SUCCESS);
                 if (mEntryType == 0) {
-                    ((BasketballScoresActivity) getActivity()).basketFocusCallback();
                 }else if(mEntryType == 1){
                     ((BasketBallScoreFragment) getParentFragment()).focusCallback();
                 }
@@ -898,7 +885,6 @@ public class BasketballFocusNewFragment extends BaseWebSocketFragment implements
         L.e("EventBus","受到了");
         request("");
         if (mEntryType == 0) {
-            ((BasketballScoresActivity) getActivity()).basketFocusCallback();
         }else if(mEntryType == 1){
             ((BasketBallScoreFragment) getParentFragment()).focusCallback();
         }

@@ -433,7 +433,6 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
                     PreferenceUtil.commitString("focus_ids", "");
 //                    ((ScoresFragment) getParentFragment()).focusCallback();
                     if (mEntryType == 0) {
-                        ((ScoresFragment) getParentFragment()).firstFocusCallback();
                     }else if(mEntryType == 1){
                         ((FootBallScoreFragment) getParentFragment()).focusCallback();
                     }
@@ -466,7 +465,6 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
                 Log.e("BBB", "存进去时" + sb.toString());
 //                ((ScoresFragment) getParentFragment()).focusCallback();
                 if (mEntryType == 0) {
-                    ((ScoresFragment) getParentFragment()).firstFocusCallback();
                 }else if(mEntryType == 1){
                     ((FootBallScoreFragment) getParentFragment()).focusCallback();
                 }
@@ -1117,7 +1115,6 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
             }
 
             if (mEntryType == 0) {
-                ((ScoresFragment) getParentFragment()).firstFocusCallback();
             }else if(mEntryType == 1){
                 ((FootBallScoreFragment) getParentFragment()).focusCallback();
             }

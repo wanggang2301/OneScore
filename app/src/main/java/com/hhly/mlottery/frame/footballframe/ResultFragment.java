@@ -306,7 +306,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 }
 //                ((ScoresFragment) getParentFragment()).focusCallback();
                 if (mEntryType == 0) {
-                    ((ScoresFragment) getParentFragment()).firstFocusCallback();
                 }else if(mEntryType == 1){
                     ((FootBallScoreFragment) getParentFragment()).focusCallback();
                 }
@@ -620,7 +619,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
             updateAdapter();
 //            ((ScoresFragment) getParentFragment()).focusCallback();
             if (mEntryType == 0) {
-                ((ScoresFragment) getParentFragment()).firstFocusCallback();
             }else if(mEntryType == 1){
                 ((FootBallScoreFragment) getParentFragment()).focusCallback();
             }

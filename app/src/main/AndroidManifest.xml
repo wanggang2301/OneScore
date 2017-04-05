@@ -195,9 +195,6 @@
             android:name=".activity.HomeUserOptionsActivity"
             android:screenOrientation="portrait" />
         <!-- 足球比分 -->
-        <activity
-            android:name=".activity.FootballActivity"
-            android:screenOrientation="portrait" />
         <!-- 语言切换 -->
         <activity
             android:name=".activity.HomeLanguageActivity"
@@ -295,9 +292,6 @@
             android:name=".activity.BasketDetailsActivityTest"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeDark.NoActionBar" />
-        <activity
-            android:name=".activity.BasketballInformationActivity"
-            android:screenOrientation="portrait" />
         <!-- 篮球资料库模糊搜索 -->
         <activity
             android:name=".activity.BasketballInformationSerachActivity"
@@ -321,9 +315,6 @@
             android:name=".activity.PicturePreviewActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.FootballDatabaseActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.AvatarSelectionActivity"
             android:screenOrientation="portrait" />
         <!-- 更多设置 -->
@@ -335,9 +326,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.PlayHighLightActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.BasketballScoresActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CustomActivity"
