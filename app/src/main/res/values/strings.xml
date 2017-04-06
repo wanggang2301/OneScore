@@ -1619,6 +1619,8 @@
     <string name="roll_asialet">亚</string>
     <string name="roll_euro">欧</string>
     <string name="roll_asiasize">大</string>
+    <string name="yesterday">昨天</string>
+    <string name="tomorrow">明天</string>
 
     <string name="basket_handicap_bigorsmall">大/走/小</string>
 
@@ -1671,4 +1673,19 @@
     <string name="tennis_datails_status9">非受迫性失误</string>
     <string name="tennis_datails_status10">主动得分</string>
     <string name="foot_event_num">""</string>
+
+    /*****不要删除*************************************************************************************************/
+    <string name="odds_back_list">""</string>
+    <string name="odds_average">""</string>
+    <string name="odd_dish_txt2">""</string>
+    <string name="odd_back">""</string>
+    <string name="no_select_head">""</string>
+    <string name="information_integral_match">""</string>
+    <string name="information_customer_service">""</string>
+    <string name="football_analyze_points">""</string>
+    <string name="foot_event_num_pre">""</string>
+    <string name="foot_details_competition_analysis">""</string>
+    <string name="customer_service">""</string>
+    <string name="basket_info_load_data">""</string>
+    <string name="all_rankings">""</string>
 </resources>

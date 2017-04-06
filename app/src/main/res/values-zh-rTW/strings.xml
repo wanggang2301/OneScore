@@ -124,10 +124,12 @@
     <string name="odd_dish_txt">盤口</string>
     <string name="odd_guest_txt">客隊</string>
     <string name="odd_time_txt">时间</string>
-    <string name="symbol_times" translatable="false">×</string>
-    <string name="symbol_plus" translatable="false">+</string>
-    <string name="symbol_equal" translatable="false">=</string>
-    <string name="label_line" translatable="false">-</string>
+
+    //不需要翻译的string只在默认string文件里面写一遍就好了，这里不需要再写了
+    <!--   <string name="symbol_times" translatable="false">×</string>
+       <string name="symbol_plus" translatable="false">+</string>
+       <string name="symbol_equal" translatable="false">=</string>
+       <string name="label_line" translatable="false">-</string>-->
     <!--欧赔-->
     <string name="odd_home_op_txt">主勝</string>
     <string name="odd_dish_op_txt">平局</string>
@@ -223,7 +225,6 @@
     <string name="more_setting">更多設定</string>
     <string name="invited_prize">邀請有獎</string>
     <string name="can_only_choose_a_picture">親，只能選擇一張圖片</string>
-
 
 
     <string name="foot_jishi_txt">即時</string>
@@ -608,7 +609,6 @@
     <string name="number_xinqi4">週四</string>
     <string name="number_xinqi5">週五</string>
     <string name="number_xinqi6">週六</string>
-
 
 
     <!-- 所有的标题 -->
