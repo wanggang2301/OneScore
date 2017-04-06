@@ -9,6 +9,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketballFocusNewFragment;
 import com.hhly.mlottery.frame.footballframe.FocusFragment;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.umeng.analytics.MobclickAgent;
@@ -37,7 +38,7 @@ public class MyFocusActivity extends BaseActivity implements View.OnClickListene
     private List<Fragment> fragments = new ArrayList<>();
 
     private FocusFragment mFootballFocus;
-    private FocusBasketballFragment mBasketballFocus;
+    private BasketballFocusNewFragment mBasketballFocus;
     private Fragment currentFragment;
 
 
@@ -72,7 +73,7 @@ public class MyFocusActivity extends BaseActivity implements View.OnClickListene
         mImgBack.setOnClickListener(this);
         fragmentManager=getSupportFragmentManager();
         mFootballFocus=FocusFragment.newInstance("","");
-        mBasketballFocus= FocusBasketballFragment.newInstance(0 , 0);
+        mBasketballFocus= BasketballFocusNewFragment.newInstance(0 , 0);
         fragments.add(mBasketballFocus);
         fragments.add(mFootballFocus);
         switchFragment(0);
