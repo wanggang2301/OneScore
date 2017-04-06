@@ -128,9 +128,9 @@ public class TennisCpiDetailsFragment extends Fragment {
         } else if ("1".equals(oddType)) {
             //亚盘
             cpi_dish_details_txt_id.setVisibility(View.VISIBLE);
-            cpi_home_details_txt_id.setText(R.string.foot_odds_alet_left);
-            cpi_dish_details_txt_id.setText(R.string.foot_odds_alet_middle);
-            cpi_guest_details_txt_id.setText(R.string.foot_odds_alet_right);
+            cpi_home_details_txt_id.setText(R.string.odd_home_op_txt);
+            cpi_dish_details_txt_id.setText(R.string.foot_odds_asize_middle);
+            cpi_guest_details_txt_id.setText(R.string.odd_guest_op_txt);
         }
         // 访问失败，点击刷新
         cpi_txt_reLoading.setOnClickListener(new View.OnClickListener() {
