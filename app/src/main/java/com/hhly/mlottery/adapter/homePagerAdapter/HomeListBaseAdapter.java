@@ -20,7 +20,7 @@ import com.bumptech.glide.Glide;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
-import com.hhly.mlottery.activity.FootballActivity;
+import com.hhly.mlottery.activity.CounselActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.activity.IndexActivity;
 import com.hhly.mlottery.activity.NumbersActivity;
@@ -1778,7 +1778,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
     }
 
     private void joinDataInfo() {
-        Intent intent = new Intent(mContext, FootballActivity.class);
+        Intent intent = new Intent(mContext, CounselActivity.class);
         intent.putExtra(AppConstants.FOTTBALL_KEY, 1);
         mContext.startActivity(intent);
     }

@@ -7,7 +7,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -22,32 +21,22 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
-import com.hhly.mlottery.activity.BasketballScoresActivity;
 import com.hhly.mlottery.adapter.ScheduleDateAdapter;
 import com.hhly.mlottery.adapter.basketball.BasketballScoreListAdapter;
-import com.hhly.mlottery.bean.basket.BasketAllOddBean;
 import com.hhly.mlottery.bean.basket.BasketMatchBean;
 import com.hhly.mlottery.bean.basket.BasketMatchFilter;
 import com.hhly.mlottery.bean.basket.BasketNewFilterBean;
 import com.hhly.mlottery.bean.basket.BasketNewRootBean;
-import com.hhly.mlottery.bean.basket.BasketOddBean;
 import com.hhly.mlottery.bean.basket.BasketRootBean;
-import com.hhly.mlottery.bean.basket.BasketScoreBean;
 import com.hhly.mlottery.bean.scheduleBean.ScheduleDate;
-import com.hhly.mlottery.bean.websocket.WebBasketAllOdds;
-import com.hhly.mlottery.bean.websocket.WebBasketMatch;
-import com.hhly.mlottery.bean.websocket.WebBasketOdds;
-import com.hhly.mlottery.bean.websocket.WebBasketOdds5;
 import com.hhly.mlottery.callback.DateOnClickListener;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.footballframe.eventbus.BasketDetailsEventBusEntity;
-import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreImmedEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreResultEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreSettingEventBusEntity;
 import com.hhly.mlottery.frame.scorefrag.BasketBallScoreFragment;
@@ -56,12 +45,8 @@ import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.ResultDateUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -550,7 +535,6 @@ public class BasketResultNewScoreFragment extends Fragment implements View.OnCli
                     v.setTag(false);
                     if (mBasketballType == TYPE_FOCUS) {
                         if (mEntryType == 0) {
-                            ((BasketballScoresActivity) getActivity()).basketFocusCallback();
                         } else if (mEntryType == 1) {
                             ((BasketBallScoreFragment) getParentFragment()).focusCallback();
                         }
@@ -558,7 +542,6 @@ public class BasketResultNewScoreFragment extends Fragment implements View.OnCli
                 }
                 updateAdapter();//防止复用
                 if (mEntryType == 0) {
-                    ((BasketballScoresActivity) getActivity()).basketFocusCallback();
                 } else if (mEntryType == 1) {
                     ((BasketBallScoreFragment) getParentFragment()).focusCallback();
                 }
@@ -742,7 +725,6 @@ public class BasketResultNewScoreFragment extends Fragment implements View.OnCli
     public void onEventMainThread(BasketDetailsEventBusEntity id) {
         updateAdapter();
         if (mEntryType == 0) {
-            ((BasketballScoresActivity) getActivity()).basketFocusCallback();
         } else if (mEntryType == 1) {
             ((BasketBallScoreFragment) getParentFragment()).focusCallback();
         }

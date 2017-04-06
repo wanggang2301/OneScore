@@ -30,10 +30,6 @@ import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.BallType;
-import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
-import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
-import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
-import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketResultNewScoreFragment;
 import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketScheduleNewScoreFragment;
 import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketImmedNewScoreFragment;
@@ -332,9 +328,11 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
                     if (BasketImmedNewScoreFragment.getIsLoad() == 1) {
                         MobclickAgent.onEvent(mContext, "Basketball_Filter");
                         Intent intent = new Intent(getActivity(), BasketFiltrateActivity.class);
+
                         intent.putExtra("MatchAllFilterDatas", (Serializable) BasketImmedNewScoreFragment.mAllFilter);//Serializable 序列化传值（所有联赛数据）
                         intent.putExtra("MatchChickedFilterDatas", (Serializable) BasketImmedNewScoreFragment.mChickedFilter);//Serializable 序列化传值（选中的联赛数据）
                         intent.putExtra("currentfragment", IMMEDIA_FRAGMENT);
+
                         startActivity(intent);
                         getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
                     } else if (BasketImmedNewScoreFragment.getIsLoad() == 0) {
