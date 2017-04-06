@@ -62,40 +62,10 @@ public class HomePagerAdapter extends PagerAdapter {
         this.mHomePagerEntity = homePagerEntity;
         this.mTopHolder = topHolder;
 
-        filterData();
         setBannersDefPic();
         onDrawPoint();
         setScroller();
         initBannerListener();
-    }
-
-    /**
-     * 过滤跳数据
-     */
-    private void filterData() {
-        try {
-            Iterator<HomeContentEntity> iterator = mHomePagerEntity.getBanners().getContent().iterator();
-            while (iterator.hasNext()) {
-                String jumpAddr = iterator.next().getJumpAddr();
-                switch (jumpAddr) {
-                    case "10":// 足球指数
-                    case "11":// 足球数据
-                    case "13":// 足球比分
-                    case "20":// 篮球即时比分
-                    case "21":// 篮球赛果
-                    case "22":// 篮球赛程
-                    case "23":// 篮球关注
-                    case "24":// 篮球资讯
-                    case "350":// 彩票资讯
-                    case "80":// 多屏动画列表
-                    case "42":// 香港彩票图表页面
-                        iterator.remove();
-                        break;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     /**

@@ -205,8 +205,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private View view_red;
     private int chartBallView = -1;// 聊球界面转标记
 
-    private TextView tv_addMultiView;
-    private boolean isAddMultiViewHide = false;
+//    private TextView tv_addMultiView;
+//    private boolean isAddMultiViewHide = false;
 
 
     @Override
@@ -219,7 +219,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
 //            mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
 //            mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
-            isAddMultiViewHide = getIntent().getExtras().getBoolean("isAddMultiViewHide");
+//            isAddMultiViewHide = getIntent().getExtras().getBoolean("isAddMultiViewHide");
 
             if (LEAGUEID_NBA.equals(mLeagueId)) {
                 isNBA = true;
@@ -393,10 +393,10 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         mBack = (ImageView) this.findViewById(R.id.basket_details_back);
 
         rl_gif_notice = (RelativeLayout) findViewById(R.id.rl_gif_notice);
-        tv_addMultiView = (TextView) findViewById(R.id.tv_addMultiView);
-        if (isAddMultiViewHide) {
-            tv_addMultiView.setVisibility(View.GONE);
-        }
+//        tv_addMultiView = (TextView) findViewById(R.id.tv_addMultiView);
+//        if (isAddMultiViewHide) {
+//            tv_addMultiView.setVisibility(View.GONE);
+//        }
 
         mTitleScore = (RelativeLayout) this.findViewById(R.id.ll_basket_title_score);
         mCollect = (ImageView) this.findViewById(R.id.basket_details_collect);
@@ -412,7 +412,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         barrage_switch = (ImageView) findViewById(R.id.barrage_switch);
         barrage_switch.setOnClickListener(this);
 
-        tv_addMultiView.setOnClickListener(this);
+//        tv_addMultiView.setOnClickListener(this);
 
     }
 
@@ -598,25 +598,25 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 }
                 break;
 
-            case R.id.tv_addMultiView:
-                enterMultiScreenView();
-                break;
+//            case R.id.tv_addMultiView:
+//                enterMultiScreenView();
+//                break;
         }
     }
 
 
-    private void enterMultiScreenView() {
-        if (PreferenceUtil.getBoolean("introduce", true)) {
-            Intent intent = new Intent(BasketDetailsActivityTest.this, MultiScreenIntroduceActivity.class);
-            intent.putExtra("thirdId", new MultipleByValueBean(2, mThirdId));
-            startActivity(intent);
-            PreferenceUtil.commitBoolean("introduce", false);
-        } else {
-            Intent intent = new Intent(BasketDetailsActivityTest.this, MultiScreenViewingListActivity.class);
-            intent.putExtra("thirdId", new MultipleByValueBean(2, mThirdId));
-            startActivity(intent);
-        }
-    }
+//    private void enterMultiScreenView() {
+//        if (PreferenceUtil.getBoolean("introduce", true)) {
+//            Intent intent = new Intent(BasketDetailsActivityTest.this, MultiScreenIntroduceActivity.class);
+//            intent.putExtra("thirdId", new MultipleByValueBean(2, mThirdId));
+//            startActivity(intent);
+//            PreferenceUtil.commitBoolean("introduce", false);
+//        } else {
+//            Intent intent = new Intent(BasketDetailsActivityTest.this, MultiScreenViewingListActivity.class);
+//            intent.putExtra("thirdId", new MultipleByValueBean(2, mThirdId));
+//            startActivity(intent);
+//        }
+//    }
 
 
     // 评论登录跳转
