@@ -164,6 +164,7 @@ public class FootballMatchSearchActivity extends BaseActivity implements View.On
     private void initView() {
         //搜索框
         et_keyword = (EditText) findViewById(R.id.et_keyword);
+        et_keyword.setHint(R.string.please_hint_team);
         //数据返回显示
         mTv_result = (RecyclerView) findViewById(R.id.tv_result);
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);

@@ -55,6 +55,7 @@ import java.util.Set;
 
 /**
  * Created by yuely198 on 2017/3/16.
+ * 竞彩详情页
  */
 
 public class FootballMatchActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
