@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/linecolor"
+    android:background="@color/home_default_icon_coloer"
     tools:context="com.hhly.mlottery.frame.tennisfrag.datailsfrag.TennisAnalysisFrag">
 
     <android.support.v4.widget.NestedScrollView
@@ -21,7 +21,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
-                android:background="@color/linecolor" />
+                android:background="@color/home_default_icon_coloer" />
 
             <!--积分排名-->
             <TextView
@@ -138,7 +138,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
-                android:background="@color/linecolor" />
+                android:background="@color/home_default_icon_coloer" />
 
             <!--交手记录-->
             <TextView
@@ -192,7 +192,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
-                android:background="@color/linecolor" />
+                android:background="@color/home_default_icon_coloer" />
 
             <!--近期战绩-->
             <TextView
@@ -233,7 +233,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
-                android:background="@color/linecolor" />
+                android:background="@color/home_default_icon_coloer" />
 
             <!--数据对比-->
             <TextView
@@ -367,7 +367,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
-                android:background="@color/linecolor" />
+                android:background="@color/home_default_icon_coloer" />
 
         </LinearLayout>
 

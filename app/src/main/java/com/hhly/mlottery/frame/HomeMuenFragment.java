@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CounselActivity;
+import com.hhly.mlottery.activity.FootballMatchActivity;
 import com.hhly.mlottery.activity.LeagueStatisticsTodayActivity;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.activity.NumbersActivity;
@@ -167,7 +168,7 @@ public class HomeMuenFragment extends Fragment {
 //                                            mContext.startActivity(new Intent(mContext, BasketballScoresActivity.class));
 //                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Score");
 //                                        }
-                                        break;
+                                            break;
                                         case "21":// 篮球赛果
 //                                        {
 //                                            Intent intent = new Intent(mContext, FootballActivity.class);
@@ -176,7 +177,7 @@ public class HomeMuenFragment extends Fragment {
 //                                            mContext.startActivity(intent);
 //                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Amidithion");
 //                                        }
-                                        break;
+                                            break;
                                         case "22":// 篮球赛程
 //                                        {
 //                                            Intent intent = new Intent(mContext, FootballActivity.class);
@@ -185,7 +186,7 @@ public class HomeMuenFragment extends Fragment {
 //                                            mContext.startActivity(intent);
 //                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Competition");
 //                                        }
-                                        break;
+                                            break;
                                         case "23":// 篮球关注
 //                                        {
 //                                            Intent intent = new Intent(mContext, FootballActivity.class);
@@ -194,7 +195,7 @@ public class HomeMuenFragment extends Fragment {
 //                                            mContext.startActivity(intent);
 //                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Attention");
 //                                        }
-                                        break;
+                                            break;
                                         case "24":// 篮球资讯
                                             //Toast.makeText(mContext, "篮球资讯", Toast.LENGTH_SHORT).show();
                                             break;
@@ -394,7 +395,7 @@ public class HomeMuenFragment extends Fragment {
 //                                            mContext.startActivity(new Intent(mContext, InfoCenterActivity.class));
 //                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_InfoCenterActivity");
 //                                        }
-                                        break;
+                                            break;
                                         case "19":// 今日联赛统计
                                         {
                                             mContext.startActivity(new Intent(mContext, LeagueStatisticsTodayActivity.class));
@@ -484,10 +485,9 @@ public class HomeMuenFragment extends Fragment {
 //                                            }
 //                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_MultiScreen_Introduce");
 //                                        }
-                                        break;
+                                            break;
                                         case "42":
-                                            // TODO 竞彩足球
-
+                                            mContext.startActivity(new Intent(mContext, FootballMatchActivity.class));
                                             break;
                                     }
                                     break;
