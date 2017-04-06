@@ -131,25 +131,25 @@ public class TennisCpiDetailsAdatper extends BaseExpandableListAdapter implement
             holder.odds_details_guest_child_txt.setTextColor(ContextCompat.getColor(mContext, R.color.content_txt_dark_grad));
         }
 
-        //盘口
-//        holder.odds_details_dish_child_txt.setText(model.getHand() + "");
         if ("one".equals(stKey)) {//亚盘
+            holder.odds_details_dish_layout.setVisibility(View.VISIBLE);
             //转换盘口
             holder.odds_details_dish_child_txt.setText(HandicapUtils.changeHandicap(String.format("%.2f", model.getHand())));
-//            holder.odds_details_dish_child_txt.setWidth(160);
             selectColor(model, holder);
         } else if ("three".equals(stKey)) {//欧赔
-            if ("green".equals(model.getDishColor())) {
-                holder.odds_details_dish_child_txt.setTextColor(ContextCompat.getColor(mContext, R.color.fall_color));
-            } else if ("red".equals(model.getDishColor())) {
-                holder.odds_details_dish_child_txt.setTextColor(ContextCompat.getColor(mContext, R.color.analyze_left));
-            } else if ("black".equals(model.getDishColor())) {
-                holder.odds_details_dish_child_txt.setTextColor(ContextCompat.getColor(mContext, R.color.content_txt_dark_grad));
-            }
-            //不用变
-            holder.odds_details_dish_child_txt.setText(String.format("%.2f", model.getHand()));
+            holder.odds_details_dish_layout.setVisibility(View.GONE);
+//            if ("green".equals(model.getDishColor())) {
+//                holder.odds_details_dish_child_txt.setTextColor(ContextCompat.getColor(mContext, R.color.fall_color));
+//            } else if ("red".equals(model.getDishColor())) {
+//                holder.odds_details_dish_child_txt.setTextColor(ContextCompat.getColor(mContext, R.color.analyze_left));
+//            } else if ("black".equals(model.getDishColor())) {
+//                holder.odds_details_dish_child_txt.setTextColor(ContextCompat.getColor(mContext, R.color.content_txt_dark_grad));
+//            }
+//            //不用变
+//            holder.odds_details_dish_child_txt.setText(String.format("%.2f", model.getHand()));
 
         } else if ("two".equals(stKey)) {//大小球
+            holder.odds_details_dish_layout.setVisibility(View.VISIBLE);
             //转为大小球
             holder.odds_details_dish_child_txt.setText(HandicapUtils.changeHandicapByBigLittleBall(model.getHand() + ""));
             selectColor(model, holder);

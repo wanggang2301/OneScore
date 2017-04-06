@@ -168,6 +168,7 @@ public class TennisBallSocketFragment extends BaseWebSocketFragment implements S
                     } else {
                         setStatus(SUCCESS);
                         connectWebSocket();
+                        settingOddsStart();
                         mAdapter.notifyDataSetChanged();
                     }
                 } else {
@@ -273,9 +274,20 @@ public class TennisBallSocketFragment extends BaseWebSocketFragment implements S
         }.start();
     }
 
-    // 指数变化
+    // 设置赔率状态变化
+    private void settingOddsStart() {
+        for (int i = 0; i < mData.size(); i++) {
+            mData.get(i).setAlet(PreferenceUtil.getBoolean(MyConstants.TENNIS_ALET, true));// 亚盘
+            mData.get(i).setEur(PreferenceUtil.getBoolean(MyConstants.TENNIS_EURO, false));// 欧赔
+            mData.get(i).setNoshow(PreferenceUtil.getBoolean(MyConstants.TENNIS_NOTSHOW, false));// 不显示
+        }
+    }
+
+    // 指数状态变化
     public void oddsChanger() {
         if (mAdapter != null) {
+            L.d("xxxxx", "指数状态变化刷新");
+            settingOddsStart();
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -305,6 +317,7 @@ public class TennisBallSocketFragment extends BaseWebSocketFragment implements S
                         euro.setR(oddsBean.getDataObj().getMatchOdd().getR());
                     }
                     if (mAdapter != null) {
+                        L.d("tennis", "网球赔率推送,更新了!");
                         mAdapter.notifyDataSetChanged();
                     }
                     break;

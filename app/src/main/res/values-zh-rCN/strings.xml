@@ -1624,6 +1624,7 @@
     <string name="tennis_datails_record_title">对手</string>
 
     <string name="tennis_datails_fight_title">双方近%1$d次交峰，%2$s %3$d胜%4$d负，胜率：%5$s。</string>
+    <string name="tennis_datails_ranking_title">近%1$d次比赛，%2$s %3$d胜%4$d负，胜率：%5$s。</string>
     <string name="tennis_datails_ranking_old">原排名</string>
     <string name="tennis_datails_ranking_changer">变化</string>
     <string name="tennis_datails_match_count">参赛次数</string>

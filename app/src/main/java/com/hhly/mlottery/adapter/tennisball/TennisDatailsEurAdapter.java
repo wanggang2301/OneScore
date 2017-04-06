@@ -45,7 +45,7 @@ public class TennisDatailsEurAdapter extends BaseQuickAdapter<TennisDataBean> {
                     baseViewHolder.setText(R.id.tennis_datails_eur_now_ks, String.valueOf(nowGuestOdd));
                 }
             }
-
+            // 红升绿降
             if (firstHomeOdd == nowHomeOdd) {
                 baseViewHolder.setTextColor(R.id.tennis_datails_eur_now_zs, ContextCompat.getColor(mContext, R.color.res_name_color));
             } else if (firstHomeOdd > nowHomeOdd) {

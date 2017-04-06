@@ -87,9 +87,7 @@ public class TennisSettingActivity extends BaseActivity implements View.OnClickL
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-
             EventBus.getDefault().post(new TennisEventBus(TENNIS_ODDS));
-
             finish();
             overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
             return true;
@@ -118,10 +116,8 @@ public class TennisSettingActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.public_img_back:
                 EventBus.getDefault().post(new TennisEventBus(TENNIS_ODDS));
-
                 finish();
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
-
                 break;
         }
         save();

@@ -1608,6 +1608,7 @@
     <string name="snooker_index_single_double">单双</string>
     <string name="score_ret">退賽</string>
     <string name="tennis_datails_fight_title">雙方近%1$d次交峰，%2$s %3$d勝%4$d負，勝率：%5$s。</string>
+    <string name="tennis_datails_ranking_title">近%1$d次比賽，%2$s %3$d勝%4$d負，勝率：%5$s。</string>
     <string name="tennis_datails_ranking_old">原排名</string>
     <string name="tennis_datails_ranking_changer">變化</string>
     <string name="tennis_datails_match_count">參賽次數</string>

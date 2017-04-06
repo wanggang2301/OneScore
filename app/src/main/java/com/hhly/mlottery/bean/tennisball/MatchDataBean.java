@@ -27,6 +27,9 @@ public class MatchDataBean {
     private MatchScoreBean matchScore;
     private MatchOddsBean matchOdds;
     private boolean isFocus;
+    private boolean alet;
+    private boolean eur;
+    private boolean noshow;
 
     public static class MatchOddsBean{
         private TennisOddsInfoBean asiaSize;
@@ -436,5 +439,29 @@ public class MatchDataBean {
 
     public void setFocus(boolean focus) {
         isFocus = focus;
+    }
+
+    public boolean isAlet() {
+        return alet;
+    }
+
+    public void setAlet(boolean alet) {
+        this.alet = alet;
+    }
+
+    public boolean isEur() {
+        return eur;
+    }
+
+    public void setEur(boolean eur) {
+        this.eur = eur;
+    }
+
+    public boolean isNoshow() {
+        return noshow;
+    }
+
+    public void setNoshow(boolean noshow) {
+        this.noshow = noshow;
     }
 }
