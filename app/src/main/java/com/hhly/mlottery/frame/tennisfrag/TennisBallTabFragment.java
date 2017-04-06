@@ -28,6 +28,8 @@ import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.MyConstants;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
@@ -137,12 +139,16 @@ public class TennisBallTabFragment extends Fragment implements SwipeRefreshLayou
                     mData.addAll(jsonObject.getData().getMatchData());
                     dates.addAll(jsonObject.getData().getDates());
 
+                    if (dates.size() != 0 && currentData == null) {
+                        settingData(dates.get(0));
+                    }
+
                     if (mData.size() == 0) {
                         setStatus(NOTO_DATA);
                     } else {
+                        settingOddsStart();
                         mAdapter.notifyDataSetChanged();
                         setStatus(SUCCESS);
-                        settingData(mData.get(0).getDate());
                     }
                 } else {
                     setStatus(ERROR);
@@ -159,7 +165,7 @@ public class TennisBallTabFragment extends Fragment implements SwipeRefreshLayou
     // 设置页面显示状态
     private void setStatus(int status) {
         L.d("xxxxx", "status:  " + status);
-        if(status == ERROR || status == NOTO_DATA){
+        if (status == ERROR || status == NOTO_DATA) {
             mData.clear();
             mAdapter.notifyDataSetChanged();
         }
@@ -238,7 +244,7 @@ public class TennisBallTabFragment extends Fragment implements SwipeRefreshLayou
     private void settingData(String data) {
         currentData = data;
         try {
-            tv_date.setText(DateUtil.convertDateToNation(data)+ " " + DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(data)));
+            tv_date.setText(DateUtil.convertDateToNation(data) + " " + DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(data)));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -250,10 +256,21 @@ public class TennisBallTabFragment extends Fragment implements SwipeRefreshLayou
         }
     }
 
-    // 指数变化
-    public void oddsChanger(){
+    // 指数状态变化
+    public void oddsChanger() {
         if (mAdapter != null) {
+            L.d("xxxxx","指数状态变化刷新");
+            settingOddsStart();
             mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    // 设置赔率状态变化
+    private void settingOddsStart() {
+        for (int i = 0; i < mData.size(); i++) {
+            mData.get(i).setAlet(PreferenceUtil.getBoolean(MyConstants.TENNIS_ALET, true));// 亚盘
+            mData.get(i).setEur(PreferenceUtil.getBoolean(MyConstants.TENNIS_EURO, false));// 欧赔
+            mData.get(i).setNoshow(PreferenceUtil.getBoolean(MyConstants.TENNIS_NOTSHOW, false));// 不显示
         }
     }
 }

@@ -352,7 +352,7 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
             // 主队
             if (data.getRecentMatch().getHomePlayerRecentMatch() != null) {
                 ll_record_content.addView(recordTopItemView());
-                String title = mContext.getResources().getString(R.string.tennis_datails_fight_title);
+                String title = mContext.getResources().getString(R.string.tennis_datails_ranking_title);
                 String titleDesc = String.format(title, data.getRecentMatch().getHomePlayerRecentMatch().getTotalTimes(), homeName, data.getRecentMatch().getHomePlayerRecentMatch().getPlayerWin(), data.getRecentMatch().getHomePlayerRecentMatch().getPlayerFail(), data.getRecentMatch().getHomePlayerRecentMatch().getWinRate());
                 record_title.setText(titleDesc);
 
@@ -381,7 +381,7 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
             // 客队
             if (data.getRecentMatch().getGuestPlayerRecentMatch() != null) {
                 ll_record_content.addView(recordTopItemView());
-                String title = mContext.getResources().getString(R.string.tennis_datails_fight_title);
+                String title = mContext.getResources().getString(R.string.tennis_datails_ranking_title);
                 String titleDesc = String.format(title, data.getRecentMatch().getGuestPlayerRecentMatch().getTotalTimes(), homeName, data.getRecentMatch().getGuestPlayerRecentMatch().getPlayerWin(), data.getRecentMatch().getGuestPlayerRecentMatch().getPlayerFail(), data.getRecentMatch().getGuestPlayerRecentMatch().getWinRate());
                 record_title.setText(titleDesc);
 

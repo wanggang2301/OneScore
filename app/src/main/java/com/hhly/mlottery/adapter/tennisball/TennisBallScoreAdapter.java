@@ -88,21 +88,26 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
                 break;
         }
 
-        // 设置盘口，默认是亚盘指数
-        boolean alet = PreferenceUtil.getBoolean(MyConstants.TENNIS_ALET, true); //亚盘
-        boolean eur = PreferenceUtil.getBoolean(MyConstants.TENNIS_EURO, false);//欧赔
-        boolean noshow = PreferenceUtil.getBoolean(MyConstants.TENNIS_NOTSHOW, false);//不显示
-
         if (matchDataBean.getMatchOdds() != null) {
-            if (alet && matchDataBean.getMatchOdds().getAsiaLet() != null) {
+            if (matchDataBean.isAlet() && matchDataBean.getMatchOdds().getAsiaLet() != null) {
                 baseViewHolder.setText(R.id.tv_tennis_odds_l, matchDataBean.getMatchOdds().getAsiaLet().getL() == null ? "" : matchDataBean.getMatchOdds().getAsiaLet().getL());
                 baseViewHolder.setText(R.id.tv_tennis_odds_m, matchDataBean.getMatchOdds().getAsiaLet().getM() == null ? "" : matchDataBean.getMatchOdds().getAsiaLet().getM());
                 baseViewHolder.setText(R.id.tv_tennis_odds_r, matchDataBean.getMatchOdds().getAsiaLet().getR() == null ? "" : matchDataBean.getMatchOdds().getAsiaLet().getR());
-            } else if (eur && matchDataBean.getMatchOdds().getEuro() != null) {
+            } else if (matchDataBean.isEur() && matchDataBean.getMatchOdds().getEuro() != null) {
                 baseViewHolder.setText(R.id.tv_tennis_odds_l, matchDataBean.getMatchOdds().getEuro().getL() == null ? "" : matchDataBean.getMatchOdds().getEuro().getL());
-                baseViewHolder.setText(R.id.tv_tennis_odds_m, matchDataBean.getMatchOdds().getEuro().getM() == null ? "" : matchDataBean.getMatchOdds().getEuro().getM());
+                if (matchDataBean.getMatchOdds().getEuro().getM() != null) {
+                    L.d("xxxxx", "M: " + matchDataBean.getMatchOdds().getEuro().getM());
+                    if ("0".equals(matchDataBean.getMatchOdds().getEuro().getM()) || "0.0".equals(matchDataBean.getMatchOdds().getEuro().getM())) {
+                        baseViewHolder.setText(R.id.tv_tennis_odds_m, mContext.getResources().getString(R.string.basket_odds_eur));
+                    } else {
+                        baseViewHolder.setText(R.id.tv_tennis_odds_m, matchDataBean.getMatchOdds().getEuro().getM());
+                    }
+                } else {
+                    baseViewHolder.setText(R.id.tv_tennis_odds_m, "");
+                }
+
                 baseViewHolder.setText(R.id.tv_tennis_odds_r, matchDataBean.getMatchOdds().getEuro().getR() == null ? "" : matchDataBean.getMatchOdds().getEuro().getR());
-            } else if (noshow) {
+            } else if (matchDataBean.isNoshow()) {
                 baseViewHolder.setText(R.id.tv_tennis_odds_l, "");
                 baseViewHolder.setText(R.id.tv_tennis_odds_m, "");
                 baseViewHolder.setText(R.id.tv_tennis_odds_r, "");
@@ -254,7 +259,7 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
         // 设置用户已关注的赛事
         if (FocusUtils.isTennisFocusId(matchDataBean.getMatchId())) {
             matchDataBean.setFocus(true);
-            mView.setImageResource(R.mipmap.tennis_focus_select);
+            mView.setImageResource(R.mipmap.football_focus);
         } else {
             matchDataBean.setFocus(false);
             settingFocusStart(matchDataBean.getMatchStatus(), matchDataBean.isFocus(), mView);
@@ -298,9 +303,9 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
 
     private void settingFocusStart(int status, boolean isFocus, ImageView view) {
         if (isFocus) {
-            view.setImageResource(R.mipmap.tennis_focus_select);
+            view.setImageResource(R.mipmap.football_focus);
         } else {
-            view.setImageResource(status == 0 ? R.mipmap.tennis_focus_noto : R.mipmap.tennis_focus_blue);
+            view.setImageResource(R.mipmap.football_nomal);
         }
     }
 }

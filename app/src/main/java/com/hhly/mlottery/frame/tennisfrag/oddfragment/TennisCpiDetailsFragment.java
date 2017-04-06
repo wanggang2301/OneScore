@@ -115,16 +115,19 @@ public class TennisCpiDetailsFragment extends Fragment {
 
         if ("3".equals(oddType)) {
             //大小球
+            cpi_dish_details_txt_id.setVisibility(View.VISIBLE);
             cpi_home_details_txt_id.setText(R.string.foot_odds_asize_left);
             cpi_dish_details_txt_id.setText(R.string.foot_odds_asize_middle);
             cpi_guest_details_txt_id.setText(R.string.foot_odds_asize_right);
         } else if ("2".equals(oddType)) {
             //欧赔
-            cpi_home_details_txt_id.setText(R.string.foot_odds_eu_left);
-            cpi_dish_details_txt_id.setText(R.string.foot_odds_eu_middle);
-            cpi_guest_details_txt_id.setText(R.string.foot_odds_eu_right);
+            cpi_dish_details_txt_id.setVisibility(View.GONE);
+            cpi_home_details_txt_id.setText(R.string.odd_home_op_txt);
+//            cpi_dish_details_txt_id.setText("");
+            cpi_guest_details_txt_id.setText(R.string.odd_guest_op_txt);
         } else if ("1".equals(oddType)) {
             //亚盘
+            cpi_dish_details_txt_id.setVisibility(View.VISIBLE);
             cpi_home_details_txt_id.setText(R.string.foot_odds_alet_left);
             cpi_dish_details_txt_id.setText(R.string.foot_odds_alet_middle);
             cpi_guest_details_txt_id.setText(R.string.foot_odds_alet_right);
