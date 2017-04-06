@@ -60,7 +60,7 @@ import de.greenrobot.event.EventBus;
  * 篮球比分fragment
  * Created by yixq on 2017/03/17
  */
-public class BasketScheduleNewScoreFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener{
+public class BasketScheduleNewScoreFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "ImmedBasketballFragment";
     private static final String PARAMS = "BASKET_PARAMS";
@@ -210,6 +210,7 @@ public class BasketScheduleNewScoreFragment extends Fragment implements View.OnC
 
     /**
      * 设置显示状态
+     *
      * @param status
      */
     //显示状态
@@ -231,16 +232,17 @@ public class BasketScheduleNewScoreFragment extends Fragment implements View.OnC
         } else if (status == SHOW_STATUS_REFRESH_ONCLICK) {
             mSwipeRefreshLayout.setVisibility(View.GONE);
             mSwipeRefreshLayout.setRefreshing(true);
-        } else if(status == SHOW_STATUS_CURRENT_ONDATA){
+        } else if (status == SHOW_STATUS_CURRENT_ONDATA) {
             mSwipeRefreshLayout.setVisibility(View.VISIBLE);
             mSwipeRefreshLayout.setRefreshing(false);
-        }else {
+        } else {
             mSwipeRefreshLayout.setVisibility(View.GONE);
             mSwipeRefreshLayout.setRefreshing(false);
         }
         mErrorLayout.setVisibility(status == SHOW_STATUS_ERROR ? View.VISIBLE : View.GONE);
         mNoDataLayout.setVisibility(status == SHOW_STATUS_NO_DATA ? View.VISIBLE : View.GONE);
     }
+
     /**
      * 初始化VIEW
      */
@@ -286,7 +288,7 @@ public class BasketScheduleNewScoreFragment extends Fragment implements View.OnC
         params.put("appType", "2");//接口添加 &appType=2 字段
 
         String url = "http://192.168.10.242:8181/mlottery/core/basketballMatch.findNewScheduledMatch.do";
-        VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_SCHEDULE, params, new VolleyContentFast.ResponseSuccessListener<BasketNewRootBean>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_NEW_SCHEDULE, params, new VolleyContentFast.ResponseSuccessListener<BasketNewRootBean>() {
             @Override
             public void onResponse(BasketNewRootBean json) {
 
@@ -320,7 +322,7 @@ public class BasketScheduleNewScoreFragment extends Fragment implements View.OnC
                     mAllDateList.add(mMatchdata.get(i).getDate());//所有日期
                 }
                 if (json.getMatchFilter() != null && json.getMatchFilter().size() != 0) {
-                    for (int i = 0; i < json.getMatchFilter().size() ; i++) {
+                    for (int i = 0; i < json.getMatchFilter().size(); i++) {
                         /**
                          * 获得所有日期的所有联赛
                          */
@@ -373,7 +375,7 @@ public class BasketScheduleNewScoreFragment extends Fragment implements View.OnC
                 }
 
                 if (adapter == null) {
-                    adapter = new BasketballScoreListAdapter(mContext , currentMatchData , 2);
+                    adapter = new BasketballScoreListAdapter(mContext, currentMatchData, 2);
                     explistview.setAdapter(adapter);
                     adapter.setmFocus(mFocusClickListener);//设置关注
                     adapter.setDateOnClickListener(mDateOnClickListener);
@@ -419,6 +421,7 @@ public class BasketScheduleNewScoreFragment extends Fragment implements View.OnC
     private ListView mDateListView;
     private List<ScheduleDate> mDatelist; // 日期
     private static int currentDatePosition = 0;//记录当前日期选择器中日期的位置
+
     private void choiceDateList() {
         mDateOnClickListener = new DateOnClickListener() {
             @Override
@@ -429,7 +432,7 @@ public class BasketScheduleNewScoreFragment extends Fragment implements View.OnC
                 LayoutInflater infla = LayoutInflater.from(getActivity());
                 View alertDialogView = infla.inflate(R.layout.alertdialog, null);
                 mDateListView = (ListView) alertDialogView.findViewById(R.id.listdate);
-                initListScheduleDateAndWeek(mAllDateList,  currentDatePosition);
+                initListScheduleDateAndWeek(mAllDateList, currentDatePosition);
                 mDateListView.setAdapter(mDateScheduleAdapter);
                 mDateListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -438,14 +441,14 @@ public class BasketScheduleNewScoreFragment extends Fragment implements View.OnC
                             if (position == currentDatePosition) {
                                 isFilter = true;
                                 updateAdapter();
-                            }else{
+                            } else {
                                 isFilter = false;
                                 switchDate(position);
                             }
                         }
                         if (position == currentDatePosition) {
                             updateAdapter();
-                        }else{
+                        } else {
                             switchDate(position);
                         }
                         currentDatePosition = position;
@@ -481,6 +484,7 @@ public class BasketScheduleNewScoreFragment extends Fragment implements View.OnC
      * @param s
      */
     private ScheduleDateAdapter mDateScheduleAdapter;
+
     private void initListScheduleDateAndWeek(List<String> s, int position) {
         mDatelist = new ArrayList<ScheduleDate>();
         for (int i = 0; i < s.size(); i++) {
@@ -503,7 +507,7 @@ public class BasketScheduleNewScoreFragment extends Fragment implements View.OnC
 //        mDateResultAdapter = new ScheduleDateAdapter(mDatelist, mContext, position);
 //    }
 
-    private void switchDate(int index){
+    private void switchDate(int index) {
         currentMatchData.clear();
         BasketMatchBean itemData = new BasketMatchBean();
         itemData.setItemType(TITTLEDATETYPE);
@@ -516,6 +520,7 @@ public class BasketScheduleNewScoreFragment extends Fragment implements View.OnC
         }
         updateAdapter();
     }
+
     /**
      * 点击关注事件
      */
