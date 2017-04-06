@@ -21,11 +21,14 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.TennisSettingActivity;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.tennisball.TennisEventBus;
+import com.hhly.mlottery.bean.tennisball.TennisOddsInfoBean;
+import com.hhly.mlottery.bean.tennisball.TennisSocketOddsBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
@@ -43,7 +46,6 @@ import de.greenrobot.event.EventBus;
 /**
  * desc:网球比分Frag
  * Created by 107_tangrr on 2017/2/20 0020.
- *
  */
 
 public class TennisBallScoreFragment extends BaseWebSocketFragment implements View.OnClickListener {
@@ -71,7 +73,7 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic("USER.topic.tennis.score");
+        setTopic("USER.topic.tennis.odd");
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
     }
@@ -230,9 +232,20 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
 
     @Override
     protected void onTextResult(String text) {
-        L.d("tennis", "网球推送消息： " + text);
-        ((TennisBallSocketFragment) fragments.get(TENNIS_IMMEDIATE)).socketDataChanged(text);
-        ((TennisBallSocketFragment) fragments.get(TENNIS_FOCUS)).socketDataChanged(text);
+        L.d("tennis", "网球赔率推送消息： " + text);
+        if (TextUtils.isEmpty(text)) return;
+        for (int i = 0; i < fragments.size(); i++) {
+            switch (i) {
+                case TENNIS_IMMEDIATE:
+                case TENNIS_FOCUS:
+                    ((TennisBallSocketFragment) fragments.get(i)).oddsDataChanger(text);
+                    break;
+                case TENNIS_RESULT:
+                case TENNIS_SCHEDULE:
+                    ((TennisBallTabFragment) fragments.get(i)).oddsDataChanger(text);
+                    break;
+            }
+        }
     }
 
     @Override
@@ -272,7 +285,7 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
             }
         }
         // 指数选择
-        else if("tennis_odds".equals(event.msg)){
+        else if ("tennis_odds".equals(event.msg)) {
             for (int i = 0; i < fragments.size(); i++) {
                 switch (i) {
                     case TENNIS_IMMEDIATE:

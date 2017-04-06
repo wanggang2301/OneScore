@@ -89,11 +89,11 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
         }
 
         if (matchDataBean.getMatchOdds() != null) {
-            if (matchDataBean.isAlet() && matchDataBean.getMatchOdds().getAsiaLet() != null) {
+            if ("alet".equals(matchDataBean.getOddsType()) && matchDataBean.getMatchOdds().getAsiaLet() != null) {
                 baseViewHolder.setText(R.id.tv_tennis_odds_l, matchDataBean.getMatchOdds().getAsiaLet().getL() == null ? "" : matchDataBean.getMatchOdds().getAsiaLet().getL());
                 baseViewHolder.setText(R.id.tv_tennis_odds_m, matchDataBean.getMatchOdds().getAsiaLet().getM() == null ? "" : matchDataBean.getMatchOdds().getAsiaLet().getM());
                 baseViewHolder.setText(R.id.tv_tennis_odds_r, matchDataBean.getMatchOdds().getAsiaLet().getR() == null ? "" : matchDataBean.getMatchOdds().getAsiaLet().getR());
-            } else if (matchDataBean.isEur() && matchDataBean.getMatchOdds().getEuro() != null) {
+            } else if ("eur".equals(matchDataBean.getOddsType()) && matchDataBean.getMatchOdds().getEuro() != null) {
                 baseViewHolder.setText(R.id.tv_tennis_odds_l, matchDataBean.getMatchOdds().getEuro().getL() == null ? "" : matchDataBean.getMatchOdds().getEuro().getL());
                 if (matchDataBean.getMatchOdds().getEuro().getM() != null) {
                     L.d("xxxxx", "M: " + matchDataBean.getMatchOdds().getEuro().getM());
@@ -107,7 +107,11 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
                 }
 
                 baseViewHolder.setText(R.id.tv_tennis_odds_r, matchDataBean.getMatchOdds().getEuro().getR() == null ? "" : matchDataBean.getMatchOdds().getEuro().getR());
-            } else if (matchDataBean.isNoshow()) {
+            }else if("asize".equals(matchDataBean.getOddsType()) && matchDataBean.getMatchOdds().getAsiaSize() != null){
+                baseViewHolder.setText(R.id.tv_tennis_odds_l, matchDataBean.getMatchOdds().getAsiaSize().getL() == null ? "" : matchDataBean.getMatchOdds().getAsiaSize().getL());
+                baseViewHolder.setText(R.id.tv_tennis_odds_m, matchDataBean.getMatchOdds().getAsiaSize().getM() == null ? "" : matchDataBean.getMatchOdds().getAsiaSize().getM());
+                baseViewHolder.setText(R.id.tv_tennis_odds_r, matchDataBean.getMatchOdds().getAsiaSize().getR() == null ? "" : matchDataBean.getMatchOdds().getAsiaSize().getR());
+            } else {
                 baseViewHolder.setText(R.id.tv_tennis_odds_l, "");
                 baseViewHolder.setText(R.id.tv_tennis_odds_m, "");
                 baseViewHolder.setText(R.id.tv_tennis_odds_r, "");
