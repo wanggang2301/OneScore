@@ -27,9 +27,7 @@ public class MatchDataBean {
     private MatchScoreBean matchScore;
     private MatchOddsBean matchOdds;
     private boolean isFocus;
-    private boolean alet;
-    private boolean eur;
-    private boolean noshow;
+    private String oddsType;
 
     public static class MatchOddsBean{
         private TennisOddsInfoBean asiaSize;
@@ -441,27 +439,11 @@ public class MatchDataBean {
         isFocus = focus;
     }
 
-    public boolean isAlet() {
-        return alet;
+    public String getOddsType() {
+        return oddsType;
     }
 
-    public void setAlet(boolean alet) {
-        this.alet = alet;
-    }
-
-    public boolean isEur() {
-        return eur;
-    }
-
-    public void setEur(boolean eur) {
-        this.eur = eur;
-    }
-
-    public boolean isNoshow() {
-        return noshow;
-    }
-
-    public void setNoshow(boolean noshow) {
-        this.noshow = noshow;
+    public void setOddsType(String oddsType) {
+        this.oddsType = oddsType;
     }
 }
