@@ -277,11 +277,7 @@ public class IndexActivity extends BaseActivity {
                         }
                         break;
                     case "basketball":// 篮球列表
-//                        Intent intent = new Intent(mContext, FootballActivity.class);
-//                        intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
-//                        mContext.startActivity(intent);
-                      //  Intent intent = new Intent(mContext, BasketballScoresActivity.class);
-                       // mContext.startActivity(intent);
+//
                         break;
                     case "basketballInfo":// 篮球详情页面
                         if (!TextUtils.isEmpty(mThirdId)) {

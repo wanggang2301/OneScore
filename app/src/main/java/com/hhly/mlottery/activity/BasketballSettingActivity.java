@@ -14,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.hhly.mlottery.R;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.BasketFocusEventBus;
 import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreSettingEventBusEntity;
@@ -213,10 +214,8 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
                 } else if (mCurrentId == 2) {
                     EventBus.getDefault().post(new BasketScoreSettingEventBusEntity(mCurrentId + ""));
                 } else if (mCurrentId == 3) {
-//				FocusBasketballFragment.BasketFocusEventBus.post(mCurrentId);
                     EventBus.getDefault().post(new BasketFocusEventBus());
                 }
-//			ImmedBasketballFragment.BasketImmedEventBus.post(0);
                 setResult(Activity.RESULT_OK, intent);
                 finish();
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
@@ -331,16 +330,16 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
         PreferenceUtil.commitBoolean(MyConstants.BASKETBALL_RBNOTSHOW, mRd_noshow.isChecked()); //不显示
 
         if (mRd_alet.isChecked()) {
-            resultstring = getResources().getString(string.set_asialet_txt);
+            resultstring = getResources().getString(R.string.set_asialet_txt);
         }
         if (mRd_asize.isChecked()) {
-            resultstring = getResources().getString(string.set_asiasize_txt);
+            resultstring = getResources().getString(R.string.set_asiasize_txt);
         }
         if (mRd_eur.isChecked()) {
-            resultstring = getResources().getString(string.set_euro_txt);
+            resultstring = getResources().getString(R.string.set_euro_txt);
         }
         if (mRd_noshow.isChecked()) {
-            resultstring = getResources().getString(string.set_oddghide_txt);
+            resultstring = getResources().getString(R.string.set_oddghide_txt);
         }
     }
 }

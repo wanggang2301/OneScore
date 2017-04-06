@@ -923,7 +923,8 @@ public class FocusBasketballFragment extends BaseWebSocketFragment implements Vi
     public void onEventMainThread(BasketFocusEventBus eventBus) {
         L.e("EventBus","受到了");
         request("");
-        if (mEntryType == 0) {}else if(mEntryType == 1){
+        if (mEntryType == 0) {
+        }else if(mEntryType == 1){
             ((BasketBallScoreFragment) getParentFragment()).focusCallback();
         }
     }
