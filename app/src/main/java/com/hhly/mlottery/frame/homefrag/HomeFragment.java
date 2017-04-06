@@ -287,6 +287,28 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 if (jsonObject != null) {// 请求成功
                     try {
                         mHomePagerEntity = JSON.parseObject(jsonObject, HomePagerEntity.class);
+                        Iterator<HomeContentEntity> iterator = mHomePagerEntity.getMenus().getContent().iterator();
+                        /**---------屏蔽多余首页菜单入口--Start--------------------------*/
+                        while (iterator.hasNext()) {
+                            String jumpAddr = iterator.next().getJumpAddr();
+                            switch (jumpAddr) {
+                                case "10":// 足球指数
+                                case "11":// 足球数据
+                                case "13":// 足球比分
+                                case "20":// 篮球即时比分
+                                case "21":// 篮球赛果
+                                case "22":// 篮球赛程
+                                case "23":// 篮球关注
+                                case "24":// 篮球资讯
+                                case "350":// 彩票资讯
+                                case "80":// 多屏动画列表
+                                case "60":// 情报中心
+                                    iterator.remove();
+                                    break;
+                            }
+                        }
+                        /**---------屏蔽多余首页菜单入口--End--------------------------*/
+
                         /**----将百度渠道的游戏竞猜和彩票相关去除掉--Start---*/
                         if ("B1001".equals(channelNumber) || "B1002".equals(channelNumber) || "B1003".equals(channelNumber) || "Q01116".equals(channelNumber)) {
                             // 处理条目入口
@@ -298,7 +320,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                                 }
                             }
                             // 处理菜单入口
-                            Iterator<HomeContentEntity> iterator = mHomePagerEntity.getMenus().getContent().iterator();
                             while (iterator.hasNext()) {
                                 HomeContentEntity b = iterator.next();
                                 if ("遊戲競猜".equals(b.getTitle()) || "游戏竞猜".equals(b.getTitle()) ||

@@ -1,14 +1,11 @@
 package com.hhly.mlottery.frame.numbersframe;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -21,17 +18,11 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.LotteryHKInfoImageActivity;
-import com.hhly.mlottery.activity.NumbersInfoBaseActivity;
 import com.hhly.mlottery.adapter.homePagerAdapter.HKLotteryInfoChartAdapter;
 import com.hhly.mlottery.bean.numbersBean.LotteryInfoHKChartBean;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.config.StaticValues;
-import com.hhly.mlottery.util.DisplayUtil;
-import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -155,15 +146,15 @@ public class HKLotteryChartFragment extends Fragment {
                     mAdapter.setLoadingView(moreView);
 
                     mRecyclerView.setAdapter(mAdapter);
-                    mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, int i) {
-                            Intent intent = new Intent(mContext, LotteryHKInfoImageActivity.class);
-                            intent.putExtra("data", (Serializable) mData);
-                            intent.putExtra("index", i);
-                            mContext.startActivity(intent);
-                        }
-                    });
+//                    mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+//                        @Override
+//                        public void onItemClick(View view, int i) {
+//                            Intent intent = new Intent(mContext, LotteryHKInfoImageActivity.class);
+//                            intent.putExtra("data", (Serializable) mData);
+//                            intent.putExtra("index", i);
+//                            mContext.startActivity(intent);
+//                        }
+//                    });
 
                     //上拉加载更多
                     mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {

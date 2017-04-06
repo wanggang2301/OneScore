@@ -289,7 +289,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private LinearLayout mMatchTypeLayout;
 
-    private TextView tv_addMultiView;
+//    private TextView tv_addMultiView;
 
     private int mType = 0;
 
@@ -324,7 +324,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     boolean barrage_isFocus = false;
     private View view_red;
 
-    boolean isAddMultiViewHide = false;
+//    boolean isAddMultiViewHide = false;
 
 
     @Override
@@ -333,7 +333,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             mThirdId = getIntent().getExtras().getString(BUNDLE_PARAM_THIRDID, "1300");
             currentFragmentId = getIntent().getExtras().getInt("currentFragmentId");
             infoCenter = getIntent().getExtras().getInt("info_center");
-            isAddMultiViewHide = getIntent().getExtras().getBoolean("isAddMultiViewHide");
+//            isAddMultiViewHide = getIntent().getExtras().getBoolean("isAddMultiViewHide");
             chartBallView = getIntent().getExtras().getInt("chart_ball_view");
         }
         EventBus.getDefault().register(this);
@@ -427,7 +427,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         barrage_switch = (ImageView) findViewById(R.id.barrage_switch);
         barrage_switch.setOnClickListener(this);
 
-        tv_addMultiView.setOnClickListener(this);
+//        tv_addMultiView.setOnClickListener(this);
 
         /***
          * 足球内页头部ViewPager
@@ -2024,9 +2024,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 }
                 break;
 
-            case R.id.tv_addMultiView:
-                enterMultiScreenView();
-                break;
+//            case R.id.tv_addMultiView:
+//                enterMultiScreenView();
+//                break;
 
             case R.id.barrage_switch:
 
@@ -2049,18 +2049,18 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     }
 
 
-    private void enterMultiScreenView() {
-        if (PreferenceUtil.getBoolean("introduce", true)) {
-            Intent intent = new Intent(FootballMatchDetailActivity.this, MultiScreenIntroduceActivity.class);
-            intent.putExtra("thirdId", new MultipleByValueBean(1, mThirdId));
-            startActivity(intent);
-            PreferenceUtil.commitBoolean("introduce", false);
-        } else {
-            Intent intent = new Intent(FootballMatchDetailActivity.this, MultiScreenViewingListActivity.class);
-            intent.putExtra("thirdId", new MultipleByValueBean(1, mThirdId));
-            startActivity(intent);
-        }
-    }
+//    private void enterMultiScreenView() {
+//        if (PreferenceUtil.getBoolean("introduce", true)) {
+//            Intent intent = new Intent(FootballMatchDetailActivity.this, MultiScreenIntroduceActivity.class);
+//            intent.putExtra("thirdId", new MultipleByValueBean(1, mThirdId));
+//            startActivity(intent);
+//            PreferenceUtil.commitBoolean("introduce", false);
+//        } else {
+//            Intent intent = new Intent(FootballMatchDetailActivity.this, MultiScreenViewingListActivity.class);
+//            intent.putExtra("thirdId", new MultipleByValueBean(1, mThirdId));
+//            startActivity(intent);
+//        }
+//    }
 
 
     /**
@@ -2297,11 +2297,11 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         btn_showGif.setOnClickListener(this);
 
         rl_gif_notice = (RelativeLayout) findViewById(R.id.rl_gif_notice);
-        tv_addMultiView = (TextView) findViewById(R.id.tv_addMultiView);
-
-        if (isAddMultiViewHide) {
-            tv_addMultiView.setVisibility(View.GONE);
-        }
+//        tv_addMultiView = (TextView) findViewById(R.id.tv_addMultiView);
+//
+//        if (isAddMultiViewHide) {
+//            tv_addMultiView.setVisibility(View.GONE);
+//        }
 
 
         //跳转到足球资料库内页
