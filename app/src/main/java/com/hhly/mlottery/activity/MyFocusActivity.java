@@ -9,7 +9,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.footballframe.FocusFragment;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.umeng.analytics.MobclickAgent;

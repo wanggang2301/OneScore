@@ -14,13 +14,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.BasketAllOddBean;
 import com.hhly.mlottery.bean.basket.BasketMatchBean;
 import com.hhly.mlottery.bean.basket.BasketOddBean;
 import com.hhly.mlottery.frame.basketballframe.MyRotateAnimation;
-import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
