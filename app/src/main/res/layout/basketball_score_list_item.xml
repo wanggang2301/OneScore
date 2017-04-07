@@ -371,7 +371,7 @@
 
                                 <TextView
                                     android:id="@+id/basket_guest_all_score"
-                                    android:layout_width="25dp"
+                                    android:layout_width="30dp"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:paddingLeft="5dp"
@@ -456,7 +456,7 @@
 
                                 <TextView
                                     android:id="@+id/basket_home_all_score"
-                                    android:layout_width="25dp"
+                                    android:layout_width="30dp"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:paddingLeft="5dp"

@@ -2,6 +2,7 @@ package com.hhly.mlottery.adapter.basketball;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -1206,6 +1207,50 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
             viewHolderList.home_score2.setText(matchScore.getHome2() + "");
             viewHolderList.home_score3.setText(matchScore.getHome3() + "");
             viewHolderList.home_score4.setText(matchScore.getHome4() + "");
+
+            if(matchScore.getGuest1() == matchScore.getHome1()){
+                viewHolderList.guest_score1.setTextColor(ContextCompat.getColor(mContext,R.color.res_time_color));
+                viewHolderList.home_score1.setTextColor(ContextCompat.getColor(mContext,R.color.res_time_color));
+            }else if(matchScore.getGuest1() > matchScore.getHome1()){
+                viewHolderList.guest_score1.setTextColor(ContextCompat.getColor(mContext,R.color.res_time_color));
+                viewHolderList.home_score1.setTextColor(ContextCompat.getColor(mContext,R.color.res_pl_color));
+            }else{
+                viewHolderList.guest_score1.setTextColor(ContextCompat.getColor(mContext,R.color.res_pl_color));
+                viewHolderList.home_score1.setTextColor(ContextCompat.getColor(mContext,R.color.res_time_color));
+            }
+
+            if(matchScore.getGuest2() == matchScore.getHome2()){
+                viewHolderList.guest_score2.setTextColor(ContextCompat.getColor(mContext,R.color.res_time_color));
+                viewHolderList.home_score2.setTextColor(ContextCompat.getColor(mContext,R.color.res_time_color));
+            }else if(matchScore.getGuest2() > matchScore.getHome2()){
+                viewHolderList.guest_score2.setTextColor(ContextCompat.getColor(mContext,R.color.res_time_color));
+                viewHolderList.home_score2.setTextColor(ContextCompat.getColor(mContext,R.color.res_pl_color));
+            }else{
+                viewHolderList.guest_score2.setTextColor(ContextCompat.getColor(mContext,R.color.res_pl_color));
+                viewHolderList.home_score2.setTextColor(ContextCompat.getColor(mContext,R.color.res_time_color));
+            }
+
+            if(matchScore.getGuest3() == matchScore.getHome3()){
+                viewHolderList.guest_score3.setTextColor(ContextCompat.getColor(mContext,R.color.res_time_color));
+                viewHolderList.home_score3.setTextColor(ContextCompat.getColor(mContext,R.color.res_time_color));
+            }else if(matchScore.getGuest3() > matchScore.getHome3()){
+                viewHolderList.guest_score3.setTextColor(ContextCompat.getColor(mContext,R.color.res_time_color));
+                viewHolderList.home_score3.setTextColor(ContextCompat.getColor(mContext,R.color.res_pl_color));
+            }else{
+                viewHolderList.guest_score3.setTextColor(ContextCompat.getColor(mContext,R.color.res_pl_color));
+                viewHolderList.home_score3.setTextColor(ContextCompat.getColor(mContext,R.color.res_time_color));
+            }
+
+            if(matchScore.getGuest4() == matchScore.getHome4()){
+                viewHolderList.guest_score4.setTextColor(ContextCompat.getColor(mContext,R.color.res_time_color));
+                viewHolderList.home_score4.setTextColor(ContextCompat.getColor(mContext,R.color.res_time_color));
+            }else if(matchScore.getGuest4() > matchScore.getHome4()){
+                viewHolderList.guest_score4.setTextColor(ContextCompat.getColor(mContext,R.color.res_time_color));
+                viewHolderList.home_score4.setTextColor(ContextCompat.getColor(mContext,R.color.res_pl_color));
+            }else{
+                viewHolderList.guest_score4.setTextColor(ContextCompat.getColor(mContext,R.color.res_pl_color));
+                viewHolderList.home_score4.setTextColor(ContextCompat.getColor(mContext,R.color.res_time_color));
+            }
         }
     }
     private void setVisible(ViewHolderList viewHolderList , int section){
