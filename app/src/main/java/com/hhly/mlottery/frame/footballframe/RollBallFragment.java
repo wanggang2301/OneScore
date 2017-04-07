@@ -379,6 +379,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     }
 
     public void requestApi() {
+        apiHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_Rollball,
                 new VolleyContentFast.ResponseSuccessListener<ImmediateMatchs>() {
                     @Override
