@@ -41,11 +41,12 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private final String ARG_ODDTYPE = "oddType";
-    private final String ARG_THIRDID = "thirdId";
-    private final String ARG_INDEX = "index";
-    private final String ARG_LEFT_NAME = "leftName";
+    private final String ARG_ODDTYPE = "oddType"; //赔率类型
+    private final String ARG_THIRDID = "thirdId";  //比赛id
+    private final String ARG_INDEX = "index"; //当前公司下表
+    private final String ARG_LEFT_NAME = "leftName"; //左侧公司列表
     private final String ARG_COMPAN_NAME = "companName";
+//    private final String ARG_COMPANY_ID="comId"; //公司Id
 
     private String mType; //亚盘大小球类型
     private String mTypeIndex;//类型对应的坐标
@@ -159,10 +160,10 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
                     //点击指数页面，传值给详情界面
                     Intent intent = new Intent(getContext(), TennisCpiDetailsActivity.class);
                     intent.putStringArrayListExtra(ARG_LEFT_NAME, (ArrayList<String>) companyList);   //两行赔率
-                    intent.putExtra(ARG_COMPAN_NAME, odds.getComName());  //公司Id
+                    intent.putExtra(ARG_COMPAN_NAME, odds.getComName());  //公司名字
                     intent.putExtra(ARG_INDEX, item.getComList().indexOf(odds) + "");
                     intent.putExtra(ARG_ODDTYPE, mTypeIndex);
-                    intent.putExtra(ARG_THIRDID,item.getLeagueId());
+                    intent.putExtra(ARG_THIRDID,item.getMatchInfo().getMatchId());
                     getContext().startActivity(intent);
                 }
 

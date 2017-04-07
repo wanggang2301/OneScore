@@ -64,11 +64,11 @@ public class SnookerIndexAdapter extends BaseQuickAdapter<SnookerIndexBean.AllIn
         handicap=holder.getView(R.id.cpi_item_odds_txt);
         guest=holder.getView(R.id.cpi_item_guest_txt);
         holder.setText(R.id.cpi_item_time_txt,allInfoEntity.getMatchInfo().getOpenTime());
-        setStatus(holder,allInfoEntity);
 
         holder.setText(R.id.cpi_host_team_txt,allInfoEntity.getMatchInfo().getMatchHomeName());
         holder.setText(R.id.cpi_guest_team_txt,allInfoEntity.getMatchInfo().getMatchGuestName());
         holder.setText(R.id.cpi_score_txt,allInfoEntity.getMatchInfo().getMatchResult()==null?"VS":allInfoEntity.getMatchInfo().getMatchResult());
+        setStatus(holder,allInfoEntity);
         if(mType.equals(SIndexFragment.ODDS_EURO)){
             home.setText(context.getString(R.string.odd_home_op_txt));
             guest.setText(context.getString(R.string.odd_guest_op_txt));
@@ -114,7 +114,7 @@ public class SnookerIndexAdapter extends BaseQuickAdapter<SnookerIndexBean.AllIn
                         @Override
                         public void onClick(View v) {
                             //
-                            onOddsClickListener.onOddsClick(data,item,toDetailCompanies);
+//                            onOddsClickListener.onOddsClick(data,item,toDetailCompanies);
                         }
                     });
                 }
@@ -160,6 +160,7 @@ public class SnookerIndexAdapter extends BaseQuickAdapter<SnookerIndexBean.AllIn
                         break;
                     case "0": //未开始
                         holder.setText(R.id.tv_tag,context.getString(R.string.tennis_match_not_start));
+                        holder.setText(R.id.cpi_score_txt,"VS");
                         break;
                     default: //进行中
                         holder.setText(R.id.tv_tag,context.getString(R.string.tennis_match_join));

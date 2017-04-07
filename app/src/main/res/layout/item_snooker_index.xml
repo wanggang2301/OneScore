@@ -99,7 +99,7 @@
                 android:layout_weight="1.5"
                 android:gravity="right"
                 android:paddingRight="20dp"
-                android:text="未开始"
+                android:text=""
                 android:textColor="#999999"
                 android:textSize="13sp" />
 
@@ -139,7 +139,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:text="0:0"
+                    android:text="vs"
                     android:textColor="#0090ff"
 
                     android:textSize="13sp" />
