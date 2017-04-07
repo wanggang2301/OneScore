@@ -260,7 +260,7 @@ public class NewPinnedHeaderExpandableAdapter  extends BaseExpandableListAdapter
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-        LinearLayout parentLayout = (LinearLayout) View.inflate(mContext, R.layout.item_live_header, null);
+        RelativeLayout parentLayout = (RelativeLayout) View.inflate(mContext, R.layout.item_live_header, null);
         TextView live_item_day_tx = (TextView) parentLayout.findViewById(R.id.live_item_day_txt);
 
         TextView mVideo_week= (TextView) parentLayout.findViewById(R.id.video_week);
