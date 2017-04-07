@@ -76,7 +76,7 @@ public class FootballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerVie
         this.mContext = context;
         this.teamLogoPre = teamLogoPre;
         this.teamLogoSuff = teamLogoSuff;
-        datas.get(1).getGuestteam();
+       // datas.get(1).getGuestteam();
     }
 
     @Override
@@ -94,7 +94,10 @@ public class FootballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerVie
         });
         return immediaViewHolder;
     }
-
+    public void clearData(){
+        datas.clear();
+        notifyDataSetChanged();
+    }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {

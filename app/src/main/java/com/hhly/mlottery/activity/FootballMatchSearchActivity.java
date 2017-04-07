@@ -89,7 +89,7 @@ public class FootballMatchSearchActivity extends BaseActivity implements View.On
                             if (basketballInforSerachAdapter != null) {
                                 //无搜索  隐藏删除键
                                 mSearch_iv_delete.setVisibility(View.GONE);
-                                // basketballInforSerachAdapter.clearData();
+                                basketballInforSerachAdapter.clearData();
                             }
                             return false;
                         }
@@ -221,6 +221,7 @@ public class FootballMatchSearchActivity extends BaseActivity implements View.On
             }
         });
         basketballInforSerachAdapter.notifyDataSetChanged();
+       // resultListBeen.clear();
         //点击监听
         initEvent(resultListBeen);
     }
