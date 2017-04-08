@@ -237,9 +237,9 @@ public class TennisIndexDetailsChildFragment extends ViewFragment<TennisIndexDet
             //亚盘
             cpiDishDetailsTxtId.setVisibility(View.VISIBLE);
 
-            cpiHomeDetailsTxtId.setText(R.string.basket_analyze_guest_win);
+            cpiHomeDetailsTxtId.setText(R.string.basket_analyze_home_win);
             cpiDishDetailsTxtId.setText(R.string.basket_analyze_dish);
-            cpiGuestDetailsTxtId.setText(R.string.basket_analyze_home_win);
+            cpiGuestDetailsTxtId.setText(R.string.basket_analyze_guest_win);
 
         } else if (TennisOddsTypeEnum.ASIASIZE.equals(oddType)) {
             //大小球
@@ -250,9 +250,9 @@ public class TennisIndexDetailsChildFragment extends ViewFragment<TennisIndexDet
             cpiGuestDetailsTxtId.setText(R.string.foot_odds_asize_right);
         } else if (TennisOddsTypeEnum.EURO.equals(oddType)) {
             //欧赔
-            cpiHomeDetailsTxtId.setText(R.string.basket_analyze_guest_win);
+            cpiHomeDetailsTxtId.setText(R.string.basket_analyze_home_win);
             cpiDishDetailsTxtId.setVisibility(View.GONE);
-            cpiGuestDetailsTxtId.setText(R.string.basket_analyze_home_win);
+            cpiGuestDetailsTxtId.setText(R.string.basket_analyze_guest_win);
         }
     }
 
