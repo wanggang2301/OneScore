@@ -1664,4 +1664,5 @@
     <string name="tennis_datails_status9">非受迫性失誤</string>
     <string name="tennis_datails_status10">主動得分</string>
     <string name="foot_event_num">""</string>
+    <string name="please_hint_team">請輸入隊伍名稱</string>
 </resources>

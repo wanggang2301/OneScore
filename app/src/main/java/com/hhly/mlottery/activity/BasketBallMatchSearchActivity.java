@@ -37,6 +37,11 @@ import de.greenrobot.event.EventBus;
 public class BasketBallMatchSearchActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = "ImmedBasketballFragment";
+    public final static String BASKET_THIRD_ID = "thirdId";
+    public final static String BASKET_MATCH_STATUS = "MatchStatus";
+    public final static String BASKET_MATCH_LEAGUEID = "leagueId";
+    public final static String BASKET_MATCH_MATCHTYPE = "matchType";
+
     //内容数据
     private List<BasketballItemSearchBean> mMatchdata = new ArrayList<>();//match的 内容(json)
     private BasketScheduleNewScoreFragment.BasketFocusClickListener mFocusClickListener; //关注点击监听
@@ -151,15 +156,14 @@ public class BasketBallMatchSearchActivity extends BaseActivity implements View.
                         public void onItemClick(View view, BasketballItemSearchBean currData) {
 
                             Intent intent = new Intent(BasketBallMatchSearchActivity.this, BasketDetailsActivityTest.class);
-                            intent.putExtra(BasketDetailsActivityTest.BASKET_THIRD_ID, currData.getThirdId());//跳转到详情
-                            intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_STATUS, currData.getMatchStatus());//跳转到详情
+                            intent.putExtra(BASKET_THIRD_ID, currData.getThirdId());//跳转到详情
+                            intent.putExtra(BASKET_MATCH_STATUS, currData.getMatchStatus());//跳转到详情
                             intent.putExtra("currentfragment", 0);
-                            intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_LEAGUEID, currData.getLeagueId());
-                            intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_MATCHTYPE, currData.getMatchType());
+                            intent.putExtra(BASKET_MATCH_LEAGUEID, currData.getLeagueId());
+                            intent.putExtra(BASKET_MATCH_MATCHTYPE, currData.getMatchType());
                             startActivity(intent);
                         }
                     });
-
 
                 } else {
                     explistview.setVisibility(View.GONE);
@@ -191,6 +195,7 @@ public class BasketBallMatchSearchActivity extends BaseActivity implements View.
 
         //搜索框
         et_keyword = (EditText) findViewById(R.id.et_keyword);
+        et_keyword.setHint(R.string.please_hint_team);
         //数据返回显示
         explistview = (RecyclerView) findViewById(R.id.explistview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(BasketBallMatchSearchActivity.this);

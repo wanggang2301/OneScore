@@ -67,9 +67,7 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener,
 
     private ListView listViews;
     private static final String FRAGMENT_INDEX = "fragment_index";
-    private View mView;
     private Context mContext;
-    private Activity mActivity;
     private TextView mPublic_txt_title;
     /*定时刷新   60s*/
     private Runnable mRunnable = new Runnable() {
@@ -86,7 +84,7 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener,
         setContentView(R.layout.activity_live_list);
         initView();
         initData();
-        mContext = mActivity;
+        mContext = this;
 
     }
 
@@ -103,31 +101,31 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener,
         ra = new RotateAnimation(0.0f, 360.f, Animation.RELATIVE_TO_SELF, 0.55f, Animation.RELATIVE_TO_SELF, 0.55f);
         ra.setDuration(3000);
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.live_swiperefreshlayout);// 数据板块，listview
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.live_swiperefreshlayout);// 数据板块，listview
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mPublic_txt_title = (TextView) mView.findViewById(R.id.public_txt_title);
+        mPublic_txt_title = (TextView) findViewById(R.id.public_txt_title);
         mPublic_txt_title.setText(getString(R.string.direct_seeding));
 
-        mView.findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
-        mView.findViewById(R.id.public_btn_set).setVisibility(View.GONE);
+        findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
+        findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         //返回键
-        mView.findViewById(R.id.public_img_back).setOnClickListener(this);
+        findViewById(R.id.public_img_back).setOnClickListener(this);
 
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(VideoActivity.this, StaticValues.REFRASH_OFFSET_END));
 
-        live_error_ll = (LinearLayout) mView.findViewById(R.id.live_error_ll);
-        live_error_btn = (TextView) mView.findViewById(R.id.live_error_btn);
+        live_error_ll = (LinearLayout) findViewById(R.id.live_error_ll);
+        live_error_btn = (TextView) findViewById(R.id.live_error_btn);
         live_error_btn.setOnClickListener(this);
 
         //级联列表listview
-        explistview_live = (PinnedHeaderExpandableListView) mView.findViewById(R.id.explistview_live);
+        explistview_live = (PinnedHeaderExpandableListView) findViewById(R.id.explistview_live);
         //设置悬浮头部VIEW
 
         explistview_live.setHeaderView(getLayoutInflater().inflate(R.layout.item_live_header, explistview_live, false));
         explistview_live.setChildDivider(getResources().getDrawable(R.color.line_football_footer));
         //暂无数据
-        live_no_data_txt = (TextView) mView.findViewById(R.id.live_no_data_txt);
+        live_no_data_txt = (TextView) findViewById(R.id.live_no_data_txt);
 
     }
 
