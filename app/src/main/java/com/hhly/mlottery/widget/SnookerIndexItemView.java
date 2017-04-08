@@ -8,7 +8,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.bean.enums.TennisOddsTypeEnum;
 import com.hhly.mlottery.bean.snookerbean.snookerIndexBean.SnookerIndexBean;
+import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SIndexFragment;
 import com.hhly.mlottery.util.HandicapUtils;
 
@@ -99,80 +101,155 @@ public class SnookerIndexItemView  extends LinearLayout{
      * @param data     data
      * @param oddsType 类型
      */
-    public void bindData(SnookerIndexBean.AllInfoEntity.ComListEntity data, String oddsType) {
+    public void bindData(SnookerIndexBean.AllInfoEntity.ComListEntity data, String oddsType,int ballType) {
 
         SnookerIndexBean.AllInfoEntity.ComListEntity.LevelEntity currLevel = data.getCurrLevel();
         SnookerIndexBean.AllInfoEntity.ComListEntity.LevelEntity preLevel= data.getPreLevel();
 
         mCompanyName.setText(data.getComName());
 
-        // 左
-        int leftUp = currLevel.getLeftStatus();
-        if (leftUp == -1) {
-            mNowLeft.setTextColor(green);
-        } else if (leftUp == 1) {
-            mNowLeft.setTextColor(red);
-        } else {
-            mNowLeft.setTextColor(black);
-        }
-        if(SIndexFragment.SINGLE_DOUBLE.equals(oddsType)||SIndexFragment.ODDS_EURO.equals(oddsType)){ //独赢没有中间
-            onlyWin.setVisibility(View.GONE);
-        }
 
-        int middleUp = currLevel.getMiddleStatus();
-        if (SIndexFragment.ODDS_EURO.equals(oddsType)) {
-            //欧赔
-            if (middleUp == -1) {
-                mNowCenter.setTextColor(green);
-            } else if (middleUp == 1) {
-                mNowCenter.setTextColor(red);
+        if(ballType== BallType.SNOOKER){
+            // 左
+            int leftUp = currLevel.getLeftStatus();
+            if (leftUp == -1) {
+                mNowLeft.setTextColor(green);
+            } else if (leftUp == 1) {
+                mNowLeft.setTextColor(red);
             } else {
-                mNowCenter.setTextColor(black);
+                mNowLeft.setTextColor(black);
             }
-        } else {
-            // 亚盘和大小
-            if (middleUp == -1) {
-                mNowCenter.setTextColor(white);
-                mNowCenter.setBackgroundResource(R.color.fall_color);
-            } else if (middleUp == 1) {
-                mNowCenter.setTextColor(white);
-                mNowCenter.setBackgroundResource(R.color.analyze_left);
+            if(SIndexFragment.SINGLE_DOUBLE.equals(oddsType)||SIndexFragment.ODDS_EURO.equals(oddsType)){ //独赢没有中间
+                onlyWin.setVisibility(View.GONE);
+            }
+
+            int middleUp = currLevel.getMiddleStatus();
+            if (SIndexFragment.ODDS_EURO.equals(oddsType)||SIndexFragment.SINGLE_DOUBLE.equals(oddsType)) { //斯诺克欧赔单双或者网球欧赔
+                //欧赔
+                if (middleUp == -1) {
+                    mNowCenter.setTextColor(green);
+                } else if (middleUp == 1) {
+                    mNowCenter.setTextColor(red);
+                } else {
+                    mNowCenter.setTextColor(black);
+                }
             } else {
-                mNowCenter.setTextColor(black);
-                mNowCenter.setBackgroundResource(R.color.transparency);
+                // 亚盘和大小
+                if (middleUp == -1) {
+                    mNowCenter.setTextColor(white);
+                    mNowCenter.setBackgroundResource(R.color.fall_color);
+                } else if (middleUp == 1) {
+                    mNowCenter.setTextColor(white);
+                    mNowCenter.setBackgroundResource(R.color.analyze_left);
+                } else {
+                    mNowCenter.setTextColor(black);
+                    mNowCenter.setBackgroundResource(R.color.transparency);
+                }
             }
+
+            // 右
+            int rightUp = currLevel.getRightStatus();
+            if (rightUp == -1) {
+                mNowRight.setTextColor(green);
+            } else if (rightUp == 1) {
+                mNowRight.setTextColor(red);
+            } else {
+                mNowRight.setTextColor(black);
+            }
+
+            String currLevelMiddle = currLevel.getMiddle();
+            String preLevelMiddle = preLevel.getMiddle();
+            // 转换盘口
+            if (SIndexFragment.ODDS_LET.equals(oddsType)) {//亚盘
+                mNowCenter.setText(HandicapUtils.changeHandicap(currLevelMiddle));
+                mDefaultCenter.setText(HandicapUtils.changeHandicap(preLevelMiddle));
+            } else if (SIndexFragment.ODDS_SIZE.equals(oddsType)) {//大小
+                mNowCenter.setText(HandicapUtils.changeHandicapByBigLittleBall(currLevelMiddle));
+                mDefaultCenter.setText(HandicapUtils.changeHandicapByBigLittleBall(preLevelMiddle));
+            } else if (SIndexFragment.ODDS_EURO.equals(oddsType)) {//欧赔
+                //不用转换盘口
+                mNowCenter.setText(currLevelMiddle);
+                mDefaultCenter.setText(preLevelMiddle);
+            }
+
+            //即赔
+            mNowLeft.setText(currLevel.getLeft());
+            mNowRight.setText(currLevel.getRight());
+            //初赔
+            mDefaultLeft.setText(preLevel.getLeft());
+            mDefaultRight.setText(preLevel.getRight());
+        }
+        else { //网球
+            // 左
+            int leftUp = currLevel.getLeftStatus();
+            if (leftUp == -1) {
+                mNowLeft.setTextColor(green);
+            } else if (leftUp == 1) {
+                mNowLeft.setTextColor(red);
+            } else {
+                mNowLeft.setTextColor(black);
+            }
+
+            if(TennisOddsTypeEnum.EURO.equals(oddsType)){ //网球欧赔
+                onlyWin.setVisibility(View.GONE);
+            }
+
+            int middleUp = currLevel.getMiddleStatus();
+            if (TennisOddsTypeEnum.EURO.equals(oddsType)) { //斯诺克欧赔单双或者网球欧赔
+                //欧赔
+                if (middleUp == -1) {
+                    mNowCenter.setTextColor(green);
+                } else if (middleUp == 1) {
+                    mNowCenter.setTextColor(red);
+                } else {
+                    mNowCenter.setTextColor(black);
+                }
+            } else {
+                // 亚盘和大小
+                if (middleUp == -1) {
+                    mNowCenter.setTextColor(white);
+                    mNowCenter.setBackgroundResource(R.color.fall_color);
+                } else if (middleUp == 1) {
+                    mNowCenter.setTextColor(white);
+                    mNowCenter.setBackgroundResource(R.color.analyze_left);
+                } else {
+                    mNowCenter.setTextColor(black);
+                    mNowCenter.setBackgroundResource(R.color.transparency);
+                }
+            }
+
+            // 右
+            int rightUp = currLevel.getRightStatus();
+            if (rightUp == -1) {
+                mNowRight.setTextColor(green);
+            } else if (rightUp == 1) {
+                mNowRight.setTextColor(red);
+            } else {
+                mNowRight.setTextColor(black);
+            }
+
+            String currLevelMiddle = currLevel.getMiddle();
+            String preLevelMiddle = preLevel.getMiddle();
+            // 转换盘口
+            if (TennisOddsTypeEnum.ASIALET.equals(oddsType)) {//亚盘
+                mNowCenter.setText(HandicapUtils.changeHandicap(currLevelMiddle));
+                mDefaultCenter.setText(HandicapUtils.changeHandicap(preLevelMiddle));
+            } else if (TennisOddsTypeEnum.ASIASIZE.equals(oddsType)) {//大小
+                mNowCenter.setText(HandicapUtils.changeHandicapByBigLittleBall(currLevelMiddle));
+                mDefaultCenter.setText(HandicapUtils.changeHandicapByBigLittleBall(preLevelMiddle));
+            } else if (TennisOddsTypeEnum.EURO.equals(oddsType)) {//欧赔
+                //不用转换盘口
+                mNowCenter.setText(currLevelMiddle);
+                mDefaultCenter.setText(preLevelMiddle);
+            }
+
+            //即赔
+            mNowLeft.setText(currLevel.getLeft());
+            mNowRight.setText(currLevel.getRight());
+            //初赔
+            mDefaultLeft.setText(preLevel.getLeft());
+            mDefaultRight.setText(preLevel.getRight());
         }
 
-        // 右
-        int rightUp = currLevel.getRightStatus();
-        if (rightUp == -1) {
-            mNowRight.setTextColor(green);
-        } else if (rightUp == 1) {
-            mNowRight.setTextColor(red);
-        } else {
-            mNowRight.setTextColor(black);
-        }
-
-        String currLevelMiddle = currLevel.getMiddle();
-        String preLevelMiddle = preLevel.getMiddle();
-        // 转换盘口
-        if (SIndexFragment.ODDS_LET.equals(oddsType)) {//亚盘
-            mNowCenter.setText(HandicapUtils.changeHandicap(currLevelMiddle));
-            mDefaultCenter.setText(HandicapUtils.changeHandicap(preLevelMiddle));
-        } else if (SIndexFragment.ODDS_SIZE.equals(oddsType)) {//大小
-            mNowCenter.setText(HandicapUtils.changeHandicapByBigLittleBall(currLevelMiddle));
-            mDefaultCenter.setText(HandicapUtils.changeHandicapByBigLittleBall(preLevelMiddle));
-        } else if (SIndexFragment.ODDS_EURO.equals(oddsType)) {//欧赔
-            //不用转换盘口
-            mNowCenter.setText(currLevelMiddle);
-            mDefaultCenter.setText(preLevelMiddle);
-        }
-
-        //即赔
-        mNowLeft.setText(currLevel.getLeft());
-        mNowRight.setText(currLevel.getRight());
-        //初赔
-        mDefaultLeft.setText(preLevel.getLeft());
-        mDefaultRight.setText(preLevel.getRight());
     }
 }

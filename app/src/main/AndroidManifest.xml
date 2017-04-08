@@ -383,6 +383,8 @@
         <activity
             android:name=".activity.VideoActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.TennisIndexDetailsActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

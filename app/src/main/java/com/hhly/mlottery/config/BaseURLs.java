@@ -1098,6 +1098,8 @@ public class BaseURLs {
     public final static String TENNIS_FOCUS_URL = URL_API_HOST + "tennisMatch.connerns.do";
     //网球指数列表接口
     public final static String TENNIS_INDEX_LIST=URL_API_HOST+"tennisIndexData.findIndexDataList.do";
+    //网球指数列表指数详情
+    public final static String TENNIS_INDEX_DETAILS=URL_API_HOST+"tennisIndexData.findIndexOddsDetail.do";
 
     // 网球内页 头部和分析
     public final static String TENNIS_DATAILS_URL = URL_API_HOST + "tennisMatch.findContentAnalysis.do";

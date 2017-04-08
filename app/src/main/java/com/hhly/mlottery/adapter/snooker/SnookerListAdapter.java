@@ -513,7 +513,7 @@ public class SnookerListAdapter extends BaseQuickAdapter<SnookerEventsBean> {
                         }else{
                             SnookerOddsMatchBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean aletOdds = mOdds.getAsiaLet().getSBO();
                             viewHolderList.mSnookerOddsLeft.setText(aletOdds.getLeftOdds());
-                            viewHolderList.mSnookerOddsMiddle.setText(aletOdds.getHandicapValue());
+                            viewHolderList.mSnookerOddsMiddle.setText(aletOdds.getHandicapValue().equals("0.0")?mContext.getString(R.string.number_bjsc_ds):aletOdds.getHandicapValue());
                             viewHolderList.mSnookerOddsRight.setText(aletOdds.getRightOdds());
                         }
                     }
