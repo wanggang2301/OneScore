@@ -26,6 +26,7 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
+import com.hhly.mlottery.bean.enums.TennisOddsTypeEnum;
 import com.hhly.mlottery.bean.snookerbean.SnookerScoreSocketBean;
 import com.hhly.mlottery.bean.snookerbean.snookerIndexBean.SnookerIndexBean;
 import com.hhly.mlottery.bean.snookerbean.snookerschedulebean.SnookerSocketOddsBean;
@@ -337,9 +338,9 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
             mTextMatch.setText(getActivity().getString(R.string.tennisball_txt));
             mTitles= new String[]{getActivity().getResources().getString(R.string.odd_plate_rb_txt), getActivity().getResources().getString(R.string.asiasize),
                     getActivity().getResources().getString(R.string.odd_op_rb_txt)};
-            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_LET,mBallType));
-            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_SIZE,mBallType));
-            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_EURO,mBallType));
+            fragments.add(SnookerIndexChildFragment.newInstance(TennisOddsTypeEnum.ASIALET,mBallType));
+            fragments.add(SnookerIndexChildFragment.newInstance(TennisOddsTypeEnum.ASIASIZE,mBallType));
+            fragments.add(SnookerIndexChildFragment.newInstance(TennisOddsTypeEnum.EURO,mBallType));
         }
 
         mTabsAdapter=new TabsAdapter(getChildFragmentManager());

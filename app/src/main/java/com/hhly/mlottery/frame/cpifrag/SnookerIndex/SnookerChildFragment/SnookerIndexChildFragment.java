@@ -19,6 +19,7 @@ import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.activity.SnookerMatchDetail;
 import com.hhly.mlottery.activity.TennisBallDetailsActivity;
 import com.hhly.mlottery.activity.TennisCpiDetailsActivity;
+import com.hhly.mlottery.activity.TennisIndexDetailsActivity;
 import com.hhly.mlottery.adapter.snooker.SnookerIndexAdapter;
 import com.hhly.mlottery.bean.snookerbean.SnookerScoreSocketBean;
 import com.hhly.mlottery.bean.snookerbean.snookerIndexBean.SnookerIndexBean;
@@ -41,12 +42,9 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private final String ARG_ODDTYPE = "oddType"; //赔率类型
     private final String ARG_THIRDID = "thirdId";  //比赛id
-    private final String ARG_INDEX = "index"; //当前公司下表
-    private final String ARG_LEFT_NAME = "leftName"; //左侧公司列表
-    private final String ARG_COMPAN_NAME = "companName";
-//    private final String ARG_COMPANY_ID="comId"; //公司Id
+    private final String ARG_COMPANY_ID="comId"; //公司Id
+    private final String ARG_TYPE="oddType";
 
     private String mType; //亚盘大小球类型
     private String mTypeIndex;//类型对应的坐标
@@ -112,13 +110,6 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
         }
         //TODO:改成dagger
         mPresenter=new SnookerIndexChildPresenter(this);
-        if(mType.equals(SIndexFragment.ODDS_LET)){
-            mTypeIndex=1+"";
-        }else if(mType.equals(SIndexFragment.ODDS_SIZE)){
-            mTypeIndex=3+"";
-        }else if(mType.equals(SIndexFragment.ODDS_EURO)){
-            mTypeIndex=2+"";
-        }
 
     }
 
@@ -154,16 +145,14 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
         // 每个 Item 内部一条赔率的单击
         mAdapter.setOnOddsClickListener(new SnookerIndexAdapter.SnookerOddsOnClick() {
             @Override
-            public void onOddsClick(SnookerIndexBean.AllInfoEntity item, SnookerIndexBean.AllInfoEntity.ComListEntity odds,List<String>companyList) {
+            public void onOddsClick(String matchId, String comId) {
 
                 if(mBallType== BallType.TENNLS){
                     //点击指数页面，传值给详情界面
-                    Intent intent = new Intent(getContext(), TennisCpiDetailsActivity.class);
-                    intent.putStringArrayListExtra(ARG_LEFT_NAME, (ArrayList<String>) companyList);   //两行赔率
-                    intent.putExtra(ARG_COMPAN_NAME, odds.getComName());  //公司名字
-                    intent.putExtra(ARG_INDEX, item.getComList().indexOf(odds) + "");
-                    intent.putExtra(ARG_ODDTYPE, mTypeIndex);
-                    intent.putExtra(ARG_THIRDID,item.getMatchInfo().getMatchId());
+                    Intent intent = new Intent(getContext(), TennisIndexDetailsActivity.class);
+                    intent.putExtra(ARG_THIRDID,matchId);
+                    intent.putExtra(ARG_COMPANY_ID,comId);
+                    intent.putExtra(ARG_TYPE,mType);
                     getContext().startActivity(intent);
                 }
 
