@@ -42,7 +42,7 @@ import java.util.Map;
 /**
  * @author wang gang
  * @date 2016/6/28 15:26
- * @des ${TODO}
+ * @des ${}
  */
 public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
     private static String TAG = "FinishMatchLiveTextFragment";

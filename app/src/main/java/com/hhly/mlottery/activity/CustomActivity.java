@@ -397,7 +397,6 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
                         }
                     }
                 } else {// 否则为最内层（赛事层）比赛的点击事件这里写
-                    // TODO***************************************************
 
                     CustomMineThirdDataBean parent = (CustomMineThirdDataBean) mData.get(position);
                     Intent intent = new Intent(CustomActivity.this, BasketDetailsActivityTest.class);
@@ -534,7 +533,7 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
                     mWebBasketOdds = JSON.parseObject(ws_json, WebBasketOdds.class);
                 }
-                updateListViewItemOdd(mWebBasketOdds);  //TODO
+                updateListViewItemOdd(mWebBasketOdds);
             }
 
 

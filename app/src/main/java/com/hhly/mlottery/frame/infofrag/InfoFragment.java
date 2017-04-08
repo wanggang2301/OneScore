@@ -166,7 +166,6 @@ public class InfoFragment extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
         switch(view.getId()){
 
-            // TODO 处理逻辑
 
             case R.id.iv_screen_icon:
                 ToastTools.showQuick(mContext,"筛选!");

@@ -277,7 +277,6 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
 
     @Override
     public void onCheckedChanged(CompoundButton button, boolean isChecked) {
-        // TODO Auto-generated method stub
 
         switch (button.getId()) {
             case R.id.sb_goal:
@@ -314,7 +313,6 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
             case R.id.sb_push:
                 PreferenceUtil.commitBoolean(MyConstants.FOOTBALL_PUSH_FOCUS, sb_push.isChecked());
 
-                //TODO:把是否接受推送消息的状态传给服务器
                 if (sb_push.isChecked()) {
                     requestServer("true");
                 } else {

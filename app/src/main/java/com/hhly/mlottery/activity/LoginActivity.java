@@ -529,7 +529,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 }
 
             } catch (Exception e) {
-                // TODO: handle exception
                 UiUtils.toast(LoginActivity.this, R.string.login_peak);
                 UiUtils.toast(mContext, "e>>" + e.toString());
 
@@ -575,7 +574,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     setResult(RESULT_OK);
                     //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
                     sendUserInfoToServer(register);
-                    //TODO: 请求获取用户关注
                     FocusUtils.getFootballUserFocus(register.getData().getUser().getUserId());
                     FocusUtils.getBasketballUserConcern(register.getData().getUser().getUserId());
                     finish();
@@ -648,7 +646,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                              }
                              finish();
                              EventBus.getDefault().post(register);
-                             //TODO:发送请求，从后台获取该用户的关注信息
                              FocusUtils.getFootballUserFocus(register.getData().getUser().getUserId());
                              FocusUtils.getBasketballUserConcern(register.getData().getUser().getUserId());
 

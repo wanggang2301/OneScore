@@ -175,7 +175,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
 
     @Override
     protected void onTextResult(String text) {
-        //TODO ***  接收推送消息
+        //接收推送消息
         String type = "";
         try {
             JSONObject jsonObject = new JSONObject(text);

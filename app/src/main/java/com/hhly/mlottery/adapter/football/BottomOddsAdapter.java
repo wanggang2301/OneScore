@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * @author wang gang
  * @date 2016/6/7 11:41
- * @des ${TODO}
+ * @des ${}
  */
 public class BottomOddsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

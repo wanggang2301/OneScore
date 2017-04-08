@@ -6,7 +6,6 @@ package com.hhly.mlottery.util;
 * FragmentUtils
 *
 * app.util.FragmentUtils.java
-* TODO: File description or class description.
 *
 * @author: qixiao
 * @since:  Feb 9, 2014
@@ -25,7 +24,7 @@ import android.support.v4.app.FragmentTransaction;
 import java.util.Observable;
 /**
  * @ClassName: FragmentUtils 
- * @Description: TODO
+ * @Description:
  * @author Tenney
  * @date 2015-10-15 上午10:35:36
  */

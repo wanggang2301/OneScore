@@ -109,7 +109,7 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
             mType = getArguments().getString(ARG_PARAM1);
             mBallType=getArguments().getInt(ARG_PARAM2);
         }
-        //TODO:改成dagger
+        //改成dagger
         mPresenter=new SnookerIndexChildPresenter(this);
         if(mType.equals(SIndexFragment.ODDS_LET)){
             mTypeIndex=1+"";

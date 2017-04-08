@@ -735,7 +735,7 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
                     mWebBasketOdds = JSON.parseObject(ws_json, WebBasketOdds.class);
                 }
-                updateListViewItemOdd(mWebBasketOdds);  //TODO
+                updateListViewItemOdd(mWebBasketOdds);
             }
 
 
@@ -1099,7 +1099,7 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
         } else {
 
             L.d("AAAAA-yxq----", "currentMatchData = " + currentMatchData.size());
-//            childrenDataList.clear();//TODO***********-----------
+//            childrenDataList.clear();
             currentMatchData.clear();
             groupDataList.clear();
 //            for (List<BasketMatchBean> lists : mAllMatchdata) { // 遍历所有数据 得到筛选后的

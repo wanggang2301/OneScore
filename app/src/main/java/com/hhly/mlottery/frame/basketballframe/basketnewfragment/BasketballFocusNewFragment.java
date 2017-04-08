@@ -549,7 +549,7 @@ public class BasketballFocusNewFragment extends BaseWebSocketFragment implements
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
                     mWebBasketOdds = JSON.parseObject(ws_json, WebBasketOdds.class);
                 }
-                updateListViewItemOdd(mWebBasketOdds);  //TODO
+                updateListViewItemOdd(mWebBasketOdds);
             }
 
 

@@ -3,7 +3,7 @@ package com.hhly.mlottery.bean.footballDetails;
 /**
  * @author wang gang
  * @date 2016/6/16 12:03
- * @des ${TODO}
+ * @des ${}
  */
 public class WebSocketRollballOdd {
 

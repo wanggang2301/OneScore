@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author wang gang
  * @date 2016/6/2 18:29
- * @des ${TODO}
+ * @des ${}
  */
 public class BasePagerAdapter extends FragmentStatePagerAdapter {
 

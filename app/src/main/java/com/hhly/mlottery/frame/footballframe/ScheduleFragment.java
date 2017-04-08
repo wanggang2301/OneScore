@@ -681,7 +681,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onRefresh() {
-        // TODO Auto-generated method stub
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

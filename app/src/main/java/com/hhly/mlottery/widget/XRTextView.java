@@ -128,8 +128,7 @@ public class XRTextView extends TextView{
    try { 
     color = isColor(i); 
    } catch (JSONException e1) { 
-    // TODO Auto-generated catch block 
-    e1.printStackTrace(); 
+    e1.printStackTrace();
    } 
     
    if(color){ 

@@ -3,7 +3,7 @@ package com.hhly.mlottery.util;
 /**
  * @author wang gang
  * @date 2016/5/16 14:47
- * @des ${TODO}
+ * @des ${}
  */
 public class NoDoubleClickUtils {
     private static long lastClickTime;

@@ -15,7 +15,7 @@ import com.hhly.mlottery.util.StringUtils;
 import java.util.List;
 
 /**
- * 描述:  ${TODO}
+ * 描述:  ${}
  * 作者:  wangg@13322.com
  * 时间:  2016/9/2 17:50
  */

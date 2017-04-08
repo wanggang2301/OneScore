@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * 彩票下一期开奖时间及期号
  * @ClassName: NumberNextInfo 
- * @Description: TODO
+ * @Description:
  * @author Tenney
  * @date 2015-10-24 下午8:01:47
  */

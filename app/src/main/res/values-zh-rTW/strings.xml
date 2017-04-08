@@ -1578,7 +1578,7 @@
     <string name="snooker_analyze_full_score">147滿分桿</string>
     <string name="snooker_analyze_total_champion">冠軍數</string>
     <string name="snooker_analyze_hundred_times">破百數</string>
-    <string name="snooker_analyze_hundred_percent">破敗率</string>
+    <string name="snooker_analyze_hundred_percent">破百率</string>
     <string name="snooker_analyze_total_times">總場數</string>
     <string name="snooker_analyze_win">場勝數</string>
     <string name="snooker_analyze_win_percent">場勝率</string>

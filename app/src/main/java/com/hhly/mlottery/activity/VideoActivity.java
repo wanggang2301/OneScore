@@ -232,7 +232,6 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener,
 
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                // TODO Auto-generated method stub
                 //如果点击间隔在500毫秒不让点击
                 if (UiUtils.onDoubClick()) {
                     //选择播放方式
