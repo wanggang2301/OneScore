@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.tennisfrag.TennisBallScoreFragment;
 import com.hhly.mlottery.util.FragmentUtils;
@@ -109,5 +110,16 @@ public class ScoreFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) { //隐藏
+            for (Fragment fragment : fragments) {
+                ((BaseWebSocketFragment) fragment).handleWebSocket();
+            }
+            L.d("bbnnn", "比分推送关闭");
+        }
     }
 }

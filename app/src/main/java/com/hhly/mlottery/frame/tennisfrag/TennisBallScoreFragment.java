@@ -21,20 +21,16 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.TennisSettingActivity;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.tennisball.TennisEventBus;
-import com.hhly.mlottery.bean.tennisball.TennisOddsInfoBean;
-import com.hhly.mlottery.bean.tennisball.TennisSocketOddsBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 
@@ -310,5 +306,9 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
                 mContext.overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
                 break;
         }
+    }
+
+    public void handleWebSocket() {
+        closeWebSocket();
     }
 }

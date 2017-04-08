@@ -282,6 +282,7 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                closeWebSocket();
                 EventBus.getDefault().post(new ScoreSwitchFg(position));
                 popupWindow.dismiss();
             }
@@ -553,6 +554,10 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
     @Override
     public void onDestroy() {
         super.onDestroy();
+        closeWebSocket();
+    }
+
+    public void handleWebSocket() {
         closeWebSocket();
     }
 }
