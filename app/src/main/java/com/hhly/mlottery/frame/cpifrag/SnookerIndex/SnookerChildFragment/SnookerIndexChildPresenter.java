@@ -53,7 +53,7 @@ public class SnookerIndexChildPresenter extends BasePresenter<SnookerIndexChildC
         }
         Map<String,String> params=new HashMap<>();
         params.put("oddType",type);
-        params.put("date","2017-04-01");
+        params.put("date",date);
         final boolean finalIsFirst = isFirst;
         VolleyContentFast.requestJsonByGet(url, params,new VolleyContentFast.ResponseSuccessListener<SnookerIndexBean>() {
             @Override
