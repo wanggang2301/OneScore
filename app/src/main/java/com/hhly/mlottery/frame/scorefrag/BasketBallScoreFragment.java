@@ -656,6 +656,8 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
 
     @Override
     protected void onTextResult(String text) {
+        L.d("websocket123", "篮球收到消息==" + text);
+
         ((BasketImmedNewScoreFragment) fragments.get(0)).handleSocketMessage(text);
     }
 
@@ -684,5 +686,9 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
 //            L.d("xxx", ">>>篮球>>>>show");
             onResume();
         }
+    }
+
+    public void handleWebSocket() {
+        closeWebSocket();
     }
 }

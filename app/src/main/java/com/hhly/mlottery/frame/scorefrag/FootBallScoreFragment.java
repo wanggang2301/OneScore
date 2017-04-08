@@ -237,7 +237,6 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-
                 if (positionOffsetPixels == 0) {
                     switch (position) {
                         case ROLLBALL_FRAGMENT:
@@ -455,6 +454,9 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+
+        L.d("websocket123", "足球关闭4");
+
         if (hidden) {
             onPause();
         } else {
@@ -567,7 +569,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
      */
     @Override
     protected void onTextResult(String text) {
-        L.d("qazwsx", "收到消息==" + text);
+        L.d("websocket123", "足球收到消息==" + text);
 
         EventBus.getDefault().post(new FootballScoresWebSocketEntity(text));
     }
@@ -616,8 +618,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         L.d(TAG, "football Fragment destroy view..");
 
         EventBus.getDefault().unregister(this);
-
-
+        closeWebSocket();
     }
 
 
@@ -812,8 +813,10 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
             isFocus = true;
             L.d("xxx", "FocusFragment>>>显示");
         }
-
     }
 
 
+    public void handleWebSocket() {
+        closeWebSocket();
+    }
 }

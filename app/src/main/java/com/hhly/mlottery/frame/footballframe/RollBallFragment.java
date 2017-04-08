@@ -113,11 +113,11 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     private boolean isNewFrameWork;
     private int mEntryType; // 标记入口 判断是从哪里进来的 (0:首页入口  1:新导航条入口)
 
-    public static RollBallFragment newInstance(int index, boolean isNewFramWork,int entryType) {
+    public static RollBallFragment newInstance(int index, boolean isNewFramWork, int entryType) {
         Bundle bundle = new Bundle();
         bundle.putInt(FRAGMENT_INDEX, index);
         bundle.putBoolean(ISNEW_FRAMEWORK, isNewFramWork);
-        bundle.putInt(ENTRY_TYPE , entryType);
+        bundle.putInt(ENTRY_TYPE, entryType);
         RollBallFragment fragment = new RollBallFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -479,7 +479,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
             this.feedAdapter(feedAdapterLists);
 //            ((ScoresFragment) getParentFragment()).focusCallback();
             if (mEntryType == 0) {
-            }else if(mEntryType == 1){
+            } else if (mEntryType == 1) {
                 ((FootBallScoreFragment) getParentFragment()).focusCallback();
             }
         }
@@ -653,4 +653,5 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
             }
         }
     }
+
 }

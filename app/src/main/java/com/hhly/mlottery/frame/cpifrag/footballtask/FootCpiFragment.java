@@ -215,8 +215,8 @@ public class FootCpiFragment extends BaseWebSocketFragment {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //tv_match_name.setText(((TextView) view.findViewById(R.id.tv)).getText().toString());
-                // iv_match.setImageResource(R.mipmap.nav_icon_cbb);
+
+                closeWebSocket();
                 EventBus.getDefault().post(new ScoreSwitchFg(position));
 
                 popupWindow.dismiss();
@@ -535,5 +535,9 @@ public class FootCpiFragment extends BaseWebSocketFragment {
                     return getString(R.string.odd_plate_rb_txt);
             }
         }
+    }
+
+    public void handleWebSocket() {
+        closeWebSocket();
     }
 }

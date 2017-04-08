@@ -426,4 +426,8 @@ public class SnookerListScoreFragment extends BaseWebSocketFragment implements V
                 break;
         }
     }
+
+    public void handleWebSocket() {
+        closeWebSocket();
+    }
 }
