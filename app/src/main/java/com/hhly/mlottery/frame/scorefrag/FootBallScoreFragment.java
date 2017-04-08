@@ -511,7 +511,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         }
         // }
         //if (getActivity() != null && ((FootballActivity) mContext).fragmentIndex != FootballActivity.BASKET_FRAGMENT) {
-        L.d("websocket123", "足球打开");
+        L.d("websocket123", "======足球打开");
         connectWebSocket();
         // }
     }
@@ -817,6 +817,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
 
 
     public void handleWebSocket() {
+        L.d("websocket123", "足球比分关闭");
         closeWebSocket();
     }
 }

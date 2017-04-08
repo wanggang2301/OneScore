@@ -116,10 +116,11 @@ public class ScoreFragment extends Fragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (hidden) { //隐藏
+            L.d("websocket123", "比分推送关闭");
+
             for (Fragment fragment : fragments) {
                 ((BaseWebSocketFragment) fragment).handleWebSocket();
             }
-            L.d("bbnnn", "比分推送关闭");
         }
     }
 }
