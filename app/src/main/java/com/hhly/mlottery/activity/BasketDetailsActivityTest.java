@@ -682,7 +682,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
      * @param basketBallDetails 推送过来消息封装的实体类
      */
     private void updateData(WebSocketBasketBallDetails basketBallDetails) {
-        mBasketDetailsHeadFragment.updateData(basketBallDetails, mChartBallFragment, mTitleGuest, mTitleHome, mTitleVS);
+        mBasketDetailsHeadFragment.updateData(basketBallDetails, mChartBallFragment);
     }
 
     /**
