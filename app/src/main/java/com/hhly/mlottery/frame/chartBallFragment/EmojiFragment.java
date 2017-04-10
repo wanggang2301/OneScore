@@ -78,7 +78,7 @@ public class EmojiFragment extends Fragment {
         iv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO  当点击的为删除键时 删除单个字符
+                //   当点击的为删除键时 删除单个字符
                 int index = mEditText.getSelectionStart();   //获取Edittext光标所在位置
                 String str = mEditText.getText().toString();
                 if (!str.equals("")) {//判断输入框不为空，执行删除

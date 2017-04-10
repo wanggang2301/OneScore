@@ -8,7 +8,7 @@ import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 /**
  * @author wang gang
  * @date 2016/5/6 9:18
- * @des ${TODO}
+ * @des ${}
  */
 public class AccessTokenKeeper {
 

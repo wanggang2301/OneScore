@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * 往期开奖号码
  * @ClassName: NumberHistoryInfo 
- * @Description: TODO
+ * @Description:
  * @author Tenney
  * @date 2015-10-23 下午12:23:41
  */
@@ -42,7 +42,6 @@ public class NumberHistoryInfo implements Serializable {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "开奖期号：" + getIssue() + "-开奖号码 ：" + getNumbers() + "--时间："
 				+ getTime() ;
 	}

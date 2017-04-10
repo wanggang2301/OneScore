@@ -4,7 +4,7 @@ package com.hhly.mlottery.bean.scheduleBean;
 /**
  * 大小球
  * @ClassName: AsiaSize 
- * @Description: TODO
+ * @Description:
  * @author Tenney
  * @date 2015-10-20 下午5:36:08
  */

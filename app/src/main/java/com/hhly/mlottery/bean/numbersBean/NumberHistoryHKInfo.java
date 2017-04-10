@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * 往期六合彩开奖号码
  * @ClassName: NumberHistoryInfo 
- * @Description: TODO
+ * @Description:
  * @author Tenney
  * @date 2015-10-23 下午12:23:41
  */
@@ -50,7 +50,6 @@ public class NumberHistoryHKInfo implements Serializable {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "期号：" + getIssue()+ "-开奖生肖 ：" + getZodiac() + "--时间：" + getTime();
 	}
 }

@@ -55,7 +55,6 @@ public class CyUtils {
             }
             L.i("lzf初始化畅言成功");
         } catch (CyanException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             L.i("lzf初始化畅言失败");
         }

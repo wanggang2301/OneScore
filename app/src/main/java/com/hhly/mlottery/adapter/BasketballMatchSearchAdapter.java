@@ -859,7 +859,6 @@ public class BasketballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerV
 //                            viewHolderList.basket_half_score.setVisibility(View.INVISIBLE);
                     viewHolderList.basket_guest_all_score.setText(DetailsData.getMatchScore().getGuestScore() + "");
                     viewHolderList.basket_home_all_score.setText(DetailsData.getMatchScore().getHomeScore() + "");
-                    //TODO--------********************************
                     viewHolderList.st_time.setText(R.string.basket_interrupt);
                     viewHolderList.st_time.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));//#0085E1
                     settingdata(viewHolderList, -3);

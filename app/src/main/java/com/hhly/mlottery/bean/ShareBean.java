@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /**
  * @author wang gang
  * @date 2016/6/15 15:30
- * @des ${TODO}
+ * @des ${}
  */
 public class ShareBean implements Parcelable {
     private String title;

@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * @author wang gang
  * @date 2016/6/12 15:30
- * @des ${TODO}
+ * @des ${}
  */
 public class BottomOddsDetails {
 

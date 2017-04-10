@@ -63,7 +63,6 @@ public class ChoiceWheelUtil {
         alertDialog = new AlertDialog.Builder(activity,R.style.AlertDialog).create();
         screenwidth = DisplayUtil.getScreenWidth(activity);
         screenheight = DisplayUtil.getScreenHeight(activity);
-        // TODO Auto-generated method stub
         view = activity.getLayoutInflater().inflate(R.layout.dialog_choicewheel, null);
         ListView lv_dialog_choicewheel = (ListView) view.findViewById(R.id.lv_dialog_choicewheel);
 
@@ -74,7 +73,6 @@ public class ChoiceWheelUtil {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO Auto-generated method stub
                 TextView textView = (TextView) view.findViewById(R.id.tv_choicewheel_ls_item);
                 //发送广播通知更新ui
                 Intent intent = new Intent("wheelcount");
@@ -131,7 +129,6 @@ public class ChoiceWheelUtil {
 
     // 设置对话框大小并显示
     private void initWindow() {
-        // TODO Auto-generated method stub
         alertDialog.show();
         Window window = alertDialog.getWindow();
         window.setLayout(screenwidth * 2 / 3, screenheight * 1/2);

@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /**
  * @author wang gang
  * @date 2016/6/8 11:24
- * @des ${TODO}
+ * @des ${}
  */
 public class BottomOddsItem implements Parcelable {
 

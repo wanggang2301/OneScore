@@ -186,7 +186,6 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View view, int postion, long arg3) {
-                // TODO Auto-generated method stub
                 view.findViewById(R.id.tv_list_item).setBackgroundColor(getResources().getColor(R.color.bg));
                 //显示选择的赛季数据
                 tv_right.setText(seasonList.get(postion));// 设置所选的item作为下拉框的标题

@@ -6,7 +6,7 @@ import com.hhly.mlottery.R.string;
 /**
  * 亚赔
  * @ClassName: MatchOdd
- * @Description: TODO
+ * @Description:
  * @author Tenney
  * @date 2015-10-20 下午5:36:54
  */

@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author wang gang
  * @date 2016/6/6 10:06
- * @des ${TODO}
+ * @des ${}
  */
 public class DetailsRollOdd extends FrameLayout {
     private Context mContext;

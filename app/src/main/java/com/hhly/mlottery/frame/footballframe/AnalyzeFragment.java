@@ -208,7 +208,6 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     private AnalyzeAsiaAdapter mSizeAdapter;
 
 
-    // TODO: Rename and change types of parameters
     private String mThirdId="1111";
 
     private NewAnalyzeBean mAnalyzeBean;

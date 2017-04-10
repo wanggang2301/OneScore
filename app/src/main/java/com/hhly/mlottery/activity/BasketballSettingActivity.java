@@ -63,7 +63,6 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.basketball_setting);
 

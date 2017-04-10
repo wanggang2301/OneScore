@@ -675,7 +675,7 @@ public class BasketScheduleNewScoreFragment extends Fragment implements View.OnC
         } else {
 
             L.d("AAAAA-yxq----", "currentMatchData = " + currentMatchData.size());
-//            childrenDataList.clear();//TODO***********-----------
+//            childrenDataList.clear();
             currentMatchData.clear();
             groupDataList.clear();
             List<BasketMatchBean> checkedMatchs = new ArrayList<>();

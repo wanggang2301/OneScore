@@ -15,7 +15,6 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.L;
 
 /**
- * TODO: document your custom view class.
  */
 public class ToolbarScrollerView extends LinearLayout {
 

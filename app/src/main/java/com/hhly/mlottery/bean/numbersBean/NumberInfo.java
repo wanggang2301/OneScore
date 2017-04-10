@@ -57,7 +57,6 @@ public class NumberInfo implements Serializable{
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "彩种：" + getName()
 				+ "-号码 ：" + getNumbers();
 	}

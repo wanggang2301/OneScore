@@ -42,20 +42,17 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
 
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
 //		return  mDatas.size();
         return (mDatas != null) ? mDatas.size() : 0;
     }
 
     @Override
     public T getItem(int arg0) {
-        // TODO Auto-generated method stub
         return mDatas.get(arg0);
     }
 
     @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
