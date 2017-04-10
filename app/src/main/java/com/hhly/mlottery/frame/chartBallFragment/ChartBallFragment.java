@@ -599,12 +599,16 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                         tv_new_msg.setVisibility(View.VISIBLE);
                     }
 
-                    // 收到消息，显示弹幕
-                    if (chartbean.getMsgCode() == 1) {
-                        EventBus.getDefault().post(new BarrageBean(chartbean.getFromUser().getUserLogo(), chartbean.getMessage()));
-                    } else if (chartbean.getMsgCode() == 2) {
-                        String message = chartbean.getToUser() != null ? "@" + chartbean.getToUser().getUserNick() + ":" + chartbean.getMessage() : chartbean.getMessage();
-                        EventBus.getDefault().post(new BarrageBean(chartbean.getFromUser().getUserLogo(), message));
+                    try {
+                        // 收到消息，显示弹幕
+                        if (chartbean.getMsgCode() == 1) {
+                            EventBus.getDefault().post(new BarrageBean(chartbean.getFromUser().getUserLogo(), chartbean.getMessage()));
+                        } else if (chartbean.getMsgCode() == 2) {
+                            String message = chartbean.getToUser() != null ? "@" + chartbean.getToUser().getUserNick() + ":" + chartbean.getMessage() : chartbean.getMessage();
+                            EventBus.getDefault().post(new BarrageBean(chartbean.getFromUser().getUserLogo(), message));
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
 
                     if (msg.arg2 == 2) { // 为@消息
