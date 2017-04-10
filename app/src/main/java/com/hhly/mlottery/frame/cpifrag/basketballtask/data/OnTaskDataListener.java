@@ -14,7 +14,7 @@ public interface OnTaskDataListener {
 
     void getDataError();
 
-    void getNoData();
+    void getNoData(String date);
 
     interface BasketIndex extends OnTaskDataListener {
         void getDataSucess(BasketIndexBean o);

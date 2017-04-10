@@ -3,7 +3,6 @@ package com.hhly.mlottery.frame.cpifrag.basketballtask.data;
 import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
 import com.hhly.mlottery.bean.basket.index.BasketIndexDetailsBean;
 import com.hhly.mlottery.util.CollectionUtils;
-import com.hhly.mlottery.util.L;
 
 import rx.Subscriber;
 
@@ -33,7 +32,7 @@ public class GetTaskSource implements IGetTaskSource {
                 if (o.getResult() == 200) {
 
                     if (o == null || !CollectionUtils.notEmpty(o.getData().getAllInfo())) {
-                        iGetTaskData.getNoData();
+                        iGetTaskData.getNoData(o.getData().getCurrDate());
                         return;
                     }
 
@@ -65,7 +64,7 @@ public class GetTaskSource implements IGetTaskSource {
                     if (basketIndexDetailsBean.getOddsData() != null) {
                         iGetTaskData.getDataSucess(basketIndexDetailsBean);
                     } else {
-                        iGetTaskData.getNoData();
+                        iGetTaskData.getNoData("");
                     }
                 } else {
                     iGetTaskData.getDataError();
