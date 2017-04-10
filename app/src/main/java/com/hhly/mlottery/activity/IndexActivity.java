@@ -308,6 +308,7 @@ public class IndexActivity extends BaseActivity {
             public synchronized void onResponse(final InformationBean info) {
                 if (info != null) {
                     if (info.getInfo() != null) {
+
                         L.d("xxx", "推送资讯访问成功！");
                         Intent intent = new Intent(IndexActivity.this, WebActivity.class);
                         intent.putExtra("key", info.getInfo().getInfoUrl());// URL

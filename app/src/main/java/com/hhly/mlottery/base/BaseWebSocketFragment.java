@@ -297,8 +297,7 @@ public abstract class BaseWebSocketFragment extends Fragment {
 
     }
 
-    public void handleWebSocket() {
+    public  void handleWebSocket() {
         closeWebSocket();
     }
-
 }
