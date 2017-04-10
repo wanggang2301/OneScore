@@ -76,11 +76,11 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
     /**
      * 亚盘
      */
-    public final static String ODDS_LET = "3";
+    public final static String ODDS_LET = "2";
     /**
      * 大小球
      */
-    public final static String ODDS_SIZE = "2";
+    public final static String ODDS_SIZE = "3";
     /**
      * 单双
      */
