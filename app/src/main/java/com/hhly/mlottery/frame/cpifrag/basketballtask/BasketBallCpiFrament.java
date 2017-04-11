@@ -39,6 +39,7 @@ import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
 import com.hhly.mlottery.frame.oddfragment.basketoddframent.BasketCompanyChooseDialogFragment;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
+import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
@@ -225,28 +226,32 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
      * 初始化公司选择Dialog
      */
     private void maybeInitCompanyChooseDialog() {
-        mCompanyChooseDialogFragment = BasketCompanyChooseDialogFragment.newInstance((ArrayList<BasketIndexBean.DataBean.CompanyBean>) companyMap.get(oddType),
-                new BasketCompanyChooseDialogFragment.OnFinishSelectionListener() {
-                    @Override
-                    public void onFinishSelection() {
-                        //对公司的筛选
+        ArrayList<BasketIndexBean.DataBean.CompanyBean> arrayList = (ArrayList<BasketIndexBean.DataBean.CompanyBean>) companyMap.get(oddType);
 
-                        switch (oddType) {
-                            case BasketOddsTypeEnum.ASIALET:
-                                mFragments.get(0).updateFilterData();
-                                break;
-                            case BasketOddsTypeEnum.ASIASIZE:
-                                mFragments.get(1).updateFilterData();
-                                break;
-                            case BasketOddsTypeEnum.EURO:
-                                mFragments.get(2).updateFilterData();
-                                break;
+        if (CollectionUtils.notEmpty(arrayList)) {
+            mCompanyChooseDialogFragment = BasketCompanyChooseDialogFragment.newInstance(arrayList,
+                    new BasketCompanyChooseDialogFragment.OnFinishSelectionListener() {
+                        @Override
+                        public void onFinishSelection() {
+                            //对公司的筛选
 
-                            default:
-                                break;
+                            switch (oddType) {
+                                case BasketOddsTypeEnum.ASIALET:
+                                    mFragments.get(0).updateFilterData();
+                                    break;
+                                case BasketOddsTypeEnum.ASIASIZE:
+                                    mFragments.get(1).updateFilterData();
+                                    break;
+                                case BasketOddsTypeEnum.EURO:
+                                    mFragments.get(2).updateFilterData();
+                                    break;
+
+                                default:
+                                    break;
+                            }
                         }
-                    }
-                });
+                    });
+        }
     }
 
 
