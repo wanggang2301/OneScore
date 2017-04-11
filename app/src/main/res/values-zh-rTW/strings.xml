@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="games_no_start">未开始</string>
+    <string name="games_no_start">未開始</string>
     <!--足球事件直播-->
     <string name="foot_event">事件</string>
     <string name="foot_trend">走勢</string>
