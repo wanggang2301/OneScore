@@ -130,7 +130,7 @@ public abstract class BaseWebSocketActivity extends AppCompatActivity {
 //        new Thread(new Runnable() {
 //            @Override
 //            public void run() {
-//                synchronized (ws) {
+//                synchronized (this) {
 //        if (ws.getState().equals(WebSocketState.CREATED)) {
 //            L.d(TAG, "run");
 //            try {
@@ -156,7 +156,7 @@ public abstract class BaseWebSocketActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (ws != null) {
-                    synchronized (ws) {
+                    synchronized (this) {
                         ws.disconnect();
                     }
                     ws = null;
@@ -176,7 +176,7 @@ public abstract class BaseWebSocketActivity extends AppCompatActivity {
     private void connect() {
         try {
             if (ws != null) {
-                synchronized (ws) {
+                synchronized (this) {
                     if (ws != null) {
                         if (ws.getState().equals(WebSocketState.CREATED)) {
                             ws.connect();
@@ -211,7 +211,7 @@ public abstract class BaseWebSocketActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (ws != null) {
-                    synchronized (ws) {
+                    synchronized (this) {
                         if (ws != null) {
                             ws.disconnect();
                         }
