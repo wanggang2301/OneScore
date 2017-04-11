@@ -136,6 +136,7 @@ public class BasketBallMatchSearchActivity extends BaseActivity implements View.
 
     //请求加载数据
     private void initData(String keyWord) {
+        mMatchdata.clear();
         Map<String, String> params = new HashMap<>();
         params.put("searchKeyword", keyWord);//接口添加 version=xx 字段
         VolleyContentFast.requestJsonByPost(BaseURLs.IOSBASKETBALLMATCH, params, new VolleyContentFast.ResponseSuccessListener<BasketballSearchBean>() {
