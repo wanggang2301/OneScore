@@ -50,7 +50,7 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
         int awayTotal = matchDataBean.getMatchScore().getAwayTotalScore();
 
         // 联赛名
-        baseViewHolder.setText(R.id.tv_match_name, matchDataBean.getLeagueName());
+        baseViewHolder.setText(R.id.tv_match_name, matchDataBean.getLeagueName() + " " + matchDataBean.getRoundName());
 
         // -6 P2退赛,-5 P1退赛,-4 待定,-3 推迟,-2 中断,-1 完,0 未开始,>0 进行中
         switch (matchDataBean.getMatchStatus()) {
@@ -107,7 +107,7 @@ public class TennisBallScoreAdapter extends BaseQuickAdapter<MatchDataBean> {
                 }
 
                 baseViewHolder.setText(R.id.tv_tennis_odds_r, matchDataBean.getMatchOdds().getEuro().getR() == null ? "" : matchDataBean.getMatchOdds().getEuro().getR());
-            }else if("asize".equals(matchDataBean.getOddsType()) && matchDataBean.getMatchOdds().getAsiaSize() != null){
+            } else if ("asize".equals(matchDataBean.getOddsType()) && matchDataBean.getMatchOdds().getAsiaSize() != null) {
                 baseViewHolder.setText(R.id.tv_tennis_odds_l, matchDataBean.getMatchOdds().getAsiaSize().getL() == null ? "" : matchDataBean.getMatchOdds().getAsiaSize().getL());
                 baseViewHolder.setText(R.id.tv_tennis_odds_m, matchDataBean.getMatchOdds().getAsiaSize().getM() == null ? "" : matchDataBean.getMatchOdds().getAsiaSize().getM());
                 baseViewHolder.setText(R.id.tv_tennis_odds_r, matchDataBean.getMatchOdds().getAsiaSize().getR() == null ? "" : matchDataBean.getMatchOdds().getAsiaSize().getR());
