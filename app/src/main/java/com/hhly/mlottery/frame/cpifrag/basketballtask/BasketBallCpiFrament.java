@@ -56,6 +56,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
+import static com.hhly.mlottery.R.id.public_date_layout;
+
 /**
  * @author wangg
  * @des:篮球指数
@@ -63,7 +65,7 @@ import de.greenrobot.event.EventBus;
  */
 public class BasketBallCpiFrament extends BaseWebSocketFragment implements ExactSwipeRefreshLayout.OnRefreshListener {
 
-    @BindView(R.id.public_date_layout)
+    @BindView(public_date_layout)
     LinearLayout publicDateLayout;
     @BindView(R.id.tv_match_name)
     TextView tvMatchName;
@@ -205,7 +207,7 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
     public void showRightButton() {
         publicImgCompany.setVisibility(View.VISIBLE);
         publicImgFilter.setVisibility(View.VISIBLE);
-
+        publicDateLayout.setVisibility(View.VISIBLE);
     }
 
 
@@ -359,10 +361,10 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
     }
 
 
-    @OnClick({R.id.public_date_layout, R.id.ll_match_select, R.id.public_img_company, R.id.public_img_filter})
+    @OnClick({public_date_layout, R.id.ll_match_select, R.id.public_img_company, R.id.public_img_filter})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.public_date_layout:
+            case public_date_layout:
                 showDateChooseDialog();
                 break;
 

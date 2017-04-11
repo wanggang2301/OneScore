@@ -72,7 +72,7 @@ public class BasketIndexDetailsChildPresenter extends BasePresenter<BasketIndexD
             }
 
             @Override
-            public void getNoData() {
+            public void getNoData(String date) {
                 mView.setTitle();
 
                 mView.noDataView();

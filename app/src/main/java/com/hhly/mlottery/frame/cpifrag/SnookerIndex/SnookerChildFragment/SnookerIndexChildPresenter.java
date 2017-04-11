@@ -60,7 +60,11 @@ public class SnookerIndexChildPresenter extends BasePresenter<SnookerIndexChildC
         VolleyContentFast.requestJsonByGet(url, params,new VolleyContentFast.ResponseSuccessListener<SnookerIndexBean>() {
             @Override
             public void onResponse(SnookerIndexBean jsonObject) {
-                if(jsonObject.getCode()!=200) mView.showNoData(NODATA);
+                if(jsonObject.getCode()!=200) {
+                    if(finalIsFirst){
+                        mView.setParentData(jsonObject);
+                    }
+                    mView.showNoData(NODATA);}
                 else {
                     mRawData=jsonObject.getAllInfo();
 

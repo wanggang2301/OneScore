@@ -30,7 +30,7 @@ public interface BasketBallContract {
 
         void showResponseDataView();
 
-        void noData();
+        void noData(String date);
     }
 
     interface OddPresenter extends IPresenter<BasketBallContract.OddView> {
