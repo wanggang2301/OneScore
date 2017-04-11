@@ -217,9 +217,7 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
      */
     public void showCompanyChooseDialog() {
         maybeInitCompanyChooseDialog();
-        if (!mCompanyChooseDialogFragment.isVisible()) {
-            mCompanyChooseDialogFragment.show(getChildFragmentManager(), "companyChooseDialog");
-        }
+
     }
 
     /**
@@ -251,6 +249,10 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
                             }
                         }
                     });
+
+            if (!mCompanyChooseDialogFragment.isVisible()) {
+                mCompanyChooseDialogFragment.show(getChildFragmentManager(), "companyChooseDialog");
+            }
         }
     }
 
