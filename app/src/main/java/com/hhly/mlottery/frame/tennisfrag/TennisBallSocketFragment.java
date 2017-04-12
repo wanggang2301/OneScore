@@ -331,10 +331,15 @@ public class TennisBallSocketFragment extends BaseWebSocketFragment implements S
                                     asiaSize.setM(oddsBean.getDataObj().getMatchOdd().getM());
                                     asiaSize.setR(oddsBean.getDataObj().getMatchOdd().getR());
                                 }
-                                if (mAdapter != null) {
-                                    L.d("tennis", "网球赔率推送,更新了!");
-                                    mAdapter.notifyDataSetChanged();
-                                }
+                                mContext.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (mAdapter != null) {
+                                            L.d("tennis", "网球赔率推送,更新了!");
+                                            mAdapter.notifyDataSetChanged();
+                                        }
+                                    }
+                                });
                                 break;
                             }
                         }

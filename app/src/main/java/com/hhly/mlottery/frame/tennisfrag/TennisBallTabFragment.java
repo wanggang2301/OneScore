@@ -1,5 +1,6 @@
 package com.hhly.mlottery.frame.tennisfrag;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -57,7 +58,7 @@ public class TennisBallTabFragment extends Fragment implements SwipeRefreshLayou
     private static final String TENNIS_TYPE = "tennis_type";
     private int type;
 
-    private Context mContext;
+    private Activity mContext;
     private View mView;
     private View mEmptyView;
     private View mErrorLayout;
@@ -96,7 +97,6 @@ public class TennisBallTabFragment extends Fragment implements SwipeRefreshLayou
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        mContext = getActivity();
         mView = View.inflate(mContext, R.layout.fragment_tennls_ball_tab, null);
         mEmptyView = inflater.inflate(R.layout.tennis_empty_layout, container, false);
 
@@ -105,6 +105,12 @@ public class TennisBallTabFragment extends Fragment implements SwipeRefreshLayou
         initData();
         initEvent();
         return mView;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = (Activity) context;
     }
 
     private void initEvent() {
@@ -268,7 +274,7 @@ public class TennisBallTabFragment extends Fragment implements SwipeRefreshLayou
     }
 
     // 指数数据推送变化
-    public void oddsDataChanger(final String text){
+    public void oddsDataChanger(final String text) {
         new Thread() {
             @Override
             public void run() {
@@ -298,10 +304,15 @@ public class TennisBallTabFragment extends Fragment implements SwipeRefreshLayou
                                     asiaSize.setM(oddsBean.getDataObj().getMatchOdd().getM());
                                     asiaSize.setR(oddsBean.getDataObj().getMatchOdd().getR());
                                 }
-                                if (mAdapter != null) {
-                                    L.d("tennis", "网球赔率推送,更新了!");
-                                    mAdapter.notifyDataSetChanged();
-                                }
+                                mContext.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (mAdapter != null) {
+                                            L.d("tennis", "网球赔率推送,更新了!");
+                                            mAdapter.notifyDataSetChanged();
+                                        }
+                                    }
+                                });
                                 break;
                             }
                         }
@@ -322,7 +333,7 @@ public class TennisBallTabFragment extends Fragment implements SwipeRefreshLayou
                 mData.get(i).setOddsType("eur");
             } else if (PreferenceUtil.getBoolean(MyConstants.TENNIS_NOTSHOW, false)) {// 不显示
                 mData.get(i).setOddsType("noshow");
-            } else if (PreferenceUtil.getBoolean(MyConstants.TENNIS_ASIZE, false)){// 大小球
+            } else if (PreferenceUtil.getBoolean(MyConstants.TENNIS_ASIZE, false)) {// 大小球
                 mData.get(i).setOddsType("asize");
             }
         }
