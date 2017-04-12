@@ -185,6 +185,12 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
         connectWebSocket();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        closeWebSocket();
+    }
+
     private void popWindow(final View v) {
         final View mView = View.inflate(mContext, R.layout.pop_select, null);
         // 创建ArrayAdapter对象

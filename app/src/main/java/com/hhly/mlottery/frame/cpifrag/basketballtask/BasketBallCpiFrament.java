@@ -502,6 +502,8 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
      */
     private void handleMessage(String jsonString) {
         JSONObject jsonObject = JSON.parseObject(jsonString);
+        L.d("pushtextscore", "推送数据==" + jsonString);
+
         int type = jsonObject.getIntValue("type");
         if (type == 100) {  //比分
             L.d("pushtextscore", "比分推送数据==" + jsonString);

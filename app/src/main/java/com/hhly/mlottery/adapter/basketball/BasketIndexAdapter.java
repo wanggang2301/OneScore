@@ -114,7 +114,12 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
                     sectionTxt = "1st";
                 }
 
-                baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt + " " + allInfoBean.getRemainTime());
+                if (TextUtils.isEmpty(allInfoBean.getRemainTime()) || allInfoBean.getRemainTime().equals("")) {
+                    baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt);
+                } else {
+                    baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt + " " + allInfoBean.getRemainTime());
+                }
+
                 baseViewHolder.setText(R.id.cpi_item_seconds_txt, "'");
                 baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#0090ff"));
                 baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#0090ff"));
@@ -127,7 +132,13 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
                     sectionTxt = "2nd";
                 }
 
-                baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt + " " + allInfoBean.getRemainTime());
+
+                if (TextUtils.isEmpty(allInfoBean.getRemainTime()) || allInfoBean.getRemainTime().equals("")) {
+                    baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt);
+                } else {
+                    baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt + " " + allInfoBean.getRemainTime());
+                }
+
                 baseViewHolder.setText(R.id.cpi_item_seconds_txt, "'");
                 baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#0090ff"));
                 baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#0090ff"));
@@ -141,7 +152,12 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
                     sectionTxt = "3rd";
                 }
 
-                baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt + " " + allInfoBean.getRemainTime());
+                if (TextUtils.isEmpty(allInfoBean.getRemainTime()) || allInfoBean.getRemainTime().equals("")) {
+                    baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt);
+                } else {
+                    baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt + " " + allInfoBean.getRemainTime());
+                }
+
                 baseViewHolder.setText(R.id.cpi_item_seconds_txt, "'");
                 baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#0090ff"));
                 baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#0090ff"));
@@ -153,8 +169,11 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
                 } else if (allInfoBean.getSection() == 4) {
                     sectionTxt = "4th";
                 }
-
-                baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt + " " + allInfoBean.getRemainTime());
+                if (TextUtils.isEmpty(allInfoBean.getRemainTime()) || allInfoBean.getRemainTime().equals("")) {
+                    baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt);
+                } else {
+                    baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt + " " + allInfoBean.getRemainTime());
+                }
                 baseViewHolder.setText(R.id.cpi_item_seconds_txt, "'");
                 baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#0090ff"));
                 baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#0090ff"));
@@ -162,8 +181,11 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
                 break;
             case 5:
                 sectionTxt = "OT1";
-
-                baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt + " " + allInfoBean.getRemainTime());
+                if (TextUtils.isEmpty(allInfoBean.getRemainTime()) || allInfoBean.getRemainTime().equals("")) {
+                    baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt);
+                } else {
+                    baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt + " " + allInfoBean.getRemainTime());
+                }
                 baseViewHolder.setText(R.id.cpi_item_seconds_txt, "'");
                 baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#0090ff"));
                 baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#0090ff"));
@@ -171,8 +193,11 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
                 break;
             case 6:
                 sectionTxt = "OT2";
-
-                baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt + " " + allInfoBean.getRemainTime());
+                if (TextUtils.isEmpty(allInfoBean.getRemainTime()) || allInfoBean.getRemainTime().equals("")) {
+                    baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt);
+                } else {
+                    baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt + " " + allInfoBean.getRemainTime());
+                }
                 baseViewHolder.setText(R.id.cpi_item_seconds_txt, "'");
                 baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#0090ff"));
                 baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#0090ff"));
@@ -180,8 +205,11 @@ public class BasketIndexAdapter extends BaseQuickAdapter<BasketIndexBean.DataBea
                 break;
             case 7:
                 sectionTxt = "OT3";
-
-                baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt + " " + allInfoBean.getRemainTime());
+                if (TextUtils.isEmpty(allInfoBean.getRemainTime()) || allInfoBean.getRemainTime().equals("")) {
+                    baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt);
+                } else {
+                    baseViewHolder.setText(R.id.cpi_item_remainTime_txt, sectionTxt + " " + allInfoBean.getRemainTime());
+                }
                 baseViewHolder.setText(R.id.cpi_item_seconds_txt, "'");
                 baseViewHolder.setTextColor(R.id.cpi_score_txt, Color.parseColor("#0090ff"));
                 baseViewHolder.setTextColor(R.id.tv_tag, Color.parseColor("#0090ff"));

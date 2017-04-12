@@ -56,9 +56,9 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.tennis.score");
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.tennis_details_activity);
 
         mThirdId = getIntent().getStringExtra("thirdId");

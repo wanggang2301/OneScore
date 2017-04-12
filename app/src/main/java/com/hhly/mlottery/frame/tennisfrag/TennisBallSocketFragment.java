@@ -234,7 +234,7 @@ public class TennisBallSocketFragment extends BaseWebSocketFragment implements S
     }
 
     // webSocket
-    public void socketDataChanged(final String text) {
+    public synchronized void socketDataChanged(final String text) {
         new Thread() {
             @Override
             public void run() {
@@ -301,7 +301,7 @@ public class TennisBallSocketFragment extends BaseWebSocketFragment implements S
     }
 
     // 指数数据推送变化
-    public void oddsDataChanger(final String text) {
+    public synchronized void oddsDataChanger(final String text) {
         new Thread() {
             @Override
             public void run() {
@@ -331,10 +331,15 @@ public class TennisBallSocketFragment extends BaseWebSocketFragment implements S
                                     asiaSize.setM(oddsBean.getDataObj().getMatchOdd().getM());
                                     asiaSize.setR(oddsBean.getDataObj().getMatchOdd().getR());
                                 }
-                                if (mAdapter != null) {
-                                    L.d("tennis", "网球赔率推送,更新了!");
-                                    mAdapter.notifyDataSetChanged();
-                                }
+                                mContext.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (mAdapter != null) {
+                                            L.d("tennis", "网球赔率推送,更新了!");
+                                            mAdapter.notifyDataSetChanged();
+                                        }
+                                    }
+                                });
                                 break;
                             }
                         }
