@@ -95,7 +95,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="18dp"
                     android:button="@drawable/basketball_setting"
-                    android:clickable="false"/>
+                    android:clickable="false" />
             </RelativeLayout>
 
             <View
@@ -128,7 +128,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="18dp"
                     android:button="@drawable/basketball_setting"
-                    android:clickable="false"/>
+                    android:clickable="false" />
             </RelativeLayout>
 
             <View
@@ -161,8 +161,13 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="18dp"
                     android:button="@drawable/basketball_setting"
-                    android:clickable="false"/>
+                    android:clickable="false" />
             </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.4dp"
+                android:background="#dddddd" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
