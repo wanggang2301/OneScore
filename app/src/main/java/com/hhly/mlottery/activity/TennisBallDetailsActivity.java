@@ -333,7 +333,6 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tennis_details_back:
-                closeWebSocket();
                 this.finish();
                 break;
         }

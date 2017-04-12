@@ -209,6 +209,7 @@ public class TennisCpiDetailsFragment extends Fragment {
 
                         //倒序，排列父view
                         Collections.reverse(groupDataList);
+
                         //倒序，排列子view
                         Collections.reverse(childDetailsList);
                         //判断主队的数据
@@ -252,7 +253,11 @@ public class TennisCpiDetailsFragment extends Fragment {
                             //默认打开全部的父类view
                             cpi_odds_tetails_right_listview.expandGroup(i);
                         }
-                        mHandler.sendEmptyMessage(SUCCESS);
+                        if (childDetailsList.size() == 0) {
+                            mHandler.sendEmptyMessage(NODATA);
+                        } else {
+                            mHandler.sendEmptyMessage(SUCCESS);
+                        }
                     } else {
                         mHandler.sendEmptyMessage(NODATA);
                     }
