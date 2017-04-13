@@ -71,6 +71,8 @@ public class SnookerListScoreFragment extends BaseWebSocketFragment implements V
         setTopic("USER.topic.snooker");
         super.onCreate(savedInstanceState);
 
+        EventBus.getDefault().register(this);
+
     }
 
     @Nullable
@@ -274,6 +276,7 @@ public class SnookerListScoreFragment extends BaseWebSocketFragment implements V
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -427,7 +430,17 @@ public class SnookerListScoreFragment extends BaseWebSocketFragment implements V
         }
     }
 
-    public void handleWebSocket() {
-        closeWebSocket();
+
+    public void onEventMainThread(CloseWebSocketEventBus closeWebSocketEventBus) {
+
+        if (closeWebSocketEventBus.isVisible()) {
+            L.d("websocket123", "斯洛克比分关闭fg");
+            closeWebSocket();
+        } else {
+            if (closeWebSocketEventBus.getIndex() == 2) {
+                L.d("websocket123", "斯洛克比分打开fg");
+                connectWebSocket();
+            }
+        }
     }
 }

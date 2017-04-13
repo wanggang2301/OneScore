@@ -38,8 +38,10 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.oddfragment.CompanyChooseDialogFragment;
 import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
+import com.hhly.mlottery.frame.scorefrag.CloseWebSocketEventBus;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.util.DateUtil;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 
 import java.io.Serializable;
@@ -99,6 +101,8 @@ public class FootCpiFragment extends BaseWebSocketFragment {
         setTopic("USER.topic.indexcenter");
         setWebSocketUri(BaseURLs.WS_SERVICE);
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+
     }
 
     @Nullable
@@ -457,6 +461,14 @@ public class FootCpiFragment extends BaseWebSocketFragment {
         }
     }
 
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+        closeWebSocket();
+    }
+
     /**
      * 更新时间和状态
      *
@@ -537,7 +549,17 @@ public class FootCpiFragment extends BaseWebSocketFragment {
         }
     }
 
-    public void handleWebSocket() {
-        closeWebSocket();
+    public void onEventMainThread(CloseWebSocketEventBus closeWebSocketEventBus) {
+
+        if (closeWebSocketEventBus.isVisible()) {
+            L.d("websocket123", "足球指数关闭fg");
+            closeWebSocket();
+        } else {
+            if (closeWebSocketEventBus.getIndex() == 0) {
+                L.d("websocket123", "足球指数打开fg");
+
+                connectWebSocket();
+            }
+        }
     }
 }

@@ -489,7 +489,7 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             settingdata(viewHolderList, 1);
                             viewHolderList.score_data.setVisibility(View.VISIBLE);
                             setSingleScore(viewHolderList , DetailsData.getMatchScore());
-                            setVisible(viewHolderList , DetailsData.getSection());
+                            setVisible(viewHolderList , DetailsData.getSection() , score);
                             viewHolderList.guest_score_ot.setVisibility(View.GONE);
                             viewHolderList.home_score_ot.setVisibility(View.GONE);
                             break;
@@ -544,7 +544,7 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             settingdata(viewHolderList, 2);
                             viewHolderList.score_data.setVisibility(View.VISIBLE);
                             setSingleScore(viewHolderList , DetailsData.getMatchScore());
-                            setVisible(viewHolderList , DetailsData.getSection());
+                            setVisible(viewHolderList , DetailsData.getSection() , score);
                             viewHolderList.guest_score_ot.setVisibility(View.GONE);
                             viewHolderList.home_score_ot.setVisibility(View.GONE);
                             break;
@@ -603,7 +603,7 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             settingdata(viewHolderList, 3);
                             viewHolderList.score_data.setVisibility(View.VISIBLE);
                             setSingleScore(viewHolderList , DetailsData.getMatchScore());
-                            setVisible(viewHolderList , DetailsData.getSection());
+                            setVisible(viewHolderList , DetailsData.getSection() , score);
                             viewHolderList.guest_score_ot.setVisibility(View.GONE);
                             viewHolderList.home_score_ot.setVisibility(View.GONE);
                             break;
@@ -661,7 +661,7 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             settingdata(viewHolderList, 4);
                             viewHolderList.score_data.setVisibility(View.VISIBLE);
                             setSingleScore(viewHolderList , DetailsData.getMatchScore());
-                            setVisible(viewHolderList , DetailsData.getSection());
+                            setVisible(viewHolderList , DetailsData.getSection() , score);
                             viewHolderList.guest_score_ot.setVisibility(View.GONE);
                             viewHolderList.home_score_ot.setVisibility(View.GONE);
                             break;
@@ -715,7 +715,7 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             viewHolderList.st_time.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
                             viewHolderList.score_data.setVisibility(View.VISIBLE);
                             setSingleScore(viewHolderList , DetailsData.getMatchScore());
-                            setVisible(viewHolderList , DetailsData.getSection());
+                            setVisible(viewHolderList , DetailsData.getSection() , score);
                             viewHolderList.guest_score_ot.setText(DetailsData.getMatchScore().getGuestOt1()+"");//加时比分
                             viewHolderList.home_score_ot.setText(DetailsData.getMatchScore().getHomeOt1()+"");
                             viewHolderList.guest_score_ot.setVisibility(View.VISIBLE);
@@ -769,7 +769,7 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             viewHolderList.st_time.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
                             viewHolderList.score_data.setVisibility(View.VISIBLE);
                             setSingleScore(viewHolderList , DetailsData.getMatchScore());
-                            setVisible(viewHolderList , DetailsData.getSection());
+                            setVisible(viewHolderList , DetailsData.getSection() , score);
                             viewHolderList.guest_score_ot.setText(DetailsData.getMatchScore().getGuestOt2()+"");//加时比分
                             viewHolderList.home_score_ot.setText(DetailsData.getMatchScore().getHomeOt2()+"");
                             viewHolderList.guest_score_ot.setVisibility(View.VISIBLE);
@@ -822,7 +822,7 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             viewHolderList.st_time.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
                             viewHolderList.score_data.setVisibility(View.VISIBLE);
                             setSingleScore(viewHolderList , DetailsData.getMatchScore());
-                            setVisible(viewHolderList , DetailsData.getSection());
+                            setVisible(viewHolderList , DetailsData.getSection() , score);
                             viewHolderList.guest_score_ot.setText(DetailsData.getMatchScore().getGuestOt3()+"");//加时比分
                             viewHolderList.home_score_ot.setText(DetailsData.getMatchScore().getHomeOt3()+"");
                             viewHolderList.guest_score_ot.setVisibility(View.VISIBLE);
@@ -864,7 +864,7 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             viewHolderList.st_time.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
                             viewHolderList.score_data.setVisibility(View.VISIBLE);
                             setSingleScore(viewHolderList , DetailsData.getMatchScore());
-                            setVisible(viewHolderList , DetailsData.getSection());
+                            setVisible(viewHolderList , DetailsData.getSection() , score);
                             viewHolderList.guest_score_ot.setVisibility(View.GONE);
                             viewHolderList.home_score_ot.setVisibility(View.GONE);
                             break;
@@ -905,7 +905,7 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
 
                             viewHolderList.score_data.setVisibility(View.VISIBLE);
                             setSingleScore(viewHolderList , DetailsData.getMatchScore());
-                            setVisible(viewHolderList , DetailsData.getSection());
+                            setVisible(viewHolderList , DetailsData.getSection() , score);
                             viewHolderList.guest_score_ot.setVisibility(View.GONE);
                             viewHolderList.home_score_ot.setVisibility(View.GONE);
                             break;
@@ -942,7 +942,7 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             settingdata(viewHolderList, -3);
                             viewHolderList.score_data.setVisibility(View.VISIBLE);
                             setSingleScore(viewHolderList , DetailsData.getMatchScore());
-                            setVisible(viewHolderList , DetailsData.getSection());
+                            setVisible(viewHolderList , DetailsData.getSection() , score);
                             viewHolderList.guest_score_ot.setVisibility(View.GONE);
                             viewHolderList.home_score_ot.setVisibility(View.GONE);
                             break;
@@ -965,7 +965,7 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                             settingdata(viewHolderList, -4);
                             viewHolderList.score_data.setVisibility(View.VISIBLE);
                             setSingleScore(viewHolderList , DetailsData.getMatchScore());
-                            setVisible(viewHolderList , DetailsData.getSection());
+                            setVisible(viewHolderList , DetailsData.getSection() , score);
                             viewHolderList.guest_score_ot.setVisibility(View.GONE);
                             viewHolderList.home_score_ot.setVisibility(View.GONE);
                             break;
@@ -1252,25 +1252,114 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
             }
         }
     }
-    private void setVisible(ViewHolderList viewHolderList , int section){
+    private void setVisible(ViewHolderList viewHolderList , int section , int type){
+        //0:未开赛,1:一节,2:二节,5:1'OT，以此类推 -1:完场,-2:待定,-3:中断,-4:取消,-5:推迟,50中场
         if (section == 2) {
-            viewHolderList.guest_score1.setVisibility(View.VISIBLE);
-            viewHolderList.guest_score2.setVisibility(View.INVISIBLE);
-            viewHolderList.guest_score3.setVisibility(View.VISIBLE);
-            viewHolderList.guest_score4.setVisibility(View.INVISIBLE);
-            viewHolderList.home_score1.setVisibility(View.VISIBLE);
-            viewHolderList.home_score2.setVisibility(View.INVISIBLE);
-            viewHolderList.home_score3.setVisibility(View.VISIBLE);
-            viewHolderList.home_score4.setVisibility(View.INVISIBLE);
+            switch (type){
+                case 1:
+                    viewHolderList.guest_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.guest_score2.setVisibility(View.INVISIBLE);
+                    viewHolderList.guest_score3.setVisibility(View.INVISIBLE);
+                    viewHolderList.guest_score4.setVisibility(View.INVISIBLE);
+                    viewHolderList.home_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score2.setVisibility(View.INVISIBLE);
+                    viewHolderList.home_score3.setVisibility(View.INVISIBLE);
+                    viewHolderList.home_score4.setVisibility(View.INVISIBLE);
+                    break;
+                case 2:
+                    viewHolderList.guest_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.guest_score2.setVisibility(View.INVISIBLE);
+                    viewHolderList.guest_score3.setVisibility(View.INVISIBLE);
+                    viewHolderList.guest_score4.setVisibility(View.INVISIBLE);
+                    viewHolderList.home_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score2.setVisibility(View.INVISIBLE);
+                    viewHolderList.home_score3.setVisibility(View.INVISIBLE);
+                    viewHolderList.home_score4.setVisibility(View.INVISIBLE);
+                    break;
+                case 3:
+                    viewHolderList.guest_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.guest_score2.setVisibility(View.INVISIBLE);
+                    viewHolderList.guest_score3.setVisibility(View.VISIBLE);
+                    viewHolderList.guest_score4.setVisibility(View.INVISIBLE);
+                    viewHolderList.home_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score2.setVisibility(View.INVISIBLE);
+                    viewHolderList.home_score3.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score4.setVisibility(View.INVISIBLE);
+                    break;
+                case 4:
+                    viewHolderList.guest_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.guest_score2.setVisibility(View.INVISIBLE);
+                    viewHolderList.guest_score3.setVisibility(View.VISIBLE);
+                    viewHolderList.guest_score4.setVisibility(View.INVISIBLE);
+                    viewHolderList.home_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score2.setVisibility(View.INVISIBLE);
+                    viewHolderList.home_score3.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score4.setVisibility(View.INVISIBLE);
+                    break;
+                default:
+                    viewHolderList.guest_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.guest_score2.setVisibility(View.INVISIBLE);
+                    viewHolderList.guest_score3.setVisibility(View.VISIBLE);
+                    viewHolderList.guest_score4.setVisibility(View.INVISIBLE);
+                    viewHolderList.home_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score2.setVisibility(View.INVISIBLE);
+                    viewHolderList.home_score3.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score4.setVisibility(View.INVISIBLE);
+                    break;
+            }
         }else if(section == 4){
-            viewHolderList.guest_score1.setVisibility(View.VISIBLE);
-            viewHolderList.guest_score2.setVisibility(View.VISIBLE);
-            viewHolderList.guest_score3.setVisibility(View.VISIBLE);
-            viewHolderList.guest_score4.setVisibility(View.VISIBLE);
-            viewHolderList.home_score1.setVisibility(View.VISIBLE);
-            viewHolderList.home_score2.setVisibility(View.VISIBLE);
-            viewHolderList.home_score3.setVisibility(View.VISIBLE);
-            viewHolderList.home_score4.setVisibility(View.VISIBLE);
+            switch (type){
+                case 1:
+                    viewHolderList.guest_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.guest_score2.setVisibility(View.INVISIBLE);
+                    viewHolderList.guest_score3.setVisibility(View.INVISIBLE);
+                    viewHolderList.guest_score4.setVisibility(View.INVISIBLE);
+                    viewHolderList.home_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score2.setVisibility(View.INVISIBLE);
+                    viewHolderList.home_score3.setVisibility(View.INVISIBLE);
+                    viewHolderList.home_score4.setVisibility(View.INVISIBLE);
+                    break;
+                case 2:
+                    viewHolderList.guest_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.guest_score2.setVisibility(View.VISIBLE);
+                    viewHolderList.guest_score3.setVisibility(View.INVISIBLE);
+                    viewHolderList.guest_score4.setVisibility(View.INVISIBLE);
+                    viewHolderList.home_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score2.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score3.setVisibility(View.INVISIBLE);
+                    viewHolderList.home_score4.setVisibility(View.INVISIBLE);
+                    break;
+                case 3:
+                    viewHolderList.guest_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.guest_score2.setVisibility(View.VISIBLE);
+                    viewHolderList.guest_score3.setVisibility(View.VISIBLE);
+                    viewHolderList.guest_score4.setVisibility(View.INVISIBLE);
+                    viewHolderList.home_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score2.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score3.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score4.setVisibility(View.INVISIBLE);
+                    break;
+                case 4:
+                    viewHolderList.guest_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.guest_score2.setVisibility(View.VISIBLE);
+                    viewHolderList.guest_score3.setVisibility(View.VISIBLE);
+                    viewHolderList.guest_score4.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score2.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score3.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score4.setVisibility(View.VISIBLE);
+                    break;
+                default:
+                    viewHolderList.guest_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.guest_score2.setVisibility(View.VISIBLE);
+                    viewHolderList.guest_score3.setVisibility(View.VISIBLE);
+                    viewHolderList.guest_score4.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score2.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score3.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score4.setVisibility(View.VISIBLE);
+                    break;
+            }
         }
     }
 
