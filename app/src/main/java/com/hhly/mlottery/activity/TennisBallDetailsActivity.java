@@ -12,6 +12,8 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.bean.tennisball.MatchDataBean;
 import com.hhly.mlottery.bean.tennisball.TennisSocketBean;
+import com.hhly.mlottery.bean.tennisball.datails.analysis.MatchInfoBean;
+import com.hhly.mlottery.bean.tennisball.datails.analysis.MatchScoreBean;
 import com.hhly.mlottery.bean.tennisball.datails.analysis.TennisAnalysisBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
@@ -277,31 +279,39 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
         new Thread() {
             @Override
             public void run() {
-                TennisSocketBean tennisSocketBean = JSON.parseObject(jsonData, TennisSocketBean.class);
-                if (tennisSocketBean.getType() == 401) {
-                    if (mThirdId.equals(tennisSocketBean.getDataObj().getMatchId())) {
-                        final TennisAnalysisBean.DataBean data = new TennisAnalysisBean.DataBean();
-                        data.getMatchInfo().setMatchStatus(tennisSocketBean.getDataObj().getMatchStatus());
-                        data.getMatchInfo().getMatchScore().setHomeSetScore1(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore1());
-                        data.getMatchInfo().getMatchScore().setHomeSetScore2(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore2());
-                        data.getMatchInfo().getMatchScore().setHomeSetScore3(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore3());
-                        data.getMatchInfo().getMatchScore().setHomeSetScore4(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore4());
-                        data.getMatchInfo().getMatchScore().setHomeSetScore5(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore5());
-                        data.getMatchInfo().getMatchScore().setAwaySetScore1(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore1());
-                        data.getMatchInfo().getMatchScore().setAwaySetScore2(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore2());
-                        data.getMatchInfo().getMatchScore().setAwaySetScore3(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore3());
-                        data.getMatchInfo().getMatchScore().setAwaySetScore4(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore4());
-                        data.getMatchInfo().getMatchScore().setAwaySetScore5(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore5());
-                        data.getMatchInfo().getMatchScore().setHomeTotalScore(tennisSocketBean.getDataObj().getMatchScore().getHomeTotalScore());
-                        data.getMatchInfo().getMatchScore().setAwayTotalScore(tennisSocketBean.getDataObj().getMatchScore().getAwayTotalScore());
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                L.d("tennis", "网球内页收到了：刷新了!");
-                                setDataShow(data);
-                            }
-                        });
+                try {
+                    TennisSocketBean tennisSocketBean = JSON.parseObject(jsonData, TennisSocketBean.class);
+                    if (tennisSocketBean.getType() == 401) {
+                        if (mThirdId.equals(tennisSocketBean.getDataObj().getMatchId())) {
+                            final TennisAnalysisBean.DataBean data = new TennisAnalysisBean.DataBean();
+                            MatchInfoBean matchInfoBean = new MatchInfoBean();
+                            MatchScoreBean matchScoreBean = new MatchScoreBean();
+                            matchInfoBean.setMatchStatus(tennisSocketBean.getDataObj().getMatchStatus());
+                            matchScoreBean.setHomeSetScore1(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore1());
+                            matchScoreBean.setHomeSetScore2(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore2());
+                            matchScoreBean.setHomeSetScore3(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore3());
+                            matchScoreBean.setHomeSetScore4(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore4());
+                            matchScoreBean.setHomeSetScore5(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore5());
+                            matchScoreBean.setAwaySetScore1(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore1());
+                            matchScoreBean.setAwaySetScore2(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore2());
+                            matchScoreBean.setAwaySetScore3(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore3());
+                            matchScoreBean.setAwaySetScore4(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore4());
+                            matchScoreBean.setAwaySetScore5(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore5());
+                            matchScoreBean.setHomeTotalScore(tennisSocketBean.getDataObj().getMatchScore().getHomeTotalScore());
+                            matchScoreBean.setAwayTotalScore(tennisSocketBean.getDataObj().getMatchScore().getAwayTotalScore());
+                            matchInfoBean.setMatchScore(matchScoreBean);
+                            data.setMatchInfo(matchInfoBean);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    L.d("tennis", "网球内页收到了：刷新了!");
+                                    setDataShow(data);
+                                }
+                            });
+                        }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }.start();

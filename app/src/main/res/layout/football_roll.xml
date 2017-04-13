@@ -25,12 +25,11 @@
         android:id="@+id/titleContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/unconection_layout"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="10dp"
-        android:visibility="invisible"
         android:background="@drawable/selector_item_clickable"
-        android:layout_below="@+id/unconection_layout"
-        >
+        android:visibility="invisible">
 
         <TextView
             android:id="@+id/t1"
@@ -60,11 +59,18 @@
     </android.support.percent.PercentRelativeLayout>
     <!--</android.support.design.widget.AppBarLayout>-->
 
-    <include
-        layout="@layout/view_recyclerview_refresh"
+    <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/titleContainer" />
+        android:layout_height="match_parent">
+
+        <include
+            layout="@layout/view_recyclerview_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/titleContainer" />
+
+    </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
 
     <RelativeLayout
         android:id="@+id/football_immediate_unfocus_ll"
