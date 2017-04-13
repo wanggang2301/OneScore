@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
 import android.provider.Settings;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -67,7 +68,7 @@ import de.greenrobot.event.EventBus;
  * @Description: 足球关注
  * @date 2015-10-15 上午9:57:25
  */
-public class FocusFragment extends BaseWebSocketFragment implements OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class FocusFragment extends Fragment implements OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -166,8 +167,8 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic("USER.topic.app");
+//        setWebSocketUri(BaseURLs.WS_SERVICE);
+//        setTopic("USER.topic.app");
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mEntryType = getArguments().getInt(ENTRY_TYPE);
@@ -1014,14 +1015,14 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-//        isPause = false;
-        L.v(TAG, "___onResume___");
-        connectWebSocket();
-
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+////        isPause = false;
+//        L.v(TAG, "___onResume___");
+//        connectWebSocket();
+//
+//    }
 
 
     @Override
@@ -1030,44 +1031,44 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
         L.d(TAG, "__onDestroy___");
     }
 
-    @Override
-    protected void onTextResult(String text) {
-        L.e("Focus", "tuisong");
-        if (mAdapter == null) {
-            return;
-        }
+//    @Override
+//    protected void onTextResult(String text) {
+//        L.e("Focus", "tuisong");
+//        if (mAdapter == null) {
+//            return;
+//        }
+//
+//        String type = "";
+//        try {
+//            JSONObject jsonObject = new JSONObject(text);
+//            type = jsonObject.getString("type");
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        if (!"".equals(type)) {
+//            Message msg = Message.obtain();
+//            msg.obj = text;
+//            msg.arg1 = Integer.parseInt(type);
+//
+//            mSocketHandler.sendMessage(msg);
+//        }
+//    }
 
-        String type = "";
-        try {
-            JSONObject jsonObject = new JSONObject(text);
-            type = jsonObject.getString("type");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        if (!"".equals(type)) {
-            Message msg = Message.obtain();
-            msg.obj = text;
-            msg.arg1 = Integer.parseInt(type);
-
-            mSocketHandler.sendMessage(msg);
-        }
-    }
-
-    @Override
-    protected void onConnectFail() {
-
-    }
-
-    @Override
-    protected void onDisconnected() {
-
-    }
-
-    @Override
-    protected void onConnected() {
-
-    }
+//    @Override
+//    protected void onConnectFail() {
+//
+//    }
+//
+//    @Override
+//    protected void onDisconnected() {
+//
+//    }
+//
+//    @Override
+//    protected void onConnected() {
+//
+//    }
 
 
     /**
@@ -1136,7 +1137,7 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
         L.d("sdfgh", "onRefresh");
         setStatus(SHOW_STATUS_LOADING);
         initData();
-        connectWebSocket();
+//        connectWebSocket();
     }
 
 
@@ -1150,5 +1151,29 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
     public void onPause() {
         super.onPause();
 //        isPause = true;
+    }
+
+    //推送
+    public void onEventMainThread(FootBallScoreFragment.FootballScoresWebSocketEntity entity) {
+        L.e("Focus", "tuisong");
+        if (mAdapter == null) {
+            return;
+        }
+
+        String type = "";
+        try {
+            JSONObject jsonObject = new JSONObject(entity.text);
+            type = jsonObject.getString("type");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (!"".equals(type)) {
+            Message msg = Message.obtain();
+            msg.obj = entity.text;
+            msg.arg1 = Integer.parseInt(type);
+
+            mSocketHandler.sendMessage(msg);
+        }
     }
 }

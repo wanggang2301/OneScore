@@ -661,6 +661,7 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         L.d("websocket123", "篮球收到消息==" + text);
 
         ((BasketImmedNewScoreFragment) fragments.get(0)).handleSocketMessage(text);
+        ((BasketballFocusNewFragment) fragments.get(3)).handleSocketMessage(text);
     }
 
     @Override
