@@ -91,106 +91,130 @@ public class DateUtil {
      * @return
      */
     public static String convertDateToNation(String date) {
-        if(TextUtils.isEmpty(date)) return "";
-        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
-            return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd"), "yyyy-MM-dd");
-        } else {
-            return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd"), "dd-MM-yyyy");
+        if (TextUtils.isEmpty(date)) return "";
+
+        try {
+            if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
+                return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd"), "yyyy-MM-dd");
+            } else {
+                return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd"), "dd-MM-yyyy");
+            }
+        } catch (Exception e) {
+            return "";
         }
     }
 
-    public static String convertDateToNationYY(String date){
-        if(TextUtils.isEmpty(date)) return "";
-        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
-            return DateUtil.format(DateUtil.parseDate(date, "yy-MM-dd"), "yy-MM-dd");
-        } else {
-            return DateUtil.format(DateUtil.parseDate(date, "yy-MM-dd"), "dd-MM-yy");
+    public static String convertDateToNationYY(String date) {
+        if (TextUtils.isEmpty(date)) return "";
+        try {
+            if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
+                return DateUtil.format(DateUtil.parseDate(date, "yy-MM-dd"), "yy-MM-dd");
+            } else {
+                return DateUtil.format(DateUtil.parseDate(date, "yy-MM-dd"), "dd-MM-yy");
+            }
+        } catch (Exception e) {
+            return "";
         }
     }
 
     public static String convertDateToNationMD(String date) {
-        if(TextUtils.isEmpty(date)) return "";
-        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
-            return DateUtil.format(DateUtil.parseDate(date, "MM-dd"), "MM-dd");
-        } else {
-            return DateUtil.format(DateUtil.parseDate(date, "MM-dd"), "dd-MM");
+        if (TextUtils.isEmpty(date)) return "";
+        try {
+            if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
+                return DateUtil.format(DateUtil.parseDate(date, "MM-dd"), "MM-dd");
+            } else {
+                return DateUtil.format(DateUtil.parseDate(date, "MM-dd"), "dd-MM");
+            }
+        } catch (Exception e) {
+            return "";
         }
     }
 
     public static String convertDateToNationYD(String date) {
-        if(TextUtils.isEmpty(date)) return "";
-        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
-            return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM"), "yyyy-MM");
-        } else {
-            return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM"), "MM-yyyy");
+        if (TextUtils.isEmpty(date)) return "";
+        try {
+            if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
+                return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM"), "yyyy-MM");
+            } else {
+                return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM"), "MM-yyyy");
+            }
+        } catch (Exception e) {
+            return "";
         }
     }
 
     public static String convertDateToNationHM(String date) {
-        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
-            return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm"), "yyyy-MM-dd HH:mm");
-        } else {
-            return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm"), "dd-MM-yyyy HH:mm");
+        try {
+            if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
+                return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm"), "yyyy-MM-dd HH:mm");
+            } else {
+                return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm"), "dd-MM-yyyy HH:mm");
+            }
+        } catch (Exception e) {
+            return "";
         }
     }
 
     public static String convertDateToNationMDHM(String date) {
-        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
-            return DateUtil.format(DateUtil.parseDate(date, "MM-dd HH:mm"), "MM-dd HH:mm");
-        } else {
-            return DateUtil.format(DateUtil.parseDate(date, "MM-dd HH:mm"), "dd-MM HH:mm");
+        try {
+            if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
+                return DateUtil.format(DateUtil.parseDate(date, "MM-dd HH:mm"), "MM-dd HH:mm");
+            } else {
+                return DateUtil.format(DateUtil.parseDate(date, "MM-dd HH:mm"), "dd-MM HH:mm");
+            }
+        } catch (Exception e) {
+            return "";
         }
     }
 
     public static String convertDateToNationHMS(String date) {
-        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
-            return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm:ss"), "yyyy-MM-dd HH:mm:ss");
-        } else {
-            return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm:ss"), "dd-MM-yyyy HH:mm:ss");
+        try {
+            if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) { //国内
+                return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm:ss"), "yyyy-MM-dd HH:mm:ss");
+            } else {
+                return DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd HH:mm:ss"), "dd-MM-yyyy HH:mm:ss");
+            }
+        } catch (Exception e) {
+            return "";
         }
     }
 
     /**
      * 判断字符串是否为日期格式 yyyy-MM-dd
+     *
      * @param s
      * @return
      */
-    public static boolean isValidDateYMD(String s)
-    {
+    public static boolean isValidDateYMD(String s) {
         // 指定日期格式为四位年/两位月份/两位日期，注意yyyy/MM/dd区分大小写；
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         // 设置lenient为false. 否则SimpleDateFormat会比较宽松地验证日期，比如2007/02/29会被接受，并转换成2007/03/01
         dateFormat.setLenient(false);
-        try
-        {
+        try {
             dateFormat.parse(s);
             return true;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             // 如果throw java.text.ParseException或者NullPointerException，就说明格式不对
             return false;
         }
 
     }
+
     /**
      * 判断字符串是否为日期格式 MM-dd
+     *
      * @param s
      * @return
      */
-    public static boolean isValidDateYM(String s)
-    {
+    public static boolean isValidDateYM(String s) {
         // 指定日期格式为四位年/两位月份/两位日期，注意yyyy/MM/dd区分大小写；
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
         // 设置lenient为false. 否则SimpleDateFormat会比较宽松地验证日期，比如2007/02/29会被接受，并转换成2007/03/01
         dateFormat.setLenient(false);
-        try
-        {
+        try {
             dateFormat.parse(s);
             return true;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             // 如果throw java.text.ParseException或者NullPointerException，就说明格式不对
             return false;
         }
@@ -577,10 +601,11 @@ public class DateUtil {
         }
         return "";
     }
+
     /**
      * 获取当前时间年月日
      */
-    public static String getMomentDate(){
+    public static String getMomentDate() {
         Date d = new Date();
         System.out.println(d);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
-import com.hhly.mlottery.bean.tennisball.MatchDataBean;
 import com.hhly.mlottery.bean.tennisball.TennisSocketBean;
 import com.hhly.mlottery.bean.tennisball.datails.analysis.MatchInfoBean;
 import com.hhly.mlottery.bean.tennisball.datails.analysis.MatchScoreBean;
@@ -116,7 +115,7 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
                 break;
         }
 
-        tv_match_name.setText(mData.getMatchInfo().getLeagueName());
+        tv_match_name.setText(mData.getMatchInfo().getLeagueName() == null ? "" : mData.getMatchInfo().getLeagueName());
         tv_date.setText(DateUtil.convertDateToNation(mData.getMatchInfo().getStartDate()));
         String time = "";
         try {
@@ -157,16 +156,21 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
                 tv_start.setTextColor(getResources().getColor(R.color.tennis_details_analysis_title_start));
                 break;
             default:
-                tv_start.setText(getString(R.string.tennis_match_join));
+                tv_start.setText("");
                 tv_start.setTextColor(getResources().getColor(R.color.tennis_details_analysis_title_start2));
                 break;
         }
 
-        tv_home_name.setText(mData.getMatchInfo().getHomePlayer1().getName());
-        tv_guest_name.setText(mData.getMatchInfo().getGuestPlayer1().getName());
-
-        tv_home_total_score.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeTotalScore()));
-        tv_guest_total_score.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwayTotalScore()));
+        if (mData.getMatchInfo().getHomePlayer1() != null) {
+            tv_home_name.setText(mData.getMatchInfo().getHomePlayer1().getName() == null ? "" : mData.getMatchInfo().getHomePlayer1().getName());
+        } else {
+            tv_home_name.setText("");
+        }
+        if (mData.getMatchInfo().getGuestPlayer1() != null) {
+            tv_guest_name.setText(mData.getMatchInfo().getGuestPlayer1().getName() == null ? "" : mData.getMatchInfo().getGuestPlayer1().getName());
+        } else {
+            tv_guest_name.setText("");
+        }
 
         if (isSingle) {
             // 单人赛
@@ -176,48 +180,75 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
             // 双人赛
             tv_home_name2.setVisibility(View.VISIBLE);
             tv_guest_name2.setVisibility(View.VISIBLE);
-            tv_home_name2.setText(mData.getMatchInfo().getHomePlayer2().getName());
-            tv_guest_name2.setText(mData.getMatchInfo().getGuestPlayer2().getName());
+            if (mData.getMatchInfo().getHomePlayer2() != null) {
+                tv_home_name2.setText(mData.getMatchInfo().getHomePlayer2().getName() == null ? "" : mData.getMatchInfo().getHomePlayer2().getName());
+            } else {
+                tv_home_name2.setText("");
+            }
+            if (mData.getMatchInfo().getGuestPlayer2() != null) {
+                tv_guest_name2.setText(mData.getMatchInfo().getGuestPlayer2().getName() == null ? "" : mData.getMatchInfo().getGuestPlayer2().getName());
+            } else {
+                tv_guest_name2.setText("");
+            }
         }
 
-        if (mData.getMatchInfo().getMatchScore().getHomeSetScore1() == 0 && mData.getMatchInfo().getMatchScore().getAwaySetScore1() == 0) {
+        if (mData.getMatchInfo().getMatchScore() != null) {
+            tv_home_total_score.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeTotalScore()));
+            tv_guest_total_score.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwayTotalScore()));
+
+            if (mData.getMatchInfo().getMatchScore().getHomeSetScore1() == 0 && mData.getMatchInfo().getMatchScore().getAwaySetScore1() == 0) {
+                tv_home_score1.setText("");
+                tv_guest_score1.setText("");
+            } else {
+                tv_home_score1.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeSetScore1()));
+                tv_guest_score1.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwaySetScore1()));
+            }
+
+            if (mData.getMatchInfo().getMatchScore().getHomeSetScore2() == 0 && mData.getMatchInfo().getMatchScore().getAwaySetScore2() == 0) {
+                tv_home_score2.setText("");
+                tv_guest_score2.setText("");
+            } else {
+                tv_home_score2.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeSetScore2()));
+                tv_guest_score2.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwaySetScore2()));
+            }
+
+            if (mData.getMatchInfo().getMatchScore().getHomeSetScore3() == 0 && mData.getMatchInfo().getMatchScore().getAwaySetScore3() == 0) {
+                tv_home_score3.setText("");
+                tv_guest_score3.setText("");
+            } else {
+                tv_home_score3.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeSetScore3()));
+                tv_guest_score3.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwaySetScore3()));
+            }
+
+            if (mData.getMatchInfo().getMatchScore().getHomeSetScore4() == 0 && mData.getMatchInfo().getMatchScore().getAwaySetScore4() == 0) {
+                tv_home_score4.setText("");
+                tv_guest_score4.setText("");
+            } else {
+                tv_home_score4.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeSetScore4()));
+                tv_guest_score4.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwaySetScore4()));
+            }
+
+            if (mData.getMatchInfo().getMatchScore().getHomeSetScore5() == 0 && mData.getMatchInfo().getMatchScore().getAwaySetScore5() == 0) {
+                tv_home_score5.setText("");
+                tv_guest_score5.setText("");
+            } else {
+                tv_home_score5.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeSetScore5()));
+                tv_guest_score5.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwaySetScore5()));
+            }
+
+        } else {
+            tv_home_total_score.setText("");
+            tv_guest_total_score.setText("");
             tv_home_score1.setText("");
             tv_guest_score1.setText("");
-        } else {
-            tv_home_score1.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeSetScore1()));
-            tv_guest_score1.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwaySetScore1()));
-        }
-
-        if (mData.getMatchInfo().getMatchScore().getHomeSetScore2() == 0 && mData.getMatchInfo().getMatchScore().getAwaySetScore2() == 0) {
             tv_home_score2.setText("");
             tv_guest_score2.setText("");
-        } else {
-            tv_home_score2.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeSetScore2()));
-            tv_guest_score2.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwaySetScore2()));
-        }
-
-        if (mData.getMatchInfo().getMatchScore().getHomeSetScore3() == 0 && mData.getMatchInfo().getMatchScore().getAwaySetScore3() == 0) {
             tv_home_score3.setText("");
             tv_guest_score3.setText("");
-        } else {
-            tv_home_score3.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeSetScore3()));
-            tv_guest_score3.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwaySetScore3()));
-        }
-
-        if (mData.getMatchInfo().getMatchScore().getHomeSetScore4() == 0 && mData.getMatchInfo().getMatchScore().getAwaySetScore4() == 0) {
             tv_home_score4.setText("");
             tv_guest_score4.setText("");
-        } else {
-            tv_home_score4.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeSetScore4()));
-            tv_guest_score4.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwaySetScore4()));
-        }
-
-        if (mData.getMatchInfo().getMatchScore().getHomeSetScore5() == 0 && mData.getMatchInfo().getMatchScore().getAwaySetScore5() == 0) {
             tv_home_score5.setText("");
             tv_guest_score5.setText("");
-        } else {
-            tv_home_score5.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeSetScore5()));
-            tv_guest_score5.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwaySetScore5()));
         }
     }
 
