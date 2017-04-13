@@ -38,6 +38,7 @@ import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
 import com.hhly.mlottery.frame.oddfragment.basketoddframent.BasketCompanyChooseDialogFragment;
+import com.hhly.mlottery.frame.scorefrag.CloseWebSocketEventBus;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.DateUtil;
@@ -119,6 +120,7 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.basketball");
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -563,12 +565,29 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+        closeWebSocket();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         closeWebSocket();
     }
 
-    public void handleWebSocket() {
-        closeWebSocket();
+    public void onEventMainThread(CloseWebSocketEventBus closeWebSocketEventBus) {
+
+        if (closeWebSocketEventBus.isVisible()) {
+            L.d("websocket123", "篮球指数关闭fg");
+            closeWebSocket();
+        } else {
+            if (closeWebSocketEventBus.getIndex() == 1) {
+                L.d("websocket123", "篮球指数打开fg");
+
+                connectWebSocket();
+            }
+        }
     }
 }

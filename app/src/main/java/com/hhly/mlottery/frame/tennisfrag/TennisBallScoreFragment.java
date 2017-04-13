@@ -28,6 +28,7 @@ import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.tennisball.TennisEventBus;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.BallType;
+import com.hhly.mlottery.frame.scorefrag.CloseWebSocketEventBus;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
@@ -314,7 +315,19 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
         }
     }
 
-    public void handleWebSocket() {
-        closeWebSocket();
+    public void onEventMainThread(CloseWebSocketEventBus closeWebSocketEventBus) {
+
+        if (closeWebSocketEventBus.isVisible()) {
+            L.d("websocket123", "网球比分关闭fg");
+            closeWebSocket();
+        } else {
+            if (closeWebSocketEventBus.getIndex() == 2) {
+                L.d("websocket123", "网球比分打开fg");
+
+
+
+                connectWebSocket();
+            }
+        }
     }
 }

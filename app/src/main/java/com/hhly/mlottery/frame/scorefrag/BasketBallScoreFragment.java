@@ -115,6 +115,8 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         setTopic("USER.topic.basketball");
         super.onCreate(savedInstanceState);
 
+        EventBus.getDefault().register(this);
+
     }
 
     @Override
@@ -688,7 +690,24 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         }
     }
 
-    public void handleWebSocket() {
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
         closeWebSocket();
+    }
+
+    public void onEventMainThread(CloseWebSocketEventBus closeWebSocketEventBus) {
+
+        if (closeWebSocketEventBus.isVisible()) {
+            L.d("websocket123", "篮球比分关闭fg");
+            closeWebSocket();
+        } else {
+            if (closeWebSocketEventBus.getIndex() == 1) {
+                L.d("websocket123", "篮球比分打开fg");
+
+                connectWebSocket();
+            }
+        }
     }
 }

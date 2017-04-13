@@ -816,8 +816,17 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     }
 
 
-    public void handleWebSocket() {
-        L.d("websocket123", "足球比分关闭");
-        closeWebSocket();
+    public void onEventMainThread(CloseWebSocketEventBus closeWebSocketEventBus) {
+
+        if (closeWebSocketEventBus.isVisible()) {
+            L.d("websocket123", "足球比分关闭fg");
+            closeWebSocket();
+        } else {
+            if (closeWebSocketEventBus.getIndex() == 0) {
+                L.d("websocket123", "足球比分打开fg");
+
+                connectWebSocket();
+            }
+        }
     }
 }
