@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.tennisfrag.TennisBallScoreFragment;
 import com.hhly.mlottery.util.FragmentUtils;
@@ -115,12 +114,7 @@ public class ScoreFragment extends Fragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (hidden) { //隐藏
-            L.d("websocket123", "比分推送关闭");
+        EventBus.getDefault().post(new CloseWebSocketEventBus(hidden, fragmentIndex));
 
-            for (Fragment fragment : fragments) {
-                ((BaseWebSocketFragment) fragment).handleWebSocket();
-            }
-        }
     }
 }

@@ -71,6 +71,7 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
     private BasketBallCpiFrament parentFragment;
 
+
     private List<BasketIndexBean.DataBean.FileterTagsBean> fileterMatchTypeList;
 
     private List<BasketIndexBean.DataBean.AllInfoBean> sourceDataList; //源数据
