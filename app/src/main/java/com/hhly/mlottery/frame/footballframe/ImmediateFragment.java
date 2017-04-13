@@ -457,6 +457,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                                     intent.putExtra("thirdId", thirdId);
                                     intent.putExtra("currentFragmentId", 1);
                                     getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+
                                 }
                             });
                             mRecyclerView.setAdapter(mAdapter);
@@ -1179,6 +1180,9 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+
+        L.d(TAG, "___onHiddenChanged___" + hidden);
+
     }
 
 
@@ -1254,4 +1258,6 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
         L.d("100", "onDestroyView");
         L.w(TAG, "immediate fragment destroy view..");
     }
+
+
 }
