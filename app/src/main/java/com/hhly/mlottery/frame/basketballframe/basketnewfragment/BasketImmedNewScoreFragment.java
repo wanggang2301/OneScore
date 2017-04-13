@@ -256,7 +256,7 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
             mSwipeRefreshLayout.setVisibility(View.GONE);
             mSwipeRefreshLayout.setRefreshing(false);
         }
-//        mLoading.setVisibility((status == SHOW_STATUS_REFRESH_ONCLICK) ? View.VISIBLE : View.GONE);
+        mLoadingLayout.setVisibility((status == SHOW_STATUS_REFRESH_ONCLICK) ? View.VISIBLE : View.GONE);
         mErrorLayout.setVisibility(status == SHOW_STATUS_ERROR ? View.VISIBLE : View.GONE);
         mNoDataLayout.setVisibility(status == SHOW_STATUS_NO_DATA ? View.VISIBLE : View.GONE);
 //        mCurrentNoData.setVisibility(status == SHOW_STATUS_CURRENT_ONDATA ? View.VISIBLE : View.GONE);
