@@ -98,7 +98,6 @@ public class CpiFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-
     }
 
     @Override
