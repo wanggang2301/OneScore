@@ -40,7 +40,7 @@ public class CpiFragment extends Fragment {
 
     private Activity mActivity;
 
-    Bundle arg1;
+//    Bundle arg1;
     Bundle arg2;
 
     @Override
@@ -61,13 +61,13 @@ public class CpiFragment extends Fragment {
     private void initView() {
         fragments.add(FootCpiFragment.newInstance());
         fragments.add(BasketBallCpiFrament.newInstace());
-        arg1 = new Bundle();
+//        arg1 = new Bundle();
         arg2 = new Bundle();
-        arg1.putInt("param1", BallType.SNOOKER);
+//        arg1.putInt("param1", BallType.SNOOKER);
         arg2.putInt("param1", BallType.TENNLS);
 
         fragments.add(SIndexFragment.newInstance());
-        fragments.add(SIndexFragment.newInstance());
+//        fragments.add(SIndexFragment.newInstance());
         switchFragment(BallType.FOOTBALL);
     }
 
@@ -81,8 +81,8 @@ public class CpiFragment extends Fragment {
         L.d("xxx", "当前Fragment下标：" + fragmentIndex);
         fragmentManager = getChildFragmentManager();
         if (position == BallType.SNOOKER) {
-            currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content_cpi, currentFragment, fragments.get(position).getClass(), arg1, false, fragments.get(position).getClass().getSimpleName() + position, true);
-        } else if (position == BallType.TENNLS) {
+//            currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content_cpi, currentFragment, fragments.get(position).getClass(), arg1, false, fragments.get(position).getClass().getSimpleName() + position, true);
+//        } else if (position == BallType.TENNLS) {
             currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content_cpi, currentFragment, fragments.get(position).getClass(), arg2, false, fragments.get(position).getClass().getSimpleName() + position, true);
         } else {
             currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content_cpi, currentFragment, fragments.get(position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, true);
