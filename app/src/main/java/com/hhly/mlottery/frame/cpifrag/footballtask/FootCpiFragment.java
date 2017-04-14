@@ -561,7 +561,7 @@ public class FootCpiFragment extends BaseWebSocketFragment {
             L.d("websocket123", "_______足球 指数 关闭 fg");
             closeWebSocket();
         } else {
-            if (closeWebSocketEventBus.getIndex() == 0) {
+            if (closeWebSocketEventBus.getIndex() == BallType.FOOTBALL) {
                 L.d("websocket123", "______足球 指数 打开 fg");
 
                 connectWebSocket();

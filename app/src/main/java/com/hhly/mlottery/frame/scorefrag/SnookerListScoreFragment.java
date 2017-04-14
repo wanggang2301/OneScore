@@ -439,7 +439,7 @@ public class SnookerListScoreFragment extends BaseWebSocketFragment implements V
             L.d("websocket123", "_________斯洛克 比分 关闭 fg");
             closeWebSocket();
         } else {
-            if (closeWebSocketEventBus.getIndex() == 2) {
+            if (closeWebSocketEventBus.getIndex() == BallType.SNOOKER) {
                 L.d("websocket123", "_________斯洛克 比分 打开 fg");
                 connectWebSocket();
             }

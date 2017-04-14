@@ -607,7 +607,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
             }
             closeWebSocket();
         } else {
-            if (closeWebSocketEventBus.getIndex() == 2 || closeWebSocketEventBus.getIndex() == 3) {
+            if (closeWebSocketEventBus.getIndex() == BallType.SNOOKER || closeWebSocketEventBus.getIndex() == BallType.TENNLS) {
                 if (mBallType == BallType.SNOOKER) {
                     L.d("websocket123", "_______斯洛克 指数 打开 fg");
 
