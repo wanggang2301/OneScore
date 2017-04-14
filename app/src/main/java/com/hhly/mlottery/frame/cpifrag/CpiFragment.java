@@ -86,7 +86,6 @@ public class CpiFragment extends Fragment {
             currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content_cpi, currentFragment, fragments.get(position).getClass(), arg2, false, fragments.get(position).getClass().getSimpleName() + position, true);
         } else {
             currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content_cpi, currentFragment, fragments.get(position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, true);
-
         }
     }
 
@@ -99,7 +98,6 @@ public class CpiFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-
     }
 
     @Override

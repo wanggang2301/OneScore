@@ -820,7 +820,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
             L.d("websocket123", "_________足球 比分 关闭 fg");
             closeWebSocket();
         } else {
-            if (closeWebSocketEventBus.getIndex() == 0) {
+            if (closeWebSocketEventBus.getIndex() == BallType.FOOTBALL) {
                 L.d("websocket123", "_________足球 比分 打开 fg");
 
                 connectWebSocket();

@@ -607,6 +607,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
 //                    L.d("websocket123", "_______网球 指数 打开 fg");
 //                }
 
+
                 connectWebSocket();
             }
         }
