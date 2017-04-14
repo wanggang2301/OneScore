@@ -324,7 +324,7 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
             L.d("websocket123", "_________网球 比分 关闭 fg");
             closeWebSocket();
         } else {
-            if (closeWebSocketEventBus.getIndex() == 2) {
+            if (closeWebSocketEventBus.getIndex() == BallType.TENNLS) {
                 L.d("websocket123", "_________网球 比分 打开 fg");
                 connectWebSocket();
             }

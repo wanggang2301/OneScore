@@ -587,7 +587,7 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
             L.d("websocket123", "篮球 指数 关闭 fg");
             closeWebSocket();
         } else {
-            if (closeWebSocketEventBus.getIndex() == 1) {
+            if (closeWebSocketEventBus.getIndex() == BallType.BASKETBALL) {
                 L.d("websocket123", "篮球 指数 打开 fg");
 
                 connectWebSocket();

@@ -139,21 +139,21 @@
                     android:layout_width="1dp"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@color/tennis_details_line_bg" />
+                    android:background="@color/selected_bg" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text=":"
-                    android:textColor="@color/snooker_score_textcolor"
+                    android:textColor="@color/res_name_color"
                     android:textSize="@dimen/info_center_value" />
 
                 <View
                     android:layout_width="1dp"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@color/tennis_details_line_bg" />
+                    android:background="@color/selected_bg" />
 
             </LinearLayout>
 

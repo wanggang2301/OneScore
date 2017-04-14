@@ -701,7 +701,7 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
             L.d("websocket123", "_________篮球 比分 关闭 fg");
             closeWebSocket();
         } else {
-            if (closeWebSocketEventBus.getIndex() == 1) {
+            if (closeWebSocketEventBus.getIndex() == BallType.BASKETBALL) {
                 L.d("websocket123", "_________篮球 比分 关闭 fg");
 
                 connectWebSocket();
