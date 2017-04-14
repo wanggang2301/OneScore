@@ -624,7 +624,7 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                L.d("websocket123", ">>>>>>>>篮球关闭");
+                L.d("websocket123", ">>>>>>>>篮球比分关闭");
                 closeWebSocket();
 
                 EventBus.getDefault().post(new ScoreSwitchFg(position));

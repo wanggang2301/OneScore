@@ -209,7 +209,7 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                L.d("websocket123", ">>>>>>>>网球关闭");
+                L.d("websocket123", ">>>>>>>>网球比分关闭");
 
                 closeWebSocket();
 

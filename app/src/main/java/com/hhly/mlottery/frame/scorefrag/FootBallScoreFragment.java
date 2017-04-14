@@ -184,7 +184,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                L.d("websocket123", ">>>>>>>>足球关闭");
+                L.d("websocket123", ">>>>>>>>足球比分关闭");
                 closeWebSocket();
                 EventBus.getDefault().post(new ScoreSwitchFg(position));
 
