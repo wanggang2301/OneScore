@@ -59,7 +59,7 @@ android {
         }
         release {
             minifyEnabled false
-            shrinkResources true  // 打开资源压缩
+//            shrinkResources true  // 打开资源压缩
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
