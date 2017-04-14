@@ -423,6 +423,9 @@
         <activity
             android:name=".activity.BasketBallMatchSearchActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ExpertsActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 
