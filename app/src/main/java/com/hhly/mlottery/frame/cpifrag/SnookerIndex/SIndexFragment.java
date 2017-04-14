@@ -606,6 +606,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
 //                } else if (mBallType == BallType.TENNLS) {
 //                    L.d("websocket123", "_______网球 指数 打开 fg");
 //                }
+
                 connectWebSocket();
             }
         }
