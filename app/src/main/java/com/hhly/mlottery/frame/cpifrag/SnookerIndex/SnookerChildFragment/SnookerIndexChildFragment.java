@@ -447,9 +447,9 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
 
             TennisSocketOddsBean.DataObjBean sockerData = socketOddsData.getDataObj();
 
-            boolean isNewCompany = true;//true :没有相同过 收到新公司赔率
+            boolean isNewCompany = false;//true :没有相同过 收到新公司赔率
             for (SnookerIndexBean.AllInfoEntity.ComListEntity currentOddsData : currentOddsDataList) {
-                if (currentOddsData.getComName().equals(socketOddsData.getDataObj().getCompany())) {
+                if (currentOddsData.getComName().equals(socketOddsData.getDataObj().getComName())) {
                     isNewCompany = false;
                     break;
                 }
@@ -458,10 +458,15 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
                 SnookerIndexBean.AllInfoEntity.ComListEntity newComlist = new SnookerIndexBean.AllInfoEntity.ComListEntity();
                 newComlist.setComName(sockerData.getCompany());
                 SnookerIndexBean.AllInfoEntity.ComListEntity.LevelEntity currlevel = new SnookerIndexBean.AllInfoEntity.ComListEntity.LevelEntity();
-                currlevel.setLeft(sockerData.getMatchOdd().getL());
-                currlevel.setRight(sockerData.getMatchOdd().getR());
-                currlevel.setMiddle(sockerData.getMatchOdd().getM());
+                SnookerIndexBean.AllInfoEntity.ComListEntity.LevelEntity prelevel=new SnookerIndexBean.AllInfoEntity.ComListEntity.LevelEntity();
+                prelevel.setLeft(sockerData.getMatchOdd().getL()); //新公司的第一条是初赔。再受到的就走正常逻辑
+                prelevel.setRight(sockerData.getMatchOdd().getR());
+                prelevel.setMiddle(sockerData.getMatchOdd().getM());
+                currlevel.setLeft(""); //新公司的第一条是初赔。及时赔率为空
+                currlevel.setRight("");
+                currlevel.setMiddle("");
                 newComlist.setCurrLevel(currlevel);
+                newComlist.setPreLevel(prelevel);
                 currentOddsDataList.add(newComlist);//添加新赔率
             }else{
                 for (SnookerIndexBean.AllInfoEntity.ComListEntity currentOddsData : currentOddsDataList) {

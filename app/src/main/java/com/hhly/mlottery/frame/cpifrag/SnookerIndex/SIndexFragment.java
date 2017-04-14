@@ -216,6 +216,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
             } else if (msg.arg1 == 404) {  //网球比分推送
                 String ws_json = (String) msg.obj;
                 TennisSocketBean mTennisScore;
+                L.e(TAG, "ws_json_snooker_odds = " + ws_json);
                 try {
                     mTennisScore = JSON.parseObject(ws_json, TennisSocketBean.class);
                 } catch (Exception e) {
@@ -283,6 +284,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
 
                         case 2://独赢[欧赔]
                             ((SnookerIndexChildFragment) fragments.get(2)).updateTennisOdds(mSnookerOdds);
+                            L.e(TAG, "ws_json_snooker_odds = " + mSnookerOdds.getDataObj().getMatchOdd().getL()+"++++++++++++++");
                             break;
 
                     }
