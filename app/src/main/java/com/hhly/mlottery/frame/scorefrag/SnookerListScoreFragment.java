@@ -148,6 +148,8 @@ public class SnookerListScoreFragment extends BaseWebSocketFragment implements V
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // tv_match_name.setText(((TextView) view.findViewById(R.id.tv)).getText().toString());
                 //  iv_match.setImageResource(R.mipmap.nav_icon_cbb);
+                L.d("websocket123", ">>>>>>>>斯洛克关闭");
+
                 closeWebSocket();
 
                 EventBus.getDefault().post(new ScoreSwitchFg(position));
@@ -434,11 +436,11 @@ public class SnookerListScoreFragment extends BaseWebSocketFragment implements V
     public void onEventMainThread(CloseWebSocketEventBus closeWebSocketEventBus) {
 
         if (closeWebSocketEventBus.isVisible()) {
-            L.d("websocket123", "斯洛克比分关闭fg");
+            L.d("websocket123", "_________斯洛克 比分 关闭 fg");
             closeWebSocket();
         } else {
             if (closeWebSocketEventBus.getIndex() == 2) {
-                L.d("websocket123", "斯洛克比分打开fg");
+                L.d("websocket123", "_________斯洛克 比分 打开 fg");
                 connectWebSocket();
             }
         }
