@@ -237,7 +237,7 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
 
     @Override
     protected void onTextResult(String text) {
-        L.d("tennis", "网球赔率推送消息： " + text);
+        L.d("websocket123", "网球收到消息==" + text);
         if (TextUtils.isEmpty(text)) return;
         for (int i = 0; i < fragments.size(); i++) {
             switch (i) {

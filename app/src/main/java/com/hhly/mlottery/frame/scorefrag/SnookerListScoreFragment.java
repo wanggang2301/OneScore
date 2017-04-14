@@ -398,7 +398,7 @@ public class SnookerListScoreFragment extends BaseWebSocketFragment implements V
 
     @Override
     protected void onTextResult(String text) {
-        L.d("yxq", "收到消息==" + text);
+        L.d("websocket123", "斯洛克收到消息==" + text);
         EventBus.getDefault().post(new SnookerScoresWebSocketEntity(text)); //收到的消息传到即时页面
     }
 
