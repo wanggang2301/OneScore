@@ -34,10 +34,10 @@ import com.hhly.mlottery.bean.tennisball.TennisSocketBean;
 import com.hhly.mlottery.bean.tennisball.TennisSocketOddsBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.BallType;
+import com.hhly.mlottery.frame.cpifrag.CloseCpiWebSocketEventBus;
 import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SnookerChildFragment.SnookerCompanyChooseDialogFragment;
 import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SnookerChildFragment.SnookerIndexChildFragment;
 import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
-import com.hhly.mlottery.frame.scorefrag.CloseWebSocketEventBus;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.L;
@@ -147,6 +147,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
         if (getArguments() != null) {
             mBallType = getArguments().getInt(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
         if (mBallType == BallType.SNOOKER) {
             setWebSocketUri(BaseURLs.WS_SERVICE);
@@ -574,7 +575,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
         closeWebSocket();
     }
 
-    public void onEventMainThread(CloseWebSocketEventBus closeWebSocketEventBus) {
+    public void onEventMainThread(CloseCpiWebSocketEventBus closeWebSocketEventBus) {
 
         if (closeWebSocketEventBus.isVisible()) {
             L.d("websocket123", "斯洛克网球指数关闭fg");

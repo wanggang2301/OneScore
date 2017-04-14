@@ -36,9 +36,9 @@ import com.hhly.mlottery.bean.websocket.WebBasketOdds;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.BallType;
+import com.hhly.mlottery.frame.cpifrag.CloseCpiWebSocketEventBus;
 import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
 import com.hhly.mlottery.frame.oddfragment.basketoddframent.BasketCompanyChooseDialogFragment;
-import com.hhly.mlottery.frame.scorefrag.CloseWebSocketEventBus;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.DateUtil;
@@ -577,7 +577,7 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
         closeWebSocket();
     }
 
-    public void onEventMainThread(CloseWebSocketEventBus closeWebSocketEventBus) {
+    public void onEventMainThread(CloseCpiWebSocketEventBus closeWebSocketEventBus) {
 
         if (closeWebSocketEventBus.isVisible()) {
             L.d("websocket123", "篮球指数关闭fg");

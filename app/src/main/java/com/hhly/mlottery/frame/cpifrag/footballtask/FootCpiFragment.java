@@ -36,9 +36,9 @@ import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.websocket.WebSocketCPIResult;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.BallType;
+import com.hhly.mlottery.frame.cpifrag.CloseCpiWebSocketEventBus;
 import com.hhly.mlottery.frame.oddfragment.CompanyChooseDialogFragment;
 import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
-import com.hhly.mlottery.frame.scorefrag.CloseWebSocketEventBus;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.L;
@@ -549,7 +549,7 @@ public class FootCpiFragment extends BaseWebSocketFragment {
         }
     }
 
-    public void onEventMainThread(CloseWebSocketEventBus closeWebSocketEventBus) {
+    public void onEventMainThread(CloseCpiWebSocketEventBus closeWebSocketEventBus) {
 
         if (closeWebSocketEventBus.isVisible()) {
             L.d("websocket123", "足球指数关闭fg");
