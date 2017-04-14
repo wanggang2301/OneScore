@@ -177,6 +177,13 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
 
     @Override
     protected void onTextResult(String text) {
+        if (mBallType == BallType.SNOOKER) {
+            L.d("websocket123", "_______斯洛克指数推送==" + text);
+        } else if (mBallType == BallType.TENNLS) {
+            L.d("websocket123", "_______网球指数推送==" + text);
+        }
+
+
         //TODO ***  接收推送消息
         String type = "";
         try {

@@ -490,6 +490,8 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
 
     @Override
     protected void onTextResult(final String text) {
+        L.d("websocket123", "_______篮球指数推送==" + text);
+
 
         tabs.post(new Runnable() {
             @Override

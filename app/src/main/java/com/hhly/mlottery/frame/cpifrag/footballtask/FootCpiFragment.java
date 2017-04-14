@@ -418,6 +418,7 @@ public class FootCpiFragment extends BaseWebSocketFragment {
      * @param jsonString jsonString
      */
     private void handleMessage(String jsonString) {
+
         JSONObject jsonObject = JSON.parseObject(jsonString);
         int type = jsonObject.getIntValue("type");
         // 根据 type 判断推送数据类型，1 - 时间和状态，2 - 赔率数据，3 - 比分
@@ -493,6 +494,10 @@ public class FootCpiFragment extends BaseWebSocketFragment {
 
     @Override
     protected void onTextResult(final String text) {
+
+        L.d("websocket123", "_______足球指数推送==" + text);
+
+
         mTabLayout.post(new Runnable() {
             @Override
             public void run() {
