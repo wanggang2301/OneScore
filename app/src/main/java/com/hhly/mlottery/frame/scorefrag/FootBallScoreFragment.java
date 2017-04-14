@@ -455,8 +455,6 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
 
-        L.d("websocket123", "足球关闭4");
-
         if (hidden) {
             onPause();
         } else {

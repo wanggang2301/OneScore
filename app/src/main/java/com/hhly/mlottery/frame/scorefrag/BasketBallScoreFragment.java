@@ -555,8 +555,6 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
             L.d("xxx", "FocusFragment>>>显示");
         }
         if (getActivity() != null) {
-            L.d("websocket123", "篮球打开");
-
             connectWebSocket();
         }
     }
