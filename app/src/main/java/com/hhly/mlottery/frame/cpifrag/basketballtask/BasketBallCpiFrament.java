@@ -582,11 +582,11 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
     public void onEventMainThread(CloseCpiWebSocketEventBus closeWebSocketEventBus) {
 
         if (closeWebSocketEventBus.isVisible()) {
-            L.d("websocket123", "篮球指数关闭fg");
+            L.d("websocket123", "篮球 指数 关闭 fg");
             closeWebSocket();
         } else {
             if (closeWebSocketEventBus.getIndex() == 1) {
-                L.d("websocket123", "篮球指数打开fg");
+                L.d("websocket123", "篮球 指数 打开 fg");
 
                 connectWebSocket();
             }

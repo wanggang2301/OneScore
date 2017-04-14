@@ -592,20 +592,20 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
 
         if (closeWebSocketEventBus.isVisible()) {
             if (mBallType == BallType.SNOOKER) {
-                L.d("websocket123", "斯洛克指数关闭fg");
+                L.d("websocket123", "_______斯洛克 指数 关闭 fg");
 
             } else if (mBallType == BallType.TENNLS) {
-                L.d("websocket123", "网球指数关闭fg");
+                L.d("websocket123", "________网球 指数 关闭 fg");
 
             }
             closeWebSocket();
         } else {
             if (closeWebSocketEventBus.getIndex() == 2 || closeWebSocketEventBus.getIndex() == 3) {
                 if (mBallType == BallType.SNOOKER) {
-                    L.d("websocket123", "斯洛克指数打开fg");
+                    L.d("websocket123", "_______斯洛克 指数 打开 fg");
 
                 } else if (mBallType == BallType.TENNLS) {
-                    L.d("websocket123", "网球指数打开fg");
+                    L.d("websocket123", "_______网球 指数 打开 fg");
                 }
                 connectWebSocket();
             }
