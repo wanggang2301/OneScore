@@ -81,7 +81,7 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
                 connectWebSocket();
                 refreshLayout.setRefreshing(false);
                 tennisAnalysisFrag.updataChange(json.getData());
-                setDataShow(json.getData());
+                setDataShow(json.getData(), 0);
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
@@ -96,35 +96,68 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
     }
 
     // 设置数据展示
-    private void setDataShow(TennisAnalysisBean.DataBean mData) {
+    private void setDataShow(TennisAnalysisBean.DataBean mData, int type) {
         if (mData == null || mData.getMatchInfo() == null) return;
-        // 比赛类型： 1男子、2女子、3男双、4女双、5混双
-        int matchType = mData.getMatchInfo().getMatchType();
-        switch (matchType) {
-            case 1:
-            case 2:
-                isSingle = true;
-                break;
-            case 3:
-            case 4:
-            case 5:
-                isSingle = false;
-                break;
-            default:
-                isSingle = false;
-                break;
-        }
+        // type 0:加载数据 ;1:推送更新
+        if (type == 0) {
+            // 比赛类型： 1男子、2女子、3男双、4女双、5混双
+            int matchType = mData.getMatchInfo().getMatchType();
+            switch (matchType) {
+                case 1:
+                case 2:
+                    isSingle = true;
+                    break;
+                case 3:
+                case 4:
+                case 5:
+                    isSingle = false;
+                    break;
+                default:
+                    isSingle = false;
+                    break;
+            }
 
-        tv_match_name.setText(mData.getMatchInfo().getLeagueName() == null ? "" : mData.getMatchInfo().getLeagueName());
-        tv_date.setText(DateUtil.convertDateToNation(mData.getMatchInfo().getStartDate()));
-        String time = "";
-        try {
-            time = mData.getMatchInfo().getStartTime().substring(0, mData.getMatchInfo().getStartTime().lastIndexOf(":"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        tv_time.setText(time);
+            tv_match_name.setText(mData.getMatchInfo().getLeagueName() == null ? "" : mData.getMatchInfo().getLeagueName());
+            tv_date.setText(DateUtil.convertDateToNation(mData.getMatchInfo().getStartDate()));
+            String time = "";
+            try {
+                time = mData.getMatchInfo().getStartTime().substring(0, mData.getMatchInfo().getStartTime().lastIndexOf(":"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            tv_time.setText(time);
 
+            if (mData.getMatchInfo().getHomePlayer1() != null) {
+                tv_home_name.setText(mData.getMatchInfo().getHomePlayer1().getName() == null ? "" : mData.getMatchInfo().getHomePlayer1().getName());
+            } else {
+                tv_home_name.setText("");
+            }
+            if (mData.getMatchInfo().getGuestPlayer1() != null) {
+                tv_guest_name.setText(mData.getMatchInfo().getGuestPlayer1().getName() == null ? "" : mData.getMatchInfo().getGuestPlayer1().getName());
+            } else {
+                tv_guest_name.setText("");
+            }
+
+            if (isSingle) {
+                // 单人赛
+                tv_home_name2.setVisibility(View.GONE);
+                tv_guest_name2.setVisibility(View.GONE);
+            } else {
+                // 双人赛
+                tv_home_name2.setVisibility(View.VISIBLE);
+                tv_guest_name2.setVisibility(View.VISIBLE);
+                if (mData.getMatchInfo().getHomePlayer2() != null) {
+                    tv_home_name2.setText(mData.getMatchInfo().getHomePlayer2().getName() == null ? "" : mData.getMatchInfo().getHomePlayer2().getName());
+                } else {
+                    tv_home_name2.setText("");
+                }
+                if (mData.getMatchInfo().getGuestPlayer2() != null) {
+                    tv_guest_name2.setText(mData.getMatchInfo().getGuestPlayer2().getName() == null ? "" : mData.getMatchInfo().getGuestPlayer2().getName());
+                } else {
+                    tv_guest_name2.setText("");
+                }
+            }
+        }
         // -6 P2退赛,-5 P1退赛,-4 待定,-3 推迟,-2 中断,-1 完,0 未开始,>0 进行中
         switch (mData.getMatchInfo().getMatchStatus()) {
             case -6:
@@ -159,37 +192,6 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
                 tv_start.setText("");
                 tv_start.setTextColor(getResources().getColor(R.color.tennis_details_analysis_title_start2));
                 break;
-        }
-
-        if (mData.getMatchInfo().getHomePlayer1() != null) {
-            tv_home_name.setText(mData.getMatchInfo().getHomePlayer1().getName() == null ? "" : mData.getMatchInfo().getHomePlayer1().getName());
-        } else {
-            tv_home_name.setText("");
-        }
-        if (mData.getMatchInfo().getGuestPlayer1() != null) {
-            tv_guest_name.setText(mData.getMatchInfo().getGuestPlayer1().getName() == null ? "" : mData.getMatchInfo().getGuestPlayer1().getName());
-        } else {
-            tv_guest_name.setText("");
-        }
-
-        if (isSingle) {
-            // 单人赛
-            tv_home_name2.setVisibility(View.GONE);
-            tv_guest_name2.setVisibility(View.GONE);
-        } else {
-            // 双人赛
-            tv_home_name2.setVisibility(View.VISIBLE);
-            tv_guest_name2.setVisibility(View.VISIBLE);
-            if (mData.getMatchInfo().getHomePlayer2() != null) {
-                tv_home_name2.setText(mData.getMatchInfo().getHomePlayer2().getName() == null ? "" : mData.getMatchInfo().getHomePlayer2().getName());
-            } else {
-                tv_home_name2.setText("");
-            }
-            if (mData.getMatchInfo().getGuestPlayer2() != null) {
-                tv_guest_name2.setText(mData.getMatchInfo().getGuestPlayer2().getName() == null ? "" : mData.getMatchInfo().getGuestPlayer2().getName());
-            } else {
-                tv_guest_name2.setText("");
-            }
         }
 
         if (mData.getMatchInfo().getMatchScore() != null) {
@@ -336,7 +338,7 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
                                 @Override
                                 public void run() {
                                     L.d("tennis", "网球内页收到了：刷新了!");
-                                    setDataShow(data);
+                                    setDataShow(data, 1);
                                 }
                             });
                         }

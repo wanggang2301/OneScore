@@ -144,8 +144,6 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mBallType = getArguments().getInt(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -157,7 +155,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
             setWebSocketUri(BaseURLs.WS_SERVICE);
             setTopic("USER.topic.tennis.oddindex");
         }
-
+        super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
     }
 
@@ -302,6 +300,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
         initView();
         setListener();
         initData();
+        connectWebSocket();
         return mView;
     }
 
