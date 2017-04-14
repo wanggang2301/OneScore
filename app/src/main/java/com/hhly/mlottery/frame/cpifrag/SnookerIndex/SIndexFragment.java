@@ -485,6 +485,19 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //tv_match_name.setText(((TextView) view.findViewById(R.id.tv)).getText().toString());
                 // iv_match.setImageResource(R.mipmap.nav_icon_cbb);
+
+
+                if (mBallType == BallType.SNOOKER) {
+                    L.d("websocket123", ">>>>>>>>斯洛克指数关闭");
+
+                } else if (mBallType == BallType.TENNLS) {
+                    L.d("websocket123", ">>>>>>>>网球指数关闭");
+
+                }
+
+                closeWebSocket();
+
+
                 EventBus.getDefault().post(new ScoreSwitchFg(position));
 
                 popupWindow.dismiss();
@@ -578,11 +591,22 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
     public void onEventMainThread(CloseCpiWebSocketEventBus closeWebSocketEventBus) {
 
         if (closeWebSocketEventBus.isVisible()) {
-            L.d("websocket123", "斯洛克网球指数关闭fg");
+            if (mBallType == BallType.SNOOKER) {
+                L.d("websocket123", "斯洛克指数关闭fg");
+
+            } else if (mBallType == BallType.TENNLS) {
+                L.d("websocket123", "网球指数关闭fg");
+
+            }
             closeWebSocket();
         } else {
             if (closeWebSocketEventBus.getIndex() == 2 || closeWebSocketEventBus.getIndex() == 3) {
-                L.d("websocket123", "斯洛克网球指数打开fg");
+                if (mBallType == BallType.SNOOKER) {
+                    L.d("websocket123", "斯洛克指数打开fg");
+
+                } else if (mBallType == BallType.TENNLS) {
+                    L.d("websocket123", "网球指数打开fg");
+                }
                 connectWebSocket();
             }
         }
