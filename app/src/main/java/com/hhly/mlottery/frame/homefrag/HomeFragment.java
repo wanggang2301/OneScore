@@ -114,7 +114,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private Activity mActivity;
 
     // 当前版本的菜单入口范围
-    private String[] menuList = {"12","14","30","31","32","33","34","35","36","37","38","39","310","311","312","313","314","315","316","317","318","319","320","321","322","323","60","19","324","325","326","327","328","329","330","331","332","42"};
+    private String[] menuList = {"12", "14", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "310", "311", "312", "313", "314", "315", "316", "317", "318", "319", "320", "321", "322", "323", "60", "19", "324", "325", "326", "327", "328", "329", "330", "331", "332", "42"};
 
     /**
      * 跳转其他Activity 的requestcode
@@ -291,10 +291,12 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                         Iterator<HomeContentEntity> iterator = mHomePagerEntity.getMenus().getContent().iterator();
                         /**---------屏蔽多余首页菜单入口--Start--------------------------*/
                         while (iterator.hasNext()) {
-                            String jumpAddr = iterator.next().getJumpAddr();
+                            HomeContentEntity entity = iterator.next();
                             // 当前菜单集合不包含此菜单
-                            if (!Arrays.asList(menuList).contains(jumpAddr)) {
-                                iterator.remove();
+                            if (entity.getJumpType() == 2) {
+                                if (!Arrays.asList(menuList).contains(entity.getJumpAddr())) {
+                                    iterator.remove();
+                                }
                             }
                             // 屏蔽的菜单
 //                            else {

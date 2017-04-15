@@ -145,7 +145,9 @@ public class HomeMuenFragment extends Fragment {
                                             break;
                                         case "12":// 足球资讯
                                         {
-                                            mContext.startActivity(new Intent(mContext, CounselActivity.class));
+                                            Intent intent = new Intent(mContext, CounselActivity.class);
+                                            intent.putExtra("currentIndex", labSeq);
+                                            mContext.startActivity(intent);
                                             MobclickAgent.onEvent(mContext, "HomePager_Menu_Football_Information");
                                         }
                                         break;
