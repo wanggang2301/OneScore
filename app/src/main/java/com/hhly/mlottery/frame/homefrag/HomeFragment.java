@@ -296,6 +296,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                             if (!Arrays.asList(menuList).contains(jumpAddr)) {
                                 iterator.remove();
                             }
+                            // 屏蔽的菜单
 //                            else {
 //                                switch (jumpAddr) {
 //                                    case "10":// 足球指数
