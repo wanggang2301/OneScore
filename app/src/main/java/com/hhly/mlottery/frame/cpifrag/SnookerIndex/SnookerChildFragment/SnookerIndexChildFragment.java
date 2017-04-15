@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiDetailsActivity;
@@ -43,8 +44,8 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private final String ARG_THIRDID = "thirdId";  //比赛id
-    private final String ARG_COMPANY_ID="comId"; //公司Id
-    private final String ARG_TYPE="oddType";
+    private final String ARG_COMPANY_ID = "comId"; //公司Id
+    private final String ARG_TYPE = "oddType";
 
     private String mType; //亚盘大小球类型
     private String mTypeIndex;//类型对应的坐标
@@ -78,19 +79,21 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
     private SnookerIndexAdapter mAdapter;
 
     private SIndexFragment parentFragment;
-    /**当前日期*/
-    private String mDate="";
+    /**
+     * 当前日期
+     */
+    private String mDate = "";
 
 
     public SnookerIndexChildFragment() {
         // Required empty public constructor
     }
 
-    public static SnookerIndexChildFragment newInstance(String type,int ballType) {
+    public static SnookerIndexChildFragment newInstance(String type, int ballType) {
         SnookerIndexChildFragment fragment = new SnookerIndexChildFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, type);
-        args.putInt(ARG_PARAM2,ballType);
+        args.putInt(ARG_PARAM2, ballType);
         fragment.setArguments(args);
         return fragment;
     }
@@ -98,7 +101,7 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        parentFragment= (SIndexFragment) getParentFragment();
+        parentFragment = (SIndexFragment) getParentFragment();
     }
 
     @Override
@@ -106,19 +109,19 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mType = getArguments().getString(ARG_PARAM1);
-            mBallType=getArguments().getInt(ARG_PARAM2);
+            mBallType = getArguments().getInt(ARG_PARAM2);
         }
         //改成dagger
-        mPresenter=new SnookerIndexChildPresenter(this);
+        mPresenter = new SnookerIndexChildPresenter(this);
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mView=inflater.inflate(R.layout.fragment_snooker_index_euro, container, false);
+        mView = inflater.inflate(R.layout.fragment_snooker_index_euro, container, false);
 
-        ButterKnife.bind(this,mView);
+        ButterKnife.bind(this, mView);
         return mView;
     }
 
@@ -138,41 +141,40 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
             }
         });
 
-        mAdapter=new SnookerIndexAdapter(mPresenter.getData(),parentFragment.getCompanyList(),mActivity,mType,mBallType);
+        mAdapter = new SnookerIndexAdapter(mPresenter.getData(), parentFragment.getCompanyList(), mActivity, mType, mBallType);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
 
         // 每个 Item 内部一条赔率的单击
         mAdapter.setOnOddsClickListener(new SnookerIndexAdapter.SnookerOddsOnClick() {
-            @Override
-            public void onOddsClick(String matchId, String comId) {
+                                            @Override
+                                            public void onOddsClick(String matchId, String comId) {
 
-                if(mBallType== BallType.TENNLS){
-                    //点击指数页面，传值给详情界面
-                    Intent intent = new Intent(getContext(), TennisIndexDetailsActivity.class);
-                    intent.putExtra(ARG_THIRDID,matchId);
-                    intent.putExtra(ARG_COMPANY_ID,comId);
-                    intent.putExtra(ARG_TYPE,mType);
-                    getContext().startActivity(intent);
-                }
+                                                if (mBallType == BallType.TENNLS) {
+                                                    //点击指数页面，传值给详情界面
+                                                    Intent intent = new Intent(getContext(), TennisIndexDetailsActivity.class);
+                                                    intent.putExtra(ARG_THIRDID, matchId);
+                                                    intent.putExtra(ARG_COMPANY_ID, comId);
+                                                    intent.putExtra(ARG_TYPE, mType);
+                                                    getContext().startActivity(intent);
+                                                }
 
 
-            }
-        }
+                                            }
+                                        }
         );
 
-        mPresenter.refreshByDate("",mType,mBallType);
+        mPresenter.refreshByDate("", mType, mBallType);
         mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
-                if(mBallType==BallType.SNOOKER){
-                    Intent intent=new Intent(getActivity(), SnookerMatchDetail.class);
-                    intent.putExtra("matchId",mPresenter.getData().get(i).getMatchInfo().getMatchId());
+                if (mBallType == BallType.SNOOKER) {
+                    Intent intent = new Intent(getActivity(), SnookerMatchDetail.class);
+                    intent.putExtra("matchId", mPresenter.getData().get(i).getMatchInfo().getMatchId());
                     getActivity().startActivity(intent);
-                }
-               else if(mBallType==BallType.TENNLS){
-                    Intent intent=new Intent(getActivity(), TennisBallDetailsActivity.class);
-                    intent.putExtra("thirdId",mPresenter.getData().get(i).getMatchInfo().getMatchId());
+                } else if (mBallType == BallType.TENNLS) {
+                    Intent intent = new Intent(getActivity(), TennisBallDetailsActivity.class);
+                    intent.putExtra("thirdId", mPresenter.getData().get(i).getMatchInfo().getMatchId());
                     getActivity().startActivity(intent);
                 }
             }
@@ -183,11 +185,12 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
 
     /**
      * 根据选中的日期刷新
+     *
      * @param date
      */
-    public void refreshDate(String date){
-        mDate=date;
-        mPresenter.refreshByDate(date,mType,mBallType);
+    public void refreshDate(String date) {
+        mDate = date;
+        mPresenter.refreshByDate(date, mType, mBallType);
     }
 
     @Override
@@ -213,14 +216,13 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
 
     @Override
     public void showNoData(String error) {
-        if(error.equals(SnookerIndexChildPresenter.NODATA)){
+        if (error.equals(SnookerIndexChildPresenter.NODATA)) {
             mNodataLayout.setVisibility(View.VISIBLE);
             mExceptionLayout.setVisibility(View.GONE);
             mProgressBarLayout.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.GONE);
             parentFragment.setRefreshing(false);
-        }
-        else if(error.equals(SnookerIndexChildPresenter.NETERROR)){
+        } else if (error.equals(SnookerIndexChildPresenter.NETERROR)) {
             mNodataLayout.setVisibility(View.GONE);
             mExceptionLayout.setVisibility(View.VISIBLE);
             mProgressBarLayout.setVisibility(View.GONE);
@@ -232,7 +234,7 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
     @Override
     public void handleCompany(List<SnookerIndexBean.CompanyEntity> company) {
         // 默认选中头两个公司
-        if(parentFragment.getCompanyList().size()==0){ //只是第一次的时候进行此操作。下拉刷新不再更改公司选中状态
+        if (parentFragment.getCompanyList().size() == 0) { //只是第一次的时候进行此操作。下拉刷新不再更改公司选中状态
             int size = company.size();
             size = size <= 2 ? size : 2;
             for (int i = 0; i < size; i++) {
@@ -259,22 +261,23 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
 
     /**
      * 斯诺克比分更新
+     *
      * @param mScoreData
      */
-    public void updateScore(SnookerScoreSocketBean mScoreData){
+    public void updateScore(SnookerScoreSocketBean mScoreData) {
         SnookerScoreSocketBean.SnookerScoreDataBean scoreData = mScoreData.getData();
-        synchronized (mPresenter.getData()){
+        synchronized (mPresenter.getData()) {
             for (SnookerIndexBean.AllInfoEntity match : mPresenter.getData()) {
                 if (match.getMatchInfo().getMatchId().equals(mScoreData.getThirdId())) {
                     if (match.getMatchInfo() != null) {
                         SnookerIndexBean.AllInfoEntity.MatchInfoEntity matchData = match.getMatchInfo();
-                        updateItemData(matchData , scoreData);
-                    }else{
+                        updateItemData(matchData, scoreData);
+                    } else {
                         /**
                          * 未开赛==>开赛 推送情况处理（状态更新）
                          */
                         SnookerIndexBean.AllInfoEntity.MatchInfoEntity newMatchData = new SnookerIndexBean.AllInfoEntity.MatchInfoEntity();
-                        updateItemData(newMatchData , scoreData);//更新单条状态
+                        updateItemData(newMatchData, scoreData);//更新单条状态
                         match.setMatchInfo(newMatchData);//赋值，给为null的MatchScore设值
                     }
                     if (mAdapter != null) {
@@ -288,54 +291,57 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
 
     /**
      * 网球比分更新
+     *
      * @param mScoreData
      */
-    public void updateTennisScore(TennisSocketBean mScoreData){
-        TennisSocketBean.DataObj scoreData=mScoreData.getDataObj();
-        synchronized (mPresenter.getData()){
-            for (SnookerIndexBean.AllInfoEntity match : mPresenter.getData()) {
-                if (match.getMatchInfo().getMatchId().equals(scoreData.getMatchId())) { //id相符合
-                    if (match.getMatchInfo() != null) {
-                        SnookerIndexBean.AllInfoEntity.MatchInfoEntity matchData = match.getMatchInfo();
-                        updateTennisItemData(matchData , scoreData);
-                    }else{
-                        /**
-                         * 未开赛==>开赛 推送情况处理（状态更新）
-                         */
-                        SnookerIndexBean.AllInfoEntity.MatchInfoEntity newMatchData = new SnookerIndexBean.AllInfoEntity.MatchInfoEntity();
-                        updateTennisItemData(newMatchData , scoreData);//更新单条状态
-                        match.setMatchInfo(newMatchData);//赋值，给为null的MatchScore设值
+    public void updateTennisScore(TennisSocketBean mScoreData) {
+        TennisSocketBean.DataObj scoreData = mScoreData.getDataObj();
+        synchronized (this) {
+            if (mPresenter != null && mPresenter.getData() != null) {
+                for (SnookerIndexBean.AllInfoEntity match : mPresenter.getData()) {
+                    if (match.getMatchInfo().getMatchId().equals(scoreData.getMatchId())) { //id相符合
+                        if (match.getMatchInfo() != null) {
+                            SnookerIndexBean.AllInfoEntity.MatchInfoEntity matchData = match.getMatchInfo();
+                            updateTennisItemData(matchData, scoreData);
+                        } else {
+                            /**
+                             * 未开赛==>开赛 推送情况处理（状态更新）
+                             */
+                            SnookerIndexBean.AllInfoEntity.MatchInfoEntity newMatchData = new SnookerIndexBean.AllInfoEntity.MatchInfoEntity();
+                            updateTennisItemData(newMatchData, scoreData);//更新单条状态
+                            match.setMatchInfo(newMatchData);//赋值，给为null的MatchScore设值
+                        }
+                        if (mAdapter != null) {
+                            mAdapter.notifyDataSetChanged();
+                        }
+                        break;
                     }
-                    if (mAdapter != null) {
-                        mAdapter.notifyDataSetChanged();
-                    }
-                    break;
                 }
             }
         }
-
     }
 
     /**
      * 网球更新单挑item的内容
+     *
      * @param matchData
      * @param data
      */
-    private void updateTennisItemData(SnookerIndexBean.AllInfoEntity.MatchInfoEntity matchData,TennisSocketBean.DataObj data){
+    private void updateTennisItemData(SnookerIndexBean.AllInfoEntity.MatchInfoEntity matchData, TennisSocketBean.DataObj data) {
         String oneWin = "";
         String towWin = "";
-        oneWin = data.getMatchScore().getHomeTotalScore() == 0 ? "0" : data.getMatchScore().getHomeTotalScore()+"";
-        towWin = data.getMatchScore().getAwayTotalScore() == 0 ? "0" : data.getMatchScore().getAwayTotalScore()+"";
+        oneWin = data.getMatchScore().getHomeTotalScore() == 0 ? "0" : data.getMatchScore().getHomeTotalScore() + "";
+        towWin = data.getMatchScore().getAwayTotalScore() == 0 ? "0" : data.getMatchScore().getAwayTotalScore() + "";
         matchData.setMatchResult(oneWin + ":" + towWin);
 
-            matchData.setMatchState(data.getMatchStatus()+"");
+        matchData.setMatchState(data.getMatchStatus() + "");
 
     }
 
     /**
      * 斯诺克更新单条item的内容
      */
-    private void updateItemData(SnookerIndexBean.AllInfoEntity.MatchInfoEntity matchData , SnookerScoreSocketBean.SnookerScoreDataBean data){
+    private void updateItemData(SnookerIndexBean.AllInfoEntity.MatchInfoEntity matchData, SnookerScoreSocketBean.SnookerScoreDataBean data) {
         String oneWin = "";
         String towWin = "";
         oneWin = data.getPlayerOnewin() == null ? "0" : data.getPlayerOnewin();
@@ -346,24 +352,26 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
             matchData.setMatchState(data.getStatus());
         }
     }
+
     /**
      * 斯诺克赔率更新
+     *
      * @param mOddsData
      */
-    public void updateOdds(SnookerSocketOddsBean mOddsData){
-        synchronized (mPresenter.getData()){
+    public void updateOdds(SnookerSocketOddsBean mOddsData) {
+        synchronized (mPresenter.getData()) {
             for (SnookerIndexBean.AllInfoEntity match : mPresenter.getData()) {
 
                 if (match.getMatchInfo().getMatchId().equals(mOddsData.getThirdId())) {
                     if (match.getComList() != null && match.getComList().size() != 0) {
-                        List<SnookerIndexBean.AllInfoEntity.ComListEntity>  comlist = match.getComList();
-                        updateOddsData(comlist , mOddsData);
-                    }else{
+                        List<SnookerIndexBean.AllInfoEntity.ComListEntity> comlist = match.getComList();
+                        updateOddsData(comlist, mOddsData);
+                    } else {
                         /**
                          * 无赔率==>有赔率情况处理
                          */
-                        List<SnookerIndexBean.AllInfoEntity.ComListEntity>  newComlist = new ArrayList<>();
-                        updateOddsData(newComlist , mOddsData);
+                        List<SnookerIndexBean.AllInfoEntity.ComListEntity> newComlist = new ArrayList<>();
+                        updateOddsData(newComlist, mOddsData);
                         match.setComList(newComlist);
                     }
                     if (mAdapter != null) {
@@ -374,24 +382,26 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
             }
         }
     }
+
     /**
      * 网球赔率更新
+     *
      * @param mOddsData
      */
-    public void updateTennisOdds(TennisSocketOddsBean mOddsData){
-        synchronized (mPresenter.getData()){
+    public void updateTennisOdds(TennisSocketOddsBean mOddsData) {
+        synchronized (mPresenter.getData()) {
             for (SnookerIndexBean.AllInfoEntity match : mPresenter.getData()) {
 
                 if (match.getMatchInfo().getMatchId().equals(mOddsData.getDataObj().getMatchId())) {
                     if (match.getComList() != null && match.getComList().size() != 0) {
-                        List<SnookerIndexBean.AllInfoEntity.ComListEntity>  comlist = match.getComList();
-                        updateTennisOddsData(comlist , mOddsData);
-                    }else{
+                        List<SnookerIndexBean.AllInfoEntity.ComListEntity> comlist = match.getComList();
+                        updateTennisOddsData(comlist, mOddsData);
+                    } else {
                         /**
                          * 无赔率==>有赔率情况处理
                          */
-                        List<SnookerIndexBean.AllInfoEntity.ComListEntity>  newComlist = new ArrayList<>();
-                        updateTennisOddsData(newComlist , mOddsData);
+                        List<SnookerIndexBean.AllInfoEntity.ComListEntity> newComlist = new ArrayList<>();
+                        updateTennisOddsData(newComlist, mOddsData);
                         match.setComList(newComlist);
                     }
                     if (mAdapter != null) {
@@ -402,10 +412,11 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
             }
         }
     }
+
     /**
      * 斯诺克赔率更新（单条数据更新）
      */
-    private void updateOddsData(List<SnookerIndexBean.AllInfoEntity.ComListEntity> currentOddsDataList, SnookerSocketOddsBean socketOddsData){
+    private void updateOddsData(List<SnookerIndexBean.AllInfoEntity.ComListEntity> currentOddsDataList, SnookerSocketOddsBean socketOddsData) {
 
         if (socketOddsData.getData() != null) {
 
@@ -427,7 +438,7 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
                 currlevel.setMiddle(sockerData.getHandicapValue());
                 newComlist.setCurrLevel(currlevel);
                 currentOddsDataList.add(newComlist);//添加新赔率
-            }else{
+            } else {
                 for (SnookerIndexBean.AllInfoEntity.ComListEntity currentOddsData : currentOddsDataList) {
                     if (sockerData.getCompany().equals(currentOddsData.getComName())) {
                         currentOddsData.getCurrLevel().setLeft(sockerData.getLeftOdds());
@@ -438,10 +449,11 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
             }
         }
     }
+
     /**
      * 网球赔率更新（单条数据更新）
      */
-    private void updateTennisOddsData(List<SnookerIndexBean.AllInfoEntity.ComListEntity> currentOddsDataList, TennisSocketOddsBean  socketOddsData){
+    private void updateTennisOddsData(List<SnookerIndexBean.AllInfoEntity.ComListEntity> currentOddsDataList, TennisSocketOddsBean socketOddsData) {
 
         if (socketOddsData.getDataObj().getMatchOdd() != null) {
 
@@ -458,7 +470,7 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
                 SnookerIndexBean.AllInfoEntity.ComListEntity newComlist = new SnookerIndexBean.AllInfoEntity.ComListEntity();
                 newComlist.setComName(sockerData.getCompany());
                 SnookerIndexBean.AllInfoEntity.ComListEntity.LevelEntity currlevel = new SnookerIndexBean.AllInfoEntity.ComListEntity.LevelEntity();
-                SnookerIndexBean.AllInfoEntity.ComListEntity.LevelEntity prelevel=new SnookerIndexBean.AllInfoEntity.ComListEntity.LevelEntity();
+                SnookerIndexBean.AllInfoEntity.ComListEntity.LevelEntity prelevel = new SnookerIndexBean.AllInfoEntity.ComListEntity.LevelEntity();
                 prelevel.setLeft(sockerData.getMatchOdd().getL()); //新公司的第一条是初赔。再受到的就走正常逻辑
                 prelevel.setRight(sockerData.getMatchOdd().getR());
                 prelevel.setMiddle(sockerData.getMatchOdd().getM());
@@ -468,7 +480,7 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
                 newComlist.setCurrLevel(currlevel);
                 newComlist.setPreLevel(prelevel);
                 currentOddsDataList.add(newComlist);//添加新赔率
-            }else{
+            } else {
                 for (SnookerIndexBean.AllInfoEntity.ComListEntity currentOddsData : currentOddsDataList) {
                     if (sockerData.getCompany().equals(currentOddsData.getComName())) {
                         currentOddsData.getCurrLevel().setLeft(sockerData.getMatchOdd().getL());
