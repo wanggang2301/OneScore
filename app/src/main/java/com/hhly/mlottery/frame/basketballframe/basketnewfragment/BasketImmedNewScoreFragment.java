@@ -27,6 +27,7 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
+import com.hhly.mlottery.activity.BettingRecommendActivity;
 import com.hhly.mlottery.adapter.ScheduleDateAdapter;
 import com.hhly.mlottery.adapter.basketball.BasketballScoreListAdapter;
 import com.hhly.mlottery.bean.basket.BasketAllOddBean;
@@ -266,6 +267,21 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
      * 初始化VIEW
      */
     private void initView() {
+        mView.findViewById(R.id.testbetting).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Bundle bundleset = new Bundle();
+//                bundleset.putInt("currentfragment", RESULT_FRAGMENT);
+//                mIntent.putExtras(bundleset);
+
+                Intent mIntent = new Intent(mContext , BettingRecommendActivity.class);
+                startActivity(mIntent);
+                getActivity().overridePendingTransition(R.anim.push_left_in , R.anim.push_fix_out);
+            }
+        });
+
+
+
         //暂无关注
         mbasketball_unfocus = (RelativeLayout) mView.findViewById(R.id.basketball_immediate_unfocus_pinned);
 
