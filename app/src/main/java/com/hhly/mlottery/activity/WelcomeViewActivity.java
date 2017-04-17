@@ -104,7 +104,7 @@ public class WelcomeViewActivity extends BaseActivity implements OnViewChangeLis
         }
         // 加入适配器
         welcome_viewpager.setAdapter(new GuideViewAdapter(list));
-
+        welcome_viewpager.setOffscreenPageLimit(3);
     }
 
     private View.OnClickListener onClick = new View.OnClickListener() {

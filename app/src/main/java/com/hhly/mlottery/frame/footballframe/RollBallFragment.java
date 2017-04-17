@@ -321,7 +321,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     }
 
     private void setupSwipeRefresh() {
-        swipeRefreshLayout.setRefreshing(true);
+//        swipeRefreshLayout.setRefreshing(true);
         swipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(MyApp.getContext(), 40));
@@ -598,11 +598,12 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
                     case VIEW_STATUS_LOADING:
                         fragment.swipeRefreshLayout.setRefreshing(true);
-                        fragment.swipeRefreshLayout.setVisibility(View.VISIBLE);
+//                        fragment.swipeRefreshLayout.setVisibility(View.VISIBLE);
                         fragment.networkExceptionLayout.setVisibility(View.GONE);
                         fragment.footballImmediateUnfocusLl.setVisibility(View.GONE);
                         break;
                     case VIEW_STATUS_NO_ANY_DATA:
+                        fragment.swipeRefreshLayout.setRefreshing(false);
                         fragment.networkExceptionLayout.setVisibility(View.GONE);
                         fragment.footballImmediateUnfocusLl.setVisibility(View.VISIBLE);
                         fragment.titleContainer.setVisibility(View.GONE);
