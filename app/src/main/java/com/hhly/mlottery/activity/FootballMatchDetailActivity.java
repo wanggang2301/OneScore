@@ -42,7 +42,6 @@ import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MathchStatisInfo;
 import com.hhly.mlottery.bean.footballDetails.PreLiveText;
 import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
-import com.hhly.mlottery.bean.multiplebean.MultipleByValueBean;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumKeepTime;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumLiveTextEvent;
 import com.hhly.mlottery.callback.FootballLiveGotoChart;
@@ -66,7 +65,6 @@ import com.hhly.mlottery.util.FootballLiveTextComparator;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.NetworkUtils;
-import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.StringUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -352,8 +350,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         initHeadView();
         initView();
         initEvent();
-
-
 
 
         mHandler.sendEmptyMessage(STARTLOADING);
@@ -771,7 +767,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 // 情报
                 mViewPager.setCurrentItem(STATISTICS_FG, false);
             } else {
-                mViewPager.setCurrentItem(ROLLBALL_FG, false);
+                mViewPager.setCurrentItem(LIVE_FG, false);
             }
 
             initPreData(matchDetail);
