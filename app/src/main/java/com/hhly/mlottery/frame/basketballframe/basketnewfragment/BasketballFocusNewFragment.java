@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -63,7 +64,7 @@ import de.greenrobot.event.EventBus;
  * 篮球比分fragment （关注）
  * Created by yixq on 2015/12/30.
  */
-public class BasketballFocusNewFragment extends BaseWebSocketFragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class BasketballFocusNewFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "FocusBasketballFragment";
     private static final String PARAMS = "BASKET_PARAMS";
@@ -147,8 +148,8 @@ public class BasketballFocusNewFragment extends BaseWebSocketFragment implements
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic("USER.topic.basketball");
+//        setWebSocketUri(BaseURLs.WS_SERVICE);
+//        setTopic("USER.topic.basketball");
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mBasketballType = 3;
@@ -233,6 +234,7 @@ public class BasketballFocusNewFragment extends BaseWebSocketFragment implements
             mSwipeRefreshLayout.setVisibility(View.GONE);
             mSwipeRefreshLayout.setRefreshing(false);
         }
+        mLoadingLayout.setVisibility((status == SHOW_STATUS_REFRESH_ONCLICK) ? View.VISIBLE : View.GONE);
         mErrorLayout.setVisibility(status == SHOW_STATUS_ERROR ? View.VISIBLE : View.GONE);
         mNoDataLayout.setVisibility(status == SHOW_STATUS_NO_DATA ? View.VISIBLE : View.GONE);
     }
@@ -470,9 +472,30 @@ public class BasketballFocusNewFragment extends BaseWebSocketFragment implements
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    protected void onTextResult(String text) {
+//    @Override
+//    protected void onTextResult(String text) {
+//
+//        if (adapter == null) {
+//            return;
+//        }
+//
+//        String type = "";
+//        try {
+//            JSONObject jsonObject = new JSONObject(text);
+//            type = jsonObject.getString("type");
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        if (!"".equals(type)) {
+//            Message msg = Message.obtain();
+//            msg.obj = text;
+//            msg.arg1 = Integer.parseInt(type);
+//            mSocketHandler.sendMessage(msg);
+//        }
+//    }
 
+    public void handleSocketMessage(String text) {
         if (adapter == null) {
             return;
         }
@@ -493,20 +516,20 @@ public class BasketballFocusNewFragment extends BaseWebSocketFragment implements
         }
     }
 
-    @Override
-    protected void onConnectFail() {
-
-    }
-
-    @Override
-    protected void onDisconnected() {
-
-    }
-
-    @Override
-    protected void onConnected() {
-
-    }
+//    @Override
+//    protected void onConnectFail() {
+//
+//    }
+//
+//    @Override
+//    protected void onDisconnected() {
+//
+//    }
+//
+//    @Override
+//    protected void onConnected() {
+//
+//    }
 
     /**
      * 下拉刷新
@@ -514,7 +537,7 @@ public class BasketballFocusNewFragment extends BaseWebSocketFragment implements
     @Override
     public void onRefresh() {
         isLoad = -1;
-        connectWebSocket();
+//        connectWebSocket();
         setStatus(SHOW_STATUS_LOADING);
         initData();
 
@@ -838,12 +861,12 @@ public class BasketballFocusNewFragment extends BaseWebSocketFragment implements
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        L.v(TAG, "___onResume___");
-        connectWebSocket(); //链接socket
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        L.v(TAG, "___onResume___");
+//        connectWebSocket(); //链接socket
+//    }
 
     private boolean isDestroy = false;
 

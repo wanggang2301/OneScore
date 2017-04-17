@@ -555,8 +555,6 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
             L.d("xxx", "FocusFragment>>>显示");
         }
         if (getActivity() != null) {
-            L.d("websocket123", "篮球打开");
-
             connectWebSocket();
         }
     }
@@ -624,8 +622,7 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
-                L.d("websocket123", "篮球关闭");
+                L.d("websocket123", ">>>>>>>>篮球比分关闭");
                 closeWebSocket();
 
                 EventBus.getDefault().post(new ScoreSwitchFg(position));
@@ -661,6 +658,7 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         L.d("websocket123", "篮球收到消息==" + text);
 
         ((BasketImmedNewScoreFragment) fragments.get(0)).handleSocketMessage(text);
+        ((BasketballFocusNewFragment) fragments.get(3)).handleSocketMessage(text);
     }
 
     @Override
@@ -700,11 +698,11 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
     public void onEventMainThread(CloseWebSocketEventBus closeWebSocketEventBus) {
 
         if (closeWebSocketEventBus.isVisible()) {
-            L.d("websocket123", "篮球比分关闭fg");
+            L.d("websocket123", "_________篮球 比分 关闭 fg");
             closeWebSocket();
         } else {
-            if (closeWebSocketEventBus.getIndex() == 1) {
-                L.d("websocket123", "篮球比分打开fg");
+            if (closeWebSocketEventBus.getIndex() == BallType.BASKETBALL) {
+                L.d("websocket123", "_________篮球 比分 关闭 fg");
 
                 connectWebSocket();
             }

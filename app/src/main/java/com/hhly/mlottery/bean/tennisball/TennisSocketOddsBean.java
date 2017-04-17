@@ -41,6 +41,25 @@ public class TennisSocketOddsBean {
          */
 
         private String company;
+        private String comId;
+        private String comName;
+
+        public String getComId() {
+            return comId;
+        }
+
+        public void setComId(String comId) {
+            this.comId = comId;
+        }
+
+        public String getComName() {
+            return comName;
+        }
+
+        public void setComName(String comName) {
+            this.comName = comName;
+        }
+
         private int gameType;
         private String matchId;
         private MatchOddBean matchOdd;

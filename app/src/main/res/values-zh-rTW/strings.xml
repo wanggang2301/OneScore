@@ -931,7 +931,7 @@
     <string name="football_database_details_most_top_draw">平/已賽:</string>
     <string name="football_database_details_most_top_lost">輸/已賽:</string>
     <string name="football_database_details_most_top_avg">勝率:</string>
-    <string name="football_database_details_most_score_avg">場均進球:</string>
+    <string name="football_database_details_most_score_avg">場均進球 :</string>
     <string name="football_database_details_statistic_home_draw">平局 :</string>
     <string name="football_database_details_statistic_all_num">總進球數 :</string>
     <string name="football_database_details_statistic_avg_num">場均 :</string>
@@ -953,6 +953,8 @@
     <string name="football_database_details_moreThree">高於3.5</string>
     <string name="football_database_details_chang">場</string>
 
+    <string name="football_database_details_statistic_fumble_num">總失球數 :</string>
+    <string name="football_database_details_fumble_score_avg">場均失球 :</string>
     <!--足球分析详情-->
     <string name="football_analyze_details">分析明細</string>
     <string name="football_analyze_details_time">時間</string>

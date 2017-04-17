@@ -209,6 +209,8 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                L.d("websocket123", ">>>>>>>>网球比分关闭");
+
                 closeWebSocket();
 
                 EventBus.getDefault().post(new ScoreSwitchFg(position));
@@ -234,8 +236,9 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
     }
 
     @Override
+
     protected void onTextResult(String text) {
-        L.d("tennis", "网球赔率推送消息： " + text);
+        L.d("websocket123", "网球收到消息==" + text);
         if (TextUtils.isEmpty(text)) return;
         for (int i = 0; i < fragments.size(); i++) {
             switch (i) {
@@ -318,14 +321,11 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
     public void onEventMainThread(CloseWebSocketEventBus closeWebSocketEventBus) {
 
         if (closeWebSocketEventBus.isVisible()) {
-            L.d("websocket123", "网球比分关闭fg");
+            L.d("websocket123", "_________网球 比分 关闭 fg");
             closeWebSocket();
         } else {
-            if (closeWebSocketEventBus.getIndex() == 2) {
-                L.d("websocket123", "网球比分打开fg");
-
-
-
+            if (closeWebSocketEventBus.getIndex() == BallType.TENNLS) {
+                L.d("websocket123", "_________网球 比分 打开 fg");
                 connectWebSocket();
             }
         }

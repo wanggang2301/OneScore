@@ -282,7 +282,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         // mHeadviewpager.setIsScrollable(false);
 
         setListener();
-        loadData();
+        mLoadHandler.postDelayed(mRun, 0);
         pollingGifCount();
 
     }
@@ -530,6 +530,16 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             }
         });
     }
+    /**
+     * 子线程 处理数据加载
+     */
+    Handler mLoadHandler = new Handler();
+    private Runnable mRun = new Runnable() {
+        @Override
+        public void run() {
+            loadData();
+        }
+    };
 
     /**
      * 请求网络数据
@@ -732,7 +742,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             @Override
             public void run() {
                 mRefreshLayout.setRefreshing(false);
-                loadData();
+                mLoadHandler.postDelayed(mRun, 0);
                 //直播刷新
                 if (isNBA && is5) {
                     if (mBasketLiveFragment != null) {

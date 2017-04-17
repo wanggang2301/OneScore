@@ -10,8 +10,9 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
-import com.hhly.mlottery.bean.tennisball.MatchDataBean;
 import com.hhly.mlottery.bean.tennisball.TennisSocketBean;
+import com.hhly.mlottery.bean.tennisball.datails.analysis.MatchInfoBean;
+import com.hhly.mlottery.bean.tennisball.datails.analysis.MatchScoreBean;
 import com.hhly.mlottery.bean.tennisball.datails.analysis.TennisAnalysisBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
@@ -80,7 +81,7 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
                 connectWebSocket();
                 refreshLayout.setRefreshing(false);
                 tennisAnalysisFrag.updataChange(json.getData());
-                setDataShow(json.getData());
+                setDataShow(json.getData(), 0);
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
@@ -95,35 +96,68 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
     }
 
     // 设置数据展示
-    private void setDataShow(TennisAnalysisBean.DataBean mData) {
+    private void setDataShow(TennisAnalysisBean.DataBean mData, int type) {
         if (mData == null || mData.getMatchInfo() == null) return;
-        // 比赛类型： 1男子、2女子、3男双、4女双、5混双
-        int matchType = mData.getMatchInfo().getMatchType();
-        switch (matchType) {
-            case 1:
-            case 2:
-                isSingle = true;
-                break;
-            case 3:
-            case 4:
-            case 5:
-                isSingle = false;
-                break;
-            default:
-                isSingle = false;
-                break;
-        }
+        // type 0:加载数据 ;1:推送更新
+        if (type == 0) {
+            // 比赛类型： 1男子、2女子、3男双、4女双、5混双
+            int matchType = mData.getMatchInfo().getMatchType();
+            switch (matchType) {
+                case 1:
+                case 2:
+                    isSingle = true;
+                    break;
+                case 3:
+                case 4:
+                case 5:
+                    isSingle = false;
+                    break;
+                default:
+                    isSingle = false;
+                    break;
+            }
 
-        tv_match_name.setText(mData.getMatchInfo().getLeagueName());
-        tv_date.setText(DateUtil.convertDateToNation(mData.getMatchInfo().getStartDate()));
-        String time = "";
-        try {
-            time = mData.getMatchInfo().getStartTime().substring(0, mData.getMatchInfo().getStartTime().lastIndexOf(":"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        tv_time.setText(time);
+            tv_match_name.setText(mData.getMatchInfo().getLeagueName() == null ? "" : mData.getMatchInfo().getLeagueName());
+            tv_date.setText(DateUtil.convertDateToNation(mData.getMatchInfo().getStartDate()));
+            String time = "";
+            try {
+                time = mData.getMatchInfo().getStartTime().substring(0, mData.getMatchInfo().getStartTime().lastIndexOf(":"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            tv_time.setText(time);
 
+            if (mData.getMatchInfo().getHomePlayer1() != null) {
+                tv_home_name.setText(mData.getMatchInfo().getHomePlayer1().getName() == null ? "" : mData.getMatchInfo().getHomePlayer1().getName());
+            } else {
+                tv_home_name.setText("");
+            }
+            if (mData.getMatchInfo().getGuestPlayer1() != null) {
+                tv_guest_name.setText(mData.getMatchInfo().getGuestPlayer1().getName() == null ? "" : mData.getMatchInfo().getGuestPlayer1().getName());
+            } else {
+                tv_guest_name.setText("");
+            }
+
+            if (isSingle) {
+                // 单人赛
+                tv_home_name2.setVisibility(View.GONE);
+                tv_guest_name2.setVisibility(View.GONE);
+            } else {
+                // 双人赛
+                tv_home_name2.setVisibility(View.VISIBLE);
+                tv_guest_name2.setVisibility(View.VISIBLE);
+                if (mData.getMatchInfo().getHomePlayer2() != null) {
+                    tv_home_name2.setText(mData.getMatchInfo().getHomePlayer2().getName() == null ? "" : mData.getMatchInfo().getHomePlayer2().getName());
+                } else {
+                    tv_home_name2.setText("");
+                }
+                if (mData.getMatchInfo().getGuestPlayer2() != null) {
+                    tv_guest_name2.setText(mData.getMatchInfo().getGuestPlayer2().getName() == null ? "" : mData.getMatchInfo().getGuestPlayer2().getName());
+                } else {
+                    tv_guest_name2.setText("");
+                }
+            }
+        }
         // -6 P2退赛,-5 P1退赛,-4 待定,-3 推迟,-2 中断,-1 完,0 未开始,>0 进行中
         switch (mData.getMatchInfo().getMatchStatus()) {
             case -6:
@@ -160,62 +194,63 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
                 break;
         }
 
-        tv_home_name.setText(mData.getMatchInfo().getHomePlayer1().getName());
-        tv_guest_name.setText(mData.getMatchInfo().getGuestPlayer1().getName());
+        if (mData.getMatchInfo().getMatchScore() != null) {
+            tv_home_total_score.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeTotalScore()));
+            tv_guest_total_score.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwayTotalScore()));
 
-        tv_home_total_score.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeTotalScore()));
-        tv_guest_total_score.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwayTotalScore()));
+            if (mData.getMatchInfo().getMatchScore().getHomeSetScore1() == 0 && mData.getMatchInfo().getMatchScore().getAwaySetScore1() == 0) {
+                tv_home_score1.setText("");
+                tv_guest_score1.setText("");
+            } else {
+                tv_home_score1.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeSetScore1()));
+                tv_guest_score1.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwaySetScore1()));
+            }
 
-        if (isSingle) {
-            // 单人赛
-            tv_home_name2.setVisibility(View.GONE);
-            tv_guest_name2.setVisibility(View.GONE);
+            if (mData.getMatchInfo().getMatchScore().getHomeSetScore2() == 0 && mData.getMatchInfo().getMatchScore().getAwaySetScore2() == 0) {
+                tv_home_score2.setText("");
+                tv_guest_score2.setText("");
+            } else {
+                tv_home_score2.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeSetScore2()));
+                tv_guest_score2.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwaySetScore2()));
+            }
+
+            if (mData.getMatchInfo().getMatchScore().getHomeSetScore3() == 0 && mData.getMatchInfo().getMatchScore().getAwaySetScore3() == 0) {
+                tv_home_score3.setText("");
+                tv_guest_score3.setText("");
+            } else {
+                tv_home_score3.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeSetScore3()));
+                tv_guest_score3.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwaySetScore3()));
+            }
+
+            if (mData.getMatchInfo().getMatchScore().getHomeSetScore4() == 0 && mData.getMatchInfo().getMatchScore().getAwaySetScore4() == 0) {
+                tv_home_score4.setText("");
+                tv_guest_score4.setText("");
+            } else {
+                tv_home_score4.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeSetScore4()));
+                tv_guest_score4.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwaySetScore4()));
+            }
+
+            if (mData.getMatchInfo().getMatchScore().getHomeSetScore5() == 0 && mData.getMatchInfo().getMatchScore().getAwaySetScore5() == 0) {
+                tv_home_score5.setText("");
+                tv_guest_score5.setText("");
+            } else {
+                tv_home_score5.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeSetScore5()));
+                tv_guest_score5.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwaySetScore5()));
+            }
+
         } else {
-            // 双人赛
-            tv_home_name2.setVisibility(View.VISIBLE);
-            tv_guest_name2.setVisibility(View.VISIBLE);
-            tv_home_name2.setText(mData.getMatchInfo().getHomePlayer2().getName());
-            tv_guest_name2.setText(mData.getMatchInfo().getGuestPlayer2().getName());
-        }
-
-        if (mData.getMatchInfo().getMatchScore().getHomeSetScore1() == 0 && mData.getMatchInfo().getMatchScore().getAwaySetScore1() == 0) {
+            tv_home_total_score.setText("");
+            tv_guest_total_score.setText("");
             tv_home_score1.setText("");
             tv_guest_score1.setText("");
-        } else {
-            tv_home_score1.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeSetScore1()));
-            tv_guest_score1.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwaySetScore1()));
-        }
-
-        if (mData.getMatchInfo().getMatchScore().getHomeSetScore2() == 0 && mData.getMatchInfo().getMatchScore().getAwaySetScore2() == 0) {
             tv_home_score2.setText("");
             tv_guest_score2.setText("");
-        } else {
-            tv_home_score2.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeSetScore2()));
-            tv_guest_score2.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwaySetScore2()));
-        }
-
-        if (mData.getMatchInfo().getMatchScore().getHomeSetScore3() == 0 && mData.getMatchInfo().getMatchScore().getAwaySetScore3() == 0) {
             tv_home_score3.setText("");
             tv_guest_score3.setText("");
-        } else {
-            tv_home_score3.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeSetScore3()));
-            tv_guest_score3.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwaySetScore3()));
-        }
-
-        if (mData.getMatchInfo().getMatchScore().getHomeSetScore4() == 0 && mData.getMatchInfo().getMatchScore().getAwaySetScore4() == 0) {
             tv_home_score4.setText("");
             tv_guest_score4.setText("");
-        } else {
-            tv_home_score4.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeSetScore4()));
-            tv_guest_score4.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwaySetScore4()));
-        }
-
-        if (mData.getMatchInfo().getMatchScore().getHomeSetScore5() == 0 && mData.getMatchInfo().getMatchScore().getAwaySetScore5() == 0) {
             tv_home_score5.setText("");
             tv_guest_score5.setText("");
-        } else {
-            tv_home_score5.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getHomeSetScore5()));
-            tv_guest_score5.setText(String.valueOf(mData.getMatchInfo().getMatchScore().getAwaySetScore5()));
         }
     }
 
@@ -277,31 +312,39 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
         new Thread() {
             @Override
             public void run() {
-                TennisSocketBean tennisSocketBean = JSON.parseObject(jsonData, TennisSocketBean.class);
-                if (tennisSocketBean.getType() == 401) {
-                    if (mThirdId.equals(tennisSocketBean.getDataObj().getMatchId())) {
-                        final TennisAnalysisBean.DataBean data = new TennisAnalysisBean.DataBean();
-                        data.getMatchInfo().setMatchStatus(tennisSocketBean.getDataObj().getMatchStatus());
-                        data.getMatchInfo().getMatchScore().setHomeSetScore1(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore1());
-                        data.getMatchInfo().getMatchScore().setHomeSetScore2(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore2());
-                        data.getMatchInfo().getMatchScore().setHomeSetScore3(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore3());
-                        data.getMatchInfo().getMatchScore().setHomeSetScore4(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore4());
-                        data.getMatchInfo().getMatchScore().setHomeSetScore5(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore5());
-                        data.getMatchInfo().getMatchScore().setAwaySetScore1(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore1());
-                        data.getMatchInfo().getMatchScore().setAwaySetScore2(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore2());
-                        data.getMatchInfo().getMatchScore().setAwaySetScore3(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore3());
-                        data.getMatchInfo().getMatchScore().setAwaySetScore4(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore4());
-                        data.getMatchInfo().getMatchScore().setAwaySetScore5(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore5());
-                        data.getMatchInfo().getMatchScore().setHomeTotalScore(tennisSocketBean.getDataObj().getMatchScore().getHomeTotalScore());
-                        data.getMatchInfo().getMatchScore().setAwayTotalScore(tennisSocketBean.getDataObj().getMatchScore().getAwayTotalScore());
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                L.d("tennis", "网球内页收到了：刷新了!");
-                                setDataShow(data);
-                            }
-                        });
+                try {
+                    TennisSocketBean tennisSocketBean = JSON.parseObject(jsonData, TennisSocketBean.class);
+                    if (tennisSocketBean.getType() == 401) {
+                        if (mThirdId.equals(tennisSocketBean.getDataObj().getMatchId())) {
+                            final TennisAnalysisBean.DataBean data = new TennisAnalysisBean.DataBean();
+                            MatchInfoBean matchInfoBean = new MatchInfoBean();
+                            MatchScoreBean matchScoreBean = new MatchScoreBean();
+                            matchInfoBean.setMatchStatus(tennisSocketBean.getDataObj().getMatchStatus());
+                            matchScoreBean.setHomeSetScore1(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore1());
+                            matchScoreBean.setHomeSetScore2(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore2());
+                            matchScoreBean.setHomeSetScore3(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore3());
+                            matchScoreBean.setHomeSetScore4(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore4());
+                            matchScoreBean.setHomeSetScore5(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore5());
+                            matchScoreBean.setAwaySetScore1(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore1());
+                            matchScoreBean.setAwaySetScore2(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore2());
+                            matchScoreBean.setAwaySetScore3(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore3());
+                            matchScoreBean.setAwaySetScore4(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore4());
+                            matchScoreBean.setAwaySetScore5(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore5());
+                            matchScoreBean.setHomeTotalScore(tennisSocketBean.getDataObj().getMatchScore().getHomeTotalScore());
+                            matchScoreBean.setAwayTotalScore(tennisSocketBean.getDataObj().getMatchScore().getAwayTotalScore());
+                            matchInfoBean.setMatchScore(matchScoreBean);
+                            data.setMatchInfo(matchInfoBean);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    L.d("tennis", "网球内页收到了：刷新了!");
+                                    setDataShow(data, 1);
+                                }
+                            });
+                        }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }.start();

@@ -34,10 +34,10 @@ import com.hhly.mlottery.bean.tennisball.TennisSocketBean;
 import com.hhly.mlottery.bean.tennisball.TennisSocketOddsBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.BallType;
+import com.hhly.mlottery.frame.cpifrag.CloseCpiWebSocketEventBus;
 import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SnookerChildFragment.SnookerCompanyChooseDialogFragment;
 import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SnookerChildFragment.SnookerIndexChildFragment;
 import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
-import com.hhly.mlottery.frame.scorefrag.CloseWebSocketEventBus;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.L;
@@ -61,12 +61,12 @@ import de.greenrobot.event.EventBus;
 
 public class SIndexFragment extends BaseWebSocketFragment implements SIndexContract.View, View.OnClickListener {
 
-    public static final String ARG_PARAM1 = "param1";
-    public static final String ARG_PARAM2 = "param2";
+//    public static final String ARG_PARAM1 = "param1";
+//    public static final String ARG_PARAM2 = "param2";
     private ArrayList<SnookerIndexBean.CompanyEntity> companyList = new ArrayList<>(); // 公司数据源
 
-    private int mBallType;
-    private String mParam2;
+//    private int mBallType;
+//    private String mParam2;
 
     /**
      * 欧赔
@@ -144,20 +144,18 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mBallType = getArguments().getInt(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-        if (mBallType == BallType.SNOOKER) {
-            setWebSocketUri(BaseURLs.WS_SERVICE);
-            setTopic("USER.topic.snooker");
-        } else if (mBallType == BallType.TENNLS) {
+//        if (getArguments() != null) {
+//            mBallType = getArguments().getInt(ARG_PARAM1);
+//            mParam2 = getArguments().getString(ARG_PARAM2);
+//        }
+//        if (mBallType == BallType.SNOOKER) {
+//            setWebSocketUri(BaseURLs.WS_SERVICE);
+//            setTopic("USER.topic.snooker");
+//        } else if (mBallType == BallType.TENNLS) {
             setWebSocketUri(BaseURLs.WS_SERVICE);
             setTopic("USER.topic.tennis.oddindex");
-        }
-
+//        }
+        super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
     }
 
@@ -218,6 +216,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
             } else if (msg.arg1 == 404) {  //网球比分推送
                 String ws_json = (String) msg.obj;
                 TennisSocketBean mTennisScore;
+                L.e(TAG, "ws_json_snooker_odds = " + ws_json);
                 try {
                     mTennisScore = JSON.parseObject(ws_json, TennisSocketBean.class);
                 } catch (Exception e) {
@@ -285,6 +284,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
 
                         case 2://独赢[欧赔]
                             ((SnookerIndexChildFragment) fragments.get(2)).updateTennisOdds(mSnookerOdds);
+                            L.e(TAG, "ws_json_snooker_odds = " + mSnookerOdds.getDataObj().getMatchOdd().getL()+"++++++++++++++");
                             break;
 
                     }
@@ -302,6 +302,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
         initView();
         setListener();
         initData();
+        connectWebSocket();
         return mView;
     }
 
@@ -327,24 +328,24 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
         mTitles = new String[]{getActivity().getResources().getString(R.string.odd_plate_rb_txt), getActivity().getResources().getString(R.string.asiasize),
                 getActivity().getResources().getString(R.string.odd_op_rb_txt), MyApp.getContext().getResources().getString(R.string.snooker_index_single_double)};
 
-        if (mBallType == BallType.SNOOKER) {
-            mTextMatch.setText(getActivity().getString(R.string.snooker_txt));
-            mTitles = new String[]{getActivity().getResources().getString(R.string.odd_plate_rb_txt), getActivity().getResources().getString(R.string.asiasize),
-                    getActivity().getResources().getString(R.string.odd_op_rb_txt), MyApp.getContext().getResources().getString(R.string.snooker_index_single_double)};
-
-            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_LET, mBallType));
-            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_SIZE, mBallType));
-            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_EURO, mBallType));
-            fragments.add(SnookerIndexChildFragment.newInstance(SINGLE_DOUBLE, mBallType));
-
-        } else if (mBallType == BallType.TENNLS) { //网球
+//        if (mBallType == BallType.SNOOKER) {
+//            mTextMatch.setText(getActivity().getString(R.string.snooker_txt));
+//            mTitles = new String[]{getActivity().getResources().getString(R.string.odd_plate_rb_txt), getActivity().getResources().getString(R.string.asiasize),
+//                    getActivity().getResources().getString(R.string.odd_op_rb_txt), MyApp.getContext().getResources().getString(R.string.snooker_index_single_double)};
+//
+//            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_LET, mBallType));
+//            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_SIZE, mBallType));
+//            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_EURO, mBallType));
+//            fragments.add(SnookerIndexChildFragment.newInstance(SINGLE_DOUBLE, mBallType));
+//
+//        } else if (mBallType == BallType.TENNLS) { //网球
             mTextMatch.setText(getActivity().getString(R.string.tennisball_txt));
             mTitles = new String[]{getActivity().getResources().getString(R.string.odd_plate_rb_txt), getActivity().getResources().getString(R.string.asiasize),
                     getActivity().getResources().getString(R.string.odd_op_rb_txt)};
-            fragments.add(SnookerIndexChildFragment.newInstance(TennisOddsTypeEnum.ASIALET, mBallType));
-            fragments.add(SnookerIndexChildFragment.newInstance(TennisOddsTypeEnum.ASIASIZE, mBallType));
-            fragments.add(SnookerIndexChildFragment.newInstance(TennisOddsTypeEnum.EURO, mBallType));
-        }
+            fragments.add(SnookerIndexChildFragment.newInstance(TennisOddsTypeEnum.ASIALET, BallType.TENNLS));
+            fragments.add(SnookerIndexChildFragment.newInstance(TennisOddsTypeEnum.ASIASIZE, BallType.TENNLS));
+            fragments.add(SnookerIndexChildFragment.newInstance(TennisOddsTypeEnum.EURO, BallType.TENNLS));
+//        }
 
         mTabsAdapter = new TabsAdapter(getChildFragmentManager());
         mTabsAdapter.setTitles(mTitles);
@@ -469,7 +470,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
     private void popWindow(final View v) {
         final View mView = View.inflate(getActivity(), R.layout.pop_select, null);
         // 创建ArrayAdapter对象
-        BallChoiceArrayAdapter mAdapter = new BallChoiceArrayAdapter(getActivity(), mItems, mBallType); //在第几个
+        BallChoiceArrayAdapter mAdapter = new BallChoiceArrayAdapter(getActivity(), mItems, BallType.SNOOKER); //在第几个
 
         ListView listview = (ListView) mView.findViewById(R.id.match_type);
         listview.setAdapter(mAdapter);
@@ -485,6 +486,19 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //tv_match_name.setText(((TextView) view.findViewById(R.id.tv)).getText().toString());
                 // iv_match.setImageResource(R.mipmap.nav_icon_cbb);
+
+
+//                if (mBallType == BallType.SNOOKER) {
+//                    L.d("websocket123", ">>>>>>>>斯洛克指数关闭");
+//
+//                } else if (mBallType == BallType.TENNLS) {
+//                    L.d("websocket123", ">>>>>>>>网球指数关闭");
+//
+//                }
+
+                closeWebSocket();
+
+
                 EventBus.getDefault().post(new ScoreSwitchFg(position));
 
                 popupWindow.dismiss();
@@ -575,14 +589,27 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
         closeWebSocket();
     }
 
-    public void onEventMainThread(CloseWebSocketEventBus closeWebSocketEventBus) {
+    public void onEventMainThread(CloseCpiWebSocketEventBus closeWebSocketEventBus) {
 
         if (closeWebSocketEventBus.isVisible()) {
-            L.d("websocket123", "斯洛克网球指数关闭fg");
+//            if (mBallType == BallType.SNOOKER) {
+//                L.d("websocket123", "_______斯洛克 指数 关闭 fg");
+//
+//            } else if (mBallType == BallType.TENNLS) {
+//                L.d("websocket123", "________网球 指数 关闭 fg");
+//
+//            }
             closeWebSocket();
         } else {
             if (closeWebSocketEventBus.getIndex() == 2 || closeWebSocketEventBus.getIndex() == 3) {
-                L.d("websocket123", "斯洛克网球指数打开fg");
+//                if (mBallType == BallType.SNOOKER) {
+//                    L.d("websocket123", "_______斯洛克 指数 打开 fg");
+//
+//                } else if (mBallType == BallType.TENNLS) {
+//                    L.d("websocket123", "_______网球 指数 打开 fg");
+//                }
+
+
                 connectWebSocket();
             }
         }

@@ -36,8 +36,8 @@ public class FootballDatabaseScheduleSectionAdapter
     @Override
     protected void convert(BaseViewHolder holder, Section section) {
         ScheduleDatasBean match = section.t;
-        holder.setText(R.id.home_name, match.getHomeName())
-                .setText(R.id.guest_name, match.getGuestName());
+        holder.setText(R.id.home_name, match.getGuestName())
+                .setText(R.id.guest_name, match.getHomeName());
 //        boolean notStart = match.getHomeScore() == 0 && match.getGuestScore() == 0;
 //        View middleLine = holder.getView(R.id.middle_line);
 //        View homeScore = holder.getView(R.id.home_score);
@@ -93,8 +93,8 @@ public class FootballDatabaseScheduleSectionAdapter
 
         ImageView homeLogo = holder.getView(R.id.home_logo);
         ImageView guestLogo = holder.getView(R.id.guest_logo);
-        ImageLoader.load(mContext,match.getHomePic(),R.mipmap.score_default).into(homeLogo);
-        ImageLoader.load(mContext,match.getGuestPic(),R.mipmap.score_default).into(guestLogo);
+        ImageLoader.load(mContext,match.getHomePic(),R.mipmap.score_default).into(guestLogo);
+        ImageLoader.load(mContext,match.getGuestPic(),R.mipmap.score_default).into(homeLogo);
 
     }
 

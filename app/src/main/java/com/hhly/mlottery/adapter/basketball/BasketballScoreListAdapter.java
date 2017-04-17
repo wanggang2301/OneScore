@@ -1296,6 +1296,16 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                     viewHolderList.home_score3.setVisibility(View.VISIBLE);
                     viewHolderList.home_score4.setVisibility(View.INVISIBLE);
                     break;
+                case 50:
+                    viewHolderList.guest_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.guest_score2.setVisibility(View.INVISIBLE);
+                    viewHolderList.guest_score3.setVisibility(View.INVISIBLE);
+                    viewHolderList.guest_score4.setVisibility(View.INVISIBLE);
+                    viewHolderList.home_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score2.setVisibility(View.INVISIBLE);
+                    viewHolderList.home_score3.setVisibility(View.INVISIBLE);
+                    viewHolderList.home_score4.setVisibility(View.INVISIBLE);
+                    break;
                 default:
                     viewHolderList.guest_score1.setVisibility(View.VISIBLE);
                     viewHolderList.guest_score2.setVisibility(View.INVISIBLE);
@@ -1348,6 +1358,16 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                     viewHolderList.home_score2.setVisibility(View.VISIBLE);
                     viewHolderList.home_score3.setVisibility(View.VISIBLE);
                     viewHolderList.home_score4.setVisibility(View.VISIBLE);
+                    break;
+                case 50:
+                    viewHolderList.guest_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.guest_score2.setVisibility(View.VISIBLE);
+                    viewHolderList.guest_score3.setVisibility(View.INVISIBLE);
+                    viewHolderList.guest_score4.setVisibility(View.INVISIBLE);
+                    viewHolderList.home_score1.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score2.setVisibility(View.VISIBLE);
+                    viewHolderList.home_score3.setVisibility(View.INVISIBLE);
+                    viewHolderList.home_score4.setVisibility(View.INVISIBLE);
                     break;
                 default:
                     viewHolderList.guest_score1.setVisibility(View.VISIBLE);

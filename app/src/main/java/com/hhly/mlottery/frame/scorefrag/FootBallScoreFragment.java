@@ -184,7 +184,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                L.d("websocket123", "足球关闭");
+                L.d("websocket123", ">>>>>>>>足球比分关闭");
                 closeWebSocket();
                 EventBus.getDefault().post(new ScoreSwitchFg(position));
 
@@ -454,8 +454,6 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-
-        L.d("websocket123", "足球关闭4");
 
         if (hidden) {
             onPause();
@@ -819,11 +817,11 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     public void onEventMainThread(CloseWebSocketEventBus closeWebSocketEventBus) {
 
         if (closeWebSocketEventBus.isVisible()) {
-            L.d("websocket123", "足球比分关闭fg");
+            L.d("websocket123", "_________足球 比分 关闭 fg");
             closeWebSocket();
         } else {
-            if (closeWebSocketEventBus.getIndex() == 0) {
-                L.d("websocket123", "足球比分打开fg");
+            if (closeWebSocketEventBus.getIndex() == BallType.FOOTBALL) {
+                L.d("websocket123", "_________足球 比分 打开 fg");
 
                 connectWebSocket();
             }

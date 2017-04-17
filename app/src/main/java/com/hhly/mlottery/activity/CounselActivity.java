@@ -59,6 +59,8 @@ public class CounselActivity extends BaseActivity implements View.OnClickListene
     private ArrayList<Integer> infotype = new ArrayList<>();//信息类型集合
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private Context mContext;
+    private Integer currentIndex;// 显示下标
+
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -115,6 +117,8 @@ public class CounselActivity extends BaseActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_counsel);
+        currentIndex = getIntent().getExtras().getInt("currentIndex");
+
         mContext = this;
         initView();
         //请求头数据
@@ -215,7 +219,7 @@ public class CounselActivity extends BaseActivity implements View.OnClickListene
         mViewPager.setAdapter(mCounselFragmentAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mViewPager.setOffscreenPageLimit(1);
-        //mViewPager.setCurrentItem(((FootballActivity) mContext).infoPagerLabel);
+        mViewPager.setCurrentItem(currentIndex == null ? 0 : currentIndex - 1);
         mTabLayout.setTabsFromPagerAdapter(mCounselFragmentAdapter);
     }
 
