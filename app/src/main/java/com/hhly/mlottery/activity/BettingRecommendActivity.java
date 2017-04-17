@@ -26,9 +26,9 @@ public class BettingRecommendActivity extends BaseActivity{
 
     private void initView(){
 
-        findViewById(R.id.public_btn_filter).setVisibility(View.INVISIBLE);//隐藏筛选
         TextView mTitlt = (TextView) findViewById(R.id.public_txt_title);
         mTitlt.setText("竞彩推荐");
+        findViewById(R.id.public_btn_filter).setVisibility(View.INVISIBLE);//隐藏筛选
 
 
 
