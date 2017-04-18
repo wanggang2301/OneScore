@@ -1097,7 +1097,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             Message msg = Message.obtain();
             msg.obj = text;
             msg.arg1 = Integer.parseInt(type);
-
             mSocketHandler.sendMessage(msg);
         }
     }
