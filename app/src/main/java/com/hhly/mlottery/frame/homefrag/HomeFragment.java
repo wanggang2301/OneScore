@@ -788,7 +788,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     private void goToUserOptionsActivity() {
-        startActivityForResult(new Intent(mContext, ExpertsActivity.class), REQUESTCODE_LOGIN);
+        startActivityForResult(new Intent(mContext, HomeUserOptionsActivity.class), REQUESTCODE_LOGIN);
     }
 
     /**

@@ -161,8 +161,8 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
 
     // 请求网络数据
     private void initData() {
-        mSwipeRefreshLayout.setRefreshing(true);
-        mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
+       // mSwipeRefreshLayout.setRefreshing(true);
+       // mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         Map<String, String> param = new HashMap<>();
         param.put("expertId", "10002");
 
@@ -177,7 +177,7 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
                         mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
                         return;
                     }
-                    mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
+
 
                     expertDatas = jsonObject.getExpert();  //获取头部数据
 
@@ -187,6 +187,7 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
                     infoArrayDatas = jsonObject.getInfoArray();
                     //填充数据
                     expertsListAdapter.addData(infoArrayDatas);
+                    mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                 } else {
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
                 }
@@ -217,7 +218,7 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
         findViewById(R.id.match_error_btn).setOnClickListener(this);
 
         px_line = (LinearLayout) findViewById(R.id.px_line);
-
+        px_line.setVisibility(View.GONE);
         emptyView = View.inflate(this, R.layout.layout_nodata, null);
 
 
@@ -273,6 +274,7 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onRefresh() {
+
         initData();
     }
 }

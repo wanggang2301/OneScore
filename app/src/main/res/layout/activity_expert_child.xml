@@ -60,7 +60,7 @@
                 android:layout_alignBottom="@+id/tv_tj"
                 android:layout_toEndOf="@+id/tv_tj"
                 android:layout_toRightOf="@+id/tv_tj"
-                android:textColor="#333333"
+                android:textColor="#666666"
                 android:textSize="12sp" />
 
             <TextView
