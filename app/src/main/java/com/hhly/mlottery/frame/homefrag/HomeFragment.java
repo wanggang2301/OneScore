@@ -288,12 +288,16 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     itemRecord.height = firstView.getHeight();
                     itemRecord.top = firstView.getTop();
                     recordSp.append(firstVisibleItem, itemRecord);
-                    int h = getScrollY();//滚动距离
 
-                    if (h <= 100) {
-                        tv_home_name.setAlpha(h / 100f);
-                    } else {
-                        tv_home_name.setAlpha(1);
+                    try {
+                        int h = getScrollY();//滚动距离
+                        if (h <= 100) {
+                            tv_home_name.setAlpha(h / 100f);
+                        } else {
+                            tv_home_name.setAlpha(1);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }
