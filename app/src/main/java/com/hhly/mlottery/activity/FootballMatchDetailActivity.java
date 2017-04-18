@@ -134,7 +134,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private final static String ONLIVE = "1";//直播中
     private final static String LIVEENDED = "-1";//直播结束
 
-
     private final static String MATCH_TYPE = "1"; //足球
 
     private final static int ROLLBALL_FG = 0;
@@ -143,13 +142,21 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private final static int STATISTICS_FG = 3;
     private final static int ODDS_FG = 4;
     private final static int TALKBALL_FG = 5;
+
+    private static final String baseUrl = "http://pic.13322.com/bg/";
+
+    private final static int PERIOD_20 = 1000 * 60 * 20;//刷新周期二十分钟
+    private final static int PERIOD_5 = 1000 * 60 * 5;//刷新周期五分钟
+    private final static int GIFPERIOD_2 = 1000 * 5;//刷新周期两分钟
+
+    private final static int MILLIS_INFuture = 3000;//倒计时3秒
+    private final static String FOOTBALL_GIF = "football_gif";
+
     private int infoCenter = -1;// 情报中心中转标记
     private int chartBallView = -1;// 聊球界面转标记
 
-
     private FrameLayout fl_odds_loading;
     private FrameLayout fl_odds_net_error_details;
-
 
     public ExactSwipeRefreshLayout mRefreshLayout; //下拉刷新
 
@@ -181,7 +188,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private List<MatchTextLiveBean> trendChartList; //赛中文字直播事件帅选List
 
-
     /**
      * 判断ViewPager是否已经初始化过
      */
@@ -192,15 +198,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
      */
     private String mKeepTime;
 
-
     /**
      * 文字直播最新一条推送时间
      */
     private int liveTextTime;
 
     private int matchKeepTime;
-
-
     /**
      * 保存上一场的状态
      */
@@ -214,7 +217,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private AnalyzeFragment mAnalyzeFragment;  //分析
     private OddsFragment mOddsFragment;         //指数
     private IntelligenceFragment mIntelligenceFragment; // 情报
-
 
     private TextView reLoading; //赔率请求失败重新加载
 
@@ -230,10 +232,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private ShareFragment mShareFragment;
 
-    private final static int PERIOD_20 = 1000 * 60 * 20;//刷新周期二十分钟
-    private final static int PERIOD_5 = 1000 * 60 * 5;//刷新周期五分钟
-    private final static int GIFPERIOD_2 = 1000 * 5;//刷新周期两分钟
-
     /**
      * 赛前轮询周期
      */
@@ -245,8 +243,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private String matchStartTime;
     private ChartBallFragment mChartBallFragment;
-
-
     //头部
     private ImageView iv_home_icon;
     private ImageView iv_guest_icon;
@@ -254,7 +250,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private TextView tv_homename;
     private TextView tv_guestname;
-
 
     private TextView score;
 
@@ -268,13 +263,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private TextView mMatchType2;
 
-    private static final String baseUrl = "http://pic.13322.com/bg/";
-
     private FrameLayout fl_head;
 
     private LinearLayout btn_showGif;
     private BarrageView barrage_view;
-
 
     private Timer gifTimer;
 
@@ -287,8 +279,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private int gifCount = 0;
 
     private CountDown countDown;
-    private final static int MILLIS_INFuture = 3000;//倒计时3秒
-    private final static String FOOTBALL_GIF = "football_gif";
 
     private ImageView barrage_switch;
 
@@ -296,7 +286,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private View view_red;
 
 //    boolean isAddMultiViewHide = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
