@@ -85,6 +85,13 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private static final String HOME = "1"; //主队
     private static final String GUEST = "0"; //客队
 
+    /***
+     * 走势图
+     */
+    private static final String TREND_DEFAULT = "0"; //维度
+    private static final String TREND_CORNER = "1"; //角球
+    private static final String TREND_GOAL = "2";  //进球
+
     private String type = "";
     private View mView;
     private Context mContext;
@@ -92,7 +99,6 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private final int ERROR = -1;//访问失败
     private final int SUCCESS = 0;// 访问成功
     private final int STARTLOADING = 1;// 正在加载中
-
 
     private LinearLayout ll_trend_main;// 走势图容器
     private FrameLayout ff;// 攻防折线图显示容器
@@ -103,12 +109,6 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private ScrollView sv_attack;
 
     private String eventType;
-
-
-    /***
-     * 统计
-     */
-
 
     private FrameLayout fl_cornerTrend_loading;// 正在加载中
     private FrameLayout fl_cornerTrend_networkError;// 访问失败
@@ -123,7 +123,6 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private RelativeLayout layout_match_bottom;//统计数据layout
 
     private MathchStatisInfo mMathchStatisInfo;
-
 
     private RadioGroup radioGroup;
 
@@ -144,16 +143,6 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private LinearLayout ll_nodata;
 
     private FootballLiveGotoChart mFootballLiveGotoChart;
-
-
-    /***
-     * 走势图
-     */
-
-    private static final String TREND_DEFAULT = "0"; //维度
-    private static final String TREND_CORNER = "1"; //角球
-    private static final String TREND_GOAL = "2";  //进球
-
 
     private LineChart chart_shoot;  //射正  //射正+进球
     private LineChart chart_shootAside; //射偏   //射偏
@@ -188,9 +177,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private int attackHome;
     private int attackGuest;
 
-
     private TrendFormBean trendFormBean;
-
 
     private XAxis shotXAxis;
     private YAxis shotYAxis;
