@@ -53,6 +53,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import static com.hhly.mlottery.config.BaseURLs.URL_FOOTBALL_DETAIL_FINDTRENDFORM_INFO;
+
 /**
  * @author wang gang
  * @date 2016/6/12 11:21
@@ -270,15 +272,14 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     }
 
     public void finishMatchRequest() {
-        getVolleyData();
-        getVolleyDataStatic();
+        getLiveStatic();
+        getTrenFormInfo();
     }
 
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
             case R.id.goChart:
                 if (mFootballLiveGotoChart != null) {
                     mFootballLiveGotoChart.onClick();
@@ -286,13 +287,11 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.reLoading:
-                getVolleyData();
-
+                getTrenFormInfo();
                 break;
 
             case R.id.reLoadin:
-                getVolleyDataStatic();
-
+                getLiveStatic();
                 break;
         }
     }
@@ -513,17 +512,10 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         eventType = livestatus;
 
         if ("0".equals(livestatus)) {
-            L.d("112233", "tttt");
-
             ll_nodata.setVisibility(View.VISIBLE);
-            // mNestedScrollView_event.setVisibility(View.GONE);
             recyclerView.setVisibility(View.GONE);
-
-
             mNestedScrollView_trend.setVisibility(View.GONE);
         } else if ("1".equals(livestatus) || "-1".equals(livestatus)) {   //-1代表完场  1代表直播中
-            L.d("112233", "vvvvvvvvvv");
-
             ll_nodata.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
             mNestedScrollView_trend.setVisibility(View.VISIBLE);
@@ -661,18 +653,12 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
      */
     public void initChartData(String id) {
         if ("0".equals(id)) {
-
             trendChartList = new ArrayList<MatchTextLiveBean>();
-
-            // trendChartList.add(new MatchTextLiveBean("1029", "", "", "", "", "3000000", "", "", "", "", "", "", "", ""));
-
             firstInitChartValues();
-
             liveMatchTrendData();
 
         } else if ("1".equals(id)) {
             firstInitChartValues();
-
             liveMatchTrendData();
         }
     }
@@ -1007,34 +993,9 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         setChartScore();
     }
 
-
     private void showTrendChartView(LineChart mChart, List<Entry> homeEntry, List<Entry> guestEntry, List<Integer> homeColors, List<Integer> guestColors) {
         LineDataSet mHomeLineDataSet;
         LineDataSet mGuestLineDataSet;
-
-
-       /* if (mChart.getData() != null && mChart.getData().getDataSetCount() > 0) {
-
-
-            L.d("hhhhjjj", "刷新chart" + homeEntry.size());
-            // L.d("hhhhjjj", "刷新chart" + guestEntry.size());
-            L.d("hhhhjjj", "刷新chart" + homeColors.size());
-            // L.d("hhhhjjj", "刷新chart" + guestColors.size());
-
-            mHomeLineDataSet = (LineDataSet) mChart.getData().getDataSetByIndex(0);
-            // mGuestLineDataSet = (LineDataSet) mChart.getData().getDataSetByIndex(1);
-
-            mHomeLineDataSet.setValues(homeEntry);
-            // mGuestLineDataSet.setValues(guestEntry);
-            mHomeLineDataSet.setCircleColors(homeColors);
-            //  mGuestLineDataSet.setCircleColors(guestColors);
-
-            mChart.getData().notifyDataChanged();
-            mChart.notifyDataSetChanged();
-
-
-        } else {*/
-
 
         mHomeLineDataSet = new LineDataSet(homeEntry, "");
         mHomeLineDataSet.setDrawHighlightIndicators(false);
@@ -1070,10 +1031,6 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         mChart.setData(lineData);
 
         mChart.invalidate();
-
-
-        // }
-
     }
 
 
@@ -1209,8 +1166,6 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
 
         //比较四个坐标轴时间，取最大的time值
 
-        L.d("hhhhjjj", maxXais + "");
-
         if (maxXais >= 45f) {
             shotXAxis.setAxisMaxValue(getXMaxValue(maxXais, FINISHMATCH));
             shotXAxis.setLabelCount(getXLabelCount(maxXais, FINISHMATCH));
@@ -1295,13 +1250,9 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
 
 
     public void addTrendChartEvent(MatchTextLiveBean matchTextLiveBean) {
-
-        L.d("223344", "直播中走勢圖測試");
         trendChartList.add(matchTextLiveBean);
         updateChartView();
-
         liveMatchTrendData();
-
     }
 
     public void cancelTrendChartEvent(MatchTextLiveBean matchTextLiveBean) {
@@ -1323,7 +1274,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
      *
      * @return
      */
-    private void getVolleyData() {
+    private void getTrenFormInfo() {
         if (getActivity() == null) {
             return;
         }
@@ -1336,9 +1287,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         Map<String, String> myPostParams = new HashMap<>();
         myPostParams.put("matchId", mThirdId);
 
-        // String url = "http://192.168.10.242:8181/mlottery/core/trendForm.findTrendForm.do";
-
-        VolleyContentFast.requestJsonByPost(BaseURLs.URL_FOOTBALL_DETAIL_FINDTRENDFORM_INFO, myPostParams, new VolleyContentFast.ResponseSuccessListener<FootballTrendBean>() {
+        VolleyContentFast.requestJsonByPost(URL_FOOTBALL_DETAIL_FINDTRENDFORM_INFO, myPostParams, new VolleyContentFast.ResponseSuccessListener<FootballTrendBean>() {
             @Override
             public void onResponse(FootballTrendBean jsonObject) {
                 if (jsonObject != null) {
@@ -1375,7 +1324,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
      *
      * @return
      */
-    public void getVolleyDataStatic() {
+    public void getLiveStatic() {
 
         mHandlerStatics.sendEmptyMessage(STARTLOADING);// 正在加载中
         Map<String, String> map = new HashMap<>();
@@ -1383,14 +1332,12 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
             return;
         } else {
             map.put("thirdId", ((FootballMatchDetailActivity) getActivity()).mThirdId);
-
             VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_STATISTICAL_DATA_INFO, map, new VolleyContentFast.ResponseSuccessListener<DataStatisInfo>() {
                 @Override
                 public void onResponse(DataStatisInfo json) {
                     if (json != null && "200".equals(json.getResult())) {
                         mHomeStatisEntity = json.getHomeStatis();
                         mGuestStatisEntity = json.getGuestStatis();
-                        //initJson("-1");//初始化json数据，绑定txt
                         mHandlerStatics.sendEmptyMessage(SUCCESS);// 访问成功
                     }
                 }
@@ -1415,8 +1362,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
      *
      * @param id
      */
-    public void initJson(String id) {
-
+    public void initLiveStatics(String id) {
         //未开赛
         if ("0".equals(id)) {
             prohome_team.setProgress(50);
@@ -1479,7 +1425,6 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
             home_lineout_txt.setText(mMathchStatisInfo.getHome_lineOut() + "");
 
         } else if ("-1".equals(id)) {//完场
-            // getVolleyDataStatic();
         }
     }
 
@@ -1499,11 +1444,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
                     fl_attackTrend_networkError.setVisibility(View.GONE);
                     ll_trend_main.setVisibility(View.VISIBLE);
 
-                    L.d("112233", "请求成功");
-
-
                     finishMatchTrendData();
-
 
                     break;
                 case ERROR:// 加载失败
