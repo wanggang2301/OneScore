@@ -3,7 +3,7 @@ package com.hhly.mlottery.config;
 /**
  * @author: Wangg
  * @name：xxx
- * @description: xxx
+ * @description: 足球常量
  * @created on:2017/4/18  15:40.
  */
 
