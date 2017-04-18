@@ -256,7 +256,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private final static int PERIOD_20 = 1000 * 60 * 20;//刷新周期二十分钟
     private final static int PERIOD_5 = 1000 * 60 * 5;//刷新周期五分钟
-
     private final static int GIFPERIOD_2 = 1000 * 5;//刷新周期两分钟
 
     /**
@@ -286,8 +285,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private TextView date;
 
     private LinearLayout mMatchTypeLayout;
-
-//    private TextView tv_addMultiView;
 
     private int mType = 0;
 
@@ -351,7 +348,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         initView();
         initEvent();
 
-
         mHandler.sendEmptyMessage(STARTLOADING);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -373,27 +369,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
-//        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                if (position != 5) {
-////                    appBarLayout.setExpanded(false);
-//                    MyApp.getContext().sendBroadcast(new Intent("closeself"));
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
+
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
         appBarLayout.addOnOffsetChangedListener(this);
@@ -403,7 +379,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         //底部ViewPager(滚球、指数等)
         mTabsAdapter = new TabsAdapter(getSupportFragmentManager());
         mTabsAdapter.setTitles(titles);
-
 
         fl_odds_loading = (FrameLayout) findViewById(R.id.fl_odds_loading_details);
         fl_odds_net_error_details = (FrameLayout) findViewById(R.id.fl_odds_networkError_details);
@@ -425,18 +400,15 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
 //        tv_addMultiView.setOnClickListener(this);
 
-        /***
-         * 足球内页头部ViewPager
-         */
 
+        //滚球
         mDetailsRollballFragment = DetailsRollballFragment.newInstance(mThirdId);
-
+        //直播
+        mLiveFragment = LiveFragment.newInstance();
         //分析
         mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, "", "");
         //指数
         mOddsFragment = OddsFragment.newInstance();
-        //统计
-        mLiveFragment = LiveFragment.newInstance();
         // 情报
         mIntelligenceFragment = IntelligenceFragment.newInstance(mThirdId);
         // 聊球
