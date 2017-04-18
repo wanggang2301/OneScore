@@ -489,7 +489,7 @@ public class HomeMuenFragment extends Fragment {
 //                                        }
                                             break;
                                         case "42":
-                                            mContext.startActivity(new Intent(mContext, FootballMatchActivity.class));
+//                                            mContext.startActivity(new Intent(mContext, FootballMatchActivity.class));
                                             break;
                                     }
                                     break;
