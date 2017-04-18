@@ -58,7 +58,7 @@ import java.util.Map;
  * @date 2016/6/12 11:21
  * @des 足球内页改版直播(足球事件直播, 走勢統計)
  */
-public class StatisticsFragment extends Fragment implements View.OnClickListener {
+public class LiveFragment extends Fragment implements View.OnClickListener {
 
 
     private static String STA_PARM = "STA_PARM";
@@ -165,9 +165,6 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
 
     private FootballLiveGotoChart mFootballLiveGotoChart;
 
-    public void setmFootballLiveGotoChart(FootballLiveGotoChart mFootballLiveGotoChart) {
-        this.mFootballLiveGotoChart = mFootballLiveGotoChart;
-    }
 
     /***
      * 走势图
@@ -253,18 +250,22 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
     private Activity mActivity;
 
 
-    public static StatisticsFragment newInstance() {
-        StatisticsFragment fragment = new StatisticsFragment();
+    public void setmFootballLiveGotoChart(FootballLiveGotoChart mFootballLiveGotoChart) {
+        this.mFootballLiveGotoChart = mFootballLiveGotoChart;
+    }
+
+
+    public static LiveFragment newInstance() {
+        LiveFragment fragment = new LiveFragment();
         return fragment;
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_statistics, container, false);
+        mView = inflater.inflate(R.layout.fragment_lives, container, false);
         mContext = mActivity;
         initView();
-        L.d("112233", "初始化View");
         return mView;
     }
 
@@ -319,18 +320,18 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 int radioButtonId = radioGroup.getCheckedRadioButtonId();
                 switch (radioButtonId) {
-                    case R.id.live_event:
-                        //  if (!eventType.equals("0")) {
-                        mNestedScrollView_event.setVisibility(View.VISIBLE);
-                        mNestedScrollView_trend.setVisibility(View.GONE);
-                        // }
+
+                    case R.id.live_text:
+
 
                         break;
+                    case R.id.live_event:
+                        mNestedScrollView_event.setVisibility(View.VISIBLE);
+                        mNestedScrollView_trend.setVisibility(View.GONE);
+                        break;
                     case R.id.live_statistics:
-                        // if (!eventType.equals("0")) {
                         mNestedScrollView_event.setVisibility(View.GONE);
                         mNestedScrollView_trend.setVisibility(View.VISIBLE);
-                        // }
                         break;
                     default:
                         break;

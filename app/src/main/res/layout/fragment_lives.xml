@@ -16,13 +16,26 @@
         android:weightSum="4">
 
         <RadioButton
-            android:id="@+id/live_event"
+            android:id="@+id/live_text"
             style="@style/odds_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="-0.25dp"
             android:background="@drawable/radio_button_left"
             android:checked="true"
+            android:text="文字"
+            android:textColor="@drawable/info_text_color" />
+
+
+        <RadioButton
+            android:id="@+id/live_event"
+            style="@style/odds_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="-0.25dp"
+            android:layout_marginLeft="-0.25dp"
+            android:background="@drawable/radio_button_center"
+            android:checked="false"
             android:text="@string/foot_event"
             android:textColor="@drawable/info_text_color" />
 
@@ -75,7 +88,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/linecolor"/>
+                        android:background="@color/linecolor" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -122,7 +135,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
-                    android:paddingTop="10dp"/>
+                    android:paddingTop="10dp" />
 
 
                 <LinearLayout
@@ -289,7 +302,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
-                    android:background="@color/home_default_icon_coloer"/>
+                    android:background="@color/home_default_icon_coloer" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -302,7 +315,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/linecolor"/>
+                    android:background="@color/linecolor" />
 
 
                 <RelativeLayout
@@ -619,7 +632,6 @@
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>
-
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nested_scroll_view_trend"
