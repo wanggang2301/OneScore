@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.enums.TennisOddsTypeEnum;
 import com.hhly.mlottery.bean.tennisball.tennisindex.TennisIndexDetailsBean;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.HandicapUtils;
 
 import java.util.List;
@@ -60,7 +61,7 @@ public class TennisIndexDetailsAdapter extends BaseQuickAdapter<TennisIndexDetai
 //                String s[]=new String[10];
 //                s=oddsDataBean.getOddDate().split("-");
 //                String s1=s[1];String s2=s[2];
-                String s=oddsDataBean.getOddDate().substring(5,10);
+                String s= DateUtil.convertDateToNationMD(oddsDataBean.getOddDate().substring(5,10));
                 String date = s + "\n" + oddsDataBean.getOddTime();
                 baseViewHolder.setText(R.id.odds_details_timeAndscore_txt, date);
             }
