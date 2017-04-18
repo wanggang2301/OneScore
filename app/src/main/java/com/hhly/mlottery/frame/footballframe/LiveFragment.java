@@ -53,7 +53,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import static com.hhly.mlottery.config.BaseURLs.URL_FOOTBALL_DETAIL_FINDTRENDFORM_INFO;
 import static com.hhly.mlottery.config.FootBallTypeEnum.ATTACK;
 import static com.hhly.mlottery.config.FootBallTypeEnum.ATTACK1;
 import static com.hhly.mlottery.config.FootBallTypeEnum.CORNER;
@@ -1266,7 +1265,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         Map<String, String> myPostParams = new HashMap<>();
         myPostParams.put("matchId", mThirdId);
 
-        VolleyContentFast.requestJsonByPost(URL_FOOTBALL_DETAIL_FINDTRENDFORM_INFO, myPostParams, new VolleyContentFast.ResponseSuccessListener<FootballTrendBean>() {
+        VolleyContentFast.requestJsonByPost(BaseURLs.URL_FOOTBALL_DETAIL_FINDTRENDFORM_INFO, myPostParams, new VolleyContentFast.ResponseSuccessListener<FootballTrendBean>() {
             @Override
             public void onResponse(FootballTrendBean jsonObject) {
                 if (jsonObject != null) {
