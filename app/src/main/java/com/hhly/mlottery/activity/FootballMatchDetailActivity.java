@@ -89,6 +89,36 @@ import java.util.TimerTask;
 
 import de.greenrobot.event.EventBus;
 
+import static com.hhly.mlottery.config.FootBallTypeEnum.ATTACK;
+import static com.hhly.mlottery.config.FootBallTypeEnum.ATTACK1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.CORNER;
+import static com.hhly.mlottery.config.FootBallTypeEnum.CORNER1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.DANGERATTACK;
+import static com.hhly.mlottery.config.FootBallTypeEnum.DANGERATTACK1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.DIANQIU;
+import static com.hhly.mlottery.config.FootBallTypeEnum.DIANQIU1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.FIRSTHALF;
+import static com.hhly.mlottery.config.FootBallTypeEnum.HALFTIME;
+import static com.hhly.mlottery.config.FootBallTypeEnum.MATCHFINISH;
+import static com.hhly.mlottery.config.FootBallTypeEnum.NOTOPEN;
+import static com.hhly.mlottery.config.FootBallTypeEnum.RED_CARD;
+import static com.hhly.mlottery.config.FootBallTypeEnum.RED_CARD1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SCORE;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SCORE1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SECONDHALF;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOT;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOT1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE12;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE2;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SUBSTITUTION;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SUBSTITUTION1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.YELLOW_CARD;
+import static com.hhly.mlottery.config.FootBallTypeEnum.YELLOW_CARD1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.YTORED;
+import static com.hhly.mlottery.config.FootBallTypeEnum.YTORED1;
+
 /**
  * @author wang gang
  * @date 2016/6/2 16:53
@@ -115,60 +145,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private final static int TALKBALL_FG = 5;
     private int infoCenter = -1;// 情报中心中转标记
     private int chartBallView = -1;// 聊球界面转标记
-
-    //事件直播
-    //主队事件
-    private static final String SCORE = "1029";//主队进球
-    private static final String RED_CARD = "1032";
-    private static final String YELLOW_CARD = "1034";
-    private static final String SUBSTITUTION = "1055";
-    private static final String CORNER = "1025";
-    private static final String YTORED = "1045";//两黄变一红
-    private static final String DIANQIU = "1031";
-
-    //客队事件
-    private static final String SCORE1 = "2053";//客队进球
-    private static final String RED_CARD1 = "2056";
-    private static final String YELLOW_CARD1 = "2058";
-    private static final String SUBSTITUTION1 = "2079";
-    private static final String CORNER1 = "2049";
-    private static final String YTORED1 = "2069";//两黄变一红
-    private static final String DIANQIU1 = "2055";
-
-    //走势图
-    private static final String SHOOT = "1039";
-    private static final String SHOOTASIDE = "1040";
-    private static final String SHOOTASIDE2 = "1041";
-    private static final String DANGERATTACK = "1026";
-    private static final String ATTACK = "1024";
-
-    private static final String SHOOT1 = "2063";
-    private static final String SHOOTASIDE1 = "2064";
-    private static final String SHOOTASIDE12 = "2065";
-    private static final String DANGERATTACK1 = "2050";
-    private static final String ATTACK1 = "2048";
-
-
-    /**
-     * 未开
-     */
-    private static final String NOTOPEN = "0";
-    /**
-     * 上半场
-     */
-    private static final String FIRSTHALF = "1";
-    /**
-     * 中场
-     */
-    private static final String HALFTIME = "2";
-    /**
-     * 下半场
-     */
-    private static final String SECONDHALF = "3";
-    /**
-     * 完场
-     **/
-    private static final String MATCHFINISH = "-1";
 
 
     private FrameLayout fl_odds_loading;

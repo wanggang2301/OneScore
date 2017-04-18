@@ -54,6 +54,27 @@ import java.util.List;
 import java.util.Map;
 
 import static com.hhly.mlottery.config.BaseURLs.URL_FOOTBALL_DETAIL_FINDTRENDFORM_INFO;
+import static com.hhly.mlottery.config.FootBallTypeEnum.ATTACK;
+import static com.hhly.mlottery.config.FootBallTypeEnum.ATTACK1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.CORNER;
+import static com.hhly.mlottery.config.FootBallTypeEnum.CORNER1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.DANGERATTACK;
+import static com.hhly.mlottery.config.FootBallTypeEnum.DANGERATTACK1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.DIANQIU;
+import static com.hhly.mlottery.config.FootBallTypeEnum.DIANQIU1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.HALFTIME;
+import static com.hhly.mlottery.config.FootBallTypeEnum.RED_CARD;
+import static com.hhly.mlottery.config.FootBallTypeEnum.RED_CARD1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SCORE;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SCORE1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOT;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOT1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE12;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE2;
+import static com.hhly.mlottery.config.FootBallTypeEnum.YELLOW_CARD;
+import static com.hhly.mlottery.config.FootBallTypeEnum.YELLOW_CARD1;
 
 /**
  * @author wang gang
@@ -62,50 +83,8 @@ import static com.hhly.mlottery.config.BaseURLs.URL_FOOTBALL_DETAIL_FINDTRENDFOR
  */
 public class LiveFragment extends Fragment implements View.OnClickListener {
 
-
-    private static String STA_PARM = "STA_PARM";
-
     private static final String HOME = "1"; //主队
     private static final String GUEST = "0"; //客队
-
-
-    //主队事件
-    private static final String SCORE = "1029";//主队进球
-    private static final String RED_CARD = "1032";
-    private static final String YELLOW_CARD = "1034";
-    private static final String CORNER = "1025";
-    private static final String DIANQIU = "1031";
-
-    //客队事件
-    private static final String SCORE1 = "2053";//客队进球
-    private static final String RED_CARD1 = "2056";
-    private static final String YELLOW_CARD1 = "2058";
-    private static final String CORNER1 = "2049";
-    private static final String DIANQIU1 = "2055";
-
-
-    //走势图表
-    private static final String SHOOT = "1039";
-    private static final String SHOOTASIDE = "1040";
-    private static final String SHOOTASIDE2 = "1041";
-    private static final String DANGERATTACK = "1026";
-    private static final String ATTACK = "1024";
-
-    private static final String SHOOT1 = "2063";
-    private static final String SHOOTASIDE1 = "2064";
-    private static final String SHOOTASIDE12 = "2065";
-    private static final String DANGERATTACK1 = "2050";
-    private static final String ATTACK1 = "2048";
-
-    /**
-     * 上半场
-     */
-    private static final String FIRSTHALF = "1";
-    /**
-     * 中场
-     */
-    private static final String HALFTIME = "2";
-
 
     private String type = "";
     private View mView;
