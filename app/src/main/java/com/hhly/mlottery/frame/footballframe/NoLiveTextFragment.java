@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import com.hhly.mlottery.R;
 
 /**
- * 足球内页直播暂无文字直播
+ * @author wangg
+ * @dete 2017/04/19
+ * @des 足球内页直播暂无文字直播
  */
 public class NoLiveTextFragment extends Fragment {
 
@@ -29,5 +31,4 @@ public class NoLiveTextFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_no_live_text, container, false);
     }
-
 }
