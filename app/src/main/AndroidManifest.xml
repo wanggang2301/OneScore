@@ -385,6 +385,11 @@
             android:screenOrientation="portrait" />
         <activity android:name="com.hhly.mlottery.activity.BettingRecommendActivity"
             android:screenOrientation="portrait" />
+        <activity android:name="com.hhly.mlottery.activity.BettingPayDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.hhly.mlottery.activity.BettingOnlinePaymentActivity"
+            android:screenOrientation="portrait" />
+
 
     </application>
 

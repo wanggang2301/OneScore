@@ -7,14 +7,14 @@
     <!-- 标题头 -->
     <include layout="@layout/layout_header" />
         <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
-            android:id="@+id/custom_refresh_layout"
+            android:id="@+id/betting_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <android.support.v7.widget.RecyclerView
                 xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/custom_recyclerview"
+                android:id="@+id/betting_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             </android.support.v7.widget.RecyclerView>
