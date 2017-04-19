@@ -229,6 +229,8 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private List<MatchTextLiveBean> matchLive;
     private List<Integer> allMatchLiveMsgId;
 
+
+    private LiveTextFragmentTest liveTextFragmentTest;
     private FinishMatchLiveTextFragment finishMatchLiveTextFragment;//完场
 
 
@@ -532,27 +534,28 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
             }
         }
 
+        //赛果
         if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
-
-            finishMatchLiveTextFragment = new FinishMatchLiveTextFragment().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
-
+            finishMatchLiveTextFragment = FinishMatchLiveTextFragment.newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
             addFragmentToActivity(getChildFragmentManager(), finishMatchLiveTextFragment, R.id.fl_live_text);
-
-        } else {
-
-
-/*
-            liveTextFragmentTest = new LiveTextFragmentTest().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
-            liveTextFragmentTest.show(getChildFragmentManager(), "bottomLive");*/
+        } else { //赛中
+            liveTextFragmentTest = LiveTextFragmentTest.newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
+            addFragmentToActivity(getChildFragmentManager(), finishMatchLiveTextFragment, R.id.fl_live_text);
         }
-
-
     }
 
 
     public void updateRecycleView(String status) {
         computeEventNum(status);
         eventAdapter.notifyDataSetChanged();
+    }
+
+
+    //文字直播推送刷新
+    public void setLiveTextDetails(List<MatchTextLiveBean> matchLive) {
+        if (liveTextFragmentTest != null) {
+            liveTextFragmentTest.updataLiveTextAdapter(matchLive);
+        }
     }
 
 

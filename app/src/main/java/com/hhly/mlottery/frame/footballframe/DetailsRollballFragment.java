@@ -30,7 +30,6 @@ import com.hhly.mlottery.util.StringUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.DetailsRollOdd;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -201,83 +200,7 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
     /**
      * 比赛赛中、赛后初始化数据
      */
-    private void initLiveText() {
-        matchLive = new ArrayList<MatchTextLiveBean>();
-        // xMatchLive = new ArrayList<MatchTimeLiveBean>();
-
-        matchLive = mMatchDetail.getMatchInfo().getMatchLive();
-        if (matchLive == null) {
-            return;
-        }
-
-        allMatchLiveMsgId = new ArrayList<>();
-        for (MatchTextLiveBean ml : matchLive) {
-
-
-            if (ml.getMsgId() != null && !"".equals(ml.getMsgId())) {
-                allMatchLiveMsgId.add(Integer.parseInt(ml.getMsgId()));
-            }
-        }
-
-/*
-        //完场处理
-        if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
-            live_time.setText(mContext.getResources().getString(R.string.finish_txt));
-            live_text.setText(matchLive.get(0).getMsgText());
-
-        } else {  //比赛中处理
-            String state = matchLive.get(0).getState();//获取最后一个的比赛状态
-            String mKeepTime = matchLive.get(0).getTime();//获取时间
-            String text = matchLive.get(0).getMsgText();
-            if (NOTOPEN.equals(state)) {
-                live_time.setText(mContext.getResources().getString(R.string.not_start_txt));
-            } else if (FIRSTHALF.equals(state) && StadiumUtils.convertStringToInt(mKeepTime) <= 45) {
-                live_time.setText(StadiumUtils.convertStringToInt(mKeepTime) + "");
-            } else if (FIRSTHALF.equals(state) && StadiumUtils.convertStringToInt(mKeepTime) > 45) {
-                live_time.setText("45+");
-            } else if (HALFTIME.equals(state)) {
-                live_time.setText(mContext.getResources().getString(R.string.pause_txt));
-            } else if (SECONDHALF.equals(state) && StadiumUtils.convertStringToInt(mKeepTime) <= 90) {
-                live_time.setText(StadiumUtils.convertStringToInt(mKeepTime) + "");
-            } else if (SECONDHALF.equals(state) && StadiumUtils.convertStringToInt(mKeepTime) > 90) {
-                live_time.setText("90+");
-            } else {
-                live_time.setText(StadiumUtils.convertStringToInt(mKeepTime) + "");
-            }
-            live_text.setText(text);
-        }*/
-
-/*
-        //文字直播
-        live_infos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                if (mBottomOddsDetailsFragment != null) {
-                    mBottomOddsDetailsFragment.dismiss();
-                }
-                if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
-                    if (finishMatchLiveTextFragment != null) {
-                        finishMatchLiveTextFragment.dismiss();
-                    }
-
-                    finishMatchLiveTextFragment = new FinishMatchLiveTextFragment().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
-                    finishMatchLiveTextFragment.show(getChildFragmentManager(), "finishLive");
-
-
-                } else {
-
-                    if (liveTextFragmentTest != null) {
-                        liveTextFragmentTest.dismiss();
-                    }
-
-                    liveTextFragmentTest = new LiveTextFragmentTest().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
-                    liveTextFragmentTest.show(getChildFragmentManager(), "bottomLive");
-                }
-            }
-        });*/
-
+    private void initOddClick() {
         reLoading.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -295,7 +218,7 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
         if (mViewType == DETAILSROLLBALL_TYPE_PRE) {
             initPreData();
         } else {
-           // initLiveText();
+            initOddClick();
 
             L.d(TAG, "refreshMatch");
             initOdds();
@@ -319,7 +242,7 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
 
             mView.findViewById(R.id.prestadium_layout).setVisibility(View.GONE);
             mView.findViewById(R.id.stadium_layout).setVisibility(View.VISIBLE);
-           // initLiveText();
+            initOddClick();
 
             L.d(TAG, "赛后");
 
@@ -379,8 +302,6 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
                         //赛中的时候开启socket推送
                         if (mViewType == DETAILSROLLBALL_TYPE_ING) {
                             if (isSocketStart) {
-//                                startWebsocket();
-//                                computeWebSocket();
                                 connectWebSocket();
                                 isSocketStart = false;
 
@@ -598,7 +519,7 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
     }
 
 
-    public void setLiveTime(String time) {
+   /* public void setLiveTime(String time) {
         //live_time.setText(time);
 
     }
@@ -608,19 +529,9 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
         L.d(TAG, "推送文字直播LiveText");
         //  live_text.setText(msg);
     }
-
-    //推送刷新
-    public void setLiveTextDetails(List<MatchTextLiveBean> matchLive) {
-
-       /* if (liveTextFragmentTest != null) {
-            liveTextFragmentTest.updataLiveTextAdapter(matchLive);
-        }*/
-    }
+*/
 
 
-    /**
-     * 直播时间推送，更新比赛即时时间和时间轴、文字直播
-     */
     Handler mSocketHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

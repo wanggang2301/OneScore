@@ -1176,39 +1176,39 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         liveTextTime = StadiumUtils.convertStringToInt(matchTextLiveBean.getTime());
 
         if (NOTOPEN.equals(matchTextLiveBean.getState())) { //未开
-            mDetailsRollballFragment.setLiveTime(mContext.getResources().getString(R.string.not_start_txt));
+            // mDetailsRollballFragment.setLiveTime(mContext.getResources().getString(R.string.not_start_txt));
 
             isMatchStart = true;
         } else if (FIRSTHALF.equals(matchTextLiveBean.getState()) && StadiumUtils.convertStringToInt(matchTextLiveBean.getTime()) <= 45) {
             if (liveTextTime >= matchKeepTime) {
-                mDetailsRollballFragment.setLiveTime(liveTextTime + "");
+                //  mDetailsRollballFragment.setLiveTime(liveTextTime + "");
             } else {
                 if (matchKeepTime > 45) {
-                    mDetailsRollballFragment.setLiveTime("45+");
+                    //     mDetailsRollballFragment.setLiveTime("45+");
                 } else {
-                    mDetailsRollballFragment.setLiveTime(matchKeepTime + "");
+                    //    mDetailsRollballFragment.setLiveTime(matchKeepTime + "");
                 }
             }
             isMatchStart = true;
         } else if (FIRSTHALF.equals(matchTextLiveBean.getState()) && StadiumUtils.convertStringToInt(matchTextLiveBean.getTime()) > 45) {
-            mDetailsRollballFragment.setLiveTime("45+");  //上半场45+
+            //mDetailsRollballFragment.setLiveTime("45+");  //上半场45+
             isMatchStart = false;
         } else if (HALFTIME.equals(matchTextLiveBean.getState())) {  //中场
-            mDetailsRollballFragment.setLiveTime(mContext.getResources().getString(R.string.pause_txt));
+            //mDetailsRollballFragment.setLiveTime(mContext.getResources().getString(R.string.pause_txt));
             isMatchStart = false;
         } else if (SECONDHALF.equals(matchTextLiveBean.getState()) && StadiumUtils.convertStringToInt(matchTextLiveBean.getTime()) <= 90) {
             if (liveTextTime >= matchKeepTime) {
-                mDetailsRollballFragment.setLiveTime(liveTextTime + "");
+                //  mDetailsRollballFragment.setLiveTime(liveTextTime + "");
             } else {
                 if (matchKeepTime > 90) {
-                    mDetailsRollballFragment.setLiveTime("90+");
+                    //      mDetailsRollballFragment.setLiveTime("90+");
                 } else {
-                    mDetailsRollballFragment.setLiveTime(matchKeepTime + "");
+                    //     mDetailsRollballFragment.setLiveTime(matchKeepTime + "");
                 }
             }
             isMatchStart = true;
         } else if (SECONDHALF.equals(matchTextLiveBean.getState()) && StadiumUtils.convertStringToInt(matchTextLiveBean.getTime()) > 90) {
-            mDetailsRollballFragment.setLiveTime("90+");
+            //  mDetailsRollballFragment.setLiveTime("90+");
             isMatchStart = false;
         }
 
@@ -1695,18 +1695,15 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
             matchLive.add(0, matchTextLiveBean);
             Collections.sort(matchLive, new FootballLiveTextComparator()); //排序
-            mDetailsRollballFragment.setLiveText(matchLive.get(0).getMsgText());
-            mDetailsRollballFragment.setLiveTextDetails(matchLive);
-
-
-            //liveTextFragment.getTimeAdapter().notifyDataSetChanged();
+            //  mDetailsRollballFragment.setLiveText(matchLive.get(0).getMsgText());
+            mLiveFragment.setLiveTextDetails(matchLive);
         }
 
         //自己推送一条结束消息     -1 完场
         if (MATCHFINISH.equals(matchTextLiveBean.getState())) {
             matchLive.add(0, new MatchTextLiveBean("", "", "0", "0", "4", "99999999", mContext.getResources().getString(R.string.matchFinished_txt), "", "", "0", "", "", "", ""));
-            mDetailsRollballFragment.setLiveText(matchLive.get(0).getMsgText());
-            mDetailsRollballFragment.setLiveTextDetails(matchLive);
+            //  mDetailsRollballFragment.setLiveText(matchLive.get(0).getMsgText());
+            mLiveFragment.setLiveTextDetails(matchLive);
         }
     }
 
