@@ -816,10 +816,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mLiveFragment.setTrendChartList(trendChartList);
                 mLiveFragment.initChartData(mMatchDetail.getLiveStatus());
 
-
             }
-
-
         }
 
         mLiveFragment.setChartName(mMatchDetail.getHomeTeamInfo().getName(), mMatchDetail.getGuestTeamInfo().getName());
