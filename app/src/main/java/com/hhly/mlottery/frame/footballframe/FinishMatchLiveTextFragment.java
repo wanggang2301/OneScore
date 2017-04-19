@@ -37,7 +37,7 @@ import java.util.Map;
 /**
  * @author wang gang
  * @date 2016/6/28 15:26
- * @des ${}
+ * @des 足球直播完场文字直播
  */
 public class FinishMatchLiveTextFragment extends Fragment {
     private static String TAG = "FinishMatchLiveTextFragment";
