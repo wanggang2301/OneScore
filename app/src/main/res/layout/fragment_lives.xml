@@ -32,8 +32,8 @@
             style="@style/odds_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginRight="-0.25dp"
             android:layout_marginLeft="-0.25dp"
+            android:layout_marginRight="-0.25dp"
             android:background="@drawable/radio_button_center"
             android:checked="false"
             android:text="@string/foot_event"
@@ -57,13 +57,19 @@
         android:layout_below="@id/radio_group"
         android:orientation="vertical">
 
+        <FrameLayout
+            android:id="@+id/fl_live_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nested_scroll_view_event"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"

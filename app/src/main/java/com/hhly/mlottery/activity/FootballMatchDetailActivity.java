@@ -52,8 +52,8 @@ import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
 import com.hhly.mlottery.frame.footballframe.AnalyzeFragment;
 import com.hhly.mlottery.frame.footballframe.DetailsRollballFragment;
 import com.hhly.mlottery.frame.footballframe.IntelligenceFragment;
-import com.hhly.mlottery.frame.footballframe.OddsFragment;
 import com.hhly.mlottery.frame.footballframe.LiveFragment;
+import com.hhly.mlottery.frame.footballframe.OddsFragment;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CountDown;
@@ -618,9 +618,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 //                            mTalkAboutBallFragment.setClickableLikeBtn(true);
 
                             Collections.reverse(eventMatchTimeLiveList);
-                            //直播事件
-                            mLiveFragment.setEventMatchLive(mMatchDetail.getLiveStatus(), eventMatchTimeLiveList);
 
+
+                            //直播事件
+                            mLiveFragment.setEventMatchLive(mMatchDetail, eventMatchTimeLiveList);
                             //统计图
                             mLiveFragment.setMathchStatisInfo(mathchStatisInfo);
                             //走势图表
@@ -690,7 +691,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             head_score.setText("VS");
 
             mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE, matchDetail);
-            mLiveFragment.setEventMatchLive(mMatchDetail.getLiveStatus(), null);
+            mLiveFragment.setEventMatchLive(mMatchDetail, null);
             mLiveFragment.setmFootballLiveGotoChart(mFootballLiveGotoChart);
         } else {
 
@@ -742,9 +743,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 //精彩瞬间
                 getOverMatchCollectionCount();
 
-                //直播事件
-                mLiveFragment.setEventMatchLive(mMatchDetail.getLiveStatus(), eventMatchTimeLiveList);
 
+                //直播事件
+                mLiveFragment.setEventMatchLive(mMatchDetail, eventMatchTimeLiveList);
                 //直播中事件的统计 和走势中的走势图
                 mLiveFragment.finishMatchRequest();
 
@@ -808,7 +809,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
 
                 //直播事件
-                mLiveFragment.setEventMatchLive(mMatchDetail.getLiveStatus(), eventMatchTimeLiveList);
+                mLiveFragment.setEventMatchLive(mMatchDetail, eventMatchTimeLiveList);
                 //事件统计图
                 mLiveFragment.setMathchStatisInfo(mathchStatisInfo);
                 mLiveFragment.initLiveStatics(mMatchDetail.getLiveStatus());
@@ -2411,4 +2412,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             }
         }, DetailsCollectionCountBean.class);
     }
+
+
 }

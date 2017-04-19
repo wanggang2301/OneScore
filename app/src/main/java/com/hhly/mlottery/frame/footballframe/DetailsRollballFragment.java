@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -27,7 +26,6 @@ import com.hhly.mlottery.bean.footballDetails.WebSocketRollballOdd;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.StringUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.DetailsRollOdd;
@@ -112,9 +110,9 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
     private TextView pre_first_not_tv;
     private ImageView pre_weather_img;//天气图
 
-    private TextView live_time; //实时时间
+    // private TextView live_time; //实时时间
 
-    private TextView live_text;  //实时直播
+    // private TextView live_text;  //实时直播
 
     private TextView reLoading; //赔率请求失败重新加载
 
@@ -124,7 +122,7 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
 
     private DetailsRollOdd odd_eur; //欧赔
 
-    private RelativeLayout live_infos;
+    // private RelativeLayout live_infos;
 
 
     private FrameLayout fl_odds_loading;
@@ -135,9 +133,9 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
 
     private BottomOddsDetailsFragment mBottomOddsDetailsFragment;
 
-    private LiveTextFragmentTest liveTextFragmentTest;
+    // private LiveTextFragmentTest liveTextFragmentTest;
 
-    private FinishMatchLiveTextFragment finishMatchLiveTextFragment;//完场
+    //  private FinishMatchLiveTextFragment finishMatchLiveTextFragment;//完场
 
 
 //    private HappySocketClient hSocketClient;
@@ -179,14 +177,6 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
         super.onCreate(savedInstanceState);
 
         mContext = getActivity();
-
-//        try {
-        // hSocketUri = new URI(BaseURLs.WS_SERVICE);
-//            hSocketUri = new URI("ws://192.168.10.242:61634/ws");
-//            System.out.println(">>>>>" + hSocketUri);
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//        }
     }
 
     @Nullable
@@ -229,7 +219,7 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
             }
         }
 
-
+/*
         //完场处理
         if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
             live_time.setText(mContext.getResources().getString(R.string.finish_txt));
@@ -255,9 +245,9 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
                 live_time.setText(StadiumUtils.convertStringToInt(mKeepTime) + "");
             }
             live_text.setText(text);
-        }
+        }*/
 
-
+/*
         //文字直播
         live_infos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -286,7 +276,7 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
                     liveTextFragmentTest.show(getChildFragmentManager(), "bottomLive");
                 }
             }
-        });
+        });*/
 
         reLoading.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -305,7 +295,7 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
         if (mViewType == DETAILSROLLBALL_TYPE_PRE) {
             initPreData();
         } else {
-            initLiveText();
+           // initLiveText();
 
             L.d(TAG, "refreshMatch");
             initOdds();
@@ -329,7 +319,7 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
 
             mView.findViewById(R.id.prestadium_layout).setVisibility(View.GONE);
             mView.findViewById(R.id.stadium_layout).setVisibility(View.VISIBLE);
-            initLiveText();
+           // initLiveText();
 
             L.d(TAG, "赛后");
 
@@ -484,13 +474,13 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
 
 
     private void isRepeatShowDialog() {
-        if (finishMatchLiveTextFragment != null) {
+      /*  if (finishMatchLiveTextFragment != null) {
             finishMatchLiveTextFragment.dismiss();
         }
 
         if (liveTextFragmentTest != null) {
             liveTextFragmentTest.dismiss();
-        }
+        }*/
 
         if (mBottomOddsDetailsFragment != null) {
             mBottomOddsDetailsFragment.dismiss();
@@ -510,13 +500,13 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
 
         pre_first_guest_data_txt = (TextView) mView.findViewById(R.id.pre_first_guest_data_txt);//克队首发阵容
         pre_first_guest_datas_txt = (TextView) mView.findViewById(R.id.pre_first_guest_datas_txt);//客队首发人员
-        live_time = (TextView) mView.findViewById(R.id.live_time);
-        live_text = (TextView) mView.findViewById(R.id.live_text);
+        //live_time = (TextView) mView.findViewById(R.id.live_time);
+        // live_text = (TextView) mView.findViewById(R.id.live_text);
 
         odd_alet = (DetailsRollOdd) mView.findViewById(R.id.odd_alet);
         odd_asize = (DetailsRollOdd) mView.findViewById(R.id.odd_asize);
         odd_eur = (DetailsRollOdd) mView.findViewById(R.id.odd_eur);
-        live_infos = (RelativeLayout) mView.findViewById(R.id.rl_live);
+        // live_infos = (RelativeLayout) mView.findViewById(R.id.rl_live);
 
         fl_odds_loading = (FrameLayout) mView.findViewById(R.id.fl_odd_loading);
         fl_odds_net_error = (FrameLayout) mView.findViewById(R.id.fl_odds_networkError);
@@ -609,97 +599,23 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
 
 
     public void setLiveTime(String time) {
-        live_time.setText(time);
+        //live_time.setText(time);
 
     }
 
     public void setLiveText(String msg) {
 
         L.d(TAG, "推送文字直播LiveText");
-        live_text.setText(msg);
+        //  live_text.setText(msg);
     }
 
     //推送刷新
     public void setLiveTextDetails(List<MatchTextLiveBean> matchLive) {
 
-        if (liveTextFragmentTest != null) {
+       /* if (liveTextFragmentTest != null) {
             liveTextFragmentTest.updataLiveTextAdapter(matchLive);
-        }
+        }*/
     }
-
-
-//    /***
-//     * 开始推送socket
-//     */
-//    private synchronized void startWebsocket() {
-//
-//        L.d(TAG, "滚球赔率");
-//
-//        if (hSocketClient != null) {
-//            if (!hSocketClient.isClosed()) {
-//                hSocketClient.close();
-//                hSocketClient = null;
-//            }
-//
-//            L.d(TAG, "hSocketClient=" + hSocketClient);
-//
-//            hSocketClient = new HappySocketClient(hSocketUri, new Draft_17());
-//            hSocketClient.setSocketResponseMessageListener(this);
-//            hSocketClient.setSocketResponseCloseListener(this);
-//            hSocketClient.setSocketResponseErrorListener(this);
-//            try {
-//                hSocketClient.connect();
-//            } catch (Exception e) {
-//                hSocketClient.close();
-//                hSocketClient = null;
-//            }
-//        } else {
-//            hSocketClient = new HappySocketClient(hSocketUri, new Draft_17());
-//            hSocketClient.setSocketResponseMessageListener(this);
-//            hSocketClient.setSocketResponseCloseListener(this);
-//            hSocketClient.setSocketResponseErrorListener(this);
-//            try {
-//                hSocketClient.connect();
-//            } catch (Exception e) {
-//                hSocketClient.close();
-//                hSocketClient = null;
-//            }
-//        }
-//    }
-
-    //事件推送
-
-//    @Override
-//    public void onMessage(String message) {
-//        // L.d(TAG, "---onMessage---推送比赛thirdId==" + ((FootballMatchDetailActivity) getActivity()).mThirdId);
-//
-//        pushStartTime = System.currentTimeMillis(); // 记录起始时间
-//        L.d(TAG, "心跳时间" + pushStartTime);
-//        if (message.startsWith("CONNECTED")) {
-//            String id = "android" + DeviceInfo.getDeviceId(mContext);
-//            id = MD5Util.getMD5(id);
-//            if (mContext == null) {
-//                return;
-//            }
-//            hSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.scollodds." + "337438" + "\n\n");
-//            return;
-//        } else if (message.startsWith("MESSAGE")) {
-//
-//            String[] msgs = message.split("\n");
-//            String ws_json = msgs[msgs.length - 1];
-//
-//            try {
-//                JSONObject jsonObject = new JSONObject(ws_json);
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//            Message msg = Message.obtain();
-//            msg.obj = ws_json;
-//            mSocketHandler.sendMessage(msg);
-//
-//        }
-//        hSocketClient.send("\n");
-//    }
 
 
     /**
@@ -817,44 +733,10 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
      */
     private boolean isStartTimer = false;
 
-//    private void computeWebSocket() {
-//        if (!isStartTimer) {
-//            TimerTask tt = new TimerTask() {
-//                @Override
-//                public void run() {
-//                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-//                    L.d(TAG, df.format(new Date()) + "---监听socket连接状态:Open=" + hSocketClient.isOpen() + ",Connecting=" + hSocketClient.isConnecting() + ",Close=" + hSocketClient.isClosed() + ",Closing=" + hSocketClient.isClosing());
-//                    long pushEndTime = System.currentTimeMillis();
-//                    if ((pushEndTime - pushStartTime) >= 30000) {
-//                        L.d(TAG, "重新启动socketvvvv");
-//                        startWebsocket();
-//                    }
-//                }
-//            };
-//
-//            if (detailsTimer != null) {
-//                detailsTimer.schedule(tt, 15000, 15000);
-//                isStartTimer = true;
-//            }
-//        }
-//    }
-
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-//        if (detailsTimer != null) {
-//            L.d("timer", "detailsRoll定时器");
-//            detailsTimer.cancel();
-//            detailsTimer.purge();
-//            detailsTimer = null;
-//        }
-//
-//        if (hSocketClient != null) {
-//            hSocketClient.close();
-//            hSocketClient = null;
-//        }
     }
 
     @Override
@@ -878,16 +760,6 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
     protected void onConnected() {
 
     }
-
-//    @Override
-//    public void onClose(String message) {
-//
-//    }
-//
-//    @Override
-//    public void onError(Exception exception) {
-//
-//    }
 
     private boolean isNULLOrEmpty(String s) {
         return s == null || "".equals(s) || "-".equals(s);

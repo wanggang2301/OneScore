@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +35,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.football.EventAdapter;
 import com.hhly.mlottery.bean.footballDetails.DataStatisInfo;
+import com.hhly.mlottery.bean.footballDetails.MatchDetail;
 import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MathchStatisInfo;
@@ -92,6 +95,9 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private static final String TREND_CORNER = "1"; //角球
     private static final String TREND_GOAL = "2";  //进球
 
+    private static final String LIVEENDED = "-1";//直播结束
+
+
     private String type = "";
     private View mView;
     private Context mContext;
@@ -129,6 +135,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private LinearLayout rl_event;
     private RelativeLayout ll_statistics;
 
+    private FrameLayout fl_live_text;
     private NestedScrollView mNestedScrollView_trend;
     private NestedScrollView mNestedScrollView_event;
     private NestedScrollView mNestedScrollView_nodata;
@@ -217,6 +224,14 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private Activity mActivity;
 
 
+    private MatchDetail mMatchDetail;
+
+    private List<MatchTextLiveBean> matchLive;
+    private List<Integer> allMatchLiveMsgId;
+
+    private FinishMatchLiveTextFragment finishMatchLiveTextFragment;//完场
+
+
     public void setmFootballLiveGotoChart(FootballLiveGotoChart mFootballLiveGotoChart) {
         this.mFootballLiveGotoChart = mFootballLiveGotoChart;
     }
@@ -266,6 +281,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
      */
     private void initView() {
         radioGroup = (RadioGroup) mView.findViewById(R.id.radio_group);
+        fl_live_text = (FrameLayout) mView.findViewById(R.id.fl_live_text);
         mNestedScrollView_event = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_event);
         mNestedScrollView_trend = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_trend);
         //  mNestedScrollView_nodata = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_nodata);
@@ -286,14 +302,18 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
                 switch (radioButtonId) {
 
                     case R.id.live_text:
-
+                        fl_live_text.setVisibility(View.VISIBLE);
+                        mNestedScrollView_event.setVisibility(View.GONE);
+                        mNestedScrollView_trend.setVisibility(View.GONE);
 
                         break;
                     case R.id.live_event:
+                        fl_live_text.setVisibility(View.GONE);
                         mNestedScrollView_event.setVisibility(View.VISIBLE);
                         mNestedScrollView_trend.setVisibility(View.GONE);
                         break;
                     case R.id.live_statistics:
+                        fl_live_text.setVisibility(View.GONE);
                         mNestedScrollView_event.setVisibility(View.GONE);
                         mNestedScrollView_trend.setVisibility(View.VISIBLE);
                         break;
@@ -471,24 +491,64 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     /**
      * 足球事件直播
      */
-    public void setEventMatchLive(String livestatus, List<MatchTimeLiveBean> matchTimeLiveBeanMs) {
+    public void setEventMatchLive(MatchDetail matchDetail, List<MatchTimeLiveBean> matchTimeLiveBeanMs) {
         //统计事件个数
         this.eventMatchLive = matchTimeLiveBeanMs;
-        eventType = livestatus;
+        eventType = matchDetail.getLiveStatus();
 
-        if ("0".equals(livestatus)) {
+
+        if ("0".equals(eventType)) {
             ll_nodata.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
             mNestedScrollView_trend.setVisibility(View.GONE);
-        } else if ("1".equals(livestatus) || "-1".equals(livestatus)) {   //-1代表完场  1代表直播中
+        } else if ("1".equals(eventType) || "-1".equals(eventType)) {   //-1代表完场  1代表直播中
+
+            initLiveText(matchDetail);
+
             ll_nodata.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
             mNestedScrollView_trend.setVisibility(View.VISIBLE);
-            computeEventNum(livestatus);
+            computeEventNum(eventType);
             eventAdapter = new EventAdapter(mContext, eventMatchLive);
             recyclerView.setAdapter(eventAdapter);
         }
     }
+
+
+    /**
+     * 比赛赛中、赛后初始化数据文字直播
+     */
+    private void initLiveText(MatchDetail mMatchDetail) {
+        matchLive = new ArrayList<MatchTextLiveBean>();
+        matchLive = mMatchDetail.getMatchInfo().getMatchLive();
+        if (matchLive == null) {
+            return;
+        }
+
+        allMatchLiveMsgId = new ArrayList<>();
+        for (MatchTextLiveBean ml : matchLive) {
+            if (ml.getMsgId() != null && !"".equals(ml.getMsgId())) {
+                allMatchLiveMsgId.add(Integer.parseInt(ml.getMsgId()));
+            }
+        }
+
+        if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
+
+            finishMatchLiveTextFragment = new FinishMatchLiveTextFragment().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
+
+            addFragmentToActivity(getChildFragmentManager(), finishMatchLiveTextFragment, R.id.fl_live_text);
+
+        } else {
+
+
+/*
+            liveTextFragmentTest = new LiveTextFragmentTest().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
+            liveTextFragmentTest.show(getChildFragmentManager(), "bottomLive");*/
+        }
+
+
+    }
+
 
     public void updateRecycleView(String status) {
         computeEventNum(status);
@@ -1492,5 +1552,13 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
+    }
+
+    public static void addFragmentToActivity(FragmentManager fragmentManager, Fragment fragment, int frameId) {
+        if (fragmentManager != null && fragment != null) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(frameId, fragment);
+            transaction.commit();
+        }
     }
 }
