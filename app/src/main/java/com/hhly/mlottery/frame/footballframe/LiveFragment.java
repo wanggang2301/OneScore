@@ -230,7 +230,8 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private List<Integer> allMatchLiveMsgId;
 
 
-    private LiveTextFragmentTest liveTextFragmentTest;
+    private NoLiveTextFragment mNoLiveTextFragment;
+    private LiveTextFragment mliveTextFragment;
     private FinishMatchLiveTextFragment finishMatchLiveTextFragment;//完场
 
 
@@ -496,10 +497,14 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     public void setEventMatchLive(MatchDetail matchDetail, List<MatchTimeLiveBean> matchTimeLiveBeanMs) {
         //统计事件个数
         this.eventMatchLive = matchTimeLiveBeanMs;
-        eventType = matchDetail.getLiveStatus();
+        this.eventType = matchDetail.getLiveStatus();
 
 
         if ("0".equals(eventType)) {
+
+            mNoLiveTextFragment = NoLiveTextFragment.newInstance();
+            addFragmentToActivity(getChildFragmentManager(), mNoLiveTextFragment, R.id.fl_live_text);
+
             ll_nodata.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
             mNestedScrollView_trend.setVisibility(View.GONE);
@@ -539,7 +544,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
             finishMatchLiveTextFragment = FinishMatchLiveTextFragment.newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
             addFragmentToActivity(getChildFragmentManager(), finishMatchLiveTextFragment, R.id.fl_live_text);
         } else { //赛中
-            liveTextFragmentTest = LiveTextFragmentTest.newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
+            mliveTextFragment = LiveTextFragment.newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
             addFragmentToActivity(getChildFragmentManager(), finishMatchLiveTextFragment, R.id.fl_live_text);
         }
     }
@@ -553,8 +558,8 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
 
     //文字直播推送刷新
     public void setLiveTextDetails(List<MatchTextLiveBean> matchLive) {
-        if (liveTextFragmentTest != null) {
-            liveTextFragmentTest.updataLiveTextAdapter(matchLive);
+        if (mliveTextFragment != null) {
+            mliveTextFragment.updataLiveTextAdapter(matchLive);
         }
     }
 

@@ -761,8 +761,6 @@
     <string name="basket_odd_setting">赔率提示</string>
 
 
-
-
     <string name="basket_scort_setting">赛事提示</string>
     <string name="basket_live">直播</string>
     <string name="basket_analyze">分析</string>
@@ -1679,4 +1677,6 @@
     <string name="tennis_datails_status10">主动得分</string>
     <string name="foot_event_num">""</string>
     <string name="please_hint_team">请输入球队名称</string>
+
+    <string name="foot_text">文字</string>
 </resources>

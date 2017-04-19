@@ -802,9 +802,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                 mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING, matchDetail);
 
-
-//                mTalkAboutBallFragment.setClickableLikeBtn(true);
-
                 Collections.reverse(eventMatchTimeLiveList);
 
 

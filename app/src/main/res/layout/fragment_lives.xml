@@ -23,7 +23,7 @@
             android:layout_marginRight="-0.25dp"
             android:background="@drawable/radio_button_left"
             android:checked="true"
-            android:text="文字"
+            android:text="@string/foot_text"
             android:textColor="@drawable/info_text_color" />
 
 

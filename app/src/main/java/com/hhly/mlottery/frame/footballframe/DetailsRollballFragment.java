@@ -132,7 +132,7 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
 
     private BottomOddsDetailsFragment mBottomOddsDetailsFragment;
 
-    // private LiveTextFragmentTest liveTextFragmentTest;
+    // private LiveTextFragment liveTextFragmentTest;
 
     //  private FinishMatchLiveTextFragment finishMatchLiveTextFragment;//完场
 

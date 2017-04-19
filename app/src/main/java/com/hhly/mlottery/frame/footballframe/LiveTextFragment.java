@@ -24,7 +24,7 @@ import java.util.List;
  * @date 2016/6/7 15:40
  * @des 足球内页改版聊球-赛中状态下文字直播详情
  */
-public class LiveTextFragmentTest extends Fragment {
+public class LiveTextFragment extends Fragment {
     private static final String PARAM_TYPE = "type";
 
     private FootBallLiveTextAdapter mLiveTextAdapter;
@@ -46,8 +46,8 @@ public class LiveTextFragmentTest extends Fragment {
 
     private String status;
 
-    public static LiveTextFragmentTest newInstance(ArrayList<MatchTextLiveBean> matchTextLiveBeans, String status) {
-        LiveTextFragmentTest fragment = new LiveTextFragmentTest();
+    public static LiveTextFragment newInstance(ArrayList<MatchTextLiveBean> matchTextLiveBeans, String status) {
+        LiveTextFragment fragment = new LiveTextFragment();
         Bundle args = new Bundle();
         args.putParcelableArrayList(LIVETEXT_PARAM, matchTextLiveBeans);
         args.putString(LIVETEXT_TYPE, status);
@@ -107,7 +107,7 @@ public class LiveTextFragmentTest extends Fragment {
                 public void onStateChanged(@NonNull View bottomSheet, int newState) {
                     switch (newState) {
                         case BottomSheetBehavior.STATE_HIDDEN:
-                            LiveTextFragmentTest.this.dismiss();
+                            LiveTextFragment.this.dismiss();
                             break;
                         case BottomSheetBehavior.STATE_EXPANDED:
                             bottomview.setVisibility(View.VISIBLE);
