@@ -774,6 +774,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     }
                 }
 
+
                 if (NOTOPEN.equals(state)) {
                     //未开state=0
                     isMatchStart = false;
