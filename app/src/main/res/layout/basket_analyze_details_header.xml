@@ -3,8 +3,8 @@
     android:id="@+id/basket_details_header_layout"
     android:layout_width="match_parent"
     android:layout_height="@dimen/header_height"
-    android:background="#000000"
     android:orientation="vertical"
+    android:background="@color/colorPrimary"
     android:paddingTop="@dimen/status_bar_offset"
     >
     <RelativeLayout
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:text=""
             android:gravity="center"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:padding="2.5dp"
             android:textSize="@dimen/text_size_20"
             android:layout_centerVertical="true"

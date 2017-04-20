@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/black_title"
     android:layout_marginLeft="7.5dp"
     android:layout_marginRight="7.5dp"
     android:layout_height="@dimen/item_height">
@@ -25,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
-            android:textColor="@color/white"
+            android:textColor="@color/mdy_333"
             android:text=""
             android:singleLine="true"
             />
@@ -58,7 +57,7 @@
                 android:layout_weight="1"
                 android:layout_marginBottom="7.5dp"
                 android:textSize="@dimen/text_size_11"
-                android:textColor="@color/white"
+                android:textColor="@color/mdy_333"
                 android:gravity="center"
                 android:text=""
                 />
@@ -68,7 +67,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:textSize="@dimen/text_size_11"
-                android:textColor="@color/white"
+                android:textColor="@color/mdy_333"
                 android:gravity="center"
                 android:text=""
                 />
@@ -90,7 +89,7 @@
                            android:layout_weight="1"
                            android:layout_marginBottom="7.5dp"
                            android:textSize="@dimen/text_size_11"
-                           android:textColor="@color/white"
+                           android:textColor="@color/mdy_333"
                            android:gravity="center"
                            android:paddingRight="1.5dp"
                            android:paddingLeft="1.5dp"
@@ -103,7 +102,7 @@
                            android:layout_height="0dp"
                            android:layout_weight="1"
                            android:textSize="@dimen/text_size_11"
-                           android:textColor="@color/white"
+                           android:textColor="@color/mdy_333"
                            android:gravity="center"
                            android:paddingRight="1.5dp"
                            android:paddingLeft="1.5dp"
@@ -125,7 +124,7 @@
                 android:layout_weight="1"
                 android:layout_marginBottom="7.5dp"
                 android:textSize="@dimen/text_size_11"
-                android:textColor="@color/white"
+                android:textColor="@color/mdy_333"
                 android:gravity="center"
                 android:text=""
                 />
@@ -135,7 +134,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:textSize="@dimen/text_size_11"
-                android:textColor="@color/white"
+                android:textColor="@color/mdy_333"
                 android:gravity="center"
                 android:text=""
                 />

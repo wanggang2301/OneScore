@@ -81,7 +81,7 @@ public class BasketOddsAdapter  extends BaseAdapter{
         if(mType.equals(EURO)){ //欧赔没有中间那一列盘口
             holder.handicap_layout.setVisibility(View.GONE);
         }
-        if(mType.equals(EURO)&&mOddsList.get(position).getCompany().equals("平均")){
+        if(mType.equals(EURO)&&mOddsList.get(position).getCompany().equals(context.getResources().getString(R.string.odds_equals))){
             holder.image_more.setVisibility(View.INVISIBLE);
         }else{
             holder.image_more.setVisibility(View.VISIBLE);
@@ -127,7 +127,7 @@ public class BasketOddsAdapter  extends BaseAdapter{
                 holder.guest_immediate_win.setTextColor(context.getResources().getColor(R.color.odds_down));
             }
             else{
-                holder.guest_immediate_win.setTextColor(context.getResources().getColor(R.color.white));
+                holder.guest_immediate_win.setTextColor(context.getResources().getColor(R.color.mdy_333));
             }
             //右侧数据的颜色变化
             if(oddsData.get(0).getRightOddsTrend()==1){
@@ -137,7 +137,7 @@ public class BasketOddsAdapter  extends BaseAdapter{
                 holder.home_immediate_win.setTextColor(context.getResources().getColor(R.color.odds_down));
             }
             else {
-                holder.home_immediate_win.setTextColor(context.getResources().getColor(R.color.white));
+                holder.home_immediate_win.setTextColor(context.getResources().getColor(R.color.mdy_333));
             }
 
             convertView.setOnClickListener(new ConvertViewClickListener(position));

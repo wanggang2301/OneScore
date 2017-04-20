@@ -19,6 +19,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -70,6 +76,7 @@ import com.hhly.mlottery.util.StringUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.BarrageView;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
+import com.hhly.mlottery.widget.ProgressWebView;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
@@ -286,6 +293,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private View view_red;
 
 //    boolean isAddMultiViewHide = false;
+    //动画WebView
+    private ProgressWebView mWebView;
+
+    private TextView tv_nopage;
+
+    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -309,9 +322,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         this.mContext = getApplicationContext();
 
         L.e(TAG, "mThirdId = " + mThirdId);
+        url = BaseURLs.URL_FOOTBALLDETAIL_H5 + "?thirdId=" + mThirdId + "&lang=" + appendLanguage();
         initHeadView();
         initView();
         initEvent();
+        loadAnim();
+
 
         mHandler.sendEmptyMessage(STARTLOADING);
         new Handler().postDelayed(new Runnable() {
@@ -362,8 +378,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         barrage_view = (BarrageView) findViewById(R.id.barrage_view);
         barrage_switch = (ImageView) findViewById(R.id.barrage_switch);
         barrage_switch.setOnClickListener(this);
-
-//        tv_addMultiView.setOnClickListener(this);
+        //动画WebView
+        tv_nopage = (TextView) findViewById(R.id.tv_nopage);
+        mWebView = (ProgressWebView) findViewById(R.id.webview);
 
 
         //滚球
@@ -420,6 +437,41 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         }
     }
 
+
+    /**
+     * 动画直播
+     */
+    private void loadAnim() {
+        WebSettings webSettings = mWebView.getSettings();
+        // 不用缓存
+        webSettings.setAppCacheEnabled(false);
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setDatabaseEnabled(true);
+        webSettings.setUseWideViewPort(true);
+        webSettings.setBuiltInZoomControls(false);
+
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                mWebView.setVisibility(View.GONE);
+                tv_nopage.setVisibility(View.VISIBLE);
+            }
+        });
+
+        mWebView.loadUrl(url);
+    }
     @Override
     public void onRefresh() {
         L.d(TAG, "下拉刷新");
@@ -1067,7 +1119,11 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        if(mWebView!=null){
+            ((ViewGroup)mWebView.getParent()).removeView(mWebView);
+            mWebView.destroy();
+            mWebView=null;
+        }
 
         if (mReloadTimer != null) {
             mReloadTimer.cancel();
@@ -2187,12 +2243,14 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
+        mWebView.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+        mWebView.onPause();
     }
 
     private void initHeadView() {
@@ -2201,7 +2259,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         iv_home_icon = (ImageView) findViewById(R.id.iv_home_icon);
         iv_guest_icon = (ImageView) findViewById(R.id.iv_guest_icon);
-        iv_bg = (ImageView) findViewById(R.id.iv_bg);
+//        iv_bg = (ImageView) findViewById(R.id.iv_bg);
 
 
         tv_homename = (TextView) findViewById(R.id.tv_home_name);
@@ -2232,7 +2290,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         // if (flag) {
         int random = new Random().nextInt(20);
         String url = baseUrl + random + ".png";
-        ImageLoader.load(mContext, url, R.color.colorPrimary).into(iv_bg);
+//        ImageLoader.load(mContext, url, R.color.colorPrimary).into(iv_bg);
 
         loadImage(mMatchDetail.getHomeTeamInfo().getUrl(), iv_home_icon);
         loadImage(mMatchDetail.getGuestTeamInfo().getUrl(), iv_guest_icon);

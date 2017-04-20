@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/basket_odds_item_selector"
     >
     <TextView
         android:id="@+id/basket_odds_company_text"
@@ -11,7 +10,7 @@
         android:layout_height="48dp"
         android:text="---"
         android:singleLine="true"
-        android:textColor="@color/black_details_ball_textcolor2"
+        android:textColor="@color/mdy_333"
         android:gravity="center"
         android:textSize="@dimen/text_size_12"/>
 </LinearLayout>

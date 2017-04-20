@@ -20,7 +20,7 @@ public class BasketPlayerNameAdapter extends BaseQuickAdapter<String> {
     @Override
     protected void convert(BaseViewHolder holder, String s) {
         if(getViewHolderPosition(holder)%2==0){
-            holder.setBackgroundColor(R.id.basket_player_name, MyApp.getContext().getResources().getColor(R.color.black_grounding));
+            holder.setBackgroundColor(R.id.basket_player_name, MyApp.getContext().getResources().getColor(R.color.mdy_ddd));
         }else{
             holder.setBackgroundColor(R.id.basket_player_name,MyApp.getContext().getResources().getColor(R.color.usercenter_body_bg));
         }
