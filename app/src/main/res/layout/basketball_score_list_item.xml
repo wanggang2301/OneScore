@@ -14,14 +14,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="115dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:paddingLeft="10dp"
+            android:paddingLeft="15dp"
             android:paddingRight="10dp">
 
             <TextView
@@ -133,23 +133,24 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.2"
                     android:orientation="vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="5dp">
+                    android:paddingLeft="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -238,6 +239,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_basket_desc_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -281,20 +283,105 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <RelativeLayout
-                    android:id="@+id/relativeLayout"
+                <LinearLayout
+                    android:id="@+id/score_data"
                     android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_alignParentRight="true"
+                    android:orientation="vertical"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp">
 
                     <LinearLayout
-                        android:id="@+id/score_data"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:orientation="vertical"
-                        android:paddingRight="20dp"
-                        android:paddingTop="10dp">
+                        android:gravity="center">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:paddingRight="5dp">
+
+                                <TextView
+                                    android:id="@+id/guest_score1"
+                                    android:layout_width="20dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="66"
+                                    android:textSize="@dimen/text_size_12" />
+
+                                <TextView
+                                    android:id="@+id/guest_score2"
+                                    android:layout_width="20dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:paddingLeft="5dp"
+                                    android:text="66"
+                                    android:textSize="@dimen/text_size_12" />
+
+                                <TextView
+                                    android:id="@+id/guest_score3"
+                                    android:layout_width="20dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:paddingLeft="5dp"
+                                    android:text="66"
+                                    android:textSize="@dimen/text_size_12" />
+
+                                <TextView
+                                    android:id="@+id/guest_score4"
+                                    android:layout_width="20dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:paddingLeft="5dp"
+                                    android:text="66"
+                                    android:textSize="@dimen/text_size_12" />
+
+                                <TextView
+                                    android:id="@+id/guest_score_ot"
+                                    android:layout_width="20dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:paddingLeft="5dp"
+                                    android:text="66"
+                                    android:textSize="@dimen/text_size_12"
+                                    android:visibility="gone" />
+                            </LinearLayout>
+
+                            <View
+                                android:id="@+id/halving_line"
+                                android:layout_width="0.5dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_horizontal"
+                                android:background="@color/snooker_line" />
+
+                            <ImageView
+                                android:layout_width="1dp"
+                                android:layout_height="20dp" />
+
+                            <TextView
+                                android:id="@+id/basket_guest_all_score"
+                                android:layout_width="30dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:paddingLeft="5dp"
+                                android:text="666"
+                                android:textColor="#0085E1"
+                                android:textSize="@dimen/text_size_12" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -304,178 +391,87 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="center">
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:paddingRight="5dp">
-
-                                    <TextView
-                                        android:id="@+id/guest_score1"
-                                        android:layout_width="20dp"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="66"
-                                        android:textSize="@dimen/text_size_12" />
-
-                                    <TextView
-                                        android:id="@+id/guest_score2"
-                                        android:layout_width="20dp"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:paddingLeft="5dp"
-                                        android:text="66"
-                                        android:textSize="@dimen/text_size_12" />
-
-                                    <TextView
-                                        android:id="@+id/guest_score3"
-                                        android:layout_width="20dp"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:paddingLeft="5dp"
-                                        android:text="66"
-                                        android:textSize="@dimen/text_size_12" />
-
-                                    <TextView
-                                        android:id="@+id/guest_score4"
-                                        android:layout_width="20dp"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:paddingLeft="5dp"
-                                        android:text="66"
-                                        android:textSize="@dimen/text_size_12" />
-
-                                    <TextView
-                                        android:id="@+id/guest_score_ot"
-                                        android:layout_width="20dp"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:paddingLeft="5dp"
-                                        android:text="66"
-                                        android:textSize="@dimen/text_size_12"
-                                        android:visibility="gone" />
-                                </LinearLayout>
-
-                                <View
-                                    android:id="@+id/halving_line"
-                                    android:layout_width="0.5dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center_horizontal"
-                                    android:background="@color/snooker_line" />
-
-                                <ImageView
-                                    android:layout_width="1dp"
-                                    android:layout_height="20dp" />
+                                android:gravity="center"
+                                android:paddingRight="5dp">
 
                                 <TextView
-                                    android:id="@+id/basket_guest_all_score"
-                                    android:layout_width="30dp"
+                                    android:id="@+id/home_score1"
+                                    android:layout_width="20dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="66"
+                                    android:textSize="@dimen/text_size_12" />
+
+                                <TextView
+                                    android:id="@+id/home_score2"
+                                    android:layout_width="20dp"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:paddingLeft="5dp"
-                                    android:text="666"
-                                    android:textColor="#0085E1"
+                                    android:text="66"
                                     android:textSize="@dimen/text_size_12" />
+
+                                <TextView
+                                    android:id="@+id/home_score3"
+                                    android:layout_width="20dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:paddingLeft="5dp"
+                                    android:text="66"
+                                    android:textSize="@dimen/text_size_12" />
+
+                                <TextView
+                                    android:id="@+id/home_score4"
+                                    android:layout_width="20dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:paddingLeft="5dp"
+                                    android:text="66"
+                                    android:textSize="@dimen/text_size_12" />
+
+                                <TextView
+                                    android:id="@+id/home_score_ot"
+                                    android:layout_width="20dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:paddingLeft="5dp"
+                                    android:text="66"
+                                    android:textSize="@dimen/text_size_12"
+                                    android:visibility="gone" />
                             </LinearLayout>
-                        </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center">
+                            <View
+                                android:id="@+id/halving_line2"
+                                android:layout_width="0.5dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_horizontal"
+                                android:background="@color/snooker_line" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <ImageView
+                                android:layout_width="1dp"
+                                android:layout_height="20dp" />
+
+                            <TextView
+                                android:id="@+id/basket_home_all_score"
+                                android:layout_width="30dp"
                                 android:layout_height="wrap_content"
-                                android:gravity="center">
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:paddingRight="5dp">
-
-                                    <TextView
-                                        android:id="@+id/home_score1"
-                                        android:layout_width="20dp"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="66"
-                                        android:textSize="@dimen/text_size_12" />
-
-                                    <TextView
-                                        android:id="@+id/home_score2"
-                                        android:layout_width="20dp"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:paddingLeft="5dp"
-                                        android:text="66"
-                                        android:textSize="@dimen/text_size_12" />
-
-                                    <TextView
-                                        android:id="@+id/home_score3"
-                                        android:layout_width="20dp"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:paddingLeft="5dp"
-                                        android:text="66"
-                                        android:textSize="@dimen/text_size_12" />
-
-                                    <TextView
-                                        android:id="@+id/home_score4"
-                                        android:layout_width="20dp"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:paddingLeft="5dp"
-                                        android:text="66"
-                                        android:textSize="@dimen/text_size_12" />
-
-                                    <TextView
-                                        android:id="@+id/home_score_ot"
-                                        android:layout_width="20dp"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:paddingLeft="5dp"
-                                        android:text="66"
-                                        android:textSize="@dimen/text_size_12"
-                                        android:visibility="gone" />
-                                </LinearLayout>
-
-                                <View
-                                    android:id="@+id/halving_line2"
-                                    android:layout_width="0.5dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center_horizontal"
-                                    android:background="@color/snooker_line" />
-
-                                <ImageView
-                                    android:layout_width="1dp"
-                                    android:layout_height="20dp" />
-
-                                <TextView
-                                    android:id="@+id/basket_home_all_score"
-                                    android:layout_width="30dp"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:paddingLeft="5dp"
-                                    android:text="666"
-                                    android:textColor="#0085E1"
-                                    android:textSize="@dimen/text_size_12" />
-                            </LinearLayout>
+                                android:gravity="center"
+                                android:paddingLeft="5dp"
+                                android:text="666"
+                                android:textColor="#0085E1"
+                                android:textSize="@dimen/text_size_12" />
                         </LinearLayout>
                     </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/Iv_guangzhu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentRight="true"
-                        android:background="@mipmap/iconfont_guanzhu" />
-                </RelativeLayout>
+                </LinearLayout>
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/Iv_guangzhu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:background="@mipmap/iconfont_guanzhu" />
         </RelativeLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

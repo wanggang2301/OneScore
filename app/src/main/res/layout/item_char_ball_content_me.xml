@@ -94,11 +94,11 @@
                         android:id="@+id/my_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/chart_ball_right_bg"
                         android:gravity="center_vertical"
                         android:textColor="@color/mdy_333"
                         android:textSize="14sp"
                         android:visibility="gone"
+                        android:padding="10dp"
                         emojicon:emojiconSize="20sp"
                         tools:text="test" />
 

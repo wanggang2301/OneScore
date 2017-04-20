@@ -1055,6 +1055,7 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
 
                 switch (mFocusType){
                     case 0:
+                        viewHolderList.ll_basket_desc_content.setVisibility(View.VISIBLE);
                         viewHolderList.mIv_guangzhu.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -1065,6 +1066,7 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                         });
                         break;
                     case 1:
+                        viewHolderList.ll_basket_desc_content.setVisibility(View.VISIBLE);
                         viewHolderList.mIv_guangzhu.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -1075,6 +1077,7 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                         });
                         break;
                     case 2:
+                        viewHolderList.ll_basket_desc_content.setVisibility(View.GONE);
                         viewHolderList.mIv_guangzhu.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -1085,6 +1088,7 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
                         });
                         break;
                     case 3:
+                        viewHolderList.ll_basket_desc_content.setVisibility(View.VISIBLE);
                         viewHolderList.mIv_guangzhu.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -1422,6 +1426,7 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
         TextView home_score4;
         TextView guest_score_ot;//加时比分
         TextView home_score_ot;
+        LinearLayout ll_basket_desc_content;
 
         public ViewHolderList(final View itemView) {
             super(itemView);
@@ -1463,6 +1468,7 @@ public class BasketballScoreListAdapter extends RecyclerView.Adapter<RecyclerVie
             home_score3 = (TextView) itemView.findViewById(R.id.home_score3);
             home_score4 = (TextView) itemView.findViewById(R.id.home_score4);
             home_score_ot = (TextView) itemView.findViewById(R.id.home_score_ot);
+            ll_basket_desc_content = (LinearLayout) itemView.findViewById(R.id.ll_basket_desc_content);
         }
     }
 }
