@@ -2647,12 +2647,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         //时间轴的处理
         //完场直接有数据
         if (BEFOURLIVE.equals(mMatchDetail.getLiveStatus())) {
-            tv_home_corner.setText("");
-            tv_home_rc.setText("");
-            tv_home_yc.setText("");
-            tv_guest_corner.setText("");
-            tv_guest_rc.setText("");
-            tv_guest_yc.setText("");
+            tv_home_corner.setText("0");
+            tv_home_rc.setText("0");
+            tv_home_yc.setText("0");
+            tv_guest_corner.setText("0");
+            tv_guest_rc.setText("0");
+            tv_guest_yc.setText("0");
         } else if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
             tv_home_corner.setText(mMatchDetail.getHomeTeamInfo().getCorner());
             tv_home_rc.setText(mMatchDetail.getHomeTeamInfo().getRc());
