@@ -13,23 +13,12 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketBallMatchSearchActivity;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
-import com.hhly.mlottery.bean.BallMatchItemsBean;
 import com.hhly.mlottery.bean.BasketballItemSearchBean;
-import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
-import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
-import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketImmedNewScoreFragment;
-import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketResultNewScoreFragment;
-import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketScheduleNewScoreFragment;
-import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketballFocusNewFragment;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -870,7 +859,6 @@ public class BasketballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerV
 //                            viewHolderList.basket_half_score.setVisibility(View.INVISIBLE);
                     viewHolderList.basket_guest_all_score.setText(DetailsData.getMatchScore().getGuestScore() + "");
                     viewHolderList.basket_home_all_score.setText(DetailsData.getMatchScore().getHomeScore() + "");
-                    //TODO--------********************************
                     viewHolderList.st_time.setText(R.string.basket_interrupt);
                     viewHolderList.st_time.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));//#0085E1
                     settingdata(viewHolderList, -3);

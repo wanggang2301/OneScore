@@ -390,7 +390,6 @@ public class IntelligenceFragment extends Fragment {
                 new VolleyContentFast.ResponseErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                        // TODO: 异常处理
                     }
                 }, BigDataResult.class);
     }

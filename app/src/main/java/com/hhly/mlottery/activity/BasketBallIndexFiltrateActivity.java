@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author: Wangg
  * @Name：BasketBallIndexFiltrateActivity
- * @Description:
+ * @Description:篮球指数筛选
  * @Created on:2017/3/21  14:45.
  */
 

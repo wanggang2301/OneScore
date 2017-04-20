@@ -495,7 +495,6 @@
     <string name="direct_seeding">Live</string>
     <string name="download_error">Download failed!</string>
     <string name="download_update">Update, please hold on...</string>
-    <string name="label_line" translatable="false">-</string>
     <string name="login_no_weixin">Please install Wechat first!</string>
     <string name="login_peak">Login busy, please try again later</string>
     <string name="not_start_short_txt">No</string>
@@ -524,9 +523,10 @@
     <string name="share_uninstall_qq">You have not installed the QQ client-side</string>
     <string name="share_recommend">Recommend</string>
     <string name="share_summary_default">One Score, the professional football score live platform</string>
-    <string name="symbol_times" translatable="false">×</string>
+  <!--  <string name="symbol_times" translatable="false">×</string>
     <string name="symbol_plus" translatable="false">+</string>
     <string name="symbol_equal" translatable="false">=</string>
+    <string name="label_line" translatable="false">-</string>-->
 
 
     <!--指数-->

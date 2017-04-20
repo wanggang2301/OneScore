@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:background="#f5f5f5"
+    android:orientation="vertical">
 
     <!--<include layout="@layout/layout_header" />-->
 
@@ -12,7 +13,8 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone" >
+        android:visibility="gone">
+
         <TextView
             android:id="@+id/basketball_loading"
             android:layout_width="wrap_content"
@@ -24,7 +26,8 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/basketball_swiperefreshlayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/basket_recyclerView"
             android:layout_width="match_parent"
@@ -32,23 +35,23 @@
             android:layout_marginLeft="0.0dip"
             android:cacheColorHint="#00000000"
             android:choiceMode="singleChoice"
+            android:divider="@color/linecolor"
+            android:dividerHeight="0.5px"
             android:drawSelectorOnTop="false"
             android:fastScrollEnabled="false"
             android:footerDividersEnabled="true"
             android:groupIndicator="@null"
             android:scrollbars="vertical"
-            android:scrollingCache="true"
-            android:divider="@color/linecolor"
-            android:dividerHeight="0.5px"
-            />
+            android:scrollingCache="true" />
     </android.support.v4.widget.SwipeRefreshLayout>
+
     <LinearLayout
         android:id="@+id/basketball_immediate_error"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -68,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
             android:gravity="center"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -87,11 +90,12 @@
                 android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/basketball_immediate_unfocus_pinned"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/basketball_immediate_unfocus_coffee"
@@ -106,10 +110,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/basketball_immediate_unfocus_coffee"
             android:layout_centerHorizontal="true"
+            android:gravity="center"
             android:text="@string/unfocus"
             android:textColor="@color/unfocus_text"
-            android:textSize="14sp"
-            android:gravity="center" />
+            android:textSize="14sp" />
     </RelativeLayout>
 
     <RelativeLayout

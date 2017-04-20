@@ -13,7 +13,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.bean.focusAndPush.ConcernBean;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
+import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketballFocusNewFragment;
 import com.hhly.mlottery.frame.footballframe.FocusFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
@@ -162,7 +162,7 @@ public class MoreSettingsActivity extends BaseActivity  implements View.OnClickL
                     PreferenceUtil.commitBoolean("three_login",false);
                     setResult(RESULT_OK);
 
-                    PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS,""); //清空篮球关注列表
+                    PreferenceUtil.commitString(BasketballFocusNewFragment.BASKET_FOCUS_IDS,""); //清空篮球关注列表
                     PreferenceUtil.commitString(FocusFragment.FOCUS_ISD,""); //清空足球关注列表
 
                     //清空定制列表id

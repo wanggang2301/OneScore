@@ -27,6 +27,7 @@ public class MatchDataBean {
     private MatchScoreBean matchScore;
     private MatchOddsBean matchOdds;
     private boolean isFocus;
+    private String oddsType;
 
     public static class MatchOddsBean{
         private TennisOddsInfoBean asiaSize;
@@ -436,5 +437,13 @@ public class MatchDataBean {
 
     public void setFocus(boolean focus) {
         isFocus = focus;
+    }
+
+    public String getOddsType() {
+        return oddsType;
+    }
+
+    public void setOddsType(String oddsType) {
+        this.oddsType = oddsType;
     }
 }

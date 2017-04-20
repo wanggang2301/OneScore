@@ -13,10 +13,10 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.FiltrateAdapter;
 import com.hhly.mlottery.bean.basket.BasketMatchFilter;
-import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
-import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
-import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.frame.footballframe.FiltrateMatchFragment;
+import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreImmedEventBusEntity;
+import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreResultEventBusEntity;
+import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreScheduleEventBusEntity;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MultipleBasketFilterListEvent;
 import com.hhly.mlottery.view.GrapeGridview;
@@ -365,7 +365,6 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        // TODO Auto-generated method stub
         switch (v.getId()) {
             case R.id.public_img_back:// 关闭(返回)
                 MobclickAgent.onEvent(mContext, "Basketball_Filter_Exit");
@@ -387,17 +386,13 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
 
                 Map<String, Object> map = new HashMap<>();
                 map.put("checkedCupIds", mCupChicked);
-//                map.put("checkedDefualt", false); currentId
 
-//                if (currentId==0) {
-//                    EventBus.getDefault().post(new MultipleBasketFilterListEvent(map));
-//                }
                 if (currentId == 0) {
-                    ImmedBasketballFragment.BasketImmedEventBus.post(map);
+                    EventBus.getDefault().post(new BasketScoreImmedEventBusEntity(map));
                 } else if (currentId == 1) {
-                    ResultBasketballFragment.BasketResultEventBus.post(map);
+                    EventBus.getDefault().post(new BasketScoreResultEventBusEntity(map));
                 } else if (currentId == 2) {
-                    ScheduleBasketballFragment.BasketScheduleEventBus.post(map);
+                    EventBus.getDefault().post(new BasketScoreScheduleEventBusEntity(map));
                 } else if (currentId == 3) {
                     EventBus.getDefault().post(new MultipleBasketFilterListEvent(map));
                 }
@@ -409,7 +404,7 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
 
             case R.id.filtrate_hot_btn:
                 MobclickAgent.onEvent(mContext, "Basketball_Filter_HotBtn");
-//                Toast.makeText(this,"热门",Toast.LENGTH_SHORT).show(); //TODO -----
+//                Toast.makeText(this,"热门",Toast.LENGTH_SHORT).show();
 //                    chickedCup.getLeagueId().equals("1") || chickedCup.getLeagueId().equals("5") || chickedCup.getLeagueId().equals("8") || chickedCup.getLeagueId().equals("15") ||
 //                    chickedCup.getLeagueId().equals("21") || chickedCup.getLeagueId().equals("22") || chickedCup.getLeagueId().equals("57") || chickedCup.getLeagueId().equals("377")
                 mCupChicked.clear();
@@ -496,7 +491,7 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.filtrate_all_btn:
                 MobclickAgent.onEvent(mContext, "Basketball_Filter_All");
-//                Toast.makeText(this,"全选",Toast.LENGTH_SHORT).show(); //TODO -----
+//                Toast.makeText(this,"全选",Toast.LENGTH_SHORT).show();
                 mCupChicked.clear();
 //                /**
 //                 * (带反选功能)
@@ -551,7 +546,7 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
 
 //                    for (BasketMatchFilter chickedCup:mAllFilterDatas) { //所有的跟 进入界面时的id比较
 //                    for (BasketMatchFilter cupid:mChickedFilterDatas) {
-//                        if (!chickedCup.getLeagueId().equals(cupid.getLeagueId())) {//TODO -----????????
+//                        if (!chickedCup.getLeagueId().equals(cupid.getLeagueId())) {
 //                            chickedCup.setIsChecked(true);
 //                            mCupChicked.add(chickedCup.getLeagueId());
 //                        }else{

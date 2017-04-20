@@ -209,6 +209,7 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
         if (data == null) return;
 
         String homeName = "";
+        String guestName = "";
         // 比赛类型： 1男子、2女子、3男双、4女双、5混双
         if (data.getMatchInfo() != null) {
             int matchType = data.getMatchInfo().getMatchType();
@@ -235,6 +236,17 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
                         homePlayer2Name = "/" + data.getMatchInfo().getHomePlayer2().getName();
                     }
                     homeName = data.getMatchInfo().getHomePlayer1().getName() + homePlayer2Name;
+                }
+            }
+            if (data.getMatchInfo().getGuestPlayer1() != null) {
+                if (isSingle) {
+                    guestName = data.getMatchInfo().getGuestPlayer1().getName();
+                } else {
+                    String guestPlayer2Name = "";
+                    if (data.getMatchInfo().getGuestPlayer2() != null) {
+                        guestPlayer2Name = "/" + data.getMatchInfo().getGuestPlayer2().getName();
+                    }
+                    guestName = data.getMatchInfo().getGuestPlayer1().getName() + guestPlayer2Name;
                 }
             }
         }
@@ -352,7 +364,7 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
             // 主队
             if (data.getRecentMatch().getHomePlayerRecentMatch() != null) {
                 ll_record_content.addView(recordTopItemView());
-                String title = mContext.getResources().getString(R.string.tennis_datails_fight_title);
+                String title = mContext.getResources().getString(R.string.tennis_datails_ranking_title);
                 String titleDesc = String.format(title, data.getRecentMatch().getHomePlayerRecentMatch().getTotalTimes(), homeName, data.getRecentMatch().getHomePlayerRecentMatch().getPlayerWin(), data.getRecentMatch().getHomePlayerRecentMatch().getPlayerFail(), data.getRecentMatch().getHomePlayerRecentMatch().getWinRate());
                 record_title.setText(titleDesc);
 
@@ -381,8 +393,8 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
             // 客队
             if (data.getRecentMatch().getGuestPlayerRecentMatch() != null) {
                 ll_record_content.addView(recordTopItemView());
-                String title = mContext.getResources().getString(R.string.tennis_datails_fight_title);
-                String titleDesc = String.format(title, data.getRecentMatch().getGuestPlayerRecentMatch().getTotalTimes(), homeName, data.getRecentMatch().getGuestPlayerRecentMatch().getPlayerWin(), data.getRecentMatch().getGuestPlayerRecentMatch().getPlayerFail(), data.getRecentMatch().getGuestPlayerRecentMatch().getWinRate());
+                String title = mContext.getResources().getString(R.string.tennis_datails_ranking_title);
+                String titleDesc = String.format(title, data.getRecentMatch().getGuestPlayerRecentMatch().getTotalTimes(), guestName, data.getRecentMatch().getGuestPlayerRecentMatch().getPlayerWin(), data.getRecentMatch().getGuestPlayerRecentMatch().getPlayerFail(), data.getRecentMatch().getGuestPlayerRecentMatch().getWinRate());
                 record_title.setText(titleDesc);
 
                 if (data.getRecentMatch().getGuestPlayerRecentMatch().getMatchList() == null || data.getRecentMatch().getGuestPlayerRecentMatch().getMatchList().size() == 0) {
@@ -418,22 +430,22 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
             for (int i = 0; i < data.getDataCompare().size(); i++) {
                 DataCompareBean dataCompareBean = data.getDataCompare().get(i);
                 if (dataCompareBean.getStatus() == 0) {
-                    data_home_name.setText(dataCompareBean.getHome1() == null ? "" : dataCompareBean.getHome1());
-                    data_guest_name.setText(dataCompareBean.getGuest1() == null ? "" : dataCompareBean.getGuest1());
+                    data_home_name.setText(dataCompareBean.getHome1() == null ? "-" : dataCompareBean.getHome1());
+                    data_guest_name.setText(dataCompareBean.getGuest1() == null ? "-" : dataCompareBean.getGuest1());
                     if (isSingle) {
                         data_home_name2.setVisibility(View.GONE);
                         data_guest_name2.setVisibility(View.GONE);
                     } else {
                         data_home_name2.setVisibility(View.VISIBLE);
                         data_guest_name2.setVisibility(View.VISIBLE);
-                        data_home_name2.setText(dataCompareBean.getHome2() == null ? "" : dataCompareBean.getHome2());
-                        data_guest_name2.setText(dataCompareBean.getGuest2() == null ? "" : dataCompareBean.getGuest2());
+                        data_home_name2.setText(dataCompareBean.getHome2() == null ? "-" : dataCompareBean.getHome2());
+                        data_guest_name2.setText(dataCompareBean.getGuest2() == null ? "-" : dataCompareBean.getGuest2());
                     }
                     continue;
                 }
                 ll_data_content.addView(dataItemView());
-                data_home_name_score.setText(dataCompareBean.getHome1() == null ? "" : dataCompareBean.getHome1());
-                data_guest_name_score.setText(dataCompareBean.getGuest1() == null ? "" : dataCompareBean.getGuest1());
+                data_home_name_score.setText(dataCompareBean.getHome1() == null ? "-" : dataCompareBean.getHome1());
+                data_guest_name_score.setText(dataCompareBean.getGuest1() == null ? "-" : dataCompareBean.getGuest1());
                 data_pk.setText(getStatus(dataCompareBean.getStatus()));
                 if (isSingle) {
                     data_home_name2_score.setVisibility(View.GONE);
@@ -441,8 +453,8 @@ public class TennisAnalysisFrag extends Fragment implements View.OnClickListener
                 } else {
                     data_home_name2_score.setVisibility(View.VISIBLE);
                     data_guest_name2_score.setVisibility(View.VISIBLE);
-                    data_home_name2_score.setText(dataCompareBean.getHome2() == null ? "" : dataCompareBean.getHome2());
-                    data_guest_name2_score.setText(dataCompareBean.getGuest2() == null ? "" : dataCompareBean.getGuest2());
+                    data_home_name2_score.setText(dataCompareBean.getHome2() == null ? "-" : dataCompareBean.getHome2());
+                    data_guest_name2_score.setText(dataCompareBean.getGuest2() == null ? "-" : dataCompareBean.getGuest2());
                 }
             }
         } else {

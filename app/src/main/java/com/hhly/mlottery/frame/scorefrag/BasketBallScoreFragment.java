@@ -30,10 +30,6 @@ import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.BallType;
-import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
-import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
-import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
-import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketResultNewScoreFragment;
 import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketScheduleNewScoreFragment;
 import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketImmedNewScoreFragment;
@@ -118,6 +114,8 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.basketball");
         super.onCreate(savedInstanceState);
+
+        EventBus.getDefault().register(this);
 
     }
 
@@ -332,9 +330,11 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
                     if (BasketImmedNewScoreFragment.getIsLoad() == 1) {
                         MobclickAgent.onEvent(mContext, "Basketball_Filter");
                         Intent intent = new Intent(getActivity(), BasketFiltrateActivity.class);
+
                         intent.putExtra("MatchAllFilterDatas", (Serializable) BasketImmedNewScoreFragment.mAllFilter);//Serializable 序列化传值（所有联赛数据）
                         intent.putExtra("MatchChickedFilterDatas", (Serializable) BasketImmedNewScoreFragment.mChickedFilter);//Serializable 序列化传值（选中的联赛数据）
                         intent.putExtra("currentfragment", IMMEDIA_FRAGMENT);
+
                         startActivity(intent);
                         getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
                     } else if (BasketImmedNewScoreFragment.getIsLoad() == 0) {
@@ -555,8 +555,6 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
             L.d("xxx", "FocusFragment>>>显示");
         }
         if (getActivity() != null) {
-            L.d("websocket123", "篮球打开");
-
             connectWebSocket();
         }
     }
@@ -624,8 +622,7 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
-                L.d("websocket123", "篮球关闭");
+                L.d("websocket123", ">>>>>>>>篮球比分关闭");
                 closeWebSocket();
 
                 EventBus.getDefault().post(new ScoreSwitchFg(position));
@@ -658,7 +655,10 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
 
     @Override
     protected void onTextResult(String text) {
+        L.d("websocket123", "篮球收到消息==" + text);
+
         ((BasketImmedNewScoreFragment) fragments.get(0)).handleSocketMessage(text);
+        ((BasketballFocusNewFragment) fragments.get(3)).handleSocketMessage(text);
     }
 
     @Override
@@ -685,6 +685,27 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         } else {
 //            L.d("xxx", ">>>篮球>>>>show");
             onResume();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+        closeWebSocket();
+    }
+
+    public void onEventMainThread(CloseWebSocketEventBus closeWebSocketEventBus) {
+
+        if (closeWebSocketEventBus.isVisible()) {
+            L.d("websocket123", "_________篮球 比分 关闭 fg");
+            closeWebSocket();
+        } else {
+            if (closeWebSocketEventBus.getIndex() == BallType.BASKETBALL) {
+                L.d("websocket123", "_________篮球 比分 关闭 fg");
+
+                connectWebSocket();
+            }
         }
     }
 }

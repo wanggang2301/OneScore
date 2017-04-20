@@ -55,7 +55,6 @@ public class CpiDateAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
         LayoutInflater inflater = LayoutInflater.from(context);
         ViewHolder viewHolder;
         if (convertView == null) {

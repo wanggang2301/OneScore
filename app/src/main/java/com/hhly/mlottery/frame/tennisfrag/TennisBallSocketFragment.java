@@ -86,7 +86,7 @@ public class TennisBallSocketFragment extends BaseWebSocketFragment implements S
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic("USER.topic.tennis.odd");
+        setTopic("USER.topic.tennis.score");
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             type = getArguments().getInt(TENNIS_TYPE);
@@ -168,6 +168,7 @@ public class TennisBallSocketFragment extends BaseWebSocketFragment implements S
                     } else {
                         setStatus(SUCCESS);
                         connectWebSocket();
+                        settingOddsStart();
                         mAdapter.notifyDataSetChanged();
                     }
                 } else {
@@ -184,7 +185,6 @@ public class TennisBallSocketFragment extends BaseWebSocketFragment implements S
 
     // 设置页面显示状态
     private void setStatus(int status) {
-        L.d("xxxxx", "socketFrag status:  " + status);
         if (status == ERROR || status == NOTO_DATA) {
             mData.clear();
             mAdapter.notifyDataSetChanged();
@@ -234,83 +234,127 @@ public class TennisBallSocketFragment extends BaseWebSocketFragment implements S
     }
 
     // webSocket
-    public void socketDataChanged(final String text) {
-        L.d("xxxxx", "收到了：type:" + type);
+    public synchronized void socketDataChanged(final String text) {
         new Thread() {
             @Override
             public void run() {
-                TennisSocketBean tennisSocketBean = JSON.parseObject(text, TennisSocketBean.class);
-                if (tennisSocketBean.getType() == 401) {
-                    for (MatchDataBean matchDataBean : mData) {
-                        if (matchDataBean.getMatchId().equals(tennisSocketBean.getDataObj().getMatchId())) {
-                            matchDataBean.setMatchStatus(tennisSocketBean.getDataObj().getMatchStatus());
-                            matchDataBean.getMatchScore().setHomeSetScore1(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore1());
-                            matchDataBean.getMatchScore().setHomeSetScore2(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore2());
-                            matchDataBean.getMatchScore().setHomeSetScore3(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore3());
-                            matchDataBean.getMatchScore().setHomeSetScore4(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore4());
-                            matchDataBean.getMatchScore().setHomeSetScore5(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore5());
-                            matchDataBean.getMatchScore().setAwaySetScore1(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore1());
-                            matchDataBean.getMatchScore().setAwaySetScore2(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore2());
-                            matchDataBean.getMatchScore().setAwaySetScore3(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore3());
-                            matchDataBean.getMatchScore().setAwaySetScore4(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore4());
-                            matchDataBean.getMatchScore().setAwaySetScore5(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore5());
-                            matchDataBean.getMatchScore().setHomeTotalScore(tennisSocketBean.getDataObj().getMatchScore().getHomeTotalScore());
-                            matchDataBean.getMatchScore().setAwayTotalScore(tennisSocketBean.getDataObj().getMatchScore().getAwayTotalScore());
-                            mContext.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (mAdapter != null) {
-                                        L.d("xxxxx", "收到了：刷新了!");
-                                        mAdapter.notifyDataSetChanged();
+                try {
+                    TennisSocketBean tennisSocketBean = JSON.parseObject(text, TennisSocketBean.class);
+                    if (tennisSocketBean.getType() == 401) {
+                        for (MatchDataBean matchDataBean : mData) {
+                            if (matchDataBean.getMatchId().equals(tennisSocketBean.getDataObj().getMatchId())) {
+                                matchDataBean.setMatchStatus(tennisSocketBean.getDataObj().getMatchStatus());
+                                matchDataBean.getMatchScore().setHomeSetScore1(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore1());
+                                matchDataBean.getMatchScore().setHomeSetScore2(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore2());
+                                matchDataBean.getMatchScore().setHomeSetScore3(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore3());
+                                matchDataBean.getMatchScore().setHomeSetScore4(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore4());
+                                matchDataBean.getMatchScore().setHomeSetScore5(tennisSocketBean.getDataObj().getMatchScore().getHomeSetScore5());
+                                matchDataBean.getMatchScore().setAwaySetScore1(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore1());
+                                matchDataBean.getMatchScore().setAwaySetScore2(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore2());
+                                matchDataBean.getMatchScore().setAwaySetScore3(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore3());
+                                matchDataBean.getMatchScore().setAwaySetScore4(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore4());
+                                matchDataBean.getMatchScore().setAwaySetScore5(tennisSocketBean.getDataObj().getMatchScore().getAwaySetScore5());
+                                matchDataBean.getMatchScore().setHomeTotalScore(tennisSocketBean.getDataObj().getMatchScore().getHomeTotalScore());
+                                matchDataBean.getMatchScore().setAwayTotalScore(tennisSocketBean.getDataObj().getMatchScore().getAwayTotalScore());
+                                mContext.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (mAdapter != null) {
+                                            L.d("tennis", "比分收到了：刷新了!");
+                                            mAdapter.notifyDataSetChanged();
+                                        }
                                     }
-                                }
-                            });
-                            break;
+                                });
+                                break;
+                            }
                         }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }.start();
     }
 
-    // 指数变化
+    // 设置赔率状态变化
+    private void settingOddsStart() {
+        for (int i = 0; i < mData.size(); i++) {
+            if (PreferenceUtil.getBoolean(MyConstants.TENNIS_ALET, true)) {// 亚盘
+                mData.get(i).setOddsType("alet");
+            } else if (PreferenceUtil.getBoolean(MyConstants.TENNIS_EURO, false)) {// 欧赔
+                mData.get(i).setOddsType("eur");
+            } else if (PreferenceUtil.getBoolean(MyConstants.TENNIS_NOTSHOW, false)) {// 不显示
+                mData.get(i).setOddsType("noshow");
+            } else if (PreferenceUtil.getBoolean(MyConstants.TENNIS_ASIZE, false)) {// 大小球
+                mData.get(i).setOddsType("asize");
+            }
+        }
+    }
+
+    // 指数状态变化
     public void oddsChanger() {
         if (mAdapter != null) {
+            L.d("tennis", "指数状态变化刷新");
+            settingOddsStart();
             mAdapter.notifyDataSetChanged();
         }
     }
 
-    @Override
-    protected void onTextResult(String text) {
-        L.d("tennis", "网球赔率推送：" + text);
-        if (TextUtils.isEmpty(text)) return;
-        TennisSocketOddsBean oddsBean = JSON.parseObject(text, TennisSocketOddsBean.class);
-        // 402 比分列表赔率主题，403 指数赔率列表
-        if (oddsBean != null && oddsBean.getType() == 402) {
-            boolean alet = PreferenceUtil.getBoolean(MyConstants.TENNIS_ALET, true); //亚盘
-            boolean eur = PreferenceUtil.getBoolean(MyConstants.TENNIS_EURO, false);//欧赔
-            //  1 亚盘 ，2 欧赔 ，3 大小球
-            int gameType = oddsBean.getDataObj().getGameType();
-            for (int i = 0; i < mData.size(); i++) {
-                if (mData.get(i).getMatchId().equals(oddsBean.getDataObj().getMatchId())) {
-                    if (alet && gameType == 1) {
-                        TennisOddsInfoBean asiaLet = mData.get(i).getMatchOdds().getAsiaLet();
-                        asiaLet.setL(oddsBean.getDataObj().getMatchOdd().getL());
-                        asiaLet.setM(oddsBean.getDataObj().getMatchOdd().getM());
-                        asiaLet.setR(oddsBean.getDataObj().getMatchOdd().getR());
-                    } else if (eur && gameType == 2) {
-                        TennisOddsInfoBean euro = mData.get(i).getMatchOdds().getEuro();
-                        euro.setL(oddsBean.getDataObj().getMatchOdd().getL());
-                        euro.setM(oddsBean.getDataObj().getMatchOdd().getM());
-                        euro.setR(oddsBean.getDataObj().getMatchOdd().getR());
+    // 指数数据推送变化
+    public synchronized void oddsDataChanger(final String text) {
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    TennisSocketOddsBean oddsBean = JSON.parseObject(text, TennisSocketOddsBean.class);
+                    // 402 比分列表赔率主题，403 指数赔率列表
+                    if (oddsBean != null && oddsBean.getType() == 402) {
+                        boolean alet = PreferenceUtil.getBoolean(MyConstants.TENNIS_ALET, true); //亚盘
+                        boolean eur = PreferenceUtil.getBoolean(MyConstants.TENNIS_EURO, false);//欧赔
+                        //  1 亚盘 ，2 欧赔 ，3 大小球
+                        int gameType = oddsBean.getDataObj().getGameType();
+                        for (int i = 0; i < mData.size(); i++) {
+                            if (mData.get(i).getMatchId().equals(oddsBean.getDataObj().getMatchId())) {
+                                if (alet && gameType == 1) {
+                                    TennisOddsInfoBean asiaLet = mData.get(i).getMatchOdds().getAsiaLet();
+                                    asiaLet.setL(oddsBean.getDataObj().getMatchOdd().getL());
+                                    asiaLet.setM(oddsBean.getDataObj().getMatchOdd().getM());
+                                    asiaLet.setR(oddsBean.getDataObj().getMatchOdd().getR());
+                                } else if (eur && gameType == 2) {
+                                    TennisOddsInfoBean euro = mData.get(i).getMatchOdds().getEuro();
+                                    euro.setL(oddsBean.getDataObj().getMatchOdd().getL());
+                                    euro.setM(oddsBean.getDataObj().getMatchOdd().getM());
+                                    euro.setR(oddsBean.getDataObj().getMatchOdd().getR());
+                                } else if (eur && gameType == 3) {
+                                    TennisOddsInfoBean asiaSize = mData.get(i).getMatchOdds().getAsiaSize();
+                                    asiaSize.setL(oddsBean.getDataObj().getMatchOdd().getL());
+                                    asiaSize.setM(oddsBean.getDataObj().getMatchOdd().getM());
+                                    asiaSize.setR(oddsBean.getDataObj().getMatchOdd().getR());
+                                }
+                                mContext.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (mAdapter != null) {
+                                            L.d("tennis", "网球赔率推送,更新了!");
+                                            mAdapter.notifyDataSetChanged();
+                                        }
+                                    }
+                                });
+                                break;
+                            }
+                        }
                     }
-                    if (mAdapter != null) {
-                        mAdapter.notifyDataSetChanged();
-                    }
-                    break;
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
-        }
+        }.start();
+    }
+
+    @Override
+    protected void onTextResult(String text) {
+        L.d("tennis", "网球比分推送：" + text);
+        socketDataChanged(text);
     }
 
     @Override

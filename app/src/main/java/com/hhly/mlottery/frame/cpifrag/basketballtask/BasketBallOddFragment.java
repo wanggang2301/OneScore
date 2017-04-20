@@ -71,6 +71,7 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
     private BasketBallCpiFrament parentFragment;
 
+
     private List<BasketIndexBean.DataBean.FileterTagsBean> fileterMatchTypeList;
 
     private List<BasketIndexBean.DataBean.AllInfoBean> sourceDataList; //源数据
@@ -175,7 +176,7 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
     @Override
     public void showResponseDataView() {
-        L.d(TAG, "请求数据成功_____________");
+        L.d(TAG, "请求数据成功_____________" + type);
 
 
         BasketIndexBean b = mPresenter.getRequestData();
@@ -263,10 +264,14 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
 
     @Override
-    public void noData() {
+    public void noData(String date) {
 
         L.d(TAG, "没有数据_____________");
         fileterMatchTypeList.clear();
+        if (!StringUtils.isEmpty(date)){
+            refreshDateView(date);
+            parentFragment.showRightButton();
+        }
 
         mHandler.sendEmptyMessage(2);
 

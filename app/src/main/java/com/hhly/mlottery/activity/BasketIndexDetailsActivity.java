@@ -9,7 +9,7 @@ import com.hhly.mlottery.frame.cpifrag.basketballtask.indexdetail.BasketIndexDet
 /**
  * @author: Wangg
  * @name：xxx
- * @description: xxx
+ * @description: 篮球指数内页
  * @created on:2017/3/30  10:40.
  */
 

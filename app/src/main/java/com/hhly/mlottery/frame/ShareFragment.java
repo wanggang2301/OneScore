@@ -394,7 +394,6 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
 
                     @Override
                     public void onComplete(Bundle bundle) {
-                        // TODO Auto-generated method stub
                         Oauth2AccessToken newToken = Oauth2AccessToken.parseAccessToken(bundle);
                         AccessTokenKeeper.writeAccessToken(mContext, newToken);
                         // Toast.makeText(mContext, "onAuthorizeComplete token = " + newToken.getToken(), Toast.LENGTH_SHORT).show();
@@ -448,7 +447,6 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
 
                     @Override
                     public void onComplete(Bundle bundle) {
-                        // TODO Auto-generated method stub
                         Oauth2AccessToken newToken = Oauth2AccessToken.parseAccessToken(bundle);
                         AccessTokenKeeper.writeAccessToken(mContext, newToken);
                         //Toast.makeText(mContext, "onAuthorizeComplete token = " + newToken.getToken(), Toast.LENGTH_SHORT).show();
@@ -533,7 +531,6 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
                 bufWriter.close();
                 filerWriter.close();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }

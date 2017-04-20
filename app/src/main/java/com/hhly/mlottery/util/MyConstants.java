@@ -67,5 +67,6 @@ public interface MyConstants {
 	//网球 设置页
 	String TENNIS_ALET = "tennis_alet";// 亚盘
 	String TENNIS_EURO = "tennis_euro";// 欧赔
+	String TENNIS_ASIZE = "tennis_asize";// 大小球
 	String TENNIS_NOTSHOW = "tennis_noShow";// 不显示
 }

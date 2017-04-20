@@ -8,7 +8,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 /**
  * @ClassName: AppManager 
- * @Description: TODO
+ * @Description:
  * @author Tenney
  * @date 2015-10-15 上午10:35:23
  */

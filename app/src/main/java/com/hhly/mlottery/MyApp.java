@@ -26,7 +26,7 @@ import cn.finalteam.okhttpfinal.OkHttpFinalConfiguration;
 /**
  * @author Tenney
  * @ClassName: MyApp
- * @Description: TODO
+ * @Description:
  * @date 2015-10-15 上午9:48:39
  */
 public class MyApp extends Application {

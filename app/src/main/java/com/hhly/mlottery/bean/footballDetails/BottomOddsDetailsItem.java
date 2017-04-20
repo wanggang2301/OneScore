@@ -3,7 +3,7 @@ package com.hhly.mlottery.bean.footballDetails;
 /**
  * @author wang gang
  * @date 2016/6/12 15:37
- * @des ${TODO}
+ * @des ${}
  */
 public class BottomOddsDetailsItem {
     private String time;

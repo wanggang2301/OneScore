@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="games_no_start">未开始</string>
+    <string name="games_no_start">未開始</string>
     <!--足球事件直播-->
     <string name="foot_event">事件</string>
     <string name="foot_trend">走勢</string>
@@ -124,10 +124,12 @@
     <string name="odd_dish_txt">盤口</string>
     <string name="odd_guest_txt">客隊</string>
     <string name="odd_time_txt">时间</string>
-    <string name="symbol_times" translatable="false">×</string>
-    <string name="symbol_plus" translatable="false">+</string>
-    <string name="symbol_equal" translatable="false">=</string>
-    <string name="label_line" translatable="false">-</string>
+
+    //不需要翻译的string只在默认string文件里面写一遍就好了，这里不需要再写了
+    <!--   <string name="symbol_times" translatable="false">×</string>
+       <string name="symbol_plus" translatable="false">+</string>
+       <string name="symbol_equal" translatable="false">=</string>
+       <string name="label_line" translatable="false">-</string>-->
     <!--欧赔-->
     <string name="odd_home_op_txt">主勝</string>
     <string name="odd_dish_op_txt">平局</string>
@@ -197,7 +199,7 @@
     <string name="game_time">(时间)</string>
     <!--首发阵容 End-->
     <!--2期end-->
-    <string name="app_name">壹比分</string>
+    <string name="app_name">壹比分體育</string>
     <string name="menu_name">菜單</string>
     <string name="action_settings">Settings</string>
     <string name="drawer_open">Open drawer</string>
@@ -223,7 +225,6 @@
     <string name="more_setting">更多設定</string>
     <string name="invited_prize">邀請有獎</string>
     <string name="can_only_choose_a_picture">親，只能選擇一張圖片</string>
-
 
 
     <string name="foot_jishi_txt">即時</string>
@@ -608,7 +609,6 @@
     <string name="number_xinqi4">週四</string>
     <string name="number_xinqi5">週五</string>
     <string name="number_xinqi6">週六</string>
-
 
 
     <!-- 所有的标题 -->
@@ -1578,7 +1578,7 @@
     <string name="snooker_analyze_full_score">147滿分桿</string>
     <string name="snooker_analyze_total_champion">冠軍數</string>
     <string name="snooker_analyze_hundred_times">破百數</string>
-    <string name="snooker_analyze_hundred_percent">破敗率</string>
+    <string name="snooker_analyze_hundred_percent">破百率</string>
     <string name="snooker_analyze_total_times">總場數</string>
     <string name="snooker_analyze_win">場勝數</string>
     <string name="snooker_analyze_win_percent">場勝率</string>
@@ -1623,6 +1623,7 @@
     <string name="tennis_datails_record_title">對手</string>
 
     <string name="tennis_datails_fight_title">雙方近%1$d次交峰，%2$s %3$d勝%4$d負，勝率：%5$s。</string>
+    <string name="tennis_datails_ranking_title">近%1$d次比賽，%2$s %3$d勝%4$d負，勝率：%5$s。</string>
     <string name="tennis_datails_ranking_old">原排名</string>
     <string name="tennis_datails_ranking_changer">變化</string>
     <string name="tennis_datails_match_count">參賽次數</string>

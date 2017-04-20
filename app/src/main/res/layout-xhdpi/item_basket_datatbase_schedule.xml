@@ -12,7 +12,7 @@
         android:background="@color/whitesmoke"/>
 
     <ImageView
-        android:id="@+id/home_logo"
+        android:id="@+id/guest_logo"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_centerVertical="true"
@@ -22,7 +22,7 @@
         android:layout_marginTop="10dp"/>
 
     <ImageView
-        android:id="@+id/guest_logo"
+        android:id="@+id/home_logo"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_alignParentEnd="true"
@@ -54,7 +54,7 @@
         tools:text="07:00"/>
 
     <TextView
-        android:id="@+id/home_score"
+        android:id="@+id/guest_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -66,7 +66,7 @@
         tools:visibility="gone"/>
 
     <TextView
-        android:id="@+id/guest_score"
+        android:id="@+id/home_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -78,7 +78,7 @@
         tools:visibility="gone"/>
 
     <TextView
-        android:id="@+id/home_name"
+        android:id="@+id/guest_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -93,7 +93,7 @@
         tools:text="骑士"/>
 
     <TextView
-        android:id="@+id/guest_name"
+        android:id="@+id/home_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"

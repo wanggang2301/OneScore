@@ -316,9 +316,13 @@
     <string name="diy_combat_rate"> ความน่าจะเป็นของการปะทะกัน</string>
     <string name="diy_host_rate"> ความน่าจะเป็นของทีมเหย้า</string>
     <string name="diy_guest_rate"> ความน่าจะเป็นของทีมเยือน</string>
-    <string name="symbol_times" translatable="false">×</string>
-    <string name="symbol_plus" translatable="false">+</string>
-    <string name="symbol_equal" translatable="false">=</string>
+
+    //不需要翻译的string只在默认string文件里面写一遍就好了，这里不需要再写了
+    <!-- <string name="symbol_times" translatable="false">×</string>
+     <string name="symbol_plus" translatable="false">+</string>
+     <string name="symbol_equal" translatable="false">=</string>
+     <string name="label_line" translatable="false">-</string>-->
+
     <string name="action_close">ปิด</string>
     <string name="action_compute">คำนวณ</string>
     <string name="big_data_check_alert"> ผลลัพธ์ไม่สามารถคำนวณได้  กรุณากรอกตัวเลขที่เหมาะสม(0~1)</string>
@@ -387,7 +391,6 @@
     <string name="intelligent_qiupinglv"> ลูกและเสมอ</string>
     <string name="intelligent_qiufulv"> ลูกและแพ้</string>
     <string name="version_update_title"> กำลังดาว์นโหลดเวอร์ชั่นอัพเดท  กรุณารอสักครู่...</string>
-    <string name="label_line" translatable="false">-</string>
 
 
     <string name="rong_comment"> ความคิดเห็น</string>

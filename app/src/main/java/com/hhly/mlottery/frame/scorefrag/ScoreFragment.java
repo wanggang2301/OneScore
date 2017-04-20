@@ -110,4 +110,11 @@ public class ScoreFragment extends Fragment {
         super.onAttach(context);
         mActivity = (Activity) context;
     }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        EventBus.getDefault().post(new CloseWebSocketEventBus(hidden, fragmentIndex));
+
+    }
 }

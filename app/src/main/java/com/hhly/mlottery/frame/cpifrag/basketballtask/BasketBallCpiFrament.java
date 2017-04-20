@@ -36,9 +36,11 @@ import com.hhly.mlottery.bean.websocket.WebBasketOdds;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.BallType;
+import com.hhly.mlottery.frame.cpifrag.CloseCpiWebSocketEventBus;
 import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
 import com.hhly.mlottery.frame.oddfragment.basketoddframent.BasketCompanyChooseDialogFragment;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
+import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
@@ -56,6 +58,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
+import static com.hhly.mlottery.R.id.public_date_layout;
+
 /**
  * @author wangg
  * @des:篮球指数
@@ -63,7 +67,7 @@ import de.greenrobot.event.EventBus;
  */
 public class BasketBallCpiFrament extends BaseWebSocketFragment implements ExactSwipeRefreshLayout.OnRefreshListener {
 
-    @BindView(R.id.public_date_layout)
+    @BindView(public_date_layout)
     LinearLayout publicDateLayout;
     @BindView(R.id.tv_match_name)
     TextView tvMatchName;
@@ -116,6 +120,7 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.basketball");
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -205,7 +210,7 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
     public void showRightButton() {
         publicImgCompany.setVisibility(View.VISIBLE);
         publicImgFilter.setVisibility(View.VISIBLE);
-
+        publicDateLayout.setVisibility(View.VISIBLE);
     }
 
 
@@ -214,37 +219,43 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
      */
     public void showCompanyChooseDialog() {
         maybeInitCompanyChooseDialog();
-        if (!mCompanyChooseDialogFragment.isVisible()) {
-            mCompanyChooseDialogFragment.show(getChildFragmentManager(), "companyChooseDialog");
-        }
+
     }
 
     /**
      * 初始化公司选择Dialog
      */
     private void maybeInitCompanyChooseDialog() {
-        mCompanyChooseDialogFragment = BasketCompanyChooseDialogFragment.newInstance((ArrayList<BasketIndexBean.DataBean.CompanyBean>) companyMap.get(oddType),
-                new BasketCompanyChooseDialogFragment.OnFinishSelectionListener() {
-                    @Override
-                    public void onFinishSelection() {
-                        //对公司的筛选
+        ArrayList<BasketIndexBean.DataBean.CompanyBean> arrayList = (ArrayList<BasketIndexBean.DataBean.CompanyBean>) companyMap.get(oddType);
 
-                        switch (oddType) {
-                            case BasketOddsTypeEnum.ASIALET:
-                                mFragments.get(0).updateFilterData();
-                                break;
-                            case BasketOddsTypeEnum.ASIASIZE:
-                                mFragments.get(1).updateFilterData();
-                                break;
-                            case BasketOddsTypeEnum.EURO:
-                                mFragments.get(2).updateFilterData();
-                                break;
+        if (CollectionUtils.notEmpty(arrayList)) {
+            mCompanyChooseDialogFragment = BasketCompanyChooseDialogFragment.newInstance(arrayList,
+                    new BasketCompanyChooseDialogFragment.OnFinishSelectionListener() {
+                        @Override
+                        public void onFinishSelection() {
+                            //对公司的筛选
 
-                            default:
-                                break;
+                            switch (oddType) {
+                                case BasketOddsTypeEnum.ASIALET:
+                                    mFragments.get(0).updateFilterData();
+                                    break;
+                                case BasketOddsTypeEnum.ASIASIZE:
+                                    mFragments.get(1).updateFilterData();
+                                    break;
+                                case BasketOddsTypeEnum.EURO:
+                                    mFragments.get(2).updateFilterData();
+                                    break;
+
+                                default:
+                                    break;
+                            }
                         }
-                    }
-                });
+                    });
+
+            if (!mCompanyChooseDialogFragment.isVisible()) {
+                mCompanyChooseDialogFragment.show(getChildFragmentManager(), "companyChooseDialog");
+            }
+        }
     }
 
 
@@ -282,6 +293,9 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                L.d("websocket123", ">>>>>>>>篮球指数关闭");
+
+                closeWebSocket();
                 EventBus.getDefault().post(new ScoreSwitchFg(position));
                 popupWindow.dismiss();
             }
@@ -358,10 +372,10 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
     }
 
 
-    @OnClick({R.id.public_date_layout, R.id.ll_match_select, R.id.public_img_company, R.id.public_img_filter})
+    @OnClick({public_date_layout, R.id.ll_match_select, R.id.public_img_company, R.id.public_img_filter})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.public_date_layout:
+            case public_date_layout:
                 showDateChooseDialog();
                 break;
 
@@ -476,6 +490,8 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
 
     @Override
     protected void onTextResult(final String text) {
+        L.d("websocket123", "_______篮球指数推送==" + text);
+
 
         tabs.post(new Runnable() {
             @Override
@@ -492,6 +508,8 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
      */
     private void handleMessage(String jsonString) {
         JSONObject jsonObject = JSON.parseObject(jsonString);
+        L.d("pushtextscore", "推送数据==" + jsonString);
+
         int type = jsonObject.getIntValue("type");
         if (type == 100) {  //比分
             L.d("pushtextscore", "比分推送数据==" + jsonString);
@@ -551,8 +569,29 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+        closeWebSocket();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         closeWebSocket();
+    }
+
+    public void onEventMainThread(CloseCpiWebSocketEventBus closeWebSocketEventBus) {
+
+        if (closeWebSocketEventBus.isVisible()) {
+            L.d("websocket123", "篮球 指数 关闭 fg");
+            closeWebSocket();
+        } else {
+            if (closeWebSocketEventBus.getIndex() == BallType.BASKETBALL) {
+                L.d("websocket123", "篮球 指数 打开 fg");
+
+                connectWebSocket();
+            }
+        }
     }
 }

@@ -48,13 +48,13 @@ public class TennisDatailsPlateAdapter extends BaseQuickAdapter<TennisDataBean> 
                     baseViewHolder.setText(R.id.tennis_datails_plate_now_ks, String.valueOf(nowGuestOdd));
                 }
             }
-
+            // 红升绿降
             if (firstHomeOdd == nowHomeOdd) {
                 baseViewHolder.setTextColor(R.id.tennis_datails_plate_now_zs, ContextCompat.getColor(mContext, R.color.res_name_color));
             } else if (firstHomeOdd > nowHomeOdd) {
-                baseViewHolder.setTextColor(R.id.tennis_datails_plate_now_zs, ContextCompat.getColor(mContext, R.color.number_red));
-            } else {
                 baseViewHolder.setTextColor(R.id.tennis_datails_plate_now_zs, ContextCompat.getColor(mContext, R.color.number_green));
+            } else {
+                baseViewHolder.setTextColor(R.id.tennis_datails_plate_now_zs, ContextCompat.getColor(mContext, R.color.number_red));
             }
             if (firstGuestOdd == nowGuestOdd) {
                 baseViewHolder.setTextColor(R.id.tennis_datails_plate_now_ks, ContextCompat.getColor(mContext, R.color.res_name_color));

@@ -33,7 +33,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
-                android:src="@mipmap/live_default" />
+                android:src="@mipmap/score_default" />
         </RelativeLayout>
 
         <LinearLayout
@@ -136,7 +136,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
-                android:src="@mipmap/live_default" />
+                android:src="@mipmap/score_default" />
         </RelativeLayout>
 
         <LinearLayout

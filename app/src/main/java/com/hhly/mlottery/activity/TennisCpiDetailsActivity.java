@@ -39,7 +39,6 @@ public class TennisCpiDetailsActivity extends BaseActivity implements View.OnCli
     private String thirdId;
     private int index;
     private String comName;
-    //球队名称和比分
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

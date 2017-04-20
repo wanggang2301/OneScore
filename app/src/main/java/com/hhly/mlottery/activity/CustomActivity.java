@@ -6,12 +6,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
@@ -23,7 +21,6 @@ import com.hhly.mlottery.bean.custombean.CustomMineBean.CustomMineDataBean;
 import com.hhly.mlottery.bean.custombean.CustomMineBean.CustomMineFirstDataBean;
 import com.hhly.mlottery.bean.custombean.CustomMineBean.CustomMineScondDataBean;
 import com.hhly.mlottery.bean.custombean.CustomMineBean.CustomMineThirdDataBean;
-import com.hhly.mlottery.bean.custombean.customlistdata.CustomSecondBean;
 import com.hhly.mlottery.bean.custombean.customlistdata.CustomSendDataBean;
 import com.hhly.mlottery.bean.focusAndPush.BasketballConcernListBean;
 import com.hhly.mlottery.bean.websocket.WebBasketAllOdds;
@@ -32,7 +29,7 @@ import com.hhly.mlottery.bean.websocket.WebBasketOdds;
 import com.hhly.mlottery.bean.websocket.WebBasketOdds5;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
-import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
+import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketballFocusNewFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CustomListEvent;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -107,10 +104,10 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
         mLoadHandler.postDelayed(mRun, 500);
     }
 
-    private void initView(){
+    private void initView() {
 
         /**头部布局*/
-        TextView mCustomTitle = (TextView)findViewById(R.id.public_txt_title);
+        TextView mCustomTitle = (TextView) findViewById(R.id.public_txt_title);
         mCustomTitle.setText(getResources().getString(R.string.custom_mine_cus));
 
         mBack = (ImageView) findViewById(R.id.public_img_back);
@@ -122,23 +119,23 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
         mCustomText.setOnClickListener(this);
 
         //下拉控件
-        mRefresh = (ExactSwipeRefreshLayout)findViewById(R.id.custom_refresh_layout);
+        mRefresh = (ExactSwipeRefreshLayout) findViewById(R.id.custom_refresh_layout);
         mRefresh.setColorSchemeResources(R.color.bg_header);
         mRefresh.setOnRefreshListener(this);
         mRefresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getApplicationContext(), StaticValues.REFRASH_OFFSET_END));
 
         /**网络、数据 异常布局*/
         // 网络不给力提示
-        mErrorll = (LinearLayout)findViewById(R.id.error_layout);
+        mErrorll = (LinearLayout) findViewById(R.id.error_layout);
         //刷新点击按键
-        mrefshTxt = (TextView)findViewById(R.id.reloading_txt);
+        mrefshTxt = (TextView) findViewById(R.id.reloading_txt);
         mrefshTxt.setOnClickListener(this);
         //暂无数据提示
-        mNoData = (TextView)findViewById(R.id.nodata_txt);
+        mNoData = (TextView) findViewById(R.id.nodata_txt);
         //还未定制任何赛事
-        mNoCustom = (LinearLayout)findViewById(R.id.to_custom_ll);
+        mNoCustom = (LinearLayout) findViewById(R.id.to_custom_ll);
         //去定制按键
-        mCustomTxt = (TextView)findViewById(R.id.to_custom);
+        mCustomTxt = (TextView) findViewById(R.id.to_custom);
         mCustomTxt.setOnClickListener(this);
 
         //点击刷新是显示正在加载中....
@@ -149,7 +146,7 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
 
-        mCustomRecycle = (LoadMoreRecyclerView)findViewById(R.id.custom_recyclerview);
+        mCustomRecycle = (LoadMoreRecyclerView) findViewById(R.id.custom_recyclerview);
         mLinearLayoutManager = new LinearLayoutManager(getApplicationContext());
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mCustomRecycle.setLayoutManager(mLinearLayoutManager);
@@ -158,18 +155,18 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
     /**
      * 数据展示状态设置
      */
-    private void setState(int state){
+    private void setState(int state) {
 
         if (state == VIEW_STATUS_LOADING) {
             mRefresh.setVisibility(View.VISIBLE);
             mRefresh.setRefreshing(true);
-        }else if(state == VIEW_STATUS_SUCCESS){
+        } else if (state == VIEW_STATUS_SUCCESS) {
             mRefresh.setVisibility(View.VISIBLE);
             mRefresh.setRefreshing(false);
-        }else if (state == VIEW_STATUS_CUSTOM_REFRESH_ONCLICK){
+        } else if (state == VIEW_STATUS_CUSTOM_REFRESH_ONCLICK) {
             mRefresh.setVisibility(View.GONE);
             mRefresh.setRefreshing(true);
-        }else{
+        } else {
             mRefresh.setVisibility(View.GONE);
             mRefresh.setRefreshing(false);
         }
@@ -203,7 +200,7 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
     };
 
 
-    private void initData(final int type){
+    private void initData(final int type) {
 
         getBasketballUserConcern();//进入详情页时先获取该账户的关注id （多设备关注同步）
 
@@ -211,14 +208,13 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
 //                "lang=zh&userId=13714102745&deviceId=21126FC4-DAF0-40DC-AF5C-1AD33EFB5F67";
         String url = BaseURLs.CUSTOM_MINE_CUS_URL;
 
-        Map<String , String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
         String userid = AppConstants.register.getData().getUser().getUserId();
         String deviceid = AppConstants.deviceToken;
-        map.put("userId" , userid);
-        map.put("deviceId" , deviceid);
+        map.put("userId", userid);
+        map.put("deviceId", deviceid);
 
-        VolleyContentFast.requestJsonByGet(url, map ,new VolleyContentFast.ResponseSuccessListener<CustomMineDataBean>() {
-
+        VolleyContentFast.requestJsonByGet(url, map, new VolleyContentFast.ResponseSuccessListener<CustomMineDataBean>() {
 
 
             @Override
@@ -227,11 +223,11 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
                 if (jsonData == null || jsonData.getData() == null) {
                     setState(VIEW_STATUS_NET_NO_DATA);
                     return;
-                }else if(jsonData.getData().getLeagueItem() == null || jsonData.getData().getLeagueItem().size() == 0){
+                } else if (jsonData.getData().getLeagueItem() == null || jsonData.getData().getLeagueItem().size() == 0) {
                     setState(VIEW_STATUS_CUSTOM_NO_DATA);
 
                     return;
-                }else{
+                } else {
 
                     mFirstData = new ArrayList<>();
                     mFirstData = jsonData.getData().getLeagueItem();
@@ -246,9 +242,9 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
                             mAdapter.notifyDataSetChanged();
                         }
 
-                        mAdapter = new CustomMyDataAdapter(getApplicationContext() , mFirstData);
+                        mAdapter = new CustomMyDataAdapter(getApplicationContext(), mFirstData);
                         mCustomRecycle.setAdapter(mAdapter);
-                    }else{
+                    } else {
                         updateAdapter();
                     }
 
@@ -270,13 +266,13 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 setState(VIEW_STATUS_NET_ERROR);
             }
-        },CustomMineDataBean.class);
+        }, CustomMineDataBean.class);
     }
 
     /**
      * 添加中间层数据（日期层）
      */
-    private void addSecondTier(){
+    private void addSecondTier() {
         /**
          * 记录添加中间层（日期层）的位置
          */
@@ -284,7 +280,7 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
         for (int i = 0; i < mFirstData.size(); i++) {
             if (mFirstData.get(i) instanceof CustomMineFirstDataBean) {
                 CustomMineFirstDataBean firstData = (CustomMineFirstDataBean) mFirstData.get(i);
-                mAdapter.addAllChild(firstData.getMatchData() , addSecondIndex);
+                mAdapter.addAllChild(firstData.getMatchData(), addSecondIndex);
                 addSecondIndex += (firstData.getMatchData().size() + 1);
             }
         }
@@ -293,7 +289,7 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
     /**
      * 添加最内层数据（比赛层）
      */
-    private void addThirdTier(){
+    private void addThirdTier() {
         /**
          * 添加最内层的位置
          */
@@ -307,14 +303,14 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
 
             if (mFirstData.get(i) instanceof CustomMineScondDataBean) {
 
-                CustomMineScondDataBean secondData = (CustomMineScondDataBean)mFirstData.get(i);
+                CustomMineScondDataBean secondData = (CustomMineScondDataBean) mFirstData.get(i);
 
-                mAdapter.addAllChild(secondData.getMatchItems() , (addThirdIndex + isGround));
+                mAdapter.addAllChild(secondData.getMatchItems(), (addThirdIndex + isGround));
 
-                addThirdIndex += (secondData.getMatchItems().size()+1 + isGround);
+                addThirdIndex += (secondData.getMatchItems().size() + 1 + isGround);
                 L.d("yxq22222", " x == " + addThirdIndex + " y == " + isGround + " size == " + secondData.getMatchItems().size());
 
-                isGround=0;
+                isGround = 0;
             }
             if (mFirstData.get(i) instanceof CustomMineFirstDataBean) {
                 isGround += 1; /** += 防止出现中间有某联赛下有无数据情况 添加数据时位置不对情况 */
@@ -323,11 +319,11 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
     }
 
 
-    private void setOnItemClick(final List<?> mData){
+    private void setOnItemClick(final List<?> mData) {
 
-        mAdapter.setOnItemClickLitener(new CustomMyDataAdapter.OnItemClickListener(){
+        mAdapter.setOnItemClickLitener(new CustomMyDataAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position , ImageView isOpen) {
+            public void onItemClick(View view, int position, ImageView isOpen) {
 
                 if (mData.get(position) instanceof CustomMineFirstDataBean) {//判断点击的是不是最外层 0
 
@@ -339,39 +335,39 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
                             isOpen.setBackgroundResource(R.mipmap.iconfont_xiala_2);
                         }
 
-                        mAdapter.addAllChild(firstData.getMatchData() , position + 1);
-                    }else{
+                        mAdapter.addAllChild(firstData.getMatchData(), position + 1);
+                    } else {
                         if (mData.get(position + 1) instanceof CustomMineFirstDataBean) {//折叠状态
 
                             if (isOpen != null) {
                                 isOpen.setBackgroundResource(R.mipmap.iconfont_xiala_2);
                             }
 
-                            mAdapter.addAllChild(firstData.getMatchData() , position + 1);
-                        }else{
+                            mAdapter.addAllChild(firstData.getMatchData(), position + 1);
+                        } else {
                             /**
                              * 记录子层数据（赛事层），若日期层打开状态需要连比赛层一并删除
                              */
-                            int thirdDataSize =  0;
+                            int thirdDataSize = 0;
                             for (CustomMineScondDataBean data : firstData.getMatchData()) {
                                 if (data.isUnfold()) {
                                     thirdDataSize += data.getMatchItems().size();
-                                    L.d("yxq==========>>> " , "a+size " + data.getMatchItems().size());
-                                    L.d("yxq==========>>> " , "a+过程 " + thirdDataSize);
+                                    L.d("yxq==========>>> ", "a+size " + data.getMatchItems().size());
+                                    L.d("yxq==========>>> ", "a+过程 " + thirdDataSize);
 
                                     data.setUnfold(false);// 遍历过后状态改为 false （折叠状态） ps:防止二次点击状态冲突
                                 }
                             }
-                            L.d("yxq==========>>> " , "删除 " + (thirdDataSize+firstData.getMatchData().size()));
+                            L.d("yxq==========>>> ", "删除 " + (thirdDataSize + firstData.getMatchData().size()));
                             if (isOpen != null) {
                                 isOpen.setBackgroundResource(R.mipmap.iconfont_xiala_1);
                             }
 
-                            mAdapter.deleteAllChild(position + 1,thirdDataSize + firstData.getMatchData().size());//删除 二级item 和 已展开的三级item 条数
+                            mAdapter.deleteAllChild(position + 1, thirdDataSize + firstData.getMatchData().size());//删除 二级item 和 已展开的三级item 条数
                         }
                     }
 
-                }else if (mData.get(position) instanceof CustomMineScondDataBean) { //判断点击的是不是 中间层 0
+                } else if (mData.get(position) instanceof CustomMineScondDataBean) { //判断点击的是不是 中间层 0
                     CustomMineScondDataBean parent = (CustomMineScondDataBean) mData.get(position);
                     if ((position + 1) == mData.size()) {//判断是否为最后一个元素
                         parent.setUnfold(true);
@@ -400,16 +396,15 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
                             mAdapter.deleteAllChild(position + 1, parent.getMatchItems().size());
                         }
                     }
-                }else{// 否则为最内层（赛事层）比赛的点击事件这里写
-                    // TODO***************************************************
+                } else {// 否则为最内层（赛事层）比赛的点击事件这里写
 
                     CustomMineThirdDataBean parent = (CustomMineThirdDataBean) mData.get(position);
                     Intent intent = new Intent(CustomActivity.this, BasketDetailsActivityTest.class);
                     intent.putExtra(BasketDetailsActivityTest.BASKET_THIRD_ID, parent.getThirdId());//跳转到详情
                     intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_STATUS, parent.getMatchStatus());//跳转到详情
                     intent.putExtra("currentfragment", 4);//代表定制页跳转
-                    intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_LEAGUEID , parent.getLeagueId());
-                    intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_MATCHTYPE , parent.getMatchType());
+                    intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_LEAGUEID, parent.getLeagueId());
+                    intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_MATCHTYPE, parent.getMatchType());
                     startActivity(intent);
                     overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
                 }
@@ -420,34 +415,34 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
     /**
      * 请求关注列表。登录后跟刷新，都会请求
      */
-    public void getBasketballUserConcern(){
+    public void getBasketballUserConcern() {
         //请求后台，及时更新关注赛事内容
-        String userId="";
-        if(AppConstants.register!=null&& AppConstants.register.getData()!=null&&AppConstants.register.getData().getUser()!=null){
-            userId= AppConstants.register.getData().getUser().getUserId();
+        String userId = "";
+        if (AppConstants.register != null && AppConstants.register.getData() != null && AppConstants.register.getData().getUser() != null) {
+            userId = AppConstants.register.getData().getUser().getUserId();
         }
-        if(userId!=null&&userId!=""){
-            String url=" http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.findConcernVsThirdIds.do";
-            String deviceId=AppConstants.deviceToken;
+        if (userId != null && userId != "") {
+            String url = " http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.findConcernVsThirdIds.do";
+            String deviceId = AppConstants.deviceToken;
             //devicetoken 友盟。
-            String umengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
-            Map<String,String > params=new HashMap<>();
-            params.put("userId",userId);
-            params.put("deviceId",deviceId);
+            String umengDeviceToken = PreferenceUtil.getString(AppConstants.uMengDeviceToken, "");
+            Map<String, String> params = new HashMap<>();
+            params.put("userId", userId);
+            params.put("deviceId", deviceId);
             VolleyContentFast.requestJsonByPost(BaseURLs.BASKET_FIND_MATCH, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
                 @Override
                 public void onResponse(BasketballConcernListBean jsonObject) {
-                    if(jsonObject.getResult().equals("200")){
+                    if (jsonObject.getResult().equals("200")) {
                         //将关注写入文件
-                        StringBuffer sb=new StringBuffer();
-                        for(String thirdId:jsonObject.getConcerns()){
-                            if("".equals(sb.toString())){
+                        StringBuffer sb = new StringBuffer();
+                        for (String thirdId : jsonObject.getConcerns()) {
+                            if ("".equals(sb.toString())) {
                                 sb.append(thirdId);
-                            }else {
-                                sb.append(","+thirdId);
+                            } else {
+                                sb.append("," + thirdId);
                             }
                         }
-                        PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS,sb.toString());
+                        PreferenceUtil.commitString(BasketballFocusNewFragment.BASKET_FOCUS_IDS, sb.toString());
 //                        focusCallback();
                     }
                 }
@@ -456,7 +451,7 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
                 public void onErrorResponse(VolleyContentFast.VolleyException exception) {
 
                 }
-            },BasketballConcernListBean.class);
+            }, BasketballConcernListBean.class);
 
         }
 
@@ -474,7 +469,7 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
     @Override
     protected void onTextResult(String text) {
 
-        L.d("yxq===1221=== " , text);
+        L.d("yxq===1221=== ", text);
 
         if (mAdapter == null) {
             return;
@@ -538,7 +533,7 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
                     mWebBasketOdds = JSON.parseObject(ws_json, WebBasketOdds.class);
                 }
-                updateListViewItemOdd(mWebBasketOdds);  //TODO
+                updateListViewItemOdd(mWebBasketOdds);
             }
 
 
@@ -553,7 +548,7 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
                 if (mFirstData.get(i) instanceof CustomMineFirstDataBean) {
 
                     CustomMineFirstDataBean firstdata = (CustomMineFirstDataBean) mFirstData.get(i);
-                    for (CustomMineScondDataBean seconddata: firstdata.getMatchData()) {
+                    for (CustomMineScondDataBean seconddata : firstdata.getMatchData()) {
                         for (CustomMineThirdDataBean third : seconddata.getMatchItems()) {
 
                             if (third.getThirdId().equals(webBasketMatch.getThirdId())) {
@@ -665,7 +660,7 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
                 if (mFirstData.get(i) instanceof CustomMineFirstDataBean) {
 
                     CustomMineFirstDataBean firstdata = (CustomMineFirstDataBean) mFirstData.get(i);
-                    for (CustomMineScondDataBean seconddata: firstdata.getMatchData()) {
+                    for (CustomMineScondDataBean seconddata : firstdata.getMatchData()) {
 
                         for (CustomMineThirdDataBean third : seconddata.getMatchItems()) {
 
@@ -843,7 +838,7 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
     /*****************************************以上推送方法**********************************************/
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_right:
                 startActivity(new Intent(CustomActivity.this, CustomListActivity.class));
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
@@ -856,8 +851,8 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
             case R.id.reloading_txt:
                 if (isSecondData) {
                     setState(VIEW_STATUS_CUSTOM_REFRESH_ONCLICK);
-                    secondInitData(sendUrl , sendMap);
-                }else{
+                    secondInitData(sendUrl, sendMap);
+                } else {
                     setState(VIEW_STATUS_CUSTOM_REFRESH_ONCLICK);
                     mLoadHandler.postDelayed(mRun, 500);
                 }
@@ -868,6 +863,7 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
                 break;
         }
     }
+
     /**
      * 设置返回
      */
@@ -875,35 +871,38 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
         /**正在加载中*/
         setState(VIEW_STATUS_CUSTOM_REFRESH_ONCLICK);
 
-        L.d("yxq123456 " ,  customListEvent.getmLeagueMsg() + " **** " + customListEvent.getmTeamMsg());
+        L.d("yxq123456 ", customListEvent.getmLeagueMsg() + " **** " + customListEvent.getmTeamMsg());
         sendUrl = BaseURLs.CUSTOM_SENDID_CUS_URL;
         String userids = AppConstants.register.getData().getUser().getUserId();
         String deviceid = AppConstants.deviceToken;
-        String devicetoken = PreferenceUtil.getString(AppConstants.uMengDeviceToken , "");
+        String devicetoken = PreferenceUtil.getString(AppConstants.uMengDeviceToken, "");
 
         sendMap = new HashMap<>();
-        sendMap.put("userId" , userids);
-        sendMap.put("deviceId" , deviceid);
-        sendMap.put("deviceToken" , devicetoken);
-        sendMap.put("teamIdsByleagueId" , customListEvent.getmTeamMsg());//关注球队的id
-        sendMap.put("leagueIds" , customListEvent.getmLeagueMsg());//关注联赛的id
+        sendMap.put("userId", userids);
+        sendMap.put("deviceId", deviceid);
+        sendMap.put("deviceToken", devicetoken);
+        sendMap.put("teamIdsByleagueId", customListEvent.getmTeamMsg());//关注球队的id
+        sendMap.put("leagueIds", customListEvent.getmLeagueMsg());//关注联赛的id
 
         secondInitData(sendUrl, sendMap);
     }
+
     /**
      * 详情页返回
-     * */
+     */
     public void onEventMainThread(CustomDetailsEvent event) {
     }
 
     /**
      * 定制完成请求的接口
+     *
      * @param url
      * @param map
      */
 
     private boolean isSecondData = false; //记录是否是在定制完成后的请求失败，即 定制id发送不成功时 刷新接口需要先发送id
-    private void secondInitData(String url , Map<String , String> map){
+
+    private void secondInitData(String url, Map<String, String> map) {
         /**这里从列表回来先发送 id 得到返回码 200 再重新请求本页接口数据*/
 
         VolleyContentFast.requestJsonByGet(url, map, new VolleyContentFast.ResponseSuccessListener<CustomSendDataBean>() {
@@ -923,7 +922,7 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
                 setState(VIEW_STATUS_NET_ERROR);
                 L.d("yxq===========请求失败");
             }
-        },CustomSendDataBean.class);
+        }, CustomSendDataBean.class);
     }
 
     /**

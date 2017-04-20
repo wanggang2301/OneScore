@@ -60,6 +60,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -113,6 +114,8 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     private Activity mActivity;
 
+    // 当前版本的菜单入口范围
+    private String[] menuList = {"12", "14", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "310", "311", "312", "313", "314", "315", "316", "317", "318", "319", "320", "321", "322", "323", "19", "324", "325", "326", "327", "328", "329", "330", "331", "332"};
 
     /**
      * 跳转其他Activity 的requestcode
@@ -141,12 +144,10 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_home, container, false);
         initView();
-
         initData();
         initEvent();
         return mView;
     }
-
 
     /**
      * 初始化布局
@@ -241,7 +242,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
                     if (h <= 100) {
                         tv_home_name.setAlpha(h / 100f);
-                    }else{
+                    } else {
                         tv_home_name.setAlpha(1);
                     }
                 }
@@ -288,6 +289,37 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 if (jsonObject != null) {// 请求成功
                     try {
                         mHomePagerEntity = JSON.parseObject(jsonObject, HomePagerEntity.class);
+                        Iterator<HomeContentEntity> iterator = mHomePagerEntity.getMenus().getContent().iterator();
+                        /**---------屏蔽多余首页菜单入口--Start--------------------------*/
+                        while (iterator.hasNext()) {
+                            HomeContentEntity entity = iterator.next();
+                            // 当前菜单集合不包含此菜单
+                            if (entity.getJumpType() == 2) {
+                                if (!Arrays.asList(menuList).contains(entity.getJumpAddr())) {
+                                    iterator.remove();
+                                }
+                            }
+                            // 屏蔽的菜单
+//                            else {
+//                                switch (jumpAddr) {
+//                                    case "10":// 足球指数
+//                                    case "11":// 足球数据
+//                                    case "13":// 足球比分
+//                                    case "20":// 篮球即时比分
+//                                    case "21":// 篮球赛果
+//                                    case "22":// 篮球赛程
+//                                    case "23":// 篮球关注
+//                                    case "24":// 篮球资讯
+//                                    case "350":// 彩票资讯
+//                                    case "80":// 多屏动画列表
+//                                    case "60":// 情报中心
+//                                        iterator.remove();
+//                                        break;
+//                                }
+//                            }
+                        }
+                        /**---------屏蔽多余首页菜单入口--End--------------------------*/
+
                         /**----将百度渠道的游戏竞猜和彩票相关去除掉--Start---*/
                         if ("B1001".equals(channelNumber) || "B1002".equals(channelNumber) || "B1003".equals(channelNumber) || "Q01116".equals(channelNumber)) {
                             // 处理条目入口
@@ -299,7 +331,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                                 }
                             }
                             // 处理菜单入口
-                            Iterator<HomeContentEntity> iterator = mHomePagerEntity.getMenus().getContent().iterator();
                             while (iterator.hasNext()) {
                                 HomeContentEntity b = iterator.next();
                                 if ("遊戲競猜".equals(b.getTitle()) || "游戏竞猜".equals(b.getTitle()) ||

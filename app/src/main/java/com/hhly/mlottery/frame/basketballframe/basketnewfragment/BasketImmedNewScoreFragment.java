@@ -27,7 +27,6 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
-import com.hhly.mlottery.activity.BasketballScoresActivity;
 import com.hhly.mlottery.adapter.ScheduleDateAdapter;
 import com.hhly.mlottery.adapter.basketball.BasketballScoreListAdapter;
 import com.hhly.mlottery.bean.basket.BasketAllOddBean;
@@ -73,7 +72,7 @@ import de.greenrobot.event.EventBus;
  * 篮球比分fragment
  * Created by yixq on 2017/03/17
  */
-public class BasketImmedNewScoreFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener{
+public class BasketImmedNewScoreFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "ImmedBasketballFragment";
     private static final String PARAMS = "BASKET_PARAMS";
@@ -228,6 +227,7 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
 
     /**
      * 设置显示状态
+     *
      * @param status
      */
     //显示状态
@@ -249,18 +249,19 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
         } else if (status == SHOW_STATUS_REFRESH_ONCLICK) {
             mSwipeRefreshLayout.setVisibility(View.GONE);
             mSwipeRefreshLayout.setRefreshing(true);
-        } else if(status == SHOW_STATUS_CURRENT_ONDATA){
+        } else if (status == SHOW_STATUS_CURRENT_ONDATA) {
             mSwipeRefreshLayout.setVisibility(View.VISIBLE);
             mSwipeRefreshLayout.setRefreshing(false);
-        }else {
+        } else {
             mSwipeRefreshLayout.setVisibility(View.GONE);
             mSwipeRefreshLayout.setRefreshing(false);
         }
-//        mLoading.setVisibility((status == SHOW_STATUS_REFRESH_ONCLICK) ? View.VISIBLE : View.GONE);
+        mLoadingLayout.setVisibility((status == SHOW_STATUS_REFRESH_ONCLICK) ? View.VISIBLE : View.GONE);
         mErrorLayout.setVisibility(status == SHOW_STATUS_ERROR ? View.VISIBLE : View.GONE);
         mNoDataLayout.setVisibility(status == SHOW_STATUS_NO_DATA ? View.VISIBLE : View.GONE);
 //        mCurrentNoData.setVisibility(status == SHOW_STATUS_CURRENT_ONDATA ? View.VISIBLE : View.GONE);
     }
+
     /**
      * 初始化VIEW
      */
@@ -319,7 +320,7 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
 
 //        String url = "http://192.168.31.241:8080/mlottery/core/basketballMatch.findNewLiveMatch.do";//?lang=zh&timeZone=8 BaseURLs.URL_BASKET_IMMEDIATE
         String url = "http://192.168.10.242:8181/mlottery/core/basketballMatch.findNewLiveMatch.do";//?lang=zh&timeZone=8 BaseURLs.URL_BASKET_IMMEDIATE
-        VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_IMMEDIATE , params, new VolleyContentFast.ResponseSuccessListener<BasketNewRootBean>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_NEW_IMMEDIATE, params, new VolleyContentFast.ResponseSuccessListener<BasketNewRootBean>() {
             @Override
             public void onResponse(BasketNewRootBean json) {
 
@@ -345,7 +346,7 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                 mAllMatchdata = new ArrayList<>();
                 currentMatchData = new ArrayList<BasketMatchBean>();
                 mAllDateFilter = new ArrayList<List<BasketMatchFilter>>();
-                mAllDateList =   new ArrayList<String>();
+                mAllDateList = new ArrayList<String>();
                 for (int i = 0; i < mSize; i++) {
                     mAllMatchdata.add(mMatchdata.get(i).getMatch());//所有日期里的比赛
                     mAllDateList.add(mMatchdata.get(i).getDate());//所有日期
@@ -353,7 +354,7 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
 
                 if (json.getMatchFilter() != null && json.getMatchFilter().size() != 0) {
 
-                    for (int i = 0; i < json.getMatchFilter().size() ; i++) {
+                    for (int i = 0; i < json.getMatchFilter().size(); i++) {
                         /**
                          * 获得所有日期的所有联赛
                          */
@@ -380,25 +381,25 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                         return;
                     } else {
 //                        for (List<BasketMatchBean> lists : mAllMatchdata) { // 遍历所有数据 得到筛选后的
-                            List<BasketMatchBean> checkedMatchs = new ArrayList<>();
-                            for (BasketMatchBean matchBean : mAllMatchdata.get(currentDatePosition)) {//只遍历当前日期里的比赛
-                                for (String checkedId : FiltrateCupsMap.basketImmedateCups) {
-                                    if (matchBean.getLeagueId().equals(checkedId)) {
-                                        checkedMatchs.add(matchBean);
-                                    }
+                        List<BasketMatchBean> checkedMatchs = new ArrayList<>();
+                        for (BasketMatchBean matchBean : mAllMatchdata.get(currentDatePosition)) {//只遍历当前日期里的比赛
+                            for (String checkedId : FiltrateCupsMap.basketImmedateCups) {
+                                if (matchBean.getLeagueId().equals(checkedId)) {
+                                    checkedMatchs.add(matchBean);
                                 }
                             }
-                            if (checkedMatchs.size() != 0) {
-                                BasketMatchBean itemData = new BasketMatchBean();
-                                itemData.setItemType(TITTLEDATETYPE);
-                                itemData.setDate(DateUtil.convertDateToNation(mAllMatchdata.get(currentDatePosition).get(0).getDate()));
-                                itemData.setThirdId("*");//这里id需要赋值，否则推送更新的时候会 NullPointerException
-                                currentMatchData.add(itemData);
-                                for (BasketMatchBean data : checkedMatchs) {
-                                    data.setItemType(LISTDATATYPE);
-                                    currentMatchData.add(data);
-                                }
+                        }
+                        if (checkedMatchs.size() != 0) {
+                            BasketMatchBean itemData = new BasketMatchBean();
+                            itemData.setItemType(TITTLEDATETYPE);
+                            itemData.setDate(DateUtil.convertDateToNation(mAllMatchdata.get(currentDatePosition).get(0).getDate()));
+                            itemData.setThirdId("*");//这里id需要赋值，否则推送更新的时候会 NullPointerException
+                            currentMatchData.add(itemData);
+                            for (BasketMatchBean data : checkedMatchs) {
+                                data.setItemType(LISTDATATYPE);
+                                currentMatchData.add(data);
                             }
+                        }
 //                        }
                     }
                 } else { //未筛选
@@ -407,7 +408,7 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                 }
 
                 if (adapter == null) {
-                    adapter = new BasketballScoreListAdapter(mContext , currentMatchData , 0);
+                    adapter = new BasketballScoreListAdapter(mContext, currentMatchData, 0);
                     explistview.setAdapter(adapter);
                     adapter.setmFocus(mFocusClickListener);//设置关注
                     adapter.setDateOnClickListener(mDateOnClickListener);
@@ -465,6 +466,7 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
     private ListView mDateListView;
     private List<ScheduleDate> mDatelist; // 日期
     private static int currentDatePosition = 0;//记录当前日期选择器中日期的位置
+
     private void choiceDateList() {
         mDateOnClickListener = new DateOnClickListener() {
             @Override
@@ -475,7 +477,7 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                 LayoutInflater infla = LayoutInflater.from(getActivity());
                 View alertDialogView = infla.inflate(R.layout.alertdialog, null);
                 mDateListView = (ListView) alertDialogView.findViewById(R.id.listdate);
-                initListImmediateDateAndWeek(mAllDateList,  currentDatePosition);
+                initListImmediateDateAndWeek(mAllDateList, currentDatePosition);
                 mDateListView.setAdapter(mImmediateDateAdapter);
                 mDateListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -485,14 +487,14 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                             if (position == currentDatePosition) {
                                 isFilter = true;
                                 updateAdapter();
-                            }else{
+                            } else {
                                 isFilter = false;
                                 switchDate(position);
                             }
                         }
                         if (position == currentDatePosition) {
                             updateAdapter();
-                        }else{
+                        } else {
                             switchDate(position);
                         }
                         currentDatePosition = position;
@@ -509,12 +511,14 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
             }
         };
     }
+
     /**
      * 初始化即时的日期
      *
      * @param s
      */
     private ScheduleDateAdapter mImmediateDateAdapter;
+
     private void initListImmediateDateAndWeek(List<String> s, int position) {
         mDatelist = new ArrayList<ScheduleDate>();
         for (int i = 0; i < s.size(); i++) {
@@ -550,7 +554,7 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
 //        mDateResultAdapter = new ScheduleDateAdapter(mDatelist, mContext, position);
 //    }
 
-    private void switchDate(int index){
+    private void switchDate(int index) {
         currentMatchData.clear();
         BasketMatchBean itemData = new BasketMatchBean();
         itemData.setItemType(TITTLEDATETYPE);
@@ -564,6 +568,7 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
         }
         updateAdapter();
     }
+
     /**
      * 点击关注事件
      */
@@ -583,7 +588,6 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                     v.setTag(false);
                     if (mBasketballType == TYPE_FOCUS) {
                         if (mEntryType == 0) {
-                            ((BasketballScoresActivity) getActivity()).basketFocusCallback();
                         } else if (mEntryType == 1) {
                             ((BasketBallScoreFragment) getParentFragment()).focusCallback();
                         }
@@ -591,7 +595,6 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                 }
                 updateAdapter();//防止复用
                 if (mEntryType == 0) {
-                    ((BasketballScoresActivity) getActivity()).basketFocusCallback();
                 } else if (mEntryType == 1) {
                     ((BasketBallScoreFragment) getParentFragment()).focusCallback();
                 }
@@ -610,7 +613,6 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
         if (isNewFrameWork) {
             ((BasketBallScoreFragment) getParentFragment()).reconnectWebSocket();
         } else {
-            ((BasketballScoresActivity) getActivity()).reconnectWebSocket();
         }
     }
 
@@ -684,7 +686,7 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
     }
 
     public void handleSocketMessage(String text) {
-        L.d("yxq===>>handleSocketMessage = " , text);
+        L.d("yxq===>>handleSocketMessage = ", text);
         if (adapter == null) {
             return;
         }
@@ -733,7 +735,7 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
                     mWebBasketOdds = JSON.parseObject(ws_json, WebBasketOdds.class);
                 }
-                updateListViewItemOdd(mWebBasketOdds);  //TODO
+                updateListViewItemOdd(mWebBasketOdds);
             }
 
 
@@ -745,100 +747,100 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
         Map<String, String> data = webBasketMatch.getData();
         synchronized (currentMatchData) {
 //            for (List<BasketMatchBean> match : childrenDataList) {
-                for (BasketMatchBean matchchildern : currentMatchData) {
-                    if (matchchildern.getThirdId().equals(webBasketMatch.getThirdId())) {
+            for (BasketMatchBean matchchildern : currentMatchData) {
+                if (matchchildern.getThirdId().equals(webBasketMatch.getThirdId())) {
 
-                        if (matchchildern.getMatchScore() != null) {
-                            String newscoreguest = matchchildern.getMatchScore().getGuestScore() + ""; //推送之前的比分客队
-                            String newscorehome = matchchildern.getMatchScore().getHomeScore() + "";
+                    if (matchchildern.getMatchScore() != null) {
+                        String newscoreguest = matchchildern.getMatchScore().getGuestScore() + ""; //推送之前的比分客队
+                        String newscorehome = matchchildern.getMatchScore().getHomeScore() + "";
 
-                            //判断推送前后的比分是否变化, 变化==>开启动画
-                            if (data.get("guestScore") != null && data.get("homeScore") != null) {
-                                if (!data.get("guestScore").equals(newscoreguest)) { //isScroll 为 true：正在滑动  滑动中不启动动画;
-                                    matchchildern.setIsGuestAnim(true);
-                                } else {
-                                    matchchildern.setIsGuestAnim(false);
-                                }
-                                if (!data.get("homeScore").equals(newscorehome)) {
-                                    matchchildern.setIsHomeAnim(true);
-                                } else {
-                                    matchchildern.setIsHomeAnim(false);
-                                }
-                                updateMatchStatus(matchchildern, data);// 修改Match里面的数据
+                        //判断推送前后的比分是否变化, 变化==>开启动画
+                        if (data.get("guestScore") != null && data.get("homeScore") != null) {
+                            if (!data.get("guestScore").equals(newscoreguest)) { //isScroll 为 true：正在滑动  滑动中不启动动画;
+                                matchchildern.setIsGuestAnim(true);
+                            } else {
+                                matchchildern.setIsGuestAnim(false);
                             }
-                        } else {
-                            /**
-                             * 未开始（VS）==>开始时候的处理
-                             */
-                            BasketScoreBean score = new BasketScoreBean();
-
-                            for (Map.Entry<String, String> entry : data.entrySet()) {
-                                switch (entry.getKey()) {
-                                    case "guest1":
-                                        score.setGuest1(Integer.parseInt(entry.getValue()));
-                                        break;
-                                    case "guest2":
-                                        score.setGuest2(Integer.parseInt(entry.getValue()));
-                                        break;
-                                    case "guest3":
-                                        score.setGuest3(Integer.parseInt(entry.getValue()));
-                                        break;
-                                    case "guest4":
-                                        score.setGuest4(Integer.parseInt(entry.getValue()));
-                                        break;
-                                    case "guestOt1":
-                                        score.setGuestOt1(Integer.parseInt(entry.getValue()));
-                                        break;
-                                    case "guestOt2":
-                                        score.setGuestOt2(Integer.parseInt(entry.getValue()));
-                                        break;
-                                    case "guestOt3":
-                                        score.setGuestOt3(Integer.parseInt(entry.getValue()));
-                                        break;
-                                    case "guestScore":
-                                        score.setGuestScore(Integer.parseInt(entry.getValue()));
-                                        break;
-                                    case "home1":
-                                        score.setHome1(Integer.parseInt(entry.getValue()));
-                                        break;
-                                    case "home2":
-                                        score.setHome2(Integer.parseInt(entry.getValue()));
-                                        break;
-                                    case "home3":
-                                        score.setHome3(Integer.parseInt(entry.getValue()));
-                                        break;
-                                    case "home4":
-                                        score.setHome4(Integer.parseInt(entry.getValue()));
-                                        break;
-                                    case "homeOt1":
-                                        score.setHomeOt1(Integer.parseInt(entry.getValue()));
-                                        break;
-                                    case "homeOt2":
-                                        score.setHomeOt2(Integer.parseInt(entry.getValue()));
-                                        break;
-                                    case "homeOt3":
-                                        score.setHomeOt3(Integer.parseInt(entry.getValue()));
-                                        break;
-                                    case "homeScore":
-                                        score.setHomeScore(Integer.parseInt(entry.getValue()));
-                                        break;
-                                    case "addTime":
-                                        score.setAddTime(Integer.parseInt(entry.getValue()));
-                                        break;
-                                    case "remainTime":
-                                        score.setRemainTime(entry.getValue());
-                                        break;
-                                    default:
-                                        break;
-                                }
+                            if (!data.get("homeScore").equals(newscorehome)) {
+                                matchchildern.setIsHomeAnim(true);
+                            } else {
+                                matchchildern.setIsHomeAnim(false);
                             }
-
-                            matchchildern.setMatchScore(score);
-                            updateMatchStatus(matchchildern, data);
+                            updateMatchStatus(matchchildern, data);// 修改Match里面的数据
                         }
-                        updateAdapter();
-                        break;
+                    } else {
+                        /**
+                         * 未开始（VS）==>开始时候的处理
+                         */
+                        BasketScoreBean score = new BasketScoreBean();
+
+                        for (Map.Entry<String, String> entry : data.entrySet()) {
+                            switch (entry.getKey()) {
+                                case "guest1":
+                                    score.setGuest1(Integer.parseInt(entry.getValue()));
+                                    break;
+                                case "guest2":
+                                    score.setGuest2(Integer.parseInt(entry.getValue()));
+                                    break;
+                                case "guest3":
+                                    score.setGuest3(Integer.parseInt(entry.getValue()));
+                                    break;
+                                case "guest4":
+                                    score.setGuest4(Integer.parseInt(entry.getValue()));
+                                    break;
+                                case "guestOt1":
+                                    score.setGuestOt1(Integer.parseInt(entry.getValue()));
+                                    break;
+                                case "guestOt2":
+                                    score.setGuestOt2(Integer.parseInt(entry.getValue()));
+                                    break;
+                                case "guestOt3":
+                                    score.setGuestOt3(Integer.parseInt(entry.getValue()));
+                                    break;
+                                case "guestScore":
+                                    score.setGuestScore(Integer.parseInt(entry.getValue()));
+                                    break;
+                                case "home1":
+                                    score.setHome1(Integer.parseInt(entry.getValue()));
+                                    break;
+                                case "home2":
+                                    score.setHome2(Integer.parseInt(entry.getValue()));
+                                    break;
+                                case "home3":
+                                    score.setHome3(Integer.parseInt(entry.getValue()));
+                                    break;
+                                case "home4":
+                                    score.setHome4(Integer.parseInt(entry.getValue()));
+                                    break;
+                                case "homeOt1":
+                                    score.setHomeOt1(Integer.parseInt(entry.getValue()));
+                                    break;
+                                case "homeOt2":
+                                    score.setHomeOt2(Integer.parseInt(entry.getValue()));
+                                    break;
+                                case "homeOt3":
+                                    score.setHomeOt3(Integer.parseInt(entry.getValue()));
+                                    break;
+                                case "homeScore":
+                                    score.setHomeScore(Integer.parseInt(entry.getValue()));
+                                    break;
+                                case "addTime":
+                                    score.setAddTime(Integer.parseInt(entry.getValue()));
+                                    break;
+                                case "remainTime":
+                                    score.setRemainTime(entry.getValue());
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+
+                        matchchildern.setMatchScore(score);
+                        updateMatchStatus(matchchildern, data);
                     }
+                    updateAdapter();
+                    break;
+                }
 //                }
             }
         }
@@ -851,13 +853,13 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
         WebBasketAllOdds data = webBasketOdds.getData();
         synchronized (currentMatchData) {
 //            for (List<BasketMatchBean> match : childrenDataList) {// all里面的match
-                for (BasketMatchBean matchchildern : currentMatchData) {
-                    if (matchchildern.getThirdId().equals(webBasketOdds.getThirdId())) {
-                        updateMatchOdd(matchchildern, data);
-                        updateAdapter();
-                        break;
-                    }
+            for (BasketMatchBean matchchildern : currentMatchData) {
+                if (matchchildern.getThirdId().equals(webBasketOdds.getThirdId())) {
+                    updateMatchOdd(matchchildern, data);
+                    updateAdapter();
+                    break;
                 }
+            }
 //            }
         }
     }
@@ -1097,36 +1099,36 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
         } else {
 
             L.d("AAAAA-yxq----", "currentMatchData = " + currentMatchData.size());
-//            childrenDataList.clear();//TODO***********-----------
+//            childrenDataList.clear();
             currentMatchData.clear();
             groupDataList.clear();
 //            for (List<BasketMatchBean> lists : mAllMatchdata) { // 遍历所有数据 得到筛选后的
-                List<BasketMatchBean> checkedMatchs = new ArrayList<>();
-                for (BasketMatchBean matchBean : mAllMatchdata.get(currentDatePosition)) {//只遍历当前日期里的比赛
-                    boolean isExistId = false;
-                    for (String checkedId : checkedIds) {
-                        if (matchBean.getLeagueId().equals(checkedId)) {
-                            isExistId = true;
-                            break;
-                        }
-                    }
-                    if (isExistId) {
-                        checkedMatchs.add(matchBean);
+            List<BasketMatchBean> checkedMatchs = new ArrayList<>();
+            for (BasketMatchBean matchBean : mAllMatchdata.get(currentDatePosition)) {//只遍历当前日期里的比赛
+                boolean isExistId = false;
+                for (String checkedId : checkedIds) {
+                    if (matchBean.getLeagueId().equals(checkedId)) {
+                        isExistId = true;
+                        break;
                     }
                 }
-                L.d("AAAAA-yxq----", "checkedMatchs.size = " + checkedMatchs.size());
-                L.d("AAAAA-yxq----", "currentMatchData.size = " + currentMatchData.size());
-                if (checkedMatchs.size() != 0) {
+                if (isExistId) {
+                    checkedMatchs.add(matchBean);
+                }
+            }
+            L.d("AAAAA-yxq----", "checkedMatchs.size = " + checkedMatchs.size());
+            L.d("AAAAA-yxq----", "currentMatchData.size = " + currentMatchData.size());
+            if (checkedMatchs.size() != 0) {
 //                    childrenDataList.add(checkedMatchs);
-                    BasketMatchBean itemData = new BasketMatchBean();
-                    itemData.setItemType(TITTLEDATETYPE);
-                    itemData.setDate(DateUtil.convertDateToNation(mAllMatchdata.get(currentDatePosition).get(0).getDate()));
-                    itemData.setThirdId("*");//这里id需要赋值，否则推送更新的时候会 NullPointerException
-                    currentMatchData.add(itemData);
-                    for (BasketMatchBean data : checkedMatchs) {
-                        data.setItemType(LISTDATATYPE);
-                        currentMatchData.add(data);
-                    }
+                BasketMatchBean itemData = new BasketMatchBean();
+                itemData.setItemType(TITTLEDATETYPE);
+                itemData.setDate(DateUtil.convertDateToNation(mAllMatchdata.get(currentDatePosition).get(0).getDate()));
+                itemData.setThirdId("*");//这里id需要赋值，否则推送更新的时候会 NullPointerException
+                currentMatchData.add(itemData);
+                for (BasketMatchBean data : checkedMatchs) {
+                    data.setItemType(LISTDATATYPE);
+                    currentMatchData.add(data);
+                }
 //                    for (String groupdata : mAllGroupdata) {
 //                        String[] weekdatas = groupdata.split(",");
 //                        String datas = weekdatas[0];
@@ -1168,7 +1170,6 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
     public void onEventMainThread(BasketDetailsEventBusEntity id) {
         updateAdapter();
         if (mEntryType == 0) {
-            ((BasketballScoresActivity) getActivity()).basketFocusCallback();
         } else if (mEntryType == 1) {
             ((BasketBallScoreFragment) getParentFragment()).focusCallback();
         }

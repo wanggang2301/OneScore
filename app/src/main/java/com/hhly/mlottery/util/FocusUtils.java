@@ -7,7 +7,6 @@ import com.hhly.mlottery.bean.focusAndPush.BasketballConcernListBean;
 import com.hhly.mlottery.bean.focusAndPush.CancelConcernBean;
 import com.hhly.mlottery.bean.focusAndPush.ConcernBean;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketballFocusNewFragment;
 import com.hhly.mlottery.frame.footballframe.FocusFragment;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -125,7 +124,7 @@ public class FocusUtils {
         } else {
             PreferenceUtil.commitString(FocusFragment.FOCUS_ISD, focusIds + "," + thirdId);
         }
-        //TODO:把用户id,deviceId,deviceToken 传给服务器
+        //把用户id,deviceId,deviceToken 传给服务器
         String deviceId = AppConstants.deviceToken;
         String uMengDeviceToken = PreferenceUtil.getString(AppConstants.uMengDeviceToken, "");
         Log.e("AAA", uMengDeviceToken + "???");
@@ -252,7 +251,7 @@ public class FocusUtils {
         } else {
             PreferenceUtil.commitString(BasketballFocusNewFragment.BASKET_FOCUS_IDS, focusIds + "," + thirdId);
         }
-        //TODO:把用户id,deviceId,deviceToken 传给服务器
+        //把用户id,deviceId,deviceToken 传给服务器
         String deviceId = AppConstants.deviceToken;
         String uMengDeviceToken = PreferenceUtil.getString(AppConstants.uMengDeviceToken, "");
         String userId = "";
@@ -315,7 +314,7 @@ public class FocusUtils {
         if (AppConstants.register != null && AppConstants.register.getData() != null && AppConstants.register.getData().getUser() != null) {
             userId = AppConstants.register.getData().getUser().getUserId();
         }
-        //TODO:请求后台
+        //请求后台
         Map<String, String> params = new HashMap<>();
         String url = " http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.cancelCustomConcernVS.do";
         params.put("userId", userId);

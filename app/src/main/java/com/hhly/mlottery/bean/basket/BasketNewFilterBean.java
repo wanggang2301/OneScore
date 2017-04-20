@@ -14,6 +14,7 @@ public class BasketNewFilterBean {
 //    filterDto: []
 
     private String date;
+
     private List<BasketMatchFilter> filterDto;
 
     public String getDate() {

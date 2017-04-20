@@ -363,7 +363,6 @@ public class CircleFlowIndicator extends View implements FlowIndicator,
 						_run = false;
 					}
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

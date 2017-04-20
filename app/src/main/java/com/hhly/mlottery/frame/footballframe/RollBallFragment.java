@@ -34,7 +34,6 @@ import com.hhly.mlottery.bean.websocket.WebSocketMatchOdd;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchStatus;
 import com.hhly.mlottery.callback.RequestHostFocusCallBack;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.frame.ScoresFragment;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFilterEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.frame.scorefrag.FootBallScoreFragment;
@@ -114,11 +113,11 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     private boolean isNewFrameWork;
     private int mEntryType; // 标记入口 判断是从哪里进来的 (0:首页入口  1:新导航条入口)
 
-    public static RollBallFragment newInstance(int index, boolean isNewFramWork,int entryType) {
+    public static RollBallFragment newInstance(int index, boolean isNewFramWork, int entryType) {
         Bundle bundle = new Bundle();
         bundle.putInt(FRAGMENT_INDEX, index);
         bundle.putBoolean(ISNEW_FRAMEWORK, isNewFramWork);
-        bundle.putInt(ENTRY_TYPE , entryType);
+        bundle.putInt(ENTRY_TYPE, entryType);
         RollBallFragment fragment = new RollBallFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -250,31 +249,10 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         if (isNewFrameWork) {
             ((FootBallScoreFragment) getParentFragment()).reconnectWebSocket();
         } else {
-            ((ScoresFragment) getParentFragment()).reconnectWebSocket();
 
         }
     }
 
-    public void onEventMainThread(ScoresFragment.FootballScoresWebSocketEntity entity) {
-
-        if (adapter == null) {
-            return;
-        }
-
-        String type = "";
-        try {
-            JSONObject jsonObject = new JSONObject(entity.text);
-            type = jsonObject.getString("type");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        if (!TextUtils.isEmpty(type)) {
-            Message msg = Message.obtain();
-            msg.obj = entity.text;
-            msg.arg1 = Integer.parseInt(type);
-            apiHandler.sendMessage(msg);
-        }
-    }
 
     public void onEventMainThread(FootBallScoreFragment.FootballScoresWebSocketEntity entity) {
         L.d("gaiban", "滚球推送改版");
@@ -343,7 +321,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     }
 
     private void setupSwipeRefresh() {
-        swipeRefreshLayout.setRefreshing(true);
+//        swipeRefreshLayout.setRefreshing(true);
         swipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(MyApp.getContext(), 40));
@@ -401,6 +379,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     }
 
     public void requestApi() {
+        apiHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_Rollball,
                 new VolleyContentFast.ResponseSuccessListener<ImmediateMatchs>() {
                     @Override
@@ -500,8 +479,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
             this.feedAdapter(feedAdapterLists);
 //            ((ScoresFragment) getParentFragment()).focusCallback();
             if (mEntryType == 0) {
-                ((ScoresFragment) getParentFragment()).firstFocusCallback();
-            }else if(mEntryType == 1){
+            } else if (mEntryType == 1) {
                 ((FootBallScoreFragment) getParentFragment()).focusCallback();
             }
         }
@@ -620,11 +598,12 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
                     case VIEW_STATUS_LOADING:
                         fragment.swipeRefreshLayout.setRefreshing(true);
-                        fragment.swipeRefreshLayout.setVisibility(View.VISIBLE);
+//                        fragment.swipeRefreshLayout.setVisibility(View.VISIBLE);
                         fragment.networkExceptionLayout.setVisibility(View.GONE);
                         fragment.footballImmediateUnfocusLl.setVisibility(View.GONE);
                         break;
                     case VIEW_STATUS_NO_ANY_DATA:
+                        fragment.swipeRefreshLayout.setRefreshing(false);
                         fragment.networkExceptionLayout.setVisibility(View.GONE);
                         fragment.footballImmediateUnfocusLl.setVisibility(View.VISIBLE);
                         fragment.titleContainer.setVisibility(View.GONE);
@@ -675,4 +654,5 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
             }
         }
     }
+
 }

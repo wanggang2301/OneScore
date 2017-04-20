@@ -115,19 +115,22 @@ public class TennisCpiDetailsFragment extends Fragment {
 
         if ("3".equals(oddType)) {
             //大小球
+            cpi_dish_details_txt_id.setVisibility(View.VISIBLE);
             cpi_home_details_txt_id.setText(R.string.foot_odds_asize_left);
             cpi_dish_details_txt_id.setText(R.string.foot_odds_asize_middle);
             cpi_guest_details_txt_id.setText(R.string.foot_odds_asize_right);
         } else if ("2".equals(oddType)) {
             //欧赔
-            cpi_home_details_txt_id.setText(R.string.foot_odds_eu_left);
-            cpi_dish_details_txt_id.setText(R.string.foot_odds_eu_middle);
-            cpi_guest_details_txt_id.setText(R.string.foot_odds_eu_right);
+            cpi_dish_details_txt_id.setVisibility(View.GONE);
+            cpi_home_details_txt_id.setText(R.string.odd_home_op_txt);
+//            cpi_dish_details_txt_id.setText("");
+            cpi_guest_details_txt_id.setText(R.string.odd_guest_op_txt);
         } else if ("1".equals(oddType)) {
             //亚盘
-            cpi_home_details_txt_id.setText(R.string.foot_odds_alet_left);
-            cpi_dish_details_txt_id.setText(R.string.foot_odds_alet_middle);
-            cpi_guest_details_txt_id.setText(R.string.foot_odds_alet_right);
+            cpi_dish_details_txt_id.setVisibility(View.VISIBLE);
+            cpi_home_details_txt_id.setText(R.string.odd_home_op_txt);
+            cpi_dish_details_txt_id.setText(R.string.foot_odds_asize_middle);
+            cpi_guest_details_txt_id.setText(R.string.odd_guest_op_txt);
         }
         // 访问失败，点击刷新
         cpi_txt_reLoading.setOnClickListener(new View.OnClickListener() {
@@ -206,6 +209,7 @@ public class TennisCpiDetailsFragment extends Fragment {
 
                         //倒序，排列父view
                         Collections.reverse(groupDataList);
+
                         //倒序，排列子view
                         Collections.reverse(childDetailsList);
                         //判断主队的数据
@@ -249,7 +253,11 @@ public class TennisCpiDetailsFragment extends Fragment {
                             //默认打开全部的父类view
                             cpi_odds_tetails_right_listview.expandGroup(i);
                         }
-                        mHandler.sendEmptyMessage(SUCCESS);
+                        if (childDetailsList.size() == 0) {
+                            mHandler.sendEmptyMessage(NODATA);
+                        } else {
+                            mHandler.sendEmptyMessage(SUCCESS);
+                        }
                     } else {
                         mHandler.sendEmptyMessage(NODATA);
                     }

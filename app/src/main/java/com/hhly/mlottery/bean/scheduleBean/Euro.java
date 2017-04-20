@@ -4,7 +4,7 @@ package com.hhly.mlottery.bean.scheduleBean;
 /**
  * 欧赔
  * @ClassName: Euro 
- * @Description: TODO
+ * @Description:
  * @author Tenney
  * @date 2015-10-20 下午5:36:23
  */

@@ -163,7 +163,6 @@ public class FiltrateMatchConfigActivity extends BaseActivity implements OnClick
 
     @Override
     public void onClick(View v) {
-        // TODO Auto-generated method stub
         switch (v.getId()) {
             case R.id.public_img_back:// 关闭
                 finish();

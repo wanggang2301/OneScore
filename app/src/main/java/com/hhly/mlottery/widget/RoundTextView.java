@@ -17,7 +17,6 @@ public class RoundTextView extends TextView {
 
 	public RoundTextView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		// TODO Auto-generated constructor stub
 	}
 
 	public RoundTextView(Context context, AttributeSet attrs) {
@@ -30,14 +29,12 @@ public class RoundTextView extends TextView {
 
 	public RoundTextView(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
 		mBgPaint.setColor(Color.WHITE);
 		mBgPaint.setAntiAlias(true);
 	}
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		// TODO Auto-generated method stub
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 		int measuredWidth = getMeasuredWidth();
 		int measuredHeight = getMeasuredHeight();
@@ -47,7 +44,6 @@ public class RoundTextView extends TextView {
 
 	@Override
 	public void setBackgroundColor(int color) {
-		// TODO Auto-generated method stub
 		mBgPaint.setColor(color);
 	}
 
@@ -67,7 +63,6 @@ public class RoundTextView extends TextView {
 
 	@Override
 	public void draw(Canvas canvas) {
-		// TODO Auto-generated method stub
 		canvas.setDrawFilter(pfd);
 		canvas.drawCircle(getWidth() / 2, getHeight() / 2,
 				Math.max(getWidth(), getHeight()) / 2, mBgPaint);

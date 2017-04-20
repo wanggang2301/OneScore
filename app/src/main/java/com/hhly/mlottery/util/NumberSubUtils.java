@@ -10,7 +10,7 @@ import com.hhly.mlottery.bean.numbersBean.NumberInfo;
 /**
  * @des 对号码还有生肖进行拆分动作
  * @ClassName: NumberSubUtils 
- * @Description: TODO
+ * @Description:
  * @author Tenney
  * @date 2015-10-22 上午10:22:29
  */

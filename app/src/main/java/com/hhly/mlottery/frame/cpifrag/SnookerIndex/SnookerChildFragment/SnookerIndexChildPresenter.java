@@ -45,20 +45,26 @@ public class SnookerIndexChildPresenter extends BasePresenter<SnookerIndexChildC
         }
 //        String url="http://m.1332255.com:81/mlottery/core/snookerOdds.getSnookerOddsByDate.do";
         String url="";
+        Map<String,String> params=new HashMap<>();
         if(ballType== BallType.SNOOKER){
             url=BaseURLs.SNOOKER_INDEX_LIST;
+            params.put("oddType",type);
         }else{
             url="http://192.168.31.1:8080/mlottery/core/mlottery/tennisIndexData.findIndexDataList.do";
             url=BaseURLs.TENNIS_INDEX_LIST;
+            params.put("type",type);
         }
-        Map<String,String> params=new HashMap<>();
-        params.put("oddType",type);
+
         params.put("date",date);
         final boolean finalIsFirst = isFirst;
         VolleyContentFast.requestJsonByGet(url, params,new VolleyContentFast.ResponseSuccessListener<SnookerIndexBean>() {
             @Override
             public void onResponse(SnookerIndexBean jsonObject) {
-                if(jsonObject.getCode()!=200) mView.showNoData(NODATA);
+                if(jsonObject.getCode()!=200) {
+                    if(finalIsFirst){
+                        mView.setParentData(jsonObject);
+                    }
+                    mView.showNoData(NODATA);}
                 else {
                     mRawData=jsonObject.getAllInfo();
 

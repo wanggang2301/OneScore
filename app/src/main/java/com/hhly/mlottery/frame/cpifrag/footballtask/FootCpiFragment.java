@@ -36,10 +36,12 @@ import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.websocket.WebSocketCPIResult;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.BallType;
+import com.hhly.mlottery.frame.cpifrag.CloseCpiWebSocketEventBus;
 import com.hhly.mlottery.frame.oddfragment.CompanyChooseDialogFragment;
 import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.util.DateUtil;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 
 import java.io.Serializable;
@@ -99,6 +101,8 @@ public class FootCpiFragment extends BaseWebSocketFragment {
         setTopic("USER.topic.indexcenter");
         setWebSocketUri(BaseURLs.WS_SERVICE);
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+
     }
 
     @Nullable
@@ -215,8 +219,9 @@ public class FootCpiFragment extends BaseWebSocketFragment {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //tv_match_name.setText(((TextView) view.findViewById(R.id.tv)).getText().toString());
-                // iv_match.setImageResource(R.mipmap.nav_icon_cbb);
+                L.d("websocket123", ">>>>>>>>足球指数关闭");
+
+                closeWebSocket();
                 EventBus.getDefault().post(new ScoreSwitchFg(position));
 
                 popupWindow.dismiss();
@@ -413,6 +418,7 @@ public class FootCpiFragment extends BaseWebSocketFragment {
      * @param jsonString jsonString
      */
     private void handleMessage(String jsonString) {
+
         JSONObject jsonObject = JSON.parseObject(jsonString);
         int type = jsonObject.getIntValue("type");
         // 根据 type 判断推送数据类型，1 - 时间和状态，2 - 赔率数据，3 - 比分
@@ -457,6 +463,14 @@ public class FootCpiFragment extends BaseWebSocketFragment {
         }
     }
 
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+        closeWebSocket();
+    }
+
     /**
      * 更新时间和状态
      *
@@ -480,6 +494,10 @@ public class FootCpiFragment extends BaseWebSocketFragment {
 
     @Override
     protected void onTextResult(final String text) {
+
+        L.d("websocket123", "_______足球指数推送==" + text);
+
+
         mTabLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -533,6 +551,20 @@ public class FootCpiFragment extends BaseWebSocketFragment {
                     return getString(R.string.odd_op_rb_txt);
                 default:
                     return getString(R.string.odd_plate_rb_txt);
+            }
+        }
+    }
+
+    public void onEventMainThread(CloseCpiWebSocketEventBus closeWebSocketEventBus) {
+
+        if (closeWebSocketEventBus.isVisible()) {
+            L.d("websocket123", "_______足球 指数 关闭 fg");
+            closeWebSocket();
+        } else {
+            if (closeWebSocketEventBus.getIndex() == BallType.FOOTBALL) {
+                L.d("websocket123", "______足球 指数 打开 fg");
+
+                connectWebSocket();
             }
         }
     }

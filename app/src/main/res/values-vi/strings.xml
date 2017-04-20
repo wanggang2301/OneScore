@@ -1580,9 +1580,13 @@
     <string name="cpi_select_company">Chọn tên công ty</string>
     <string name="frame_cpi_chupan_txt">Đầu</string>
     <string name="backstage_error">Lỗi hệ thống oss</string>
-    <string name="symbol_times" translatable="false">×</string>
-    <string name="symbol_plus" translatable="false">+</string>
-    <string name="symbol_equal" translatable="false">=</string>
+
+    //不需要翻译的string只在默认string文件里面写一遍就好了，这里不需要再写了
+    <!--  <string name="symbol_times" translatable="false">×</string>
+      <string name="symbol_plus" translatable="false">+</string>
+      <string name="symbol_equal" translatable="false">=</string>
+      <string name="label_line" translatable="false">-</string>-->
+
     <string name="not_start_short_txt">No</string>
     <string name="all_rankings">Xếp hạng tất cả>>>></string>
     <string name="basket_info_load_data">Xin đợi trong giây lát, đang thu thập số liệu</string>
@@ -1593,7 +1597,6 @@
     <string name="pwd_empty_new">Mời nhập mật mã (gồm 6-16 ký tự số, chữ và ký hiệu)</string>
     <string name="send_register_succ">Đã gửi mã xác minh, hãy chú ý kiểm tra</string>
     <string name="username_original_pass_error">Mời nhập chính xác mật mã cũ</string>
-    <string name="label_line" translatable="false">-</string>
     <string name="odds_average">trung bình</string>
 
 

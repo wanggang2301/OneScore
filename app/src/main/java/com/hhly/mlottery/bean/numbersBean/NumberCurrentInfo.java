@@ -7,7 +7,7 @@ import java.util.List;
  * 当前开奖号码
  * 
  * @ClassName: NumberCurrentInfo
- * @Description: TODO
+ * @Description:
  * @author Tenney
  * @date 2015-10-23 下午12:23:53
  */
@@ -425,7 +425,6 @@ public class NumberCurrentInfo implements Serializable {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "彩种：" + getName() + "-号码 ：" + getNumbers();
 	}
 }

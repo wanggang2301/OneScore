@@ -184,7 +184,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                L.d("websocket123", "足球关闭");
+                L.d("websocket123", ">>>>>>>>足球比分关闭");
                 closeWebSocket();
                 EventBus.getDefault().post(new ScoreSwitchFg(position));
 
@@ -236,7 +236,6 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
 
                 if (positionOffsetPixels == 0) {
                     switch (position) {
@@ -455,6 +454,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+
         if (hidden) {
             onPause();
         } else {
@@ -509,7 +509,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         }
         // }
         //if (getActivity() != null && ((FootballActivity) mContext).fragmentIndex != FootballActivity.BASKET_FRAGMENT) {
-        L.d("websocket123", "足球打开");
+        L.d("websocket123", "======足球打开");
         connectWebSocket();
         // }
     }
@@ -567,7 +567,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
      */
     @Override
     protected void onTextResult(String text) {
-        L.d("qazwsx", "收到消息==" + text);
+        L.d("websocket123", "足球收到消息==" + text);
 
         EventBus.getDefault().post(new FootballScoresWebSocketEntity(text));
     }
@@ -616,8 +616,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         L.d(TAG, "football Fragment destroy view..");
 
         EventBus.getDefault().unregister(this);
-
-
+        closeWebSocket();
     }
 
 
@@ -812,8 +811,20 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
             isFocus = true;
             L.d("xxx", "FocusFragment>>>显示");
         }
-
     }
 
 
+    public void onEventMainThread(CloseWebSocketEventBus closeWebSocketEventBus) {
+
+        if (closeWebSocketEventBus.isVisible()) {
+            L.d("websocket123", "_________足球 比分 关闭 fg");
+            closeWebSocket();
+        } else {
+            if (closeWebSocketEventBus.getIndex() == BallType.FOOTBALL) {
+                L.d("websocket123", "_________足球 比分 打开 fg");
+
+                connectWebSocket();
+            }
+        }
+    }
 }

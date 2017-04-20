@@ -369,7 +369,7 @@ public class SnookerAnalyzeFragment extends Fragment implements View.OnClickList
             mHomeRecentBattle.setVisibility(View.VISIBLE);
 
             SnookerAnalyzeBean.SnookerStatisics homeRecent = analyzeBean.getPlayerRecent().getHomeStatisics();
-                //TODO：设置最近比赛信息1
+                //设置最近比赛信息1
             if(homeRecent!=null){
                 mHomeText.setText(Html.fromHtml(setHomeRecentText(homeRecent)));
             }
@@ -394,7 +394,7 @@ public class SnookerAnalyzeFragment extends Fragment implements View.OnClickList
             mNoGuestRecentBattle.setVisibility(View.GONE);
 
             SnookerAnalyzeBean.SnookerStatisics guestRecent = analyzeBean.getPlayerRecent().getGuestStatisics();
-            //TODO：设置最近比赛信息2
+            //设置最近比赛信息2
             if(guestRecent!=null){
                 mGuestText.setText(Html.fromHtml(setGuestRecentText(guestRecent)));
             }

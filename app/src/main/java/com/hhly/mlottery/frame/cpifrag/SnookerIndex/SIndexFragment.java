@@ -26,6 +26,7 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
+import com.hhly.mlottery.bean.enums.TennisOddsTypeEnum;
 import com.hhly.mlottery.bean.snookerbean.SnookerScoreSocketBean;
 import com.hhly.mlottery.bean.snookerbean.snookerIndexBean.SnookerIndexBean;
 import com.hhly.mlottery.bean.snookerbean.snookerschedulebean.SnookerSocketOddsBean;
@@ -33,12 +34,11 @@ import com.hhly.mlottery.bean.tennisball.TennisSocketBean;
 import com.hhly.mlottery.bean.tennisball.TennisSocketOddsBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.BallType;
+import com.hhly.mlottery.frame.cpifrag.CloseCpiWebSocketEventBus;
 import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SnookerChildFragment.SnookerCompanyChooseDialogFragment;
 import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SnookerChildFragment.SnookerIndexChildFragment;
-import com.hhly.mlottery.frame.oddfragment.CompanyChooseDialogFragment;
 import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
-import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
@@ -59,14 +59,14 @@ import de.greenrobot.event.EventBus;
  * created by mdy 155
  */
 
-public class SIndexFragment extends BaseWebSocketFragment implements SIndexContract.View,View.OnClickListener{
+public class SIndexFragment extends BaseWebSocketFragment implements SIndexContract.View, View.OnClickListener {
 
-    public static final String ARG_PARAM1 = "param1";
-    public static final String ARG_PARAM2 = "param2";
-    private ArrayList<SnookerIndexBean.CompanyEntity> companyList=new ArrayList<>(); // 公司数据源
+//    public static final String ARG_PARAM1 = "param1";
+//    public static final String ARG_PARAM2 = "param2";
+    private ArrayList<SnookerIndexBean.CompanyEntity> companyList = new ArrayList<>(); // 公司数据源
 
-    private   int mBallType;
-    private String mParam2;
+//    private int mBallType;
+//    private String mParam2;
 
     /**
      * 欧赔
@@ -75,15 +75,15 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
     /**
      * 亚盘
      */
-    public final static String ODDS_LET = "3";
+    public final static String ODDS_LET = "2";
     /**
      * 大小球
      */
-    public final static String ODDS_SIZE = "2";
+    public final static String ODDS_SIZE = "3";
     /**
      * 单双
      */
-    public final static String SINGLE_DOUBLE="4";
+    public final static String SINGLE_DOUBLE = "4";
     private View mView;
     @BindView(R.id.public_date_layout)
     LinearLayout mLiDateSelect;
@@ -125,8 +125,9 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
     private DateChooseDialogFragment mDateChooseDialogFragment; // 日期选择
     private SnookerCompanyChooseDialogFragment mCompanyChooseDialogFragment; // 公司选择
 
-    private String currentDate=""; // 当前日期
+    private String currentDate = ""; // 当前日期
     private String choosenDate; // 选中日期
+
     public SIndexFragment() {
         // Required empty public constructor
     }
@@ -143,19 +144,19 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mBallType = getArguments().getInt(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-        if(mBallType==BallType.SNOOKER){
-            setWebSocketUri(BaseURLs.WS_SERVICE);
-            setTopic("USER.topic.snooker");
-        }else if(mBallType==BallType.TENNLS){
+//        if (getArguments() != null) {
+//            mBallType = getArguments().getInt(ARG_PARAM1);
+//            mParam2 = getArguments().getString(ARG_PARAM2);
+//        }
+//        if (mBallType == BallType.SNOOKER) {
+//            setWebSocketUri(BaseURLs.WS_SERVICE);
+//            setTopic("USER.topic.snooker");
+//        } else if (mBallType == BallType.TENNLS) {
             setWebSocketUri(BaseURLs.WS_SERVICE);
             setTopic("USER.topic.tennis.oddindex");
-        }
+//        }
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -191,7 +192,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
         }
     }
 
-    Handler webSocketHandler = new Handler(){
+    Handler webSocketHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -202,45 +203,46 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
                 L.e(TAG, "ws_json_snooker_score = " + ws_json);
                 SnookerScoreSocketBean mSnookerScore = null;
                 try {
-                    mSnookerScore = JSON.parseObject(ws_json , SnookerScoreSocketBean.class);
+                    mSnookerScore = JSON.parseObject(ws_json, SnookerScoreSocketBean.class);
                 } catch (Exception e) {
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
-                    mSnookerScore = JSON.parseObject(ws_json , SnookerScoreSocketBean.class);
+                    mSnookerScore = JSON.parseObject(ws_json, SnookerScoreSocketBean.class);
                 }
                 if (mSnookerScore.getData() != null) {
                     for (int i = 0; i < fragments.size(); i++) {
                         ((SnookerIndexChildFragment) fragments.get(i)).updateScore(mSnookerScore);
                     }
                 }
-            }else if(msg.arg1==404){  //网球比分推送
-                String ws_json= (String) msg.obj;
+            } else if (msg.arg1 == 404) {  //网球比分推送
+                String ws_json = (String) msg.obj;
                 TennisSocketBean mTennisScore;
+                L.e(TAG, "ws_json_snooker_odds = " + ws_json);
                 try {
-                    mTennisScore = JSON.parseObject(ws_json , TennisSocketBean.class);
+                    mTennisScore = JSON.parseObject(ws_json, TennisSocketBean.class);
                 } catch (Exception e) {
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
-                    mTennisScore = JSON.parseObject(ws_json , TennisSocketBean.class);
+                    mTennisScore = JSON.parseObject(ws_json, TennisSocketBean.class);
                 }
                 if (mTennisScore.getDataObj() != null) {
                     for (int i = 0; i < fragments.size(); i++) {
                         ((SnookerIndexChildFragment) fragments.get(i)).updateTennisScore(mTennisScore);
                     }
                 }
-            }else if (msg.arg1 == 301) {  // 斯诺克赔率推送
+            } else if (msg.arg1 == 301) {  // 斯诺克赔率推送
                 String ws_json = (String) msg.obj;
                 L.e(TAG, "ws_json_snooker_odds = " + ws_json);
                 SnookerSocketOddsBean mSnookerOdds = null;
                 try {
-                    mSnookerOdds = JSON.parseObject(ws_json , SnookerSocketOddsBean.class);
+                    mSnookerOdds = JSON.parseObject(ws_json, SnookerSocketOddsBean.class);
                 } catch (Exception e) {
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
-                    mSnookerOdds = JSON.parseObject(ws_json , SnookerSocketOddsBean.class);
+                    mSnookerOdds = JSON.parseObject(ws_json, SnookerSocketOddsBean.class);
                 }
 
                 if (mSnookerOdds.getData() != null) {
 
                     SnookerSocketOddsBean.SnookerDataBean oddsData = mSnookerOdds.getData();
-                    switch (oddsData.getPlayType()){
+                    switch (oddsData.getPlayType()) {
 
                         case "asiaLet"://亚盘
                             ((SnookerIndexChildFragment) fragments.get(0)).updateOdds(mSnookerOdds);
@@ -257,21 +259,21 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
                             break;
                     }
                 }
-            }else if(msg.arg1==403){ //网球赔率推送
+            } else if (msg.arg1 == 403) { //网球赔率推送
                 String ws_json = (String) msg.obj;
                 L.e(TAG, "ws_json_snooker_odds = " + ws_json);
                 TennisSocketOddsBean mSnookerOdds = null;
                 try {
-                    mSnookerOdds = JSON.parseObject(ws_json , TennisSocketOddsBean.class);
+                    mSnookerOdds = JSON.parseObject(ws_json, TennisSocketOddsBean.class);
                 } catch (Exception e) {
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
-                    mSnookerOdds = JSON.parseObject(ws_json , TennisSocketOddsBean.class);
+                    mSnookerOdds = JSON.parseObject(ws_json, TennisSocketOddsBean.class);
                 }
 
                 if (mSnookerOdds.getDataObj() != null) {
 
                     TennisSocketOddsBean.DataObjBean oddsData = mSnookerOdds.getDataObj();
-                    switch (oddsData.getGameType()){
+                    switch (oddsData.getGameType()) {
 
                         case 1://亚盘
                             ((SnookerIndexChildFragment) fragments.get(0)).updateTennisOdds(mSnookerOdds);
@@ -282,6 +284,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
 
                         case 2://独赢[欧赔]
                             ((SnookerIndexChildFragment) fragments.get(2)).updateTennisOdds(mSnookerOdds);
+                            L.e(TAG, "ws_json_snooker_odds = " + mSnookerOdds.getDataObj().getMatchOdd().getL()+"++++++++++++++");
                             break;
 
                     }
@@ -289,15 +292,17 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
             }
         }
     };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mView=inflater.inflate(R.layout.fragment_sindex,container,false);
+        mView = inflater.inflate(R.layout.fragment_sindex, container, false);
 
-        ButterKnife.bind(this,mView);
+        ButterKnife.bind(this, mView);
         initView();
         setListener();
         initData();
+        connectWebSocket();
         return mView;
     }
 
@@ -313,36 +318,36 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
                         mRefreshLayout.setRefreshing(false);
                         //刷新各个fragment
                     }
-                },1000);
+                }, 1000);
             }
         });
 
         mItems = getResources().getStringArray(R.array.zhishu_select);
 
-        fragments=new ArrayList<>();
-        mTitles= new String[]{getActivity().getResources().getString(R.string.odd_plate_rb_txt), getActivity().getResources().getString(R.string.asiasize),
+        fragments = new ArrayList<>();
+        mTitles = new String[]{getActivity().getResources().getString(R.string.odd_plate_rb_txt), getActivity().getResources().getString(R.string.asiasize),
                 getActivity().getResources().getString(R.string.odd_op_rb_txt), MyApp.getContext().getResources().getString(R.string.snooker_index_single_double)};
 
-        if(mBallType==BallType.SNOOKER){
-            mTextMatch.setText(getActivity().getString(R.string.snooker_txt));
-            mTitles= new String[]{getActivity().getResources().getString(R.string.odd_plate_rb_txt), getActivity().getResources().getString(R.string.asiasize),
-                     getActivity().getResources().getString(R.string.odd_op_rb_txt), MyApp.getContext().getResources().getString(R.string.snooker_index_single_double)};
-
-            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_LET,mBallType));
-            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_SIZE,mBallType));
-            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_EURO,mBallType));
-            fragments.add(SnookerIndexChildFragment.newInstance(SINGLE_DOUBLE,mBallType));
-
-        }else if(mBallType==BallType.TENNLS){ //网球
+//        if (mBallType == BallType.SNOOKER) {
+//            mTextMatch.setText(getActivity().getString(R.string.snooker_txt));
+//            mTitles = new String[]{getActivity().getResources().getString(R.string.odd_plate_rb_txt), getActivity().getResources().getString(R.string.asiasize),
+//                    getActivity().getResources().getString(R.string.odd_op_rb_txt), MyApp.getContext().getResources().getString(R.string.snooker_index_single_double)};
+//
+//            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_LET, mBallType));
+//            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_SIZE, mBallType));
+//            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_EURO, mBallType));
+//            fragments.add(SnookerIndexChildFragment.newInstance(SINGLE_DOUBLE, mBallType));
+//
+//        } else if (mBallType == BallType.TENNLS) { //网球
             mTextMatch.setText(getActivity().getString(R.string.tennisball_txt));
-            mTitles= new String[]{getActivity().getResources().getString(R.string.odd_plate_rb_txt), getActivity().getResources().getString(R.string.asiasize),
+            mTitles = new String[]{getActivity().getResources().getString(R.string.odd_plate_rb_txt), getActivity().getResources().getString(R.string.asiasize),
                     getActivity().getResources().getString(R.string.odd_op_rb_txt)};
-            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_LET,mBallType));
-            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_SIZE,mBallType));
-            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_EURO,mBallType));
-        }
+            fragments.add(SnookerIndexChildFragment.newInstance(TennisOddsTypeEnum.ASIALET, BallType.TENNLS));
+            fragments.add(SnookerIndexChildFragment.newInstance(TennisOddsTypeEnum.ASIASIZE, BallType.TENNLS));
+            fragments.add(SnookerIndexChildFragment.newInstance(TennisOddsTypeEnum.EURO, BallType.TENNLS));
+//        }
 
-        mTabsAdapter=new TabsAdapter(getChildFragmentManager());
+        mTabsAdapter = new TabsAdapter(getChildFragmentManager());
         mTabsAdapter.setTitles(mTitles);
         mTabsAdapter.addFragments(fragments);
         mViewPager.setAdapter(mTabsAdapter);
@@ -366,7 +371,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
                         setRefreshing(false);
                         refreshAllChildFragments();
                     }
-                },1000);
+                }, 1000);
             }
         });
     }
@@ -412,12 +417,13 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
     /**
      * 刷新每个子fragment
      */
-    public void refreshAllChildFragments(){
-        for(Fragment childFragment :fragments){
+    public void refreshAllChildFragments() {
+        for (Fragment childFragment : fragments) {
 
-            ((SnookerIndexChildFragment)childFragment).refreshDate(choosenDate==null?currentDate:choosenDate);
+            ((SnookerIndexChildFragment) childFragment).refreshDate(choosenDate == null ? currentDate : choosenDate);
         }
     }
+
     /**
      * 设置刷新状态
      *
@@ -444,16 +450,18 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
     }
 
     /**
-     *获取公司列表
+     * 获取公司列表
+     *
      * @return
      */
-    public List<SnookerIndexBean.CompanyEntity> getCompanyList(){
+    public List<SnookerIndexBean.CompanyEntity> getCompanyList() {
         return companyList;
     }
+
     /**
      * 弹出切换球类的下拉
      */
-    private void switchMatch(View v){
+    private void switchMatch(View v) {
         mImgMatch.setImageResource(R.mipmap.nav_icon_up);
         backgroundAlpha(getActivity(), 0.5f);
         popWindow(v);
@@ -462,7 +470,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
     private void popWindow(final View v) {
         final View mView = View.inflate(getActivity(), R.layout.pop_select, null);
         // 创建ArrayAdapter对象
-        BallChoiceArrayAdapter mAdapter = new BallChoiceArrayAdapter(getActivity(), mItems, mBallType); //在第几个
+        BallChoiceArrayAdapter mAdapter = new BallChoiceArrayAdapter(getActivity(), mItems, BallType.SNOOKER); //在第几个
 
         ListView listview = (ListView) mView.findViewById(R.id.match_type);
         listview.setAdapter(mAdapter);
@@ -478,6 +486,19 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //tv_match_name.setText(((TextView) view.findViewById(R.id.tv)).getText().toString());
                 // iv_match.setImageResource(R.mipmap.nav_icon_cbb);
+
+
+//                if (mBallType == BallType.SNOOKER) {
+//                    L.d("websocket123", ">>>>>>>>斯洛克指数关闭");
+//
+//                } else if (mBallType == BallType.TENNLS) {
+//                    L.d("websocket123", ">>>>>>>>网球指数关闭");
+//
+//                }
+
+                closeWebSocket();
+
+
                 EventBus.getDefault().post(new ScoreSwitchFg(position));
 
                 popupWindow.dismiss();
@@ -514,12 +535,13 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
                         @Override
                         public void onFinishSelection() {
                             for (Fragment childFragment : fragments) {
-                                ((SnookerIndexChildFragment)childFragment).updateFilterData();
+                                ((SnookerIndexChildFragment) childFragment).updateFilterData();
                             }
                         }
                     });
         }
     }
+
     /**
      * 设置添加屏幕的背景透明度
      *
@@ -536,8 +558,8 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
     /**
      * 设置日期跟公司
      */
-    public void setDateAndCompany(SnookerIndexBean bean){
-        currentDate=bean.getCurrDate();
+    public void setDateAndCompany(SnookerIndexBean bean) {
+        currentDate = bean.getCurrDate();
         mLiDateSelect.setVisibility(View.VISIBLE);
         mCompanySelect.setVisibility(View.VISIBLE);
         mTextDateSelect.setText(DateUtil.convertDateToNation(bean.getCurrDate()));
@@ -546,7 +568,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.public_date_layout: //日期选择
                 showDateChooseDialog();
                 break;
@@ -556,6 +578,40 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
             case R.id.ll_match_select: //切换比赛
                 switchMatch(v);
                 break;
+        }
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+        closeWebSocket();
+    }
+
+    public void onEventMainThread(CloseCpiWebSocketEventBus closeWebSocketEventBus) {
+
+        if (closeWebSocketEventBus.isVisible()) {
+//            if (mBallType == BallType.SNOOKER) {
+//                L.d("websocket123", "_______斯洛克 指数 关闭 fg");
+//
+//            } else if (mBallType == BallType.TENNLS) {
+//                L.d("websocket123", "________网球 指数 关闭 fg");
+//
+//            }
+            closeWebSocket();
+        } else {
+            if (closeWebSocketEventBus.getIndex() == 2 || closeWebSocketEventBus.getIndex() == 3) {
+//                if (mBallType == BallType.SNOOKER) {
+//                    L.d("websocket123", "_______斯洛克 指数 打开 fg");
+//
+//                } else if (mBallType == BallType.TENNLS) {
+//                    L.d("websocket123", "_______网球 指数 打开 fg");
+//                }
+
+
+                connectWebSocket();
+            }
         }
 
     }

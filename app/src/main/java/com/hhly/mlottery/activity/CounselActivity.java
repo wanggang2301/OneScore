@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame;
+package com.hhly.mlottery.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,22 +9,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.adapter.CounselFragmentAdapter;
 import com.hhly.mlottery.bean.footballDetails.CounselBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.frame.CounselChildFragment;
+import com.hhly.mlottery.frame.ForeignInfomationFragment;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +31,7 @@ import java.util.List;
   lzf
   资讯页面
  */
-public class CounselFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
-    private View mView;
+public class CounselActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
 
@@ -62,6 +59,8 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
     private ArrayList<Integer> infotype = new ArrayList<>();//信息类型集合
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private Context mContext;
+    private Integer currentIndex;// 显示下标
+
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -115,14 +114,15 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
     };
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        mContext = getActivity();
-        mView = inflater.inflate(R.layout.fragment_counsel, null);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_counsel);
+        currentIndex = getIntent().getExtras().getInt("currentIndex");
+
+        mContext = this;
         initView();
         //请求头数据
         loadHeadData(BaseURLs.URL_FOOTBALL_INFOINDEX);
-        return mView;
     }
 
     //请求头数据  发起网络请求
@@ -215,57 +215,54 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
             mTabLayout.addTab(mTabLayout.newTab().setText(mHeadName.get(i)));
         }
         initData();
-        mCounselFragmentAdapter = new CounselFragmentAdapter(getChildFragmentManager(), mList, mHeadName, mContext);
+        mCounselFragmentAdapter = new CounselFragmentAdapter(getSupportFragmentManager(), mList, mHeadName, mContext);
         mViewPager.setAdapter(mCounselFragmentAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mViewPager.setOffscreenPageLimit(1);
-        mViewPager.setCurrentItem(((FootballActivity) mContext).infoPagerLabel);
+        mViewPager.setCurrentItem(currentIndex == null ? 0 : currentIndex - 1);
         mTabLayout.setTabsFromPagerAdapter(mCounselFragmentAdapter);
     }
 
     public void initView() {
         //网络异常
-        reloadwhenfail = (LinearLayout) mView.findViewById(R.id.network_exception_layout);
-        reLoading = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
-        nodataorloading = (TextView) mView.findViewById(R.id.dataloding_ornodata);
+        reloadwhenfail = (LinearLayout) findViewById(R.id.network_exception_layout);
+        reLoading = (TextView) findViewById(R.id.network_exception_reload_btn);
+        nodataorloading = (TextView) findViewById(R.id.dataloding_ornodata);
         reLoading.setOnClickListener(this);
 
         //标题
-        public_txt_title = (TextView) mView.findViewById(R.id.public_txt_title);
+        public_txt_title = (TextView) findViewById(R.id.public_txt_title);
         public_txt_title.setVisibility(View.VISIBLE);
         public_txt_title.setText(R.string.foot_title);
-        public_txt_left_title = (TextView) mView.findViewById(R.id.public_txt_left_title);
+        public_txt_left_title = (TextView) findViewById(R.id.public_txt_left_title);
         public_txt_left_title.setVisibility(View.GONE);
 
         //筛选
-        public_btn_filter = (ImageView) mView.findViewById(R.id.public_btn_filter);
+        public_btn_filter = (ImageView) findViewById(R.id.public_btn_filter);
         public_btn_filter.setVisibility(View.GONE);
 
         //设置
-        public_btn_set = (ImageView) mView.findViewById(R.id.public_btn_set);
+        public_btn_set = (ImageView) findViewById(R.id.public_btn_set);
         public_btn_set.setVisibility(View.GONE);
         //返回
-        public_img_back = (ImageView) mView.findViewById(R.id.public_img_back);
+        public_img_back = (ImageView) findViewById(R.id.public_img_back);
         public_img_back.setOnClickListener(this);
-        mViewPager = (ViewPager) mView.findViewById(R.id.counselfragment_viewpager);
-        mTabLayout = (TabLayout) mView.findViewById(R.id.tabs);
+        mViewPager = (ViewPager) findViewById(R.id.counselfragment_viewpager);
+        mTabLayout = (TabLayout) findViewById(R.id.tabs);
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.counselfragment_SwipeRefresh);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.counselfragment_SwipeRefresh);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
+        mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(this, StaticValues.REFRASH_OFFSET_END));
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.public_img_back:
-                MobclickAgent.onEvent(mContext, "CounselChildFragment_Exit");
-                ((FootballActivity)getActivity()).eventBusPost();
-                ((FootballActivity) mContext).finish();
+                finish();
                 break;
             case R.id.network_exception_reload_btn:
-                MobclickAgent.onEvent(mContext, "CounselChildFragment_NotNet");
                 loadHeadData(BaseURLs.URL_FOOTBALL_INFOINDEX);
                 break;
             default:
@@ -276,32 +273,5 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
     @Override
     public void onRefresh() {
 
-    }
-
-    private boolean isHidden;// 当前Fragment是否显示
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        isHidden = hidden;
-        if (hidden) {
-            MobclickAgent.onPageEnd("CounselChildFragment");
-        } else {
-            MobclickAgent.onPageStart("CounselChildFragment");
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart("CounselChildFragment");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (!isHidden) {
-            MobclickAgent.onPageEnd("CounselChildFragment");
-        }
     }
 }

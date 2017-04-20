@@ -124,7 +124,6 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
 
         mSeason = getArguments().getString(PARAM2_SEASON);
         mLeagueId = getArguments().getString(PARAM_ID);
-        //TODO-----
 
     }
 

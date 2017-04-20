@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame;
+package com.hhly.mlottery.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -7,12 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
@@ -24,10 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.FootballActivity;
-import com.hhly.mlottery.activity.PlayWebViewActivity;
 import com.hhly.mlottery.adapter.videolive.NewPinnedHeaderExpandableAdapter;
-import com.hhly.mlottery.adapter.videolive.PinnedHeaderExpandableAdapter;
 import com.hhly.mlottery.bean.videobean.NewMatchVideoinfo;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
@@ -47,7 +40,7 @@ import java.util.Map;
  * Created by yuely198 on 2017/3/21.
  */
 
-public class VideoFragemnt extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class VideoActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     /*标题，暂无数据*/
     private TextView live_no_data_txt;
@@ -74,9 +67,7 @@ public class VideoFragemnt extends Fragment implements View.OnClickListener, Swi
 
     private ListView listViews;
     private static final String FRAGMENT_INDEX = "fragment_index";
-    private View mView;
     private Context mContext;
-    private Activity mActivity;
     private TextView mPublic_txt_title;
     /*定时刷新   60s*/
     private Runnable mRunnable = new Runnable() {
@@ -88,16 +79,16 @@ public class VideoFragemnt extends Fragment implements View.OnClickListener, Swi
     };
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-
-        mContext = mActivity;
-        mView = View.inflate(mContext, R.layout.activity_live_list, null);
-
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_live_list);
         initView();
         initData();
-        return mView;
+        mContext = this;
+
     }
+
+
 
     @Override
     public void onResume() {
@@ -110,31 +101,31 @@ public class VideoFragemnt extends Fragment implements View.OnClickListener, Swi
         ra = new RotateAnimation(0.0f, 360.f, Animation.RELATIVE_TO_SELF, 0.55f, Animation.RELATIVE_TO_SELF, 0.55f);
         ra.setDuration(3000);
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.live_swiperefreshlayout);// 数据板块，listview
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.live_swiperefreshlayout);// 数据板块，listview
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mPublic_txt_title = (TextView) mView.findViewById(R.id.public_txt_title);
+        mPublic_txt_title = (TextView) findViewById(R.id.public_txt_title);
         mPublic_txt_title.setText(getString(R.string.direct_seeding));
 
-        mView.findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
-        mView.findViewById(R.id.public_btn_set).setVisibility(View.GONE);
+        findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
+        findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         //返回键
-        mView.findViewById(R.id.public_img_back).setOnClickListener(this);
+        findViewById(R.id.public_img_back).setOnClickListener(this);
 
-        mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getActivity(), StaticValues.REFRASH_OFFSET_END));
+        mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(VideoActivity.this, StaticValues.REFRASH_OFFSET_END));
 
-        live_error_ll = (LinearLayout) mView.findViewById(R.id.live_error_ll);
-        live_error_btn = (TextView) mView.findViewById(R.id.live_error_btn);
+        live_error_ll = (LinearLayout) findViewById(R.id.live_error_ll);
+        live_error_btn = (TextView) findViewById(R.id.live_error_btn);
         live_error_btn.setOnClickListener(this);
 
         //级联列表listview
-        explistview_live = (PinnedHeaderExpandableListView) mView.findViewById(R.id.explistview_live);
+        explistview_live = (PinnedHeaderExpandableListView) findViewById(R.id.explistview_live);
         //设置悬浮头部VIEW
 
-        explistview_live.setHeaderView(getLayoutInflater(null).inflate(R.layout.item_live_header, explistview_live, false));
+        explistview_live.setHeaderView(getLayoutInflater().inflate(R.layout.item_live_header, explistview_live, false));
         explistview_live.setChildDivider(getResources().getDrawable(R.color.line_football_footer));
         //暂无数据
-        live_no_data_txt = (TextView) mView.findViewById(R.id.live_no_data_txt);
+        live_no_data_txt = (TextView) findViewById(R.id.live_no_data_txt);
 
     }
 
@@ -241,7 +232,6 @@ public class VideoFragemnt extends Fragment implements View.OnClickListener, Swi
 
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                // TODO Auto-generated method stub
                 //如果点击间隔在500毫秒不让点击
                 if (UiUtils.onDoubClick()) {
                     //选择播放方式
@@ -318,8 +308,7 @@ public class VideoFragemnt extends Fragment implements View.OnClickListener, Swi
                 break;
 
             case R.id.public_img_back:
-                ((FootballActivity)getActivity()).eventBusPost();
-                ((FootballActivity) getActivity()).finish();
+                 finish();
                 break;
             default:
                 break;
@@ -356,11 +345,6 @@ public class VideoFragemnt extends Fragment implements View.OnClickListener, Swi
         }, 500);
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.mActivity = (Activity) context;
-    }
 
     @Override
     public void onPause() {

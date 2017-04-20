@@ -9,7 +9,7 @@ import android.widget.ScrollView;
 /**
  * 
  * @ClassName: ScrollViewExtend 
- * @Description: TODO
+ * @Description:
  * @author Tenney
  * @date 2015-10-27 下午9:37:00
  */

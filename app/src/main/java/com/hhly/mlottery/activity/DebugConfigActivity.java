@@ -13,9 +13,7 @@ import com.hhly.mlottery.util.PreferenceUtil;
 import com.umeng.analytics.MobclickAgent;
 
 public class DebugConfigActivity extends BaseActivity {
-
     private final static String TAG = "DebugConfigActivity";
-
     public final static int ZH_1332255 = 1;
     public final static int TH_1332255 = 2;
     public final static int VN_1332255 = 3;

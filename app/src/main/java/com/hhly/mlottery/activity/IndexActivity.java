@@ -2,7 +2,6 @@ package com.hhly.mlottery.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -261,7 +260,7 @@ public class IndexActivity extends BaseActivity {
                         }
                         break;
                     case "football":// 足球列表
-                        startActivity(new Intent(mContext, FootballActivity.class));
+                       // startActivity(new Intent(mContext, FootballActivity.class));
                         break;
                     case "footballInfo":// 足球详情页面
                         if (!TextUtils.isEmpty(mThirdId)) {
@@ -278,11 +277,7 @@ public class IndexActivity extends BaseActivity {
                         }
                         break;
                     case "basketball":// 篮球列表
-//                        Intent intent = new Intent(mContext, FootballActivity.class);
-//                        intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
-//                        mContext.startActivity(intent);
-                        Intent intent = new Intent(mContext, BasketballScoresActivity.class);
-                        mContext.startActivity(intent);
+//
                         break;
                     case "basketballInfo":// 篮球详情页面
                         if (!TextUtils.isEmpty(mThirdId)) {
@@ -313,6 +308,7 @@ public class IndexActivity extends BaseActivity {
             public synchronized void onResponse(final InformationBean info) {
                 if (info != null) {
                     if (info.getInfo() != null) {
+
                         L.d("xxx", "推送资讯访问成功！");
                         Intent intent = new Intent(IndexActivity.this, WebActivity.class);
                         intent.putExtra("key", info.getInfo().getInfoUrl());// URL

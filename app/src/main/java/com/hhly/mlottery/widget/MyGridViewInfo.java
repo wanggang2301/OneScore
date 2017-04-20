@@ -5,7 +5,7 @@ import android.widget.GridView;
 /**
  * @author wang gang
  * @date 2016/7/15 20:14
- * @des ${TODO}
+ * @des ${}
  */
 public class MyGridViewInfo extends GridView {
     public MyGridViewInfo(android.content.Context context,

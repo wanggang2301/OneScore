@@ -12,24 +12,19 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.BasketballInformationActivity;
-import com.hhly.mlottery.activity.BasketballScoresActivity;
-import com.hhly.mlottery.activity.FootballActivity;
-import com.hhly.mlottery.activity.InfoCenterActivity;
+import com.hhly.mlottery.activity.CounselActivity;
+import com.hhly.mlottery.activity.FootballMatchActivity;
 import com.hhly.mlottery.activity.LeagueStatisticsTodayActivity;
 import com.hhly.mlottery.activity.LoginActivity;
-import com.hhly.mlottery.activity.MultiScreenIntroduceActivity;
-import com.hhly.mlottery.activity.MultiScreenViewingListActivity;
 import com.hhly.mlottery.activity.NumbersActivity;
 import com.hhly.mlottery.activity.NumbersInfoBaseActivity;
+import com.hhly.mlottery.activity.VideoActivity;
 import com.hhly.mlottery.activity.WebActivity;
 import com.hhly.mlottery.adapter.homePagerAdapter.HomeGridAdapter;
 import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.PreferenceUtil;
-import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.widget.MyGridView;
 import com.umeng.analytics.MobclickAgent;
 
@@ -129,108 +124,85 @@ public class HomeMuenFragment extends Fragment {
                                     }
                                     break;
                                 }
-//                                case 4:
-//                                    int sportsInfoIndex = 0;
-//                                    if (jumpAddr.contains("&")) {
-//                                        String str = jumpAddr.substring(0, jumpAddr.lastIndexOf("&"));
-//                                        sportsInfoIndex = Integer.parseInt(jumpAddr.substring(jumpAddr.lastIndexOf("&") + 1, jumpAddr.length())) - 1;
-//                                        jumpAddr = str;
-//                                    }
-//                                    switch (jumpAddr) {
-//                                        case "12":// 体育资讯指定label页
-//                                            Intent intent = new Intent(getContext(), FootballActivity.class);
-//                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_INFORMATION_VALUE);
-//                                            intent.putExtra(AppConstants.FOTTBALL_INFO_LABEL_KEY, sportsInfoIndex);
-//                                            getContext().startActivity(intent);
-//                                            break;
-//                                    }
-//                                    break;
                                 case 2:// 跳内页
-                                    int sportsInfoIndex = 0;
+//                                    int sportsInfoIndex = 0;
                                     switch (jumpAddr) {
                                         case "10":// 足球指数
-                                        {
-                                            Intent intent = new Intent(mContext, FootballActivity.class);
-                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_EXPONENT_VALUE);
-                                            mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Football_Index");
-                                        }
-                                        break;
+//                                        {
+//                                            Intent intent = new Intent(mContext, FootballActivity.class);
+//                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_EXPONENT_VALUE);
+//                                            mContext.startActivity(intent);
+//                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Football_Index");
+//                                        }
+                                            break;
                                         case "11":// 足球数据
-                                        {
-                                            Intent intent = new Intent(mContext, FootballActivity.class);
-                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_DATA_VALUE);
-                                            mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Football_Data");
-                                        }
-                                        break;
+//                                        {
+//                                            Intent intent = new Intent(mContext, FootballActivity.class);
+//                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_DATA_VALUE);
+//                                            mContext.startActivity(intent);
+//                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Football_Data");
+//                                        }
+                                            break;
                                         case "12":// 足球资讯
                                         {
-                                            if (labSeq != null) {
-                                                sportsInfoIndex = labSeq - 1;
-                                            }
-                                            Intent intent = new Intent(mContext, FootballActivity.class);
-                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_INFORMATION_VALUE);
-                                            intent.putExtra(AppConstants.FOTTBALL_INFO_LABEL_KEY, sportsInfoIndex);
+                                            Intent intent = new Intent(mContext, CounselActivity.class);
+                                            intent.putExtra("currentIndex", labSeq);
                                             mContext.startActivity(intent);
                                             MobclickAgent.onEvent(mContext, "HomePager_Menu_Football_Information");
                                         }
                                         break;
                                         case "13":// 足球比分
-                                        {
-                                            Intent intent = new Intent(mContext, FootballActivity.class);
-                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_SCORE_VALUE);
-                                            mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Football_Score");
-                                        }
-                                        break;
+//                                        {
+//                                            Intent intent = new Intent(mContext, FootballActivity.class);
+//                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_SCORE_VALUE);
+//                                            mContext.startActivity(intent);
+//                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Football_Score");
+//                                        }
+                                            break;
                                         case "14":// 足球视频
                                         {
-                                            Intent intent = new Intent(mContext, FootballActivity.class);
-                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_VIDEO_VALUE);
-                                            mContext.startActivity(intent);
+                                            mContext.startActivity(new Intent(mContext, VideoActivity.class));
                                             MobclickAgent.onEvent(mContext, "HomePager_Menu_Football_Video");
                                         }
                                         break;
                                         case "20":// 篮球即时比分
-                                        {
-                                            mContext.startActivity(new Intent(mContext, BasketballScoresActivity.class));
-                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Score");
-                                        }
-                                        break;
+//                                        {
+//                                            mContext.startActivity(new Intent(mContext, BasketballScoresActivity.class));
+//                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Score");
+//                                        }
+                                            break;
                                         case "21":// 篮球赛果
-                                        {
-                                            Intent intent = new Intent(mContext, FootballActivity.class);
-                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
-                                            intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_AMIDITHION_VALUE);
-                                            mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Amidithion");
-                                        }
-                                        break;
+//                                        {
+//                                            Intent intent = new Intent(mContext, FootballActivity.class);
+//                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
+//                                            intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_AMIDITHION_VALUE);
+//                                            mContext.startActivity(intent);
+//                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Amidithion");
+//                                        }
+                                            break;
                                         case "22":// 篮球赛程
-                                        {
-                                            Intent intent = new Intent(mContext, FootballActivity.class);
-                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
-                                            intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_COMPETITION_VALUE);
-                                            mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Competition");
-                                        }
-                                        break;
+//                                        {
+//                                            Intent intent = new Intent(mContext, FootballActivity.class);
+//                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
+//                                            intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_COMPETITION_VALUE);
+//                                            mContext.startActivity(intent);
+//                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Competition");
+//                                        }
+                                            break;
                                         case "23":// 篮球关注
-                                        {
-                                            Intent intent = new Intent(mContext, FootballActivity.class);
-                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
-                                            intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_ATTENTION_VALUE);
-                                            mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Attention");
-                                        }
-                                        break;
+//                                        {
+//                                            Intent intent = new Intent(mContext, FootballActivity.class);
+//                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
+//                                            intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_ATTENTION_VALUE);
+//                                            mContext.startActivity(intent);
+//                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Attention");
+//                                        }
+                                            break;
                                         case "24":// 篮球资讯
                                             //Toast.makeText(mContext, "篮球资讯", Toast.LENGTH_SHORT).show();
                                             break;
                                         case "25":// 篮球资料库
-                                            mContext.startActivity(new Intent(mContext, BasketballInformationActivity.class));
-                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Info");
+
                                             break;
                                         case "30":// 彩票开奖
                                             mContext.startActivity(new Intent(mContext, NumbersActivity.class));
@@ -421,11 +393,11 @@ public class HomeMuenFragment extends Fragment {
                                         }
                                         break;
                                         case "60":// 情报中心
-                                        {
-                                            mContext.startActivity(new Intent(mContext, InfoCenterActivity.class));
-                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_InfoCenterActivity");
-                                        }
-                                        break;
+//                                        {
+//                                            mContext.startActivity(new Intent(mContext, InfoCenterActivity.class));
+//                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_InfoCenterActivity");
+//                                        }
+                                            break;
                                         case "19":// 今日联赛统计
                                         {
                                             mContext.startActivity(new Intent(mContext, LeagueStatisticsTodayActivity.class));
@@ -505,17 +477,20 @@ public class HomeMuenFragment extends Fragment {
                                         }
                                         break;
                                         case "80":// 多屏动画列表
-                                        {
-                                            if (PreferenceUtil.getBoolean("introduce", true)) {
-                                                mContext.startActivity(new Intent(mContext, MultiScreenIntroduceActivity.class));
-
-                                                PreferenceUtil.commitBoolean("introduce", false);
-                                            } else {
-                                                mContext.startActivity(new Intent(mContext, MultiScreenViewingListActivity.class));
-                                            }
-                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_MultiScreen_Introduce");
-                                        }
-                                        break;
+//                                        {
+//                                            if (PreferenceUtil.getBoolean("introduce", true)) {
+//                                                mContext.startActivity(new Intent(mContext, MultiScreenIntroduceActivity.class));
+//
+//                                                PreferenceUtil.commitBoolean("introduce", false);
+//                                            } else {
+//                                                mContext.startActivity(new Intent(mContext, MultiScreenViewingListActivity.class));
+//                                            }
+//                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_MultiScreen_Introduce");
+//                                        }
+                                            break;
+                                        case "42":
+//                                            mContext.startActivity(new Intent(mContext, FootballMatchActivity.class));
+                                            break;
                                     }
                                     break;
                             }

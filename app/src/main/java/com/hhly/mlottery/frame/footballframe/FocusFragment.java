@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
 import android.provider.Settings;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,7 +40,6 @@ import com.hhly.mlottery.callback.FocusMatchClickListener;
 import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
-import com.hhly.mlottery.frame.ScoresFragment;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchSettingEventBusEntity;
 import com.hhly.mlottery.frame.scorefrag.FootBallScoreFragment;
@@ -65,17 +65,19 @@ import de.greenrobot.event.EventBus;
 /**
  * @author Tenney
  * @ClassName: FocusFragment
- * @Description: 关注
+ * @Description: 足球关注
  * @date 2015-10-15 上午9:57:25
  */
-public class FocusFragment extends BaseWebSocketFragment implements OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class FocusFragment extends Fragment implements OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     private static final String TAG = "FocusFragment";
 
-    /**保存足球关注id的key*/
+    /**
+     * 保存足球关注id的key
+     */
     public final static String FOCUS_ISD = "focus_ids";
 
     public final static int REQUEST_SET_CODE = 0x42;
@@ -152,11 +154,11 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
     }
 
 
-    public static FocusFragment newInstance(int index,int entryType) {
+    public static FocusFragment newInstance(int index, int entryType) {
 
         Bundle bundle = new Bundle();
         bundle.putInt(FRAGMENT_INDEX, index);
-        bundle.putInt(ENTRY_TYPE , entryType);
+        bundle.putInt(ENTRY_TYPE, entryType);
         FocusFragment fragment = new FocusFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -165,8 +167,8 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic("USER.topic.app");
+//        setWebSocketUri(BaseURLs.WS_SERVICE);
+//        setTopic("USER.topic.app");
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mEntryType = getArguments().getInt(ENTRY_TYPE);
@@ -220,8 +222,8 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
         mReloadTvBtn = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
         mReloadTvBtn.setOnClickListener(this);
 
-        mUnFocusLayout = (RelativeLayout)mView.findViewById(R.id.football_unfocus);
-        mLoading = (LinearLayout)mView.findViewById(R.id.football_focus_loading_ll);
+        mUnFocusLayout = (RelativeLayout) mView.findViewById(R.id.football_unfocus);
+        mLoading = (LinearLayout) mView.findViewById(R.id.football_focus_loading_ll);
 
         mLoadingLayout = (LinearLayout) mView.findViewById(R.id.football_immediate_loading_ll);
         mErrorLayout = (LinearLayout) mView.findViewById(R.id.network_exception_layout);
@@ -234,7 +236,7 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
     /**
      * 设置监听事件
      */
-    private void setListener(){
+    private void setListener() {
         mFocusClickListener = new FocusMatchClickListener() {
             @Override
             public void onClick(View view, String third) {
@@ -289,6 +291,7 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
 
     /**
      * 设置显示状态
+     *
      * @param status
      */
     //显示状态
@@ -312,7 +315,7 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
         } else if (status == 9) {
             mSwipeRefreshLayout.setVisibility(View.GONE);
             mSwipeRefreshLayout.setRefreshing(true);
-        }else {
+        } else {
             mSwipeRefreshLayout.setVisibility(View.GONE);
             mSwipeRefreshLayout.setRefreshing(false);
         }
@@ -398,6 +401,7 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
             initData();
         }
     };
+
     // 初始化数据
     public void initData() {
 
@@ -434,8 +438,7 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
                     PreferenceUtil.commitString("focus_ids", "");
 //                    ((ScoresFragment) getParentFragment()).focusCallback();
                     if (mEntryType == 0) {
-                        ((ScoresFragment) getParentFragment()).firstFocusCallback();
-                    }else if(mEntryType == 1){
+                    } else if (mEntryType == 1) {
                         ((FootBallScoreFragment) getParentFragment()).focusCallback();
                     }
 //                    mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
@@ -467,8 +470,7 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
                 Log.e("BBB", "存进去时" + sb.toString());
 //                ((ScoresFragment) getParentFragment()).focusCallback();
                 if (mEntryType == 0) {
-                    ((ScoresFragment) getParentFragment()).firstFocusCallback();
-                }else if(mEntryType == 1){
+                } else if (mEntryType == 1) {
                     ((FootBallScoreFragment) getParentFragment()).focusCallback();
                 }
 
@@ -496,17 +498,17 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
                             Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
                             intent.putExtra("thirdId", thirdId);
                             intent.putExtra("currentFragmentId", 4);
-                            if(getActivity()!=null){
+                            if (getActivity() != null) {
                                 getActivity().startActivityForResult(intent, REQUEST_DETAIL_CODE);
                             }
                         }
                     });
                     mRecyclerView.setAdapter(mAdapter);
-                    L.d("sdfgh","mAdapter == null");
+                    L.d("sdfgh", "mAdapter == null");
 
                 } else {
                     updateAdapter();
-                    L.d("sdfgh","else");
+                    L.d("sdfgh", "else");
                 }
 
 
@@ -977,6 +979,7 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
         mAdapter.notifyDataSetChanged();
 
     }
+
     public void reLoadData() {
 //        mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
 //        setStatus(SHOW_STATUS_LOADING);
@@ -1012,14 +1015,14 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-//        isPause = false;
-        L.v(TAG, "___onResume___");
-        connectWebSocket();
-
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+////        isPause = false;
+//        L.v(TAG, "___onResume___");
+//        connectWebSocket();
+//
+//    }
 
 
     @Override
@@ -1028,44 +1031,44 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
         L.d(TAG, "__onDestroy___");
     }
 
-    @Override
-    protected void onTextResult(String text) {
-        L.e("Focus","tuisong");
-        if (mAdapter == null) {
-            return;
-        }
+//    @Override
+//    protected void onTextResult(String text) {
+//        L.e("Focus", "tuisong");
+//        if (mAdapter == null) {
+//            return;
+//        }
+//
+//        String type = "";
+//        try {
+//            JSONObject jsonObject = new JSONObject(text);
+//            type = jsonObject.getString("type");
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        if (!"".equals(type)) {
+//            Message msg = Message.obtain();
+//            msg.obj = text;
+//            msg.arg1 = Integer.parseInt(type);
+//
+//            mSocketHandler.sendMessage(msg);
+//        }
+//    }
 
-        String type = "";
-        try {
-            JSONObject jsonObject = new JSONObject(text);
-            type = jsonObject.getString("type");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        if (!"".equals(type)) {
-            Message msg = Message.obtain();
-            msg.obj = text;
-            msg.arg1 = Integer.parseInt(type);
-
-            mSocketHandler.sendMessage(msg);
-        }
-    }
-
-    @Override
-    protected void onConnectFail() {
-
-    }
-
-    @Override
-    protected void onDisconnected() {
-
-    }
-
-    @Override
-    protected void onConnected() {
-
-    }
+//    @Override
+//    protected void onConnectFail() {
+//
+//    }
+//
+//    @Override
+//    protected void onDisconnected() {
+//
+//    }
+//
+//    @Override
+//    protected void onConnected() {
+//
+//    }
 
 
     /**
@@ -1098,7 +1101,7 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
      * EventBus 赛场比赛详情返回FootballMatchDetailActivity.关注页面分离出来不需要改
      * 接受消息的页面实现
      * 未关注页面去关注后返回也是此处接收
-     *
+     * <p>
      * ps:改回原关注页面，需要判断更新（2017-3-7） 1.2.5国际化版本
      */
 
@@ -1118,8 +1121,7 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
             }
 
             if (mEntryType == 0) {
-                ((ScoresFragment) getParentFragment()).firstFocusCallback();
-            }else if(mEntryType == 1){
+            } else if (mEntryType == 1) {
                 ((FootBallScoreFragment) getParentFragment()).focusCallback();
             }
 
@@ -1132,10 +1134,10 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
 
     @Override
     public void onRefresh() {
-        L.d("sdfgh","onRefresh");
+        L.d("sdfgh", "onRefresh");
         setStatus(SHOW_STATUS_LOADING);
         initData();
-        connectWebSocket();
+//        connectWebSocket();
     }
 
 
@@ -1149,5 +1151,29 @@ public class FocusFragment extends BaseWebSocketFragment implements OnClickListe
     public void onPause() {
         super.onPause();
 //        isPause = true;
+    }
+
+    //推送
+    public void onEventMainThread(FootBallScoreFragment.FootballScoresWebSocketEntity entity) {
+        L.e("Focus", "tuisong");
+        if (mAdapter == null) {
+            return;
+        }
+
+        String type = "";
+        try {
+            JSONObject jsonObject = new JSONObject(entity.text);
+            type = jsonObject.getString("type");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (!"".equals(type)) {
+            Message msg = Message.obtain();
+            msg.obj = entity.text;
+            msg.arg1 = Integer.parseInt(type);
+
+            mSocketHandler.sendMessage(msg);
+        }
     }
 }

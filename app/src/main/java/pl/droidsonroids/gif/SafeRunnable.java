@@ -27,7 +27,6 @@ abstract class SafeRunnable implements Runnable {
 			try {
 				throw throwable;
 			} catch (Throwable e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

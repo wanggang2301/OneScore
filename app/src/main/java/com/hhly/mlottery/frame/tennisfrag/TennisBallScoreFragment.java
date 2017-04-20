@@ -28,10 +28,10 @@ import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.tennisball.TennisEventBus;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.BallType;
+import com.hhly.mlottery.frame.scorefrag.CloseWebSocketEventBus;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 
@@ -70,7 +70,7 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic("USER.topic.tennis.score");
+        setTopic("USER.topic.tennis.odd");
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
     }
@@ -186,6 +186,12 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
         connectWebSocket();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        closeWebSocket();
+    }
+
     private void popWindow(final View v) {
         final View mView = View.inflate(mContext, R.layout.pop_select, null);
         // 创建ArrayAdapter对象
@@ -203,6 +209,8 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                L.d("websocket123", ">>>>>>>>网球比分关闭");
+
                 closeWebSocket();
 
                 EventBus.getDefault().post(new ScoreSwitchFg(position));
@@ -228,10 +236,22 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
     }
 
     @Override
+
     protected void onTextResult(String text) {
-        L.d("tennis", "网球推送消息： " + text);
-        ((TennisBallSocketFragment) fragments.get(TENNIS_IMMEDIATE)).socketDataChanged(text);
-        ((TennisBallSocketFragment) fragments.get(TENNIS_FOCUS)).socketDataChanged(text);
+        L.d("websocket123", "网球收到消息==" + text);
+        if (TextUtils.isEmpty(text)) return;
+        for (int i = 0; i < fragments.size(); i++) {
+            switch (i) {
+                case TENNIS_IMMEDIATE:
+                case TENNIS_FOCUS:
+                    ((TennisBallSocketFragment) fragments.get(i)).oddsDataChanger(text);
+                    break;
+                case TENNIS_RESULT:
+                case TENNIS_SCHEDULE:
+                    ((TennisBallTabFragment) fragments.get(i)).oddsDataChanger(text);
+                    break;
+            }
+        }
     }
 
     @Override
@@ -271,7 +291,7 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
             }
         }
         // 指数选择
-        else if("tennis_odds".equals(event.msg)){
+        else if ("tennis_odds".equals(event.msg)) {
             for (int i = 0; i < fragments.size(); i++) {
                 switch (i) {
                     case TENNIS_IMMEDIATE:
@@ -295,6 +315,19 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
                 startActivity(intent);
                 mContext.overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
                 break;
+        }
+    }
+
+    public void onEventMainThread(CloseWebSocketEventBus closeWebSocketEventBus) {
+
+        if (closeWebSocketEventBus.isVisible()) {
+            L.d("websocket123", "_________网球 比分 关闭 fg");
+            closeWebSocket();
+        } else {
+            if (closeWebSocketEventBus.getIndex() == BallType.TENNLS) {
+                L.d("websocket123", "_________网球 比分 打开 fg");
+                connectWebSocket();
+            }
         }
     }
 }

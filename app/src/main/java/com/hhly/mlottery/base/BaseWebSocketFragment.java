@@ -2,8 +2,6 @@ package com.hhly.mlottery.base;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
-
 
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
@@ -140,7 +138,7 @@ public abstract class BaseWebSocketFragment extends Fragment {
             @Override
             public void run() {
                 if (ws != null) {
-                    synchronized (ws) {
+                    synchronized (this) {
                         ws.disconnect();
                     }
                     ws = null;
@@ -161,7 +159,7 @@ public abstract class BaseWebSocketFragment extends Fragment {
     private void connect() {
         try {
             if (ws != null) {
-                synchronized (ws) {
+                synchronized (this) {
                     if (ws != null) {
                         if (ws.getState().equals(WebSocketState.CREATED)) {
                             L.d(TAG, "before connect ws.getState() = " + ws.getState());
@@ -202,7 +200,7 @@ public abstract class BaseWebSocketFragment extends Fragment {
             @Override
             public void run() {
                 if (ws != null) {
-                    synchronized (ws) {
+                    synchronized (this) {
                         if (ws != null) {
                             ws.disconnect();
                         }
