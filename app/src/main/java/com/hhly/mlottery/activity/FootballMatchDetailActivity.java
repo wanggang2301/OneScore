@@ -68,7 +68,6 @@ import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.FootballLiveTextComparator;
-import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.NetworkUtils;
 import com.hhly.mlottery.util.StadiumUtils;
@@ -292,7 +291,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     boolean barrage_isFocus = false;
     private View view_red;
 
-//    boolean isAddMultiViewHide = false;
+    private RelativeLayout mLayoutScore;
+
+    //    boolean isAddMultiViewHide = false;
     //动画WebView
     private ProgressWebView mWebView;
 
@@ -371,6 +372,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         head_guest_name = (TextView) findViewById(R.id.head_guest_name);
         iv_back = (ImageView) findViewById(R.id.iv_back);
         iv_setting = (ImageView) findViewById(R.id.iv_setting);
+        mLayoutScore= (RelativeLayout) findViewById(R.id.ll_football_score);
 
         iv_back.setOnClickListener(this);
         iv_setting.setOnClickListener(this);
@@ -472,6 +474,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         mWebView.loadUrl(url);
     }
+
     @Override
     public void onRefresh() {
         L.d(TAG, "下拉刷新");
@@ -723,6 +726,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private void initViewPager(MatchDetail matchDetail) {
         if ("0".equals(matchDetail.getLiveStatus())) { //赛前
+            mLayoutScore.setVisibility(View.VISIBLE);
             if (chartBallView == 1) {
                 // 聊球
                 mViewPager.setCurrentItem(TALKBALL_FG, false);
@@ -765,6 +769,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
             //完场
             if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
+                mLayoutScore.setVisibility(View.VISIBLE);
                 String halfScore = mMatchDetail.getHomeTeamInfo().getHalfScore() + " : " + mMatchDetail.getGuestTeamInfo().getHalfScore();
                 String finishScore = mMatchDetail.getHomeTeamInfo().getScore() + " : " + mMatchDetail.getGuestTeamInfo().getScore();
 
@@ -804,8 +809,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_ED, matchDetail);
 
             } else if (ONLIVE.equals(mMatchDetail.getLiveStatus())) { //未完场头部
-
-
+                mLayoutScore.setVisibility(View.GONE);
                 //place  1主队 2客队
                 initMatchSatisInfo();
 
@@ -815,7 +819,23 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 head_score.setText(mathchStatisInfo.getHome_score() + ":" + mathchStatisInfo.getGuest_score());
 
                 setScoreText(mathchStatisInfo.getHome_score() + " : " + mathchStatisInfo.getGuest_score() + "");
+                //精彩瞬间
+                pollingGifCount();
 
+                mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING, matchDetail);
+
+                Collections.reverse(eventMatchTimeLiveList);
+
+
+                //直播事件
+                mLiveFragment.setEventMatchLive(mMatchDetail, eventMatchTimeLiveList);
+                //事件统计图
+                mLiveFragment.setMathchStatisInfo(mathchStatisInfo);
+                mLiveFragment.initLiveStatics(mMatchDetail.getLiveStatus());
+
+                //走势图表
+                mLiveFragment.setTrendChartList(trendChartList);
+                mLiveFragment.initChartData(mMatchDetail.getLiveStatus());
 
                 String state = matchLive.get(0).getState();//获取最后一个的比赛状态
                 mKeepTime = matchLive.get(0).getTime();//获取时间
@@ -825,6 +845,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         mKeepTime = 45 * 60 * 1000 + "";//时间继续赋值为45分钟
                     }
                 }
+
+                mLiveFragment.showTimeView(mKeepTime);
 
 
                 if (NOTOPEN.equals(state)) {
@@ -850,24 +872,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 } else {
                 }
 
-                //精彩瞬间
-                pollingGifCount();
-
-                mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING, matchDetail);
-
-                Collections.reverse(eventMatchTimeLiveList);
-
-
-                //直播事件
-                mLiveFragment.setEventMatchLive(mMatchDetail, eventMatchTimeLiveList);
-                //事件统计图
-                mLiveFragment.setMathchStatisInfo(mathchStatisInfo);
-                mLiveFragment.initLiveStatics(mMatchDetail.getLiveStatus());
-
-
-                //走势图表
-                mLiveFragment.setTrendChartList(trendChartList);
-                mLiveFragment.initChartData(mMatchDetail.getLiveStatus());
 
             }
         }
@@ -1119,10 +1123,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(mWebView!=null){
-            ((ViewGroup)mWebView.getParent()).removeView(mWebView);
+        if (mWebView != null) {
+            ((ViewGroup) mWebView.getParent()).removeView(mWebView);
             mWebView.destroy();
-            mWebView=null;
+            mWebView = null;
         }
 
         if (mReloadTimer != null) {
@@ -1267,10 +1271,11 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             case "0":
             case "10":
             case "11":  //开始上半场，开球：
+                mLayoutScore.setVisibility(View.GONE);
                 break;
             case "1"://上半场结束
                 isMatchStart = false;
-                mLiveFragment.addFootBallEvent(matchTextLiveBean);
+                mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
 
 
@@ -1282,11 +1287,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             case "13":  //下半场开始
                 break;
             case "3": //结束下半场
+                mLayoutScore.setVisibility(View.VISIBLE);
                 //socket关闭
                 // 获取上半场的走势图数据
                 setScoreClolor(getApplicationContext().getResources().getColor(R.color.score));
 
-                mLiveFragment.addFootBallEvent(matchTextLiveBean);
+                mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
 
 
@@ -1311,7 +1317,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                 head_score.setText(mathchStatisInfo.getHome_score() + ":" + mathchStatisInfo.getGuest_score());
 
-                mLiveFragment.addFootBallEvent(matchTextLiveBean);
+                //x时间轴
+                mLiveFragment.addFootballEvent(matchTextLiveBean);
+                //事件放入并展示
+                mLiveFragment.showFootballEventByState();
+
+                mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
 
                 mLiveFragment.setMathchStatisInfo(mathchStatisInfo);
@@ -1341,6 +1352,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 head_score.setText(mathchStatisInfo.getHome_score() + ":" + mathchStatisInfo.getGuest_score());
 
                 mLiveFragment.cancelFootBallEvent(matchTextLiveBean);
+                mLiveFragment.showFootballEventByState();
+
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
 
                 mLiveFragment.setMathchStatisInfo(mathchStatisInfo);
@@ -1366,7 +1379,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                 head_score.setText(mathchStatisInfo.getHome_score() + ":" + mathchStatisInfo.getGuest_score());
 
-                mLiveFragment.addFootBallEvent(matchTextLiveBean);
+                //x时间轴
+                mLiveFragment.addFootballEvent(matchTextLiveBean);
+                //事件放入并展示
+                mLiveFragment.showFootballEventByState();
+
+                mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
 
                 mLiveFragment.setMathchStatisInfo(mathchStatisInfo);
@@ -1398,6 +1416,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
 
                 mLiveFragment.cancelFootBallEvent(matchTextLiveBean);
+                mLiveFragment.showFootballEventByState();
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
 
                 mLiveFragment.setMathchStatisInfo(mathchStatisInfo);
@@ -1414,8 +1433,13 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 //x时间轴
                 //事件放入并展示
 
+                //x时间轴
+                mLiveFragment.addFootballEvent(matchTextLiveBean);
+                //事件放入并展示
+                mLiveFragment.showFootballEventByState();
 
-                mLiveFragment.addFootBallEvent(matchTextLiveBean);
+
+                mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
 
                 mLiveFragment.addTrendChartEvent(matchTextLiveBean);
@@ -1429,8 +1453,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 }
 
                 //取消进球时间，重绘
-
+                //取消进球时间，重绘
                 mLiveFragment.cancelFootBallEvent(matchTextLiveBean);
+                mLiveFragment.showFootballEventByState();
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
 
                 mLiveFragment.cancelFootBallEvent(matchTextLiveBean);
@@ -1440,7 +1465,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
             case "2049": //客队角球
                 mathchStatisInfo.setGuest_corner(mathchStatisInfo.getGuest_corner() + 1);
-                mLiveFragment.addFootBallEvent(matchTextLiveBean);
+                //x时间轴
+                mLiveFragment.addFootballEvent(matchTextLiveBean);
+                //事件放入并展示
+                mLiveFragment.showFootballEventByState();
+
+                mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
                 mLiveFragment.addTrendChartEvent(matchTextLiveBean);
 
@@ -1451,25 +1481,33 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     mathchStatisInfo.setGuest_corner(mathchStatisInfo.getGuest_corner() - 1);
                 }
 
+                //取消进球时间，重绘
                 mLiveFragment.cancelFootBallEvent(matchTextLiveBean);
+                mLiveFragment.showFootballEventByState();
+
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
                 mLiveFragment.cancelTrendChartEvent(matchTextLiveBean);
 
                 break;
 
             case "1031"://主队点球
-                mLiveFragment.addFootBallEvent(matchTextLiveBean);
+                mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
                 break;
 
             case "2055"://客队点球
-                mLiveFragment.addFootBallEvent(matchTextLiveBean);
+                mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
                 break;
 
             case "1034":   //主队黄牌
                 mathchStatisInfo.setHome_yc(mathchStatisInfo.getHome_yc() + 1);
-                mLiveFragment.addFootBallEvent(matchTextLiveBean);
+                //x时间轴
+                mLiveFragment.addFootballEvent(matchTextLiveBean);
+                //事件放入并展示
+                mLiveFragment.showFootballEventByState();
+
+                mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
                 break;
 
@@ -1478,8 +1516,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     mathchStatisInfo.setHome_yc(mathchStatisInfo.getHome_yc() - 1);
                 }
 
-
+                //取消进球时间，重绘
                 mLiveFragment.cancelFootBallEvent(matchTextLiveBean);
+                mLiveFragment.showFootballEventByState();
+
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
                 break;
 
@@ -1487,7 +1527,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                 mathchStatisInfo.setHome_yc(mathchStatisInfo.getHome_yc() + 1);
                 mathchStatisInfo.setHome_rc(mathchStatisInfo.getHome_rc() + 1);
-                mLiveFragment.addFootBallEvent(matchTextLiveBean);
+                //x时间轴
+                mLiveFragment.addFootballEvent(matchTextLiveBean);
+                //事件放入并展示
+                mLiveFragment.showFootballEventByState();
+
+                mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
                 break;
 
@@ -1497,7 +1542,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     mathchStatisInfo.setHome_rc(mathchStatisInfo.getHome_rc() - 1);
                 }
 
+                //取消进球时间，重绘
                 mLiveFragment.cancelFootBallEvent(matchTextLiveBean);
+                mLiveFragment.showFootballEventByState();
+
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
 
                 break;
@@ -1505,8 +1553,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
             case "2058":  //客队黄牌
                 mathchStatisInfo.setGuest_yc(mathchStatisInfo.getGuest_yc() + 1);
+                //x时间轴
+                mLiveFragment.addFootballEvent(matchTextLiveBean);
+                //事件放入并展示
+                mLiveFragment.showFootballEventByState();
 
-                mLiveFragment.addFootBallEvent(matchTextLiveBean);
+                mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
                 break;
 
@@ -1514,7 +1566,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 if (mathchStatisInfo.getGuest_yc() > 0) {
                     mathchStatisInfo.setGuest_yc(mathchStatisInfo.getGuest_yc() - 1);
                 }
+                //取消进球时间，重绘
                 mLiveFragment.cancelFootBallEvent(matchTextLiveBean);
+                mLiveFragment.showFootballEventByState();
+
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
                 break;
 
@@ -1522,7 +1577,13 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             case "2069": //客队两黄变一红
                 mathchStatisInfo.setGuest_yc(mathchStatisInfo.getGuest_yc() + 1);
                 mathchStatisInfo.setGuest_rc(mathchStatisInfo.getGuest_rc() + 1);
-                mLiveFragment.addFootBallEvent(matchTextLiveBean);
+
+                //x时间轴
+                mLiveFragment.addFootballEvent(matchTextLiveBean);
+                //事件放入并展示
+                mLiveFragment.showFootballEventByState();
+
+                mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
                 break;
 
@@ -1533,23 +1594,40 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     mathchStatisInfo.setGuest_rc(mathchStatisInfo.getGuest_rc() - 1);
                 }
 
+
+                //取消进球时间，重绘
                 mLiveFragment.cancelFootBallEvent(matchTextLiveBean);
+                mLiveFragment.showFootballEventByState();
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
                 break;
 
             case "1032":  //主队红牌
                 mathchStatisInfo.setHome_rc(mathchStatisInfo.getHome_rc() + 1);
+                //x时间轴
+                mLiveFragment.addFootballEvent(matchTextLiveBean);
+                //事件放入并展示
+                mLiveFragment.showFootballEventByState();
                 break;
             case "1047": //取消主队红牌
                 if (mathchStatisInfo.getHome_rc() > 0) {
                     mathchStatisInfo.setHome_rc(mathchStatisInfo.getHome_rc() - 1);
                 }
 
+                //取消进球时间，重绘
+                mLiveFragment.cancelFootBallEvent(matchTextLiveBean);
+                mLiveFragment.showFootballEventByState();
+
+
                 break;
 
             case "2056":  //客队红牌
                 mathchStatisInfo.setGuest_rc(mathchStatisInfo.getGuest_rc() + 1);
-                mLiveFragment.addFootBallEvent(matchTextLiveBean);
+                //x时间轴
+                mLiveFragment.addFootballEvent(matchTextLiveBean);
+                //事件放入并展示
+                mLiveFragment.showFootballEventByState();
+
+                mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
                 break;
 
@@ -1558,7 +1636,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     mathchStatisInfo.setGuest_rc(mathchStatisInfo.getGuest_rc() - 1);
                 }
 
+                //取消进球时间，重绘
                 mLiveFragment.cancelFootBallEvent(matchTextLiveBean);
+                mLiveFragment.showFootballEventByState();
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
                 break;
 
@@ -1652,12 +1732,20 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
 
             case "1055"://主队换人
-                mLiveFragment.addFootBallEvent(matchTextLiveBean);
+                //x时间轴
+                mLiveFragment.addFootballEvent(matchTextLiveBean);
+                //事件放入并展示
+                mLiveFragment.showFootballEventByState();
+                mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
                 break;
 
             case "2079": //客队换人
-                mLiveFragment.addFootBallEvent(matchTextLiveBean);
+                //x时间轴
+                mLiveFragment.addFootballEvent(matchTextLiveBean);
+                //事件放入并展示
+                mLiveFragment.showFootballEventByState();
+                mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
                 break;
             case "1043"://主队越位
@@ -1866,6 +1954,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mKeepTime = 45 * 60 * 1000 + "";//时间继续赋值为45分钟
             }
         }
+
+        mLiveFragment.showTimeView(mKeepTime); //刷新时间轴
+
 
         if (isMatchStart) {
             if (liveTextTime >= matchKeepTime) {

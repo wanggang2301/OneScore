@@ -580,11 +580,14 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
 
     private void initEvent(MatchDetail mMatchDetail) {
         if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
-            xMatchLive = mMatchDetail.getMatchInfo().getMatchTimeLive();//完场直接有数据
-            secondToMinute(xMatchLive);
-            String time = "5400000";//90分钟的毫秒数
-            showFootballEventByState();
-            showTimeView(time);//画一下时间轴
+            if(mMatchDetail.getMatchInfo().getMatchTimeLive()!=null){
+                xMatchLive = mMatchDetail.getMatchInfo().getMatchTimeLive();//完场直接有数据
+                secondToMinute(xMatchLive);
+                String time = "5400000";//90分钟的毫秒数
+                showFootballEventByState();
+                showTimeView(time);//画一下时间轴
+            }
+
         } else { //赛中
             initFootBallEventData(mMatchDetail);
         }
@@ -640,7 +643,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
      * <p/>
      * eventMatchTimeLiveList.add(new MatchTimeLiveBean(matchTextLiveBean.getTime(), matchTextLiveBean.getCode(), matchTextLiveBean.getHomeScore() + " : " + matchTextLiveBean.getGuestScore(), matchTextLiveBean.getMsgId(), HALFTIME, matchTextLiveBean.getPlayInfo(), 0));
      */
-    public void addFootBallEvent(MatchTextLiveBean matchTextLiveBean) {
+    public void addVerticalFootBallEvent(MatchTextLiveBean matchTextLiveBean) {
         String place = matchTextLiveBean.getMsgPlace();
         if (matchTextLiveBean.getMsgPlace().equals("2")) {//客队
             place = "0";  //客队
