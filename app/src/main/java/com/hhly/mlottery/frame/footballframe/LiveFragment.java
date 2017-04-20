@@ -573,14 +573,15 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
             finishMatchLiveTextFragment = FinishMatchLiveTextFragment.newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
             addFragmentToActivity(getChildFragmentManager(), finishMatchLiveTextFragment, R.id.fl_live_text);
         } else { //赛中
+            L.d("xxccvv", "赛中" + matchLive.size());
             mliveTextFragment = LiveTextFragment.newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
-            addFragmentToActivity(getChildFragmentManager(), finishMatchLiveTextFragment, R.id.fl_live_text);
+            addFragmentToActivity(getChildFragmentManager(), mliveTextFragment, R.id.fl_live_text);
         }
     }
 
     private void initEvent(MatchDetail mMatchDetail) {
         if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
-            if(mMatchDetail.getMatchInfo().getMatchTimeLive()!=null){
+            if (mMatchDetail.getMatchInfo().getMatchTimeLive() != null) {
                 xMatchLive = mMatchDetail.getMatchInfo().getMatchTimeLive();//完场直接有数据
                 secondToMinute(xMatchLive);
                 String time = "5400000";//90分钟的毫秒数
@@ -604,7 +605,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
      * @param mMatchDetail
      */
     public void initFootBallEventData(MatchDetail mMatchDetail) {
-       // matchLive = mMatchDetail.getMatchInfo().getMatchLive();
+        // matchLive = mMatchDetail.getMatchInfo().getMatchLive();
         getTimeLive();
         showFootballEventByState();
     }

@@ -83,7 +83,7 @@ public class LiveTextFragment extends Fragment {
             }
         });*/
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return mView;
     }
 /*
 
