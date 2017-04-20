@@ -2,7 +2,6 @@
 <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/basket_odds_title_layout"
     android:layout_width="match_parent"
-    android:background="@color/black_title"
     android:paddingTop="12.5dp"
     android:paddingBottom="6dp"
     android:layout_height="35dp"
@@ -16,7 +15,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textColor="@color/black_details_ball_textcolor"
+            android:textColor="@color/mdy_666"
             android:textSize="@dimen/text_size_12"
             android:gravity="center"
             android:text="@string/basket_company"
@@ -39,7 +38,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textColor="@color/black_details_ball_textcolor"
+            android:textColor="@color/mdy_666"
             android:textSize="@dimen/text_size_12"
             android:gravity="center"
             android:text=""/>
@@ -48,7 +47,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textColor="@color/black_details_ball_textcolor"
+            android:textColor="@color/mdy_666"
             android:textSize="@dimen/text_size_12"
             android:gravity="center"
             android:text="@string/basket_analyze_dish"/>
@@ -57,7 +56,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textColor="@color/black_details_ball_textcolor"
+            android:textColor="@color/mdy_666"
             android:textSize="@dimen/text_size_12"
             android:gravity="center"
             android:text=""/>

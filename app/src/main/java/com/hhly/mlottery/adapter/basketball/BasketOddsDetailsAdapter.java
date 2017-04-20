@@ -51,7 +51,7 @@ public class BasketOddsDetailsAdapter extends CommonAdapter<OddsDataEntity> {
         }else{
 //            holder.setText(R.id.basket_odds_details_guestwin, Html.fromHtml("<font color='#FFFFFF'><b>" + oddBean.getLeftOdds() + "</b></font>"));
             holder.setText(R.id.basket_odds_details_guestwin , oddBean.getLeftOdds());
-            holder.setTextColorRes(R.id.basket_odds_details_guestwin, R.color.basket_default_color);
+            holder.setTextColorRes(R.id.basket_odds_details_guestwin, R.color.mdy_333);
         }
 
         if (oddBean.getRightOddsTrend() == 1) {
@@ -66,7 +66,7 @@ public class BasketOddsDetailsAdapter extends CommonAdapter<OddsDataEntity> {
         }else{
 //            holder.setText(R.id.basket_odds_details_homewin, Html.fromHtml("<font color='#FFFFFF'><b>" + oddBean.getRightOdds() + "</b></font>"));
             holder.setText(R.id.basket_odds_details_homewin, oddBean.getRightOdds());
-            holder.setTextColorRes(R.id.basket_odds_details_homewin, R.color.basket_default_color);
+            holder.setTextColorRes(R.id.basket_odds_details_homewin, R.color.mdy_333);
         }
 
 
@@ -96,7 +96,7 @@ public class BasketOddsDetailsAdapter extends CommonAdapter<OddsDataEntity> {
                             holder.setVisible(R.id.basket_odds_details_image, View.INVISIBLE);
 //                            holder.setText(R.id.basket_odds_details_handicap, Html.fromHtml("<font color='#FFFFFF'><b>" + oddBean.getHandicapValue() + "</b></font>"));
                             holder.setText(R.id.basket_odds_details_handicap , oddBean.getHandicapValue());
-                            holder.setBackgroundColorRes(R.id.basket_odds_details_handicap, R.color.black_grounding);
+                            holder.setBackgroundColorRes(R.id.basket_odds_details_handicap, R.color.whitesmoke);
                         }
                 } else {
                     holder.setVisible(R.id.basket_odds_handicp_ll ,false);
