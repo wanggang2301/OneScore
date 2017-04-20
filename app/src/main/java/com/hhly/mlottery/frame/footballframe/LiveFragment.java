@@ -44,15 +44,19 @@ import com.hhly.mlottery.bean.footballDetails.trend.TrendBean;
 import com.hhly.mlottery.bean.footballDetails.trend.TrendFormBean;
 import com.hhly.mlottery.callback.FootballLiveGotoChart;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.FootballEventComparator;
 import com.hhly.mlottery.util.FootballTrendChartComparator;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.widget.FootballEventView;
+import com.hhly.mlottery.widget.TimeView;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -64,6 +68,7 @@ import static com.hhly.mlottery.config.FootBallTypeEnum.DANGERATTACK;
 import static com.hhly.mlottery.config.FootBallTypeEnum.DANGERATTACK1;
 import static com.hhly.mlottery.config.FootBallTypeEnum.DIANQIU;
 import static com.hhly.mlottery.config.FootBallTypeEnum.DIANQIU1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.FIRSTHALF;
 import static com.hhly.mlottery.config.FootBallTypeEnum.HALFTIME;
 import static com.hhly.mlottery.config.FootBallTypeEnum.RED_CARD;
 import static com.hhly.mlottery.config.FootBallTypeEnum.RED_CARD1;
@@ -75,8 +80,12 @@ import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE;
 import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE1;
 import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE12;
 import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE2;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SUBSTITUTION;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SUBSTITUTION1;
 import static com.hhly.mlottery.config.FootBallTypeEnum.YELLOW_CARD;
 import static com.hhly.mlottery.config.FootBallTypeEnum.YELLOW_CARD1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.YTORED;
+import static com.hhly.mlottery.config.FootBallTypeEnum.YTORED1;
 
 /**
  * @author wang gang
@@ -148,6 +157,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private List<MatchTimeLiveBean> eventMatchLive = new ArrayList<>();
 
     private LinearLayout ll_nodata;
+    private LinearLayout ll_event;
 
     private FootballLiveGotoChart mFootballLiveGotoChart;
 
@@ -224,11 +234,21 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private Activity mActivity;
 
 
-    private MatchDetail mMatchDetail;
+    //  private MatchDetail mMatchDetail;
 
     private List<MatchTextLiveBean> matchLive;
     private List<Integer> allMatchLiveMsgId;
 
+
+    /**
+     * 时间轴的集合
+     */
+    private List<MatchTimeLiveBean> xMatchLive = new ArrayList<>();
+
+    //时间轴的view
+    private TimeView timeView;
+    private FootballEventView timeLayoutTop;
+    private FootballEventView timeLayoutBottom;
 
     private NoLiveTextFragment mNoLiveTextFragment;
     private LiveTextFragment mliveTextFragment;
@@ -295,8 +315,14 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         recyclerView.setNestedScrollingEnabled(false);
 
         ll_nodata = (LinearLayout) mView.findViewById(R.id.nodata);
+        ll_event = (LinearLayout) mView.findViewById(R.id.ll_event);
 
         mNestedScrollView_event.setFillViewport(true);
+
+        //x时间轴
+        timeView = (TimeView) mView.findViewById(R.id.time_football);
+        timeLayoutTop = (FootballEventView) mView.findViewById(R.id.time_layout_top);
+        timeLayoutBottom = (FootballEventView) mView.findViewById(R.id.time_layout_bottom);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -506,18 +532,21 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
             addFragmentToActivity(getChildFragmentManager(), mNoLiveTextFragment, R.id.fl_live_text);
 
             ll_nodata.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
+            ll_event.setVisibility(View.GONE);
             mNestedScrollView_trend.setVisibility(View.GONE);
         } else if ("1".equals(eventType) || "-1".equals(eventType)) {   //-1代表完场  1代表直播中
 
-            initLiveText(matchDetail);
 
             ll_nodata.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
+            ll_event.setVisibility(View.VISIBLE);
             mNestedScrollView_trend.setVisibility(View.VISIBLE);
-            computeEventNum(eventType);
-            eventAdapter = new EventAdapter(mContext, eventMatchLive);
-            recyclerView.setAdapter(eventAdapter);
+
+            //文字直播
+            initLiveText(matchDetail);
+
+            //时间轴和事件
+            initEvent(matchDetail);
+
         }
     }
 
@@ -547,6 +576,34 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
             mliveTextFragment = LiveTextFragment.newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
             addFragmentToActivity(getChildFragmentManager(), finishMatchLiveTextFragment, R.id.fl_live_text);
         }
+    }
+
+    private void initEvent(MatchDetail mMatchDetail) {
+        if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
+            xMatchLive = mMatchDetail.getMatchInfo().getMatchTimeLive();//完场直接有数据
+            secondToMinute(xMatchLive);
+            String time = "5400000";//90分钟的毫秒数
+            showFootballEventByState();
+            showTimeView(time);//画一下时间轴
+        } else { //赛中
+            initFootBallEventData(mMatchDetail);
+        }
+
+
+        computeEventNum(eventType);
+        eventAdapter = new EventAdapter(mContext, eventMatchLive);
+        recyclerView.setAdapter(eventAdapter);
+    }
+
+    /**
+     * 赛中的时间轴数据，从文字直播数据中筛选
+     *
+     * @param mMatchDetail
+     */
+    public void initFootBallEventData(MatchDetail mMatchDetail) {
+       // matchLive = mMatchDetail.getMatchInfo().getMatchLive();
+        getTimeLive();
+        showFootballEventByState();
     }
 
 
@@ -597,19 +654,6 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-
-    /**
-     * 取消对应的事件直播
-     */
-    public void cancelFootBallEvent(MatchTextLiveBean matchTextLiveBean) {
-        Iterator<MatchTimeLiveBean> iterator = eventMatchLive.iterator();
-        while (iterator.hasNext()) {
-            MatchTimeLiveBean bean = iterator.next();
-            if (bean.getEnNum().equals(matchTextLiveBean.getCancelEnNum())) {//取消进球等事件的判断
-                iterator.remove();//用xMatchLive.remove会有异常
-            }
-        }
-    }
 
     private void computeEventNum(String status) {
         int homeGoal = 0;
@@ -1567,6 +1611,168 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.add(frameId, fragment);
             transaction.commit();
+        }
+    }
+
+
+    /**
+     * 完场将时间改为分钟
+     *
+     * @param xMatchLive
+     */
+    private void secondToMinute(List<MatchTimeLiveBean> xMatchLive) {
+        for (MatchTimeLiveBean timeLiveBean : xMatchLive) {
+            int time = StadiumUtils.convertStringToInt(timeLiveBean.getTime());
+            if (time > 45 && timeLiveBean.getState().equals(FIRSTHALF)) {//上半场
+                time = 45;
+            }
+            if (time > 90) {
+                time = 90;
+            }
+            if (timeLiveBean.getState().equals(HALFTIME)) {
+                time = 46;
+            }
+            timeLiveBean.setTime(time + "");
+        }
+    }
+
+    /**
+     * 展示足球事件。根据比赛状态
+     */
+    public void showFootballEventByState() {
+        Collections.sort(xMatchLive, new FootballEventComparator());
+
+        Map<String, List<MatchTimeLiveBean>> timeEventMap1 = new LinkedHashMap<String, List<MatchTimeLiveBean>>();//LinkedHashMap保证map有序
+        Map<String, List<MatchTimeLiveBean>> timeEventMap2 = new LinkedHashMap<String, List<MatchTimeLiveBean>>();
+
+        for (MatchTimeLiveBean data : xMatchLive) {
+            List<MatchTimeLiveBean> temp1 = timeEventMap1.get(data.getTime());
+            List<MatchTimeLiveBean> temp2 = timeEventMap2.get(data.getTime());
+            if (temp1 == null) {
+                temp1 = new ArrayList<>();
+            }
+            if (temp2 == null) {
+                temp2 = new ArrayList<>();
+            }
+            if (data.getIsHome().equals("1")) {//主队
+                temp1.add(data);
+                timeEventMap1.put(data.getTime(), temp1);
+            }
+            if (data.getIsHome().equals("0")) {//客队
+                temp2.add(data);
+                timeEventMap2.put(data.getTime(), temp2);
+            }
+
+        }
+
+        timeLayoutTop.setEventImageByState(timeEventMap1);
+        timeLayoutBottom.setEventImageByState(timeEventMap2);
+
+
+    }
+
+    /**
+     * 展示时间轴时间
+     */
+    public void showTimeView(String mKeepTime) {
+        if (mKeepTime == null) {
+            mKeepTime = "0";
+        }
+        timeView.updateTime(Integer.parseInt(mKeepTime));
+    }
+
+    /**
+     * 赛中时获取时间轴数据
+     */
+    private void getTimeLive() {
+        xMatchLive = new ArrayList<>();
+        if (matchLive == null) {
+            return;
+        }
+        Iterator<MatchTextLiveBean> iterator1 = matchLive.iterator();
+        while (iterator1.hasNext()) {
+            MatchTextLiveBean bean1 = iterator1.next();
+            if (bean1.getCode().equals(SCORE) || bean1.getCode().equals(SCORE1) ||
+                    bean1.getCode().equals(RED_CARD) || bean1.getCode().equals(RED_CARD1) ||
+                    bean1.getCode().equals(YTORED) || bean1.getCode().equals(YTORED1) ||
+                    bean1.getCode().equals(YELLOW_CARD) || bean1.getCode().equals(YELLOW_CARD1) ||
+                    bean1.getCode().equals(CORNER) || bean1.getCode().equals(CORNER1) ||
+                    bean1.getCode().equals(SUBSTITUTION) || bean1.getCode().equals(SUBSTITUTION1)
+                //  bean1.getCode().equals(FIRSTOVER)//把上半场结束的状态也加进来
+                    ) {
+                String place = bean1.getMsgPlace();
+                if (place.equals("2")) {//客队
+                    place = "0";//isHome=0客队
+                }
+
+                MatchTimeLiveBean timeLiveBean = new MatchTimeLiveBean(secondToMInute(bean1) + "", bean1.getCode(),//这里时间直接转换为分钟，就会一样了
+                        place, bean1.getEnNum(), bean1.getState(), "", bean1.getEnNum(), 0);
+                xMatchLive.add(timeLiveBean);
+
+            }
+
+        }
+
+        for (MatchTextLiveBean bean : matchLive) {
+            Iterator<MatchTimeLiveBean> iterator2 = xMatchLive.iterator();
+            while (iterator2.hasNext()) {
+                MatchTimeLiveBean bean2 = iterator2.next();
+                if (bean2.getMsgId().equals(bean.getCancelEnNum())) {
+                    iterator2.remove();//去掉已经取消的
+                }
+            }
+        }
+
+
+    }
+
+    /**
+     * 赛中将时间改为分钟
+     *
+     * @param bean
+     * @return
+     */
+    private int secondToMInute(MatchTextLiveBean bean) {
+        int time = StadiumUtils.convertStringToInt(bean.getTime());
+        if (time > 45 && bean.getState().equals(FIRSTHALF)) {//上半场
+            time = 45;
+        }
+        if (time > 90) {
+            time = 90;
+        }
+        if (bean.getState().equals(HALFTIME)) {
+            time = 46;
+        }
+        return time;
+
+    }
+
+    /**
+     * 把事件从文字直播集合中取出加到时间轴集合中
+     *
+     * @param matchTextLiveBean
+     */
+    public void addFootballEvent(MatchTextLiveBean matchTextLiveBean) {
+        String place = matchTextLiveBean.getMsgPlace();
+        if (matchTextLiveBean.getMsgPlace().equals("2")) {//客队
+            place = "0";
+        }
+
+        xMatchLive.add(new MatchTimeLiveBean(secondToMInute(matchTextLiveBean) + "",
+                matchTextLiveBean.getCode(), place, matchTextLiveBean.getEnNum(), matchTextLiveBean.getState(), "", matchTextLiveBean.getEnNum(), 0));
+    }
+
+    /**
+     * 取消对应的足球事件
+     */
+
+    public void cancelFootBallEvent(MatchTextLiveBean matchTextLiveBean) {
+        Iterator<MatchTimeLiveBean> iterator = xMatchLive.iterator();
+        while (iterator.hasNext()) {
+            MatchTimeLiveBean bean = iterator.next();
+            if (bean.getMsgId().equals(matchTextLiveBean.getCancelEnNum())) {//取消进球等事件的判断
+                iterator.remove();//用xMatchLive.remove会有异常
+            }
         }
     }
 }
