@@ -1676,6 +1676,19 @@
     <string name="foot_event_num">""</string>
     <string name="please_hint_team">请输入球队名称</string>
 
+    <!--球队信息-->
+    <string name="foot_team_info_total">总</string>
+    <string name="foot_team_info_zu">主</string>
+    <string name="foot_team_info_ke">客</string>
+    <string name="foot_team_info_match_count">比赛场次</string>
+    <string name="foot_team_info_lose_goal">失球</string>
+    <string name="foot_team_info_goal_avg">均场进球</string>
+    <string name="foot_team_info_lose_avg">均场失球</string>
+    <string name="foot_team_info_data">球队数据</string>
+    <string name="foot_team_info_his">赛程赛果</string>
+    <string name="foot_team_info_odds">盘口统计</string>
+    <string name="foot_team_info_lineup">球队阵容</string>
+
     /*****不要删除*************************************************************************************************/
     <string name="odds_back_list">""</string>
     <string name="odds_average">""</string>
