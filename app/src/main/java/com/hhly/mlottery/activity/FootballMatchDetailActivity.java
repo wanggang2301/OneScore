@@ -2309,6 +2309,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Share");
                 popupWindow.dismiss();
 
+
                 if (mMatchDetail == null) {
                     return;
                 }
