@@ -501,13 +501,13 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         connectWebSocket();
                     }
 
-
                     mAnalyzeFragment.initData();// 分析下拉刷新
                     mOddsFragment.oddPlateRefresh(); // 指数刷新
                     mChartBallFragment.onRefresh();// 聊球
                 }
             }
         }, 1000);
+
     }
 
     private Timer mReloadTimer;
