@@ -333,8 +333,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         initView();
         initEvent();
         loadAnim();
-
-
         mHandler.sendEmptyMessage(STARTLOADING);
         new Handler().postDelayed(new Runnable() {
             @Override
