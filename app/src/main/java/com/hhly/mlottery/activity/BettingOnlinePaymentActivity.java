@@ -8,9 +8,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.bettingbean.Weixinpayidbean;
+import com.hhly.mlottery.bean.bettingbean.WeiFuTongPayidDataBean;
+import com.hhly.mlottery.bean.bettingbean.WeiXinPayidDataBean;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.tencent.mm.sdk.modelpay.PayReq;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +24,10 @@ import java.util.Map;
  */
 
 public class BettingOnlinePaymentActivity extends BaseActivity implements View.OnClickListener {
+    //AppId,官网申请的合法id
+    private static final String APP_ID = "wx2a5538052969956e";
+    // IWXAPI 是第三方app和微信通信的openapi接口
+//    private IWXAPI api;
 
     private ImageView mBack;
     private LinearLayout mConfirmPay;
@@ -28,7 +36,6 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.betting_recommend_online_payment_lay);
-
         initView();
     }
 
@@ -52,36 +59,79 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
                 break;
             case R.id.betting_confirm_pay:
                 Toast.makeText(mContext, "去支付", Toast.LENGTH_SHORT).show();
-
-                Map<String, String> params = new HashMap<>();
-                params.put("service", "unified.trade.pay");//接口类型
-                params.put("outTradeNo", "ybf20170419");//商户订单号
-                params.put("body", "测试购买商品");//商品描述
-                params.put("totalFee", "1");//总金额 (分)
-
-                String url = "http://192.168.31.15:8083/sunon-web-api/pay/unifiedTradePay";
-
-                VolleyContentFast.requestJsonByPost(url,params , new VolleyContentFast.ResponseSuccessListener<Weixinpayidbean>() {
-
-                    @Override
-                    public void onResponse(Weixinpayidbean jsondata) {
-
-                        Weixinpayidbean.PayData.PayDataMap mDetailsData = jsondata.getData().getDataMap();
-
-                        L.d("yxq0419===" , jsondata.getMsg() + " >>token_id= " + mDetailsData.getToken_id());
-
-                    }
-                }, new VolleyContentFast.ResponseErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-
-                    }
-                },Weixinpayidbean.class);
-
-
-
-
+                WeiXinPayData();
                 break;
         }
+    }
+
+    /**
+     * 威富通支付参数接口
+     */
+    private void WeiFuTongPayData(){
+        Map<String, String> params = new HashMap<>();
+        params.put("service", "unified.trade.pay");//接口类型
+        params.put("outTradeNo", "ybf20170419");//商户订单号
+        params.put("body", "测试购买商品");//商品描述
+        params.put("totalFee", "1");//总金额 (分)
+
+        String url = "http://192.168.31.15:8083/sunon-web-api/pay/unifiedTradePay";
+        VolleyContentFast.requestJsonByPost(url,params , new VolleyContentFast.ResponseSuccessListener<WeiFuTongPayidDataBean>() {
+            @Override
+            public void onResponse(WeiFuTongPayidDataBean jsondata) {
+                WeiFuTongPayidDataBean.PayData.PayDataMap mDetailsData = jsondata.getData().getDataMap();
+                L.d("yxq_WFTPay===" , jsondata.getMsg() + " >>token_id= " + mDetailsData.getToken_id());
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+            }
+        },WeiFuTongPayidDataBean.class);
+    }
+
+    /**
+     * 微信支付参数接口
+     */
+    private void WeiXinPayData(){
+        Map<String, String> params = new HashMap<>();
+        params.put("service", "pay.weixin.raw.app");//接口类型
+        params.put("outTradeNo", "ybf20170421");//商户订单号
+        params.put("body", "测试购买推荐");//商品描述
+        params.put("totalFee", "1");//总金额 (分)
+        params.put("appId", APP_ID);//appid
+
+        String url = "http://192.168.31.15:8083/sunon-web-api/pay/unifiedTradePay";
+        VolleyContentFast.requestJsonByPost(url,params , new VolleyContentFast.ResponseSuccessListener<WeiXinPayidDataBean>() {
+            @Override
+            public void onResponse(WeiXinPayidDataBean jsondata) {
+                WeiXinPayidDataBean.PayDataWX.PayDataMapWX.PayInfo payInfoData = jsondata.getData().getDataMap().getPay_info();
+                L.d("yxq_WXPay===" , jsondata.getMsg() + " >>appid= " + payInfoData.getAppid());
+                toPay(payInfoData);
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                Toast.makeText(mContext, "后台接口访问失败", Toast.LENGTH_SHORT).show();
+            }
+        },WeiXinPayidDataBean.class);
+    }
+
+    private void toPay(WeiXinPayidDataBean.PayDataWX.PayDataMapWX.PayInfo payInfo){
+        //注册appid
+        IWXAPI api = WXAPIFactory.createWXAPI(this, APP_ID);// 通过WXAPIFactory工厂，获取IWXAPI的实例
+        if (!api.isWXAppInstalled()) {
+            Toast.makeText(this, mContext.getResources().getString(R.string.share_uninstall_webchat), Toast.LENGTH_SHORT).show();
+        }
+        api.registerApp(APP_ID); //将appid注册到微信
+
+        //赋值微信支付所需参数
+        PayReq payReq = new PayReq();
+        payReq.appId = payInfo.getAppid();
+        payReq.partnerId = payInfo.getPartnerid();
+        payReq.prepayId = payInfo.getPrepayid();
+        payReq.packageValue = payInfo.getPackages();
+        payReq.nonceStr = payInfo.getNoncestr();
+        payReq.timeStamp = payInfo.getTimestamp();
+        payReq.sign = payInfo.getSign();
+        api.sendReq(payReq);
     }
 }

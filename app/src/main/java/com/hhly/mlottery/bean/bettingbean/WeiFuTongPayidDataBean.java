@@ -1,10 +1,10 @@
 package com.hhly.mlottery.bean.bettingbean;
 
 /**
- * Created by Administrator on 2017/4/19.
+ * 威富通支付参数的bean
  */
 
-public class Weixinpayidbean {
+public class WeiFuTongPayidDataBean {
 //    data	Object
 //    httpCode	200
 //    msg	请求成功
