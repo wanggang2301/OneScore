@@ -205,6 +205,10 @@
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
+        <!--微信支付-->
+        <activity android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"/>
         <!-- QQ分享 -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -383,6 +387,18 @@
             android:screenOrientation="portrait" />
         <activity android:name=".activity.TennisIndexDetailsActivity"
             android:screenOrientation="portrait" />
+<<<<<<< Updated upstream
+=======
+        <activity android:name="com.hhly.mlottery.activity.BettingRecommendActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.hhly.mlottery.activity.BettingPayDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.hhly.mlottery.activity.BettingOnlinePaymentActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.hhly.mlottery.activity.BettingRecommendSettingActivity"
+            android:screenOrientation="portrait" />
+
+>>>>>>> Stashed changes
 
     </application>
 

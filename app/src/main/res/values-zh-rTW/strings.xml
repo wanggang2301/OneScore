@@ -1665,4 +1665,8 @@
     <string name="tennis_datails_status10">主動得分</string>
     <string name="foot_event_num">""</string>
     <string name="please_hint_team">請輸入球隊名稱</string>
+
+    <!--竞彩推荐-->
+    <string name="betting_setting_palying_method">玩法</string>
+    <string name="betting_setting_league">聯賽</string>
 </resources>
