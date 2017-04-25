@@ -6,7 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.AppCompatSpinner;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,13 +22,16 @@ import com.hhly.mlottery.bean.footballteaminfo.FootTeamDataBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.footballteaminfo.TeamInfoDataFragment;
+import com.hhly.mlottery.frame.footballteaminfo.TeamInfoLineupFragment;
+import com.hhly.mlottery.frame.footballteaminfo.TeamInfoOddsFragment;
+import com.hhly.mlottery.frame.footballteaminfo.TeamInfoScoreFragment;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.widget.CustomViewpager;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 import com.hhly.mlottery.widget.ScrollTouchListView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,20 +44,28 @@ public class FootballTeamInfoActivity extends BaseActivity implements SwipeRefre
     private final String TEAM_ID = "TEAM_ID";
     private final String TITLE_TEAM_NAME = "TITLE_TEAM_NAME";
 
-    private ExactSwipeRefreshLayout swipere_fresh;
+    private ExactSwipeRefreshLayout refreshLayout;
     private TabLayout tabLayout;
-    private ViewPager viewPager;
+    private CustomViewpager viewPager;
     private List<String> titles;
     private List<Fragment> fragments = new ArrayList<>();
+    private TextView title;
+    private TextView currentData;
     private PureViewPagerAdapter adapter;
+    private TeamInfoDataFragment teamInfoDataFragment;
+    private TeamInfoScoreFragment teamInfoScoreFragment;
+    private TeamInfoOddsFragment teamInfoOddsFragment;
+    private TeamInfoLineupFragment teamInfoLineupFragment;
+
     private String teamId;
     private String titleName;
     private List<String> seasonList = new ArrayList<>();
     private List<String> yearList = new ArrayList<>();
-    private TeamInfoDataFragment teamInfoDataFragment;
     private String leagueDate;
-    private TextView title;
-    private TextView currentData;
+    private String scoreDate;
+    private int currentDataIndex = 0;
+    private int currentOddsIndex = 0;
+    private boolean isOddsPager = false;// 是否为赛程赛果界面
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +79,7 @@ public class FootballTeamInfoActivity extends BaseActivity implements SwipeRefre
     }
 
     public void initData() {
-        swipere_fresh.setRefreshing(true);
+        refreshLayout.setRefreshing(true);
         Map<String, String> map = new HashMap<>();
         map.put("teamId", teamId);// 球队ID
         map.put("leagueDate", leagueDate);// 日期
@@ -76,17 +87,28 @@ public class FootballTeamInfoActivity extends BaseActivity implements SwipeRefre
         VolleyContentFast.requestJsonByGet(BaseURLs.FOOT_TEAM_DATA_URL, map, new VolleyContentFast.ResponseSuccessListener<FootTeamDataBean>() {
             @Override
             public void onResponse(FootTeamDataBean json) {
-                swipere_fresh.setRefreshing(false);
+                refreshLayout.setRefreshing(false);
                 if (json != null && json.getCode() == 200) {
                     seasonList.clear();
                     yearList.clear();
                     seasonList.addAll(json.getSeasonList());
                     yearList.addAll(json.getYearList());
-                    // TODO 判断当前Fragment
+
                     if (leagueDate == null && seasonList.size() != 0) {
                         leagueDate = seasonList.get(0);
-                        currentData.setText(leagueDate == null ? "--" : leagueDate);
+                        if (!isOddsPager) {
+                            currentData.setText(leagueDate == null ? "" : leagueDate);
+                        }
+
                     }
+                    if (scoreDate == null && yearList.size() != 0) {
+                        scoreDate = yearList.get(0);
+                        if (isOddsPager) {
+                            currentData.setText(scoreDate == null ? "" : scoreDate);
+                        }
+                        teamInfoScoreFragment.updataList(scoreDate);
+                    }
+                    viewPager.setIsScrollable(true);
                     teamInfoDataFragment.updataList(json.getTeamInfo());
                 } else {
                     teamInfoDataFragment.updataList(null);
@@ -95,7 +117,7 @@ public class FootballTeamInfoActivity extends BaseActivity implements SwipeRefre
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                swipere_fresh.setRefreshing(false);
+                refreshLayout.setRefreshing(false);
                 teamInfoDataFragment.updataList(null);
             }
         }, FootTeamDataBean.class);
@@ -108,12 +130,13 @@ public class FootballTeamInfoActivity extends BaseActivity implements SwipeRefre
         findViewById(R.id.ll_data_select).setOnClickListener(this);
         currentData = (TextView) findViewById(R.id.tv_data_content);
 
-        swipere_fresh = (ExactSwipeRefreshLayout) findViewById(R.id.team_swipere_fresh);
-        swipere_fresh.setColorSchemeResources(R.color.bg_header);
-        swipere_fresh.setOnRefreshListener(this);
-        swipere_fresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(this, StaticValues.REFRASH_OFFSET_END));
+        refreshLayout = (ExactSwipeRefreshLayout) findViewById(R.id.team_swipere_fresh);
+        refreshLayout.setColorSchemeResources(R.color.bg_header);
+        refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(this, StaticValues.REFRASH_OFFSET_END));
         tabLayout = (TabLayout) findViewById(R.id.team_title_tabs);
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        viewPager = (CustomViewpager) findViewById(R.id.view_pager);
+        viewPager.setIsScrollable(false);// 禁止滑动，请求成功后再滑动
 
         titles = new ArrayList<>();
         titles.add(getString(R.string.foot_team_info_data));
@@ -122,22 +145,54 @@ public class FootballTeamInfoActivity extends BaseActivity implements SwipeRefre
         titles.add(getString(R.string.foot_team_info_lineup));
 
         teamInfoDataFragment = new TeamInfoDataFragment();
+        teamInfoScoreFragment = TeamInfoScoreFragment.newInstance(teamId);
+        teamInfoOddsFragment = TeamInfoOddsFragment.newInstance(teamId);
+        teamInfoLineupFragment = TeamInfoLineupFragment.newInstance(teamId);
 
         fragments.add(teamInfoDataFragment);
-        fragments.add(teamInfoDataFragment);
-        fragments.add(teamInfoDataFragment);
-        fragments.add(teamInfoDataFragment);
+        fragments.add(teamInfoScoreFragment);
+        fragments.add(teamInfoOddsFragment);
+        fragments.add(teamInfoLineupFragment);
 
         adapter = new PureViewPagerAdapter(fragments, titles, getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(titles.size());
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setupWithViewPager(viewPager);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                isOddsPager = position == 1;
+                if (isOddsPager) {
+                    currentData.setText(scoreDate == null ? "" : scoreDate);
+                } else {
+                    currentData.setText(leagueDate == null ? "" : leagueDate);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
     public void onRefresh() {
         initData();
+        if (!TextUtils.isEmpty(scoreDate)) {
+            teamInfoScoreFragment.updataList(scoreDate);
+        }
+        if (!TextUtils.isEmpty(leagueDate)) {
+            teamInfoOddsFragment.updataList(leagueDate);
+            teamInfoLineupFragment.updataList(leagueDate);
+        }
     }
 
     @Override
@@ -147,13 +202,19 @@ public class FootballTeamInfoActivity extends BaseActivity implements SwipeRefre
                 this.finish();
                 break;
             case R.id.ll_data_select:
-                setDialog();
+                if (!isOddsPager) {
+                    if (!TextUtils.isEmpty(leagueDate)) {
+                        setDialog();
+                    }
+                } else {
+                    if (!TextUtils.isEmpty(scoreDate)) {
+                        setDialog();
+                    }
+                }
                 break;
         }
     }
 
-    int currentDialogPosition = 0;
-    int currentPosition = 0;
     // 日期选择
     private void setDialog() {
         // Dialog 设置
@@ -164,25 +225,38 @@ public class FootballTeamInfoActivity extends BaseActivity implements SwipeRefre
         Button dataOk = (Button) view.findViewById(R.id.sports_btn_ok);
         titleView.setText(getResources().getString(R.string.basket_database_details_season));
 
-        // TODO 判断当前Fragment 使用相对应的日期数据
-        final SportsDialogAdapter mAdapter = new SportsDialogAdapter(seasonList, this, currentDialogPosition);
+        final SportsDialogAdapter mAdapter;
+        if (!isOddsPager) {
+            mAdapter = new SportsDialogAdapter(seasonList, this, currentDataIndex);
+        } else {
+            mAdapter = new SportsDialogAdapter(yearList, this, currentOddsIndex);
+        }
 
         final AlertDialog mAlertDialog = mBuilder.create();
-        mAlertDialog.setCanceledOnTouchOutside(true);//设置空白处点击 dialog消失
+        mAlertDialog.setCanceledOnTouchOutside(true);
 
-        /**
-         * 根据List数据条数加载不同的ListView （数据多加载可滑动 ScrollTouchListview）
-         */
+        // 根据List数据条数加载不同的ListView （数据多加载可滑动 ScrollTouchListview）
         ScrollView scrollview = (ScrollView) view.findViewById(R.id.basket_sports_scroll);//数据多时显示
         ScrollTouchListView scrollListview = (ScrollTouchListView) view.findViewById(R.id.sport_date_scroll);
         ListView listview = (ListView) view.findViewById(R.id.sport_date);//数据少时显示
-        if (seasonList.size() > 5) {
+
+        int size;
+        if (!isOddsPager) {
+            size = seasonList.size();
+        } else {
+            size = yearList.size();
+        }
+        if (size > 5) {
             scrollListview.setAdapter(mAdapter);
             scrollListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    currentPosition = position;
+                    if (!isOddsPager) {
+                        currentDataIndex = position;
+                    } else {
+                        currentOddsIndex = position;
+                    }
                     mAdapter.updateDatas(position);
                     mAdapter.notifyDataSetChanged();
 
@@ -196,7 +270,11 @@ public class FootballTeamInfoActivity extends BaseActivity implements SwipeRefre
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    currentPosition = position;
+                    if (!isOddsPager) {
+                        currentDataIndex = position;
+                    } else {
+                        currentOddsIndex = position;
+                    }
                     mAdapter.updateDatas(position);
                     mAdapter.notifyDataSetChanged();
                 }
@@ -209,10 +287,14 @@ public class FootballTeamInfoActivity extends BaseActivity implements SwipeRefre
             @Override
             public void onClick(View v) {
                 mAlertDialog.dismiss();
-                currentDialogPosition = currentPosition;
-                leagueDate = seasonList.get(currentDialogPosition);
-                currentData.setText(leagueDate == null ? "--" : leagueDate);
-                initData();
+                leagueDate = seasonList.get(currentDataIndex);
+                scoreDate = yearList.get(currentOddsIndex);
+                if (!isOddsPager) {
+                    currentData.setText(leagueDate == null ? "" : leagueDate);
+                } else {
+                    currentData.setText(scoreDate == null ? "" : scoreDate);
+                }
+                onRefresh();
             }
         });
         mAlertDialog.show();
