@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
@@ -43,7 +43,7 @@ public class TeamInfoDataFragment extends Fragment implements View.OnClickListen
     private LinearLayout networkExceptionLayout;
     private TextView networkExceptionReloadBtn;
     private TextView tvNotData;
-    private ScrollView scrollView;
+    private NestedScrollView scrollView;
     private TextView dataContent, rankTotal, rankZu, rankKe, scoreTotal, scoreZu, scoreKe, countTotal, countZu, countKe, winTotal, winZu, winKe, equTotal, equZu, equKe, loseTotal, loseZu, loseKe, goalTotal, goalZu, goalKe, loseGoalTotal, loseGoalZu, loseGoalKe, goalAvgTotal, goalAvgZu, goalAvgKe, loseAvgTotal, loseAvgZu, loseAvgKe;
     private int currentNameIndex = 0;
     private RelativeLayout ll_data_select;
@@ -221,7 +221,7 @@ public class TeamInfoDataFragment extends Fragment implements View.OnClickListen
     private void initView() {
         fl_mask_view = (FrameLayout) mView.findViewById(R.id.fl_mask_view);
         ll_data_select = (RelativeLayout) mView.findViewById(R.id.ll_data_select);
-        scrollView = (ScrollView) mView.findViewById(R.id.scroll_view);
+        scrollView = (NestedScrollView) mView.findViewById(R.id.scroll_view);
         mView.findViewById(R.id.ll_data_select).setOnClickListener(this);
         dataContent = (TextView) mView.findViewById(R.id.tv_data_content);
         tv_team_select = (ImageView) mView.findViewById(R.id.tv_team_select);

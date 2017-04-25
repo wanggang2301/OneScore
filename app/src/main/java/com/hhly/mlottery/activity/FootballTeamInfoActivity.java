@@ -99,14 +99,15 @@ public class FootballTeamInfoActivity extends BaseActivity implements SwipeRefre
                         if (!isOddsPager) {
                             currentData.setText(leagueDate == null ? "" : leagueDate);
                         }
-
+                        teamInfoScoreFragment.updataList(leagueDate);
+                        teamInfoLineupFragment.updataList(leagueDate);
                     }
                     if (scoreDate == null && yearList.size() != 0) {
                         scoreDate = yearList.get(0);
                         if (isOddsPager) {
                             currentData.setText(scoreDate == null ? "" : scoreDate);
                         }
-                        teamInfoScoreFragment.updataList(scoreDate);
+                        teamInfoOddsFragment.updataList(scoreDate);
                     }
                     viewPager.setIsScrollable(true);
                     teamInfoDataFragment.updataList(json.getTeamInfo());

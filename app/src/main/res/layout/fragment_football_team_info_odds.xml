@@ -4,135 +4,136 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <LinearLayout
-        android:id="@+id/ll_content"
-        android:layout_width="match_parent"
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="5dp">
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/tv_the_ball_bt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:background="@color/snooker_rank_txt_top3"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:textColor="@color/white"
-                    android:paddingTop="8dp"
-                    android:text="@string/foot_team_odds_let_the_ball" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/tv_size_ball_bt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/bot"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:paddingTop="8dp"
-                    android:textColor="@color/title"
-                    android:text="@string/foot_team_odds_size_ball" />
-            </RelativeLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!--头部-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/setting_bg"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="5dp">
 
-                <RelativeLayout
-                    android:id="@+id/ll_data_select"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.5"
-                    android:padding="10dp">
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tv_data_content"
+                        android:id="@+id/tv_the_ball_bt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:textColor="@color/snooker_rank_txt_top3"
-                        android:textSize="@dimen/item_football_half_score"
-                        tools:text="英超" />
+                        android:background="@color/snooker_rank_txt_top3"
+                        android:paddingBottom="8dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="8dp"
+                        android:text="@string/foot_team_odds_let_the_ball"
+                        android:textColor="@color/white" />
+                </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/tv_team_select"
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_size_ball_bt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerInParent="true"
-                        android:layout_marginRight="5dp"
-                        android:background="@mipmap/foot_team_info_select_ok" />
-                </RelativeLayout>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/foot_team_info_total"
-                    android:textColor="@color/res_time_color"
-                    android:textSize="@dimen/item_football_half_score" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/foot_team_info_zu"
-                    android:textColor="@color/res_time_color"
-                    android:textSize="@dimen/item_football_half_score" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/foot_team_info_ke"
-                    android:textColor="@color/res_time_color"
-                    android:textSize="@dimen/item_football_half_score" />
-
+                        android:background="@color/bot"
+                        android:paddingBottom="8dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="8dp"
+                        android:text="@string/foot_team_odds_size_ball"
+                        android:textColor="@color/title" />
+                </LinearLayout>
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/linecolor" />
-
-            <ScrollView
-                android:id="@+id/scroll_view"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scrollbars="none">
+                android:orientation="vertical">
+
+                <!--头部-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/setting_bg"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:id="@+id/ll_data_select"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/tv_data_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/snooker_rank_txt_top3"
+                            android:textSize="@dimen/item_football_half_score"
+                            tools:text="英超" />
+
+                        <ImageView
+                            android:id="@+id/tv_team_select"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerInParent="true"
+                            android:layout_marginRight="5dp"
+                            android:background="@mipmap/foot_team_info_select_ok" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/foot_team_info_total"
+                        android:textColor="@color/res_time_color"
+                        android:textSize="@dimen/item_football_half_score" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/foot_team_info_zu"
+                        android:textColor="@color/res_time_color"
+                        android:textSize="@dimen/item_football_half_score" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/foot_team_info_ke"
+                        android:textColor="@color/res_time_color"
+                        android:textSize="@dimen/item_football_half_score" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/linecolor" />
+
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -1220,11 +1221,12 @@
                         android:alpha="0"
                         android:background="@color/black" />
                 </FrameLayout>
-            </ScrollView>
+
+            </LinearLayout>
+
         </LinearLayout>
 
-    </LinearLayout>
-
+    </android.support.v4.widget.NestedScrollView>
 
     <include layout="@layout/network_exception" />
 

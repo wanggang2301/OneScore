@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.FootballTeamInfoActivity;
 import com.hhly.mlottery.adapter.football.teaminfoadapter.FootTeamArrayAdapter;
 import com.hhly.mlottery.bean.footballteaminfo.FootTeamMatchOddBean;
 import com.hhly.mlottery.config.BaseURLs;
@@ -46,7 +47,8 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
 
     private Activity mContext;
     private View mView;
-    private LinearLayout networkExceptionLayout, letTheBallContent, sizeBallContent, ll_content;
+    private NestedScrollView scroll_view;
+    private LinearLayout networkExceptionLayout, letTheBallContent, sizeBallContent;
     private TextView networkExceptionReloadBtn, tvNotData;
     private FrameLayout fl_mask_view;
     private RelativeLayout dataSelect;
@@ -413,7 +415,7 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
     }
 
     private void initView() {
-        ll_content = (LinearLayout) mView.findViewById(R.id.ll_content);
+        scroll_view = (NestedScrollView) mView.findViewById(R.id.scroll_view);
         fl_mask_view = (FrameLayout) mView.findViewById(R.id.fl_mask_view);
 
         theBallBt = (TextView) mView.findViewById(R.id.tv_the_ball_bt);
@@ -506,7 +508,7 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
 
     // 设置页面显示状态
     private void setStatus(int status) {
-        ll_content.setVisibility(status == SUCCESS ? View.VISIBLE : View.GONE);
+        scroll_view.setVisibility(status == SUCCESS ? View.VISIBLE : View.GONE);
         networkExceptionLayout.setVisibility(status == ERROR ? View.VISIBLE : View.GONE);
         tvNotData.setVisibility(status == NOTO_DATA ? View.VISIBLE : View.GONE);
     }
@@ -515,7 +517,7 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.network_exception_reload_btn:
-                ll_content.setVisibility(View.VISIBLE);
+                scroll_view.setVisibility(View.VISIBLE);
                 networkExceptionLayout.setVisibility(View.GONE);
                 tvNotData.setVisibility(View.GONE);
                 initData();
