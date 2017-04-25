@@ -52,6 +52,7 @@ import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.FootballEventView;
 import com.hhly.mlottery.widget.TimeView;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -1777,6 +1778,20 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
             if (bean.getMsgId().equals(matchTextLiveBean.getCancelEnNum())) {//取消进球等事件的判断
                 iterator.remove();//用xMatchLive.remove会有异常
             }
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
     }
 }
