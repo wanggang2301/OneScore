@@ -7,7 +7,7 @@
     android:paddingTop="@dimen/basket_details_ball6"
     android:paddingLeft="@dimen/basket_details_ball5"
     android:paddingRight="@dimen/basket_details_ball5"
-    android:background="@color/black_grounding">
+    >
 
     <!--<LinearLayout-->
         <!--android:layout_width="match_parent"-->
@@ -23,7 +23,7 @@
             android:layout_weight="1.5"
             android:gravity="center"
             android:text="16-03-31"
-            android:textColor="@color/black_details_textcolor"
+            android:textColor="@color/mdy_666"
             android:textSize="@dimen/text_size_10" />
 
         <TextView
@@ -34,7 +34,7 @@
             android:gravity="center"
             android:text="乙蓝甲乙蓝甲"
             android:singleLine="true"
-            android:textColor="@color/black_details_textcolor"
+            android:textColor="@color/mdy_666"
             android:textSize="@dimen/text_size_10" />
         <TextView
             android:id="@+id/basket_details_guest_name"
@@ -44,7 +44,7 @@
             android:gravity="center"
             android:text=""
             android:singleLine="true"
-            android:textColor="@color/black_details_textcolor"
+            android:textColor="@color/mdy_666"
             android:textSize="@dimen/text_size_10" />
 
         <TextView
@@ -55,7 +55,7 @@
             android:gravity="center"
             android:text=""
             android:singleLine="true"
-            android:textColor="@color/black_details_textcolor"
+            android:textColor="@color/mdy_666"
             android:textSize="@dimen/text_size_10" />
 
         <TextView
@@ -65,7 +65,7 @@
             android:layout_weight="1.2"
             android:gravity="center"
             android:text="107:107"
-            android:textColor="@color/black_details_textcolor"
+            android:textColor="@color/mdy_666"
             android:textSize="@dimen/text_size_10" />
 
         <TextView
@@ -75,7 +75,7 @@
             android:layout_weight="0.7"
             android:gravity="center"
             android:text="小"
-            android:textColor="@color/black_details_textcolor"
+            android:textColor="@color/mdy_666"
             android:textSize="@dimen/text_size_10" />
         <TextView
             android:id="@+id/basket_details_concede"
@@ -84,7 +84,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="让分"
-            android:textColor="@color/black_details_textcolor"
+            android:textColor="@color/mdy_666"
             android:textSize="@dimen/text_size_10" />
     <!--</LinearLayout>-->
 </LinearLayout>

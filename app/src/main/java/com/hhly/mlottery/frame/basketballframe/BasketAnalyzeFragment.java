@@ -744,12 +744,12 @@ public class BasketAnalyzeFragment extends Fragment {
             if (mGuestRanking.equals("--") || mGuestTeam.equals("--")) {
                 mRankingGuestName.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
             } else {
-                mRankingGuestName.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
+                mRankingGuestName.setTextColor(getResources().getColor(R.color.mdy_666));
             }
             if (mHomeRanking.equals("--") || mHomeTeam.equals("--")) {
                 mRankingHomeName.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
             } else {
-                mRankingHomeName.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
+                mRankingHomeName.setTextColor(getResources().getColor(R.color.mdy_666));
             }
             //已赛
 //        mRankingGuestOverGame.setText(mAnalyzeDatas.get(0).getMatchAll());
@@ -764,12 +764,12 @@ public class BasketAnalyzeFragment extends Fragment {
             if (mGuestWinRate.equals("--")) {
                 mRankingGuestWinRate.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
             } else {
-                mRankingGuestWinRate.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
+                mRankingGuestWinRate.setTextColor(getResources().getColor(R.color.mdy_666));
             }
             if (mHomeWinRate.equals("--")) {
                 mRankingHomeWinRate.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
             } else {
-                mRankingHomeWinRate.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
+                mRankingHomeWinRate.setTextColor(getResources().getColor(R.color.mdy_666));
             }
         }
 
@@ -838,10 +838,10 @@ public class BasketAnalyzeFragment extends Fragment {
         }
 
         if (guestWin > homeWin) {
-            mGuestScoreWinSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
+            mGuestScoreWinSix.setTextColor(getResources().getColor(R.color.mdy_666));
             mHomeScoreWinSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
         } else if (guestWin < homeWin) {
-            mHomeScoreWinSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
+            mHomeScoreWinSix.setTextColor(getResources().getColor(R.color.mdy_666));
             mGuestScoreWinSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
         } else {
             mHomeScoreWinSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
@@ -849,10 +849,10 @@ public class BasketAnalyzeFragment extends Fragment {
         }
 
         if (guestLose > homeLose) {
-            mGuestScoreLoseSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
+            mGuestScoreLoseSix.setTextColor(getResources().getColor(R.color.mdy_666));
             mHomeScoreLoseSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
         } else if (guestLose < homeLose) {
-            mHomeScoreLoseSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
+            mHomeScoreLoseSix.setTextColor(getResources().getColor(R.color.mdy_666));
             mGuestScoreLoseSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
         } else {
             mHomeScoreLoseSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));

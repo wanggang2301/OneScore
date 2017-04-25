@@ -843,7 +843,7 @@
                                 android:gravity="center"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/text_size_12"
-                                android:textColor="@color/black_details_ball_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:text="--"/>
                         </LinearLayout>
                     </LinearLayout>
