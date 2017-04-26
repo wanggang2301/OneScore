@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.footballframe;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -83,7 +85,7 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
 
     private List<BasketballDatabaseScheduleSectionAdapter.Section> mSections;
     private List<FootballDatabaseScheduleSectionAdapter.Section> mSectionsNew;
-    private BasketballDatabaseScheduleSectionAdapter mAdapter;
+//    private BasketballDatabaseScheduleSectionAdapter mAdapter;
     private FootballDatabaseScheduleSectionAdapter mAdapterNew;
     private List<DataBean> mRoundString;
     private String mLeagueRound = "";
@@ -138,6 +140,7 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
 
         initEmptyView();
 
+        setDetailsOnClick();
         initRecycler();
 
         mTitleTextView.setOnClickListener(this);
@@ -577,12 +580,13 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
 
     private void initRecycler() {
         mSections = new ArrayList<>();
-        mAdapter = new BasketballDatabaseScheduleSectionAdapter(mSections);
-        mAdapter.addHeaderView(mButtonFrame);
-        mAdapter.setEmptyView(true, mEmptyView);
+//        mAdapter = new BasketballDatabaseScheduleSectionAdapter(mSections);
+//        mAdapter.addHeaderView(mButtonFrame);
+//        mAdapter.setEmptyView(true, mEmptyView);
 
         mSectionsNew = new ArrayList<>();
         mAdapterNew = new FootballDatabaseScheduleSectionAdapter(mSectionsNew);
+        mAdapterNew.setFootballTeamDetailsClickListener(footballTeamDetailsClickListener);
         mAdapterNew.addHeaderView(mButtonFrame);
         mAdapterNew.setEmptyView(true , mEmptyView);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
@@ -709,5 +713,35 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
     }
     public interface OnItemClickListener {
         void onItemClick(int position);
+    }
+
+    private FootballTeamDetailsClickListener footballTeamDetailsClickListener;
+    // 购买(查看)的点击监听
+    public interface FootballTeamDetailsClickListener {
+        void DetailsOnClick(View view , ScheduleDatasBean matchData , int type);
+    }
+    private void setDetailsOnClick(){
+        footballTeamDetailsClickListener = new FootballTeamDetailsClickListener() {
+            @Override
+            public void DetailsOnClick(View view, ScheduleDatasBean matchData, int type) {
+                if (type == 0) {
+                    if (matchData.getGuestId() != null) {
+//                        Intent homeIntent = new Intent(this, FootballTeamInfoActivity.class);
+//                        homeIntent.putExtra("TEAM_ID", matchData.getGuestId());
+//                        homeIntent.putExtra("TITLE_TEAM_NAME", matchData.getGuestName());
+//                        startActivity(homeIntent);
+                    }
+                    Toast.makeText(getContext(), "0", Toast.LENGTH_SHORT).show();
+                }else if(type == 1){
+                    Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
+                    if (matchData.getHomeId() != null) {
+//                        Intent homeIntent = new Intent(this, FootballTeamInfoActivity.class);
+//                        homeIntent.putExtra("TEAM_ID", matchData.getHomeId());
+//                        homeIntent.putExtra("TITLE_TEAM_NAME", matchData.getHomeName());
+//                        startActivity(homeIntent);
+                    }
+                }
+            }
+        };
     }
 }

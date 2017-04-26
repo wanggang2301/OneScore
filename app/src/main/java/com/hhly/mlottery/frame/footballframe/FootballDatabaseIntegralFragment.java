@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.footballframe;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.hhly.mlottery.R;
@@ -129,6 +131,7 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
 
         initEmptyView();
 
+        setIntegralDetailsOnClick();
         initRecycler();
 
         mTitleTextView.setOnClickListener(this);
@@ -221,6 +224,7 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
     private void initRecycler() {
         mSections = new ArrayList<>();
         mAdapter = new FootballDatabaseIntegralAdapter(mSections);
+        mAdapter.setFootballTeamIntegralDetailsClickListener(footballTeamIntegralDetailsClickListener);
         mAdapter.setEmptyView(mEmptyView);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRecyclerView.setAdapter(mAdapter);
@@ -449,5 +453,23 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
                 }
                 break;
         }
+    }
+
+    private FootballTeamIntegralDetailsClickListener footballTeamIntegralDetailsClickListener;
+    // 购买(查看)的点击监听
+    public interface FootballTeamIntegralDetailsClickListener {
+        void IntegralDetailsOnClick(View view , FootballRankingData teamData);
+    }
+    private void setIntegralDetailsOnClick(){
+        footballTeamIntegralDetailsClickListener = new FootballTeamIntegralDetailsClickListener() {
+            @Override
+            public void IntegralDetailsOnClick(View view, FootballRankingData teamData) {
+//                        Intent homeIntent = new Intent(this, FootballTeamInfoActivity.class);
+//                        homeIntent.putExtra("TEAM_ID", teamData.getTid() + "");
+//                        homeIntent.putExtra("TITLE_TEAM_NAME", teamData.getName());
+//                        startActivity(homeIntent);
+                Toast.makeText(getContext(), "00", Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 }
