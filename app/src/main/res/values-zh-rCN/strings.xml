@@ -201,7 +201,7 @@
     <string name="game_time">(时间)</string>
     <!--首发阵容 End-->
     <!--2期end-->
-    <string name="app_name">一比分</string>
+    <string name="app_name">一比分体育</string>
     <string name="menu_name">菜单</string>
     <string name="action_settings">Settings</string>
     <string name="drawer_open">Open drawer</string>
@@ -759,8 +759,6 @@
 
     <!--篮球设置-->
     <string name="basket_odd_setting">赔率提示</string>
-
-
 
 
     <string name="basket_scort_setting">赛事提示</string>
@@ -1679,6 +1677,8 @@
     <string name="tennis_datails_status10">主动得分</string>
     <string name="foot_event_num">""</string>
     <string name="please_hint_team">请输入球队名称</string>
+
+    <string name="foot_text">文字</string>
 
     <!--竞彩推荐-->
     <string name="betting_setting_palying_method">玩法</string>

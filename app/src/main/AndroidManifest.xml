@@ -43,10 +43,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
 
-            <!--<intent-filter>
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <!-- 环境选择 -->
         <activity
@@ -61,14 +63,25 @@
         </activity>
 
         <!-- 内地版的key-begin -->
-        <meta-data android:name="UMENG_APPKEY" android:value="5625a606e0f55aad6700244f" />
-        <meta-data android:name="UMENG_MESSAGE_SECRET" android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
-        <meta-data android:name="UMENG_CHANNEL" android:value="BETA" />
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5625a606e0f55aad6700244f" />
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="BETA" />
         <!-- 内地版的key-end -->
 
-        <!--TalkingData key  begin-->
-        <meta-data android:name="TD_APP_ID" android:value="28673E18FAF2475F8C42D20D4A140B27" />
-        <meta-data android:name="TD_CHANNEL_ID" android:value="BETA" />
+
+        <!-- TalkingData key  begin -->
+        <meta-data
+            android:name="TD_APP_ID"
+            android:value="28673E18FAF2475F8C42D20D4A140B27" />
+        <meta-data
+            android:name="TD_CHANNEL_ID"
+            android:value="BETA" />
 
         <service
             android:name="com.talkingdata.sdk.TDAntiCheatingService"
@@ -77,7 +90,7 @@
                 <action android:name="com.talkingdata.sdk.TDAntiCheatingService" />
             </intent-filter>
         </service>
-        <!--TalkingData key  end-->
+        <!-- TalkingData key  end -->
 
         <activity
             android:name=".activity.FiltrateMatchConfigActivity"
@@ -89,7 +102,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation" />
 
-        <!--足球数据内页显示-->
+        <!-- 足球数据内页显示 -->
         <activity
             android:name=".activity.FootballInformationActivity"
             android:screenOrientation="portrait" />
@@ -116,13 +129,13 @@
             android:name=".activity.CounselCommentActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <!--足球内页改版-->
+        <!-- 足球内页改版 -->
         <activity
             android:name=".activity.FootballMatchDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <!--播放视频的webview-->
+        <!-- 播放视频的webview -->
         <activity
             android:name=".activity.PlayWebViewActivity"
             android:screenOrientation="portrait" />
@@ -231,7 +244,7 @@
         <activity
             android:name=".activity.CpiFiltrateActivity"
             android:screenOrientation="portrait" />
-        <!--tencent相关-->
+        <!-- tencent相关 -->
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -244,7 +257,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.BlackStatusBar.ColorGreen"
             android:windowSoftInputMode="adjustResize" />
-        <!--聊球输入框-->
+        <!-- 聊球输入框 -->
         <activity
             android:name=".activity.ChartballActivity"
             android:screenOrientation="portrait"
@@ -252,7 +265,7 @@
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <!-- 友盟消息推送服务 -->
         <service android:name=".service.umengPushService" />
-        <!--篮球详情的-->
+        <!-- 篮球详情的 -->
         <activity
             android:name=".activity.BasketDetailsActivityTest"
             android:screenOrientation="portrait"
@@ -273,15 +286,15 @@
         <activity
             android:name=".activity.PLVideoTextureActivity"
             android:screenOrientation="portrait" />
-        <!--境外资讯详情-->
+        <!-- 境外资讯详情 -->
         <activity
             android:name=".activity.ForeignInfomationDetailsActivity"
             android:screenOrientation="portrait" />
-        <!--国外资讯图片预览-->
+        <!-- 国外资讯图片预览 -->
         <activity
             android:name=".activity.PicturePreviewActivity"
             android:screenOrientation="portrait" />
-        <!--头像选择-->
+        <!-- 头像选择 -->
         <activity
             android:name=".activity.AvatarSelectionActivity"
             android:screenOrientation="portrait" />
@@ -289,23 +302,23 @@
         <activity
             android:name=".activity.MoreSettingsActivity"
             android:screenOrientation="portrait" />
-        <!--产品建议-->
+        <!-- 产品建议 -->
         <activity
             android:name=".activity.ProductAdviceActivity"
             android:screenOrientation="portrait" />
-        <!--视频集锦-->
+        <!-- 视频集锦 -->
         <activity
             android:name=".activity.PlayHighLightActivity"
             android:screenOrientation="portrait" />
-        <!--我的定制页-->
+        <!-- 我的定制页 -->
         <activity
             android:name=".activity.CustomActivity"
             android:screenOrientation="portrait" />
-        <!--定制列表页-->
+        <!-- 定制列表页 -->
         <activity
             android:name=".activity.CustomListActivity"
             android:screenOrientation="portrait" />
-        <!--获取邀请码页面-->
+        <!-- 获取邀请码页面 -->
         <activity
             android:name=".activity.InvitedActivity"
             android:screenOrientation="portrait" />
@@ -313,7 +326,7 @@
         <activity
             android:name=".activity.SnookerMatchDetail"
             android:screenOrientation="portrait" />
-        <!--覆盖安装监听-->
+        <!-- 覆盖安装监听 -->
         <receiver
             android:name=".receiver.AppInstallReceiver"
             android:label="@string/app_name">
@@ -329,63 +342,70 @@
         <activity
             android:name=".activity.SnookerSettingActivity"
             android:screenOrientation="portrait" />
-        <!--足球比分列表搜索-->
+        <!-- 足球比分列表搜索 -->
         <activity
             android:name=".activity.FootballMatchSearchActivity"
             android:screenOrientation="portrait" />
-        <!--1.2.3改版后的新首页-->
+        <!-- 1.2.3改版后的新首页 -->
         <activity
             android:name=".activity.IndexActivity"
             android:screenOrientation="portrait" />
-        <!--斯诺克球员信息-->
+        <!-- 斯诺克球员信息 -->
         <activity
             android:name=".activity.SnookerPlayerInfoActivity"
             android:screenOrientation="portrait" />
-        <!--斯洛克排名搜索-->
+        <!-- 斯洛克排名搜索 -->
         <activity
             android:name=".activity.SnookerInformationSerachActivity"
             android:screenOrientation="portrait" />
-        <!--斯诺克赛事内页-->
+        <!-- 斯诺克赛事内页 -->
         <activity
             android:name=".activity.SnookerEventPageActivity"
             android:screenOrientation="portrait" />
-        <!--篮球指数筛选-->
+        <!-- 篮球指数筛选 -->
         <activity
             android:name=".activity.BasketBallIndexFiltrateActivity"
             android:screenOrientation="portrait" />
-        <!--篮球指数内页-->
+        <!-- 篮球指数内页 -->
         <activity
             android:name=".activity.BasketIndexDetailsActivity"
             android:screenOrientation="portrait" />
-        <!--网球设置页面-->
+        <!-- 网球设置页面 -->
         <activity
             android:name=".activity.TennisSettingActivity"
             android:screenOrientation="portrait" />
-        <!--网球内页-->
+        <!-- 网球内页 -->
         <activity
             android:name=".activity.TennisBallDetailsActivity"
             android:screenOrientation="portrait" />
-        <!--网球指数详情-->
+        <!-- 网球指数详情 -->
         <activity
             android:name=".activity.TennisCpiDetailsActivity"
             android:screenOrientation="portrait" />
-        <!--竞彩足球-->
+        <!-- 竞彩足球 -->
         <activity
             android:name=".activity.FootballMatchActivity"
             android:screenOrientation="portrait" />
-        <!--篮球比分搜索-->
+        <!-- 篮球比分搜索 -->
         <activity
             android:name=".activity.BasketBallMatchSearchActivity"
             android:screenOrientation="portrait" />
-        <!--资讯-->
+        <!-- 资讯 -->
         <activity
             android:name=".activity.CounselActivity"
             android:screenOrientation="portrait" />
-        <!--视频-->
+        <!-- 视频 -->
         <activity
             android:name=".activity.VideoActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.TennisIndexDetailsActivity"
+        <!--网球指数内页-->
+        <activity
+            android:name=".activity.TennisIndexDetailsActivity"
+            android:screenOrientation="portrait" />
+        <!--足球球队详情页-->
+        <activity android:name=".activity.FootballTeamInfoActivity"/>
+        <activity
+            android:name=".activity.ExpertsActivity"
             android:screenOrientation="portrait" />
 <<<<<<< Updated upstream
 =======

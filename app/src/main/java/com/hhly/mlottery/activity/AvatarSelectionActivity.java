@@ -44,9 +44,6 @@ import de.greenrobot.event.EventBus;
 public class AvatarSelectionActivity extends Activity implements View.OnClickListener {
 
 
-
-
-
     private TextView public_txt_title;
     private TextView tv_right;
     private GridView male_gridview;

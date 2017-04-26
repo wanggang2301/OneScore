@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.hhly.mlottery.R;
@@ -27,7 +26,6 @@ import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.LoadMoreRecyclerView;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -110,7 +108,7 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
         mBack = (ImageView) findViewById(R.id.public_img_back);
         mBack.setOnClickListener(this);
 
-        mCustomText = (TextView) findViewById(R.id.tv_right);
+        mCustomText = (TextView) findViewById(R.id.right_tv);
         mCustomText.setVisibility(View.VISIBLE);
         mCustomText.setText(getResources().getString(R.string.custom_accomplish_cus));
         mCustomText.setOnClickListener(this);
@@ -509,7 +507,7 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_right:
+            case R.id.right_tv:
 
                 if (isSccomplish) {
 

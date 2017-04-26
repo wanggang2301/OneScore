@@ -65,10 +65,10 @@
                     android:id="@+id/receive_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/chart_ball_left_bg"
                     android:gravity="center_vertical"
                     android:textColor="@color/mdy_333"
                     android:textSize="14sp"
+                    android:padding="10dp"
                     android:visibility="gone"
                     emojicon:emojiconSize="20sp"
                     tools:text="test" />

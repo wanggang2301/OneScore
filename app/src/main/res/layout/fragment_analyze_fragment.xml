@@ -26,8 +26,7 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/basket_analyze_sides"
                 android:textColor="@color/analyze_title"
-                android:textSize="@dimen/text_size_13"
-                />
+                android:textSize="@dimen/text_size_13" />
 
         </RelativeLayout>
 

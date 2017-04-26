@@ -20,6 +20,7 @@ import com.hhly.mlottery.bean.MatchOdd;
 import com.hhly.mlottery.callback.FocusMatchClickListener;
 import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.frame.footballframe.FocusFragment;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.HandicapUtils;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.MyConstants;
@@ -137,6 +138,7 @@ public class ImmediateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         TextView keeptime;
 
         TextView item_football_racename;
+        TextView item_football_date;
         TextView item_football_time;
         TextView item_football_frequency;
         TextView item_football_home_yc;
@@ -175,6 +177,7 @@ public class ImmediateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             cardView = (CardView) itemView.findViewById(R.id.card_view);
             keeptime = (TextView) itemView.findViewById(R.id.keeptime);
             item_football_racename = (TextView) itemView.findViewById(R.id.item_football_racename);
+            item_football_date= (TextView) itemView.findViewById(R.id.item_football_date);
             item_football_time = (TextView) itemView.findViewById(R.id.item_football_time);
             item_home_half_score = (TextView) itemView.findViewById(R.id.tv_home_half_score);
             item_home_full_score = (TextView) itemView.findViewById(R.id.tv_home_full_score);
@@ -236,6 +239,11 @@ public class ImmediateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         holder.item_football_racename.setText(match.getRacename());
         holder.item_football_racename.setTextColor(Color.parseColor(match.getRaceColor()));
         holder.item_football_time.setText(match.getTime());
+
+        if(match.getDate()!=null){
+            holder.item_football_date.setVisibility(View.VISIBLE);
+            holder.item_football_date.setText(DateUtil.convertDateToNationMD(match.getDate().substring(5,10)));//截取日月
+        }
 
         holder.rl_score.setVisibility(View.GONE);
         holder.tv_match_type.setVisibility(View.GONE);

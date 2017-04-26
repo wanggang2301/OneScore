@@ -2,6 +2,7 @@ package com.hhly.mlottery.adapter.homePagerAdapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -215,12 +216,21 @@ public class HomePagerAdapter extends PagerAdapter {
                 lastClickTime = currentTime;
                 String jumpAddr = mHomePagerEntity.getBanners().getContent().get(index).getJumpAddr();
                 int jumpType = mHomePagerEntity.getBanners().getContent().get(index).getJumpType();
-//                Integer labSeq = mHomePagerEntity.getBanners().getContent().get(index).getLabSeq();
+                Integer labSeq = mHomePagerEntity.getBanners().getContent().get(index).getLabSeq();
                 String title = mHomePagerEntity.getBanners().getContent().get(index).getTitle();
                 String picUrl = mHomePagerEntity.getBanners().getContent().get(index).getPicUrl();
 
                 if (!TextUtils.isEmpty(jumpAddr)) {
                     switch (jumpType) {
+                        case 5:// 调用浏览器
+                        {
+                            Intent intent = new Intent();
+                            intent.setAction("android.intent.action.VIEW");
+                            Uri content_url = Uri.parse(jumpAddr);
+                            intent.setData(content_url);
+                            mContext.startActivity(intent);
+                        }
+                        break;
                         case 0:// 无
                             break;
                         case 1:// 页面
@@ -250,71 +260,36 @@ public class HomePagerAdapter extends PagerAdapter {
                             break;
                         }
                         case 2:// 内页
-//                            int sportsInfoIndex = 0;
                             switch (jumpAddr) {
                                 case "10":// 足球指数
-//                                {
-//                                    Intent intent = new Intent(mContext, FootballActivity.class);
-//                                    intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_EXPONENT_VALUE);
-//                                    mContext.startActivity(intent);
-//                                }
                                     break;
                                 case "11":// 足球数据
-//                                {
-//                                    Intent intent = new Intent(mContext, FootballActivity.class);
-//                                    intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_DATA_VALUE);
-//                                    mContext.startActivity(intent);
-//                                }
                                     break;
                                 case "12":// 体育资讯
-                                    mContext.startActivity(new Intent(mContext, CounselActivity.class));
+                                    Intent foot_intent = new Intent(mContext, CounselActivity.class);
+                                    foot_intent.putExtra("currentIndex", labSeq);
+                                    mContext.startActivity(foot_intent);
+                                    MobclickAgent.onEvent(mContext, "HomePager_Menu_Football_Information");
                                     break;
                                 case "13":// 足球比分
-//                                {
-//                                    Intent intent = new Intent(mContext, FootballActivity.class);
-//                                    intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_SCORE_VALUE);
-//                                    mContext.startActivity(intent);
-//                                }
                                     break;
                                 case "14":// 足球视频
                                     mContext.startActivity(new Intent(mContext, VideoActivity.class));
                                     break;
                                 case "20":// 篮球即时比分
-                                {
-//                                    Intent intent = new Intent(mContext, BasketListActivity.class);
-//                                    intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_SCORE_KEY);
-//                                    mContext.startActivity(intent);
-                                }
-                                break;
+                                    break;
                                 case "21":// 篮球赛果
-                                {
-//                                    Intent intent = new Intent(mContext, BasketListActivity.class);
-//                                    intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_AMIDITHION_VALUE);
-//                                    mContext.startActivity(intent);
-                                }
-                                break;
+                                    break;
                                 case "22":// 篮球赛程
-                                {
-//                                    Intent intent = new Intent(mContext, BasketListActivity.class);
-//                                    intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_COMPETITION_VALUE);
-//                                    mContext.startActivity(intent);
-                                }
-                                break;
+                                    break;
                                 case "23":// 篮球关注
-                                {
-//                                    Intent intent = new Intent(mContext, BasketListActivity.class);
-//                                    intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_ATTENTION_VALUE);
-//                                    mContext.startActivity(intent);
-                                }
-                                break;
+                                    break;
                                 case "24":// 篮球资讯
-//                                    Toast.makeText(mContext, "篮球资讯", Toast.LENGTH_SHORT).show();
                                     break;
                                 case "30":// 彩票开奖
                                     mContext.startActivity(new Intent(mContext, NumbersActivity.class));
                                     break;
                                 case "350":// 彩票资讯
-//                                    Toast.makeText(mContext, "彩票资讯", Toast.LENGTH_SHORT).show();
                                     break;
                                 case "31":// 香港开奖
                                 {
@@ -478,26 +453,11 @@ public class HomePagerAdapter extends PagerAdapter {
                                 }
                                 break;
                                 case "80":// 多屏动画列表
-                                {
-//                                    if (PreferenceUtil.getBoolean("introduce", true)) {
-//                                        mContext.startActivity(new Intent(mContext, MultiScreenIntroduceActivity.class));
-//
-//                                        PreferenceUtil.commitBoolean("introduce", false);
-//                                    } else {
-//                                        mContext.startActivity(new Intent(mContext, MultiScreenViewingListActivity.class));
-//                                    }
-                                }
-                                break;
+                                    break;
                                 case "90":// 个人中心
                                     mContext.startActivity(new Intent(mContext, HomeUserOptionsActivity.class));
                                     break;
                                 case "42":// 香港彩票图表页面
-//                                {
-//                                    Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
-//                                    intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.ONE));
-//                                    intent.putExtra("index", 1);
-//                                    mContext.startActivity(intent);
-//                                }
                                     break;
                             }
                             break;

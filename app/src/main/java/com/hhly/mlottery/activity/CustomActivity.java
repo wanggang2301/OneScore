@@ -113,7 +113,7 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
         mBack = (ImageView) findViewById(R.id.public_img_back);
         mBack.setOnClickListener(this);
 
-        mCustomText = (TextView) findViewById(R.id.tv_right);
+        mCustomText = (TextView) findViewById(R.id.right_tv);
         mCustomText.setVisibility(View.VISIBLE);
         mCustomText.setText(getResources().getString(R.string.custom_redact_cus));
         mCustomText.setOnClickListener(this);
@@ -839,7 +839,7 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_right:
+            case R.id.right_tv:
                 startActivity(new Intent(CustomActivity.this, CustomListActivity.class));
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
                 break;

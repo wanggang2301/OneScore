@@ -27,7 +27,7 @@ public class BasketPlayerStatisticsAdapter extends BaseQuickAdapter<BasketPlayer
     protected void convert(BaseViewHolder holder, BasketPlayerStatisticsBean.PlayerStatsEntity entity) {
 
         if(getViewHolderPosition(holder)%2==0){
-            holder.setBackgroundColor(R.id.ll_basket_player, MyApp.getContext().getResources().getColor(R.color.black_grounding));
+            holder.setBackgroundColor(R.id.ll_basket_player, MyApp.getContext().getResources().getColor(R.color.mdy_ddd));
         }else{
             holder.setBackgroundColor(R.id.ll_basket_player,MyApp.getContext().getResources().getColor(R.color.usercenter_body_bg));
         }
