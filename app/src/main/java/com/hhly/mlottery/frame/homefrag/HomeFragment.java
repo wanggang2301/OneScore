@@ -114,7 +114,58 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private Activity mActivity;
 
     // 当前版本的菜单入口范围
-    private String[] menuList = {"12", "14", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "310", "311", "312", "313", "314", "315", "316", "317", "318", "319", "320", "321", "322", "323", "19", "324", "325", "326", "327", "328", "329", "330", "331", "332"};
+    private String[] menuList = {
+//            "10",// 足球指数
+//            "11",// 足球数据
+//            "13",// 足球比分
+//            "20",// 篮球即时比分
+//            "21",// 篮球赛果
+//            "22",// 篮球赛程
+//            "23",// 篮球关注
+//            "24",// 篮球资讯
+//            "350",// 彩票资讯
+//            "80",// 多屏动画列表
+//            "60",// 情报中心
+//            "42",// 足球竞彩 -->未完成
+
+            "12", // 体育资讯
+            "14", // 体育视频
+            "30", // 彩票开奖
+            "31", // 香港开奖
+            "32", // 重庆时时彩
+            "33", // 江西时时彩
+            "34", // 新疆时时彩
+            "35", // 云南时时彩
+            "36", // 七星彩
+            "37",// 广东11选5
+            "38",// 广东快乐10分
+            "39",// 湖北11选5
+            "310",// 安徽快3
+            "311",// 湖南快乐10分
+            "312",// 快乐8
+            "313",// 吉林快三
+            "314",// 辽宁11选5
+            "315",// 北京赛车
+            "316",// 江苏快3
+            "317",// 时时乐
+            "318",// 广西快三
+            "319",// 幸运农场
+            "320",// 江苏11选5
+            "321",// 江西11选5
+            "322",// 山东11选5
+            "323",// 天津时时彩
+            "19",// 今日联赛统计
+            "324",// 双色球
+            "325",// 大乐透
+            "326",// 排列三
+            "327",// 排列五
+            "328",// 胜负彩
+            "329",// 六场半全场
+            "330",// 四场进球彩
+            "331",// 福彩3D
+            "332",// 七乐彩
+            "91"// 竞彩推介
+    };
 
     /**
      * 跳转其他Activity 的requestcode
@@ -237,12 +288,16 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     itemRecord.height = firstView.getHeight();
                     itemRecord.top = firstView.getTop();
                     recordSp.append(firstVisibleItem, itemRecord);
-                    int h = getScrollY();//滚动距离
 
-                    if (h <= 100) {
-                        tv_home_name.setAlpha(h / 100f);
-                    } else {
-                        tv_home_name.setAlpha(1);
+                    try {
+                        int h = getScrollY();//滚动距离
+                        if (h <= 100) {
+                            tv_home_name.setAlpha(h / 100f);
+                        } else {
+                            tv_home_name.setAlpha(1);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }

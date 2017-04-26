@@ -2180,6 +2180,18 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     barrage_view.setAlpha(0);
                 }
                 break;
+            case R.id.iv_home_icon:// 主队logo
+                Intent homeIntent = new Intent(this,FootballTeamInfoActivity.class);
+                homeIntent.putExtra("TEAM_ID",mMatchDetail.getHomeTeamInfo().getId());
+                homeIntent.putExtra("TITLE_TEAM_NAME",mMatchDetail.getHomeTeamInfo().getName());
+                startActivity(homeIntent);
+                break;
+            case R.id.iv_guest_icon:// 客队logo
+                Intent guestIntent = new Intent(this,FootballTeamInfoActivity.class);
+                guestIntent.putExtra("TEAM_ID",mMatchDetail.getGuestTeamInfo().getId());
+                guestIntent.putExtra("TITLE_TEAM_NAME",mMatchDetail.getGuestTeamInfo().getName());
+                startActivity(guestIntent);
+                break;
             default:
                 break;
         }
@@ -2424,6 +2436,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         iv_home_icon = (ImageView) findViewById(R.id.iv_home_icon);
         iv_guest_icon = (ImageView) findViewById(R.id.iv_guest_icon);
 //        iv_bg = (ImageView) findViewById(R.id.iv_bg);
+
+        iv_home_icon.setOnClickListener(this);
+        iv_guest_icon.setOnClickListener(this);
 
 
         tv_homename = (TextView) findViewById(R.id.tv_home_name);

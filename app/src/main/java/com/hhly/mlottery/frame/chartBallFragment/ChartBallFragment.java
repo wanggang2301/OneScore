@@ -80,6 +80,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     private static final int MSG_UPDATA_TIME = 7;             // 设置时间并更新
     private static final int SUCCESS_REFRASH_HISTORY = 8;     // 加载历史成功
     private static final int ERROR_REFRASH_HISTORY = 9;       // 加载历史失败
+    private static final int SOCKET_TIMER_TASK = 10;       // 定时器检测socket连接
     private static final String TYPE_MSG = "1";               // 1普通消息
     private static final String TYPE_MSG_TO_ME = "2";         // 2@消息
     private static final String TYPE_MSG_SERVER = "3";        // 3系统消息
@@ -168,6 +169,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         initAnim();
         initData(SLIDE_TYPE_MSG_ONE);
         initEvent();
+        socketTimerTask();
         return mView;
     }
 
@@ -219,16 +221,6 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     }
 
     private void initView() {
-
-        //定时器
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                handler.sendEmptyMessage(0);
-            }
-        };
-        timer.schedule(timerTask, 1000 * 1, 1000 * 30);
-
         mEditText = (EmojiconEditText) mView.findViewById(R.id.et_emoji_input);
         mEditText.setFocusable(false);
         mEditText.setFocusableInTouchMode(false);
@@ -262,19 +254,6 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         ivGuestLike.setVisibility(View.INVISIBLE);
         setClickableLikeBtn(true);
     }
-
-    /**
-     * 30重连socket一次
-     */
-    Handler handler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            connectWebSocket();
-        }
-    };
-
 
     /*自定发送消息测试*/
     private void initData(final String slideType) {
@@ -646,9 +625,25 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                 case MSG_UPDATA_TIME:
                     mAdapter.notifyDataSetChanged();
                     break;
+                case SOCKET_TIMER_TASK:// 启动定时器
+                    connectWebSocket();
+                    break;
             }
         }
     };
+
+    /**
+     * 30重连socket一次
+     */
+    private void socketTimerTask(){
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                mHandler.sendEmptyMessage(SOCKET_TIMER_TASK);
+            }
+        };
+        timer.schedule(timerTask, 1000 * 1, 1000 * 30);
+    }
 
     @Override
     public void onAttach(Context context) {
