@@ -21,6 +21,7 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.CounselActivity;
+import com.hhly.mlottery.activity.ExpertsActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.activity.IndexActivity;
 import com.hhly.mlottery.activity.NumbersActivity;
@@ -1619,6 +1620,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
         return convertView;
     }
 
+    int expertid1,expertid2,expertid3,expertid4;
     /**
      * 添加专家专栏的专家名单
      *
@@ -1661,6 +1663,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 e.printStackTrace();
             }
             tv_expert_name1.setText(mHomePagerEntity.getHeadTitles().getContent().get(0).getTitle());
+            expertid1 = mHomePagerEntity.getHeadTitles().getContent().get(0).getExpertId();
         } else if (size == 2) {
             ll_expert_name_item1.setVisibility(View.VISIBLE);
             ll_expert_name_item02.setVisibility(View.GONE);
@@ -1671,6 +1674,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 e.printStackTrace();
             }
             tv_expert_name1.setText(mHomePagerEntity.getHeadTitles().getContent().get(0).getTitle());
+            expertid1 = mHomePagerEntity.getHeadTitles().getContent().get(0).getExpertId();
             ll_expert_content2.setVisibility(View.VISIBLE);
             try {
                 Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(1).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon2);
@@ -1678,6 +1682,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 e.printStackTrace();
             }
             tv_expert_name2.setText(mHomePagerEntity.getHeadTitles().getContent().get(1).getTitle());
+            expertid2 = mHomePagerEntity.getHeadTitles().getContent().get(1).getExpertId();
         } else if (size == 3) {
             ll_expert_name_item1.setVisibility(View.GONE);
             ll_expert_name_item02.setVisibility(View.VISIBLE);
@@ -1687,18 +1692,21 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 e.printStackTrace();
             }
             tv_expert_name01.setText(mHomePagerEntity.getHeadTitles().getContent().get(0).getTitle());
+            expertid1 = mHomePagerEntity.getHeadTitles().getContent().get(0).getExpertId();
             try {
                 Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(1).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon02);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             tv_expert_name02.setText(mHomePagerEntity.getHeadTitles().getContent().get(1).getTitle());
+            expertid2 = mHomePagerEntity.getHeadTitles().getContent().get(1).getExpertId();
             try {
                 Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(2).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon03);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             tv_expert_name03.setText(mHomePagerEntity.getHeadTitles().getContent().get(2).getTitle());
+            expertid3 = mHomePagerEntity.getHeadTitles().getContent().get(2).getExpertId();
         } else if (size >= 4) {
             ll_expert_name_item1.setVisibility(View.VISIBLE);
             ll_expert_name_item02.setVisibility(View.GONE);
@@ -1709,6 +1717,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 e.printStackTrace();
             }
             tv_expert_name1.setText(mHomePagerEntity.getHeadTitles().getContent().get(0).getTitle());
+            expertid1 = mHomePagerEntity.getHeadTitles().getContent().get(0).getExpertId();
             ll_expert_content2.setVisibility(View.VISIBLE);
             try {
                 Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(1).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon2);
@@ -1716,6 +1725,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 e.printStackTrace();
             }
             tv_expert_name2.setText(mHomePagerEntity.getHeadTitles().getContent().get(1).getTitle());
+            expertid2 = mHomePagerEntity.getHeadTitles().getContent().get(1).getExpertId();
             ll_expert_content3.setVisibility(View.VISIBLE);
             try {
                 Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(2).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon3);
@@ -1723,6 +1733,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 e.printStackTrace();
             }
             tv_expert_name3.setText(mHomePagerEntity.getHeadTitles().getContent().get(2).getTitle());
+            expertid3 = mHomePagerEntity.getHeadTitles().getContent().get(2).getExpertId();
             ll_expert_content4.setVisibility(View.VISIBLE);
             try {
                 Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(3).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon4);
@@ -1730,56 +1741,57 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 e.printStackTrace();
             }
             tv_expert_name4.setText(mHomePagerEntity.getHeadTitles().getContent().get(3).getTitle());
+            expertid4 = mHomePagerEntity.getHeadTitles().getContent().get(3).getExpertId();
         }
 
         ll_expert_content1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                joinDataInfo();
+                joinDataInfo(expertid1);
             }
         });
         ll_expert_content2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                joinDataInfo();
+                joinDataInfo(expertid2);
             }
         });
         ll_expert_content3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                joinDataInfo();
+                joinDataInfo(expertid3);
             }
         });
         ll_expert_content4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                joinDataInfo();
+                joinDataInfo(expertid4);
             }
         });
         ll_expert_content01.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                joinDataInfo();
+                joinDataInfo(expertid1);
             }
         });
         ll_expert_content02.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                joinDataInfo();
+                joinDataInfo(expertid2);
             }
         });
         ll_expert_content03.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                joinDataInfo();
+                joinDataInfo(expertid3);
             }
         });
         return view;
     }
 
-    private void joinDataInfo() {
-        Intent intent = new Intent(mContext, CounselActivity.class);
-        intent.putExtra(AppConstants.FOTTBALL_KEY, 1);
+    private void joinDataInfo(int expertId) {
+        Intent intent = new Intent(mContext, ExpertsActivity.class);
+        intent.putExtra("expertId", String.valueOf(expertId));
         mContext.startActivity(intent);
     }
 

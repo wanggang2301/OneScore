@@ -1118,6 +1118,9 @@ public class BaseURLs {
     public final static String FOOT_TEAM_LIST_URL = URL_API_HOST + "footballLeagueData.findTeamPlayers.do";
 
 
+    // 专家详情页
+    public final static String EXPERTS_LIST_URL = URL_API_HOST + "expert.findAppExpert.do";
+
     /*****************************************************************************************************************
      * 下面URL为HTML页面
      * <p>
