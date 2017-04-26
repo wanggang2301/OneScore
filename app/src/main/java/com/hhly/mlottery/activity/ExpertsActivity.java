@@ -21,6 +21,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.ExpertsListAdapter;
 import com.hhly.mlottery.bean.MostExpertBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -38,6 +39,7 @@ import java.util.Map;
 
 public class ExpertsActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
+    private final String EXPERT_ID = "expertId";
 
     private ImageView ex_image;//专家头像
     private TextView ex_name;//专家名称
@@ -67,6 +69,7 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
     public static final String NET_PARM_PAGE = "currentPage";//网络请求的参数key  页数
     public static final String BUNDLE_PARM_INFOTYPE = "infoType";//网络请求的参数key  列表类型
 
+    private String expertId;
 
     private Handler mViewHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -112,6 +115,10 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_experts);
+
+        if (getIntent() != null) {
+            expertId = getIntent().getStringExtra(EXPERT_ID);
+        }
 
         initView();
         initData();
@@ -161,12 +168,12 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
 
     // 请求网络数据
     private void initData() {
-       // mSwipeRefreshLayout.setRefreshing(true);
-       // mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
+        // mSwipeRefreshLayout.setRefreshing(true);
+        // mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         Map<String, String> param = new HashMap<>();
-        param.put("expertId", "10002");
+        param.put(EXPERT_ID, expertId);
 
-        VolleyContentFast.requestJsonByGet("http://m.13322.com/mlottery/core/expert.findAppExpert.do", param, new VolleyContentFast.ResponseSuccessListener<MostExpertBean>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.EXPERTS_LIST_URL, param, new VolleyContentFast.ResponseSuccessListener<MostExpertBean>() {
             @Override
             public void onResponse(MostExpertBean jsonObject) {
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -223,7 +230,7 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
 
 
         TextView public_txt_title = (TextView) findViewById(R.id.public_txt_title);
-        public_txt_title.setText("专家专栏");
+        public_txt_title.setText(getString(R.string.home_expert_title));
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         findViewById(R.id.public_img_back).setOnClickListener(this);
