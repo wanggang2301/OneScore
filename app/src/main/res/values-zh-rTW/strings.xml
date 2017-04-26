@@ -1665,4 +1665,6 @@
     <string name="tennis_datails_status10">主動得分</string>
     <string name="foot_event_num">""</string>
     <string name="please_hint_team">請輸入球隊名稱</string>
+    <string name="foot_text">文字</string>
+
 </resources>

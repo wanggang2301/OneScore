@@ -2,58 +2,58 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="10dp">
 
-    <View
-        android:id="@+id/bottomview"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:visibility="gone"
-        android:alpha="0"></View>
-
-    <LinearLayout
-        android:id="@+id/ll_live_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="8dp">
-
-        <TextView
-            android:layout_width="wrap_content"
+    <!-- <View
+         android:id="@+id/bottomview"
+         android:layout_width="match_parent"
+         android:layout_height="20dp"
+         android:visibility="gone"
+         android:alpha="0"></View>-->
+    <!--
+        <LinearLayout
+            android:id="@+id/ll_live_text"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/foot_details_live_tesxt"
-            android:textColor="@color/content_txt_black"
-            android:textSize="@dimen/text_size_13" />
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="8dp">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text=""
-            android:textColor="@color/red" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/foot_details_live_tesxt"
+                android:textColor="@color/content_txt_black"
+                android:textSize="@dimen/text_size_13" />
 
-        <ImageView
-            android:id="@+id/close_image"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@mipmap/close_outline" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:textColor="@color/red" />
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/close_image"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@mipmap/close_outline" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/line_football_footer" />
+        </LinearLayout>-->
+    <!--
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line_football_footer" />
+    -->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/timerecyclerView"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="10dp"
-        android:clickable="false"></android.support.v7.widget.RecyclerView>
+        android:clickable="false" />
 </LinearLayout>

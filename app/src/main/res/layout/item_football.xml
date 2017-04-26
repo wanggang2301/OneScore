@@ -39,10 +39,21 @@
                     android:textSize="@dimen/item_football_racename" />
 
                 <TextView
+                    android:id="@+id/item_football_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:text="4-17"
+                    android:layout_toRightOf="@id/item_football_racename"
+                    android:textColor="@color/title"
+                    android:textSize="@dimen/item_football_time"
+                    android:visibility="gone"
+                    />
+                <TextView
                     android:id="@+id/item_football_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/item_football_racename"
+                    android:layout_toRightOf="@id/item_football_date"
                     android:paddingLeft="5dp"
                     android:text="12:01"
                     android:textColor="@color/title"

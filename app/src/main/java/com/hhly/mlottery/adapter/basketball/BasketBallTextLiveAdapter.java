@@ -66,7 +66,7 @@ public class BasketBallTextLiveAdapter extends BaseQuickAdapter<BasketEachTextLi
             baseViewHolder.setText(R.id.tv_remainTime, "");
             baseViewHolder.getView(R.id.iv_topsanjiao).setVisibility(View.GONE);
             baseViewHolder.getView(R.id.tv_eventContent).setBackgroundResource(0);
-            ((TextView) baseViewHolder.getView(R.id.tv_eventContent)).setTextColor(mContext.getResources().getColor(R.color.black_details_textcolor));
+            ((TextView) baseViewHolder.getView(R.id.tv_eventContent)).setTextColor(mContext.getResources().getColor(R.color.mdy_333));
         } else {
 
             text += "  " + "<font color='#21b11e'>" + b.getGuestScore() + "-" + b.getHomeScore() + "</font>";

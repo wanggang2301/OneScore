@@ -1675,6 +1675,8 @@
     <string name="tennis_datails_status10">主动得分</string>
     <string name="foot_event_num">""</string>
     <string name="please_hint_team">请输入球队名称</string>
+    <string name="foot_text">文字</string>
+
 
     /*****不要删除*************************************************************************************************/
     <string name="odds_back_list">""</string>
