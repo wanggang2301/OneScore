@@ -2181,16 +2181,20 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 }
                 break;
             case R.id.iv_home_icon:// 主队logo
-                Intent homeIntent = new Intent(this,FootballTeamInfoActivity.class);
-                homeIntent.putExtra("TEAM_ID",mMatchDetail.getHomeTeamInfo().getId());
-                homeIntent.putExtra("TITLE_TEAM_NAME",mMatchDetail.getHomeTeamInfo().getName());
-                startActivity(homeIntent);
+                if (mMatchDetail.getHomeTeamInfo().getId() != null) {
+                    Intent homeIntent = new Intent(this, FootballTeamInfoActivity.class);
+                    homeIntent.putExtra("TEAM_ID", mMatchDetail.getHomeTeamInfo().getId());
+                    homeIntent.putExtra("TITLE_TEAM_NAME", mMatchDetail.getHomeTeamInfo().getName());
+                    startActivity(homeIntent);
+                }
                 break;
             case R.id.iv_guest_icon:// 客队logo
-                Intent guestIntent = new Intent(this,FootballTeamInfoActivity.class);
-                guestIntent.putExtra("TEAM_ID",mMatchDetail.getGuestTeamInfo().getId());
-                guestIntent.putExtra("TITLE_TEAM_NAME",mMatchDetail.getGuestTeamInfo().getName());
-                startActivity(guestIntent);
+                if (mMatchDetail.getGuestTeamInfo().getId() != null) {
+                    Intent guestIntent = new Intent(this, FootballTeamInfoActivity.class);
+                    guestIntent.putExtra("TEAM_ID", mMatchDetail.getGuestTeamInfo().getId());
+                    guestIntent.putExtra("TITLE_TEAM_NAME", mMatchDetail.getGuestTeamInfo().getName());
+                    startActivity(guestIntent);
+                }
                 break;
             default:
                 break;
