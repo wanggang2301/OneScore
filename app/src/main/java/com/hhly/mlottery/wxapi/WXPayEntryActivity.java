@@ -30,7 +30,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.entry);
+//        setContentView(R.layout.entry);TODO*********
 
         // 通过WXAPIFactory工厂，获取IWXAPI的实例
 //        api = WXAPIFactory.createWXAPI(this, Constants.APP_ID, false);

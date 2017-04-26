@@ -293,11 +293,11 @@ public class FootballDatabaseStatisticsFragment extends Fragment implements View
                 DatabaseTopBean data2 = bean.getTop();
 
                 //之最
-                mAdapter0 = new MostAdapter(getContext(),data2.getWinTop(),R.layout.football_database_most_item , true);//胜平负最多
-                mAdapter1 = new MostAdapter(getContext() , data2.getAtkTop(), R.layout.football_database_most_item , false);//攻击力最强
-                mAdapter2 = new MostAdapter(getContext() , data2.getAtkWeak(), R.layout.football_database_most_item ,false);//攻击力最弱
-                mAdapter3 = new MostAdapter(getContext() , data2.getDefTop(), R.layout.football_database_most_item , false);//防守最强
-                mAdapter4 = new MostAdapter(getContext() , data2.getDefWeak(), R.layout.football_database_most_item , false);//防守最弱
+                mAdapter0 = new MostAdapter(getContext(),data2.getWinTop(),R.layout.football_database_most_item , true , false);//胜平负最多
+                mAdapter1 = new MostAdapter(getContext() , data2.getAtkTop(), R.layout.football_database_most_item , false , false);//攻击力最强
+                mAdapter2 = new MostAdapter(getContext() , data2.getAtkWeak(), R.layout.football_database_most_item ,false , false);//攻击力最弱
+                mAdapter3 = new MostAdapter(getContext() , data2.getDefTop(), R.layout.football_database_most_item , false , true);//防守最强
+                mAdapter4 = new MostAdapter(getContext() , data2.getDefWeak(), R.layout.football_database_most_item , false , true);//防守最弱
 
                 mListView0.setAdapter(mAdapter0);
                 mListView1.setAdapter(mAdapter1);
@@ -474,12 +474,14 @@ public class FootballDatabaseStatisticsFragment extends Fragment implements View
     class MostAdapter extends CommonAdapter<TopDetailsBean>{
 
         boolean isSPF;//是否胜平负最多
+        boolean isDEFENS;//是否是防守信息
 
-        public MostAdapter(Context context, List<TopDetailsBean> datas, int layoutId , boolean isSPFMost) {
+        public MostAdapter(Context context, List<TopDetailsBean> datas, int layoutId , boolean isSPFMost , boolean isDefens) {
             super(context, datas, layoutId);
 
             this.mContext = context;
             this.isSPF = isSPFMost;
+            this.isDEFENS = isDefens;
         }
         @Override
         public void convert(ViewHolder holder, TopDetailsBean basketDatabaseMostDat) {
@@ -540,8 +542,13 @@ public class FootballDatabaseStatisticsFragment extends Fragment implements View
                         break;
                 }
             }else{
-                holder.setText(R.id.football_database_most_item_avg_num , getResources().getString(R.string.football_database_details_most_score_avg));
-                holder.setText(R.id.football_database_most_item_num , getResources().getString(R.string.football_database_details_statistic_all_num));
+                if (isDEFENS) {
+                    holder.setText(R.id.football_database_most_item_avg_num , getResources().getString(R.string.football_database_details_fumble_score_avg));
+                    holder.setText(R.id.football_database_most_item_num , getResources().getString(R.string.football_database_details_statistic_fumble_num));
+                }else{
+                    holder.setText(R.id.football_database_most_item_avg_num , getResources().getString(R.string.football_database_details_most_score_avg));
+                    holder.setText(R.id.football_database_most_item_num , getResources().getString(R.string.football_database_details_statistic_all_num));
+                }
             }
 
 

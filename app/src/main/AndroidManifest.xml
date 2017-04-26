@@ -402,6 +402,15 @@
         <activity
             android:name=".activity.TennisIndexDetailsActivity"
             android:screenOrientation="portrait" />
+        <activity android:name="com.hhly.mlottery.activity.BettingRecommendActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.hhly.mlottery.activity.BettingPayDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.hhly.mlottery.activity.BettingOnlinePaymentActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.hhly.mlottery.activity.BettingRecommendSettingActivity"
+            android:screenOrientation="portrait" />
+
         <!--足球球队详情页-->
         <activity android:name=".activity.FootballTeamInfoActivity"/>
         <activity

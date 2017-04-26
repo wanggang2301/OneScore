@@ -110,6 +110,7 @@ public class BettingRecommendActivity extends BaseActivity implements View.OnCli
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 break;
             case R.id.public_btn_set:
+                //TODO=====================
                 Intent mIntent = new Intent(mContext , BettingRecommendSettingActivity.class);
                 startActivity(mIntent);
                 overridePendingTransition(R.anim.push_left_in , R.anim.push_fix_out);
@@ -119,6 +120,7 @@ public class BettingRecommendActivity extends BaseActivity implements View.OnCli
 
     @Override
     public void onRefresh() {
+        //TODO=====================
     }
 
     private BettingBuyClickListener mBettingBuyClickListener;

@@ -927,7 +927,7 @@
     <string name="football_database_details_most_top_draw">平/已赛:</string>
     <string name="football_database_details_most_top_lost">输/已赛:</string>
     <string name="football_database_details_most_top_avg">胜率:</string>
-    <string name="football_database_details_most_score_avg">场均进球:</string>
+    <string name="football_database_details_most_score_avg">场均进球 :</string>
     <string name="football_database_details_statistic_home_draw">平局 :</string>
     <string name="football_database_details_statistic_all_num">总进球数 :</string>
     <string name="football_database_details_statistic_avg_num">场均 :</string>
@@ -949,6 +949,8 @@
     <string name="football_database_details_moreThree">高于3.5</string>
     <string name="football_database_details_chang">场</string>
 
+    <string name="football_database_details_statistic_fumble_num">总失球数 :</string>
+    <string name="football_database_details_fumble_score_avg">场均失球 :</string>
     <!--足球分析详情-->
     <string name="football_analyze_details">分析明细</string>
     <string name="football_analyze_details_time">时间</string>
@@ -1715,6 +1717,11 @@
     <string name="foot_team_odds_over25">高于2.5</string>
     <string name="foot_team_odds_let_the_ball">让球盘</string>
     <string name="foot_team_odds_size_ball">大小球</string>
+
+    <!--竞彩推荐-->
+    <string name="betting_setting_palying_method">玩法</string>
+    <string name="betting_setting_league">联赛</string>
+
 
     <!--竞彩推荐-->
     <string name="betting_setting_palying_method">玩法</string>

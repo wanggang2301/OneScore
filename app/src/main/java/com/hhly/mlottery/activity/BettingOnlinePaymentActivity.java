@@ -8,8 +8,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.bettingbean.WeiFuTongPayidbean;
-import com.hhly.mlottery.bean.bettingbean.WeiXinPayidBean;
+import com.hhly.mlottery.bean.bettingbean.WeiFuTongPayidDataBean;
+import com.hhly.mlottery.bean.bettingbean.WeiXinPayidDataBean;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.tencent.mm.sdk.modelpay.PayReq;
@@ -75,17 +75,17 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
         params.put("totalFee", "1");//总金额 (分)
 
         String url = "http://192.168.31.15:8083/sunon-web-api/pay/unifiedTradePay";
-        VolleyContentFast.requestJsonByPost(url,params , new VolleyContentFast.ResponseSuccessListener<WeiFuTongPayidbean>() {
+        VolleyContentFast.requestJsonByPost(url,params , new VolleyContentFast.ResponseSuccessListener<WeiFuTongPayidDataBean>() {
             @Override
-            public void onResponse(WeiFuTongPayidbean jsondata) {
-                WeiFuTongPayidbean.PayData.PayDataMap mDetailsData = jsondata.getData().getDataMap();
+            public void onResponse(WeiFuTongPayidDataBean jsondata) {
+                WeiFuTongPayidDataBean.PayData.PayDataMap mDetailsData = jsondata.getData().getDataMap();
                 L.d("yxq_WFTPay===" , jsondata.getMsg() + " >>token_id= " + mDetailsData.getToken_id());
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
             }
-        },WeiFuTongPayidbean.class);
+        },WeiFuTongPayidDataBean.class);
     }
 
     /**
@@ -100,10 +100,10 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
         params.put("appId", APP_ID);//appid
 
         String url = "http://192.168.31.15:8083/sunon-web-api/pay/unifiedTradePay";
-        VolleyContentFast.requestJsonByPost(url,params , new VolleyContentFast.ResponseSuccessListener<WeiXinPayidBean>() {
+        VolleyContentFast.requestJsonByPost(url,params , new VolleyContentFast.ResponseSuccessListener<WeiXinPayidDataBean>() {
             @Override
-            public void onResponse(WeiXinPayidBean jsondata) {
-                WeiXinPayidBean.PayDataWX.PayDataMapWX.PayInfo payInfoData = jsondata.getData().getDataMap().getPay_info();
+            public void onResponse(WeiXinPayidDataBean jsondata) {
+                WeiXinPayidDataBean.PayDataWX.PayDataMapWX.PayInfo payInfoData = jsondata.getData().getDataMap().getPay_info();
                 L.d("yxq_WXPay===" , jsondata.getMsg() + " >>appid= " + payInfoData.getAppid());
                 toPay(payInfoData);
             }
@@ -112,10 +112,10 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 Toast.makeText(mContext, "后台接口访问失败", Toast.LENGTH_SHORT).show();
             }
-        },WeiXinPayidBean.class);
+        },WeiXinPayidDataBean.class);
     }
 
-    private void toPay(WeiXinPayidBean.PayDataWX.PayDataMapWX.PayInfo payInfo){
+    private void toPay(WeiXinPayidDataBean.PayDataWX.PayDataMapWX.PayInfo payInfo){
         //注册appid
         IWXAPI api = WXAPIFactory.createWXAPI(this, APP_ID);// 通过WXAPIFactory工厂，获取IWXAPI的实例
         if (!api.isWXAppInstalled()) {
