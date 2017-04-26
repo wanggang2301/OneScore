@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -50,6 +51,7 @@ public class TeamInfoScoreFragment extends Fragment implements View.OnClickListe
 
     private String mTeamId;
     private String leagueDate;
+    private FrameLayout fl_loading;
 
     public static TeamInfoScoreFragment newInstance(String thirdId) {
         TeamInfoScoreFragment fragment = new TeamInfoScoreFragment();
@@ -83,9 +85,15 @@ public class TeamInfoScoreFragment extends Fragment implements View.OnClickListe
         return mView;
     }
 
-    private void initData() {
+    /**
+     * 加载数据
+     * @param type 0:显示加载框，1：不显示
+     */
+    private void initData(int type) {
         if (leagueDate == null) return;
-        setStatus(LOADING);
+        if(type == 0){
+            setStatus(LOADING);
+        }
 
         final Map<String, String> map = new HashMap<>();
         map.put("teamId", mTeamId);// 球队ID
@@ -122,11 +130,13 @@ public class TeamInfoScoreFragment extends Fragment implements View.OnClickListe
         networkExceptionReloadBtn.setOnClickListener(this);
 
         tvNotData = (TextView) mView.findViewById(R.id.tv_not_data);
+
+        fl_loading = (FrameLayout) mView.findViewById(R.id.fl_loading);
     }
 
-    public void updataList(String data) {
+    public void updataList(String data ,int type) {
         leagueDate = data;
-        initData();
+        initData(type);
     }
 
     // 设置页面显示状态
@@ -134,6 +144,7 @@ public class TeamInfoScoreFragment extends Fragment implements View.OnClickListe
         recyclerView.setVisibility(status == SUCCESS ? View.VISIBLE : View.GONE);
         networkExceptionLayout.setVisibility(status == ERROR ? View.VISIBLE : View.GONE);
         tvNotData.setVisibility(status == NOTO_DATA ? View.VISIBLE : View.GONE);
+        fl_loading.setVisibility(status == LOADING ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -143,7 +154,7 @@ public class TeamInfoScoreFragment extends Fragment implements View.OnClickListe
                 recyclerView.setVisibility(View.VISIBLE);
                 networkExceptionLayout.setVisibility(View.GONE);
                 tvNotData.setVisibility(View.GONE);
-                initData();
+                initData(0);
                 break;
         }
     }

@@ -33,6 +33,7 @@ import java.util.List;
  */
 
 public class TeamInfoDataFragment extends Fragment implements View.OnClickListener {
+    private final int LOADING = 0;
     private final int SUCCESS = 1;
     private final int ERROR = 2;
     private final int NOTO_DATA = 3;
@@ -261,6 +262,7 @@ public class TeamInfoDataFragment extends Fragment implements View.OnClickListen
         networkExceptionReloadBtn.setOnClickListener(this);
 
         tvNotData = (TextView) mView.findViewById(R.id.tv_not_data);
+
     }
 
     public void updataList(List<FootTeamInfoBean> list) {

@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
@@ -65,6 +64,7 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
     private int currentHDPIndex = 0;
     private int currentOUIndex = 0;
     private boolean isTheBallBt = true;// 是否为让球盘
+    private FrameLayout fl_loading;
 
     public static TeamInfoOddsFragment newInstance(String thirdId) {
         TeamInfoOddsFragment fragment = new TeamInfoOddsFragment();
@@ -377,16 +377,18 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
                 }
             }
         }
-        if(isTheBallBt){
+        if (isTheBallBt) {
             dataContent.setText(hdpBean.getLgName());
-        }else{
+        } else {
             dataContent.setText(ouBean.getLgName());
         }
     }
 
-    private void initData() {
+    private void initData(int type) {
         if (leagueDate == null) return;
-        setStatus(LOADING);
+        if(type == 0){
+            setStatus(LOADING);
+        }
 
         final Map<String, String> map = new HashMap<>();
         map.put("teamId", mTeamId);// 球队ID
@@ -396,14 +398,25 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
             @Override
             public void onResponse(FootTeamMatchOddBean json) {
                 if (json != null && json.getCode() == 200) {
-                    setStatus(SUCCESS);
                     currOUList.clear();
                     currHDPList.clear();
                     currOUList.addAll(json.getCurrOU());
                     currHDPList.addAll(json.getCurrHDP());
+                    if (isTheBallBt) {
+                        if (currHDPList.size() == 0) {
+                            setStatus(NOTO_DATA);
+                            return;
+                        }
+                    } else {
+                        if (currOUList.size() == 0) {
+                            setStatus(NOTO_DATA);
+                            return;
+                        }
+                    }
+                    setStatus(SUCCESS);
                     setData(0);
                 } else {
-                    setStatus(NOTO_DATA);
+                    setStatus(ERROR);
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -499,11 +512,13 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
         networkExceptionReloadBtn.setOnClickListener(this);
 
         tvNotData = (TextView) mView.findViewById(R.id.tv_not_data);
+
+        fl_loading = (FrameLayout) mView.findViewById(R.id.fl_loading);
     }
 
-    public void updataList(String data) {
+    public void updataList(String data,int type) {
         leagueDate = data;
-        initData();
+        initData(type);
     }
 
     // 设置页面显示状态
@@ -511,6 +526,7 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
         scroll_view.setVisibility(status == SUCCESS ? View.VISIBLE : View.GONE);
         networkExceptionLayout.setVisibility(status == ERROR ? View.VISIBLE : View.GONE);
         tvNotData.setVisibility(status == NOTO_DATA ? View.VISIBLE : View.GONE);
+        fl_loading.setVisibility(status == LOADING ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -520,7 +536,7 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
                 scroll_view.setVisibility(View.VISIBLE);
                 networkExceptionLayout.setVisibility(View.GONE);
                 tvNotData.setVisibility(View.GONE);
-                initData();
+                initData(0);
                 break;
             case R.id.tv_the_ball_bt:
                 isTheBallBt = true;

@@ -99,15 +99,15 @@ public class FootballTeamInfoActivity extends BaseActivity implements SwipeRefre
                         if (!isOddsPager) {
                             currentData.setText(leagueDate == null ? "" : leagueDate);
                         }
-                        teamInfoScoreFragment.updataList(leagueDate);
-                        teamInfoLineupFragment.updataList(leagueDate);
+                        teamInfoScoreFragment.updataList(leagueDate , 0);
+                        teamInfoLineupFragment.updataList(leagueDate , 0);
                     }
                     if (scoreDate == null && yearList.size() != 0) {
                         scoreDate = yearList.get(0);
                         if (isOddsPager) {
                             currentData.setText(scoreDate == null ? "" : scoreDate);
                         }
-                        teamInfoOddsFragment.updataList(scoreDate);
+                        teamInfoOddsFragment.updataList(scoreDate , 0);
                     }
                     viewPager.setIsScrollable(true);
                     teamInfoDataFragment.updataList(json.getTeamInfo());
@@ -188,11 +188,11 @@ public class FootballTeamInfoActivity extends BaseActivity implements SwipeRefre
     public void onRefresh() {
         initData();
         if (!TextUtils.isEmpty(scoreDate)) {
-            teamInfoScoreFragment.updataList(scoreDate);
+            teamInfoScoreFragment.updataList(scoreDate , 1);
         }
         if (!TextUtils.isEmpty(leagueDate)) {
-            teamInfoOddsFragment.updataList(leagueDate);
-            teamInfoLineupFragment.updataList(leagueDate);
+            teamInfoOddsFragment.updataList(leagueDate , 1);
+            teamInfoLineupFragment.updataList(leagueDate , 1);
         }
     }
 

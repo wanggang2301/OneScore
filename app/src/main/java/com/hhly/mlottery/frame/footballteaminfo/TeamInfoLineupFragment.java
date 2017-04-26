@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -51,6 +52,7 @@ public class TeamInfoLineupFragment extends Fragment implements View.OnClickList
     private String leagueDate;
     private List<FootTeamInfoListBean.PlayerBean> playerList = new ArrayList<>();
     private LinearLayout ll_content;
+    private FrameLayout fl_loading;
 
     public static TeamInfoLineupFragment newInstance(String thirdId) {
         TeamInfoLineupFragment fragment = new TeamInfoLineupFragment();
@@ -84,9 +86,11 @@ public class TeamInfoLineupFragment extends Fragment implements View.OnClickList
         return mView;
     }
 
-    private void initData() {
+    private void initData(int type) {
         if (leagueDate == null) return;
-        setStatus(LOADING);
+        if(type == 0){
+            setStatus(LOADING);
+        }
 
         final Map<String, String> map = new HashMap<>();
         map.put("teamId", mTeamId);// 球队ID
@@ -124,11 +128,13 @@ public class TeamInfoLineupFragment extends Fragment implements View.OnClickList
         networkExceptionReloadBtn.setOnClickListener(this);
 
         tvNotData = (TextView) mView.findViewById(R.id.tv_not_data);
+
+        fl_loading = (FrameLayout) mView.findViewById(R.id.fl_loading);
     }
 
-    public void updataList(String data) {
+    public void updataList(String data,int type) {
         leagueDate = data;
-        initData();
+        initData(type);
     }
 
     // 设置页面显示状态
@@ -136,6 +142,7 @@ public class TeamInfoLineupFragment extends Fragment implements View.OnClickList
         ll_content.setVisibility(status == SUCCESS ? View.VISIBLE : View.GONE);
         networkExceptionLayout.setVisibility(status == ERROR ? View.VISIBLE : View.GONE);
         tvNotData.setVisibility(status == NOTO_DATA ? View.VISIBLE : View.GONE);
+        fl_loading.setVisibility(status == LOADING ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -145,7 +152,7 @@ public class TeamInfoLineupFragment extends Fragment implements View.OnClickList
                 recyclerView.setVisibility(View.VISIBLE);
                 networkExceptionLayout.setVisibility(View.GONE);
                 tvNotData.setVisibility(View.GONE);
-                initData();
+                initData(0);
                 break;
         }
     }

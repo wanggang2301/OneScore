@@ -44,7 +44,7 @@ public class FootTeamArrayAdapter extends ArrayAdapter<String> {
         tv.setText(mStringArray.get(position));
         if (position == index) {
             tv.setTextColor(mContext.getResources().getColor(R.color.radio_colors));
-            tv.setBackgroundResource(R.color.basket_database_details_color);
+            tv.setBackgroundResource(R.color.snooker_rank_txt_top3);
         } else {
             tv.setTextColor(mContext.getResources().getColor(R.color.basket_parting_line));
             tv.setBackgroundResource(R.color.radio_colors);
@@ -67,7 +67,7 @@ public class FootTeamArrayAdapter extends ArrayAdapter<String> {
         tv.setText(mStringArray.get(position));
         if (position == index) {
             tv.setTextColor(mContext.getResources().getColor(R.color.radio_colors));
-            tv.setBackgroundResource(R.color.basket_database_details_color);
+            tv.setBackgroundResource(R.color.snooker_rank_txt_top3);
         } else {
             tv.setTextColor(mContext.getResources().getColor(R.color.basket_parting_line));
             tv.setBackgroundResource(R.color.radio_colors);

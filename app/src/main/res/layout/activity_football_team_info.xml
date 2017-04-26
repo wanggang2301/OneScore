@@ -32,7 +32,7 @@
                 android:id="@+id/tv_team_title"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_centerInParent="true"
+                android:layout_toRightOf="@id/im_team_back"
                 android:ellipsize="end"
                 android:gravity="center"
                 android:lines="1"
