@@ -2,6 +2,7 @@ package com.hhly.mlottery.adapter.homePagerAdapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -221,6 +222,15 @@ public class HomePagerAdapter extends PagerAdapter {
 
                 if (!TextUtils.isEmpty(jumpAddr)) {
                     switch (jumpType) {
+                        case 5:// 调用浏览器
+                        {
+                            Intent intent = new Intent();
+                            intent.setAction("android.intent.action.VIEW");
+                            Uri content_url = Uri.parse(jumpAddr);
+                            intent.setData(content_url);
+                            mContext.startActivity(intent);
+                        }
+                        break;
                         case 0:// 无
                             break;
                         case 1:// 页面
