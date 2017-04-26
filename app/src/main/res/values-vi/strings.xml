@@ -1402,7 +1402,6 @@
     <string name="basket_reset">Đạt lại</string>
 
 
-
     <string name="basket_isok">xắc định</string>
 
     <string name="basket_unfiltrate">Tạm không có giải đấu</string>
@@ -1633,4 +1632,6 @@
     <string name="basket_handicap_bigorsmall">O/D/U</string>
     <string name="home_gender">Giới tính</string>
     <string name="no_select_head">Bạn vẫn chưa chọn hình đại diện</string>
+    <string name="foot_text">文字</string>
+
 </resources>

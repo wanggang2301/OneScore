@@ -1616,4 +1616,6 @@
     <string name="basket_handicap_bigorsmall">O/D/U</string>
     <string name="home_gender">Gender</string>
     <string name="no_select_head">You have not selected image</string>
+    <string name="foot_text">文字</string>
+
 </resources>

@@ -1,16 +1,12 @@
 package com.hhly.mlottery.frame.footballframe;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +14,6 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -42,9 +37,9 @@ import java.util.Map;
 /**
  * @author wang gang
  * @date 2016/6/28 15:26
- * @des ${}
+ * @des 足球直播完场文字直播
  */
-public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
+public class FinishMatchLiveTextFragment extends Fragment {
     private static String TAG = "FinishMatchLiveTextFragment";
 
     private static final String PARAM_TYPE = "type";
@@ -74,7 +69,7 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
     private static final int NODATA = 2;// 没有更多数据
 
     private View moreView;  //加载更多
-    private View bottomview;
+    // private View bottomview;
 
 
     private int lastItem;
@@ -114,10 +109,16 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // moreView = inflater.inflate(R.layout.finish_live_text_loadmore, container, false);
-        return super.onCreateView(inflater, container, savedInstanceState);
+        mView = View.inflate(mContext, R.layout.football_live_text, null);  //文字直播
+
+        moreView = View.inflate(mContext, R.layout.load, null);  //文字直播
+        initView();
+        initData();
+
+        return mView;
     }
 
-    @Override
+   /* @Override
     public void setupDialog(final Dialog dialog, int style) {
         super.setupDialog(dialog, style);
 
@@ -171,21 +172,21 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
             }
         });
     }
-
+*/
 
     private void initView() {
         Resources resources = this.getResources();
         DisplayMetrics dm = resources.getDisplayMetrics();
         int width3 = dm.widthPixels;
 
-        int left = width3 / 2 - DisplayUtil.dip2px(mContext, 120)/2;
+        int left = width3 / 2 - DisplayUtil.dip2px(mContext, 120) / 2;
         moreView.setPadding(left, 0, 0, 0);
 
 
-        close_image = (ImageView) mView.findViewById(R.id.close_image);
+        // close_image = (ImageView) mView.findViewById(R.id.close_image);
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.timerecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        bottomview = mView.findViewById(R.id.bottomview);
+        // bottomview = mView.findViewById(R.id.bottomview);
     }
 
     private void initData() {

@@ -49,6 +49,7 @@
         android:layout_marginTop="4dp"
         android:layout_weight="10"
         android:orientation="vertical"
+        android:background="@color/whitesmoke"
         android:paddingLeft="7dp">
 
         <TextView

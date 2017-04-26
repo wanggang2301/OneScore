@@ -3,7 +3,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/black_title"
     >
     <LinearLayout
         android:id="@+id/odds_nodata_container"
@@ -18,7 +17,7 @@
             android:layout_height="wrap_content"
             android:text="@string/nodata"
             android:textSize="@dimen/text_size_15"
-            android:textColor="@color/version"
+            android:textColor="@color/mdy_666"
             />
     </LinearLayout>
 

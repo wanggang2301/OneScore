@@ -328,9 +328,9 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
                 holder.setText(R.id.basket_odds_company_text , data.getCompany());
             }
             if (mPosition == holder.getPosition()) {
-                holder.setBackgroundColor(R.id.basket_odds_company_text , getResources().getColor(R.color.black_grounding));
+                holder.setBackgroundColor(R.id.basket_odds_company_text , getResources().getColor(R.color.whitesmoke));
             }else {
-                holder.setBackgroundColor(R.id.basket_odds_company_text, getResources().getColor(R.color.black_title));
+                holder.setBackgroundColor(R.id.basket_odds_company_text, getResources().getColor(R.color.white));
             }
         }
     }

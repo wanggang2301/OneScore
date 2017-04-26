@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
+<!--
             <RelativeLayout
                 android:id="@+id/rl_live"
                 android:layout_width="match_parent"
@@ -95,7 +95,7 @@
                 </LinearLayout>
 
 
-            </RelativeLayout>
+            </RelativeLayout>-->
 
 
             <!--内容加载进度条_正在加载中-->

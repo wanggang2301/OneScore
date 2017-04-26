@@ -1675,6 +1675,46 @@
     <string name="tennis_datails_status10">主动得分</string>
     <string name="foot_event_num">""</string>
     <string name="please_hint_team">请输入球队名称</string>
+    <string name="foot_text">文字</string>
+
+
+    <!--球队信息-->
+    <string name="foot_team_info_total">总</string>
+    <string name="foot_team_info_zu">主</string>
+    <string name="foot_team_info_ke">客</string>
+    <string name="foot_team_info_match_count">比赛场次</string>
+    <string name="foot_team_info_lose_goal">失球</string>
+    <string name="foot_team_info_goal_avg">均场进球</string>
+    <string name="foot_team_info_lose_avg">均场失球</string>
+    <string name="foot_team_info_data">球队数据</string>
+    <string name="foot_team_info_his">赛程赛果</string>
+    <string name="foot_team_info_odds">盘口统计</string>
+    <string name="foot_team_info_lineup">球队阵容</string>
+    <string name="foot_team_lineup_number">号码</string>
+    <string name="foot_team_lineup_name">姓名</string>
+    <string name="foot_team_lineup_nation">国籍</string>
+    <string name="foot_team_lineup_position">位置</string>
+    <string name="foot_team_lineup_birth">年龄</string>
+    <string name="foot_team_odds_match_count">比赛场次</string>
+    <string name="foot_team_odds_ms">上盘</string>
+    <string name="foot_team_odds_ns">平盘</string>
+    <string name="foot_team_odds_ts">下盘</string>
+    <string name="foot_team_odds_hdpw">赢盘</string>
+    <string name="foot_team_odds_hdph">赢半</string>
+    <string name="foot_team_odds_voi">走盘</string>
+    <string name="foot_team_odds_hdplh">输半</string>
+    <string name="foot_team_odds_hdpl">输盘</string>
+    <string name="foot_team_odds_winrate">胜率</string>
+    <string name="foot_team_odds_loserate">负率</string>
+    <string name="foot_team_odds_over">大球</string>
+    <string name="foot_team_odds_under">小球</string>
+    <string name="foot_team_odds_over_rate">大球率</string>
+    <string name="foot_team_odds_voi_rate">走盘率</string>
+    <string name="foot_team_odds_under_rate">小球率</string>
+    <string name="foot_team_odds_under25">低于2.5</string>
+    <string name="foot_team_odds_over25">高于2.5</string>
+    <string name="foot_team_odds_let_the_ball">让球盘</string>
+    <string name="foot_team_odds_size_ball">大小球</string>
 
     /*****不要删除*************************************************************************************************/
     <string name="odds_back_list">""</string>
