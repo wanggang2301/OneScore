@@ -187,6 +187,13 @@ public class WebActivity extends BaseActivity implements OnClickListener {
             mType = intent.getIntExtra("type", 0);
             mThird = intent.getStringExtra("thirdId");
             infoTypeName = intent.getStringExtra("infoTypeName");
+            if (intent.getStringExtra("iscomment") != null) {
+                if (intent.getStringExtra("iscomment").equals("1")) {
+                    findViewById(R.id.comment).setVisibility(View.GONE);
+                }
+            } else {
+                findViewById(R.id.comment).setVisibility(View.VISIBLE);
+            }
             token = AppConstants.register.getData().getLoginToken();
             String deviceId = AppConstants.deviceToken;
             reqMethod = intent.getStringExtra("reqMethod");
