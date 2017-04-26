@@ -575,7 +575,7 @@
                             android:paddingBottom="@dimen/basket_details_item_height"
                             android:layout_gravity="center"
                             android:textSize="@dimen/text_size_12"
-                            android:textColor="@color/mdy_666"
+                            android:textColor="@color/more_record"
                             android:text="@string/basket_analyze_more"/>
                     </LinearLayout>
                     <View
@@ -740,7 +740,7 @@
                             android:paddingBottom="@dimen/basket_details_item_height"
                             android:layout_gravity="center"
                             android:textSize="@dimen/text_size_12"
-                            android:textColor="@color/mdy_666"
+                            android:textColor="@color/more_record"
                             android:text="@string/basket_analyze_all_rank"/>
                     </LinearLayout>
                     <TextView
