@@ -21,6 +21,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
@@ -74,6 +75,7 @@ import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.NetworkUtils;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.StringUtils;
+import com.hhly.mlottery.util.adapter.ScreenUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.BarrageView;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
@@ -302,7 +304,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     //    boolean isAddMultiViewHide = false;
     //动画WebView
-    private ProgressWebView mWebView;
+    private WebView mWebView;
     private LinearLayout ll_Webview;
 
     private TextView tv_nopage;
@@ -312,19 +314,20 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        if (Build.VERSION.SDK_INT >= 21) {
-            View decorView = getWindow().getDecorView();
-            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-            // View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN：
-            //Activity布局全屏显示，但状态栏不会被隐藏覆盖，
-            //状态栏依然可见，Activity顶端布局部分会被状态遮住。
-            //SYSTEM_UI_FLAG_LAYOUT_STABLE ：
-            //防止状态栏隐藏，保证你使用fitSystemWindows时候,系统UI边界
-            //始终不会变，依然存在可见.即使你隐藏了所有，他依然存在，增加了UI稳定性，
-            decorView.setSystemUiVisibility(option);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);//状态栏颜色设置为透明。
-        }
+//        if (Build.VERSION.SDK_INT >= 21) {
+//            View decorView = getWindow().getDecorView();
+//            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+//            // View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN：
+//            //Activity布局全屏显示，但状态栏不会被隐藏覆盖，
+//            //状态栏依然可见，Activity顶端布局部分会被状态遮住。
+//            //SYSTEM_UI_FLAG_LAYOUT_STABLE ：
+//            //防止状态栏隐藏，保证你使用fitSystemWindows时候,系统UI边界
+//            //始终不会变，依然存在可见.即使你隐藏了所有，他依然存在，增加了UI稳定性，
+//            decorView.setSystemUiVisibility(option);
+//            getWindow().setStatusBarColor(Color.TRANSPARENT);//状态栏颜色设置为透明。
+//        }
+        ScreenUtils.setTranslucentStatus(this);
 
 //        if(Build.VERSION.SDK_INT>=19){
 //            WindowManager.LayoutParams  myLayoutParams = getWindow().getAttributes();
@@ -410,7 +413,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         barrage_switch.setOnClickListener(this);
         //动画WebView
         tv_nopage = (TextView) findViewById(R.id.tv_nopage);
-        mWebView = (ProgressWebView) findViewById(R.id.webview);
+        mWebView = (WebView) findViewById(R.id.webview);
         ll_Webview= (LinearLayout) findViewById(R.id.ll_webview);
 
 
@@ -485,6 +488,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         webSettings.setDatabaseEnabled(true);
         webSettings.setUseWideViewPort(true);
         webSettings.setBuiltInZoomControls(false);
+        mWebView.setBackgroundColor(Color.parseColor("#00000000"));//去掉webView白条
 
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
