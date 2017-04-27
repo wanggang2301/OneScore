@@ -1616,8 +1616,10 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.add(frameId, fragment);
             transaction.commit();
+            transaction.commitAllowingStateLoss();
         }
     }
+
 
 
     /**
