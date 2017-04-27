@@ -1,6 +1,7 @@
 package com.hhly.mlottery.adapter.football;
 
 import android.graphics.Bitmap;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -9,6 +10,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.SectionEntity;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.ScheduleDatasBean;
+import com.hhly.mlottery.frame.footballframe.FootballDatabaseScheduleNewFragment;
 import com.hhly.mlottery.util.ImageLoader;
 
 import java.util.List;
@@ -22,6 +24,11 @@ import java.util.List;
 public class FootballDatabaseScheduleSectionAdapter
         extends BaseSectionQuickAdapter<FootballDatabaseScheduleSectionAdapter.Section> {
 
+    //球队的点击监听
+    private FootballDatabaseScheduleNewFragment.FootballTeamDetailsClickListener mFootballTeamDetailsClickListener;
+    public void setFootballTeamDetailsClickListener(FootballDatabaseScheduleNewFragment.FootballTeamDetailsClickListener mFootballTeamDetailsClickListener){
+        this.mFootballTeamDetailsClickListener = mFootballTeamDetailsClickListener;
+    }
 
     public FootballDatabaseScheduleSectionAdapter(List<Section> data) {
         super(R.layout.item_basket_datatbase_schedule, R.layout.item_basket_datatbase_schedule_title, data);
@@ -35,7 +42,7 @@ public class FootballDatabaseScheduleSectionAdapter
 
     @Override
     protected void convert(BaseViewHolder holder, Section section) {
-        ScheduleDatasBean match = section.t;
+        final ScheduleDatasBean match = section.t;
         holder.setText(R.id.home_name, match.getGuestName())
                 .setText(R.id.guest_name, match.getHomeName());
 //        boolean notStart = match.getHomeScore() == 0 && match.getGuestScore() == 0;
@@ -95,6 +102,23 @@ public class FootballDatabaseScheduleSectionAdapter
         ImageView guestLogo = holder.getView(R.id.guest_logo);
         ImageLoader.load(mContext,match.getHomePic(),R.mipmap.score_default).into(guestLogo);
         ImageLoader.load(mContext,match.getGuestPic(),R.mipmap.score_default).into(homeLogo);
+
+        holder.setOnClickListener(R.id.guest_name, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mFootballTeamDetailsClickListener != null) {
+                    mFootballTeamDetailsClickListener.DetailsOnClick(v,match , 1);
+                }
+            }
+        });
+        holder.setOnClickListener(R.id.home_name, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mFootballTeamDetailsClickListener != null) {
+                    mFootballTeamDetailsClickListener.DetailsOnClick(v,match , 0);
+                }
+            }
+        });
 
     }
 
