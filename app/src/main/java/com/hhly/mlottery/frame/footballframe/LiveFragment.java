@@ -1617,8 +1617,8 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
 
             transaction.replace(frameId, fragment)
-                    .addToBackStack(null)
-                    .commitAllowingStateLoss();
+                    .disallowAddToBackStack()
+                    .commit();
             //transaction.add(frameId, fragment);
 
             //transaction.commitAllowingStateLoss();
