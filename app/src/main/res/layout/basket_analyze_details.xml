@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="68dp"
-        android:background="@color/tabtitle"
+        android:background="@color/colorPrimary"
         android:gravity="center_vertical"
         android:paddingTop="24dp">
 
@@ -58,14 +58,12 @@
         android:id="@+id/basket_analyze_details_refreshlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black_grounding"
         >
 
         <ScrollView
             android:id="@+id/basket_analyze_details_scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/black_grounding"
             >
 
             <RelativeLayout
@@ -83,7 +81,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/basket_analyze"
-                        android:background="@color/black_title">
+                        >
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -92,7 +90,7 @@
                             android:layout_centerVertical="true"
                             android:paddingLeft="@dimen/basket_details_item_height"
                             android:text="@string/basket_analyze_history"
-                            android:textColor="@color/black_details_ball_textcolor2"
+                            android:textColor="@color/mdy_333"
                             android:textSize="@dimen/text_size_12" />
 
                         <ImageView
@@ -105,12 +103,16 @@
                             android:src="@mipmap/cpi_filtrate" />
                     </RelativeLayout>
 
-
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/line_football_footer"
+                        />
                     <LinearLayout
                         android:id="@+id/basket_analyze_details_history"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/black_grounding"
                         android:orientation="vertical">
 
                         <TextView
@@ -119,7 +121,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:paddingTop="@dimen/basket_details_item"
-                            android:textColor="@color/black_details_ball_textcolor2"
+                            android:textColor="@color/mdy_666"
                             android:textSize="@dimen/text_size_14" />
                         <!--android:text="最近&#45;&#45;场，-&#45;&#45;胜&#45;&#45;负，主场&#45;&#45;胜&#45;&#45;负"    -->
                         <LinearLayout
@@ -138,7 +140,7 @@
                                 android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_date"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_10" />
 
                             <TextView
@@ -147,7 +149,7 @@
                                 android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_event"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_10" />
 
                             <TextView
@@ -156,7 +158,7 @@
                                 android:layout_weight="2"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_guest"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_10" />
 
                             <TextView
@@ -165,7 +167,7 @@
                                 android:layout_weight="2"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_home"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_10" />
 
                             <TextView
@@ -174,7 +176,7 @@
                                 android:layout_weight="1.1"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_score"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_10" />
 
                             <TextView
@@ -183,7 +185,7 @@
                                 android:layout_weight="0.7"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_sizeof"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_10" />
 
                             <TextView
@@ -192,7 +194,7 @@
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_let_points"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_10" />
                         </LinearLayout>
                     </LinearLayout>
@@ -202,7 +204,7 @@
                         android:layout_height="1px"
                         android:layout_marginLeft="@dimen/margin_standard"
                         android:layout_marginRight="@dimen/margin_standard"
-                        android:background="@color/basket_parting_line" />
+                        android:background="@color/line_football_footer" />
 
                     <com.hhly.mlottery.widget.NestedListView
                         android:id="@+id/basket_histroy_list"
@@ -216,19 +218,18 @@
                         android:id="@+id/basket_analyze_nodata1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/black_grounding"
                         android:gravity="center"
                         android:paddingBottom="@dimen/basket_details_item"
                         android:paddingTop="@dimen/basket_details_item"
                         android:text="@string/basket_nodata"
-                        android:textColor="@color/black_details_ball_textcolor2"
+                        android:textColor="@color/mdy_666"
                         android:textSize="@dimen/text_size_16"
                         android:visibility="gone"/>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/basket_analyze"
-                        android:background="@color/black_title">
+                        >
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -237,7 +238,7 @@
                             android:layout_centerVertical="true"
                             android:paddingLeft="@dimen/basket_details_item_height"
                             android:text="@string/basket_analyze_recent"
-                            android:textColor="@color/black_details_ball_textcolor2"
+                            android:textColor="@color/mdy_333"
                             android:textSize="@dimen/text_size_12" />
 
                         <ImageView
@@ -249,12 +250,16 @@
                             android:paddingRight="@dimen/basket_details_item_height"
                             android:src="@mipmap/cpi_filtrate" />
                     </RelativeLayout>
-
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/line_football_footer"
+                        />
                     <LinearLayout
                         android:id="@+id/basket_analyze_details_recent_guest"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/black_grounding"
                         android:orientation="vertical">
 
                         <TextView
@@ -263,7 +268,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:paddingTop="@dimen/basket_details_item"
-                            android:textColor="@color/black_details_ball_textcolor2"
+                            android:textColor="@color/mdy_666"
                             android:textSize="@dimen/text_size_14" />
 
                         <LinearLayout
@@ -282,7 +287,7 @@
                                 android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_date"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_10" />
 
                             <TextView
@@ -291,7 +296,7 @@
                                 android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_event"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_10" />
 
                             <TextView
@@ -300,7 +305,7 @@
                                 android:layout_weight="2"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_guest"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_10" />
 
                             <TextView
@@ -309,7 +314,7 @@
                                 android:layout_weight="2"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_home"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_10" />
 
                             <TextView
@@ -318,7 +323,7 @@
                                 android:layout_weight="1.1"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_score"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_10" />
 
                             <TextView
@@ -327,7 +332,7 @@
                                 android:layout_weight="0.7"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_sizeof"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_10" />
 
                             <TextView
@@ -336,7 +341,7 @@
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_let_points"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_10" />
                         </LinearLayout>
                     </LinearLayout>
@@ -346,7 +351,7 @@
                         android:layout_height="1px"
                         android:layout_marginLeft="@dimen/margin_standard"
                         android:layout_marginRight="@dimen/margin_standard"
-                        android:background="@color/basket_parting_line" />
+                        android:background="@color/line_football_footer" />
 
                     <com.hhly.mlottery.widget.NestedListView
                         android:id="@+id/basket_recent_exploits_list_to"
@@ -372,7 +377,6 @@
                         android:id="@+id/basket_analyze_details_recent_home"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/black_grounding"
                         android:orientation="vertical">
 
                         <TextView
@@ -381,7 +385,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:paddingTop="@dimen/basket_details_item"
-                            android:textColor="@color/black_details_ball_textcolor2"
+                            android:textColor="@color/mdy_666"
                             android:textSize="@dimen/text_size_14" />
 
                         <LinearLayout
@@ -400,7 +404,7 @@
                                 android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_date"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_10" />
 
                             <TextView
@@ -409,7 +413,7 @@
                                 android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_event"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_10" />
 
                             <TextView
@@ -418,7 +422,7 @@
                                 android:layout_weight="2"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_guest"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_10" />
 
                             <TextView
@@ -427,7 +431,7 @@
                                 android:layout_weight="2"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_home"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_10" />
 
                             <TextView
@@ -436,7 +440,7 @@
                                 android:layout_weight="1.1"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_score"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_10" />
 
                             <TextView
@@ -445,7 +449,7 @@
                                 android:layout_weight="0.7"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_sizeof"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_10" />
 
                             <TextView
@@ -454,7 +458,7 @@
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_let_points"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_10" />
                         </LinearLayout>
                     </LinearLayout>
@@ -464,7 +468,7 @@
                         android:layout_height="1px"
                         android:layout_marginLeft="@dimen/margin_standard"
                         android:layout_marginRight="@dimen/margin_standard"
-                        android:background="@color/basket_parting_line" />
+                        android:background="@color/line_football_footer" />
 
                     <com.hhly.mlottery.widget.NestedListView
                         android:id="@+id/basket_recent_exploits_list"
@@ -478,7 +482,6 @@
                         android:id="@+id/basket_analyze_nodata3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/black_grounding"
                         android:gravity="center"
                         android:paddingBottom="@dimen/basket_details_item"
                         android:paddingTop="@dimen/basket_details_item"
@@ -490,7 +493,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/basket_analyze"
-                        android:background="@color/black_title">
+                        >
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -499,15 +502,20 @@
                             android:layout_centerVertical="true"
                             android:paddingLeft="@dimen/basket_details_item_height"
                             android:text="@string/basket_analyze_fruture_competition"
-                            android:textColor="@color/black_details_ball_textcolor2"
+                            android:textColor="@color/mdy_333"
                             android:textSize="@dimen/text_size_12" />
                     </RelativeLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/line_football_footer"
+                        />
                     <LinearLayout
                         android:id="@+id/basket_analyze_details_future_guest"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/black_grounding"
                         android:orientation="vertical">
 
                         <TextView
@@ -516,7 +524,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:paddingTop="@dimen/basket_details_item"
-                            android:textColor="@color/black_details_ball_textcolor2"
+                            android:textColor="@color/mdy_666"
                             android:textSize="@dimen/text_size_14" />
 
                         <LinearLayout
@@ -532,7 +540,7 @@
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_date"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_11" />
 
                             <TextView
@@ -541,7 +549,7 @@
                                 android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_event"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_11" />
 
                             <TextView
@@ -550,7 +558,7 @@
                                 android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_guest"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_11" />
 
                             <TextView
@@ -559,7 +567,7 @@
                                 android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_home"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_11" />
 
                             <TextView
@@ -568,7 +576,7 @@
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_interval"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_11" />
                         </LinearLayout>
 
@@ -577,7 +585,7 @@
                             android:layout_height="1px"
                             android:layout_marginLeft="@dimen/margin_standard"
                             android:layout_marginRight="@dimen/margin_standard"
-                            android:background="@color/basket_parting_line" />
+                            android:background="@color/line_football_footer" />
 
                         <com.hhly.mlottery.widget.NestedListView
                             android:id="@+id/basket_future_exploits_list"
@@ -591,12 +599,11 @@
                             android:id="@+id/basket_analyze_nodata4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/black_grounding"
                             android:gravity="center"
                             android:paddingBottom="@dimen/basket_details_item"
                             android:paddingTop="@dimen/basket_details_item"
                             android:text="@string/basket_nodata"
-                            android:textColor="@color/black_details_ball_textcolor2"
+                            android:textColor="@color/mdy_666"
                             android:textSize="@dimen/text_size_16"
                             android:visibility="gone"/>
 
@@ -606,7 +613,6 @@
                         android:id="@+id/basket_analyze_details_future_home"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/black_grounding"
                         android:orientation="vertical">
 
                         <TextView
@@ -615,7 +621,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:paddingTop="@dimen/basket_details_item"
-                            android:textColor="@color/black_details_ball_textcolor2"
+                            android:textColor="@color/mdy_666"
                             android:textSize="@dimen/text_size_14" />
 
                         <LinearLayout
@@ -631,7 +637,7 @@
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_date"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_11" />
 
                             <TextView
@@ -640,7 +646,7 @@
                                 android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_event"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_11" />
 
                             <TextView
@@ -649,7 +655,7 @@
                                 android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_guest"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_11" />
 
                             <TextView
@@ -658,7 +664,7 @@
                                 android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_home"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_11" />
 
                             <TextView
@@ -667,7 +673,7 @@
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_interval"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_11" />
                         </LinearLayout>
 
@@ -676,7 +682,7 @@
                             android:layout_height="1px"
                             android:layout_marginLeft="@dimen/margin_standard"
                             android:layout_marginRight="@dimen/margin_standard"
-                            android:background="@color/basket_parting_line" />
+                            android:background="@color/line_football_footer" />
 
                         <com.hhly.mlottery.widget.NestedListView
                             android:id="@+id/basket_future_exploits_list_to"
@@ -690,12 +696,11 @@
                             android:id="@+id/basket_analyze_nodata5"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/black_grounding"
                             android:gravity="center"
                             android:paddingBottom="@dimen/basket_details_item"
                             android:paddingTop="@dimen/basket_details_item"
                             android:text="@string/basket_nodata"
-                            android:textColor="@color/black_details_ball_textcolor2"
+                            android:textColor="@color/mdy_666"
                             android:textSize="@dimen/text_size_16"
                             android:visibility="gone"/>
                     </LinearLayout>
@@ -710,7 +715,6 @@
                     android:id="@+id/basketball_details_error"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/black_grounding"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:paddingTop="200dp"
@@ -726,7 +730,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:text="@string/exp_net_status_txt"
-                        android:textColor="@color/version"
+                        android:textColor="@color/mdy_666"
                         android:textSize="14sp" />
 
                     <LinearLayout
@@ -740,7 +744,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5dip"
                             android:text="@string/exp__check_txt"
-                            android:textColor="@color/version"
+                            android:textColor="@color/mdy_666"
                             android:textSize="14sp" />
 
                         <TextView
@@ -759,8 +763,7 @@
                     android:text="@string/basket_nodata"
                     android:textSize="20sp"
                     android:gravity="center"
-                    android:textColor="@color/version"
-                    android:background="@color/black_grounding"
+                    android:textColor="@color/mdy_666"
                     android:paddingTop="250dp"
                     android:visibility="gone"
                     />

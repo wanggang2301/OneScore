@@ -5,7 +5,7 @@
     android:orientation="horizontal"
     android:paddingBottom="@dimen/basket_details_ball6"
     android:paddingTop="@dimen/basket_details_ball6"
-    android:background="@color/black_grounding">
+    >
 
     <!--<LinearLayout-->
         <!--android:layout_width="match_parent"-->
@@ -20,7 +20,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="16-03-31"
-            android:textColor="@color/black_details_textcolor"
+            android:textColor="@color/mdy_666"
             android:textSize="@dimen/text_size_11" />
 
         <TextView
@@ -30,7 +30,7 @@
             android:layout_weight="1.5"
             android:gravity="center"
             android:text="NBA"
-            android:textColor="@color/black_details_textcolor"
+            android:textColor="@color/mdy_666"
             android:singleLine="true"
             android:textSize="@dimen/text_size_11" />
 
@@ -42,7 +42,7 @@
             android:gravity="center"
             android:text="老鹰"
             android:singleLine="true"
-            android:textColor="@color/black_details_textcolor"
+            android:textColor="@color/mdy_666"
             android:textSize="@dimen/text_size_11" />
 
         <TextView
@@ -52,7 +52,7 @@
             android:layout_weight="1.5"
             android:gravity="center"
             android:text="鹈鹕"
-            android:textColor="@color/black_details_textcolor"
+            android:textColor="@color/mdy_666"
             android:singleLine="true"
             android:textSize="@dimen/text_size_11" />
 
@@ -63,7 +63,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="间隔"
-            android:textColor="@color/black_details_textcolor"
+            android:textColor="@color/mdy_666"
             android:textSize="@dimen/text_size_11" />
     <!--</LinearLayout>-->
 </LinearLayout>

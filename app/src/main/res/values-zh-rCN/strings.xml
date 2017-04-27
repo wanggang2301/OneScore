@@ -1679,4 +1679,5 @@
     <string name="please_hint_team">请输入球队名称</string>
 
     <string name="foot_text">文字</string>
+    <string name="nopage">暂无比赛直播</string>
 </resources>
