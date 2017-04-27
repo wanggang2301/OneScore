@@ -580,6 +580,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+
     private void initEvent(MatchDetail mMatchDetail) {
         if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
             if (mMatchDetail.getMatchInfo().getMatchTimeLive() != null) {
@@ -1614,12 +1615,15 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     public static void addFragmentToActivity(FragmentManager fragmentManager, Fragment fragment, int frameId) {
         if (fragmentManager != null && fragment != null) {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.add(frameId, fragment);
-            transaction.commit();
-            transaction.commitAllowingStateLoss();
+
+            transaction.replace(frameId, fragment)
+                    .addToBackStack(null)
+                    .commitAllowingStateLoss();
+            //transaction.add(frameId, fragment);
+
+            //transaction.commitAllowingStateLoss();
         }
     }
-
 
 
     /**
