@@ -107,7 +107,7 @@ public class FootballDatabaseScheduleSectionAdapter
             @Override
             public void onClick(View v) {
                 if (mFootballTeamDetailsClickListener != null) {
-                    mFootballTeamDetailsClickListener.DetailsOnClick(v,match , 0);
+                    mFootballTeamDetailsClickListener.DetailsOnClick(v,match , 1);
                 }
             }
         });
@@ -115,7 +115,7 @@ public class FootballDatabaseScheduleSectionAdapter
             @Override
             public void onClick(View v) {
                 if (mFootballTeamDetailsClickListener != null) {
-                    mFootballTeamDetailsClickListener.DetailsOnClick(v,match , 1);
+                    mFootballTeamDetailsClickListener.DetailsOnClick(v,match , 0);
                 }
             }
         });

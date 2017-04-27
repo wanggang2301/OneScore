@@ -1669,11 +1669,6 @@
     <string name="please_hint_team">請輸入球隊名稱</string>
     <string name="foot_text">文字</string>
 
-
-    <!--竞彩推荐-->
-    <string name="betting_setting_palying_method">玩法</string>
-    <string name="betting_setting_league">聯賽</string>
-
     <!--竞彩推荐-->
     <string name="betting_setting_palying_method">玩法</string>
     <string name="betting_setting_league">聯賽</string>

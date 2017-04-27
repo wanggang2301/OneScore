@@ -1722,12 +1722,6 @@
     <string name="betting_setting_palying_method">玩法</string>
     <string name="betting_setting_league">联赛</string>
 
-
-    <!--竞彩推荐-->
-    <string name="betting_setting_palying_method">玩法</string>
-    <string name="betting_setting_league">联赛</string>
-
-
     /*****不要删除*************************************************************************************************/
     <string name="odds_back_list">""</string>
     <string name="odds_average">""</string>

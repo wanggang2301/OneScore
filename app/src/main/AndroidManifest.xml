@@ -416,8 +416,8 @@
         <activity
             android:name=".activity.ExpertsActivity"
             android:screenOrientation="portrait" />
-<<<<<<< Updated upstream
-=======
+
+        <!--支付相关-->
         <activity android:name="com.hhly.mlottery.activity.BettingRecommendActivity"
             android:screenOrientation="portrait" />
         <activity android:name="com.hhly.mlottery.activity.BettingPayDetailsActivity"
@@ -426,8 +426,6 @@
             android:screenOrientation="portrait" />
         <activity android:name="com.hhly.mlottery.activity.BettingRecommendSettingActivity"
             android:screenOrientation="portrait" />
-
->>>>>>> Stashed changes
 
     </application>
 
