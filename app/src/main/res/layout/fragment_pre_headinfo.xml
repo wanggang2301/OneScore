@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fl_head"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="220dp"
     android:orientation="vertical"
     android:paddingBottom="5dp">
     <!--web view-->
@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="暂无比赛直播"
+                android:text="@string/nopage"
                 android:visibility="gone" />
         </LinearLayout>
 
@@ -33,6 +33,7 @@
             android:layout_height="match_parent"
             android:background="@mipmap/anim_bg"
             android:gravity="center"
+            android:id="@+id/ll_webview"
             android:orientation="vertical">
 
             <com.hhly.mlottery.widget.ProgressWebView
@@ -57,14 +58,14 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/multiscreen_space_image_height"
         android:gravity="center_vertical"
-        android:visibility="gone"
+        android:visibility="visible"
         >
 
         <RelativeLayout
             android:id="@+id/rl_iv"
             android:layout_width="105dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="30dp"
             android:orientation="vertical"
             android:paddingTop="15dp">
 
@@ -170,6 +171,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
             android:layout_alignParentTop="true"
             android:orientation="vertical"
             android:paddingTop="15dp">
@@ -216,7 +218,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="3dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginBottom="20dp"
         android:layout_gravity="center_horizontal|bottom"
         >
 

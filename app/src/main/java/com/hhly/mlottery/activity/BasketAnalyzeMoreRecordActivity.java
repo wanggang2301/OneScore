@@ -540,7 +540,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
 
         //"<font color='#ff0000'><b>" + win + getActivity().getString(R.string.analyze_win) + "、 " + "</b></font> "   #FF1F1F  #21B11E
 
-        mText.setText(Html.fromHtml(getResources().getText(R.string.basket_analyze_recently) + matchNum + getResources().getText(R.string.basket_analyze_recently2) + mTeam + "<font color='#FF1F1F'><b>" + homeWin + "</b></font>" + "<font color='#21B11E'><b>" + homeLose + "</b></font>"
+        mText.setText(Html.fromHtml(getResources().getText(R.string.basket_analyze_recently) + matchNum + getResources().getText(R.string.basket_analyze_recently2) + mTeam + "<font color='#666666'><b>" + homeWin + "</b></font>" + "<font color='#21B11E'><b>" + homeLose + "</b></font>"
                 + getResources().getText(R.string.basket_analyze_home_field) + "<font color='#FF1F1F'><b>" + homeCourtWin + "</b></font>" + "<font color='#21B11E'><b>" + homeCourtLose + "</b></font>"));
     }
 
