@@ -399,7 +399,8 @@
             android:name=".activity.TennisIndexDetailsActivity"
             android:screenOrientation="portrait" />
         <!--足球球队详情页-->
-        <activity android:name=".activity.FootballTeamInfoActivity"/>
+        <activity android:name=".activity.FootballTeamInfoActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.ExpertsActivity"
             android:screenOrientation="portrait" />

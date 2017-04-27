@@ -22,10 +22,16 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballTeamInfoActivity;
 import com.hhly.mlottery.adapter.football.teaminfoadapter.FootTeamArrayAdapter;
+import com.hhly.mlottery.bean.footballteaminfo.FootTeamDataInfoBean;
+import com.hhly.mlottery.bean.footballteaminfo.FootTeamHistoryMatchBean;
 import com.hhly.mlottery.bean.footballteaminfo.FootTeamInfoBean;
+import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * desc:足球球队数据
@@ -72,6 +78,28 @@ public class TeamInfoDataFragment extends Fragment implements View.OnClickListen
         initView();
         initData(0);
         return mView;
+    }
+
+    private void initxxx() {
+        final Map<String, String> map = new HashMap<>();
+//        map.put("teamId", mTeamId);// 球队ID
+//        map.put("leagueDate", leagueDate);// 日期
+
+        VolleyContentFast.requestJsonByGet(BaseURLs.FOOT_TEAM_DATA_INFO_URL, map, new VolleyContentFast.ResponseSuccessListener<FootTeamDataInfoBean>() {
+            @Override
+            public void onResponse(FootTeamDataInfoBean json) {
+                if (json != null && json.getCode() == 200) {
+
+                } else {
+
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+            }
+        }, FootTeamDataInfoBean.class);
     }
 
     private void initData(int type) {

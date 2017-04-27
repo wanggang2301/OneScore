@@ -1668,4 +1668,42 @@
     <string name="foot_text">文字</string>
     <string name="nopage">暫無動畫直播</string>
 
+    <!--球队信息-->
+    <string name="foot_team_info_total">總</string>
+    <string name="foot_team_info_zu">主</string>
+    <string name="foot_team_info_ke">客</string>
+    <string name="foot_team_info_match_count">比賽場次</string>
+    <string name="foot_team_info_lose_goal">失球</string>
+    <string name="foot_team_info_goal_avg">均場進球</string>
+    <string name="foot_team_info_lose_avg">均場失球</string>
+    <string name="foot_team_info_data">球隊數據</string>
+    <string name="foot_team_info_his">賽程賽果</string>
+    <string name="foot_team_info_odds">盤口統計</string>
+    <string name="foot_team_info_lineup">球隊陣容</string>
+    <string name="foot_team_lineup_number">號碼</string>
+    <string name="foot_team_lineup_name">姓名</string>
+    <string name="foot_team_lineup_nation">國籍</string>
+    <string name="foot_team_lineup_position">位置</string>
+    <string name="foot_team_lineup_birth">年齡</string>
+    <string name="foot_team_odds_match_count">比賽場次</string>
+    <string name="foot_team_odds_ms">上盤</string>
+    <string name="foot_team_odds_ns">平盤</string>
+    <string name="foot_team_odds_ts">下盤</string>
+    <string name="foot_team_odds_hdpw">贏盤</string>
+    <string name="foot_team_odds_hdph">贏半</string>
+    <string name="foot_team_odds_voi">走盤</string>
+    <string name="foot_team_odds_hdplh">輸半</string>
+    <string name="foot_team_odds_hdpl">輸盤</string>
+    <string name="foot_team_odds_winrate">勝率</string>
+    <string name="foot_team_odds_loserate">負率</string>
+    <string name="foot_team_odds_over">大球</string>
+    <string name="foot_team_odds_under">小球</string>
+    <string name="foot_team_odds_over_rate">大球率</string>
+    <string name="foot_team_odds_voi_rate">走盤率</string>
+    <string name="foot_team_odds_under_rate">小球率</string>
+    <string name="foot_team_odds_under25">低於2.5</string>
+    <string name="foot_team_odds_over25">高於2.5</string>
+    <string name="foot_team_odds_let_the_ball">讓球盤</string>
+    <string name="foot_team_odds_size_ball">大小球</string>
+
 </resources>

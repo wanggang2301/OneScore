@@ -33,6 +33,34 @@ public class FootTeamInfoScoreAdapter extends BaseQuickAdapter<FootTeamHistoryMa
         holder.setText(R.id.tv_team_name_home, bean.getHomeTeam() == null ? "" : bean.getHomeTeam());
         holder.setText(R.id.tv_team_name_guest, bean.getGuestTeam() == null ? "" : bean.getGuestTeam());
 
+        if (bean.getIsHome() == 0) {
+            switch (bean.getColor()){
+                case 1:
+                    holder.setTextColor(R.id.tv_team_name_guest, ContextCompat.getColor(mContext, R.color.foot_team_name_score1));
+                    break;
+                case 2:
+                    holder.setTextColor(R.id.tv_team_name_guest, ContextCompat.getColor(mContext, R.color.foot_team_name_score2));
+                    break;
+                case 3:
+                    holder.setTextColor(R.id.tv_team_name_guest, ContextCompat.getColor(mContext, R.color.foot_team_name_score3));
+                    break;
+            }
+            holder.setTextColor(R.id.tv_team_name_home, ContextCompat.getColor(mContext, R.color.content_txt_black));
+        } else if (bean.getIsHome() == 1) {
+            switch (bean.getColor()){
+                case 1:
+                    holder.setTextColor(R.id.tv_team_name_home, ContextCompat.getColor(mContext, R.color.foot_team_name_score1));
+                    break;
+                case 2:
+                    holder.setTextColor(R.id.tv_team_name_home, ContextCompat.getColor(mContext, R.color.foot_team_name_score2));
+                    break;
+                case 3:
+                    holder.setTextColor(R.id.tv_team_name_home, ContextCompat.getColor(mContext, R.color.foot_team_name_score3));
+                    break;
+            }
+            holder.setTextColor(R.id.tv_team_name_guest, ContextCompat.getColor(mContext, R.color.content_txt_black));
+        }
+
         ImageView homeIcon = holder.getView(R.id.iv_team_icon_home);
         ImageView guestIcon = holder.getView(R.id.iv_team_icon_guest);
 
@@ -50,17 +78,47 @@ public class FootTeamInfoScoreAdapter extends BaseQuickAdapter<FootTeamHistoryMa
                 holder.setTextColor(R.id.tv_match_state, ContextCompat.getColor(mContext, R.color.content_txt_light_grad));
                 break;
             case "1":// 上半场
+                holder.setText(R.id.tv_match_state, mContext.getResources().getString(R.string.fragme_home_shangbanchang_text));
+                holder.setTextColor(R.id.tv_match_state, ContextCompat.getColor(mContext, R.color.colorPrimary));
+                break;
             case "2":// 中场
+                holder.setText(R.id.tv_match_state, mContext.getResources().getString(R.string.fragme_home_zhongchang_text));
+                holder.setTextColor(R.id.tv_match_state, ContextCompat.getColor(mContext, R.color.colorPrimary));
+                break;
             case "3":// 下半场
+                holder.setText(R.id.tv_match_state, mContext.getResources().getString(R.string.fragme_home_xiabanchang_text));
+                holder.setTextColor(R.id.tv_match_state, ContextCompat.getColor(mContext, R.color.colorPrimary));
+                break;
             case "4":// 加时
+                holder.setText(R.id.tv_match_state, mContext.getResources().getString(R.string.fottball_home_jiashi));
+                holder.setTextColor(R.id.tv_match_state, ContextCompat.getColor(mContext, R.color.colorPrimary));
+                break;
             case "5":// 点球
+                holder.setText(R.id.tv_match_state, mContext.getResources().getString(R.string.fottball_home_dianqiu));
+                holder.setTextColor(R.id.tv_match_state, ContextCompat.getColor(mContext, R.color.colorPrimary));
+                break;
             case "-10":// 取消
+                holder.setText(R.id.tv_match_state, mContext.getResources().getString(R.string.fottball_home_quxiao));
+                holder.setTextColor(R.id.tv_match_state, ContextCompat.getColor(mContext, R.color.colorPrimary));
+                break;
             case "-11":// 待定
+                holder.setText(R.id.tv_match_state, mContext.getResources().getString(R.string.fottball_home_daiding));
+                holder.setTextColor(R.id.tv_match_state, ContextCompat.getColor(mContext, R.color.colorPrimary));
+                break;
             case "-12":// 腰斩
+                holder.setText(R.id.tv_match_state, mContext.getResources().getString(R.string.fottball_home_yaozhan));
+                holder.setTextColor(R.id.tv_match_state, ContextCompat.getColor(mContext, R.color.colorPrimary));
+                break;
             case "-13":// 中断
+                holder.setText(R.id.tv_match_state, mContext.getResources().getString(R.string.fottball_home_zhongduan));
+                holder.setTextColor(R.id.tv_match_state, ContextCompat.getColor(mContext, R.color.colorPrimary));
+                break;
             case "-14":// 推迟
+                holder.setText(R.id.tv_match_state, mContext.getResources().getString(R.string.fottball_home_tuichi));
+                holder.setTextColor(R.id.tv_match_state, ContextCompat.getColor(mContext, R.color.colorPrimary));
+                break;
             case "-100":// 取消直播
-                holder.setText(R.id.tv_match_state, bean.getMatchResult() == null ? "" : bean.getMatchResult());
+                holder.setText(R.id.tv_match_state, mContext.getResources().getString(R.string.fottball_home_quxiaozhibo));
                 holder.setTextColor(R.id.tv_match_state, ContextCompat.getColor(mContext, R.color.colorPrimary));
                 break;
         }

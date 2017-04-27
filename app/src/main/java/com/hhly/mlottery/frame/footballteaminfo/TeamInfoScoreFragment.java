@@ -2,6 +2,7 @@ package com.hhly.mlottery.frame.footballteaminfo;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,7 +15,9 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.activity.FootballTeamInfoActivity;
 import com.hhly.mlottery.adapter.football.teaminfoadapter.FootTeamInfoScoreAdapter;
 import com.hhly.mlottery.bean.footballteaminfo.FootTeamHistoryMatchBean;
@@ -87,11 +90,12 @@ public class TeamInfoScoreFragment extends Fragment implements View.OnClickListe
 
     /**
      * 加载数据
+     *
      * @param type 0:显示加载框，1：不显示
      */
     private void initData(int type) {
         if (leagueDate == null) return;
-        if(type == 0){
+        if (type == 0) {
             setStatus(LOADING);
         }
 
@@ -132,9 +136,20 @@ public class TeamInfoScoreFragment extends Fragment implements View.OnClickListe
         tvNotData = (TextView) mView.findViewById(R.id.tv_not_data);
 
         fl_loading = (FrameLayout) mView.findViewById(R.id.fl_loading);
+
+        mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int i) {
+                Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
+                intent.putExtra("thirdId", String.valueOf(matchList.get(i).getMatchId()));
+                intent.putExtra("currentFragmentId", 0);
+                intent.putExtra("chart_ball_view", 0);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
-    public void updataList(String data ,int type) {
+    public void updataList(String data, int type) {
         leagueDate = data;
         initData(type);
     }

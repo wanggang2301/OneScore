@@ -40,8 +40,8 @@ public class FootTeamHistoryMatchBean {
         private int matchId;
         private String homeIcon;
         private String guestIcon;
-        private int isHome;
-        private int color;
+        private int isHome; // 1、主;0、客
+        private int color; // 3、胜;2、平;1、负
         private int state;
 
         public String getDate() {
