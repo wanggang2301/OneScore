@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.FootballTeamInfoActivity;
 import com.hhly.mlottery.adapter.football.FootballDatabaseDetailsAdapter;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.DatabaseBigSmallBean;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.FootballDatabaseBigSmallBean;
@@ -274,17 +275,16 @@ public class FootballDatabaseBigSmallFragment extends Fragment implements View.O
     private FootballTeamBigSmallDetailsClickListener footballTeamBigSmallDetailsClickListener;
     // 购买(查看)的点击监听
     public interface FootballTeamBigSmallDetailsClickListener {
-        void BigSmallDetailsOnClick(View view , DatabaseBigSmallBean beanData);
+        void BigSmallDetailsOnClick(View view, DatabaseBigSmallBean beanData);
     }
     private void setBigSmallDetailsOnClick(){
         footballTeamBigSmallDetailsClickListener = new FootballTeamBigSmallDetailsClickListener() {
             @Override
             public void BigSmallDetailsOnClick(View view, DatabaseBigSmallBean beanData) {
-//                        Intent homeIntent = new Intent(this, FootballTeamInfoActivity.class);
-//                        homeIntent.putExtra("TEAM_ID", beanData.getTeamId());
-//                        homeIntent.putExtra("TITLE_TEAM_NAME", beanData.getTeamName());
-//                        startActivity(homeIntent);
-                Toast.makeText(getContext(), "B0", Toast.LENGTH_SHORT).show();
+                        Intent homeIntent = new Intent(getContext(), FootballTeamInfoActivity.class);
+                        homeIntent.putExtra("TEAM_ID", beanData.getTeamId());
+                        homeIntent.putExtra("TITLE_TEAM_NAME", beanData.getTeamName());
+                        startActivity(homeIntent);
             }
         };
     }

@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.FootballTeamInfoActivity;
 import com.hhly.mlottery.adapter.basketball.SportsDialogAdapter;
 import com.hhly.mlottery.adapter.football.FootballDatabaseIntegralAdapter;
 import com.hhly.mlottery.bean.footballDetails.FootballIntegralResult;
@@ -458,17 +459,16 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
     private FootballTeamIntegralDetailsClickListener footballTeamIntegralDetailsClickListener;
     // 购买(查看)的点击监听
     public interface FootballTeamIntegralDetailsClickListener {
-        void IntegralDetailsOnClick(View view , FootballRankingData teamData);
+        void IntegralDetailsOnClick(View view, FootballRankingData teamData);
     }
     private void setIntegralDetailsOnClick(){
         footballTeamIntegralDetailsClickListener = new FootballTeamIntegralDetailsClickListener() {
             @Override
             public void IntegralDetailsOnClick(View view, FootballRankingData teamData) {
-//                        Intent homeIntent = new Intent(this, FootballTeamInfoActivity.class);
-//                        homeIntent.putExtra("TEAM_ID", teamData.getTid() + "");
-//                        homeIntent.putExtra("TITLE_TEAM_NAME", teamData.getName());
-//                        startActivity(homeIntent);
-                Toast.makeText(getContext(), "00", Toast.LENGTH_SHORT).show();
+                        Intent homeIntent = new Intent(getContext(), FootballTeamInfoActivity.class);
+                        homeIntent.putExtra("TEAM_ID", teamData.getTid() + "");
+                        homeIntent.putExtra("TITLE_TEAM_NAME", teamData.getName());
+                        startActivity(homeIntent);
             }
         };
     }
