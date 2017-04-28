@@ -108,7 +108,7 @@ public class FootballEventView extends View {
      */
     private void init(AttributeSet attrs) {
         //提前加载好图片
-        bitmapScore = BitmapFactory.decodeResource(getResources(), R.mipmap.score);
+        bitmapScore = BitmapFactory.decodeResource(getResources(), R.mipmap.event_goal);
         bitmapRed = BitmapFactory.decodeResource(getResources(), R.mipmap.rc);
         bitmapYellow = BitmapFactory.decodeResource(getResources(), R.mipmap.yc);
         bitmapCorner = BitmapFactory.decodeResource(getResources(), R.mipmap.corner);
@@ -174,7 +174,7 @@ public class FootballEventView extends View {
     private void drawFootballImage(Map<String, List<MatchTimeLiveBean>> eventMap,boolean isFirst) {
 
 
-        Bitmap bitmapEvent = BitmapFactory.decodeResource(getResources(), R.mipmap.score);
+        Bitmap bitmapEvent = BitmapFactory.decodeResource(getResources(), R.mipmap.event_goal);
 
         for (String time : eventMap.keySet()) {
 
@@ -246,7 +246,7 @@ public class FootballEventView extends View {
     private void drawFootballImageByState(Map<String, List<MatchTimeLiveBean>> eventMap) {
 
 
-        Bitmap bitmapEvent = BitmapFactory.decodeResource(getResources(), R.mipmap.score);
+        Bitmap bitmapEvent = BitmapFactory.decodeResource(getResources(), R.mipmap.event_goal);
          List<Map.Entry<String,List<MatchTimeLiveBean>>> mappingList=null;
         mappingList=new ArrayList<>(eventMap.entrySet());
         Collections.sort(mappingList, new Comparator<Map.Entry<String, List<MatchTimeLiveBean>>>() {//同一时间内既有别的事件又有进球。进球会因为

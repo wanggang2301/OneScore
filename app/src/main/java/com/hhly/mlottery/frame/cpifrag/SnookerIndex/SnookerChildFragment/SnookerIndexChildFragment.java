@@ -266,24 +266,26 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
      */
     public void updateScore(SnookerScoreSocketBean mScoreData) {
         SnookerScoreSocketBean.SnookerScoreDataBean scoreData = mScoreData.getData();
-        synchronized (mPresenter.getData()) {
-            for (SnookerIndexBean.AllInfoEntity match : mPresenter.getData()) {
-                if (match.getMatchInfo().getMatchId().equals(mScoreData.getThirdId())) {
-                    if (match.getMatchInfo() != null) {
-                        SnookerIndexBean.AllInfoEntity.MatchInfoEntity matchData = match.getMatchInfo();
-                        updateItemData(matchData, scoreData);
-                    } else {
-                        /**
-                         * 未开赛==>开赛 推送情况处理（状态更新）
-                         */
-                        SnookerIndexBean.AllInfoEntity.MatchInfoEntity newMatchData = new SnookerIndexBean.AllInfoEntity.MatchInfoEntity();
-                        updateItemData(newMatchData, scoreData);//更新单条状态
-                        match.setMatchInfo(newMatchData);//赋值，给为null的MatchScore设值
+        synchronized (this) {
+            if(mPresenter != null && mPresenter.getData() != null){
+                for (SnookerIndexBean.AllInfoEntity match : mPresenter.getData()) {
+                    if (match.getMatchInfo().getMatchId().equals(mScoreData.getThirdId())) {
+                        if (match.getMatchInfo() != null) {
+                            SnookerIndexBean.AllInfoEntity.MatchInfoEntity matchData = match.getMatchInfo();
+                            updateItemData(matchData, scoreData);
+                        } else {
+                            /**
+                             * 未开赛==>开赛 推送情况处理（状态更新）
+                             */
+                            SnookerIndexBean.AllInfoEntity.MatchInfoEntity newMatchData = new SnookerIndexBean.AllInfoEntity.MatchInfoEntity();
+                            updateItemData(newMatchData, scoreData);//更新单条状态
+                            match.setMatchInfo(newMatchData);//赋值，给为null的MatchScore设值
+                        }
+                        if (mAdapter != null) {
+                            mAdapter.notifyDataSetChanged();
+                        }
+                        break;
                     }
-                    if (mAdapter != null) {
-                        mAdapter.notifyDataSetChanged();
-                    }
-                    break;
                 }
             }
         }
@@ -359,27 +361,30 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
      * @param mOddsData
      */
     public void updateOdds(SnookerSocketOddsBean mOddsData) {
-        synchronized (mPresenter.getData()) {
-            for (SnookerIndexBean.AllInfoEntity match : mPresenter.getData()) {
+        synchronized (this) {
+            if(mPresenter != null && mPresenter.getData() != null){
+                for (SnookerIndexBean.AllInfoEntity match : mPresenter.getData()) {
 
-                if (match.getMatchInfo().getMatchId().equals(mOddsData.getThirdId())) {
-                    if (match.getComList() != null && match.getComList().size() != 0) {
-                        List<SnookerIndexBean.AllInfoEntity.ComListEntity> comlist = match.getComList();
-                        updateOddsData(comlist, mOddsData);
-                    } else {
-                        /**
-                         * 无赔率==>有赔率情况处理
-                         */
-                        List<SnookerIndexBean.AllInfoEntity.ComListEntity> newComlist = new ArrayList<>();
-                        updateOddsData(newComlist, mOddsData);
-                        match.setComList(newComlist);
+                    if (match.getMatchInfo().getMatchId().equals(mOddsData.getThirdId())) {
+                        if (match.getComList() != null && match.getComList().size() != 0) {
+                            List<SnookerIndexBean.AllInfoEntity.ComListEntity> comlist = match.getComList();
+                            updateOddsData(comlist, mOddsData);
+                        } else {
+                            /**
+                             * 无赔率==>有赔率情况处理
+                             */
+                            List<SnookerIndexBean.AllInfoEntity.ComListEntity> newComlist = new ArrayList<>();
+                            updateOddsData(newComlist, mOddsData);
+                            match.setComList(newComlist);
+                        }
+                        if (mAdapter != null) {
+                            mAdapter.notifyDataSetChanged();
+                        }
+                        break;
                     }
-                    if (mAdapter != null) {
-                        mAdapter.notifyDataSetChanged();
-                    }
-                    break;
                 }
             }
+
         }
     }
 
@@ -389,27 +394,30 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
      * @param mOddsData
      */
     public void updateTennisOdds(TennisSocketOddsBean mOddsData) {
-        synchronized (mPresenter.getData()) {
-            for (SnookerIndexBean.AllInfoEntity match : mPresenter.getData()) {
+        synchronized (this) {
+            if(mPresenter != null && mPresenter.getData() != null){
+                for (SnookerIndexBean.AllInfoEntity match : mPresenter.getData()) {
 
-                if (match.getMatchInfo().getMatchId().equals(mOddsData.getDataObj().getMatchId())) {
-                    if (match.getComList() != null && match.getComList().size() != 0) {
-                        List<SnookerIndexBean.AllInfoEntity.ComListEntity> comlist = match.getComList();
-                        updateTennisOddsData(comlist, mOddsData);
-                    } else {
-                        /**
-                         * 无赔率==>有赔率情况处理
-                         */
-                        List<SnookerIndexBean.AllInfoEntity.ComListEntity> newComlist = new ArrayList<>();
-                        updateTennisOddsData(newComlist, mOddsData);
-                        match.setComList(newComlist);
+                    if (match.getMatchInfo().getMatchId().equals(mOddsData.getDataObj().getMatchId())) {
+                        if (match.getComList() != null && match.getComList().size() != 0) {
+                            List<SnookerIndexBean.AllInfoEntity.ComListEntity> comlist = match.getComList();
+                            updateTennisOddsData(comlist, mOddsData);
+                        } else {
+                            /**
+                             * 无赔率==>有赔率情况处理
+                             */
+                            List<SnookerIndexBean.AllInfoEntity.ComListEntity> newComlist = new ArrayList<>();
+                            updateTennisOddsData(newComlist, mOddsData);
+                            match.setComList(newComlist);
+                        }
+                        if (mAdapter != null) {
+                            mAdapter.notifyDataSetChanged();
+                        }
+                        break;
                     }
-                    if (mAdapter != null) {
-                        mAdapter.notifyDataSetChanged();
-                    }
-                    break;
                 }
             }
+
         }
     }
 
