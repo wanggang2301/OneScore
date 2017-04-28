@@ -401,6 +401,7 @@
         <!--足球球队详情页-->
         <activity android:name=".activity.FootballTeamInfoActivity"
             android:screenOrientation="portrait"/>
+        <!--专家详情-->
         <activity
             android:name=".activity.ExpertsActivity"
             android:screenOrientation="portrait" />
