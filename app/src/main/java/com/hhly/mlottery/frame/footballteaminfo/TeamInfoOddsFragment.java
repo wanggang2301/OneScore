@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,10 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.teaminfoadapter.FootTeamArrayAdapter;
 import com.hhly.mlottery.bean.footballteaminfo.FootTeamMatchOddBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +40,7 @@ import java.util.Map;
  * Created by 107_tangrr on 2017/4/24 0021.
  */
 
-public class TeamInfoOddsFragment extends Fragment implements View.OnClickListener {
+public class TeamInfoOddsFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private static final String TEAM_ID = "teamId";
     private static final String LEAGUE_DATE = "leagueDate";
     private final int LOADING = 0;
@@ -52,6 +56,7 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
     private FrameLayout fl_mask_view;
     private RelativeLayout dataSelect;
     private ImageView teamSelect;
+    private ExactSwipeRefreshLayout refreshLayout;
 
     private TextView theBallBt, sizeBallBt, dataContent, matchTotal, matchZu, matchKe, msTotal, msZu, msKe, nsTotal, nsZu, nsKe, tsTotal, tsZu, odds2Over25Ke, tsKe, hdpwTotal, hdpwZu, hdpwKe, hdphTotal, hdphZu, hdphKe, voiTotal, voiZu, voiKe, hdplhTotal, hdplhZu, hdplhKe, hdplTotal, hdplZu, hdplKe, winrateTotal, winrateZu, winrateKe, loserateTotal, loserateZu, loserateKe, odds2MatchTotal, odds2MatchZu, odds2MatchKe, odds2VoerTotal, odds2VoerZu, odds2VoerKe, odds2VoiTotal, odds2VoiZu, odds2VoiKe, odds2UnderTotal, odds2UnderZu, odds2UnderKe, odds2OverRateTotal, odds2OverRateZu, odds2OverRateKe, odds2VoiRateTotal, odds2Over25Zu, odds2VoiRateZu, odds2VoiRateKe, odds2UnderRateTotal, odds2UnderRateZu, odds2UnderRateKe, odds2Under25Total, odds2Under25Zu, odds2Under25Ke, odds2Over25Total;
 
@@ -59,12 +64,9 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
     private List<FootTeamMatchOddBean.CurrOUBean> currOUList = new ArrayList<>();
     private String mTeamId;
     private String leagueDate;
-    private List<String> itemsHDP = new ArrayList<>();
-    private List<String> itemsOU = new ArrayList<>();
-    private int currentHDPIndex = 0;
-    private int currentOUIndex = 0;
+    private List<String> items = new ArrayList<>();
+    private int currentIndex = 0;
     private boolean isTheBallBt = true;// 是否为让球盘
-    private FrameLayout fl_loading;
 
     public static TeamInfoOddsFragment newInstance(String thirdId) {
         TeamInfoOddsFragment fragment = new TeamInfoOddsFragment();
@@ -98,19 +100,9 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
         return mView;
     }
 
-    private void setData(int type) {
-        if (type == 0) {
-            itemsHDP.clear();
-            for (FootTeamMatchOddBean.CurrHDPBean currHDPBean : currHDPList) {
-                itemsHDP.add(currHDPBean.getLgName());
-            }
-            itemsOU.clear();
-            for (FootTeamMatchOddBean.CurrOUBean currOUBean : currOUList) {
-                itemsOU.add(currOUBean.getLgName());
-            }
-        }
+    private void setData() {
         // 让球盘
-        FootTeamMatchOddBean.CurrHDPBean hdpBean = currHDPList.get(currentHDPIndex);
+        FootTeamMatchOddBean.CurrHDPBean hdpBean = currHDPList.get(currentIndex);
         if (hdpBean != null && hdpBean.getData() != null) {
             // 比赛场次
             if (hdpBean.getData().getMatchCount() != null) {
@@ -257,7 +249,7 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
             }
         }
         // 大小球
-        FootTeamMatchOddBean.CurrOUBean ouBean = currOUList.get(currentOUIndex);
+        FootTeamMatchOddBean.CurrOUBean ouBean = currOUList.get(currentIndex);
         if (ouBean != null && ouBean.getData() != null) {
             // 比赛场次
             if (ouBean.getData().getMatchCount() != null) {
@@ -377,18 +369,14 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
                 }
             }
         }
-        if (isTheBallBt) {
-            dataContent.setText(hdpBean.getLgName());
-        } else {
-            dataContent.setText(ouBean.getLgName());
-        }
     }
 
-    private void initData(int type) {
-        if (leagueDate == null) return;
-        if(type == 0){
-            setStatus(LOADING);
+    private void initData() {
+        if (leagueDate == null) {
+            setStatus(ERROR);
+            return;
         }
+        setStatus(LOADING);
 
         final Map<String, String> map = new HashMap<>();
         map.put("teamId", mTeamId);// 球队ID
@@ -402,6 +390,15 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
                     currHDPList.clear();
                     currOUList.addAll(json.getCurrOU());
                     currHDPList.addAll(json.getCurrHDP());
+
+                    items.clear();
+                    for (FootTeamMatchOddBean.CurrHDPBean currHDPBean : currHDPList) {
+                        items.add(currHDPBean.getLgName());
+                    }
+                    if (items.size() != 0) {
+                        dataContent.setText(items.get(0));
+                    }
+
                     if (isTheBallBt) {
                         if (currHDPList.size() == 0) {
                             setStatus(NOTO_DATA);
@@ -414,9 +411,9 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
                         }
                     }
                     setStatus(SUCCESS);
-                    setData(0);
+                    setData();
                 } else {
-                    setStatus(ERROR);
+                    setStatus(NOTO_DATA);
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -513,20 +510,23 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
 
         tvNotData = (TextView) mView.findViewById(R.id.tv_not_data);
 
-        fl_loading = (FrameLayout) mView.findViewById(R.id.fl_loading);
+        refreshLayout = (ExactSwipeRefreshLayout) mView.findViewById(R.id.refresh_layout);
+        refreshLayout.setColorSchemeResources(R.color.bg_header);
+        refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
     }
 
-    public void updataList(String data,int type) {
+    public void updataList(String data) {
         leagueDate = data;
-        initData(type);
+        initData();
     }
 
     // 设置页面显示状态
     private void setStatus(int status) {
+        refreshLayout.setRefreshing(status == LOADING);
         scroll_view.setVisibility(status == SUCCESS ? View.VISIBLE : View.GONE);
         networkExceptionLayout.setVisibility(status == ERROR ? View.VISIBLE : View.GONE);
         tvNotData.setVisibility(status == NOTO_DATA ? View.VISIBLE : View.GONE);
-        fl_loading.setVisibility(status == LOADING ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -536,11 +536,10 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
                 scroll_view.setVisibility(View.VISIBLE);
                 networkExceptionLayout.setVisibility(View.GONE);
                 tvNotData.setVisibility(View.GONE);
-                initData(0);
+                initData();
                 break;
             case R.id.tv_the_ball_bt:
                 isTheBallBt = true;
-                dataContent.setText(itemsHDP.get(currentHDPIndex));
                 theBallBt.setTextColor(ContextCompat.getColor(mContext, R.color.white));
                 theBallBt.setBackgroundColor(ContextCompat.getColor(mContext, R.color.snooker_rank_txt_top3));
                 sizeBallBt.setTextColor(ContextCompat.getColor(mContext, R.color.title));
@@ -550,7 +549,6 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
                 break;
             case R.id.tv_size_ball_bt:
                 isTheBallBt = false;
-                dataContent.setText(itemsOU.get(currentOUIndex));
                 sizeBallBt.setTextColor(ContextCompat.getColor(mContext, R.color.white));
                 sizeBallBt.setBackgroundColor(ContextCompat.getColor(mContext, R.color.snooker_rank_txt_top3));
                 theBallBt.setTextColor(ContextCompat.getColor(mContext, R.color.title));
@@ -559,18 +557,10 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
                 sizeBallContent.setVisibility(View.VISIBLE);
                 break;
             case R.id.ll_data_select:
-                if (isTheBallBt) {
-                    if (itemsHDP.size() > 0) {
-                        popWindow();
-                        fl_mask_view.setAlpha(0.3f);
-                        teamSelect.setBackgroundResource(R.mipmap.foot_team_info_select_not);
-                    }
-                } else {
-                    if (itemsOU.size() > 0) {
-                        popWindow();
-                        fl_mask_view.setAlpha(0.3f);
-                        teamSelect.setBackgroundResource(R.mipmap.foot_team_info_select_not);
-                    }
+                if (items.size() > 0) {
+                    popWindow();
+                    fl_mask_view.setAlpha(0.3f);
+                    teamSelect.setBackgroundResource(R.mipmap.foot_team_info_select_not);
                 }
                 break;
         }
@@ -580,11 +570,7 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
         final View mView = View.inflate(mContext, R.layout.popup_foot_team_info, null);
         // 创建ArrayAdapter对象
         FootTeamArrayAdapter mAdapter;
-        if (isTheBallBt) {
-            mAdapter = new FootTeamArrayAdapter(mContext, itemsHDP, currentHDPIndex);
-        } else {
-            mAdapter = new FootTeamArrayAdapter(mContext, itemsOU, currentOUIndex);
-        }
+        mAdapter = new FootTeamArrayAdapter(mContext, items, currentIndex);
 
         ListView listview = (ListView) mView.findViewById(R.id.match_type);
         listview.setAdapter(mAdapter);
@@ -598,13 +584,8 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (isTheBallBt) {
-                    currentHDPIndex = position;
-                    dataContent.setText(itemsHDP.get(position));
-                } else {
-                    currentOUIndex = position;
-                    dataContent.setText(itemsOU.get(position));
-                }
+                currentIndex = position;
+                dataContent.setText(items.get(position));
                 popupWindow.dismiss();
             }
         });
@@ -612,10 +593,15 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                setData(1);
+                setData();
                 fl_mask_view.setAlpha(0f);
                 teamSelect.setBackgroundResource(R.mipmap.foot_team_info_select_ok);
             }
         });
+    }
+
+    @Override
+    public void onRefresh() {
+        initData();
     }
 }
