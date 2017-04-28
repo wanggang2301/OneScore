@@ -110,7 +110,7 @@ public class TeamInfoDataFragment extends Fragment implements View.OnClickListen
         VolleyContentFast.requestJsonByGet(BaseURLs.FOOT_TEAM_DATA_INFO_URL, map, new VolleyContentFast.ResponseSuccessListener<FootTeamDataInfoBean>() {
             @Override
             public void onResponse(FootTeamDataInfoBean json) {
-                refreshLayout.setRefreshing(false);
+                currentNameIndex = 0;
                 if (json != null && json.getCode() == 200) {
                     if (json.getTeamInfo() != null && json.getTeamInfo().size() != 0) {
                         setStatus(SUCCESS);

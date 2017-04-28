@@ -55,10 +55,10 @@ public class TeamInfoScoreFragment extends Fragment implements View.OnClickListe
     private LinearLayout networkExceptionLayout;
     private TextView networkExceptionReloadBtn;
     private TextView tvNotData;
+    private ExactSwipeRefreshLayout refreshLayout;
 
     private String mTeamId;
     private String leagueDate;
-    private ExactSwipeRefreshLayout refreshLayout;
 
     public static TeamInfoScoreFragment newInstance(String thirdId) {
         TeamInfoScoreFragment fragment = new TeamInfoScoreFragment();

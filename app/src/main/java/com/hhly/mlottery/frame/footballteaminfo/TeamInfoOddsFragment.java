@@ -385,6 +385,7 @@ public class TeamInfoOddsFragment extends Fragment implements View.OnClickListen
         VolleyContentFast.requestJsonByGet(BaseURLs.FOOT_TEAM_ODDS_URL, map, new VolleyContentFast.ResponseSuccessListener<FootTeamMatchOddBean>() {
             @Override
             public void onResponse(FootTeamMatchOddBean json) {
+                currentIndex = 0;
                 if (json != null && json.getCode() == 200) {
                     currOUList.clear();
                     currHDPList.clear();
