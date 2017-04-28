@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,15 +19,12 @@ import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.adapter.basketball.SportsDialogAdapter;
 import com.hhly.mlottery.bean.footballteaminfo.FootTeamDataBean;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.footballteaminfo.TeamInfoDataFragment;
 import com.hhly.mlottery.frame.footballteaminfo.TeamInfoLineupFragment;
 import com.hhly.mlottery.frame.footballteaminfo.TeamInfoOddsFragment;
 import com.hhly.mlottery.frame.footballteaminfo.TeamInfoScoreFragment;
-import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.CustomViewpager;
-import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 import com.hhly.mlottery.widget.ScrollTouchListView;
 
 import java.util.ArrayList;
@@ -40,11 +36,10 @@ import java.util.Map;
  * 足球球队详情activity
  * 20170420 tangrr
  */
-public class FootballTeamInfoActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class FootballTeamInfoActivity extends BaseActivity implements View.OnClickListener {
     private final String TEAM_ID = "TEAM_ID";
     private final String TITLE_TEAM_NAME = "TITLE_TEAM_NAME";
 
-    private ExactSwipeRefreshLayout refreshLayout;
     private TabLayout tabLayout;
     private CustomViewpager viewPager;
     private List<String> titles;
@@ -79,47 +74,42 @@ public class FootballTeamInfoActivity extends BaseActivity implements SwipeRefre
     }
 
     public void initData() {
-        refreshLayout.setRefreshing(true);
         Map<String, String> map = new HashMap<>();
         map.put("teamId", teamId);// 球队ID
-        map.put("leagueDate", leagueDate);// 日期
 
         VolleyContentFast.requestJsonByGet(BaseURLs.FOOT_TEAM_DATA_URL, map, new VolleyContentFast.ResponseSuccessListener<FootTeamDataBean>() {
             @Override
             public void onResponse(FootTeamDataBean json) {
-                refreshLayout.setRefreshing(false);
                 if (json != null && json.getCode() == 200) {
                     seasonList.clear();
                     yearList.clear();
                     seasonList.addAll(json.getSeasonList());
                     yearList.addAll(json.getYearList());
-
+                    viewPager.setIsScrollable(true);
                     if (leagueDate == null && seasonList.size() != 0) {
                         leagueDate = seasonList.get(0);
                         if (!isOddsPager) {
                             currentData.setText(leagueDate == null ? "" : leagueDate);
                         }
-                        teamInfoScoreFragment.updataList(leagueDate , 0);
-                        teamInfoLineupFragment.updataList(leagueDate , 0);
+                        teamInfoDataFragment.updataList(json.getTeamInfo(), leagueDate);
+                        teamInfoOddsFragment.updataList(leagueDate);
+                        teamInfoLineupFragment.updataList(leagueDate);
                     }
                     if (scoreDate == null && yearList.size() != 0) {
                         scoreDate = yearList.get(0);
                         if (isOddsPager) {
                             currentData.setText(scoreDate == null ? "" : scoreDate);
                         }
-                        teamInfoOddsFragment.updataList(scoreDate , 0);
+                        teamInfoScoreFragment.updataList(scoreDate);
                     }
-                    viewPager.setIsScrollable(true);
-                    teamInfoDataFragment.updataList(json.getTeamInfo());
                 } else {
-                    teamInfoDataFragment.updataList(null);
+                    teamInfoDataFragment.updataList(null, null);
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                refreshLayout.setRefreshing(false);
-                teamInfoDataFragment.updataList(null);
+                teamInfoDataFragment.updataList(null, null);
             }
         }, FootTeamDataBean.class);
     }
@@ -131,10 +121,6 @@ public class FootballTeamInfoActivity extends BaseActivity implements SwipeRefre
         findViewById(R.id.ll_data_select).setOnClickListener(this);
         currentData = (TextView) findViewById(R.id.tv_data_content);
 
-        refreshLayout = (ExactSwipeRefreshLayout) findViewById(R.id.team_swipere_fresh);
-        refreshLayout.setColorSchemeResources(R.color.bg_header);
-        refreshLayout.setOnRefreshListener(this);
-        refreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(this, StaticValues.REFRASH_OFFSET_END));
         tabLayout = (TabLayout) findViewById(R.id.team_title_tabs);
         viewPager = (CustomViewpager) findViewById(R.id.view_pager);
         viewPager.setIsScrollable(false);// 禁止滑动，请求成功后再滑动
@@ -145,7 +131,7 @@ public class FootballTeamInfoActivity extends BaseActivity implements SwipeRefre
         titles.add(getString(R.string.foot_team_info_odds));
         titles.add(getString(R.string.foot_team_info_lineup));
 
-        teamInfoDataFragment = new TeamInfoDataFragment();
+        teamInfoDataFragment = TeamInfoDataFragment.newInstance(teamId);
         teamInfoScoreFragment = TeamInfoScoreFragment.newInstance(teamId);
         teamInfoOddsFragment = TeamInfoOddsFragment.newInstance(teamId);
         teamInfoLineupFragment = TeamInfoLineupFragment.newInstance(teamId);
@@ -184,15 +170,15 @@ public class FootballTeamInfoActivity extends BaseActivity implements SwipeRefre
         });
     }
 
-    @Override
-    public void onRefresh() {
-        initData();
+    // 切换头部日期
+    private void onDataRefresh() {
         if (!TextUtils.isEmpty(scoreDate)) {
-            teamInfoScoreFragment.updataList(scoreDate , 1);
+            teamInfoScoreFragment.updataList(scoreDate);
         }
         if (!TextUtils.isEmpty(leagueDate)) {
-            teamInfoOddsFragment.updataList(leagueDate , 1);
-            teamInfoLineupFragment.updataList(leagueDate , 1);
+            teamInfoOddsFragment.updataList(leagueDate);
+            teamInfoLineupFragment.updataList(leagueDate);
+            teamInfoDataFragment.updataList(null, leagueDate);
         }
     }
 
@@ -295,7 +281,7 @@ public class FootballTeamInfoActivity extends BaseActivity implements SwipeRefre
                 } else {
                     currentData.setText(scoreDate == null ? "" : scoreDate);
                 }
-                onRefresh();
+                onDataRefresh();
             }
         });
         mAlertDialog.show();

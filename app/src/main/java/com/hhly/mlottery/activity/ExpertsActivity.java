@@ -153,11 +153,20 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
         int matchType = infoArrayDatas.get(i).getMatchType();
         boolean relateMatch = infoArrayDatas.get(i).isRelateMatch();
 
-        if (relateMatch) {
-            intent.putExtra(INTENT_PARAM_THIRDID, thirdId);
-            intent.putExtra(INTENT_PARAM_TYPE, matchType);
+        // relateMatch = true  matchType = 0 跳足球内页
+        // relateMatch = false matchType = 1 跳篮球内页
+        // relateMatch = flase matchType = 0 不跳转
+        // relateMatch = true  matchType = 1 不存在这种情况
+
+
+        if (relateMatch && matchType == 0) {
+            intent.putExtra(INTENT_PARAM_TYPE, 2);
+        } else if (!relateMatch && matchType == 1) {
+            intent.putExtra(INTENT_PARAM_TYPE, 1);
         }
-        intent.putExtra(INTENT_PARAM_TITLE, title);//头部名称
+
+        intent.putExtra(INTENT_PARAM_THIRDID, String.valueOf(thirdId));
+        intent.putExtra(INTENT_PARAM_TITLE, mContext.getResources().getString(R.string.share_recommend));//头部名称
         intent.putExtra(INTENT_PARAM_JUMPURL, infoUrl);
         intent.putExtra("title", title);
         intent.putExtra("subtitle", subTitle);
@@ -230,7 +239,7 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
 
 
         TextView public_txt_title = (TextView) findViewById(R.id.public_txt_title);
-        public_txt_title.setText(getString(R.string.home_expert_title));
+        public_txt_title.setText(getString(R.string.home_expert_title_name));
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         findViewById(R.id.public_img_back).setOnClickListener(this);
