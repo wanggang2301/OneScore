@@ -61,12 +61,12 @@ import de.greenrobot.event.EventBus;
 
 public class SIndexFragment extends BaseWebSocketFragment implements SIndexContract.View, View.OnClickListener {
 
-//    public static final String ARG_PARAM1 = "param1";
-//    public static final String ARG_PARAM2 = "param2";
+    public static final String ARG_PARAM1 = "param1";
+    public static final String ARG_PARAM2 = "param2";
     private ArrayList<SnookerIndexBean.CompanyEntity> companyList = new ArrayList<>(); // 公司数据源
 
-//    private int mBallType;
-//    private String mParam2;
+    private int mBallType;
+    private String mParam2;
 
     /**
      * 欧赔
@@ -135,26 +135,23 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
 
     public static SIndexFragment newInstance() {
         SIndexFragment fragment = new SIndexFragment();
-//        Bundle args = new Bundle();
-//        args.putInt(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-//        if (getArguments() != null) {
-//            mBallType = getArguments().getInt(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
-//        if (mBallType == BallType.SNOOKER) {
-//            setWebSocketUri(BaseURLs.WS_SERVICE);
-//            setTopic("USER.topic.snooker");
-//        } else if (mBallType == BallType.TENNLS) {
+        if (getArguments() != null) {
+            mBallType = getArguments().getInt(ARG_PARAM1);
+        }
+        if (mBallType == BallType.SNOOKER) {
+            setWebSocketUri(BaseURLs.WS_SERVICE);
+            setTopic("USER.topic.snooker");
+        } else if (mBallType == BallType.TENNLS) {
             setWebSocketUri(BaseURLs.WS_SERVICE);
             setTopic("USER.topic.tennis.oddindex");
-//        }
+        }
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
     }
@@ -328,24 +325,24 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
         mTitles = new String[]{getActivity().getResources().getString(R.string.odd_plate_rb_txt), getActivity().getResources().getString(R.string.asiasize),
                 getActivity().getResources().getString(R.string.odd_op_rb_txt), MyApp.getContext().getResources().getString(R.string.snooker_index_single_double)};
 
-//        if (mBallType == BallType.SNOOKER) {
-//            mTextMatch.setText(getActivity().getString(R.string.snooker_txt));
-//            mTitles = new String[]{getActivity().getResources().getString(R.string.odd_plate_rb_txt), getActivity().getResources().getString(R.string.asiasize),
-//                    getActivity().getResources().getString(R.string.odd_op_rb_txt), MyApp.getContext().getResources().getString(R.string.snooker_index_single_double)};
-//
-//            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_LET, mBallType));
-//            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_SIZE, mBallType));
-//            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_EURO, mBallType));
-//            fragments.add(SnookerIndexChildFragment.newInstance(SINGLE_DOUBLE, mBallType));
-//
-//        } else if (mBallType == BallType.TENNLS) { //网球
+        if (mBallType == BallType.SNOOKER) {
+            mTextMatch.setText(getActivity().getString(R.string.snooker_txt));
+            mTitles = new String[]{getActivity().getResources().getString(R.string.odd_plate_rb_txt), getActivity().getResources().getString(R.string.asiasize),
+                    getActivity().getResources().getString(R.string.odd_op_rb_txt), MyApp.getContext().getResources().getString(R.string.snooker_index_single_double)};
+
+            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_LET, mBallType));
+            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_SIZE, mBallType));
+            fragments.add(SnookerIndexChildFragment.newInstance(ODDS_EURO, mBallType));
+            fragments.add(SnookerIndexChildFragment.newInstance(SINGLE_DOUBLE, mBallType));
+
+        } else if (mBallType == BallType.TENNLS) { //网球
             mTextMatch.setText(getActivity().getString(R.string.tennisball_txt));
             mTitles = new String[]{getActivity().getResources().getString(R.string.odd_plate_rb_txt), getActivity().getResources().getString(R.string.asiasize),
                     getActivity().getResources().getString(R.string.odd_op_rb_txt)};
             fragments.add(SnookerIndexChildFragment.newInstance(TennisOddsTypeEnum.ASIALET, BallType.TENNLS));
             fragments.add(SnookerIndexChildFragment.newInstance(TennisOddsTypeEnum.ASIASIZE, BallType.TENNLS));
             fragments.add(SnookerIndexChildFragment.newInstance(TennisOddsTypeEnum.EURO, BallType.TENNLS));
-//        }
+        }
 
         mTabsAdapter = new TabsAdapter(getChildFragmentManager());
         mTabsAdapter.setTitles(mTitles);
@@ -470,7 +467,7 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
     private void popWindow(final View v) {
         final View mView = View.inflate(getActivity(), R.layout.pop_select, null);
         // 创建ArrayAdapter对象
-        BallChoiceArrayAdapter mAdapter = new BallChoiceArrayAdapter(getActivity(), mItems, BallType.SNOOKER); //在第几个
+        BallChoiceArrayAdapter mAdapter = new BallChoiceArrayAdapter(getActivity(), mItems, mBallType); //在第几个
 
         ListView listview = (ListView) mView.findViewById(R.id.match_type);
         listview.setAdapter(mAdapter);
