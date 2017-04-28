@@ -572,11 +572,17 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         //赛果
         if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
             finishMatchLiveTextFragment = FinishMatchLiveTextFragment.newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
-            addFragmentToActivity(getChildFragmentManager(), finishMatchLiveTextFragment, R.id.fl_live_text);
+            if(getActivity()!=null){
+                addFragmentToActivity(getChildFragmentManager(), finishMatchLiveTextFragment, R.id.fl_live_text);
+            }
+
         } else { //赛中
             L.d("xxccvv", "赛中" + matchLive.size());
             mliveTextFragment = LiveTextFragment.newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
-            addFragmentToActivity(getChildFragmentManager(), mliveTextFragment, R.id.fl_live_text);
+            if(getActivity()!=null){
+                addFragmentToActivity(getChildFragmentManager(), mliveTextFragment, R.id.fl_live_text);
+            }
+
         }
     }
 
