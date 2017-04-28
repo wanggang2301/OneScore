@@ -346,9 +346,11 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
     private void updateItemData(SnookerIndexBean.AllInfoEntity.MatchInfoEntity matchData, SnookerScoreSocketBean.SnookerScoreDataBean data) {
         String oneWin = "";
         String towWin = "";
+        String total="";
         oneWin = data.getPlayerOnewin() == null ? "0" : data.getPlayerOnewin();
         towWin = data.getPlayerTwowin() == null ? "0" : data.getPlayerTwowin();
-        matchData.setMatchResult(oneWin + ":" + towWin);
+        total = data.getTotalGames()==null?"0":data.getTotalGames();
+        matchData.setMatchResult(oneWin + "("+total+")" + towWin);
 
         if (data.getStatus() != null) {
             matchData.setMatchState(data.getStatus());
