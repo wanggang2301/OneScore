@@ -98,6 +98,7 @@ public class TeamInfoDataFragment extends Fragment implements View.OnClickListen
         mView = inflater.inflate(R.layout.fragment_football_team_info_data, container, false);
 
         initView();
+        setStatus(LOADING);
         return mView;
     }
 
@@ -333,6 +334,7 @@ public class TeamInfoDataFragment extends Fragment implements View.OnClickListen
             teamInfoList.clear();
             teamInfoList.addAll(infoList);
             showData();
+            setStatus(SUCCESS);
         } else {
             initData();
         }
@@ -354,6 +356,7 @@ public class TeamInfoDataFragment extends Fragment implements View.OnClickListen
                 networkExceptionLayout.setVisibility(View.GONE);
                 tvNotData.setVisibility(View.GONE);
                 if (leagueDate == null) {
+                    setStatus(LOADING);
                     ((FootballTeamInfoActivity) mContext).initData();
                 } else {
                     initData();
