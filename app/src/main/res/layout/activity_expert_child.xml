@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="90dp">
+
+    <ImageView
+        android:id="@+id/ex_image"
+        android:layout_width="90dp"
+        android:layout_height="68dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="fitXY" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/ex_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:textColor="#333333"
+            android:textSize="15sp" />
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:id="@+id/tv_tj"
+                android:layout_width="30dp"
+                android:layout_height="15dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/shape_tuijian_bg"
+                android:gravity="center"
+                android:text="@string/foot_tujian"
+                android:textColor="#ffffff"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:id="@+id/ex_tuijian"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_tj"
+                android:layout_alignBottom="@+id/tv_tj"
+                android:layout_toEndOf="@+id/tv_tj"
+                android:layout_toRightOf="@+id/tv_tj"
+                android:textColor="#666666"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/ex_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:textColor="#999999"
+                android:textSize="10sp" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/linecolor"/>
+</LinearLayout>

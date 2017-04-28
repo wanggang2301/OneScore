@@ -1,5 +1,6 @@
 package com.hhly.mlottery.frame.footballframe;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,8 +14,10 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.FootballTeamInfoActivity;
 import com.hhly.mlottery.adapter.football.FootballDatabaseDetailsAdapter;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.DatabaseBigSmallBean;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.FootballDatabaseBigSmallBean;
@@ -36,6 +39,7 @@ import java.util.Map;
 
 public class FootballDatabaseHandicapFragment extends Fragment implements View.OnClickListener {
 
+    private int BHtype = 0;//区分让分盘和大小盘
     private View mView;
     private static final String PARAM_ID = "leagueId";
     private static final String PARAM_LEAGUEDATA = "leagueDate";
@@ -93,6 +97,7 @@ public class FootballDatabaseHandicapFragment extends Fragment implements View.O
         mView = inflater.inflate(R.layout.football_database_details_handicap , container ,false);
 
         initView();
+        setIntegralDetailsOnClick();
         mHandlerData.postDelayed(mRun, 500); // 加载数据
         return mView;
     }
@@ -185,7 +190,8 @@ public class FootballDatabaseHandicapFragment extends Fragment implements View.O
                     if (bean.getAll() == null || bean.getAll().size() == 0) {
                         mHandler.sendEmptyMessage(VIEW_STATUS_NET_NODATA);
                     }else{
-                        mAdapter = new FootballDatabaseDetailsAdapter(getContext(), mAllList, R.layout.football_database_details_item);
+                        mAdapter = new FootballDatabaseDetailsAdapter(getContext(), mAllList, R.layout.football_database_details_item , BHtype);
+                        mAdapter.setFootballTeamIntegralDetailsClickListener(footballTeamHandicpDetailsClickListener);
                         mListview.setAdapter(mAdapter);
                         mHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                     }
@@ -265,5 +271,21 @@ public class FootballDatabaseHandicapFragment extends Fragment implements View.O
             mAdapter.updateDatas(mGuestList);
             mAdapter.notifyDataSetChanged();
         }
+    }
+    private FootballTeamHandicpDetailsClickListener footballTeamHandicpDetailsClickListener;
+    // 购买(查看)的点击监听
+    public interface FootballTeamHandicpDetailsClickListener {
+        void HandicpDetailsOnClick(View view, DatabaseBigSmallBean beanData);
+    }
+    private void setIntegralDetailsOnClick(){
+        footballTeamHandicpDetailsClickListener = new FootballTeamHandicpDetailsClickListener() {
+            @Override
+            public void HandicpDetailsOnClick(View view, DatabaseBigSmallBean beanData) {
+                        Intent homeIntent = new Intent(getContext(), FootballTeamInfoActivity.class);
+                        homeIntent.putExtra("TEAM_ID", beanData.getTeamId());
+                        homeIntent.putExtra("TITLE_TEAM_NAME", beanData.getTeamName());
+                        startActivity(homeIntent);
+            }
+        };
     }
 }

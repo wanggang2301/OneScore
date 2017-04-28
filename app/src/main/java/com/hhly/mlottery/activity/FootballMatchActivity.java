@@ -204,7 +204,6 @@ public class FootballMatchActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
-                Log.i("sdas","asdas"+exception);
 
             }
         }, InfoCenterBean.class);

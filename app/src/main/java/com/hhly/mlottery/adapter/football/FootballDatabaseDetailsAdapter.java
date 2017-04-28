@@ -1,9 +1,12 @@
 package com.hhly.mlottery.adapter.football;
 
 import android.content.Context;
+import android.view.View;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.DatabaseBigSmallBean;
+import com.hhly.mlottery.frame.footballframe.FootballDatabaseBigSmallFragment;
+import com.hhly.mlottery.frame.footballframe.FootballDatabaseHandicapFragment;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
 
@@ -16,16 +19,27 @@ import java.util.List;
  */
 public class FootballDatabaseDetailsAdapter extends CommonAdapter<DatabaseBigSmallBean> {
 
-    public FootballDatabaseDetailsAdapter(Context context, List<DatabaseBigSmallBean> datas, int layoutId) {
+    private int type;
+    public FootballDatabaseDetailsAdapter(Context context, List<DatabaseBigSmallBean> datas, int layoutId , int type) {
         super(context, datas, layoutId);
         this.mContext = context;
+        this.type = type;
     }
+    private FootballDatabaseHandicapFragment.FootballTeamHandicpDetailsClickListener footballTeamHandicpDetailsClickListener;
+    public void setFootballTeamIntegralDetailsClickListener(FootballDatabaseHandicapFragment.FootballTeamHandicpDetailsClickListener footballTeamHandicpDetailsClickListener){
+        this.footballTeamHandicpDetailsClickListener = footballTeamHandicpDetailsClickListener;
+    }
+    private FootballDatabaseBigSmallFragment.FootballTeamBigSmallDetailsClickListener footballTeamBigSmallDetailsClickListener;
+    public void setFootballTeamBigSmallDetailsClickListener(FootballDatabaseBigSmallFragment.FootballTeamBigSmallDetailsClickListener footballTeamBigSmallDetailsClickListener){
+        this.footballTeamBigSmallDetailsClickListener = footballTeamBigSmallDetailsClickListener;
+    }
+
 
     public void updateDatas(List<DatabaseBigSmallBean> datas) {
         this.mDatas = datas;
     }
     @Override
-    public void convert(ViewHolder holder, DatabaseBigSmallBean bean) {
+    public void convert(ViewHolder holder, final DatabaseBigSmallBean bean) {
 
         if (holder.getPosition() < 3) {
             holder.setText(R.id.football_database_datails_ranking_big_small , bean.getRank());
@@ -63,6 +77,26 @@ public class FootballDatabaseDetailsAdapter extends CommonAdapter<DatabaseBigSma
             holder.setText(R.id.football_database_details_small, right.substring(0 , right.length()-1));
         }else{
             holder.setText(R.id.football_database_details_small, "-");
+        }
+
+        if (type == 0) {
+            holder.setOnClickListener(R.id.football_database_details_name_big_small, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (footballTeamHandicpDetailsClickListener != null) {
+                        footballTeamHandicpDetailsClickListener.HandicpDetailsOnClick(v , bean);
+                    }
+                }
+            });
+        }else if(type == 1){
+            holder.setOnClickListener(R.id.football_database_details_name_big_small, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (footballTeamBigSmallDetailsClickListener != null) {
+                        footballTeamBigSmallDetailsClickListener.BigSmallDetailsOnClick(v,bean);
+                    }
+                }
+            });
         }
     }
 }

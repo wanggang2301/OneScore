@@ -359,8 +359,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         initView();
         initEvent();
         loadAnim();
-
-
         mHandler.sendEmptyMessage(STARTLOADING);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -530,13 +528,13 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         connectWebSocket();
                     }
 
-
                     mAnalyzeFragment.initData();// 分析下拉刷新
                     mOddsFragment.oddPlateRefresh(); // 指数刷新
                     mChartBallFragment.onRefresh();// 聊球
                 }
             }
         }, 1000);
+
     }
 
     private Timer mReloadTimer;
@@ -2211,6 +2209,22 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     barrage_view.setAlpha(0);
                 }
                 break;
+            case R.id.iv_home_icon:// 主队logo
+                if (mMatchDetail.getHomeTeamInfo().getId() != null) {
+                    Intent homeIntent = new Intent(this, FootballTeamInfoActivity.class);
+                    homeIntent.putExtra("TEAM_ID", mMatchDetail.getHomeTeamInfo().getId());
+                    homeIntent.putExtra("TITLE_TEAM_NAME", mMatchDetail.getHomeTeamInfo().getName());
+                    startActivity(homeIntent);
+                }
+                break;
+            case R.id.iv_guest_icon:// 客队logo
+                if (mMatchDetail.getGuestTeamInfo().getId() != null) {
+                    Intent guestIntent = new Intent(this, FootballTeamInfoActivity.class);
+                    guestIntent.putExtra("TEAM_ID", mMatchDetail.getGuestTeamInfo().getId());
+                    guestIntent.putExtra("TITLE_TEAM_NAME", mMatchDetail.getGuestTeamInfo().getName());
+                    startActivity(guestIntent);
+                }
+                break;
             default:
                 break;
         }
@@ -2338,6 +2352,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Share");
                 popupWindow.dismiss();
 
+
                 if (mMatchDetail == null) {
                     return;
                 }
@@ -2454,6 +2469,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         iv_home_icon = (ImageView) findViewById(R.id.iv_home_icon);
         iv_guest_icon = (ImageView) findViewById(R.id.iv_guest_icon);
 //        iv_bg = (ImageView) findViewById(R.id.iv_bg);
+
+        iv_home_icon.setOnClickListener(this);
+        iv_guest_icon.setOnClickListener(this);
 
 
         tv_homename = (TextView) findViewById(R.id.tv_home_name);

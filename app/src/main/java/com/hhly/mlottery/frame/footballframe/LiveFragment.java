@@ -52,6 +52,7 @@ import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.FootballEventView;
 import com.hhly.mlottery.widget.TimeView;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -578,6 +579,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
             addFragmentToActivity(getChildFragmentManager(), mliveTextFragment, R.id.fl_live_text);
         }
     }
+
 
     private void initEvent(MatchDetail mMatchDetail) {
         if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
@@ -1613,8 +1615,13 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     public static void addFragmentToActivity(FragmentManager fragmentManager, Fragment fragment, int frameId) {
         if (fragmentManager != null && fragment != null) {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.add(frameId, fragment);
-            transaction.commit();
+
+            transaction.replace(frameId, fragment)
+                    .disallowAddToBackStack()
+                    .commit();
+            //transaction.add(frameId, fragment);
+
+            //transaction.commitAllowingStateLoss();
         }
     }
 
@@ -1777,6 +1784,20 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
             if (bean.getMsgId().equals(matchTextLiveBean.getCancelEnNum())) {//取消进球等事件的判断
                 iterator.remove();//用xMatchLive.remove会有异常
             }
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
     }
 }

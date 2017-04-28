@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_team_data_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/home_default_icon_coloer"
+        android:padding="10dp"
+        android:textColor="@color/basket_database_details_color"
+        android:textSize="@dimen/item_football_half_score"
+        tools:text="英超" />
+
+    <!--头部-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/foot_team_info_total"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/foot_team_info_zu"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/foot_team_info_ke"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/linecolor" />
+
+    <!--排名-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="@string/basket_ranking"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score" />
+
+        <TextView
+            android:id="@+id/tv_data_rank_total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/tv_data_rank_zu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/tv_data_rank_ke"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/linecolor" />
+
+    <!--积分-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="@string/new_analyze_integral"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score" />
+
+        <TextView
+            android:id="@+id/tv_data_score_total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/tv_data_score_zu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/tv_data_score_ke"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/linecolor" />
+
+    <!--比赛场次-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="@string/foot_team_info_match_count"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score" />
+
+        <TextView
+            android:id="@+id/tv_data_count_total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/tv_data_count_zu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/tv_data_count_ke"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/linecolor" />
+
+    <!--胜-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="@string/foot_odds_eu_left"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score" />
+
+        <TextView
+            android:id="@+id/tv_data_win_total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/tv_data_win_zu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/tv_data_win_ke"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/linecolor" />
+
+    <!--平-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="@string/foot_odds_eu_middle"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score" />
+
+        <TextView
+            android:id="@+id/tv_data_equ_total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/tv_data_equ_zu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/tv_data_equ_ke"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/linecolor" />
+
+    <!--负-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="@string/foot_odds_eu_right"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score" />
+
+        <TextView
+            android:id="@+id/tv_data_lose_total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/tv_data_lose_zu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/tv_data_lose_ke"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/linecolor" />
+
+    <!--进球-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="@string/set_goal_txt"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score" />
+
+        <TextView
+            android:id="@+id/tv_data_goal_total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/tv_data_goal_zu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/tv_data_goal_ke"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/linecolor" />
+
+    <!--失球-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="@string/foot_team_info_lose_goal"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score" />
+
+        <TextView
+            android:id="@+id/tv_data_lose_goal_total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/tv_data_lose_goal_zu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/tv_data_lose_goal_ke"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/linecolor" />
+
+    <!--均场进球-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="@string/foot_team_info_goal_avg"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score" />
+
+        <TextView
+            android:id="@+id/tv_data_goal_avg_total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/tv_data_goal_avg_zu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/tv_data_goal_avg_ke"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/linecolor" />
+
+    <!--均场失球-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="@string/foot_team_info_lose_avg"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score" />
+
+        <TextView
+            android:id="@+id/tv_data_lose_avg_total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/tv_data_lose_avg_zu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/tv_data_lose_avg_ke"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/res_time_color"
+            android:textSize="@dimen/item_football_half_score"
+            tools:text="1" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/linecolor" />
+
+</LinearLayout>

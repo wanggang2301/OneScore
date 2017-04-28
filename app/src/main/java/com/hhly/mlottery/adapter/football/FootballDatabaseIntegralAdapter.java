@@ -15,6 +15,7 @@ import com.chad.library.adapter.base.entity.SectionEntity;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.FootballIntegralResult;
 import com.hhly.mlottery.bean.footballDetails.FootballRankingData;
+import com.hhly.mlottery.frame.footballframe.FootballDatabaseIntegralFragment;
 import com.hhly.mlottery.util.DisplayUtil;
 
 import java.util.List;
@@ -28,6 +29,10 @@ import java.util.Locale;
 public class FootballDatabaseIntegralAdapter
         extends BaseSectionQuickAdapter<FootballDatabaseIntegralAdapter.Section> {
 
+    private FootballDatabaseIntegralFragment.FootballTeamIntegralDetailsClickListener footballTeamIntegralDetailsClickListener;
+    public void setFootballTeamIntegralDetailsClickListener(FootballDatabaseIntegralFragment.FootballTeamIntegralDetailsClickListener footballTeamIntegralDetailsClickListener){
+        this.footballTeamIntegralDetailsClickListener = footballTeamIntegralDetailsClickListener;
+    }
     private static final int TYPE_FORM_TITLE = 1;
 
     private int type = FootballIntegralResult.SINGLE_LEAGUE;
@@ -72,7 +77,7 @@ public class FootballDatabaseIntegralAdapter
 
     @Override
     protected void convert(BaseViewHolder holder, Section section) {
-        FootballRankingData team = section.t;
+        final FootballRankingData team = section.t;
 
         if (team == null) return;
 
@@ -114,6 +119,14 @@ public class FootballDatabaseIntegralAdapter
                 name.setTextColor(ContextCompat.getColor(mContext, R.color.content_txt_dark_grad));
             }
         }
+        holder.setOnClickListener(R.id.name, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(footballTeamIntegralDetailsClickListener != null){
+                    footballTeamIntegralDetailsClickListener.IntegralDetailsOnClick(v,team);
+                }
+            }
+        });
     }
 
     @Override
