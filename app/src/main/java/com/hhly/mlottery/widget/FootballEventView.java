@@ -108,7 +108,7 @@ public class FootballEventView extends View {
      */
     private void init(AttributeSet attrs) {
         //提前加载好图片
-        bitmapScore = BitmapFactory.decodeResource(getResources(), R.mipmap.score);
+        bitmapScore = BitmapFactory.decodeResource(getResources(), R.mipmap.event_goal);
         bitmapRed = BitmapFactory.decodeResource(getResources(), R.mipmap.rc);
         bitmapYellow = BitmapFactory.decodeResource(getResources(), R.mipmap.yc);
         bitmapCorner = BitmapFactory.decodeResource(getResources(), R.mipmap.corner);
