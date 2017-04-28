@@ -530,8 +530,10 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         if ("0".equals(eventType)) {
 
             mNoLiveTextFragment = NoLiveTextFragment.newInstance();
-            addFragmentToActivity(getChildFragmentManager(), mNoLiveTextFragment, R.id.fl_live_text);
+            if(getActivity()!=null){
+                addFragmentToActivity(getChildFragmentManager(), mNoLiveTextFragment, R.id.fl_live_text);
 
+            }
             ll_nodata.setVisibility(View.VISIBLE);
             ll_event.setVisibility(View.GONE);
             mNestedScrollView_trend.setVisibility(View.GONE);
