@@ -454,7 +454,9 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         for (int len = historyBeen.size() - 1, i = len; i >= 0; i--) {
             if (historyBeen.get(i).getMessage().equals(message)) {
                 historyBeen.get(i).setSendStart(sendStart);
-                mAdapter.notifyDataSetChanged();
+                if(mAdapter != null){
+                    mAdapter.notifyDataSetChanged();
+                }
                 chatHistoryBean = historyBeen.get(i);
                 break;
             }
@@ -612,7 +614,9 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     ll_not_chart_image.setVisibility(View.GONE);
                     rl_chart_content.setVisibility(View.VISIBLE);
                     historyBeen.add(contentEntitiy);
-                    mAdapter.notifyDataSetChanged();
+                    if(mAdapter != null) {
+                        mAdapter.notifyDataSetChanged();
+                    }
                     if (contentEntitiy.getMsgCode() == 2 && !TextUtils.isEmpty(contentEntitiy.getToUser().getUserId())) {
                         sendMessageToServer(TYPE_MSG_TO_ME, contentEntitiy.getMessage(), contentEntitiy.getToUser().getUserId());
                     } else {
@@ -623,7 +627,9 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
                     break;
                 case MSG_UPDATA_TIME:
-                    mAdapter.notifyDataSetChanged();
+                    if(mAdapter != null) {
+                        mAdapter.notifyDataSetChanged();
+                    }
                     break;
                 case SOCKET_TIMER_TASK:// 启动定时器
                     connectWebSocket();
@@ -696,7 +702,9 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     sendMessageToServer(TYPE_MSG, historyBeen.get(i).getMessage(), null);
                 }
                 historyBeen.get(i).setSendStart(SendMsgEnum.SEND_LOADING);
-                mAdapter.notifyDataSetChanged();
+                if(mAdapter != null) {
+                    mAdapter.notifyDataSetChanged();
+                }
                 break;
             }
         }

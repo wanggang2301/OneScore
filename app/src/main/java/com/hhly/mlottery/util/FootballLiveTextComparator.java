@@ -13,11 +13,12 @@ public class FootballLiveTextComparator implements Comparator<MatchTextLiveBean>
     @Override
     public int compare(MatchTextLiveBean o1, MatchTextLiveBean o2) {
         int compare = 0;
-        if (!TextUtils.isEmpty(o1.getMsgId()) && !TextUtils.isEmpty(o2.getMsgId())) {
+        try {
             compare = Integer.parseInt(o2.getMsgId()) - Integer.parseInt(o1.getMsgId());//先按msgid排序
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
         return compare;
-
     }
 }
 

@@ -132,7 +132,11 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onItemClick(View view, int i) {
 
-                gotoWebActivity(i);
+                try {
+                    gotoWebActivity(i);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             }
 

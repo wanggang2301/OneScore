@@ -552,8 +552,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             @Override
             public void onResponse(BasketballDetailsBean basketDetailsBean) {
                 if (basketDetailsBean != null && basketDetailsBean.getMatch() != null) {
-
-                    if(mChartBallFragment!=null){
+                    if(mChartBallFragment != null){
                         mBasketDetailsHeadFragment.initData(basketDetailsBean, mChartBallFragment);
                     }
 
