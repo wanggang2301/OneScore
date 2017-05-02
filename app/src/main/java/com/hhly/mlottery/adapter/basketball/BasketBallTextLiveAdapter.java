@@ -79,7 +79,11 @@ public class BasketBallTextLiveAdapter extends BaseQuickAdapter<BasketEachTextLi
                 //  ImageLoader.load(mContext, BasketDetailsActivityTest.homeIconUrl, R.mipmap.basket_default).into(circleImageView);
             } else if (2 == b.getTeamType()) { //客队
                 if (BasketDetailsActivityTest.guestIconUrl != null && !"".equals(BasketDetailsActivityTest.guestIconUrl)) {
-                    Glide.with(mContext).load(BasketDetailsActivityTest.guestIconUrl).placeholder(R.mipmap.basket_default).into(circleImageView);
+                    try {
+                        Glide.with(mContext).load(BasketDetailsActivityTest.guestIconUrl).placeholder(R.mipmap.basket_default).into(circleImageView);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 // ImageLoader.load(mContext, BasketDetailsActivityTest.guestIconUrl, R.mipmap.basket_default).into(circleImageView);
             } else {

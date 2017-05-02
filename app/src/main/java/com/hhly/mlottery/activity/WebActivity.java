@@ -127,11 +127,11 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         mWebView.setOnCustomScroolChangeListener(new ProgressWebView.ScrollInterface() {
             @Override
             public void onSChanged(int l, int t, int oldl, int oldt) {
-                L.d("___onSChanged___");
-                L.d("l = " + l);
-                L.d("t = " + t);
-                L.d("oldl = " + oldl);
-                L.d("oldt = " + oldt);
+//                L.d("___onSChanged___");
+//                L.d("l = " + l);
+//                L.d("t = " + t);
+//                L.d("oldl = " + oldl);
+//                L.d("oldt = " + oldt);
                 y = mWebView.getContentHeight() * mWebView.getScale() - (mWebView.getHeight() + mWebView.getScrollY());
                 if (y < 3) {
                     //已经处于底端
