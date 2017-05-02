@@ -413,8 +413,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         //动画WebView
         tv_nopage = (TextView) findViewById(R.id.tv_nopage);
         mWebView = (WebView) findViewById(R.id.webview);
-        ll_Webview= (LinearLayout) findViewById(R.id.ll_webview);
-        mHalfScore= (TextView) findViewById(R.id.half_score);
+        ll_Webview = (LinearLayout) findViewById(R.id.ll_webview);
+        mHalfScore = (TextView) findViewById(R.id.half_score);
 
 
         //滚球
@@ -502,7 +502,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 super.onReceivedError(view, request, error);
                 mWebView.setVisibility(View.GONE);
                 ll_Webview.setVisibility(View.GONE);
-                L.e("AAAA","error?");
+                L.e("AAAA", "error?");
             }
         });
 
@@ -821,9 +821,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             //完场
             if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
                 date.setVisibility(View.GONE);
-                if(matchDetail.getHomeTeamInfo()!=null&&matchDetail.getGuestTeamInfo()!=null){
+                if (matchDetail.getHomeTeamInfo() != null && matchDetail.getGuestTeamInfo() != null) {
                     mHalfScore.setVisibility(View.VISIBLE);
-                    mHalfScore.setText(matchDetail.getHomeTeamInfo().getHalfScore()+":"+matchDetail.getGuestTeamInfo().getHalfScore());
+                    mHalfScore.setText(matchDetail.getHomeTeamInfo().getHalfScore() + ":" + matchDetail.getGuestTeamInfo().getHalfScore());
                 }
                 mLayoutScore.setVisibility(View.VISIBLE);
                 String halfScore = mMatchDetail.getHomeTeamInfo().getHalfScore() + " : " + mMatchDetail.getGuestTeamInfo().getHalfScore();
@@ -2507,7 +2507,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(FootballMatchDetailActivity.this, FootballDatabaseDetailsActivity.class);
-                intent.putExtra("league", new DataBaseBean(mMatchDetail.getLeagueType() + "", mMatchDetail.getLeagueId() + "", "", ""));
+                if (mMatchDetail != null) {
+                    intent.putExtra("league", new DataBaseBean(mMatchDetail.getLeagueType() + "", mMatchDetail.getLeagueId() + "", "", ""));
+                }
                 intent.putExtra("isIntegral", false);
                 startActivity(intent);
             }
