@@ -553,7 +553,9 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             public void onResponse(BasketballDetailsBean basketDetailsBean) {
                 if (basketDetailsBean != null && basketDetailsBean.getMatch() != null) {
 
-                    mBasketDetailsHeadFragment.initData(basketDetailsBean, mChartBallFragment);
+                    if(mChartBallFragment!=null){
+                        mBasketDetailsHeadFragment.initData(basketDetailsBean, mChartBallFragment);
+                    }
 
                     homeIconUrl = basketDetailsBean.getMatch().getHomeLogoUrl();
                     guestIconUrl = basketDetailsBean.getMatch().getGuestLogoUrl();
