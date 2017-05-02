@@ -25,9 +25,11 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +49,7 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
     private TextView ex_text;
     private RecyclerView ex_recyclerview;
     private MostExpertBean.ExpertBean expertDatas;
-    private List<MostExpertBean.InfoArrayBean> infoArrayDatas;
+    private List<MostExpertBean.InfoArrayBean> infoArrayDatas = new ArrayList<>();
     private ExpertsListAdapter expertsListAdapter;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -131,12 +133,8 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
         expertsListAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
-
-                try {
-                    gotoWebActivity(i);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                L.d("experts","index: " + i);
+                gotoWebActivity(i);
 
             }
 
@@ -204,9 +202,10 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
                     if (expertDatas != null) {
                         setHeaderDatas(expertDatas);
                     }
-                    infoArrayDatas = jsonObject.getInfoArray();
+                    infoArrayDatas.clear();
+                    infoArrayDatas.addAll(jsonObject.getInfoArray());
                     //填充数据
-                    expertsListAdapter.addData(infoArrayDatas);
+                    expertsListAdapter.notifyDataSetChanged();
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                 } else {
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
@@ -259,7 +258,7 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
         ex_recyclerview.setNestedScrollingEnabled(false);
         layoutManager.setOrientation(OrientationHelper.VERTICAL);//设置为垂直布局，这也是默认的
 
-        expertsListAdapter = new ExpertsListAdapter(ExpertsActivity.this, R.layout.activity_expert_child, null);
+        expertsListAdapter = new ExpertsListAdapter(ExpertsActivity.this, R.layout.activity_expert_child, infoArrayDatas);
         ex_recyclerview.setAdapter(expertsListAdapter);
 
 
