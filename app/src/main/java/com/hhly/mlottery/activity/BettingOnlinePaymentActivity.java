@@ -115,6 +115,32 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
         },WeiXinPayidDataBean.class);
     }
 
+    /**
+     * 支付宝参数接口
+     */
+    private void ALiPayData(){
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("outTradeNo", String.valueOf(System.currentTimeMillis()));
+        map.put("subject", "测试商品");
+        map.put("body", "商品描述");
+        map.put("totalAmount", "0.01");
+        map.put("timeoutExpress", "5d");
+
+        String aliPayUrl = "http://192.168.31.15:8081/app-pay/alipay/tradeAppPay";
+        VolleyContentFast.requestJsonByPost(aliPayUrl, map, new VolleyContentFast.ResponseSuccessListener<WeiXinPayidDataBean>() {
+            @Override
+            public void onResponse(WeiXinPayidDataBean jsonObject) {
+
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+            }
+        },WeiXinPayidDataBean.class);
+
+    }
+
     private void toPay(WeiXinPayidDataBean.PayDataWX.PayDataMapWX.PayInfo payInfo){
         //注册appid
         IWXAPI api = WXAPIFactory.createWXAPI(this, APP_ID);// 通过WXAPIFactory工厂，获取IWXAPI的实例
