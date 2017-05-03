@@ -774,8 +774,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private void initViewPager(MatchDetail matchDetail) {
         if (BEFOURLIVE.equals(matchDetail.getLiveStatus())) { //赛前
-            date.setVisibility(View.VISIBLE);
-            mHalfScore.setVisibility(View.GONE);
             mLayoutScore.setVisibility(View.VISIBLE);
             if (chartBallView == 1) {
                 // 聊球
@@ -820,10 +818,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
             //完场
             if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
-                date.setVisibility(View.GONE);
                 if (matchDetail.getHomeTeamInfo() != null && matchDetail.getGuestTeamInfo() != null) {
-                    mHalfScore.setVisibility(View.VISIBLE);
-                    mHalfScore.setText(matchDetail.getHomeTeamInfo().getHalfScore() + ":" + matchDetail.getGuestTeamInfo().getHalfScore());
+                    mHalfScore.setText("("+matchDetail.getHomeTeamInfo().getHalfScore() + ":" + matchDetail.getGuestTeamInfo().getHalfScore()+")");
                 }
                 mLayoutScore.setVisibility(View.VISIBLE);
                 String halfScore = mMatchDetail.getHomeTeamInfo().getHalfScore() + " : " + mMatchDetail.getGuestTeamInfo().getHalfScore();
@@ -1345,6 +1341,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 break;
             case "3": //结束下半场
                 mLayoutScore.setVisibility(View.VISIBLE);
+
+
+                    mHalfScore.setText("("+mathchStatisInfo.getHome_half_score() + ":" + mathchStatisInfo.getGuest_half_score()
+                            +")");
                 //socket关闭
                 // 获取上半场的走势图数据
                 setScoreClolor(getApplicationContext().getResources().getColor(R.color.score));
@@ -2552,10 +2552,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 return;
             }
             if (!StringUtils.isEmpty(startTime) && startTime.length() == 16) {
-                date.setVisibility(View.VISIBLE);
                 date.setText(DateUtil.convertDateToNationHM(startTime));
             } else {
-                date.setVisibility(View.GONE);
                 date.setText("");//开赛时间
             }
         }
