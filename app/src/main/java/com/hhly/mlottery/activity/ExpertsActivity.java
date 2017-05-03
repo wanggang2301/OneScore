@@ -284,11 +284,14 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
 
     /*加载头部数据*/
     public void setHeaderDatas(MostExpertBean.ExpertBean headerDatas) {
-
-        Glide.with(this).load(headerDatas.getIcon()).into(ex_image);
-        ex_name.setText(headerDatas.getTitle());
-        ex_zhong.setText(headerDatas.getLastWeekResults());
-        ex_text.setText("\t\t\t\t" + headerDatas.getDes());
+        try {
+            Glide.with(this).load(headerDatas.getIcon()).into(ex_image);
+            ex_name.setText(headerDatas.getTitle());
+            ex_zhong.setText(headerDatas.getLastWeekResults());
+            ex_text.setText("\t\t\t\t" + headerDatas.getDes());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
