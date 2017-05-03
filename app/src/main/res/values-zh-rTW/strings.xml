@@ -1707,4 +1707,7 @@
     <string name="foot_team_odds_let_the_ball">讓球盤</string>
     <string name="foot_team_odds_size_ball">大小球</string>
 
+    <string name="football_database_details_statistic_fumble_num">總失球數 :</string>
+    <string name="football_database_details_fumble_score_avg">場均失球 :</string>
+
 </resources>
