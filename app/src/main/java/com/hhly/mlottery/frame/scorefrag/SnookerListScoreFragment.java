@@ -24,6 +24,7 @@ import com.hhly.mlottery.activity.SnookerSettingActivity;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.BaseUserTopics;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.snookerframe.SnookerImmediateFragment;
 import com.hhly.mlottery.frame.snookerframe.SnookerResultFragment;
@@ -68,7 +69,8 @@ public class SnookerListScoreFragment extends BaseWebSocketFragment implements V
          */
 //        setWebSocketUri("ws://192.168.10.242:61634");
         setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic("USER.topic.snooker");
+//        setTopic("USER.topic.snooker");
+        setTopic(BaseUserTopics.snookerMatch);
         super.onCreate(savedInstanceState);
 
         EventBus.getDefault().register(this);

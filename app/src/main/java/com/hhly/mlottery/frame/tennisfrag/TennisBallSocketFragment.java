@@ -29,6 +29,7 @@ import com.hhly.mlottery.bean.tennisball.TennisSocketBean;
 import com.hhly.mlottery.bean.tennisball.TennisSocketOddsBean;
 import com.hhly.mlottery.callback.TennisFocusCallBack;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.BaseUserTopics;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -86,7 +87,8 @@ public class TennisBallSocketFragment extends BaseWebSocketFragment implements S
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic("USER.topic.tennis.score");
+//        setTopic("USER.topic.tennis.score");
+        setTopic(BaseUserTopics.tennisScore);
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             type = getArguments().getInt(TENNIS_TYPE);

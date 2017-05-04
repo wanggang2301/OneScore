@@ -24,6 +24,7 @@ import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
 import com.hhly.mlottery.bean.footballDetails.WebSocketRollballOdd;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.BaseUserTopics;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.StringUtils;
@@ -172,7 +173,8 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         String thirdId = getArguments().getString(DETAILSROLLBALL_THIRD_ID);
         setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic("USER.topic.scollodds." + thirdId);
+//        setTopic("USER.topic.scollodds." + thirdId);
+        setTopic(BaseUserTopics.oddsFootballMatch + "." + thirdId);
         super.onCreate(savedInstanceState);
 
         mContext = getActivity();

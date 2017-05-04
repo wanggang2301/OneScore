@@ -1720,6 +1720,8 @@
     <string name="football_database_details_statistic_fumble_num">总失球数 :</string>
     <string name="football_database_details_fumble_score_avg">场均失球 :</string>
 
+    <string name="invited_summary">请您一起看比赛，输入邀请码，优惠多多哦。</string>
+
     /*****不要删除*************************************************************************************************/
     <string name="odds_back_list">""</string>
     <string name="odds_average">""</string>

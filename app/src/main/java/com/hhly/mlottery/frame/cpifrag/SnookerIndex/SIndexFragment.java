@@ -33,6 +33,7 @@ import com.hhly.mlottery.bean.snookerbean.snookerschedulebean.SnookerSocketOddsB
 import com.hhly.mlottery.bean.tennisball.TennisSocketBean;
 import com.hhly.mlottery.bean.tennisball.TennisSocketOddsBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.BaseUserTopics;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.cpifrag.CloseCpiWebSocketEventBus;
 import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SnookerChildFragment.SnookerCompanyChooseDialogFragment;
@@ -147,10 +148,12 @@ public class SIndexFragment extends BaseWebSocketFragment implements SIndexContr
         }
         if (mBallType == BallType.SNOOKER) {
             setWebSocketUri(BaseURLs.WS_SERVICE);
-            setTopic("USER.topic.snooker");
+//            setTopic("USER.topic.snooker");
+            setTopic(BaseUserTopics.snookerMatch);
         } else if (mBallType == BallType.TENNLS) {
             setWebSocketUri(BaseURLs.WS_SERVICE);
-            setTopic("USER.topic.tennis.oddindex");
+//            setTopic("USER.topic.tennis.oddindex");
+            setTopic(BaseUserTopics.oddsTennis);
         }
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);

@@ -2,8 +2,6 @@ package com.hhly.mlottery.frame.basketballframe.basketnewfragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,12 +10,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,7 +21,6 @@ import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.adapter.basketball.BasketballScoreListAdapter;
-import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.basket.BasketAllOddBean;
 import com.hhly.mlottery.bean.basket.BasketMatchBean;
 import com.hhly.mlottery.bean.basket.BasketMatchFilter;
@@ -52,7 +47,6 @@ import com.umeng.analytics.MobclickAgent;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -76,8 +70,8 @@ public class BasketballFocusNewFragment extends Fragment implements View.OnClick
     /**
      * 点击去关注，到列表页传intent的key值
      */
-    public final static String MY_BASKET_FOCUS = "my_basket_focus";
-    public static final int TYPE_FOCUS = 3;
+//    public final static String MY_BASKET_FOCUS = "my_basket_focus";
+    private final int TYPE_FOCUS = 3;
     private RecyclerView explistview;
     //    //筛选的数据
 //    public static List<BasketMatchFilter> mChickedFilter = new ArrayList<>();//选中的
@@ -86,38 +80,38 @@ public class BasketballFocusNewFragment extends Fragment implements View.OnClick
     private List<List<BasketMatchBean>> mAllMatchdata;//所有的比赛list
     private List<BasketRootBean> mMatchdata = new ArrayList<>();//match的 内容(json)
     //    private List<Integer> isToday; // = -10;//(-1:昨天; 0:今天; 1:明天)
-    private int expandFlag = -1;//控制列表的展开
+//    private int expandFlag = -1;//控制列表的展开
     private BasketballScoreListAdapter adapter;
     private View mView;
     private Context mContext;
-    private RelativeLayout mbasketball_unfocus;//暂无关注图标
+//    private RelativeLayout mbasketball_unfocus;//暂无关注图标
     private RelativeLayout mbasket_unfiltrate; //暂无赛选图标
     private int mEntryType; // 标记入口 判断是从哪里进来的 (0:首页入口  1:新导航条入口)
     private LinearLayout mLoadingLayout;
     private RelativeLayout mNoDataLayout;
     private LinearLayout mErrorLayout;
     private TextView mReloadTvBtn;// 刷新 控件
-    private Intent mIntent;
+//    private Intent mIntent;
     private BasketFocusClickListener mFocusClickListener; //关注点击监听
-    private URI mScoketuri = null;//推送 URI
-    private boolean isError = false;
+//    private URI mScoketuri = null;//推送 URI
+//    private boolean isError = false;
     private SwipeRefreshLayout mSwipeRefreshLayout; //下拉刷新
     private int mBasketballType = 3; //判断是哪个fragment(即时 赛果 赛程)
-    private boolean isFilter = false;  //是否赛选过
-    private String url;
-    public static int isLoad = -1;
+//    private boolean isFilter = false;  //是否赛选过
+//    private String url;
+//    public static int isLoad = -1;
 
-    public static int getIsLoad() {
-        return isLoad;
-    }
+//    public static int getIsLoad() {
+//        return isLoad;
+//    }
 
     private int mSize; //记录共有几天的数据
 
     private List<BasketMatchBean> currentMatchData;//当前选择日期所显示的数据
     public static List<List<BasketMatchFilter>> mAllDateFilter;//所有的联赛
-    private static int currentDatePosition = 0;//记录当前日期选择器中日期的位置
+//    private static int currentDatePosition = 0;//记录当前日期选择器中日期的位置
     private LinearLayoutManager linearLayoutManager;
-    private ListView mDateListView;
+//    private ListView mDateListView;
 
     /**
      * 切换后更新显示的fragment
@@ -161,21 +155,21 @@ public class BasketballFocusNewFragment extends Fragment implements View.OnClick
     /**
      * 返回当前程序版本号 versioncode
      */
-    public static String getAppVersionCode(Context context) {
-        String versioncode = "";
-        try {
-            PackageManager pm = context.getPackageManager();
-            PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
-//            versionName = pi.versionName;
-            versioncode = pi.versionCode + "";
-            if (versioncode == null || versioncode.length() <= 0) {
-                return "";
-            }
-        } catch (Exception e) {
-            Log.e("VersionInfo", "Exception", e);
-        }
-        return versioncode;
-    }
+//    public static String getAppVersionCode(Context context) {
+//        String versioncode = "";
+//        try {
+//            PackageManager pm = context.getPackageManager();
+//            PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
+////            versionName = pi.versionName;
+//            versioncode = pi.versionCode + "";
+//            if (versioncode == null || versioncode.length() <= 0) {
+//                return "";
+//            }
+//        } catch (Exception e) {
+//            Log.e("VersionInfo", "Exception", e);
+//        }
+//        return versioncode;
+//    }
 
     @Nullable
     @Override
@@ -273,7 +267,7 @@ public class BasketballFocusNewFragment extends Fragment implements View.OnClick
      * @param thirdId
      */
     private void request(String thirdId) {
-        String url1 = "http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.findCancelAfterConcernList.do";
+//        String url1 = "http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.findCancelAfterConcernList.do";
         Map<String, String> params = new HashMap<>();
         String deviceId = AppConstants.deviceToken;
         String userId = "";
@@ -284,14 +278,14 @@ public class BasketballFocusNewFragment extends Fragment implements View.OnClick
         params.put("deviceId", deviceId);
         params.put("cancelThirdIds", thirdId);
 
-        String url = "http://192.168.10.242:8181/mlottery/core/androidBasketballMatch.findCancelAfterConcernList.do";//?lang=zh&timeZone=7&deviceId=868048029263480&userId=&cancelThirdIds=
+//        String url = "http://192.168.10.242:8181/mlottery/core/androidBasketballMatch.findCancelAfterConcernList.do";//?lang=zh&timeZone=7&deviceId=868048029263480&userId=&cancelThirdIds=
         VolleyContentFast.requestJsonByGet(BaseURLs.BASKET_FOCUS, params, new VolleyContentFast.ResponseSuccessListener<BasketRoot>() {
             @Override
             public void onResponse(BasketRoot json) {
                 if (getActivity() == null) {
                     return;
                 }
-                isLoad = 1;
+//                isLoad = 1;
                 if (json == null || json.getMatchData() == null || json.getMatchData().size() == 0) {
                     if (mBasketballType == TYPE_FOCUS) {
                         PreferenceUtil.commitString(BASKET_FOCUS_IDS, "");
@@ -392,7 +386,7 @@ public class BasketballFocusNewFragment extends Fragment implements View.OnClick
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 L.e(TAG, "exception.getErrorCode() = " + exception.getErrorCode());
-                isLoad = 0;
+//                isLoad = 0;
                 setStatus(SHOW_STATUS_ERROR);
             }
         }, BasketRoot.class);
@@ -453,7 +447,7 @@ public class BasketballFocusNewFragment extends Fragment implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.basketball_immediate_error_btn:
-                isLoad = -1;
+//                isLoad = -1;
                 MobclickAgent.onEvent(mContext, "Basketball_Refresh");
                 setStatus(SHOW_STATUS_REFRESH_ONCLICK);
                 initData();
@@ -536,7 +530,7 @@ public class BasketballFocusNewFragment extends Fragment implements View.OnClick
      */
     @Override
     public void onRefresh() {
-        isLoad = -1;
+//        isLoad = -1;
 //        connectWebSocket();
         setStatus(SHOW_STATUS_LOADING);
         initData();
@@ -868,7 +862,7 @@ public class BasketballFocusNewFragment extends Fragment implements View.OnClick
 //        connectWebSocket(); //链接socket
 //    }
 
-    private boolean isDestroy = false;
+//    private boolean isDestroy = false;
 
     @Override
     public void onDestroy() { //销毁

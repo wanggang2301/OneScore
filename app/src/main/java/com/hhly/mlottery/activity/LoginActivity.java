@@ -74,16 +74,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     /**
      * 跳转其他Activity 的requestcode
      */
-    public static final int REQUESTCODE_LOGIN = 100;
-    public static final int REQUESTCODE_LOGOUT = 110;
+    private final int REQUESTCODE_LOGIN = 100;
+    //    private final int REQUESTCODE_LOGOUT = 110;
+    private final int REQUESTCODE_FINDPW = 200;
+
+    private final int ALL_CLOSE = 1111;
+    private final int QQ_CLOSE = 111;
+    private final int WEIXIN_CLOSE = 222;
+    private final int SINA_CLOSE = 333;
+    private final int QQ_DISPLAY = 11;
+    private final int WEIXIN_DISPLAY = 22;
+    private final int SINA_DISPLAY = 33;
+
+    private final String TAG = "LoginActivity";
 
     private EditText et_username, et_password;
     private ImageView iv_eye;
     private ProgressDialog progressBar;
 
-    public static final String TAG = "LoginActivity";
-
-    public static final int REQUESTCODE_FINDPW = 200;
     private Tencent tencent;
     private IUiListener mIUiListener;
     private AuthInfo mAuthInfo;
@@ -92,13 +100,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     public static IWXAPI mApi;
     private String mWeixincode;
 
-    private final static int ALL_CLOSE = 1111;
-    private final static int QQ_CLOSE = 111;
-    private final static int WEIXIN_CLOSE = 222;
-    private final static int SINA_CLOSE = 333;
-    private final static int QQ_DISPLAY = 11;
-    private final static int WEIXIN_DISPLAY = 22;
-    private final static int SINA_DISPLAY = 33;
     private Handler mViewHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -136,7 +137,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         }
     };
     private LinearLayout mLogin_display;
-    private LinearLayout mLogin_three;
+    //    private LinearLayout mLogin_three;
     private ImageView mLogin_qq;
     private ImageView mLogin_sina;
     private ImageView mLogin_weixin;
@@ -150,7 +151,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.activity_login);
         if (getIntent().getExtras() != null) {
-            isCoustom = getIntent().getBooleanExtra("custom" , false);
+            isCoustom = getIntent().getBooleanExtra("custom", false);
         }
 
         //应UI要求，把状态栏设置成透明的
@@ -168,27 +169,27 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             public void onResponse(IsTestLoginBean register) {
 
 
-                if(register.data==null){
+                if (register.data == null) {
 
-                   return;
-                }else {
+                    return;
+                } else {
 
                     if (register.data.qq == 1) {
                         mViewHandler.sendEmptyMessage(QQ_DISPLAY);
-                    }else{
+                    } else {
                         mViewHandler.sendEmptyMessage(QQ_CLOSE);
                     }
-                    if (register.data.weChat == 1){
+                    if (register.data.weChat == 1) {
                         mViewHandler.sendEmptyMessage(WEIXIN_DISPLAY);
-                    }else{
+                    } else {
                         mViewHandler.sendEmptyMessage(WEIXIN_CLOSE);
                     }
-                    if (register.data.weibo == 1){
+                    if (register.data.weibo == 1) {
                         mViewHandler.sendEmptyMessage(SINA_DISPLAY);
-                    }else{
+                    } else {
                         mViewHandler.sendEmptyMessage(SINA_CLOSE);
                     }
-                    if(register.data.qq != 1&&register.data.weibo != 1&&register.data.weChat != 1){
+                    if (register.data.qq != 1 && register.data.weibo != 1 && register.data.weChat != 1) {
                         mViewHandler.sendEmptyMessage(ALL_CLOSE);
                     }
                 }
@@ -216,8 +217,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         et_username.setFocusableInTouchMode(true);
         et_username.requestFocus();*/
 
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() { //让软键盘延时弹出，以更好的加载Activity
+        new Timer().schedule(new TimerTask() { //让软键盘延时弹出，以更好的加载Activity
             public void run() {
                 InputMethodManager inputManager = (InputMethodManager) et_username.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputManager.showSoftInput(et_username, 0);
@@ -267,9 +267,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         //第三方登录图标显示
         mLogin_display = (LinearLayout) findViewById(R.id.login_display);
-        mLogin_three = (LinearLayout) findViewById(R.id.login_three);
+//        mLogin_three = (LinearLayout) findViewById(R.id.login_three);
 
-        switch (MyApp.isPackageName){
+        switch (MyApp.isPackageName) {
             case AppConstants.PACKGER_NAME_ZH:
                 tv_forgetpw.setVisibility(View.VISIBLE);
                 break;
@@ -316,7 +316,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     et_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
                     iv_eye.setImageResource(R.mipmap.new_open_eye);
-                       }
+                }
                 et_password.setTypeface(Typeface.SANS_SERIF);
                 // 光标移动到结尾
                 CommonUtils.selectionLast(et_password);
@@ -333,7 +333,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 startActivityForResult(new Intent(this, FindPassWordActivity.class), REQUESTCODE_FINDPW);
                 break;
             case R.id.login_qq:
-                Log.i(TAG, "点击我了>>>>>>>>>>");
 
                 QQlogin();
                 break;
@@ -458,7 +457,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             if (mOauth2AccessToken.isSessionValid()) {
                 // UiUtils.toast(MyApp.getInstance(),"build"+bundle.toString());
                 AccessTokenKeeper.writeAccessToken(LoginActivity.this, mOauth2AccessToken);
-                Log.i(TAG, "认证成功>>>>>>>>>>>>>");
                 String openID = bundle.getString("uid");
                 String accessToken = bundle.getString("access_token");
                 Map<String, String> param = new HashMap<>();
@@ -481,13 +479,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         @Override
         public void onWeiboException(WeiboException e) {
-            Log.e(TAG, "认证失败>>>>>>>>>>>>>" + e.toString());
 
         }
 
         @Override
         public void onCancel() {
-            Log.i(TAG, "认证取消>>>>>>>>>>>>>");
         }
     }
 
@@ -499,7 +495,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private class BaseUiListener implements IUiListener {
         @Override
         public void onComplete(Object response) {
-            Log.i(TAG, "回调成功>>>>>>>>>>>>>");
             // UiUtils.toast(MyApp.getInstance(), "三登录成功");
             if (response == null) {
                 return;
@@ -538,12 +533,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         @Override
         public void onError(UiError e) {
-            Log.i(TAG, "回调失败>>>>>>>>>>>>>");
         }
 
         @Override
         public void onCancel() {
-            Log.i(TAG, "回调取消>>>>>>>>>>>>>");
         }
     }
 
@@ -559,7 +552,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 }
                 UiUtils.toast(MyApp.getInstance(), R.string.login_succ);
                 CommonUtils.saveRegisterInfo(register);
-                Log.e(TAG, "register" + register.toString());
                 //UiUtils.toast(MyApp.getInstance(), register.toString());
                 PreferenceUtil.commitBoolean("three_login", true);
                 PreferenceUtil.commitString("code", "");
@@ -600,72 +592,67 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private void login() {
         String userName = et_username.getText().toString();
         String passWord = et_password.getText().toString();
-        Log.i("dasdasdas","userName==="+userName);
-         if(userName.isEmpty()) {
-             UiUtils.toast(LoginActivity.this, R.string.account_cannot_be_empty);
-             return;
-         }else{
-             if (UiUtils.checkPassword_JustLength(this, passWord)) {
-                 // 登录
-                 progressBar.show();
-                 final String url = BaseURLs.URL_LOGIN;
-                 Map<String, String> param = new HashMap<>();
-                 param.put("account", userName);
-                 param.put("password", MD5Util.getMD5(passWord));
-                 setResult(RESULT_OK);
-                 Log.d(TAG, AppConstants.deviceToken);
-                 param.put("deviceToken", AppConstants.deviceToken);
+        if (userName.isEmpty()) {
+            UiUtils.toast(LoginActivity.this, R.string.account_cannot_be_empty);
+            return;
+        } else {
+            if (UiUtils.checkPassword_JustLength(this, passWord)) {
+                // 登录
+                progressBar.show();
+                final String url = BaseURLs.URL_LOGIN;
+                Map<String, String> param = new HashMap<>();
+                param.put("account", userName);
+                param.put("password", MD5Util.getMD5(passWord));
+                setResult(RESULT_OK);
+                param.put("deviceToken", AppConstants.deviceToken);
 
-                 //防止用户恶意注册后先添加的字段，versioncode和versionname;
-                 int versionCode = CommonUtils.getVersionCode();
-                 param.put("versionCode", String.valueOf(versionCode));
+                //防止用户恶意注册后先添加的字段，versioncode和versionname;
+                int versionCode = CommonUtils.getVersionCode();
+                param.put("versionCode", String.valueOf(versionCode));
 
-                 Log.d(TAG, versionCode + "");
+                String versionName = CommonUtils.getVersionName();
+                param.put("versionName", versionName);
 
-                 String versionName = CommonUtils.getVersionName();
-                 param.put("versionName", versionName);
-                 Log.d(TAG, versionName);
+                VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
+                    @Override
+                    public void onResponse(Register register) {
 
-                 VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
-                     @Override
-                     public void onResponse(Register register) {
+                        progressBar.dismiss();
+                        if (register.getResult() == AccountResultCode.SUCC) {
 
-                         progressBar.dismiss();
-                         if (register.getResult() == AccountResultCode.SUCC) {
-
-                             UiUtils.toast(MyApp.getInstance(), R.string.login_succ);
-                             CommonUtils.saveRegisterInfo(register);
-                             PreferenceUtil.commitBoolean("three_login", false);
-                             setResult(RESULT_OK);
-                             //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
-                             sendUserInfoToServer(register);
-                             PreferenceUtil.commitString(AppConstants.SPKEY_LOGINACCOUNT, register.getData().getUser().getLoginAccount());
-                             if (isCoustom) {
+                            UiUtils.toast(MyApp.getInstance(), R.string.login_succ);
+                            CommonUtils.saveRegisterInfo(register);
+                            PreferenceUtil.commitBoolean("three_login", false);
+                            setResult(RESULT_OK);
+                            //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
+                            sendUserInfoToServer(register);
+                            PreferenceUtil.commitString(AppConstants.SPKEY_LOGINACCOUNT, register.getData().getUser().getLoginAccount());
+                            if (isCoustom) {
 //                                 PreferenceUtil.commitBoolean("custom_red_dot" , false);
-                                 startActivity(new Intent(LoginActivity.this, CustomActivity.class));
-                             }
-                             finish();
-                             EventBus.getDefault().post(register);
-                             FocusUtils.getFootballUserFocus(register.getData().getUser().getUserId());
-                             FocusUtils.getBasketballUserConcern(register.getData().getUser().getUserId());
+                                startActivity(new Intent(LoginActivity.this, CustomActivity.class));
+                            }
+                            finish();
+                            EventBus.getDefault().post(register);
+                            FocusUtils.getFootballUserFocus(register.getData().getUser().getUserId());
+                            FocusUtils.getBasketballUserConcern(register.getData().getUser().getUserId());
 
-                         } else {
-                             CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
-                         }
-                     }
-                 }, new VolleyContentFast.ResponseErrorListener() {
-                     @Override
-                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                         progressBar.dismiss();
-                         L.e(TAG, " 登录失败");
-                         UiUtils.toast(LoginActivity.this, R.string.foot_neterror);
+                        } else {
+                            CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
+                        }
+                    }
+                }, new VolleyContentFast.ResponseErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                        progressBar.dismiss();
+                        L.e(TAG, " 登录失败");
+                        UiUtils.toast(LoginActivity.this, R.string.foot_neterror);
 
 
-                     }
-                 }, Register.class);
-             }
+                    }
+                }, Register.class);
+            }
 
-         }
+        }
 
     }
 
@@ -748,6 +735,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         super.onDestroy();
         PreferenceUtil.commitString("code", "");
     }
+
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
     }
