@@ -15,11 +15,8 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.CpiDetailsActivity;
-import com.hhly.mlottery.activity.LoginActivity;
-import com.hhly.mlottery.activity.SnookerMatchDetail;
+import com.hhly.mlottery.activity.SnookerMatchDetailActivity;
 import com.hhly.mlottery.activity.TennisBallDetailsActivity;
-import com.hhly.mlottery.activity.TennisCpiDetailsActivity;
 import com.hhly.mlottery.activity.TennisIndexDetailsActivity;
 import com.hhly.mlottery.adapter.snooker.SnookerIndexAdapter;
 import com.hhly.mlottery.bean.snookerbean.SnookerScoreSocketBean;
@@ -31,10 +28,8 @@ import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.cpifrag.SnookerIndex.SIndexFragment;
 import com.hhly.mlottery.mvp.ViewFragment;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -169,7 +164,7 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
             @Override
             public void onItemClick(View view, int i) {
                 if (mBallType == BallType.SNOOKER) {
-                    Intent intent = new Intent(getActivity(), SnookerMatchDetail.class);
+                    Intent intent = new Intent(getActivity(), SnookerMatchDetailActivity.class);
                     intent.putExtra("matchId", mPresenter.getData().get(i).getMatchInfo().getMatchId());
                     getActivity().startActivity(intent);
                 } else if (mBallType == BallType.TENNLS) {
