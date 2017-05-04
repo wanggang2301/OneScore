@@ -55,6 +55,7 @@ import com.hhly.mlottery.bean.websocket.WebSocketStadiumKeepTime;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumLiveTextEvent;
 import com.hhly.mlottery.callback.FootballLiveGotoChart;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.BaseUserTopics;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
@@ -146,11 +147,11 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private final static String MATCH_TYPE = "1"; //足球
 
-    private final static int ROLLBALL_FG = 0;
+//    private final static int ROLLBALL_FG = 0;
     private final static int LIVE_FG = 1;
     private final static int ANALYZE_FG = 2;
     private final static int STATISTICS_FG = 3;
-    private final static int ODDS_FG = 4;
+//    private final static int ODDS_FG = 4;
     private final static int TALKBALL_FG = 5;
 
     private static final String baseUrl = "http://pic.13322.com/bg/";
@@ -160,7 +161,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private final static int GIFPERIOD_2 = 1000 * 5;//刷新周期两分钟
 
     private final static int MILLIS_INFuture = 3000;//倒计时3秒
-    private final static String FOOTBALL_GIF = "football_gif";
+//    private final static String FOOTBALL_GIF = "football_gif";
 
     private int infoCenter = -1;// 情报中心中转标记
     private int chartBallView = -1;// 聊球界面转标记
@@ -175,7 +176,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     public ExactSwipeRefreshLayout mRefreshLayout; //下拉刷新
 
-    private FragmentManager fragmentManager;
+//    private FragmentManager fragmentManager;
     private ViewPager mViewPager;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     public AppBarLayout appBarLayout;
@@ -261,7 +262,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     //头部
     private ImageView iv_home_icon;
     private ImageView iv_guest_icon;
-    private ImageView iv_bg;
+//    private ImageView iv_bg;
 
     private TextView tv_homename;
     private TextView tv_guestname;
@@ -272,7 +273,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private LinearLayout mMatchTypeLayout;
 
-    private int mType = 0;
+//    private int mType = 0;
 
     private TextView mMatchType1;
 
@@ -298,7 +299,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private ImageView barrage_switch;
 
     boolean barrage_isFocus = false;
-    private View view_red;
+//    private View view_red;
 
     private RelativeLayout mLayoutScore;
 
@@ -307,7 +308,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private WebView mWebView;
     private LinearLayout ll_Webview;
 
-    private TextView tv_nopage;
+//    private TextView tv_nopage;
     private TextView mHalfScore;
 
     private String url;
@@ -345,7 +346,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         EventBus.getDefault().register(this);
 
         setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic("USER.topic.liveEvent." + mThirdId + "." + appendLanguage());
+//        setTopic("USER.topic.liveEvent." + mThirdId + "." + appendLanguage());
+        setTopic(BaseUserTopics.footballLive + "." + mThirdId + "." + appendLanguage());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_football_match_details_test);
 
@@ -386,7 +388,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
         appBarLayout.addOnOffsetChangedListener(this);
 
-        fragmentManager = getSupportFragmentManager();
+//        fragmentManager = getSupportFragmentManager();
 
         //底部ViewPager(滚球、指数等)
         mTabsAdapter = new TabsAdapter(getSupportFragmentManager());
@@ -411,7 +413,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         barrage_switch = (ImageView) findViewById(R.id.barrage_switch);
         barrage_switch.setOnClickListener(this);
         //动画WebView
-        tv_nopage = (TextView) findViewById(R.id.tv_nopage);
+//        tv_nopage = (TextView) findViewById(R.id.tv_nopage);
         mWebView = (WebView) findViewById(R.id.webview);
         ll_Webview = (LinearLayout) findViewById(R.id.ll_webview);
         mHalfScore = (TextView) findViewById(R.id.half_score);
@@ -2428,9 +2430,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 if (position != 5) {// 聊球界面禁用下拉刷新
                     MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
                 } else {
-                    if (view_red != null) {
-                        view_red.setVisibility(View.GONE);
-                    }
+//                    if (view_red != null) {
+//                        view_red.setVisibility(View.GONE);
+//                    }
                     mRefreshLayout.setEnabled(true); //展开
                     appBarLayout.setExpanded(false);
                 }

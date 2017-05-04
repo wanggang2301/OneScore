@@ -108,8 +108,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         et_username.setFocusableInTouchMode(true);
         et_username.requestFocus();
 
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() { //让软键盘延时弹出，以更好的加载Activity
+        new Timer().schedule(new TimerTask() { //让软键盘延时弹出，以更好的加载Activity
             public void run() {
                 InputMethodManager inputManager = (InputMethodManager) et_username.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputManager.showSoftInput(et_username, 0);

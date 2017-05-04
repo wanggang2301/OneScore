@@ -34,6 +34,7 @@ import com.hhly.mlottery.bean.enums.BasketOddsTypeEnum;
 import com.hhly.mlottery.bean.websocket.WebBasketMatch;
 import com.hhly.mlottery.bean.websocket.WebBasketOdds;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.BaseUserTopics;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.cpifrag.CloseCpiWebSocketEventBus;
@@ -118,7 +119,8 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic("USER.topic.basketball");
+//        setTopic("USER.topic.basketball");
+        setTopic(BaseUserTopics.oddsBasket);
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
     }

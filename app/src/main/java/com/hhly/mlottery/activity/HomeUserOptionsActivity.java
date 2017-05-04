@@ -2,7 +2,6 @@ package com.hhly.mlottery.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,27 +12,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.ChoseHeadStartBean;
 import com.hhly.mlottery.bean.account.Register;
-import com.hhly.mlottery.bean.focusAndPush.BasketballConcernListBean;
-import com.hhly.mlottery.bean.focusAndPush.ConcernBean;
-import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketballFocusNewFragment;
-import com.hhly.mlottery.frame.footballframe.FocusFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
-import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.util.net.account.AccountResultCode;
 import com.hhly.mlottery.util.net.account.CustomEvent;
 import com.umeng.analytics.MobclickAgent;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 
@@ -45,13 +33,13 @@ import de.greenrobot.event.EventBus;
  */
 public class HomeUserOptionsActivity extends Activity implements View.OnClickListener {
 
-    public static String TAG = "HomeUserOptionsActivity";
+    private String TAG = "HomeUserOptionsActivity";
 
     /**我的关注*/
 //    private RelativeLayout rl_focus;
 //    private  View mFocus_RedDot; //关注红点
     /**我的关注红点*/
-    boolean mShowRedDot=false;
+//    boolean mShowRedDot=false;
     boolean mInvitedShowRedDot=true;
     /*邀请码红点*/
     /**我的定制*/
@@ -73,14 +61,14 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     public static final int NOT_LOGGED_ON = 33;
     public static final int LOGGED_ON = 44;
     /**我的关注的红点*/
-    public static final String SHOW_RED="show_focus_red_dot";
+//    public static final String SHOW_RED="show_focus_red_dot";
     /**我的关注的红点*/
-    public static final String INVITED_SHOW_RED="show_invited_red_dot";
+    private final String INVITED_SHOW_RED="show_invited_red_dot";
 
     private TextView mTv_nickname;
     private ImageView mUser_image;
 //    private View mRedDot;
-    private TextView mTv_logout;
+//    private TextView mTv_logout;
     private Handler mViewHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -90,7 +78,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 case LOGGED_ON:
                     mTv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
                    // ImageLoader.load(HomeUserOptionsActivity.this,AppConstants.register.getData().getUser().getHeadIcon()).into(mUser_image);
-                    Glide.with(HomeUserOptionsActivity.this)
+                    Glide.with(getApplicationContext())
                             .load(AppConstants.register.getData().getUser().getHeadIcon())
                             .error(R.mipmap.center_head)
                             .into(mUser_image);
@@ -272,29 +260,29 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         startActivityForResult(new Intent(this, LoginActivity.class), REQUESTCODE_LOGIN);
     }
 
-    private void showDialog() {
-
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(HomeUserOptionsActivity.this, R.style.AppThemeDialog);//  android.R.style.Theme_Material_Light_Dialog
-        builder.setCancelable(false);// 设置对话框以外不可点击
-        builder.setTitle("");// 提示标题
-        builder.setMessage(R.string.logout_check);// 提示内容
-        builder.setPositiveButton(R.string.about_confirm, new DialogInterface.OnClickListener() {
-            //@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                logout();
-            }
-        });
-        builder.setNegativeButton(R.string.about_cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        android.support.v7.app.AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
+//    private void showDialog() {
+//
+//        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(HomeUserOptionsActivity.this, R.style.AppThemeDialog);//  android.R.style.Theme_Material_Light_Dialog
+//        builder.setCancelable(false);// 设置对话框以外不可点击
+//        builder.setTitle("");// 提示标题
+//        builder.setMessage(R.string.logout_check);// 提示内容
+//        builder.setPositiveButton(R.string.about_confirm, new DialogInterface.OnClickListener() {
+//            //@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//                logout();
+//            }
+//        });
+//        builder.setNegativeButton(R.string.about_cancel, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.cancel();
+//            }
+//        });
+//        android.support.v7.app.AlertDialog alertDialog = builder.create();
+//        alertDialog.show();
+//    }
 
 
 
@@ -302,7 +290,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
      * 注销
      */
 
-    private void logout() {
+    /*private void logout() {
 
         progressBar.show();
 
@@ -340,37 +328,38 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 UiUtils.toast(MyApp.getInstance(), R.string.immediate_unconection);
             }
         }, Register.class);
-    }
-   /* *//**
+    }*/
+
+    /**
      * 用户注销把用户状态改成0
      */
-    private void request() {
-        String url="http://192.168.31.73:8080/mlottery/core/pushSetting.exitUpdateOnlile.do";
-        Map<String ,String> params=new HashMap<>();
-        params.put("deviceId",AppConstants.deviceToken);
-        VolleyContentFast.requestJsonByPost(BaseURLs.EXIT_PUSH_ONLINE, params, new VolleyContentFast.ResponseSuccessListener<ConcernBean>() {
-            @Override
-            public void onResponse(ConcernBean jsonObject) {
-                if(jsonObject.getResult().equals("200")){
-                    //注销成功
-                    L.d("AAA","注销成功");
-
-                }
-                finish();
-
-            }
-        }, new VolleyContentFast.ResponseErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-
-                finish();
-            }
-        },ConcernBean.class);
-    }
+//    private void request() {
+//        String url="http://192.168.31.73:8080/mlottery/core/pushSetting.exitUpdateOnlile.do";
+//        Map<String ,String> params=new HashMap<>();
+//        params.put("deviceId",AppConstants.deviceToken);
+//        VolleyContentFast.requestJsonByPost(BaseURLs.EXIT_PUSH_ONLINE, params, new VolleyContentFast.ResponseSuccessListener<ConcernBean>() {
+//            @Override
+//            public void onResponse(ConcernBean jsonObject) {
+//                if(jsonObject.getResult().equals("200")){
+//                    //注销成功
+//                    L.d("AAA","注销成功");
+//
+//                }
+//                finish();
+//
+//            }
+//        }, new VolleyContentFast.ResponseErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+//
+//                finish();
+//            }
+//        },ConcernBean.class);
+//    }
     /**
      * 获取用户足球关注列表
      */
-    private void getFootballUserFocus(String userId) {
+    /*private void getFootballUserFocus(String userId) {
 
         //devideID;
         String deviceId=AppConstants.deviceToken;
@@ -414,7 +403,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             }
         },BasketballConcernListBean.class);
 
-    }
+    }*/
 
     /**
      * 定制页面返回
@@ -429,7 +418,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     }
     public void onEventMainThread(ChoseHeadStartBean choseHeadStartBean){
         //ImageLoader.load(HomeUserOptionsActivity.this,choseHeadStartBean.startUrl,R.mipmap.center_head).into(mUser_image);
-        Glide.with(HomeUserOptionsActivity.this)
+        Glide.with(getApplicationContext())
                 .load(choseHeadStartBean.startUrl)
                 .error(R.mipmap.center_head)
                 .into(mUser_image);
@@ -437,7 +426,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     public void onEventMainThread(Register register){
 
         //ImageLoader.load(HomeUserOptionsActivity.this,register.getData().getUser().getHeadIcon()).into(mUser_image);
-      Glide.with(HomeUserOptionsActivity.this)
+      Glide.with(getApplicationContext())
               .load(register.getData().getUser().getHeadIcon())
               .error(R.mipmap.center_head)
               .into(mUser_image);

@@ -29,6 +29,7 @@ import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.LeagueCup;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.BaseUserTopics;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.footballframe.FocusFragment;
 import com.hhly.mlottery.frame.footballframe.ImmediateFragment;
@@ -101,7 +102,8 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic("USER.topic.app");
+//        setTopic("USER.topic.app");
+        setTopic(BaseUserTopics.footballScore);
         super.onCreate(savedInstanceState);
 
         EventBus.getDefault().register(this);

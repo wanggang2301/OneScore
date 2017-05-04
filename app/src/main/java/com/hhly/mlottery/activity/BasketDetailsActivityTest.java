@@ -34,6 +34,7 @@ import com.hhly.mlottery.bean.footballDetails.DetailsCollectionCountBean;
 import com.hhly.mlottery.bean.multiplebean.MultipleByValueBean;
 import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.BaseUserTopics;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.basketballframe.BasketAnalyzeFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketAnimLiveFragment;
@@ -80,32 +81,32 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     public final static String BASKET_MATCH_MATCHTYPE = "matchType";
     //    0:未开赛,1:一节,2:二节,5:1'OT，以此类推
 //            -1:完场,-2:待定,-3:中断,-4:取消,-5:推迟,50中场
-    private final static int PRE_MATCH = 0;//赛前
-    private final static int FIRST_QUARTER = 1;
-    private final static int SECOND_QUARTER = 2;
-    private final static int THIRD_QUARTER = 3;
-    private final static int FOURTH_QUARTER = 4;
-    private final static int OT1 = 5;
-    private final static int OT2 = 6;
-    private final static int OT3 = 7;
+//    private final static int PRE_MATCH = 0;//赛前
+//    private final static int FIRST_QUARTER = 1;
+//    private final static int SECOND_QUARTER = 2;
+//    private final static int THIRD_QUARTER = 3;
+//    private final static int FOURTH_QUARTER = 4;
+//    private final static int OT1 = 5;
+//    private final static int OT2 = 6;
+//    private final static int OT3 = 7;
     private final static int END = -1;
-    private final static int DETERMINED = -2;//待定
-    private final static int GAME_CUT = -3;
-    private final static int GAME_CANCLE = -4;
-    private final static int GAME_DELAY = -5;
-    private final static int HALF_GAME = 50;
+//    private final static int DETERMINED = -2;//待定
+//    private final static int GAME_CUT = -3;
+//    private final static int GAME_CANCLE = -4;
+//    private final static int GAME_DELAY = -5;
+//    private final static int HALF_GAME = 50;
     /**
      * 欧赔
      */
-    public final static String ODDS_EURO = "euro";
+    public static final String ODDS_EURO = "euro";
     /**
      * 亚盘
      */
-    public final static String ODDS_LET = "asiaLet";
+    public static final String ODDS_LET = "asiaLet";
     /**
      * 大小球
      */
-    public final static String ODDS_SIZE = "asiaSize";
+    public static final String ODDS_SIZE = "asiaSize";
     public static String mThirdId = "936707";
     //    public static String mMatchStatus;
     private Context mContext;
@@ -128,7 +129,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private TabLayout mTabLayout;
     private TabsAdapter mTabsAdapter;
     private Toolbar toolbar;
-    private CoordinatorLayout mCoordinatorLayout;
+//    private CoordinatorLayout mCoordinatorLayout;
     private String[] TITLES;
 
 
@@ -144,11 +145,11 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     /**
      * 标题比分的布局
      */
-    private RelativeLayout mTitleScore;
-
-    private TextView mTitleHome;//主队比分/队名
-    private TextView mTitleGuest;//客队比分/队名
-    private TextView mTitleVS;//冒号  VS
+//    private RelativeLayout mTitleScore;
+//
+//    private TextView mTitleHome;//主队比分/队名
+//    private TextView mTitleGuest;//客队比分/队名
+//    private TextView mTitleVS;//冒号  VS
 
     LinearLayout headLayout;// 小头部
     private int mCurrentId;
@@ -164,7 +165,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private Integer mMatchType; //联赛类型
     private CustomViewpager mHeadviewpager;
     private BasketDetailsHeadFragment mBasketDetailsHeadFragment;
-    private BasketAnimLiveFragment mBasketAnimLiveFragment;
+//    private BasketAnimLiveFragment mBasketAnimLiveFragment;
     private CircleIndicator mIndicator;
 
 
@@ -193,16 +194,16 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private int gifCount = 0;
 
     private CountDown countDown;
-    private final static int MILLIS_INFuture = 3000;//倒计时3秒
-    private final static String MATCH_TYPE = "2"; //篮球
-    private final static int GIFPERIOD_2 = 1000 * 5;//刷新周期两分钟
+    private final int MILLIS_INFuture = 3000;//倒计时3秒
+    private final String MATCH_TYPE = "2"; //篮球
+    private final int GIFPERIOD_2 = 1000 * 5;//刷新周期两分钟
     //private final static int GIFPERIOD_2 = 1000 * 15;//刷新周期15秒
 
-    private final static String BASKETBALL_GIF = "basketball_gif";
+//    private final static String BASKETBALL_GIF = "basketball_gif";
     private BarrageView barrage_view;
     private ImageView barrage_switch;
     boolean barrage_isFocus = false;
-    private View view_red;
+//    private View view_red;
     private int chartBallView = -1;// 聊球界面转标记
 
 //    private TextView tv_addMultiView;
@@ -240,7 +241,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         }
         EventBus.getDefault().register(this);
         setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic("USER.topic.basketball.score." + mThirdId + "."+appendLanguage());
+//        setTopic("USER.topic.basketball.score." + mThirdId + "."+appendLanguage());
+        setTopic(BaseUserTopics.basketballScore +"." + mThirdId + "."+appendLanguage());
 
         L.d("zxcvbn", "basketURL===" + BaseURLs.WS_SERVICE);
         L.d("zxcvbn", "basketTopic===" + "USER.topic.basketball.score." + mThirdId + appendLanguage());
@@ -316,7 +318,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         mHeadviewpager = (CustomViewpager) findViewById(R.id.headviewpager);
         mIndicator = (CircleIndicator) findViewById(R.id.indicator);
 
-        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
+//        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
         mViewPager = (ViewPager) findViewById(R.id.basket_details_view_pager);
         appBarLayout = (AppBarLayout) findViewById(R.id.basket_details_appbar);
         mTabLayout = (TabLayout) findViewById(R.id.basket_details_tab_layout);
@@ -326,17 +328,15 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        TabLayout.Tab tabAt;
+//        TabLayout.Tab tabAt;
         if (isNBA) {  //是NBA
             mTabsAdapter.addFragments(mBasketLiveFragment, mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mChartBallFragment);
-            isFragment5 = true; // 直接
 
             if (chartBallView == 1) {
                 mViewPager.setCurrentItem(5, false);
             }
         } else {
             mTabsAdapter.addFragments(mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mChartBallFragment);
-            isFragment0 = true;// 分析
 
             if (chartBallView == 1) {
                 mViewPager.setCurrentItem(4, false);
@@ -356,23 +356,22 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
             @Override
             public void onPageSelected(int position) {
-                isHindShow(position);
                 if (!isNBA) {
                     if (position != 4) {// 聊球界面禁用下拉刷新
                         MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
                     } else {
-                        if (view_red != null) {
-                            view_red.setVisibility(View.GONE);
-                        }
+//                        if (view_red != null) {
+//                            view_red.setVisibility(View.GONE);
+//                        }
                         mRefreshLayout.setEnabled(true); //展开
                     }
                 } else {
                     if (position != 5) {// 聊球界面禁用下拉刷新
                         MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
                     } else {
-                        if (view_red != null) {
-                            view_red.setVisibility(View.GONE);
-                        }
+//                        if (view_red != null) {
+//                            view_red.setVisibility(View.GONE);
+//                        }
                         mRefreshLayout.setEnabled(true); //展开
                     }
                 }
@@ -387,9 +386,9 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
         mRefreshLayout.setOnRefreshListener(this);
         mRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
-        mTitleHome = (TextView) this.findViewById(R.id.title_home_score);
-        mTitleGuest = (TextView) this.findViewById(R.id.title_guest_score);
-        mTitleVS = (TextView) this.findViewById(R.id.title_vs);
+//        mTitleHome = (TextView) this.findViewById(R.id.title_home_score);
+//        mTitleGuest = (TextView) this.findViewById(R.id.title_guest_score);
+//        mTitleVS = (TextView) this.findViewById(R.id.title_vs);
         mBack = (ImageView) this.findViewById(R.id.basket_details_back);
 
         rl_gif_notice = (RelativeLayout) findViewById(R.id.rl_gif_notice);
@@ -398,7 +397,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 //            tv_addMultiView.setVisibility(View.GONE);
 //        }
 
-        mTitleScore = (RelativeLayout) this.findViewById(R.id.ll_basket_title_score);
+//        mTitleScore = (RelativeLayout) this.findViewById(R.id.ll_basket_title_score);
         mCollect = (ImageView) this.findViewById(R.id.basket_details_collect);
 
         boolean isFocus = FocusUtils.isBasketFocusId(mThirdId);
@@ -745,26 +744,10 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 mRefreshLayout.setRefreshing(false);
                 mLoadHandler.postDelayed(mRun, 0);
                 //直播刷新
-                if (isNBA && is5) {
+                if (isNBA ) {
                     if (mBasketLiveFragment != null) {
                         mBasketLiveFragment.refresh();
                     }
-                }
-
-                if (is0) {
-                    mAnalyzeFragment.initData();// 分析
-                }
-                if (is2) {
-                    mOddsEuro.initData();// 亚盘
-                }
-                if (is1) {
-                    mOddsLet.initData();// 欧赔
-                }
-                if (is3) {
-                    mOddsSize.initData();// 大小
-                }
-                if (is4) {
-                    mChartBallFragment.onRefresh();// 聊球
                 }
 //                mTalkAboutBallFragment.loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
             }
@@ -772,223 +755,16 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     }
 
 
-    /**
-     * 直播、分析、欧赔、亚盘、大小、聊球Fragment页面统计
-     */
-    private boolean isFragment0 = false;
-    private boolean is0 = false;
-    private boolean isFragment1 = false;
-    private boolean is1 = false;
-    private boolean isFragment2 = false;
-    private boolean is2 = false;
-    private boolean isFragment3 = false;
-    private boolean is3 = false;
-    private boolean isFragment4 = false;
-    private boolean is4 = false;
-    private boolean isFragment5 = false;
-    private boolean is5 = false;
-
-    private void isHindShow(int position) {
-        int index = position;
-        if (!isNBA) {
-            index = position + 1;
-        }
-        switch (index) {
-
-            case 0: //直播
-                isFragment0 = false;
-                isFragment1 = false;
-                isFragment2 = false;
-                isFragment3 = false;
-                isFragment4 = false;
-                isFragment5 = true;
-                break;
-
-            case 1:// 分析
-                isFragment0 = true;
-                isFragment1 = false;
-                isFragment2 = false;
-                isFragment3 = false;
-                isFragment4 = false;
-                isFragment5 = false;
-
-                break;
-            case 4:// 欧赔
-                isFragment0 = false;
-                isFragment1 = true;
-                isFragment2 = false;
-                isFragment3 = false;
-                isFragment4 = false;
-                isFragment5 = false;
-
-                break;
-            case 2:// 亚盘
-                isFragment0 = false;
-                isFragment1 = false;
-                isFragment2 = true;
-                isFragment3 = false;
-                isFragment4 = false;
-                isFragment5 = false;
-
-                break;
-            case 3:// 大小
-                isFragment0 = false;
-                isFragment1 = false;
-                isFragment2 = false;
-                isFragment3 = true;
-                isFragment4 = false;
-                isFragment5 = false;
-
-                break;
-            case 5:// 聊球
-                isFragment0 = false;
-                isFragment1 = false;
-                isFragment2 = false;
-                isFragment3 = false;
-                isFragment4 = true;
-                isFragment5 = false;
-
-                break;
-        }
-
-        if (is5) {
-            MobclickAgent.onPageEnd("BasketBall_Info_ZB");
-            is5 = false;
-            L.d("xxx", "直播隐藏");
-        }
-
-
-        if (is0) {
-            MobclickAgent.onPageEnd("BasketBall_Info_FX");
-            is0 = false;
-            L.d("xxx", "分析隐藏");
-        }
-        if (is1) {
-            MobclickAgent.onPageEnd("BasketBall_Info_OP");
-            is1 = false;
-            L.d("xxx", "欧赔隐藏");
-        }
-        if (is2) {
-            MobclickAgent.onPageEnd("BasketBall_Info_YP");
-            is2 = false;
-            L.d("xxx", "亚盘隐藏");
-        }
-        if (is3) {
-            MobclickAgent.onPageEnd("BasketBall_Info_DX");
-            is3 = false;
-            L.d("xxx", "大小隐藏");
-        }
-        if (is4) {
-            MobclickAgent.onPageEnd("BasketBall_Info_LQ");
-            is4 = false;
-            L.d("xxx", "聊球隐藏");
-        }
-
-
-        if (isFragment5) {
-            MobclickAgent.onPageStart("BasketBall_Info_ZB");
-            is5 = true;
-            L.d("xxx", "直播显示");
-        }
-
-        if (isFragment0) {
-            MobclickAgent.onPageStart("BasketBall_Info_FX");
-            is0 = true;
-            L.d("xxx", "分析显示");
-        }
-        if (isFragment1) {
-            MobclickAgent.onPageStart("BasketBall_Info_OP");
-            is1 = true;
-            L.d("xxx", "欧赔显示");
-        }
-        if (isFragment2) {
-            MobclickAgent.onPageStart("BasketBall_Info_YP");
-            is2 = true;
-            L.d("xxx", "亚盘显示");
-        }
-        if (isFragment3) {
-            MobclickAgent.onPageStart("BasketBall_Info_DX");
-            is3 = true;
-            L.d("xxx", "大小显示");
-        }
-        if (isFragment4) {
-            MobclickAgent.onPageStart("BasketBall_Info_LQ");
-            is4 = true;
-            L.d("xxx", "聊球显示");
-        }
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
-        if (isFragment0) {
-            MobclickAgent.onPageStart("BasketBall_Info_FX");
-            is0 = true;
-            L.d("xxx", "分析显示");
-        }
-        if (isFragment1) {
-            MobclickAgent.onPageStart("BasketBall_Info_OP");
-            is1 = true;
-            L.d("xxx", "欧赔显示");
-        }
-        if (isFragment2) {
-            MobclickAgent.onPageStart("BasketBall_Info_YP");
-            is2 = true;
-            L.d("xxx", "亚盘显示");
-        }
-        if (isFragment3) {
-            MobclickAgent.onPageStart("BasketBall_Info_DX");
-            is3 = true;
-            L.d("xxx", "大小显示");
-        }
-        if (isFragment4) {
-            MobclickAgent.onPageStart("BasketBall_Info_LQ");
-            is4 = true;
-            L.d("xxx", "聊球显示");
-        }
-        if (isFragment5) {
-            MobclickAgent.onPageStart("BasketBall_Info_ZB");
-            is5 = true;
-            L.d("xxx", "直播显示");
-        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
-        if (is0) {
-            MobclickAgent.onPageEnd("BasketBall_Info_FX");
-            is0 = false;
-            L.d("xxx", "分析 隐藏");
-        }
-        if (is1) {
-            MobclickAgent.onPageEnd("BasketBall_Info_OP");
-            is1 = false;
-            L.d("xxx", "欧赔 隐藏");
-        }
-        if (is2) {
-            MobclickAgent.onPageEnd("BasketBall_Info_YP");
-            is2 = false;
-            L.d("xxx", "亚盘 隐藏");
-        }
-        if (is3) {
-            MobclickAgent.onPageEnd("BasketBall_Info_DX");
-            is3 = false;
-            L.d("xxx", "大小 隐藏");
-        }
-        if (is4) {
-            MobclickAgent.onPageEnd("BasketBall_Info_LQ");
-            is4 = false;
-            L.d("xxx", "聊球隐藏");
-        }
-
-        if (is5) {
-            MobclickAgent.onPageEnd("BasketBall_Info_ZB");
-            is5 = false;
-            L.d("xxx", "直播隐藏");
-        }
     }
 
 

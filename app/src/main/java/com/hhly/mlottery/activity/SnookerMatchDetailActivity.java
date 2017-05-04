@@ -19,6 +19,7 @@ import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.bean.snookerbean.snookerDetail.SnookerAnalyzeBean;
 import com.hhly.mlottery.bean.snookerbean.snookerDetail.SnookerScoreSocketBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.BaseUserTopics;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.snookerFragment.SnookerAnalyzeFragment;
 import com.hhly.mlottery.frame.snookerFragment.SnookerLetFragment;
@@ -119,7 +120,8 @@ public class SnookerMatchDetailActivity extends BaseWebSocketActivity implements
 
         setWebSocketUri(BaseURLs.WS_SERVICE);
 //        setWebSocketUri("ws://192.168.10.242:61634");
-        setTopic("USER.topic.snooker");
+//        setTopic("USER.topic.snooker");
+        setTopic(BaseUserTopics.snookerMatch);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snooker_match_detail);
@@ -176,8 +178,8 @@ public class SnookerMatchDetailActivity extends BaseWebSocketActivity implements
     private void initData() {
         Map<String, String> params = new HashMap<>();
         params.put("matchId", mMatchId);
-        //  http://192.168.10.242:8181/mlottery/core/footBallMatch.matchAnalysis.do?thirdId=278222&lang=zh
-        String url="http://192.168.31.162:8080/mlottery/core/snookerAnalysis.findAnalysisInfo.do";
+//        //  http://192.168.10.242:8181/mlottery/core/footBallMatch.matchAnalysis.do?thirdId=278222&lang=zh
+//        String url="http://192.168.31.162:8080/mlottery/core/snookerAnalysis.findAnalysisInfo.do";
 
         VolleyContentFast.requestJsonByGet(BaseURLs.SNOOKER_ANALYZE_URL,params, new VolleyContentFast.ResponseSuccessListener<SnookerAnalyzeBean>() {
             @Override
