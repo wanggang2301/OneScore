@@ -143,13 +143,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private final static String MATCH_TYPE = "1"; //足球
 
-    //    private final static int ROLLBALL_FG = 0;
-    private final static int LIVE_FG = 1;
-    private final static int ANALYZE_FG = 2;
-    private final static int INFOCENTER_FG = 3;
-    //    private final static int ODDS_FG = 4;
-    private final static int TALKBALL_FG = 5;
-
     private static final String baseUrl = "http://pic.13322.com/bg/";
 
     private final static int PERIOD_20 = 1000 * 60 * 20;//刷新周期二十分钟
@@ -159,8 +152,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private final static int MILLIS_INFuture = 3000;//倒计时3秒
 //    private final static String FOOTBALL_GIF = "football_gif";
 
-    // private int infoCenter = -1;// 情报中心中转标记
-    // private int chartBallView = -1;// 聊球界面转标记
 
     private int current_tab = -1;
 
@@ -438,7 +429,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         mFootballLiveGotoChart = new FootballLiveGotoChart() {
             @Override
             public void onClick() {
-                mViewPager.setCurrentItem(TALKBALL_FG, false);
+                mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_CHARTBALL, false);
             }
         };
     }
