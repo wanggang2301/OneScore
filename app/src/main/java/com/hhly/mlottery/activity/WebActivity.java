@@ -229,12 +229,6 @@ public class WebActivity extends BaseActivity implements OnClickListener {
             mWebView.loadUrl(url);
             L.d("lzf:" + "imageurl=" + imageurl + "title" + title + "subtitle" + subtitle);
 
-            if (mType != 0 && !TextUtils.isEmpty(mThird) && !"0".equals(mThird)) {
-                mTv_check_info.setVisibility(View.VISIBLE);
-            } else {
-                mTv_check_info.setVisibility(View.GONE);
-            }
-
         } catch (Exception e) {
             L.d("initData初始化失败:" + e.getMessage());
         }
