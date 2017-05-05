@@ -953,8 +953,6 @@
     <string name="football_database_details_moreThree">高於3.5</string>
     <string name="football_database_details_chang">場</string>
 
-    <string name="football_database_details_statistic_fumble_num">總失球數 :</string>
-    <string name="football_database_details_fumble_score_avg">場均失球 :</string>
     <!--足球分析详情-->
     <string name="football_analyze_details">分析明細</string>
     <string name="football_analyze_details_time">時間</string>
