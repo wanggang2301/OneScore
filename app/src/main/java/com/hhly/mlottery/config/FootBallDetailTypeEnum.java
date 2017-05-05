@@ -9,7 +9,7 @@ package com.hhly.mlottery.config;
 
 public interface FootBallDetailTypeEnum {
 
-
+    //key
     String CURRENT_TAB_KEY = "current_ab";
 
     //默认
