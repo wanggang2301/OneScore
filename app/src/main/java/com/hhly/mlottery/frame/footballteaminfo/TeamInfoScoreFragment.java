@@ -12,20 +12,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
-import com.hhly.mlottery.activity.FootballTeamInfoActivity;
 import com.hhly.mlottery.adapter.football.teaminfoadapter.FootTeamInfoScoreAdapter;
 import com.hhly.mlottery.bean.footballteaminfo.FootTeamHistoryMatchBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.FootBallDetailTypeEnum;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
@@ -151,7 +149,7 @@ public class TeamInfoScoreFragment extends Fragment implements View.OnClickListe
                 Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
                 intent.putExtra("thirdId", String.valueOf(matchList.get(i).getMatchId()));
                 intent.putExtra("currentFragmentId", 0);
-                intent.putExtra("chart_ball_view", 0);
+                intent.putExtra(FootBallDetailTypeEnum.CURRENT_TAB_KEY, FootBallDetailTypeEnum.FOOT_DETAIL_LIVE);
                 mContext.startActivity(intent);
             }
         });
