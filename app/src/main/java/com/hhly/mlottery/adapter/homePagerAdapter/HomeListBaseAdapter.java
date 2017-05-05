@@ -174,7 +174,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         final int jumpType = bodys.get(j).getJumpType();// 跳转类型
                         final String jumpAddr = bodys.get(j).getJumpAddr();// 跳转地址
                         final String thirdId = bodys.get(j).getThirdId();// 赛事ID
-                        final String isRelateMatch = bodys.get(j).getRelateMatch();// 是否有关联赛事
+//                        final String isRelateMatch = bodys.get(j).getRelateMatch();// 是否有关联赛事
                         final int type = bodys.get(j).getType();// 关联赛事类型
                         final int matchType = bodys.get(j).getMatchType();// 关联赛事类型-->专家专栏的
                         final String infoTypeName = bodys.get(j).getInfoTypeName();// 赛事类型名
@@ -237,10 +237,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                                     intent.putExtra("title", title);// 分享标题
                                                     intent.putExtra("subtitle", summary);
                                                     intent.putExtra("infoTypeName", infoTypeName);
-                                                    if ("true".equals(isRelateMatch)) {
-                                                        intent.putExtra("type", type);
-                                                        intent.putExtra("thirdId", thirdId);
-                                                    }
+//                                                    if ("true".equals(isRelateMatch)) {
+                                                    intent.putExtra("type", type);
+                                                    intent.putExtra("thirdId", thirdId);
+//                                                    }
                                                     mContext.startActivity(intent);
                                                     break;
                                                 }
@@ -337,10 +337,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                                     intent.putExtra("title", title);// 分享标题
                                                     intent.putExtra("subtitle", summary);
                                                     intent.putExtra("infoTypeName", infoTypeName);
-                                                    if ("true".equals(isRelateMatch)) {
-                                                        intent.putExtra("type", matchType == 0 ? 2 : matchType);
-                                                        intent.putExtra("thirdId", thirdId);
-                                                    }
+//                                                    if ("true".equals(isRelateMatch)) {
+                                                    intent.putExtra("type", matchType == 0 ? 2 : matchType);
+                                                    intent.putExtra("thirdId", thirdId);
+//                                                    }
                                                     mContext.startActivity(intent);
                                                     break;
                                                 }
@@ -1620,7 +1620,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
         return convertView;
     }
 
-    int expertid1,expertid2,expertid3,expertid4;
+    int expertid1, expertid2, expertid3, expertid4;
+
     /**
      * 添加专家专栏的专家名单
      *

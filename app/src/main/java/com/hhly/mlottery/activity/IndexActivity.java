@@ -318,7 +318,7 @@ public class IndexActivity extends BaseActivity {
                         intent.putExtra("type", info.getInfo().getType());// 关系赛事类型
                         intent.putExtra("thirdId", info.getInfo().getThirdId());// 关系赛事Id
                         intent.putExtra("title", info.getInfo().getTitle());
-                        intent.putExtra("reqMethod", info.getInfo().getRelateMatch());// 是否关联赛事
+//                        intent.putExtra("reqMethod", info.getInfo().getRelateMatch());// 是否关联赛事
                         startActivity(intent);
                     }
                 } else {

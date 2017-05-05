@@ -29,6 +29,7 @@ import com.hhly.mlottery.activity.WebActivity;
 import com.hhly.mlottery.bean.homepagerentity.HomeBannersEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomePagerEntity;
+import com.hhly.mlottery.config.FootBallDetailTypeEnum;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -38,7 +39,6 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -470,7 +470,7 @@ public class HomePagerAdapter extends PagerAdapter {
                                         Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
                                         intent.putExtra("thirdId", split[1]);
                                         intent.putExtra("currentFragmentId", 0);
-                                        intent.putExtra("chart_ball_view", 1);
+                                        intent.putExtra(FootBallDetailTypeEnum.CURRENT_TAB_KEY, FootBallDetailTypeEnum.FOOT_DETAIL_DEFAULT);
                                         mContext.startActivity(intent);
                                     }
                                     break;
