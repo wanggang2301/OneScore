@@ -948,7 +948,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             case FootBallDetailTypeEnum.FOOT_DETAIL_CHARTBALL:
                 mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_CHARTBALL, false);
                 break;
-            default:
+            default: //默认 用比赛状态来做跳转判断跟外部进来没有关系
                 if (BEFOURLIVE.equals(matchstatus)) {
                     mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_ANALYSIS, false);
                 } else {
