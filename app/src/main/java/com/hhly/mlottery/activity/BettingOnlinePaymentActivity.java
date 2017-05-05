@@ -1,15 +1,20 @@
 package com.hhly.mlottery.activity;
 
 import android.os.Bundle;
+import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alipay.sdk.app.PayTask;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.alipay.PayResult;
 import com.hhly.mlottery.bean.bettingbean.WeiFuTongPayidDataBean;
 import com.hhly.mlottery.bean.bettingbean.WeiXinPayidDataBean;
+import com.hhly.mlottery.bean.bettingbean.ZFBPayDataBean;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.tencent.mm.sdk.modelpay.PayReq;
@@ -18,6 +23,7 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import java.util.HashMap;
 import java.util.Map;
+import android.os.Handler;
 
 /**
  * Created by Administrator on 2017/4/19.
@@ -29,6 +35,7 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
     // IWXAPI 是第三方app和微信通信的openapi接口
 //    private IWXAPI api;
 
+    private static final int SDK_PAY_FLAG = 1;
     private ImageView mBack;
     private LinearLayout mConfirmPay;
 
@@ -59,7 +66,8 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
                 break;
             case R.id.betting_confirm_pay:
                 Toast.makeText(mContext, "去支付", Toast.LENGTH_SHORT).show();
-                WeiXinPayData();
+//                WeiXinPayData();
+                ALiPayData();
                 break;
         }
     }
@@ -127,20 +135,25 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
         map.put("timeoutExpress", "5d");
 
         String aliPayUrl = "http://192.168.31.15:8081/app-pay/alipay/tradeAppPay";
-        VolleyContentFast.requestJsonByPost(aliPayUrl, map, new VolleyContentFast.ResponseSuccessListener<WeiXinPayidDataBean>() {
+        VolleyContentFast.requestJsonByPost(aliPayUrl, map, new VolleyContentFast.ResponseSuccessListener<ZFBPayDataBean>() {
             @Override
-            public void onResponse(WeiXinPayidDataBean jsonObject) {
-
+            public void onResponse(ZFBPayDataBean jsonBean) {
+                L.d("qwer_AliPay===>>" , "body = " + jsonBean.getBody());
+                toAliPay(jsonBean.getBody());
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-
+                L.d("qwer_AliPay===>>" , "error");
             }
-        },WeiXinPayidDataBean.class);
+        },ZFBPayDataBean.class);
 
     }
 
+    /**
+     * 调用微信支付
+     * @param payInfo
+     */
     private void toPay(WeiXinPayidDataBean.PayDataWX.PayDataMapWX.PayInfo payInfo){
         //注册appid
         IWXAPI api = WXAPIFactory.createWXAPI(this, APP_ID);// 通过WXAPIFactory工厂，获取IWXAPI的实例
@@ -160,4 +173,53 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
         payReq.sign = payInfo.getSign();
         api.sendReq(payReq);
     }
+
+    /**
+     * 调用支付宝支付
+     */
+    private void toAliPay(final String orderInfo){
+
+        Runnable aliPayRun = new Runnable() {
+            @Override
+            public void run() {
+                PayTask aliPay = new PayTask(BettingOnlinePaymentActivity.this);
+//                String result = aliPay.pay(orderInfo , true);
+                Map<String , String> payMap = aliPay.payV2(orderInfo , true);
+
+                Message msg = new Message();
+                msg.what = SDK_PAY_FLAG;
+                msg.obj = payMap;
+                mHandler.sendMessage(msg);
+
+            }
+        };
+        // 必须异步调用
+        Thread payThread = new Thread(aliPayRun);
+        payThread.start();
+    }
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case SDK_PAY_FLAG:{
+                    PayResult mResult = new PayResult((Map<String , String>)msg.obj);
+
+                    String resultStatus = mResult.getResultStatus();
+                    if ( TextUtils.equals(resultStatus , "9000")) {
+                        Toast.makeText(mContext, "支付成功 > " + resultStatus, Toast.LENGTH_SHORT).show();
+                    }else{
+                        if (TextUtils.equals(resultStatus, "8000")) {
+                            Toast.makeText(mContext, "结果确认中 > " + resultStatus, Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(mContext, "支付失败 > " + resultStatus, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 }
