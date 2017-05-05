@@ -44,8 +44,8 @@ import java.util.regex.Pattern;
  */
 public class FeedbackActivity extends BaseActivity implements View.OnClickListener {
 
-    private final static String TAG = "FeedbackActivity";
-    private final static int ED_MAX_LENGHT = 200;
+    private final String TAG = "FeedbackActivity";
+    private final int ED_MAX_LENGHT = 200;
 
     private Button submitBtn;
     private EditText contentEt;

@@ -28,6 +28,7 @@ import com.hhly.mlottery.bean.websocket.WebBasketMatch;
 import com.hhly.mlottery.bean.websocket.WebBasketOdds;
 import com.hhly.mlottery.bean.websocket.WebBasketOdds5;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.BaseUserTopics;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketballFocusNewFragment;
 import com.hhly.mlottery.util.AppConstants;
@@ -90,7 +91,8 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
          */
         setWebSocketUri(BaseURLs.WS_SERVICE);
 //        setWebSocketUri("ws://192.168.10.242:61634");
-        setTopic("USER.topic.basketball");
+//        setTopic("USER.topic.basketball");
+        setTopic(BaseUserTopics.customBasketball);
         super.onCreate(savedInstanceState);
         //注册
         EventBus.getDefault().register(this);

@@ -63,25 +63,14 @@
         </activity>
 
         <!-- 内地版的key-begin -->
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="5625a606e0f55aad6700244f" />
-        <meta-data
-            android:name="UMENG_MESSAGE_SECRET"
-            android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="BETA" />
+        <meta-data android:name="UMENG_APPKEY" android:value="5625a606e0f55aad6700244f" />
+        <meta-data android:name="UMENG_MESSAGE_SECRET" android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
+        <meta-data android:name="UMENG_CHANNEL" android:value="BETA" />
         <!-- 内地版的key-end -->
 
-
         <!-- TalkingData key  begin -->
-        <meta-data
-            android:name="TD_APP_ID"
-            android:value="28673E18FAF2475F8C42D20D4A140B27" />
-        <meta-data
-            android:name="TD_CHANNEL_ID"
-            android:value="BETA" />
+        <meta-data android:name="TD_APP_ID" android:value="28673E18FAF2475F8C42D20D4A140B27" />
+        <meta-data android:name="TD_CHANNEL_ID" android:value="BETA" />
 
         <service
             android:name="com.talkingdata.sdk.TDAntiCheatingService"
@@ -324,7 +313,7 @@
             android:screenOrientation="portrait" />
         <!-- 斯诺克内页 -->
         <activity
-            android:name=".activity.SnookerMatchDetail"
+            android:name=".activity.SnookerMatchDetailActivity"
             android:screenOrientation="portrait" />
         <!-- 覆盖安装监听 -->
         <receiver
@@ -412,7 +401,9 @@
             android:screenOrientation="portrait" />
 
         <!--足球球队详情页-->
-        <activity android:name=".activity.FootballTeamInfoActivity"/>
+        <activity android:name=".activity.FootballTeamInfoActivity"
+            android:screenOrientation="portrait"/>
+        <!--专家详情-->
         <activity
             android:name=".activity.ExpertsActivity"
             android:screenOrientation="portrait" />

@@ -263,6 +263,10 @@
     <color name="tennis_details_analysis_title_start3">#f75550</color>
     <color name="tennis_details_pager_bg">#f7f7f8</color>
 
+    <!--球队详情-->
+    <color name="foot_team_name_score1">#6ca8ff</color>
+    <color name="foot_team_name_score2">#85c780</color>
+    <color name="foot_team_name_score3">#ff2321</color>
 
     <!-- 开奖详情第二列背景色 -->
     <color name="number_info_two_bg">#f5f5f5</color>

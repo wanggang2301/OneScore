@@ -530,8 +530,10 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         if ("0".equals(eventType)) {
 
             mNoLiveTextFragment = NoLiveTextFragment.newInstance();
-            addFragmentToActivity(getChildFragmentManager(), mNoLiveTextFragment, R.id.fl_live_text);
+            if(getActivity()!=null){
+                addFragmentToActivity(getChildFragmentManager(), mNoLiveTextFragment, R.id.fl_live_text);
 
+            }
             ll_nodata.setVisibility(View.VISIBLE);
             ll_event.setVisibility(View.GONE);
             mNestedScrollView_trend.setVisibility(View.GONE);
@@ -572,13 +574,20 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         //赛果
         if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
             finishMatchLiveTextFragment = FinishMatchLiveTextFragment.newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
-            addFragmentToActivity(getChildFragmentManager(), finishMatchLiveTextFragment, R.id.fl_live_text);
+            if(getActivity()!=null){
+                addFragmentToActivity(getChildFragmentManager(), finishMatchLiveTextFragment, R.id.fl_live_text);
+            }
+
         } else { //赛中
             L.d("xxccvv", "赛中" + matchLive.size());
             mliveTextFragment = LiveTextFragment.newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
-            addFragmentToActivity(getChildFragmentManager(), mliveTextFragment, R.id.fl_live_text);
+            if(getActivity()!=null){
+                addFragmentToActivity(getChildFragmentManager(), mliveTextFragment, R.id.fl_live_text);
+            }
+
         }
     }
+
 
     private void initEvent(MatchDetail mMatchDetail) {
         if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
@@ -1614,8 +1623,13 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     public static void addFragmentToActivity(FragmentManager fragmentManager, Fragment fragment, int frameId) {
         if (fragmentManager != null && fragment != null) {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.add(frameId, fragment);
-            transaction.commit();
+
+            transaction.replace(frameId, fragment)
+                    .disallowAddToBackStack()
+                    .commit();
+            //transaction.add(frameId, fragment);
+
+            //transaction.commitAllowingStateLoss();
         }
     }
 

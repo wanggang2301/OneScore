@@ -15,6 +15,7 @@ import com.hhly.mlottery.bean.tennisball.datails.analysis.MatchInfoBean;
 import com.hhly.mlottery.bean.tennisball.datails.analysis.MatchScoreBean;
 import com.hhly.mlottery.bean.tennisball.datails.analysis.TennisAnalysisBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.BaseUserTopics;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.tennisfrag.datailsfrag.TennisAnalysisFrag;
 import com.hhly.mlottery.frame.tennisfrag.datailsfrag.TennisEurFrag;
@@ -58,7 +59,8 @@ public class TennisBallDetailsActivity extends BaseWebSocketActivity implements 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic("USER.topic.tennis.score");
+//        setTopic("USER.topic.tennis.score");
+        setTopic(BaseUserTopics.tennisScore);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tennis_details_activity);
 

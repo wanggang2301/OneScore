@@ -25,9 +25,11 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +49,7 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
     private TextView ex_text;
     private RecyclerView ex_recyclerview;
     private MostExpertBean.ExpertBean expertDatas;
-    private List<MostExpertBean.InfoArrayBean> infoArrayDatas;
+    private List<MostExpertBean.InfoArrayBean> infoArrayDatas = new ArrayList<>();
     private ExpertsListAdapter expertsListAdapter;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -131,7 +133,7 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
         expertsListAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
-
+                L.d("experts","index: " + i);
                 gotoWebActivity(i);
 
             }
@@ -153,11 +155,20 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
         int matchType = infoArrayDatas.get(i).getMatchType();
         boolean relateMatch = infoArrayDatas.get(i).isRelateMatch();
 
-        if (relateMatch) {
-            intent.putExtra(INTENT_PARAM_THIRDID, thirdId);
-            intent.putExtra(INTENT_PARAM_TYPE, matchType);
+        // relateMatch = true  matchType = 0 跳足球内页
+        // relateMatch = false matchType = 1 跳篮球内页
+        // relateMatch = flase matchType = 0 不跳转
+        // relateMatch = true  matchType = 1 不存在这种情况
+
+
+        if (relateMatch && matchType == 0) {
+            intent.putExtra(INTENT_PARAM_TYPE, 2);
+        } else if (!relateMatch && matchType == 1) {
+            intent.putExtra(INTENT_PARAM_TYPE, 1);
         }
-        intent.putExtra(INTENT_PARAM_TITLE, title);//头部名称
+
+        intent.putExtra(INTENT_PARAM_THIRDID, String.valueOf(thirdId));
+        intent.putExtra(INTENT_PARAM_TITLE, mContext.getResources().getString(R.string.share_recommend));//头部名称
         intent.putExtra(INTENT_PARAM_JUMPURL, infoUrl);
         intent.putExtra("title", title);
         intent.putExtra("subtitle", subTitle);
@@ -191,9 +202,10 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
                     if (expertDatas != null) {
                         setHeaderDatas(expertDatas);
                     }
-                    infoArrayDatas = jsonObject.getInfoArray();
+                    infoArrayDatas.clear();
+                    infoArrayDatas.addAll(jsonObject.getInfoArray());
                     //填充数据
-                    expertsListAdapter.addData(infoArrayDatas);
+                    expertsListAdapter.notifyDataSetChanged();
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                 } else {
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
@@ -230,7 +242,7 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
 
 
         TextView public_txt_title = (TextView) findViewById(R.id.public_txt_title);
-        public_txt_title.setText(getString(R.string.home_expert_title));
+        public_txt_title.setText(getString(R.string.home_expert_title_name));
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         findViewById(R.id.public_img_back).setOnClickListener(this);
@@ -246,7 +258,7 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
         ex_recyclerview.setNestedScrollingEnabled(false);
         layoutManager.setOrientation(OrientationHelper.VERTICAL);//设置为垂直布局，这也是默认的
 
-        expertsListAdapter = new ExpertsListAdapter(ExpertsActivity.this, R.layout.activity_expert_child, null);
+        expertsListAdapter = new ExpertsListAdapter(ExpertsActivity.this, R.layout.activity_expert_child, infoArrayDatas);
         ex_recyclerview.setAdapter(expertsListAdapter);
 
 
@@ -272,11 +284,14 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
 
     /*加载头部数据*/
     public void setHeaderDatas(MostExpertBean.ExpertBean headerDatas) {
-
-        Glide.with(this).load(headerDatas.getIcon()).into(ex_image);
-        ex_name.setText(headerDatas.getTitle());
-        ex_zhong.setText(headerDatas.getLastWeekResults());
-        ex_text.setText("\t\t\t\t" + headerDatas.getDes());
+        try {
+            Glide.with(this).load(headerDatas.getIcon()).into(ex_image);
+            ex_name.setText(headerDatas.getTitle());
+            ex_zhong.setText(headerDatas.getLastWeekResults());
+            ex_text.setText("\t\t\t\t" + headerDatas.getDes());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

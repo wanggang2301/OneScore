@@ -1108,8 +1108,10 @@ public class BaseURLs {
     // 网球内页 赔率公司指数详情接口
     public final static String TENNIS_DATAILS_ODDS_INFO_URL = URL_API_HOST + "tennisMatch.findContentOddsDetail.do";
 
-    // 球队详情-数据
+    // 球队详情-头部
     public final static String FOOT_TEAM_DATA_URL = URL_API_HOST + "footballLeagueData.findTeamDateAndRank.do";
+    // 球队详情-数据
+    public final static String FOOT_TEAM_DATA_INFO_URL = URL_API_HOST + "footballLeagueData.findTeamInfoById.do";
     // 球队详情-赛程赛果
     public final static String FOOT_TEAM_HISTORY_URL = URL_API_HOST + "footballLeagueData.findTeamMatchList.do";
     // 球队详情-盘口

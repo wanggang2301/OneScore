@@ -10,12 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.SnookerMatchDetail;
+import com.hhly.mlottery.activity.SnookerMatchDetailActivity;
 import com.hhly.mlottery.adapter.snooker.SnookerOddsAdapter;
 import com.hhly.mlottery.bean.snookerbean.snookerDetail.SnookerOddsBean;
 import com.hhly.mlottery.config.BaseURLs;
@@ -163,12 +161,12 @@ public class SnookerLetFragment extends Fragment implements View.OnClickListener
         mNodataLayout.setVisibility(View.GONE);
         mExceptionLayout.setVisibility(View.GONE);
 
-        if(mOddsType.equals(SnookerMatchDetail.ODDS_LET)){
+        if(mOddsType.equals(SnookerMatchDetailActivity.ODDS_LET)){
             //标题
             mHomeText.setText(getResources().getString(R.string.snooker_odds_peilv));
             mGuestText.setText(getResources().getString(R.string.snooker_odds_peilv));
 
-        }else if(mOddsType.equals(SnookerMatchDetail.ODDS_SIZE)){
+        }else if(mOddsType.equals(SnookerMatchDetailActivity.ODDS_SIZE)){
 
             mHomeText.setText(getResources().getString(R.string.odd_home_big_txt));
             mGuestText.setText(getResources().getString(R.string.odd_guest_big_txt));

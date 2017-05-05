@@ -80,8 +80,8 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
      */
     public final static String FOCUS_ISD = "focus_ids";
 
-    public final static int REQUEST_SET_CODE = 0x42;
-    public final static int REQUEST_DETAIL_CODE = 0x43;
+//    public final static int REQUEST_SET_CODE = 0x42;
+    private final int REQUEST_DETAIL_CODE = 0x43;
 
 
     private RecyclerView mRecyclerView;
@@ -89,7 +89,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
     private TextView mReloadTvBtn;
 
-    private LinearLayout mLoadingLayout;
+//    private LinearLayout mLoadingLayout;
     private LinearLayout mErrorLayout;
 
     private ExactSwipeRefreshLayout mSwipeRefreshLayout;
@@ -104,9 +104,9 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
     private List<Match> mMatchs;
     private View mView;
 
-    private boolean isLoadedData = false;
-
-    private boolean isWebSocketStart = false;// 不使用websocket时可设置为true
+//    private boolean isLoadedData = false;
+//
+//    private boolean isWebSocketStart = false;// 不使用websocket时可设置为true
 
 //    private HappySocketClient mSocketClient;
 
@@ -131,11 +131,11 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
     /**
      * 标志位，标志已经初始化完成
      */
-    private boolean isPrepared;
+//    private boolean isPrepared;
     /**
      * 是否已被加载过一次，第二次就不再去请求数据了
      */
-    private boolean mHasLoadedOnce;
+//    private boolean mHasLoadedOnce;
 
 
     private String teamLogoSuff;
@@ -180,7 +180,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "___onCreateView____");
+//        Log.d(TAG, "___onCreateView____");
 
 
         mContext = getActivity();
@@ -225,7 +225,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         mUnFocusLayout = (RelativeLayout) mView.findViewById(R.id.football_unfocus);
         mLoading = (LinearLayout) mView.findViewById(R.id.football_focus_loading_ll);
 
-        mLoadingLayout = (LinearLayout) mView.findViewById(R.id.football_immediate_loading_ll);
+//        mLoadingLayout = (LinearLayout) mView.findViewById(R.id.football_immediate_loading_ll);
         mErrorLayout = (LinearLayout) mView.findViewById(R.id.network_exception_layout);
 
 
@@ -282,10 +282,10 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         };
     }
 
-    private final static int VIEW_STATUS_LOADING = 1;
-    private final static int VIEW_STATUS_NO_ANY_DATA = 2;
-    private final static int VIEW_STATUS_SUCCESS = 3;
-    private final static int VIEW_STATUS_NET_ERROR = 4;
+//    private final static int VIEW_STATUS_LOADING = 1;
+//    private final static int VIEW_STATUS_NO_ANY_DATA = 2;
+//    private final static int VIEW_STATUS_SUCCESS = 3;
+//    private final static int VIEW_STATUS_NET_ERROR = 4;
 //    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS = 6;
 //    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_FAIL = 7;
 
@@ -295,11 +295,11 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
      * @param status
      */
     //显示状态
-    private static final int SHOW_STATUS_LOADING = 1;//加载中
-    private static final int SHOW_STATUS_ERROR = 2;//加载失败
-    private static final int SHOW_STATUS_NO_DATA = 3;//暂无数据
-    private static final int SHOW_STATUS_SUCCESS = 4;//加载成功
-    private final static int SHOW_STATUS_REFRESH_ONCLICK = 5;//点击刷新
+    private final int SHOW_STATUS_LOADING = 1;//加载中
+    private final int SHOW_STATUS_ERROR = 2;//加载失败
+    private final int SHOW_STATUS_NO_DATA = 3;//暂无数据
+    private final int SHOW_STATUS_SUCCESS = 4;//加载成功
+    private final int SHOW_STATUS_REFRESH_ONCLICK = 5;//点击刷新
 
     private void setStatus(int status) {
 
@@ -467,7 +467,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                 }
 
                 PreferenceUtil.commitString(FOCUS_ISD, sb.toString());
-                Log.e("BBB", "存进去时" + sb.toString());
+//                Log.e("BBB", "存进去时" + sb.toString());
 //                ((ScoresFragment) getParentFragment()).focusCallback();
                 if (mEntryType == 0) {
                 } else if (mEntryType == 1) {
@@ -512,7 +512,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                 }
 
 
-                isLoadedData = true;
+//                isLoadedData = true;
 //                mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                 setStatus(SHOW_STATUS_SUCCESS);
 //                startWebsocket();
@@ -532,11 +532,11 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            Log.e(TAG, "__handleMessage__");
-            Log.e(TAG, "msg.arg1 = " + msg.arg1);
+//            Log.e(TAG, "__handleMessage__");
+//            Log.e(TAG, "msg.arg1 = " + msg.arg1);
             if (msg.arg1 == 1) {
                 String ws_json = (String) msg.obj;
-                Log.e(TAG, "ws_json = " + ws_json);
+//                Log.e(TAG, "ws_json = " + ws_json);
                 WebSocketMatchStatus webSocketMatchStatus = null;
                 try {
                     webSocketMatchStatus = JSON.parseObject(ws_json, WebSocketMatchStatus.class);
@@ -547,7 +547,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                 updateListViewItemStatus(webSocketMatchStatus);
             } else if (msg.arg1 == 2) {
                 String ws_json = (String) msg.obj;
-                Log.e(TAG, "ws_json = " + ws_json);
+//                Log.e(TAG, "ws_json = " + ws_json);
                 WebSocketMatchOdd webSocketMatchOdd = null;
                 try {
                     webSocketMatchOdd = JSON.parseObject(ws_json, WebSocketMatchOdd.class);
@@ -556,11 +556,11 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                     webSocketMatchOdd = JSON.parseObject(ws_json, WebSocketMatchOdd.class);
                 }
 
-                Log.e(TAG, "----webSocketMatchStatus -----" + webSocketMatchOdd.getThirdId());
+//                Log.e(TAG, "----webSocketMatchStatus -----" + webSocketMatchOdd.getThirdId());
                 updateListViewItemOdd(webSocketMatchOdd);
             } else if (msg.arg1 == 3) {
                 String ws_json = (String) msg.obj;
-                Log.e(TAG, "ws_json = " + ws_json);
+//                Log.e(TAG, "ws_json = " + ws_json);
                 WebSocketMatchEvent webSocketMatchEvent = null;
                 try {
                     webSocketMatchEvent = JSON.parseObject(ws_json, WebSocketMatchEvent.class);
@@ -572,7 +572,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                 updateListViewItemEvent(webSocketMatchEvent);
             } else if (msg.arg1 == 5) {
                 String ws_json = (String) msg.obj;
-                Log.e(TAG, "ws_json = " + ws_json);
+//                Log.e(TAG, "ws_json = " + ws_json);
                 WebSocketMatchChange webSocketMatchChange = null;
                 try {
                     webSocketMatchChange = JSON.parseObject(ws_json, WebSocketMatchChange.class);

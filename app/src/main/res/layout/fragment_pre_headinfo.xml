@@ -36,13 +36,13 @@
             android:id="@+id/ll_webview"
             android:orientation="vertical">
 
-            <com.hhly.mlottery.widget.ProgressWebView
+            <WebView
                 android:id="@+id/webview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:nestedScrollingEnabled="false"
-                android:scrollbars="none"></com.hhly.mlottery.widget.ProgressWebView>0
+                android:scrollbars="none"></WebView>
         </LinearLayout>
     </LinearLayout>
 
@@ -58,15 +58,16 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/multiscreen_space_image_height"
         android:gravity="center_vertical"
-        android:visibility="visible"
+        android:visibility="gone"
         >
 
         <RelativeLayout
             android:id="@+id/rl_iv"
             android:layout_width="105dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="15dp"
             android:orientation="vertical"
+            android:layout_marginTop="5dp"
             android:paddingTop="15dp">
 
             <ImageView
@@ -118,6 +119,7 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:layout_alignParentTop="true"
+                android:layout_marginTop="20dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true">
 
@@ -144,7 +146,14 @@
                 android:layout_below="@id/matchType"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
-
+                <TextView
+                    android:id="@+id/half_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_marginBottom="-8dp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_14" />
                 <TextView
                     android:id="@+id/score"
                     android:layout_width="wrap_content"
@@ -153,7 +162,6 @@
                     android:text="— : —"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_30" />
-
                 <TextView
                     android:id="@+id/date"
                     android:layout_width="wrap_content"
@@ -161,6 +169,7 @@
                     android:text=""
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_12" />
+
             </LinearLayout>
         </RelativeLayout>
 
@@ -171,9 +180,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="15dp"
             android:layout_alignParentTop="true"
             android:orientation="vertical"
+            android:layout_marginTop="5dp"
             android:paddingTop="15dp">
 
             <ImageView
