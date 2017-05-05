@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.MostExpertBean;
 
@@ -40,7 +41,7 @@ public class ExpertsListAdapter extends BaseQuickAdapter<MostExpertBean.InfoArra
 
         baseViewHolder.setText(R.id.ex_from, infoArrayBean.getInfoSource());
 
-        Glide.with(mContext).load(infoArrayBean.getPicUrl()).into((ImageView) baseViewHolder.getView(R.id.ex_image));
+        Glide.with(MyApp.getContext()).load(infoArrayBean.getPicUrl()).into((ImageView) baseViewHolder.getView(R.id.ex_image));
 
 
     }

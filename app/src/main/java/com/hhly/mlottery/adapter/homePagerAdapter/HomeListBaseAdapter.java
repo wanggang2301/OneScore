@@ -724,13 +724,13 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 score01_title.setTextColor(Color.parseColor(homeBodysEntity.getRaceColor()));// 标题颜色
                                 score01_home_name.setText(homeBodysEntity.getHometeam());// 设置主队队名
                                 try {
-                                    Glide.with(mContext).load(homeBodysEntity.getHomeLogoUrl()).error(R.mipmap.home_score_item_icon_def).into(score01_home_icon);
+                                    Glide.with(MyApp.getContext()).load(homeBodysEntity.getHomeLogoUrl()).error(R.mipmap.home_score_item_icon_def).into(score01_home_icon);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                                 score01_guest_name.setText(homeBodysEntity.getGuestteam());// 设置客队队名
                                 try {
-                                    Glide.with(mContext).load(homeBodysEntity.getGuestLogoUrl()).error(R.mipmap.home_score_item_icon_def).into(score01_guest_icon);
+                                    Glide.with(MyApp.getContext()).load(homeBodysEntity.getGuestLogoUrl()).error(R.mipmap.home_score_item_icon_def).into(score01_guest_icon);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -793,13 +793,13 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 // 篮球客队在前主队在后
                                 score01_guest_name.setText(homeBodysEntity.getHometeam());// 设置主队队名
                                 try {
-                                    Glide.with(mContext).load(homeBodysEntity.getHomeLogoUrl()).error(R.mipmap.home_score_item_icon_def).into(score01_guest_icon);
+                                    Glide.with(MyApp.getContext()).load(homeBodysEntity.getHomeLogoUrl()).error(R.mipmap.home_score_item_icon_def).into(score01_guest_icon);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                                 score01_home_name.setText(homeBodysEntity.getGuestteam());// 设置客队队名
                                 try {
-                                    Glide.with(mContext).load(homeBodysEntity.getGuestLogoUrl()).error(R.mipmap.home_score_item_icon_def).into(score01_home_icon);
+                                    Glide.with(MyApp.getContext()).load(homeBodysEntity.getGuestLogoUrl()).error(R.mipmap.home_score_item_icon_def).into(score01_home_icon);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -812,7 +812,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             dataInfoViewList.add(dataInfoView);
 
                             try {
-                                Glide.with(mContext).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_data_info_def).into(data_info_icon01);
+                                Glide.with(MyApp.getContext()).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_data_info_def).into(data_info_icon01);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -963,7 +963,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             View expertView = getExpertView();// 获取布局对象
                             expertViewList.add(expertView);
                             try {
-                                Glide.with(mContext).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_data_info_def).into(iv_expert_icon);
+                                Glide.with(MyApp.getContext()).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_data_info_def).into(iv_expert_icon);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -1123,7 +1123,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
         View lotteryView = getLotteryKSView();
         lotteryViewList.add(lotteryView);
         try {
-            Glide.with(mContext).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_number_item_icon_def).into(ks_icon);
+            Glide.with(MyApp.getContext()).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_number_item_icon_def).into(ks_icon);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1147,7 +1147,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
         View lotteryView = getLotteryKLSFView();
         lotteryViewList.add(lotteryView);
         try {
-            Glide.with(mContext).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_number_item_icon_def).into(klsf_icon);
+            Glide.with(MyApp.getContext()).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_number_item_icon_def).into(klsf_icon);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1185,7 +1185,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
         View lotteryView = getLotteryBJSCView();
         lotteryViewList.add(lotteryView);
         try {
-            Glide.with(mContext).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_number_item_icon_def).into(bjsc_icon);
+            Glide.with(MyApp.getContext()).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_number_item_icon_def).into(bjsc_icon);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1209,7 +1209,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
         View lotteryView = getLotteryyQXCView();
         lotteryViewList.add(lotteryView);
         try {
-            Glide.with(mContext).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_number_item_icon_def).into(qxc_icon);
+            Glide.with(MyApp.getContext()).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_number_item_icon_def).into(qxc_icon);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1240,7 +1240,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
         View lotteryView = getLotteryHKView();
         lotteryViewList.add(lotteryView);
         try {
-            Glide.with(mContext).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_number_item_icon_def).into(hk_icon);
+            Glide.with(MyApp.getContext()).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_number_item_icon_def).into(hk_icon);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1378,7 +1378,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
         View lotteryView = getLotterySSCView();
         lotteryViewList.add(lotteryView);
         try {
-            Glide.with(mContext).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_number_item_icon_def).into(ssc_icon);
+            Glide.with(MyApp.getContext()).load(homeBodysEntity.getPicUrl()).error(R.mipmap.home_number_item_icon_def).into(ssc_icon);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1659,7 +1659,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
             ll_expert_name_item02.setVisibility(View.GONE);
             ll_expert_content1.setVisibility(View.VISIBLE);
             try {
-                Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon1);
+                Glide.with(MyApp.getContext()).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon1);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1670,7 +1670,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
             ll_expert_name_item02.setVisibility(View.GONE);
             ll_expert_content1.setVisibility(View.VISIBLE);
             try {
-                Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon1);
+                Glide.with(MyApp.getContext()).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon1);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1678,7 +1678,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
             expertid1 = mHomePagerEntity.getHeadTitles().getContent().get(0).getExpertId();
             ll_expert_content2.setVisibility(View.VISIBLE);
             try {
-                Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(1).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon2);
+                Glide.with(MyApp.getContext()).load(mHomePagerEntity.getHeadTitles().getContent().get(1).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon2);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1688,21 +1688,21 @@ public class HomeListBaseAdapter extends BaseAdapter {
             ll_expert_name_item1.setVisibility(View.GONE);
             ll_expert_name_item02.setVisibility(View.VISIBLE);
             try {
-                Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon01);
+                Glide.with(MyApp.getContext()).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon01);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             tv_expert_name01.setText(mHomePagerEntity.getHeadTitles().getContent().get(0).getTitle());
             expertid1 = mHomePagerEntity.getHeadTitles().getContent().get(0).getExpertId();
             try {
-                Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(1).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon02);
+                Glide.with(MyApp.getContext()).load(mHomePagerEntity.getHeadTitles().getContent().get(1).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon02);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             tv_expert_name02.setText(mHomePagerEntity.getHeadTitles().getContent().get(1).getTitle());
             expertid2 = mHomePagerEntity.getHeadTitles().getContent().get(1).getExpertId();
             try {
-                Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(2).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon03);
+                Glide.with(MyApp.getContext()).load(mHomePagerEntity.getHeadTitles().getContent().get(2).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon03);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1713,7 +1713,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
             ll_expert_name_item02.setVisibility(View.GONE);
             ll_expert_content1.setVisibility(View.VISIBLE);
             try {
-                Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon1);
+                Glide.with(MyApp.getContext()).load(mHomePagerEntity.getHeadTitles().getContent().get(0).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon1);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1721,7 +1721,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
             expertid1 = mHomePagerEntity.getHeadTitles().getContent().get(0).getExpertId();
             ll_expert_content2.setVisibility(View.VISIBLE);
             try {
-                Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(1).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon2);
+                Glide.with(MyApp.getContext()).load(mHomePagerEntity.getHeadTitles().getContent().get(1).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon2);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1729,7 +1729,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
             expertid2 = mHomePagerEntity.getHeadTitles().getContent().get(1).getExpertId();
             ll_expert_content3.setVisibility(View.VISIBLE);
             try {
-                Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(2).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon3);
+                Glide.with(MyApp.getContext()).load(mHomePagerEntity.getHeadTitles().getContent().get(2).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon3);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1737,7 +1737,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
             expertid3 = mHomePagerEntity.getHeadTitles().getContent().get(2).getExpertId();
             ll_expert_content4.setVisibility(View.VISIBLE);
             try {
-                Glide.with(mContext).load(mHomePagerEntity.getHeadTitles().getContent().get(3).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon4);
+                Glide.with(MyApp.getContext()).load(mHomePagerEntity.getHeadTitles().getContent().get(3).getIcon()).error(R.mipmap.home_menu_icon_def).into(iv_expert_icon4);
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -217,7 +217,7 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
         } else {
             ivPhone.setVisibility(View.VISIBLE);
 
-            Glide.with(mContext).load(oilBean.getPhoto()).asBitmap().into(new SimpleTarget<Bitmap>(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL) {
+            Glide.with(MyApp.getContext()).load(oilBean.getPhoto()).asBitmap().into(new SimpleTarget<Bitmap>(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL) {
                 @Override
                 public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                     int imageWidth = resource.getWidth();
@@ -226,7 +226,7 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
                     ViewGroup.LayoutParams para = ivPhone.getLayoutParams();
                     para.height = height;
                     ivPhone.setLayoutParams(para);
-                    Glide.with(mContext).load(oilBean.getPhoto()).asBitmap().into(ivPhone);
+                    Glide.with(MyApp.getContext()).load(oilBean.getPhoto()).asBitmap().into(ivPhone);
                 }
             });
 

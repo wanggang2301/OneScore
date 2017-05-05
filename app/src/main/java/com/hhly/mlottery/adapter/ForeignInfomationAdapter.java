@@ -16,6 +16,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.ForeignInfomationDetailsActivity;
 import com.hhly.mlottery.activity.PLVideoTextureActivity;
@@ -60,7 +61,7 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
     protected void convert(final BaseViewHolder viewHolder, final OverseasInformationListBean o) {
         LinearLayout linearLayout = viewHolder.getView(R.id.item_ll);
 
-        Glide.with(mContext).load(o.getAvatar()).into((CircleImageView) viewHolder.getView(R.id.civ_logo));
+        Glide.with(MyApp.getContext()).load(o.getAvatar()).into((CircleImageView) viewHolder.getView(R.id.civ_logo));
 
         long mNumberTimeMinute = ((long) (o.getCurrentTimestamp() - o.getTimestamp())) / 1000;  //得到秒
 
@@ -125,7 +126,7 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
             viewHolder.getView(R.id.iv_video).setVisibility(View.GONE);
         } else {
             viewHolder.getView(R.id.iv_photo).setVisibility(View.VISIBLE);
-            Glide.with(mContext).load(o.getPhoto()).asBitmap().into(new SimpleTarget<Bitmap>(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL) {
+            Glide.with(MyApp.getContext()).load(o.getPhoto()).asBitmap().into(new SimpleTarget<Bitmap>(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL) {
                 @Override
                 public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                     int imageWidth = resource.getWidth();
@@ -134,7 +135,7 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
                     ViewGroup.LayoutParams para = (viewHolder.getView(R.id.iv_photo)).getLayoutParams();
                     para.height = height;
                     (viewHolder.getView(R.id.iv_photo)).setLayoutParams(para);
-                    Glide.with(mContext).load(o.getPhoto()).asBitmap().into((ImageView) viewHolder.getView(R.id.iv_photo));
+                    Glide.with(MyApp.getContext()).load(o.getPhoto()).asBitmap().into((ImageView) viewHolder.getView(R.id.iv_photo));
                 }
             });
 

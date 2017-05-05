@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.UiUtils;
@@ -159,7 +160,7 @@ public class BarrageView extends RelativeLayout {
         }
 
 
-        Glide.with(mContext)
+        Glide.with(MyApp.getContext())
                 .load(url)
                 .error(R.mipmap.center_head)
                 .into(imageView);

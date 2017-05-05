@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballteaminfo.FootTeamHistoryMatchBean;
 
@@ -64,8 +65,8 @@ public class FootTeamInfoScoreAdapter extends BaseQuickAdapter<FootTeamHistoryMa
         ImageView homeIcon = holder.getView(R.id.iv_team_icon_home);
         ImageView guestIcon = holder.getView(R.id.iv_team_icon_guest);
 
-        Glide.with(mContext).load(bean.getHomeIcon()).error(R.mipmap.home_score_item_icon_def).into(homeIcon);
-        Glide.with(mContext).load(bean.getGuestIcon()).error(R.mipmap.home_score_item_icon_def).into(guestIcon);
+        Glide.with(MyApp.getContext()).load(bean.getHomeIcon()).error(R.mipmap.home_score_item_icon_def).into(homeIcon);
+        Glide.with(MyApp.getContext()).load(bean.getGuestIcon()).error(R.mipmap.home_score_item_icon_def).into(guestIcon);
 
         // 比分
         switch (String.valueOf(bean.getState())) {
