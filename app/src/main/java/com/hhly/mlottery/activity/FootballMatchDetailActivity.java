@@ -926,15 +926,19 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private void setCurrentShowTab(String matchstatus) {
         switch (current_tab) {
             case FootBallDetailTypeEnum.FOOT_DETAIL_ROLL:
+                mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_ROLL, false);
                 break;
             case FootBallDetailTypeEnum.FOOT_DETAIL_LIVE:
+                mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_LIVE, false);
                 break;
             case FootBallDetailTypeEnum.FOOT_DETAIL_ANALYSIS:
+                mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_ANALYSIS, false);
                 break;
             case FootBallDetailTypeEnum.FOOT_DETAIL_INFOCENTER:
                 mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_INFOCENTER, false);
                 break;
             case FootBallDetailTypeEnum.FOOT_DETAIL_INDEX:
+                mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_INDEX, false);
                 break;
             case FootBallDetailTypeEnum.FOOT_DETAIL_CHARTBALL:
                 mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_CHARTBALL, false);
