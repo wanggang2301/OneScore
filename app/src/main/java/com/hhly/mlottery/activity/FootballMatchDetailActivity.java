@@ -941,18 +941,18 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             case FootBallDetailTypeEnum.FOOT_DETAIL_ANALYSIS:
                 break;
             case FootBallDetailTypeEnum.FOOT_DETAIL_INFOCENTER:
-                mViewPager.setCurrentItem(INFOCENTER_FG, false);
+                mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_INFOCENTER, false);
                 break;
             case FootBallDetailTypeEnum.FOOT_DETAIL_INDEX:
                 break;
             case FootBallDetailTypeEnum.FOOT_DETAIL_CHARTBALL:
-                mViewPager.setCurrentItem(TALKBALL_FG, false);
+                mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_CHARTBALL, false);
                 break;
             default:
                 if (BEFOURLIVE.equals(matchstatus)) {
-                    mViewPager.setCurrentItem(ANALYZE_FG, false);
+                    mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_ANALYSIS, false);
                 } else {
-                    mViewPager.setCurrentItem(LIVE_FG, false);
+                    mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_LIVE, false);
                 }
                 break;
         }
