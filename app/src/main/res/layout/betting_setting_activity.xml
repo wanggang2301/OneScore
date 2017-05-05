@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- 标题头 -->
+    <include layout="@layout/layout_header" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/betting_setting_palying_method"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:textSize="14sp"
+                />
+
+            <com.hhly.mlottery.widget.GrapeGridView
+                android:id="@+id/betting_set_playing_gridview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:columnWidth="0dp"
+                android:gravity="center"
+                android:horizontalSpacing="0dp"
+                android:numColumns="4"
+                android:scrollbars="none"
+                android:stretchMode="columnWidth"
+                android:layout_marginTop="6dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/betting_setting_league"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:textSize="14sp"
+                />
+
+            <com.hhly.mlottery.widget.GrapeGridView
+                android:id="@+id/betting_set_league_gridview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:columnWidth="0dp"
+                android:gravity="center"
+                android:horizontalSpacing="0dp"
+                android:numColumns="4"
+                android:scrollbars="none"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="3dp"
+                android:layout_marginTop="6dp"
+                />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

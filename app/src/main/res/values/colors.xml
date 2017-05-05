@@ -696,4 +696,19 @@
     <color name="item_new_video_color">#222222</color>
     <color name="item_match_jingcai">#dcdcdc</color>
 
+    <!--竞彩推荐颜色-->
+    <color name="betting_recommend_name_color">#222222</color>
+    <color name="betting_recommend_grand_color">#ff5c0b</color>
+    <color name="betting_recommend_zhuanjia_grand_color">#ffffff</color>
+    <color name="betting_recommend_zhuanjia_details_color">#999999</color>
+    <color name="betting_recommend_zhuanjia_spf_color">#0085e1</color>
+    <color name="betting_recommend_details_color">#666666</color>
+    <color name="betting_recommend_details_bg_color">#f5f5f5</color>
+    <color name="betting_recommend_line_color">#eeeeee</color>
+    <color name="betting_recommend_buy_details_bg_color">#e1f2ff</color>
+    <color name="betting_recommend_to_buybg_color">#ff6c23</color>
+    <color name="betting_recommend_to_buy_line_color">#dcdcdc</color>
+    <color name="betting_recommend_to_buy_color">#dfdfdf</color>
+    <color name="betting_recommend_confirm_buy_color">#ff5f10</color>
+
 </resources>

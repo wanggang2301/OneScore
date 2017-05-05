@@ -207,6 +207,10 @@
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
+        <!--微信支付-->
+        <activity android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"/>
         <!-- QQ分享 -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -387,12 +391,31 @@
         <activity
             android:name=".activity.TennisIndexDetailsActivity"
             android:screenOrientation="portrait" />
+        <activity android:name="com.hhly.mlottery.activity.BettingRecommendActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.hhly.mlottery.activity.BettingPayDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.hhly.mlottery.activity.BettingOnlinePaymentActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.hhly.mlottery.activity.BettingRecommendSettingActivity"
+            android:screenOrientation="portrait" />
+
         <!--足球球队详情页-->
         <activity android:name=".activity.FootballTeamInfoActivity"
             android:screenOrientation="portrait"/>
         <!--专家详情-->
         <activity
             android:name=".activity.ExpertsActivity"
+            android:screenOrientation="portrait" />
+
+        <!--支付相关-->
+        <activity android:name="com.hhly.mlottery.activity.BettingRecommendActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.hhly.mlottery.activity.BettingPayDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.hhly.mlottery.activity.BettingOnlinePaymentActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.hhly.mlottery.activity.BettingRecommendSettingActivity"
             android:screenOrientation="portrait" />
 
     </application>

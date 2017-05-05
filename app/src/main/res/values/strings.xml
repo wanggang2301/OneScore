@@ -927,7 +927,7 @@
     <string name="football_database_details_most_top_draw">平/已赛:</string>
     <string name="football_database_details_most_top_lost">输/已赛:</string>
     <string name="football_database_details_most_top_avg">胜率:</string>
-    <string name="football_database_details_most_score_avg">场均进球:</string>
+    <string name="football_database_details_most_score_avg">场均进球 :</string>
     <string name="football_database_details_statistic_home_draw">平局 :</string>
     <string name="football_database_details_statistic_all_num">总进球数 :</string>
     <string name="football_database_details_statistic_avg_num">场均 :</string>
@@ -1721,6 +1721,10 @@
     <string name="football_database_details_fumble_score_avg">场均失球 :</string>
 
     <string name="invited_summary">请您一起看比赛，输入邀请码，优惠多多哦。</string>
+
+    <!--竞彩推荐-->
+    <string name="betting_setting_palying_method">玩法</string>
+    <string name="betting_setting_league">联赛</string>
 
     /*****不要删除*************************************************************************************************/
     <string name="odds_back_list">""</string>
