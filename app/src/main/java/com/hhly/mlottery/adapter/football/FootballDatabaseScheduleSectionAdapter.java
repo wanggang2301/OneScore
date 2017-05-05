@@ -103,19 +103,11 @@ public class FootballDatabaseScheduleSectionAdapter
         ImageLoader.load(mContext,match.getHomePic(),R.mipmap.score_default).into(guestLogo);
         ImageLoader.load(mContext,match.getGuestPic(),R.mipmap.score_default).into(homeLogo);
 
-        holder.setOnClickListener(R.id.guest_name, new View.OnClickListener() {
+        holder.setOnClickListener(R.id.item_id, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mFootballTeamDetailsClickListener != null) {
-                    mFootballTeamDetailsClickListener.DetailsOnClick(v,match , 1);
-                }
-            }
-        });
-        holder.setOnClickListener(R.id.home_name, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mFootballTeamDetailsClickListener != null) {
-                    mFootballTeamDetailsClickListener.DetailsOnClick(v,match , 0);
+                    mFootballTeamDetailsClickListener.DetailsOnClick(v,match);
                 }
             }
         });
