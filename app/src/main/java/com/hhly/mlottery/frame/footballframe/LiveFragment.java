@@ -255,6 +255,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private LiveTextFragment mliveTextFragment;
     private FinishMatchLiveTextFragment finishMatchLiveTextFragment;//完场
 
+    private boolean isLoading = false;// 是否已加载过数据
 
     public void setmFootballLiveGotoChart(FootballLiveGotoChart mFootballLiveGotoChart) {
         this.mFootballLiveGotoChart = mFootballLiveGotoChart;
@@ -1366,9 +1367,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
      * @return
      */
     private void getTrenFormInfo() {
-        if (getActivity() == null) {
-            return;
-        }
+
         mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
         // 获取对象ID
         String mThirdId = ((FootballMatchDetailActivity) getActivity()).mThirdId;
