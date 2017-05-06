@@ -903,7 +903,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             }
         }
 
-        mLiveFragment.setChartName(mMatchDetail.getHomeTeamInfo().getName(), mMatchDetail.getGuestTeamInfo().getName());
+//        mLiveFragment.setChartName(mMatchDetail.getHomeTeamInfo().getName(), mMatchDetail.getGuestTeamInfo().getName());
 
 
         if (!isInitedViewPager) {
