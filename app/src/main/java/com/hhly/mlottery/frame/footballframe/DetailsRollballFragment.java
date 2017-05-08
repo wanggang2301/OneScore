@@ -150,6 +150,7 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
 
     private boolean isSocketStart = true;
 
+    private boolean isLoading = false;// 是否已加载过数据
 
     public static DetailsRollballFragment newInstance(String thirdId) {
         DetailsRollballFragment fragment = new DetailsRollballFragment();
@@ -280,6 +281,13 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
     };
 
     private void initOdds() {
+        if (isLoading) {
+            if (!getUserVisibleHint()) {
+                return;
+            }
+        }else{
+            isLoading = true;
+        }
         if (getActivity() == null) {
             return;
         }

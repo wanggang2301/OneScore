@@ -37,6 +37,7 @@ import java.util.Map;
 public class FootballPlateFragment extends Fragment {
 
     private static final String TYPE = "type";
+    private static final String IS_LOADING = "isLoading";
 
     RecyclerView mRecyclerView;
     EmptyView mEmptyView;
@@ -50,6 +51,7 @@ public class FootballPlateFragment extends Fragment {
     private ArrayList<OddsDataInfo.ListOddEntity> items; // 指数数据源
     private FootballPlateAdapter mAdapter;
     private String type;
+    private boolean isLoading = false;// 是否已加载过数据
 
     private OddsFragment mParentFragment;
 
@@ -65,6 +67,7 @@ public class FootballPlateFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             type = args.getString(TYPE, OddsTypeEnum.PLATE);
+            isLoading = args.getBoolean(IS_LOADING);
         }
     }
 
@@ -109,7 +112,9 @@ public class FootballPlateFragment extends Fragment {
 
         mActivity = (FootballMatchDetailActivity) getActivity();
 
-        loadData();
+        if (isLoading) {
+            loadData();
+        }
     }
 
     private void initTitle(View view) {
@@ -206,10 +211,11 @@ public class FootballPlateFragment extends Fragment {
         }
     }
 
-    public static FootballPlateFragment newInstance(@OddsTypeEnum.OddsType String type) {
+    public static FootballPlateFragment newInstance(@OddsTypeEnum.OddsType String type, boolean loading) {
 
         Bundle args = new Bundle();
         args.putString(TYPE, type);
+        args.putBoolean(IS_LOADING, loading);
         FootballPlateFragment fragment = new FootballPlateFragment();
         fragment.setArguments(args);
         return fragment;

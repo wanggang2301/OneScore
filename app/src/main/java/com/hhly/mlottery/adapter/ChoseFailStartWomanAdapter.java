@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
@@ -40,7 +41,7 @@ public class ChoseFailStartWomanAdapter extends CommonAdapter<String> {
 
         chose_head_child = holder.getView(R.id.chose_head_child);
         imageView4 = holder.getView(R.id.imageView4);
-        Glide.with(mContext).load(s).diskCacheStrategy(DiskCacheStrategy.ALL).into(chose_head_child);
+        Glide.with(MyApp.getContext()).load(s).diskCacheStrategy(DiskCacheStrategy.ALL).into(chose_head_child);
 
         if (clickStatus==holder.getPosition()) {
             holder.setBackgroundRes(R.id.imageView4, R.mipmap.right2x);

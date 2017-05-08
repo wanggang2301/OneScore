@@ -5,6 +5,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.ChoseStartBean;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
@@ -41,7 +42,7 @@ public class ChoseStartManAdapter extends CommonAdapter<ChoseStartBean.DataBean.
        this.holder=holder;
         chose_head_child = holder.getView(R.id.chose_head_child);
         imageView4 = holder.getView(R.id.imageView4);
-            Glide.with(mContext).load( femaleBean.getHeadIcon())
+            Glide.with(MyApp.getContext()).load( femaleBean.getHeadIcon())
                     .diskCacheStrategy(DiskCacheStrategy.ALL).into(chose_head_child);
         if (clickStatus==position) {
             holder.setBackgroundRes(R.id.imageView4, R.mipmap.right2x);

@@ -216,17 +216,17 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
 
 
     private TextView tv_shot;
-    private TextView tv_shot_home;
-    private TextView tv_shot_guest;
+//    private TextView tv_shot_home;
+//    private TextView tv_shot_guest;
     private TextView tv_shotAside;
-    private TextView tv_shotAside_home;
-    private TextView tv_shotAside_guest;
+//    private TextView tv_shotAside_home;
+//    private TextView tv_shotAside_guest;
     private TextView tv_dangerAttack;
-    private TextView tv_dangerAttack_home;
-    private TextView tv_dangerAttack_guest;
+//    private TextView tv_dangerAttack_home;
+//    private TextView tv_dangerAttack_guest;
     private TextView tv_attack;
-    private TextView tv_attack_home;
-    private TextView tv_attack_guest;
+//    private TextView tv_attack_home;
+//    private TextView tv_attack_guest;
 
     private TextView goChart;
 
@@ -255,6 +255,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private LiveTextFragment mliveTextFragment;
     private FinishMatchLiveTextFragment finishMatchLiveTextFragment;//完场
 
+    private boolean isLoading = false;// 是否已加载过数据
 
     public void setmFootballLiveGotoChart(FootballLiveGotoChart mFootballLiveGotoChart) {
         this.mFootballLiveGotoChart = mFootballLiveGotoChart;
@@ -408,17 +409,17 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
 
 
         tv_shot = (TextView) mView.findViewById(R.id.tv_shoot);
-        tv_shot_home = (TextView) mView.findViewById(R.id.tv_shot_home);
-        tv_shot_guest = (TextView) mView.findViewById(R.id.tv_shot_guest);
+//        tv_shot_home = (TextView) mView.findViewById(R.id.tv_shot_home);
+//        tv_shot_guest = (TextView) mView.findViewById(R.id.tv_shot_guest);
         tv_shotAside = (TextView) mView.findViewById(R.id.tv_shotAside);
-        tv_shotAside_home = (TextView) mView.findViewById(R.id.tv_shotAside_home);
-        tv_shotAside_guest = (TextView) mView.findViewById(R.id.tv_shotAside_guest);
+//        tv_shotAside_home = (TextView) mView.findViewById(R.id.tv_shotAside_home);
+//        tv_shotAside_guest = (TextView) mView.findViewById(R.id.tv_shotAside_guest);
         tv_dangerAttack = (TextView) mView.findViewById(R.id.tv_dangerAttack);
-        tv_dangerAttack_home = (TextView) mView.findViewById(R.id.tv_dangerAttack_home);
-        tv_dangerAttack_guest = (TextView) mView.findViewById(R.id.tv_dangerAttack_guest);
+//        tv_dangerAttack_home = (TextView) mView.findViewById(R.id.tv_dangerAttack_home);
+//        tv_dangerAttack_guest = (TextView) mView.findViewById(R.id.tv_dangerAttack_guest);
         tv_attack = (TextView) mView.findViewById(R.id.tv_attack);
-        tv_attack_home = (TextView) mView.findViewById(R.id.tv_attack_home);
-        tv_attack_guest = (TextView) mView.findViewById(R.id.tv_attack_guest);
+//        tv_attack_home = (TextView) mView.findViewById(R.id.tv_attack_home);
+//        tv_attack_guest = (TextView) mView.findViewById(R.id.tv_attack_guest);
 
 
         goChart = (TextView) mView.findViewById(R.id.goChart);
@@ -506,16 +507,16 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    public void setChartName(String home, String guest) {
-        tv_shot_home.setText(home);
-        tv_shot_guest.setText(guest);
-        tv_shotAside_home.setText(home);
-        tv_shotAside_guest.setText(guest);
-        tv_dangerAttack_home.setText(home);
-        tv_dangerAttack_guest.setText(guest);
-        tv_attack_home.setText(home);
-        tv_attack_guest.setText(guest);
-    }
+//    public void setChartName(String home, String guest) {
+//        tv_shot_home.setText(home);
+//        tv_shot_guest.setText(guest);
+//        tv_shotAside_home.setText(home);
+//        tv_shotAside_guest.setText(guest);
+//        tv_dangerAttack_home.setText(home);
+//        tv_dangerAttack_guest.setText(guest);
+//        tv_attack_home.setText(home);
+//        tv_attack_guest.setText(guest);
+//    }
 
 
     /**
@@ -1366,9 +1367,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
      * @return
      */
     private void getTrenFormInfo() {
-        if (getActivity() == null) {
-            return;
-        }
+
         mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
         // 获取对象ID
         String mThirdId = ((FootballMatchDetailActivity) getActivity()).mThirdId;

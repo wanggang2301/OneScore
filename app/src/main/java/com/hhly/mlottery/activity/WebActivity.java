@@ -66,7 +66,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 
     private void initEvent() {
         // 跳转关联赛事详情
-        if (mType != 0 && !TextUtils.isEmpty(mThird)) {
+        if (mType != 0 && !TextUtils.isEmpty(mThird) && !"0".equals(mThird)) {
             mTv_check_info.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -136,7 +136,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
                 if (y < 3) {
                     //已经处于底端
 //                    mTv_check_info.setVisibility(View.VISIBLE);
-                    if (mType != 0 && !TextUtils.isEmpty(mThird)) {
+                    if (mType != 0 && !TextUtils.isEmpty(mThird) && !"0".equals(mThird)) {
                         mTv_check_info.setVisibility(View.VISIBLE);
                     } else {
                         mTv_check_info.setVisibility(View.GONE);

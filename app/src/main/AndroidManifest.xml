@@ -207,6 +207,10 @@
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
+        <!--微信支付-->
+        <activity android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"/>
         <!-- QQ分享 -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -393,6 +397,16 @@
         <!--专家详情-->
         <activity
             android:name=".activity.ExpertsActivity"
+            android:screenOrientation="portrait" />
+
+        <!--支付相关-->
+        <activity android:name=".activity.BettingRecommendActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.BettingPayDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.BettingOnlinePaymentActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.BettingRecommendSettingActivity"
             android:screenOrientation="portrait" />
 
     </application>

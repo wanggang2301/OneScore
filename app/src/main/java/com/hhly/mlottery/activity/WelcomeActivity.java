@@ -381,7 +381,7 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
                     //判断本地缓存是否存在该图片  是显示 不是替换
                     mCount_down.setVisibility(View.VISIBLE);
 
-                    Glide.with(mContext)
+                    Glide.with(getApplicationContext())
                             .load(mStartimageUrl)
                             .error(R.mipmap.home_menu_icon_def)
                             .placeholder(R.mipmap.home_menu_icon_def)

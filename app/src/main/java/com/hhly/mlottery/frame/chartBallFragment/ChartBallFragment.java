@@ -132,7 +132,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
     private boolean isScrollBottom = true;
     private TextView tv_new_msg;
-
+    private boolean isLoading = false;// 是否已加载过数据
 
     Timer timer = new Timer();
 
@@ -168,7 +168,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_chartball, container, false);
         initView();
-        requestLikeData(ADDKEYHOME, "0", type);
+//        requestLikeData(ADDKEYHOME, "0", type);
         initAnim();
         initData(SLIDE_TYPE_MSG_ONE);
         initEvent();
@@ -260,6 +260,13 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
     /*自定发送消息测试*/
     private void initData(final String slideType) {
+        if (isLoading) {
+            if (!getUserVisibleHint()) {
+                return;
+            }
+        }else{
+            isLoading = true;
+        }
         if (SLIDE_TYPE_MSG_ONE.equals(slideType)) {
             mHandler.sendEmptyMessage(START_LOADING);// 正在加载数据中
         }
@@ -480,6 +487,9 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
     //请求点赞数据
     private void requestLikeData(String addkey, String addcount, int type) {
+        if (!getUserVisibleHint()) {
+            return;
+        }
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", mThirdId);
         params.put(addkey, addcount);
@@ -952,6 +962,14 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     public void onRefresh() {
         if (historyBeen != null && historyBeen.size() != 0) {
             initData(SLIDE_TYPE_MSG_HISTORY);
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            requestLikeData(ADDKEYHOME, "0", type);
         }
     }
 }

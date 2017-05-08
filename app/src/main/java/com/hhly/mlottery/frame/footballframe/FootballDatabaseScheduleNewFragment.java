@@ -24,6 +24,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.activity.FootballTeamInfoActivity;
 import com.hhly.mlottery.adapter.basketball.BasketballDatabaseScheduleSectionAdapter;
 import com.hhly.mlottery.adapter.basketball.SportsDialogAdapter;
@@ -34,6 +35,7 @@ import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.ScheduleBean;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.ScheduleDatasBean;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.ScheduleRaceBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.FootBallDetailTypeEnum;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.LocaleFactory;
@@ -719,29 +721,18 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
     private FootballTeamDetailsClickListener footballTeamDetailsClickListener;
     // 购买(查看)的点击监听
     public interface FootballTeamDetailsClickListener {
-        void DetailsOnClick(View view, ScheduleDatasBean matchData, int type);
+        void DetailsOnClick(View view, ScheduleDatasBean matchData);
     }
     private void setDetailsOnClick(){
         footballTeamDetailsClickListener = new FootballTeamDetailsClickListener() {
             @Override
-            public void DetailsOnClick(View view, ScheduleDatasBean matchData, int type) {
-                if (type == 0) {
+            public void DetailsOnClick(View view, ScheduleDatasBean matchData) {
                     if (matchData.getGuestId() != null) {
-                        Intent homeIntent = new Intent(getContext(), FootballTeamInfoActivity.class);
-                        homeIntent.putExtra("TEAM_ID", matchData.getGuestId());
-                        homeIntent.putExtra("TITLE_TEAM_NAME", matchData.getGuestName());
-                        startActivity(homeIntent);
+                        Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
+                        intent.putExtra("thirdId", matchData.getMatchId()+"");
+                        intent.putExtra(FootBallDetailTypeEnum.CURRENT_TAB_KEY,FootBallDetailTypeEnum.FOOT_DETAIL_LIVE);
+                        startActivity(intent);
                     }
-                    Toast.makeText(getContext(), "0", Toast.LENGTH_SHORT).show();
-                }else if(type == 1){
-                    Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
-                    if (matchData.getHomeId() != null) {
-                        Intent homeIntent = new Intent(getContext(), FootballTeamInfoActivity.class);
-                        homeIntent.putExtra("TEAM_ID", matchData.getHomeId());
-                        homeIntent.putExtra("TITLE_TEAM_NAME", matchData.getHomeName());
-                        startActivity(homeIntent);
-                    }
-                }
             }
         };
     }
