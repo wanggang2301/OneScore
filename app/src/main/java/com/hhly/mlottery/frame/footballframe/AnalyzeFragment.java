@@ -27,6 +27,7 @@ import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.ImageLoader;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.RoundProgressBar;
 import com.hhly.mlottery.widget.LineChartView;
@@ -212,6 +213,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
 
     private NewAnalyzeBean mAnalyzeBean;
 
+    private boolean isLoading = false;// 是否已加载过数据
+
     public AnalyzeFragment() {
         // Required empty public constructor
     }
@@ -245,7 +248,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
 //        mHomeName=getString(R.string.intelligent_home);
 //        mGuestName=getString(R.string.intelligent_guest);
         initView();
-        initData();
+
         setListener();
 
         return mView;
@@ -415,6 +418,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     }
 
     public void initData() {
+        if(!getUserVisibleHint()){return;}
         Map<String ,String > params=new HashMap<>();
 //        params.put("thirdId","345566");
         params.put("thirdId",mThirdId);
@@ -1188,6 +1192,16 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 intent1.putExtra("isIntegral" , true);
                 startActivity(intent1);
                 break;
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser && !isLoading){
+            isLoading = true;
+            initData();
+            L.d("sssss","isVisibleToUser_分析: " + isVisibleToUser);
         }
     }
 }

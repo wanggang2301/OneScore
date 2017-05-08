@@ -15,6 +15,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.enums.OddsTypeEnum;
 import com.hhly.mlottery.frame.oddfragment.FootballPlateDetailsFragment;
 import com.hhly.mlottery.frame.oddfragment.FootballPlateFragment;
+import com.hhly.mlottery.util.L;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -31,6 +32,7 @@ public class OddsFragment extends Fragment {
     private FootballPlateFragment mPlateFragment;
     private FootballPlateDetailsFragment mDetailsFragment;
     private boolean isVisible;
+    private boolean isLoading = false;// 是否已加载过数据
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,17 +62,17 @@ public class OddsFragment extends Fragment {
                     // 亚盘
                     case R.id.odd_plate_btn:
                         MobclickAgent.onEvent(mContext, "Football_MatchData_OddPlateBtn");
-                        mPlateFragment = FootballPlateFragment.newInstance(OddsTypeEnum.PLATE);
+                        mPlateFragment = FootballPlateFragment.newInstance(OddsTypeEnum.PLATE , isLoading);
                         break;
                     // 大小球
                     case R.id.odd_big_btn:
                         MobclickAgent.onEvent(mContext, "Football_MatchData_OddBigBtn");
-                        mPlateFragment = FootballPlateFragment.newInstance(OddsTypeEnum.BIG);
+                        mPlateFragment = FootballPlateFragment.newInstance(OddsTypeEnum.BIG , isLoading);
                         break;
                     // 欧盘
                     case R.id.odd_op_btn:
                         MobclickAgent.onEvent(mContext, "Football_MatchData_OddOpBtn");
-                        mPlateFragment = FootballPlateFragment.newInstance(OddsTypeEnum.OP);
+                        mPlateFragment = FootballPlateFragment.newInstance(OddsTypeEnum.OP , isLoading);
                         break;
                 }
                 fragmentManager.beginTransaction()
@@ -79,7 +81,7 @@ public class OddsFragment extends Fragment {
             }
         });
 
-        mPlateFragment = FootballPlateFragment.newInstance(OddsTypeEnum.PLATE);
+        mPlateFragment = FootballPlateFragment.newInstance(OddsTypeEnum.PLATE , isLoading);
         fragmentManager = getChildFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.odd_content_fragment, mPlateFragment).commit();
     }
@@ -92,6 +94,12 @@ public class OddsFragment extends Fragment {
         //如果是隐藏
         //相当于Fragment的onPause
         isVisible = isVisibleToUser;
+
+        if(isVisibleToUser && !isLoading){
+            isLoading = true;
+            mPlateFragment.loadData();
+            L.d("sssss","isVisibleToUser_指数: " + isVisibleToUser);
+        }
     }
 
     /**

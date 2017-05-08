@@ -776,9 +776,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:paddingLeft="20dp">
+                            android:paddingLeft="15dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -795,13 +794,18 @@
                                 android:text=""
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/text_size_11" />
+                        </LinearLayout>
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingLeft="15dp">
 
                             <View
                                 android:layout_width="10dp"
                                 android:layout_height="1.5dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="15dp"
                                 android:background="#C23531"
                                 android:gravity="center" />
 
@@ -813,7 +817,6 @@
                                 android:paddingLeft="3dp"
                                 android:text="@string/foot_details_home"
                                 android:textSize="@dimen/text_size_10" />
-
 
                             <View
                                 android:layout_width="10dp"
@@ -866,7 +869,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
                             android:background="@color/white"
-                            android:paddingLeft="10dp"></com.github.mikephil.charting.charts.LineChart>
+                            android:paddingLeft="10dp"/>
 
                     </LinearLayout>
 
@@ -882,11 +885,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginTop="10dp"
-                            android:background="@color/white"
-                            android:orientation="horizontal"
-                            android:paddingLeft="20dp">
+                            android:paddingLeft="15dp"
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -904,12 +904,20 @@
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/text_size_11" />
 
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/white"
+                            android:orientation="horizontal"
+                            android:paddingLeft="15dp">
 
                             <View
                                 android:layout_width="10dp"
                                 android:layout_height="1.5dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="15dp"
                                 android:background="#C23531"
                                 android:gravity="center" />
 
@@ -971,7 +979,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
                             android:background="@color/white"
-                            android:paddingLeft="10dp"></com.github.mikephil.charting.charts.LineChart>
+                            android:paddingLeft="10dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -986,11 +994,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginTop="10dp"
-                            android:background="@color/white"
-                            android:orientation="horizontal"
-                            android:paddingLeft="20dp">
+                            android:paddingLeft="15dp"
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -1008,12 +1013,20 @@
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/text_size_11" />
 
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/white"
+                            android:orientation="horizontal"
+                            android:paddingLeft="15dp">
 
                             <View
                                 android:layout_width="10dp"
                                 android:layout_height="1.5dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="15dp"
                                 android:background="#C23531"
                                 android:gravity="center" />
 
@@ -1076,7 +1089,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
                             android:background="@color/white"
-                            android:paddingLeft="10dp"></com.github.mikephil.charting.charts.LineChart>
+                            android:paddingLeft="10dp" />
 
                     </LinearLayout>
 
@@ -1092,11 +1105,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginTop="10dp"
-                            android:background="@color/white"
-                            android:orientation="horizontal"
-                            android:paddingLeft="20dp">
+                            android:paddingLeft="15dp"
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -1114,12 +1124,20 @@
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/text_size_11" />
 
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/white"
+                            android:orientation="horizontal"
+                            android:paddingLeft="15dp">
 
                             <View
                                 android:layout_width="10dp"
                                 android:layout_height="1.5dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="15dp"
                                 android:background="#C23531"
                                 android:gravity="center" />
 

@@ -22,6 +22,7 @@ import com.hhly.mlottery.bean.intelligence.BigDataForecastData;
 import com.hhly.mlottery.bean.intelligence.BigDataForecastFactor;
 import com.hhly.mlottery.bean.intelligence.BigDataResult;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.StringFormatUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.RoundProgressBar;
@@ -149,6 +150,7 @@ public class IntelligenceFragment extends Fragment {
     private IntelligenceRecentAdapter mRecentHalfAdapter;
     private List<BigDataResult.GridViewEntity> halfRecentList=new ArrayList<>();
 
+    private boolean isLoading = false;// 是否已加载过数据
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -173,7 +175,6 @@ public class IntelligenceFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
-        initData();
     }
 
     /**
@@ -334,7 +335,8 @@ public class IntelligenceFragment extends Fragment {
         mGvTodayHandicapHalf.setFocusable(false);
     }
 
-    private void initData(){
+    public void initData(){
+        if(!getUserVisibleHint()){return;}
         Map<String, String> params = new HashMap<>();
         params.put(KEY_THIRD_ID, mThirdId);
 
@@ -811,5 +813,15 @@ public class IntelligenceFragment extends Fragment {
         IntelligenceFragment fragment = new IntelligenceFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser && !isLoading){
+            isLoading = true;
+            initData();
+            L.d("sssss","isVisibleToUser_情报: " + isVisibleToUser);
+        }
     }
 }
