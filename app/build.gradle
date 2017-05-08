@@ -42,7 +42,7 @@ android {
     defaultConfig {
         applicationId "com.hhly.mlottery"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 31
         versionName "1.2.9.0428"
         multiDexEnabled true
@@ -104,6 +104,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'io.reactivex:rxjava:1.1.2'
     compile 'io.reactivex:rxandroid:1.1.0'
+    compile "com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar"
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:v1.8.4'
     compile 'com.timehop.stickyheadersrecyclerview:library:0.4.3@aar'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.0-beta1'
