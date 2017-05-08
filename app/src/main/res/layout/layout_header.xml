@@ -267,7 +267,7 @@
             android:visibility="gone"
             />
 
-        <TextView
+        <!--<TextView
             android:id="@+id/right_tv"
             style="@style/RippleBackgroudBorderless"
             android:layout_width="wrap_content"
@@ -280,7 +280,7 @@
             android:textColor="@color/white"
             android:textSize="15sp"
             android:visibility="gone"
-            />
+            />-->
 
         <ImageView
             android:id="@+id/public_btn_write_advice"
