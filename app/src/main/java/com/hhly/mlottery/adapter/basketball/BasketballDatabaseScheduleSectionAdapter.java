@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.SectionEntity;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.basketdatabase.ScheduledMatch;
+import com.hhly.mlottery.frame.basketballframe.BasketDatabaseScheduleFragment;
 import com.hhly.mlottery.util.ImageLoader;
 
 import java.util.List;
@@ -23,6 +24,10 @@ import java.util.List;
 public class BasketballDatabaseScheduleSectionAdapter
         extends BaseSectionQuickAdapter<BasketballDatabaseScheduleSectionAdapter.Section> {
 
+    private BasketDatabaseScheduleFragment.BasketballDetailsClickListener basketballDetailsClickListener;
+    public void setBasketballDetailsClickListener(BasketDatabaseScheduleFragment.BasketballDetailsClickListener basketballDetailsClickListener){
+        this.basketballDetailsClickListener = basketballDetailsClickListener;
+    }
 
     public BasketballDatabaseScheduleSectionAdapter(List<Section> data) {
         super(R.layout.item_basket_datatbase_schedule, R.layout.item_basket_datatbase_schedule_title, data);
@@ -36,7 +41,7 @@ public class BasketballDatabaseScheduleSectionAdapter
 
     @Override
     protected void convert(BaseViewHolder holder, Section section) {
-        ScheduledMatch match = section.t;
+        final ScheduledMatch match = section.t;
         holder.setText(R.id.home_name, match.getHomeTeamName())
                 .setText(R.id.guest_name, match.getGuestTeamName());
         boolean notStart = match.getHomeScore() == 0 && match.getGuestScore() == 0;
@@ -63,6 +68,14 @@ public class BasketballDatabaseScheduleSectionAdapter
         ImageLoader.load(mContext,match.getHomeTeamIconUrl(),R.mipmap.basket_default).into(homeLogo);
         ImageLoader.load(mContext,match.getGuestTeamIconUrl(),R.mipmap.basket_default).into(guestLogo);
 
+        holder.setOnClickListener(R.id.item_id, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (basketballDetailsClickListener != null){
+                    basketballDetailsClickListener.DetailsOnClick(v , match.getHomeTeamId()+"");
+                }
+            }
+        });
     }
 
     public static class Section extends SectionEntity<ScheduledMatch> {
