@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CounselActivity;
-import com.hhly.mlottery.activity.FootballMatchActivity;
 import com.hhly.mlottery.activity.LeagueStatisticsTodayActivity;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.activity.NumbersActivity;
@@ -23,7 +22,7 @@ import com.hhly.mlottery.activity.WebActivity;
 import com.hhly.mlottery.adapter.homePagerAdapter.HomeGridAdapter;
 import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.CommonUtils;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.widget.MyGridView;
@@ -106,7 +105,7 @@ public class HomeMuenFragment extends Fragment {
                                 case 1:// 页面
                                 {
                                     if (jumpAddr.contains("{loginToken}")) {// 是否需要登录
-                                        if (CommonUtils.isLogin()) {// 判断用户是否登录
+                                        if (DeviceInfo.isLogin()) {// 判断用户是否登录
                                             Intent intent = new Intent(getContext(), WebActivity.class);
                                             intent.putExtra("key", jumpAddr);// 跳转地址
                                             intent.putExtra("infoTypeName", title);

@@ -55,6 +55,7 @@ import rx.functions.Func1;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
@@ -101,6 +102,7 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
     private String[] mPermissions = {
             WRITE_EXTERNAL_STORAGE,
             READ_PHONE_STATE,
+            CAMERA,
             ACCESS_FINE_LOCATION,
             ACCESS_COARSE_LOCATION
     };
@@ -120,30 +122,6 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
             e.printStackTrace();
             // 此异常不会发生
         }
-
-        RxPermissions.getInstance(this)
-                .request(mPermissions)
-                .map(new Func1<Boolean, Boolean>() {
-                    @Override
-                    public Boolean call(Boolean granted) {
-                        if (granted) {
-
-                        }
-                        return granted;
-                    }
-                })
-                .subscribe(new Action1<Boolean>() {
-                    @Override
-                    public void call(Boolean aBoolean) {
-                        isPermissionComplete = true;
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable t) {
-                        t.printStackTrace();
-                        isPermissionComplete = true;
-                    }
-                });
 
         new Thread() {
             @Override
@@ -221,11 +199,43 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
         //判断是否是第一次启动
         //如果是已经启动了 是“YES”
         //如果本地保存的versionname等于应用的版本号（例：1.0.4）
+
+        RxPermissions.getInstance(this)
+                .request(mPermissions)
+                .map(new Func1<Boolean, Boolean>() {
+                    @Override
+                    public Boolean call(Boolean granted) {
+                        if (granted) {
+
+                        }
+                        return granted;
+                    }
+                })
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean aBoolean) {
+                        isPermissionComplete = true;
+                        goActivityAfterGetPermissions();
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable t) {
+                        t.printStackTrace();
+                        isPermissionComplete = true;
+                        goActivityAfterGetPermissions();
+                    }
+                });
+
+    }
+
+    /**
+     * 获取权限后跳转页面
+     */
+    private void goActivityAfterGetPermissions(){
         if (PreferenceUtil.getString("isFirst", "").equals("YES") && PreferenceUtil.getString("versionName", "").equals(mPackageInfo.versionName)&&isPermissionComplete) {
             startActivity(new Intent(this, IndexActivity.class));
             this.finish();
         }
-
         //否则就是第一次启动
         else {
             if(isPermissionComplete){
@@ -233,9 +243,7 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
                 this.finish();
             }
         }
-
     }
-
     /**
      * 获取youmeng渠道号，保存下来 "TERID.out"
      */

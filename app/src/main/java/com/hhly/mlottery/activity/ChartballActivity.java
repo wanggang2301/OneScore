@@ -29,12 +29,11 @@ import android.widget.TextView;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.chart.ChartReceive;
-import com.hhly.mlottery.frame.chartBallFragment.EmojiFragment;
 import com.hhly.mlottery.frame.chartBallFragment.LocalFragment;
 import com.hhly.mlottery.adapter.football.BasePagerAdapter;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.ToastTools;
 import com.umeng.analytics.MobclickAgent;
@@ -319,7 +318,7 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
                         ToastTools.showQuickCenter(this, getResources().getString(R.string.warn_nullcontent));
                     }
                 } else {//有输入内容
-                    if (CommonUtils.isLogin()) {//已登录华海
+                    if (DeviceInfo.isLogin()) {//已登录华海
                         ChartReceive.DataBean.ChatHistoryBean chatHistoryBean;
 
                         if (!TextUtils.isEmpty(callName)) {
@@ -351,7 +350,7 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
 
                 break;
             case R.id.et_emoji_input:// 输入
-                if (!CommonUtils.isLogin()) {
+                if (!DeviceInfo.isLogin()) {
                     //跳转登录界面
                     Intent intent1 = new Intent(ChartballActivity.this, LoginActivity.class);
                     startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);

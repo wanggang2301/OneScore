@@ -41,8 +41,8 @@ import com.hhly.mlottery.bean.footballDetails.MatchLike;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.BaseUserTopics;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.DateUtil;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -208,7 +208,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
     // 登录返回
     private void loginBack() {
-        if (!CommonUtils.isLogin()) {
+        if (!DeviceInfo.isLogin()) {
             if (type == 1) {
                 ((BasketDetailsActivityTest) mContext).talkAboutBallLoginBasket();
             } else if (type == 0) {

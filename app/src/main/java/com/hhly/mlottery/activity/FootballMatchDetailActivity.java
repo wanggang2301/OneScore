@@ -62,10 +62,10 @@ import com.hhly.mlottery.frame.footballframe.IntelligenceFragment;
 import com.hhly.mlottery.frame.footballframe.LiveFragment;
 import com.hhly.mlottery.frame.footballframe.OddsFragment;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
-import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.FootballLiveTextComparator;
@@ -2357,7 +2357,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         iv_share = mView.findViewById(R.id.football_item_share);
 
-        if (CommonUtils.isZH()) {
+        if (DeviceInfo.isZH()) {
             iv_share.setVisibility(View.VISIBLE);
         } else {
             iv_share.setVisibility(View.GONE);
