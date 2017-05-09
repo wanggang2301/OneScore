@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
@@ -66,7 +67,7 @@ public class BasketBallTextLiveAdapter extends BaseQuickAdapter<BasketEachTextLi
             baseViewHolder.setText(R.id.tv_remainTime, "");
             baseViewHolder.getView(R.id.iv_topsanjiao).setVisibility(View.GONE);
             baseViewHolder.getView(R.id.tv_eventContent).setBackgroundResource(0);
-            ((TextView) baseViewHolder.getView(R.id.tv_eventContent)).setTextColor(mContext.getResources().getColor(R.color.black_details_textcolor));
+            ((TextView) baseViewHolder.getView(R.id.tv_eventContent)).setTextColor(mContext.getResources().getColor(R.color.mdy_333));
         } else {
 
             text += "  " + "<font color='#21b11e'>" + b.getGuestScore() + "-" + b.getHomeScore() + "</font>";
@@ -74,12 +75,16 @@ public class BasketBallTextLiveAdapter extends BaseQuickAdapter<BasketEachTextLi
 
             if (1 == b.getTeamType()) { //主队
                 if (BasketDetailsActivityTest.homeIconUrl != null && !"".equals(BasketDetailsActivityTest.homeIconUrl)) {
-                    Glide.with(mContext).load(BasketDetailsActivityTest.homeIconUrl).placeholder(R.mipmap.basket_default).into(circleImageView);
+                    Glide.with(MyApp.getContext()).load(BasketDetailsActivityTest.homeIconUrl).placeholder(R.mipmap.basket_default).into(circleImageView);
                 }
                 //  ImageLoader.load(mContext, BasketDetailsActivityTest.homeIconUrl, R.mipmap.basket_default).into(circleImageView);
             } else if (2 == b.getTeamType()) { //客队
                 if (BasketDetailsActivityTest.guestIconUrl != null && !"".equals(BasketDetailsActivityTest.guestIconUrl)) {
-                    Glide.with(mContext).load(BasketDetailsActivityTest.guestIconUrl).placeholder(R.mipmap.basket_default).into(circleImageView);
+                    try {
+                        Glide.with(MyApp.getContext()).load(BasketDetailsActivityTest.guestIconUrl).placeholder(R.mipmap.basket_default).into(circleImageView);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 // ImageLoader.load(mContext, BasketDetailsActivityTest.guestIconUrl, R.mipmap.basket_default).into(circleImageView);
             } else {

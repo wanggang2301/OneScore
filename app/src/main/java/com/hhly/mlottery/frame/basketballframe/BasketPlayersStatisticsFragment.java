@@ -266,12 +266,11 @@ public class BasketPlayersStatisticsFragment extends Fragment implements View.On
             case R.id.rl_guest_team:
                 if(!isCheckedGuest){ //防止不停的点击就不停的设置颜色
                     mGuestName.setTextColor(MyApp.getContext().getResources().getColor(R.color.tabtitle));
-                    mHomeName.setTextColor(MyApp.getContext().getResources().getColor(R.color.black_details_textcolor));
+                    mHomeName.setTextColor(MyApp.getContext().getResources().getColor(R.color.mdy_333));
                     list.clear();
                     list.addAll(mData.getData().getGuestPlayerStats());
                     if(list.size()==0){
                         mNodataLayout.setVisibility(View.VISIBLE);
-                        mNodataLayout.setBackgroundColor(MyApp.getContext().getResources().getColor(R.color.black_grounding));
                     }else{
                         mNodataLayout.setVisibility(View.GONE);
                     }
@@ -287,7 +286,7 @@ public class BasketPlayersStatisticsFragment extends Fragment implements View.On
                 break;
             case R.id.rl_home_team:
                 if(isCheckedGuest){
-                    mGuestName.setTextColor(MyApp.getContext().getResources().getColor(R.color.black_details_textcolor));
+                    mGuestName.setTextColor(MyApp.getContext().getResources().getColor(R.color.mdy_333));
                     mHomeName.setTextColor(MyApp.getContext().getResources().getColor(R.color.tabtitle));
                     list.clear();
                     list.addAll( mData.getData().getHomePlayerStats());

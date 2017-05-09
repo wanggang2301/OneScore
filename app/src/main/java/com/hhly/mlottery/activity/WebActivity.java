@@ -66,7 +66,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 
     private void initEvent() {
         // 跳转关联赛事详情
-        if (mType != 0 && !TextUtils.isEmpty(mThird)) {
+        if (mType != 0 && !TextUtils.isEmpty(mThird) && !"0".equals(mThird)) {
             mTv_check_info.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -94,6 +94,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 
 
     private void initView() {
+        findViewById(R.id.comment).setVisibility(View.GONE);
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.header_layout);
         linearLayout.setLayoutParams(
                 new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
@@ -126,16 +127,16 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         mWebView.setOnCustomScroolChangeListener(new ProgressWebView.ScrollInterface() {
             @Override
             public void onSChanged(int l, int t, int oldl, int oldt) {
-                L.d("___onSChanged___");
-                L.d("l = " + l);
-                L.d("t = " + t);
-                L.d("oldl = " + oldl);
-                L.d("oldt = " + oldt);
+//                L.d("___onSChanged___");
+//                L.d("l = " + l);
+//                L.d("t = " + t);
+//                L.d("oldl = " + oldl);
+//                L.d("oldt = " + oldt);
                 y = mWebView.getContentHeight() * mWebView.getScale() - (mWebView.getHeight() + mWebView.getScrollY());
                 if (y < 3) {
                     //已经处于底端
 //                    mTv_check_info.setVisibility(View.VISIBLE);
-                    if (mType != 0 && !TextUtils.isEmpty(mThird)) {
+                    if (mType != 0 && !TextUtils.isEmpty(mThird) && !"0".equals(mThird)) {
                         mTv_check_info.setVisibility(View.VISIBLE);
                     } else {
                         mTv_check_info.setVisibility(View.GONE);
@@ -187,6 +188,13 @@ public class WebActivity extends BaseActivity implements OnClickListener {
             mType = intent.getIntExtra("type", 0);
             mThird = intent.getStringExtra("thirdId");
             infoTypeName = intent.getStringExtra("infoTypeName");
+//            if (intent.getStringExtra("iscomment") != null) {
+//                if (intent.getStringExtra("iscomment").equals("1")) {
+//                    findViewById(R.id.comment).setVisibility(View.GONE);
+//                }
+//            } else {
+//                findViewById(R.id.comment).setVisibility(View.VISIBLE);
+//            }
             token = AppConstants.register.getData().getLoginToken();
             String deviceId = AppConstants.deviceToken;
             reqMethod = intent.getStringExtra("reqMethod");
@@ -201,13 +209,13 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 
             });
             if (url != null) {
-                if (!url.contains("comment=false")) {
-                    //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
-                    ChatFragment chatFragment = new ChatFragment();
-                    CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
-                } else {
-                    findViewById(R.id.comment).setVisibility(View.GONE);
-                }
+//                if (!url.contains("comment=false")) {
+//                    //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
+//                    ChatFragment chatFragment = new ChatFragment();
+//                    CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
+//                } else {
+//                    findViewById(R.id.comment).setVisibility(View.GONE);
+//                }
 //                else if (url.contains("comment=false")) {
 //                    getSupportFragmentManager().beginTransaction().remove(chatFragment).commit();//移除评论
 //                }

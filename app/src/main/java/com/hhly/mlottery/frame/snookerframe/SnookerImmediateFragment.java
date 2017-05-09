@@ -14,11 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.SnookerMatchDetail;
+import com.hhly.mlottery.activity.SnookerMatchDetailActivity;
 import com.hhly.mlottery.adapter.snooker.SnookerListAdapter;
 import com.hhly.mlottery.bean.scheduleBean.ScheduleDate;
 import com.hhly.mlottery.bean.snookerbean.SnookerMatchScoreBean;
@@ -213,7 +212,7 @@ public class SnookerImmediateFragment extends Fragment implements SwipeRefreshLa
                 mSnookerListAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
                     @Override
                     public void onItemClick(View view, String data) {
-                        Intent intent = new Intent(getActivity(), SnookerMatchDetail.class);
+                        Intent intent = new Intent(getActivity(), SnookerMatchDetailActivity.class);
                         intent.putExtra("matchId" , data);
                         startActivity(intent);
                         getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);

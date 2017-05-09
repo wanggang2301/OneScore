@@ -9,7 +9,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:overScrollMode="never"
-            android:background="@color/black_grounding"
             android:scrollbars="none">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -28,15 +27,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/basket_item_height"
                         android:text="@string/basket_analyze_sides"
-                        android:textColor="@color/basket_text_color"
-                        android:background="@color/black_title"
+                        android:textColor="@color/mdy_333"
+                        android:background="@color/white"
                         android:gravity="center"
                         android:textSize="@dimen/text_size_12"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/line_football_footer"
+                        />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:background="@color/black_grounding"
                         >
                         <TextView
                             android:id="@+id/lishijiaofeng"
@@ -45,7 +49,7 @@
                             android:paddingTop="@dimen/basket_details_item_height"
                             android:paddingBottom="@dimen/basket_details_item_height"
                             android:text="@string/basket_analyze_history"
-                            android:textColor="@color/black_details_textcolor"
+                            android:textColor="@color/mdy_666"
                             android:textSize="@dimen/text_size_12"
                             android:gravity="center"/>
 
@@ -74,7 +78,7 @@
                                 android:layout_height="wrap_content"
                                 android:id="@+id/basket_progressbar_guest"
                                 android:layout_alignParentLeft="true"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_12"
                                 android:gravity="center"
                                 android:text="--"/>
@@ -83,7 +87,7 @@
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/black_details_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:textSize="@dimen/text_size_12"
                                 android:gravity="center"
                                 android:text="--"/>
@@ -96,7 +100,7 @@
                             android:paddingBottom="@dimen/basket_details_item_height"
                             android:textSize="@dimen/text_size_12"
                             android:text="@string/basket_analyze_recent"
-                            android:textColor="@color/black_details_textcolor"
+                            android:textColor="@color/mdy_666"
                             android:gravity="center"
                             />
                         <LinearLayout
@@ -191,7 +195,7 @@
                             android:paddingBottom="@dimen/basket_details_item_height"
                             android:textSize="@dimen/text_size_12"
                             android:text="@string/basket_analyze_fruture"
-                            android:textColor="@color/black_details_textcolor"
+                            android:textColor="@color/mdy_666"
                             android:gravity="center"
                             />
 
@@ -239,9 +243,8 @@
                             android:paddingBottom="@dimen/basket_details_item_height"
                             android:textSize="@dimen/text_size_12"
                             android:text="@string/basket_nodata"
-                            android:textColor="@color/black_details_ball_textcolor"
+                            android:textColor="@color/mdy_666"
                             android:gravity="center"
-                            android:background="@color/black_grounding"
                             android:visibility="gone"
                             />
 
@@ -308,7 +311,7 @@
                                         android:text="--"
                                         android:textSize="@dimen/text_size_10"
                                         android:paddingLeft="8dp"
-                                        android:textColor="@color/black_details_ball_textcolor"
+                                        android:textColor="@color/mdy_666"
                                         android:layout_gravity="center"
                                         />
 
@@ -319,7 +322,7 @@
                                         android:layout_weight="3"
                                         android:singleLine="true"
                                         android:text="--"
-                                        android:textColor="@color/black_details_ball_textcolor"
+                                        android:textColor="@color/mdy_666"
                                         android:textSize="@dimen/text_size_12"
                                         android:paddingRight="5dp"
                                         android:gravity="right"
@@ -344,7 +347,7 @@
                                         android:layout_weight="1.2"
                                         android:text="--"
                                         android:textSize="@dimen/text_size_10"
-                                        android:textColor="@color/black_details_ball_textcolor"
+                                        android:textColor="@color/mdy_666"
                                         android:paddingLeft="8dp"
                                         android:layout_gravity="center"
                                         />
@@ -356,7 +359,7 @@
                                         android:layout_weight="3"
                                         android:text="--"
                                         android:singleLine="true"
-                                        android:textColor="@color/black_details_ball_textcolor"
+                                        android:textColor="@color/mdy_666"
                                         android:textSize="@dimen/text_size_12"
                                         android:paddingRight="5dp"
                                         android:gravity="right"
@@ -381,7 +384,7 @@
                                         android:layout_weight="1.2"
                                         android:text="--"
                                         android:textSize="@dimen/text_size_10"
-                                        android:textColor="@color/black_details_ball_textcolor"
+                                        android:textColor="@color/mdy_666"
                                         android:paddingLeft="8dp"
                                         android:layout_gravity="center"
                                         />
@@ -393,7 +396,7 @@
                                         android:layout_weight="3"
                                         android:text="--"
                                         android:singleLine="true"
-                                        android:textColor="@color/black_details_ball_textcolor"
+                                        android:textColor="@color/mdy_666"
                                         android:textSize="@dimen/text_size_12"
                                         android:paddingRight="5dp"
                                         android:gravity="right"
@@ -472,7 +475,7 @@
                                         android:layout_weight="3"
                                         android:text="--"
                                         android:singleLine="true"
-                                        android:textColor="@color/black_details_ball_textcolor"
+                                        android:textColor="@color/mdy_666"
                                         android:textSize="@dimen/text_size_12"
                                         android:paddingLeft="5dp"
                                         android:layout_gravity="center"
@@ -484,7 +487,7 @@
                                         android:layout_weight="1.2"
                                         android:text="--"
                                         android:textSize="@dimen/text_size_10"
-                                        android:textColor="@color/black_details_ball_textcolor"
+                                        android:textColor="@color/mdy_666"
                                         android:paddingRight="8dp"
                                         android:layout_gravity="center"
                                         android:gravity="right"
@@ -508,7 +511,7 @@
                                         android:layout_weight="3"
                                         android:text="--"
                                         android:singleLine="true"
-                                        android:textColor="@color/black_details_ball_textcolor"
+                                        android:textColor="@color/mdy_666"
                                         android:textSize="@dimen/text_size_12"
                                         android:paddingLeft="5dp"
                                         android:layout_gravity="center"
@@ -520,7 +523,7 @@
                                         android:layout_weight="1.2"
                                         android:text="--"
                                         android:textSize="@dimen/text_size_10"
-                                        android:textColor="@color/black_details_ball_textcolor"
+                                        android:textColor="@color/mdy_666"
                                         android:paddingRight="8dp"
                                         android:layout_gravity="center"
                                         android:gravity="right"
@@ -544,23 +547,23 @@
                                         android:layout_weight="3"
                                         android:text="--"
                                         android:singleLine="true"
-                                        android:textColor="@color/black_details_ball_textcolor"
+                                        android:textColor="@color/mdy_666"
                                         android:textSize="@dimen/text_size_12"
                                         android:paddingLeft="5dp"
                                         android:layout_gravity="center"
                                         />
+
                                     <TextView
                                         android:id="@+id/basket_future_home_date3"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1.2"
-                                        android:text="--"
-                                        android:textSize="@dimen/text_size_10"
-                                        android:textColor="@color/black_details_ball_textcolor"
-                                        android:paddingRight="8dp"
                                         android:layout_gravity="center"
+                                        android:layout_weight="1.2"
                                         android:gravity="right"
-                                        />
+                                        android:paddingRight="8dp"
+                                        android:text="--"
+                                        android:textColor="@color/mdy_666"
+                                        android:textSize="@dimen/text_size_10" />
                                 </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
@@ -572,18 +575,26 @@
                             android:paddingBottom="@dimen/basket_details_item_height"
                             android:layout_gravity="center"
                             android:textSize="@dimen/text_size_12"
-                            android:textColor="@color/black_details_textcolor"
+                            android:textColor="@color/more_record"
                             android:text="@string/basket_analyze_more"/>
                     </LinearLayout>
-
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="@color/home_item_bg"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/basket_item_height"
                         android:text="@string/basket_analyze_points_ranking"
-                        android:textColor="@color/basket_text_color"
-                        android:background="@color/black_title"
+                        android:textColor="@color/mdy_333"
                         android:gravity="center"
                         android:textSize="@dimen/text_size_12"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/line_football_footer"
+                        />
                     <LinearLayout
                         android:id="@+id/basket_analyze_runking"
                         android:layout_width="match_parent"
@@ -591,7 +602,6 @@
                         android:paddingLeft="@dimen/basket_details_item_height2"
                         android:paddingRight="@dimen/basket_details_item_height2"
                         android:orientation="vertical"
-                        android:background="@color/black_grounding"
                         >
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -605,7 +615,7 @@
                                 android:layout_weight="2"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/text_size_12"
-                                android:textColor="@color/black_details_ball_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:text="@string/basket_analyze_rank_team"/>
                             <TextView
                                 android:layout_width="0dp"
@@ -613,7 +623,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:textSize="@dimen/text_size_12"
-                                android:textColor="@color/black_details_ball_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:text="@string/basket_analyze_has"/>
                             <TextView
                                 android:layout_width="0dp"
@@ -621,7 +631,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:textSize="@dimen/text_size_12"
-                                android:textColor="@color/black_details_ball_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:text="@string/basket_analyze_win_lost"/>
                             <TextView
                                 android:layout_width="0dp"
@@ -629,7 +639,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:textSize="@dimen/text_size_12"
-                                android:textColor="@color/black_details_ball_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:text="@string/basket_analyze_winodds"/>
                         </LinearLayout>
                         <View
@@ -650,7 +660,7 @@
                                 android:layout_weight="2"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/text_size_11"
-                                android:textColor="@color/black_details_ball_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:text="--"/>
                             <TextView
                                 android:id="@+id/basket_ranking_guest_overgame"
@@ -659,7 +669,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:textSize="@dimen/text_size_11"
-                                android:textColor="@color/black_details_ball_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:text="--"/>
                             <TextView
                                 android:id="@+id/basket_ranking_guest_result"
@@ -668,7 +678,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:textSize="@dimen/text_size_11"
-                                android:textColor="@color/black_details_ball_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:text="--"/>
                             <TextView
                                 android:id="@+id/basket_ranking_guest_winrate"
@@ -677,7 +687,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:textSize="@dimen/text_size_11"
-                                android:textColor="@color/black_details_ball_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:text="--"/>
                         </LinearLayout>
                         <LinearLayout
@@ -693,7 +703,7 @@
                                 android:layout_weight="2"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/text_size_11"
-                                android:textColor="@color/black_details_ball_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:text="--"/>
                             <TextView
                                 android:id="@+id/basket_ranking_home_overgame"
@@ -702,7 +712,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:textSize="@dimen/text_size_11"
-                                android:textColor="@color/black_details_ball_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:text="--"/>
                             <TextView
                                 android:id="@+id/basket_ranking_home_result"
@@ -711,7 +721,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:textSize="@dimen/text_size_11"
-                                android:textColor="@color/black_details_ball_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:text="--"/>
                             <TextView
                                 android:id="@+id/basket_ranking_home_winrate"
@@ -720,7 +730,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:textSize="@dimen/text_size_11"
-                                android:textColor="@color/black_details_ball_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:text="--"/>
                         </LinearLayout>
                         <TextView
@@ -730,7 +740,7 @@
                             android:paddingBottom="@dimen/basket_details_item_height"
                             android:layout_gravity="center"
                             android:textSize="@dimen/text_size_12"
-                            android:textColor="@color/black_details_textcolor"
+                            android:textColor="@color/more_record"
                             android:text="@string/basket_analyze_all_rank"/>
                     </LinearLayout>
                     <TextView
@@ -741,19 +751,27 @@
                         android:paddingTop="@dimen/basket_details_item_height"
                         android:textSize="@dimen/text_size_12"
                         android:text="@string/basket_nodata"
-                        android:textColor="@color/black_details_ball_textcolor"
+                        android:textColor="@color/mdy_666"
                         android:gravity="center"
-                        android:background="@color/black_grounding"
                         android:visibility="gone"
                         />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="@color/home_item_bg"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/basket_item_height"
                         android:textSize="@dimen/text_size_12"
-                        android:textColor="@color/basket_text_color"
-                        android:background="@color/black_title"
+                        android:textColor="@color/mdy_333"
                         android:text="@string/basket_analyze_recent_performance"
                         android:gravity="center"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/line_football_footer"
+                        />
                     <LinearLayout
                         android:id="@+id/basket_analyze_scorewin"
                         android:layout_width="match_parent"
@@ -763,7 +781,6 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/black_grounding"
                             android:paddingTop="@dimen/basket_details_item_height2"
                             android:paddingBottom="@dimen/basket_details_item_height2"
                             >
@@ -774,7 +791,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:textSize="@dimen/text_size_12"
-                                android:textColor="@color/black_details_ball_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:text="--"/>
                             <TextView
                                 android:id="@+id/basket_score_win"
@@ -783,7 +800,7 @@
                                 android:gravity="center"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/text_size_12"
-                                android:textColor="@color/black_details_ball_textcolor"
+                                android:textColor="@color/mdy_666"
                                 />
                             <TextView
                                 android:id="@+id/basket_home_scorewinsix"
@@ -792,13 +809,12 @@
                                 android:gravity="center"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/text_size_12"
-                                android:textColor="@color/black_details_ball_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:text="--"/>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/black_grounding"
                             android:paddingTop="@dimen/basket_details_item_height2"
                             android:paddingBottom="@dimen/basket_details_item_height2"
                             >
@@ -809,7 +825,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:textSize="@dimen/text_size_12"
-                                android:textColor="@color/black_details_ball_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:text="--"/>
                             <TextView
                                 android:id="@+id/basket_score_lose"
@@ -827,7 +843,7 @@
                                 android:gravity="center"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/text_size_12"
-                                android:textColor="@color/black_details_ball_textcolor"
+                                android:textColor="@color/mdy_666"
                                 android:text="--"/>
                         </LinearLayout>
                     </LinearLayout>
@@ -839,9 +855,8 @@
                         android:paddingTop="@dimen/basket_details_item_height"
                         android:textSize="@dimen/text_size_12"
                         android:text="@string/basket_nodata"
-                        android:textColor="@color/black_details_ball_textcolor"
+                        android:textColor="@color/mdy_666"
                         android:gravity="center"
-                        android:background="@color/black_grounding"
                         android:visibility="gone"
                         />
                     <!--<View-->

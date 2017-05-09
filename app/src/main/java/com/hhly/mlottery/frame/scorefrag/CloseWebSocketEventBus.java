@@ -3,7 +3,8 @@ package com.hhly.mlottery.frame.scorefrag;
 /**
  * @author: Wangg
  * @name：xxx
- * @description: xxx
+ * @description: 关闭websocket推送
+ *
  * @created on:2017/4/13  10:33.
  */
 

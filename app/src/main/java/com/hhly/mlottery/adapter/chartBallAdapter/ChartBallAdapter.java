@@ -90,7 +90,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                 ViewHolderMsg viewHolderMsg = (ViewHolderMsg) holder;
                 viewHolderMsg.tv_name.setText(mData.get(position).getFromUser().getUserNick());
                 try {
-                    Glide.with(mContext).load(mData.get(position).getFromUser().getUserLogo()).placeholder(mContext.getResources().getDrawable(R.mipmap.center_head)).into(viewHolderMsg.bighead_view);
+                    Glide.with(MyApp.getContext()).load(mData.get(position).getFromUser().getUserLogo()).placeholder(mContext.getResources().getDrawable(R.mipmap.center_head)).into(viewHolderMsg.bighead_view);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -136,7 +136,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
             case 1:// 自己
                 ViewHolderMe viewHolderMe = (ViewHolderMe) holder;
                 try {
-                    Glide.with(mContext).load(mData.get(position).getFromUser().getUserLogo()).placeholder(mContext.getResources().getDrawable(R.mipmap.center_head)).into(viewHolderMe.my_bighead_view);
+                    Glide.with(MyApp.getContext()).load(mData.get(position).getFromUser().getUserLogo()).placeholder(mContext.getResources().getDrawable(R.mipmap.center_head)).into(viewHolderMe.my_bighead_view);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

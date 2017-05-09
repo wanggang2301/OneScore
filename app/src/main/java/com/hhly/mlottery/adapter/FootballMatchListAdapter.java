@@ -36,6 +36,7 @@ public class FootballMatchListAdapter extends BaseQuickAdapter<ListEntity> {
         baseViewHolder.setText(R.id.match_home, listEntity.homeName);
         baseViewHolder.setText(R.id.match_guest, listEntity.guestName);
 
+
     }
 
 }

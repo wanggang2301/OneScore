@@ -95,6 +95,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity
     private TextView mSportsText;
     private LeagueBean mLeague;
     private boolean mCurrentIsRanking;
+    private TextView mTitleLeagueName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,7 +187,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity
         mBack = (ImageView) this.findViewById(R.id.basket_database_details_back);
 
         mCollect = (LinearLayout) this.findViewById(R.id.basket_database_details_collect);
-
+        mTitleLeagueName = (TextView) findViewById(R.id.basket_database_leaguename_title);
     }
 
     /**
@@ -230,16 +231,20 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity
                         if (mSports == null || mSports.length == 0) {
                             mSportsText.setText("--");
                         } else {
-                            mSportsText.setText(mSports[0] + getResources().getString(R.string.basket_database_details_season));
+//                            mSportsText.setText(mSports[0] + getResources().getString(R.string.basket_database_details_season));
+                            mSportsText.setText(mSports[0]);
                         }
                     } else {
-                        mSportsText.setText(mCurrentSports + getResources().getString(R.string.basket_database_details_season));
+//                        mSportsText.setText(mCurrentSports + getResources().getString(R.string.basket_database_details_season));
+                        mSportsText.setText(mCurrentSports);
                     }
 
                     if (basketDatabaseBean.getLeagueName() == null || basketDatabaseBean.getLeagueName().equals("")) {
                         mLeagueName.setText("--");
+                        mTitleLeagueName.setText("--");
                     } else {
                         mLeagueName.setText(basketDatabaseBean.getLeagueName());
+                        mTitleLeagueName.setText(basketDatabaseBean.getLeagueName());
                     }
                     //图标
                     ImageLoader.load(BasketballDatabaseDetailsActivity.this,basketDatabaseBean.getLeagueLogoUrl(),R.mipmap.basket_default).into(mIcon);
@@ -297,8 +302,10 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity
         }
         if ((-verticalOffset) == appBarLayout.getTotalScrollRange()) {
             headLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+            mTitleLeagueName.setVisibility(View.VISIBLE);
         } else {
             headLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.transparency));
+            mTitleLeagueName.setVisibility(View.GONE);
         }
 
     }

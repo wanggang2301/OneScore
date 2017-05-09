@@ -2,7 +2,7 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_title">
+   >
 
     <FrameLayout
         android:id="@+id/basket_odds_root"
@@ -21,13 +21,13 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/basket_odds_divider" />
+                android:background="@color/line_football_footer" />
 
             <com.hhly.mlottery.widget.NoScrollListView
                 android:id="@+id/basket_odds_listview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:divider="@color/basket_odds_divider"
+                android:divider="@color/line_football_footer"
                 android:dividerHeight="0.5dp"
                 android:listSelector="#00000000" />
 

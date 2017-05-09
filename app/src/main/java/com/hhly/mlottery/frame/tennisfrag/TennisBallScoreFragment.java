@@ -27,6 +27,7 @@ import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.tennisball.TennisEventBus;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.BaseUserTopics;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.scorefrag.CloseWebSocketEventBus;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
@@ -70,7 +71,8 @@ public class TennisBallScoreFragment extends BaseWebSocketFragment implements Vi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic("USER.topic.tennis.odd");
+//        setTopic("USER.topic.tennis.odd");
+        setTopic(BaseUserTopics.oddsTennisMatch);
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
     }

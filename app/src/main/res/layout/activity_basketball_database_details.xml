@@ -101,6 +101,16 @@
                                 android:paddingLeft="8dp"
                                 android:paddingRight="8dp"
                                 android:src="@mipmap/basketball_back" />
+                            <TextView
+                                android:id="@+id/basket_database_leaguename_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:layout_toRightOf="@+id/basket_database_details_back"
+                                android:textColor="@color/home_default_icon_coloer"
+                                android:textSize="15sp"
+                                android:paddingLeft="5dp"
+                                android:text="--"/>
 
                             <LinearLayout
                                 android:id="@+id/basket_database_details_collect"

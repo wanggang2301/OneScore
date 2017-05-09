@@ -35,6 +35,7 @@ import com.hhly.mlottery.bean.enums.OddsTypeEnum;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.websocket.WebSocketCPIResult;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.BaseUserTopics;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.cpifrag.CloseCpiWebSocketEventBus;
 import com.hhly.mlottery.frame.oddfragment.CompanyChooseDialogFragment;
@@ -98,7 +99,8 @@ public class FootCpiFragment extends BaseWebSocketFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setTopic("USER.topic.indexcenter");
+//        setTopic("USER.topic.indexcenter");
+        setTopic(BaseUserTopics.indexFootball);
         setWebSocketUri(BaseURLs.WS_SERVICE);
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);

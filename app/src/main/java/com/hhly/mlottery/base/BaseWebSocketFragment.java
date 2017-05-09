@@ -116,7 +116,7 @@ public abstract class BaseWebSocketFragment extends Fragment {
 
         ws.addListener(new MyWebSocketAdapter());
 
-        L.d(TAG, "WebSocket State = " + ws.getState());
+//        L.d(TAG, "WebSocket State = " + ws.getState());
 
 
     }
@@ -162,9 +162,9 @@ public abstract class BaseWebSocketFragment extends Fragment {
                 synchronized (this) {
                     if (ws != null) {
                         if (ws.getState().equals(WebSocketState.CREATED)) {
-                            L.d(TAG, "before connect ws.getState() = " + ws.getState());
+//                            L.d(TAG, "before connect ws.getState() = " + ws.getState());
                             ws.connect();
-                            L.d(TAG, "after connect ws.getState() = " + ws.getState());
+//                            L.d(TAG, "after connect ws.getState() = " + ws.getState());
                         } else if (ws.getState().equals(WebSocketState.CLOSED)) {
                             ws = ws.recreate().connect();
                         }
@@ -269,15 +269,15 @@ public abstract class BaseWebSocketFragment extends Fragment {
         public void onStateChanged(WebSocket websocket, WebSocketState newState) throws Exception {
             super.onStateChanged(websocket, newState);
             L.d(TAG, "onStateChanged");
-            L.d(TAG, "websocket.getState() = " + websocket.getState());
-            L.d(TAG, "newState = " + newState);
+//            L.d(TAG, "websocket.getState() = " + websocket.getState());
+//            L.d(TAG, "newState = " + newState);
         }
 
         @Override
         public void onError(WebSocket websocket, WebSocketException cause) throws Exception {
             super.onError(websocket, cause);
             L.d(TAG, "onError");
-            L.d(TAG, "cause" + cause.getMessage());
+//            L.d(TAG, "cause" + cause.getMessage());
         }
 
         @Override

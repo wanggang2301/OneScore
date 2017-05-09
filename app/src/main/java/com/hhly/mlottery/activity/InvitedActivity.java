@@ -135,7 +135,7 @@ public class InvitedActivity extends BaseActivity implements View.OnClickListene
                 MobclickAgent.onEvent(this, "InvitedActivity_Save");
                 ShareBean shareBean = new ShareBean();
                 shareBean.setTitle(getApplicationContext().getResources().getString(R.string.please_invited));
-                shareBean.setSummary("【" + AppConstants.register.getData().getUser().getUserId() + "】" + "请您一起看比赛，输入邀请码，优惠多多哦。");
+                shareBean.setSummary("【" + AppConstants.register.getData().getUser().getUserId() + "】" + getResources().getString(R.string.invited_summary));
                 shareBean.setTarget_url(BaseURLs.INVITED_ACTIVITY_URL + "?userId=" + AppConstants.register.getData().getUser().getUserId());
                 shareBean.setCopy(shareBean.getTarget_url());
 

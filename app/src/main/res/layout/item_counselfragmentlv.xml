@@ -67,7 +67,9 @@
             android:paddingRight="10dp"
             android:paddingTop="10dp"
 
-            >
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
             <!--位了设置副标题于推荐的蓝色背景底部对齐，所以用了marginbotto否则在父布局用统一pading就行-->
             <ImageView
                 android:id="@+id/leftimage"

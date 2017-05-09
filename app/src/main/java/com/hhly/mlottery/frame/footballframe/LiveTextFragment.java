@@ -1,18 +1,14 @@
 package com.hhly.mlottery.frame.footballframe;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.hhly.mlottery.R;
@@ -28,7 +24,7 @@ import java.util.List;
  * @date 2016/6/7 15:40
  * @des 足球内页改版聊球-赛中状态下文字直播详情
  */
-public class LiveTextFragmentTest extends BottomSheetDialogFragment {
+public class LiveTextFragment extends Fragment {
     private static final String PARAM_TYPE = "type";
 
     private FootBallLiveTextAdapter mLiveTextAdapter;
@@ -50,8 +46,8 @@ public class LiveTextFragmentTest extends BottomSheetDialogFragment {
 
     private String status;
 
-    public static LiveTextFragmentTest newInstance(ArrayList<MatchTextLiveBean> matchTextLiveBeans, String status) {
-        LiveTextFragmentTest fragment = new LiveTextFragmentTest();
+    public static LiveTextFragment newInstance(ArrayList<MatchTextLiveBean> matchTextLiveBeans, String status) {
+        LiveTextFragment fragment = new LiveTextFragment();
         Bundle args = new Bundle();
         args.putParcelableArrayList(LIVETEXT_PARAM, matchTextLiveBeans);
         args.putString(LIVETEXT_TYPE, status);
@@ -68,6 +64,28 @@ public class LiveTextFragmentTest extends BottomSheetDialogFragment {
             status = getArguments().getString(LIVETEXT_TYPE);
         }
     }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        mView = View.inflate(getContext(), R.layout.football_live_text, null);
+        initView();
+
+        filterLiveText(matchTextLiveBeans);
+        mLiveTextAdapter = new FootBallLiveTextAdapter(getActivity(), matchTextLiveBeans);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        mRecyclerView.setAdapter(mLiveTextAdapter);
+  /*      close_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });*/
+
+        return mView;
+    }
+/*
 
     @Override
     public void setupDialog(final Dialog dialog, int style) {
@@ -89,7 +107,7 @@ public class LiveTextFragmentTest extends BottomSheetDialogFragment {
                 public void onStateChanged(@NonNull View bottomSheet, int newState) {
                     switch (newState) {
                         case BottomSheetBehavior.STATE_HIDDEN:
-                            LiveTextFragmentTest.this.dismiss();
+                            LiveTextFragment.this.dismiss();
                             break;
                         case BottomSheetBehavior.STATE_EXPANDED:
                             bottomview.setVisibility(View.VISIBLE);
@@ -107,22 +125,12 @@ public class LiveTextFragmentTest extends BottomSheetDialogFragment {
             });
         }
 
-        filterLiveText(matchTextLiveBeans);
-        mLiveTextAdapter = new FootBallLiveTextAdapter(getActivity(), matchTextLiveBeans);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mRecyclerView.setAdapter(mLiveTextAdapter);
-        close_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-    }
+    }*/
 
 
     private void initView() {
-        close_image = (ImageView) mView.findViewById(R.id.close_image);
+        //  close_image = (ImageView) mView.findViewById(R.id.close_image);
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.timerecyclerView);
         bottomview = mView.findViewById(R.id.bottomview);
 

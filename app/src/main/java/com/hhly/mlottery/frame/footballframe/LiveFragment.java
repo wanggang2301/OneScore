@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +35,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.football.EventAdapter;
 import com.hhly.mlottery.bean.footballDetails.DataStatisInfo;
+import com.hhly.mlottery.bean.footballDetails.MatchDetail;
 import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MathchStatisInfo;
@@ -41,68 +44,68 @@ import com.hhly.mlottery.bean.footballDetails.trend.TrendBean;
 import com.hhly.mlottery.bean.footballDetails.trend.TrendFormBean;
 import com.hhly.mlottery.callback.FootballLiveGotoChart;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.FootballEventComparator;
 import com.hhly.mlottery.util.FootballTrendChartComparator;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.widget.FootballEventView;
+import com.hhly.mlottery.widget.TimeView;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.hhly.mlottery.config.FootBallTypeEnum.ATTACK;
+import static com.hhly.mlottery.config.FootBallTypeEnum.ATTACK1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.CORNER;
+import static com.hhly.mlottery.config.FootBallTypeEnum.CORNER1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.DANGERATTACK;
+import static com.hhly.mlottery.config.FootBallTypeEnum.DANGERATTACK1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.DIANQIU;
+import static com.hhly.mlottery.config.FootBallTypeEnum.DIANQIU1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.FIRSTHALF;
+import static com.hhly.mlottery.config.FootBallTypeEnum.HALFTIME;
+import static com.hhly.mlottery.config.FootBallTypeEnum.RED_CARD;
+import static com.hhly.mlottery.config.FootBallTypeEnum.RED_CARD1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SCORE;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SCORE1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOT;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOT1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE12;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE2;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SUBSTITUTION;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SUBSTITUTION1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.YELLOW_CARD;
+import static com.hhly.mlottery.config.FootBallTypeEnum.YELLOW_CARD1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.YTORED;
+import static com.hhly.mlottery.config.FootBallTypeEnum.YTORED1;
 
 /**
  * @author wang gang
  * @date 2016/6/12 11:21
  * @des 足球内页改版直播(足球事件直播, 走勢統計)
  */
-public class StatisticsFragment extends Fragment implements View.OnClickListener {
-
-
-    private static String STA_PARM = "STA_PARM";
+public class LiveFragment extends Fragment implements View.OnClickListener {
 
     private static final String HOME = "1"; //主队
     private static final String GUEST = "0"; //客队
 
-
-    //主队事件
-    private static final String SCORE = "1029";//主队进球
-    private static final String RED_CARD = "1032";
-    private static final String YELLOW_CARD = "1034";
-    private static final String CORNER = "1025";
-    private static final String DIANQIU = "1031";
-
-    //客队事件
-    private static final String SCORE1 = "2053";//客队进球
-    private static final String RED_CARD1 = "2056";
-    private static final String YELLOW_CARD1 = "2058";
-    private static final String CORNER1 = "2049";
-    private static final String DIANQIU1 = "2055";
-
-
-    //走势图表
-    private static final String SHOOT = "1039";
-    private static final String SHOOTASIDE = "1040";
-    private static final String SHOOTASIDE2 = "1041";
-    private static final String DANGERATTACK = "1026";
-    private static final String ATTACK = "1024";
-
-    private static final String SHOOT1 = "2063";
-    private static final String SHOOTASIDE1 = "2064";
-    private static final String SHOOTASIDE12 = "2065";
-    private static final String DANGERATTACK1 = "2050";
-    private static final String ATTACK1 = "2048";
-
-    /**
-     * 上半场
+    /***
+     * 走势图
      */
-    private static final String FIRSTHALF = "1";
-    /**
-     * 中场
-     */
-    private static final String HALFTIME = "2";
+    private static final String TREND_DEFAULT = "0"; //维度
+    private static final String TREND_CORNER = "1"; //角球
+    private static final String TREND_GOAL = "2";  //进球
+
+    private static final String LIVEENDED = "-1";//直播结束
 
 
     private String type = "";
@@ -113,7 +116,6 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
     private final int SUCCESS = 0;// 访问成功
     private final int STARTLOADING = 1;// 正在加载中
 
-
     private LinearLayout ll_trend_main;// 走势图容器
     private FrameLayout ff;// 攻防折线图显示容器
     private FrameLayout ff_corner;// 角球折线图显示容器
@@ -123,12 +125,6 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
     private ScrollView sv_attack;
 
     private String eventType;
-
-
-    /***
-     * 统计
-     */
-
 
     private FrameLayout fl_cornerTrend_loading;// 正在加载中
     private FrameLayout fl_cornerTrend_networkError;// 访问失败
@@ -144,12 +140,12 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
 
     private MathchStatisInfo mMathchStatisInfo;
 
-
     private RadioGroup radioGroup;
 
     private LinearLayout rl_event;
     private RelativeLayout ll_statistics;
 
+    private FrameLayout fl_live_text;
     private NestedScrollView mNestedScrollView_trend;
     private NestedScrollView mNestedScrollView_event;
     private NestedScrollView mNestedScrollView_nodata;
@@ -162,21 +158,9 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
     private List<MatchTimeLiveBean> eventMatchLive = new ArrayList<>();
 
     private LinearLayout ll_nodata;
+    private LinearLayout ll_event;
 
     private FootballLiveGotoChart mFootballLiveGotoChart;
-
-    public void setmFootballLiveGotoChart(FootballLiveGotoChart mFootballLiveGotoChart) {
-        this.mFootballLiveGotoChart = mFootballLiveGotoChart;
-    }
-
-    /***
-     * 走势图
-     */
-
-    private static final String TREND_DEFAULT = "0"; //维度
-    private static final String TREND_CORNER = "1"; //角球
-    private static final String TREND_GOAL = "2";  //进球
-
 
     private LineChart chart_shoot;  //射正  //射正+进球
     private LineChart chart_shootAside; //射偏   //射偏
@@ -211,9 +195,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
     private int attackHome;
     private int attackGuest;
 
-
     private TrendFormBean trendFormBean;
-
 
     private XAxis shotXAxis;
     private YAxis shotYAxis;
@@ -234,17 +216,17 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
 
 
     private TextView tv_shot;
-    private TextView tv_shot_home;
-    private TextView tv_shot_guest;
+//    private TextView tv_shot_home;
+//    private TextView tv_shot_guest;
     private TextView tv_shotAside;
-    private TextView tv_shotAside_home;
-    private TextView tv_shotAside_guest;
+//    private TextView tv_shotAside_home;
+//    private TextView tv_shotAside_guest;
     private TextView tv_dangerAttack;
-    private TextView tv_dangerAttack_home;
-    private TextView tv_dangerAttack_guest;
+//    private TextView tv_dangerAttack_home;
+//    private TextView tv_dangerAttack_guest;
     private TextView tv_attack;
-    private TextView tv_attack_home;
-    private TextView tv_attack_guest;
+//    private TextView tv_attack_home;
+//    private TextView tv_attack_guest;
 
     private TextView goChart;
 
@@ -253,31 +235,56 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
     private Activity mActivity;
 
 
-    public static StatisticsFragment newInstance() {
-        StatisticsFragment fragment = new StatisticsFragment();
+    //  private MatchDetail mMatchDetail;
+
+    private List<MatchTextLiveBean> matchLive;
+    private List<Integer> allMatchLiveMsgId;
+
+
+    /**
+     * 时间轴的集合
+     */
+    private List<MatchTimeLiveBean> xMatchLive = new ArrayList<>();
+
+    //时间轴的view
+    private TimeView timeView;
+    private FootballEventView timeLayoutTop;
+    private FootballEventView timeLayoutBottom;
+
+    private NoLiveTextFragment mNoLiveTextFragment;
+    private LiveTextFragment mliveTextFragment;
+    private FinishMatchLiveTextFragment finishMatchLiveTextFragment;//完场
+
+    private boolean isLoading = false;// 是否已加载过数据
+
+    public void setmFootballLiveGotoChart(FootballLiveGotoChart mFootballLiveGotoChart) {
+        this.mFootballLiveGotoChart = mFootballLiveGotoChart;
+    }
+
+
+    public static LiveFragment newInstance() {
+        LiveFragment fragment = new LiveFragment();
         return fragment;
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_statistics, container, false);
+        mView = inflater.inflate(R.layout.fragment_lives, container, false);
         mContext = mActivity;
         initView();
-        L.d("112233", "初始化View");
         return mView;
     }
 
     public void finishMatchRequest() {
-        getVolleyData();
-        getVolleyDataStatic();
+        getLiveStatic();
+        getTrenFormInfo();
     }
 
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
             case R.id.goChart:
                 if (mFootballLiveGotoChart != null) {
                     mFootballLiveGotoChart.onClick();
@@ -285,13 +292,11 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
                 break;
 
             case R.id.reLoading:
-                getVolleyData();
-
+                getTrenFormInfo();
                 break;
 
             case R.id.reLoadin:
-                getVolleyDataStatic();
-
+                getLiveStatic();
                 break;
         }
     }
@@ -301,6 +306,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
      */
     private void initView() {
         radioGroup = (RadioGroup) mView.findViewById(R.id.radio_group);
+        fl_live_text = (FrameLayout) mView.findViewById(R.id.fl_live_text);
         mNestedScrollView_event = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_event);
         mNestedScrollView_trend = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_trend);
         //  mNestedScrollView_nodata = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_nodata);
@@ -311,26 +317,36 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         recyclerView.setNestedScrollingEnabled(false);
 
         ll_nodata = (LinearLayout) mView.findViewById(R.id.nodata);
+        ll_event = (LinearLayout) mView.findViewById(R.id.ll_event);
 
         mNestedScrollView_event.setFillViewport(true);
+
+        //x时间轴
+        timeView = (TimeView) mView.findViewById(R.id.time_football);
+        timeLayoutTop = (FootballEventView) mView.findViewById(R.id.time_layout_top);
+        timeLayoutBottom = (FootballEventView) mView.findViewById(R.id.time_layout_bottom);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 int radioButtonId = radioGroup.getCheckedRadioButtonId();
                 switch (radioButtonId) {
-                    case R.id.live_event:
-                        //  if (!eventType.equals("0")) {
-                        mNestedScrollView_event.setVisibility(View.VISIBLE);
+
+                    case R.id.live_text:
+                        fl_live_text.setVisibility(View.VISIBLE);
+                        mNestedScrollView_event.setVisibility(View.GONE);
                         mNestedScrollView_trend.setVisibility(View.GONE);
-                        // }
 
                         break;
+                    case R.id.live_event:
+                        fl_live_text.setVisibility(View.GONE);
+                        mNestedScrollView_event.setVisibility(View.VISIBLE);
+                        mNestedScrollView_trend.setVisibility(View.GONE);
+                        break;
                     case R.id.live_statistics:
-                        // if (!eventType.equals("0")) {
+                        fl_live_text.setVisibility(View.GONE);
                         mNestedScrollView_event.setVisibility(View.GONE);
                         mNestedScrollView_trend.setVisibility(View.VISIBLE);
-                        // }
                         break;
                     default:
                         break;
@@ -393,17 +409,17 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
 
 
         tv_shot = (TextView) mView.findViewById(R.id.tv_shoot);
-        tv_shot_home = (TextView) mView.findViewById(R.id.tv_shot_home);
-        tv_shot_guest = (TextView) mView.findViewById(R.id.tv_shot_guest);
+//        tv_shot_home = (TextView) mView.findViewById(R.id.tv_shot_home);
+//        tv_shot_guest = (TextView) mView.findViewById(R.id.tv_shot_guest);
         tv_shotAside = (TextView) mView.findViewById(R.id.tv_shotAside);
-        tv_shotAside_home = (TextView) mView.findViewById(R.id.tv_shotAside_home);
-        tv_shotAside_guest = (TextView) mView.findViewById(R.id.tv_shotAside_guest);
+//        tv_shotAside_home = (TextView) mView.findViewById(R.id.tv_shotAside_home);
+//        tv_shotAside_guest = (TextView) mView.findViewById(R.id.tv_shotAside_guest);
         tv_dangerAttack = (TextView) mView.findViewById(R.id.tv_dangerAttack);
-        tv_dangerAttack_home = (TextView) mView.findViewById(R.id.tv_dangerAttack_home);
-        tv_dangerAttack_guest = (TextView) mView.findViewById(R.id.tv_dangerAttack_guest);
+//        tv_dangerAttack_home = (TextView) mView.findViewById(R.id.tv_dangerAttack_home);
+//        tv_dangerAttack_guest = (TextView) mView.findViewById(R.id.tv_dangerAttack_guest);
         tv_attack = (TextView) mView.findViewById(R.id.tv_attack);
-        tv_attack_home = (TextView) mView.findViewById(R.id.tv_attack_home);
-        tv_attack_guest = (TextView) mView.findViewById(R.id.tv_attack_guest);
+//        tv_attack_home = (TextView) mView.findViewById(R.id.tv_attack_home);
+//        tv_attack_guest = (TextView) mView.findViewById(R.id.tv_attack_guest);
 
 
         goChart = (TextView) mView.findViewById(R.id.goChart);
@@ -491,50 +507,132 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
     }
 
 
-    public void setChartName(String home, String guest) {
-        tv_shot_home.setText(home);
-        tv_shot_guest.setText(guest);
-        tv_shotAside_home.setText(home);
-        tv_shotAside_guest.setText(guest);
-        tv_dangerAttack_home.setText(home);
-        tv_dangerAttack_guest.setText(guest);
-        tv_attack_home.setText(home);
-        tv_attack_guest.setText(guest);
-    }
+//    public void setChartName(String home, String guest) {
+//        tv_shot_home.setText(home);
+//        tv_shot_guest.setText(guest);
+//        tv_shotAside_home.setText(home);
+//        tv_shotAside_guest.setText(guest);
+//        tv_dangerAttack_home.setText(home);
+//        tv_dangerAttack_guest.setText(guest);
+//        tv_attack_home.setText(home);
+//        tv_attack_guest.setText(guest);
+//    }
 
 
     /**
      * 足球事件直播
      */
-    public void setEventMatchLive(String livestatus, List<MatchTimeLiveBean> matchTimeLiveBeanMs) {
+    public void setEventMatchLive(MatchDetail matchDetail, List<MatchTimeLiveBean> matchTimeLiveBeanMs) {
         //统计事件个数
         this.eventMatchLive = matchTimeLiveBeanMs;
-        eventType = livestatus;
+        this.eventType = matchDetail.getLiveStatus();
 
-        if ("0".equals(livestatus)) {
-            L.d("112233", "tttt");
 
+        if ("0".equals(eventType)) {
+
+            mNoLiveTextFragment = NoLiveTextFragment.newInstance();
+            if(getActivity()!=null){
+                addFragmentToActivity(getChildFragmentManager(), mNoLiveTextFragment, R.id.fl_live_text);
+
+            }
             ll_nodata.setVisibility(View.VISIBLE);
-            // mNestedScrollView_event.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.GONE);
-
-
+            ll_event.setVisibility(View.GONE);
             mNestedScrollView_trend.setVisibility(View.GONE);
-        } else if ("1".equals(livestatus) || "-1".equals(livestatus)) {   //-1代表完场  1代表直播中
-            L.d("112233", "vvvvvvvvvv");
+        } else if ("1".equals(eventType) || "-1".equals(eventType)) {   //-1代表完场  1代表直播中
+
 
             ll_nodata.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
+            ll_event.setVisibility(View.VISIBLE);
             mNestedScrollView_trend.setVisibility(View.VISIBLE);
-            computeEventNum(livestatus);
-            eventAdapter = new EventAdapter(mContext, eventMatchLive);
-            recyclerView.setAdapter(eventAdapter);
+
+            //文字直播
+            initLiveText(matchDetail);
+
+            //时间轴和事件
+            initEvent(matchDetail);
+
         }
     }
+
+
+    /**
+     * 比赛赛中、赛后初始化数据文字直播
+     */
+    private void initLiveText(MatchDetail mMatchDetail) {
+        matchLive = new ArrayList<MatchTextLiveBean>();
+        matchLive = mMatchDetail.getMatchInfo().getMatchLive();
+        if (matchLive == null) {
+            return;
+        }
+
+        allMatchLiveMsgId = new ArrayList<>();
+        for (MatchTextLiveBean ml : matchLive) {
+            if (ml.getMsgId() != null && !"".equals(ml.getMsgId())) {
+                allMatchLiveMsgId.add(Integer.parseInt(ml.getMsgId()));
+            }
+        }
+
+        //赛果
+        if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
+            finishMatchLiveTextFragment = FinishMatchLiveTextFragment.newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
+            if(getActivity()!=null){
+                addFragmentToActivity(getChildFragmentManager(), finishMatchLiveTextFragment, R.id.fl_live_text);
+            }
+
+        } else { //赛中
+            L.d("xxccvv", "赛中" + matchLive.size());
+            mliveTextFragment = LiveTextFragment.newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
+            if(getActivity()!=null){
+                addFragmentToActivity(getChildFragmentManager(), mliveTextFragment, R.id.fl_live_text);
+            }
+
+        }
+    }
+
+
+    private void initEvent(MatchDetail mMatchDetail) {
+        if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
+            if (mMatchDetail.getMatchInfo().getMatchTimeLive() != null) {
+                xMatchLive = mMatchDetail.getMatchInfo().getMatchTimeLive();//完场直接有数据
+                secondToMinute(xMatchLive);
+                String time = "5400000";//90分钟的毫秒数
+                showFootballEventByState();
+                showTimeView(time);//画一下时间轴
+            }
+
+        } else { //赛中
+            initFootBallEventData(mMatchDetail);
+        }
+
+
+        computeEventNum(eventType);
+        eventAdapter = new EventAdapter(mContext, eventMatchLive);
+        recyclerView.setAdapter(eventAdapter);
+    }
+
+    /**
+     * 赛中的时间轴数据，从文字直播数据中筛选
+     *
+     * @param mMatchDetail
+     */
+    public void initFootBallEventData(MatchDetail mMatchDetail) {
+        // matchLive = mMatchDetail.getMatchInfo().getMatchLive();
+        getTimeLive();
+        showFootballEventByState();
+    }
+
 
     public void updateRecycleView(String status) {
         computeEventNum(status);
         eventAdapter.notifyDataSetChanged();
+    }
+
+
+    //文字直播推送刷新
+    public void setLiveTextDetails(List<MatchTextLiveBean> matchLive) {
+        if (mliveTextFragment != null) {
+            mliveTextFragment.updataLiveTextAdapter(matchLive);
+        }
     }
 
 
@@ -557,7 +655,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
      * <p/>
      * eventMatchTimeLiveList.add(new MatchTimeLiveBean(matchTextLiveBean.getTime(), matchTextLiveBean.getCode(), matchTextLiveBean.getHomeScore() + " : " + matchTextLiveBean.getGuestScore(), matchTextLiveBean.getMsgId(), HALFTIME, matchTextLiveBean.getPlayInfo(), 0));
      */
-    public void addFootBallEvent(MatchTextLiveBean matchTextLiveBean) {
+    public void addVerticalFootBallEvent(MatchTextLiveBean matchTextLiveBean) {
         String place = matchTextLiveBean.getMsgPlace();
         if (matchTextLiveBean.getMsgPlace().equals("2")) {//客队
             place = "0";  //客队
@@ -571,19 +669,6 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         }
     }
 
-
-    /**
-     * 取消对应的事件直播
-     */
-    public void cancelFootBallEvent(MatchTextLiveBean matchTextLiveBean) {
-        Iterator<MatchTimeLiveBean> iterator = eventMatchLive.iterator();
-        while (iterator.hasNext()) {
-            MatchTimeLiveBean bean = iterator.next();
-            if (bean.getEnNum().equals(matchTextLiveBean.getCancelEnNum())) {//取消进球等事件的判断
-                iterator.remove();//用xMatchLive.remove会有异常
-            }
-        }
-    }
 
     private void computeEventNum(String status) {
         int homeGoal = 0;
@@ -660,18 +745,12 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
      */
     public void initChartData(String id) {
         if ("0".equals(id)) {
-
             trendChartList = new ArrayList<MatchTextLiveBean>();
-
-            // trendChartList.add(new MatchTextLiveBean("1029", "", "", "", "", "3000000", "", "", "", "", "", "", "", ""));
-
             firstInitChartValues();
-
             liveMatchTrendData();
 
         } else if ("1".equals(id)) {
             firstInitChartValues();
-
             liveMatchTrendData();
         }
     }
@@ -1006,34 +1085,9 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         setChartScore();
     }
 
-
     private void showTrendChartView(LineChart mChart, List<Entry> homeEntry, List<Entry> guestEntry, List<Integer> homeColors, List<Integer> guestColors) {
         LineDataSet mHomeLineDataSet;
         LineDataSet mGuestLineDataSet;
-
-
-       /* if (mChart.getData() != null && mChart.getData().getDataSetCount() > 0) {
-
-
-            L.d("hhhhjjj", "刷新chart" + homeEntry.size());
-            // L.d("hhhhjjj", "刷新chart" + guestEntry.size());
-            L.d("hhhhjjj", "刷新chart" + homeColors.size());
-            // L.d("hhhhjjj", "刷新chart" + guestColors.size());
-
-            mHomeLineDataSet = (LineDataSet) mChart.getData().getDataSetByIndex(0);
-            // mGuestLineDataSet = (LineDataSet) mChart.getData().getDataSetByIndex(1);
-
-            mHomeLineDataSet.setValues(homeEntry);
-            // mGuestLineDataSet.setValues(guestEntry);
-            mHomeLineDataSet.setCircleColors(homeColors);
-            //  mGuestLineDataSet.setCircleColors(guestColors);
-
-            mChart.getData().notifyDataChanged();
-            mChart.notifyDataSetChanged();
-
-
-        } else {*/
-
 
         mHomeLineDataSet = new LineDataSet(homeEntry, "");
         mHomeLineDataSet.setDrawHighlightIndicators(false);
@@ -1069,10 +1123,6 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         mChart.setData(lineData);
 
         mChart.invalidate();
-
-
-        // }
-
     }
 
 
@@ -1208,8 +1258,6 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
 
         //比较四个坐标轴时间，取最大的time值
 
-        L.d("hhhhjjj", maxXais + "");
-
         if (maxXais >= 45f) {
             shotXAxis.setAxisMaxValue(getXMaxValue(maxXais, FINISHMATCH));
             shotXAxis.setLabelCount(getXLabelCount(maxXais, FINISHMATCH));
@@ -1294,13 +1342,9 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
 
 
     public void addTrendChartEvent(MatchTextLiveBean matchTextLiveBean) {
-
-        L.d("223344", "直播中走勢圖測試");
         trendChartList.add(matchTextLiveBean);
         updateChartView();
-
         liveMatchTrendData();
-
     }
 
     public void cancelTrendChartEvent(MatchTextLiveBean matchTextLiveBean) {
@@ -1322,10 +1366,8 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
      *
      * @return
      */
-    private void getVolleyData() {
-        if (getActivity() == null) {
-            return;
-        }
+    private void getTrenFormInfo() {
+
         mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
         // 获取对象ID
         String mThirdId = ((FootballMatchDetailActivity) getActivity()).mThirdId;
@@ -1334,8 +1376,6 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         // 设置参数
         Map<String, String> myPostParams = new HashMap<>();
         myPostParams.put("matchId", mThirdId);
-
-        // String url = "http://192.168.10.242:8181/mlottery/core/trendForm.findTrendForm.do";
 
         VolleyContentFast.requestJsonByPost(BaseURLs.URL_FOOTBALL_DETAIL_FINDTRENDFORM_INFO, myPostParams, new VolleyContentFast.ResponseSuccessListener<FootballTrendBean>() {
             @Override
@@ -1374,7 +1414,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
      *
      * @return
      */
-    public void getVolleyDataStatic() {
+    public void getLiveStatic() {
 
         mHandlerStatics.sendEmptyMessage(STARTLOADING);// 正在加载中
         Map<String, String> map = new HashMap<>();
@@ -1382,14 +1422,12 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
             return;
         } else {
             map.put("thirdId", ((FootballMatchDetailActivity) getActivity()).mThirdId);
-
             VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_STATISTICAL_DATA_INFO, map, new VolleyContentFast.ResponseSuccessListener<DataStatisInfo>() {
                 @Override
                 public void onResponse(DataStatisInfo json) {
                     if (json != null && "200".equals(json.getResult())) {
                         mHomeStatisEntity = json.getHomeStatis();
                         mGuestStatisEntity = json.getGuestStatis();
-                        //initJson("-1");//初始化json数据，绑定txt
                         mHandlerStatics.sendEmptyMessage(SUCCESS);// 访问成功
                     }
                 }
@@ -1414,8 +1452,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
      *
      * @param id
      */
-    public void initJson(String id) {
-
+    public void initLiveStatics(String id) {
         //未开赛
         if ("0".equals(id)) {
             prohome_team.setProgress(50);
@@ -1478,7 +1515,6 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
             home_lineout_txt.setText(mMathchStatisInfo.getHome_lineOut() + "");
 
         } else if ("-1".equals(id)) {//完场
-            // getVolleyDataStatic();
         }
     }
 
@@ -1498,11 +1534,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
                     fl_attackTrend_networkError.setVisibility(View.GONE);
                     ll_trend_main.setVisibility(View.VISIBLE);
 
-                    L.d("112233", "请求成功");
-
-
                     finishMatchTrendData();
-
 
                     break;
                 case ERROR:// 加载失败
@@ -1585,5 +1617,194 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (Activity) context;
+    }
+
+    public static void addFragmentToActivity(FragmentManager fragmentManager, Fragment fragment, int frameId) {
+        if (fragmentManager != null && fragment != null) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+            transaction.replace(frameId, fragment)
+                    .disallowAddToBackStack()
+                    .commit();
+            //transaction.add(frameId, fragment);
+
+            //transaction.commitAllowingStateLoss();
+        }
+    }
+
+
+    /**
+     * 完场将时间改为分钟
+     *
+     * @param xMatchLive
+     */
+    private void secondToMinute(List<MatchTimeLiveBean> xMatchLive) {
+        for (MatchTimeLiveBean timeLiveBean : xMatchLive) {
+            int time = StadiumUtils.convertStringToInt(timeLiveBean.getTime());
+            if (time > 45 && timeLiveBean.getState().equals(FIRSTHALF)) {//上半场
+                time = 45;
+            }
+            if (time > 90) {
+                time = 90;
+            }
+            if (timeLiveBean.getState().equals(HALFTIME)) {
+                time = 46;
+            }
+            timeLiveBean.setTime(time + "");
+        }
+    }
+
+    /**
+     * 展示足球事件。根据比赛状态
+     */
+    public void showFootballEventByState() {
+        Collections.sort(xMatchLive, new FootballEventComparator());
+
+        Map<String, List<MatchTimeLiveBean>> timeEventMap1 = new LinkedHashMap<String, List<MatchTimeLiveBean>>();//LinkedHashMap保证map有序
+        Map<String, List<MatchTimeLiveBean>> timeEventMap2 = new LinkedHashMap<String, List<MatchTimeLiveBean>>();
+
+        for (MatchTimeLiveBean data : xMatchLive) {
+            List<MatchTimeLiveBean> temp1 = timeEventMap1.get(data.getTime());
+            List<MatchTimeLiveBean> temp2 = timeEventMap2.get(data.getTime());
+            if (temp1 == null) {
+                temp1 = new ArrayList<>();
+            }
+            if (temp2 == null) {
+                temp2 = new ArrayList<>();
+            }
+            if (data.getIsHome().equals("1")) {//主队
+                temp1.add(data);
+                timeEventMap1.put(data.getTime(), temp1);
+            }
+            if (data.getIsHome().equals("0")) {//客队
+                temp2.add(data);
+                timeEventMap2.put(data.getTime(), temp2);
+            }
+
+        }
+
+        timeLayoutTop.setEventImageByState(timeEventMap1);
+        timeLayoutBottom.setEventImageByState(timeEventMap2);
+
+
+    }
+
+    /**
+     * 展示时间轴时间
+     */
+    public void showTimeView(String mKeepTime) {
+        if (mKeepTime == null) {
+            mKeepTime = "0";
+        }
+        timeView.updateTime(Integer.parseInt(mKeepTime));
+    }
+
+    /**
+     * 赛中时获取时间轴数据
+     */
+    private void getTimeLive() {
+        xMatchLive = new ArrayList<>();
+        if (matchLive == null) {
+            return;
+        }
+        Iterator<MatchTextLiveBean> iterator1 = matchLive.iterator();
+        while (iterator1.hasNext()) {
+            MatchTextLiveBean bean1 = iterator1.next();
+            if (bean1.getCode().equals(SCORE) || bean1.getCode().equals(SCORE1) ||
+                    bean1.getCode().equals(RED_CARD) || bean1.getCode().equals(RED_CARD1) ||
+                    bean1.getCode().equals(YTORED) || bean1.getCode().equals(YTORED1) ||
+                    bean1.getCode().equals(YELLOW_CARD) || bean1.getCode().equals(YELLOW_CARD1) ||
+                    bean1.getCode().equals(CORNER) || bean1.getCode().equals(CORNER1) ||
+                    bean1.getCode().equals(SUBSTITUTION) || bean1.getCode().equals(SUBSTITUTION1)
+                //  bean1.getCode().equals(FIRSTOVER)//把上半场结束的状态也加进来
+                    ) {
+                String place = bean1.getMsgPlace();
+                if (place.equals("2")) {//客队
+                    place = "0";//isHome=0客队
+                }
+
+                MatchTimeLiveBean timeLiveBean = new MatchTimeLiveBean(secondToMInute(bean1) + "", bean1.getCode(),//这里时间直接转换为分钟，就会一样了
+                        place, bean1.getEnNum(), bean1.getState(), "", bean1.getEnNum(), 0);
+                xMatchLive.add(timeLiveBean);
+
+            }
+
+        }
+
+        for (MatchTextLiveBean bean : matchLive) {
+            Iterator<MatchTimeLiveBean> iterator2 = xMatchLive.iterator();
+            while (iterator2.hasNext()) {
+                MatchTimeLiveBean bean2 = iterator2.next();
+                if (bean2.getMsgId().equals(bean.getCancelEnNum())) {
+                    iterator2.remove();//去掉已经取消的
+                }
+            }
+        }
+
+
+    }
+
+    /**
+     * 赛中将时间改为分钟
+     *
+     * @param bean
+     * @return
+     */
+    private int secondToMInute(MatchTextLiveBean bean) {
+        int time = StadiumUtils.convertStringToInt(bean.getTime());
+        if (time > 45 && bean.getState().equals(FIRSTHALF)) {//上半场
+            time = 45;
+        }
+        if (time > 90) {
+            time = 90;
+        }
+        if (bean.getState().equals(HALFTIME)) {
+            time = 46;
+        }
+        return time;
+
+    }
+
+    /**
+     * 把事件从文字直播集合中取出加到时间轴集合中
+     *
+     * @param matchTextLiveBean
+     */
+    public void addFootballEvent(MatchTextLiveBean matchTextLiveBean) {
+        String place = matchTextLiveBean.getMsgPlace();
+        if (matchTextLiveBean.getMsgPlace().equals("2")) {//客队
+            place = "0";
+        }
+
+        xMatchLive.add(new MatchTimeLiveBean(secondToMInute(matchTextLiveBean) + "",
+                matchTextLiveBean.getCode(), place, matchTextLiveBean.getEnNum(), matchTextLiveBean.getState(), "", matchTextLiveBean.getEnNum(), 0));
+    }
+
+    /**
+     * 取消对应的足球事件
+     */
+
+    public void cancelFootBallEvent(MatchTextLiveBean matchTextLiveBean) {
+        Iterator<MatchTimeLiveBean> iterator = xMatchLive.iterator();
+        while (iterator.hasNext()) {
+            MatchTimeLiveBean bean = iterator.next();
+            if (bean.getMsgId().equals(matchTextLiveBean.getCancelEnNum())) {//取消进球等事件的判断
+                iterator.remove();//用xMatchLive.remove会有异常
+            }
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

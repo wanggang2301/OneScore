@@ -112,23 +112,23 @@ public class AppConstants {
     public static final int THIRTY = 30;
     public static final int THIRTY_ONE = 31;
     public static final int THIRTY_TWO = 32;
-    public static final int THIRTY_THREE = 33;
-    public static final int THIRTY_FOUR = 34;
-    public static final int THIRTY_FIVE = 35;
-    public static final int THIRTY_SIX = 36;
-    public static final int THIRTY_SEVEN = 37;
-    public static final int THIRTY_EIGHT = 38;
-    public static final int THIRTY_NINE = 39;
-    public static final int FORTY = 40;
-    public static final int FORTY_ONE = 41;
-    public static final int FORTY_TWO = 42;
-    public static final int FORTY_THREE = 43;
-    public static final int FORTY_FOUR = 44;
-    public static final int FORTY_FIVE = 45;
-    public static final int FORTY_SIX = 46;
-    public static final int FORTY_SEVEN = 47;
-    public static final int FORTY_EIGHT = 48;
-    public static final int FORTY_NINE = 49;
+//    public static final int THIRTY_THREE = 33;
+//    public static final int THIRTY_FOUR = 34;
+//    public static final int THIRTY_FIVE = 35;
+//    public static final int THIRTY_SIX = 36;
+//    public static final int THIRTY_SEVEN = 37;
+//    public static final int THIRTY_EIGHT = 38;
+//    public static final int THIRTY_NINE = 39;
+//    public static final int FORTY = 40;
+//    public static final int FORTY_ONE = 41;
+//    public static final int FORTY_TWO = 42;
+//    public static final int FORTY_THREE = 43;
+//    public static final int FORTY_FOUR = 44;
+//    public static final int FORTY_FIVE = 45;
+//    public static final int FORTY_SIX = 46;
+//    public static final int FORTY_SEVEN = 47;
+//    public static final int FORTY_EIGHT = 48;
+//    public static final int FORTY_NINE = 49;
 
     // 北京赛车开奖号码
     public static int[] numberCarNos = {R.mipmap.car_no1, R.mipmap.car_no2, R.mipmap.car_no3, R.mipmap.car_no4, R.mipmap.car_no5, R.mipmap.car_no6, R.mipmap.car_no7,
@@ -189,19 +189,19 @@ public class AppConstants {
             R.mipmap.number_anim_blue2, R.mipmap.number_anim_blue3};
 
     // 首页跳转key_value
-    public static final String FOTTBALL_KEY = "football";// 足球界面跳转Key
-    public static final int FOTTBALL_SCORE_VALUE = 0;// 足球比分跳转value
-    public static final int BASKETBALL_SCORE_VALUE = 5;// 篮球比分跳转value
-    public static final int FOTTBALL_INFORMATION_VALUE = 1;// 足球资讯跳转value
-    public static final String FOTTBALL_INFO_LABEL_KEY = "sportsInfoIndex";// 足球资讯标签Key
-    public static final int FOTTBALL_DATA_VALUE = 2;// 足球数据跳转value
-    public static final int FOTTBALL_VIDEO_VALUE = 3;// 足球视频跳转value
-    public static final int FOTTBALL_EXPONENT_VALUE = 4;// 足球指数跳转value
-    public static final String BASKETBALL_KEY = "basketball";// 篮球界面跳转Key
-    public static final int BASKETBALL_SCORE_KEY = 0;// 篮球即时跳转value
-    public static final int BASKETBALL_AMIDITHION_VALUE = 1;// 篮球赛果跳转value
-    public static final int BASKETBALL_COMPETITION_VALUE = 2;// 篮球赛程跳转value
-    public static final int BASKETBALL_ATTENTION_VALUE = 3;// 篮球关注跳转value
+//    public static final String FOTTBALL_KEY = "football";// 足球界面跳转Key
+//    public static final int FOTTBALL_SCORE_VALUE = 0;// 足球比分跳转value
+//    public static final int BASKETBALL_SCORE_VALUE = 5;// 篮球比分跳转value
+//    public static final int FOTTBALL_INFORMATION_VALUE = 1;// 足球资讯跳转value
+//    public static final String FOTTBALL_INFO_LABEL_KEY = "sportsInfoIndex";// 足球资讯标签Key
+//    public static final int FOTTBALL_DATA_VALUE = 2;// 足球数据跳转value
+//    public static final int FOTTBALL_VIDEO_VALUE = 3;// 足球视频跳转value
+//    public static final int FOTTBALL_EXPONENT_VALUE = 4;// 足球指数跳转value
+//    public static final String BASKETBALL_KEY = "basketball";// 篮球界面跳转Key
+//    public static final int BASKETBALL_SCORE_KEY = 0;// 篮球即时跳转value
+//    public static final int BASKETBALL_AMIDITHION_VALUE = 1;// 篮球赛果跳转value
+//    public static final int BASKETBALL_COMPETITION_VALUE = 2;// 篮球赛程跳转value
+//    public static final int BASKETBALL_ATTENTION_VALUE = 3;// 篮球关注跳转value
     public static final String LOTTERY_KEY = "numberName";// 彩票界面跳转Key
     public static final String HOME_PAGER_DATA_KEY = "homePagerDataKey";// 首页缓存数据key
     public static final String HOME_PAGER_VERSION_UPDATE_KEY = "homePagerVersionUpdate";// 首页忽略此版本

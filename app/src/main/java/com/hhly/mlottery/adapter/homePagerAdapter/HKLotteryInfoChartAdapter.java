@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.numbersBean.LotteryInfoHKChartBean;
 
@@ -32,7 +33,7 @@ public class HKLotteryInfoChartAdapter extends BaseQuickAdapter<LotteryInfoHKCha
     protected void convert(BaseViewHolder baseViewHolder, LotteryInfoHKChartBean.DataBean dataBean) {
         ImageView lotteryImg = baseViewHolder.getView(R.id.iv_chart_icon);
         try {
-            Glide.with(mContext).load(dataBean.getPicUrl()).error(mContext.getResources().getDrawable(R.mipmap.home_data_info_def)).into(lotteryImg);
+            Glide.with(MyApp.getContext()).load(dataBean.getPicUrl()).error(mContext.getResources().getDrawable(R.mipmap.home_data_info_def)).into(lotteryImg);
         } catch (Resources.NotFoundException e) {
             e.printStackTrace();
         }

@@ -37,7 +37,6 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.DisplayUtil;
-import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
@@ -67,40 +66,52 @@ import de.greenrobot.event.EventBus;
 /**
  * @ClassName: OneScoreGit
  * @author:Administrator luyao
- * @Description:   个人中心
+ * @Description: 个人中心
  * @data: 2016/7/11 17:53
  */
 public class ProfileActivity extends Activity implements View.OnClickListener {
 
-    public static String TAG = "ProfileActivity";
+    private String TAG = "ProfileActivity";
     /*昵称*/
     private TextView tv_nickname;
 
     /*头像*/
     private ImageView mHead_portrait;//头像
 
-    /** 拍照获得图片Url */
+    /**
+     * 拍照获得图片Url
+     */
     private Uri mCamerUri;
 
     /** 头像Bitmap */
-    private Bitmap mHeadBitmap;
+//    private Bitmap mHeadBitmap;
 
-    /** 裁剪图片code */
-    private final static int REQUEST_IMAGE_CROP = 2000;
-    /** 相册获得图片code */
-    private final static int REQUEST_IMAGE_CHOICE = 10;
-    /** 拍照获得图片code */
-    private final static int REQUEST_IMAGE_CAPTURE = 20;
+    /**
+     * 裁剪图片code
+     */
+    private final int REQUEST_IMAGE_CROP = 2000;
+    /**
+     * 相册获得图片code
+     */
+    private final int REQUEST_IMAGE_CHOICE = 10;
+    /**
+     * 拍照获得图片code
+     */
+    private final int REQUEST_IMAGE_CAPTURE = 20;
 
-    public static final int REQUESTCODE_CHOSE = 100;
+    private final int REQUESTCODE_CHOSE = 100;
 
     /*图片上传url*/
-    String PUT_URL="http://file.13322.com/upload/uploadImage.do";
+    String PUT_URL = "http://file.13322.com/upload/uploadImage.do";
 
-    /**图片裁剪宽度*/
+    /**
+     * 图片裁剪宽度
+     */
     private int width = 300;
 
-    /**图片裁剪高度*/
+    /**
+     * 图片裁剪高度
+     */
     private int height = 300;
 
 
@@ -110,10 +121,10 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
 
     private final OkHttpClient client = new OkHttpClient();
 
-    private static final String IMAGE_STORAGGEID = "/headview/image.png";
-    private static final String IMAGE = "image.png";
-    private static final String STORAGGEID = "/headview";
-    private List<String> sexDatas=new ArrayList<>();
+    //    private final String IMAGE_STORAGGEID = "/headview/image.png";
+    private final String IMAGE = "image.png";
+    private final String STORAGGEID = "/headview";
+    private List<String> sexDatas = new ArrayList<>();
 
     private AlertDialog alertDialog;
 
@@ -168,13 +179,13 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
         super.onResume();
         MobclickAgent.onResume(this);
         tv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
-        if(AppConstants.register.getData().getUser().getSex()!=null){
-            if(AppConstants.register.getData().getUser().getSex().equals("1")){
-                sexChange(R.color.home_logo_color,R.mipmap.man_sex,R.color.res_pl_color,R.mipmap.default_noon_sex,R.color.res_pl_color,R.mipmap.default_woman_sex);
-            }else if(AppConstants.register.getData().getUser().getSex().equals("2")){
-                sexChange(R.color.res_pl_color,R.mipmap.default_man_sex,R.color.res_pl_color,R.mipmap.default_noon_sex,R.color.woman_sex,R.mipmap.woman_sex);
-            }else {
-                sexChange(R.color.res_pl_color,R.mipmap.default_man_sex,R.color.noon_sex,R.mipmap.noon_sex,R.color.res_pl_color,R.mipmap.default_woman_sex);
+        if (AppConstants.register.getData().getUser().getSex() != null) {
+            if (AppConstants.register.getData().getUser().getSex().equals("1")) {
+                sexChange(R.color.home_logo_color, R.mipmap.man_sex, R.color.res_pl_color, R.mipmap.default_noon_sex, R.color.res_pl_color, R.mipmap.default_woman_sex);
+            } else if (AppConstants.register.getData().getUser().getSex().equals("2")) {
+                sexChange(R.color.res_pl_color, R.mipmap.default_man_sex, R.color.res_pl_color, R.mipmap.default_noon_sex, R.color.woman_sex, R.mipmap.woman_sex);
+            } else {
+                sexChange(R.color.res_pl_color, R.mipmap.default_man_sex, R.color.noon_sex, R.mipmap.noon_sex, R.color.res_pl_color, R.mipmap.default_woman_sex);
             }
         }
 
@@ -190,12 +201,12 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
         mHead_portrait = (ImageView) findViewById(R.id.head_portrait);
         mHead_portrait.setOnClickListener(this);
         findViewById(R.id.modify_avatar).setOnClickListener(this);
-       if (CommonUtils.isLogin()){
+        if (CommonUtils.isLogin()) {
             //ImageLoader.load(ProfileActivity.this,AppConstants.register.getData().getUser().getHeadIcon(),R.mipmap.center_head).into(mHead_portrait);
-           Glide.with(ProfileActivity.this)
-                   .load(AppConstants.register.getData().getUser().getHeadIcon())
-                   .error(R.mipmap.center_head)
-                   .into(mHead_portrait);
+            Glide.with(getApplicationContext())
+                    .load(AppConstants.register.getData().getUser().getHeadIcon())
+                    .error(R.mipmap.center_head)
+                    .into(mHead_portrait);
         }
         //universalImageLoader.displayImage(AppConstants.register.getData().getUser().getHeadIcon(), mHead_portrait, options);
 
@@ -225,14 +236,15 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
 
 
         //第三方登录时隐藏修改密码栏
-        if(PreferenceUtil.getBoolean("three_login",false)){
+        if (PreferenceUtil.getBoolean("three_login", false)) {
             findViewById(R.id.rl_modifypass).setVisibility(View.GONE);
             findViewById(R.id.account_number).setVisibility(View.GONE);
         }
 
         tv_nickname = ((TextView) findViewById(R.id.tv_nickname));
-        ((TextView) findViewById(R.id.tv_account_real)).setText(PreferenceUtil.getString(AppConstants.SPKEY_LOGINACCOUNT,""));
+        ((TextView) findViewById(R.id.tv_account_real)).setText(PreferenceUtil.getString(AppConstants.SPKEY_LOGINACCOUNT, ""));
     }
+
     /*提示保存性别修改信息*/
     private void showDialog() {
 
@@ -264,9 +276,9 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.public_img_back: // 返回
                 MobclickAgent.onEvent(ProfileActivity.this, "ProfileActivity_Exit");
-                if(sexDatas.size()==0){
+                if (sexDatas.size() == 0) {
                     finish();
-                }else{
+                } else {
                     showDialog();
 
                 }
@@ -313,73 +325,74 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.tv_chose_start_photo:
                 Intent intent3 = new Intent(ProfileActivity.this, AvatarSelectionActivity.class);
-                startActivityForResult(intent3,REQUESTCODE_CHOSE);
+                startActivityForResult(intent3, REQUESTCODE_CHOSE);
                 mPopupWindow.dismiss();
                 break;
             case R.id.tv_cancel:  //取消
 
-                mPopupWindow. dismiss();
+                mPopupWindow.dismiss();
                 break;
             case R.id.text_man:
 
-               // man_sex.setImageResource(R.mipmap.man_sex);
+                // man_sex.setImageResource(R.mipmap.man_sex);
                 sexDatas.clear();
                 sexDatas.add("1");
-                sexChange(R.color.home_logo_color,R.mipmap.man_sex,R.color.res_pl_color,R.mipmap.default_noon_sex,R.color.res_pl_color,R.mipmap.default_woman_sex);
+                sexChange(R.color.home_logo_color, R.mipmap.man_sex, R.color.res_pl_color, R.mipmap.default_noon_sex, R.color.res_pl_color, R.mipmap.default_woman_sex);
                 break;
             case R.id.text_woman:
                 sexDatas.clear();
                 sexDatas.add("2");
-                sexChange(R.color.res_pl_color,R.mipmap.default_man_sex,R.color.res_pl_color,R.mipmap.default_noon_sex,R.color.woman_sex,R.mipmap.woman_sex);
+                sexChange(R.color.res_pl_color, R.mipmap.default_man_sex, R.color.res_pl_color, R.mipmap.default_noon_sex, R.color.woman_sex, R.mipmap.woman_sex);
                 break;
             case R.id.text_noon:
                 sexDatas.clear();
                 sexDatas.add("3");
-                sexChange(R.color.res_pl_color,R.mipmap.default_man_sex,R.color.noon_sex,R.mipmap.noon_sex,R.color.res_pl_color,R.mipmap.default_woman_sex);
+                sexChange(R.color.res_pl_color, R.mipmap.default_man_sex, R.color.noon_sex, R.mipmap.noon_sex, R.color.res_pl_color, R.mipmap.default_woman_sex);
                 break;
             default:
                 break;
         }
     }
-   //修改性别
+
+    //修改性别
     private void modifyGender() {
-                progressBar.show();
-                String url = BaseURLs.UPDATEUSERINFO;
-                Map<String, String> param = new HashMap<>();
-                param.put("account", PreferenceUtil.getString(AppConstants.SPKEY_LOGINACCOUNT,""));
-                param.put("loginToken", AppConstants.register.getData().getLoginToken());
-                param.put("deviceToken", AppConstants.deviceToken);
-                param.put("sex", sexDatas.get(0).toString());
+        progressBar.show();
+        String url = BaseURLs.UPDATEUSERINFO;
+        Map<String, String> param = new HashMap<>();
+        param.put("account", PreferenceUtil.getString(AppConstants.SPKEY_LOGINACCOUNT, ""));
+        param.put("loginToken", AppConstants.register.getData().getLoginToken());
+        param.put("deviceToken", AppConstants.deviceToken);
+        param.put("sex", sexDatas.get(0));
 
-                VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
-                    @Override
-                    public void onResponse(Register register) {
-                        if (register.getResult() == AccountResultCode.SUCC) {
-                            //
-                            // CommonUtils.saveRegisterInfo(register);
-                            AppConstants.register.getData().getUser().setSex(sexDatas.get(0));
-                            PreferenceUtil.commitString(AppConstants.SEX, register.getData().getUser().getSex());
-                            progressBar.dismiss();
-                            finish();
-                        } else if (register.getResult() == AccountResultCode.USER_NOT_LOGIN) {
-                            progressBar.dismiss();
-                            UiUtils.toast(getApplicationContext() ,R.string.name_invalid);
-                            Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
-                            startActivity(intent);
+        VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
+            @Override
+            public void onResponse(Register register) {
+                if (register.getResult() == AccountResultCode.SUCC) {
+                    //
+                    // CommonUtils.saveRegisterInfo(register);
+                    AppConstants.register.getData().getUser().setSex(sexDatas.get(0));
+                    PreferenceUtil.commitString(AppConstants.SEX, register.getData().getUser().getSex());
+                    progressBar.dismiss();
+                    finish();
+                } else if (register.getResult() == AccountResultCode.USER_NOT_LOGIN) {
+                    progressBar.dismiss();
+                    UiUtils.toast(getApplicationContext(), R.string.name_invalid);
+                    Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+                    startActivity(intent);
 
-                        } else {
-                            progressBar.dismiss();
-                            CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
-                        }
-                    }
-                }, new VolleyContentFast.ResponseErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                        L.e(TAG, "上传性别失败");
-                     UiUtils.toast(ProfileActivity.this, R.string.foot_neterror_post_photo);
-                        progressBar.dismiss();
-                    }
-                }, Register.class);
+                } else {
+                    progressBar.dismiss();
+                    CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                L.e(TAG, "上传性别失败");
+                UiUtils.toast(ProfileActivity.this, R.string.foot_neterror_post_photo);
+                progressBar.dismiss();
+            }
+        }, Register.class);
 
     }
 
@@ -406,13 +419,14 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
             mCamerUri = Uri.fromFile(picFile);
         }
     }
+
     /**
      * 获得图片缓存文件
      */
     private File getPicFile() {
         File photoFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
         if (!photoFile.exists()) {
-            UiUtils.toast(MyApp.getInstance(),R.string.sd_card_not_exist);
+            UiUtils.toast(MyApp.getInstance(), R.string.sd_card_not_exist);
         }
         File file = new File(photoFile.getAbsolutePath() + "/dcim" + System.currentTimeMillis() + ".jpg");
         if (!file.exists()) {
@@ -425,14 +439,15 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
         return file;
     }
 
-    public void onEventMainThread(ChoseHeadStartBean choseHeadStartBean){
+    public void onEventMainThread(ChoseHeadStartBean choseHeadStartBean) {
 
         //ImageLoader.load(ProfileActivity.this,choseHeadStartBean.startUrl).into(mHead_portrait);
-        Glide.with(ProfileActivity.this)
+        Glide.with(getApplicationContext())
                 .load(choseHeadStartBean.startUrl)
                 .error(R.mipmap.center_head)
                 .into(mHead_portrait);
     }
+
     /**
      * 开启从相册获得图片功能
      */
@@ -445,6 +460,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
             UiUtils.toast(MyApp.getInstance(), R.string.install_the_gallery);
         }
     }
+
     /*
     * 设置头像
     */
@@ -458,7 +474,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
         // 实例化一个PopuWindow对象
         mPopupWindow = new PopupWindow(v);
         // 设置弹框的宽度为布局文件的宽
-        mPopupWindow.setWidth( DisplayUtil.getScreenWidth(ProfileActivity.this));
+        mPopupWindow.setWidth(DisplayUtil.getScreenWidth(ProfileActivity.this));
         // 高度随着内容变化
         mPopupWindow.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
         // 设置一个透明的背景，不然无法实现点击弹框外，弹框消失
@@ -474,19 +490,20 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
         // 设置所在布局
         mPopupWindow.setContentView(layout);
         // 设置弹框出现的位置，在v的正下方横轴偏移textview的宽度，为了对齐~纵轴不偏移
-       // popupWindow.showAsDropDown(mTxt_title1);
+        // popupWindow.showAsDropDown(mTxt_title1);
         mPopupWindow.showAtLocation(ProfileActivity.this.findViewById(R.id.profile_main),
-                Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
+                Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
         layout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-               // UiUtils.toast(getApplicationContext(),":我被点击了");
+                // UiUtils.toast(getApplicationContext(),":我被点击了");
                 return true;
             }
         });
 
     }
-    class poponDismissListener implements PopupWindow.OnDismissListener{
+
+    class poponDismissListener implements PopupWindow.OnDismissListener {
         @Override
         public void onDismiss() {
             backgroundAlpha(1f);
@@ -495,18 +512,18 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
 
     /**
      * 设置添加屏幕的背景透明度
+     *
      * @param bgAlpha
      */
-    public void backgroundAlpha(float bgAlpha)
-    {
+    public void backgroundAlpha(float bgAlpha) {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
-         lp.alpha = bgAlpha; //0.0-1.0
+        lp.alpha = bgAlpha; //0.0-1.0
         getWindow().setAttributes(lp);
     }
 
 
     File outFile = null;
-    Bitmap bitmap = null;
+    //    Bitmap bitmap = null;
     File outDir = null;
 
     /**
@@ -528,7 +545,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(ProfileActivity.this.getContentResolver(), uri);
                     if (bitmap.getWidth() < width || bitmap.getHeight() < height) {
-                        UiUtils.toast(MyApp.getInstance(),R.string.see_your_face);
+                        UiUtils.toast(MyApp.getInstance(), R.string.see_your_face);
                         bitmap.recycle();
                         System.gc();
                         //successNull();
@@ -544,14 +561,14 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(ProfileActivity.this.getContentResolver(), mCamerUri);
                     if (bitmap.getWidth() < width || bitmap.getHeight() < height) {
-                       // successNull();
+                        // successNull();
                         UiUtils.toast(MyApp.getInstance(), R.string.see_your_face);
                         bitmap.recycle();
                         System.gc();
                         return;
                     }
                 } catch (Exception e) {
-                   // error(e);
+                    // error(e);
                     return;
                 }
                 doZoomImage(mCamerUri, width, height);
@@ -566,61 +583,59 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 if (extras != null) {
                     Bitmap photo = extras.getParcelable("data");
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    if (photo!=null)
+                    if (photo != null)
 
                     {
                         photo.compress(Bitmap.CompressFormat.PNG, 75, stream);// (0-100)压缩文件
 
-                    //此处可以把Bitmap保存到sd卡中，具体请看：http://www.cnblogs.com/linjiqin/archive/2011/12/28/2304940.html
-                    try {
+                        //此处可以把Bitmap保存到sd卡中，具体请看：http://www.cnblogs.com/linjiqin/archive/2011/12/28/2304940.html
+                        try {
 
-                        String state = Environment.getExternalStorageState();
-                        if (state.equals(Environment.MEDIA_MOUNTED)) {
-                            // 这个路径，在手机内存下创建一个定制的文件夹，把图片存在其中。
-                            outDir = Environment.getExternalStoragePublicDirectory(STORAGGEID);
-                        } else {
-                            if (ProfileActivity.this != null) {
+                            String state = Environment.getExternalStorageState();
+                            if (state.equals(Environment.MEDIA_MOUNTED)) {
+                                // 这个路径，在手机内存下创建一个定制的文件夹，把图片存在其中。
+                                outDir = Environment.getExternalStoragePublicDirectory(STORAGGEID);
+                            } else {
                                 outDir = this.getFilesDir();
                             }
-                        }
-                        if (!outDir.exists()) {
-                            outDir.mkdirs();
-                        }
-                        // 保存图片
-                        try {
-                            outFile = new File(outDir, IMAGE);
-                            FileOutputStream fos = new FileOutputStream(outFile);
-                            //PreferenceUtil.commitString("image_url", outFile.toString());
-                            boolean flag = photo.compress(Bitmap.CompressFormat.JPEG,
-                                    100, fos);// 把数据写入文件
-                            if (flag) {
-                                 mHead_portrait.setImageBitmap(photo);
-                                 doPostSycn(PUT_URL,outFile);//上传图片
-
-                            } else {
-                                UiUtils.toast(MyApp.getInstance(), R.string.picture_save_failed);
+                            if (!outDir.exists()) {
+                                outDir.mkdirs();
                             }
-                        } catch (FileNotFoundException e) {
+                            // 保存图片
+                            try {
+                                outFile = new File(outDir, IMAGE);
+                                FileOutputStream fos = new FileOutputStream(outFile);
+                                //PreferenceUtil.commitString("image_url", outFile.toString());
+                                boolean flag = photo.compress(Bitmap.CompressFormat.JPEG,
+                                        100, fos);// 把数据写入文件
+                                if (flag) {
+                                    mHead_portrait.setImageBitmap(photo);
+                                    doPostSycn(PUT_URL, outFile);//上传图片
+
+                                } else {
+                                    UiUtils.toast(MyApp.getInstance(), R.string.picture_save_failed);
+                                }
+                            } catch (FileNotFoundException e) {
+                                UiUtils.toast(MyApp.getInstance(), R.string.save_file_not_found);
+                                throw new RuntimeException(e);
+                            }
+
+
+                        } catch (Exception e) {
                             UiUtils.toast(MyApp.getInstance(), R.string.save_file_not_found);
-                            throw new RuntimeException(e);
+                            e.printStackTrace();
                         }
-
-
-                    } catch (Exception e) {
-                        UiUtils.toast(MyApp.getInstance(), R.string.save_file_not_found);
-                        e.printStackTrace();
+                        // mPopupWindow. dismiss();
+                        mHead_portrait.setImageBitmap(photo); //把图片显示在ImageView控件上
+                        photo.recycle();
+                        System.gc();
                     }
-                   // mPopupWindow. dismiss();
-                    mHead_portrait.setImageBitmap(photo); //把图片显示在ImageView控件上
-                    photo.recycle();
-                    System.gc();
-                   }
                 }
-                try{
-                    mPopupWindow. dismiss();
-                }catch(Exception e){
+                try {
+                    mPopupWindow.dismiss();
+                } catch (Exception e) {
 
-            }
+                }
 
                 break;
             default:
@@ -628,58 +643,58 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
         }
     }
 
-     /*图片上传*/
-     //异步上传图片并且携带其他参数
-     public void doPostSycn(String url,File file){
-         progressBar.show();
-         try {
-             RequestBody requestBody = new MultipartBuilder() //建立请求的内容
+    /*图片上传*/
+    //异步上传图片并且携带其他参数
+    public void doPostSycn(String url, File file) {
+        progressBar.show();
+        try {
+            RequestBody requestBody = new MultipartBuilder() //建立请求的内容
 
-                     .type(MultipartBuilder.FORM)//表单形式
-                     .addFormDataPart("imageFile", "imageFile", RequestBody.create(MEDIA_TYPE_PNG, file))
-                     .build();
+                    .type(MultipartBuilder.FORM)//表单形式
+                    .addFormDataPart("imageFile", "imageFile", RequestBody.create(MEDIA_TYPE_PNG, file))
+                    .build();
 
-             Request request = new Request.Builder()//建立请求
-                     .url(url)//请求的地址
-                     .post(requestBody)//请求的内容（上面建立的requestBody）
-                     .build();
+            Request request = new Request.Builder()//建立请求
+                    .url(url)//请求的地址
+                    .post(requestBody)//请求的内容（上面建立的requestBody）
+                    .build();
 
-             //发送异步请求，同步会报错，Android4.0以后禁止在主线程中进行耗时操作
-             client.newCall(request).enqueue(new Callback() {
-                 @Override
-                 public void onFailure(Request request, IOException e) {
-                     // UiUtils.toast(MyApp.getInstance(), R.string.picture_put_failed);
-                     mViewHandler.sendEmptyMessage(Put_FAIL_PHOTO);
-                     progressBar.dismiss();
-                 }
+            //发送异步请求，同步会报错，Android4.0以后禁止在主线程中进行耗时操作
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Request request, IOException e) {
+                    // UiUtils.toast(MyApp.getInstance(), R.string.picture_put_failed);
+                    mViewHandler.sendEmptyMessage(Put_FAIL_PHOTO);
+                    progressBar.dismiss();
+                }
 
-                 @Override
-                 public void onResponse(Response response) throws IOException {
+                @Override
+                public void onResponse(Response response) throws IOException {
 
-                     String jsonString=response.body().string();
-                     JSONObject jo = JSON.parseObject(jsonString);
-                     //UiUtils.toast(MyApp.getInstance(), jo.toString());
-                     String headerUrl = jo.getString("url");
-                     if(!headerUrl.isEmpty()){
-                         putPhotoUrl(headerUrl);
-                     }else{
-                         UiUtils.toast(MyApp.getInstance(), R.string.picture_put_failed);
-                     }
-                 }
-             });
+                    String jsonString = response.body().string();
+                    JSONObject jo = JSON.parseObject(jsonString);
+                    //UiUtils.toast(MyApp.getInstance(), jo.toString());
+                    String headerUrl = jo.getString("url");
+                    if (!headerUrl.isEmpty()) {
+                        putPhotoUrl(headerUrl);
+                    } else {
+                        UiUtils.toast(MyApp.getInstance(), R.string.picture_put_failed);
+                    }
+                }
+            });
 
-         }catch (Exception e){
+        } catch (Exception e) {
 
-             UiUtils.toast(MyApp.getInstance(), R.string.picture_resource_does_not_exist);
-         }
+            UiUtils.toast(MyApp.getInstance(), R.string.picture_resource_does_not_exist);
+        }
 
 
-     }
+    }
 
     /*上传图片url  后台绑定*/
 
     private void putPhotoUrl(String headerUrl) {
-       //  mPopupWindow. dismiss();
+        //  mPopupWindow. dismiss();
         //final String url = BaseURLs.UPDATEHEADICON;
 
         Map<String, String> param = new HashMap<>();
@@ -697,13 +712,13 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 progressBar.dismiss();
                 if (register.getResult() == AccountResultCode.SUCC) {
                     UiUtils.toast(MyApp.getInstance(), R.string.picture_put_success);
-                   // register.getData().getUser().setLoginAccount(AppConstants.register.getData().getLoginToken());
+                    // register.getData().getUser().setLoginAccount(AppConstants.register.getData().getLoginToken());
                     CommonUtils.saveRegisterInfo(register);
 
-                   // PreferenceUtil.commitString(AppConstants.HEADICON, register.getData().getUser().getHeadIcon().toString());
-                    Log.i("aasd","dasd"+register.getData().getUser().getLoginAccount());
+                    // PreferenceUtil.commitString(AppConstants.HEADICON, register.getData().getUser().getHeadIcon().toString());
+//                    Log.i("aasd", "dasd" + register.getData().getUser().getLoginAccount());
                     EventBus.getDefault().post(register);
-                    Glide.with(ProfileActivity.this)
+                    Glide.with(getApplicationContext())
                             .load(register.getData().getUser().getHeadIcon())
                             .error(R.mipmap.center_head)
                             .into(mHead_portrait);
@@ -726,14 +741,15 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     }
 
     private Uri fileUri;
+
     /**
      * 开启图片裁剪功能
      */
     public void doZoomImage(Uri uri, int width, int height) {
         try {
             Intent intent = new Intent("com.android.camera.action.CROP");
-            if (Build.VERSION.SDK_INT >= 23){
-                Bitmap bmp = null;
+            if (Build.VERSION.SDK_INT >= 23) {
+                Bitmap bmp ;
                 String str = "";
                 try {
                     bmp = MediaStore.Images.Media.getBitmap(ProfileActivity.this.getContentResolver(), uri);
@@ -743,7 +759,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 }
                 fileUri = Uri.parse(str);
                 intent.setDataAndType(fileUri, "image/*");
-            }else{
+            } else {
                 intent.setDataAndType(uri, "image/*");
             }
 
@@ -759,7 +775,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
             intent.putExtra("return-data", true);
             startActivityForResult(intent, REQUEST_IMAGE_CROP);
         } catch (Exception e) {
-            UiUtils.toast(MyApp.getInstance(),R.string.install_the_gallery);
+            UiUtils.toast(MyApp.getInstance(), R.string.install_the_gallery);
         }
     }
 
@@ -767,9 +783,9 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     /**
      * 压缩图片
      */
-    private Bitmap createThumbnail(String filepath, int i) {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = i;
-        return BitmapFactory.decodeFile(filepath, options);
-    }
+//    private Bitmap createThumbnail(String filepath, int i) {
+//        BitmapFactory.Options options = new BitmapFactory.Options();
+//        options.inSampleSize = i;
+//        return BitmapFactory.decodeFile(filepath, options);
+//    }
 }

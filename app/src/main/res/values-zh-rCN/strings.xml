@@ -201,7 +201,7 @@
     <string name="game_time">(时间)</string>
     <!--首发阵容 End-->
     <!--2期end-->
-    <string name="app_name">一比分</string>
+    <string name="app_name">一比分体育</string>
     <string name="menu_name">菜单</string>
     <string name="action_settings">Settings</string>
     <string name="drawer_open">Open drawer</string>
@@ -761,8 +761,6 @@
     <string name="basket_odd_setting">赔率提示</string>
 
 
-
-
     <string name="basket_scort_setting">赛事提示</string>
     <string name="basket_live">直播</string>
     <string name="basket_analyze">分析</string>
@@ -933,7 +931,7 @@
     <string name="football_database_details_most_top_draw">平/已赛:</string>
     <string name="football_database_details_most_top_lost">输/已赛:</string>
     <string name="football_database_details_most_top_avg">胜率:</string>
-    <string name="football_database_details_most_score_avg">场均进球 :</string>
+    <string name="football_database_details_most_score_avg">场均进球:</string>
     <string name="football_database_details_statistic_home_draw">平局 :</string>
     <string name="football_database_details_statistic_all_num">总进球数 :</string>
     <string name="football_database_details_statistic_avg_num">场均 :</string>
@@ -955,8 +953,6 @@
     <string name="football_database_details_moreThree">高于3.5</string>
     <string name="football_database_details_chang">场</string>
 
-    <string name="football_database_details_statistic_fumble_num">总失球数 :</string>
-    <string name="football_database_details_fumble_score_avg">场均失球 :</string>
     <!--足球分析详情-->
     <string name="football_analyze_details">分析明细</string>
     <string name="football_analyze_details_time">时间</string>
@@ -1504,6 +1500,7 @@
     <string name="chart_ball_report_hint">请输入举报内容</string>
     <string name="chart_ball_report">举报</string>
     <string name="home_expert_title">专家专栏</string>
+    <string name="home_expert_title_name">专家</string>
 
     <string name="title_product_advice">给产品建议</string>
     <string name="product_advice">产品回复</string>
@@ -1682,7 +1679,50 @@
     <string name="foot_event_num">""</string>
     <string name="please_hint_team">请输入球队名称</string>
 
-    <!--竞彩推荐-->
-    <string name="betting_setting_palying_method">玩法</string>
-    <string name="betting_setting_league">联赛</string>
+    <string name="foot_text">文字</string>
+    <string name="nopage">暂无比赛直播</string>
+
+    <!--球队信息-->
+    <string name="foot_team_info_total">总</string>
+    <string name="foot_team_info_zu">主</string>
+    <string name="foot_team_info_ke">客</string>
+    <string name="foot_team_info_match_count">比赛场次</string>
+    <string name="foot_team_info_lose_goal">失球</string>
+    <string name="foot_team_info_goal_avg">均场进球</string>
+    <string name="foot_team_info_lose_avg">均场失球</string>
+    <string name="foot_team_info_data">球队数据</string>
+    <string name="foot_team_info_his">赛程赛果</string>
+    <string name="foot_team_info_odds">盘口统计</string>
+    <string name="foot_team_info_lineup">球队阵容</string>
+    <string name="foot_team_lineup_number">号码</string>
+    <string name="foot_team_lineup_name">姓名</string>
+    <string name="foot_team_lineup_nation">国籍</string>
+    <string name="foot_team_lineup_position">位置</string>
+    <string name="foot_team_lineup_birth">年龄</string>
+    <string name="foot_team_odds_match_count">比赛场次</string>
+    <string name="foot_team_odds_ms">上盘</string>
+    <string name="foot_team_odds_ns">平盘</string>
+    <string name="foot_team_odds_ts">下盘</string>
+    <string name="foot_team_odds_hdpw">赢盘</string>
+    <string name="foot_team_odds_hdph">赢半</string>
+    <string name="foot_team_odds_voi">走盘</string>
+    <string name="foot_team_odds_hdplh">输半</string>
+    <string name="foot_team_odds_hdpl">输盘</string>
+    <string name="foot_team_odds_winrate">胜率</string>
+    <string name="foot_team_odds_loserate">负率</string>
+    <string name="foot_team_odds_over">大球</string>
+    <string name="foot_team_odds_under">小球</string>
+    <string name="foot_team_odds_over_rate">大球率</string>
+    <string name="foot_team_odds_voi_rate">走盘率</string>
+    <string name="foot_team_odds_under_rate">小球率</string>
+    <string name="foot_team_odds_under25">低于2.5</string>
+    <string name="foot_team_odds_over25">高于2.5</string>
+    <string name="foot_team_odds_let_the_ball">让球盘</string>
+    <string name="foot_team_odds_size_ball">大小球</string>
+
+    <string name="football_database_details_statistic_fumble_num">总失球数 :</string>
+    <string name="football_database_details_fumble_score_avg">场均失球 :</string>
+
+    <string name="invited_summary">请您一起看比赛，输入邀请码，优惠多多哦。</string>
+
 </resources>

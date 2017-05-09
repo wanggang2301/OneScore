@@ -142,7 +142,7 @@ public class HomeLanguageActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        Intent it = new Intent(mContext, WelcomeActivity.class);
+//        Intent it = new Intent(mContext, WelcomeActivity.class);
         switch (v.getId()) {
             case R.id.public_img_back:// 点击返回菜单栏
                 finish();

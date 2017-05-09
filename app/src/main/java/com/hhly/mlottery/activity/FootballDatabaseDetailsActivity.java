@@ -91,6 +91,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
     private FootballDatabaseStatisticsFragment mFootballDatabaseStatisticsFragment;
 
     private boolean mIsCurrenIntegral;//是否默认显示积分页
+    private TextView mTitleName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,6 +167,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         mBack = (ImageView) this.findViewById(R.id.football_database_details_back);
         mCollect = (LinearLayout) this.findViewById(R.id.football_database_details_collect);
 
+        mTitleName = (TextView) findViewById(R.id.football_database_details_name_title);
     }
 
     private void initData() {
@@ -179,9 +181,9 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<FootballDatabaseHeaderBean>() {
 
             @Override
-            public void onResponse(FootballDatabaseHeaderBean basketDatabaseBean) {
-                if (basketDatabaseBean != null) {
-                    mSports = basketDatabaseBean.getSeason();
+            public void onResponse(FootballDatabaseHeaderBean footballDatabaseBean) {
+                if (footballDatabaseBean != null) {
+                    mSports = footballDatabaseBean.getSeason();
 
                     /**
                      * 判断赛季集合mSports 中有数据时 ，才设为可筛选
@@ -195,20 +197,24 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
                         if (mSports == null || mSports.length == 0) {
                             mSportsText.setText("--");
                         } else {
-                            mSportsText.setText(mSports[0] + getResources().getString(R.string.basket_database_details_season));
+//                            mSportsText.setText(mSports[0] + getResources().getString(R.string.basket_database_details_season));
+                            mSportsText.setText(mSports[0]);
                         }
                     } else {
-                        mSportsText.setText(mCurrentSports + getResources().getString(R.string.basket_database_details_season));
+//                        mSportsText.setText(mCurrentSports + getResources().getString(R.string.basket_database_details_season));
+                        mSportsText.setText(mCurrentSports);
                     }
 
-                    if (basketDatabaseBean.getLeagueName() == null || basketDatabaseBean.getLeagueName().equals("")) {
+                    if (footballDatabaseBean.getLeagueName() == null || footballDatabaseBean.getLeagueName().equals("")) {
                         mLeagueName.setText("--");
+                        mTitleName.setText("--");
                     } else {
-                        mLeagueName.setText(basketDatabaseBean.getLeagueName());
+                        mLeagueName.setText(footballDatabaseBean.getLeagueName());
+                        mTitleName.setText(footballDatabaseBean.getLeagueName());
                     }
                     //图标
-                    ImageLoader.load(FootballDatabaseDetailsActivity.this, basketDatabaseBean.getLeagueLogo(), R.mipmap.score_default).into(mIcon);
-                    ImageLoader.load(FootballDatabaseDetailsActivity.this, basketDatabaseBean.getRandomBg(), R.color.colorPrimary).into(mBackground);
+                    ImageLoader.load(FootballDatabaseDetailsActivity.this, footballDatabaseBean.getLeagueLogo(), R.mipmap.score_default).into(mIcon);
+                    ImageLoader.load(FootballDatabaseDetailsActivity.this, footballDatabaseBean.getRandomBg(), R.color.colorPrimary).into(mBackground);
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -248,8 +254,10 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         }
         if ((-verticalOffset) == appBarLayout.getTotalScrollRange()) {
             headLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+            mTitleName.setVisibility(View.VISIBLE);
         } else {
             headLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.transparency));
+            mTitleName.setVisibility(View.GONE);
         }
     }
 

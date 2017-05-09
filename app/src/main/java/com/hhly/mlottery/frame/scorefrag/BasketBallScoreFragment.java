@@ -29,6 +29,7 @@ import com.hhly.mlottery.activity.BasketballSettingActivity;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.BaseUserTopics;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketResultNewScoreFragment;
 import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketScheduleNewScoreFragment;
@@ -112,7 +113,8 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic("USER.topic.basketball");
+//        setTopic("USER.topic.basketball");
+        setTopic(BaseUserTopics.oddsBasket);
         super.onCreate(savedInstanceState);
 
         EventBus.getDefault().register(this);
@@ -175,14 +177,14 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         titles.add(getString(R.string.foot_guanzhu_txt));
 
         fragments = new ArrayList<>();
-        fragments.add(BasketImmedNewScoreFragment.newInstance(IMMEDIA_FRAGMENT , isNewFrameWork ,basketEntryType));
-        fragments.add(BasketResultNewScoreFragment.newInstance(RESULT_FRAGMENT , basketEntryType));
-        fragments.add(BasketScheduleNewScoreFragment.newInstance(SCHEDULE_FRAGMENT ,basketEntryType));
+        fragments.add(BasketImmedNewScoreFragment.newInstance(IMMEDIA_FRAGMENT, isNewFrameWork, basketEntryType));
+        fragments.add(BasketResultNewScoreFragment.newInstance(RESULT_FRAGMENT, basketEntryType));
+        fragments.add(BasketScheduleNewScoreFragment.newInstance(SCHEDULE_FRAGMENT, basketEntryType));
 //        fragments.add(ImmedBasketballFragment.newInstance(IMMEDIA_FRAGMENT, isNewFrameWork ,basketEntryType));
 //        fragments.add(ResultBasketballFragment.newInstance(RESULT_FRAGMENT , basketEntryType));
 //        fragments.add(ScheduleBasketballFragment.newInstance(SCHEDULE_FRAGMENT , basketEntryType));
 //        fragments.add(FocusBasketballFragment.newInstance(FOCUS_FRAGMENT , basketEntryType));
-        fragments.add(BasketballFocusNewFragment.newInstance(FOCUS_FRAGMENT , basketEntryType));
+        fragments.add(BasketballFocusNewFragment.newInstance(FOCUS_FRAGMENT, basketEntryType));
 
 
         pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
@@ -256,7 +258,7 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
     /**
      * 刷新tab栏后的关注个数
      */
-    public  void focusCallback() {
+    public void focusCallback() {
         String focusIds = PreferenceUtil.getString(BasketballFocusNewFragment.BASKET_FOCUS_IDS, "");
         String[] arrayId = focusIds.split("[,]");
         if (getActivity() != null) {

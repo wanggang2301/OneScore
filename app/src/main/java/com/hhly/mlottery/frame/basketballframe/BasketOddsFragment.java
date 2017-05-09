@@ -172,7 +172,6 @@ public class BasketOddsFragment extends Fragment implements View.OnClickListener
 //        mNodataLayout.setBackgroundColor(getResources().getColor(R.color.black_title));
         //网络异常的
         mExceptionLayout= (LinearLayout) mView.findViewById(R.id.basket_odds_net_error);
-        mExceptionLayout.setBackgroundColor(getResources().getColor(R.color.black_title));
         mBtnRefresh= (TextView) mView.findViewById(R.id.network_exception_reload_btn);
         mBtnRefresh.setOnClickListener(this);
 
