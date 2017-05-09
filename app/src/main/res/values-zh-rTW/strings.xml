@@ -1667,6 +1667,8 @@
     <string name="foot_event_num">""</string>
     <string name="please_hint_team">請輸入球隊名稱</string>
     <string name="foot_text">文字</string>
+    <string name="foot_lineup">陣容</string>
+    <string name="foot_statistics">統計</string>
     <string name="nopage">暫無動畫直播</string>
 
     <!--球队信息-->

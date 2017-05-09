@@ -12,6 +12,7 @@ public interface FootBallDetailTypeEnum {
     //key
     String CURRENT_TAB_KEY = "current_ab";
 
+
     //默认
     int FOOT_DETAIL_DEFAULT = -1;
 

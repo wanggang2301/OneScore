@@ -15,16 +15,40 @@
         android:layout_marginTop="13dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:weightSum="4">
+        android:weightSum="6">
 
         <RadioButton
-            android:id="@+id/live_text"
+            android:id="@+id/live_lineup"
             style="@style/odds_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="-0.25dp"
             android:background="@drawable/radio_button_left"
             android:checked="true"
+            android:text="@string/foot_lineup"
+            android:textColor="@drawable/info_text_color" />
+
+        <RadioButton
+            android:id="@+id/live_statistics"
+            style="@style/odds_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="-0.25dp"
+            android:layout_marginRight="-0.25dp"
+            android:background="@drawable/radio_button_center"
+            android:checked="false"
+            android:text="@string/foot_statictics"
+            android:textColor="@drawable/info_text_color" />
+
+        <RadioButton
+            android:id="@+id/live_text"
+            style="@style/odds_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="-0.25dp"
+            android:layout_marginRight="-0.25dp"
+            android:background="@drawable/radio_button_center"
+            android:checked="false"
             android:text="@string/foot_text"
             android:textColor="@drawable/info_text_color" />
 
@@ -42,7 +66,7 @@
             android:textColor="@drawable/info_text_color" />
 
         <RadioButton
-            android:id="@+id/live_statistics"
+            android:id="@+id/live_trend"
             style="@style/odds_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -59,13 +83,716 @@
         android:layout_below="@id/radio_group"
         android:orientation="vertical">
 
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nested_scroll_view_lineup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="15dp">
+
+                    <TextView
+                        android:id="@+id/lineup_home_team"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="@string/firsPlayers_rosters_homeTeam"
+                        android:textColor="@color/odds_details"
+                        android:textSize="@dimen/text_size_15" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/lineup_home_team"
+                        android:paddingTop="2dp"
+                        android:src="@mipmap/hometeam_uniform" />
+
+                    <TextView
+                        android:id="@+id/lineup_guest_team"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:gravity="right"
+                        android:singleLine="true"
+                        android:text="@string/firsPlayers_rosters_visitingTeam"
+                        android:textColor="@color/more_record"
+                        android:textSize="@dimen/text_size_15" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:layout_toLeftOf="@id/lineup_guest_team"
+                        android:paddingTop="2dp"
+                        android:src="@mipmap/guestteam_uniform" />
+                </RelativeLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:src="@mipmap/player_background" />
+
+                    <!--暂无首发-->
+                    <FrameLayout
+                        android:id="@+id/fl_firsPlayers_not"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/first_players_not_hint" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="20dp"
+                                android:text="@string/firsPlayers_not"
+                                android:textColor="@color/content_txt_light_grad"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+                    </FrameLayout>
+                    <!--主客队信息-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <!--主、客队名单-->
+                        <LinearLayout
+                            android:id="@+id/fl_firsPlayers_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <!--主队名单-->
+                            <LinearLayout
+                                android:id="@+id/ll_rosters_homeTeam"
+                                android:layout_width="0dip"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:paddingLeft="25dp">
+
+                            </LinearLayout>
+                            <!--客队名单-->
+                            <LinearLayout
+                                android:id="@+id/ll_rosters_visitingTeam"
+                                android:layout_width="0dip"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:orientation="vertical"
+                                android:paddingRight="25dp">
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
+                </FrameLayout>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nested_scroll_view_statistics"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:visibility="gone">
+
+
+            <RelativeLayout
+                android:id="@+id/statistics"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+                <!--统计布局-->
+
+                <!--内容加载进度条_正在加载中-->
+                <FrameLayout
+                    android:id="@+id/fl_cornerTrend_loading"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
+
+                </FrameLayout>
+                <!--网络访问失败-->
+                <FrameLayout
+                    android:id="@+id/fl_cornerTrend_networkError"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/refresh" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/exp_net_status_txt"
+                            android:textColor="@color/version"
+                            android:textSize="@dimen/text_size_14" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dip"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dip"
+                                android:text="@string/exp__check_txt"
+                                android:textColor="@color/msg"
+                                android:textSize="@dimen/text_size_14" />
+
+                            <TextView
+                                android:id="@+id/reLoadin"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/exp_refresh_txt"
+                                android:textColor="@color/exp_refresh"
+                                android:textSize="@dimen/text_size_14" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </FrameLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:orientation="horizontal"
+                        android:paddingTop="3dp">
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/home_corner"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="left"
+                                    android:text="0"
+                                    android:textColor="@color/progress_score"
+                                    android:textSize="@dimen/text_size_10" />
+
+                                <TextView
+                                    android:id="@+id/tv_corner"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="@string/foot_event_corner"
+                                    android:textColor="@color/tabhost_unselected_text"
+                                    android:textSize="@dimen/text_size_12" />
+
+                                <TextView
+                                    android:id="@+id/guest_corner"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="right"
+                                    android:text="0"
+                                    android:textColor="@color/progress_score"
+                                    android:textSize="@dimen/text_size_10" />
+                            </LinearLayout>
+
+                            <ProgressBar
+                                android:id="@+id/pb_corner"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="fill_parent"
+                                android:layout_height="5dp"
+                                android:max="100"
+                                android:progress="50"
+                                android:progressDrawable="@drawable/pro" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/home_danger_attack"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="left"
+                                    android:text="0"
+                                    android:textColor="@color/progress_score"
+                                    android:textSize="@dimen/text_size_10" />
+
+                                <TextView
+                                    android:id="@+id/textView2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="@string/danger_attack_txt"
+                                    android:textColor="@color/tabhost_unselected_text"
+                                    android:textSize="@dimen/text_size_12" />
+
+                                <TextView
+                                    android:id="@+id/guest_danger_attack"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="right"
+                                    android:text="0"
+                                    android:textColor="@color/progress_score"
+                                    android:textSize="@dimen/text_size_10" />
+                            </LinearLayout>
+
+                            <ProgressBar
+                                android:id="@+id/pb_danger_attack"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="fill_parent"
+                                android:layout_height="5dp"
+                                android:max="100"
+                                android:progress="50"
+                                android:progressDrawable="@drawable/pro" />
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/home_shoot_correct"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="left"
+                                    android:text="0"
+                                    android:textColor="@color/progress_score"
+                                    android:textSize="@dimen/text_size_10" />
+
+                                <TextView
+                                    android:id="@+id/textVi"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="@string/shoot_correct_txt"
+                                    android:textColor="@color/tabhost_unselected_text"
+                                    android:textSize="@dimen/text_size_12" />
+
+                                <TextView
+                                    android:id="@+id/guest_shoot_correct"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="right"
+                                    android:text="0"
+                                    android:textColor="@color/progress_score"
+
+                                    android:textSize="@dimen/text_size_10" />
+                            </LinearLayout>
+
+                            <ProgressBar
+                                android:id="@+id/pb_shoot_correct"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="fill_parent"
+                                android:layout_height="5dp"
+                                android:max="100"
+                                android:progress="50"
+                                android:progressDrawable="@drawable/pro" />
+
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/home_shoot_miss"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="left"
+                                    android:text="0"
+                                    android:textColor="@color/progress_score"
+                                    android:textSize="@dimen/text_size_10" />
+
+                                <TextView
+                                    android:id="@+id/textV"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="@string/shoot_miss_txt"
+                                    android:textColor="@color/tabhost_unselected_text"
+                                    android:textSize="@dimen/text_size_12" />
+
+                                <TextView
+                                    android:id="@+id/guest_shoot_miss"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="right"
+                                    android:text="0"
+                                    android:textColor="@color/progress_score"
+                                    android:textSize="@dimen/text_size_10" />
+                            </LinearLayout>
+
+                            <ProgressBar
+                                android:id="@+id/pb_shoot"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="fill_parent"
+                                android:layout_height="5dp"
+                                android:max="100"
+                                android:progress="50"
+                                android:progressDrawable="@drawable/pro" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <!--数据统计的弹框 begin-->
+                <RelativeLayout
+                    android:id="@+id/layout_match_bottom"
+                    style="@style/Style_relative_layout"
+                    android:layout_marginTop="90dp"
+                    android:visibility="visible">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <!-- 主队和客队的射门数 begin -->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/home_team_txt"
+                                style="@style/Style_txt1"
+                                android:gravity="left" />
+
+                            <TextView
+                                style="@style/Style_txt"
+                                android:gravity="center"
+                                android:text="@string/shoot_txt" />
+
+                            <TextView
+                                android:id="@+id/guest_team_txt"
+                                style="@style/Style_txt1"
+                                android:gravity="right" />
+                        </LinearLayout>
+                        <!-- 主队和客队的射门数end -->
+                        <!-- 主队客队数据view begin -->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <!-- 主队 射门-->
+
+                            <ProgressBar
+                                android:id="@+id/prohome_team"
+                                style="@style/StyleProgressBarguest_statics" />
+
+                            <!-- 客队 射门-->
+
+
+                        </LinearLayout>
+                        <!-- 主队客队数据view end -->
+                        <!-- 扑救 begin -->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/home_trapping_txt"
+                                style="@style/Style_txt1"
+                                android:gravity="left" />
+
+                            <TextView
+                                style="@style/Style_txt"
+                                android:gravity="center"
+                                android:text="@string/trapping_txt" />
+
+                            <TextView
+                                android:id="@+id/guest_trapping_txt"
+                                style="@style/Style_txt1"
+                                android:gravity="right" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ProgressBar
+                                android:id="@+id/prohome_trapping"
+                                style="@style/StyleProgressBarguest_statics" />
+
+                        </LinearLayout>
+                        <!-- 扑救end -->
+
+                        <!-- 犯规begin -->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/home_foul_txt"
+                                style="@style/Style_txt1"
+                                android:gravity="left" />
+
+                            <TextView
+                                style="@style/Style_txt"
+                                android:gravity="center"
+                                android:text="@string/foul_txt" />
+
+                            <TextView
+                                android:id="@+id/guest_foul_txt"
+                                style="@style/Style_txt1"
+                                android:gravity="right" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ProgressBar
+                                android:id="@+id/prohome_foul"
+                                style="@style/StyleProgressBarguest_statics" />
+                        </LinearLayout>
+                        <!-- 犯规end -->
+                        <!-- 越位 begin -->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/home_offside_txt"
+                                style="@style/Style_txt1"
+                                android:gravity="left" />
+
+                            <TextView
+                                style="@style/Style_txt"
+                                android:gravity="center"
+                                android:text="@string/away_txt" />
+
+                            <TextView
+                                android:id="@+id/guest_offside_txt"
+                                style="@style/Style_txt1"
+                                android:gravity="right" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ProgressBar
+                                android:id="@+id/prohome_offside"
+                                style="@style/StyleProgressBarguest_statics" />
+
+
+                        </LinearLayout>
+                        <!-- 越位end -->
+                        <!-- 任意球 begin -->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/home_freeHit_txt"
+                                style="@style/Style_txt1"
+                                android:gravity="left" />
+
+                            <TextView
+                                style="@style/Style_txt"
+                                android:gravity="center"
+                                android:text="@string/free_hit_txt" />
+
+                            <TextView
+                                android:id="@+id/guest_freeHit_txt"
+                                style="@style/Style_txt1"
+                                android:gravity="right" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ProgressBar
+                                android:id="@+id/prohome_freeHit"
+                                style="@style/StyleProgressBarguest_statics" />
+
+
+                        </LinearLayout>
+                        <!-- 任意球end -->
+                        <!-- 界外球 begin -->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/home_lineout_txt"
+                                style="@style/Style_txt1"
+                                android:gravity="left" />
+
+                            <TextView
+                                style="@style/Style_txt"
+                                android:gravity="center"
+                                android:text="@string/lineout_txt" />
+
+                            <TextView
+                                android:id="@+id/guest_lineout_txt"
+                                style="@style/Style_txt1"
+                                android:gravity="right" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ProgressBar
+                                android:id="@+id/prohome_lineout"
+                                style="@style/StyleProgressBarguest_statics" />
+                        </LinearLayout>
+                        <!-- 界外球end -->
+                    </LinearLayout>
+
+                </RelativeLayout>
+                <!--数据统计的弹框 end-->
+            </RelativeLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
         <FrameLayout
             android:id="@+id/fl_live_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="5dp"
             android:background="@color/white"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
 
         <android.support.v4.widget.NestedScrollView
@@ -346,337 +1073,6 @@
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/text_size_10" />
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:background="@color/home_default_icon_coloer" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:text="@string/foot_statictics"
-                    android:textColor="#3F5672"
-                    android:textSize="@dimen/text_size_13" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/linecolor" />
-
-
-                <RelativeLayout
-                    android:id="@+id/statistics"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp">
-                    <!--统计布局-->
-
-                    <!--内容加载进度条_正在加载中-->
-                    <FrameLayout
-                        android:id="@+id/fl_cornerTrend_loading"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:visibility="gone">
-
-                        <ProgressBar
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center" />
-
-                    </FrameLayout>
-                    <!--网络访问失败-->
-                    <FrameLayout
-                        android:id="@+id/fl_cornerTrend_networkError"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:visibility="gone">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@mipmap/refresh" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="@string/exp_net_status_txt"
-                                android:textColor="@color/version"
-                                android:textSize="@dimen/text_size_14" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="0dip"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginRight="5dip"
-                                    android:text="@string/exp__check_txt"
-                                    android:textColor="@color/msg"
-                                    android:textSize="@dimen/text_size_14" />
-
-                                <TextView
-                                    android:id="@+id/reLoadin"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/exp_refresh_txt"
-                                    android:textColor="@color/exp_refresh"
-                                    android:textSize="@dimen/text_size_14" />
-                            </LinearLayout>
-                        </LinearLayout>
-                    </FrameLayout>
-
-
-                    <!--数据统计的弹框 begin-->
-                    <RelativeLayout
-                        android:id="@+id/layout_match_bottom"
-                        style="@style/Style_relative_layout"
-                        android:layout_marginTop="20dp"
-                        android:visibility="visible">
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-                            <!-- 主队和客队的射门数 begin -->
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/home_team_txt"
-                                    style="@style/Style_txt1"
-                                    android:gravity="left" />
-
-                                <TextView
-                                    style="@style/Style_txt"
-                                    android:gravity="center"
-                                    android:text="@string/shoot_txt" />
-
-                                <TextView
-                                    android:id="@+id/guest_team_txt"
-                                    style="@style/Style_txt1"
-                                    android:gravity="right" />
-                            </LinearLayout>
-                            <!-- 主队和客队的射门数end -->
-                            <!-- 主队客队数据view begin -->
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <!-- 主队 射门-->
-
-                                <ProgressBar
-                                    android:id="@+id/prohome_team"
-                                    style="@style/StyleProgressBarguest_statics" />
-
-                                <!-- 客队 射门-->
-
-
-                            </LinearLayout>
-                            <!-- 主队客队数据view end -->
-                            <!-- 扑救 begin -->
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/home_trapping_txt"
-                                    style="@style/Style_txt1"
-                                    android:gravity="left" />
-
-                                <TextView
-                                    style="@style/Style_txt"
-                                    android:gravity="center"
-                                    android:text="@string/trapping_txt" />
-
-                                <TextView
-                                    android:id="@+id/guest_trapping_txt"
-                                    style="@style/Style_txt1"
-                                    android:gravity="right" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <ProgressBar
-                                    android:id="@+id/prohome_trapping"
-                                    style="@style/StyleProgressBarguest_statics" />
-
-                            </LinearLayout>
-                            <!-- 扑救end -->
-
-                            <!-- 犯规begin -->
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/home_foul_txt"
-                                    style="@style/Style_txt1"
-                                    android:gravity="left" />
-
-                                <TextView
-                                    style="@style/Style_txt"
-                                    android:gravity="center"
-                                    android:text="@string/foul_txt" />
-
-                                <TextView
-                                    android:id="@+id/guest_foul_txt"
-                                    style="@style/Style_txt1"
-                                    android:gravity="right" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <ProgressBar
-                                    android:id="@+id/prohome_foul"
-                                    style="@style/StyleProgressBarguest_statics" />
-                            </LinearLayout>
-                            <!-- 犯规end -->
-                            <!-- 越位 begin -->
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/home_offside_txt"
-                                    style="@style/Style_txt1"
-                                    android:gravity="left" />
-
-                                <TextView
-                                    style="@style/Style_txt"
-                                    android:gravity="center"
-                                    android:text="@string/away_txt" />
-
-                                <TextView
-                                    android:id="@+id/guest_offside_txt"
-                                    style="@style/Style_txt1"
-                                    android:gravity="right" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <ProgressBar
-                                    android:id="@+id/prohome_offside"
-                                    style="@style/StyleProgressBarguest_statics" />
-
-
-                            </LinearLayout>
-                            <!-- 越位end -->
-                            <!-- 任意球 begin -->
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/home_freeHit_txt"
-                                    style="@style/Style_txt1"
-                                    android:gravity="left" />
-
-                                <TextView
-                                    style="@style/Style_txt"
-                                    android:gravity="center"
-                                    android:text="@string/free_hit_txt" />
-
-                                <TextView
-                                    android:id="@+id/guest_freeHit_txt"
-                                    style="@style/Style_txt1"
-                                    android:gravity="right" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <ProgressBar
-                                    android:id="@+id/prohome_freeHit"
-                                    style="@style/StyleProgressBarguest_statics" />
-
-
-                            </LinearLayout>
-                            <!-- 任意球end -->
-                            <!-- 界外球 begin -->
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/home_lineout_txt"
-                                    style="@style/Style_txt1"
-                                    android:gravity="left" />
-
-                                <TextView
-                                    style="@style/Style_txt"
-                                    android:gravity="center"
-                                    android:text="@string/lineout_txt" />
-
-                                <TextView
-                                    android:id="@+id/guest_lineout_txt"
-                                    style="@style/Style_txt1"
-                                    android:gravity="right" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <ProgressBar
-                                    android:id="@+id/prohome_lineout"
-                                    style="@style/StyleProgressBarguest_statics" />
-                            </LinearLayout>
-                            <!-- 界外球end -->
-                        </LinearLayout>
-
-                    </RelativeLayout>
-                    <!--数据统计的弹框 end-->
-                </RelativeLayout>
-
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>
@@ -869,7 +1265,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
                             android:background="@color/white"
-                            android:paddingLeft="10dp"/>
+                            android:paddingLeft="10dp" />
 
                     </LinearLayout>
 
@@ -885,8 +1281,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="15dp"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:paddingLeft="15dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -994,8 +1390,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="15dp"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:paddingLeft="15dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -1105,8 +1501,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="15dp"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:paddingLeft="15dp">
 
                             <TextView
                                 android:layout_width="wrap_content"

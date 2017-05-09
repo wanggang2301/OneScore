@@ -767,6 +767,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private void initViewPager(MatchDetail matchDetail) {
         if (BEFOURLIVE.equals(matchDetail.getLiveStatus())) { //赛前
             mLayoutScore.setVisibility(View.VISIBLE);
+            L.d("ssdddd", "lineup===" + matchDetail.getHomeTeamInfo().getLineup());
+            L.d("ssdddd", "lineup===" + matchDetail.getHomeTeamInfo().getLineup().isEmpty());
 
             setCurrentShowTab(matchDetail.getLiveStatus());
 
@@ -779,6 +781,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             head_score.setText("VS");
 
             mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE, matchDetail);
+            mLiveFragment.showLineUp(matchDetail.getHomeTeamInfo().getLineup(), matchDetail.getGuestTeamInfo().getLineup());
+
             mLiveFragment.setEventMatchLive(mMatchDetail, null);
             mLiveFragment.setmFootballLiveGotoChart(mFootballLiveGotoChart);
         } else {
@@ -789,6 +793,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
             matchLive = mMatchDetail.getMatchInfo().getMatchLive();
             allMatchLiveMsgId = new ArrayList<>();
+            L.d("ssdddd", "lineup===" + matchDetail.getHomeTeamInfo().getLineup().size());
+
+            mLiveFragment.showLineUp(matchDetail.getHomeTeamInfo().getLineup(), matchDetail.getGuestTeamInfo().getLineup());
 
 
             //完场
@@ -1495,9 +1502,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                 mLiveFragment.setMathchStatisInfo(mathchStatisInfo);
                 mLiveFragment.initLiveStatics(mMatchDetail.getLiveStatus());// 刷新统计
-
                 mLiveFragment.cancelTrendChartEvent(matchTextLiveBean);
-
 
                 break;
 
@@ -2032,6 +2037,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     if (liveTextList.size() > 0) {
                         for (MatchTextLiveBean m : liveTextList) {
                             L.i("1028", "漏消息msgId=" + m.getMsgId());
+
+
                             boolean isRepeat = true;
                             for (Integer matchTextLiveBean : allMatchLiveMsgId) {
                                 if (m.getMsgId().equals(matchTextLiveBean)) {

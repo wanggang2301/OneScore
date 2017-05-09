@@ -188,6 +188,8 @@
 
     <!--首发阵容 Start-->
     <string name="firsPlayers_not">暂无首发</string>
+    <string name="homePlayers">主队名单</string>
+    <string name="guestPlayers">客队名单</string>
     <string name="firsPlayers_rosters_homeTeam">主队名单</string>
     <string name="firsPlayers_rosters_visitingTeam">客队名单</string>
     <string name="homeTeam">主队 一</string>
@@ -1677,6 +1679,8 @@
     <string name="foot_event_num">""</string>
     <string name="please_hint_team">请输入球队名称</string>
     <string name="foot_text">文字</string>
+    <string name="foot_lineup">阵容</string>
+    <string name="foot_statistics">统计</string>
 
 
     <!--球队信息-->
