@@ -391,11 +391,11 @@
             android:screenOrientation="portrait" />
         <activity android:name="com.hhly.mlottery.activity.BettingPayDetailsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.hhly.mlottery.activity.BettingOnlinePaymentActivity"
-            android:screenOrientation="portrait" />
         <activity android:name="com.hhly.mlottery.activity.BettingRecommendSettingActivity"
             android:screenOrientation="portrait" />
         <activity android:name="com.hhly.mlottery.activity.BettingMvp.MvpBettingRecommendActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.hhly.mlottery.activity.BettingOnlinePaymentActivity"
             android:screenOrientation="portrait" />
         <!-- alipay sdk begin -->
         <!-- 若手机没有安装支付宝，则调用H5支付页面 -->
@@ -404,7 +404,14 @@
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
+            >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            >
         </activity>
         <!-- alipay sdk end -->
         <activity

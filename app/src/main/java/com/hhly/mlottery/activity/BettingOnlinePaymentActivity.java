@@ -185,7 +185,6 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
                 PayTask aliPay = new PayTask(BettingOnlinePaymentActivity.this);
 //                String result = aliPay.pay(orderInfo , true);
                 Map<String , String> payMap = aliPay.payV2(orderInfo , true);
-
                 Message msg = new Message();
                 msg.what = SDK_PAY_FLAG;
                 msg.obj = payMap;
@@ -204,13 +203,18 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
             switch (msg.what){
                 case SDK_PAY_FLAG:{
                     PayResult mResult = new PayResult((Map<String , String>)msg.obj);
-
                     String resultStatus = mResult.getResultStatus();
                     if ( TextUtils.equals(resultStatus , "9000")) {
                         Toast.makeText(mContext, "支付成功 > " + resultStatus, Toast.LENGTH_SHORT).show();
                     }else{
                         if (TextUtils.equals(resultStatus, "8000")) {
                             Toast.makeText(mContext, "结果确认中 > " + resultStatus, Toast.LENGTH_SHORT).show();
+                        }else if (TextUtils.equals(resultStatus, "6001")) {
+                            Toast.makeText(mContext, "支付取消 > " + resultStatus, Toast.LENGTH_SHORT).show();
+                        }else if (TextUtils.equals(resultStatus, "6002")) {
+                            Toast.makeText(mContext, "网络异常 > " + resultStatus, Toast.LENGTH_SHORT).show();
+                        }else if (TextUtils.equals(resultStatus, "5000")) {
+                            Toast.makeText(mContext, "重复请求 > " + resultStatus, Toast.LENGTH_SHORT).show();
                         }else{
                             Toast.makeText(mContext, "支付失败 > " + resultStatus, Toast.LENGTH_SHORT).show();
                         }
