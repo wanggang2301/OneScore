@@ -1,5 +1,6 @@
 package com.hhly.mlottery.frame.basketballframe;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -12,11 +13,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.adapter.basketball.BasketballDatabaseScheduleSectionAdapter;
 import com.hhly.mlottery.bean.basket.basketdatabase.MatchDay;
 import com.hhly.mlottery.bean.basket.basketdatabase.MatchStage;
@@ -120,6 +123,7 @@ public class BasketDatabaseScheduleFragment extends Fragment {
 
         initEmptyView();
 
+        setDetailsOnClick();
         initRecycler();
 
         initListener();
@@ -414,6 +418,7 @@ public class BasketDatabaseScheduleFragment extends Fragment {
     private void initRecycler() {
         mSections = new ArrayList<>();
         mAdapter = new BasketballDatabaseScheduleSectionAdapter(mSections);
+        mAdapter.setBasketballDetailsClickListener(basketballDetailsClickListener);
         mAdapter.addHeaderView(mButtonFrame);
         mAdapter.setEmptyView(true, mEmptyView);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
@@ -435,5 +440,25 @@ public class BasketDatabaseScheduleFragment extends Fragment {
         this.season = season;
         Bundle args = getArguments();
         if (args != null) args.putString(PARAM_SEASON, season);
+    }
+
+    //点击跳转到内页
+    private BasketballDetailsClickListener basketballDetailsClickListener;
+    public interface BasketballDetailsClickListener {
+        void DetailsOnClick(View view, String id);
+    }
+    private void setDetailsOnClick(){
+        basketballDetailsClickListener = new BasketballDetailsClickListener() {
+            @Override
+            public void DetailsOnClick(View view, String thirdId) {
+//                Intent intent = new Intent(getActivity(), BasketDetailsActivityTest.class);
+//                intent.putExtra(BasketDetailsActivityTest.BASKET_THIRD_ID, thirdId);//跳转到详情 4830987
+//                intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_LEAGUEID, league.getLeagueId());
+//                intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_MATCHTYPE, league.getMatchType().toString());
+//                startActivity(intent);
+//                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
+//                Toast.makeText(getContext(), "aaa " + thirdId, Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 }

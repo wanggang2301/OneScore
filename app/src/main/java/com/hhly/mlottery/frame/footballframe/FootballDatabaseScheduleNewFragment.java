@@ -718,8 +718,8 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
         void onItemClick(int position);
     }
 
+    //点击内页跳转
     private FootballTeamDetailsClickListener footballTeamDetailsClickListener;
-    // 购买(查看)的点击监听
     public interface FootballTeamDetailsClickListener {
         void DetailsOnClick(View view, ScheduleDatasBean matchData);
     }
