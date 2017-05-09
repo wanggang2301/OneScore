@@ -126,8 +126,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
     apt 'com.google.dagger:dagger-compiler:2.4'
-    provided 'org.glassfish:javax.annotation:10.0-b28'
     provided 'com.android.support:support-annotations:23.4.0'
-//   compile 'com.google.android:multidex:0.1'
+    provided 'org.glassfish:javax.annotation:10.0-b28'
     compile 'com.android.support:multidex:1.0.0'
+//   compile 'com.google.android:multidex:0.1'
 }
