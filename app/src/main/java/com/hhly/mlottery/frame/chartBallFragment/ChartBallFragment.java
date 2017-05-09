@@ -59,7 +59,6 @@ import java.util.TimerTask;
 import java.util.UUID;
 
 import de.greenrobot.event.EventBus;
-import io.github.rockerhieu.emojicon.EmojiconEditText;
 
 
 /**
@@ -105,7 +104,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     private View mView;                                       // 总布局
     private int type = -1;                                    // 1 籃球、0 足球
     private String mThirdId;                                  // 赛事id
-    private EmojiconEditText mEditText;
+    private TextView mEditText;
     private RecyclerView recycler_view;
     private ChartBallAdapter mAdapter;
     private ChartBallReportDialogFragment dialogFragment;
@@ -135,6 +134,8 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     private boolean isLoading = false;// 是否已加载过数据
 
     Timer timer = new Timer();
+
+    public ChartBallFragment(){}
 
     public static ChartBallFragment newInstance(int type, String thirdId) {
         ChartBallFragment fragment = new ChartBallFragment();
@@ -224,7 +225,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     }
 
     private void initView() {
-        mEditText = (EmojiconEditText) mView.findViewById(R.id.et_emoji_input);
+        mEditText = (TextView) mView.findViewById(R.id.et_emoji_input);
         mEditText.setFocusable(false);
         mEditText.setFocusableInTouchMode(false);
         recycler_view = (RecyclerView) mView.findViewById(R.id.recycler_view);

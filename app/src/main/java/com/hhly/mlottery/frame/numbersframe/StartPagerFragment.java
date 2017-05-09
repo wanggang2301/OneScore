@@ -1,14 +1,17 @@
 package com.hhly.mlottery.frame.numbersframe;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
@@ -22,7 +25,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import io.github.rockerhieu.emojicon.EmojiconTextView;
 
 /**
  * desc:香港开奖统计详情fragment
@@ -45,7 +47,7 @@ public class StartPagerFragment extends Fragment {
     private List<LotteryInfoDateBean> mBoList;
     private int mLabs;
 
-    private List<EmojiconTextView> emojiIconList = new ArrayList<>(12);
+    private List<ImageView> emojiIconList = new ArrayList<>(12);
     private List<TextView> emojiCountList = new ArrayList<>(12);
     private List<TextView> showNumberList = new ArrayList<>(49);
     private List<TextView> showCountList = new ArrayList<>(49);
@@ -74,6 +76,22 @@ public class StartPagerFragment extends Fragment {
     private FrameLayout fl_content;
     private FrameLayout fl_notNet;
     private TextView tv_reLoading;
+
+    // 12生肖图
+    private int[] zodicaIcons = {
+            R.mipmap.hk_zodizc_rat, // 鼠
+            R.mipmap.hk_zodizc_chicken, // 鸡
+            R.mipmap.hk_zodizc_monkey, // 猴
+            R.mipmap.hk_zodizc_loong, // 龙
+            R.mipmap.hk_zodizc_rabbit, // 兔
+            R.mipmap.hk_zodizc_horse, // 马
+            R.mipmap.hk_zodiac_dog, // 狗
+            R.mipmap.hk_zodizc_pig, // 猪
+            R.mipmap.hk_zodizc_sheep, // 羊
+            R.mipmap.hk_zodizc_cattle, // 牛
+            R.mipmap.hk_zodizc_snake, // 蛇
+            R.mipmap.hk_zodizc_tiger  // 虎
+    };
 
     public static StartPagerFragment newInstance(int labs, List<LotteryInfoDateBean> zodiacList, List<LotteryInfoDateBean> numberList, List<LotteryInfoDateBean> mantissaList, List<LotteryInfoDateBean> boList) {
         StartPagerFragment fragment = new StartPagerFragment();
@@ -219,61 +237,11 @@ public class StartPagerFragment extends Fragment {
 
     // 直充数据
     private void addDataShow() {
-        // 鼠 \ue053
-        // 鸡 \ue52e
-        // 猴 \ue109
-        // 龙 自定义图片
-        // 兔 \ue52c
-        // 马 \ue01a
-        // 狗 \ue052
-        // 猪 \ue10b
-        // 羊 \ue529
-        // 牛 \ue52b
-        // 蛇 \ue52d
-        // 虎 \ue050
         switch (mLabs) {
             case 1:
                 // 生肖
                 for (int i = 0; i < zodiacCoedAppearList.size(); i++) {
-                    switch (zodiacCoedAppearList.get(i).getKey()) {
-                        case "鼠":
-                            emojiIconList.get(i).setText("\ue053");
-                            break;
-                        case "鸡":
-                            emojiIconList.get(i).setText("\ue52e");
-                            break;
-                        case "猴":
-                            emojiIconList.get(i).setText("\ue109");
-                            break;
-                        case "龙":
-                            emojiIconList.get(i).setText("");
-                            emojiIconList.get(i).setBackground(mContext.getResources().getDrawable(R.mipmap.number_hk_emoji_long));
-                            break;
-                        case "兔":
-                            emojiIconList.get(i).setText("\ue52c");
-                            break;
-                        case "马":
-                            emojiIconList.get(i).setText("\ue01a");
-                            break;
-                        case "狗":
-                            emojiIconList.get(i).setText("\ue052");
-                            break;
-                        case "猪":
-                            emojiIconList.get(i).setText("\ue10b");
-                            break;
-                        case "羊":
-                            emojiIconList.get(i).setText("\ue529");
-                            break;
-                        case "牛":
-                            emojiIconList.get(i).setText("\ue52b");
-                            break;
-                        case "蛇":
-                            emojiIconList.get(i).setText("\ue52d");
-                            break;
-                        case "虎":
-                            emojiIconList.get(i).setText("\ue050");
-                            break;
-                    }
+                    settingZodicaIcon(i, zodiacCoedAppearList.get(i).getKey());
                     emojiCountList.get(i).setText(String.valueOf(zodiacCoedAppearList.get(i).getCoedAppear()));
                 }
                 // 特码出现
@@ -309,45 +277,7 @@ public class StartPagerFragment extends Fragment {
             case 2:
                 // 生肖
                 for (int i = 0; i < zodiacNumberAppearList.size(); i++) {
-                    switch (zodiacNumberAppearList.get(i).getKey()) {
-                        case "鼠":
-                            emojiIconList.get(i).setText("\ue053");
-                            break;
-                        case "鸡":
-                            emojiIconList.get(i).setText("\ue52e");
-                            break;
-                        case "猴":
-                            emojiIconList.get(i).setText("\ue109");
-                            break;
-                        case "龙":
-                            emojiIconList.get(i).setText("");
-                            emojiIconList.get(i).setBackground(mContext.getResources().getDrawable(R.mipmap.number_hk_emoji_long));
-                            break;
-                        case "兔":
-                            emojiIconList.get(i).setText("\ue52c");
-                            break;
-                        case "马":
-                            emojiIconList.get(i).setText("\ue01a");
-                            break;
-                        case "狗":
-                            emojiIconList.get(i).setText("\ue052");
-                            break;
-                        case "猪":
-                            emojiIconList.get(i).setText("\ue10b");
-                            break;
-                        case "羊":
-                            emojiIconList.get(i).setText("\ue529");
-                            break;
-                        case "牛":
-                            emojiIconList.get(i).setText("\ue52b");
-                            break;
-                        case "蛇":
-                            emojiIconList.get(i).setText("\ue52d");
-                            break;
-                        case "虎":
-                            emojiIconList.get(i).setText("\ue050");
-                            break;
-                    }
+                    settingZodicaIcon(i, zodiacNumberAppearList.get(i).getKey());
                     emojiCountList.get(i).setText(String.valueOf(zodiacNumberAppearList.get(i).getNumberAppear()));
                 }
                 // 特码出现
@@ -383,45 +313,7 @@ public class StartPagerFragment extends Fragment {
             case 3:
                 // 生肖
                 for (int i = 0; i < zodiacCoedNotAppearList.size(); i++) {
-                    switch (zodiacCoedNotAppearList.get(i).getKey()) {
-                        case "鼠":
-                            emojiIconList.get(i).setText("\ue053");
-                            break;
-                        case "鸡":
-                            emojiIconList.get(i).setText("\ue52e");
-                            break;
-                        case "猴":
-                            emojiIconList.get(i).setText("\ue109");
-                            break;
-                        case "龙":
-                            emojiIconList.get(i).setText("");
-                            emojiIconList.get(i).setBackground(mContext.getResources().getDrawable(R.mipmap.number_hk_emoji_long));
-                            break;
-                        case "兔":
-                            emojiIconList.get(i).setText("\ue52c");
-                            break;
-                        case "马":
-                            emojiIconList.get(i).setText("\ue01a");
-                            break;
-                        case "狗":
-                            emojiIconList.get(i).setText("\ue052");
-                            break;
-                        case "猪":
-                            emojiIconList.get(i).setText("\ue10b");
-                            break;
-                        case "羊":
-                            emojiIconList.get(i).setText("\ue529");
-                            break;
-                        case "牛":
-                            emojiIconList.get(i).setText("\ue52b");
-                            break;
-                        case "蛇":
-                            emojiIconList.get(i).setText("\ue52d");
-                            break;
-                        case "虎":
-                            emojiIconList.get(i).setText("\ue050");
-                            break;
-                    }
+                    settingZodicaIcon(i, zodiacCoedNotAppearList.get(i).getKey());
                     emojiCountList.get(i).setText(String.valueOf(zodiacCoedNotAppearList.get(i).getCoedNotAppear()));
                 }
                 // 特码出现
@@ -453,6 +345,52 @@ public class StartPagerFragment extends Fragment {
                     }
                     boCountList.get(i).setText(String.valueOf(boCoedNotAppearList.get(i).getCoedNotAppear()));
                 }
+                break;
+        }
+    }
+
+    /**
+     * 设置生肖icon，注：key值和顺序不能变，否则会影响图标不对应
+     * @param i 下标
+     * @param key 生肖
+     */
+    private void settingZodicaIcon(int i, String key) {
+        switch (key) {
+            case "鼠":
+                emojiIconList.get(i).setBackground(ContextCompat.getDrawable(mContext,zodicaIcons[0]));
+                break;
+            case "鸡":
+                emojiIconList.get(i).setBackground(ContextCompat.getDrawable(mContext,zodicaIcons[1]));
+                break;
+            case "猴":
+                emojiIconList.get(i).setBackground(ContextCompat.getDrawable(mContext,zodicaIcons[2]));
+                break;
+            case "龙":
+                emojiIconList.get(i).setBackground(ContextCompat.getDrawable(mContext,zodicaIcons[3]));
+                break;
+            case "兔":
+                emojiIconList.get(i).setBackground(ContextCompat.getDrawable(mContext,zodicaIcons[4]));
+                break;
+            case "马":
+                emojiIconList.get(i).setBackground(ContextCompat.getDrawable(mContext,zodicaIcons[5]));
+                break;
+            case "狗":
+                emojiIconList.get(i).setBackground(ContextCompat.getDrawable(mContext,zodicaIcons[6]));
+                break;
+            case "猪":
+                emojiIconList.get(i).setBackground(ContextCompat.getDrawable(mContext,zodicaIcons[7]));
+                break;
+            case "羊":
+                emojiIconList.get(i).setBackground(ContextCompat.getDrawable(mContext,zodicaIcons[8]));
+                break;
+            case "牛":
+                emojiIconList.get(i).setBackground(ContextCompat.getDrawable(mContext,zodicaIcons[9]));
+                break;
+            case "蛇":
+                emojiIconList.get(i).setBackground(ContextCompat.getDrawable(mContext,zodicaIcons[10]));
+                break;
+            case "虎":
+                emojiIconList.get(i).setBackground(ContextCompat.getDrawable(mContext,zodicaIcons[11]));
                 break;
         }
     }
@@ -609,18 +547,18 @@ public class StartPagerFragment extends Fragment {
         tv_title_03 = (TextView) mView.findViewById(R.id.tv_title_03);
         tv_title_04 = (TextView) mView.findViewById(R.id.tv_title_04);
 
-        EmojiconTextView emoji_icon_01 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_01);
-        EmojiconTextView emoji_icon_02 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_02);
-        EmojiconTextView emoji_icon_03 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_03);
-        EmojiconTextView emoji_icon_04 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_04);
-        EmojiconTextView emoji_icon_05 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_05);
-        EmojiconTextView emoji_icon_06 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_06);
-        EmojiconTextView emoji_icon_07 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_07);
-        EmojiconTextView emoji_icon_08 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_08);
-        EmojiconTextView emoji_icon_09 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_09);
-        EmojiconTextView emoji_icon_10 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_10);
-        EmojiconTextView emoji_icon_11 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_11);
-        EmojiconTextView emoji_icon_12 = (EmojiconTextView) mView.findViewById(R.id.emoji_icon_12);
+        ImageView emoji_icon_01 = (ImageView) mView.findViewById(R.id.emoji_icon_01);
+        ImageView emoji_icon_02 = (ImageView) mView.findViewById(R.id.emoji_icon_02);
+        ImageView emoji_icon_03 = (ImageView) mView.findViewById(R.id.emoji_icon_03);
+        ImageView emoji_icon_04 = (ImageView) mView.findViewById(R.id.emoji_icon_04);
+        ImageView emoji_icon_05 = (ImageView) mView.findViewById(R.id.emoji_icon_05);
+        ImageView emoji_icon_06 = (ImageView) mView.findViewById(R.id.emoji_icon_06);
+        ImageView emoji_icon_07 = (ImageView) mView.findViewById(R.id.emoji_icon_07);
+        ImageView emoji_icon_08 = (ImageView) mView.findViewById(R.id.emoji_icon_08);
+        ImageView emoji_icon_09 = (ImageView) mView.findViewById(R.id.emoji_icon_09);
+        ImageView emoji_icon_10 = (ImageView) mView.findViewById(R.id.emoji_icon_10);
+        ImageView emoji_icon_11 = (ImageView) mView.findViewById(R.id.emoji_icon_11);
+        ImageView emoji_icon_12 = (ImageView) mView.findViewById(R.id.emoji_icon_12);
         emojiIconList.add(emoji_icon_01);
         emojiIconList.add(emoji_icon_02);
         emojiIconList.add(emoji_icon_03);
