@@ -61,6 +61,7 @@ import com.hhly.mlottery.frame.footballframe.DetailsRollballFragment;
 import com.hhly.mlottery.frame.footballframe.IntelligenceFragment;
 import com.hhly.mlottery.frame.footballframe.LiveFragment;
 import com.hhly.mlottery.frame.footballframe.OddsFragment;
+import com.hhly.mlottery.frame.footballframe.RecommendFragment;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CountDown;
@@ -217,6 +218,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private boolean isMatchStart = false;  //判断比赛推送时间状态
 
+    private RecommendFragment mRecommendFragment;  //推介
     private DetailsRollballFragment mDetailsRollballFragment; //滚球
     private LiveFragment mLiveFragment;  //直播
     private AnalyzeFragment mAnalyzeFragment;  //分析
@@ -407,7 +409,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         ll_Webview = (LinearLayout) findViewById(R.id.ll_webview);
         mHalfScore = (TextView) findViewById(R.id.half_score);
 
-
+        //推介
+        mRecommendFragment = RecommendFragment.newInstance();
         //滚球
         mDetailsRollballFragment = DetailsRollballFragment.newInstance(mThirdId);
         //直播
@@ -421,8 +424,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         // 聊球
         mChartBallFragment = ChartBallFragment.newInstance(0, mThirdId);
 
-        mTabsAdapter.addFragments(mDetailsRollballFragment, mLiveFragment, mAnalyzeFragment, mIntelligenceFragment, mOddsFragment, mChartBallFragment);
-        mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
+        mTabsAdapter.addFragments(mRecommendFragment, mDetailsRollballFragment, mLiveFragment, mOddsFragment, mAnalyzeFragment, mIntelligenceFragment, mChartBallFragment);
+        mViewPager.setOffscreenPageLimit(6);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 

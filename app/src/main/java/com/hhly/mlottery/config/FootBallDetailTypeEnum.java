@@ -16,21 +16,25 @@ public interface FootBallDetailTypeEnum {
     //默认
     int FOOT_DETAIL_DEFAULT = -1;
 
+    int FOOT_DETAIL_RECOMMEND = 0;
+
     //滚球
-    int FOOT_DETAIL_ROLL = 0;
+    int FOOT_DETAIL_ROLL = 1;
 
     //直播
-    int FOOT_DETAIL_LIVE = 1;
+    int FOOT_DETAIL_LIVE = 2;
 
-    //分析
-    int FOOT_DETAIL_ANALYSIS = 2;
-
-    //情报
-    int FOOT_DETAIL_INFOCENTER = 3;
 
     //指数
-    int FOOT_DETAIL_INDEX = 4;
+    int FOOT_DETAIL_INDEX = 3;
+
+
+    //分析
+    int FOOT_DETAIL_ANALYSIS = 4;
+
+    //情报
+    int FOOT_DETAIL_INFOCENTER = 5;
 
     //聊球
-    int FOOT_DETAIL_CHARTBALL = 5;
+    int FOOT_DETAIL_CHARTBALL = 6;
 }
