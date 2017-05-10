@@ -128,4 +128,6 @@ dependencies {
     provided 'org.glassfish:javax.annotation:10.0-b28'
     compile 'com.android.support:multidex:1.0.0'
 //   compile 'com.google.android:multidex:0.1'
+    compile 'io.github.rockerhieu:emojicon:1.4.2'
+    compile 'io.github.rockerhieu:emojiconize:1.0.0'
 }
