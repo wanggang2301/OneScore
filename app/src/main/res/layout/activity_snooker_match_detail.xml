@@ -19,7 +19,7 @@
             android:theme="@style/AppTheme.AppBarOverlay"
             >
 
-            <android.support.design.widget.CollapsingToolbarLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -59,7 +59,7 @@
                 </android.support.v7.widget.Toolbar>
 
 
-            </android.support.design.widget.CollapsingToolbarLayout>
+            </FrameLayout>
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/snooker_details_tab_layout"

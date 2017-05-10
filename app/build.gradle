@@ -127,5 +127,4 @@ dependencies {
     provided 'com.android.support:support-annotations:23.4.0'
     provided 'org.glassfish:javax.annotation:10.0-b28'
     compile 'com.android.support:multidex:1.0.0'
-    compile 'io.github.rockerhieu:emojicon:1.4.2'
 }

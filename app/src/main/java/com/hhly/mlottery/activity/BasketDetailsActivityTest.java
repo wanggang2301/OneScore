@@ -124,7 +124,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
 
     private ViewPager mViewPager;
-    private CollapsingToolbarLayout mCollapsingToolbarLayout;
+//    private CollapsingToolbarLayout mCollapsingToolbarLayout;
     public AppBarLayout appBarLayout;
     private TabLayout mTabLayout;
     private TabsAdapter mTabsAdapter;
@@ -313,7 +313,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
         toolbar = (Toolbar) findViewById(R.id.basket_details_toolbar);
         setSupportActionBar(toolbar);
-        mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+//        mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         mHeadviewpager = new CustomViewpager(mContext);
         mHeadviewpager = (CustomViewpager) findViewById(R.id.headviewpager);
         mIndicator = (CircleIndicator) findViewById(R.id.indicator);
@@ -729,11 +729,11 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 //        }
         headLayout.setBackgroundColor(getResources().getColor(R.color.transparency));
 
-        if (mCollapsingToolbarLayout.getHeight() + verticalOffset < mHeadviewpager.getHeight()) {
-            mRefreshLayout.setEnabled(false);   //收缩
-        } else {
-            mRefreshLayout.setEnabled(true); //展开
-        }
+//        if (mCollapsingToolbarLayout.getHeight() + verticalOffset < mHeadviewpager.getHeight()) {
+//            mRefreshLayout.setEnabled(false);   //收缩
+//        } else {
+//            mRefreshLayout.setEnabled(true); //展开
+//        }
     }
 
     @Override
