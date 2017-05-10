@@ -126,7 +126,7 @@
 -keep class org.apache.commons.logging.** { *; }
 -keep class android.net.compatibility.** { *; }
 -keep class android.net.http.** { *; }
-
+-keep class org.apache.http.{*;}
 ########################## 友盟推送 End
 
 # License
@@ -265,4 +265,7 @@ public void *(***);
 -keep class com.alipay.android.app.IRemoteServiceCallback$Stub{*;}
 -keep class com.alipay.sdk.app.PayTask{ public *;}
 -keep class com.alipay.sdk.app.AuthTask{ public *;}
+
+-dontwarn android.net.**
+-keep class android.net.SSLCertificateSocketFactory{*;}
 ##-----支付宝 end-----

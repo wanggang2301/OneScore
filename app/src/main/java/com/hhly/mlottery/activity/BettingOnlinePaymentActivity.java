@@ -1,5 +1,9 @@
 package com.hhly.mlottery.activity;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
@@ -10,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
+import com.alipay.sdk.util.H5PayResultModel;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.alipay.PayResult;
 import com.hhly.mlottery.bean.bettingbean.WeiFuTongPayidDataBean;
@@ -183,13 +188,11 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
             @Override
             public void run() {
                 PayTask aliPay = new PayTask(BettingOnlinePaymentActivity.this);
-//                String result = aliPay.pay(orderInfo , true);
                 Map<String , String> payMap = aliPay.payV2(orderInfo , true);
                 Message msg = new Message();
                 msg.what = SDK_PAY_FLAG;
                 msg.obj = payMap;
                 mHandler.sendMessage(msg);
-
             }
         };
         // 必须异步调用
@@ -203,7 +206,10 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
             switch (msg.what){
                 case SDK_PAY_FLAG:{
                     PayResult mResult = new PayResult((Map<String , String>)msg.obj);
+                    String result = mResult.getResult();
                     String resultStatus = mResult.getResultStatus();
+
+                    L.d("qwer_asd " , result + " == " + resultStatus);
                     if ( TextUtils.equals(resultStatus , "9000")) {
                         Toast.makeText(mContext, "支付成功 > " + resultStatus, Toast.LENGTH_SHORT).show();
                     }else{
@@ -226,4 +232,16 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
             }
         }
     };
+
+    /**
+     * 判断是否安装有支付宝客户端
+     * @param context
+     * @return
+     */
+    public static boolean checkAliPayInstalled(Context context) {
+        Uri uri = Uri.parse("alipays://platformapi/startApp");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        ComponentName componentName = intent.resolveActivity(context.getPackageManager());
+        return componentName != null;
+    }
 }
