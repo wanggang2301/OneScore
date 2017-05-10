@@ -159,6 +159,7 @@ public class IntelligenceFragment extends Fragment {
         if (args != null) {
             mThirdId = args.getString(KEY_THIRD_ID);
         }
+
         if (mFactor == null) {
             mFactor = new BigDataForecastFactor();
         }

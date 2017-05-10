@@ -247,8 +247,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_analyze_fragment, container, false);
         mAnalyzeBean = new NewAnalyzeBean();
 //        mHomeName=getString(R.string.intelligent_home);

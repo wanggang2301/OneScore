@@ -1671,6 +1671,7 @@
     <string name="foot_lineup">陣容</string>
     <string name="foot_statistics">統計</string>
     <string name="nopage">暫無動畫直播</string>
+    <string name="foot_bigdata">大数据</string>
 
     <!--球队信息-->
     <string name="foot_team_info_total">總</string>

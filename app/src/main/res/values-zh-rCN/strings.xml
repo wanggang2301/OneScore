@@ -1684,6 +1684,8 @@
     <string name="foot_lineup">阵容</string>
     <string name="foot_statistics">统计</string>
     <string name="nopage">暂无比赛直播</string>
+    <string name="foot_bigdata">大数据</string>
+
 
     <!--球队信息-->
     <string name="foot_team_info_total">总</string>
