@@ -257,7 +257,7 @@ public void *(***);
 ##-----TalkingData统计 end-----
 
 ##-----支付宝 begin-----
--libraryjars libs/alipaySdk-20170407.jar
+-libraryjars libs/alipaySingle-20161222.jar
 
 -keep class com.alipay.android.app.IAlixPay{*;}
 -keep class com.alipay.android.app.IAlixPay$Stub{*;}
