@@ -76,9 +76,9 @@
         <item>@string/foot_details_recommend</item>
         <item>@string/foot_details_roolball</item>
         <item>@string/foot_details_statistics</item>
+        <item>@string/foot_details_odds</item>
         <item>@string/foot_details_analyze</item>
         <item>@string/foot_details_info</item>
-        <item>@string/foot_details_odds</item>
         <item>@string/foot_details_talkball</item>
     </string-array>
 
