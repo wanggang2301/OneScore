@@ -124,12 +124,12 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
 
     private ViewPager mViewPager;
-//    private CollapsingToolbarLayout mCollapsingToolbarLayout;
+    private CollapsingToolbarLayout mCollapsingToolbarLayout;
     public AppBarLayout appBarLayout;
     private TabLayout mTabLayout;
     private TabsAdapter mTabsAdapter;
     private Toolbar toolbar;
-//    private CoordinatorLayout mCoordinatorLayout;
+    //    private CoordinatorLayout mCoordinatorLayout;
     private String[] TITLES;
 
 
@@ -165,7 +165,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private Integer mMatchType; //联赛类型
     private CustomViewpager mHeadviewpager;
     private BasketDetailsHeadFragment mBasketDetailsHeadFragment;
-//    private BasketAnimLiveFragment mBasketAnimLiveFragment;
+    //    private BasketAnimLiveFragment mBasketAnimLiveFragment;
     private CircleIndicator mIndicator;
 
 
@@ -199,11 +199,11 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private final int GIFPERIOD_2 = 1000 * 5;//刷新周期两分钟
     //private final static int GIFPERIOD_2 = 1000 * 15;//刷新周期15秒
 
-//    private final static String BASKETBALL_GIF = "basketball_gif";
+    //    private final static String BASKETBALL_GIF = "basketball_gif";
     private BarrageView barrage_view;
     private ImageView barrage_switch;
     boolean barrage_isFocus = false;
-//    private View view_red;
+    //    private View view_red;
     private int chartBallView = -1;// 聊球界面转标记
 
 //    private TextView tv_addMultiView;
@@ -313,7 +313,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
         toolbar = (Toolbar) findViewById(R.id.basket_details_toolbar);
         setSupportActionBar(toolbar);
-//        mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         mHeadviewpager = new CustomViewpager(mContext);
         mHeadviewpager = (CustomViewpager) findViewById(R.id.headviewpager);
         mIndicator = (CircleIndicator) findViewById(R.id.indicator);
@@ -729,11 +729,11 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 //        }
         headLayout.setBackgroundColor(getResources().getColor(R.color.transparency));
 
-//        if (mCollapsingToolbarLayout.getHeight() + verticalOffset < mHeadviewpager.getHeight()) {
-//            mRefreshLayout.setEnabled(false);   //收缩
-//        } else {
-//            mRefreshLayout.setEnabled(true); //展开
-//        }
+        if (mCollapsingToolbarLayout.getHeight() + verticalOffset < mHeadviewpager.getHeight()) {
+            mRefreshLayout.setEnabled(false);   //收缩
+        } else {
+            mRefreshLayout.setEnabled(true); //展开
+        }
     }
 
     @Override

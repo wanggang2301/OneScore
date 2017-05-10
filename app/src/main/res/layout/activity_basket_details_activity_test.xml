@@ -19,7 +19,7 @@
             android:background="@color/black"
             android:theme="@style/AppTheme.AppBarOverlay">
 
-            <FrameLayout
+            <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                     <include layout="@layout/basket_details_header" />
                 </android.support.v7.widget.Toolbar>
 
-            </FrameLayout>
+            </android.support.design.widget.CollapsingToolbarLayout>
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/basket_details_tab_layout"

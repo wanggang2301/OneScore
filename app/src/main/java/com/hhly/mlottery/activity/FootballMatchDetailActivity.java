@@ -167,7 +167,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     //    private FragmentManager fragmentManager;
     private ViewPager mViewPager;
-//    private CollapsingToolbarLayout mCollapsingToolbarLayout;
+    private CollapsingToolbarLayout mCollapsingToolbarLayout;
     public AppBarLayout appBarLayout;
     private TabLayout mTabLayout;
     private TabsAdapter mTabsAdapter;
@@ -370,7 +370,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         mRefreshLayout.setOnRefreshListener(this);
         mRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
 
-//        mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
 
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
@@ -450,16 +450,16 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             head_score.setVisibility(View.GONE);
         }
 
-//        if (mCollapsingToolbarLayout.getHeight() + verticalOffset < fl_head.getHeight()) {
-//            mRefreshLayout.setEnabled(false);   //收缩
-//        } else {
-//
-//            if (isRquestSuccess) {
-//                mRefreshLayout.setEnabled(true); //展开
-//            } else {
-//                mRefreshLayout.setEnabled(false); //展开
-//            }
-//        }
+        if (mCollapsingToolbarLayout.getHeight() + verticalOffset < fl_head.getHeight()) {
+            mRefreshLayout.setEnabled(false);   //收缩
+        } else {
+
+            if (isRquestSuccess) {
+                mRefreshLayout.setEnabled(true); //展开
+            } else {
+                mRefreshLayout.setEnabled(false); //展开
+            }
+        }
     }
 
 
