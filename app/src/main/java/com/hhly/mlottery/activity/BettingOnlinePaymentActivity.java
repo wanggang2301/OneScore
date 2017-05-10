@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alipay.sdk.app.PayTask;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.alipay.PayResult;
 import com.hhly.mlottery.bean.bettingbean.WeiFuTongPayidDataBean;
@@ -177,24 +176,25 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
     /**
      * 调用支付宝支付
      */
-    private void toAliPay(final String orderInfo){
+    private void
+    toAliPay(final String orderInfo){
 
-        Runnable aliPayRun = new Runnable() {
-            @Override
-            public void run() {
-                PayTask aliPay = new PayTask(BettingOnlinePaymentActivity.this);
-//                String result = aliPay.pay(orderInfo , true);
-                Map<String , String> payMap = aliPay.payV2(orderInfo , true);
-                Message msg = new Message();
-                msg.what = SDK_PAY_FLAG;
-                msg.obj = payMap;
-                mHandler.sendMessage(msg);
-
-            }
-        };
-        // 必须异步调用
-        Thread payThread = new Thread(aliPayRun);
-        payThread.start();
+//        Runnable aliPayRun = new Runnable() {
+//            @Override
+//            public void run() {
+//                PayTask aliPay = new PayTask(BettingOnlinePaymentActivity.this);
+////                String result = aliPay.pay(orderInfo , true);
+//                Map<String , String> payMap = aliPay.payV2(orderInfo , true);
+//                Message msg = new Message();
+//                msg.what = SDK_PAY_FLAG;
+//                msg.obj = payMap;
+//                mHandler.sendMessage(msg);
+//
+//            }
+//        };
+//        // 必须异步调用
+//        Thread payThread = new Thread(aliPayRun);
+//        payThread.start();
     }
 
     private Handler mHandler = new Handler(){
