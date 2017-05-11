@@ -368,7 +368,7 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
             public void onClick(View v) {
 
                 isRepeatShowDialog();
-                mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getAsianlistOdd().get(0), ALET);
+                mBottomOddsDetailsFragment = BottomOddsDetailsFragment.newInstance(bottomOdds.getAsianlistOdd().get(0), ALET);
                 mBottomOddsDetailsFragment.show(getChildFragmentManager(), "bottomOdds");
             }
         });
@@ -381,7 +381,7 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
 
                 isRepeatShowDialog();
 
-                mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getOverunderlistOdd().get(0), ASIZE);
+                mBottomOddsDetailsFragment = BottomOddsDetailsFragment.newInstance(bottomOdds.getOverunderlistOdd().get(0), ASIZE);
                 mBottomOddsDetailsFragment.show(getChildFragmentManager(), "bottomOdds");
             }
         });
@@ -393,7 +393,7 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
             public void onClick(View v) {
                 isRepeatShowDialog();
 
-                mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getEuropelistOdd().get(0), EUR);
+                mBottomOddsDetailsFragment = BottomOddsDetailsFragment.newInstance(bottomOdds.getEuropelistOdd().get(0), EUR);
                 mBottomOddsDetailsFragment.show(getChildFragmentManager(), "bottomOdds");
             }
         });
