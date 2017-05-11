@@ -39,11 +39,11 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                    <ImageView
                         android:id="@+id/emoji_icon_01"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        tools:background="@mipmap/number_hk_emoji_long"
+                        tools:background="@mipmap/hk_zodizc_loong"
                         android:textSize="40sp"
                         tools:text="" />
 
@@ -65,12 +65,12 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                    <ImageView
                         android:id="@+id/emoji_icon_02"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:textSize="40sp"
-                        tools:text="\ue109" />
+                        tools:background="@mipmap/hk_zodizc_loong"/>
 
                     <TextView
                         android:id="@+id/emoji_count_02"
@@ -90,12 +90,12 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                    <ImageView
                         android:id="@+id/emoji_icon_03"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:textSize="40sp"
-                        tools:text="" />
+                        tools:background="@mipmap/hk_zodizc_loong" />
 
                     <TextView
                         android:id="@+id/emoji_count_03"
@@ -115,12 +115,12 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                    <ImageView
                         android:id="@+id/emoji_icon_04"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:textSize="40sp"
-                        tools:text="" />
+                        tools:background="@mipmap/hk_zodizc_loong"/>
 
                     <TextView
                         android:id="@+id/emoji_count_04"
@@ -140,12 +140,12 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                    <ImageView
                         android:id="@+id/emoji_icon_05"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:textSize="40sp"
-                        tools:text="" />
+                        tools:background="@mipmap/hk_zodizc_loong" />
 
                     <TextView
                         android:id="@+id/emoji_count_05"
@@ -165,12 +165,12 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                    <ImageView
                         android:id="@+id/emoji_icon_06"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:textSize="40sp"
-                        tools:text="" />
+                        tools:background="@mipmap/hk_zodizc_loong"/>
 
                     <TextView
                         android:id="@+id/emoji_count_06"
@@ -197,12 +197,12 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                    <ImageView
                         android:id="@+id/emoji_icon_07"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:textSize="40sp"
-                        tools:text="" />
+                        tools:background="@mipmap/hk_zodizc_loong"/>
 
                     <TextView
                         android:id="@+id/emoji_count_07"
@@ -222,12 +222,12 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                    <ImageView
                         android:id="@+id/emoji_icon_08"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:textSize="40sp"
-                        tools:text="" />
+                        tools:background="@mipmap/hk_zodizc_loong"/>
 
                     <TextView
                         android:id="@+id/emoji_count_08"
@@ -247,12 +247,12 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                    <ImageView
                         android:id="@+id/emoji_icon_09"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:textSize="40sp"
-                        tools:text="" />
+                        tools:background="@mipmap/hk_zodizc_loong"/>
 
                     <TextView
                         android:id="@+id/emoji_count_09"
@@ -272,12 +272,12 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                    <ImageView
                         android:id="@+id/emoji_icon_10"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:textSize="40sp"
-                        tools:text="" />
+                        tools:background="@mipmap/hk_zodizc_loong"/>
 
                     <TextView
                         android:id="@+id/emoji_count_10"
@@ -297,12 +297,12 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                    <ImageView
                         android:id="@+id/emoji_icon_11"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:textSize="40sp"
-                        tools:text="" />
+                        tools:background="@mipmap/hk_zodizc_loong"/>
 
                     <TextView
                         android:id="@+id/emoji_count_11"
@@ -322,12 +322,12 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                    <ImageView
                         android:id="@+id/emoji_icon_12"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:textSize="40sp"
-                        tools:text="" />
+                        tools:background="@mipmap/hk_zodizc_loong"/>
 
                     <TextView
                         android:id="@+id/emoji_count_12"

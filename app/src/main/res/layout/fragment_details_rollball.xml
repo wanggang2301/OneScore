@@ -180,19 +180,19 @@
                     android:id="@+id/odd_alet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"></com.hhly.mlottery.widget.DetailsRollOdd>
+                    android:layout_marginTop="10dp"/>
 
                 <com.hhly.mlottery.widget.DetailsRollOdd
                     android:id="@+id/odd_asize"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"></com.hhly.mlottery.widget.DetailsRollOdd>
+                    android:layout_marginTop="10dp"/>
 
                 <com.hhly.mlottery.widget.DetailsRollOdd
                     android:id="@+id/odd_eur"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"></com.hhly.mlottery.widget.DetailsRollOdd>
+                    android:layout_marginTop="10dp"/>
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>

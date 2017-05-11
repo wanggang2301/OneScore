@@ -46,6 +46,8 @@ public class OddsFragment extends Fragment {
         InitView(view);
     }
 
+    public OddsFragment(){}
+
     public static OddsFragment newInstance() {
         OddsFragment fragment = new OddsFragment();
         Bundle args = new Bundle();

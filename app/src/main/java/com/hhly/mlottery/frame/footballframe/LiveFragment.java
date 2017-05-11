@@ -1370,7 +1370,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
 
         mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
         // 获取对象ID
-        String mThirdId = ((FootballMatchDetailActivity) getActivity()).mThirdId;
+        String mThirdId = ((FootballMatchDetailActivity) mActivity).mThirdId;
 
         L.d("112233", mThirdId);
         // 设置参数

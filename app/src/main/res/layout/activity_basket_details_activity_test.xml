@@ -44,7 +44,7 @@
                         android:id="@+id/barrage_view"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
-                        android:paddingTop="30dp"></com.hhly.mlottery.view.BarrageView>
+                        android:paddingTop="30dp"/>
 
                 </FrameLayout>
 

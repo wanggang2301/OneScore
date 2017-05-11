@@ -129,7 +129,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private TabLayout mTabLayout;
     private TabsAdapter mTabsAdapter;
     private Toolbar toolbar;
-//    private CoordinatorLayout mCoordinatorLayout;
+    //    private CoordinatorLayout mCoordinatorLayout;
     private String[] TITLES;
 
 
@@ -165,7 +165,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private Integer mMatchType; //联赛类型
     private CustomViewpager mHeadviewpager;
     private BasketDetailsHeadFragment mBasketDetailsHeadFragment;
-//    private BasketAnimLiveFragment mBasketAnimLiveFragment;
+    //    private BasketAnimLiveFragment mBasketAnimLiveFragment;
     private CircleIndicator mIndicator;
 
 
@@ -199,11 +199,11 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private final int GIFPERIOD_2 = 1000 * 5;//刷新周期两分钟
     //private final static int GIFPERIOD_2 = 1000 * 15;//刷新周期15秒
 
-//    private final static String BASKETBALL_GIF = "basketball_gif";
+    //    private final static String BASKETBALL_GIF = "basketball_gif";
     private BarrageView barrage_view;
     private ImageView barrage_switch;
     boolean barrage_isFocus = false;
-//    private View view_red;
+    //    private View view_red;
     private int chartBallView = -1;// 聊球界面转标记
 
 //    private TextView tv_addMultiView;
