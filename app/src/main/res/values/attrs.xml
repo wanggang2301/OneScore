@@ -78,7 +78,7 @@
         <item>@string/foot_details_analyze</item>
         <item>@string/foot_details_info</item>
         <item>@string/foot_details_odds</item>
-        <item>@string/foot_details_talkball</item>
+      <!--  <item>@string/foot_details_talkball</item>-->
     </string-array>
 
     <!--足球篮球切换-->

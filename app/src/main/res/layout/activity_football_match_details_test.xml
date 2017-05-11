@@ -28,7 +28,7 @@
                 <include
                     layout="@layout/fragment_pre_headinfo" />
 
-                <FrameLayout
+                <!--<FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -38,7 +38,7 @@
                         android:layout_height="200dp"
                         android:paddingTop="30dp" />
 
-                </FrameLayout>
+                </FrameLayout>-->
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"

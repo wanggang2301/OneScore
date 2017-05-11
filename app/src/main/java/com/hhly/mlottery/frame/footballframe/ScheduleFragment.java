@@ -171,11 +171,11 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
         return fragment;
     }
 
-    public static ScheduleFragment newInstance(int index ,int entryType) {
+    public static ScheduleFragment newInstance(int index, int entryType) {
 
         Bundle bundle = new Bundle();
         bundle.putInt(FRAGMENT_INDEX, index);
-        bundle.putInt(ENTRY_TYPE , entryType);
+        bundle.putInt(ENTRY_TYPE, entryType);
         ScheduleFragment fragment = new ScheduleFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -255,7 +255,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                 }
 //                ((ScoresFragment) getParentFragment()).focusCallback();
                 if (mEntryType == 0) {
-                }else if(mEntryType == 1){
+                } else if (mEntryType == 1) {
                     ((FootBallScoreFragment) getParentFragment()).focusCallback();
                 }
 
@@ -450,6 +450,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                             intent.putExtra("thirdId", thirdId);
                             intent.putExtra("currentFragmentId", 3);
                             getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+
+                           // startActivity(new Intent(getActivity(), TestActivity.class));
+
                         }
                     });
 
@@ -636,7 +639,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
             updateAdapter();
 //            ((ScoresFragment) getParentFragment()).focusCallback();
             if (mEntryType == 0) {
-            }else if(mEntryType == 1){
+            } else if (mEntryType == 1) {
                 ((FootBallScoreFragment) getParentFragment()).focusCallback();
             }
         }
