@@ -29,12 +29,18 @@ public interface FootBallDetailTypeEnum {
     int FOOT_DETAIL_INDEX = 3;
 
 
-    //分析
-    int FOOT_DETAIL_ANALYSIS = 4;
-
-    //情报
-    int FOOT_DETAIL_INFOCENTER = 5;
+    //分析(由分析和情报组成)
+    int FOOT_ANALYSE_MERGE = 4;
 
     //聊球
-    int FOOT_DETAIL_CHARTBALL = 6;
+    int FOOT_DETAIL_CHARTBALL = 5;
+
+
+    //只为标记是由哪里跳转到足球内页的
+    //情报
+    int FOOT_DETAIL_INFOCENTER = 6;
+    //分析
+    int FOOT_DETAIL_ANALYSIS = 7;
+
+
 }

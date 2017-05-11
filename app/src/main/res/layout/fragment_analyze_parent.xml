@@ -39,7 +39,7 @@
 
 
     <FrameLayout
-        android:id="@+id/fl_content"
+        android:id="@+id/fl_analyse"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/radio_group" />

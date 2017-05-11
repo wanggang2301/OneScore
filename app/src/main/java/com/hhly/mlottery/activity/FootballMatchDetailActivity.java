@@ -56,9 +56,8 @@ import com.hhly.mlottery.config.FootBallDetailTypeEnum;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
-import com.hhly.mlottery.frame.footballframe.AnalyzeFragment;
+import com.hhly.mlottery.frame.footballframe.AnalyzeParentFragment;
 import com.hhly.mlottery.frame.footballframe.DetailsRollballFragment;
-import com.hhly.mlottery.frame.footballframe.IntelligenceFragment;
 import com.hhly.mlottery.frame.footballframe.LiveFragment;
 import com.hhly.mlottery.frame.footballframe.OddsFragment;
 import com.hhly.mlottery.frame.footballframe.RecommendFragment;
@@ -221,9 +220,11 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private RecommendFragment mRecommendFragment;  //推介
     private DetailsRollballFragment mDetailsRollballFragment; //滚球
     private LiveFragment mLiveFragment;  //直播
-    private AnalyzeFragment mAnalyzeFragment;  //分析
+    // private AnalyzeFragment mAnalyzeFragment;  //分析
     private OddsFragment mOddsFragment;         //指数
-    private IntelligenceFragment mIntelligenceFragment; // 情报
+    //private IntelligenceFragment mIntelligenceFragment; // 情报
+
+    private AnalyzeParentFragment mAnalyzeParentFragment;
 
     private TextView reLoading; //赔率请求失败重新加载
 
@@ -416,16 +417,20 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         //直播
         mLiveFragment = LiveFragment.newInstance();
         //分析
-        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, "", "");
+        //  mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, "", "");
         //指数
         mOddsFragment = OddsFragment.newInstance();
         // 情报
-        mIntelligenceFragment = IntelligenceFragment.newInstance(mThirdId);
+        //  mIntelligenceFragment = IntelligenceFragment.newInstance(mThirdId);
+
+        //分析parent
+        mAnalyzeParentFragment = AnalyzeParentFragment.newInstance(mThirdId, current_tab);
+
         // 聊球
         mChartBallFragment = ChartBallFragment.newInstance(0, mThirdId);
 
-        mTabsAdapter.addFragments(mRecommendFragment, mDetailsRollballFragment, mLiveFragment, mOddsFragment, mAnalyzeFragment, mIntelligenceFragment, mChartBallFragment);
-        mViewPager.setOffscreenPageLimit(6);//设置预加载页面的个数。
+        mTabsAdapter.addFragments(mRecommendFragment, mDetailsRollballFragment, mLiveFragment, mOddsFragment, mAnalyzeParentFragment, mChartBallFragment);
+        mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
@@ -524,8 +529,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         connectWebSocket();
                     }
 
-                    mAnalyzeFragment.initData();// 分析下拉刷新
-                    mIntelligenceFragment.initData();// 情报刷新
+                    mAnalyzeParentFragment.initData();
                     mOddsFragment.oddPlateRefresh(); // 指数刷新
                     mChartBallFragment.onRefresh();// 聊球
                 }
@@ -926,7 +930,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             }
         }
 
-
         isInitedViewPager = true;
     }
 
@@ -943,10 +946,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_LIVE, false);
                 break;
             case FootBallDetailTypeEnum.FOOT_DETAIL_ANALYSIS:
-                mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_ANALYSIS, false);
+                mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_ANALYSE_MERGE, false);
                 break;
             case FootBallDetailTypeEnum.FOOT_DETAIL_INFOCENTER:
-                mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_INFOCENTER, false);
+                mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_ANALYSE_MERGE, false);
                 break;
             case FootBallDetailTypeEnum.FOOT_DETAIL_INDEX:
                 mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_INDEX, false);
