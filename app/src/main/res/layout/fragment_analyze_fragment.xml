@@ -10,6 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/home_item_bg" />
         <!--双方战绩-->
         <RelativeLayout
             android:layout_width="match_parent"
@@ -915,7 +920,7 @@
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:background="@color/home_item_bg"
-            android:visibility="gone"/>
+            android:visibility="gone" />
         <!--球员信息-->
         <RelativeLayout
             android:layout_width="match_parent"
@@ -938,7 +943,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/line_football_footer"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <RelativeLayout
             android:layout_width="match_parent"
