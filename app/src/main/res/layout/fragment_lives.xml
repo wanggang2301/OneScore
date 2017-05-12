@@ -24,7 +24,7 @@
             android:layout_height="match_parent"
             android:layout_marginRight="-0.25dp"
             android:background="@drawable/radio_button_left"
-            android:checked="true"
+            android:checked="false"
             android:text="@string/foot_lineup"
             android:textColor="@drawable/info_text_color" />
 
@@ -61,7 +61,7 @@
             android:layout_marginLeft="-0.25dp"
             android:layout_marginRight="-0.25dp"
             android:background="@drawable/radio_button_center"
-            android:checked="false"
+            android:checked="true"
             android:text="@string/foot_event"
             android:textColor="@drawable/info_text_color" />
 
@@ -83,12 +83,14 @@
         android:layout_below="@id/radio_group"
         android:orientation="vertical">
 
+        <!--直播->>>陣容-->
+
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nested_scroll_view_lineup"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -216,6 +218,7 @@
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 
+        <!--直播->>>>>统计-->
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nested_scroll_view_statistics"
             android:layout_width="match_parent"
@@ -360,7 +363,7 @@
                                 android:id="@+id/pb_corner"
                                 style="?android:attr/progressBarStyleHorizontal"
                                 android:layout_width="fill_parent"
-                                android:layout_height="5dp"
+                                android:layout_height="6dp"
                                 android:max="100"
                                 android:progress="50"
                                 android:progressDrawable="@drawable/pro" />
@@ -414,7 +417,7 @@
                                 android:id="@+id/pb_danger_attack"
                                 style="?android:attr/progressBarStyleHorizontal"
                                 android:layout_width="fill_parent"
-                                android:layout_height="5dp"
+                                android:layout_height="6dp"
                                 android:max="100"
                                 android:progress="50"
                                 android:progressDrawable="@drawable/pro" />
@@ -481,7 +484,7 @@
                                 android:id="@+id/pb_shoot_correct"
                                 style="?android:attr/progressBarStyleHorizontal"
                                 android:layout_width="fill_parent"
-                                android:layout_height="5dp"
+                                android:layout_height="6dp"
                                 android:max="100"
                                 android:progress="50"
                                 android:progressDrawable="@drawable/pro" />
@@ -538,7 +541,7 @@
                                 android:id="@+id/pb_shoot"
                                 style="?android:attr/progressBarStyleHorizontal"
                                 android:layout_width="fill_parent"
-                                android:layout_height="5dp"
+                                android:layout_height="6dp"
                                 android:max="100"
                                 android:progress="50"
                                 android:progressDrawable="@drawable/pro" />
@@ -786,6 +789,7 @@
 
         </android.support.v4.widget.NestedScrollView>
 
+        <!--直播->>>>>文字直播-->
         <FrameLayout
             android:id="@+id/fl_live_text"
             android:layout_width="match_parent"
@@ -794,13 +798,13 @@
             android:background="@color/white"
             android:visibility="gone" />
 
-
+        <!--事件-->
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nested_scroll_view_event"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -1077,6 +1081,7 @@
 
         </android.support.v4.widget.NestedScrollView>
 
+        <!--直播->>>>>走势-->
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nested_scroll_view_trend"
             android:layout_width="match_parent"
