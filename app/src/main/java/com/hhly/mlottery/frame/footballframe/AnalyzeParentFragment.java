@@ -51,8 +51,7 @@ public class AnalyzeParentFragment extends Fragment {
     //分析
     private AnalyzeFragment mAnalyzeFragment;
 
-    public AnalyzeParentFragment() {
-    }
+    public AnalyzeParentFragment() {}
 
     public static AnalyzeParentFragment newInstance(String thirdId, int currentTab) {
         AnalyzeParentFragment analyzeParentFragment = new AnalyzeParentFragment();
