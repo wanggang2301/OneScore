@@ -489,7 +489,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
             L.e(TAG, "__handleMessage__");
 
             L.e(TAG, "msg.arg1 = " + msg.arg1);
-            if (msg.arg1 == 1) {
+            if (msg.arg1 == 1) {  //状态为1时  ，推送为比赛的状态
                 String ws_json = (String) msg.obj;
                 L.e(TAG, "ws_json = " + ws_json);
                 WebSocketMatchStatus webSocketMatchStatus = null;
@@ -500,7 +500,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                     webSocketMatchStatus = JSON.parseObject(ws_json, WebSocketMatchStatus.class);
                 }
                 updateListViewItemStatus(webSocketMatchStatus);
-            } else if (msg.arg1 == 2) {
+            } else if (msg.arg1 == 2) {  //为2时，推送为比赛的赔率
                 String ws_json = (String) msg.obj;
                 L.e(TAG, "ws_json = " + ws_json);
                 WebSocketMatchOdd webSocketMatchOdd = null;
@@ -512,7 +512,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                 }
 
                 updateListViewItemOdd(webSocketMatchOdd);
-            } else if (msg.arg1 == 4) {
+            } else if (msg.arg1 == 4) {  //为4时
 
                 new Handler().postDelayed(new Runnable() {
                     @Override

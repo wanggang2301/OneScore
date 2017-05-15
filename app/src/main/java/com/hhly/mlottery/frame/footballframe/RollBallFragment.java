@@ -558,7 +558,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                 switch (msg.what) {
                     case 0:  // WEB_SOCKET PUSH
                         switch (msg.arg1) {
-                            case SOCKET_TYPE_STATUS:
+                            case SOCKET_TYPE_STATUS:  //1时
                                 String statusJsonData = (String) msg.obj;
                                 WebSocketMatchStatus webSocketMatchStatus = (WebSocketMatchStatus) this.jsonParseObject(statusJsonData,
                                         WebSocketMatchStatus
