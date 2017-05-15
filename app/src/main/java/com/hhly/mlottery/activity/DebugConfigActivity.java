@@ -132,14 +132,14 @@ public class DebugConfigActivity extends BaseActivity {
                     PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, WS_1332255_TH);
                 } else if (config_tuisong.getCheckedRadioButtonId() == R.id.config_ws_vn) {
                     PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, WS_1332255_VN);
-                }else if (config_tuisong.getCheckedRadioButtonId() == R.id.config_shengchan_ws) {
-                    PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG,WS_13322_ZH );
-                }else if (config_tuisong.getCheckedRadioButtonId() == R.id.config_shengchan_ws_th) {
-                    PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG,WS_13322_TH );
-                }else if (config_tuisong.getCheckedRadioButtonId() == R.id.config_shengchan_ws_vn) {
-                    PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG,WS_13322_VN );
-                }else if (config_tuisong.getCheckedRadioButtonId() == R.id.config_shengchan_ws_vn_hn) {
-                    PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG,WS_13366_VN );
+                } else if (config_tuisong.getCheckedRadioButtonId() == R.id.config_shengchan_ws) {
+                    PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, WS_13322_ZH);
+                } else if (config_tuisong.getCheckedRadioButtonId() == R.id.config_shengchan_ws_th) {
+                    PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, WS_13322_TH);
+                } else if (config_tuisong.getCheckedRadioButtonId() == R.id.config_shengchan_ws_vn) {
+                    PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, WS_13322_VN);
+                } else if (config_tuisong.getCheckedRadioButtonId() == R.id.config_shengchan_ws_vn_hn) {
+                    PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, WS_13366_VN);
                 }
 
                 startActivity(new Intent(DebugConfigActivity.this, WelcomeActivity.class));
@@ -172,9 +172,7 @@ public class DebugConfigActivity extends BaseActivity {
 
                 PreferenceUtil.commitString("DIY_INPUT", str);*/
 
-                startActivity(new Intent(DebugConfigActivity.this, BasketIndexDetailsActivity.class));
-
-                System.exit(0);
+                //System.exit(0);
 
             }
         });

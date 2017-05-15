@@ -85,7 +85,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -538,24 +537,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     }
 
-    private Timer mReloadTimer;
-    private boolean isStartTimer = false;
-
-    private void startReloadTimer() {
-        if (!isStartTimer && !isFinishing()) {//已经开启则不需要再开启
-            TimerTask reloadTimerTask = new TimerTask() {
-                @Override
-                public void run() {
-                    L.d(TAG, "TimerTask run....");
-                    loadData();
-                }
-            };
-            mReloadTimer = new Timer();
-            mReloadTimer.schedule(reloadTimerTask, mReloadPeriod, mReloadPeriod);
-            isStartTimer = true;
-        }
-    }
-
 
     private void loadData() {
         Map<String, String> params = new HashMap<>();
@@ -594,7 +575,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         head_home_name.setText(matchDetail.getHomeTeamInfo().getName());
                         head_guest_name.setText(matchDetail.getGuestTeamInfo().getName());
                         head_score.setText("VS");
-                        mDetailsRollballFragment.refreshMatch(matchDetail, DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE);
+                       // mDetailsRollballFragment.refreshMatch(matchDetail, DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE);
 
 
                     } else {
@@ -643,7 +624,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                                 //直播中事件的统计 和走势中的走势图
                                 mLiveFragment.finishMatchRequest();
 
-                                mDetailsRollballFragment.refreshMatch(matchDetail, DetailsRollballFragment.DETAILSROLLBALL_TYPE_ED);
+                               // mDetailsRollballFragment.refreshMatch(matchDetail, DetailsRollballFragment.DETAILSROLLBALL_TYPE_ED);
 
 
                             }
@@ -671,17 +652,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                             }
 
 
-                            if ("0".equals(mPreStatus) && "1".equals(matchDetail.getLiveStatus()) && !isFinishing()) {
-                                mDetailsRollballFragment.activateMatch(matchDetail, DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING);
-
-
-                                if (mReloadTimer != null) {
-                                    mReloadTimer.cancel();
-                                }
-
-                                mPreStatus = "1";
-                            }
-
                             Collections.reverse(eventMatchTimeLiveList);
 
                             //直播事件
@@ -701,7 +671,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                             //是否显示精彩瞬间
                             pollingGifCount();
 
-                            mDetailsRollballFragment.refreshMatch(matchDetail, DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING);
+                           // mDetailsRollballFragment.refreshMatch(matchDetail, DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING);
 
 //                            mTalkAboutBallFragment.setClickableLikeBtn(true);
 
@@ -733,33 +703,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     }
                 }
 
-                if ("0".equals(matchDetail.getLiveStatus())) {//Viewpager为初始化和赛前状态，需要开启定时器
-                    String serverTime = matchDetail.getMatchInfo().getServerTime();
-                    String startTime = matchDetail.getMatchInfo().getStartTime();
-
-                    Date startDate = DateUtil.yyyyMMddhhmmToDate(startTime);
-
-                    long startTimestamp = startDate.getTime();
-                    long serverTimestamp = 0;
-                    try {
-                        serverTimestamp = Long.parseLong(serverTime);
-                    } catch (NumberFormatException e) {
-                        e.printStackTrace();
-                    }
-
-                    if (startTimestamp - serverTimestamp > (1000 * 60 * 60)) {//大于一个小时
-                        mReloadPeriod = PERIOD_20;
-                    } else {
-                        if (mReloadPeriod == PERIOD_20) {//如果之前的频率是20分钟，转到5分钟，则需要关闭之前的定时器，从新开启
-                            isStartTimer = false;
-                            if (mReloadTimer != null) {
-                                mReloadTimer.cancel();
-                            }
-                        }
-                        mReloadPeriod = PERIOD_5;
-                    }
-                    startReloadTimer();
-                }
                 mHandler.sendEmptyMessage(SUCCESS);
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -787,7 +730,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             head_guest_name.setText(matchDetail.getGuestTeamInfo().getName());
             head_score.setText("VS");
 
-            mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE, matchDetail);
+            //mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE, matchDetail);
             mLiveFragment.showLineUp(matchDetail.getHomeTeamInfo().getLineup(), matchDetail.getGuestTeamInfo().getLineup());
 
             mLiveFragment.setEventMatchLive(mMatchDetail, null);
@@ -847,7 +790,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 //直播中事件的统计 和走势中的走势图
                 mLiveFragment.finishMatchRequest();
 
-                mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_ED, matchDetail);
+              //  mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_ED, matchDetail);
 
             } else if (ONLIVE.equals(mMatchDetail.getLiveStatus())) { //未完场头部
                 mLayoutScore.setVisibility(View.GONE);
@@ -864,7 +807,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 //精彩瞬间
                 pollingGifCount();
 
-                mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING, matchDetail);
+               // mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING, matchDetail);
 
                 Collections.reverse(eventMatchTimeLiveList);
 
@@ -1204,10 +1147,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             mWebView = null;
         }
 
-        if (mReloadTimer != null) {
-            mReloadTimer.cancel();
-            mReloadTimer.purge();
-        }
 
         closePollingGifCount();
 

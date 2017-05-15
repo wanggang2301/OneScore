@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,9 +24,7 @@ import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
 import com.hhly.mlottery.bean.footballDetails.WebSocketRollballOdd;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.BaseUserTopics;
-import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.StringUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.DetailsRollOdd;
 
@@ -42,7 +39,6 @@ import java.util.Timer;
  * @des 足球内页聊球下部内容
  */
 public class DetailsRollballFragment extends BaseWebSocketFragment {
-
 
     private final int ERROR = -1;//访问失败
     private final int SUCCESS = 0;// 访问成功
@@ -98,22 +94,6 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
     private static final int EUR = 2;
     private static final int ASIZE = 3;  //大小球
 
-    //赛前view
-    private TextView pre_dataTime_txt;//开赛时间
-    private TextView pre_dataDate_txt;//开赛日期
-    private TextView pre_weather_data_txt;//天气
-    private TextView pre_site_data_txt;//场地
-    private TextView pre_first_home_data_txt;//主队首发阵容
-    private TextView pre_first_guest_data_txt;//客队首发阵容
-    private TextView pre_first_home_datas_txt;//zhu队首发阵容
-    private TextView pre_first_guest_datas_txt;//客队首发阵容
-    private TextView pre_first_not_tv;
-    private ImageView pre_weather_img;//天气图
-
-    // private TextView live_time; //实时时间
-
-    // private TextView live_text;  //实时直播
-
     private TextView reLoading; //赔率请求失败重新加载
 
     private DetailsRollOdd odd_alet; //亚盘
@@ -121,9 +101,6 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
     private DetailsRollOdd odd_asize; //大小
 
     private DetailsRollOdd odd_eur; //欧赔
-
-    // private RelativeLayout live_infos;
-
 
     private FrameLayout fl_odds_loading;
 
@@ -133,20 +110,10 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
 
     private BottomOddsDetailsFragment mBottomOddsDetailsFragment;
 
-    // private LiveTextFragment liveTextFragmentTest;
-
-    //  private FinishMatchLiveTextFragment finishMatchLiveTextFragment;//完场
-
-
-//    private HappySocketClient hSocketClient;
-//    private URI hSocketUri = null;
-
-
     //保存上次推送赔率
     private BottomOddsItem aletBottomOddsItem;
     private BottomOddsItem asizeBottomOddsItem;
     private BottomOddsItem eurBottomOddsItem;
-
 
     private boolean isSocketStart = true;
 
@@ -174,10 +141,8 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         String thirdId = getArguments().getString(DETAILSROLLBALL_THIRD_ID);
         setWebSocketUri(BaseURLs.WS_SERVICE);
-//        setTopic("USER.topic.scollodds." + thirdId);
         setTopic(BaseUserTopics.oddsFootballMatch + "." + thirdId);
         super.onCreate(savedInstanceState);
-
         mContext = getActivity();
     }
 
@@ -186,19 +151,11 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_details_rollball, container, false);
         initView();
+        initOddClick();
+        initOdds();
         return mView;
     }
 
-
-    public void activateMatch(MatchDetail matchDetail, int type) {
-        this.mMatchDetail = matchDetail;
-        this.mViewType = type;
-        mView.findViewById(R.id.prestadium_layout).setVisibility(View.GONE);
-        mView.findViewById(R.id.stadium_layout).setVisibility(View.VISIBLE);
-        if (mViewType == DETAILSROLLBALL_TYPE_ING) {
-            initOdds();
-        }
-    }
 
     /**
      * 比赛赛中、赛后初始化数据
@@ -218,39 +175,8 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
     public void refreshMatch(MatchDetail matchDetail, int type) {
         this.mMatchDetail = matchDetail;
         this.mViewType = type;
-        if (mViewType == DETAILSROLLBALL_TYPE_PRE) {
-            initPreData();
-        } else {
-            initOddClick();
-
-            L.d(TAG, "refreshMatch");
-            initOdds();
-        }
-    }
-
-
-    public void setMatchData(int type, MatchDetail mMatchDetail) {
-        this.mViewType = type;
-        this.mMatchDetail = mMatchDetail;
-        L.d(TAG, "mViewType=" + mViewType + "-------DETAILSROLLBALL_TYPE_PRE=" + DETAILSROLLBALL_TYPE_PRE);
-
-        if (mViewType == DETAILSROLLBALL_TYPE_PRE) {//赛前
-
-            L.d(TAG, "赛前");
-            mView.findViewById(R.id.prestadium_layout).setVisibility(View.VISIBLE);
-            mView.findViewById(R.id.stadium_layout).setVisibility(View.GONE);
-            initPreData();
-        } else {  //赛后活赛中
-
-
-            mView.findViewById(R.id.prestadium_layout).setVisibility(View.GONE);
-            mView.findViewById(R.id.stadium_layout).setVisibility(View.VISIBLE);
-            initOddClick();
-
-            L.d(TAG, "赛后");
-
-            initOdds();
-        }
+        initOddClick();
+        initOdds();
     }
 
 
@@ -285,20 +211,15 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
             if (!getUserVisibleHint()) {
                 return;
             }
-        }else{
+        } else {
             isLoading = true;
         }
         if (getActivity() == null) {
             return;
         }
-
-        L.d("ddd", "加载数据");
         mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
-
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", ((FootballMatchDetailActivity) getActivity()).mThirdId);
-        //String url = "http://192.168.10.242:8181/mlottery/core/footballBallList.ballListOverview.do";
-
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_BALLLISTOVERVIEW_INFO, params,
                 new VolleyContentFast.ResponseSuccessListener<BottomOdds>() {
                     @Override
@@ -308,7 +229,6 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
                         }
 
                         initItemOdd(bottomOdds);
-
                         //赛中的时候开启socket推送
                         if (mViewType == DETAILSROLLBALL_TYPE_ING) {
                             if (isSocketStart) {
@@ -405,34 +325,12 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
 
 
     private void isRepeatShowDialog() {
-      /*  if (finishMatchLiveTextFragment != null) {
-            finishMatchLiveTextFragment.dismiss();
-        }
-
-        if (liveTextFragmentTest != null) {
-            liveTextFragmentTest.dismiss();
-        }*/
-
         if (mBottomOddsDetailsFragment != null) {
             mBottomOddsDetailsFragment.dismiss();
         }
     }
 
     private void initView() {
-        pre_dataTime_txt = (TextView) mView.findViewById(R.id.pre_dataTime_txt);//开始时间
-        pre_dataDate_txt = (TextView) mView.findViewById(R.id.pre_dataDate_txt);//开始时间
-        pre_weather_data_txt = (TextView) mView.findViewById(R.id.pre_weather_data_txt);//天气
-        pre_site_data_txt = (TextView) mView.findViewById(R.id.pre_site_data_txt);//场地
-        pre_first_not_tv = (TextView) mView.findViewById(R.id.pre_first_not_tv);
-        pre_weather_img = (ImageView) mView.findViewById(R.id.pre_weather_img);//天气图标
-
-        pre_first_home_data_txt = (TextView) mView.findViewById(R.id.pre_first_home_data_txt);//主队首发阵容
-        pre_first_home_datas_txt = (TextView) mView.findViewById(R.id.pre_first_home_datas_txt);//主队首发人员
-
-        pre_first_guest_data_txt = (TextView) mView.findViewById(R.id.pre_first_guest_data_txt);//克队首发阵容
-        pre_first_guest_datas_txt = (TextView) mView.findViewById(R.id.pre_first_guest_datas_txt);//客队首发人员
-        //live_time = (TextView) mView.findViewById(R.id.live_time);
-        // live_text = (TextView) mView.findViewById(R.id.live_text);
 
         odd_alet = (DetailsRollOdd) mView.findViewById(R.id.odd_alet);
         odd_asize = (DetailsRollOdd) mView.findViewById(R.id.odd_asize);
@@ -447,76 +345,6 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
         reLoading = (TextView) mView.findViewById(R.id.reLoading);
     }
 
-    private void initPreData() {
-        String startTime = mMatchDetail.getMatchInfo().getStartTime();
-        if (pre_dataTime_txt == null) {
-            return;
-        }
-        if (!StringUtils.isEmpty(startTime) && startTime.length() == 16) {
-            pre_dataTime_txt.setText(startTime.substring(11, 16));
-            pre_dataDate_txt.setText(DateUtil.convertDateToNation(startTime.substring(0, 10)));
-        } else {
-            pre_dataTime_txt.setText("");//开赛时间
-            pre_dataDate_txt.setText("");
-        }
-
-
-        pre_site_data_txt.setText(StringUtils.isBlank(mMatchDetail.getMatchInfo().getCity()) ? mMatchDetail.getMatchInfo().getVenue() : mMatchDetail.getMatchInfo().getCity() + " " + mMatchDetail.getMatchInfo().getVenue());//场地
-        pre_weather_data_txt.setText(mMatchDetail.getMatchInfo().getWeather());//天气
-        switch (mMatchDetail.getMatchInfo().getWeather()) {
-            case "0":
-            case "5":
-            case "8":
-            case "14":
-            case "15":
-            case "16":
-            case "17":
-            case "18":
-                pre_weather_data_txt.setText(R.string.pre_stadium_weather_sunny);
-                pre_weather_img.setImageResource(R.mipmap.pre_weather_sunny);
-                break;
-            case "1":
-            case "12":
-            case "13":
-                pre_weather_data_txt.setText(R.string.pre_stadium_weather_wind);
-                pre_weather_img.setImageResource(R.mipmap.pre_weather_wind);
-                break;
-            case "2":
-            case "6":
-            case "19":
-                pre_weather_data_txt.setText(R.string.pre_stadium_weather_heavy_rain);
-                pre_weather_img.setImageResource(R.mipmap.pre_weather_heavy_rain);
-                break;
-            case "3":
-            case "7":
-                pre_weather_data_txt.setText(R.string.pre_stadium_weather_light_rain);
-                pre_weather_img.setImageResource(R.mipmap.pre_weather_light_rain);
-                break;
-            case "4":
-            case "9":
-            case "10":
-            case "11":
-                pre_weather_data_txt.setText(R.string.pre_stadium_weather_snow);
-                pre_weather_img.setImageResource(R.mipmap.pre_weather_snow);
-                break;
-            default:
-                pre_weather_data_txt.setText("--");
-                break;
-
-        }
-
-        if ((mMatchDetail.getHomeTeamInfo().getLineup() == null && mMatchDetail.getGuestTeamInfo().getLineup() == null) || (mMatchDetail.getHomeTeamInfo().getLineup().size() == 0 && mMatchDetail.getGuestTeamInfo().getLineup().size() == 0)) {
-            mView.findViewById(R.id.pre_first_layout).setVisibility(View.GONE);
-            pre_first_not_tv.setText(R.string.firsPlayers_not);
-            pre_first_not_tv.setVisibility(View.VISIBLE);
-        } else {
-            pre_first_home_data_txt.setText(mMatchDetail.getHomeTeamInfo().getName());//zhu队首发
-            pre_first_home_datas_txt.setText(appendPlayerNames(mMatchDetail.getHomeTeamInfo().getLineup()));//zhu队首发人员
-            pre_first_guest_data_txt.setText(mMatchDetail.getGuestTeamInfo().getName());//客队首发
-            pre_first_guest_datas_txt.setText(appendPlayerNames(mMatchDetail.getGuestTeamInfo().getLineup()));//客队首发人员
-        }
-    }
-
     private String appendPlayerNames(List<PlayerInfo> playerInfos) {
         StringBuffer s = new StringBuffer();
         if (playerInfos != null) {
@@ -527,20 +355,6 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
         }
         return s.toString();
     }
-
-
-   /* public void setLiveTime(String time) {
-        //live_time.setText(time);
-
-    }
-
-    public void setLiveText(String msg) {
-
-        L.d(TAG, "推送文字直播LiveText");
-        //  live_text.setText(msg);
-    }
-*/
-
 
     Handler mSocketHandler = new Handler() {
         @Override
@@ -557,13 +371,8 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
                 webSocketRollballOdd = JSON.parseObject(ws_json, WebSocketRollballOdd.class);
             }
 
-            L.d(TAG, "=======赔率推送=====" + ws_json);
-            L.d(TAG, "=======赔率推送=====" + webSocketRollballOdd.getLeft() + "==" + webSocketRollballOdd.getOddType());
-
             //更新赔率
-
             updateOdds(webSocketRollballOdd);
-
         }
     };
 
@@ -592,8 +401,6 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
      * @return
      */
     private synchronized BottomOddsItem setLiveOdds(BottomOddsItem b, WebSocketRollballOdd webodds) {
-
-
         if (isNULLOrEmpty(webodds.getLeft()) || isNULLOrEmpty(webodds.getMiddle()) || isNULLOrEmpty(webodds.getRight()) || isNULLOrEmpty(b.getLeft()) || isNULLOrEmpty(b.getMiddle()) || isNULLOrEmpty(b.getRight())) {
 
             b.setLeft(webodds.getLeft());
@@ -636,7 +443,6 @@ public class DetailsRollballFragment extends BaseWebSocketFragment {
             }
 
             b.setRight(webodds.getRight());
-
         }
 
 

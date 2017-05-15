@@ -42,6 +42,7 @@ import com.hhly.mlottery.callback.FocusMatchClickListener;
 import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.callback.RequestHostFocusCallBack;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFilterEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
@@ -374,6 +375,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                 teamLogoSuff = jsonMatch.getTeamLogoSuff();
 
                 HotFocusUtils hotFocusUtils = new HotFocusUtils();
+
                 hotFocusUtils.loadHotFocusData(getActivity(), new RequestHostFocusCallBack() {
 
                     @Override
@@ -387,8 +389,9 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                             hotList = hotFocusLeagueCup.getHotLeagueIds();
                         }
 
+
                         if (FiltrateCupsMap.immediateCups.length != 0) {// 判断是否已经筛选过
-                            for (Match m : mAllMatchs) {// 已选择的
+                            for (Match m : mAllMatchs) {// 已选择的   显示筛选的比赛
                                 for (String checkedId : FiltrateCupsMap.immediateCups) {
                                     if (m.getRaceId().equals(checkedId)) {
                                         mMatchs.add(m);
@@ -406,15 +409,17 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                                 }
                             }
                         }
+
                         mCups = jsonMatch.getAll();
+
                         mNoDataTextView.setText(R.string.immediate_no_data);
+
+
                         if (mMatchs.size() == 0) {// 没有热门赛事，显示全部
 
                             mMatchs.addAll(mAllMatchs);
                             mCheckedCups = mCups.toArray(new LeagueCup[mCups.size()]);
                             if (mMatchs.size() == 0) {// 一个赛事都没有，显示“暂无赛事”
-
-
                                 isLoadedData = true;
                                 mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
 //                                startWebsocket();
@@ -1080,6 +1085,8 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
             String[] checkedIds = (String[]) ((LinkedList) map.get(FiltrateMatchConfigActivity.RESULT_CHECKED_CUPS_IDS)).toArray(new String[]{});
             FiltrateCupsMap.immediateCups = checkedIds;
             mMatchs.clear();
+
+            //筛选比赛
             for (Match match : mAllMatchs) {
                 boolean isExistId = false;
                 for (String checkedId : checkedIds) {
@@ -1094,6 +1101,9 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
             }
             List<LeagueCup> leagueCupList = new ArrayList<LeagueCup>();
 
+            List<String> localFilterRace = new ArrayList<>();
+
+
             for (LeagueCup cup : mCups) {
                 boolean isExistId = false;
                 for (String checkedId : checkedIds) {
@@ -1105,8 +1115,12 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 
                 if (isExistId) {
                     leagueCupList.add(cup);
+                    localFilterRace.add(cup.getRaceId());
                 }
             }
+
+
+            PreferenceUtil.setDataList(FootBallMatchFilterTypeEnum.FOOT_IMMEDIA, localFilterRace);
 
             mCheckedCups = leagueCupList.toArray(new LeagueCup[]{});
             updateAdapter();
