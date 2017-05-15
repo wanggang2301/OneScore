@@ -250,7 +250,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     //头部
     private ImageView iv_home_icon;
     private ImageView iv_guest_icon;
-//    private ImageView iv_bg;
 
     private TextView tv_homename;
     private TextView tv_guestname;
