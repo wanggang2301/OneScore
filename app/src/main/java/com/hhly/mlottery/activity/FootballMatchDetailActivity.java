@@ -298,16 +298,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         ScreenUtils.setTranslucentStatus(this);
-
 
         if (getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BUNDLE_PARAM_THIRDID, "1300");
             currentFragmentId = getIntent().getExtras().getInt("currentFragmentId");
-
             current_tab = getIntent().getIntExtra(FootBallDetailTypeEnum.CURRENT_TAB_KEY, FootBallDetailTypeEnum.FOOT_DETAIL_DEFAULT);
-
         }
         EventBus.getDefault().register(this);
 
@@ -384,13 +380,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         mDetailsRollballFragment = DetailsRollballFragment.newInstance(mThirdId);
         //直播
         mLiveFragment = LiveFragment.newInstance();
-        //分析
-        //  mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, "", "");
         //指数
         mOddsFragment = OddsFragment.newInstance();
         //分析parent
         mAnalyzeParentFragment = AnalyzeParentFragment.newInstance(mThirdId, current_tab);
-
         // 聊球
         mChartBallFragment = ChartBallFragment.newInstance(0, mThirdId);
 
