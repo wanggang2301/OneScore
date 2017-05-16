@@ -38,6 +38,7 @@ import com.hhly.mlottery.callback.DateOnClickListener;
 import com.hhly.mlottery.callback.FocusMatchClickListener;
 import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFilterEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
@@ -171,11 +172,11 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
         return fragment;
     }
 
-    public static ScheduleFragment newInstance(int index ,int entryType) {
+    public static ScheduleFragment newInstance(int index, int entryType) {
 
         Bundle bundle = new Bundle();
         bundle.putInt(FRAGMENT_INDEX, index);
-        bundle.putInt(ENTRY_TYPE , entryType);
+        bundle.putInt(ENTRY_TYPE, entryType);
         ScheduleFragment fragment = new ScheduleFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -255,7 +256,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                 }
 //                ((ScoresFragment) getParentFragment()).focusCallback();
                 if (mEntryType == 0) {
-                }else if(mEntryType == 1){
+                } else if (mEntryType == 1) {
                     ((FootBallScoreFragment) getParentFragment()).focusCallback();
                 }
 
@@ -431,9 +432,26 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                         }
 
                     } else {
+                        if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_SCHEDULE).size() > 0) {
+                            List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_SCHEDULE);
+                            for (ScheduleMatchDto sch : mAllMatchs) {
+                                if (sch.getType() == VIEW_DATE_INDEX) {
+                                    mMatchs.add(sch);
+                                    continue;
+                                }
 
-                        mMatchs.addAll(mAllMatchs);
-                        mCheckedCups = mAllCup.toArray(new LeagueCup[mAllCup.size()]);
+                                for (String raceId : list) {
+                                    if ((sch.getType() == VIEW_MATCH_INDEX) && raceId.equals(sch.getSchmatchs().getRaceId())) {
+                                        mMatchs.add(sch);
+                                        break;
+                                    }
+                                }
+                            }
+
+                        } else {
+                            mMatchs.addAll(mAllMatchs);
+                            mCheckedCups = mAllCup.toArray(new LeagueCup[mAllCup.size()]);
+                        }
                     }
 
                     mAdapter = new ScheduleAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
@@ -505,26 +523,12 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
 
     }
 
-    // 国际化
-    /*
-     * public void updateAdapter() { if (mAdapter != null) {
-	 * mAdapter.updateDatas(mOperatingList); mAdapter.notifyDataSetChanged(); }
-	 * }
-	 */
 
     public void updateAdapter() {
-       /* if (AppConstants.isGOKeyboard) {
-            if (internalAdapter != null) {
-                // internalAdapter.updateDatas(mMatchs);
-                //  internalAdapter.notifyDataSetChanged();
-            }
-        } else {*/
         if (mAdapter != null) {
             mAdapter.updateDatas(mMatchs);
             mAdapter.notifyDataSetChanged();
         }
-        //  }
-
     }
 
     /**
@@ -584,6 +588,10 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                 }
 
                 List<LeagueCup> leagueCupList = new ArrayList<LeagueCup>();
+
+                List<String> localFilterRace = new ArrayList<>();
+
+
                 for (LeagueCup cup : mAllCup) {
                     boolean isExistId = false;
                     for (String checkedId : checkedIds) {
@@ -594,9 +602,15 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                     }
                     if (isExistId) {
                         leagueCupList.add(cup);
+                        localFilterRace.add(cup.getRaceId());
+
                     }
                 }
                 mCheckedCups = leagueCupList.toArray(new LeagueCup[]{});
+
+                PreferenceUtil.setDataList(FootBallMatchFilterTypeEnum.FOOT_SCHEDULE, localFilterRace);
+
+
                 updateAdapter();
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
             } else {
@@ -636,7 +650,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
             updateAdapter();
 //            ((ScoresFragment) getParentFragment()).focusCallback();
             if (mEntryType == 0) {
-            }else if(mEntryType == 1){
+            } else if (mEntryType == 1) {
                 ((FootBallScoreFragment) getParentFragment()).focusCallback();
             }
         }

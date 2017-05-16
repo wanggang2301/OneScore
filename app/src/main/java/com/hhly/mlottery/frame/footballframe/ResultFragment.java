@@ -40,6 +40,7 @@ import com.hhly.mlottery.callback.FocusClickListener;
 import com.hhly.mlottery.callback.FocusMatchClickListener;
 import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFilterEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
@@ -49,6 +50,7 @@ import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ResultDateUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
@@ -162,12 +164,12 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
         return fragment;
     }
 
-    public static ResultFragment newInstance(int index , int entryType) {
+    public static ResultFragment newInstance(int index, int entryType) {
 
 
         Bundle bundle = new Bundle();
         bundle.putInt(FRAGMENT_INDEX, index);
-        bundle.putInt(ENTRY_TYPE , entryType);
+        bundle.putInt(ENTRY_TYPE, entryType);
         ResultFragment fragment = new ResultFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -235,10 +237,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        /**注册事件总线*/
-        //  resultEventBus = new EventBus();
-        // resultEventBus.register(this);
         if (getArguments() != null) {
             mEntryType = getArguments().getInt(ENTRY_TYPE);
         }
@@ -306,7 +304,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 }
 //                ((ScoresFragment) getParentFragment()).focusCallback();
                 if (mEntryType == 0) {
-                }else if(mEntryType == 1){
+                } else if (mEntryType == 1) {
                     ((FootBallScoreFragment) getParentFragment()).focusCallback();
                 }
             }
@@ -377,14 +375,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
             return;
         }
 
-        /**
-         * 多点登录的时候。另一台手机登录需要进行请求关注的数据。现在单点登录之后，则在登录的时候请求一次就可以
-         * 因为不存在两台手机同时在关注列表瞎他tm的情况
-         */
-//
-//        if (getParentFragment() != null) {
-////            ((ScoresFragment) getParentFragment()).getFootballUserConcern();
-//        }
 
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_ResultMatchs, new VolleyContentFast.ResponseSuccessListener<ResultMatch>() {
             @Override
@@ -483,9 +473,26 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 } else {
                   /*  *
                      * 默认显示 全部赛事*/
+                    if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_RESULT).size() > 0) {
+                        List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_RESULT);
+                        for (ResultMatchDto match : mAllMatchs) {
+                            if (match.getType() == ResultMultiAdapter.VIEW_DATE_INDEX) {
+                                mMatchs.add(match);
+                                continue;
+                            }
 
-                    mMatchs.addAll(mAllMatchs);
-                    mCheckedCups = mCups.toArray(new LeagueCup[mCups.size()]);
+                            for (String raceId : list) {
+                                if ((match.getType() == ResultMultiAdapter.VIEW_MATCH_INDEX) && raceId.equals(match.getMatchs().getRaceId())) {
+                                    mMatchs.add(match);
+                                    break;
+                                }
+                            }
+                        }
+
+                    } else {
+                        mMatchs.addAll(mAllMatchs);
+                        mCheckedCups = mCups.toArray(new LeagueCup[mCups.size()]);
+                    }
                 }
 
                 mAdapter = new ResultMultiAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
@@ -563,6 +570,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                         }
                     }
                 }
+                List<String> localFilterRace = new ArrayList<>();
 
                 List<LeagueCup> leagueCupList = new ArrayList<LeagueCup>();
                 for (LeagueCup cup : mCups) {
@@ -576,8 +584,13 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
                     if (isExistId) {
                         leagueCupList.add(cup);
+                        localFilterRace.add(cup.getRaceId());
+
                     }
                 }
+
+                PreferenceUtil.setDataList(FootBallMatchFilterTypeEnum.FOOT_RESULT, localFilterRace);
+
 
                 mCheckedCups = leagueCupList.toArray(new LeagueCup[]{});
                 updateAdapter();
@@ -619,7 +632,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
             updateAdapter();
 //            ((ScoresFragment) getParentFragment()).focusCallback();
             if (mEntryType == 0) {
-            }else if(mEntryType == 1){
+            } else if (mEntryType == 1) {
                 ((FootBallScoreFragment) getParentFragment()).focusCallback();
             }
         }
@@ -693,8 +706,26 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                     /**
                      * 默认显示 全部赛事
                      */
-                    mMatchs.addAll(mAllMatchs);
-                    mCheckedCups = mCups.toArray(new LeagueCup[mCups.size()]);
+                    if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_RESULT).size() > 0) {
+                        List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_RESULT);
+                        for (ResultMatchDto match : mAllMatchs) {
+                            if (match.getType() == ResultMultiAdapter.VIEW_DATE_INDEX) {
+                                mMatchs.add(match);
+                                continue;
+                            }
+
+                            for (String raceId : list) {
+                                if ((match.getType() == ResultMultiAdapter.VIEW_MATCH_INDEX) && raceId.equals(match.getMatchs().getRaceId())) {
+                                    mMatchs.add(match);
+                                    break;
+                                }
+                            }
+                        }
+
+                    } else {
+                        mMatchs.addAll(mAllMatchs);
+                        mCheckedCups = mCups.toArray(new LeagueCup[mCups.size()]);
+                    }
                 }
 
                 if (mMatchs.size() == 1) {// size == 1

@@ -173,6 +173,8 @@ public class DebugConfigActivity extends BaseActivity {
                 PreferenceUtil.commitString("DIY_INPUT", str);*/
 
                 //System.exit(0);
+                //   public LeagueCup(int type, List<String> thirdId, String racename, String raceId, int count, boolean hot) {
+
 
             }
         });
