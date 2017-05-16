@@ -285,7 +285,7 @@
                 android:orientation="horizontal"
                 android:padding="10dp">
 
-                <io.github.rockerhieu.emojicon.EmojiconEditText
+                <EditText
                     android:id="@+id/et_emoji_input"
                     android:layout_width="0dp"
                     android:layout_height="40dp"

@@ -14,7 +14,7 @@ import com.hhly.mlottery.bean.ShareBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.CommonUtils;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -106,7 +106,7 @@ public class InvitedActivity extends BaseActivity implements View.OnClickListene
         findViewById(public_btn_set).setVisibility(View.GONE);
         public_btn_save = (Button) findViewById(R.id.public_btn_save);
 
-        if (CommonUtils.isZH()) {
+        if (DeviceInfo.isZH()) {
             public_btn_save.setVisibility(View.VISIBLE);
         } else {
             public_btn_save.setVisibility(View.GONE);

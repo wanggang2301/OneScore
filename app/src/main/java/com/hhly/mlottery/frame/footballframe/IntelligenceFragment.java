@@ -807,6 +807,8 @@ public class IntelligenceFragment extends Fragment {
         alertView.setVisibility(View.VISIBLE);
     }
 
+    public IntelligenceFragment(){}
+
     public static IntelligenceFragment newInstance(String thirdId) {
 
         Bundle args = new Bundle();

@@ -16,7 +16,7 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketballFocusNewFragment;
 import com.hhly.mlottery.frame.footballframe.FocusFragment;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.CommonUtils;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
@@ -100,7 +100,7 @@ public class MoreSettingsActivity extends BaseActivity  implements View.OnClickL
     @Override
     protected void onResume() {
         super.onResume();
-        if(CommonUtils.isLogin()){
+        if(DeviceInfo.isLogin()){
             tv_logout.setVisibility(View.VISIBLE);
          //
             //   findViewById(R.id.view_botom).setVisibility(View.VISIBLE);
@@ -157,7 +157,7 @@ public class MoreSettingsActivity extends BaseActivity  implements View.OnClickL
 
                 progressBar.dismiss();
                 if (register.getResult() == AccountResultCode.SUCC || register.getResult() == AccountResultCode.USER_NOT_LOGIN) {
-                    CommonUtils.saveRegisterInfo(null);
+                    DeviceInfo.saveRegisterInfo(null);
                     UiUtils.toast(MyApp.getInstance(), R.string.logout_succ);
                     PreferenceUtil.commitBoolean("three_login",false);
                     setResult(RESULT_OK);
@@ -175,7 +175,7 @@ public class MoreSettingsActivity extends BaseActivity  implements View.OnClickL
 //                    getFootballUserFocus(""); //注销时把未登录状态的用户id请求过来 .篮球不需要是因为篮球进行了预加载，会直接请求关注页面。足球没有。
 //
                 } else {
-                    CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
+                    DeviceInfo.handlerRequestResult(register.getResult(), register.getMsg());
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {

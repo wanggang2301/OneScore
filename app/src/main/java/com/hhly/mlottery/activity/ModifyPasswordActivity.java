@@ -5,8 +5,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,7 +14,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.BaseBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.CommonUtils;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
@@ -102,7 +100,7 @@ public class ModifyPasswordActivity extends BaseActivity implements View.OnClick
                     et_password_confirm.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                     mIv_eye.setImageResource(R.mipmap.open_eye);
                 }  // 光标移动到结尾
-                CommonUtils.selectionLast(et_password_old, et_password_new, et_password_confirm);
+                DeviceInfo.selectionLast(et_password_old, et_password_new, et_password_confirm);
 
                 break;
             default:
@@ -155,7 +153,7 @@ public class ModifyPasswordActivity extends BaseActivity implements View.OnClick
                                     UiUtils.toast(MyApp.getInstance(), R.string.username_original_pass_error);
                                     // CommonUtils.handlerRequestResult(reset.getResult() , reset.getMsg());
                                 } else {
-                                    CommonUtils.handlerRequestResult(reset.getResult(), reset.getMsg());
+                                    DeviceInfo.handlerRequestResult(reset.getResult(), reset.getMsg());
                                 }
                             }
                         }, new VolleyContentFast.ResponseErrorListener() {

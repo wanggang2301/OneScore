@@ -14,7 +14,6 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -35,8 +34,8 @@ import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AccessTokenKeeper;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -319,7 +318,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 }
                 et_password.setTypeface(Typeface.SANS_SERIF);
                 // 光标移动到结尾
-                CommonUtils.selectionLast(et_password);
+                DeviceInfo.selectionLast(et_password);
 
                 break;
             case R.id.tv_login: // 登录
@@ -400,8 +399,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 Map<String, String> param = new HashMap<>();
                 param.put("accessToken", access_token);
                 param.put("uid", openid);
-                param.put("ip", CommonUtils.getIpAddress());
-                param.put("deviceToken", CommonUtils.getDeviceToken());
+                param.put("ip", DeviceInfo.getIpAddress());
+                param.put("deviceToken", DeviceInfo.getDeviceId(MyApp.getContext()));
                 //调用公共的登录请求
                 requestLogin(BaseURLs.URL_WEIXIN_LOGIN, param);
 
@@ -462,8 +461,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 Map<String, String> param = new HashMap<>();
                 param.put("accessToken", accessToken);
                 param.put("uid", openID);
-                param.put("ip", CommonUtils.getIpAddress());
-                param.put("deviceToken", CommonUtils.getDeviceToken());
+                param.put("ip", DeviceInfo.getIpAddress());
+                param.put("deviceToken", DeviceInfo.getDeviceId(MyApp.getContext()));
                 requestLogin(BaseURLs.URL_SINA_LOGIN, param);
 
             } else {
@@ -516,8 +515,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     Map<String, String> param = new HashMap<>();
                     param.put("accessToken", accessToken);
                     param.put("uid", openID);
-                    param.put("ip", CommonUtils.getIpAddress());
-                    param.put("deviceToken", CommonUtils.getDeviceToken());
+                    param.put("ip", DeviceInfo.getIpAddress());
+                    param.put("deviceToken", DeviceInfo.getDeviceId(MyApp.getContext()));
                     /*将所需参数传给后台*/
                     requestLogin(BaseURLs.URL_QQ_LOGIN, param);
 
@@ -551,7 +550,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     return;
                 }
                 UiUtils.toast(MyApp.getInstance(), R.string.login_succ);
-                CommonUtils.saveRegisterInfo(register);
+                DeviceInfo.saveRegisterInfo(register);
                 //UiUtils.toast(MyApp.getInstance(), register.toString());
                 PreferenceUtil.commitBoolean("three_login", true);
                 PreferenceUtil.commitString("code", "");
@@ -561,7 +560,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 finish();
                 if (register.getResult() == AccountResultCode.SUCC) {
                     UiUtils.toast(MyApp.getInstance(), R.string.login_succ);
-                    CommonUtils.saveRegisterInfo(register);
+                    DeviceInfo.saveRegisterInfo(register);
                     EventBus.getDefault().post(register);
                     setResult(RESULT_OK);
                     //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
@@ -570,7 +569,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     FocusUtils.getBasketballUserConcern(register.getData().getUser().getUserId());
                     finish();
                 } else {
-                    CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
+                    DeviceInfo.handlerRequestResult(register.getResult(), register.getMsg());
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -607,10 +606,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 param.put("deviceToken", AppConstants.deviceToken);
 
                 //防止用户恶意注册后先添加的字段，versioncode和versionname;
-                int versionCode = CommonUtils.getVersionCode();
+                int versionCode = DeviceInfo.getVersionCode();
                 param.put("versionCode", String.valueOf(versionCode));
 
-                String versionName = CommonUtils.getVersionName();
+                String versionName = DeviceInfo.getVersionName();
                 param.put("versionName", versionName);
 
                 VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
@@ -621,7 +620,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                         if (register.getResult() == AccountResultCode.SUCC) {
 
                             UiUtils.toast(MyApp.getInstance(), R.string.login_succ);
-                            CommonUtils.saveRegisterInfo(register);
+                            DeviceInfo.saveRegisterInfo(register);
                             PreferenceUtil.commitBoolean("three_login", false);
                             setResult(RESULT_OK);
                             //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
@@ -637,7 +636,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             FocusUtils.getBasketballUserConcern(register.getData().getUser().getUserId());
 
                         } else {
-                            CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
+                            DeviceInfo.handlerRequestResult(register.getResult(), register.getMsg());
                         }
                     }
                 }, new VolleyContentFast.ResponseErrorListener() {

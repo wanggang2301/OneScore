@@ -1,11 +1,12 @@
 package com.hhly.mlottery.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -14,8 +15,8 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -35,7 +36,7 @@ import com.hhly.mlottery.bean.ChoseHeadStartBean;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.CommonUtils;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -49,6 +50,7 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
+import com.tbruyelle.rxpermissions.RxPermissions;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.ByteArrayOutputStream;
@@ -62,6 +64,10 @@ import java.util.List;
 import java.util.Map;
 
 import de.greenrobot.event.EventBus;
+import rx.functions.Action1;
+import rx.functions.Func1;
+
+import static android.Manifest.permission.CAMERA;
 
 /**
  * @ClassName: OneScoreGit
@@ -201,7 +207,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
         mHead_portrait = (ImageView) findViewById(R.id.head_portrait);
         mHead_portrait.setOnClickListener(this);
         findViewById(R.id.modify_avatar).setOnClickListener(this);
-        if (CommonUtils.isLogin()) {
+        if (DeviceInfo.isLogin()) {
             //ImageLoader.load(ProfileActivity.this,AppConstants.register.getData().getUser().getHeadIcon(),R.mipmap.center_head).into(mHead_portrait);
             Glide.with(getApplicationContext())
                     .load(AppConstants.register.getData().getUser().getHeadIcon())
@@ -382,7 +388,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
 
                 } else {
                     progressBar.dismiss();
-                    CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
+                    DeviceInfo.handlerRequestResult(register.getResult(), register.getMsg());
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -411,13 +417,47 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
      * 开启拍照功能
      */
     private void doTakePhoto() {
-        Intent captrueIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE, null);
-        File picFile = getPicFile();
-        if (picFile != null) {
-            captrueIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(picFile));
-            startActivityForResult(captrueIntent, REQUEST_IMAGE_CAPTURE);
-            mCamerUri = Uri.fromFile(picFile);
+        if(ActivityCompat.checkSelfPermission(this,Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
+
+            RxPermissions.getInstance(this)
+                    .request(CAMERA)
+                    .map(new Func1<Boolean, Boolean>() {
+                        @Override
+                        public Boolean call(Boolean granted) {
+                            if(granted){ //拍照
+                                Intent captrueIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE, null);
+                                File picFile = getPicFile();
+                                if (picFile != null) {
+                                    captrueIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(picFile));
+                                    startActivityForResult(captrueIntent, REQUEST_IMAGE_CAPTURE);
+                                    mCamerUri = Uri.fromFile(picFile);
+                                }
+                            }else{
+                                //可进行提示。国际化啥的贼麻烦。先算了。再点还会继续谈授权提醒反正
+                            }
+                            return granted;
+                        }
+                    }).subscribe(new Action1<Boolean>() {
+                @Override
+                public void call(Boolean aBoolean) {
+
+                }
+            }, new Action1<Throwable>() {
+                @Override
+                public void call(Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+        }else{
+            Intent captrueIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE, null);
+            File picFile = getPicFile();
+            if (picFile != null) {
+                captrueIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(picFile));
+                startActivityForResult(captrueIntent, REQUEST_IMAGE_CAPTURE);
+                mCamerUri = Uri.fromFile(picFile);
+            }
         }
+
     }
 
     /**
@@ -713,7 +753,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 if (register.getResult() == AccountResultCode.SUCC) {
                     UiUtils.toast(MyApp.getInstance(), R.string.picture_put_success);
                     // register.getData().getUser().setLoginAccount(AppConstants.register.getData().getLoginToken());
-                    CommonUtils.saveRegisterInfo(register);
+                    DeviceInfo.saveRegisterInfo(register);
 
                     // PreferenceUtil.commitString(AppConstants.HEADICON, register.getData().getUser().getHeadIcon().toString());
 //                    Log.i("aasd", "dasd" + register.getData().getUser().getLoginAccount());
@@ -726,7 +766,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                     //ImageLoader.load(ProfileActivity.this,register.getData().getUser().getHeadIcon(),R.mipmap.center_head).into(mHead_portrait);
 
                 } else {
-                    CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
+                    DeviceInfo.handlerRequestResult(register.getResult(), register.getMsg());
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {

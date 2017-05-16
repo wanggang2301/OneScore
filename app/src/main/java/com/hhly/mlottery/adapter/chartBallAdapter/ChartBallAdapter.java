@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -26,8 +25,7 @@ import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.bean.chart.ChartReceive;
 import com.hhly.mlottery.bean.enums.SendMsgEnum;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.CommonUtils;
-import com.hhly.mlottery.util.ToastTools;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.view.CircleImageView;
 
 import java.util.List;
@@ -198,7 +196,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
 
     @Override
     public int getRecycleViewItemType(int position) {
-        if (CommonUtils.isLogin()) {
+        if (DeviceInfo.isLogin()) {
             if (mData.get(position).getFromUser().getUserId().equals(AppConstants.register.getData().getUser().getUserId())) {
                 return 1;
             } else {
@@ -301,7 +299,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
             @Override
             public void onClick(View view) {
                 MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
-                if (!CommonUtils.isLogin()) {
+                if (!DeviceInfo.isLogin()) {
                     // 未登录
                     userLoginBack();
                 } else {
