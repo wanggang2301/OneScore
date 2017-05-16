@@ -10,7 +10,8 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 
 /**
- * Created by Administrator on 2017/4/18.
+ * Created by：XQyi on 2017/4/18 11:12
+ * Use:竞彩单关页面（详情内容页）
  */
 
 public class BettingPayDetailsActivity extends BaseActivity implements View.OnClickListener {

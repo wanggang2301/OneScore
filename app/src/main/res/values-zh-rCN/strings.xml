@@ -1725,4 +1725,8 @@
 
     <string name="invited_summary">请您一起看比赛，输入邀请码，优惠多多哦。</string>
 
+    <!--竞彩推荐-->
+    <string name="betting_setting_palying_method">玩法</string>
+    <string name="betting_setting_league">联赛</string>
+    <string name="betting_issue_title">推介</string>
 </resources>

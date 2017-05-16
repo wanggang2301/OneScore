@@ -1138,5 +1138,16 @@
         <item name="android:textSize">@dimen/text_size_12</item>
         <item name="android:textColor">@color/betting_recommend_zhuanjia_details_color</item>
     </style>
-
+    <!-- 竞彩推介发布内容 -->
+    <style name="betting_recommend_issue_check">
+        <item name="android:layout_weight">1</item>
+        <item name="android:button">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/betting_issue_check_txt_color</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+    </style>
 </resources>

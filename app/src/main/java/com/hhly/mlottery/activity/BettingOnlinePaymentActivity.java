@@ -31,7 +31,8 @@ import java.util.Map;
 import android.os.Handler;
 
 /**
- * Created by Administrator on 2017/4/19.
+ * Created by：XQyi on 2017/4/19 11:12
+ * Use:支付页面（选择支付方式）
  */
 
 public class BettingOnlinePaymentActivity extends BaseActivity implements View.OnClickListener {
@@ -188,6 +189,9 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
             @Override
             public void run() {
                 PayTask aliPay = new PayTask(BettingOnlinePaymentActivity.this);
+//                checkAliPayInstalled(getApplicationContext());
+//                L.d("qwer_asd = " + aliPay.getVersion());
+//                H5PayResultModel h5PayResultModel = aliPay.h5Pay(orderInfo, true);
                 Map<String , String> payMap = aliPay.payV2(orderInfo , true);
                 Message msg = new Message();
                 msg.what = SDK_PAY_FLAG;

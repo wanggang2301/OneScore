@@ -57,6 +57,7 @@ import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
 import com.hhly.mlottery.frame.footballframe.AnalyzeFragment;
+import com.hhly.mlottery.frame.footballframe.BettingIssueFragment;
 import com.hhly.mlottery.frame.footballframe.DetailsRollballFragment;
 import com.hhly.mlottery.frame.footballframe.IntelligenceFragment;
 import com.hhly.mlottery.frame.footballframe.LiveFragment;
@@ -301,6 +302,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private TextView mHalfScore;
 
     private String url;
+    private BettingIssueFragment mBettingIssueFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -407,7 +409,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         ll_Webview = (LinearLayout) findViewById(R.id.ll_webview);
         mHalfScore = (TextView) findViewById(R.id.half_score);
 
-
+        //推介
+        mBettingIssueFragment = BettingIssueFragment.newInstance(mThirdId);
         //滚球
         mDetailsRollballFragment = DetailsRollballFragment.newInstance(mThirdId);
         //直播
@@ -421,8 +424,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         // 聊球
         mChartBallFragment = ChartBallFragment.newInstance(0, mThirdId);
 
-        mTabsAdapter.addFragments(mDetailsRollballFragment, mLiveFragment, mAnalyzeFragment, mIntelligenceFragment, mOddsFragment, mChartBallFragment);
-        mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
+
+
+        mTabsAdapter.addFragments(mBettingIssueFragment ,mDetailsRollballFragment, mLiveFragment, mAnalyzeFragment, mIntelligenceFragment, mOddsFragment, mChartBallFragment);
+        mViewPager.setOffscreenPageLimit(6);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
@@ -525,6 +530,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     mIntelligenceFragment.initData();// 情报刷新
                     mOddsFragment.oddPlateRefresh(); // 指数刷新
                     mChartBallFragment.onRefresh();// 聊球
+                    mBettingIssueFragment.initData();//推介
                 }
             }
         }, 1000);
