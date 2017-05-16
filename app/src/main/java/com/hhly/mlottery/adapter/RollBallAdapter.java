@@ -142,7 +142,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
         // 初始化数据
         if (TextUtils.isEmpty(data.getKeepTime())) data.setKeepTime("0");
         // this.setVisiableStateOfThisViews(container, rlHalfContainer, tvHomeScore, tvGuestScore);
-       // this.setVisiableStateOfThisViews(container, tvHomeScore, tvGuestScore);
+        // this.setVisiableStateOfThisViews(container, tvHomeScore, tvGuestScore);
         this.initializedTextColor(tvKeepTime, tvGuestScore, tvHomeScore, tvHandicapValue_DA_BLACK, tvHandicapValue_YA_BLACK, tvLeftOdds_DA, tvLeftOdds_YA, tvLeftOdds_EU, tvMediumOdds_EU, tvRightOdds_DA, tvRightOdds_YA, tvRightOdds_EU);
         tvLeftOdds_DA.setTextColor(context.getResources().getColor(R.color.res_name_color));
         tvLeftOdds_YA.setTextColor(context.getResources().getColor(R.color.res_name_color));
@@ -217,7 +217,8 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
                 rlHalfContainer.setVisibility(View.GONE);
                 tvHomeScore.setVisibility(View.GONE);
                 tvGuestScore.setVisibility(View.GONE);
-             
+                tvKeepTime.setText("");
+
                 break;
             case "1": // 上半场进行时间
                 rlHalfContainer.setVisibility(View.GONE);
