@@ -137,7 +137,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
 
-
     private FocusMatchClickListener mFocusMatchClickListener;
     private DateOnClickListener mDateOnClickListener;
 
@@ -260,9 +259,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
             switch (msg.what) {
                 case VIEW_STATUS_LOADING:
                     mLoadDataStatus = LOAD_DATA_STATUS_LOADING;
-
                     mErrorLayout.setVisibility(View.GONE);
-//                    mListView.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setRefreshing(true);
                     mNoDataLayout.setVisibility(View.GONE);
@@ -596,7 +593,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
      */
     public void onEventMainThread(ScoresMatchFocusEventBusEntity scoresMatchFocusEventBusEntity) {
         if (scoresMatchFocusEventBusEntity.getFgIndex() == 3) {
-            L.d("qazwsx", "赛程关注");
             updateAdapter();
             if (mEntryType == 0) {
             } else if (mEntryType == 1) {
