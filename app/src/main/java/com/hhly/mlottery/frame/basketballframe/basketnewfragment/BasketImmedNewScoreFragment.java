@@ -204,6 +204,7 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                 return "";
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return versioncode;
     }
@@ -319,21 +320,17 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
     }
 
     private void initData() {
-
         Map<String, String> params = new HashMap<>();
         String version = getAppVersionCode(mContext);//获得当前版本号 android:versionCode="5"
         params.put("version", version);//接口添加 version=xx 字段
         params.put("appType", "2");//接口添加 &appType=2 字段
 
-//        String url = "http://192.168.31.241:8080/mlottery/core/basketballMatch.findNewLiveMatch.do";//?lang=zh&timeZone=8 BaseURLs.URL_BASKET_IMMEDIATE
-        String url = "http://192.168.10.242:8181/mlottery/core/basketballMatch.findNewLiveMatch.do";//?lang=zh&timeZone=8 BaseURLs.URL_BASKET_IMMEDIATE
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_NEW_IMMEDIATE, params, new VolleyContentFast.ResponseSuccessListener<BasketNewRootBean>() {
             @Override
             public void onResponse(BasketNewRootBean json) {
                 if (getActivity() == null) {
                     return;
                 }
-
                 isLoad = 1;
                 if (json == null || json.getMatchData() == null || json.getMatchData().size() == 0) {
                     setStatus(SHOW_STATUS_NO_DATA);
@@ -380,13 +377,11 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                     if (FiltrateCupsMap.basketImmedateCups.length == 0) {
                         List<BasketMatchFilter> noCheckedFilters = new ArrayList<>();
                         mChickedFilter = noCheckedFilters;//筛选0场后，再次进入赛选页面 显示已选中0场（全部不选中）
-
                         mbasket_unfiltrate.setVisibility(View.VISIBLE);
                         mSwipeRefreshLayout.setVisibility(View.GONE);
                         mLoadingLayout.setVisibility(View.GONE);
                         return;
                     } else {
-//                        for (List<BasketMatchBean> lists : mAllMatchdata) { // 遍历所有数据 得到筛选后的
                         List<BasketMatchBean> checkedMatchs = new ArrayList<>();
                         for (BasketMatchBean matchBean : mAllMatchdata.get(currentDatePosition)) {//只遍历当前日期里的比赛
                             for (String checkedId : FiltrateCupsMap.basketImmedateCups) {
@@ -395,7 +390,6 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                                 }
                             }
                         }
-
 
                         if (checkedMatchs.size() != 0) {
 
@@ -409,11 +403,8 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                                 currentMatchData.add(data);
                             }
                         }
-//                        }
                     }
                 } else {
-
-
                     //未筛选
                     switchDate(currentDatePosition);
                     mChickedFilter = mAllFilter;//默认选中全部
@@ -427,7 +418,6 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                     adapter.setmOnItemClickListener(new BasketballScoreListAdapter.OnRecycleItemClickListener() {
                         @Override
                         public void onItemClick(View view, BasketMatchBean currData) {
-
                             Intent intent = new Intent(getActivity(), BasketDetailsActivityTest.class);
                             intent.putExtra(BasketDetailsActivityTest.BASKET_THIRD_ID, currData.getThirdId());//跳转到详情
                             intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_STATUS, currData.getMatchStatus());//跳转到详情
@@ -453,10 +443,7 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
              */
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                L.e(TAG, "exception.getErrorCode() = " + exception.getErrorCode());
-
                 isLoad = 0;
-
                 setStatus(SHOW_STATUS_ERROR);
             }
         }, BasketNewRootBean.class);
@@ -603,7 +590,6 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
         mLoadHandler.postDelayed(mRun, 0);
         if (isNewFrameWork) {
             ((BasketBallScoreFragment) getParentFragment()).reconnectWebSocket();
-        } else {
         }
     }
 
@@ -615,10 +601,8 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
 
     @Override
     public void onClick(View v) {
-
         switch (v.getId()) {
             case R.id.basketball_immediate_error_btn:
-
                 isLoad = -1;
                 MobclickAgent.onEvent(mContext, "Basketball_Refresh");
                 setStatus(SHOW_STATUS_REFRESH_ONCLICK);
@@ -694,8 +678,6 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                 }
                 updateListViewItemOdd(mWebBasketOdds);
             }
-
-
         }
     };
 
@@ -705,11 +687,9 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
         synchronized (currentMatchData) {
             for (BasketMatchBean matchchildern : currentMatchData) {
                 if (matchchildern.getThirdId().equals(webBasketMatch.getThirdId())) {
-
                     if (matchchildern.getMatchScore() != null) {
                         String newscoreguest = matchchildern.getMatchScore().getGuestScore() + ""; //推送之前的比分客队
                         String newscorehome = matchchildern.getMatchScore().getHomeScore() + "";
-
                         //判断推送前后的比分是否变化, 变化==>开启动画
                         if (data.get("guestScore") != null && data.get("homeScore") != null) {
                             if (!data.get("guestScore").equals(newscoreguest)) { //isScroll 为 true：正在滑动  滑动中不启动动画;
@@ -729,7 +709,6 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                          * 未开始（VS）==>开始时候的处理
                          */
                         BasketScoreBean score = new BasketScoreBean();
-
                         for (Map.Entry<String, String> entry : data.entrySet()) {
                             switch (entry.getKey()) {
                                 case "guest1":
@@ -797,18 +776,13 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                     updateAdapter();
                     break;
                 }
-//                }
             }
         }
-
-
     }
 
     private void updateListViewItemOdd(WebBasketOdds webBasketOdds) {
-        // Match targetMatch = null;
         WebBasketAllOdds data = webBasketOdds.getData();
         synchronized (currentMatchData) {
-//            for (List<BasketMatchBean> match : childrenDataList) {// all里面的match
             for (BasketMatchBean matchchildern : currentMatchData) {
                 if (matchchildern.getThirdId().equals(webBasketOdds.getThirdId())) {
                     updateMatchOdd(matchchildern, data);
@@ -816,7 +790,6 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                     break;
                 }
             }
-//            }
         }
     }
 
@@ -842,8 +815,6 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
         if (null != data.get("guestScore") && matchchildern.getMatchScore() != null) {
             matchchildern.getMatchScore().setGuestScore(Integer.parseInt(data.get("guestScore")));
         }
-
-        //
         if (null != data.get("home1") && matchchildern.getMatchScore() != null) {
             matchchildern.getMatchScore().setHome1(Integer.parseInt(data.get("home1")));
         }
@@ -906,7 +877,6 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                     if (map.getCrown().get("handicap").equals("asiaLet") && matchchildern.getMatchOdds() != null) {
                         Map<String, BasketAllOddBean> odds = matchchildern.getMatchOdds();
                         BasketAllOddBean odd = odds.get("asiaLet");
-
                         if (odd == null) {//
                             odd = new BasketAllOddBean();
                             BasketOddBean modd = odd.getCrown();
@@ -1025,7 +995,6 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                 mLoadingLayout.setVisibility(View.GONE);
             }
         } else {
-
             mbasket_unfiltrate.setVisibility(View.VISIBLE);
             mSwipeRefreshLayout.setVisibility(View.GONE);
             mLoadingLayout.setVisibility(View.GONE);
@@ -1038,9 +1007,7 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
     public void onEventMainThread(BasketScoreImmedEventBusEntity basketScoreImmedEventBusEntity) {
         Map<String, Object> map = basketScoreImmedEventBusEntity.getMap();
         String[] checkedIds = (String[]) ((List) map.get(BasketFiltrateActivity.CHECKED_CUPS_IDS)).toArray(new String[]{});
-
         isFilter = true;
-
         FiltrateCupsMap.basketImmedateCups = checkedIds;
         if (checkedIds.length == 0) {
             List<BasketMatchFilter> noCheckedFilters = new ArrayList<>();
@@ -1050,14 +1017,10 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
             mSwipeRefreshLayout.setVisibility(View.GONE);
             mLoadingLayout.setVisibility(View.GONE);
         } else {
-
             currentMatchData.clear();
             groupDataList.clear();
             List<BasketMatchBean> checkedMatchs = new ArrayList<>();
-
             List<String> localFilterRace = new ArrayList<>();
-
-
             for (BasketMatchBean matchBean : mAllMatchdata.get(currentDatePosition)) {//只遍历当前日期里的比赛
                 boolean isExistId = false;
                 for (String checkedId : checkedIds) {
@@ -1073,8 +1036,6 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
             }
 
             PreferenceUtil.setDataList(FootBallMatchFilterTypeEnum.BASKET_IMMEDIA, localFilterRace);
-
-
             if (checkedMatchs.size() != 0) {
                 BasketMatchBean itemData = new BasketMatchBean();
                 itemData.setItemType(TITTLEDATETYPE);
@@ -1086,9 +1047,6 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                     currentMatchData.add(data);
                 }
             }
-
-
-
             List<BasketMatchFilter> checkedFilters = new ArrayList<>();
             for (BasketMatchFilter allFilter : mAllFilter) {
                 for (String checkedId : checkedIds) {
@@ -1101,12 +1059,7 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
             mbasket_unfiltrate.setVisibility(View.GONE);
             mSwipeRefreshLayout.setRefreshing(false);
             mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-
             updateAdapter();
-            // 设置打开全部日期内容
-//            for (int i = 0; i < groupDataList.size(); i++) {
-//                explistview.expandGroup(i);
-//            }
         }
     }
 
