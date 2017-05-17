@@ -972,10 +972,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
      * 统计赛中红黄牌等信息
      */
     private void initMatchSatisInfo() {
-
         mathchStatisInfo = new MathchStatisInfo();
-
-
         for (MatchTextLiveBean m : matchLive) {
             switch (m.getCode().trim()) {
                 case "1029": //主队进球

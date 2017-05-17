@@ -386,7 +386,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                     return;
                 }
 
-
                 mAllCup = json.getCeaselessFilter();
 
                 teamLogoPre = json.getTeamLogoPre();
@@ -430,7 +429,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                                 }
                             }
                         }
-
                     } else {
                         if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_SCHEDULE).size() > 0) {
                             List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_SCHEDULE);
