@@ -180,10 +180,7 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         fragments.add(BasketImmedNewScoreFragment.newInstance(IMMEDIA_FRAGMENT, isNewFrameWork, basketEntryType));
         fragments.add(BasketResultNewScoreFragment.newInstance(RESULT_FRAGMENT, basketEntryType));
         fragments.add(BasketScheduleNewScoreFragment.newInstance(SCHEDULE_FRAGMENT, basketEntryType));
-//        fragments.add(ImmedBasketballFragment.newInstance(IMMEDIA_FRAGMENT, isNewFrameWork ,basketEntryType));
-//        fragments.add(ResultBasketballFragment.newInstance(RESULT_FRAGMENT , basketEntryType));
-//        fragments.add(ScheduleBasketballFragment.newInstance(SCHEDULE_FRAGMENT , basketEntryType));
-//        fragments.add(FocusBasketballFragment.newInstance(FOCUS_FRAGMENT , basketEntryType));
+
         fragments.add(BasketballFocusNewFragment.newInstance(FOCUS_FRAGMENT, basketEntryType));
 
 

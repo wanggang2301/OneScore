@@ -1132,8 +1132,8 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                     checkedMatchs.add(matchBean);
                 }
             }
-            L.d("AAAAA-yxq----", "checkedMatchs.size = " + checkedMatchs.size());
-            L.d("AAAAA-yxq----", "currentMatchData.size = " + currentMatchData.size());
+
+
             if (checkedMatchs.size() != 0) {
 //                    childrenDataList.add(checkedMatchs);
                 BasketMatchBean itemData = new BasketMatchBean();
@@ -1145,16 +1145,6 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                     data.setItemType(LISTDATATYPE);
                     currentMatchData.add(data);
                 }
-//                    for (String groupdata : mAllGroupdata) {
-//                        String[] weekdatas = groupdata.split(",");
-//                        String datas = weekdatas[0];
-//                        String currData = DateUtil.convertDateToNation(checkedMatchs.get(0).getDate());//国际化后比较日期
-//                        if (currData.equals(datas)) {
-//                            groupDataList.add(groupdata);
-//                            break;
-//                        }
-//                    }
-//                }
             }
             List<BasketMatchFilter> checkedFilters = new ArrayList<>();
             for (BasketMatchFilter allFilter : mAllFilter) {
