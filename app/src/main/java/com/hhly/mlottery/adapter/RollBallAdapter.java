@@ -218,6 +218,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
                 tvHomeScore.setVisibility(View.GONE);
                 tvGuestScore.setVisibility(View.GONE);
                 tvKeepTime.setText("VS");
+                keepTimeShuffle.setVisibility(View.GONE);
 
                 break;
             case "1": // 上半场进行时间
