@@ -79,7 +79,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     private List<ScheduleDate> mDatelist; // 日期
     public static LeagueCup[] mCheckedCups; // 联赛筛选
 
-
     private Context mContext;
 
     private RelativeLayout mNoDataLayout;
@@ -91,10 +90,8 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
 
     private View mLine;
 
-
     private ListView mDateListView;
     private View view;
-
 
     private LinearLayout mLoadingLayout;
 
@@ -114,20 +111,15 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
 
     public static boolean isNetSuccess = true;// 告诉筛选页面数据是否加载成功
 
-
     public static final int LOAD_DATA_STATUS_INIT = 0;
     public static final int LOAD_DATA_STATUS_LOADING = 1;
     public static final int LOAD_DATA_STATUS_SUCCESS = 2;
     public static final int LOAD_DATA_STATUS_ERROR = 3;
 
-
     public final static int VIEW_DATE_INDEX = 0;
     public final static int VIEW_MATCH_INDEX = 1;
 
     public static int mLoadDataStatus = LOAD_DATA_STATUS_INIT;// 加载数据状态
-
-
-    // public static EventBus schEventBus;
 
     private static final String FRAGMENT_INDEX = "fragment_index";
     private static final String ENTRY_TYPE = "entryType";
@@ -173,7 +165,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     }
 
     public static ScheduleFragment newInstance(int index, int entryType) {
-
         Bundle bundle = new Bundle();
         bundle.putInt(FRAGMENT_INDEX, index);
         bundle.putInt(ENTRY_TYPE, entryType);
@@ -192,8 +183,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       /* schEventBus = new EventBus();
-        schEventBus.register(this);*/
         if (getArguments() != null) {
             mEntryType = getArguments().getInt(ENTRY_TYPE);
         }
@@ -218,16 +207,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
         layoutManager = new LinearLayoutManager(getActivity());
 
         recyclerView = (RecyclerView) view.findViewById(R.id.listview_schedule);
-
-      /*  //禁止滑动
-        mListView.initSlideMode(SlideListView.MOD_FORBID);// 设置可左划
-
-        mListView.setSwipeRefreshLayout(mSwipeRefreshLayout);*/
         recyclerView.setLayoutManager(layoutManager);
 
-
         mNoDataLayout = (RelativeLayout) view.findViewById(R.id.football_schedule_unfocus_ll);
-
 
         mLoadingLayout = (LinearLayout) view.findViewById(R.id.football_schedule_loading_ll);
         mErrorLayout = (LinearLayout) view.findViewById(R.id.network_exception_layout);
@@ -296,15 +278,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                     mSwipeRefreshLayout.setRefreshing(false);
                     mNoDataLayout.setVisibility(View.GONE);
                     mLine.setVisibility(View.VISIBLE);
-
-//                    mListView.setVisibility(View.VISIBLE);
-                    // mFilterImgBtn.setVisibility(View.VISIBLE);
-
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     break;
                 case VIEW_STATUS_NET_ERROR:
-
-//                    mListView.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     if (isLoadData) {
                         Toast.makeText(getActivity(), R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
@@ -321,13 +297,11 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                 case VIEW_STATUS_NO_ANY_DATA:
                     mLoadDataStatus = LOAD_DATA_STATUS_SUCCESS;
                     mLoadingLayout.setVisibility(View.GONE);
-                    //mListView.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     mErrorLayout.setVisibility(View.GONE);
                     mNoDataLayout.setVisibility(View.VISIBLE);
                     mNoDataTextView.setText(R.string.immediate_no_match);
-//                    mLine.setVisibility(View.INVISIBLE);
                     break;
                 case VIEW_STATUS_FLITER_NO_DATA:
                     mLoadDataStatus = LOAD_DATA_STATUS_SUCCESS;
@@ -347,12 +321,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
 
     private void initData(final int position) {
 
-        /**
-         * 多点登录的时候。另一台手机登录需要进行请求关注的数据。现在单点登录之后，则在登录的时候请求一次就可以
-         * 因为不存在两台手机同时在关注列表瞎他tm的情况
-         */
-//        ((ScoresFragment) getParentFragment()).getFootballUserConcern();
-
         String url = BaseURLs.URL_CeaselessMatchs;
         Map<String, String> params = new HashMap<String, String>();
 
@@ -367,7 +335,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<ScheduleMatchs>() {
             @Override
             public synchronized void onResponse(final ScheduleMatchs json) {
-
                 if (json == null) {
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
                     return;
@@ -461,7 +428,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                     mAdapter.setmFocusMatchClickListener(mFocusMatchClickListener);
                     mAdapter.setDateOnClickListener(mDateOnClickListener);
 
-
                     mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
                         @Override
                         public void onItemClick(View view, String data) {
@@ -473,16 +439,12 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                         }
                     });
 
-
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                     isLoadData = true;
-
                 } else {
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
                 }
-
                 currentDatePosition = position;
-
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
@@ -490,7 +452,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
             }
         }, ScheduleMatchs.class);
-
 
         choiceDateList();
     }
@@ -521,10 +482,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                 alertDialog.setCanceledOnTouchOutside(true);
             }
         };
-
-
     }
-
 
     public void updateAdapter() {
         if (mAdapter != null) {
@@ -556,14 +514,11 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
             default:
                 break;
         }
-
     }
-
 
     public interface SchFocusClickListener {
         void onClick(View view, SchMatch match);
     }
-
 
     /**
      * 筛选比赛
@@ -588,12 +543,8 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                         }
                     }
                 }
-
                 List<LeagueCup> leagueCupList = new ArrayList<LeagueCup>();
-
                 List<String> localFilterRace = new ArrayList<>();
-
-
                 for (LeagueCup cup : mAllCup) {
                     boolean isExistId = false;
                     for (String checkedId : checkedIds) {
@@ -605,14 +556,11 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                     if (isExistId) {
                         leagueCupList.add(cup);
                         localFilterRace.add(cup.getRaceId());
-
                     }
                 }
                 mCheckedCups = leagueCupList.toArray(new LeagueCup[]{});
 
                 PreferenceUtil.setDataList(FootBallMatchFilterTypeEnum.FOOT_SCHEDULE, localFilterRace);
-
-
                 updateAdapter();
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
             } else {
@@ -650,7 +598,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
         if (scoresMatchFocusEventBusEntity.getFgIndex() == 3) {
             L.d("qazwsx", "赛程关注");
             updateAdapter();
-//            ((ScoresFragment) getParentFragment()).focusCallback();
             if (mEntryType == 0) {
             } else if (mEntryType == 1) {
                 ((FootBallScoreFragment) getParentFragment()).focusCallback();
@@ -661,7 +608,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-
         if (isVisibleToUser) {
             L.d("xxx", "Schedule>>>>isVisibleToUser...显示了");
         } else {
