@@ -84,13 +84,9 @@ public class PreferenceUtil {
      * @param datalist
      */
     public static <T> void setDataList(String tag, List<T> datalist) {
-
         mEditor = mSharedPreferences.edit();
-
-
         if (null == datalist || datalist.size() <= 0)
             return;
-
         Gson gson = new Gson();
         //转换成json数据，再保存
         String strJson = gson.toJson(datalist);
@@ -118,8 +114,5 @@ public class PreferenceUtil {
         datalist = gson.fromJson(strJson, new TypeToken<List<T>>() {
         }.getType());
         return datalist;
-
     }
-
-
 }
