@@ -396,7 +396,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
                                 if (FiltrateCupsMap.rollballCups.length != 0) {// 判断是否已经筛选过
                                     if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL).size() > 0) {
-                                        List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_SCHEDULE);  //先判断本地保存
+                                        List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL);  //先判断本地保存
                                         for (Match m : allDataLists) {// 已选择的
                                             for (String checkedId : list) {
                                                 if (m.getRaceId().equals(checkedId)) {
@@ -418,7 +418,12 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                                 } else {// 没有筛选过
 
                                     if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL).size() > 0) {
-                                        List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_SCHEDULE);
+
+
+                                        List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL);
+
+                                        L.d("filter",list.size()+"");
+
                                         for (Match m : allDataLists) {// 默认显示热门赛程
                                             for (String filterId : list) {
                                                 if (m.getRaceId().equals(filterId)) {

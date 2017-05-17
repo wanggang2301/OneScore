@@ -391,7 +391,10 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 
                         if (FiltrateCupsMap.immediateCups.length != 0) {// 判断是否已经筛选过
                             if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_IMMEDIA).size() > 0) {
-                                List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_SCHEDULE);
+                                List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_IMMEDIA);
+
+                                L.d("filter", "即时==" + list.size() + "");
+
                                 for (Match m : mAllMatchs) {// 已选择的   显示筛选的比赛
                                     for (String checkedId : list) {
                                         if (m.getRaceId().equals(checkedId)) {
@@ -414,10 +417,12 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                         } else {// 没有筛选过
 
                             if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_IMMEDIA).size() > 0) {
-                                List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_SCHEDULE);
+                                List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_IMMEDIA);
+                                L.d("filter", "即时没有筛选过==" + list.size() + "");
+
                                 for (Match m : mAllMatchs) {// 默认显示热门赛程 (所以把热门的过滤出来)
-                                    for (String hotId : list) {
-                                        if (m.getRaceId().equals(hotId)) {
+                                    for (String filterId : list) {
+                                        if (m.getRaceId().equals(filterId)) {
                                             mMatchs.add(m);
                                             break;
                                         }
