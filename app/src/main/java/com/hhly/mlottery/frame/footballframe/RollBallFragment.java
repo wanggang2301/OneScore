@@ -533,7 +533,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
             List<LeagueCup> leagueCupList = new ArrayList<>();
             List<String> localFilterRace = new ArrayList<>();
 
-
             for (LeagueCup cup : leagueCupLists) {
                 boolean isExistId = false;
                 for (String checkedId : checkedIds) {
@@ -551,7 +550,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
             }
 
             PreferenceUtil.setDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL, localFilterRace);
-
 
             checkedLeagueCup = leagueCupList.toArray(new LeagueCup[]{});
             this.feedAdapter(feedAdapterLists);

@@ -35,6 +35,7 @@ import com.hhly.mlottery.bean.basket.BasketRootBean;
 import com.hhly.mlottery.bean.scheduleBean.ScheduleDate;
 import com.hhly.mlottery.callback.DateOnClickListener;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.footballframe.eventbus.BasketDetailsEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreScheduleEventBusEntity;
@@ -45,6 +46,7 @@ import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
 
@@ -515,10 +517,24 @@ public class BasketScheduleNewScoreFragment extends Fragment implements View.OnC
         itemData.setDate(DateUtil.convertDateToNation(mAllMatchdata.get(index).get(0).getDate()));
         currentMatchData.add(itemData);
 
-        for (BasketMatchBean data : mAllMatchdata.get(index)) {
-            data.setItemType(LISTDATATYPE);
-            currentMatchData.add(data);
+        List<String> filiterLeagueIds = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.BASKET_SCHEDULE);
+
+        if (filiterLeagueIds.size() > 0) {
+            for (BasketMatchBean data : mAllMatchdata.get(index)) {
+                for (String id : filiterLeagueIds) {
+                    if (data.getLeagueId().equals(id)) {
+                        data.setItemType(LISTDATATYPE);
+                        currentMatchData.add(data);
+                    }
+                }
+            }
+        } else {
+            for (BasketMatchBean data : mAllMatchdata.get(index)) {
+                data.setItemType(LISTDATATYPE);
+                currentMatchData.add(data);
+            }
         }
+
         updateAdapter();
     }
 
@@ -680,6 +696,9 @@ public class BasketScheduleNewScoreFragment extends Fragment implements View.OnC
             currentMatchData.clear();
             groupDataList.clear();
             List<BasketMatchBean> checkedMatchs = new ArrayList<>();
+            List<String> localFilterRace = new ArrayList<>();
+
+
             for (BasketMatchBean matchBean : mAllMatchdata.get(currentDatePosition)) {//只遍历当前日期里的比赛
                 boolean isExistId = false;
                 for (String checkedId : checkedIds) {
@@ -690,8 +709,14 @@ public class BasketScheduleNewScoreFragment extends Fragment implements View.OnC
                 }
                 if (isExistId) {
                     checkedMatchs.add(matchBean);
+                    localFilterRace.add(matchBean.getLeagueId());
+
                 }
             }
+
+            PreferenceUtil.setDataList(FootBallMatchFilterTypeEnum.BASKET_SCHEDULE, localFilterRace);
+
+
             L.d("AAAAA-yxq----", "checkedMatchs.size = " + checkedMatchs.size());
             L.d("AAAAA-yxq----", "currentMatchData.size = " + currentMatchData.size());
             if (checkedMatchs.size() != 0) {
