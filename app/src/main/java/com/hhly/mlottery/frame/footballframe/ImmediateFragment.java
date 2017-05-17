@@ -389,7 +389,6 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                             hotList = hotFocusLeagueCup.getHotLeagueIds();  //热门比赛
                         }
 
-
                         if (FiltrateCupsMap.immediateCups.length != 0) {// 判断是否已经筛选过
                             if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_IMMEDIA).size() > 0) {
                                 List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_SCHEDULE);
@@ -425,7 +424,6 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                                     }
                                 }
                             } else {
-
                                 for (Match m : mAllMatchs) {// 默认显示热门赛程 (所以把热门的过滤出来)
                                     for (String hotId : hotList) {
                                         if (m.getRaceId().equals(hotId)) {
@@ -440,7 +438,6 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                         mCups = jsonMatch.getAll();
 
                         mNoDataTextView.setText(R.string.immediate_no_data);
-
 
                         if (mMatchs.size() == 0) {// 没有热门赛事，显示全部
                             mMatchs.addAll(mAllMatchs);
