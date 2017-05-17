@@ -332,7 +332,6 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_NEW_IMMEDIATE, params, new VolleyContentFast.ResponseSuccessListener<BasketNewRootBean>() {
             @Override
             public void onResponse(BasketNewRootBean json) {
-
                 if (getActivity() == null) {
                     return;
                 }
