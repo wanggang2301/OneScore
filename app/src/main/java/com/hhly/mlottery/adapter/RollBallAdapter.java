@@ -226,7 +226,11 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
                 if (Integer.parseInt(data.getKeepTime()) > 45) {
                     this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, "45+", R.color.football_keeptime, true);
 
-                } else tvKeepTime.setText(data.getKeepTime());
+                } else {
+                    tvKeepTime.setText(data.getKeepTime());
+                    tvKeepTime.setTextColor(context.getResources().getColor(R.color.text_about_color));
+
+                }
 
 
                 this.startShuffleAnimation(keepTimeShuffle);
@@ -252,7 +256,12 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
             case "3": // 下半场进行时间
                 if (Integer.parseInt(data.getKeepTime()) > 90) {
                     this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, "90+", R.color.football_keeptime, true);
-                } else tvKeepTime.setText(data.getKeepTime());
+                } else {
+                    tvKeepTime.setText(data.getKeepTime());
+                    tvKeepTime.setTextColor(context.getResources().getColor(R.color.text_about_color));
+
+                }
+
                 this.startShuffleAnimation(keepTimeShuffle);
                 rlHalfContainer.setVisibility(View.VISIBLE);
                 tvHomeScore.setVisibility(View.VISIBLE);
@@ -267,7 +276,6 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
                 tvHomeScore.setVisibility(View.VISIBLE);
                 tvGuestScore.setVisibility(View.VISIBLE);
 
-                tvKeepTime.setTextColor(context.getResources().getColor(R.color.text_about_color));
                 tvGuestScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
                 tvHomeScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
                 break;
@@ -292,7 +300,6 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
                 tvHomeScore.setVisibility(View.GONE);
                 tvGuestScore.setVisibility(View.GONE);
 
-                tvKeepTime.setTextColor(context.getResources().getColor(R.color.text_about_color));
                 tvGuestScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
                 tvHomeScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
                 break;
@@ -311,7 +318,6 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
                 tvHomeScore.setVisibility(View.VISIBLE);
                 tvGuestScore.setVisibility(View.VISIBLE);
 
-                tvKeepTime.setTextColor(context.getResources().getColor(R.color.text_about_color));
                 tvGuestScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
                 tvHomeScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
 

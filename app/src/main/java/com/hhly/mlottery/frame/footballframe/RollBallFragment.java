@@ -349,14 +349,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     private void feedAdapter(List<Match> dataLists) {
         checkNotNull(adapter, "adapter == null");
 
-//        if (loadingMoreData) {
-//            loadingMoreData = false;
-//            adapter.addAll(allDataLists);
-//            //			adapter.dismissFooterViewLoading();
-//        } else {
         this.checkTheLifeCycleIsChanging(resestTheLifeCycle);
         adapter.setList(dataLists);
-//        }
         adapter.notifyDataSetChanged();
     }
 
@@ -368,15 +362,10 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     private void checkTheLifeCycleIsChanging(boolean resestTheLifeCycle) {
         if (resestTheLifeCycle) {
             this.resestTheLifeCycle = false;
-//            this.clearDecoration();
             recyclerView.setLayoutManager(layoutManager);
-//            recyclerView.addItemDecoration(dataDecration);
         }
     }
 
-    private void clearDecoration() {
-//        this.recyclerView.removeItemDecoration(this.dataDecration);
-    }
 
     public void requestApi() {
         apiHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
