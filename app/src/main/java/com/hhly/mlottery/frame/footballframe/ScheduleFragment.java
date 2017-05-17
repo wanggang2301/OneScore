@@ -364,7 +364,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
             params.put("date", mDatelist.get(position).toString());
         }
 
-
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<ScheduleMatchs>() {
             @Override
             public synchronized void onResponse(final ScheduleMatchs json) {
