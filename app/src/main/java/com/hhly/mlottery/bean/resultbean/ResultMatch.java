@@ -19,6 +19,15 @@ public class ResultMatch {
 	private ResultDateMatchs current;// 当天数据
 	private ResultDateMatchs previous;// 前一天数据
 
+	private String filterDate;
+
+	public String getFilterDate() {
+		return filterDate;
+	}
+
+	public void setFilterDate(String filterDate) {
+		this.filterDate = filterDate;
+	}
 
 	private List<LeagueCup> finishFilter;
 

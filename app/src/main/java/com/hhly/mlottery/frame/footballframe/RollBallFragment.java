@@ -383,6 +383,11 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                         leagueCupLists = jsonObject.getAll();
                         feedAdapterLists = new ArrayList<>();
 
+                        if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, "").equals(jsonObject.getFilterDate())) {
+                            PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_ROLL);
+                            PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, jsonObject.getFilterDate());
+                        }
+
                         HotFocusUtils hotFocusUtils = new HotFocusUtils();
                         hotFocusUtils.loadHotFocusData(getActivity(), new RequestHostFocusCallBack() {
                             @Override
@@ -422,7 +427,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
                                         List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL);
 
-                                        L.d("filter",list.size()+"");
+                                        L.d("filter", list.size() + "");
 
                                         for (Match m : allDataLists) {// 默认显示热门赛程
                                             for (String filterId : list) {

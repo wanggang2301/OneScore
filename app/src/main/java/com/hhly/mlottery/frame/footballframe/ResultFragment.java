@@ -410,6 +410,12 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 teamLogoPre = json.getTeamLogoPre();
                 teamLogoSuff = json.getTeamLogoSuff();
 
+                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, "").equals(json.getFilterDate())) {
+                    PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_RESULT);
+                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, json.getFilterDate());
+                }
+
+
 
                 /**
                  * 标记 Type 1--只加载 current下的 Date数据

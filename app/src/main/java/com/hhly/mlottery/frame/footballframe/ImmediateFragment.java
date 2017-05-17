@@ -370,6 +370,11 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                     return;
                 }
 
+                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, "").equals(jsonMatch.getFilterDate())) {
+                    PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_IMMEDIA);
+                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, jsonMatch.getFilterDate());
+                }
+
 
                 teamLogoPre = jsonMatch.getTeamLogoPre(); //logo
                 teamLogoSuff = jsonMatch.getTeamLogoSuff();
