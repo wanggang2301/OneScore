@@ -271,8 +271,6 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
         mView.findViewById(R.id.testbetting).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ;
-
                 Intent mIntent = new Intent(mContext, BettingRecommendActivity.class);
                 startActivity(mIntent);
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
