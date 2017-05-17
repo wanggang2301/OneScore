@@ -527,7 +527,6 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
 
         List<String> filiterLeagueIds = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.BASKET_IMMEDIA);
 
-
         if (filiterLeagueIds.size() > 0) {
             for (BasketMatchBean data : mAllMatchdata.get(index)) {
                 for (String id : filiterLeagueIds) {
