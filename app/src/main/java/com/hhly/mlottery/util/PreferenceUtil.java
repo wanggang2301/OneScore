@@ -94,11 +94,11 @@ public class PreferenceUtil {
         Gson gson = new Gson();
         //转换成json数据，再保存
         String strJson = gson.toJson(datalist);
+
         mEditor.putString(tag, strJson);
         mEditor.commit();
 
     }
-
 
 
 
