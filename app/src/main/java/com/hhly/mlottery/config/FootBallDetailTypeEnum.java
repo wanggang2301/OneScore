@@ -19,21 +19,21 @@ public interface FootBallDetailTypeEnum {
     int FOOT_DETAIL_RECOMMEND = 0;
 
     //滚球
-    int FOOT_DETAIL_ROLL = 1;
+    int FOOT_DETAIL_ROLL = 0;
 
     //直播
-    int FOOT_DETAIL_LIVE = 2;
+    int FOOT_DETAIL_LIVE = 1;
 
 
     //指数
-    int FOOT_DETAIL_INDEX = 3;
+    int FOOT_DETAIL_INDEX = 2;
 
 
     //分析(由分析和情报组成)
-    int FOOT_ANALYSE_MERGE = 4;
+    int FOOT_ANALYSE_MERGE = 3;
 
     //聊球
-    int FOOT_DETAIL_CHARTBALL = 5;
+    int FOOT_DETAIL_CHARTBALL = 4;
 
 
     //只为标记是由哪里跳转到足球内页的
