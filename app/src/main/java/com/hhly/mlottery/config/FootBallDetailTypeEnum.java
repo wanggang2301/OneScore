@@ -12,8 +12,11 @@ public interface FootBallDetailTypeEnum {
     //key
     String CURRENT_TAB_KEY = "current_ab";
 
+
     //默认
     int FOOT_DETAIL_DEFAULT = -1;
+
+    int FOOT_DETAIL_RECOMMEND = 0;
 
     //滚球
     int FOOT_DETAIL_ROLL = 0;
@@ -21,15 +24,23 @@ public interface FootBallDetailTypeEnum {
     //直播
     int FOOT_DETAIL_LIVE = 1;
 
-    //分析
-    int FOOT_DETAIL_ANALYSIS = 2;
-
-    //情报
-    int FOOT_DETAIL_INFOCENTER = 3;
 
     //指数
-    int FOOT_DETAIL_INDEX = 4;
+    int FOOT_DETAIL_INDEX = 2;
+
+
+    //分析(由分析和情报组成)
+    int FOOT_ANALYSE_MERGE = 3;
 
     //聊球
-    int FOOT_DETAIL_CHARTBALL = 5;
+    int FOOT_DETAIL_CHARTBALL = 4;
+
+
+    //只为标记是由哪里跳转到足球内页的
+    //情报
+    int FOOT_DETAIL_INFOCENTER = 6;
+    //分析
+    int FOOT_DETAIL_ANALYSIS = 7;
+
+
 }

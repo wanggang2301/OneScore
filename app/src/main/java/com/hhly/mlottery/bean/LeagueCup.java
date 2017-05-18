@@ -8,11 +8,11 @@
  */
 package com.hhly.mlottery.bean;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LeagueCup implements Parcelable {
 	public final static int TYPE_TITLE = 1;//用于区分筛选
@@ -28,8 +28,16 @@ public class LeagueCup implements Parcelable {
 	private int count;
 	private boolean hot;
 
-	
-	
+	public LeagueCup(int type, List<String> thirdId, String racename, String raceId, int count, boolean hot) {
+		this.type = type;
+		this.thirdId = thirdId;
+		this.racename = racename;
+		this.raceId = raceId;
+		this.count = count;
+		this.hot = hot;
+	}
+
+
 	public int getType() {
 		return type;
 	}

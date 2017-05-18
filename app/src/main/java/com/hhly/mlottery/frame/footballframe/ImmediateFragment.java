@@ -42,6 +42,7 @@ import com.hhly.mlottery.callback.FocusMatchClickListener;
 import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.callback.RequestHostFocusCallBack;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFilterEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
@@ -362,18 +363,24 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
                     return;
                 }
-                mAllMatchs = jsonMatch.getImmediateMatch();// 获取所有赛程
+                mAllMatchs = jsonMatch.getImmediateMatch();// 获取所有比赛
                 mMatchs = new ArrayList<Match>();//
 
                 if (getActivity() == null) {
                     return;
                 }
 
+                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, "").equals(jsonMatch.getFilterDate())) {
+                    PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_IMMEDIA);
+                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, jsonMatch.getFilterDate());
+                }
 
-                teamLogoPre = jsonMatch.getTeamLogoPre();
+
+                teamLogoPre = jsonMatch.getTeamLogoPre(); //logo
                 teamLogoSuff = jsonMatch.getTeamLogoSuff();
 
                 HotFocusUtils hotFocusUtils = new HotFocusUtils();
+
                 hotFocusUtils.loadHotFocusData(getActivity(), new RequestHostFocusCallBack() {
 
                     @Override
@@ -384,37 +391,68 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                         if (hotFocusLeagueCup == null) {
                             hotList = new ArrayList<String>();
                         } else {
-                            hotList = hotFocusLeagueCup.getHotLeagueIds();
+                            hotList = hotFocusLeagueCup.getHotLeagueIds();  //热门比赛
                         }
 
                         if (FiltrateCupsMap.immediateCups.length != 0) {// 判断是否已经筛选过
-                            for (Match m : mAllMatchs) {// 已选择的
-                                for (String checkedId : FiltrateCupsMap.immediateCups) {
-                                    if (m.getRaceId().equals(checkedId)) {
-                                        mMatchs.add(m);
-                                        break;
+                            if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_IMMEDIA).size() > 0) {
+                                List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_IMMEDIA);
+
+                                L.d("filter", "即时==" + list.size() + "");
+
+                                for (Match m : mAllMatchs) {// 已选择的   显示筛选的比赛
+                                    for (String checkedId : list) {
+                                        if (m.getRaceId().equals(checkedId)) {
+                                            mMatchs.add(m);       //从筛选的数据中过滤
+                                            break;
+                                        }
+                                    }
+                                }
+                            } else {
+                                for (Match m : mAllMatchs) {// 已选择的   显示筛选的比赛
+                                    for (String checkedId : FiltrateCupsMap.immediateCups) {
+                                        if (m.getRaceId().equals(checkedId)) {
+                                            mMatchs.add(m);       //从筛选的数据中过滤
+                                            break;
+                                        }
                                     }
                                 }
                             }
+
                         } else {// 没有筛选过
-                            for (Match m : mAllMatchs) {// 默认显示热门赛程
-                                for (String hotId : hotList) {
-                                    if (m.getRaceId().equals(hotId)) {
-                                        mMatchs.add(m);
-                                        break;
+
+                            if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_IMMEDIA).size() > 0) {
+                                List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_IMMEDIA);
+                                L.d("filter", "即时没有筛选过==" + list.size() + "");
+
+                                for (Match m : mAllMatchs) {// 默认显示热门赛程 (所以把热门的过滤出来)
+                                    for (String filterId : list) {
+                                        if (m.getRaceId().equals(filterId)) {
+                                            mMatchs.add(m);
+                                            break;
+                                        }
+                                    }
+                                }
+                            } else {
+                                for (Match m : mAllMatchs) {// 默认显示热门赛程 (所以把热门的过滤出来)
+                                    for (String hotId : hotList) {
+                                        if (m.getRaceId().equals(hotId)) {
+                                            mMatchs.add(m);
+                                            break;
+                                        }
                                     }
                                 }
                             }
                         }
-                        mCups = jsonMatch.getAll();
-                        mNoDataTextView.setText(R.string.immediate_no_data);
-                        if (mMatchs.size() == 0) {// 没有热门赛事，显示全部
 
+                        mCups = jsonMatch.getAll();
+
+                        mNoDataTextView.setText(R.string.immediate_no_data);
+
+                        if (mMatchs.size() == 0) {// 没有热门赛事，显示全部
                             mMatchs.addAll(mAllMatchs);
                             mCheckedCups = mCups.toArray(new LeagueCup[mCups.size()]);
                             if (mMatchs.size() == 0) {// 一个赛事都没有，显示“暂无赛事”
-
-
                                 isLoadedData = true;
                                 mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
 //                                startWebsocket();
@@ -489,7 +527,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
             L.e(TAG, "__handleMessage__");
 
             L.e(TAG, "msg.arg1 = " + msg.arg1);
-            if (msg.arg1 == 1) {
+            if (msg.arg1 == 1) {  //状态为1时  ，推送为比赛的状态
                 String ws_json = (String) msg.obj;
                 L.e(TAG, "ws_json = " + ws_json);
                 WebSocketMatchStatus webSocketMatchStatus = null;
@@ -500,7 +538,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                     webSocketMatchStatus = JSON.parseObject(ws_json, WebSocketMatchStatus.class);
                 }
                 updateListViewItemStatus(webSocketMatchStatus);
-            } else if (msg.arg1 == 2) {
+            } else if (msg.arg1 == 2) {  //为2时，推送为比赛的赔率
                 String ws_json = (String) msg.obj;
                 L.e(TAG, "ws_json = " + ws_json);
                 WebSocketMatchOdd webSocketMatchOdd = null;
@@ -512,7 +550,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                 }
 
                 updateListViewItemOdd(webSocketMatchOdd);
-            } else if (msg.arg1 == 4) {
+            } else if (msg.arg1 == 4) {  //为4时
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -1080,6 +1118,8 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
             String[] checkedIds = (String[]) ((LinkedList) map.get(FiltrateMatchConfigActivity.RESULT_CHECKED_CUPS_IDS)).toArray(new String[]{});
             FiltrateCupsMap.immediateCups = checkedIds;
             mMatchs.clear();
+
+            //筛选比赛
             for (Match match : mAllMatchs) {
                 boolean isExistId = false;
                 for (String checkedId : checkedIds) {
@@ -1094,6 +1134,9 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
             }
             List<LeagueCup> leagueCupList = new ArrayList<LeagueCup>();
 
+            List<String> localFilterRace = new ArrayList<>();
+
+
             for (LeagueCup cup : mCups) {
                 boolean isExistId = false;
                 for (String checkedId : checkedIds) {
@@ -1105,8 +1148,12 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 
                 if (isExistId) {
                     leagueCupList.add(cup);
+                    localFilterRace.add(cup.getRaceId());
                 }
             }
+
+
+            PreferenceUtil.setDataList(FootBallMatchFilterTypeEnum.FOOT_IMMEDIA, localFilterRace);
 
             mCheckedCups = leagueCupList.toArray(new LeagueCup[]{});
             updateAdapter();

@@ -2,22 +2,22 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/basket_layout_header"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="230dp"
     android:orientation="vertical">
 
     <ImageView
         android:id="@+id/image_background"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/flexible_space_image_height"
+        android:layout_height="match_parent"
         android:background="@color/black_title"
         android:scaleType="centerCrop" />
 
     <RelativeLayout
         android:id="@+id/basket_title_rl"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/flexible_space_image_height"
-        android:background="@android:color/transparent"
-        android:paddingTop="?attr/actionBarSize">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="@android:color/transparent">
 
         <RelativeLayout
             android:id="@+id/rl_iv"
@@ -470,14 +470,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="30dp"
                 android:background="@drawable/video_gif_bg"
                 android:orientation="horizontal"
                 android:paddingBottom="2dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="2dp"
-                android:visibility="gone">
+                android:visibility="visible">
 
 
                 <ImageView

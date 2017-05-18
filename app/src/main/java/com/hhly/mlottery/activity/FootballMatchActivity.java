@@ -1,7 +1,5 @@
 package com.hhly.mlottery.activity;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,56 +9,47 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.android.volley.VolleyError;
+import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.FootballMatchListAdapter;
 import com.hhly.mlottery.adapter.InfoCenterAdapter;
-import com.hhly.mlottery.adapter.snooker.PinnedHeaderExpandableAdapter;
-import com.hhly.mlottery.bean.BasketballItemSearchBean;
-import com.hhly.mlottery.bean.BasketballSearchBean;
-import com.hhly.mlottery.bean.TextDemo;
-import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.DataBean;
-import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.ScheduleBean;
+import com.hhly.mlottery.bean.FootBallKeepBean;
+import com.hhly.mlottery.bean.FootBallOddsBean;
+import com.hhly.mlottery.bean.FootballLotteryBean;
 import com.hhly.mlottery.bean.infoCenterBean.InfoCenterBean;
-import com.hhly.mlottery.bean.snookerbean.SnookerRaceListitemBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
-import com.hhly.mlottery.frame.infofrag.FootInfoCallBack;
-import com.hhly.mlottery.frame.infofrag.FootInfoShowSelectInfoCallBack;
+import com.hhly.mlottery.frame.footballframe.DateMatchChoseDialogFragment;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.InfoCenterPW;
-import com.hhly.mlottery.widget.NoScrollListView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by yuely198 on 2017/3/16.
  * 竞彩详情页
  */
 
-public class FootballMatchActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class FootballMatchActivity extends BaseWebSocketActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
-
+    private static final String TAG = "FootballMatchActivity";
     private RecyclerView mRecyclerView;
     private RelativeLayout rl_top;
     private InfoCenterBean mInfoCenterBean;// 测试数据
@@ -79,6 +68,10 @@ public class FootballMatchActivity extends BaseActivity implements View.OnClickL
     private FootballMatchListAdapter footballMatchListAdapter;
     private TextView match_no_data_txt;
     private LinearLayout match_error_btn;
+
+    boolean isSelect = false;
+
+    String Currentselection = "";
 
     private final static int VIEW_STATUS_LOADING = 11;
     private final static int VIEW_STATUS_SUCCESS = 33;
@@ -106,7 +99,7 @@ public class FootballMatchActivity extends BaseActivity implements View.OnClickL
                     break;
 
                 case VIEW_STATUS_NO_DATA:
-                    rl_top.setVisibility(View.GONE);
+                    rl_top.setVisibility(View.VISIBLE);
                     match_no_data_txt.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
@@ -125,24 +118,257 @@ public class FootballMatchActivity extends BaseActivity implements View.OnClickL
             }
         }
     };
+    private List<FootballLotteryBean.BettingListBean> bettingList;
+    private String currentDate;
+    private int totalSize;
+    private DateMatchChoseDialogFragment mDateChooseDialogFragment;
+
+    private String choosenDate; // 选中日期
+    private TextView tv_data_size;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+
+        setWebSocketUri(BaseURLs.WS_SERVICE);
+        setTopic("USER.topic.football.betting");
         super.onCreate(savedInstanceState);
 
         initView();
         mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-        initDate();
+        initDate(DateUtil.getMomentDate());
+        Currentselection = DateUtil.getMomentDate();
         initEvent();
+
     }
+
+    @Override
+    protected void onTextResult(String text) {
+
+        String type = "";
+        try {
+            JSONObject jsonObject = new JSONObject(text);
+            type = jsonObject.getString("type");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (!TextUtils.isEmpty(type)) {
+            Message msg = Message.obtain();
+            msg.obj = text;
+            msg.arg1 = Integer.parseInt(type);
+            mSocketHandler.sendMessage(msg);
+        }
+
+    }
+
+    Handler mSocketHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            L.e(TAG, "__handleMessage__");
+
+            L.e(TAG, "msg.arg1 = " + msg.arg1);
+
+            if (msg.arg1 == 1) {
+                String ws_json = (String) msg.obj;
+                FootBallKeepBean footBallKeepBean = null;
+                try {
+                    footBallKeepBean = JSON.parseObject(ws_json, FootBallKeepBean.class);
+
+                } catch (Exception e) {
+                    ws_json = ws_json.substring(0, ws_json.length() - 1);
+                    footBallKeepBean = JSON.parseObject(ws_json, FootBallKeepBean.class);
+                }
+                updateListViewItemStatus(footBallKeepBean);
+            } else if (msg.arg1 == 2) {
+
+                String ws_json = (String) msg.obj;
+                FootBallOddsBean footBallOddsBean = null;
+
+                try {
+                    footBallOddsBean = JSON.parseObject(ws_json, FootBallOddsBean.class);
+                    L.i("dasda", "阿大苏打撒旦撒====" + footBallOddsBean);
+                } catch (Exception e) {
+                    ws_json = ws_json.substring(0, ws_json.length() - 1);
+                    footBallOddsBean = JSON.parseObject(ws_json, FootBallOddsBean.class);
+                }
+                updateListViewItemOdd(footBallOddsBean);
+
+
+            } else if (msg.arg2 == 3) {
+
+
+            }
+
+
+        }
+    };
+
+    private void updateListViewItemOdd(FootBallOddsBean footBallOddsBean) {
+
+        for (int i = 0; i < bettingList.size(); i++) {
+
+            for (FootballLotteryBean.BettingListBean data : bettingList) {
+                if (footBallOddsBean.getThirdId().equals(data.getMatchId())) {  //找到对应比赛对象
+
+                    updateMatchOdd(i, footBallOddsBean);
+                }
+            }
+        }
+    }
+
+    private void updateMatchOdd(int i, FootBallOddsBean data) {
+        L.i("dasda", "updateMatchOdd" + data);
+        if (data != null) {
+
+            if (data.getData().getLetNumber() != null) {
+
+
+                bettingList.get(i).setLetNumber(data.getData().getLetNumber());
+
+            }
+            if (data.getData().getLetLoseOdds() != null) {
+
+                if (Integer.parseInt(data.getData().getLetLoseOdds()) > Integer.parseInt(bettingList.get(i).getLetLoseOdds())) {
+                    //升
+                    bettingList.get(i).setLetloseoddsColorId(R.color.odds_up_bg);
+                } else {
+                    //降
+                    bettingList.get(i).setLetloseoddsColorId(R.color.odds_down_bg);
+                }
+
+                bettingList.get(i).setLetLoseOdds(data.getData().getLetLoseOdds());
+
+            }
+            if (data.getData().getLetSameOdds() != null) {
+
+                if (Integer.parseInt(data.getData().getLetSameOdds()) > Integer.parseInt(bettingList.get(i).getLetSameOdds())) {
+                    //升
+                    bettingList.get(i).setLetsameoddsColorId(R.color.odds_up_bg);
+                } else {
+                    //降
+                    bettingList.get(i).setLetsameoddsColorId(R.color.odds_down_bg);
+                }
+
+                bettingList.get(i).setLetSameOdds(data.getData().getLetSameOdds());
+
+            }
+            if (data.getData().getLetWinOdds() != null) {
+
+                if (Integer.parseInt(data.getData().getLetWinOdds()) > Integer.parseInt(bettingList.get(i).getLetWinOdds())) {
+                    //升
+                    bettingList.get(i).setLetwinoddsColorId(R.color.odds_up_bg);
+                } else {
+                    //降
+                    bettingList.get(i).setLetwinoddsColorId(R.color.odds_down_bg);
+                }
+
+                bettingList.get(i).setLetSameOdds(data.getData().getLetSameOdds());
+
+            }
+            if (data.getData().getLoseOdds() != null) {
+
+
+                if (Integer.parseInt(data.getData().getLoseOdds()) > Integer.parseInt(bettingList.get(i).getLoseOdds())) {
+                    //升
+                    bettingList.get(i).setLoseoddsColorId(R.color.odds_up_bg);
+                } else {
+                    //降
+                    bettingList.get(i).setLoseoddsColorId(R.color.odds_down_bg);
+                }
+
+                bettingList.get(i).setLoseOdds(data.getData().getLoseOdds());
+
+            }
+            if (data.getData().getSameOdds() != null) {
+                if (Integer.parseInt(data.getData().getSameOdds()) > Integer.parseInt(bettingList.get(i).getSameOdds())) {
+                    //升
+                    bettingList.get(i).setSameoddsColorId(R.color.odds_up_bg);
+                } else {
+                    //降
+                    bettingList.get(i).setSameoddsColorId(R.color.odds_down_bg);
+                }
+                bettingList.get(i).setSameOdds(data.getData().getSameOdds());
+
+            }
+            if (data.getData().getWinOdds() != null) {
+
+                if (Integer.parseInt(data.getData().getWinOdds()) > Integer.parseInt(bettingList.get(i).getWinOdds())) {
+                    //升
+                    bettingList.get(i).setWinoddsColorId(R.color.odds_up_bg);
+                } else {
+                    //降
+                    bettingList.get(i).setWinoddsColorId(R.color.odds_down_bg);
+                }
+
+
+                bettingList.get(i).setWinOdds(data.getData().getWinOdds());
+
+            }
+            if (footballMatchListAdapter != null) {
+                footballMatchListAdapter.updateDatas(bettingList, i);
+                footballMatchListAdapter.notifyDataSetChanged();
+            }
+
+        }
+
+
+    }
+
+    private void updateListViewItemStatus(FootBallKeepBean footBallKeepBean) {
+
+        Map<String, String> data = footBallKeepBean.getData();
+        for (int i = 0; i < bettingList.size(); i++) {
+
+            if ((bettingList.get(i).getMatchId() + "").equals(footBallKeepBean.getThirdId())) {  //找到对应比赛对象
+                updateMatchStatus(i, data);
+            }
+        }
+    }
+
+    private void updateMatchStatus(int i, Map<String, String> data) {
+        bettingList.get(i).setStatus(data.get("statusOrigin"));
+        if ("0".equals(bettingList.get(i).getStatus()) && "1".equals(bettingList.get(i).getStatus())) {// 未开场变成开场
+            bettingList.get(i).setHomeScore("0");
+            bettingList.get(i).setGuestScore("0");
+        }
+
+        if (data.get("keepTime") != null) {
+            bettingList.get(i).setKeepTime(data.get("keepTime"));
+        }
+
+        if (footballMatchListAdapter != null) {
+
+            footballMatchListAdapter.updateDatas(bettingList, i);
+            footballMatchListAdapter.notifyDataSetChanged();
+        }
+
+
+    }
+
+
+    @Override
+    protected void onConnectFail() {
+
+    }
+
+    @Override
+    protected void onDisconnected() {
+
+    }
+
+    @Override
+    protected void onConnected() {
+
+    }
+
     private void initEvent() {
         footballMatchListAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
-                int thirdId = mInfoCenterBean.intelligences.get(currentIndexDate).list.get(i).thirdId;
+                String thirdId = bettingList.get(i).getMatchId();
                 L.d("xxx", "thirdId: " + thirdId);
-                Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
-                intent.putExtra(FootballMatchDetailActivity.BUNDLE_PARAM_THIRDID, String.valueOf(thirdId));
+                Intent intent = new Intent(FootballMatchActivity.this, FootballMatchDetailActivity.class);
+                intent.putExtra("thirdId", thirdId);
                 intent.putExtra("match_details", 1);
                 startActivity(intent);
             }
@@ -150,51 +376,45 @@ public class FootballMatchActivity extends BaseActivity implements View.OnClickL
     }
 
 
-    private void initDate() {
+    private void initDate(String date) {
         mSwipeRefreshLayout.setRefreshing(true);
-
         Map<String, String> params = new HashMap<>();
-        params.put("searchKeyword", "奧巴杜魯");//接口添加 version=xx 字段
+        params.put("date", date);
+        params.put("pageNum", "1");
+        params.put("pageSize", "100");
         // 请求网络数据
-        VolleyContentFast.requestJsonByPost("http://m.13322.com/mlottery/core/IOSBasketballMatch.fuzzySearch.do",params,new VolleyContentFast.ResponseSuccessListener<InfoCenterBean>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.FINDBETTINGLIST, params, new VolleyContentFast.ResponseSuccessListener<FootballLotteryBean>() {
             @Override
-            public void onResponse(InfoCenterBean jsonObject) {
-
+            public void onResponse(FootballLotteryBean jsonObject) {
 
                 mSwipeRefreshLayout.setRefreshing(false);
+
                 if (jsonObject != null) {
+                    connectWebSocket();
+                    if (jsonObject.getResult() == 200) {
 
-                    if (jsonObject.result == 200) {
-
-                        if (jsonObject.intelligences.isEmpty()) {
-                            mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
-                            return;
-                        }
-
+                        totalSize = jsonObject.getTotalSize();
+                        currentDate = jsonObject.getCurrentDate();
                         mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
 
+                        bettingList = jsonObject.getBettingList();
 
-                        mInfoCenterBean = jsonObject;
-                        getCurrentDateInfoIndex();
+                        tv_data_size.setText("(" + totalSize + ")");
 
-                        if (mInfoCenterBean.intelligences.get(currentIndexDate).list.size() == 0) {
-                            footballMatchListAdapter.setEmptyView(emptyView);
+                        if (bettingList == null) {
+                            mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
                         } else {
                             footballMatchListAdapter.getData().clear();
-                            footballMatchListAdapter.addData(mInfoCenterBean.intelligences.get(currentIndexDate).list);
+                            footballMatchListAdapter.addData(bettingList);
                         }
-
-                        mTitleTextView.setText(getCurrentDate(mInfoCenterBean.intelligences.get(currentIndexDate).date, mInfoCenterBean.intelligences.get(currentIndexDate).count));
-
-            /*            mInfoCenterPW = new InfoCenterPW((Activity) mContext, mInfoCenterBean.intelligences, currentIndexDate);
-                        mInfoCenterPW.setFootInfoCallBack(footInfoCallBack);
-                        mInfoCenterPW.setFootInfoShowSelectInfoCallBack(footInfoShowSelectInfoCallBack);
-*/
-
-                        mInfoCenterBean.intelligences.get(currentIndexDate).isSelect = true;
+                        if (!isSelect) {
+                            maybeInitDateList();
+                            getCurrentDateInfoIndex();
+                            mTitleTextView.setText(currentDate + " " + DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(currentDate)));
+                        }
+                        isSelect = true;
                     } else {
                         mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
-
                     }
                 } else {
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
@@ -206,15 +426,40 @@ public class FootballMatchActivity extends BaseActivity implements View.OnClickL
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
 
             }
-        }, InfoCenterBean.class);
+        }, FootballLotteryBean.class);
     }
 
+    private List<Map<String, String>> dateList;
+
+    /**
+     * 初始化日期列表
+     */
+    private void maybeInitDateList() {
+        if (dateList == null) {
+            dateList = new ArrayList<>();
+        } else {
+            dateList.clear();
+        }
+        for (int i = -7; i < 2; i++) {
+            addDate(i);
+        }
+    }
+
+    /**
+     * 添加日期
+     *
+     * @param offset offset
+     */
+    private void addDate(int offset) {
+        Map<String, String> map = new HashMap<>();
+        map.put("date", UiUtils.getDate(currentDate, offset));
+        dateList.add(map);
+    }
 
     private void getCurrentDateInfoIndex() {
-        for (int i = 0, len = mInfoCenterBean.intelligences.size(); i < len; i++) {
-            if (mInfoCenterBean.currentDate.equals(mInfoCenterBean.intelligences.get(i).date)) {
+        for (int i = 0, len = dateList.size(); i < len; i++) {
+            if (currentDate.equals(dateList.get(i).get("date"))) {
                 currentIndexDate = i;
-                return;
             }
         }
     }
@@ -238,6 +483,8 @@ public class FootballMatchActivity extends BaseActivity implements View.OnClickL
         //筛选按钮
         public_btn_filter = (ImageView) findViewById(R.id.public_btn_filter);
         public_btn_filter.setOnClickListener(this);
+        public_btn_filter.setVisibility(View.GONE);
+
         findViewById(R.id.public_img_back).setOnClickListener(this);
         findViewById(R.id.public_btn_set).setVisibility(View.INVISIBLE);
         //日期头部选择器
@@ -245,7 +492,9 @@ public class FootballMatchActivity extends BaseActivity implements View.OnClickL
         mTitleTextView = (TextView) findViewById(R.id.tv_data_content);
         iv_left = (ImageView) findViewById(R.id.iv_left);
         iv_right = (ImageView) findViewById(R.id.iv_right);
+        tv_data_size = (TextView) findViewById(R.id.tv_data_size);
 
+        rl_top.setOnClickListener(this);
         mTitleTextView.setOnClickListener(this);
         iv_left.setOnClickListener(this);
         iv_right.setOnClickListener(this);
@@ -274,35 +523,75 @@ public class FootballMatchActivity extends BaseActivity implements View.OnClickL
         emptyView = View.inflate(this, R.layout.layout_nodata, null);
     }
 
+    /**
+     * 日期选择 Fragment 初始化
+     */
+    private void maybeInitDateChooseDialog() {
+        if (mDateChooseDialogFragment != null) return;
+        mDateChooseDialogFragment = DateMatchChoseDialogFragment.newInstance(currentDate,
+                new DateMatchChoseDialogFragment.OnDateChooseListener() {
+                    @Override
+                    public void onDateChoose(String date) {
+                        choosenDate = date;
+                        mTitleTextView.setText(DateUtil.convertDateToNation(date) + " " + DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(DateUtil.convertDateToNation(date))));
+                        initDate(DateUtil.convertDateToNation(date));
+
+                        Currentselection = date;
+
+                        for (int i = 0, len = dateList.size(); i < len; i++) {
+                            if (choosenDate.equals(dateList.get(i).get("date"))) {
+                                currentIndexDate = i;
+                            }
+                        }
+                        if (currentIndexDate <= 0) {
+                            findViewById(R.id.iv_left).setVisibility(View.GONE);
+                            findViewById(R.id.iv_right).setVisibility(View.VISIBLE);
+                        } else if (currentIndexDate >= dateList.size() - 1) {
+                            findViewById(R.id.iv_right).setVisibility(View.GONE);
+                            findViewById(R.id.iv_left).setVisibility(View.VISIBLE);
+                        } else {
+                            findViewById(R.id.iv_left).setVisibility(View.VISIBLE);
+                            findViewById(R.id.iv_right).setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 显示日期选择 dialog
+     */
+    private void showDateChooseDialog() {
+        maybeInitDateChooseDialog();
+        if (!mDateChooseDialogFragment.isVisible()) {
+            mDateChooseDialogFragment.show(getSupportFragmentManager(), "dateChooseFragment");
+
+        }
+    }
+
     public void showSelectInfo(int indexDate) {
+
         currentIndexDate = indexDate;
         footballMatchListAdapter.getData().clear();
-        if (mInfoCenterBean.intelligences.get(indexDate).count != 0) {
-            footballMatchListAdapter.addData(mInfoCenterBean.intelligences.get(indexDate).list);
+        if (dateList.get(indexDate).size() != 0) {
+            initDate(dateList.get(indexDate).get("date"));
         } else {
             footballMatchListAdapter.setEmptyView(emptyView);
             footballMatchListAdapter.notifyDataSetChanged();
         }
-        mTitleTextView.setText(getCurrentDate(mInfoCenterBean.intelligences.get(indexDate).date, mInfoCenterBean.intelligences.get(indexDate).count));
 
+
+        mTitleTextView.setText(dateList.get(indexDate).get("date") + "" + DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(dateList.get(indexDate).get("date"))));
         if (indexDate <= 0) {
             findViewById(R.id.iv_left).setVisibility(View.GONE);
             findViewById(R.id.iv_right).setVisibility(View.VISIBLE);
-        } else if (indexDate >= mInfoCenterBean.intelligences.size() - 1) {
+        } else if (indexDate >= dateList.size() - 1) {
             findViewById(R.id.iv_right).setVisibility(View.GONE);
             findViewById(R.id.iv_left).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.iv_left).setVisibility(View.VISIBLE);
             findViewById(R.id.iv_right).setVisibility(View.VISIBLE);
         }
-        for (int i = 0, len = mInfoCenterBean.intelligences.size(); i < len; i++) {
-            if (i == indexDate) {
-                mInfoCenterBean.intelligences.get(i).isSelect = true;
-            } else {
-                mInfoCenterBean.intelligences.get(i).isSelect = false;
-            }
-        }
-        //mInfoCenterPW.notifyChanged(indexDate);
+        Currentselection = dateList.get(indexDate).get("date");
     }
 
     @Override
@@ -314,23 +603,30 @@ public class FootballMatchActivity extends BaseActivity implements View.OnClickL
                 finish();
                 break;
             case R.id.match_error_btn:
+                isSelect = false;
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-                initDate();
+                initDate(currentDate);
                 break;
             case R.id.tv_data_content:
-
+                showDateChooseDialog();
                 break;
             case R.id.iv_left:
                 if (currentIndexDate > 0) {
                     currentIndexDate--;
                 }
                 showSelectInfo(currentIndexDate);
+
                 break;
             case R.id.iv_right:
-                if (currentIndexDate < mInfoCenterBean.intelligences.size() - 1) {
+
+                if (currentIndexDate < dateList.size() - 1) {
                     currentIndexDate++;
                 }
                 showSelectInfo(currentIndexDate);
+                break;
+            case R.id.rl_top:
+
+                showDateChooseDialog();
                 break;
             default:
                 break;
@@ -341,7 +637,23 @@ public class FootballMatchActivity extends BaseActivity implements View.OnClickL
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        closeWebSocket();
+    }
+
+    /**
+     * 设置刷新状态
+     *
+     * @param b 是否正在刷新
+     */
+    public void setRefreshing(boolean b) {
+        mSwipeRefreshLayout.setRefreshing(b);
+    }
+
+
+    @Override
     public void onRefresh() {
-        initDate();
+        initDate(Currentselection);
     }
 }

@@ -22,6 +22,16 @@ public class ScheduleMatchs {
 
 	private String teamLogoSuff;
 
+	private String filterDate;
+
+	public String getFilterDate() {
+		return filterDate;
+	}
+
+	public void setFilterDate(String filterDate) {
+		this.filterDate = filterDate;
+	}
+
 	public String getTeamLogoSuff() {
 		return teamLogoSuff;
 	}

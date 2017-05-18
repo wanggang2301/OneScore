@@ -57,6 +57,8 @@ public class MyApp extends Application {
                 // 初始化PreferenceUtil
                 PreferenceUtil.init(appcontext);
 
+
+
                 //初始化获取语言环境
                 mResources = appcontext.getResources();
                 mConfiguration = mResources.getConfiguration();
