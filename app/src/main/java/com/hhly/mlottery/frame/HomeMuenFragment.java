@@ -358,7 +358,7 @@ public class HomeMuenFragment extends Fragment {
                                             break;
                                         case "80":// 多屏动画列表
                                             break;
-                                        case "42":// 足球竞彩
+                                        case "44":// 足球竞彩
                                             mContext.startActivity(new Intent(mContext, FootballMatchActivity.class));
                                             break;
                                         case "91":// 竞彩推介
