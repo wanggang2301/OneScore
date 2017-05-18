@@ -91,33 +91,7 @@ import java.util.TimerTask;
 
 import de.greenrobot.event.EventBus;
 
-import static com.hhly.mlottery.config.FootBallTypeEnum.ATTACK;
-import static com.hhly.mlottery.config.FootBallTypeEnum.ATTACK1;
-import static com.hhly.mlottery.config.FootBallTypeEnum.CORNER;
-import static com.hhly.mlottery.config.FootBallTypeEnum.CORNER1;
-import static com.hhly.mlottery.config.FootBallTypeEnum.DANGERATTACK;
-import static com.hhly.mlottery.config.FootBallTypeEnum.DANGERATTACK1;
-import static com.hhly.mlottery.config.FootBallTypeEnum.DIANQIU;
-import static com.hhly.mlottery.config.FootBallTypeEnum.DIANQIU1;
-import static com.hhly.mlottery.config.FootBallTypeEnum.FIRSTHALF;
-import static com.hhly.mlottery.config.FootBallTypeEnum.HALFTIME;
-import static com.hhly.mlottery.config.FootBallTypeEnum.MATCHFINISH;
-import static com.hhly.mlottery.config.FootBallTypeEnum.RED_CARD;
-import static com.hhly.mlottery.config.FootBallTypeEnum.RED_CARD1;
-import static com.hhly.mlottery.config.FootBallTypeEnum.SCORE;
-import static com.hhly.mlottery.config.FootBallTypeEnum.SCORE1;
-import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOT;
-import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOT1;
-import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE;
-import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE1;
-import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE12;
-import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE2;
-import static com.hhly.mlottery.config.FootBallTypeEnum.SUBSTITUTION;
-import static com.hhly.mlottery.config.FootBallTypeEnum.SUBSTITUTION1;
-import static com.hhly.mlottery.config.FootBallTypeEnum.YELLOW_CARD;
-import static com.hhly.mlottery.config.FootBallTypeEnum.YELLOW_CARD1;
-import static com.hhly.mlottery.config.FootBallTypeEnum.YTORED;
-import static com.hhly.mlottery.config.FootBallTypeEnum.YTORED1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.*;
 
 /**
  * @author wang gang
