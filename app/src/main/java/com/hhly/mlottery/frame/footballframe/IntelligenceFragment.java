@@ -135,7 +135,6 @@ public class IntelligenceFragment extends Fragment {
     private List<BigDataResult.GridViewEntity> halfTodayHandicapList=new ArrayList<>();
     private LinearLayout mLlTodayHandicapHalf;
 
-    private String mThirdId;
     private BigDataForecast mBigDataForecast;
     private BigDataForecastFactor mFactor;
     private BigDataResult mResult;
@@ -159,10 +158,6 @@ public class IntelligenceFragment extends Fragment {
         if (mFactor == null) {
             mFactor = new BigDataForecastFactor();
         }
-    }
-
-    public void setThirdId(String thirdId){
-        this.mThirdId = thirdId;
     }
 
     @Nullable
