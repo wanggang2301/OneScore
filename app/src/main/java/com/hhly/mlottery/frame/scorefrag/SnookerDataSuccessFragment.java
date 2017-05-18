@@ -34,6 +34,7 @@ import info.hoang8f.android.segmented.SegmentedGroup;
 
 /**
  * Created by yuely198 on 2017/2/28.
+ * 斯诺克赛事内页 历届冠军
  */
 
 public class SnookerDataSuccessFragment extends Fragment implements View.OnClickListener,SwipeRefreshLayout.OnRefreshListener{
