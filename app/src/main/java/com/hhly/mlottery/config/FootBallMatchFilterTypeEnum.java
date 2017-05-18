@@ -10,10 +10,16 @@ package com.hhly.mlottery.config;
 public interface FootBallMatchFilterTypeEnum {
 
     //比分
+
+    String FOOT_CURR_DATE = "foot_curr_date";
+
     String FOOT_ROLL = "foot_roll";
     String FOOT_IMMEDIA = "foot_immedia";
     String FOOT_RESULT = "foot_result";
     String FOOT_SCHEDULE = "foot_schedule";
+
+
+    String BASKET_CURR_DATE = "basket_curr_date";
 
     String BASKET_IMMEDIA = "basket_immedia";
     String BASKET_RESULT = "basket_result";

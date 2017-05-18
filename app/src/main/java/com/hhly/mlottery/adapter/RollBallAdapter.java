@@ -142,11 +142,12 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
         // 初始化数据
         if (TextUtils.isEmpty(data.getKeepTime())) data.setKeepTime("0");
         // this.setVisiableStateOfThisViews(container, rlHalfContainer, tvHomeScore, tvGuestScore);
-       // this.setVisiableStateOfThisViews(container, tvHomeScore, tvGuestScore);
+        // this.setVisiableStateOfThisViews(container, tvHomeScore, tvGuestScore);
         this.initializedTextColor(tvKeepTime, tvGuestScore, tvHomeScore, tvHandicapValue_DA_BLACK, tvHandicapValue_YA_BLACK, tvLeftOdds_DA, tvLeftOdds_YA, tvLeftOdds_EU, tvMediumOdds_EU, tvRightOdds_DA, tvRightOdds_YA, tvRightOdds_EU);
         tvLeftOdds_DA.setTextColor(context.getResources().getColor(R.color.res_name_color));
         tvLeftOdds_YA.setTextColor(context.getResources().getColor(R.color.res_name_color));
         keepTimeShuffle.setTextColor(context.getResources().getColor(R.color.text_about_color));
+
 
         // 置顶
         if (data.getIsTopData() > 0 || isTopDataCacheMaps.get(data)) {
@@ -216,7 +217,9 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
                 rlHalfContainer.setVisibility(View.GONE);
                 tvHomeScore.setVisibility(View.GONE);
                 tvGuestScore.setVisibility(View.GONE);
-             
+                tvKeepTime.setText("VS");
+                keepTimeShuffle.setVisibility(View.GONE);
+
                 break;
             case "1": // 上半场进行时间
                 rlHalfContainer.setVisibility(View.GONE);
@@ -224,11 +227,18 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
                 if (Integer.parseInt(data.getKeepTime()) > 45) {
                     this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, "45+", R.color.football_keeptime, true);
 
-                } else tvKeepTime.setText(data.getKeepTime());
+                } else {
+                    tvKeepTime.setText(data.getKeepTime());
+                    tvKeepTime.setTextColor(context.getResources().getColor(R.color.text_about_color));
+
+                }
 
 
                 this.startShuffleAnimation(keepTimeShuffle);
 
+                tvKeepTime.setTextColor(context.getResources().getColor(R.color.text_about_color));
+                tvGuestScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
+                tvHomeScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
 
 
                 tvHomeScore.setVisibility(View.VISIBLE);
@@ -239,21 +249,36 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
                 rlHalfContainer.setVisibility(View.VISIBLE);
                 tvHomeScore.setVisibility(View.VISIBLE);
                 tvGuestScore.setVisibility(View.VISIBLE);
+
+                tvKeepTime.setTextColor(context.getResources().getColor(R.color.text_about_color));
+                tvGuestScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
+                tvHomeScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
                 break;
             case "3": // 下半场进行时间
                 if (Integer.parseInt(data.getKeepTime()) > 90) {
                     this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, "90+", R.color.football_keeptime, true);
-                } else tvKeepTime.setText(data.getKeepTime());
+                } else {
+                    tvKeepTime.setText(data.getKeepTime());
+                    tvKeepTime.setTextColor(context.getResources().getColor(R.color.text_about_color));
+
+                }
+
                 this.startShuffleAnimation(keepTimeShuffle);
                 rlHalfContainer.setVisibility(View.VISIBLE);
                 tvHomeScore.setVisibility(View.VISIBLE);
                 tvGuestScore.setVisibility(View.VISIBLE);
+
+                tvGuestScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
+                tvHomeScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
                 break;
             case "4": // 加时
                 this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, context.getString(R.string.immediate_status_overtime), R.color.football_keeptime, false);
                 rlHalfContainer.setVisibility(View.VISIBLE);
                 tvHomeScore.setVisibility(View.VISIBLE);
                 tvGuestScore.setVisibility(View.VISIBLE);
+
+                tvGuestScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
+                tvHomeScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
                 break;
             case "5": // 点球
                 this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, context.getString(R.string.immediate_status_point), R.color.football_keeptime, false);
@@ -275,6 +300,9 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
                 this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, context.getString(R.string.immediate_status_cancel), R.color.red, false);
                 tvHomeScore.setVisibility(View.GONE);
                 tvGuestScore.setVisibility(View.GONE);
+
+                tvGuestScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
+                tvHomeScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
                 break;
             case "-11": // 待定
                 rlHalfContainer.setVisibility(View.GONE);
@@ -282,11 +310,17 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
                 this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, context.getString(R.string.immediate_status_hold), R.color.red, false);
                 tvHomeScore.setVisibility(View.GONE);
                 tvGuestScore.setVisibility(View.GONE);
+
+                tvGuestScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
+                tvHomeScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
                 break;
             case "-12": // 腰斩
                 rlHalfContainer.setVisibility(View.GONE);
                 tvHomeScore.setVisibility(View.VISIBLE);
                 tvGuestScore.setVisibility(View.VISIBLE);
+
+                tvGuestScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
+                tvHomeScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
 
                 this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, context.getString(R.string.immediate_status_cut), R.color.red, false);
                 break;
@@ -295,12 +329,18 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
                 tvHomeScore.setVisibility(View.VISIBLE);
                 tvGuestScore.setVisibility(View.VISIBLE);
 
+                tvGuestScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
+                tvHomeScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
+
                 this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, context.getString(R.string.immediate_status_mesomere), R.color.bg_header, false);
                 break;
             case "-14": // 推迟
                 rlHalfContainer.setVisibility(View.GONE);
                 tvHomeScore.setVisibility(View.GONE);
                 tvGuestScore.setVisibility(View.GONE);
+
+                tvGuestScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
+                tvHomeScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
 
                 this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, context.getString(R.string.immediate_status_postpone), R.color.red, false);
                 break;

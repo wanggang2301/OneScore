@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -173,6 +175,14 @@ public class DebugConfigActivity extends BaseActivity {
                 PreferenceUtil.commitString("DIY_INPUT", str);*/
 
                 //System.exit(0);
+                //   public LeagueCup(int type, List<String> thirdId, String racename, String raceId, int count, boolean hot) {
+
+
+                L.d("ddff", "ro=" + PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL).size() + "");
+                L.d("ddff", "ji=" + PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_IMMEDIA).size() + "");
+                L.d("ddff", "guo=" + PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_RESULT).size() + "");
+                L.d("ddff", "cheng=" + PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_SCHEDULE).size() + "");
+
 
             }
         });

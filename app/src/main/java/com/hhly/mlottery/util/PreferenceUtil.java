@@ -4,9 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,6 +74,7 @@ public class PreferenceUtil {
     }
 
 
+    /**该功能先屏蔽**/
     /**
      * 保存List
      *
@@ -84,21 +82,18 @@ public class PreferenceUtil {
      * @param datalist
      */
     public static <T> void setDataList(String tag, List<T> datalist) {
-
-        mEditor = mSharedPreferences.edit();
-
-
+       /* mEditor = mSharedPreferences.edit();
         if (null == datalist || datalist.size() <= 0)
             return;
-
         Gson gson = new Gson();
         //转换成json数据，再保存
         String strJson = gson.toJson(datalist);
-        mEditor.clear();
+
         mEditor.putString(tag, strJson);
-        mEditor.commit();
+        mEditor.commit();*/
 
     }
+
 
     /**
      * 获取List
@@ -108,16 +103,14 @@ public class PreferenceUtil {
      */
     public static <T> List<T> getDataList(String tag) {
         List<T> datalist = new ArrayList<T>();
-        String strJson = mSharedPreferences.getString(tag, null);
+        /*String strJson = mSharedPreferences.getString(tag, null);
         if (null == strJson) {
             return datalist;
         }
         Gson gson = new Gson();
         datalist = gson.fromJson(strJson, new TypeToken<List<T>>() {
-        }.getType());
+        }.getType());*/
+
         return datalist;
-
     }
-
-
 }
