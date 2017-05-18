@@ -111,7 +111,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     private static final String ISNEW_FRAMEWORK = "isnew_framework";
     private static final String ENTRY_TYPE = "entryType";
 
-
     private boolean isNewFrameWork;
     private int mEntryType; // 标记入口 判断是从哪里进来的 (0:首页入口  1:新导航条入口)
 
