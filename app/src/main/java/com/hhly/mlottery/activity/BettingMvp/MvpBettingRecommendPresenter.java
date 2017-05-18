@@ -4,7 +4,7 @@ import com.hhly.mlottery.bean.basket.BasketNewRootBean;
 
 /**
  * Created by：XQyi on 2017/5/2 10:56
- * Use:
+ * Use:竞彩推荐列表（MVP-Presenter）
  */
 public class MvpBettingRecommendPresenter implements MPresenter {
 

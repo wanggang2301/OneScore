@@ -30,7 +30,7 @@ import java.util.List;
 
 /**
  * Created by：XQyi on 2017/5/2 10:56
- * Use:
+ * Use:竞彩推荐列表（MVP-View）
  */
 public class MvpBettingRecommendActivity extends BaseActivity implements MView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 

@@ -5,7 +5,7 @@ import com.hhly.mlottery.util.net.VolleyContentFast;
 
 /**
  * Created by：XQyi on 2017/5/2 10:55
- * Use:
+ * Use:竞彩推荐列表（MVP-Model）
  */
 public class MvpBettingRecommendModel implements MModel {
 
