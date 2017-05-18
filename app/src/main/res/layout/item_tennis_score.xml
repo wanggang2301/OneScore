@@ -12,7 +12,9 @@
     android:clickable="true"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="5dp"
-    app:cardElevation="0.5dp">
+    app:cardElevation="0.5dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"

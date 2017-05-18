@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:mdy="http://schemas.android.com/apk/res-auto"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/home_default_icon_coloer"
@@ -11,8 +10,9 @@
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:layout_marginBottom="13dp"
-        android:layout_marginTop="13dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true"
         android:gravity="center"
         android:orientation="horizontal"
         android:weightSum="6">
@@ -80,7 +80,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/radio_group"
+        android:layout_above="@id/radio_group"
         android:orientation="vertical">
 
         <!--直播->>>陣容-->
@@ -146,12 +146,6 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal|bottom"
-                        android:src="@mipmap/player_background" />
 
                     <!--暂无首发-->
                     <FrameLayout
@@ -818,18 +812,18 @@
                     android:orientation="vertical"
                     android:visibility="visible">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:text="@string/foot_event"
-                        android:textColor="#3F5672"
-                        android:textSize="@dimen/text_size_13" />
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:padding="10dp"-->
+                        <!--android:text="@string/foot_event"-->
+                        <!--android:textColor="#3F5672"-->
+                        <!--android:textSize="@dimen/text_size_13" />-->
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/linecolor" />
+                    <!--<View-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="1dp"-->
+                        <!--android:background="@color/linecolor" />-->
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -1245,7 +1239,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="3dp"
-                                android:text="进球"
+                                android:text="@string/foot_event_goal"
                                 android:textSize="@dimen/text_size_10" />
 
                             <ImageView
@@ -1259,7 +1253,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="3dp"
-                                android:text="角球"
+                                android:text="@string/foot_event_corner"
                                 android:textSize="@dimen/text_size_10" />
 
 
@@ -1356,7 +1350,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="3dp"
-                                android:text="进球"
+                                android:text="@string/set_goal_txt"
                                 android:textSize="@dimen/text_size_10" />
 
                             <ImageView
@@ -1370,7 +1364,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="3dp"
-                                android:text="角球"
+                                android:text="@string/foot_event_corner"
                                 android:textSize="@dimen/text_size_10" />
 
                         </LinearLayout>
@@ -1577,7 +1571,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="3dp"
-                                android:text="进球"
+                                android:text="@string/set_goal_txt"
                                 android:textSize="@dimen/text_size_10" />
 
                             <ImageView
@@ -1591,7 +1585,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="3dp"
-                                android:text="角球"
+                                android:text="@string/foot_event_corner"
                                 android:textSize="@dimen/text_size_10" />
 
                         </LinearLayout>
@@ -1610,6 +1604,5 @@
         </android.support.v4.widget.NestedScrollView>
 
     </LinearLayout>
-
 
 </RelativeLayout>

@@ -959,7 +959,7 @@
                 android:id="@+id/lineup_home_team"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
+                android:lines="1"
                 android:text="--"
                 android:textColor="@color/odds_details"
                 android:textSize="@dimen/text_size_15" />
@@ -978,7 +978,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:gravity="right"
-                android:singleLine="true"
+                android:lines="1"
                 android:text="--"
                 android:textColor="@color/more_record"
                 android:textSize="@dimen/text_size_15" />
@@ -991,81 +991,6 @@
                 android:paddingTop="2dp"
                 android:src="@mipmap/guestteam_uniform" />
         </RelativeLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|bottom"
-                android:src="@mipmap/player_background" />
-
-            <!--暂无首发-->
-            <FrameLayout
-                android:id="@+id/fl_firsPlayers_not"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/first_players_not_hint" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="20dp"
-                        android:text="@string/firsPlayers_not"
-                        android:textColor="@color/content_txt_light_grad"
-                        android:textSize="18sp" />
-                </LinearLayout>
-            </FrameLayout>
-            <!--主客队信息-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <!--主、客队名单-->
-                <LinearLayout
-                    android:id="@+id/fl_firsPlayers_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <!--主队名单-->
-                    <LinearLayout
-                        android:id="@+id/ll_rosters_homeTeam"
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:paddingLeft="25dp">
-
-                    </LinearLayout>
-                    <!--客队名单-->
-                    <LinearLayout
-                        android:id="@+id/ll_rosters_visitingTeam"
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:orientation="vertical"
-                        android:paddingRight="25dp">
-
-                    </LinearLayout>
-                </LinearLayout>
-            </RelativeLayout>
-        </FrameLayout>
-
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>
