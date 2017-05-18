@@ -337,6 +337,11 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                     return;
                 }
 
+                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.BASKET_CURR_DATE, "").equals(json.getFilerDate())) {
+                    PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.BASKET_IMMEDIA);
+                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.BASKET_CURR_DATE, json.getFilerDate());
+                }
+
                 mMatchdata = json.getMatchData();
 
                 mMatchFilter = json.getMatchFilter();
