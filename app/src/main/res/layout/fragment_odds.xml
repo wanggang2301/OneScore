@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/whitesmoke"
@@ -9,8 +9,9 @@
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:layout_marginBottom="13dp"
-        android:layout_marginTop="13dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true"
         android:gravity="center"
         android:orientation="horizontal"
         android:weightSum="4">
@@ -52,7 +53,8 @@
 
     <FrameLayout
         android:id="@+id/odd_content_fragment"
+        android:layout_above="@id/radio_group"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-</LinearLayout>
+</RelativeLayout>

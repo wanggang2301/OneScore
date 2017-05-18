@@ -8,8 +8,9 @@
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:layout_marginBottom="13dp"
-        android:layout_marginTop="13dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true"
         android:gravity="center"
         android:orientation="horizontal"
         android:weightSum="4">
@@ -44,6 +45,6 @@
         android:id="@+id/fl_analyse"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/radio_group" />
+        android:layout_above="@id/radio_group" />
 
 </RelativeLayout>

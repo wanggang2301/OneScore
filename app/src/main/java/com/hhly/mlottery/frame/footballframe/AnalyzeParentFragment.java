@@ -14,6 +14,7 @@ import android.widget.RadioGroup;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.config.FootBallDetailTypeEnum;
 import com.hhly.mlottery.util.FragmentUtils;
+import com.hhly.mlottery.util.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,8 +83,8 @@ public class AnalyzeParentFragment extends Fragment {
 
 
     private void initEvent() {
-        mIntelligenceFragment = IntelligenceFragment.newInstance(mThirdId);
-        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, "", "");
+        mIntelligenceFragment = IntelligenceFragment.newInstance();
+        mAnalyzeFragment = AnalyzeFragment.newInstance();
 
         fragments = new ArrayList<>();
         fragments.add(mIntelligenceFragment);
