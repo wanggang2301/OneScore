@@ -360,8 +360,6 @@ public class ComprehensiveVideoFragment extends Fragment  implements View.OnClic
 
     /*定时刷新UI*/
 
-
-
     private Handler mViewHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {

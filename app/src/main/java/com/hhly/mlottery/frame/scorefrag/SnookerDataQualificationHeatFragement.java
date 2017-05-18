@@ -46,6 +46,7 @@ import info.hoang8f.android.segmented.SegmentedGroup;
 
 /**
  * Created by yuely198 on 2017/2/23.
+ * 斯诺克赛事内页
  */
 
 public class SnookerDataQualificationHeatFragement extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
