@@ -31,7 +31,7 @@ import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomePagerEntity;
 import com.hhly.mlottery.config.FootBallDetailTypeEnum;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.CommonUtils;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
@@ -236,7 +236,7 @@ public class HomePagerAdapter extends PagerAdapter {
                         case 1:// 页面
                         {
                             if (jumpAddr.contains("{loginToken}")) {// 是否需要登录
-                                if (CommonUtils.isLogin()) {// 判断用户是否登录
+                                if (DeviceInfo.isLogin()) {// 判断用户是否登录
                                     Intent intent = new Intent(mContext, WebActivity.class);
                                     intent.putExtra("key", jumpAddr);// 跳转地址
                                     intent.putExtra("infoTypeName", title);

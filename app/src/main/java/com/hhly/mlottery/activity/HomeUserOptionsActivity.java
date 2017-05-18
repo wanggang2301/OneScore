@@ -16,7 +16,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.ChoseHeadStartBean;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.CommonUtils;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
@@ -28,7 +28,7 @@ import de.greenrobot.event.EventBus;
 /**
  * @ClassName: OneScoreGit
  * @author:Administrator luyao
- * @Description:  用户中心首页
+ * @Description:  个人中心首页
  * @data: 2016/4/8 15:04
  */
 public class HomeUserOptionsActivity extends Activity implements View.OnClickListener {
@@ -125,7 +125,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         rl_setting_invited.setOnClickListener(this);
 
              /*判断登录状态*/
-        if (CommonUtils.isLogin()) {
+        if (DeviceInfo.isLogin()) {
             mViewHandler.sendEmptyMessage(LOGGED_ON);
 
 
@@ -188,7 +188,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 //                    startActivity(new Intent(HomeUserOptionsActivity.this,MyFocusActivity.class));
 //                break;
             case R.id.rl_custom:
-                if (CommonUtils.isLogin()) {
+                if (DeviceInfo.isLogin()) {
                     PreferenceUtil.commitBoolean("custom_red_dot" , false);
 //                    mRedDot.setVisibility(View.GONE);
                     startActivity(new Intent(HomeUserOptionsActivity.this, CustomActivity.class));
@@ -233,7 +233,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 break;*/
             case R.id.user_info_image: //用户信息
                 MobclickAgent.onEvent(HomeUserOptionsActivity.this, "ProfileActivity_Start");
-                if (CommonUtils.isLogin()) {
+                if (DeviceInfo.isLogin()) {
                     startActivity(new Intent(this, ProfileActivity.class));
                 } else {
                     startActivity(new Intent(this, LoginActivity.class));
@@ -245,7 +245,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 MobclickAgent.onEvent(this, "InvitedActivity");
                 PreferenceUtil.commitBoolean(INVITED_SHOW_RED,false);
                 invited_red_dot_view.setVisibility(View.GONE);
-                if (CommonUtils.isLogin()){
+                if (DeviceInfo.isLogin()){
                     startActivity(new Intent(HomeUserOptionsActivity.this, InvitedActivity.class));
                 }else{
                     UiUtils.toast(getApplicationContext(),R.string.please_login_first);
@@ -437,7 +437,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         super.onResume();
         MobclickAgent.onResume(this);
 
-        if(CommonUtils.isLogin()){
+        if(DeviceInfo.isLogin()){
             mTv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
         }else {
             mTv_nickname.setText(R.string.Login_register);

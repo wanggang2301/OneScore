@@ -39,7 +39,6 @@ import com.hhly.mlottery.bean.foreigninfomation.TightBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -175,7 +174,7 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
             isShowComment = bundle.getBoolean(CyUtils.ISSHOWCOMMENT);
         }
 //        单点登录   nickname可以相同  用户id不能相同
-        if (CommonUtils.isLogin()) {
+        if (DeviceInfo.isLogin()) {
             CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
         }
         model = DeviceInfo.getModel().replace(" ", "");
@@ -308,7 +307,7 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
         mEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!CommonUtils.isLogin()) {
+                if (!DeviceInfo.isLogin()) {
                     //跳转登录界面
                     Intent intent1 = new Intent(mContext, LoginActivity.class);
                     startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
@@ -512,7 +511,7 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
                 if (TextUtils.isEmpty(mEditText.getText())) {//没有输入内容
                     ToastTools.showQuickCenter(mContext, getResources().getString(R.string.warn_nullcontent));
                 } else {//有输入内容
-                    if (CommonUtils.isLogin()) {//已登录华海
+                    if (DeviceInfo.isLogin()) {//已登录华海
                         if (CyUtils.isLogin) {//已登录畅言
                             L.i("lzf提交topicid=" + topicid);
                             if (issubmitFinish) {//是否提交完成，若提交未完成，则不再重复提交
@@ -652,7 +651,7 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
         //接收登录华海成功返回
         if (requestCode == 3) {
             if (resultCode == CyUtils.RESULT_OK) {
-                if (CommonUtils.isLogin()) {
+                if (DeviceInfo.isLogin()) {
                     CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
                 }
             }

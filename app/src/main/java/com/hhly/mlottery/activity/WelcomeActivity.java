@@ -1,5 +1,6 @@
 package com.hhly.mlottery.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -13,6 +14,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -46,6 +48,16 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+import com.tbruyelle.rxpermissions.RxPermissions;
+
+import rx.functions.Action1;
+import rx.functions.Func1;
+
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.READ_PHONE_STATE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 /**
  * @author Tenney
@@ -84,6 +96,16 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
     private LinearLayout mCount_down;
     private int mDuration;
     private SimpleTarget target;
+    /**是否获取到权限*/
+    private boolean isPermissionComplete = false;
+
+    private String[] mPermissions = {
+            WRITE_EXTERNAL_STORAGE,
+            READ_PHONE_STATE,
+            CAMERA,
+            ACCESS_FINE_LOCATION,
+            ACCESS_COARSE_LOCATION
+    };
 
     @SuppressWarnings("unused")
     @Override
@@ -116,6 +138,16 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
                 criteria.setPowerRequirement(Criteria.POWER_LOW);
                 String provider = locationManager.getBestProvider(criteria, true);
                 if (!TextUtils.isEmpty(provider)) {
+                    if (ActivityCompat.checkSelfPermission(WelcomeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(WelcomeActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
                     location = locationManager.getLastKnownLocation(provider);
                 }
 
@@ -167,19 +199,51 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
         //判断是否是第一次启动
         //如果是已经启动了 是“YES”
         //如果本地保存的versionname等于应用的版本号（例：1.0.4）
-        if (PreferenceUtil.getString("isFirst", "").equals("YES") && PreferenceUtil.getString("versionName", "").equals(mPackageInfo.versionName)) {
-            startActivity(new Intent(this, IndexActivity.class));
-            this.finish();
-        }
 
-        //否则就是第一次启动
-        else {
-            startActivity(new Intent(this, WelcomeViewActivity.class));
-            this.finish();
-        }
+        RxPermissions.getInstance(this)
+                .request(mPermissions)
+                .map(new Func1<Boolean, Boolean>() {
+                    @Override
+                    public Boolean call(Boolean granted) {
+                        if (granted) {
+
+                        }
+                        return granted;
+                    }
+                })
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean aBoolean) {
+                        isPermissionComplete = true;
+                        goActivityAfterGetPermissions();
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable t) {
+                        t.printStackTrace();
+                        isPermissionComplete = true;
+                        goActivityAfterGetPermissions();
+                    }
+                });
 
     }
 
+    /**
+     * 获取权限后跳转页面
+     */
+    private void goActivityAfterGetPermissions(){
+        if (PreferenceUtil.getString("isFirst", "").equals("YES") && PreferenceUtil.getString("versionName", "").equals(mPackageInfo.versionName)&&isPermissionComplete) {
+            startActivity(new Intent(this, IndexActivity.class));
+            this.finish();
+        }
+        //否则就是第一次启动
+        else {
+            if(isPermissionComplete){
+                startActivity(new Intent(this, WelcomeViewActivity.class));
+                this.finish();
+            }
+        }
+    }
     /**
      * 获取youmeng渠道号，保存下来 "TERID.out"
      */

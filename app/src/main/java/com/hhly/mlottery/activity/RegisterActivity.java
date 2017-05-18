@@ -26,8 +26,8 @@ import com.hhly.mlottery.bean.account.SendSmsCode;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.impl.GetVerifyCodeCallBack;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CountDown;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.cipher.MD5Util;
@@ -36,7 +36,6 @@ import com.hhly.mlottery.util.net.account.AccountResultCode;
 import com.hhly.mlottery.util.net.account.OperateType;
 import com.hhly.mlottery.util.net.account.RegisterType;
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.common.message.Log;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -240,7 +239,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }
                 et_password.setTypeface(Typeface.SANS_SERIF);
                 // 光标移动到结尾
-                CommonUtils.selectionLast(et_password);
+                DeviceInfo.selectionLast(et_password);
 
                 break;
             case R.id.tv_verycode:
@@ -302,13 +301,13 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             param.put("deviceToken", AppConstants.deviceToken);
 
             //以下添加的参数为修复恶意注册的bug所加。
-            String sign = CommonUtils.getSign(userName, AppConstants.deviceToken, AppConstants.SIGN_KEY);
+            String sign = DeviceInfo.getSign(userName, AppConstants.deviceToken, AppConstants.SIGN_KEY);
             param.put("sign",sign);
 
-            int versioncode = CommonUtils.getVersionCode();
+            int versioncode = DeviceInfo.getVersionCode();
             param.put("versionCode",String.valueOf(versioncode));
 
-            String versionName= CommonUtils.getVersionName();
+            String versionName= DeviceInfo.getVersionName();
             param.put("versionName",versionName);
 
 
@@ -320,7 +319,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     progressBar.dismiss();
 
                     if (register != null && register.getResult() == AccountResultCode.SUCC) {
-                        CommonUtils.saveRegisterInfo(register);
+                        DeviceInfo.saveRegisterInfo(register);
                         UiUtils.toast(MyApp.getInstance(), R.string.register_succ);
                         EventBus.getDefault().post(register);
                         //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
@@ -333,7 +332,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         countDown.cancel();
 
                         L.e(TAG, "成功请求，注册失败");
-                        CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
+                        DeviceInfo.handlerRequestResult(register.getResult(), register.getMsg());
                     }
                 }
             }, new VolleyContentFast.ResponseErrorListener() {
@@ -396,7 +395,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
 
         String phone = et_username.getText().toString();
-        CommonUtils.getVerifyCode(this, phone, OperateType.TYPE_REGISTER, new GetVerifyCodeCallBack() {
+        DeviceInfo.getVerifyCode(this, phone, OperateType.TYPE_REGISTER, new GetVerifyCodeCallBack() {
             @Override
             public void beforGet() {
                 //countDown.start();

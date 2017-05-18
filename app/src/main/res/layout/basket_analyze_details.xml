@@ -100,7 +100,7 @@
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:paddingRight="@dimen/basket_details_item_height"
-                            android:src="@mipmap/cpi_filtrate" />
+                            android:src="@mipmap/football_analyze_filtrate" />
                     </RelativeLayout>
 
                     <View
@@ -248,7 +248,7 @@
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:paddingRight="@dimen/basket_details_item_height"
-                            android:src="@mipmap/cpi_filtrate" />
+                            android:src="@mipmap/football_analyze_filtrate" />
                     </RelativeLayout>
                     <View
                         android:layout_width="match_parent"

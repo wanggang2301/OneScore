@@ -21,8 +21,7 @@ import com.hhly.mlottery.bean.ChoseStartBean;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.CommonUtils;
-import com.hhly.mlottery.util.ListDatasSaveUtils;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -278,7 +277,7 @@ public class AvatarSelectionActivity extends Activity implements View.OnClickLis
                 if (register.getResult() == AccountResultCode.SUCC) {
                     UiUtils.toast(MyApp.getInstance(), R.string.picture_put_success);
                     register.getData().getUser().setLoginAccount(PreferenceUtil.getString(AppConstants.SPKEY_LOGINACCOUNT, "aa"));
-                    CommonUtils.saveRegisterInfo(register);
+                    DeviceInfo.saveRegisterInfo(register);
                     AppConstants.register.getData().getUser().setHeadIcon(headerUrl);
                     if (register.getData().getUser().getHeadIcon() != null) {
                         EventBus.getDefault().post(new ChoseHeadStartBean(headerUrl));
@@ -286,7 +285,7 @@ public class AvatarSelectionActivity extends Activity implements View.OnClickLis
                     progressBar.dismiss();
                     finish();
                 } else {
-                    CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
+                    DeviceInfo.handlerRequestResult(register.getResult(), register.getMsg());
                     progressBar.dismiss();
                 }
             }

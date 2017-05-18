@@ -9,7 +9,6 @@ import android.support.multidex.MultiDex;
 import android.util.DisplayMetrics;
 
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CrashException;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DataBus;
@@ -93,6 +92,8 @@ public class MyApp extends Application {
         super.onCreate();
     }
 
+
+
     /**
      * 设置时区
      */
@@ -136,7 +137,7 @@ public class MyApp extends Application {
     }
 
     private void initUserInfo() {
-        CommonUtils.initRegisterInfo();
+        DeviceInfo.initRegisterInfo();
     }
 
 

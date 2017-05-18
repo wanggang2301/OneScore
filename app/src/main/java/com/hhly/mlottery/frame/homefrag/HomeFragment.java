@@ -37,7 +37,6 @@ import com.android.volley.DefaultRetryPolicy;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.DebugConfigActivity;
-import com.hhly.mlottery.activity.ExpertsActivity;
 import com.hhly.mlottery.activity.HomeUserOptionsActivity;
 import com.hhly.mlottery.activity.ProductAdviceActivity;
 import com.hhly.mlottery.adapter.homePagerAdapter.HomeListBaseAdapter;
@@ -51,7 +50,7 @@ import com.hhly.mlottery.callback.ProductListener;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.CommonUtils;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -208,7 +207,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         iv_home_pic = (ImageView) mView.findViewById(R.id.iv_home_pic);
         iv_home_pic.setOnClickListener(this);
 
-        if (CommonUtils.isLogin()) {
+        if (DeviceInfo.isLogin()) {
             iv_home_pic.setImageResource(R.mipmap.login);
         } else {
             iv_home_pic.setImageResource(R.mipmap.logout);
