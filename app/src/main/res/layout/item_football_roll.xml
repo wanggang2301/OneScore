@@ -21,7 +21,8 @@
     android:layout_marginRight="5dp"
     android:visibility="visible"
     app:cardBackgroundColor="@color/line_football_footer"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true"
+    android:foreground="?android:attr/selectableItemBackground">
 
     <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
