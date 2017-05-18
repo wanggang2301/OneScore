@@ -6,12 +6,15 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -39,11 +41,13 @@ import com.hhly.mlottery.bean.footballDetails.MatchDetail;
 import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MathchStatisInfo;
+import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
 import com.hhly.mlottery.bean.footballDetails.trend.FootballTrendBean;
 import com.hhly.mlottery.bean.footballDetails.trend.TrendBean;
 import com.hhly.mlottery.bean.footballDetails.trend.TrendFormBean;
-import com.hhly.mlottery.callback.FootballLiveGotoChart;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.FootBallDetailTypeEnum;
+import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FootballEventComparator;
 import com.hhly.mlottery.util.FootballTrendChartComparator;
 import com.hhly.mlottery.util.L;
@@ -61,32 +65,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.hhly.mlottery.config.FootBallTypeEnum.ATTACK;
-import static com.hhly.mlottery.config.FootBallTypeEnum.ATTACK1;
-import static com.hhly.mlottery.config.FootBallTypeEnum.CORNER;
-import static com.hhly.mlottery.config.FootBallTypeEnum.CORNER1;
-import static com.hhly.mlottery.config.FootBallTypeEnum.DANGERATTACK;
-import static com.hhly.mlottery.config.FootBallTypeEnum.DANGERATTACK1;
-import static com.hhly.mlottery.config.FootBallTypeEnum.DIANQIU;
-import static com.hhly.mlottery.config.FootBallTypeEnum.DIANQIU1;
-import static com.hhly.mlottery.config.FootBallTypeEnum.FIRSTHALF;
-import static com.hhly.mlottery.config.FootBallTypeEnum.HALFTIME;
-import static com.hhly.mlottery.config.FootBallTypeEnum.RED_CARD;
-import static com.hhly.mlottery.config.FootBallTypeEnum.RED_CARD1;
-import static com.hhly.mlottery.config.FootBallTypeEnum.SCORE;
-import static com.hhly.mlottery.config.FootBallTypeEnum.SCORE1;
-import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOT;
-import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOT1;
-import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE;
-import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE1;
-import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE12;
-import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE2;
-import static com.hhly.mlottery.config.FootBallTypeEnum.SUBSTITUTION;
-import static com.hhly.mlottery.config.FootBallTypeEnum.SUBSTITUTION1;
-import static com.hhly.mlottery.config.FootBallTypeEnum.YELLOW_CARD;
-import static com.hhly.mlottery.config.FootBallTypeEnum.YELLOW_CARD1;
-import static com.hhly.mlottery.config.FootBallTypeEnum.YTORED;
-import static com.hhly.mlottery.config.FootBallTypeEnum.YTORED1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.*;
 
 /**
  * @author wang gang
@@ -117,12 +96,9 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private final int STARTLOADING = 1;// 正在加载中
 
     private LinearLayout ll_trend_main;// 走势图容器
-    private FrameLayout ff;// 攻防折线图显示容器
-    private FrameLayout ff_corner;// 角球折线图显示容器
     private FrameLayout fl_attackTrend_loading;// 正在加载中
     private FrameLayout fl_attackTrend_networkError;// 加载失败
     private TextView reLoading;// 刷新
-    private ScrollView sv_attack;
 
     private String eventType;
 
@@ -142,13 +118,11 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
 
     private RadioGroup radioGroup;
 
-    private LinearLayout rl_event;
-    private RelativeLayout ll_statistics;
-
+    private NestedScrollView mNestedScrollView_lineup;
+    private NestedScrollView mNestedScrollView_statistics;
     private FrameLayout fl_live_text;
     private NestedScrollView mNestedScrollView_trend;
     private NestedScrollView mNestedScrollView_event;
-    private NestedScrollView mNestedScrollView_nodata;
 
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
@@ -159,8 +133,6 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
 
     private LinearLayout ll_nodata;
     private LinearLayout ll_event;
-
-    private FootballLiveGotoChart mFootballLiveGotoChart;
 
     private LineChart chart_shoot;  //射正  //射正+进球
     private LineChart chart_shootAside; //射偏   //射偏
@@ -212,34 +184,34 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private static final float HALFMATCH = 5f;
     private static final float FINISHMATCH = 10f;
 
-    private List<MatchTextLiveBean> trendChartList;
+    private TextView tv_home_corner, tv_home_danger, tv_home_shoot_correct, tv_home_shoot_miss;
+    private TextView tv_guest_corner, tv_guest_danger, tv_guest_shoot_correct, tv_guest_shoot_miss;
+    private ProgressBar pb_corner, pb_danger, pb_shoot_correct, pb_shoot;
 
+    private FrameLayout fl_firsPlayers_not;
+    private LinearLayout fl_firsPlayers_content;
+    private LinearLayout ll_rosters_homeTeam;
+    private LinearLayout ll_rosters_visitingTeam;
 
     private TextView tv_shot;
-//    private TextView tv_shot_home;
-//    private TextView tv_shot_guest;
     private TextView tv_shotAside;
-//    private TextView tv_shotAside_home;
-//    private TextView tv_shotAside_guest;
     private TextView tv_dangerAttack;
-//    private TextView tv_dangerAttack_home;
-//    private TextView tv_dangerAttack_guest;
     private TextView tv_attack;
-//    private TextView tv_attack_home;
-//    private TextView tv_attack_guest;
 
     private TextView goChart;
 
-    private boolean isCreateView = false;
-
     private Activity mActivity;
-
-
-    //  private MatchDetail mMatchDetail;
 
     private List<MatchTextLiveBean> matchLive;
     private List<Integer> allMatchLiveMsgId;
 
+    private MatchDetail matchDetail;
+    private List<MatchTextLiveBean> trendChartList;
+    private List<MatchTimeLiveBean> eventMatchTimeLiveList;
+    private String keepTime;
+    private final static String BEFOURLIVE = "0";//直播前
+    private final static String ONLIVE = "1";//直播中
+    private String mPreStatus;
 
     /**
      * 时间轴的集合
@@ -254,29 +226,63 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private NoLiveTextFragment mNoLiveTextFragment;
     private LiveTextFragment mliveTextFragment;
     private FinishMatchLiveTextFragment finishMatchLiveTextFragment;//完场
+    private String mThirdId;
 
-    private boolean isLoading = false;// 是否已加载过数据
-
-    public void setmFootballLiveGotoChart(FootballLiveGotoChart mFootballLiveGotoChart) {
-        this.mFootballLiveGotoChart = mFootballLiveGotoChart;
-    }
-
-
-    public static LiveFragment newInstance() {
+    public static LiveFragment newInstance(String thirdId,MatchDetail matchDetail, MathchStatisInfo mathchStatisInfo, List<MatchTimeLiveBean> eventMatchTimeLiveList, List<MatchTextLiveBean> trendChartList, String keepTime) {
         LiveFragment fragment = new LiveFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("thirdId",thirdId);
+        bundle.putParcelable("matchDetail", matchDetail);
+        bundle.putParcelable("mathchStatisInfo", mathchStatisInfo);
+        bundle.putParcelableArrayList("trendChartList", (ArrayList<? extends Parcelable>) trendChartList);
+        bundle.putParcelableArrayList("eventMatchTimeLiveList", (ArrayList<? extends Parcelable>) eventMatchTimeLiveList);
+        bundle.putString("keepTime", keepTime);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            this.mThirdId = getArguments().getString("thirdId");
+            this.matchDetail = getArguments().getParcelable("matchDetail");
+            this.mMathchStatisInfo = getArguments().getParcelable("mathchStatisInfo");
+            this.trendChartList = getArguments().getParcelableArrayList("trendChartList");
+            this.eventMatchTimeLiveList = getArguments().getParcelableArrayList("eventMatchTimeLiveList");
+            this.keepTime = getArguments().getString("keepTime");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_lives, container, false);
         mContext = mActivity;
         initView();
+        initData();
         return mView;
     }
 
-    public void finishMatchRequest() {
+    private void initData() {
+        mPreStatus = matchDetail.getLiveStatus();
+        showLineUp();
+
+        if (BEFOURLIVE.equals(matchDetail.getLiveStatus())) { //赛前
+            setEventMatchLive(matchDetail, null);
+        } else {
+            setEventMatchLive(matchDetail, eventMatchTimeLiveList);
+
+            if (LIVEENDED.equals(matchDetail.getLiveStatus())) {//完场
+                finishMatchRequest();
+            } else if (ONLIVE.equals(matchDetail.getLiveStatus())) {//未完场
+                initLiveStatics(matchDetail.getLiveStatus());
+                initChartData(matchDetail.getLiveStatus());
+                showTimeView(keepTime);
+            }
+        }
+    }
+
+    private void finishMatchRequest() {
         getLiveStatic();
         getTrenFormInfo();
     }
@@ -286,9 +292,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.goChart:
-                if (mFootballLiveGotoChart != null) {
-                    mFootballLiveGotoChart.onClick();
-                }
+                ((FootballMatchDetailActivity)mActivity).mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_CHARTBALL);
                 break;
 
             case R.id.reLoading:
@@ -307,6 +311,8 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private void initView() {
         radioGroup = (RadioGroup) mView.findViewById(R.id.radio_group);
         fl_live_text = (FrameLayout) mView.findViewById(R.id.fl_live_text);
+        mNestedScrollView_lineup = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_lineup);
+        mNestedScrollView_statistics = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_statistics);
         mNestedScrollView_event = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_event);
         mNestedScrollView_trend = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_trend);
         //  mNestedScrollView_nodata = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_nodata);
@@ -332,18 +338,41 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
                 int radioButtonId = radioGroup.getCheckedRadioButtonId();
                 switch (radioButtonId) {
 
+                    case R.id.live_lineup:
+                        mNestedScrollView_lineup.setVisibility(View.VISIBLE);
+                        mNestedScrollView_statistics.setVisibility(View.GONE);
+                        fl_live_text.setVisibility(View.VISIBLE);
+                        mNestedScrollView_event.setVisibility(View.GONE);
+                        mNestedScrollView_trend.setVisibility(View.GONE);
+
+                        break;
+
+                    case R.id.live_statistics:
+                        mNestedScrollView_lineup.setVisibility(View.GONE);
+                        mNestedScrollView_statistics.setVisibility(View.VISIBLE);
+                        fl_live_text.setVisibility(View.VISIBLE);
+                        mNestedScrollView_event.setVisibility(View.GONE);
+                        mNestedScrollView_trend.setVisibility(View.GONE);
+                        break;
+
                     case R.id.live_text:
+                        mNestedScrollView_lineup.setVisibility(View.GONE);
+                        mNestedScrollView_statistics.setVisibility(View.GONE);
                         fl_live_text.setVisibility(View.VISIBLE);
                         mNestedScrollView_event.setVisibility(View.GONE);
                         mNestedScrollView_trend.setVisibility(View.GONE);
 
                         break;
                     case R.id.live_event:
+                        mNestedScrollView_lineup.setVisibility(View.GONE);
+                        mNestedScrollView_statistics.setVisibility(View.GONE);
                         fl_live_text.setVisibility(View.GONE);
                         mNestedScrollView_event.setVisibility(View.VISIBLE);
                         mNestedScrollView_trend.setVisibility(View.GONE);
                         break;
-                    case R.id.live_statistics:
+                    case R.id.live_trend:
+                        mNestedScrollView_lineup.setVisibility(View.GONE);
+                        mNestedScrollView_statistics.setVisibility(View.GONE);
                         fl_live_text.setVisibility(View.GONE);
                         mNestedScrollView_event.setVisibility(View.GONE);
                         mNestedScrollView_trend.setVisibility(View.VISIBLE);
@@ -363,15 +392,37 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
 
         reLoading = (TextView) mView.findViewById(R.id.reLoading);// 刷新走势图
 
+
+        //首發陣容
+        fl_firsPlayers_not = (FrameLayout) mView.findViewById(R.id.fl_firsPlayers_not);
+        fl_firsPlayers_content = (LinearLayout) mView.findViewById(R.id.fl_firsPlayers_content);
+        ll_rosters_homeTeam = (LinearLayout) mView.findViewById(R.id.ll_rosters_homeTeam);
+        ll_rosters_visitingTeam = (LinearLayout) mView.findViewById(R.id.ll_rosters_visitingTeam);
+
         /***
          * 统计图
          */
-
 
         fl_cornerTrend_loading = (FrameLayout) mView.findViewById(R.id.fl_cornerTrend_loading);
         fl_cornerTrend_networkError = (FrameLayout) mView.findViewById(R.id.fl_cornerTrend_networkError);
         layout_match_bottom = (RelativeLayout) mView.findViewById(R.id.layout_match_bottom);
         reLoadin = (TextView) mView.findViewById(R.id.reLoadin);// 刷新统计图
+
+
+        tv_home_corner = (TextView) mView.findViewById(R.id.home_corner);
+        tv_home_danger = (TextView) mView.findViewById(R.id.home_danger_attack);
+        tv_home_shoot_correct = (TextView) mView.findViewById(R.id.home_shoot_correct);
+        tv_home_shoot_miss = (TextView) mView.findViewById(R.id.home_shoot_miss);
+
+        tv_guest_corner = (TextView) mView.findViewById(R.id.guest_corner);
+        tv_guest_danger = (TextView) mView.findViewById(R.id.guest_danger_attack);
+        tv_guest_shoot_correct = (TextView) mView.findViewById(R.id.guest_shoot_correct);
+        tv_guest_shoot_miss = (TextView) mView.findViewById(R.id.guest_shoot_miss);
+
+        pb_corner = (ProgressBar) mView.findViewById(R.id.pb_corner);
+        pb_danger = (ProgressBar) mView.findViewById(R.id.pb_danger_attack);
+        pb_shoot_correct = (ProgressBar) mView.findViewById(R.id.pb_shoot_correct);
+        pb_shoot = (ProgressBar) mView.findViewById(R.id.pb_shoot);
 
 
         //主（客）队进度条
@@ -507,31 +558,18 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     }
 
 
-//    public void setChartName(String home, String guest) {
-//        tv_shot_home.setText(home);
-//        tv_shot_guest.setText(guest);
-//        tv_shotAside_home.setText(home);
-//        tv_shotAside_guest.setText(guest);
-//        tv_dangerAttack_home.setText(home);
-//        tv_dangerAttack_guest.setText(guest);
-//        tv_attack_home.setText(home);
-//        tv_attack_guest.setText(guest);
-//    }
-
-
     /**
      * 足球事件直播
      */
-    public void setEventMatchLive(MatchDetail matchDetail, List<MatchTimeLiveBean> matchTimeLiveBeanMs) {
+    private void setEventMatchLive(MatchDetail matchDetail, List<MatchTimeLiveBean> matchTimeLiveBeanMs) {
         //统计事件个数
         this.eventMatchLive = matchTimeLiveBeanMs;
         this.eventType = matchDetail.getLiveStatus();
 
-
         if ("0".equals(eventType)) {
 
             mNoLiveTextFragment = NoLiveTextFragment.newInstance();
-            if(getActivity()!=null){
+            if (getActivity() != null) {
                 addFragmentToActivity(getChildFragmentManager(), mNoLiveTextFragment, R.id.fl_live_text);
 
             }
@@ -559,7 +597,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
      * 比赛赛中、赛后初始化数据文字直播
      */
     private void initLiveText(MatchDetail mMatchDetail) {
-        matchLive = new ArrayList<MatchTextLiveBean>();
+        matchLive = new ArrayList<>();
         matchLive = mMatchDetail.getMatchInfo().getMatchLive();
         if (matchLive == null) {
             return;
@@ -575,14 +613,14 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         //赛果
         if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
             finishMatchLiveTextFragment = FinishMatchLiveTextFragment.newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
-            if(getActivity()!=null){
+            if (getActivity() != null) {
                 addFragmentToActivity(getChildFragmentManager(), finishMatchLiveTextFragment, R.id.fl_live_text);
             }
 
         } else { //赛中
             L.d("xxccvv", "赛中" + matchLive.size());
             mliveTextFragment = LiveTextFragment.newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
-            if(getActivity()!=null){
+            if (getActivity() != null) {
                 addFragmentToActivity(getChildFragmentManager(), mliveTextFragment, R.id.fl_live_text);
             }
 
@@ -616,7 +654,6 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
      * @param mMatchDetail
      */
     public void initFootBallEventData(MatchDetail mMatchDetail) {
-        // matchLive = mMatchDetail.getMatchInfo().getMatchLive();
         getTimeLive();
         showFootballEventByState();
     }
@@ -734,18 +771,12 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-
-    public void setTrendChartList(List<MatchTextLiveBean> list) {
-        trendChartList = list;
-    }
-
-
     /**
      * 初始化数据走势图数据
      */
     public void initChartData(String id) {
         if ("0".equals(id)) {
-            trendChartList = new ArrayList<MatchTextLiveBean>();
+            trendChartList = new ArrayList<>();
             firstInitChartValues();
             liveMatchTrendData();
 
@@ -1115,7 +1146,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         mGuestLineDataSet.setCircleColors(guestColors);
 
 
-        ArrayList<ILineDataSet> dataSetsList = new ArrayList<ILineDataSet>();
+        ArrayList<ILineDataSet> dataSetsList = new ArrayList<>();
         dataSetsList.add(mHomeLineDataSet);
         dataSetsList.add(mGuestLineDataSet);
 
@@ -1360,7 +1391,6 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         liveMatchTrendData();
     }
 
-
     /**
      * 请求走势图后台数据
      *
@@ -1369,10 +1399,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private void getTrenFormInfo() {
 
         mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
-        // 获取对象ID
-        String mThirdId = ((FootballMatchDetailActivity) mActivity).mThirdId;
 
-        L.d("112233", mThirdId);
         // 设置参数
         Map<String, String> myPostParams = new HashMap<>();
         myPostParams.put("matchId", mThirdId);
@@ -1421,7 +1448,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         if (getActivity() == null) {
             return;
         } else {
-            map.put("thirdId", ((FootballMatchDetailActivity) getActivity()).mThirdId);
+            map.put("thirdId", mThirdId);
             VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_STATISTICAL_DATA_INFO, map, new VolleyContentFast.ResponseSuccessListener<DataStatisInfo>() {
                 @Override
                 public void onResponse(DataStatisInfo json) {
@@ -1455,6 +1482,26 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     public void initLiveStatics(String id) {
         //未开赛
         if ("0".equals(id)) {
+
+            //  private TextView tv_home_corner, tv_home_danger, tv_home_shoot_correct, tv_home_shoot;
+            // private TextView tv_guest_corner, tv_guest_danger, tv_guest_shoot_correct, tv_guest_shoot;
+            //private ProgressBar pb_corner, pb_danger, pb_shoot_correct, pb_shoot;
+
+            tv_home_corner.setText("");
+            tv_home_danger.setText("");
+            tv_home_shoot_correct.setText("");
+            tv_home_shoot_miss.setText("");
+            tv_guest_corner.setText("");
+            tv_guest_danger.setText("");
+            tv_guest_shoot_correct.setText("");
+            tv_guest_shoot_miss.setText("");
+
+            pb_corner.setProgress(50);
+            pb_danger.setProgress(50);
+            pb_shoot_correct.setProgress(50);
+            pb_shoot.setProgress(50);
+
+
             prohome_team.setProgress(50);
             prohome_trapping.setProgress(50);
             prohome_foul.setProgress(50);
@@ -1486,6 +1533,21 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
             if (mMathchStatisInfo == null) {
                 return;
             }
+
+            pb_corner.setProgress((int) StadiumUtils.computeProgressbarPercent(mMathchStatisInfo.getHome_corner(), mMathchStatisInfo.getHome_corner()));
+            pb_danger.setProgress((int) StadiumUtils.computeProgressbarPercent(mMathchStatisInfo.getHome_danger(), mMathchStatisInfo.getGuest_danger()));
+            pb_shoot_correct.setProgress((int) StadiumUtils.computeProgressbarPercent(mMathchStatisInfo.getHome_shoot_correct(), mMathchStatisInfo.getHome_shoot_correct()));
+            pb_shoot.setProgress((int) StadiumUtils.computeProgressbarPercent(mMathchStatisInfo.getHome_shoot_door(), mMathchStatisInfo.getGuest_shoot_door()));
+
+
+            tv_home_corner.setText(mMathchStatisInfo.getHome_corner() + "");
+            tv_home_danger.setText(mMathchStatisInfo.getHome_danger() + "");
+            tv_home_shoot_correct.setText(mMathchStatisInfo.getHome_shoot_correct() + "");
+            tv_home_shoot_miss.setText(mMathchStatisInfo.getHome_shoot_miss() + "");
+            tv_guest_corner.setText(mMathchStatisInfo.getGuest_corner() + "");
+            tv_guest_danger.setText(mMathchStatisInfo.getGuest_danger() + "");
+            tv_guest_shoot_correct.setText(mMathchStatisInfo.getHome_shoot_correct() + "");
+            tv_guest_shoot_miss.setText(mMathchStatisInfo.getGuest_shoot_miss() + "");
 
 
             prohome_team.setProgress((int) StadiumUtils.computeProgressbarPercent(mMathchStatisInfo.getHome_shoot_door(), mMathchStatisInfo.getGuest_shoot_door()));
@@ -1575,7 +1637,86 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         }
     };
 
+
+    private void showLineUp() {
+        List<PlayerInfo> homeLineUpList = matchDetail.getHomeTeamInfo().getLineup();
+        List<PlayerInfo> guestLineUpList = matchDetail.getGuestTeamInfo().getLineup();
+
+        if (!homeLineUpList.isEmpty() && !guestLineUpList.isEmpty()) {
+            if (homeLineUpList.size() > 0) {
+                // 显示首发内容
+                fl_firsPlayers_not.setVisibility(View.GONE); ///sd
+                fl_firsPlayers_content.setVisibility(View.VISIBLE);
+
+                int dip5 = DisplayUtil.dip2px(mContext, 5);
+                int dip10 = DisplayUtil.dip2px(mContext, 10);
+
+                if (ll_rosters_homeTeam.getChildCount() != 0) {  //刷新时清空上次add的textview
+                    ll_rosters_homeTeam.removeAllViews();
+                }
+                if (ll_rosters_visitingTeam.getChildCount() != 0) {
+                    ll_rosters_visitingTeam.removeAllViews();
+                }
+                // 添加主队名单
+                for (int i = 0, len = homeLineUpList.size(); i < len; i++) {
+                    TextView tv_homeTeams = new TextView(mContext);
+                    tv_homeTeams.setText(homeLineUpList.get(i).getName());
+                    if (i == 0) {
+                        tv_homeTeams.setPadding(dip5, 0, 0, dip10);
+                    } else {
+                        tv_homeTeams.setPadding(dip5, 0, 0, dip10);
+                    }
+                    tv_homeTeams.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+                    ll_rosters_homeTeam.addView(tv_homeTeams);
+                }
+
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.gravity = Gravity.RIGHT;// 设置靠右对齐
+                // 添加客队名单
+                for (int i = 0, len = guestLineUpList.size(); i < len; i++) {
+                    TextView tv_visitingTeams = new TextView(mContext);
+                    tv_visitingTeams.setText(guestLineUpList.get(i).getName());
+                    tv_visitingTeams.setLayoutParams(params);
+                    if (i == 0) {
+                        tv_visitingTeams.setPadding(0, 0, dip5, dip10);
+                    } else {
+                        tv_visitingTeams.setPadding(0, 0, dip5, dip10);
+                    }
+                    tv_visitingTeams.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+                    ll_rosters_visitingTeam.addView(tv_visitingTeams);
+                }
+
+            } else {
+                // 显示暂无首发提示
+                fl_firsPlayers_not.setVisibility(View.VISIBLE);
+                fl_firsPlayers_content.setVisibility(View.GONE);
+            }
+
+        } else {
+            // 显示暂无首发提示
+            fl_firsPlayers_not.setVisibility(View.VISIBLE);
+            fl_firsPlayers_content.setVisibility(View.GONE);
+        }
+
+    }
+
     private void loadStatics() {
+
+        pb_corner.setProgress((int) StadiumUtils.computeProgressbarPercent(mHomeStatisEntity.getCorner(), mGuestStatisEntity.getCorner()));
+        pb_danger.setProgress((int) StadiumUtils.computeProgressbarPercent(mHomeStatisEntity.getDanger(), mGuestStatisEntity.getDanger()));
+        pb_shoot_correct.setProgress((int) StadiumUtils.computeProgressbarPercent(mHomeStatisEntity.getShot(), mGuestStatisEntity.getShot()));
+        pb_shoot.setProgress((int) StadiumUtils.computeProgressbarPercent(mHomeStatisEntity.getAllShots(), mGuestStatisEntity.getAllShots()));
+
+
+        tv_home_corner.setText(mHomeStatisEntity.getCorner() + "");
+        tv_home_danger.setText(mHomeStatisEntity.getDanger() + "");
+        tv_home_shoot_correct.setText(mHomeStatisEntity.getShot() + "");
+        tv_home_shoot_miss.setText((mHomeStatisEntity.getAllShots() - mHomeStatisEntity.getShot()) + "");
+        tv_guest_corner.setText(mGuestStatisEntity.getCorner() + "");
+        tv_guest_danger.setText(mGuestStatisEntity.getDanger() + "");
+        tv_guest_shoot_correct.setText(mGuestStatisEntity.getShot() + "");
+        tv_guest_shoot_miss.setText((mGuestStatisEntity.getAllShots() - mGuestStatisEntity.getShot()) + "");
+
         prohome_team.setProgress((int) StadiumUtils.computeProgressbarPercent(mHomeStatisEntity.getAllShots(), mGuestStatisEntity.getAllShots()));
         prohome_trapping.setProgress((int) StadiumUtils.computeProgressbarPercent(mHomeStatisEntity.getTrapping(), mGuestStatisEntity.getTrapping()));
         prohome_foul.setProgress((int) StadiumUtils.computeProgressbarPercent(mHomeStatisEntity.getFoul(), mGuestStatisEntity.getFoul()));

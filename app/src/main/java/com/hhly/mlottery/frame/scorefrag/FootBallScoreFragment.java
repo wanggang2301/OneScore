@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
+import com.hhly.mlottery.activity.FootballMatchSearchActivity;
 import com.hhly.mlottery.activity.FootballTypeSettingActivity;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
@@ -37,7 +38,6 @@ import com.hhly.mlottery.frame.footballframe.ResultFragment;
 import com.hhly.mlottery.frame.footballframe.RollBallFragment;
 import com.hhly.mlottery.frame.footballframe.ScheduleFragment;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoreFragmentWebSocketEntity;
-import com.hhly.mlottery.activity.FootballMatchSearchActivity;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
@@ -47,6 +47,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
+
+import static com.hhly.mlottery.frame.footballframe.ScheduleFragment.mAllCup;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -393,9 +395,10 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
                     if (ScheduleFragment.mLoadDataStatus == ScheduleFragment.LOAD_DATA_STATUS_SUCCESS) {
                         Intent intent = new Intent(getActivity(), FiltrateMatchConfigActivity.class);
                         Bundle bundle = new Bundle();
-                        LeagueCup[] allCups = ScheduleFragment.mAllCup.toArray(new LeagueCup[]{});
+                        LeagueCup[] allCups = mAllCup.toArray(new LeagueCup[]{});
                         bundle.putParcelableArray(FiltrateMatchConfigActivity.ALL_CUPS, allCups);
                         bundle.putParcelableArray(FiltrateMatchConfigActivity.CHECKED_CUPS, ScheduleFragment.mCheckedCups);
+
                         bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS, ScheduleFragment.isNetSuccess);
                         bundle.putBoolean(FiltrateMatchConfigActivity.CHECKED_DEFUALT, ScheduleFragment.isCheckedDefualt);
                         bundle.putInt("currentFragmentId", SCHEDULE_FRAGMENT);

@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -18,7 +17,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.MyApp;
@@ -31,13 +29,11 @@ import com.hhly.mlottery.bean.OpenBarrage;
 import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.DetailsCollectionCountBean;
-import com.hhly.mlottery.bean.multiplebean.MultipleByValueBean;
 import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.BaseUserTopics;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.basketballframe.BasketAnalyzeFragment;
-import com.hhly.mlottery.frame.basketballframe.BasketAnimLiveFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDetailsHeadFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketFocusEventBus;
 import com.hhly.mlottery.frame.basketballframe.BasketLiveFragment;
@@ -50,7 +46,6 @@ import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.CustomDetailsEvent;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.BarrageView;
@@ -81,20 +76,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     public final static String BASKET_MATCH_MATCHTYPE = "matchType";
     //    0:未开赛,1:一节,2:二节,5:1'OT，以此类推
 //            -1:完场,-2:待定,-3:中断,-4:取消,-5:推迟,50中场
-//    private final static int PRE_MATCH = 0;//赛前
-//    private final static int FIRST_QUARTER = 1;
-//    private final static int SECOND_QUARTER = 2;
-//    private final static int THIRD_QUARTER = 3;
-//    private final static int FOURTH_QUARTER = 4;
-//    private final static int OT1 = 5;
-//    private final static int OT2 = 6;
-//    private final static int OT3 = 7;
     private final static int END = -1;
-//    private final static int DETERMINED = -2;//待定
-//    private final static int GAME_CUT = -3;
-//    private final static int GAME_CANCLE = -4;
-//    private final static int GAME_DELAY = -5;
-//    private final static int HALF_GAME = 50;
     /**
      * 欧赔
      */
@@ -115,7 +97,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     BasketLiveFragment mBasketLiveFragment;
 
     BasketAnalyzeFragment mAnalyzeFragment = new BasketAnalyzeFragment();
-    //    TalkAboutBallFragment mTalkAboutBallFragment;
     ChartBallFragment mChartBallFragment;
 
     BasketOddsFragment mOddsEuro;
@@ -125,11 +106,10 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
     private ViewPager mViewPager;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
-    public AppBarLayout appBarLayout;
+//    public AppBarLayout appBarLayout;
     private TabLayout mTabLayout;
     private TabsAdapter mTabsAdapter;
-    private Toolbar toolbar;
-    //    private CoordinatorLayout mCoordinatorLayout;
+//    private Toolbar toolbar;
     private String[] TITLES;
 
 
@@ -141,15 +121,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
      * 收藏按钮
      */
     private ImageView mCollect;
-
-    /**
-     * 标题比分的布局
-     */
-//    private RelativeLayout mTitleScore;
-//
-//    private TextView mTitleHome;//主队比分/队名
-//    private TextView mTitleGuest;//客队比分/队名
-//    private TextView mTitleVS;//冒号  VS
 
     LinearLayout headLayout;// 小头部
     private int mCurrentId;
@@ -218,10 +189,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             mMatchType = getIntent().getExtras().getInt(BASKET_MATCH_MATCHTYPE);
             chartBallView = getIntent().getExtras().getInt("chart_ball_view");
 
-//            mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
-//            mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
-//            isAddMultiViewHide = getIntent().getExtras().getBoolean("isAddMultiViewHide");
-
             if (LEAGUEID_NBA.equals(mLeagueId)) {
                 isNBA = true;
             }
@@ -233,7 +200,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             mOddsEuro = BasketOddsFragment.newInstance(mThirdId, ODDS_EURO);
             mOddsLet = BasketOddsFragment.newInstance(mThirdId, ODDS_LET);
             mOddsSize = BasketOddsFragment.newInstance(mThirdId, ODDS_SIZE);
-//            mTalkAboutBallFragment = TalkAboutBallFragment.newInstance(mThirdId, mMatchStatus, 1, "");
             mChartBallFragment = ChartBallFragment.newInstance(1, mThirdId);
 
             mCurrentId = getIntent().getExtras().getInt("currentfragment");
@@ -241,18 +207,10 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         }
         EventBus.getDefault().register(this);
         setWebSocketUri(BaseURLs.WS_SERVICE);
-//        setTopic("USER.topic.basketball.score." + mThirdId + "."+appendLanguage());
         setTopic(BaseUserTopics.basketballScore +"." + mThirdId + "."+appendLanguage());
-
-        L.d("zxcvbn", "basketURL===" + BaseURLs.WS_SERVICE);
-        L.d("zxcvbn", "basketTopic===" + "USER.topic.basketball.score." + mThirdId + appendLanguage());
-
-        L.d("wanggg", "getApplicationContext111=" + getApplicationContext());
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket_details_activity_test);
-        /**不统计当前的Activity界面，只统计Fragment界面*/
-        MobclickAgent.openActivityDurationTrack(false);
         mContext = this;
 
 
@@ -311,16 +269,12 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             TITLES = new String[]{getResources().getString(R.string.basket_analyze), getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof), getResources().getString(R.string.basket_eur), getResources().getString(R.string.basket_details_talkable)};
         }
 
-        toolbar = (Toolbar) findViewById(R.id.basket_details_toolbar);
-        setSupportActionBar(toolbar);
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         mHeadviewpager = new CustomViewpager(mContext);
         mHeadviewpager = (CustomViewpager) findViewById(R.id.headviewpager);
         mIndicator = (CircleIndicator) findViewById(R.id.indicator);
 
-//        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
         mViewPager = (ViewPager) findViewById(R.id.basket_details_view_pager);
-        appBarLayout = (AppBarLayout) findViewById(R.id.basket_details_appbar);
         mTabLayout = (TabLayout) findViewById(R.id.basket_details_tab_layout);
         mTabsAdapter = new TabsAdapter(getSupportFragmentManager());
         mTabsAdapter.setTitles(TITLES);
@@ -343,7 +297,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             }
         }
 
-        appBarLayout.addOnOffsetChangedListener(this);
         fragmentManager = getSupportFragmentManager();
         basePagerAdapter = new BasePagerAdapter(fragmentManager);
 
@@ -390,6 +343,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 //        mTitleGuest = (TextView) this.findViewById(R.id.title_guest_score);
 //        mTitleVS = (TextView) this.findViewById(R.id.title_vs);
         mBack = (ImageView) this.findViewById(R.id.basket_details_back);
+        mBack.setOnClickListener(this);
 
         rl_gif_notice = (RelativeLayout) findViewById(R.id.rl_gif_notice);
 //        tv_addMultiView = (TextView) findViewById(R.id.tv_addMultiView);
@@ -399,6 +353,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
 //        mTitleScore = (RelativeLayout) this.findViewById(R.id.ll_basket_title_score);
         mCollect = (ImageView) this.findViewById(R.id.basket_details_collect);
+        mCollect.setOnClickListener(this);
 
         boolean isFocus = FocusUtils.isBasketFocusId(mThirdId);
         if (isFocus) {

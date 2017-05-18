@@ -47,6 +47,7 @@
     <string name="football_info_oceania">大洋洲</string>
 
     <!--足球内页改版(滚球等)-->
+    <string name="foot_details_recommend">推介</string>
     <string name="foot_details_roolball">滾球</string>
     <string name="foot_details_talkball">聊球</string>
     <string name="foot_details_analyze">分析</string>
@@ -1667,7 +1668,10 @@
     <string name="foot_event_num">""</string>
     <string name="please_hint_team">請輸入球隊名稱</string>
     <string name="foot_text">文字</string>
+    <string name="foot_lineup">陣容</string>
+    <string name="foot_statistics">統計</string>
     <string name="nopage">暫無動畫直播</string>
+    <string name="foot_bigdata">大數據</string>
 
     <!--球队信息-->
     <string name="foot_team_info_total">總</string>

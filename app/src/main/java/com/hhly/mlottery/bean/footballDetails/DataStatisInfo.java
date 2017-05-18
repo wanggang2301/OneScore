@@ -72,6 +72,15 @@ public class DataStatisInfo {
         private int freeHit;//任意球
         private int foul;//犯规
         private int lineOut;//界外球
+        private int danger;
+
+        public int getDanger() {
+            return danger;
+        }
+
+        public void setDanger(int danger) {
+            this.danger = danger;
+        }
 
         public int getLineOut() {
             return lineOut;
@@ -164,6 +173,15 @@ public class DataStatisInfo {
         private int freeHit;//任意球
         private int foul;//犯规
         private int lineOut;//界外球
+        private int danger;
+
+        public int getDanger() {
+            return danger;
+        }
+
+        public void setDanger(int danger) {
+            this.danger = danger;
+        }
 
         public int getLineOut() {
             return lineOut;

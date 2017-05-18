@@ -447,7 +447,7 @@ public class BaseURLs {
     //分析
 //    private final static String URL_FOOTBALL_ANALYSIS = "footBallMatch.matchAnalysis.do";
     // 阵容首发
-//    private final static String URL_FOOTBALL_DETAIL_FINDLINEUP = "footBallMatch.findLineUp.do";
+    private final static String URL_FOOTBALL_DETAIL_FINDLINEUP = "footBallMatch.findLineUp.do";
     // 角球走势
 //    private final static String URL_FOOTBALL_DETAIL_FINDCORNERKICKCOUNTS = "footBallMatch.findCornerKickCounts.do";
 //    // 攻防走势
@@ -711,7 +711,7 @@ public class BaseURLs {
     //赛场统计数据
     public final static String URL_FOOTBALL_DETAIL_STATISTICAL_DATA_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_STATISTICAL_DATA;
     // 阵容
-//    public final static String URL_FOOTBALL_DETAIL_FINDLINEUP_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_FINDLINEUP;
+    public final static String URL_FOOTBALL_DETAIL_FINDLINEUP_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_FINDLINEUP;
 
     //走势图表 进攻 危险进攻 射正 射偏
 
