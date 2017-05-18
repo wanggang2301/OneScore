@@ -447,7 +447,7 @@ public class BaseURLs {
     //分析
 //    private final static String URL_FOOTBALL_ANALYSIS = "footBallMatch.matchAnalysis.do";
     // 阵容首发
-    private final static String URL_FOOTBALL_DETAIL_FINDLINEUP = "footBallMatch.findLineUp.do";
+//    private final static String URL_FOOTBALL_DETAIL_FINDLINEUP = "footBallMatch.findLineUp.do";
     // 角球走势
 //    private final static String URL_FOOTBALL_DETAIL_FINDCORNERKICKCOUNTS = "footBallMatch.findCornerKickCounts.do";
 //    // 攻防走势
@@ -711,7 +711,7 @@ public class BaseURLs {
     //赛场统计数据
     public final static String URL_FOOTBALL_DETAIL_STATISTICAL_DATA_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_STATISTICAL_DATA;
     // 阵容
-    public final static String URL_FOOTBALL_DETAIL_FINDLINEUP_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_FINDLINEUP;
+//    public final static String URL_FOOTBALL_DETAIL_FINDLINEUP_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_FINDLINEUP;
 
     //走势图表 进攻 危险进攻 射正 射偏
 
@@ -1097,9 +1097,9 @@ public class BaseURLs {
     // 网球比分关注列表
     public final static String TENNIS_FOCUS_URL = URL_API_HOST + "tennisMatch.connerns.do";
     //网球指数列表接口
-    public final static String TENNIS_INDEX_LIST=URL_API_HOST+"tennisIndexData.findIndexDataList.do";
+    public final static String TENNIS_INDEX_LIST = URL_API_HOST + "tennisIndexData.findIndexDataList.do";
     //网球指数列表指数详情
-    public final static String TENNIS_INDEX_DETAILS=URL_API_HOST+"tennisIndexData.findIndexOddsDetail.do";
+    public final static String TENNIS_INDEX_DETAILS = URL_API_HOST + "tennisIndexData.findIndexOddsDetail.do";
 
     // 网球内页 头部和分析
     public final static String TENNIS_DATAILS_URL = URL_API_HOST + "tennisMatch.findContentAnalysis.do";
@@ -1140,11 +1140,7 @@ public class BaseURLs {
 
     //邀请码分享
     public final static String INVITED_ACTIVITY_URL = HTTP + HOST + URL_SPLITTER + "download_yqm.html";
-
-
-    /***
-     * 斯洛克url
-     */
+    /***********************************************************************************************************************/
 
     //斯洛克资料库排名
     public final static String URL_SNOOKER_INFO_RANK = URL_API_HOST + "snookerWorldRanking.getWorldRankingPaging.do";
@@ -1162,11 +1158,10 @@ public class BaseURLs {
     //斯诺克资料库赛事内页历届冠军
     public final static String SNOOKER_FINDPREVIOUSWINNERS = URL_API_HOST + "snookerData.findPreviousWinners.do";
     //斯诺克指数接口
-    public final static String SNOOKER_INDEX_LIST=URL_API_HOST+"snookerOdds.getSnookerOddsByDate.do";
+    public final static String SNOOKER_INDEX_LIST = URL_API_HOST + "snookerOdds.getSnookerOddsByDate.do";
     //篮球比分搜索
-
-    public final static String IOSBASKETBALLMATCH=URL_API_HOST+"IOSBasketballMatch.fuzzySearch.do";
-
-    /***********************************************************************************************************************/
+    public final static String IOSBASKETBALLMATCH = URL_API_HOST + "IOSBasketballMatch.fuzzySearch.do";
+    //足球竞彩
+    public final static String FINDBETTINGLIST = URL_API_HOST + "footballBetting.findBettingList.do";
 
 }

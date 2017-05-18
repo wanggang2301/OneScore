@@ -126,7 +126,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 //            "350",// 彩票资讯
 //            "80",// 多屏动画列表
 //            "60",// 情报中心
-//            "42",// 足球竞彩 -->未完成
+//            "91"// 竞彩推介 -->未完成
 
             "12", // 体育资讯
             "14", // 体育视频
@@ -164,7 +164,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             "330",// 四场进球彩
             "331",// 福彩3D
             "332",// 七乐彩
-            "91"// 竞彩推介
+            "42"// 竞彩足球
     };
 
     /**

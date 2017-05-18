@@ -1,7 +1,5 @@
 package com.hhly.mlottery.activity;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,56 +10,37 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.android.volley.VolleyError;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.FootballMatchListAdapter;
 import com.hhly.mlottery.adapter.InfoCenterAdapter;
-import com.hhly.mlottery.adapter.snooker.PinnedHeaderExpandableAdapter;
-import com.hhly.mlottery.bean.BasketballItemSearchBean;
-import com.hhly.mlottery.bean.BasketballSearchBean;
 import com.hhly.mlottery.bean.FootBallKeepBean;
 import com.hhly.mlottery.bean.FootBallOddsBean;
 import com.hhly.mlottery.bean.FootballLotteryBean;
-import com.hhly.mlottery.bean.TextDemo;
-import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.DataBean;
-import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.ScheduleBean;
 import com.hhly.mlottery.bean.infoCenterBean.InfoCenterBean;
-import com.hhly.mlottery.bean.snookerbean.SnookerRaceListitemBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.footballframe.DateMatchChoseDialogFragment;
-import com.hhly.mlottery.frame.infofrag.FootInfoCallBack;
-import com.hhly.mlottery.frame.infofrag.FootInfoShowSelectInfoCallBack;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.InfoCenterPW;
-import com.hhly.mlottery.widget.NoScrollListView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by yuely198 on 2017/3/16.
@@ -207,7 +186,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
 
                 try {
                     footBallOddsBean = JSON.parseObject(ws_json, FootBallOddsBean.class);
-                    Log.i("dasda","阿大苏打撒旦撒===="+footBallOddsBean);
+                    L.i("dasda", "阿大苏打撒旦撒====" + footBallOddsBean);
                 } catch (Exception e) {
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
                     footBallOddsBean = JSON.parseObject(ws_json, FootBallOddsBean.class);
@@ -238,7 +217,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
     }
 
     private void updateMatchOdd(int i, FootBallOddsBean data) {
-        Log.i("dasda","updateMatchOdd"+data);
+        L.i("dasda", "updateMatchOdd" + data);
         if (data != null) {
 
             if (data.getData().getLetNumber() != null) {
@@ -249,10 +228,10 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
             }
             if (data.getData().getLetLoseOdds() != null) {
 
-                if (Integer.parseInt(data.getData().getLetLoseOdds())>Integer.parseInt(bettingList.get(i).getLetLoseOdds())){
+                if (Integer.parseInt(data.getData().getLetLoseOdds()) > Integer.parseInt(bettingList.get(i).getLetLoseOdds())) {
                     //升
                     bettingList.get(i).setLetloseoddsColorId(R.color.odds_up_bg);
-                }else{
+                } else {
                     //降
                     bettingList.get(i).setLetloseoddsColorId(R.color.odds_down_bg);
                 }
@@ -262,10 +241,10 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
             }
             if (data.getData().getLetSameOdds() != null) {
 
-                if (Integer.parseInt(data.getData().getLetSameOdds())>Integer.parseInt(bettingList.get(i).getLetSameOdds())){
+                if (Integer.parseInt(data.getData().getLetSameOdds()) > Integer.parseInt(bettingList.get(i).getLetSameOdds())) {
                     //升
                     bettingList.get(i).setLetsameoddsColorId(R.color.odds_up_bg);
-                }else{
+                } else {
                     //降
                     bettingList.get(i).setLetsameoddsColorId(R.color.odds_down_bg);
                 }
@@ -273,12 +252,12 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                 bettingList.get(i).setLetSameOdds(data.getData().getLetSameOdds());
 
             }
-            if (data.getData().getLetWinOdds()!= null) {
+            if (data.getData().getLetWinOdds() != null) {
 
-                if (Integer.parseInt(data.getData().getLetWinOdds())>Integer.parseInt(bettingList.get(i).getLetWinOdds())){
+                if (Integer.parseInt(data.getData().getLetWinOdds()) > Integer.parseInt(bettingList.get(i).getLetWinOdds())) {
                     //升
                     bettingList.get(i).setLetwinoddsColorId(R.color.odds_up_bg);
-                }else{
+                } else {
                     //降
                     bettingList.get(i).setLetwinoddsColorId(R.color.odds_down_bg);
                 }
@@ -289,10 +268,10 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
             if (data.getData().getLoseOdds() != null) {
 
 
-                if (Integer.parseInt(data.getData().getLoseOdds())>Integer.parseInt(bettingList.get(i).getLoseOdds())){
+                if (Integer.parseInt(data.getData().getLoseOdds()) > Integer.parseInt(bettingList.get(i).getLoseOdds())) {
                     //升
                     bettingList.get(i).setLoseoddsColorId(R.color.odds_up_bg);
-                }else{
+                } else {
                     //降
                     bettingList.get(i).setLoseoddsColorId(R.color.odds_down_bg);
                 }
@@ -301,10 +280,10 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
 
             }
             if (data.getData().getSameOdds() != null) {
-                if (Integer.parseInt(data.getData().getSameOdds())>Integer.parseInt(bettingList.get(i).getSameOdds())){
+                if (Integer.parseInt(data.getData().getSameOdds()) > Integer.parseInt(bettingList.get(i).getSameOdds())) {
                     //升
                     bettingList.get(i).setSameoddsColorId(R.color.odds_up_bg);
-                }else{
+                } else {
                     //降
                     bettingList.get(i).setSameoddsColorId(R.color.odds_down_bg);
                 }
@@ -313,10 +292,10 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
             }
             if (data.getData().getWinOdds() != null) {
 
-                if (Integer.parseInt(data.getData().getWinOdds())>Integer.parseInt(bettingList.get(i).getWinOdds())){
+                if (Integer.parseInt(data.getData().getWinOdds()) > Integer.parseInt(bettingList.get(i).getWinOdds())) {
                     //升
                     bettingList.get(i).setWinoddsColorId(R.color.odds_up_bg);
-                }else{
+                } else {
                     //降
                     bettingList.get(i).setWinoddsColorId(R.color.odds_down_bg);
                 }
@@ -326,7 +305,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
 
             }
             if (footballMatchListAdapter != null) {
-                footballMatchListAdapter.updateDatas(bettingList,i);
+                footballMatchListAdapter.updateDatas(bettingList, i);
                 footballMatchListAdapter.notifyDataSetChanged();
             }
 
@@ -340,7 +319,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
         Map<String, String> data = footBallKeepBean.getData();
         for (int i = 0; i < bettingList.size(); i++) {
 
-            if ((bettingList.get(i).getMatchId()+ "").equals(footBallKeepBean.getThirdId())) {  //找到对应比赛对象
+            if ((bettingList.get(i).getMatchId() + "").equals(footBallKeepBean.getThirdId())) {  //找到对应比赛对象
                 updateMatchStatus(i, data);
             }
         }
@@ -359,7 +338,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
 
         if (footballMatchListAdapter != null) {
 
-            footballMatchListAdapter.updateDatas(bettingList,i);
+            footballMatchListAdapter.updateDatas(bettingList, i);
             footballMatchListAdapter.notifyDataSetChanged();
         }
 
@@ -386,10 +365,10 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
         footballMatchListAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
-                int thirdId = bettingList.get(i).getLeagueId();
+                String thirdId = bettingList.get(i).getMatchId();
                 L.d("xxx", "thirdId: " + thirdId);
                 Intent intent = new Intent(FootballMatchActivity.this, FootballMatchDetailActivity.class);
-                intent.putExtra("thirdId", String.valueOf(thirdId));
+                intent.putExtra("thirdId", thirdId);
                 intent.putExtra("match_details", 1);
                 startActivity(intent);
             }
@@ -404,7 +383,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
         params.put("pageNum", "1");
         params.put("pageSize", "100");
         // 请求网络数据
-        VolleyContentFast.requestJsonByPost("http://m.1332255.com:81/mlottery/core/footballBetting.findBettingList.do", params, new VolleyContentFast.ResponseSuccessListener<FootballLotteryBean>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.FINDBETTINGLIST, params, new VolleyContentFast.ResponseSuccessListener<FootballLotteryBean>() {
             @Override
             public void onResponse(FootballLotteryBean jsonObject) {
 
