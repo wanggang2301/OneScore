@@ -26,6 +26,7 @@ import com.hhly.mlottery.bean.FootBallOddsBean;
 import com.hhly.mlottery.bean.FootballLotteryBean;
 import com.hhly.mlottery.bean.infoCenterBean.InfoCenterBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.BaseUserTopics;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.footballframe.DateMatchChoseDialogFragment;
 import com.hhly.mlottery.util.DateUtil;
@@ -130,7 +131,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
         setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic("USER.topic.football.betting");
+        setTopic(BaseUserTopics.footballBetting);
         super.onCreate(savedInstanceState);
 
         initView();
