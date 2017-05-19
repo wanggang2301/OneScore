@@ -162,7 +162,7 @@ public class FootballPlateFragment extends Fragment {
         myPostParams.put("oddType", convertType());
 
         setStatus(StatusEnum.LOADING);
-        VolleyContentFast.requestJsonByPost(BaseURLs.URL_FOOTBALL_MATCHODD, myPostParams,
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_MATCHODD, myPostParams,
                 new VolleyContentFast.ResponseSuccessListener<OddsDataInfo>() {
                     @Override
                     public void onResponse(OddsDataInfo jsonObject) {

@@ -203,7 +203,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ScreenUtils.setTranslucentStatus(this);
-        if (getIntent().getExtras() != null) {
+        if (getIntent() != null && getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BUNDLE_PARAM_THIRDID, "1300");
             currentFragmentId = getIntent().getExtras().getInt("currentFragmentId");
             current_tab = getIntent().getIntExtra(FootBallDetailTypeEnum.CURRENT_TAB_KEY, FootBallDetailTypeEnum.FOOT_DETAIL_DEFAULT);
@@ -221,7 +221,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         url = BaseURLs.URL_FOOTBALLDETAIL_H5 + "?thirdId=" + mThirdId + "&lang=" + appendLanguage();
         initHeadView();
         initView();
-        loadData();
+        loadData(0);
         initEvent();
         loadAnim();
     }
@@ -315,7 +315,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 // if (mMatchDetail != null && !"-1".equals(mMatchDetail.getLiveStatus())) {
                 if (mMatchDetail != null) {
                     L.d(TAG, "下拉刷新未开赛和正在比赛的");
-                    loadData();
+                    loadData(1);
 
                     //走势图
                     mLiveFragment.initChartData(mMatchDetail.getLiveStatus());
@@ -344,7 +344,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 @Override
                 public void run() {
                     L.d(TAG, "TimerTask run....");
-                    loadData();
+                    loadData(1);
                 }
             };
             mReloadTimer = new Timer();
@@ -354,8 +354,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     }
 
 
-    private void loadData() {
-        mHandler.sendEmptyMessage(STARTLOADING);
+    private void loadData(int type) {
+        if(type != 1){
+            mHandler.sendEmptyMessage(STARTLOADING);
+        }
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", mThirdId);
 
@@ -1785,7 +1787,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 break;
             case R.id.reLoading_details:
                 mHandler.sendEmptyMessage(STARTLOADING);
-                loadData();
+                loadData(0);
                 break;
             case R.id.btn_showGif:
                 if (NetworkUtils.isConnected(getApplicationContext())) {
