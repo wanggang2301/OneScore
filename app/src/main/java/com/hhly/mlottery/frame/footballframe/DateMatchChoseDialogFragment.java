@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.cpiadapter.CpiDateAdapter;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.UiUtils;
 
 import java.util.ArrayList;
@@ -105,7 +106,7 @@ public class DateMatchChoseDialogFragment extends DialogFragment {
      */
     private void addDate(int offset) {
         Map<String, String> map = new HashMap<>();
-        map.put("date", UiUtils.getDate(currentDate, offset));
+        map.put("date", UiUtils.getDate(currentDate, offset)+ DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(UiUtils.getDate(currentDate, offset))));
         dateList.add(map);
     }
 

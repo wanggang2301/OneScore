@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -187,7 +188,6 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
 
                 try {
                     footBallOddsBean = JSON.parseObject(ws_json, FootBallOddsBean.class);
-                    L.i("dasda", "阿大苏打撒旦撒====" + footBallOddsBean);
                 } catch (Exception e) {
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
                     footBallOddsBean = JSON.parseObject(ws_json, FootBallOddsBean.class);
@@ -205,22 +205,23 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
     };
 
     private void updateListViewItemOdd(FootBallOddsBean footBallOddsBean) {
+        if (bettingList != null) {
+            for (int i = 0; i < bettingList.size(); i++) {
 
-        for (int i = 0; i < bettingList.size(); i++) {
+                for (FootballLotteryBean.BettingListBean data : bettingList) {
+                    if (footBallOddsBean.getThirdId().equals(data.getMatchId())) {  //找到对应比赛对象
 
-            for (FootballLotteryBean.BettingListBean data : bettingList) {
-                if (footBallOddsBean.getThirdId().equals(data.getMatchId())) {  //找到对应比赛对象
-
-                    updateMatchOdd(i, footBallOddsBean);
+                        updateMatchOdd(i, footBallOddsBean);
+                    }
                 }
             }
+
         }
     }
 
     private void updateMatchOdd(int i, FootBallOddsBean data) {
-        L.i("dasda", "updateMatchOdd" + data);
         if (data != null) {
-
+            Log.i("dasdas","我进来了......"+data);
             if (data.getData().getLetNumber() != null) {
 
 
@@ -300,10 +301,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                     //降
                     bettingList.get(i).setWinoddsColorId(R.color.odds_down_bg);
                 }
-
-
                 bettingList.get(i).setWinOdds(data.getData().getWinOdds());
-
             }
             if (footballMatchListAdapter != null) {
                 footballMatchListAdapter.updateDatas(bettingList, i);
@@ -318,10 +316,13 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
     private void updateListViewItemStatus(FootBallKeepBean footBallKeepBean) {
 
         Map<String, String> data = footBallKeepBean.getData();
-        for (int i = 0; i < bettingList.size(); i++) {
+        if (bettingList != null) {
 
-            if ((bettingList.get(i).getMatchId() + "").equals(footBallKeepBean.getThirdId())) {  //找到对应比赛对象
-                updateMatchStatus(i, data);
+            for (int i = 0; i < bettingList.size(); i++) {
+
+                if ((bettingList.get(i).getMatchId() + "").equals(footBallKeepBean.getThirdId())) {  //找到对应比赛对象
+                    updateMatchStatus(i, data);
+                }
             }
         }
     }
@@ -479,7 +480,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
 
         setContentView(R.layout.activity_footballmatch);
         public_txt_title = (TextView) findViewById(R.id.public_txt_title);
-        public_txt_title.setText("竞彩足球");
+        public_txt_title.setText(R.string.football_jingcai);
 
         //筛选按钮
         public_btn_filter = (ImageView) findViewById(R.id.public_btn_filter);

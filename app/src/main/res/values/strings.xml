@@ -1747,4 +1747,8 @@
     <string name="basket_info_load_data">""</string>
     <string name="all_rankings">""</string>
     <string name="nopage">暂无比赛直播</string>
+
+    <!--竞彩足球-->
+    <string name="football_jingcai">竞彩足球</string>
+
 </resources>
