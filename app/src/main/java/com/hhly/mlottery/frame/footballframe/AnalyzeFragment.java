@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -26,13 +24,10 @@ import com.hhly.mlottery.adapter.football.AnalyzeAsiaAdapter;
 import com.hhly.mlottery.bean.footballDetails.NewAnalyzeBean;
 import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.ImageLoader;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.RoundProgressBar;
 import com.hhly.mlottery.widget.LineChartView;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -215,9 +210,6 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener {
     private AnalyzeAsiaAdapter mLetAdapter;
     private AnalyzeAsiaAdapter mSizeAdapter;
 
-
-    private String mThirdId;
-
     private NewAnalyzeBean mAnalyzeBean;
 
 //    private boolean isLoading = false;// 是否已加载过数据
@@ -229,10 +221,6 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener {
 
     public static AnalyzeFragment newInstance() {
         return new AnalyzeFragment();
-    }
-
-    public void setThirdId(String thirdId){
-        this.mThirdId = thirdId;
     }
 
     @Override
@@ -1163,7 +1151,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener {
             case R.id.ll_analyze_let:
             case R.id.ll_analyze_size:
                 Intent intent = new Intent(getActivity(), FootballAnalyzeDetailsActivity.class);
-                intent.putExtra(FootballAnalyzeDetailsActivity.FOOTBALL_ANALYZE_THIRD_ID, mThirdId);
+                intent.putExtra("analyzeId", getActivity() != null ? ((FootballMatchDetailActivity)getActivity()).mThirdId : null);
                 startActivity(intent);
                 break;
             case R.id.football_analyze_integral_table:
