@@ -25,9 +25,11 @@ import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
 import com.hhly.mlottery.bean.enums.BasketOddsTypeEnum;
 import com.hhly.mlottery.bean.websocket.WebBasketMatch;
 import com.hhly.mlottery.bean.websocket.WebBasketOdds5;
+import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.StringUtils;
 
 import java.util.ArrayList;
@@ -181,6 +183,9 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
         BasketIndexBean b = mPresenter.getRequestData();
 
+
+        saveCurrentDate(b.getData().getFilerDate());
+
         //获取筛选的list
         fileterMatchTypeList.clear();
         fileterMatchTypeList.addAll(b.getData().getFileterTags());
@@ -200,6 +205,14 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         mHandler.sendEmptyMessage(1);
 
     }
+
+    private void saveCurrentDate(String date) {
+        if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.BASKET_INDEX_DATE, "").equals(date)) {
+            PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.BASKET_INDEX);
+            PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.BASKET_INDEX_DATE, date);
+        }
+    }
+
 
     private Handler mHandler = new Handler() {
         @Override
@@ -268,7 +281,7 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
         L.d(TAG, "没有数据_____________");
         fileterMatchTypeList.clear();
-        if (!StringUtils.isEmpty(date)){
+        if (!StringUtils.isEmpty(date)) {
             refreshDateView(date);
             parentFragment.showRightButton();
         }

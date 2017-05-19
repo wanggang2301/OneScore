@@ -27,13 +27,15 @@ public interface FootBallMatchFilterTypeEnum {
 
 
     //指数
-    String FOOT_ALET = "foot_alet";
-    String FOOT_ASIZE = "foot_asize";
-    String FOOT_EUR = "foot_eur";
+    String FOOT_INDEX_DATE = "foot_index_date";
 
-    String BASKET_ALET = "basket_alet";
-    String BASKET_ASIZE = "basket_asize";
-    String BASKET_EUR = "basket_eur";
+    String FOOT_INDEX = "foot_index";
+
+
+    String BASKET_INDEX_DATE = "basket_index_date";
+
+    String BASKET_INDEX = "basket_index";
+
 
 
 }

@@ -35,6 +35,7 @@ import com.hhly.mlottery.bean.websocket.WebBasketMatch;
 import com.hhly.mlottery.bean.websocket.WebBasketOdds;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.BaseUserTopics;
+import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.cpifrag.CloseCpiWebSocketEventBus;
@@ -45,6 +46,7 @@ import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
@@ -424,6 +426,10 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
         if (filterLeagueList == null) filterLeagueList = new LinkedList<>();
         filterLeagueList.clear();
         filterLeagueList.addAll(checkedIdList);
+
+        PreferenceUtil.setDataList(FootBallMatchFilterTypeEnum.BASKET_INDEX, filterLeagueList);
+
+
         for (BasketBallOddFragment fragment : mFragments) {
             fragment.updateFilterData();
         }
