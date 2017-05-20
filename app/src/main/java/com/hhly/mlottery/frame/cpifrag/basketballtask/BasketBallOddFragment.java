@@ -345,6 +345,9 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
         //第一次请求
         if (filterLeagueList != null) {
+
+            L.d("saveId",   "第二次筛选");
+
             for (BasketIndexBean.DataBean.AllInfoBean allInfo : sourceDataList) {
 
                 if (filterLeagueList.indexOf(allInfo.getLeagueId()) >= 0) {
@@ -352,11 +355,30 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
                 }
             }
         } else {
-            for (BasketIndexBean.DataBean.AllInfoBean allInfo : sourceDataList) {  //每一场赛事
-                if (allInfo.isHot()) {
-                    filterAllInfo(allInfo);   //默认显示热门的比赛
+
+            if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.BASKET_INDEX).size() > 0) {
+                List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.BASKET_INDEX);
+                for (BasketIndexBean.DataBean.AllInfoBean allInfo : sourceDataList) {
+                    for (String id : list) {
+                        if (allInfo.getLeagueId().equals(id)) {
+                            filterAllInfo(allInfo);
+                        }
+                    }
+                }
+
+                L.d("saveId",   "取本地存储");
+
+            } else {
+                L.d("saveId",   "没有本地存储");
+
+                for (BasketIndexBean.DataBean.AllInfoBean allInfo : sourceDataList) {  //每一场赛事
+                    if (allInfo.isHot()) {
+                        filterAllInfo(allInfo);   //默认显示热门的比赛
+                    }
                 }
             }
+
+
         }
 
         mBasketIndexAdapter.notifyDataSetChanged();

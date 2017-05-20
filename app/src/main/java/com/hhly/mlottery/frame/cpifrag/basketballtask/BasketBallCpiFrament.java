@@ -427,6 +427,8 @@ public class BasketBallCpiFrament extends BaseWebSocketFragment implements Exact
         filterLeagueList.clear();
         filterLeagueList.addAll(checkedIdList);
 
+        L.d("saveId", filterLeagueList.size() + "");
+
         PreferenceUtil.setDataList(FootBallMatchFilterTypeEnum.BASKET_INDEX, filterLeagueList);
 
 
