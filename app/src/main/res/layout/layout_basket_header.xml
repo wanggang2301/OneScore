@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/basket_layout_header"
     android:layout_width="match_parent"
-    android:layout_height="230dp"
+    android:layout_height="220dp"
     android:orientation="vertical">
 
     <ImageView
@@ -121,18 +121,6 @@
                 android:textColor="#ffffff"
                 android:textSize="@dimen/text_size_30" />
 
-            <!--<TextView-->
-            <!--android:id="@+id/basket_half_score"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center_horizontal"-->
-            <!--android:text="完场"-->
-            <!--android:textColor="#ffffff"-->
-            <!--android:textSize="@dimen/text_size_12"-->
-            <!--android:layout_below="@+id/basket_score"-->
-            <!--android:layout_centerHorizontal="true"-->
-            <!--android:visibility="invisible"-->
-            <!--android:paddingTop="10dp"/>-->
             <LinearLayout
                 android:id="@+id/basket_details_times"
                 android:layout_width="wrap_content"
@@ -148,9 +136,7 @@
                     android:text=""
                     android:textColor="#ffffff"
                     android:textSize="@dimen/text_size_12" />
-                <!--<View-->
-                <!--android:layout_width="10dp"-->
-                <!--android:layout_height="0dp"/>-->
+
                 <TextView
                     android:id="@+id/basket_details_remain_time"
                     android:layout_width="wrap_content"
@@ -476,7 +462,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="2dp"
-                android:visibility="visible">
+                android:visibility="gone">
 
 
                 <ImageView

@@ -22,32 +22,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="220dp">
 
-                <com.hhly.mlottery.widget.CustomViewpager
-                    android:id="@+id/headviewpager"
-                    style="@style/isFitsSystemWindows"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                <include
+                    layout="@layout/layout_basket_header"/>
 
                 <com.hhly.mlottery.view.BarrageView
                     android:id="@+id/barrage_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingTop="30dp" />
-
-                <me.relex.circleindicator.CircleIndicator
-                    android:id="@+id/indicator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    app:ci_animator="@animator/indicator_animator"
-                    app:ci_animator_reverse="@animator/indicator_animator_reverse"
-                    app:ci_drawable="@color/white"
-                    app:ci_height="2dp"
-                    app:ci_width="8dp" />
-
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -108,7 +90,6 @@
             android:id="@+id/rl_gif_notice"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="200dp"
             android:visibility="gone">
 
             <ImageView
