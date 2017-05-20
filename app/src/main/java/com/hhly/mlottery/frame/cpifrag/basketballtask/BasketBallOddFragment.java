@@ -168,13 +168,10 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
     @Override
     public void showLoadView() {
-
-
         mHandler.sendEmptyMessage(0);
         L.d(TAG, "加载中_____________");
 
     }
-
 
     @Override
     public void showResponseDataView() {
