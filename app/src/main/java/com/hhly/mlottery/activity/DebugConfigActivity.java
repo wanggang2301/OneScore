@@ -144,7 +144,7 @@ public class DebugConfigActivity extends BaseActivity {
                     PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, WS_13366_VN);
                 }
 
-                startActivity(new Intent(DebugConfigActivity.this, WelcomeActivity.class));
+                startActivity(new Intent(DebugConfigActivity.this, IndexActivity.class));
                 System.exit(0);
 
 
