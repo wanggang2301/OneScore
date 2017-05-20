@@ -212,14 +212,12 @@ public class CPIOddsFragment2 extends Fragment {
                 }, NewOddsInfo.class);
     }
 
-
     private void saveCurrentDate(String date) {
         if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_INDEX_DATE, "").equals(date)) {
             PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_INDEX);
             PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_INDEX_DATE, date);
         }
     }
-
 
     /**
      * 更新过滤数据源（注意要过滤公司赔率信息）
