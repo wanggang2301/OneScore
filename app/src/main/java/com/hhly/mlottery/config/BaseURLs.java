@@ -1167,6 +1167,11 @@ public class BaseURLs {
 
     public final static String IOSBASKETBALLMATCH=URL_API_HOST+"IOSBasketballMatch.fuzzySearch.do";
 
+    /**
+     * 角球列表
+     */
+    public final static String CORNER_LIST=URL_API_HOST+"corner.getCornerList.do";
+
     /***********************************************************************************************************************/
 
 }

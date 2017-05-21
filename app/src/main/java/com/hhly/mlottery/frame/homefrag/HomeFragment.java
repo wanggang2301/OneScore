@@ -37,6 +37,7 @@ import com.android.volley.DefaultRetryPolicy;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.DebugConfigActivity;
+import com.hhly.mlottery.activity.FootballCornerActivity;
 import com.hhly.mlottery.activity.HomeUserOptionsActivity;
 import com.hhly.mlottery.activity.ProductAdviceActivity;
 import com.hhly.mlottery.adapter.homePagerAdapter.HomeListBaseAdapter;
@@ -873,7 +874,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     private void goToUserOptionsActivity() {
-        startActivityForResult(new Intent(mContext, HomeUserOptionsActivity.class), REQUESTCODE_LOGIN);
+        startActivityForResult(new Intent(mContext, FootballCornerActivity.class), REQUESTCODE_LOGIN);
     }
 
     /**
