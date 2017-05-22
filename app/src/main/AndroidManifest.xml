@@ -402,7 +402,13 @@
             android:screenOrientation="portrait" />
         <activity android:name="com.hhly.mlottery.activity.BettingRecommendSettingActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.hhly.mlottery.activity.BettingMvp.MvpBettingRecommendActivity"
+
+        <!--专家详情MVP-->
+        <activity android:name="com.hhly.mlottery.activity.bettingmvp.mvpview.MvpBettingRecommendActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.hhly.mlottery.activity.bettingmvp.mvpview.MvpBettingPayDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.hhly.mlottery.activity.bettingmvp.mvpview.MvpBettingOnlinePaymentActivity"
             android:screenOrientation="portrait" />
 
         <activity

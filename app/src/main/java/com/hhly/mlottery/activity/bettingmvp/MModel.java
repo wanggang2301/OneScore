@@ -1,8 +1,8 @@
-package com.hhly.mlottery.activity.BettingMvp;
+package com.hhly.mlottery.activity.bettingmvp;
 
 /**
  * Created by：XQyi on 2017/5/2 10:47
- * Use:
+ * Use:MVP_model接口
  */
 public interface MModel {
 

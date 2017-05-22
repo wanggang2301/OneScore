@@ -1,11 +1,13 @@
-package com.hhly.mlottery.activity.BettingMvp;
+package com.hhly.mlottery.activity.bettingmvp.mvpmodel;
 
+import com.hhly.mlottery.activity.bettingmvp.MModel;
+import com.hhly.mlottery.activity.bettingmvp.MPresenter;
 import com.hhly.mlottery.bean.basket.BasketNewRootBean;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 /**
  * Created by：XQyi on 2017/5/2 10:55
- * Use:竞彩推荐列表（MVP-Model）
+ * Use:竞彩推荐列表（MVP-Model 数据请求）
  */
 public class MvpBettingRecommendModel implements MModel {
 

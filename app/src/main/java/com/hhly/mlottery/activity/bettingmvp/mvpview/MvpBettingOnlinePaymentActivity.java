@@ -1,4 +1,4 @@
-package com.hhly.mlottery.activity;
+package com.hhly.mlottery.activity.bettingmvp.mvpview;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,9 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
-import com.alipay.sdk.util.H5PayResultModel;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BaseActivity;
+import com.hhly.mlottery.activity.bettingmvp.MView;
+import com.hhly.mlottery.activity.bettingmvp.mvppresenter.MvpBettingOnlinePaymentPresenter;
 import com.hhly.mlottery.alipay.PayResult;
+import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBean;
 import com.hhly.mlottery.bean.bettingbean.WeiFuTongPayidDataBean;
 import com.hhly.mlottery.bean.bettingbean.WeiXinPayidDataBean;
 import com.hhly.mlottery.bean.bettingbean.ZFBPayDataBean;
@@ -31,14 +35,13 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import java.util.HashMap;
 import java.util.Map;
-import android.os.Handler;
 
 /**
  * Created by：XQyi on 2017/4/19 11:12
- * Use:支付页面（选择支付方式）
+ * Use:支付页面（选择支付方式 [MVP-view 页面展示]）
  */
 
-public class BettingOnlinePaymentActivity extends BaseActivity implements View.OnClickListener {
+public class MvpBettingOnlinePaymentActivity extends BaseActivity implements MView<BasketDatabaseBean>, View.OnClickListener {
     //AppId,官网申请的合法id
     private static final String APP_ID = "wx2a5538052969956e";
     // IWXAPI 是第三方app和微信通信的openapi接口
@@ -59,15 +62,17 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
     private RadioButton mPayZFB;
     private RadioButton mPayWeiXin;
     private RadioButton mPayYuE;
+    private MvpBettingOnlinePaymentPresenter paymentPresenter;
+    private TextView mBalance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.betting_recommend_online_payment_lay);
 
-        new MediaRecorder();
-
+        paymentPresenter = new MvpBettingOnlinePaymentPresenter(this);
         initView();
+        initData();
     }
 
     private void initView(){
@@ -95,8 +100,13 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
         mPayZFB.setChecked(true);
         mPayWeiXin.setChecked(false);
         mPayYuE.setChecked(false);
+
+        mBalance = (TextView) findViewById(R.id.betting_online_balance);
     }
 
+    private void initData(){
+        paymentPresenter.loadData("http://m.13322.com/mlottery/core/basketballData.findLeagueHeader.do");
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -255,7 +265,7 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
         Runnable aliPayRun = new Runnable() {
             @Override
             public void run() {
-                PayTask aliPay = new PayTask(BettingOnlinePaymentActivity.this);
+                PayTask aliPay = new PayTask(MvpBettingOnlinePaymentActivity.this);
 //                checkAliPayInstalled(getApplicationContext());
 //                L.d("qwer_asd = " + aliPay.getVersion());
 //                H5PayResultModel h5PayResultModel = aliPay.h5Pay(orderInfo, true);
@@ -314,5 +324,20 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         ComponentName componentName = intent.resolveActivity(context.getPackageManager());
         return componentName != null;
+    }
+
+    @Override
+    public void loadSuccessView(BasketDatabaseBean basketDatabaseBean) {
+        mBalance.setText(basketDatabaseBean.getLeagueId() + " K");
+    }
+
+    @Override
+    public void loadFailView() {
+        Toast.makeText(mContext, "网络请求失败~！！", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void loadNoData() {
+        Toast.makeText(mContext, "暂无数据~！！", Toast.LENGTH_SHORT).show();
     }
 }

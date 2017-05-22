@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.BettingMvp.MvpBettingRecommendActivity;
+import com.hhly.mlottery.activity.bettingmvp.mvpview.MvpBettingRecommendActivity;
 import com.hhly.mlottery.view.CircleImageView;
 
 import java.util.List;

@@ -27,7 +27,7 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
-import com.hhly.mlottery.activity.BettingMvp.MvpBettingRecommendActivity;
+import com.hhly.mlottery.activity.bettingmvp.mvpview.MvpBettingRecommendActivity;
 import com.hhly.mlottery.adapter.ScheduleDateAdapter;
 import com.hhly.mlottery.adapter.basketball.BasketballScoreListAdapter;
 import com.hhly.mlottery.bean.basket.BasketAllOddBean;

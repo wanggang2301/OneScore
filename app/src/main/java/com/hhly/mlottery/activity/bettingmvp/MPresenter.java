@@ -1,12 +1,11 @@
-package com.hhly.mlottery.activity.BettingMvp;
+package com.hhly.mlottery.activity.bettingmvp;
 
-import com.hhly.mlottery.bean.basket.BasketNewRootBean;
 
 /**
  * Created by：XQyi on 2017/5/2 10:47
- * Use:
+ * Use: MVP_Presenter接口
  */
-public interface MPresenter {
+public interface MPresenter<T> {
 
     /**
      * 接口请求
@@ -17,7 +16,7 @@ public interface MPresenter {
     /**
      * 请求成功
      */
-    void loadSuccess(BasketNewRootBean beanData);
+    void loadSuccess(T t);
 
     /**
      * 请求失败

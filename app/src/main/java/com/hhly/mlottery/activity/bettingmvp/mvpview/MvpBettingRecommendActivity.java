@@ -1,6 +1,5 @@
-package com.hhly.mlottery.activity.BettingMvp;
+package com.hhly.mlottery.activity.bettingmvp.mvpview;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,6 +14,8 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BaseActivity;
 import com.hhly.mlottery.activity.BettingPayDetailsActivity;
 import com.hhly.mlottery.activity.BettingRecommendSettingActivity;
+import com.hhly.mlottery.activity.bettingmvp.MView;
+import com.hhly.mlottery.activity.bettingmvp.mvppresenter.MvpBettingRecommendPresenter;
 import com.hhly.mlottery.adapter.bettingadapter.BettingRecommendMvpAdapter;
 import com.hhly.mlottery.bean.basket.BasketMatchBean;
 import com.hhly.mlottery.bean.basket.BasketNewRootBean;
@@ -30,11 +31,10 @@ import java.util.List;
 
 /**
  * Created by：XQyi on 2017/5/2 10:56
- * Use:竞彩推荐列表（MVP-View）
+ * Use:竞彩推荐列表（MVP-View 页面展示）
  */
-public class MvpBettingRecommendActivity extends BaseActivity implements MView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class MvpBettingRecommendActivity extends BaseActivity implements MView<BasketNewRootBean>, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
-    private Context mContext;
     private MvpBettingRecommendPresenter mvpBettingRecommendPresenter;
     private List<String> list;
     private BettingRecommendMvpAdapter mAdapter;
@@ -182,7 +182,8 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView, 
             public void BuyOnClick(View view, String s) {
 //                Toast.makeText(mContext, "点击了购买** " + s, Toast.LENGTH_SHORT).show();
                 L.d("yxq-0418=== " , "点击了*购买** " + s);
-                Intent mIntent = new Intent(mContext , BettingPayDetailsActivity.class);
+//                Intent mIntent = new Intent(mContext , BettingPayDetailsActivity.class);
+                Intent mIntent = new Intent(mContext , MvpBettingPayDetailsActivity.class);
                 startActivity(mIntent);
                 overridePendingTransition(R.anim.push_left_in , R.anim.push_fix_out);
             }
