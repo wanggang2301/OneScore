@@ -173,16 +173,16 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
         };
         mAdapter.setmFocusMatchClickListener(mFocusClickListener);
 
-        mCdt = new CountDownTimer(10000*1000, 1000*2 ) { //每两秒一次
-            @Override
-            public void onTick(long millisUntilFinished) {
-                mPresenter.refreshData(mType);
-            }
-            @Override
-            public void onFinish() {
-
-            }
-        };
+//        mCdt = new CountDownTimer(10000*1000, 1000*2 ) { //每两秒一次
+//            @Override
+//            public void onTick(long millisUntilFinished) {
+//                mPresenter.refreshData(mType);
+//            }
+//            @Override
+//            public void onFinish() {
+//
+//            }
+//        };
 
 //        mCdt.start();
     }
@@ -203,7 +203,9 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
         mNodataLayout.setVisibility(View.GONE);
         mExceptionLayout.setVisibility(View.GONE);
         mProgressBarLayout.setVisibility(View.GONE);
-        ((FootballCornerActivity)mActivity).setRefreshing(false);
+        if(getActivity()!=null){
+            ((FootballCornerActivity)getActivity()).setRefreshing(false);
+        }
     }
 
     @Override
@@ -220,7 +222,9 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
             mProgressBarLayout.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.GONE);
         }
-        ((FootballCornerActivity)mActivity).setRefreshing(false);
+        if(getActivity()!=null){
+            ((FootballCornerActivity)getActivity()).setRefreshing(false);
+        }
     }
 
     @Override

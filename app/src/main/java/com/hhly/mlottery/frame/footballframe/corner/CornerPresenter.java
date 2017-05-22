@@ -2,7 +2,9 @@ package com.hhly.mlottery.frame.footballframe.corner;
 
 import com.hhly.mlottery.bean.corner.CornerListBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.BasePresenter;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ public class CornerPresenter extends BasePresenter<CornerContract.View> implemen
         mData=new ArrayList<>();
     }
 
+    Map<String,String> params=new HashMap<>();
 
     @Override
     public List<CornerListBean.CornerEntity> getData() {
@@ -34,15 +37,16 @@ public class CornerPresenter extends BasePresenter<CornerContract.View> implemen
         String url;
         if(type.equals("0")){
             url=BaseURLs.CORNER_LIST;
-        }else {url="";
+            params.put("date","2017-05-19");
+        }else {url=BaseURLs.CORNER_LIST;
+            params.put("ids", PreferenceUtil.getString(StaticValues.CORNER_FOCUS_ID,""));
         }
 
-        Map<String,String> params=new HashMap<>();
 
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<CornerListBean>() {
             @Override
             public void onResponse(CornerListBean jsonObject) {
-               if(jsonObject.getResult()==200){
+               if(jsonObject.getResult()==200&&jsonObject.getCorner().size()!=0){
                    mData.clear();
                    mData.addAll(jsonObject.getCorner());
                    mView.recyclerNotify();

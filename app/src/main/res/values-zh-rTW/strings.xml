@@ -1715,4 +1715,5 @@
     <!--竞彩推荐-->
     <string name="betting_setting_palying_method">玩法</string>
     <string name="betting_setting_league">聯賽</string>
+    <string name="corner_score">角球比分</string>
 </resources>

@@ -59,10 +59,10 @@ public class FootballCornerActivity extends BaseActivity {
     }
 
     private void initView() {
-        mTitle.setText("角球比分");
+        mTitle.setText(R.string.corner_score);
         mFilter.setVisibility(View.GONE);
         mSetButton.setVisibility(View.GONE);
-        mTitles=new String[]{"角球","关注"};
+        mTitles=new String[]{getString(R.string.foot_event_corner),getString(R.string.foot_details_focus)};
 
         fragments=new ArrayList();
 
@@ -89,7 +89,7 @@ public class FootballCornerActivity extends BaseActivity {
         mViewPager.post(new Runnable() {
             @Override
             public void run() {
-                setRefreshing(false);
+                setRefreshing(true);
             }
         });
 

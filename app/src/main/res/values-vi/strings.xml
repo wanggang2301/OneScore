@@ -1634,5 +1634,6 @@
     <string name="no_select_head">Bạn vẫn chưa chọn hình đại diện</string>
     <string name="foot_text">文字</string>
     <string name="nopage">暂无比赛直播</string>
+    <string name="corner_score">角球比分</string>
 
 </resources>

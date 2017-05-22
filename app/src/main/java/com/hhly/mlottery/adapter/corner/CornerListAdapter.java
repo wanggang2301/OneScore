@@ -57,8 +57,8 @@ public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEnt
         //图标
         ImageView homeIcon=holder.getView(R.id.home_icon);
         ImageView guestIcon=holder.getView(R.id.guest_icon);
-        ImageLoader.load(MyApp.getContext(),entity.getHpic()).into(homeIcon);
-        ImageLoader.load(MyApp.getContext(),entity.getGpic()).into(guestIcon);
+        ImageLoader.load(MyApp.getContext(),entity.getHpic(),R.mipmap.score_default).into(homeIcon);
+        ImageLoader.load(MyApp.getContext(),entity.getGpic(),R.mipmap.score_default).into(guestIcon);
         //队名
         holder.setText(R.id.item_football_hometeam,entity.getHtn());
         holder.setText(R.id.item_football_guestteam,entity.getGtn());
@@ -67,6 +67,12 @@ public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEnt
         holder.setText(R.id.item_football_home_rc,entity.getHr()==0?"":entity.getHr()+"");
         holder.setText(R.id.item_football_guest_yc,entity.getGy()==0?"":entity.getGy()+"");
         holder.setText(R.id.item_football_guest_rc,entity.getGr()==0?"":entity.getGr()+"");
+        //比分
+        holder.setText(R.id.tv_home_half_score,entity.getHhc()+"");
+        holder.setText(R.id.tv_home_full_score,entity.getHc()+"");
+        holder.setText(R.id.tv_guest_half_score,entity.getGhc()+"");
+        holder.setText(R.id.tv_guest_full_score,entity.getGc()+"");
+
         if(entity.getStatus().equals("0")){ //未开
             rl_score.setVisibility(View.GONE);
             match_type.setVisibility(View.VISIBLE);
@@ -76,7 +82,7 @@ public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEnt
             rl_score.setVisibility(View.VISIBLE);
             match_type.setVisibility(View.GONE);
             match_state_started.setVisibility(View.VISIBLE);
-            match_state_started.setText("上半场");
+            match_state_started.setText(MyApp.getContext().getString(R.string.fragme_home_shangbanchang_text));
             holder.setText(R.id.corner_first_odd,bean.getOd().getCpOdd()+"");
             holder.setText(R.id.corner_immediate_odd,bean.getOd().getJsOdd()+"");
             holder.setText(R.id.corner_higher,bean.getOd().getHigher()+"");
@@ -86,16 +92,16 @@ public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEnt
             rl_score.setVisibility(View.VISIBLE);
             match_type.setVisibility(View.GONE);
             match_state_started.setVisibility(View.VISIBLE);
-            match_state_started.setText("中场");
+            match_state_started.setText(MyApp.getContext().getString(R.string.fragme_home_zhongchang_text));
             holder.setText(R.id.corner_first_odd,bean.getOd().getCpOdd()+"");
             holder.setText(R.id.corner_immediate_odd,bean.getOd().getJsOdd()+"");
             holder.setText(R.id.corner_higher,bean.getOd().getHigher()+"");
             holder.setText(R.id.corner_lower,bean.getOd().getBelow()+"");
-        }else if(entity.getStatus().equals("3")){
+        }else if(entity.getStatus().equals("3")){ //下半场
             rl_score.setVisibility(View.VISIBLE);
             match_type.setVisibility(View.GONE);
             match_state_started.setVisibility(View.VISIBLE);
-            match_state_started.setText("下半场");
+            match_state_started.setText(MyApp.getContext().getString(R.string.fragme_home_xiabanchang_text));
             holder.setText(R.id.corner_first_odd,bean.getHod().getCpOdd()+"");
             holder.setText(R.id.corner_immediate_odd,bean.getHod().getJsOdd()+"");
             holder.setText(R.id.corner_higher,bean.getHod().getHigher()+"");
@@ -104,11 +110,12 @@ public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEnt
             rl_score.setVisibility(View.VISIBLE);
             match_type.setVisibility(View.GONE);
             match_state_started.setVisibility(View.VISIBLE);
-            match_state_started.setText("完场");
-            holder.setText(R.id.tv_home_half_score,entity.getHhc()+"");
-            holder.setText(R.id.tv_home_full_score,entity.getHc()+"");
-            holder.setText(R.id.tv_guest_half_score,entity.getGhc()+"");
-            holder.setText(R.id.tv_guest_full_score,entity.getGc()+"");
+            match_state_started.setText(MyApp.getContext().getString(R.string.fragme_home_wanchang_text));
+            holder.setText(R.id.corner_first_odd,bean.getHod().getCpOdd()+"");
+            holder.setText(R.id.corner_immediate_odd,bean.getHod().getJsOdd()+"");
+            holder.setText(R.id.corner_higher,bean.getHod().getHigher()+"");
+            holder.setText(R.id.corner_lower,bean.getHod().getBelow()+"");
+
         }
         final TextView frequency=holder.getView(R.id.item_football_frequency);
 
