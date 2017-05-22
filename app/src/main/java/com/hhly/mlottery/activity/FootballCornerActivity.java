@@ -62,14 +62,15 @@ public class FootballCornerActivity extends BaseActivity {
         mTitle.setText(R.string.corner_score);
         mFilter.setVisibility(View.GONE);
         mSetButton.setVisibility(View.GONE);
-        mTitles=new String[]{getString(R.string.foot_event_corner),getString(R.string.foot_details_focus)};
+        mTitles=new String[]{getString(R.string.foot_event_corner)};
+//        ,getString(R.string.foot_details_focus)
 
         fragments=new ArrayList();
 
         CornerFragment cornerFragment=CornerFragment.getInstance("0");
-        CornerFragment focusFragment=CornerFragment.getInstance("1");
+//        CornerFragment focusFragment=CornerFragment.getInstance("1");
         fragments.add(cornerFragment);
-        fragments.add(focusFragment);
+//        fragments.add(focusFragment);
 
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +86,7 @@ public class FootballCornerActivity extends BaseActivity {
         mTabsAdapter.addFragments(fragments);
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-
+        focusCallback();
         mViewPager.post(new Runnable() {
             @Override
             public void run() {
@@ -128,14 +129,14 @@ public class FootballCornerActivity extends BaseActivity {
     }
 
     public void focusCallback() {
-        String focusIds = PreferenceUtil.getString(StaticValues.CORNER_FOCUS_ID, "");
-        String[] arrayId = focusIds.split("[,]");
-
-            if ("".equals(focusIds) || arrayId.length == 0) {
-                mTabLayout.getTabAt(1).setText(getResources().getString(R.string.foot_guanzhu_txt));
-            } else {
-                mTabLayout.getTabAt(1).setText(getResources().getString(R.string.foot_guanzhu_txt) + "(" + arrayId.length + ")");
-            }
+//        String focusIds = PreferenceUtil.getString(StaticValues.CORNER_FOCUS_ID, "");
+//        String[] arrayId = focusIds.split("[,]");
+//
+//            if ("".equals(focusIds) || arrayId.length == 0) {
+//                mTabLayout.getTabAt(1).setText(getResources().getString(R.string.foot_guanzhu_txt));
+//            } else {
+//                mTabLayout.getTabAt(1).setText(getResources().getString(R.string.foot_guanzhu_txt) + "(" + arrayId.length + ")");
+//            }
 
     }
 }

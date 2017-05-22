@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.footballframe.corner;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -17,9 +18,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballCornerActivity;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.corner.CornerListAdapter;
+import com.hhly.mlottery.bean.corner.CornerListBean;
 import com.hhly.mlottery.callback.FocusMatchClickListener;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.ViewFragment;
@@ -32,6 +36,8 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.hhly.mlottery.activity.FootballMatchDetailActivity.BUNDLE_PARAM_THIRDID;
 
 /**
  * Created by mdy
@@ -122,13 +128,11 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
             }
         });
 
-        mAdapter=new CornerListAdapter(mPresenter.getData());
+        mAdapter=new CornerListAdapter(mPresenter.getData(),getActivity());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
 
         mPresenter.refreshData(mType);
-
-
 
         mFocusClickListener = new FocusMatchClickListener() { // 关注按钮事件
             @Override
@@ -172,6 +176,18 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
 
         };
         mAdapter.setmFocusMatchClickListener(mFocusClickListener);
+
+        mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int i) {
+                CornerListBean.CornerEntity entity=mPresenter.getData().get(i);
+                Intent intent=new Intent(getActivity(), FootballMatchDetailActivity.class);
+                intent.putExtra(BUNDLE_PARAM_THIRDID,entity.getMatchId()+"");
+//                ToastTools.showQuick(getActivity(),entity.getMatchId()+"");
+                intent.putExtra("current_ab",1);
+                getActivity().startActivity(intent);
+            }
+        });
 
 //        mCdt = new CountDownTimer(10000*1000, 1000*2 ) { //每两秒一次
 //            @Override

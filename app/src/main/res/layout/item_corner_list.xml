@@ -11,6 +11,7 @@
     android:clickable="true"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="5dp"
+    android:foreground="?attr/selectableItemBackground"
     app:cardElevation="0.5dp">
 
     <LinearLayout
@@ -333,19 +334,19 @@
                     >
                     <TextView
                         style="@style/corner_text_style"
-                        android:text="初盘"
+                        android:text="@string/chupan"
                         />
                     <TextView
                         style="@style/corner_text_style"
-                        android:text="高于"
+                        android:text="@string/higher"
                         />
                     <TextView
                         style="@style/corner_text_style"
-                        android:text="即时盘"
+                        android:text="@string/jishi_pan"
                         />
                     <TextView
                         style="@style/corner_text_style"
-                        android:text="低于"
+                        android:text="@string/lower"
                         />
                 </TableRow>
                 <TextView
@@ -396,6 +397,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
+                    android:visibility="gone"
                     android:background="@mipmap/football_nomal" />
             </RelativeLayout>
         </RelativeLayout>

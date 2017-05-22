@@ -1,5 +1,7 @@
 package com.hhly.mlottery.adapter.corner;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -9,25 +11,33 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.github.mikephil.charting.formatter.ColorFormatter;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.FootballCornerActivity;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.bean.corner.CornerListBean;
 import com.hhly.mlottery.callback.FocusMatchClickListener;
+import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.PreferenceUtil;
+import com.hhly.mlottery.util.ToastTools;
 
 import java.util.List;
+
+import static com.hhly.mlottery.activity.FootballMatchDetailActivity.BUNDLE_PARAM_THIRDID;
 
 /**
  * 描    述：角球列表适配器
  * 作    者：mady@13322.com
  * 时    间：2017/5/19
  */
-public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEntity>{
+public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEntity> {
 
+    Context mContext;
     /**
      * 关注比赛
      */
@@ -37,12 +47,15 @@ public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEnt
         this.mFocusMatchClickListener = mFocusMatchClickListener;
     }
 
-    public CornerListAdapter( List<CornerListBean.CornerEntity> data) {
+
+    public CornerListAdapter(List<CornerListBean.CornerEntity> data, Context contxt) {
         super(R.layout.item_corner_list, data);
+        this.mContext=contxt;
     }
 
     @Override
     protected void convert(final BaseViewHolder holder, final CornerListBean.CornerEntity bean) {
+
         CornerListBean.CornerEntity.CornerMatchInfoEntity entity=bean.getCornerMatchInfo();
         TextView match_type=holder.getView(R.id.tv_match_type);
         RelativeLayout rl_score=holder.getView(R.id.rl_score);
@@ -63,10 +76,27 @@ public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEnt
         holder.setText(R.id.item_football_hometeam,entity.getHtn());
         holder.setText(R.id.item_football_guestteam,entity.getGtn());
         //红黄牌
-        holder.setText(R.id.item_football_home_yc,entity.getHy()==0?"":entity.getHy()+"");
-        holder.setText(R.id.item_football_home_rc,entity.getHr()==0?"":entity.getHr()+"");
-        holder.setText(R.id.item_football_guest_yc,entity.getGy()==0?"":entity.getGy()+"");
-        holder.setText(R.id.item_football_guest_rc,entity.getGr()==0?"":entity.getGr()+"");
+        if(entity.getHr()!=0){
+            holder.setText(R.id.item_football_home_rc,entity.getHr()+"");
+        }else {
+            holder.getView(R.id.item_football_home_rc).setVisibility(View.GONE);
+        }
+        if(entity.getHy()!=0){
+            holder.setText(R.id.item_football_home_yc,entity.getHy()+"");
+        }else {
+            holder.getView(R.id.item_football_home_yc).setVisibility(View.GONE);
+        }
+        if(entity.getGr()!=0){
+            holder.setText(R.id.item_football_guest_rc,entity.getGr()+"");
+        }else {
+            holder.getView(R.id.item_football_guest_rc).setVisibility(View.GONE);
+        }
+        if(entity.getGy()!=0){
+            holder.setText(R.id.item_football_guest_yc,entity.getGy()+"");
+        }else {
+            holder.getView(R.id.item_football_guest_yc).setVisibility(View.GONE);
+        }
+
         //比分
         holder.setText(R.id.tv_home_half_score,entity.getHhc()+"");
         holder.setText(R.id.tv_home_full_score,entity.getHc()+"");
@@ -176,7 +206,7 @@ public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEnt
         String[] idArray = focusIds.split("[,]");
 
         for (String id : idArray) {
-            if (id.equals(bean.getMatchId())) {
+            if (id.equals(bean.getMatchId()+"")) {
                 focus.setImageResource(R.mipmap.football_focus);
                 focus.setTag(true);
                 break;
@@ -194,5 +224,10 @@ public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEnt
                 }
             }
         });
+
+
     }
+
+
+
 }
