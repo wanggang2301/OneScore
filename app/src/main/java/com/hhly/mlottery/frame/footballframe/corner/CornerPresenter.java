@@ -37,7 +37,7 @@ public class CornerPresenter extends BasePresenter<CornerContract.View> implemen
         String url;
         if(type.equals("0")){
             url=BaseURLs.CORNER_LIST;
-            params.put("date","2017-05-19");
+//            params.put("date","2017-05-19");
         }else {url=BaseURLs.CORNER_LIST;
             params.put("ids", PreferenceUtil.getString(StaticValues.CORNER_FOCUS_ID,""));
         }
