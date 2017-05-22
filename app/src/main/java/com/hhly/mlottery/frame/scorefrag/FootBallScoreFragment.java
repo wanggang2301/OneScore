@@ -6,8 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +21,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.flyco.tablayout.SlidingTabLayout;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
@@ -66,7 +67,6 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     private final int FOCUS_FRAGMENT = 4;
 
     private final static String TAG = "ScoresFragment";
-    public static List<String> titles;
 
     private View view;
     private Context mContext;
@@ -88,7 +88,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     private int currentFragmentId = 0;
 
     private ViewPager mViewPager;
-    private TabLayout mTabLayout;
+    private SlidingTabLayout mTabLayout;
     private PureViewPagerAdapter pureViewPagerAdapter;
     private List<Fragment> fragments;
 
@@ -100,6 +100,8 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     private TextView tv_match_name;
     private ImageView iv_match;
     private ImageView public_search_filter;
+
+    private FragmentPagerAdapter fragmentPagerAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -114,7 +116,6 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         mContext = getActivity();
         view = View.inflate(mContext, R.layout.fragment_foot_ball_score, null);
         initView();
@@ -153,9 +154,9 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         String[] arrayId = focusIds.split("[,]");
         if (getActivity() != null) {
             if ("".equals(focusIds) || arrayId.length == 0) {
-                mTabLayout.getTabAt(FOCUS_FRAGMENT).setText(getActivity().getResources().getString(R.string.foot_guanzhu_txt));
+                mTabLayout.hideMsg(FOCUS_FRAGMENT);
             } else {
-                mTabLayout.getTabAt(FOCUS_FRAGMENT).setText(getActivity().getResources().getString(R.string.foot_guanzhu_txt) + "(" + arrayId.length + ")");
+                mTabLayout.showMsg(FOCUS_FRAGMENT, arrayId.length);
             }
         }
     }
@@ -219,13 +220,10 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
 
 
     private void setupViewPager() {
-        mTabLayout = (TabLayout) view.findViewById(R.id.tabs);
-        titles = new ArrayList<>();
-        titles.add(getString(R.string.foot_rollball_txt));
-        titles.add(getString(R.string.foot_jishi_txt));
-        titles.add(getString(R.string.foot_saiguo_txt));
-        titles.add(getString(R.string.foot_saicheng_txt));
-        titles.add(getString(R.string.foot_guanzhu_txt));
+        mTabLayout = (SlidingTabLayout) view.findViewById(R.id.tabs);
+
+        String[] tabNames = {getString(R.string.foot_rollball_txt), getString(R.string.foot_jishi_txt), getString(R.string.foot_saiguo_txt), getString(R.string.foot_saicheng_txt), getString(R.string.foot_guanzhu_txt)};
+
 
         fragments = new ArrayList<>();
         rollBallFragment = RollBallFragment.newInstance(ROLLBALL_FRAGMENT, isNewFrameWork, entryType);
@@ -235,7 +233,19 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         fragments.add(ScheduleFragment.newInstance(SCHEDULE_FRAGMENT, entryType));
         fragments.add(FocusFragment.newInstance(FOCUS_FRAGMENT, entryType));
 
-        pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
+
+        fragmentPagerAdapter = new FragmentPagerAdapter(getChildFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                return fragments.get(position);
+            }
+
+            @Override
+            public int getCount() {
+                return fragments.size();
+            }
+        };
+
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -283,16 +293,22 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
             public void onPageScrollStateChanged(int state) {
             }
         });
-        mViewPager.setAdapter(pureViewPagerAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
+        mViewPager.setAdapter(fragmentPagerAdapter);
+        mViewPager.setOffscreenPageLimit(tabNames.length);
+
+        mTabLayout.setViewPager(mViewPager, tabNames);
+        mTabLayout.showDot(FOCUS_FRAGMENT);
+        mTabLayout.showMsg(FOCUS_FRAGMENT, 0);
+        mTabLayout.setMsgMargin(FOCUS_FRAGMENT, 0, 6);
+        mTabLayout.hideMsg(FOCUS_FRAGMENT);
+
 
         if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
-            mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+            mTabLayout.setTabSpaceEqual(true);
         } else {
-            mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+            mTabLayout.setTabSpaceEqual(false);
         }
 
-        mViewPager.setOffscreenPageLimit(titles.size());
     }
 
 
