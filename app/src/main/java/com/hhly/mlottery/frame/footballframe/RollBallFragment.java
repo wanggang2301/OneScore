@@ -34,6 +34,7 @@ import com.hhly.mlottery.bean.websocket.WebSocketMatchOdd;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchStatus;
 import com.hhly.mlottery.callback.RequestHostFocusCallBack;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFilterEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.frame.scorefrag.FootBallScoreFragment;
@@ -41,6 +42,7 @@ import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.HotFocusUtils;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.RxBus;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
@@ -108,7 +110,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     private boolean isLoadedData = false;
     private static final String ISNEW_FRAMEWORK = "isnew_framework";
     private static final String ENTRY_TYPE = "entryType";
-
 
     private boolean isNewFrameWork;
     private int mEntryType; // 标记入口 判断是从哪里进来的 (0:首页入口  1:新导航条入口)
@@ -349,14 +350,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     private void feedAdapter(List<Match> dataLists) {
         checkNotNull(adapter, "adapter == null");
 
-//        if (loadingMoreData) {
-//            loadingMoreData = false;
-//            adapter.addAll(allDataLists);
-//            //			adapter.dismissFooterViewLoading();
-//        } else {
         this.checkTheLifeCycleIsChanging(resestTheLifeCycle);
         adapter.setList(dataLists);
-//        }
         adapter.notifyDataSetChanged();
     }
 
@@ -368,15 +363,10 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     private void checkTheLifeCycleIsChanging(boolean resestTheLifeCycle) {
         if (resestTheLifeCycle) {
             this.resestTheLifeCycle = false;
-//            this.clearDecoration();
             recyclerView.setLayoutManager(layoutManager);
-//            recyclerView.addItemDecoration(dataDecration);
         }
     }
 
-    private void clearDecoration() {
-//        this.recyclerView.removeItemDecoration(this.dataDecration);
-    }
 
     public void requestApi() {
         apiHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
@@ -392,6 +382,11 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                         leagueCupLists = jsonObject.getAll();
                         feedAdapterLists = new ArrayList<>();
 
+                        if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, "").equals(jsonObject.getFilterDate())) {
+                            PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_ROLL);
+                            PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, jsonObject.getFilterDate());
+                        }
+
                         HotFocusUtils hotFocusUtils = new HotFocusUtils();
                         hotFocusUtils.loadHotFocusData(getActivity(), new RequestHostFocusCallBack() {
                             @Override
@@ -404,20 +399,50 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                                 }
 
                                 if (FiltrateCupsMap.rollballCups.length != 0) {// 判断是否已经筛选过
-                                    for (Match m : allDataLists) {// 已选择的
-                                        for (String checkedId : FiltrateCupsMap.rollballCups) {
-                                            if (m.getRaceId().equals(checkedId)) {
-                                                feedAdapterLists.add(m);
-                                                break;
+                                    if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL).size() > 0) {
+                                        List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL);  //先判断本地保存
+                                        for (Match m : allDataLists) {// 已选择的
+                                            for (String checkedId : list) {
+                                                if (m.getRaceId().equals(checkedId)) {
+                                                    feedAdapterLists.add(m);
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        for (Match m : allDataLists) {// 已选择的
+                                            for (String checkedId : FiltrateCupsMap.rollballCups) {
+                                                if (m.getRaceId().equals(checkedId)) {
+                                                    feedAdapterLists.add(m);
+                                                    break;
+                                                }
                                             }
                                         }
                                     }
                                 } else {// 没有筛选过
-                                    for (Match m : allDataLists) {// 默认显示热门赛程
-                                        for (String hotId : hotList) {
-                                            if (m.getRaceId().equals(hotId)) {
-                                                feedAdapterLists.add(m);
-                                                break;
+
+                                    if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL).size() > 0) {
+
+
+                                        List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL);
+
+                                        L.d("filter", list.size() + "");
+
+                                        for (Match m : allDataLists) {// 默认显示热门赛程
+                                            for (String filterId : list) {
+                                                if (m.getRaceId().equals(filterId)) {
+                                                    feedAdapterLists.add(m);
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        for (Match m : allDataLists) {// 默认显示热门赛程
+                                            for (String hotId : hotList) {
+                                                if (m.getRaceId().equals(hotId)) {
+                                                    feedAdapterLists.add(m);
+                                                    break;
+                                                }
                                             }
                                         }
                                     }
@@ -510,6 +535,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                 }
             }
             List<LeagueCup> leagueCupList = new ArrayList<>();
+            List<String> localFilterRace = new ArrayList<>();
 
             for (LeagueCup cup : leagueCupLists) {
                 boolean isExistId = false;
@@ -522,8 +548,12 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
                 if (isExistId) {
                     leagueCupList.add(cup);
+                    localFilterRace.add(cup.getRaceId());
+
                 }
             }
+
+            PreferenceUtil.setDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL, localFilterRace);
 
             checkedLeagueCup = leagueCupList.toArray(new LeagueCup[]{});
             this.feedAdapter(feedAdapterLists);
@@ -558,7 +588,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                 switch (msg.what) {
                     case 0:  // WEB_SOCKET PUSH
                         switch (msg.arg1) {
-                            case SOCKET_TYPE_STATUS:
+                            case SOCKET_TYPE_STATUS:  //1时
                                 String statusJsonData = (String) msg.obj;
                                 WebSocketMatchStatus webSocketMatchStatus = (WebSocketMatchStatus) this.jsonParseObject(statusJsonData,
                                         WebSocketMatchStatus

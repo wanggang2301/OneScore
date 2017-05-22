@@ -12,6 +12,7 @@
     yxq:cardBackgroundColor="@color/white"
     yxq:cardCornerRadius="5dp"
     yxq:cardElevation="0.5dp"
+    android:foreground="?android:attr/selectableItemBackground"
     >
     <LinearLayout
         android:orientation="horizontal"

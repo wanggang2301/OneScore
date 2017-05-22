@@ -101,7 +101,7 @@ public class FiltrateMatchConfigActivity extends BaseActivity implements OnClick
             mSubmitLayout.setVisibility(View.VISIBLE);
         }
 
-        final FiltrateMatchFragment fragmentMatch = FiltrateMatchFragment.newInstance(mCups, mCheckedCups, isDefualt);
+        final FiltrateMatchFragment fragmentMatch = FiltrateMatchFragment.newInstance(currentFragmentId, mCups, mCheckedCups, isDefualt);
         final FiltrateStatusFragment fragmentStatus = new FiltrateStatusFragment();
 
         mTab.check(R.id.filtrate_match_tab);
@@ -138,13 +138,9 @@ public class FiltrateMatchConfigActivity extends BaseActivity implements OnClick
         transaction.commit();
 
         mFragmentMatchId = fragmentMatch.getId();
+
         mSubmit = (Button) findViewById(R.id.filtrate_submit_btn);
         mSubmit.setOnClickListener(this);
-        // mCancel = (Button) findViewById(R.id.filtrate_cancel_btn);
-        // mCancel.setOnClickListener(this);
-
-        // mSubmit.setVisibility(View.GONE);
-        // mCancel.setVisibility(View.GONE);
 
     }
 
@@ -195,18 +191,6 @@ public class FiltrateMatchConfigActivity extends BaseActivity implements OnClick
 
                     EventBus.getDefault().post(new ScoresMatchFilterEventBusEntity(currentFragmentId, map));
 
-                 /*   if (currentFragmentId == 0) {
-                        RollBallFragment.eventBus.post(map);
-                    } else if (currentFragmentId == 1) {
-                        //ImmediateFragment.imEventBus.post(map);
-                    } else if (currentFragmentId == 2) {
-                        // ResultFragment.resultEventBus.post(map);
-                        EventBus.getDefault().post(new ScoresMatchFilterEventBusEntity(currentFragmentId, map));
-                    } else if (currentFragmentId == 3) {
-                        EventBus.getDefault().post(new ScoresMatchFilterEventBusEntity(currentFragmentId, map));
-                    }*/
-
-                    //setResult(Activity.RESULT_OK, intent);
                 }
 
                 finish();

@@ -32,5 +32,6 @@ public interface BaseUserTopics {
     String oddsFootballMatch = "USER.topic.scollodds";
     // 足球比分
     String footballScore = "USER.topic.app";
-
+    // 足球竟彩
+    String  footballBetting = "USER.topic.football.betting";
 }

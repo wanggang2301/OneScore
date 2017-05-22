@@ -94,7 +94,41 @@
         android:id="@+id/ly_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/ly_tab_bar"></FrameLayout>
+        android:layout_above="@id/ly_tab_bar" />
 
+    <!--启动页-->
+    <FrameLayout
+        android:id="@+id/ff_welcome"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageAD"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY" />
+
+        <LinearLayout
+            android:id="@+id/count_down"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_verycode"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="30dp"
+                android:background="@mipmap/rounded_rectangle"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_13"
+                android:visibility="gone" />
+        </LinearLayout>
+    </FrameLayout>
 
 </RelativeLayout>

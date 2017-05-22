@@ -13,7 +13,7 @@ import android.widget.AdapterView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CounselActivity;
-import com.hhly.mlottery.activity.FootballCornerActivity;
+import com.hhly.mlottery.activity.FootballMatchActivity;
 import com.hhly.mlottery.activity.LeagueStatisticsTodayActivity;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.activity.NumbersActivity;
@@ -358,15 +358,11 @@ public class HomeMuenFragment extends Fragment {
                                             break;
                                         case "80":// 多屏动画列表
                                             break;
-                                        case "42":// 足球竞彩
-//                                            mContext.startActivity(new Intent(mContext, FootballMatchActivity.class));
+                                        case "44":// 足球竞彩
+                                            mContext.startActivity(new Intent(mContext, FootballMatchActivity.class));
                                             break;
                                         case "91":// 竞彩推介
-                                            // TODO 待完成
-                                            ToastTools.showQuick(mContext,"竞彩推介");
-                                            break;
-                                        case "101": //角球比分
-                                            startActivity(new Intent(mContext, FootballCornerActivity.class));
+//                                            ToastTools.showQuick(mContext,"竞彩推介");
                                             break;
                                     }
                                     break;

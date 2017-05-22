@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.football.IntelligenceRecentAdapter;
 import com.hhly.mlottery.adapter.football.IntelligenceResultAdapter;
 import com.hhly.mlottery.bean.intelligence.BigDataForecast;
@@ -134,7 +135,6 @@ public class IntelligenceFragment extends Fragment {
     private List<BigDataResult.GridViewEntity> halfTodayHandicapList=new ArrayList<>();
     private LinearLayout mLlTodayHandicapHalf;
 
-    private String mThirdId;
     private BigDataForecast mBigDataForecast;
     private BigDataForecastFactor mFactor;
     private BigDataResult mResult;
@@ -150,15 +150,11 @@ public class IntelligenceFragment extends Fragment {
     private IntelligenceRecentAdapter mRecentHalfAdapter;
     private List<BigDataResult.GridViewEntity> halfRecentList=new ArrayList<>();
 
-    private boolean isLoading = false;// 是否已加载过数据
+//    private boolean isLoading = false;// 是否已加载过数据
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle args = getArguments();
-        if (args != null) {
-            mThirdId = args.getString(KEY_THIRD_ID);
-        }
         if (mFactor == null) {
             mFactor = new BigDataForecastFactor();
         }
@@ -175,6 +171,7 @@ public class IntelligenceFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
+        initData();
     }
 
     /**
@@ -336,9 +333,8 @@ public class IntelligenceFragment extends Fragment {
     }
 
     public void initData(){
-        if(!getUserVisibleHint()){return;}
         Map<String, String> params = new HashMap<>();
-        params.put(KEY_THIRD_ID, mThirdId);
+        params.put(KEY_THIRD_ID, getActivity() != null ? ((FootballMatchDetailActivity)getActivity()).mThirdId : null);
 
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_INTELLIGENCE_BIG_DATA, params,
                 new VolleyContentFast.ResponseSuccessListener<BigDataResult>() {
@@ -806,24 +802,7 @@ public class IntelligenceFragment extends Fragment {
         alertView.setVisibility(View.VISIBLE);
     }
 
-    public IntelligenceFragment(){}
-
-    public static IntelligenceFragment newInstance(String thirdId) {
-
-        Bundle args = new Bundle();
-        args.putString(KEY_THIRD_ID, thirdId);
-        IntelligenceFragment fragment = new IntelligenceFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser && !isLoading){
-            isLoading = true;
-            initData();
-            L.d("sssss","isVisibleToUser_情报: " + isVisibleToUser);
-        }
+    public static IntelligenceFragment newInstance() {
+        return new IntelligenceFragment();
     }
 }
