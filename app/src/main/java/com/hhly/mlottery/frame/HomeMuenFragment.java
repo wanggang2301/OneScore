@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CounselActivity;
+import com.hhly.mlottery.activity.FootballCornerActivity;
 import com.hhly.mlottery.activity.LeagueStatisticsTodayActivity;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.activity.NumbersActivity;
@@ -363,6 +364,9 @@ public class HomeMuenFragment extends Fragment {
                                         case "91":// 竞彩推介
                                             // TODO 待完成
                                             ToastTools.showQuick(mContext,"竞彩推介");
+                                            break;
+                                        case "101": //角球比分
+                                            startActivity(new Intent(mContext, FootballCornerActivity.class));
                                             break;
                                     }
                                     break;

@@ -165,7 +165,8 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             "330",// 四场进球彩
             "331",// 福彩3D
             "332",// 七乐彩
-            "91"// 竞彩推介
+            "91",// 竞彩推介
+            "101" //角球比分
     };
 
     /**
@@ -874,7 +875,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     private void goToUserOptionsActivity() {
-        startActivityForResult(new Intent(mContext, FootballCornerActivity.class), REQUESTCODE_LOGIN);
+        startActivityForResult(new Intent(mContext, HomeUserOptionsActivity.class), REQUESTCODE_LOGIN);
     }
 
     /**
