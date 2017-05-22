@@ -129,6 +129,7 @@ public class FootballCornerActivity extends BaseActivity {
     }
 
     public void focusCallback() {
+
 //        String focusIds = PreferenceUtil.getString(StaticValues.CORNER_FOCUS_ID, "");
 //        String[] arrayId = focusIds.split("[,]");
 //
