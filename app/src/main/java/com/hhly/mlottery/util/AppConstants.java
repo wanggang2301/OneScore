@@ -42,15 +42,6 @@ public class AppConstants {
     }
 
     /**
-     * 引导页
-     */
-    public static final int[] getGuidePage() {
-
-        return new int[]{R.mipmap.welcome1, R.mipmap.welcome2, R.mipmap.welcome3};
-    }
-
-
-    /**
      * 项目时区 8中国，7泰国、越南 ，0英语
      */
     public static int timeZone = 8;// 默认为中国时区
@@ -189,19 +180,6 @@ public class AppConstants {
             R.mipmap.number_anim_blue2, R.mipmap.number_anim_blue3};
 
     // 首页跳转key_value
-//    public static final String FOTTBALL_KEY = "football";// 足球界面跳转Key
-//    public static final int FOTTBALL_SCORE_VALUE = 0;// 足球比分跳转value
-//    public static final int BASKETBALL_SCORE_VALUE = 5;// 篮球比分跳转value
-//    public static final int FOTTBALL_INFORMATION_VALUE = 1;// 足球资讯跳转value
-//    public static final String FOTTBALL_INFO_LABEL_KEY = "sportsInfoIndex";// 足球资讯标签Key
-//    public static final int FOTTBALL_DATA_VALUE = 2;// 足球数据跳转value
-//    public static final int FOTTBALL_VIDEO_VALUE = 3;// 足球视频跳转value
-//    public static final int FOTTBALL_EXPONENT_VALUE = 4;// 足球指数跳转value
-//    public static final String BASKETBALL_KEY = "basketball";// 篮球界面跳转Key
-//    public static final int BASKETBALL_SCORE_KEY = 0;// 篮球即时跳转value
-//    public static final int BASKETBALL_AMIDITHION_VALUE = 1;// 篮球赛果跳转value
-//    public static final int BASKETBALL_COMPETITION_VALUE = 2;// 篮球赛程跳转value
-//    public static final int BASKETBALL_ATTENTION_VALUE = 3;// 篮球关注跳转value
     public static final String LOTTERY_KEY = "numberName";// 彩票界面跳转Key
     public static final String HOME_PAGER_DATA_KEY = "homePagerDataKey";// 首页缓存数据key
     public static final String HOME_PAGER_VERSION_UPDATE_KEY = "homePagerVersionUpdate";// 首页忽略此版本

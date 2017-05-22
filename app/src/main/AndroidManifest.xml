@@ -39,7 +39,7 @@
         android:screenOrientation="portrait"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".activity.WelcomeActivity"
+            android:name=".activity.IndexActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
@@ -84,11 +84,6 @@
             android:name=".activity.FiltrateMatchConfigActivity"
             android:screenOrientation="portrait" />
 
-        <!-- 引导页 -->
-        <activity
-            android:name=".activity.WelcomeViewActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation" />
 
         <!-- 足球数据内页显示 -->
         <activity
@@ -335,9 +330,9 @@
             android:name=".activity.FootballMatchSearchActivity"
             android:screenOrientation="portrait" />
         <!-- 1.2.3改版后的新首页 -->
-        <activity
-            android:name=".activity.IndexActivity"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name=".activity.IndexActivity"-->
+            <!--android:screenOrientation="portrait" />-->
         <!-- 斯诺克球员信息 -->
         <activity
             android:name=".activity.SnookerPlayerInfoActivity"
