@@ -114,8 +114,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mContext = getActivity();
         view = View.inflate(mContext, R.layout.fragment_foot_ball_score, null);
         initView();
