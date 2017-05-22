@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
@@ -34,6 +35,8 @@ public class DebugConfigActivity extends BaseActivity {
 
     public final static int DIY_INPUT = 8;
 
+    TextView tv_redpoint;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,8 @@ public class DebugConfigActivity extends BaseActivity {
 
         Button config_submit = (Button) findViewById(R.id.config_submit);
         Button bt_zidingyi = (Button) findViewById(R.id.bt_zidingyi);
+        tv_redpoint = (TextView) findViewById(R.id.tv_redpoint);
+
 
         //国内测试环境
         findViewById(R.id.config_ceshi_zh).setOnClickListener(new OnClickListener() {
@@ -186,6 +191,10 @@ public class DebugConfigActivity extends BaseActivity {
 
             }
         });
+
+
+
+
     }
 
 }

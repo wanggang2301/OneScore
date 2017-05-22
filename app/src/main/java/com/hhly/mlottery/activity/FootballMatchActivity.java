@@ -1,7 +1,5 @@
 package com.hhly.mlottery.activity;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,47 +9,25 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.android.volley.VolleyError;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.FootballMatchListAdapter;
 import com.hhly.mlottery.adapter.InfoCenterAdapter;
-import com.hhly.mlottery.adapter.snooker.PinnedHeaderExpandableAdapter;
-import com.hhly.mlottery.bean.BasketballItemSearchBean;
-import com.hhly.mlottery.bean.BasketballSearchBean;
-import com.hhly.mlottery.bean.TextDemo;
-import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.DataBean;
-import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.ScheduleBean;
 import com.hhly.mlottery.bean.infoCenterBean.InfoCenterBean;
-import com.hhly.mlottery.bean.snookerbean.SnookerRaceListitemBean;
-import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
-import com.hhly.mlottery.frame.infofrag.FootInfoCallBack;
-import com.hhly.mlottery.frame.infofrag.FootInfoShowSelectInfoCallBack;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.InfoCenterPW;
-import com.hhly.mlottery.widget.NoScrollListView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by yuely198 on 2017/3/16.
@@ -135,6 +111,7 @@ public class FootballMatchActivity extends BaseActivity implements View.OnClickL
         initDate();
         initEvent();
     }
+
     private void initEvent() {
         footballMatchListAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
@@ -156,7 +133,7 @@ public class FootballMatchActivity extends BaseActivity implements View.OnClickL
         Map<String, String> params = new HashMap<>();
         params.put("searchKeyword", "奧巴杜魯");//接口添加 version=xx 字段
         // 请求网络数据
-        VolleyContentFast.requestJsonByPost("http://m.13322.com/mlottery/core/IOSBasketballMatch.fuzzySearch.do",params,new VolleyContentFast.ResponseSuccessListener<InfoCenterBean>() {
+        VolleyContentFast.requestJsonByPost("http://m.13322.com/mlottery/core/IOSBasketballMatch.fuzzySearch.do", params, new VolleyContentFast.ResponseSuccessListener<InfoCenterBean>() {
             @Override
             public void onResponse(InfoCenterBean jsonObject) {
 
@@ -334,8 +311,6 @@ public class FootballMatchActivity extends BaseActivity implements View.OnClickL
                 break;
             default:
                 break;
-
-
         }
 
     }
