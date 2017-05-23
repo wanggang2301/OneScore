@@ -8,8 +8,6 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -35,6 +33,7 @@ public class DebugConfigActivity extends BaseActivity {
     public final static int DIY_INPUT = 8;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +43,7 @@ public class DebugConfigActivity extends BaseActivity {
 
         Button config_submit = (Button) findViewById(R.id.config_submit);
         Button bt_zidingyi = (Button) findViewById(R.id.bt_zidingyi);
+
 
         //国内测试环境
         findViewById(R.id.config_ceshi_zh).setOnClickListener(new OnClickListener() {
@@ -178,14 +178,12 @@ public class DebugConfigActivity extends BaseActivity {
                 //   public LeagueCup(int type, List<String> thirdId, String racename, String raceId, int count, boolean hot) {
 
 
-                L.d("ddff", "ro=" + PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL).size() + "");
-                L.d("ddff", "ji=" + PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_IMMEDIA).size() + "");
-                L.d("ddff", "guo=" + PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_RESULT).size() + "");
-                L.d("ddff", "cheng=" + PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_SCHEDULE).size() + "");
-
-
             }
         });
+
+
+
+
     }
 
 }

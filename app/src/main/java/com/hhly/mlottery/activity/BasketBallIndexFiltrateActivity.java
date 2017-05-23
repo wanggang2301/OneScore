@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.cpiadapter.basket.BasketIndexFiltrateMatchAdapter;
 import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
+import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.widget.GrapeGridView;
 
 import java.util.ArrayList;
@@ -120,6 +122,14 @@ public class BasketBallIndexFiltrateActivity extends Activity implements View.On
                     normalTemp.add(mFilterTagsList.get(i));
                 }
             }
+
+            //如果本地存在取本地的值
+            if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.BASKET_INDEX).size() > 0) {
+                List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.BASKET_INDEX);
+                mCheckedIds.clear();
+                mCheckedIds.addAll(list);
+            }
+
             mTempCheckIdsReset.addAll(mCheckedIds);
 //            tempCheckids1.addAll(mCheckedIds);
         } else {
