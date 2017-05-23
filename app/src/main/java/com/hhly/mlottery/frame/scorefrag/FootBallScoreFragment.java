@@ -4,6 +4,7 @@ package com.hhly.mlottery.frame.scorefrag;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.flyco.tablayout.SlidingTabLayout;
+import com.flyco.tablayout.widget.MsgView;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
@@ -298,8 +300,13 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         mTabLayout.setViewPager(mViewPager, tabNames);
         mTabLayout.showDot(FOCUS_FRAGMENT);
         mTabLayout.showMsg(FOCUS_FRAGMENT, 0);
-        mTabLayout.setMsgMargin(FOCUS_FRAGMENT, 0, 6);
+        mTabLayout.setMsgMargin(FOCUS_FRAGMENT, 2, 7);
         mTabLayout.hideMsg(FOCUS_FRAGMENT);
+        MsgView msgView = mTabLayout.getMsgView(FOCUS_FRAGMENT);
+        if (msgView != null) {
+            msgView.setBackgroundColor(Color.parseColor("#ffde00"));
+            msgView.setTextColor(Color.parseColor("#0085e1"));
+        }
 
 
         if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
