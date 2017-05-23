@@ -37,6 +37,16 @@ public class BasketIndexBean {
     public static class DataBean {
 
         private String currDate;
+        private String filerDate;
+
+        public String getFilerDate() {
+            return filerDate;
+        }
+
+        public void setFilerDate(String filerDate) {
+            this.filerDate = filerDate;
+        }
+
         private List<String> focusLeagueIds;
         private List<FileterTagsBean> fileterTags;
         private List<CompanyBean> company;
