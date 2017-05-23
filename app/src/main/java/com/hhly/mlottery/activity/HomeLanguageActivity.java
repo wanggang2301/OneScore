@@ -297,6 +297,7 @@ public class HomeLanguageActivity extends BaseActivity implements View.OnClickLi
                 intent.setClass(this, IndexActivity.class);
 
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("languageChanger", true);
                 startActivity(intent);// 跳回到首页面
                 break;
             default:

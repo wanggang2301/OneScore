@@ -132,6 +132,7 @@ public class IndexActivity extends BaseActivity implements View.OnClickListener 
             ACCESS_COARSE_LOCATION
     };
 
+    boolean isLanguageChanger = false;// 语言切换重启app
     private long mExitTime;// 退出程序...时间
 
     @Override
@@ -140,8 +141,19 @@ public class IndexActivity extends BaseActivity implements View.OnClickListener 
         mContext = IndexActivity.this;
         setContentView(R.layout.activity_index);
 
-        initView();
-        initData();
+        if (getIntent() != null) {
+            isLanguageChanger = getIntent().getBooleanExtra("languageChanger", false);
+        }
+
+        if (!isLanguageChanger) {
+            // 正常启动
+            initView();
+            initData();
+        } else {
+            // 跳过启动页
+            initHomeData();
+            versionUpdate();
+        }
     }
 
     private void initHomeData() {

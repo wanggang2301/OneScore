@@ -40,7 +40,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 //    private  View mFocus_RedDot; //关注红点
     /**我的关注红点*/
 //    boolean mShowRedDot=false;
-    boolean mInvitedShowRedDot=true;
     /*邀请码红点*/
     /**我的定制*/
     private RelativeLayout rl_custom;
@@ -89,8 +88,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             }
         }
     };
-    private RelativeLayout rl_setting_invited;
-    private View invited_red_dot_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,9 +117,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         //头像
         mUser_image = (ImageView) findViewById(R.id.user_info_image);
         mUser_image.setOnClickListener(this);
-
-        rl_setting_invited = (RelativeLayout) findViewById(R.id.rl_setting_invited);
-        rl_setting_invited.setOnClickListener(this);
 
              /*判断登录状态*/
         if (DeviceInfo.isLogin()) {
@@ -167,13 +161,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 //        }
         /*邀请码红点*/
 
-        invited_red_dot_view = findViewById(R.id.invited_red_dot_view);
-        mInvitedShowRedDot=PreferenceUtil.getBoolean(INVITED_SHOW_RED,true);
-        if(mInvitedShowRedDot){
-            invited_red_dot_view.setVisibility(View.GONE);
-        }else {
-            invited_red_dot_view.setVisibility(View.GONE);
-        }
     }
 
 
@@ -241,18 +228,17 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 }
 
                 break;
-            case R.id.rl_setting_invited:
-                MobclickAgent.onEvent(this, "InvitedActivity");
-                PreferenceUtil.commitBoolean(INVITED_SHOW_RED,false);
-                invited_red_dot_view.setVisibility(View.GONE);
-                if (DeviceInfo.isLogin()){
-                    startActivity(new Intent(HomeUserOptionsActivity.this, InvitedActivity.class));
-                }else{
-                    UiUtils.toast(getApplicationContext(),R.string.please_login_first);
-                }
-
-
-                break;
+//            case R.id.rl_setting_invited:
+//                MobclickAgent.onEvent(this, "InvitedActivity");
+//                PreferenceUtil.commitBoolean(INVITED_SHOW_RED,false);
+//                if (DeviceInfo.isLogin()){
+//                    startActivity(new Intent(HomeUserOptionsActivity.this, InvitedActivity.class));
+//                }else{
+//                    UiUtils.toast(getApplicationContext(),R.string.please_login_first);
+//                }
+//
+//
+//                break;
         }
     }
 

@@ -347,7 +347,7 @@
      </LinearLayout>-->
 
     <!---->
-    <RelativeLayout
+    <!--<RelativeLayout
         android:visibility="gone"
         android:id="@+id/rl_setting_invited"
         android:layout_width="match_parent"
@@ -400,7 +400,7 @@
 
         </RelativeLayout>
 
-    </RelativeLayout>
+    </RelativeLayout>-->
     <!--分割线-->
     <LinearLayout
         android:layout_width="match_parent"

@@ -137,6 +137,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
         LinearLayout llOddsContent2 = viewHolder.findViewById(R.id.ll_odds_content2);
 
         TextView tvRollDesc = viewHolder.findViewById(R.id.tv_roll_desc);// 描述
+        View view_line = viewHolder.findViewById(R.id.view_line);// 描述分隔线
 
         // 初始化数据
         if (TextUtils.isEmpty(data.getKeepTime())) data.setKeepTime("0");
@@ -175,21 +176,16 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
         boolean alet = PreferenceUtil.getBoolean(MyConstants.RBSECOND, true);
         boolean noshow = PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false);
 
-        L.d("aaaaa", "asize: " + asize + "   eur:" + eur + "   alet:" + alet + "   noshow:" + noshow);
-
         // 隐藏赔率
         if (noshow) {
             llOddsContent1.setVisibility(View.GONE);
             llOddsContent2.setVisibility(View.GONE);
-            L.d("aaaaa", "都不显示！");
         } else if ((asize && eur) || (asize && alet) || (eur && alet)) {
             llOddsContent1.setVisibility(View.VISIBLE);
             llOddsContent2.setVisibility(View.VISIBLE);
-            L.d("aaaaa", "显示两个！");
         } else {
             llOddsContent1.setVisibility(View.VISIBLE);
             llOddsContent2.setVisibility(View.GONE);
-            L.d("aaaaa", "显示一个！");
         }
 
 
@@ -201,21 +197,17 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
                 switch (matchOdd.getKey()) {
                     case "asiaSize":// 大小盘数据
                         asiaSize = matchOddMap.get("asiaSize");
-                        L.d("sssss", "大小盘口有数据 !");
                         break;
                     case "euro":// 欧赔数据
                         euro = matchOddMap.get("euro");
-                        L.d("sssss", "欧赔盘口有数据 !");
                         break;
                     case "asiaLet":// 亚赔数据
                         asiaLet = matchOddMap.get("asiaLet");
-                        L.d("sssss", "亚赔盘口有数据 !");
                         break;
                 }
             }
         }
 
-        L.d("sssss", "asize: " + asize + "   eur:" + eur + "   alet:" + alet + "   noshow:" + noshow);
         // 亚盘赔率
         if (alet) {
             setOddsItemData(tvHandicapValue_YA_BLACK, tvLeftOdds_YA, tvRightOdds_YA, asiaLet, data);
@@ -471,6 +463,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
 
         // 完场描述
         tvRollDesc.setVisibility(TextUtils.isEmpty(data.getTxt()) ? View.GONE : View.VISIBLE);
+        view_line.setVisibility(TextUtils.isEmpty(data.getTxt()) ? View.GONE : View.VISIBLE);
         String name = data.getWinner() == data.getHomeId() ? data.getHometeam() : data.getGuestteam();
         tvRollDesc.setText(data.getTxt() + "," + name + context.getResources().getString(R.string.roll_desc_txt));
     }
