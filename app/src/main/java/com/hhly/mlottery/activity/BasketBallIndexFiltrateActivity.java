@@ -215,7 +215,6 @@ public class BasketBallIndexFiltrateActivity extends Activity implements View.On
                 setHideNumber();
                 break;
             case R.id.cpi_filtrate_submit_btn:// 确定
-
                 if (mCheckedIds.size() <= 0) {
                     Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.at_least_one_race), Toast.LENGTH_SHORT).show();
                 } else {
