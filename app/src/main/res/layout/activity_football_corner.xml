@@ -17,6 +17,7 @@
         app:tabIndicatorColor="@color/white"
         app:tabIndicatorHeight="2dp"
         app:tabSelectedTextColor="@color/white"
+        android:visibility="gone"
         app:tabTextAppearance="@style/MyTabLayoutTextAppearanceInverse" />
 
     <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
