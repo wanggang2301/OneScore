@@ -1,27 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?><!--<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/coordiNatorContent"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">-->
-
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/home_item_bg">
 
-    <!--<android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--android:id="@+id/app_bar_layout"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:background="@color/home_item_bg"-->
-    <!--app:elevation="0.5dp">-->
-
-    <!-- app:layout_scrollFlags="scroll|enterAlways" -->
-
     <include layout="@layout/item_header_unconection_view" />
 
-    <android.support.percent.PercentRelativeLayout
+    <LinearLayout
         android:id="@+id/titleContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,40 +16,46 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/selector_item_clickable"
+        android:orientation="horizontal"
         android:visibility="invisible">
 
-        <TextView
-            android:id="@+id/t1"
-            style="@style/WW_Width_0dp"
-            app:layout_widthPercent="63%" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4.8">
+
+            <TextView
+                style="@style/WW_Width_0dp"
+                android:layout_weight="3.6" />
+
+            <TextView
+                android:id="@+id/tv_handicap_name1"
+                style="@style/WW_Width_0dp"
+                android:layout_weight="0.6"
+                android:gravity="center"
+                android:text="@string/roll_asialet"/>
+
+            <TextView
+                android:id="@+id/tv_handicap_name2"
+                style="@style/WW_Width_0dp"
+                android:layout_weight="0.6"
+                android:gravity="center"
+                android:text="@string/roll_asiasize" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/t2"
             style="@style/WW_Width_0dp"
-            android:layout_toRightOf="@id/t1"
-            android:text="@string/roll_asialet"
-            app:layout_widthPercent="14%" />
-
-        <TextView
-            android:id="@+id/t3"
-            style="@style/WW_Width_0dp"
-            android:layout_toRightOf="@id/t2"
-            android:text="@string/roll_asiasize"
-            app:layout_widthPercent="13%" />
-
-        <TextView
-            android:id="@+id/t4"
-            style="@style/WW_Width_0dp"
-            android:layout_toRightOf="@id/t3"
-            android:text="@string/roll_euro"
-            app:layout_widthPercent="10%" />
-    </android.support.percent.PercentRelativeLayout>
-    <!--</android.support.design.widget.AppBarLayout>-->
+            android:layout_weight="0.7"
+            android:gravity="center"
+            app:layout_widthPercent="10%"
+            tools:text="@string/roll_euro" />
+    </LinearLayout>
 
     <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/titleContainer">
 
         <include
             layout="@layout/view_recyclerview_refresh"
@@ -98,4 +91,4 @@
     </RelativeLayout>
 
     <include layout="@layout/network_exception" />
-</RelativeLayout><!--</android.support.design.widget.CoordinatorLayout>-->
+</RelativeLayout>

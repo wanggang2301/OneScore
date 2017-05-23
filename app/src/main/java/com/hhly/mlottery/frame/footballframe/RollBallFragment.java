@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,11 +40,13 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFilterEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
+import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchSettingEventBusEntity;
 import com.hhly.mlottery.frame.scorefrag.FootBallScoreFragment;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.HotFocusUtils;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.RxBus;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -94,7 +99,11 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     @BindView(R.id.swipe_refresh_layout)
     ExactSwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.titleContainer)
-    PercentRelativeLayout titleContainer;
+    LinearLayout titleContainer;
+    @BindView(R.id.tv_handicap_name1)
+    TextView handicapName1;
+    @BindView(R.id.tv_handicap_name2)
+    TextView handicapName2;
 
     private ApiHandler apiHandler = new ApiHandler(this);
     private RollBallAdapter adapter;
@@ -130,6 +139,49 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         if (getArguments() != null) {
             isNewFrameWork = getArguments().getBoolean(ISNEW_FRAMEWORK);
             mEntryType = getArguments().getInt(ENTRY_TYPE);
+        }
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setHandicapName();
+    }
+
+    /**
+     * 设置盘口显示类型
+     */
+    private void setHandicapName(){
+        boolean alet = PreferenceUtil.getBoolean(MyConstants.RBSECOND, true);
+        boolean asize = PreferenceUtil.getBoolean(MyConstants.rbSizeBall, false);
+        boolean eur = PreferenceUtil.getBoolean(MyConstants.RBOCOMPENSATE, true);
+        // 隐藏赔率name
+        if ((asize && eur) || (asize && alet) || (eur && alet)) {
+            handicapName1.setVisibility(View.VISIBLE);
+            handicapName2.setVisibility(View.VISIBLE);
+        } else {
+            handicapName1.setVisibility(View.VISIBLE);
+            handicapName2.setVisibility(View.GONE);
+        }
+        // 亚盘赔率
+        if (alet) {
+            handicapName1.setText(getResources().getString(R.string.roll_asialet));
+        }
+        // 大小盘赔率
+        if (asize) {
+            if (!alet) {
+                handicapName1.setText(getResources().getString(R.string.roll_asiasize));
+            } else {
+                handicapName2.setText(getResources().getString(R.string.roll_asiasize));
+            }
+        }
+        // 欧盘赔率
+        if (eur) {
+            if (!alet && !asize) {
+                handicapName1.setText(getResources().getString(R.string.roll_euro));
+            } else {
+                handicapName2.setText(getResources().getString(R.string.roll_euro));
+            }
         }
     }
 
@@ -275,42 +327,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
             msg.arg1 = Integer.parseInt(type);
             apiHandler.sendMessage(msg);
         }
-    }
-
-//    public void connectFail() {
-//        apiHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_FAIL);
-//    }
-//
-//    public void connectSuccess() {
-//        apiHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS);
-//    }
-
-
-//    private void checkedOutWebsocketIsConnected() {
-//        Observable.timer(25000, TimeUnit.MILLISECONDS).subscribe(new Action1<Long>() {
-//            @Override
-//            public void call(Long aLong) {
-//                checkoutWebsocketIsConnectedNow = onOldMessageCount;
-//                onOldMessageCount = onNewMessageCount;
-//                // 一定是断开socket连接了
-//                if (checkoutWebsocketIsConnectedNow == onOldMessageCount) {
-//                    RollBallFragment.this.restoreSocketConnectedFieldCount();
-//                    RollBallFragment.this.reConnectionWebSocket();
-//                }
-//                if (eventBus != null) RollBallFragment.this.checkedOutWebsocketIsConnected();
-//            }
-//        });
-//    }
-
-//    private void restoreSocketConnectedFieldCount() {
-//        checkoutWebsocketIsConnectedNow = 0;
-//        onOldMessageCount = 0;
-//        onNewMessageCount = 0;
-//    }
-
-    private void reConnectionWebSocket() {
-//        RollBallFragment.this.restoreSocketClient();
-//        RollBallFragment.this.setupWebSocketClient();
     }
 
     private void setupTitleAnimations(View titleView, int translationY, Animator.AnimatorListener animatorListener) {
@@ -639,7 +655,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                         fragment.titleContainer.setVisibility(View.GONE);
                         break;
                     case VIEW_STATUS_SUCCESS:
-                        fragment.titleContainer.setVisibility(View.VISIBLE);
+                        fragment.titleContainer.setVisibility(PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE);
                         fragment.swipeRefreshLayout.setRefreshing(false);
                         fragment.networkExceptionLayout.setVisibility(View.GONE);
                         fragment.footballImmediateUnfocusLl.setVisibility(View.GONE);
@@ -683,6 +699,16 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                 return JSON.parseObject(oddsJsonData.substring(0, oddsJsonData.length() - 1), clazz);
             }
         }
+    }
+
+    /**
+     * 设置
+     * 接受消息的页面实现
+     */
+    public void onEventMainThread(ScoresMatchSettingEventBusEntity scoresMatchSettingEventBusEntity) {
+        titleContainer.setVisibility(PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE);
+        setHandicapName();
+        adapter.notifyDataSetChanged();
     }
 
 }
