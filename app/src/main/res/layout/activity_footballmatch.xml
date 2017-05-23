@@ -60,7 +60,7 @@
     </RelativeLayout>
 
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
         android:id="@+id/match_swiperefreshlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -72,8 +72,8 @@
             android:background="@color/number_info_two_bg"
             android:visibility="visible" />
 
-    </android.support.v4.widget.SwipeRefreshLayout>
 
+    </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
 
     <TextView
         android:id="@+id/match_no_data_txt"
@@ -132,5 +132,7 @@
         </LinearLayout>
 
     </LinearLayout>
+
+
 
 </LinearLayout>

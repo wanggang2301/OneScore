@@ -1725,4 +1725,7 @@
     <string name="lower">低於</string>
 
     <string name="roll_desc_txt">勝出</string>
+
+    <!--竞彩足球-->
+    <string name="football_jingcai">競彩足球</string>
 </resources>
