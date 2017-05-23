@@ -4,10 +4,11 @@ package com.hhly.mlottery.frame.scorefrag;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,19 +22,20 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.flyco.tablayout.SlidingTabLayout;
+import com.flyco.tablayout.widget.MsgView;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketBallMatchSearchActivity;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
 import com.hhly.mlottery.activity.BasketballSettingActivity;
-import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.BaseUserTopics;
 import com.hhly.mlottery.frame.BallType;
+import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketImmedNewScoreFragment;
 import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketResultNewScoreFragment;
 import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketScheduleNewScoreFragment;
-import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketImmedNewScoreFragment;
 import com.hhly.mlottery.frame.basketballframe.basketnewfragment.BasketballFocusNewFragment;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -64,7 +66,6 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
     private final int FOCUS_FRAGMENT = 3;
 
     private final static String TAG = "BasketScoresFragment";
-    public static List<String> titles;
 
     private Intent mIntent;
     private final int basketEntryType = 1;
@@ -96,8 +97,8 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
     private int currentFragmentId = 0;
 
     private ViewPager mViewPager;
-    private TabLayout mTabLayout;
-    private PureViewPagerAdapter pureViewPagerAdapter;
+    private SlidingTabLayout mTabLayout;
+    private FragmentPagerAdapter fragmentPagerAdapter;
     private List<Fragment> fragments;
     /**
      * 判断是否来自关注页面
@@ -169,12 +170,11 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
     }
 
     private void setupViewPager() {
-        mTabLayout = (TabLayout) view.findViewById(R.id.sliding_tabs);
-        titles = new ArrayList<>();
-        titles.add(getString(R.string.foot_jishi_txt));
-        titles.add(getString(R.string.foot_saiguo_txt));
-        titles.add(getString(R.string.foot_saicheng_txt));
-        titles.add(getString(R.string.foot_guanzhu_txt));
+        mTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs);
+
+
+        String[] tabNames = {getString(R.string.foot_jishi_txt), getString(R.string.foot_saiguo_txt), getString(R.string.foot_saicheng_txt), getString(R.string.foot_guanzhu_txt)};
+
 
         fragments = new ArrayList<>();
         fragments.add(BasketImmedNewScoreFragment.newInstance(IMMEDIA_FRAGMENT, isNewFrameWork, basketEntryType));
@@ -184,18 +184,42 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         fragments.add(BasketballFocusNewFragment.newInstance(FOCUS_FRAGMENT, basketEntryType));
 
 
-        pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
-        mViewPager.setAdapter(pureViewPagerAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
+        fragmentPagerAdapter = new FragmentPagerAdapter(getChildFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                return fragments.get(position);
+            }
+
+            @Override
+            public int getCount() {
+                return fragments.size();
+            }
+        };
+
+
+        mViewPager.setAdapter(fragmentPagerAdapter);
+        mViewPager.setOffscreenPageLimit(tabNames.length);
+
+        mTabLayout.setViewPager(mViewPager, tabNames);
+        mTabLayout.showDot(FOCUS_FRAGMENT);
+        mTabLayout.showMsg(FOCUS_FRAGMENT, 0);
+        mTabLayout.setMsgMargin(FOCUS_FRAGMENT, 12, 7);
+        mTabLayout.hideMsg(FOCUS_FRAGMENT);
+        MsgView msgView = mTabLayout.getMsgView(FOCUS_FRAGMENT);
+        if (msgView != null) {
+            msgView.setBackgroundColor(Color.parseColor("#ffde00"));
+            msgView.setTextColor(Color.parseColor("#0085e1"));
+        }
+
 
         if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
-            mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+            mTabLayout.setTabSpaceEqual(true);
         } else {
-            mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+            mTabLayout.setTabSpaceEqual(false);
         }
 
         mViewPager.setCurrentItem(currentFragmentId);
-        mViewPager.setOffscreenPageLimit(titles.size());
+        mViewPager.setOffscreenPageLimit(tabNames.length);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -260,9 +284,9 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         String[] arrayId = focusIds.split("[,]");
         if (getActivity() != null) {
             if ("".equals(focusIds) || arrayId.length == 0) {
-                mTabLayout.getTabAt(3).setText(getActivity().getResources().getString(R.string.foot_guanzhu_txt));
+                mTabLayout.hideMsg(FOCUS_FRAGMENT);
             } else {
-                mTabLayout.getTabAt(3).setText(getActivity().getResources().getString(R.string.foot_guanzhu_txt) + "(" + arrayId.length + ")");
+                mTabLayout.showMsg(FOCUS_FRAGMENT, arrayId.length);
             }
         }
 

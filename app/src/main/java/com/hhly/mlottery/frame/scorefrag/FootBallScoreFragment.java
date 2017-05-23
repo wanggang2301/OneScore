@@ -300,7 +300,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         mTabLayout.setViewPager(mViewPager, tabNames);
         mTabLayout.showDot(FOCUS_FRAGMENT);
         mTabLayout.showMsg(FOCUS_FRAGMENT, 0);
-        mTabLayout.setMsgMargin(FOCUS_FRAGMENT, 2, 7);
+        mTabLayout.setMsgMargin(FOCUS_FRAGMENT, 3, 7);
         mTabLayout.hideMsg(FOCUS_FRAGMENT);
         MsgView msgView = mTabLayout.getMsgView(FOCUS_FRAGMENT);
         if (msgView != null) {
