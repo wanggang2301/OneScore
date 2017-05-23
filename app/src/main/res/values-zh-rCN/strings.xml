@@ -1735,5 +1735,6 @@
     <string name="lower">低于</string>
 
     <string name="roll_desc_txt">胜出</string>
+    <string name="data_updating">详情数据更新中...</string>
 
 </resources>

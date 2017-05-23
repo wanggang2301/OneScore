@@ -33,6 +33,7 @@ import com.hhly.mlottery.config.FootBallDetailTypeEnum;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.HandMatchId;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.umeng.analytics.MobclickAgent;
@@ -467,11 +468,14 @@ public class HomePagerAdapter extends PagerAdapter {
                                 switch (split[0]) {
                                     case "18":// 足球
                                     {
-                                        Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
-                                        intent.putExtra("thirdId", split[1]);
-                                        intent.putExtra("currentFragmentId", 0);
-                                        intent.putExtra(FootBallDetailTypeEnum.CURRENT_TAB_KEY, FootBallDetailTypeEnum.FOOT_DETAIL_DEFAULT);
-                                        mContext.startActivity(intent);
+                                        if (HandMatchId.handId(mContext, split[1])) {
+
+                                            Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
+                                            intent.putExtra("thirdId", split[1]);
+                                            intent.putExtra("currentFragmentId", 0);
+                                            intent.putExtra(FootBallDetailTypeEnum.CURRENT_TAB_KEY, FootBallDetailTypeEnum.FOOT_DETAIL_DEFAULT);
+                                            mContext.startActivity(intent);
+                                        }
                                     }
                                     break;
                                     case "26":// 篮球

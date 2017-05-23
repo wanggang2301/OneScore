@@ -1,6 +1,5 @@
 package com.hhly.mlottery.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,8 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -36,6 +33,7 @@ import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.footballframe.DateMatchChoseDialogFragment;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.HandMatchId;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -382,8 +380,8 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
         pageNum = 1;
         Map<String, String> params = new HashMap<>();
         params.put("date", date);
-        params.put("pageNum",pageNum+"");
-        params.put("pageSize", PAGE_SIZE+"");
+        params.put("pageNum", pageNum + "");
+        params.put("pageSize", PAGE_SIZE + "");
         // 请求网络数据
         VolleyContentFast.requestJsonByGet(BaseURLs.FINDBETTINGLIST, params, new VolleyContentFast.ResponseSuccessListener<FootballLotteryBean>() {
             @Override
@@ -438,7 +436,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
         mRecyclerView.setAdapter(footballMatchListAdapter);
 
 
-        footballMatchListAdapter.openLoadMore(0,true);
+        footballMatchListAdapter.openLoadMore(0, true);
         footballMatchListAdapter.setLoadingView(view);
         footballMatchListAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
@@ -458,10 +456,15 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
             public void onItemClick(View view, int i) {
                 String thirdId = bettingList.get(i).getMatchId();
                 L.d("xxx", "thirdId: " + thirdId);
-                Intent intent = new Intent(FootballMatchActivity.this, FootballMatchDetailActivity.class);
-                intent.putExtra("thirdId", thirdId);
-                intent.putExtra("match_details", 1);
-                startActivity(intent);
+
+                if (HandMatchId.handId(getApplicationContext(), thirdId)) {
+
+
+                    Intent intent = new Intent(FootballMatchActivity.this, FootballMatchDetailActivity.class);
+                    intent.putExtra("thirdId", thirdId);
+                    intent.putExtra("match_details", 1);
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -515,8 +518,8 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
 
         setContentView(R.layout.activity_footballmatch);
 
-        LayoutInflater layoutInflater=this.getLayoutInflater();
-        view = layoutInflater.inflate(R.layout.view_load_more,null);
+        LayoutInflater layoutInflater = this.getLayoutInflater();
+        view = layoutInflater.inflate(R.layout.view_load_more, null);
 
         public_txt_title = (TextView) findViewById(R.id.public_txt_title);
         public_txt_title.setText(R.string.football_jingcai);
@@ -546,9 +549,8 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
         layoutManager.setOrientation(OrientationHelper.VERTICAL);//设置为垂直布局，这也是默认的
 
         //上来加载view
-        progressBar = (ProgressBar)view. findViewById(R.id.progressBar);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         loadmore_text = (TextView) view.findViewById(R.id.loadmore_text);
-
 
 
         mSwipeRefreshLayout = (ExactSwipeRefreshLayout) findViewById(R.id.match_swiperefreshlayout);
@@ -571,27 +573,27 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
 
     private void pullUpLoadMoreData() {
 
-        pageNum ++;
+        pageNum++;
         Map<String, String> params = new HashMap<>();
         params.put("date", Currentselection);
-        params.put("pageNum",pageNum+"");
-        params.put("pageSize", PAGE_SIZE+"");
+        params.put("pageNum", pageNum + "");
+        params.put("pageSize", PAGE_SIZE + "");
         // 请求网络数据
         VolleyContentFast.requestJsonByGet(BaseURLs.FINDBETTINGLIST, params, new VolleyContentFast.ResponseSuccessListener<FootballLotteryBean>() {
             @Override
             public void onResponse(FootballLotteryBean jsonObject) {
 
-                if (jsonObject!=null){
+                if (jsonObject != null) {
 
-                    if (jsonObject.getResult()==200){
-                        if (jsonObject.getBettingList()!=null&&jsonObject.getBettingList().size()>0){
+                    if (jsonObject.getResult() == 200) {
+                        if (jsonObject.getBettingList() != null && jsonObject.getBettingList().size() > 0) {
                             loadmore_text.setText(FootballMatchActivity.this.getResources().getString(R.string.loading_data_txt));
                             progressBar.setVisibility(View.VISIBLE);
                             bettingList.addAll(jsonObject.getBettingList());
                             footballMatchListAdapter.addData(bettingList);
                             footballMatchListAdapter.notifyDataChangedAfterLoadMore(true);
-                        }else{
-                           // loadmore_text.setText(FootballMatchActivity.this.getResources().getString(R.string.nodata_txt));
+                        } else {
+                            // loadmore_text.setText(FootballMatchActivity.this.getResources().getString(R.string.nodata_txt));
                             loadmore_text.setText("");
                             progressBar.setVisibility(View.GONE);
                             return;
@@ -606,8 +608,6 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
 
             }
         }, FootballLotteryBean.class);
-
-
 
 
     }
