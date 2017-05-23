@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.cpiadapter.CpiDateAdapter;
+import com.hhly.mlottery.adapter.football.MatchWeeksAdapter;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.UiUtils;
 
@@ -66,7 +67,7 @@ public class DateMatchChoseDialogFragment extends DialogFragment {
         mListView = (ListView) dialog.findViewById(R.id.listdate);
         maybeInitDateList();
 
-        final CpiDateAdapter cpiDateAdapter = new CpiDateAdapter(getContext(), dateList);
+        final MatchWeeksAdapter cpiDateAdapter = new MatchWeeksAdapter(getContext(), dateList);
         mListView.setAdapter(cpiDateAdapter);
         cpiDateAdapter.setDefSelect(selectedPosition);
         mListView.setSelection(selectedPosition);
