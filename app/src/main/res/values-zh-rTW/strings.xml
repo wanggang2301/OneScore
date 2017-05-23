@@ -1729,5 +1729,6 @@
     <!--竞彩足球-->
     <string name="football_jingcai">競彩足球</string>
     <string name="data_updating">詳情數據更新中...</string>
+    <string name="at_least_one_race">至少選擇一場賽事</string>
 
 </resources>

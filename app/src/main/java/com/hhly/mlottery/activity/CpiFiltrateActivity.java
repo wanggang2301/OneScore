@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.cpiadapter.CpiFiltrateMatchAdapter;
@@ -213,11 +214,16 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
                 setHideNumber();
                 break;
             case R.id.cpi_filtrate_submit_btn:// 确定
-                Intent intent = new Intent();
-                intent.putExtra("key", mCheckedIds);
-                setResult(0, intent);
-                finish();
-                isDefaultHot = false;
+
+                if (mCheckedIds.size() <= 0) {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.at_least_one_race), Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent();
+                    intent.putExtra("key", mCheckedIds);
+                    setResult(0, intent);
+                    finish();
+                    isDefaultHot = false;
+                }
                 break;
             default:
                 break;

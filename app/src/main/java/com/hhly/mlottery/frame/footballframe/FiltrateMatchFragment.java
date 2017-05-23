@@ -218,6 +218,8 @@ public class FiltrateMatchFragment extends Fragment implements OnClickListener {
                 break;
         }
 
+        L.d("ddddeee", "shuai==" + list.size() + "");
+
         for (String id : list) {
             mCheckedIds.add(id);
         }
