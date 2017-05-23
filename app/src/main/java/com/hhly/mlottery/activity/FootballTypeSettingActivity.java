@@ -28,7 +28,9 @@ import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.greenrobot.event.EventBus;
@@ -37,6 +39,10 @@ import de.greenrobot.event.EventBus;
  * 足球设置
  */
 public class FootballTypeSettingActivity extends BaseActivity implements OnClickListener, OnCheckedChangeListener {
+
+    private final String ALET = "1";
+    private final String EUR = "2";
+    private final String SIZE = "3";
 
     private SwitchCompat cb_notice;
 
@@ -59,13 +65,13 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
     private RadioButton mRd_asize;
     private RadioButton mRd_noshow;
 
-    String resultstring;
+//    String resultstring;
 
     Vibrator vibrator;
 
     SoundPool soundPool;
 
-    HashMap<Integer, Integer> soundMap = new HashMap<Integer, Integer>();
+    HashMap<Integer, Integer> soundMap = new HashMap<>();
 
     private int currentFragmentId = 0;
 
@@ -102,9 +108,9 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
         Intent intent = getIntent();
         currentFragmentId = intent.getIntExtra("currentFragmentId", 0);
 
-        //第一次进来根据文件选择选中哪个。默认是亚盘
+        //第一次进来根据文件选择选中哪个。默认是亚盘和欧赔
         boolean asize = PreferenceUtil.getBoolean(MyConstants.rbSizeBall, false);
-        boolean eur = PreferenceUtil.getBoolean(MyConstants.RBOCOMPENSATE, false);
+        boolean eur = PreferenceUtil.getBoolean(MyConstants.RBOCOMPENSATE, true);
         boolean alet = PreferenceUtil.getBoolean(MyConstants.RBSECOND, true);
         boolean noshow = PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false);
 
@@ -112,6 +118,11 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
         mRd_eur.setChecked(eur);
         mRd_asize.setChecked(asize);
         mRd_noshow.setChecked(noshow);
+
+        if(mRd_alet.isChecked()){selectList.add(ALET);}
+        if(mRd_eur.isChecked()){selectList.add(EUR);}
+        if(mRd_asize.isChecked()){selectList.add(SIZE);}
+        if(mRd_noshow.isChecked()){selectList.clear();}
 
         //设置按钮开关的选中状态
 
@@ -187,51 +198,69 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
 
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
-
     }
+
+    List<String> selectList = new ArrayList<>(2);
+
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             //赔率提示
-
             case R.id.rl_set_alet:
-                mRd_alet.setChecked(true);
-                mRd_eur.setChecked(false);
-                mRd_asize.setChecked(false);
-                mRd_noshow.setChecked(false);
+                mRd_alet.setChecked(!mRd_alet.isChecked());
+                if(mRd_alet.isChecked()){
+                    if(selectList.size() != 2){
+                        selectList.add(ALET);
+                    }else{
+                        selectList.remove(0);
+                        selectList.add(ALET);
+                    }
+                }else{
+                    selectList.remove(ALET);
+                }
                 save();
                 break;
             case R.id.rl_set_eur:
-                mRd_alet.setChecked(false);
-                mRd_eur.setChecked(true);
-                mRd_asize.setChecked(false);
-                mRd_noshow.setChecked(false);
+                mRd_eur.setChecked(!mRd_eur.isChecked());
+                if(mRd_eur.isChecked()){
+                    if(selectList.size() != 2){
+                        selectList.add(EUR);
+                    }else{
+                        selectList.remove(0);
+                        selectList.add(EUR);
+                    }
+                }else{
+                    selectList.remove(EUR);
+                }
                 save();
                 break;
             case R.id.rl_set_asize:
-                mRd_alet.setChecked(false);
-                mRd_eur.setChecked(false);
-                mRd_asize.setChecked(true);
-                mRd_noshow.setChecked(false);
+                mRd_asize.setChecked(!mRd_asize.isChecked());
+                if(mRd_asize.isChecked()){
+                    if(selectList.size() != 2){
+                        selectList.add(SIZE);
+                    }else{
+                        selectList.remove(0);
+                        selectList.add(SIZE);
+                    }
+                }else{
+                    selectList.remove(SIZE);
+                }
                 save();
                 break;
             case R.id.rl_set_noshow:
-                mRd_alet.setChecked(false);
-                mRd_eur.setChecked(false);
-                mRd_asize.setChecked(false);
+                selectList.clear();
                 mRd_noshow.setChecked(true);
                 save();
                 break;
-
             case R.id.public_img_back:
                 MobclickAgent.onEvent(mContext, "Football_Setting_Exit");
-                //   setResult(Activity.RESULT_OK);
-                Intent intent = new Intent();
-                intent.putExtra("resultType", resultstring);
+//                Intent intent = new Intent();
+//                intent.putExtra("resultType", resultstring);
 
                 eventbus();
-                setResult(Activity.RESULT_OK, intent);
+//                setResult(Activity.RESULT_OK, intent);
                 finish();
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 break;
@@ -244,13 +273,12 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            //   setResult(Activity.RESULT_OK);
-            Intent intent = new Intent();
-            intent.putExtra("resultType", resultstring);
+//            Intent intent = new Intent();
+//            intent.putExtra("resultType", resultstring);
 
             eventbus();
 
-            setResult(Activity.RESULT_OK, intent);
+//            setResult(Activity.RESULT_OK, intent);
             finish();
             overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
             return true;
@@ -339,7 +367,6 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
         params.put("statusPush", isPush);
         params.put("deviceToken", uMengDeviceToken);
         params.put("appNo", "11");
-        String url = "http://192.168.31.73:8080/mlottery/core/pushSetting.followUserPushSetting.do";
         VolleyContentFast.requestJsonByPost(BaseURLs.FOOTBALL_USER_SET, params, new VolleyContentFast.ResponseSuccessListener<String>() {
             @Override
             public void onResponse(String jsonObject) {
@@ -356,23 +383,29 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
     }
 
     private void save() {
+        mRd_alet.setChecked(selectList.contains(ALET));
+        mRd_eur.setChecked(selectList.contains(EUR));
+        mRd_asize.setChecked(selectList.contains(SIZE));
+        mRd_noshow.setChecked(selectList.size() == 0);
+
+
         PreferenceUtil.commitBoolean(MyConstants.RBSECOND, mRd_alet.isChecked()); //亚盘
         PreferenceUtil.commitBoolean(MyConstants.RBOCOMPENSATE, mRd_eur.isChecked());//欧赔
         PreferenceUtil.commitBoolean(MyConstants.rbSizeBall, mRd_asize.isChecked());//大小球
         PreferenceUtil.commitBoolean(MyConstants.RBNOTSHOW, mRd_noshow.isChecked()); //不显示
 
-        if (mRd_alet.isChecked()) {
-            resultstring = getResources().getString(R.string.set_asialet_txt);
-        }
-        if (mRd_asize.isChecked()) {
-            resultstring = getResources().getString(R.string.set_asiasize_txt);
-        }
-        if (mRd_eur.isChecked()) {
-            resultstring = getResources().getString(R.string.set_euro_txt);
-        }
-        if (mRd_noshow.isChecked()) {
-            resultstring = getResources().getString(R.string.set_oddghide_txt);
-        }
+//        if (mRd_alet.isChecked()) {
+//            resultstring = getResources().getString(R.string.set_asialet_txt);
+//        }
+//        if (mRd_asize.isChecked()) {
+//            resultstring = getResources().getString(R.string.set_asiasize_txt);
+//        }
+//        if (mRd_eur.isChecked()) {
+//            resultstring = getResources().getString(R.string.set_euro_txt);
+//        }
+//        if (mRd_noshow.isChecked()) {
+//            resultstring = getResources().getString(R.string.set_oddghide_txt);
+//        }
 
     }
 }

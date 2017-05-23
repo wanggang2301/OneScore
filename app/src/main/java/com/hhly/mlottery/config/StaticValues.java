@@ -23,4 +23,5 @@ public class StaticValues {
     public final static String TOTAL_NUMBERS="totalNumbers";
     public final static String TOTAL_WINS="totalWins";
     public final static String BOARD_WINS_PERSCENT="boardWinsPercent";
+    public final static String CORNER_FOCUS_ID="corner_focus_id";
 }

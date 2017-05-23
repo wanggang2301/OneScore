@@ -3,6 +3,8 @@ package com.hhly.mlottery;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.multidex.MultiDex;
@@ -13,6 +15,7 @@ import com.hhly.mlottery.util.CrashException;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DataBus;
 import com.hhly.mlottery.util.DeviceInfo;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.tendcloud.tenddata.TCAgent;
@@ -38,6 +41,9 @@ public class MyApp extends Application {
     public static String isPackageName;// 获取当前包名
     public static double LA;// 用户所在经度
     public static double LO;// 用户所在纬度
+    public static String version;// 当前版本Name
+    public static int versionCode;// 当前版本Code
+    public static String channelNumber;// 当前版本渠道号
 
     @Override
     public void onCreate() {
@@ -56,7 +62,6 @@ public class MyApp extends Application {
 
                 // 初始化PreferenceUtil
                 PreferenceUtil.init(appcontext);
-
 
 
                 //初始化获取语言环境
@@ -88,12 +93,14 @@ public class MyApp extends Application {
                 OkHttpFinalConfiguration.Builder builder = new OkHttpFinalConfiguration.Builder();
                 OkHttpFinal.getInstance().init(builder.build());
 
+                // 获取当前apk版本信息
+                getVersion();
+
             }
         }.start();
 
         super.onCreate();
     }
-
 
 
     /**
@@ -288,5 +295,26 @@ public class MyApp extends Application {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         System.exit(0);
+    }
+
+    /**
+     * 获取版本号
+     */
+    private void getVersion() {
+        try {
+            channelNumber = DeviceInfo.getAppMetaData(this, "UMENG_CHANNEL");// 获取渠道号
+            PackageManager manager = getPackageManager();
+            PackageInfo info = manager.getPackageInfo(getPackageName(), 0);
+            versionCode = info.versionCode;
+            String xxx = info.versionName.replace(".", "#");
+            String[] split = xxx.split("#");
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < 3; i++) {
+                sb = sb.append(split[i]);
+            }
+            version = sb.toString();
+        } catch (Exception e) {
+            L.d(e.getMessage());
+        }
     }
 }

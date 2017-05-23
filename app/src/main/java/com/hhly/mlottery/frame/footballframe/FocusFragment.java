@@ -125,6 +125,9 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
     private SoundPool mSoundPool;
     private HashMap<Integer, Integer> mSoundMap = new HashMap<Integer, Integer>();
 
+    private LinearLayout titleContainer;
+    private TextView handicapName1;
+    private TextView handicapName2;
 
     private static final String FRAGMENT_INDEX = "fragment_index";
     private static final String ENTRY_TYPE = "entryType";
@@ -231,6 +234,10 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
         mSwipeRefreshLayout.setRefreshing(true);
         mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+
+        titleContainer = (LinearLayout) mView.findViewById(R.id.titleContainer);
+        handicapName1 = (TextView) mView.findViewById(R.id.tv_handicap_name1);
+        handicapName2 = (TextView) mView.findViewById(R.id.tv_handicap_name2);
     }
 
     /**
@@ -302,6 +309,8 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
     private final int SHOW_STATUS_REFRESH_ONCLICK = 5;//点击刷新
 
     private void setStatus(int status) {
+
+        titleContainer.setVisibility(status == SHOW_STATUS_SUCCESS ? (PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE) : View.GONE);
 
         if (status == SHOW_STATUS_LOADING) {
             mSwipeRefreshLayout.setVisibility(View.VISIBLE);
@@ -511,6 +520,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                     L.d("sdfgh", "else");
                 }
 
+                setHandicapName();
 
 //                isLoadedData = true;
 //                mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
@@ -1092,10 +1102,48 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
             for (Match match : mMatchs) {
                 resetOddColor(match);
             }
+            titleContainer.setVisibility(PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE);
+            setHandicapName();
             updateAdapter();
         }
     }
 
+    /**
+     * 设置盘口显示类型
+     */
+    private void setHandicapName(){
+        boolean alet = PreferenceUtil.getBoolean(MyConstants.RBSECOND, true);
+        boolean asize = PreferenceUtil.getBoolean(MyConstants.rbSizeBall, false);
+        boolean eur = PreferenceUtil.getBoolean(MyConstants.RBOCOMPENSATE, true);
+        // 隐藏赔率name
+        if ((asize && eur) || (asize && alet) || (eur && alet)) {
+            handicapName1.setVisibility(View.VISIBLE);
+            handicapName2.setVisibility(View.VISIBLE);
+        } else {
+            handicapName1.setVisibility(View.VISIBLE);
+            handicapName2.setVisibility(View.GONE);
+        }
+        // 亚盘赔率
+        if (alet) {
+            handicapName1.setText(getResources().getString(R.string.roll_asialet));
+        }
+        // 大小盘赔率
+        if (asize) {
+            if (!alet) {
+                handicapName1.setText(getResources().getString(R.string.roll_asiasize));
+            } else {
+                handicapName2.setText(getResources().getString(R.string.roll_asiasize));
+            }
+        }
+        // 欧盘赔率
+        if (eur) {
+            if (!alet && !asize) {
+                handicapName1.setText(getResources().getString(R.string.roll_euro));
+            } else {
+                handicapName2.setText(getResources().getString(R.string.roll_euro));
+            }
+        }
+    }
 
     /**
      * EventBus 赛场比赛详情返回FootballMatchDetailActivity.关注页面分离出来不需要改

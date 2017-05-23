@@ -9,32 +9,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.footballDetails.BottomOdds;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsItem;
-import com.hhly.mlottery.bean.footballDetails.MatchDetail;
-import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
-import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
 import com.hhly.mlottery.bean.footballDetails.WebSocketRollballOdd;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.BaseUserTopics;
-import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.StringUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.DetailsRollOdd;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Timer;
 
 /**
  * @author wang gang
@@ -80,7 +71,7 @@ public class DetailsRollballFragment extends BaseWebSocketFragment implements Vi
     private BottomOddsItem asizeBottomOddsItem;
     private BottomOddsItem eurBottomOddsItem;
 
-    private boolean isLoading = false;// 是否已加载过数据
+    private String mThirdId;
 
     public static DetailsRollballFragment newInstance(String thirdId) {
         DetailsRollballFragment fragment = new DetailsRollballFragment();
@@ -92,9 +83,11 @@ public class DetailsRollballFragment extends BaseWebSocketFragment implements Vi
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        String thirdId = getArguments().getString(DETAILSROLLBALL_THIRD_ID);
+        if(getArguments() != null){
+            mThirdId = getArguments().getString(DETAILSROLLBALL_THIRD_ID);
+        }
         setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic(BaseUserTopics.oddsFootballMatch + "." + thirdId);
+        setTopic(BaseUserTopics.oddsFootballMatch + "." + mThirdId);
         super.onCreate(savedInstanceState);
         mContext = getActivity();
     }
@@ -116,23 +109,11 @@ public class DetailsRollballFragment extends BaseWebSocketFragment implements Vi
     }
 
     private void initOdds() {
-        if (isLoading) {
-            if (!getUserVisibleHint()) {
-                return;
-            }
-        } else {
-            isLoading = true;
-        }
-        if (getActivity() == null) {
-            return;
-        }
-
         L.d("ddd", "加载数据");
         setStatus(STARTLOADING);// 正在加载数据中
 
         Map<String, String> params = new HashMap<>();
-        params.put("thirdId", ((FootballMatchDetailActivity) getActivity()).mThirdId);
-        //String url = "http://192.168.10.242:8181/mlottery/core/footballBallList.ballListOverview.do";
+        params.put("thirdId", mThirdId);
 
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_BALLLISTOVERVIEW_INFO, params,
                 new VolleyContentFast.ResponseSuccessListener<BottomOdds>() {
@@ -148,16 +129,6 @@ public class DetailsRollballFragment extends BaseWebSocketFragment implements Vi
                         initItemOdd(bottomOdds);
 
                         connectWebSocket();
-
-//                        //赛中的时候开启socket推送
-//                        if (mViewType == DETAILSROLLBALL_TYPE_ING) {
-//                            if (isSocketStart) {
-//                                connectWebSocket();
-//                                isSocketStart = false;
-//
-//                            }
-//                        }
-
 
                     }
                 }
@@ -370,6 +341,7 @@ public class DetailsRollballFragment extends BaseWebSocketFragment implements Vi
     @Override
     public void onDestroy() {
         super.onDestroy();
+        closeWebSocket();
     }
 
     @Override
