@@ -69,6 +69,7 @@ import com.hhly.mlottery.util.NetworkUtils;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.StringUtils;
 import com.hhly.mlottery.util.adapter.ScreenUtils;
+import com.hhly.mlottery.util.immersionbar.ImmersionBar;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.BarrageView;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
@@ -202,7 +203,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ScreenUtils.setTranslucentStatus(this);
+//        ImmersionBar.with(this)
+//                .statusBarColor(R.color.colorPrimary)
+//                .init();
         if (getIntent() != null && getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BUNDLE_PARAM_THIRDID, "1300");
             currentFragmentId = getIntent().getExtras().getInt("currentFragmentId");
@@ -304,6 +307,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         mWebView.loadUrl(url);
     }
+
+
 
     @Override
     public void onRefresh() {
@@ -2043,6 +2048,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         super.onResume();
         MobclickAgent.onResume(this);
         mWebView.onResume();
+        ImmersionBar.with(this).transparentStatusBar().init();
     }
 
     @Override

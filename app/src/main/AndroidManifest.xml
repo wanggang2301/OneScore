@@ -42,7 +42,7 @@
             android:name=".activity.IndexActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
+            android:theme="@style/AppTheme.NoActionBar">
 
             <!--
             <intent-filter>
