@@ -114,7 +114,7 @@ public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEnt
             match_type.setVisibility(View.VISIBLE);
             match_state_started.setVisibility(View.GONE);
 
-        }else if(entity.getStatus().equals(-1)){ //完场
+        }else if(entity.getStatus().equals("-1")){ //完场
             rl_score.setVisibility(View.VISIBLE);
             match_type.setVisibility(View.GONE);
             match_state_started.setVisibility(View.VISIBLE);
