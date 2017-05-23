@@ -137,6 +137,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
         LinearLayout llOddsContent2 = viewHolder.findViewById(R.id.ll_odds_content2);
 
         TextView tvRollDesc = viewHolder.findViewById(R.id.tv_roll_desc);// 描述
+        View view_line = viewHolder.findViewById(R.id.view_line);// 描述分隔线
 
         // 初始化数据
         if (TextUtils.isEmpty(data.getKeepTime())) data.setKeepTime("0");
@@ -471,6 +472,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHo
 
         // 完场描述
         tvRollDesc.setVisibility(TextUtils.isEmpty(data.getTxt()) ? View.GONE : View.VISIBLE);
+        view_line.setVisibility(TextUtils.isEmpty(data.getTxt()) ? View.GONE : View.VISIBLE);
         String name = data.getWinner() == data.getHomeId() ? data.getHometeam() : data.getGuestteam();
         tvRollDesc.setText(data.getTxt() + "," + name + context.getResources().getString(R.string.roll_desc_txt));
     }

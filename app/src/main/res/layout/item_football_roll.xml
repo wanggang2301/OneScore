@@ -3,15 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
-    style="@style/Md.Card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
+    android:layout_marginBottom="@dimen/football_cardview_margin"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="@dimen/football_cardview_margin"
+    android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    android:visibility="visible"
-    app:cardBackgroundColor="@color/line_football_footer"
-    app:cardUseCompatPadding="true">
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="0.5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +24,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:orientation="vertical">
 
             <LinearLayout
@@ -334,13 +335,6 @@
 
                 </LinearLayout>
 
-                <View
-                    android:layout_width="0.5dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/linecolor" />
-
                 <!--置顶-->
                 <FrameLayout
                     android:id="@+id/fl_control"
@@ -363,8 +357,10 @@
             </LinearLayout>
 
             <View
+                android:id="@+id/view_line"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
+                android:visibility="gone"
                 android:background="@color/linecolor" />
 
             <TextView
@@ -380,10 +376,6 @@
                 android:textSize="@dimen/item_football_international_card"
                 tools:text="90分钟90分钟90分钟90分钟90分钟90分钟90分钟90分钟90分钟钟90分钟钟90分钟" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:background="@color/linecolor" />
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>
