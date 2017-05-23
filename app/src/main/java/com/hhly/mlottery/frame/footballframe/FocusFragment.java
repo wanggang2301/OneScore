@@ -14,7 +14,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,7 +27,6 @@ import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.ImmediateAdapter;
-import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.Focus;
 import com.hhly.mlottery.bean.Match;
 import com.hhly.mlottery.bean.MatchOdd;
@@ -45,6 +43,7 @@ import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchSettingEventBus
 import com.hhly.mlottery.frame.scorefrag.FootBallScoreFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.HandMatchId;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -503,12 +502,15 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                     mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
                         @Override
                         public void onItemClick(View view, String data) {
-                            String thirdId = data;
-                            Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
-                            intent.putExtra("thirdId", thirdId);
-                            intent.putExtra("currentFragmentId", 4);
-                            if (getActivity() != null) {
-                                getActivity().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                            if(HandMatchId.handId(getActivity(), data)) {
+
+                                String thirdId = data;
+                                Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
+                                intent.putExtra("thirdId", thirdId);
+                                intent.putExtra("currentFragmentId", 4);
+                                if (getActivity() != null) {
+                                    getActivity().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                                }
                             }
                         }
                     });

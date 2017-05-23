@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -21,6 +19,7 @@ import com.hhly.mlottery.callback.FootballMatchSearchService;
 import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.FocusUtils;
+import com.hhly.mlottery.util.HandMatchId;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
@@ -212,12 +211,17 @@ public class FootballMatchSearchActivity extends BaseActivity implements View.On
         basketballInforSerachAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, String data) {
-                String thirdId = data;
-                Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
-                intent.putExtra("thirdId", thirdId);
-                intent.putExtra("currentFragmentId", 1);
-                startActivity(intent);
-                //startActivityForResult(intent, REQUEST_DETAIL_CODE);
+
+               if (HandMatchId.handId(mContext, data)) {
+
+
+                   String thirdId = data;
+                   Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
+                   intent.putExtra("thirdId", thirdId);
+                   intent.putExtra("currentFragmentId", 1);
+                   startActivity(intent);
+                   //startActivityForResult(intent, REQUEST_DETAIL_CODE);
+               }
             }
         });
         basketballInforSerachAdapter.notifyDataSetChanged();

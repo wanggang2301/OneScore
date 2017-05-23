@@ -49,6 +49,7 @@ import com.hhly.mlottery.frame.scorefrag.FootBallScoreFragment;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FocusUtils;
+import com.hhly.mlottery.util.HandMatchId;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ResultDateUtil;
@@ -485,11 +486,14 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
                     @Override
                     public void onItemClick(View view, String data) {
-                        String thirdId = data;
-                        Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
-                        intent.putExtra("thirdId", thirdId);
-                        intent.putExtra("currentFragmentId", 2);
-                        getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                        if(HandMatchId.handId(getActivity(), data)) {
+
+                            String thirdId = data;
+                            Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
+                            intent.putExtra("thirdId", thirdId);
+                            intent.putExtra("currentFragmentId", 2);
+                            getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                        }
                     }
                 });
 

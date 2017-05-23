@@ -56,6 +56,7 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.FragmentUtils;
+import com.hhly.mlottery.util.HandMatchId;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -436,10 +437,13 @@ public class IndexActivity extends BaseActivity implements View.OnClickListener 
                         break;
                     case "footballInfo":// 足球详情页面
                         if (!TextUtils.isEmpty(mThirdId)) {
-                            Intent footIntent = new Intent(mContext, FootballMatchDetailActivity.class);
-                            footIntent.putExtra("currentFragmentId", -1);
-                            footIntent.putExtra("thirdId", mThirdId);
-                            startActivity(footIntent);
+
+                            if (HandMatchId.handId(mContext, mThirdId)) {
+                                Intent footIntent = new Intent(mContext, FootballMatchDetailActivity.class);
+                                footIntent.putExtra("currentFragmentId", -1);
+                                footIntent.putExtra("thirdId", mThirdId);
+                                startActivity(footIntent);
+                            }
                             L.d("xxx", "mThirdId: " + mThirdId);
                         }
                         break;
@@ -646,7 +650,7 @@ public class IndexActivity extends BaseActivity implements View.OnClickListener 
     /**
      * 检查版本更新
      */
-    private void checkUpdata(){
+    private void checkUpdata() {
         try {
             boolean isNewVersion = true;
             int serverVersion = Integer.parseInt(mUpdateInfo.getVersion()); // 取得服务器上的版本code
@@ -809,6 +813,7 @@ public class IndexActivity extends BaseActivity implements View.OnClickListener 
 
     /**
      * 安装新版本apk
+     *
      * @param file
      */
     private void installAPK(File file) {

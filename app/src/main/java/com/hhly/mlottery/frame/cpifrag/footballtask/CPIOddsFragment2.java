@@ -23,6 +23,7 @@ import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.websocket.WebSocketCPIResult;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
+import com.hhly.mlottery.util.HandMatchId;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.EmptyView;
@@ -120,9 +121,14 @@ public class CPIOddsFragment2 extends Fragment {
         mAdapter.setOnItemClickListener(new CPIRecyclerListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(NewOddsInfo.AllInfoBean item) {
-                Intent intent = new Intent(getContext(), FootballMatchDetailActivity.class);
-                intent.putExtra("thirdId", item.getMatchInfo().getMatchId());
-                getContext().startActivity(intent);
+
+                if(HandMatchId.handId(getContext(), item.getMatchInfo().getMatchId())) {
+
+
+                    Intent intent = new Intent(getContext(), FootballMatchDetailActivity.class);
+                    intent.putExtra("thirdId", item.getMatchInfo().getMatchId());
+                    getContext().startActivity(intent);
+                }
             }
         });
         // 每个 Item 内部一条赔率的单击

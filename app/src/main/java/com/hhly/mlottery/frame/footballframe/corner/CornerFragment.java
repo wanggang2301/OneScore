@@ -4,10 +4,7 @@ package com.hhly.mlottery.frame.footballframe.corner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,12 +24,8 @@ import com.hhly.mlottery.bean.corner.CornerListBean;
 import com.hhly.mlottery.callback.FocusMatchClickListener;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.ViewFragment;
-import com.hhly.mlottery.util.FocusUtils;
+import com.hhly.mlottery.util.HandMatchId;
 import com.hhly.mlottery.util.PreferenceUtil;
-import com.hhly.mlottery.util.ToastTools;
-import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
-
-import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -181,11 +174,16 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
             @Override
             public void onItemClick(View view, int i) {
                 CornerListBean.CornerEntity entity=mPresenter.getData().get(i);
-                Intent intent=new Intent(getActivity(), FootballMatchDetailActivity.class);
-                intent.putExtra(BUNDLE_PARAM_THIRDID,entity.getMatchId()+"");
+
+                if(HandMatchId.handId(getActivity(), entity.getMatchId()+"")) {
+
+
+                    Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
+                    intent.putExtra(BUNDLE_PARAM_THIRDID, entity.getMatchId() + "");
 //                ToastTools.showQuick(getActivity(),entity.getMatchId()+"");
-                intent.putExtra("current_ab",1);
-                getActivity().startActivity(intent);
+                    intent.putExtra("current_ab", 1);
+                    getActivity().startActivity(intent);
+                }
             }
         });
 
