@@ -4,34 +4,33 @@ public class ScheduleMatchOdd {
 
 
 
-	private AsiaSize asiaSize;
+	private OddsBean asiaSize;
 	
-	private Euro euro;
+	private OddsBean euro;
 	
-	private AsiaLet asiaLet;
+	private OddsBean asiaLet;
 
-	public AsiaSize getAsiaSize() {
+	public OddsBean getAsiaSize() {
 		return asiaSize;
 	}
 
-	public void setAsiaSize(AsiaSize asiaSize) {
+	public void setAsiaSize(OddsBean asiaSize) {
 		this.asiaSize = asiaSize;
 	}
 
-	public Euro getEuro() {
+	public OddsBean getEuro() {
 		return euro;
 	}
 
-	public void setEuro(Euro euro) {
+	public void setEuro(OddsBean euro) {
 		this.euro = euro;
 	}
 
-	public AsiaLet getAsiaLet() {
+	public OddsBean getAsiaLet() {
 		return asiaLet;
 	}
 
-	public void setAsiaLet(AsiaLet asiaLet) {
+	public void setAsiaLet(OddsBean asiaLet) {
 		this.asiaLet = asiaLet;
 	}
-	
 }

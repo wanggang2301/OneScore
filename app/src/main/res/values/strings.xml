@@ -1732,6 +1732,8 @@
     <string name="betting_setting_palying_method">玩法</string>
     <string name="betting_setting_league">联赛</string>
 
+    <string name="roll_desc_txt">胜出</string>
+
     /*****不要删除*************************************************************************************************/
     <string name="odds_back_list">""</string>
     <string name="odds_average">""</string>

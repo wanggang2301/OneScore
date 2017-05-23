@@ -1,15 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!--<LinearLayout--><!--xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:id="@+id/titleContainer"--><!--android:layout_height="wrap_content"--><!--android:layout_marginBottom="5dp"--><!--android:layout_marginTop="10dp"--><!--android:layout_width="match_parent"--><!--android:visibility="gone">-->
-
-<!--<TextView--><!--style="@style/WW_Weight_1"--><!--android:layout_weight="6"/>-->
-
-<!--<TextView--><!--style="@style/WW_Weight_1"--><!--android:text="亚"/>-->
-
-<!--<TextView--><!--style="@style/WW_Weight_1"--><!--android:text="大"/>-->
-
-<!--<TextView--><!--style="@style/WW_Weight_1"--><!--android:text="欧"/>--><!--</LinearLayout>-->
-
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -19,355 +8,382 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
+    android:foreground="?android:attr/selectableItemBackground"
     android:visibility="visible"
     app:cardBackgroundColor="@color/line_football_footer"
-    app:cardUseCompatPadding="true"
-    android:foreground="?android:attr/selectableItemBackground">
+    app:cardUseCompatPadding="true">
 
-    <android.support.percent.PercentRelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/selector_item_clickable">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
 
         <LinearLayout
-            android:id="@+id/ll2"
-            style="@style/item_rollball_linearlayout"
-            android:layout_marginBottom="0.4dp"
-            android:layout_marginTop="0.4dp"
-            android:layout_toRightOf="@+id/ll1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/white"
-            android:gravity="center_vertical"
-            android:minHeight="110dp"
-            app:layout_widthPercent="10%">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvHomeScore"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/text_about_color"
-                android:textSize="@dimen/text_size_13"
-                tools:text="1" />
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical">
+                <TextView
+                    android:id="@+id/tvRaceName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/item_football_racename"
+                    tools:text="哥伦乙" />
+
+                <TextView
+                    android:id="@+id/tvTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:textColor="@color/title"
+                    android:textSize="@dimen/item_football_time"
+                    tools:text="13:00" />
 
                 <TextView
                     android:id="@+id/tvKeepTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:maxWidth="50dp"
-                    android:textColor="@color/text_about_color"
-                    android:textSize="@dimen/info_center_title"
-                    tools:text="63" />
+                    android:paddingLeft="5dp"
+                    android:textColor="@color/football_keeptime"
+                    android:textSize="@dimen/keep_time"
+                    tools:text="0" />
 
                 <TextView
                     android:id="@+id/keepTimeShuffle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/tvKeepTime"
-                    android:gravity="center"
-                    android:text="'"
-                    android:textColor="@color/text_about_color"
-                    android:textSize="@dimen/text_size_13"
-                    android:visibility="gone" />
-            </RelativeLayout>
+                    android:textColor="@color/football_keeptime"
+                    android:textSize="@dimen/item_football_frequency"
+                    tools:text="'" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/linecolor" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4.8"
+                    android:orientation="horizontal">
+                    <!--Name-->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="3"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/tvHomeTeam"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:ellipsize="end"
+                                android:maxEms="10"
+                                android:maxLines="1"
+                                android:textColor="@color/msg"
+                                android:textSize="@dimen/item_football_half_score"
+                                tools:text="皇家马德里" />
+
+                            <TextView
+                                android:id="@+id/tvHomeYellowCard"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:background="@mipmap/card_yellow"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textSize="9sp"
+                                tools:text="0" />
+
+                            <TextView
+                                android:id="@+id/tvHomeRedCard"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="3dp"
+                                android:background="@mipmap/card_red"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textSize="9sp"
+                                tools:text="0" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/tvGuestTeam"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:ellipsize="end"
+                                android:maxEms="10"
+                                android:maxLines="1"
+                                android:textColor="@color/msg"
+                                android:textSize="@dimen/item_football_half_score"
+                                tools:text="韩国" />
+
+                            <TextView
+                                android:id="@+id/tvGuestYelloCard"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:background="@mipmap/card_yellow"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textSize="9sp"
+                                tools:text="0" />
+
+                            <TextView
+                                android:id="@+id/tvGuestRedCard"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="3dp"
+                                android:background="@mipmap/card_red"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textSize="9sp"
+                                tools:text="0" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!--半场比分-->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.3"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:id="@+id/tvHomeHalfScore"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textColor="@color/res_pl_color"
+                            android:textSize="@dimen/item_football_half_score"
+                            tools:text="0" />
+
+
+                        <TextView
+                            android:id="@+id/tvGuestHalfScore"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textColor="@color/res_pl_color"
+                            android:textSize="@dimen/item_football_half_score"
+                            tools:text="0" />
+
+                    </LinearLayout>
+
+                    <!--全场比分-->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:id="@+id/tvHomeScore"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/item_football_full_score"
+                            tools:text="0" />
+
+
+                        <TextView
+                            android:id="@+id/tvGuestScore"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/item_football_full_score"
+                            tools:text="0" />
+
+                    </LinearLayout>
+
+                    <!--赔率-->
+                    <LinearLayout
+                        android:id="@+id/ll_odds_content1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.6"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_odds_top1"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="-"
+                            android:textColor="@color/res_pl_color"
+                            android:textSize="@dimen/item_football_half_score" />
+
+                        <TextView
+                            android:id="@+id/tv_odds_center1"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="-"
+                            android:textColor="@color/res_pl_color"
+                            android:textSize="@dimen/item_football_half_score" />
+
+                        <TextView
+                            android:id="@+id/tv_odds_bottom1"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="-"
+                            android:textColor="@color/res_pl_color"
+                            android:textSize="@dimen/item_football_half_score" />
+
+                    </LinearLayout>
+
+                    <!--赔率2-->
+                    <LinearLayout
+                        android:id="@+id/ll_odds_content2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.6"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:id="@+id/tv_odds_top2"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="-"
+                            android:textColor="@color/res_pl_color"
+                            android:textSize="@dimen/item_football_half_score" />
+
+                        <TextView
+                            android:id="@+id/tv_odds_center2"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="-"
+                            android:textColor="@color/res_pl_color"
+                            android:textSize="@dimen/item_football_half_score" />
+
+                        <TextView
+                            android:id="@+id/tv_odds_bottom2"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="-"
+                            android:textColor="@color/res_pl_color"
+                            android:textSize="@dimen/item_football_half_score" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/linecolor" />
+
+                <!--置顶-->
+                <FrameLayout
+                    android:id="@+id/fl_control"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.7"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:id="@+id/ivItemPositionControl"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/roll_top" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/linecolor" />
 
             <TextView
-                android:id="@+id/tvGuestScore"
+                android:id="@+id/tv_roll_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/text_about_color"
-                android:textSize="@dimen/text_size_13"
-                tools:text="1" />
-        </LinearLayout>
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:visibility="gone"
+                android:textColor="@color/score_red"
+                android:textSize="@dimen/item_football_international_card"
+                tools:text="90分钟90分钟90分钟90分钟90分钟90分钟90分钟90分钟90分钟钟90分钟钟90分钟" />
 
-        <LinearLayout
-            android:id="@+id/ll3"
-            style="@style/item_rollball_linearlayout"
-            android:layout_marginBottom="0.4dp"
-            android:layout_marginLeft="0.4dp"
-            android:layout_marginTop="0.4dp"
-            android:layout_toRightOf="@id/ll2"
-            android:background="@color/line_football_footer"
-            android:gravity="center_vertical"
-            android:minHeight="110dp"
-            app:layout_widthPercent="37%">
-
-            <RelativeLayout style="@style/MW_White">
-
-                <TextView
-                    android:id="@+id/tvHomeTeam"
-                    style="@style/item_rollball_MeasureSpec_EXACTLY"
-                    android:layout_marginLeft="@dimen/activity_margin_half"
-                    android:maxEms="6"
-                    tools:text="皇家马德里" />
-
-                <TextView
-                    android:id="@+id/tvHomeYellowCard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@+id/tvHomeTeam"
-                    android:background="@mipmap/card_yellow"
-                    android:gravity="center"
-                    android:text="0"
-                    android:textColor="@color/white"
-                    android:textSize="9sp" />
-
-                <TextView
-                    android:id="@+id/tvHomeRedCard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="3dp"
-                    android:layout_toRightOf="@+id/tvHomeYellowCard"
-                    android:background="@mipmap/card_red"
-                    android:gravity="center"
-                    android:text="0"
-                    android:textColor="@color/white"
-                    android:textSize="9sp" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                style="@style/MW_White"
-                android:layout_marginTop="0.4dp">
-
-                <RelativeLayout
-                    android:id="@+id/rlHalfContainer"
-                    style="@style/MW_White"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:id="@+id/tvSpace"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/activity_margin_half"
-                        android:text="@string/fragme_home_shangbanchang_text"
-                        android:textColor="@color/red"
-                        android:textSize="@dimen/text_size_12" />
-
-                    <TextView
-                        android:id="@+id/tvHomeHalfScore"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="5dp"
-                        android:layout_toRightOf="@+id/tvSpace"
-                        android:padding="1dp"
-                        android:textColor="@color/red"
-                        android:textSize="@dimen/text_size_11"
-                        tools:text="1" />
-
-                    <TextView
-                        android:id="@+id/spec"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/tvHomeHalfScore"
-                        android:padding="1dp"
-                        android:text="-"
-                        android:textColor="@color/red"
-                        android:textSize="@dimen/text_size_11" />
-
-                    <TextView
-                        android:id="@+id/tvGuestHalfScore"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/activity_margin_half"
-                        android:layout_toRightOf="@+id/spec"
-                        android:padding="1dp"
-                        android:textColor="@color/red"
-                        android:textSize="@dimen/text_size_11"
-                        tools:text="0" />
-                </RelativeLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
-                style="@style/MW_White"
-                android:layout_marginTop="0.4dp">
-
-                <TextView
-                    android:id="@+id/tvGuestTeam"
-                    style="@style/item_rollball_MeasureSpec_EXACTLY"
-                    android:layout_marginLeft="@dimen/activity_margin_half"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:maxEms="6"
-                    tools:text="巴萨" />
-
-                <TextView
-                    android:id="@+id/tvGuestYelloCard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@+id/tvGuestTeam"
-                    android:background="@mipmap/card_yellow"
-                    android:gravity="center"
-                    android:text="0"
-                    android:textColor="@color/white"
-                    android:textSize="9sp" />
-
-                <TextView
-                    android:id="@+id/tvGuestRedCard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="3dp"
-                    android:layout_toRightOf="@+id/tvGuestYelloCard"
-                    android:background="@mipmap/card_red"
-                    android:gravity="center"
-                    android:text="0"
-                    android:textColor="@color/white"
-                    android:textSize="9sp" />
-            </RelativeLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll4"
-            style="@style/item_rollball_linearlayout"
-            android:layout_marginBottom="0.4dp"
-            android:layout_marginLeft="0.4dp"
-            android:layout_marginTop="0.4dp"
-            android:layout_toRightOf="@id/ll3"
-            android:background="@color/line_football_footer"
-            android:gravity="center_vertical"
-            android:minHeight="110dp"
-            android:textColor="@color/res_name_color"
-            app:layout_widthPercent="13.3%">
-
-            <TextView
-                android:id="@+id/tvHandicapValue_YA_BLACK"
-                style="@style/item_rollball_textview"
-                android:textColor="@color/res_pl_color" />
-
-            <TextView
-                android:id="@+id/tvLeftOdds_YA"
-                style="@style/item_rollball_textview"
-                android:layout_marginTop="0.4dp"
-                android:textColor="@color/res_name_color" />
-
-            <TextView
-                android:id="@+id/tvRightOdds_YA"
-                style="@style/item_rollball_textview"
-                android:layout_marginTop="0.4dp"
-                android:textColor="@color/res_pl_color" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll5"
-            style="@style/item_rollball_linearlayout"
-            android:layout_marginBottom="0.4dp"
-            android:layout_marginLeft="0.4dp"
-            android:layout_marginTop="0.4dp"
-            android:layout_toRightOf="@id/ll4"
-            android:background="@color/line_football_footer"
-            android:gravity="center_vertical"
-            android:minHeight="110dp"
-            app:layout_widthPercent="13.3%">
-
-            <TextView
-                android:id="@+id/tvHandicapValue_DA_BLACK"
-                style="@style/item_rollball_textview"
-                android:textColor="@color/res_pl_color" />
-
-            <TextView
-                android:id="@+id/tvLeftOdds_DA"
-                style="@style/item_rollball_textview"
-                android:layout_marginTop="0.4dp"
-                android:textColor="@color/res_name_color" />
-
-            <TextView
-                android:id="@+id/tvRightOdds_DA"
-                style="@style/item_rollball_textview"
-                android:layout_marginTop="0.4dp"
-                android:textColor="@color/res_pl_color" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll6"
-            style="@style/item_rollball_linearlayout"
-            android:layout_margin="0.4dp"
-            android:layout_toRightOf="@id/ll5"
-            android:background="@color/line_football_footer"
-            android:gravity="center_vertical"
-            android:minHeight="110dp"
-            app:layout_widthPercent="13.3%">
-
-            <TextView
-                android:id="@+id/tvMediumOdds_EU"
-                style="@style/item_rollball_textview"
-                android:textColor="@color/res_pl_color" />
-
-            <TextView
-                android:id="@+id/tvLeftOdds_EU"
-                style="@style/item_rollball_textview"
-                android:layout_marginTop="0.4dp"
-                android:textColor="@color/res_pl_color" />
-
-            <TextView
-                android:id="@+id/tvRightOdds_EU"
-                style="@style/item_rollball_textview"
-                android:layout_marginTop="0.4dp"
-                android:textColor="@color/res_pl_color" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll1"
-            style="@style/item_rollball_linearlayout"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/ll2"
-            android:background="@color/white"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:minHeight="110dp"
-            app:layout_widthPercent="13%">
-
-            <TextView
-                android:id="@+id/tvRaceName"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="0.4dp"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:lines="1"
-                android:textColor="@color/orange"
-                android:textSize="@dimen/text_size_11"
-                tools:text="欧巴杯" />
-
-            <TextView
-                android:id="@+id/tvTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="12dp"
-                android:gravity="center"
-                android:textColor="@color/res_time_color"
-                android:textSize="@dimen/text_size_13"
-                tools:text="01:30" />
-
-            <ImageView
-                android:id="@+id/ivItemPositionControl"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:src="@mipmap/roll_top" />
+                android:layout_height="5dp"
+                android:background="@color/linecolor" />
         </LinearLayout>
-    </android.support.percent.PercentRelativeLayout>
+    </LinearLayout>
 </android.support.v7.widget.CardView>
