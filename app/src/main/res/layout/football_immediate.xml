@@ -1,11 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/whitesmoke"
     android:orientation="vertical">
     <include layout="@layout/item_header_unconection_view" />
+
+    <LinearLayout
+        android:id="@+id/titleContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/selector_item_clickable"
+        android:orientation="horizontal"
+        android:visibility="invisible">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_weight="4.8">
+
+            <TextView
+                style="@style/WW_Width_0dp"
+                android:layout_weight="3.6" />
+
+            <TextView
+                android:id="@+id/tv_handicap_name1"
+                style="@style/WW_Width_0dp"
+                android:layout_weight="0.6"
+                android:gravity="center"
+                android:text="@string/roll_asialet"/>
+
+            <TextView
+                android:id="@+id/tv_handicap_name2"
+                style="@style/WW_Width_0dp"
+                android:layout_weight="0.6"
+                android:gravity="center"
+                android:text="@string/roll_asiasize"/>
+
+            <TextView
+                style="@style/WW_Width_0dp"
+                android:layout_weight="0.4"
+                android:gravity="center"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"

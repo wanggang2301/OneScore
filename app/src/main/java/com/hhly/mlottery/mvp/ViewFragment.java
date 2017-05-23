@@ -11,6 +11,8 @@ public abstract class ViewFragment<P extends IPresenter> extends MvpBaseFragment
 
     protected P mPresenter;
 
+    public static String NODATA="1";
+    public static String NETERROR="2";
     @Override
     public void onDestroy() {
         super.onDestroy();

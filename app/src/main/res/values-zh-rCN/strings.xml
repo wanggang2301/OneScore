@@ -1729,5 +1729,11 @@
     <string name="football_database_details_fumble_score_avg">场均失球 :</string>
 
     <string name="invited_summary">请您一起看比赛，输入邀请码，优惠多多哦。</string>
+    <string name="corner_score">角球比分</string>
+    <string name="higher">高于</string>
+    <string name="jishi_pan">即时盘</string>
+    <string name="lower">低于</string>
+
+    <string name="roll_desc_txt">胜出</string>
 
 </resources>

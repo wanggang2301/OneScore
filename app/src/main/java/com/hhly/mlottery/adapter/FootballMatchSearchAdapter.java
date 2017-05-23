@@ -169,9 +169,8 @@ public class FootballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerVie
 
         ImageView guest_icon;
 
-        TextView tv_match_type;
-
-        RelativeLayout rl_score;
+        LinearLayout ll_half_score;
+        LinearLayout ll_all_score;
 
         public ImmediaViewHolder(final View itemView) {
             super(itemView);
@@ -184,9 +183,6 @@ public class FootballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerVie
             item_home_full_score = (TextView) itemView.findViewById(R.id.tv_home_full_score);
             item_guest_half_score = (TextView) itemView.findViewById(R.id.tv_guest_half_score);
             item_guest_full_score = (TextView) itemView.findViewById(R.id.tv_guest_full_score);
-            tv_match_type = (TextView) itemView.findViewById(R.id.tv_match_type);
-            rl_score = (RelativeLayout) itemView.findViewById(R.id.rl_score);
-
 
             item_football_frequency = (TextView) itemView.findViewById(R.id.item_football_frequency);
             item_football_home_yc = (TextView) itemView.findViewById(R.id.item_football_home_yc);
@@ -204,6 +200,9 @@ public class FootballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerVie
             Iv_guangzhu = (ImageView) itemView.findViewById(R.id.Iv_guangzhu);
             home_icon = (ImageView) itemView.findViewById(R.id.home_icon);
             guest_icon = (ImageView) itemView.findViewById(R.id.guest_icon);
+
+            ll_half_score = (LinearLayout) itemView.findViewById(R.id.ll_half_score);
+            ll_all_score = (LinearLayout) itemView.findViewById(R.id.ll_all_score);
         }
 
     }
@@ -241,18 +240,16 @@ public class FootballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerVie
         holder.item_football_racename.setTextColor(Color.parseColor(match.getRaceColor()));
         holder.item_football_time.setText(match.getTime());
 
-        holder.rl_score.setVisibility(View.GONE);
-        holder.tv_match_type.setVisibility(View.GONE);
-
         if ("0".equals(match.getStatusOrigin())) {// 未开
-            holder.rl_score.setVisibility(View.GONE);
-            holder.tv_match_type.setVisibility(View.VISIBLE);
-            holder.keeptime.setVisibility(View.GONE);
+            holder.ll_half_score.setVisibility(View.GONE);
+            holder.ll_all_score.setVisibility(View.GONE);
+            holder.keeptime.setText(mContext.getResources().getString(R.string.tennis_match_not_start));
+            holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.res_pl_color));
 
         } else if ("1".equals(match.getStatusOrigin())) {// 上半场
 
-            holder.rl_score.setVisibility(View.VISIBLE);
-            holder.tv_match_type.setVisibility(View.GONE);
+            holder.ll_half_score.setVisibility(View.VISIBLE);
+            holder.ll_all_score.setVisibility(View.VISIBLE);
 
             holder.item_home_half_score.setVisibility(View.INVISIBLE);
             holder.item_guest_half_score.setVisibility(View.INVISIBLE);
@@ -278,15 +275,14 @@ public class FootballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerVie
                 holder.keeptime.setText("E");
                 holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
             }
-            holder.keeptime.setVisibility(View.VISIBLE);
 
         } else if ("3".equals(match.getStatusOrigin())) {// 下半场
             //  holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
             //  holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
 
 
-            holder.rl_score.setVisibility(View.VISIBLE);
-            holder.tv_match_type.setVisibility(View.GONE);
+            holder.ll_half_score.setVisibility(View.VISIBLE);
+            holder.ll_all_score.setVisibility(View.VISIBLE);
 
 
             holder.item_home_full_score.setText(match.getHomeScore());
@@ -311,11 +307,10 @@ public class FootballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerVie
                 holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
             }
 
-            holder.keeptime.setVisibility(View.VISIBLE);
         } else if ("4".equals(match.getStatusOrigin())) {// 加时
 
-            holder.rl_score.setVisibility(View.VISIBLE);
-            holder.tv_match_type.setVisibility(View.GONE);
+            holder.ll_half_score.setVisibility(View.VISIBLE);
+            holder.ll_all_score.setVisibility(View.VISIBLE);
 
 
             holder.item_home_full_score.setText(match.getHomeScore());
@@ -328,12 +323,10 @@ public class FootballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerVie
             holder.keeptime.setText(mContext.getString(R.string.immediate_status_overtime));
             holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
 
-            holder.keeptime.setVisibility(View.VISIBLE);
         } else if ("5".equals(match.getStatusOrigin())) {// 点球
 
-            holder.rl_score.setVisibility(View.VISIBLE);
-            holder.tv_match_type.setVisibility(View.GONE);
-
+            holder.ll_half_score.setVisibility(View.VISIBLE);
+            holder.ll_all_score.setVisibility(View.VISIBLE);
 
             holder.item_home_full_score.setText(match.getHomeScore());
             holder.item_guest_full_score.setText(match.getGuestScore());
@@ -345,14 +338,14 @@ public class FootballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerVie
             holder.keeptime.setText(mContext.getString(R.string.immediate_status_point));
             holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
 
-            holder.keeptime.setVisibility(View.VISIBLE);
 
         } else if ("-1".equals(match.getStatusOrigin())) {// 完场
 
-            holder.keeptime.setVisibility(View.GONE);
+            holder.keeptime.setText(mContext.getResources().getString(R.string.finish_txt));
+            holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
 
-            holder.rl_score.setVisibility(View.VISIBLE);
-            holder.tv_match_type.setVisibility(View.GONE);
+            holder.ll_half_score.setVisibility(View.VISIBLE);
+            holder.ll_all_score.setVisibility(View.VISIBLE);
 
 
             holder.item_home_full_score.setText(match.getHomeScore());
@@ -377,8 +370,8 @@ public class FootballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerVie
             // holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
             // holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
 
-            holder.rl_score.setVisibility(View.VISIBLE);
-            holder.tv_match_type.setVisibility(View.GONE);
+            holder.ll_half_score.setVisibility(View.VISIBLE);
+            holder.ll_all_score.setVisibility(View.VISIBLE);
 
 
             holder.item_home_full_score.setText(match.getHomeScore());
@@ -389,30 +382,25 @@ public class FootballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerVie
 
             holder.keeptime.setText(mContext.getString(R.string.immediate_status_midfield));
             holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
-            holder.keeptime.setVisibility(View.VISIBLE);
 
         } else if ("-10".equals(match.getStatusOrigin())) {// 取消
             //  holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
             //  holder.item_football_full_score.setText("VS");
+
             //  holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.content_txt_grad));
+            holder.ll_half_score.setVisibility(View.GONE);
+            holder.ll_all_score.setVisibility(View.GONE);
 
-
-            holder.rl_score.setVisibility(View.GONE);
-            holder.tv_match_type.setVisibility(View.VISIBLE);
-
-
-            holder.keeptime.setVisibility(View.VISIBLE);
             holder.keeptime.setText(mContext.getString(R.string.immediate_status_cancel));
             holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
         } else if ("-11".equals(match.getStatusOrigin())) {// 待定
 
-            holder.rl_score.setVisibility(View.GONE);
-            holder.tv_match_type.setVisibility(View.VISIBLE);
+            holder.ll_half_score.setVisibility(View.GONE);
+            holder.ll_all_score.setVisibility(View.GONE);
 
 
             holder.keeptime.setText(mContext.getString(R.string.immediate_status_hold));
             holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
-            holder.keeptime.setVisibility(View.VISIBLE);
             //   holder.item_football_full_score.setText("VS");
             //  holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.content_txt_grad));
         } else if ("-12".equals(match.getStatusOrigin())) {// 腰斩
@@ -421,8 +409,8 @@ public class FootballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerVie
             //  holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
             //  holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
 
-            holder.rl_score.setVisibility(View.VISIBLE);
-            holder.tv_match_type.setVisibility(View.GONE);
+            holder.ll_half_score.setVisibility(View.VISIBLE);
+            holder.ll_all_score.setVisibility(View.VISIBLE);
 
 
             holder.item_home_full_score.setText(match.getHomeScore());
@@ -431,7 +419,6 @@ public class FootballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerVie
             holder.item_guest_full_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
 
 
-            holder.keeptime.setVisibility(View.VISIBLE);
 
         } else if ("-13".equals(match.getStatusOrigin())) {// 中断
 
@@ -440,17 +427,13 @@ public class FootballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerVie
             //  holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
             //  holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
 
-            holder.rl_score.setVisibility(View.VISIBLE);
-            holder.tv_match_type.setVisibility(View.GONE);
-
+            holder.ll_half_score.setVisibility(View.VISIBLE);
+            holder.ll_all_score.setVisibility(View.VISIBLE);
 
             holder.item_home_full_score.setText(match.getHomeScore());
             holder.item_guest_full_score.setText(match.getGuestScore());
             holder.item_home_full_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
             holder.item_guest_full_score.setTextColor(mContext.getResources().getColor(R.color.basket_score));
-
-
-            holder.keeptime.setVisibility(View.VISIBLE);
 
 
         } else if ("-14".equals(match.getStatusOrigin())) {// 推迟
@@ -459,14 +442,13 @@ public class FootballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerVie
             holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
             // holder.item_football_full_score.setText(match.getHomeScore() + "-" + match.getGuestScore());
             // holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
-            holder.keeptime.setVisibility(View.VISIBLE);
 
             //  holder.item_football_full_score.setText("VS");
             //  holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.content_txt_grad));
             //  holder.item_football_full_score.setVisibility(View.VISIBLE);
 
-            holder.rl_score.setVisibility(View.GONE);
-            holder.tv_match_type.setVisibility(View.VISIBLE);
+            holder.ll_half_score.setVisibility(View.GONE);
+            holder.ll_all_score.setVisibility(View.GONE);
 
 
         }
@@ -489,8 +471,8 @@ public class FootballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerVie
                 && (match.getHomeScore() == null || match.getGuestScore() == null)) {
             // holder.item_football_full_score.setText(Html.fromHtml("<span><b>0</b></span><span>-</span><span><b>0</b></span>"));
 
-            holder.rl_score.setVisibility(View.VISIBLE);
-            holder.tv_match_type.setVisibility(View.GONE);
+            holder.ll_half_score.setVisibility(View.VISIBLE);
+            holder.ll_all_score.setVisibility(View.VISIBLE);
 
 
             holder.item_home_full_score.setText(0 + "");
@@ -557,8 +539,8 @@ public class FootballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerVie
 
         if ("3".equals(match.getStatusOrigin()) || "2".equals(match.getStatusOrigin())) {// 显示右上角上半场比分
 
-            holder.rl_score.setVisibility(View.VISIBLE);
-            holder.tv_match_type.setVisibility(View.GONE);
+            holder.ll_half_score.setVisibility(View.VISIBLE);
+            holder.ll_all_score.setVisibility(View.VISIBLE);
 
 
             holder.item_home_half_score.setVisibility(View.VISIBLE);
@@ -576,8 +558,8 @@ public class FootballMatchSearchAdapter extends RecyclerView.Adapter<RecyclerVie
             // 有中场比分显示中场比分
             if (match.getHomeHalfScore() != null && match.getGuestHalfScore() != null) {
 
-                holder.rl_score.setVisibility(View.VISIBLE);
-                holder.tv_match_type.setVisibility(View.GONE);
+                holder.ll_half_score.setVisibility(View.VISIBLE);
+                holder.ll_all_score.setVisibility(View.VISIBLE);
 
                 holder.item_home_half_score.setVisibility(View.VISIBLE);
                 holder.item_guest_half_score.setVisibility(View.VISIBLE);

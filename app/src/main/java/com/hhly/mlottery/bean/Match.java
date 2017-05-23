@@ -21,7 +21,7 @@ public class Match implements Parcelable, Cloneable, Comparator<Match> {
     private String raceColor;
     private String date;
     private String time;
-    private String homeId;
+    private int homeId;
     private String hometeam;
 
     private String guestId;
@@ -55,6 +55,76 @@ public class Match implements Parcelable, Cloneable, Comparator<Match> {
 
     private int homeTeamTextColorId;
     private int guestTeamTextColorId;
+
+    private String txt;
+    private int winner;
+
+    protected Match(Parcel in) {
+        thirdId = in.readString();
+        sortId = in.readInt();
+        racename = in.readString();
+        raceId = in.readString();
+        raceColor = in.readString();
+        date = in.readString();
+        time = in.readString();
+        homeId = in.readInt();
+        hometeam = in.readString();
+        guestId = in.readString();
+        guestteam = in.readString();
+        homerank = in.readString();
+        guestrank = in.readString();
+        statusOrigin = in.readString();
+        status = in.readString();
+        keepTime = in.readString();
+        halfScore = in.readString();
+        fullScore = in.readString();
+        home_rc = in.readString();
+        home_yc = in.readString();
+        guest_rc = in.readString();
+        guest_yc = in.readString();
+        homeScore = in.readString();
+        guestScore = in.readString();
+        homeHalfScore = in.readString();
+        guestHalfScore = in.readString();
+        leftOddTextColorId = in.readInt();
+        rightOddTextColorId = in.readInt();
+        midOddTextColorId = in.readInt();
+        homeTeamTextColorId = in.readInt();
+        guestTeamTextColorId = in.readInt();
+        txt = in.readString();
+        winner = in.readInt();
+        isFootballChicks = in.readByte() != 0;
+        itemBackGroundColorId = in.readInt();
+        isTopData = in.readInt();
+    }
+
+    public static final Creator<Match> CREATOR = new Creator<Match>() {
+        @Override
+        public Match createFromParcel(Parcel in) {
+            return new Match(in);
+        }
+
+        @Override
+        public Match[] newArray(int size) {
+            return new Match[size];
+        }
+    };
+
+    public int getWinner() {
+        return winner;
+    }
+
+    public void setWinner(int winner) {
+        this.winner = winner;
+    }
+
+    public String getTxt() {
+        return txt;
+    }
+
+    public void setTxt(String txt) {
+        this.txt = txt;
+    }
 
     private boolean isFootballChicks = false; //标记item是否被选中(默认未选中)
 
@@ -99,17 +169,6 @@ public class Match implements Parcelable, Cloneable, Comparator<Match> {
         this.isTopData = isTopData;
     }
 
-    public static final Creator<Match> CREATOR = new Creator<Match>() {
-        @Override
-        public Match createFromParcel(Parcel in) {
-            return new Match(in);
-        }
-
-        @Override
-        public Match[] newArray(int size) {
-            return new Match[size];
-        }
-    };
 
     public int getHomeTeamTextColorId() {
         return homeTeamTextColorId;
@@ -343,11 +402,11 @@ public class Match implements Parcelable, Cloneable, Comparator<Match> {
         this.guestId = guestId;
     }
 
-    public String getHomeId() {
+    public int getHomeId() {
         return homeId;
     }
 
-    public void setHomeId(String homeId) {
+    public void setHomeId(int homeId) {
         this.homeId = homeId;
     }
 
@@ -373,30 +432,44 @@ public class Match implements Parcelable, Cloneable, Comparator<Match> {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(thirdId);
-        dest.writeString(racename);
-        dest.writeString(raceId);
-        dest.writeString(raceColor);
-        dest.writeString(date);
-        dest.writeString(time);
-        dest.writeString(homeId);
-        dest.writeString(hometeam);
-        dest.writeString(guestId);
-        dest.writeString(guestteam);
-        dest.writeString(homerank);
-        dest.writeString(guestrank);
-        dest.writeString(status);
-        dest.writeString(statusOrigin);
-        dest.writeString(keepTime);
-        dest.writeString(halfScore);
-        dest.writeString(fullScore);
-        dest.writeString(home_rc);
-        dest.writeString(home_yc);
-        dest.writeString(guest_rc);
-        dest.writeString(guest_yc);
-        dest.writeMap(matchOdds);
+    public void writeToParcel(Parcel parcel, int i) {
 
+        parcel.writeString(thirdId);
+        parcel.writeInt(sortId);
+        parcel.writeString(racename);
+        parcel.writeString(raceId);
+        parcel.writeString(raceColor);
+        parcel.writeString(date);
+        parcel.writeString(time);
+        parcel.writeInt(homeId);
+        parcel.writeString(hometeam);
+        parcel.writeString(guestId);
+        parcel.writeString(guestteam);
+        parcel.writeString(homerank);
+        parcel.writeString(guestrank);
+        parcel.writeString(statusOrigin);
+        parcel.writeString(status);
+        parcel.writeString(keepTime);
+        parcel.writeString(halfScore);
+        parcel.writeString(fullScore);
+        parcel.writeString(home_rc);
+        parcel.writeString(home_yc);
+        parcel.writeString(guest_rc);
+        parcel.writeString(guest_yc);
+        parcel.writeString(homeScore);
+        parcel.writeString(guestScore);
+        parcel.writeString(homeHalfScore);
+        parcel.writeString(guestHalfScore);
+        parcel.writeInt(leftOddTextColorId);
+        parcel.writeInt(rightOddTextColorId);
+        parcel.writeInt(midOddTextColorId);
+        parcel.writeInt(homeTeamTextColorId);
+        parcel.writeInt(guestTeamTextColorId);
+        parcel.writeString(txt);
+        parcel.writeInt(winner);
+        parcel.writeByte((byte) (isFootballChicks ? 1 : 0));
+        parcel.writeInt(itemBackGroundColorId);
+        parcel.writeInt(isTopData);
     }
 
 
@@ -404,30 +477,7 @@ public class Match implements Parcelable, Cloneable, Comparator<Match> {
 
     }
 
-    public Match(Parcel in) {
-        thirdId = in.readString();
-        racename = in.readString();
-        raceId = in.readString();
-        raceColor = in.readString();
-        date = in.readString();
-        time = in.readString();
-        homeId = in.readString();
-        hometeam = in.readString();
-        guestId = in.readString();
-        guestteam = in.readString();
-        homerank = in.readString();
-        guestrank = in.readString();
-        status = in.readString();
-        keepTime = in.readString();
-        halfScore = in.readString();
-        fullScore = in.readString();
-        home_rc = in.readString();
-        home_yc = in.readString();
-        guest_rc = in.readString();
-        guest_yc = in.readString();
-        statusOrigin = in.readString();
-        matchOdds = in.readHashMap(HashMap.class.getClassLoader());
-    }
+
 
     @Override
     public Object clone() throws CloneNotSupportedException {

@@ -2,20 +2,30 @@ package com.hhly.mlottery.bean.scheduleBean;
 
 
 /**
- * 大小球
- * @ClassName: AsiaSize 
+ * 亚赔
+ * @ClassName: MatchOdd
  * @Description:
  * @author Tenney
- * @date 2015-10-20 下午5:36:08
+ * @date 2015-10-20 下午5:36:54
  */
-public class AsiaSize {
+public class OddsBean {
 
 	
 	private String  handicap;
 	private String  handicapValue;
 	private String  leftOdds;
+	private String  mediumOdds;
 	private String  rightOdds;
-	
+
+
+	public String getMediumOdds() {
+		return mediumOdds;
+	}
+
+	public void setMediumOdds(String mediumOdds) {
+		this.mediumOdds = mediumOdds;
+	}
+
 	public String getHandicap() {
 		return handicap;
 	}
@@ -40,5 +50,6 @@ public class AsiaSize {
 	public void setRightOdds(String rightOdds) {
 		this.rightOdds = rightOdds;
 	}
+	
 	
 }

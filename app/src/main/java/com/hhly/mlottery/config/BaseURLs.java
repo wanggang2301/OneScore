@@ -1164,4 +1164,11 @@ public class BaseURLs {
     //足球竞彩
     public final static String FINDBETTINGLIST = URL_API_HOST + "footballBetting.findBettingList.do";
 
+    /**
+     * 角球列表
+     */
+    public final static String CORNER_LIST=URL_API_HOST+"corner.getCornerList.do";
+
+    /***********************************************************************************************************************/
+
 }
