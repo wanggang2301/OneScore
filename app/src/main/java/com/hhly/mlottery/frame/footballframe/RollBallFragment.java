@@ -6,14 +6,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.percent.PercentRelativeLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -44,6 +41,7 @@ import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchSettingEventBus
 import com.hhly.mlottery.frame.scorefrag.FootBallScoreFragment;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
+import com.hhly.mlottery.util.HandMatchId;
 import com.hhly.mlottery.util.HotFocusUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
@@ -283,12 +281,18 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
     @Override
     public void onItemClick(View convertView, int position) {
+
+
+
         Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
         List<Match> topLists = adapter.getTopLists();
         if (null == topLists) topLists = feedAdapterLists;
-        intent.putExtra("thirdId", topLists.get(position).getThirdId());
-        intent.putExtra("currentFragmentId", 0);
-        getParentFragment().startActivity(intent);
+
+        if(HandMatchId.handId(getActivity(), topLists.get(position).getThirdId())) {
+            intent.putExtra("thirdId", topLists.get(position).getThirdId());
+            intent.putExtra("currentFragmentId", 0);
+            getParentFragment().startActivity(intent);
+        }
     }
 
     @Override
