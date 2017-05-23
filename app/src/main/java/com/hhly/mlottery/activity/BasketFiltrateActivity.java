@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.FiltrateAdapter;
@@ -343,23 +344,26 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
                 bundle.putCharSequenceArray(CHECKED_CUPS_IDS, checkedCups);
                 intent.putExtras(bundle);
                 setResult(Activity.RESULT_OK, intent);
+                if (mCupChicked.size() <= 0) {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.at_least_one_race), Toast.LENGTH_SHORT).show();
+                } else {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("checkedCupIds", mCupChicked);
 
-                Map<String, Object> map = new HashMap<>();
-                map.put("checkedCupIds", mCupChicked);
+                    if (currentId == 0) {
+                        EventBus.getDefault().post(new BasketScoreImmedEventBusEntity(map));
+                    } else if (currentId == 1) {
+                        EventBus.getDefault().post(new BasketScoreResultEventBusEntity(map));
+                    } else if (currentId == 2) {
+                        EventBus.getDefault().post(new BasketScoreScheduleEventBusEntity(map));
+                    } else if (currentId == 3) {
+                        EventBus.getDefault().post(new MultipleBasketFilterListEvent(map));
+                    }
 
-                if (currentId == 0) {
-                    EventBus.getDefault().post(new BasketScoreImmedEventBusEntity(map));
-                } else if (currentId == 1) {
-                    EventBus.getDefault().post(new BasketScoreResultEventBusEntity(map));
-                } else if (currentId == 2) {
-                    EventBus.getDefault().post(new BasketScoreScheduleEventBusEntity(map));
-                } else if (currentId == 3) {
-                    EventBus.getDefault().post(new MultipleBasketFilterListEvent(map));
+                    L.d("currentId >>>>>>>>>>>", "currentId == >" + currentId);
+                    finish();
+                    overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 }
-
-                L.d("currentId >>>>>>>>>>>", "currentId == >" + currentId);
-                finish();
-                overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 break;
 
             case R.id.filtrate_hot_btn:

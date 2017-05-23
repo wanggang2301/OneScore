@@ -34,6 +34,7 @@ import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.LeagueCup;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.BaseUserTopics;
+import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.footballframe.FocusFragment;
 import com.hhly.mlottery.frame.footballframe.ImmediateFragment;
@@ -324,6 +325,11 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
                 MobclickAgent.onEvent(mContext, "Football_Filtrate");
                 currentFragmentId = mViewPager.getCurrentItem();
                 if (currentFragmentId == ROLLBALL_FRAGMENT) {
+
+
+                    L.d("ddddeee", "bendi==" + PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL).size() + "");
+
+
                     Intent intent = new Intent(getActivity(), FiltrateMatchConfigActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS, true);
@@ -464,7 +470,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
                     bundle.putInt("currentFragmentId", FOCUS_FRAGMENT);
                     intent.putExtras(bundle);
                     startActivity(intent);
-                }else if (currentFragmentId == ROLLBALL_FRAGMENT) {
+                } else if (currentFragmentId == ROLLBALL_FRAGMENT) {
                     Intent intent = new Intent(getActivity(), FootballTypeSettingActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putInt("currentFragmentId", ROLLBALL_FRAGMENT);

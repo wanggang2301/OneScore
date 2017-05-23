@@ -384,9 +384,9 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                     return;
                 }
 
-                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, "").equals(jsonMatch.getFilterDate())) {
+                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, "").equals(jsonMatch.getFilerDate())) {
                     PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_IMMEDIA);
-                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, jsonMatch.getFilterDate());
+                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, jsonMatch.getFilerDate());
                 }
 
 

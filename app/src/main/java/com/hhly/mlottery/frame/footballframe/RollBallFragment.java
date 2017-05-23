@@ -149,7 +149,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     /**
      * 设置盘口显示类型
      */
-    private void setHandicapName(){
+    private void setHandicapName() {
         boolean alet = PreferenceUtil.getBoolean(MyConstants.RBSECOND, true);
         boolean asize = PreferenceUtil.getBoolean(MyConstants.rbSizeBall, false);
         boolean eur = PreferenceUtil.getBoolean(MyConstants.RBOCOMPENSATE, true);
@@ -283,12 +283,11 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     public void onItemClick(View convertView, int position) {
 
 
-
         Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
         List<Match> topLists = adapter.getTopLists();
         if (null == topLists) topLists = feedAdapterLists;
 
-        if(HandMatchId.handId(getActivity(), topLists.get(position).getThirdId())) {
+        if (HandMatchId.handId(getActivity(), topLists.get(position).getThirdId())) {
             intent.putExtra("thirdId", topLists.get(position).getThirdId());
             intent.putExtra("currentFragmentId", 0);
             getParentFragment().startActivity(intent);
@@ -402,10 +401,18 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                         leagueCupLists = jsonObject.getAll();
                         feedAdapterLists = new ArrayList<>();
 
-                        if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, "").equals(jsonObject.getFilterDate())) {
+                        L.d("ddddeee", "刷新前==" + PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL).size() + "");
+                        L.d("ddddeee", "日期==" + PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, ""));
+                        L.d("ddddeee", "请求==" + jsonObject.getFilerDate());
+
+
+                        if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, "").equals(jsonObject.getFilerDate())) {
                             PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_ROLL);
-                            PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, jsonObject.getFilterDate());
+                            PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, jsonObject.getFilerDate());
                         }
+
+                        L.d("ddddeee", "刷新后==" + PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL).size() + "");
+
 
                         HotFocusUtils hotFocusUtils = new HotFocusUtils();
                         hotFocusUtils.loadHotFocusData(getActivity(), new RequestHostFocusCallBack() {

@@ -17,16 +17,15 @@ public class ImmediateMatchs {
 
 	private String teamLogoPre;
 
-	public String getFilterDate() {
-		return filterDate;
+	public String getFilerDate() {
+		return filerDate;
 	}
 
-	public void setFilterDate(String filterDate) {
-		this.filterDate = filterDate;
+	public void setFilerDate(String filerDate) {
+		this.filerDate = filerDate;
 	}
 
-	private String filterDate;
-
+	private String filerDate;
 
 
 	public List<Match> getImmediateMatch() {
