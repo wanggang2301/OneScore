@@ -1723,4 +1723,9 @@
     <string name="higher">高於</string>
     <string name="jishi_pan">即時盤</string>
     <string name="lower">低於</string>
+
+    <string name="roll_desc_txt">勝出</string>
+
+    <!--竞彩足球-->
+    <string name="football_jingcai">競彩足球</string>
 </resources>

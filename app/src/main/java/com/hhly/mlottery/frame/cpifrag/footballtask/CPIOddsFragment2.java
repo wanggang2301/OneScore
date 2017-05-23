@@ -22,6 +22,8 @@ import com.hhly.mlottery.bean.enums.StatusEnum;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.websocket.WebSocketCPIResult;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.EmptyView;
 
@@ -177,6 +179,10 @@ public class CPIOddsFragment2 extends Fragment {
                             refreshOver();
                             return;
                         }
+
+                        //本地存储当天日期
+                        saveCurrentDate(jsonObject.getFilerDate());
+
                         List<NewOddsInfo.AllInfoBean> allInfo = jsonObject.getAllInfo();
 
                         // 公司数据
@@ -206,6 +212,13 @@ public class CPIOddsFragment2 extends Fragment {
                 }, NewOddsInfo.class);
     }
 
+    private void saveCurrentDate(String date) {
+        if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_INDEX_DATE, "").equals(date)) {
+            PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_INDEX);
+            PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_INDEX_DATE, date);
+        }
+    }
+
     /**
      * 更新过滤数据源（注意要过滤公司赔率信息）
      */
@@ -220,9 +233,20 @@ public class CPIOddsFragment2 extends Fragment {
                 }
             }
         } else {
-            for (NewOddsInfo.AllInfoBean allInfo : defaultData) {
-                if (allInfo.isHot()) {
-                    filterAllInfo(allInfo);
+            if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_INDEX).size() > 0) {
+                List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_INDEX);
+                for (NewOddsInfo.AllInfoBean allInfo : defaultData) {
+                    for (String id : list) {
+                        if (allInfo.getLeagueId().equals(id)) {
+                            filterAllInfo(allInfo);
+                        }
+                    }
+                }
+            } else {
+                for (NewOddsInfo.AllInfoBean allInfo : defaultData) {
+                    if (allInfo.isHot()) {
+                        filterAllInfo(allInfo);
+                    }
                 }
             }
         }

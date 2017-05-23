@@ -17,6 +17,24 @@ public class SchMatch {
 	private String statusOrigin;
 
 	private ScheduleMatchOdd matchOdds;
+	private String txt;
+	private String winner;
+
+	public String getTxt() {
+		return txt;
+	}
+
+	public void setTxt(String txt) {
+		this.txt = txt;
+	}
+
+	public String getWinner() {
+		return winner;
+	}
+
+	public void setWinner(String winner) {
+		this.winner = winner;
+	}
 
 	public String getHomeId() {
 		return homeId;

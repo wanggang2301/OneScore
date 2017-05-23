@@ -29,7 +29,6 @@ import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
-import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.chartBallAdapter.ChartBallAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.BarrageBean;
@@ -213,13 +212,13 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
             if (type == 1) {
                 ((BasketDetailsActivityTest) mContext).talkAboutBallLoginBasket();
             } else if (type == 0) {
-                ((FootballMatchDetailActivity) mContext).talkAboutBallLoginFoot();
+              //  ((FootballMatchDetailActivity) mContext).talkAboutBallLoginFoot();
             }
         } else {//跳转输入评论页面
             if (type == 1) {
                 ((BasketDetailsActivityTest) mContext).talkAboutBallSendBasket();
             } else if (type == 0) {
-                ((FootballMatchDetailActivity) mContext).talkAboutBallSendFoot();
+              //  ((FootballMatchDetailActivity) mContext).talkAboutBallSendFoot();
             }
         }
     }

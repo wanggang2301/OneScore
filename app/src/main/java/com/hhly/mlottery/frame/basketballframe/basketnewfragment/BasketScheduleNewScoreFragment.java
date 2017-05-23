@@ -304,6 +304,11 @@ public class BasketScheduleNewScoreFragment extends Fragment implements View.OnC
                     return;
                 }
 
+                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.BASKET_CURR_DATE, "").equals(json.getFilerDate())) {
+                    PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.BASKET_SCHEDULE);
+                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.BASKET_CURR_DATE, json.getFilerDate());
+                }
+
                 mMatchdata = json.getMatchData();
 
                 mMatchFilter = json.getMatchFilter();

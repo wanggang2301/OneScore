@@ -18,6 +18,16 @@ import java.util.Map;
 public class NewOddsInfo {
 
     private String currDate;
+
+    public String getFilerDate() {
+        return filerDate;
+    }
+
+    public void setFilerDate(String filerDate) {
+        this.filerDate = filerDate;
+    }
+
+    private String filerDate;
     private int code;
     private List<String> focusLeagueIds;
     /**

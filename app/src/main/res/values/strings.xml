@@ -1732,6 +1732,8 @@
     <string name="betting_setting_palying_method">玩法</string>
     <string name="betting_setting_league">联赛</string>
 
+    <string name="roll_desc_txt">胜出</string>
+
     /*****不要删除*************************************************************************************************/
     <string name="odds_back_list">""</string>
     <string name="odds_average">""</string>
@@ -1751,4 +1753,8 @@
     <string name="higher">高于</string>
     <string name="jishi_pan">即时盘</string>
     <string name="lower">低于</string>
+
+    <!--竞彩足球-->
+    <string name="football_jingcai">竞彩足球</string>
+
 </resources>
