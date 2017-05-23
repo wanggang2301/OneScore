@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.DateUtil;
+import com.hhly.mlottery.util.UiUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -67,7 +68,7 @@ public class CpiDateAdapter extends BaseAdapter {
         }
 
 
-        viewHolder.mTextView.setText(DateUtil.convertDateToNation(cpiDateList.get(position).get("date")));
+        viewHolder.mTextView.setText(DateUtil.convertDateToNation(cpiDateList.get(position).get("date"))+"\t\t\t"+ DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(DateUtil.convertDateToNation(cpiDateList.get(position).get("date")))));
 
         if (defItem == position) {//如果点击listview的当前的position相等
             // 设置背景颜色

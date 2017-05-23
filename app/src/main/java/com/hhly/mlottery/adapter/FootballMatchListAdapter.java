@@ -341,4 +341,5 @@ public class FootballMatchListAdapter extends BaseQuickAdapter<FootballLotteryBe
 
     }
 
+
 }
