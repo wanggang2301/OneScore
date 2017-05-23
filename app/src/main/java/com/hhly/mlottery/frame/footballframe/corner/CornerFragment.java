@@ -187,18 +187,18 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
             }
         });
 
-//        mCdt = new CountDownTimer(10000*1000, 1000*2 ) { //每两秒一次
-//            @Override
-//            public void onTick(long millisUntilFinished) {
-//                mPresenter.refreshData(mType);
-//            }
-//            @Override
-//            public void onFinish() {
-//
-//            }
-//        };
+        mCdt = new CountDownTimer(10000*1000, 1000*5 ) { //每两秒一次
+            @Override
+            public void onTick(long millisUntilFinished) {
+                mPresenter.refreshData(mType);
+            }
+            @Override
+            public void onFinish() {
 
-//        mCdt.start();
+            }
+        };
+
+        mCdt.start();
     }
 
     public void refreshDate(){
