@@ -44,7 +44,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 32
-        versionName "1.3.0.0523"
+        versionName "1.3.0.0524"
         multiDexEnabled true
     }
 
@@ -88,24 +88,6 @@ dependencies {
     compile files('libs/qq/open_sdk_r5509.jar')
     compile files('libs/sina/weibosdkcore_release.jar')
     compile files('libs/pldroid-player-1.3.0.jar')
-    // 视频集锦
-    // glide图片加载
-    // json数据解析
-    // volley请求框架
-    // 联赛统计_日历控件
-    // 篮球内页布局使用
-    // retrofit
-    // 控件_注解
-    // okhttp
-    // RecyclerViewAdapter
-    // 足球指数详情使用
-    // 足球分析图
-    // WebSocket推送
-
-    // 分包解决65535
-
-    // 权限配置
-
 
     compile 'com.github.chrisbanes:PhotoView:1.3.0'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
