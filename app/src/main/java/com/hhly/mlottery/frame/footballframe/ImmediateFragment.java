@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -400,7 +401,8 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 
 
                 tv_date.setText(jsonMatch.getFilerDate());
-                tv_week.setText(DateUtil.getWeekOfXinQi(DateUtil.parseDate(jsonMatch.getFilerDate())));
+                if (!TextUtils.isEmpty(jsonMatch.getFilerDate()))
+                    tv_week.setText(DateUtil.getWeekOfXinQi(DateUtil.parseDate(jsonMatch.getFilerDate())));
 
                 teamLogoPre = jsonMatch.getTeamLogoPre(); //logo
                 teamLogoSuff = jsonMatch.getTeamLogoSuff();

@@ -519,7 +519,9 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                                 }
 
                                 tvDate.setText(jsonObject.getFilerDate());
-                                tvWeek.setText(DateUtil.getWeekOfXinQi(DateUtil.parseDate(jsonObject.getFilerDate())));
+
+                                if (!TextUtils.isEmpty(jsonObject.getFilerDate()))
+                                    tvWeek.setText(DateUtil.getWeekOfXinQi(DateUtil.parseDate(jsonObject.getFilerDate())));
 
                                 RollBallFragment.this.feedAdapter(feedAdapterLists);
                                 apiHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
