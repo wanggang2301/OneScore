@@ -128,7 +128,7 @@ public class FootBallLiveTextAdapter extends BaseQuickAdapter<MatchTextLiveBean>
 
         int msgPlace = Integer.parseInt(matchTextLiveBean.getMsgPlace());
         //中间
-        if (msgPlace == 0) {
+        if (msgPlace == 0 || (msgPlace == 1 && "20".equals(matchTextLiveBean.getCode()))) {  //接口已经没有按以前约定的规则走了，没办法只能这样写了
             if ("99999999".equals(matchTextLiveBean.getTime())) {  //比赛结束
                 holder.setText(R.id.zuo_msg_text, matchTextLiveBean.getMsgText());
                 holder.setText(R.id.msg_text, "");
