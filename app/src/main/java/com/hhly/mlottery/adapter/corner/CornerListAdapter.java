@@ -144,7 +144,11 @@ public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEnt
         }else { //半场
             rl_score.setVisibility(View.VISIBLE);
             match_type.setVisibility(View.GONE);
-            match_state_started_half.setVisibility(View.VISIBLE);
+            if(entity.getStatus().equals("1")){
+                match_state_started_half.setVisibility(View.GONE);
+            }else{
+                match_state_started_half.setVisibility(View.VISIBLE);
+            }
             match_state_started_full.setVisibility(View.GONE);
             match_state_started_half.setText(MyApp.getContext().getString(R.string.number_info_half));
             holder.setTextColor(R.id.tv_home_full_score, ContextCompat.getColor(mContext,R.color.colorPrimary));
