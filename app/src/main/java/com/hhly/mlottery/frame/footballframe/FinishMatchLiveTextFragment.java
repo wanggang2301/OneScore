@@ -199,7 +199,7 @@ public class FinishMatchLiveTextFragment extends Fragment {
 
 
         if (matchTextLiveBeansList.size() > 0) {
-            if ("3".equals(matchTextLiveBeansList.get(0).getCode())) {
+            if ("3".equals(matchTextLiveBeansList.get(0).getCode()) || "20".equals(matchTextLiveBeansList.get(0).getCode())) {
                 //999代表完场  time位置显示黄色“完场”
                 matchTextLiveBeansList.add(0, new MatchTextLiveBean("", "", "0", "0", "4", "99999999", mContext.getResources().getString(R.string.matchFinished_txt) + "", "", "", "0", "", "", "", ""));
             }
