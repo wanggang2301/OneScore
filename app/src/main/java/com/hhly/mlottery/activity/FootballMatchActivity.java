@@ -238,7 +238,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
             }
             if (data.getData().getLetLoseOdds() != null) {
 
-                if (Integer.parseInt(data.getData().getLetLoseOdds()) > Integer.parseInt(bettingList.get(i).getLetLoseOdds())) {
+                if (Double.parseDouble(data.getData().getLetLoseOdds()) > Double.parseDouble(bettingList.get(i).getLetLoseOdds())) {
                     //升
                     bettingList.get(i).setLetloseoddsColorId(R.color.odds_up_bg);
                 } else {
@@ -251,7 +251,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
             }
             if (data.getData().getLetSameOdds() != null) {
 
-                if (Integer.parseInt(data.getData().getLetSameOdds()) > Integer.parseInt(bettingList.get(i).getLetSameOdds())) {
+                if (Double.parseDouble(data.getData().getLetSameOdds()) > Double.parseDouble(bettingList.get(i).getLetSameOdds())) {
                     //升
                     bettingList.get(i).setLetsameoddsColorId(R.color.odds_up_bg);
                 } else {
@@ -264,7 +264,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
             }
             if (data.getData().getLetWinOdds() != null) {
 
-                if (Integer.parseInt(data.getData().getLetWinOdds()) > Integer.parseInt(bettingList.get(i).getLetWinOdds())) {
+                if (Double.parseDouble(data.getData().getLetWinOdds()) > Double.parseDouble(bettingList.get(i).getLetWinOdds())) {
                     //升
                     bettingList.get(i).setLetwinoddsColorId(R.color.odds_up_bg);
                 } else {
@@ -278,7 +278,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
             if (data.getData().getLoseOdds() != null) {
 
 
-                if (Integer.parseInt(data.getData().getLoseOdds()) > Integer.parseInt(bettingList.get(i).getLoseOdds())) {
+                if (Double.parseDouble(data.getData().getLoseOdds()) > Double.parseDouble(bettingList.get(i).getLoseOdds())) {
                     //升
                     bettingList.get(i).setLoseoddsColorId(R.color.odds_up_bg);
                 } else {
@@ -290,7 +290,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
 
             }
             if (data.getData().getSameOdds() != null) {
-                if (Integer.parseInt(data.getData().getSameOdds()) > Integer.parseInt(bettingList.get(i).getSameOdds())) {
+                if (Double.parseDouble(data.getData().getSameOdds()) > Double.parseDouble(bettingList.get(i).getSameOdds())) {
                     //升
                     bettingList.get(i).setSameoddsColorId(R.color.odds_up_bg);
                 } else {
@@ -302,7 +302,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
             }
             if (data.getData().getWinOdds() != null) {
 
-                if (Integer.parseInt(data.getData().getWinOdds()) > Integer.parseInt(bettingList.get(i).getWinOdds())) {
+                if (Double.parseDouble(data.getData().getWinOdds()) > Double.parseDouble(bettingList.get(i).getWinOdds())) {
                     //升
                     bettingList.get(i).setWinoddsColorId(R.color.odds_up_bg);
                 } else {
@@ -402,11 +402,12 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                         bettingList = jsonObject.getBettingList();
                         tv_data_size.setText("(" + totalSize + ")");
 
-                        initViewData();
 
                         if (bettingList == null) {
                             mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
                         } else {
+                            initViewData();
+                            footballMatchListAdapter.notifyItemRemoved(bettingList.size()-1);
                             footballMatchListAdapter.getData().clear();
                             footballMatchListAdapter.addData(bettingList);
                         }
@@ -437,9 +438,10 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
         footballMatchListAdapter = new FootballMatchListAdapter(getApplicationContext(), R.layout.football_match_child, null);
         mRecyclerView.setAdapter(footballMatchListAdapter);
 
-
         footballMatchListAdapter.openLoadMore(0,true);
         footballMatchListAdapter.setLoadingView(view);
+
+
         footballMatchListAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
@@ -452,7 +454,6 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                 });
             }
         });
-
         footballMatchListAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
@@ -564,6 +565,9 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
         findViewById(R.id.match_error_btn).setOnClickListener(this);
 
         emptyView = View.inflate(this, R.layout.layout_nodata, null);
+
+
+
     }
 
 
@@ -580,6 +584,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
         VolleyContentFast.requestJsonByGet(BaseURLs.FINDBETTINGLIST, params, new VolleyContentFast.ResponseSuccessListener<FootballLotteryBean>() {
             @Override
             public void onResponse(FootballLotteryBean jsonObject) {
+                mSwipeRefreshLayout.setRefreshing(false);
 
                 if (jsonObject!=null){
 
@@ -589,6 +594,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                             progressBar.setVisibility(View.VISIBLE);
                             bettingList.addAll(jsonObject.getBettingList());
                             footballMatchListAdapter.addData(bettingList);
+                            //mRecyclerView.getRecycledViewPool().clear();
                             footballMatchListAdapter.notifyDataChangedAfterLoadMore(true);
                         }else{
                            // loadmore_text.setText(FootballMatchActivity.this.getResources().getString(R.string.nodata_txt));
@@ -660,9 +666,11 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
     public void showSelectInfo(int indexDate) {
 
         currentIndexDate = indexDate;
-        footballMatchListAdapter.getData().clear();
+
+        //footballMatchListAdapter.getData().clear();
         if (dateList.get(indexDate).size() != 0) {
             initDate(dateList.get(indexDate).get("date"));
+            footballMatchListAdapter.notifyDataSetChanged();
         } else {
             footballMatchListAdapter.setEmptyView(emptyView);
             footballMatchListAdapter.notifyDataSetChanged();
