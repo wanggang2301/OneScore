@@ -159,6 +159,7 @@ public class MoreSettingsActivity extends BaseActivity  implements View.OnClickL
                 if (register.getResult() == AccountResultCode.SUCC || register.getResult() == AccountResultCode.USER_NOT_LOGIN) {
                     DeviceInfo.saveRegisterInfo(null);
                     UiUtils.toast(MyApp.getInstance(), R.string.logout_succ);
+
                     PreferenceUtil.commitBoolean("three_login",false);
                     setResult(RESULT_OK);
 
@@ -171,7 +172,7 @@ public class MoreSettingsActivity extends BaseActivity  implements View.OnClickL
 
 
                     request(); //推送需要
-
+                    finish();
 //                    getFootballUserFocus(""); //注销时把未登录状态的用户id请求过来 .篮球不需要是因为篮球进行了预加载，会直接请求关注页面。足球没有。
 //
                 } else {
