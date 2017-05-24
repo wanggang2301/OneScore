@@ -380,8 +380,8 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         holder.item_football_time.setText(match.getTime());
 
         if ("0".equals(match.getStatusOrigin())) {// 未开
-            holder.ll_half_score.setVisibility(View.GONE);
-            holder.ll_all_score.setVisibility(View.GONE);
+            holder.ll_half_score.setVisibility(View.INVISIBLE);
+            holder.ll_all_score.setVisibility(View.INVISIBLE);
 
             holder.keeptime.setText(mContext.getResources().getString(R.string.tennis_match_not_start));
             holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.res_pl_color));
@@ -565,8 +565,8 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else if ("-10".equals(match.getStatusOrigin())) {// 取消
 
 
-            holder.ll_half_score.setVisibility(View.GONE);
-            holder.ll_all_score.setVisibility(View.GONE);
+            holder.ll_half_score.setVisibility(View.INVISIBLE);
+            holder.ll_all_score.setVisibility(View.INVISIBLE);
 
 
        /*     holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
@@ -583,8 +583,8 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         } else if ("-11".equals(match.getStatusOrigin())) {// 待定
 
-            holder.ll_half_score.setVisibility(View.GONE);
-            holder.ll_all_score.setVisibility(View.GONE);
+            holder.ll_half_score.setVisibility(View.INVISIBLE);
+            holder.ll_all_score.setVisibility(View.INVISIBLE);
 
 
             // holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
@@ -651,8 +651,8 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             //   holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
 
 
-            holder.ll_half_score.setVisibility(View.GONE);
-            holder.ll_all_score.setVisibility(View.GONE);
+            holder.ll_half_score.setVisibility(View.INVISIBLE);
+            holder.ll_all_score.setVisibility(View.INVISIBLE);
 
 
 
@@ -819,23 +819,23 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         MatchOdd euro = match.getMatchOdds().get("euro");
 
         // 亚盘赔率
-        if (alet && asiaLet != null) {
-            setOddsData(holder.oddsTop1, holder.tv_odds_center1, holder.tv_odds_bottom1, asiaLet, match, false);
+        if (alet) {
+            setOddsData(holder.oddsTop1, holder.tv_odds_center1, holder.tv_odds_bottom1, asiaLet, match, 1);
         }
         // 大小盘赔率
-        if (asize && asiaSize != null) {
+        if (asize) {
             if (!alet) {
-                setOddsData(holder.oddsTop1, holder.tv_odds_center1, holder.tv_odds_bottom1, asiaSize, match, false);
+                setOddsData(holder.oddsTop1, holder.tv_odds_center1, holder.tv_odds_bottom1, asiaSize, match, 2);
             } else {
-                setOddsData(holder.oddsTop2, holder.tv_odds_center2, holder.tv_odds_bottom2, asiaSize, match, false);
+                setOddsData(holder.oddsTop2, holder.tv_odds_center2, holder.tv_odds_bottom2, asiaSize, match, 2);
             }
         }
         // 欧盘赔率
-        if (eur && euro != null) {
+        if (eur) {
             if (!alet && !asize) {
-                setOddsData(holder.oddsTop1, holder.tv_odds_center1, holder.tv_odds_bottom1, euro, match, true);
+                setOddsData(holder.oddsTop1, holder.tv_odds_center1, holder.tv_odds_bottom1, euro, match, 3);
             } else {
-                setOddsData(holder.oddsTop2, holder.tv_odds_center2, holder.tv_odds_bottom2, euro, match, true);
+                setOddsData(holder.oddsTop2, holder.tv_odds_center2, holder.tv_odds_bottom2, euro, match, 3);
             }
         }
 
@@ -864,9 +864,29 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     }
 
-    private void setOddsData(TextView topView, TextView centerView, TextView bottomView, MatchOdd odds, Match match, boolean isEuro) {
+    private void setOddsData(TextView topView, TextView centerView, TextView bottomView, MatchOdd odds, Match match, int type) {
 
-        String handicapValue = isEuro ? odds.getLeftOdds() : odds.getHandicapValue();
+        if (odds == null) {
+            topView.setText("-");
+            centerView.setText("-");
+            bottomView.setText("-");
+            return;
+        }
+        String handicapValue;
+        switch (type) {
+            case 1:
+                handicapValue = HandicapUtils.changeHandicap(odds.getHandicapValue());
+                break;
+            case 2:
+                handicapValue = HandicapUtils.changeHandicapByBigLittleBall(odds.getHandicapValue());
+                break;
+            case 3:
+                handicapValue = odds.getMediumOdds();
+                break;
+            default:
+                handicapValue = "-";
+                break;
+        }
 
         int keeptime = 0;
         if (match.getKeepTime() != null) {
@@ -874,66 +894,16 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
 
         if ((!"-1".equals(match.getStatusOrigin()) && keeptime >= 89) || "-".equals(handicapValue) || "|".equals(handicapValue)) {// 封盘,完场不会有封盘的情况
-            topView.setVisibility(View.GONE);
-            centerView.setVisibility(View.GONE);
+            topView.setText("-");
+            centerView.setText("-");
             bottomView.setText(mContext.getString(R.string.immediate_status_entertained));
         } else {
-            topView.setVisibility(View.VISIBLE);
-            centerView.setVisibility(View.VISIBLE);
-            bottomView.setVisibility(View.VISIBLE);
-            centerView.setText(isEuro ? odds.getMediumOdds() : HandicapUtils.changeHandicap(handicapValue));
+            centerView.setText(handicapValue);
             topView.setText(odds.getLeftOdds());
             bottomView.setText(odds.getRightOdds());
             topView.setTextColor(match.getLeftOddTextColorId() != 0 ? match.getLeftOddTextColorId() : mContext.getResources().getColor(R.color.content_txt_light_grad));
             bottomView.setTextColor(match.getRightOddTextColorId() != 0 ? match.getRightOddTextColorId() : mContext.getResources().getColor(R.color.content_txt_light_grad));
             centerView.setTextColor(match.getMidOddTextColorId() != 0 ? match.getMidOddTextColorId() : mContext.getResources().getColor(R.color.content_txt_black));
-        }
-
-        if ("-1".equals(match.getStatusOrigin())) {// 完场不会有封盘的情况
-//            topView.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
-//            topView.setBackgroundResource(R.color.transparent);
-//            centerView.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
-//            centerView.setBackgroundResource(R.color.transparent);
-//            bottomView.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
-//            bottomView.setBackgroundResource(R.color.transparent);
-            try {
-                float homeScore = Float.parseFloat(match.getHomeScore());
-                float guestScore = Float.parseFloat(match.getGuestScore());
-                float handicapValueF = Float.parseFloat(handicapValue);
-                float re = homeScore + guestScore - handicapValueF;
-                if (re > 0) {
-                    topView.setTextColor(mContext.getResources().getColor(R.color.white));
-                    topView.setBackgroundResource(R.color.resultcol);
-                    centerView.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
-                    centerView.setBackgroundResource(R.color.transparent);
-                    bottomView.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
-                    bottomView.setBackgroundResource(R.color.transparent);
-                } else if (re < 0) {
-                    topView.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
-                    topView.setBackgroundResource(R.color.transparent);
-                    centerView.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
-                    centerView.setBackgroundResource(R.color.transparent);
-                    bottomView.setTextColor(mContext.getResources().getColor(R.color.white));
-                    bottomView.setBackgroundResource(R.color.resultcol);
-                } else {
-                    topView.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
-                    topView.setBackgroundResource(R.color.transparent);
-                    centerView.setTextColor(mContext.getResources().getColor(R.color.black));
-                    centerView.setBackgroundResource(R.color.transparent);
-                    bottomView.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
-                    bottomView.setBackgroundResource(R.color.transparent);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        } else {
-            topView.setTextColor(match.getLeftOddTextColorId() == 0 ? mContext.getResources().getColor(R.color.content_txt_light_grad) : match.getLeftOddTextColorId());
-            centerView.setTextColor(match.getRightOddTextColorId() == 0 ? mContext.getResources().getColor(R.color.content_txt_black) : match.getMidOddTextColorId());
-            bottomView.setTextColor(match.getMidOddTextColorId() == 0 ? mContext.getResources().getColor(R.color.content_txt_light_grad) : match.getRightOddTextColorId());
-            topView.setBackgroundResource(R.color.transparent);
-            centerView.setBackgroundResource(R.color.transparent);
-            bottomView.setBackgroundResource(R.color.transparent);
         }
     }
 
