@@ -607,45 +607,5 @@ public class ImmediateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             bottomView.setTextColor(match.getRightOddTextColorId() != 0 ? mContext.getResources().getColor(match.getRightOddTextColorId()) : mContext.getResources().getColor(R.color.content_txt_black));
             centerView.setTextColor(match.getMidOddTextColorId() != 0 ? mContext.getResources().getColor(match.getMidOddTextColorId()) : mContext.getResources().getColor(R.color.content_txt_light_grad));
         }
-
-        if ("-1".equals(match.getStatusOrigin())) {// 完场不会有封盘的情况
-            try {
-                float homeScore = Float.parseFloat(match.getHomeScore());
-                float guestScore = Float.parseFloat(match.getGuestScore());
-                float handicapValueF = Float.parseFloat(handicapValue);
-                float re = homeScore - guestScore - handicapValueF;
-                if (re > 0) {// 注意这是亚盘的
-                    topView.setTextColor(mContext.getResources().getColor(R.color.white));
-                    topView.setBackgroundResource(R.color.resultcol);
-                    centerView.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
-                    centerView.setBackgroundResource(R.color.transparent);
-                    bottomView.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
-                    bottomView.setBackgroundResource(R.color.transparent);
-                } else if (re < 0) {
-                    topView.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
-                    topView.setBackgroundResource(R.color.transparent);
-                    centerView.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
-                    centerView.setBackgroundResource(R.color.transparent);
-                    bottomView.setTextColor(mContext.getResources().getColor(R.color.white));
-                    bottomView.setBackgroundResource(R.color.resultcol);
-                } else {
-                    topView.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
-                    topView.setBackgroundResource(R.color.transparent);
-                    centerView.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
-                    centerView.setBackgroundResource(R.color.transparent);
-                    bottomView.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
-                    bottomView.setBackgroundResource(R.color.transparent);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            topView.setTextColor(match.getLeftOddTextColorId() == 0?mContext.getResources().getColor(R.color.content_txt_light_grad):mContext.getResources().getColor(match.getLeftOddTextColorId()));
-            centerView.setTextColor(match.getRightOddTextColorId() == 0?mContext.getResources().getColor(R.color.content_txt_black):mContext.getResources().getColor(match.getMidOddTextColorId()));
-            bottomView.setTextColor(match.getMidOddTextColorId() == 0?mContext.getResources().getColor(R.color.content_txt_light_grad):mContext.getResources().getColor(match.getRightOddTextColorId()));
-            topView.setBackgroundResource(R.color.transparent);
-            centerView.setBackgroundResource(R.color.transparent);
-            bottomView.setBackgroundResource(R.color.transparent);
-        }
     }
 }

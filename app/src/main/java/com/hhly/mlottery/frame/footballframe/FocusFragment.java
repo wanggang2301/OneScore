@@ -79,7 +79,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
      */
     public final static String FOCUS_ISD = "focus_ids";
 
-//    public final static int REQUEST_SET_CODE = 0x42;
+    //    public final static int REQUEST_SET_CODE = 0x42;
     private final int REQUEST_DETAIL_CODE = 0x43;
 
 
@@ -88,7 +88,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
     private TextView mReloadTvBtn;
 
-//    private LinearLayout mLoadingLayout;
+    //    private LinearLayout mLoadingLayout;
     private LinearLayout mErrorLayout;
 
     private ExactSwipeRefreshLayout mSwipeRefreshLayout;
@@ -122,7 +122,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
     private Vibrator mVibrator;
     private SoundPool mSoundPool;
-    private HashMap<Integer, Integer> mSoundMap = new HashMap<Integer, Integer>();
+    private HashMap<Integer, Integer> mSoundMap = new HashMap<>();
 
     private LinearLayout titleContainer;
     private TextView handicapName1;
@@ -309,8 +309,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
     private void setStatus(int status) {
 
-        titleContainer.setVisibility(status == SHOW_STATUS_SUCCESS ? (PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE) : View.GONE);
-
         if (status == SHOW_STATUS_LOADING) {
             mSwipeRefreshLayout.setVisibility(View.VISIBLE);
             mSwipeRefreshLayout.setRefreshing(true);
@@ -425,7 +423,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         if (getActivity() == null) {
             return;
         }
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         String deviceId = AppConstants.deviceToken;
         String userId = "";
         if (AppConstants.register != null && AppConstants.register.getData() != null && AppConstants.register.getData().getUser() != null) {
@@ -453,14 +451,14 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                     setStatus(SHOW_STATUS_NO_DATA);
                     return;
                 }
-                mAllMatchs = new ArrayList<Match>();
+                mAllMatchs = new ArrayList<>();
                 mAllMatchs = json.getFocus();
 
                 teamLogoPre = json.getTeamLogoPre();
 
                 teamLogoSuff = json.getTeamLogoSuff();
 
-                mMatchs = new ArrayList<Match>();
+                mMatchs = new ArrayList<>();
 
                 //把请求回来的列表存入本地
                 StringBuffer sb = new StringBuffer("");
@@ -502,7 +500,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                     mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
                         @Override
                         public void onItemClick(View view, String data) {
-                            if(HandMatchId.handId(getActivity(), data)) {
+                            if (HandMatchId.handId(getActivity(), data)) {
 
                                 String thirdId = data;
                                 Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
@@ -522,6 +520,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                     L.d("sdfgh", "else");
                 }
 
+                titleContainer.setVisibility(PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE);
                 setHandicapName();
 
 //                isLoadedData = true;
@@ -1113,7 +1112,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
     /**
      * 设置盘口显示类型
      */
-    private void setHandicapName(){
+    private void setHandicapName() {
         boolean alet = PreferenceUtil.getBoolean(MyConstants.RBSECOND, true);
         boolean asize = PreferenceUtil.getBoolean(MyConstants.rbSizeBall, false);
         boolean eur = PreferenceUtil.getBoolean(MyConstants.RBOCOMPENSATE, true);
