@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="15dp"
-            android:paddingRight="20dp"
+            android:layout_marginRight="15dp"
             android:paddingTop="10dp">
 
             <RelativeLayout
@@ -83,19 +83,29 @@
 
             <RelativeLayout
                 android:id="@+id/item_football_odds_layout"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
                 >
 
                 <TextView
-                    android:id="@+id/match_state_started"
+                    android:id="@+id/match_state_started_half"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text=""
-                    android:visibility="gone"
+                    android:visibility="visible"
+                    android:textColor="@color/version"
+                    android:textSize="@dimen/item_football_left_odds" />
+                <TextView
+                    android:id="@+id/match_state_started_full"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text=""
+                    android:layout_toRightOf="@id/match_state_started_half"
+                    android:layout_marginLeft="15dp"
+                    android:visibility="visible"
                     android:textColor="@color/version"
                     android:textSize="@dimen/item_football_left_odds" />
 
@@ -319,6 +329,8 @@
                 android:layout_below="@id/rl_home"
                 android:orientation="vertical"
                 android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 >
                 <TextView
                     android:layout_width="match_parent"

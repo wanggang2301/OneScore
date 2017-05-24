@@ -1146,6 +1146,8 @@
         <item name="android:text">5.66</item>
         <item name="android:textSize">@dimen/text_size_13</item>
         <item name="android:textColor">@color/mdy_333</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:paddingTop">6dp</item>
         <item name="android:gravity">center</item>
 
     </style>
