@@ -207,15 +207,15 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         });
     }
 
-    // 登录返回
+    // 开始聊天时判断用户是否登录
     private void loginBack() {
-        if (!DeviceInfo.isLogin()) {
+        if (!DeviceInfo.isLogin()) {// 跳转登录
             if (type == 1) {
                 ((BasketDetailsActivityTest) mContext).talkAboutBallLoginBasket();
             } else if (type == 0) {
                 ((FootballMatchDetailActivity) mContext).talkAboutBallLoginFoot();
             }
-        } else {//跳转输入评论页面
+        } else {//跳转聊天框页面
             if (type == 1) {
                 ((BasketDetailsActivityTest) mContext).talkAboutBallSendBasket();
             } else if (type == 0) {

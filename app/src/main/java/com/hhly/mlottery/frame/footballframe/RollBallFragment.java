@@ -361,8 +361,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         if (null == adapter) {
             adapter = new RollBallAdapter(getActivity());
             recyclerView.setAdapter(adapter);
-            adapter.setOnItemClickListener(this);
-            adapter.setOnItemLongClickListener(this);
+//            adapter.setOnItemClickListener(this);
+//            adapter.setOnItemLongClickListener(this);
         }
     }
 
