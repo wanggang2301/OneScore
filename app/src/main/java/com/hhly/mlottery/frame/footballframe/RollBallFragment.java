@@ -34,6 +34,8 @@ import com.hhly.mlottery.bean.websocket.WebSocketMatchChange;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchEvent;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchOdd;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchStatus;
+import com.hhly.mlottery.callback.FocusMatchClickListener;
+import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.callback.RequestHostFocusCallBack;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
@@ -371,8 +373,19 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         if (null == adapter) {
             adapter = new RollBallAdapter(getActivity());
             recyclerView.setAdapter(adapter);
-//            adapter.setOnItemClickListener(this);
-//            adapter.setOnItemLongClickListener(this);
+            adapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
+                @Override
+                public void onItemClick(View view, String data) {
+                    if (HandMatchId.handId(getActivity(), data)) {
+
+                        String thirdId = data;
+                        Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
+                        intent.putExtra("thirdId", thirdId);
+                        intent.putExtra("currentFragmentId", 0);
+                        getParentFragment().startActivityForResult(intent, 0x12);
+                    }
+                }
+            });
         }
     }
 
