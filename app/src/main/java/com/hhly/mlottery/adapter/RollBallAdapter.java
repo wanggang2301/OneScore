@@ -195,12 +195,12 @@ public class RollBallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (Integer.parseInt(data.getKeepTime()) < 89) { // 手动操控封盘状态，时间如果大于89 则不显示颜色变化，防止在“--”状态下，后台推送的数据并非“--”，而显示颜色变化
             switch (handicap) {
                 case 1: // 亚盘
-                    if (!asiaLet.getLeftOdds().equals("-") && alet) {
+                    if (asiaLet != null && !asiaLet.getLeftOdds().equals("-") && alet) {
                         setupOddTextColor(data, holder.tvLeftOdds_YA, holder.tvHandicapValue_YA_BLACK, holder.tvRightOdds_YA);
                     }
                     break;
                 case 2: // 大小球
-                    if (!asiaSize.getLeftOdds().equals("-") && asize) {
+                    if (asiaSize != null && !asiaSize.getLeftOdds().equals("-") && asize) {
                         if (!alet) {
                             setupOddTextColor(data, holder.tvLeftOdds_YA, holder.tvHandicapValue_YA_BLACK, holder.tvRightOdds_YA);
                         } else {
@@ -209,7 +209,7 @@ public class RollBallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     }
                     break;
                 case 3: // 欧赔
-                    if (!euro.getLeftOdds().equals("-") && eur) {
+                    if (euro != null && !euro.getLeftOdds().equals("-") && eur) {
                         if (!alet && !asize) {
                             setupOddTextColor(data, holder.tvLeftOdds_YA, holder.tvHandicapValue_YA_BLACK, holder.tvRightOdds_YA);
                         } else {
