@@ -10,7 +10,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -39,6 +41,7 @@ import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFilterEventBusE
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchSettingEventBusEntity;
 import com.hhly.mlottery.frame.scorefrag.FootBallScoreFragment;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.HandMatchId;
@@ -61,6 +64,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -102,6 +106,12 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     TextView handicapName1;
     @BindView(R.id.tv_handicap_name2)
     TextView handicapName2;
+    @BindView(R.id.tv_date)
+    TextView tvDate;
+    @BindView(R.id.tv_week)
+    TextView tvWeek;
+    @BindView(R.id.ll_odd)
+    LinearLayout llOdd;
 
     private ApiHandler apiHandler = new ApiHandler(this);
     private RollBallAdapter adapter;
@@ -392,7 +402,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_Rollball,
                 new VolleyContentFast.ResponseSuccessListener<ImmediateMatchs>() {
                     @Override
-                    public void onResponse(ImmediateMatchs jsonObject) {
+                    public void onResponse(final ImmediateMatchs jsonObject) {
                         if (null == jsonObject || null == jsonObject.getImmediateMatch()) {
                             apiHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
                             return;
@@ -507,6 +517,12 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                                     }
                                     checkedLeagueCup = tempHotCups.toArray(new LeagueCup[tempHotCups.size()]);
                                 }
+
+                                tvDate.setText(jsonObject.getFilerDate());
+
+                                if (!TextUtils.isEmpty(jsonObject.getFilerDate()))
+                                    tvWeek.setText(DateUtil.getWeekOfXinQi(DateUtil.parseDate(jsonObject.getFilerDate())));
+
                                 RollBallFragment.this.feedAdapter(feedAdapterLists);
                                 apiHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                                 isLoadedData = true;
@@ -601,6 +617,14 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         return checkedLeagueCup;
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
     private class ApiHandler extends Handler {
         private WeakReference<RollBallFragment> weakReference;
 
@@ -666,7 +690,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                         fragment.titleContainer.setVisibility(View.GONE);
                         break;
                     case VIEW_STATUS_SUCCESS:
-                        fragment.titleContainer.setVisibility(PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE);
+                        fragment.titleContainer.setVisibility(View.VISIBLE);
+                        fragment.llOdd.setVisibility(PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE);
                         fragment.swipeRefreshLayout.setRefreshing(false);
                         fragment.networkExceptionLayout.setVisibility(View.GONE);
                         fragment.footballImmediateUnfocusLl.setVisibility(View.GONE);
@@ -717,7 +742,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
      * 接受消息的页面实现
      */
     public void onEventMainThread(ScoresMatchSettingEventBusEntity scoresMatchSettingEventBusEntity) {
-        titleContainer.setVisibility(PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE);
+        llOdd.setVisibility(PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE);
         setHandicapName();
         adapter.notifyDataSetChanged();
     }

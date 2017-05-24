@@ -194,12 +194,8 @@ public class FiltrateMatchConfigActivity extends BaseActivity implements OnClick
                         EventBus.getDefault().post(new ScoresMatchFilterEventBusEntity(currentFragmentId, map));
                         finish();
                     }
-
                 }
-
-
                 break;
-
             default:
                 break;
         }
