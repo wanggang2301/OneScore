@@ -252,8 +252,8 @@ public class RollBallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                 holder.tvHomeScore.setVisibility(View.VISIBLE);
                 holder.tvGuestScore.setVisibility(View.VISIBLE);
-                holder.tvHomeHalfScore.setVisibility(View.VISIBLE);
-                holder.tvGuestHalfScore.setVisibility(View.VISIBLE);
+                holder.tvHomeHalfScore.setVisibility(View.GONE);
+                holder.tvGuestHalfScore.setVisibility(View.GONE);
                 break;
             case "2": // 中场
                 this.setupKeepTimeStyle(holder.tvKeepTime, holder.keepTimeShuffle, context.getString(R.string.immediate_status_midfield), R.color.football_keeptime, false);
