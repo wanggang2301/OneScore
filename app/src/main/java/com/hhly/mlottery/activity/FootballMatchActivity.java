@@ -723,7 +723,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                 break;
             case R.id.rl_top:
 
-                showDateChooseDialog();
+               // showDateChooseDialog();
                 break;
             default:
                 break;
