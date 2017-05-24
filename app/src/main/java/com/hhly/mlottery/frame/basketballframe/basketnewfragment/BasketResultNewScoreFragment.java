@@ -304,9 +304,9 @@ public class BasketResultNewScoreFragment extends Fragment implements View.OnCli
                     return;
                 }
 
-                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.BASKET_CURR_DATE, "").equals(json.getFilerDate())) {
+                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.BASKET_CURR_DATE_RESULT, "").equals(json.getFilerDate())) {
                     PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.BASKET_RESULT);
-                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.BASKET_CURR_DATE, json.getFilerDate());
+                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.BASKET_CURR_DATE_RESULT, json.getFilerDate());
                 }
 
                 mMatchdata = json.getMatchData();

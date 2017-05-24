@@ -34,7 +34,6 @@ import com.hhly.mlottery.bean.websocket.WebSocketMatchChange;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchEvent;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchOdd;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchStatus;
-import com.hhly.mlottery.callback.FocusMatchClickListener;
 import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.callback.RequestHostFocusCallBack;
 import com.hhly.mlottery.config.BaseURLs;
@@ -425,13 +424,17 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                         feedAdapterLists = new ArrayList<>();
 
                         L.d("ddddeee", "刷新前==" + PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL).size() + "");
-                        L.d("ddddeee", "日期==" + PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, ""));
+                        L.d("ddddeee", "日期==" + PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_ROLL, ""));
                         L.d("ddddeee", "请求==" + jsonObject.getFilerDate());
 
 
-                        if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, "").equals(jsonObject.getFilerDate())) {
+                        if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_ROLL, "").equals(jsonObject.getFilerDate())) {
+                            L.d("ddddeee", "删除");
+
                             PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_ROLL);
-                            PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, jsonObject.getFilerDate());
+                            PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_ROLL, jsonObject.getFilerDate());
+                            L.d("ddddeee", "保存日期==" + PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_ROLL, ""));
+
                         }
 
                         L.d("ddddeee", "刷新后==" + PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL).size() + "");
@@ -472,7 +475,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                                 } else {// 没有筛选过
 
                                     if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL).size() > 0) {
-
 
                                         List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL);
 
