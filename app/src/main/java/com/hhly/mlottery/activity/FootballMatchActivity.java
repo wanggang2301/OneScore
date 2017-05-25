@@ -205,7 +205,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
                     footBallOddsBean = JSON.parseObject(ws_json, FootBallOddsBean.class);
                 }
-                updateListViewItemOdd(footBallOddsBean);
+                //updateListViewItemOdd(footBallOddsBean);
 
             } else if (msg.arg2 == 3) {
 
@@ -218,7 +218,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
             for (int i = 0; i < bettingList.size(); i++) {
 
                 for (FootballLotteryBean.BettingListBean data : bettingList) {
-                    if (footBallOddsBean.getThirdId().equals(data.getMatchId())) {  //找到对应比赛对象
+                    if (footBallOddsBean.getData().getMatchId().equals(data.getMatchId())) {  //找到对应比赛对象
 
                         updateMatchOdd(i, footBallOddsBean);
                     }
@@ -246,7 +246,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                     bettingList.get(i).setLetloseoddsColorId(R.color.odds_down_bg);
                     bettingList.get(i).setLetWinOdds(data.getData().getLetLoseOdds());
                 } else {
-
+                    bettingList.get(i).setLetloseoddsColorId(R.color.transparency);
                 }
 
 
@@ -263,7 +263,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                     bettingList.get(i).setLetsameoddsColorId(R.color.odds_down_bg);
                     bettingList.get(i).setLetSameOdds(data.getData().getLetSameOdds());
                 } else {
-
+                    bettingList.get(i).setLetsameoddsColorId(R.color.transparency);
                 }
 
 
@@ -279,7 +279,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                     bettingList.get(i).setLetwinoddsColorId(R.color.odds_down_bg);
                     bettingList.get(i).setLetSameOdds(data.getData().getLetWinOdds());
                 } else {
-
+                    bettingList.get(i).setLetwinoddsColorId(R.color.transparency);
                 }
 
 
@@ -296,6 +296,8 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                     //降
                     bettingList.get(i).setLoseoddsColorId(R.color.odds_down_bg);
                     bettingList.get(i).setLoseOdds(data.getData().getLoseOdds());
+                }else{
+                    bettingList.get(i).setLoseoddsColorId(R.color.transparency);
                 }
 
 
@@ -310,7 +312,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                     bettingList.get(i).setSameoddsColorId(R.color.odds_down_bg);
                     bettingList.get(i).setSameOdds(data.getData().getSameOdds());
                 } else {
-
+                    bettingList.get(i).setSameoddsColorId(R.color.transparency);
                 }
 
 
@@ -327,6 +329,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                     bettingList.get(i).setWinOdds(data.getData().getWinOdds());
 
                 } else {
+                    bettingList.get(i).setWinoddsColorId(R.color.transparency);
                     //bettingList.get(i).setWinoddsColorId(R.color.transparency);
                 }
 
