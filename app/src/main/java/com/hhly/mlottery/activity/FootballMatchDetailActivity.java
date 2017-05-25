@@ -368,11 +368,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     }
 
     private Timer mReloadTimer;
+    private TimerTask reloadTimerTask;
     private boolean isStartTimer = false;
 
     private void startReloadTimer() {
         if (!isStartTimer && !isFinishing()) {//已经开启则不需要再开启
-            TimerTask reloadTimerTask = new TimerTask() {
+            reloadTimerTask = new TimerTask() {
                 @Override
                 public void run() {
                     L.d(TAG, "TimerTask run....");
@@ -895,6 +896,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         if (mReloadTimer != null) {
             mReloadTimer.cancel();
             mReloadTimer.purge();
+            mReloadTimer = null;
+        }
+
+        if(reloadTimerTask != null){
+            reloadTimerTask.cancel();
+            reloadTimerTask = null;
         }
 
         closePollingGifCount();
