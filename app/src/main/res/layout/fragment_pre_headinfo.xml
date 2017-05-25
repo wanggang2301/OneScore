@@ -35,13 +35,13 @@
             android:id="@+id/ll_webview"
             android:orientation="vertical">
 
-            <WebView
-                android:id="@+id/webview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:nestedScrollingEnabled="false"
-                android:scrollbars="none"/>
+            <!--<WebView-->
+                <!--android:id="@+id/webview"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerInParent="true"-->
+                <!--android:nestedScrollingEnabled="false"-->
+                <!--android:scrollbars="none"/>-->
         </LinearLayout>
     </LinearLayout>
 
