@@ -1021,6 +1021,14 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                 break;
 
+            case "18": //点球状态
+
+                mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
+                mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
+
+
+                break;
+
             case "1029": //主队进球
 
                 if ("".equals(matchTextLiveBean.getHomeScore()) || "".equals(matchTextLiveBean.getGuestScore())) {
