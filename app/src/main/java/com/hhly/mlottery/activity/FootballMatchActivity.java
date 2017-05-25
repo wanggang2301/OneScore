@@ -236,7 +236,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                 bettingList.get(i).setLetNumber(data.getData().getLetNumber());
 
             }
-            if (data.getData().getLetLoseOdds() != null) {
+            if (!TextUtils.isEmpty(data.getData().getLetWinOdds())) {
 
                 if (Double.parseDouble(data.getData().getLetLoseOdds()) > Double.parseDouble(bettingList.get(i).getLetLoseOdds())) {
                     //升
@@ -249,7 +249,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                 bettingList.get(i).setLetLoseOdds(data.getData().getLetLoseOdds());
 
             }
-            if (data.getData().getLetSameOdds() != null) {
+            if (!TextUtils.isEmpty(data.getData().getLetWinOdds())) {
 
                 if (Double.parseDouble(data.getData().getLetSameOdds()) > Double.parseDouble(bettingList.get(i).getLetSameOdds())) {
                     //升
@@ -260,9 +260,8 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                 }
 
                 bettingList.get(i).setLetSameOdds(data.getData().getLetSameOdds());
-
             }
-            if (data.getData().getLetWinOdds() != null) {
+            if (!TextUtils.isEmpty(data.getData().getLetWinOdds())) {
 
                 if (Double.parseDouble(data.getData().getLetWinOdds()) > Double.parseDouble(bettingList.get(i).getLetWinOdds())) {
                     //升
@@ -275,7 +274,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                 bettingList.get(i).setLetSameOdds(data.getData().getLetSameOdds());
 
             }
-            if (data.getData().getLoseOdds() != null) {
+            if (!TextUtils.isEmpty(data.getData().getLetWinOdds())) {
 
 
                 if (Double.parseDouble(data.getData().getLoseOdds()) > Double.parseDouble(bettingList.get(i).getLoseOdds())) {
@@ -289,7 +288,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                 bettingList.get(i).setLoseOdds(data.getData().getLoseOdds());
 
             }
-            if (data.getData().getSameOdds() != null) {
+            if (!TextUtils.isEmpty(data.getData().getLetWinOdds())) {
                 if (Double.parseDouble(data.getData().getSameOdds()) > Double.parseDouble(bettingList.get(i).getSameOdds())) {
                     //升
                     bettingList.get(i).setSameoddsColorId(R.color.odds_up_bg);
@@ -300,7 +299,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                 bettingList.get(i).setSameOdds(data.getData().getSameOdds());
 
             }
-            if (data.getData().getWinOdds() != null) {
+            if (!TextUtils.isEmpty(data.getData().getLetWinOdds())) {
 
                 if (Double.parseDouble(data.getData().getWinOdds()) > Double.parseDouble(bettingList.get(i).getWinOdds())) {
                     //升
