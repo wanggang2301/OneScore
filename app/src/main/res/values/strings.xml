@@ -1758,5 +1758,6 @@
     <string name="football_jingcai">竞彩足球</string>
     <string name="data_updating">详情数据更新中...</string>
     <string name="at_least_one_race">至少选择一场赛事</string>
+    <string name="start_dianqiu">开始点球大战</string>
 
 </resources>
