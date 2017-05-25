@@ -308,7 +308,6 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         } else {
             mTabLayout.setTabSpaceEqual(false);
         }
-
     }
 
 
@@ -321,6 +320,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
             }
         });
         mFilterImgBtn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 MobclickAgent.onEvent(mContext, "Football_Filtrate");

@@ -13,32 +13,30 @@
         android:layout_gravity="center"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/tv_status"
-            android:layout_width="15dp"
-            android:layout_height="13dp"
-            android:layout_gravity="center"
-            android:background="@color/tabhost"
-            android:gravity="center"
-            android:text="HF"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_9" />
 
         <TextView
-            android:id="@+id/tv_score"
-            android:layout_width="30dp"
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
             android:layout_height="15dp"
             android:layout_gravity="center"
-            android:background="@drawable/football_event"
-            android:gravity="center"
-            android:text="0 : 0"
-            android:textColor="@color/red"
-            android:textSize="@dimen/text_size_10" />
+            android:gravity="center_horizontal"
+            android:text="@string/start_dianqiu"
+            android:textSize="@dimen/text_size_13" />
 
+        <TextView
+
+            android:id="@+id/tv_addtime"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:text="@string/start_addtime"
+            android:textSize="@dimen/text_size_13" />
 
     </LinearLayout>
-
 
     <TextView
         android:id="@+id/line"

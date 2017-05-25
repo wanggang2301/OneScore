@@ -228,10 +228,10 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private FinishMatchLiveTextFragment finishMatchLiveTextFragment;//完场
     private String mThirdId;
 
-    public static LiveFragment newInstance(String thirdId,MatchDetail matchDetail, MathchStatisInfo mathchStatisInfo, List<MatchTimeLiveBean> eventMatchTimeLiveList, List<MatchTextLiveBean> trendChartList, String keepTime) {
+    public static LiveFragment newInstance(String thirdId, MatchDetail matchDetail, MathchStatisInfo mathchStatisInfo, List<MatchTimeLiveBean> eventMatchTimeLiveList, List<MatchTextLiveBean> trendChartList, String keepTime) {
         LiveFragment fragment = new LiveFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("thirdId",thirdId);
+        bundle.putString("thirdId", thirdId);
         bundle.putParcelable("matchDetail", matchDetail);
         bundle.putParcelable("mathchStatisInfo", mathchStatisInfo);
         bundle.putParcelableArrayList("trendChartList", (ArrayList<? extends Parcelable>) trendChartList);
@@ -292,7 +292,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.goChart:
-                ((FootballMatchDetailActivity)mActivity).mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_CHARTBALL);
+                ((FootballMatchDetailActivity) mActivity).mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_CHARTBALL);
                 break;
 
             case R.id.reLoading:
@@ -644,6 +644,8 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
 
 
         computeEventNum(eventType);
+
+        //事件轴Y
         eventAdapter = new EventAdapter(mContext, eventMatchLive);
         recyclerView.setAdapter(eventAdapter);
     }
