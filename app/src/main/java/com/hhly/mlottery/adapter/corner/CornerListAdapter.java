@@ -72,6 +72,12 @@ public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEnt
         if(entity.getStatus().equals("2")){ //中场
             holder.setText(R.id.keeptime,mContext.getString(R.string.fragme_home_zhongchang_text));
         }
+        if(entity.getStatus().equals("1")&&entity.getKeep()!=null&&Integer.parseInt(entity.getKeep())>45){ //上半场大于45
+            holder.setText(R.id.keeptime,"45+");
+        }
+        if(entity.getStatus().equals("3")&&entity.getKeep()!=null&&Integer.parseInt(entity.getKeep())>90){ //上半场大于45
+            holder.setText(R.id.keeptime,"90+");
+        }
         //图标
         ImageView homeIcon=holder.getView(R.id.home_icon);
         ImageView guestIcon=holder.getView(R.id.guest_icon);
@@ -120,11 +126,46 @@ public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEnt
             holder.getView(R.id.tv_guest_half_score).setVisibility(View.VISIBLE);
         }
 
+        TextView mTv_immediate=holder.getView(R.id.corner_immediate_odd);
+        TextView mTv_higher=holder.getView(R.id.corner_higher);
+        TextView mTv_lower=holder.getView(R.id.corner_lower);
+
+
 
         holder.setText(R.id.corner_first_odd,bean.getOd().getCpOdd()+"");
         holder.setText(R.id.corner_immediate_odd,bean.getOd().getJsOdd()+"");
         holder.setText(R.id.corner_higher,bean.getOd().getHigher()+"");
         holder.setText(R.id.corner_lower,bean.getOd().getBelow()+"");
+
+        String immediate=mTv_immediate.getText().toString();
+        String higher=mTv_higher.getText().toString();
+        String lower=mTv_lower.getText().toString();
+
+        if(bean.getOd().getHigher()>Double.parseDouble(higher)){ //高于
+            mTv_higher.setTextColor(ContextCompat.getColor(mContext,R.color.analyze_left));
+        } else if(bean.getOd().getHigher()<Double.parseDouble(higher)){
+            mTv_higher.setTextColor(ContextCompat.getColor(mContext,R.color.fall_color));
+        } else {
+            mTv_higher.setTextColor(ContextCompat.getColor(mContext,R.color.mdy_333));
+        }
+
+        if(bean.getOd().getJsOdd()>Double.parseDouble(immediate)){ //红升绿降
+            mTv_immediate.setTextColor(ContextCompat.getColor(mContext,R.color.analyze_left));
+        } else if(bean.getOd().getJsOdd()<Double.parseDouble(immediate)){
+            mTv_immediate.setTextColor(ContextCompat.getColor(mContext,R.color.fall_color));
+        } else {
+            mTv_immediate.setTextColor(ContextCompat.getColor(mContext,R.color.mdy_333));
+        }
+
+
+        if(bean.getOd().getBelow()>Double.parseDouble(lower)){ //低于
+            mTv_lower.setTextColor(ContextCompat.getColor(mContext,R.color.analyze_left));
+        } else if(bean.getOd().getBelow()<Double.parseDouble(lower)){
+            mTv_lower.setTextColor(ContextCompat.getColor(mContext,R.color.fall_color));
+        } else {
+            mTv_lower.setTextColor(ContextCompat.getColor(mContext,R.color.mdy_333));
+        }
+
 
         if(entity.getStatus().equals("0")){ //未开
             rl_score.setVisibility(View.GONE);
@@ -144,7 +185,11 @@ public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEnt
         }else { //半场
             rl_score.setVisibility(View.VISIBLE);
             match_type.setVisibility(View.GONE);
-            match_state_started_half.setVisibility(View.VISIBLE);
+            if(entity.getStatus().equals("1")){
+                match_state_started_half.setVisibility(View.GONE);
+            }else{
+                match_state_started_half.setVisibility(View.VISIBLE);
+            }
             match_state_started_full.setVisibility(View.GONE);
             match_state_started_half.setText(MyApp.getContext().getString(R.string.number_info_half));
             holder.setTextColor(R.id.tv_home_full_score, ContextCompat.getColor(mContext,R.color.colorPrimary));
