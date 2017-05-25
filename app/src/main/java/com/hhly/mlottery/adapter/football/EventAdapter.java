@@ -99,10 +99,8 @@ public class EventAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolde
 
 
     private void BindRecycleViewMatchDianqiu(BaseRecyclerViewHolder viewHolder, int position) {
-        TextView tv_time = viewHolder.findViewById(R.id.tv_time);
-        tv_time.setText(mContext.getResources().getString(R.string.start_dianqiu));
-
-
+       // TextView tv_time = viewHolder.findViewById(R.id.tv_time);
+        // tv_time.setText(mContext.getResources().getString(R.string.start_dianqiu));
     }
 
 
