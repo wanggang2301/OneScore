@@ -284,9 +284,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 res.getString(R.string.input_password_new),
                 res.getString(R.string.new_pw) + res.getString(R.string.pwd_format))) {
 
-            String url = BaseURLs.URL_REGISTER;
+            //String url = BaseURLs.URL_REGISTER;
+            String url = "http://192.168.10.242:8091/user/register";
             Map<String, String> param = new HashMap<>();
-            param.put("account", userName);
+            param.put("phoneNum", userName);
             param.put("password", MD5Util.getMD5(passWord));
             if(AppConstants.isGOKeyboard){
                 param.put("registerType", RegisterType.USERNAME);
@@ -296,9 +297,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 param.put("registerType", RegisterType.PHONE);
             }
            // param.put("registerType", RegisterType.USERNAME);
-            param.put("smsCode", verifyCode);
+            param.put("sms", verifyCode);
 
-            param.put("deviceToken", AppConstants.deviceToken);
+         /*   param.put("deviceToken", AppConstants.deviceToken);
 
             //以下添加的参数为修复恶意注册的bug所加。
             String sign = DeviceInfo.getSign(userName, AppConstants.deviceToken, AppConstants.SIGN_KEY);
@@ -309,9 +310,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
             String versionName= DeviceInfo.getVersionName();
             param.put("versionName",versionName);
+*/
 
-
-            VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
+            VolleyContentFast.requestJsonByGet(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
                 @Override
                 public void onResponse(Register register) {
 

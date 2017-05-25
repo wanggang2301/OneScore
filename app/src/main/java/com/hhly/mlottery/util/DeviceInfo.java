@@ -458,24 +458,25 @@ public class DeviceInfo {
 	public static void getVerifyCode(Context ctx, String phone, String oprateType, final GetVerifyCodeCallBack callBack) {
 		if (UiUtils.isMobileNO(ctx, phone)) {
 			callBack.beforGet();
-			String url = BaseURLs.URL_SENDSMSCODE;
+			//String url = BaseURLs.URL_SENDSMSCODE;
+			String url = "http://192.168.10.242:8091/user/getsms/phoneNum/type";
 			Map<String, String> param = new HashMap<>();
-			param.put("phone", phone);
-			param.put("operateType", oprateType);
+			param.put("phoneNum", phone);
+			param.put("type", oprateType);
 
 			Log.d(TAG, phone + "...............................");
 
-			//以下添加的参数为修复恶意注册的bug所加。
+	/*		//以下添加的参数为修复恶意注册的bug所加。
 			String sign = DeviceInfo.getSign(phone, AppConstants.deviceToken, AppConstants.SIGN_KEY);
 			param.put("sign", sign);
 
 			int versioncode = DeviceInfo.getVersionCode();
 			param.put("versionCode", String.valueOf(versioncode));
 
-			param.put("deviceToken", AppConstants.deviceToken);
+			param.put("deviceToken", AppConstants.deviceToken);*/
 
 
-			VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<SendSmsCode>() {
+			VolleyContentFast.requestJsonByGet(url, param, new VolleyContentFast.ResponseSuccessListener<SendSmsCode>() {
 				@Override
 				public void onResponse(SendSmsCode jsonObject) {
 					callBack.onGetResponce(jsonObject);

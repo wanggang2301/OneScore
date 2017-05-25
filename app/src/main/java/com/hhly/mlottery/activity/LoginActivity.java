@@ -598,19 +598,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             if (UiUtils.checkPassword_JustLength(this, passWord)) {
                 // 登录
                 progressBar.show();
-                final String url = BaseURLs.URL_LOGIN;
+                //final String url = BaseURLs.URL_LOGIN;
+                final String url = "http://127.0.0.1:8091/user/login";
+
                 Map<String, String> param = new HashMap<>();
-                param.put("account", userName);
+                param.put("phoneNum", userName);
                 param.put("password", MD5Util.getMD5(passWord));
                 setResult(RESULT_OK);
-                param.put("deviceToken", AppConstants.deviceToken);
+                //param.put("deviceToken", AppConstants.deviceToken);
 
                 //防止用户恶意注册后先添加的字段，versioncode和versionname;
                 int versionCode = DeviceInfo.getVersionCode();
-                param.put("versionCode", String.valueOf(versionCode));
+                //param.put("versionCode", String.valueOf(versionCode));
 
                 String versionName = DeviceInfo.getVersionName();
-                param.put("versionName", versionName);
+                //param.put("versionName", versionName);
 
                 VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
                     @Override
