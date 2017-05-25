@@ -39,6 +39,25 @@ public class BallMatchItemsBean implements Parcelable, Cloneable, Comparator<Bal
     private String guest_rc;
     private String guest_yc;
 
+    private String txt;
+    private int winner;
+
+    public String getTxt() {
+        return txt;
+    }
+
+    public void setTxt(String txt) {
+        this.txt = txt;
+    }
+
+    public int getWinner() {
+        return winner;
+    }
+
+    public void setWinner(int winner) {
+        this.winner = winner;
+    }
+
     private String homeScore;
     private String guestScore;
 
@@ -394,6 +413,8 @@ public class BallMatchItemsBean implements Parcelable, Cloneable, Comparator<Bal
         dest.writeString(guest_rc);
         dest.writeString(guest_yc);
         dest.writeMap(matchOdds);
+        dest.writeString(txt);
+        dest.writeInt(winner);
 
     }
 
@@ -425,6 +446,8 @@ public class BallMatchItemsBean implements Parcelable, Cloneable, Comparator<Bal
         guest_yc = in.readString();
         statusOrigin = in.readString();
         matchOdds = in.readHashMap(HashMap.class.getClassLoader());
+        txt = in.readString();
+        winner = in.readInt();
     }
 
     @Override
