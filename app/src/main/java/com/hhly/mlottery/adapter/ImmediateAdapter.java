@@ -596,9 +596,9 @@ public class ImmediateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             keeptime = Integer.parseInt(match.getKeepTime());
         }
         if ((!"-1".equals(match.getStatusOrigin()) && keeptime >= 89) || "-".equals(handicapValue) || "|".equals(handicapValue)) {// 封盘,完场不会有封盘的情况
-            topView.setText("-");
+            topView.setText(mContext.getString(R.string.immediate_status_entertained));
             centerView.setText("-");
-            bottomView.setText(mContext.getString(R.string.immediate_status_entertained));
+            bottomView.setText("-");
         } else {
             centerView.setText(handicapValue);
             topView.setText(odd.getLeftOdds());
