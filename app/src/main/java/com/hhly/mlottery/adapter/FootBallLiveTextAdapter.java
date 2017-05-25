@@ -42,7 +42,7 @@ public class FootBallLiveTextAdapter extends BaseQuickAdapter<MatchTextLiveBean>
     private static final String MATCHFINISH = "-1";
 
 
-    public  FootBallLiveTextAdapter(Context context, List<MatchTextLiveBean> data) {
+    public FootBallLiveTextAdapter(Context context, List<MatchTextLiveBean> data) {
         super(R.layout.item_live_text, data);
         this.context = context;
         this.list = data;
@@ -128,7 +128,7 @@ public class FootBallLiveTextAdapter extends BaseQuickAdapter<MatchTextLiveBean>
 
         int msgPlace = Integer.parseInt(matchTextLiveBean.getMsgPlace());
         //中间
-        if (msgPlace == 0) {
+        if (msgPlace == 0 || (msgPlace == 1 && "20".equals(matchTextLiveBean.getCode()))) {  //接口已经没有按以前约定的规则走了，没办法只能这样写了
             if ("99999999".equals(matchTextLiveBean.getTime())) {  //比赛结束
                 holder.setText(R.id.zuo_msg_text, matchTextLiveBean.getMsgText());
                 holder.setText(R.id.msg_text, "");
@@ -163,9 +163,15 @@ public class FootBallLiveTextAdapter extends BaseQuickAdapter<MatchTextLiveBean>
             holder.setText(R.id.zuo_msg_text, matchTextLiveBean.getMsgText().trim());
             holder.setText(R.id.msg_text, "");
             if (StadiumUtils.convertStringToInt(matchTextLiveBean.getTime()) > 90) {
-                holder.setBackgroundRes(R.id.time, R.drawable.live_text_ot);
+                if (SECONDHALF.equals(matchTextLiveBean.getState())) {
+                    holder.setBackgroundRes(R.id.time, R.drawable.live_text_ot);
+                } else if (MATCHFINISH.equals(matchTextLiveBean.getState())) {
+                    holder.setBackgroundRes(R.id.time, R.drawable.live_text_ot);
 
-
+                } else {
+                    holder.setBackgroundRes(R.id.time, R.drawable.live_text_time);
+                    holder.setText(R.id.time, StadiumUtils.convertStringToInt(matchTextLiveBean.getTime()) + "'");
+                }
             } else {
                 holder.setBackgroundRes(R.id.time, R.drawable.live_text_time);
 
@@ -181,8 +187,14 @@ public class FootBallLiveTextAdapter extends BaseQuickAdapter<MatchTextLiveBean>
 
 
             if (StadiumUtils.convertStringToInt(matchTextLiveBean.getTime()) > 90) {
+                if (SECONDHALF.equals(matchTextLiveBean.getState())) {
+                    holder.setBackgroundRes(R.id.time, R.drawable.live_text_ot);
+                } else {
+                    holder.setBackgroundRes(R.id.time, R.drawable.live_text_time);
+                    holder.setText(R.id.time, StadiumUtils.convertStringToInt(matchTextLiveBean.getTime()) + "'");
 
-                holder.setBackgroundRes(R.id.time, R.drawable.live_text_ot);
+                }
+
 
             } else {
                 holder.setBackgroundRes(R.id.time, R.drawable.live_text_time);

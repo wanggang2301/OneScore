@@ -122,7 +122,7 @@ public class CPIOddsFragment2 extends Fragment {
             @Override
             public void onItemClick(NewOddsInfo.AllInfoBean item) {
 
-                if(HandMatchId.handId(getContext(), item.getMatchInfo().getMatchId())) {
+                if (HandMatchId.handId(getContext(), item.getMatchInfo().getMatchId())) {
 
 
                     Intent intent = new Intent(getContext(), FootballMatchDetailActivity.class);
@@ -219,9 +219,21 @@ public class CPIOddsFragment2 extends Fragment {
     }
 
     private void saveCurrentDate(String date) {
-        if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_INDEX_DATE, "").equals(date)) {
-            PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_INDEX);
-            PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_INDEX_DATE, date);
+        if (OddsTypeEnum.PLATE.equals(type)) {
+            if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_INDEX_DATE_PLATE, "").equals(date)) {
+                PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_INDEX);
+                PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_INDEX_DATE_PLATE, date);
+            }
+        } else if (OddsTypeEnum.BIG.equals(type)) {
+            if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_INDEX_DATE_BIG, "").equals(date)) {
+                PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_INDEX);
+                PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_INDEX_DATE_BIG, date);
+            }
+        } else if (OddsTypeEnum.OP.equals(type)) {
+            if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_INDEX_DATE_OP, "").equals(date)) {
+                PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_INDEX);
+                PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_INDEX_DATE_OP, date);
+            }
         }
     }
 

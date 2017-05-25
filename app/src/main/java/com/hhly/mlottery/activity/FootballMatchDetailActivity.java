@@ -68,7 +68,6 @@ import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.NetworkUtils;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.StringUtils;
-import com.hhly.mlottery.util.adapter.ScreenUtils;
 import com.hhly.mlottery.util.immersionbar.ImmersionBar;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.BarrageView;
@@ -92,7 +91,33 @@ import java.util.TimerTask;
 
 import de.greenrobot.event.EventBus;
 
-import static com.hhly.mlottery.config.FootBallTypeEnum.*;
+import static com.hhly.mlottery.config.FootBallTypeEnum.ATTACK;
+import static com.hhly.mlottery.config.FootBallTypeEnum.ATTACK1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.CORNER;
+import static com.hhly.mlottery.config.FootBallTypeEnum.CORNER1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.DANGERATTACK;
+import static com.hhly.mlottery.config.FootBallTypeEnum.DANGERATTACK1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.DIANQIU;
+import static com.hhly.mlottery.config.FootBallTypeEnum.DIANQIU1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.FIRSTHALF;
+import static com.hhly.mlottery.config.FootBallTypeEnum.HALFTIME;
+import static com.hhly.mlottery.config.FootBallTypeEnum.MATCHFINISH;
+import static com.hhly.mlottery.config.FootBallTypeEnum.RED_CARD;
+import static com.hhly.mlottery.config.FootBallTypeEnum.RED_CARD1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SCORE;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SCORE1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOT;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOT1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE12;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE2;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SUBSTITUTION;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SUBSTITUTION1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.YELLOW_CARD;
+import static com.hhly.mlottery.config.FootBallTypeEnum.YELLOW_CARD1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.YTORED;
+import static com.hhly.mlottery.config.FootBallTypeEnum.YTORED1;
 
 /**
  * @author wang gang
@@ -309,7 +334,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     }
 
 
-
     @Override
     public void onRefresh() {
         L.d(TAG, "下拉刷新");
@@ -360,7 +384,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
 
     private void loadData(int type) {
-        if(type != 1){
+        if (type != 1) {
             mHandler.sendEmptyMessage(STARTLOADING);
         }
         Map<String, String> params = new HashMap<>();
@@ -1567,7 +1591,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         }
 
         //自己推送一条结束消息     -1 完场
-        if (MATCHFINISH.equals(matchTextLiveBean.getState())) {
+        if (MATCHFINISH.equals(matchTextLiveBean.getState()) || "20".equals(matchTextLiveBean.getCode())) {
             matchLive.add(0, new MatchTextLiveBean("", "", "0", "0", "4", "99999999", mContext.getResources().getString(R.string.matchFinished_txt), "", "", "0", "", "", "", ""));
             mLiveFragment.setLiveTextDetails(matchLive);
         }
@@ -1744,7 +1768,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         //滚球
                         mDetailsRollballFragment = DetailsRollballFragment.newInstance(mThirdId);
                         //直播
-                        mLiveFragment = LiveFragment.newInstance(mThirdId,mMatchDetail, mathchStatisInfo, eventMatchTimeLiveList, trendChartList, mKeepTime);
+                        mLiveFragment = LiveFragment.newInstance(mThirdId, mMatchDetail, mathchStatisInfo, eventMatchTimeLiveList, trendChartList, mKeepTime);
                         //指数
                         mOddsFragment = OddsFragment.newInstance();
                         //分析、情报

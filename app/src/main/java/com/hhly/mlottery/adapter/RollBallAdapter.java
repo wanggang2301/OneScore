@@ -195,12 +195,12 @@ public class RollBallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (Integer.parseInt(data.getKeepTime()) < 89) { // 手动操控封盘状态，时间如果大于89 则不显示颜色变化，防止在“--”状态下，后台推送的数据并非“--”，而显示颜色变化
             switch (handicap) {
                 case 1: // 亚盘
-                    if (!asiaLet.getLeftOdds().equals("-") && alet) {
+                    if (asiaLet != null && !asiaLet.getLeftOdds().equals("-") && alet) {
                         setupOddTextColor(data, holder.tvLeftOdds_YA, holder.tvHandicapValue_YA_BLACK, holder.tvRightOdds_YA);
                     }
                     break;
                 case 2: // 大小球
-                    if (!asiaSize.getLeftOdds().equals("-") && asize) {
+                    if (asiaSize != null && !asiaSize.getLeftOdds().equals("-") && asize) {
                         if (!alet) {
                             setupOddTextColor(data, holder.tvLeftOdds_YA, holder.tvHandicapValue_YA_BLACK, holder.tvRightOdds_YA);
                         } else {
@@ -209,7 +209,7 @@ public class RollBallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     }
                     break;
                 case 3: // 欧赔
-                    if (!euro.getLeftOdds().equals("-") && eur) {
+                    if (euro != null && !euro.getLeftOdds().equals("-") && eur) {
                         if (!alet && !asize) {
                             setupOddTextColor(data, holder.tvLeftOdds_YA, holder.tvHandicapValue_YA_BLACK, holder.tvRightOdds_YA);
                         } else {
@@ -223,10 +223,10 @@ public class RollBallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         // 比赛状态
         switch (data.getStatusOrigin()) {
             case "0": // 未开赛
-                holder.tvHomeScore.setVisibility(View.GONE);
-                holder.tvGuestScore.setVisibility(View.GONE);
-                holder.tvHomeHalfScore.setVisibility(View.GONE);
-                holder.tvGuestHalfScore.setVisibility(View.GONE);
+                holder.tvHomeScore.setVisibility(View.INVISIBLE);
+                holder.tvGuestScore.setVisibility(View.INVISIBLE);
+                holder.tvHomeHalfScore.setVisibility(View.INVISIBLE);
+                holder.tvGuestHalfScore.setVisibility(View.INVISIBLE);
 
                 holder.tvKeepTime.setText(context.getString(R.string.snooker_state_no_start));
                 holder.keepTimeShuffle.setVisibility(View.GONE);
@@ -252,8 +252,8 @@ public class RollBallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                 holder.tvHomeScore.setVisibility(View.VISIBLE);
                 holder.tvGuestScore.setVisibility(View.VISIBLE);
-                holder.tvHomeHalfScore.setVisibility(View.VISIBLE);
-                holder.tvGuestHalfScore.setVisibility(View.VISIBLE);
+                holder.tvHomeHalfScore.setVisibility(View.INVISIBLE);
+                holder.tvGuestHalfScore.setVisibility(View.INVISIBLE);
                 break;
             case "2": // 中场
                 this.setupKeepTimeStyle(holder.tvKeepTime, holder.keepTimeShuffle, context.getString(R.string.immediate_status_midfield), R.color.football_keeptime, false);
@@ -312,10 +312,10 @@ public class RollBallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             case "-10": // 取消
 
                 this.setupKeepTimeStyle(holder.tvKeepTime, holder.keepTimeShuffle, context.getString(R.string.immediate_status_cancel), R.color.red, false);
-                holder.tvHomeScore.setVisibility(View.GONE);
-                holder.tvGuestScore.setVisibility(View.GONE);
-                holder.tvHomeHalfScore.setVisibility(View.GONE);
-                holder.tvGuestHalfScore.setVisibility(View.GONE);
+                holder.tvHomeScore.setVisibility(View.INVISIBLE);
+                holder.tvGuestScore.setVisibility(View.INVISIBLE);
+                holder.tvHomeHalfScore.setVisibility(View.INVISIBLE);
+                holder.tvGuestHalfScore.setVisibility(View.INVISIBLE);
 
                 holder.tvGuestScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
                 holder.tvHomeScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
@@ -323,10 +323,10 @@ public class RollBallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             case "-11": // 待定
 
                 this.setupKeepTimeStyle(holder.tvKeepTime, holder.keepTimeShuffle, context.getString(R.string.immediate_status_hold), R.color.red, false);
-                holder.tvHomeScore.setVisibility(View.GONE);
-                holder.tvGuestScore.setVisibility(View.GONE);
-                holder.tvHomeHalfScore.setVisibility(View.GONE);
-                holder.tvGuestHalfScore.setVisibility(View.GONE);
+                holder.tvHomeScore.setVisibility(View.INVISIBLE);
+                holder.tvGuestScore.setVisibility(View.INVISIBLE);
+                holder.tvHomeHalfScore.setVisibility(View.INVISIBLE);
+                holder.tvGuestHalfScore.setVisibility(View.INVISIBLE);
 
                 holder.tvGuestScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
                 holder.tvHomeScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
@@ -354,10 +354,10 @@ public class RollBallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 this.setupKeepTimeStyle(holder.tvKeepTime, holder.keepTimeShuffle, context.getString(R.string.immediate_status_mesomere), R.color.bg_header, false);
                 break;
             case "-14": // 推迟
-                holder.tvHomeScore.setVisibility(View.GONE);
-                holder.tvGuestScore.setVisibility(View.GONE);
-                holder.tvHomeHalfScore.setVisibility(View.GONE);
-                holder.tvGuestHalfScore.setVisibility(View.GONE);
+                holder.tvHomeScore.setVisibility(View.INVISIBLE);
+                holder.tvGuestScore.setVisibility(View.INVISIBLE);
+                holder.tvHomeHalfScore.setVisibility(View.INVISIBLE);
+                holder.tvGuestHalfScore.setVisibility(View.INVISIBLE);
 
                 holder.tvGuestScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
                 holder.tvHomeScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
