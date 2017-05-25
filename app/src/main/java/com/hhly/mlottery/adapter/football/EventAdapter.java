@@ -14,6 +14,7 @@ import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.StadiumUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +27,7 @@ public class EventAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolde
     private static final int VIEW_TYPE_DEFAULT = 1;
     private static final int VIEW_TYPE_HALF_FINISH = 2;
     private static final int VIEW_TYPE_HALF_DIANQIU = 3;
+    private static final int VIEW_TYPE_HALF_HIDE = 4;
 
     private static final String HOME = "1"; //主队
     private static final String GUEST = "0"; //客队
@@ -94,13 +96,20 @@ public class EventAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolde
                 BindRecycleViewMatchDianqiu(viewHolder, getItemCount() - position - 1);
                 break;
 
+
+            case VIEW_TYPE_HALF_HIDE:
+                BindRecycleViewMatchHide(viewHolder, getItemCount() - position - 1);
+                break;
+
         }
     }
 
+    private void BindRecycleViewMatchHide(BaseRecyclerViewHolder viewHolder, int position) {
+
+    }
 
     private void BindRecycleViewMatchDianqiu(BaseRecyclerViewHolder viewHolder, int position) {
-       // TextView tv_time = viewHolder.findViewById(R.id.tv_time);
-        // tv_time.setText(mContext.getResources().getString(R.string.start_dianqiu));
+
     }
 
 
@@ -259,7 +268,7 @@ public class EventAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolde
 
     @Override
     public int[] getItemLayouts() {
-        return new int[]{R.layout.item_event_normal, R.layout.item_event_half_finish, R.layout.item_event_dianqiu};
+        return new int[]{R.layout.item_event_normal, R.layout.item_event_half_finish, R.layout.item_event_dianqiu, R.layout.item_event_hide};
     }
 
     @Override
@@ -274,10 +283,30 @@ public class EventAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolde
         } else if ("-1".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getState()) && "3".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getCode())) {
 
             return VIEW_TYPE_HALF_FINISH;
-        } else if ("18".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getCode()) && "5".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getState())) {
+        } else if ("18".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getCode()) || "19".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getCode())) {
             return VIEW_TYPE_HALF_DIANQIU;
+        } else if (hideOfCode(matchTimeLiveBeans.get(getItemCount() - position - 1).getCode())) {
+            return VIEW_TYPE_HALF_HIDE;
         } else {
             return VIEW_TYPE_DEFAULT;
         }
+    }
+
+    private boolean hideOfCode(String code) {
+
+        List<String> list = new ArrayList<>();
+
+        list.add("605");
+        list.add("14");
+        list.add("5");
+        list.add("17");
+        list.add("7");
+
+        if (list.contains(code)) {
+            return true;
+        }
+
+
+        return false;
     }
 }
