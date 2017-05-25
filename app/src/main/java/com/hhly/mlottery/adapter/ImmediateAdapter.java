@@ -604,8 +604,8 @@ public class ImmediateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             topView.setText(odd.getLeftOdds());
             bottomView.setText(odd.getRightOdds());
             topView.setTextColor(match.getLeftOddTextColorId() != 0 ? mContext.getResources().getColor(match.getLeftOddTextColorId()) : mContext.getResources().getColor(R.color.content_txt_light_grad));
-            bottomView.setTextColor(match.getRightOddTextColorId() != 0 ? mContext.getResources().getColor(match.getRightOddTextColorId()) : mContext.getResources().getColor(R.color.content_txt_black));
-            centerView.setTextColor(match.getMidOddTextColorId() != 0 ? mContext.getResources().getColor(match.getMidOddTextColorId()) : mContext.getResources().getColor(R.color.content_txt_light_grad));
+            bottomView.setTextColor(match.getRightOddTextColorId() != 0 ? mContext.getResources().getColor(match.getRightOddTextColorId()) : mContext.getResources().getColor(R.color.content_txt_light_grad));
+            centerView.setTextColor(match.getMidOddTextColorId() != 0 ? mContext.getResources().getColor(match.getMidOddTextColorId()) : mContext.getResources().getColor(R.color.content_txt_black));
         }
     }
 }

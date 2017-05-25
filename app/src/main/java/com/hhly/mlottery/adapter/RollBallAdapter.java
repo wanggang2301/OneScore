@@ -106,7 +106,7 @@ public class RollBallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.initializedTextColor(holder.tvKeepTime, holder.tvGuestScore, holder.tvHomeScore, holder.tvHandicapValue_DA_BLACK, holder.tvHandicapValue_YA_BLACK, holder.tvLeftOdds_DA, holder.tvLeftOdds_YA, holder.tvRightOdds_DA, holder.tvRightOdds_YA);
         holder.tvLeftOdds_DA.setTextColor(context.getResources().getColor(R.color.res_name_color));
         holder.tvLeftOdds_YA.setTextColor(context.getResources().getColor(R.color.res_name_color));
-        holder.keepTimeShuffle.setTextColor(context.getResources().getColor(R.color.text_about_color));
+        holder.keepTimeShuffle.setTextColor(context.getResources().getColor(R.color.football_keeptime));
 
 
         // 置顶
@@ -777,7 +777,7 @@ public class RollBallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     // 事件推送
     private void updateTypeEvent(final Match match, final int position, WebSocketMatchEvent webSocketMatchEvent) {
         if (match.getThirdId().equals(webSocketMatchEvent.getThirdId())) {
-            match.setItemBackGroundColorId(R.color.item_football_event_yellow);
+//            match.setItemBackGroundColorId(R.color.item_football_event_yellow);
             String eventType = webSocketMatchEvent.getData().get("eventType");
             if ("1".equals(eventType) || "2".equals(eventType) || "5".equals(eventType) || "6".equals(eventType)) {// 主队有效进球传
                 // 客队有效进球5 or 客队进球取消6
