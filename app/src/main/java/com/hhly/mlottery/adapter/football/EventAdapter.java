@@ -302,11 +302,11 @@ public class EventAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolde
         list.add("5");
         list.add("17");
         list.add("7");
+        list.add("9");
 
         if (list.contains(code)) {
             return true;
         }
-
 
         return false;
     }
