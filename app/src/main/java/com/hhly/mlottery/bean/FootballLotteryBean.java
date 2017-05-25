@@ -99,6 +99,14 @@ public class FootballLotteryBean {
         private String letLoseOdds;
         private Object guestScore;
         private Object homeScore;
+        private int letsameoddsColorId=0;
+        private int letloseoddsColorId=0;
+        private int letwinoddsColorId=0;
+
+        private int winoddsColorId=0;
+        private int loseoddsColorId=0;
+        private int sameoddsColorId=0;
+
 
         public int getLetloseoddsColorId() {
             return letloseoddsColorId;
@@ -149,13 +157,6 @@ public class FootballLotteryBean {
             this.letsameoddsColorId = letsameoddsColorId;
         }
 
-        private int letsameoddsColorId;
-        private int letloseoddsColorId;
-        private int letwinoddsColorId;
-
-        private int winoddsColorId;
-        private int loseoddsColorId;
-        private int sameoddsColorId;
 
 
         public int getLeagueId() {

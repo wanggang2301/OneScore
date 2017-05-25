@@ -299,14 +299,28 @@ public class FootballMatchListAdapter extends BaseQuickAdapter<FootballLotteryBe
                 baseViewHolder.setText(R.id.loseodds, "-");
             }
 
+            if (listEntity.getLetwinoddsColorId() == 0) {
 
-            baseViewHolder.setBackgroundColor(R.id.match_letwinodds, listEntity.getLetwinoddsColorId());
-            baseViewHolder.setBackgroundColor(R.id.match_letsameodds, listEntity.getLetsameoddsColorId());
-            baseViewHolder.setBackgroundColor(R.id.match_letloseodds, listEntity.getLetloseoddsColorId());
+            }
+            if (listEntity.getLetwinoddsColorId() != 0) {
+                baseViewHolder.setBackgroundColor(R.id.match_letwinodds, listEntity.getLetwinoddsColorId());
+            }
+            if (listEntity.getLetsameoddsColorId() != 0) {
+                baseViewHolder.setBackgroundColor(R.id.match_letsameodds, listEntity.getLetsameoddsColorId());
+            }
+            if (listEntity.getLetloseoddsColorId() != 0) {
+                baseViewHolder.setBackgroundColor(R.id.match_letloseodds, listEntity.getLetloseoddsColorId());
+            }
 
-            baseViewHolder.setBackgroundColor(R.id.winodds, listEntity.getWinoddsColorId());
-            baseViewHolder.setBackgroundColor(R.id.sameodds, listEntity.getSameoddsColorId());
-            baseViewHolder.setBackgroundColor(R.id.loseodds, listEntity.getLoseoddsColorId());
+            if (listEntity.getWinoddsColorId() != 0) {
+                baseViewHolder.setBackgroundColor(R.id.winodds, listEntity.getWinoddsColorId());
+            }
+            if (listEntity.getSameoddsColorId() != 0) {
+                baseViewHolder.setBackgroundColor(R.id.sameodds, listEntity.getSameoddsColorId());
+            }
+            if (listEntity.getLoseoddsColorId() != 0) {
+                baseViewHolder.setBackgroundColor(R.id.loseodds, listEntity.getLoseoddsColorId());
+            }
 
 
             if (listEntity.getStatus().equals("-1")) {
