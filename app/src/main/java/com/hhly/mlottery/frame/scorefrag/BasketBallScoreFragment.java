@@ -211,6 +211,7 @@ public class BasketBallScoreFragment extends BaseWebSocketFragment implements Vi
         if (msgView != null) {
             msgView.setBackgroundColor(Color.parseColor("#ffde00"));
             msgView.setTextColor(Color.parseColor("#0085e1"));
+            msgView.setTextSize(mContext.getResources().getDimension(R.dimen.text_size_5));
         }
 
 
