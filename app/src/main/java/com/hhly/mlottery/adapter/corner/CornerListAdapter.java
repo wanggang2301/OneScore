@@ -72,6 +72,12 @@ public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEnt
         if(entity.getStatus().equals("2")){ //中场
             holder.setText(R.id.keeptime,mContext.getString(R.string.fragme_home_zhongchang_text));
         }
+        if(entity.getStatus().equals("1")&&entity.getKeep()!=null&&Integer.parseInt(entity.getKeep())>45){ //上半场大于45
+            holder.setText(R.id.keeptime,"45+");
+        }
+        if(entity.getStatus().equals("3")&&entity.getKeep()!=null&&Integer.parseInt(entity.getKeep())>90){ //上半场大于45
+            holder.setText(R.id.keeptime,"90+");
+        }
         //图标
         ImageView homeIcon=holder.getView(R.id.home_icon);
         ImageView guestIcon=holder.getView(R.id.guest_icon);
