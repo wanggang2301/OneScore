@@ -25,12 +25,14 @@ public class FootballMatchListAdapter extends BaseQuickAdapter<FootballLotteryBe
 
     Context mContext;
     List<FootballLotteryBean.BettingListBean> datas;
+
     public FootballMatchListAdapter(Context context, int layoutResId, List<FootballLotteryBean.BettingListBean> data) {
         super(layoutResId, data);
         this.datas = data;
         this.mContext = context;
     }
-    public void updateDatas(List<FootballLotteryBean.BettingListBean> bean,int i) {
+
+    public void updateDatas(List<FootballLotteryBean.BettingListBean> bean, int i) {
 
         datas = bean;
     }
@@ -44,33 +46,33 @@ public class FootballMatchListAdapter extends BaseQuickAdapter<FootballLotteryBe
             baseViewHolder.setVisible(R.id.tv_back, true);
         }
 
-        if (listEntity.getWeek()==1){
+        if (listEntity.getWeek() == 1) {
             baseViewHolder.setText(R.id.match_week, MyApp.getContext().getResources().getString(R.string.number_1));
 
 
-        }else if(listEntity.getWeek()==2){
+        } else if (listEntity.getWeek() == 2) {
             baseViewHolder.setText(R.id.match_week, MyApp.getContext().getResources().getString(R.string.number_2));
 
 
-        }else if(listEntity.getWeek()==3){
+        } else if (listEntity.getWeek() == 3) {
 
             baseViewHolder.setText(R.id.match_week, MyApp.getContext().getResources().getString(R.string.number_3));
 
-        }else if(listEntity.getWeek()==4){
+        } else if (listEntity.getWeek() == 4) {
 
-            baseViewHolder.setText(R.id.match_week,  MyApp.getContext().getResources().getString(R.string.number_4));
+            baseViewHolder.setText(R.id.match_week, MyApp.getContext().getResources().getString(R.string.number_4));
 
-        }else if(listEntity.getWeek()==5){
+        } else if (listEntity.getWeek() == 5) {
 
             baseViewHolder.setText(R.id.match_week, MyApp.getContext().getResources().getString(R.string.number_5));
 
-        }else if(listEntity.getWeek()==6){
+        } else if (listEntity.getWeek() == 6) {
 
             baseViewHolder.setText(R.id.match_week, MyApp.getContext().getResources().getString(R.string.number_6));
 
-        }else if(listEntity.getWeek()==7){
+        } else if (listEntity.getWeek() == 7) {
 
-            baseViewHolder.setText(R.id.match_week,MyApp.getContext().getResources().getString(R.string.number_7));
+            baseViewHolder.setText(R.id.match_week, MyApp.getContext().getResources().getString(R.string.number_7));
 
         }
 
@@ -88,10 +90,10 @@ public class FootballMatchListAdapter extends BaseQuickAdapter<FootballLotteryBe
         baseViewHolder.setText(R.id.match_time, listEntity.getStartTime());
 
         if (listEntity.getStatus() != null) {
-            baseViewHolder.setVisible(R.id.match_socer,true);
-            baseViewHolder.setVisible(R.id.item_football_frequency,false);
+            baseViewHolder.setVisible(R.id.match_socer, true);
+            baseViewHolder.setVisible(R.id.item_football_frequency, false);
             if ("0".equals(listEntity.getStatus())) {// 未开
-                baseViewHolder.setVisible(R.id.match_socer,false);
+                baseViewHolder.setVisible(R.id.match_socer, false);
                 baseViewHolder.setText(R.id.match_status, mContext.getString(R.string.snooker_state_no_start));
                 baseViewHolder.setTextColor(R.id.match_status, mContext.getResources().getColor(R.color.content_txt_black));
 
@@ -103,8 +105,8 @@ public class FootballMatchListAdapter extends BaseQuickAdapter<FootballLotteryBe
                 baseViewHolder.setTextColor(R.id.loseodds, mContext.getResources().getColor(R.color.content_txt_black));
 
             } else if ("1".equals(listEntity.getStatus())) {// 上半场
-                baseViewHolder.setVisible(R.id.match_socer,false);
-                baseViewHolder.setVisible(R.id.item_football_frequency,true);
+                baseViewHolder.setVisible(R.id.match_socer, false);
+                baseViewHolder.setVisible(R.id.item_football_frequency, true);
 
                 try {
                     int keeptime = Integer.parseInt(listEntity.getKeepTime());// 设置时间
@@ -122,8 +124,8 @@ public class FootballMatchListAdapter extends BaseQuickAdapter<FootballLotteryBe
                 }
 
             } else if ("3".equals(listEntity.getStatus())) {// 下半场
-                baseViewHolder.setVisible(R.id.match_socer,false);
-                baseViewHolder.setVisible(R.id.item_football_frequency,true);
+                baseViewHolder.setVisible(R.id.match_socer, false);
+                baseViewHolder.setVisible(R.id.item_football_frequency, true);
                 try {
                     int keeptime = Integer.parseInt(listEntity.getKeepTime());// 设置时间
                     if (keeptime > 90) {
@@ -141,23 +143,23 @@ public class FootballMatchListAdapter extends BaseQuickAdapter<FootballLotteryBe
                 }
 
             } else if ("4".equals(listEntity.getStatus())) {// 加时
-                baseViewHolder.setVisible(R.id.item_football_frequency,false);
-                baseViewHolder.setVisible(R.id.match_socer,false);
+                baseViewHolder.setVisible(R.id.item_football_frequency, false);
+                baseViewHolder.setVisible(R.id.match_socer, false);
                 baseViewHolder.setText(R.id.match_status, mContext.getString(R.string.immediate_status_overtime));
                 baseViewHolder.setTextColor(R.id.match_status, mContext.getResources().getColor(R.color.betting_recommend_zhuanjia_spf_color));
 
             } else if ("5".equals(listEntity.getStatus())) {// 点球
-                baseViewHolder.setVisible(R.id.item_football_frequency,false);
-                baseViewHolder.setVisible(R.id.match_socer,false);
+                baseViewHolder.setVisible(R.id.item_football_frequency, false);
+                baseViewHolder.setVisible(R.id.match_socer, false);
                 baseViewHolder.setText(R.id.match_status, mContext.getString(R.string.immediate_status_point));
                 baseViewHolder.setTextColor(R.id.match_status, mContext.getResources().getColor(R.color.betting_recommend_zhuanjia_spf_color));
 
             } else if ("-1".equals(listEntity.getStatus())) {// 完场
-                baseViewHolder.setVisible(R.id.item_football_frequency,false);
+                baseViewHolder.setVisible(R.id.item_football_frequency, false);
                 if (listEntity.getHomeScore() == null || listEntity.getGuestScore() == null) {
-                    baseViewHolder.setVisible(R.id.match_socer,false);
+                    baseViewHolder.setVisible(R.id.match_socer, false);
                 } else {
-                    baseViewHolder.setVisible(R.id.match_socer,true);
+                    baseViewHolder.setVisible(R.id.match_socer, true);
                     baseViewHolder.setText(R.id.match_socer, listEntity.getHomeScore() + ":" + listEntity.getGuestScore());
                 }
                 baseViewHolder.setText(R.id.match_status, "完场");
@@ -165,52 +167,51 @@ public class FootballMatchListAdapter extends BaseQuickAdapter<FootballLotteryBe
                 baseViewHolder.setTextColor(R.id.match_socer, mContext.getResources().getColor(R.color.red));
 
             } else if ("2".equals(listEntity.getStatus())) {// 中场
-                baseViewHolder.setVisible(R.id.item_football_frequency,false);
-                baseViewHolder.setVisible(R.id.match_socer,false);
+                baseViewHolder.setVisible(R.id.item_football_frequency, false);
+                baseViewHolder.setVisible(R.id.match_socer, false);
                 baseViewHolder.setText(R.id.match_status, mContext.getString(R.string.immediate_status_midfield));
                 baseViewHolder.setTextColor(R.id.match_status, mContext.getResources().getColor(R.color.betting_recommend_zhuanjia_spf_color));
 
 
             } else if ("-10".equals(listEntity.getStatus())) {// 取消
-                baseViewHolder.setVisible(R.id.item_football_frequency,false);
-                baseViewHolder.setVisible(R.id.match_socer,false);
+                baseViewHolder.setVisible(R.id.item_football_frequency, false);
+                baseViewHolder.setVisible(R.id.match_socer, false);
                 baseViewHolder.setText(R.id.match_status, mContext.getString(R.string.immediate_status_cancel));
                 baseViewHolder.setTextColor(R.id.match_status, mContext.getResources().getColor(R.color.red));
 
 
             } else if ("-11".equals(listEntity.getStatus())) {// 待定
-                baseViewHolder.setVisible(R.id.item_football_frequency,false);
-                baseViewHolder.setVisible(R.id.match_socer,false);
+                baseViewHolder.setVisible(R.id.item_football_frequency, false);
+                baseViewHolder.setVisible(R.id.match_socer, false);
                 baseViewHolder.setText(R.id.match_status, mContext.getString(R.string.immediate_status_hold));
                 baseViewHolder.setTextColor(R.id.match_status, mContext.getResources().getColor(R.color.red));
 
 
             } else if ("-12".equals(listEntity.getStatus())) {// 腰斩
-                baseViewHolder.setVisible(R.id.item_football_frequency,false);
-                baseViewHolder.setVisible(R.id.match_socer,false);
+                baseViewHolder.setVisible(R.id.item_football_frequency, false);
+                baseViewHolder.setVisible(R.id.match_socer, false);
                 baseViewHolder.setText(R.id.match_status, mContext.getString(R.string.immediate_status_cut));
                 baseViewHolder.setTextColor(R.id.match_status, mContext.getResources().getColor(R.color.red));
 
 
             } else if ("-13".equals(listEntity.getStatus())) {// 中断
-                baseViewHolder.setVisible(R.id.item_football_frequency,false);
-                baseViewHolder.setVisible(R.id.match_socer,false);
+                baseViewHolder.setVisible(R.id.item_football_frequency, false);
+                baseViewHolder.setVisible(R.id.match_socer, false);
                 baseViewHolder.setText(R.id.match_status, mContext.getString(R.string.immediate_status_mesomere));
                 baseViewHolder.setTextColor(R.id.match_status, mContext.getResources().getColor(R.color.red));
 
             } else if ("-14".equals(listEntity.getStatus())) {// 推迟
-                baseViewHolder.setVisible(R.id.item_football_frequency,false);
-                baseViewHolder.setVisible(R.id.match_socer,false);
+                baseViewHolder.setVisible(R.id.item_football_frequency, false);
+                baseViewHolder.setVisible(R.id.match_socer, false);
                 baseViewHolder.setText(R.id.match_status, mContext.getString(R.string.immediate_status_postpone));
                 baseViewHolder.setTextColor(R.id.match_status, mContext.getResources().getColor(R.color.red));
 
             }
 
 
-
             if ("1".equals(listEntity.getStatus()) || "3".equals(listEntity.getStatus())) {// 显示秒的闪烁
-                baseViewHolder.setText(R.id.item_football_frequency,"\'");
-                baseViewHolder.setVisible(R.id.item_football_frequency,true);
+                baseViewHolder.setText(R.id.item_football_frequency, "\'");
+                baseViewHolder.setVisible(R.id.item_football_frequency, true);
 
                 final AlphaAnimation anim1 = new AlphaAnimation(1, 1);
                 anim1.setDuration(500);
@@ -256,24 +257,47 @@ public class FootballMatchListAdapter extends BaseQuickAdapter<FootballLotteryBe
                 baseViewHolder.getView(R.id.item_football_frequency).startAnimation(anim1);
             } else {
 
-                baseViewHolder.setText(R.id.item_football_frequency,"");
-                baseViewHolder.setVisible(R.id.item_football_frequency,false);
+                baseViewHolder.setText(R.id.item_football_frequency, "");
+                baseViewHolder.setVisible(R.id.item_football_frequency, false);
                 baseViewHolder.getView(R.id.item_football_frequency).clearAnimation();
 
             }
 
 
-
-
             baseViewHolder.setText(R.id.match_letnumber, listEntity.getLetNumber());//让球数
-            baseViewHolder.setText(R.id.match_letwinodds, listEntity.getLetWinOdds());
-            baseViewHolder.setText(R.id.match_letsameodds, listEntity.getLetSameOdds());
-            baseViewHolder.setText(R.id.match_letloseodds, listEntity.getLetLoseOdds());
+            if (listEntity.getLetWinOdds() != null) {
+                baseViewHolder.setText(R.id.match_letwinodds, listEntity.getLetWinOdds());
+            } else {
+                baseViewHolder.setText(R.id.match_letwinodds, "-");
+            }
+            if (listEntity.getLetSameOdds() != null) {
+                baseViewHolder.setText(R.id.match_letsameodds, listEntity.getLetSameOdds());
+            } else {
+                baseViewHolder.setText(R.id.match_letsameodds, "-");
+            }
+            if (listEntity.getLetLoseOdds() != null) {
+                baseViewHolder.setText(R.id.match_letloseodds, listEntity.getLetLoseOdds());
+            } else {
+                baseViewHolder.setText(R.id.match_letloseodds, "-");
+            }
+
 
             baseViewHolder.setText(R.id.match_number, "0");//非让球数
-            baseViewHolder.setText(R.id.winodds, listEntity.getWinOdds());
-            baseViewHolder.setText(R.id.sameodds, listEntity.getSameOdds());
-            baseViewHolder.setText(R.id.loseodds, listEntity.getLoseOdds());
+            if (listEntity.getWinOdds() != null) {
+                baseViewHolder.setText(R.id.winodds, listEntity.getWinOdds());
+            } else {
+                baseViewHolder.setText(R.id.winodds, "-");
+            }
+            if (listEntity.getSameOdds() != null) {
+                baseViewHolder.setText(R.id.sameodds, listEntity.getSameOdds());
+            } else {
+                baseViewHolder.setText(R.id.sameodds, "-");
+            }
+            if (listEntity.getLoseOdds() != null) {
+                baseViewHolder.setText(R.id.loseodds, listEntity.getLoseOdds());
+            } else {
+                baseViewHolder.setText(R.id.loseodds, "-");
+            }
 
 
             baseViewHolder.setBackgroundColor(R.id.match_letwinodds, listEntity.getLetwinoddsColorId());
@@ -285,8 +309,7 @@ public class FootballMatchListAdapter extends BaseQuickAdapter<FootballLotteryBe
             baseViewHolder.setBackgroundColor(R.id.loseodds, listEntity.getLoseoddsColorId());
 
 
-
-            if (listEntity.getStatus().equals("-1")){
+            if (listEntity.getStatus().equals("-1")) {
                 if (listEntity.getGuestScore() != null && listEntity.getHomeScore() != null && listEntity.getLetNumber() != null) {
 
                     int homeScore = Integer.parseInt(listEntity.getHomeScore() + "");
@@ -325,7 +348,7 @@ public class FootballMatchListAdapter extends BaseQuickAdapter<FootballLotteryBe
 
                 }
 
-            }else{
+            } else {
                 baseViewHolder.setTextColor(R.id.match_letwinodds, mContext.getResources().getColor(R.color.content_txt_black));
                 baseViewHolder.setTextColor(R.id.match_letsameodds, mContext.getResources().getColor(R.color.content_txt_black));
                 baseViewHolder.setTextColor(R.id.match_letloseodds, mContext.getResources().getColor(R.color.content_txt_black));
@@ -333,10 +356,10 @@ public class FootballMatchListAdapter extends BaseQuickAdapter<FootballLotteryBe
                 baseViewHolder.setTextColor(R.id.loseodds, mContext.getResources().getColor(R.color.content_txt_black));
                 baseViewHolder.setTextColor(R.id.sameodds, mContext.getResources().getColor(R.color.content_txt_black));
             }
-        }else{
+        } else {
 
             baseViewHolder.setText(R.id.match_status, "");
-            baseViewHolder.setVisible(R.id.match_socer,false);
+            baseViewHolder.setVisible(R.id.match_socer, false);
         }
 
     }

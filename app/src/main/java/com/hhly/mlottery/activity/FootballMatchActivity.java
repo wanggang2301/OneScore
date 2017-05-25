@@ -205,7 +205,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
                     footBallOddsBean = JSON.parseObject(ws_json, FootBallOddsBean.class);
                 }
-                updateListViewItemOdd(footBallOddsBean);
+                //updateListViewItemOdd(footBallOddsBean);
 
             } else if (msg.arg2 == 3) {
 
@@ -218,7 +218,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
             for (int i = 0; i < bettingList.size(); i++) {
 
                 for (FootballLotteryBean.BettingListBean data : bettingList) {
-                    if (footBallOddsBean.getThirdId().equals(data.getMatchId())) {  //找到对应比赛对象
+                    if (footBallOddsBean.getData().getMatchId().equals(data.getMatchId())) {  //找到对应比赛对象
 
                         updateMatchOdd(i, footBallOddsBean);
                     }
@@ -232,83 +232,107 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
         if (data != null) {
             if (data.getData().getLetNumber() != null) {
 
-
                 bettingList.get(i).setLetNumber(data.getData().getLetNumber());
 
             }
-            if (!TextUtils.isEmpty(data.getData().getLetWinOdds())) {
+            if (!TextUtils.isEmpty(data.getData().getLetLoseOdds()) && !TextUtils.isEmpty(bettingList.get(i).getLetLoseOdds())) {
 
                 if (Double.parseDouble(data.getData().getLetLoseOdds()) > Double.parseDouble(bettingList.get(i).getLetLoseOdds())) {
                     //升
                     bettingList.get(i).setLetloseoddsColorId(R.color.odds_up_bg);
-                } else {
+                    bettingList.get(i).setLetWinOdds(data.getData().getLetLoseOdds());
+                } else if (Double.parseDouble(data.getData().getLetLoseOdds()) < Double.parseDouble(bettingList.get(i).getLetLoseOdds())) {
                     //降
                     bettingList.get(i).setLetloseoddsColorId(R.color.odds_down_bg);
+                    bettingList.get(i).setLetWinOdds(data.getData().getLetLoseOdds());
+                } else {
+                    bettingList.get(i).setLetloseoddsColorId(R.color.transparency);
                 }
 
-                bettingList.get(i).setLetLoseOdds(data.getData().getLetLoseOdds());
 
             }
-            if (!TextUtils.isEmpty(data.getData().getLetWinOdds())) {
+            if (!TextUtils.isEmpty(data.getData().getLetSameOdds()) && !TextUtils.isEmpty(bettingList.get(i).getLetSameOdds())) {
 
                 if (Double.parseDouble(data.getData().getLetSameOdds()) > Double.parseDouble(bettingList.get(i).getLetSameOdds())) {
                     //升
                     bettingList.get(i).setLetsameoddsColorId(R.color.odds_up_bg);
-                } else {
+                    bettingList.get(i).setLetSameOdds(data.getData().getLetSameOdds());
+
+                } else if (Double.parseDouble(data.getData().getLetSameOdds()) < Double.parseDouble(bettingList.get(i).getLetSameOdds())) {
                     //降
                     bettingList.get(i).setLetsameoddsColorId(R.color.odds_down_bg);
+                    bettingList.get(i).setLetSameOdds(data.getData().getLetSameOdds());
+                } else {
+                    bettingList.get(i).setLetsameoddsColorId(R.color.transparency);
                 }
 
-                bettingList.get(i).setLetSameOdds(data.getData().getLetSameOdds());
+
             }
-            if (!TextUtils.isEmpty(data.getData().getLetWinOdds())) {
+            if (!TextUtils.isEmpty(data.getData().getLetWinOdds()) && !TextUtils.isEmpty(bettingList.get(i).getLetWinOdds())) {
 
                 if (Double.parseDouble(data.getData().getLetWinOdds()) > Double.parseDouble(bettingList.get(i).getLetWinOdds())) {
                     //升
                     bettingList.get(i).setLetwinoddsColorId(R.color.odds_up_bg);
-                } else {
+                    bettingList.get(i).setLetSameOdds(data.getData().getLetWinOdds());
+                } else if (Double.parseDouble(data.getData().getLetWinOdds()) < Double.parseDouble(bettingList.get(i).getLetWinOdds())) {
                     //降
                     bettingList.get(i).setLetwinoddsColorId(R.color.odds_down_bg);
+                    bettingList.get(i).setLetSameOdds(data.getData().getLetWinOdds());
+                } else {
+                    bettingList.get(i).setLetwinoddsColorId(R.color.transparency);
                 }
 
-                bettingList.get(i).setLetSameOdds(data.getData().getLetSameOdds());
 
             }
-            if (!TextUtils.isEmpty(data.getData().getLetWinOdds())) {
+            if (!TextUtils.isEmpty(data.getData().getLoseOdds()) && !TextUtils.isEmpty(bettingList.get(i).getLoseOdds())) {
 
 
                 if (Double.parseDouble(data.getData().getLoseOdds()) > Double.parseDouble(bettingList.get(i).getLoseOdds())) {
                     //升
                     bettingList.get(i).setLoseoddsColorId(R.color.odds_up_bg);
-                } else {
+                    bettingList.get(i).setLoseOdds(data.getData().getLoseOdds());
+
+                } else if (Double.parseDouble(data.getData().getLoseOdds()) < Double.parseDouble(bettingList.get(i).getLoseOdds())) {
                     //降
                     bettingList.get(i).setLoseoddsColorId(R.color.odds_down_bg);
+                    bettingList.get(i).setLoseOdds(data.getData().getLoseOdds());
+                }else{
+                    bettingList.get(i).setLoseoddsColorId(R.color.transparency);
                 }
 
-                bettingList.get(i).setLoseOdds(data.getData().getLoseOdds());
 
             }
-            if (!TextUtils.isEmpty(data.getData().getLetWinOdds())) {
+            if (!TextUtils.isEmpty(data.getData().getSameOdds()) && !TextUtils.isEmpty(bettingList.get(i).getSameOdds())) {
                 if (Double.parseDouble(data.getData().getSameOdds()) > Double.parseDouble(bettingList.get(i).getSameOdds())) {
                     //升
                     bettingList.get(i).setSameoddsColorId(R.color.odds_up_bg);
-                } else {
+                    bettingList.get(i).setSameOdds(data.getData().getSameOdds());
+                } else if (Double.parseDouble(data.getData().getSameOdds()) > Double.parseDouble(bettingList.get(i).getSameOdds())) {
                     //降
                     bettingList.get(i).setSameoddsColorId(R.color.odds_down_bg);
+                    bettingList.get(i).setSameOdds(data.getData().getSameOdds());
+                } else {
+                    bettingList.get(i).setSameoddsColorId(R.color.transparency);
                 }
-                bettingList.get(i).setSameOdds(data.getData().getSameOdds());
+
 
             }
-            if (!TextUtils.isEmpty(data.getData().getLetWinOdds())) {
+            if (!TextUtils.isEmpty(data.getData().getWinOdds()) && !TextUtils.isEmpty(bettingList.get(i).getWinOdds())) {
 
                 if (Double.parseDouble(data.getData().getWinOdds()) > Double.parseDouble(bettingList.get(i).getWinOdds())) {
                     //升
                     bettingList.get(i).setWinoddsColorId(R.color.odds_up_bg);
-                } else {
+                    bettingList.get(i).setWinOdds(data.getData().getWinOdds());
+                } else if (Double.parseDouble(data.getData().getWinOdds()) < Double.parseDouble(bettingList.get(i).getWinOdds())) {
                     //降
                     bettingList.get(i).setWinoddsColorId(R.color.odds_down_bg);
+                    bettingList.get(i).setWinOdds(data.getData().getWinOdds());
+
+                } else {
+                    bettingList.get(i).setWinoddsColorId(R.color.transparency);
+                    //bettingList.get(i).setWinoddsColorId(R.color.transparency);
                 }
-                bettingList.get(i).setWinOdds(data.getData().getWinOdds());
+
             }
             if (footballMatchListAdapter != null) {
                 footballMatchListAdapter.updateDatas(bettingList, i);
@@ -381,8 +405,8 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
         pageNum = 1;
         Map<String, String> params = new HashMap<>();
         params.put("date", date);
-        params.put("pageNum",pageNum+"");
-        params.put("pageSize", PAGE_SIZE+"");
+        params.put("pageNum", pageNum + "");
+        params.put("pageSize", PAGE_SIZE + "");
         // 请求网络数据
         VolleyContentFast.requestJsonByGet(BaseURLs.FINDBETTINGLIST, params, new VolleyContentFast.ResponseSuccessListener<FootballLotteryBean>() {
             @Override
@@ -406,7 +430,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                             mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
                         } else {
                             initViewData();
-                            footballMatchListAdapter.notifyItemRemoved(bettingList.size()-1);
+                            footballMatchListAdapter.notifyItemRemoved(bettingList.size() - 1);
                             footballMatchListAdapter.getData().clear();
                             footballMatchListAdapter.addData(bettingList);
                         }
@@ -437,7 +461,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
         footballMatchListAdapter = new FootballMatchListAdapter(getApplicationContext(), R.layout.football_match_child, null);
         mRecyclerView.setAdapter(footballMatchListAdapter);
 
-        footballMatchListAdapter.openLoadMore(0,true);
+        footballMatchListAdapter.openLoadMore(0, true);
         footballMatchListAdapter.setLoadingView(view);
 
 
@@ -515,8 +539,8 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
 
         setContentView(R.layout.activity_footballmatch);
 
-        LayoutInflater layoutInflater=this.getLayoutInflater();
-        view = layoutInflater.inflate(R.layout.view_load_more,null);
+        LayoutInflater layoutInflater = this.getLayoutInflater();
+        view = layoutInflater.inflate(R.layout.view_load_more, null);
 
         public_txt_title = (TextView) findViewById(R.id.public_txt_title);
         public_txt_title.setText(R.string.football_jingcai);
@@ -546,9 +570,8 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
         layoutManager.setOrientation(OrientationHelper.VERTICAL);//设置为垂直布局，这也是默认的
 
         //上来加载view
-        progressBar = (ProgressBar)view. findViewById(R.id.progressBar);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         loadmore_text = (TextView) view.findViewById(R.id.loadmore_text);
-
 
 
         mSwipeRefreshLayout = (ExactSwipeRefreshLayout) findViewById(R.id.match_swiperefreshlayout);
@@ -566,7 +589,6 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
         emptyView = View.inflate(this, R.layout.layout_nodata, null);
 
 
-
     }
 
 
@@ -574,29 +596,29 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
 
     private void pullUpLoadMoreData() {
 
-        pageNum ++;
+        pageNum++;
         Map<String, String> params = new HashMap<>();
         params.put("date", Currentselection);
-        params.put("pageNum",pageNum+"");
-        params.put("pageSize", PAGE_SIZE+"");
+        params.put("pageNum", pageNum + "");
+        params.put("pageSize", PAGE_SIZE + "");
         // 请求网络数据
         VolleyContentFast.requestJsonByGet(BaseURLs.FINDBETTINGLIST, params, new VolleyContentFast.ResponseSuccessListener<FootballLotteryBean>() {
             @Override
             public void onResponse(FootballLotteryBean jsonObject) {
                 mSwipeRefreshLayout.setRefreshing(false);
 
-                if (jsonObject!=null){
+                if (jsonObject != null) {
 
-                    if (jsonObject.getResult()==200){
-                        if (jsonObject.getBettingList()!=null&&jsonObject.getBettingList().size()>0){
+                    if (jsonObject.getResult() == 200) {
+                        if (jsonObject.getBettingList() != null && jsonObject.getBettingList().size() > 0) {
                             loadmore_text.setText(FootballMatchActivity.this.getResources().getString(R.string.loading_data_txt));
                             progressBar.setVisibility(View.VISIBLE);
                             bettingList.addAll(jsonObject.getBettingList());
                             footballMatchListAdapter.addData(bettingList);
                             //mRecyclerView.getRecycledViewPool().clear();
                             footballMatchListAdapter.notifyDataChangedAfterLoadMore(true);
-                        }else{
-                           // loadmore_text.setText(FootballMatchActivity.this.getResources().getString(R.string.nodata_txt));
+                        } else {
+                            // loadmore_text.setText(FootballMatchActivity.this.getResources().getString(R.string.nodata_txt));
                             loadmore_text.setText("");
                             progressBar.setVisibility(View.GONE);
                             return;
@@ -611,8 +633,6 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
 
             }
         }, FootballLotteryBean.class);
-
-
 
 
     }
@@ -722,7 +742,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                 break;
             case R.id.rl_top:
 
-               // showDateChooseDialog();
+                // showDateChooseDialog();
                 break;
             default:
                 break;
