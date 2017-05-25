@@ -294,7 +294,7 @@ public class EventAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolde
 
     private boolean hideOfCode(String code) {
 
-        //接口裡面的數據已經被玩壞了，這樣先處理一下
+        //接口裡面的數據已經被玩壞了，文字直播已經和事件直播混為一談了，這樣先處理一下
         List<String> list = new ArrayList<>();
 
         list.add("605");
