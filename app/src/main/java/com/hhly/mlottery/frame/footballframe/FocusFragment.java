@@ -288,13 +288,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         };
     }
 
-//    private final static int VIEW_STATUS_LOADING = 1;
-//    private final static int VIEW_STATUS_NO_ANY_DATA = 2;
-//    private final static int VIEW_STATUS_SUCCESS = 3;
-//    private final static int VIEW_STATUS_NET_ERROR = 4;
-//    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS = 6;
-//    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_FAIL = 7;
-
     /**
      * 设置显示状态
      *
@@ -328,75 +321,11 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         mLoading.setVisibility((status == SHOW_STATUS_REFRESH_ONCLICK) ? View.VISIBLE : View.GONE);
         mErrorLayout.setVisibility(status == SHOW_STATUS_ERROR ? View.VISIBLE : View.GONE);
         mUnFocusLayout.setVisibility(status == SHOW_STATUS_NO_DATA ? View.VISIBLE : View.GONE);
+        if (mUnFocusLayout.getVisibility() == View.VISIBLE) {
+            titleContainer.setVisibility(View.GONE);
+        }
     }
 
-
-//    private Handler mViewHandler = new Handler() {
-//        public void handleMessage(Message msg) {
-//            switch (msg.what) {
-//                case VIEW_STATUS_LOADING:
-//                    //mLoadingLayout.setVisibility(View.VISIBLE);
-//                    mErrorLayout.setVisibility(View.GONE);
-////                    mListView.setVisibility(View.GONE);
-//                    mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-//                    mSwipeRefreshLayout.setRefreshing(true);
-//                    if (!isLoadedData) {
-//                        mLoadingLayout.setVisibility(View.VISIBLE);
-//                    }
-//                    break;
-//                case VIEW_STATUS_NO_ANY_DATA:
-//                    mLoadingLayout.setVisibility(View.GONE);
-////                    mListView.setVisibility(View.GONE);
-//                    mErrorLayout.setVisibility(View.GONE);
-//                    //如果不隐藏mSwipeRefreshLayout，会出现没关注的页面和一条比赛。
-//                    mSwipeRefreshLayout.setVisibility(View.GONE);
-//                    //mUnconectionLayout.setVisibility(View.GONE);
-//                    mSwipeRefreshLayout.setRefreshing(false);
-//                    mUnFocusLayout.setVisibility(View.VISIBLE);
-//                    break;
-//                case VIEW_STATUS_SUCCESS:
-//                    mLoadingLayout.setVisibility(View.GONE);
-////                    mListView.setVisibility(View.VISIBLE);
-//                    mErrorLayout.setVisibility(View.GONE);
-////                    mUnconectionLayout.setVisibility(View.GONE);
-//                    mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-//                    mSwipeRefreshLayout.setRefreshing(false);
-//                    mUnFocusLayout.setVisibility(View.GONE);
-//                    break;
-//                case VIEW_STATUS_NET_ERROR:
-//                    mLoadingLayout.setVisibility(View.GONE);
-////                    mListView.setVisibility(View.GONE);
-////                    mUnconectionLayout.setVisibility(View.GONE);
-//
-//                    mSwipeRefreshLayout.setRefreshing(false);
-//
-//                    if (isLoadedData) {
-////                        if (!isPause && getActivity() != null && !isError) {
-//                        if (getActivity() != null) {
-//                            Toast.makeText(getActivity(), R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
-//                        }
-//                    } else {
-//                        //mSwipeRefreshLayout.setVisibility(View.GONE);
-//                        mLoadingLayout.setVisibility(View.GONE);
-//                        mErrorLayout.setVisibility(View.VISIBLE);
-//                        mUnFocusLayout.setVisibility(View.GONE);
-//                    }
-//                    break;
-////                case VIEW_STATUS_WEBSOCKET_CONNECT_FAIL:
-////                    if (mUnconectionLayout != null) {
-////                        mUnconectionLayout.setVisibility(View.VISIBLE);
-////                    }
-////                    break;
-////                case VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS:
-////                    if (mUnconectionLayout != null) {
-////                        mUnconectionLayout.setVisibility(View.GONE);
-////                    }
-////                    break;
-//                default:
-//                    break;
-//            }
-//        }
-//    };
     /**
      * 子线程 处理数据加载
      */
@@ -410,10 +339,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
     // 初始化数据
     public void initData() {
-
         request("");
-
-
     }
 
     /**
@@ -520,12 +446,12 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                     L.d("sdfgh", "else");
                 }
 
+                setStatus(SHOW_STATUS_SUCCESS);
                 titleContainer.setVisibility(PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE);
                 setHandicapName();
 
 //                isLoadedData = true;
 //                mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
-                setStatus(SHOW_STATUS_SUCCESS);
 //                startWebsocket();
             }
         }, new VolleyContentFast.ResponseErrorListener() {
