@@ -714,11 +714,9 @@ public class BasketResultNewScoreFragment extends Fragment implements View.OnCli
                 }
                 if (isExistId) {
                     checkedMatchs.add(matchBean);
-                    localFilterRace.add(matchBean.getLeagueId());
-
                 }
             }
-
+            localFilterRace.addAll((List)map.get(BasketFiltrateActivity.CHECKED_CUPS_IDS));
             PreferenceUtil.setDataList(FootBallMatchFilterTypeEnum.BASKET_RESULT, localFilterRace);
 
 
