@@ -134,6 +134,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     private boolean isLoading = false;// 是否已加载过数据
 
     Timer timer = new Timer();
+    private TimerTask mTimerTask;
 
     public ChartBallFragment(){}
 
@@ -656,13 +657,13 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
      * 30重连socket一次
      */
     private void socketTimerTask() {
-        TimerTask timerTask = new TimerTask() {
+        mTimerTask = new TimerTask() {
             @Override
             public void run() {
                 mHandler.sendEmptyMessage(SOCKET_TIMER_TASK);
             }
         };
-        timer.schedule(timerTask, 1000 * 1, 1000 * 30);
+        timer.schedule(mTimerTask, 1000 * 1, 1000 * 30);
     }
 
     @Override
@@ -690,6 +691,8 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         super.onDestroy();
         MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
         EventBus.getDefault().unregister(this);
+        timer.cancel();
+        mTimerTask.cancel();
     }
 
     @Override

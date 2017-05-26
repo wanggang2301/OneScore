@@ -18,6 +18,8 @@ import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 import com.tendcloud.tenddata.TCAgent;
 
 import java.util.Locale;
@@ -45,6 +47,8 @@ public class MyApp extends Application {
     public static int versionCode;// 当前版本Code
     public static String channelNumber;// 当前版本渠道号
 
+    private static RefWatcher mRefWatcher;
+
     @Override
     public void onCreate() {
         appcontext = this;
@@ -54,6 +58,7 @@ public class MyApp extends Application {
             @Override
             public void run() {
 
+                initLeakCanary();
                 // 初始化TalkingData统计
                 TCAgent.LOG_ON = true;
                 TCAgent.init(appcontext, DeviceInfo.getAppMetaData(appcontext, "TD_APP_ID"), DeviceInfo.getAppMetaData(appcontext, "TD_CHANNEL_ID"));
@@ -102,7 +107,24 @@ public class MyApp extends Application {
         super.onCreate();
     }
 
-
+    /**
+     * 获取了LeakCanary
+     * @return
+     */
+    public static RefWatcher getRefWatcher() {
+        return mRefWatcher;
+    }
+    /**
+     * 初始化 LeakCanary
+     */
+    private void initLeakCanary() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        mRefWatcher = LeakCanary.install(this);
+    }
     /**
      * 设置时区
      */

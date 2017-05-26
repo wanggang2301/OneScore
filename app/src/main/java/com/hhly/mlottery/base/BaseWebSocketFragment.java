@@ -3,6 +3,7 @@ package com.hhly.mlottery.base;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.cipher.MD5Util;
@@ -145,7 +146,7 @@ public abstract class BaseWebSocketFragment extends Fragment {
                 }
             }
         }).start();
-
+        MyApp.getRefWatcher().watch(this);
     }
 
     public WebSocketState getSocketState() {
