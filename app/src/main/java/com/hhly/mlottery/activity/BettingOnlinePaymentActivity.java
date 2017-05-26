@@ -183,7 +183,7 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
         VolleyContentFast.requestJsonByPost(url,params , new VolleyContentFast.ResponseSuccessListener<WeiXinPayidDataBean>() {
             @Override
             public void onResponse(WeiXinPayidDataBean jsondata) {
-                WeiXinPayidDataBean.PayDataWX.PayDataMapWX.PayInfo payInfoData = jsondata.getData().getDataMap().getPay_info();
+                WeiXinPayidDataBean.PayDataWX.PayDataMapWX payInfoData = jsondata.getData().getDataMap();
                 L.d("yxq_WXPay===" , jsondata.getMsg() + " >>appid= " + payInfoData.getAppid());
                 toPay(payInfoData);
             }
@@ -210,8 +210,8 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
         VolleyContentFast.requestJsonByPost(aliPayUrl, map, new VolleyContentFast.ResponseSuccessListener<ZFBPayDataBean>() {
             @Override
             public void onResponse(ZFBPayDataBean jsonBean) {
-                L.d("qwer_AliPay===>>" , "body = " + jsonBean.getBody());
-                toAliPay(jsonBean.getBody());
+                L.d("qwer_AliPay===>>" , "body = " + jsonBean.getData().getDataMap().getBody());
+                toAliPay(jsonBean.getData().getDataMap().getBody());
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
@@ -227,7 +227,7 @@ public class BettingOnlinePaymentActivity extends BaseActivity implements View.O
      * 调用微信支付
      * @param payInfo
      */
-    private void toPay(WeiXinPayidDataBean.PayDataWX.PayDataMapWX.PayInfo payInfo){
+    private void toPay(WeiXinPayidDataBean.PayDataWX.PayDataMapWX payInfo){
         //注册appid
         IWXAPI api = WXAPIFactory.createWXAPI(this, APP_ID);// 通过WXAPIFactory工厂，获取IWXAPI的实例
         if (!api.isWXAppInstalled()) {

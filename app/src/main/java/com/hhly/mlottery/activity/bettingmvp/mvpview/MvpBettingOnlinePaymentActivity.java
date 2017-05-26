@@ -47,6 +47,8 @@ public class MvpBettingOnlinePaymentActivity extends BaseActivity implements MVi
     // IWXAPI 是第三方app和微信通信的openapi接口
 //    private IWXAPI api;
 
+    //订单接口
+    String payUrl = "http://192.168.31.15:8081/sunon-web-api/pay/unifiedTradePay";
     /**
      * 支付方式  支付宝(默认) 0 ；微信 1 ；余额 2
      */
@@ -183,17 +185,19 @@ public class MvpBettingOnlinePaymentActivity extends BaseActivity implements MVi
      */
     private void WeiXinPayData(){
         Map<String, String> params = new HashMap<>();
-        params.put("service", "pay.weixin.raw.app");//接口类型
+//        params.put("service", "pay.weixin.raw.app");//接口类型
+        params.put("service", "wxpay.trade.app.pay");//接口类型
         params.put("outTradeNo", "ybf20170421");//商户订单号
         params.put("body", "测试购买推荐");//商品描述
         params.put("totalFee", "1");//总金额 (分)
-        params.put("appId", APP_ID);//appid
+        params.put("expireTime", "120");//订单有效时间
+//        params.put("appId", APP_ID);//appid
 
         String url = "http://192.168.31.15:8083/sunon-web-api/pay/unifiedTradePay";
-        VolleyContentFast.requestJsonByPost(url,params , new VolleyContentFast.ResponseSuccessListener<WeiXinPayidDataBean>() {
+        VolleyContentFast.requestJsonByPost(payUrl,params , new VolleyContentFast.ResponseSuccessListener<WeiXinPayidDataBean>() {
             @Override
             public void onResponse(WeiXinPayidDataBean jsondata) {
-                WeiXinPayidDataBean.PayDataWX.PayDataMapWX.PayInfo payInfoData = jsondata.getData().getDataMap().getPay_info();
+                WeiXinPayidDataBean.PayDataWX.PayDataMapWX payInfoData = jsondata.getData().getDataMap();
                 L.d("yxq_WXPay===" , jsondata.getMsg() + " >>appid= " + payInfoData.getAppid());
                 toPay(payInfoData);
             }
@@ -210,18 +214,20 @@ public class MvpBettingOnlinePaymentActivity extends BaseActivity implements MVi
      */
     private void ALiPayData(){
         Map<String, String> map = new HashMap<String, String>();
+        map.put("service" , "alipay.trade.app.pay");
         map.put("outTradeNo", String.valueOf(System.currentTimeMillis()));
-        map.put("subject", "测试商品");
         map.put("body", "商品描述");
-        map.put("totalAmount", "0.01");
-        map.put("timeoutExpress", "5d");
+        map.put("totalFee", "1");
+        map.put("expireTime", "120");
+//        map.put("subject", "测试商品");
 
         String aliPayUrl = "http://192.168.31.15:8081/app-pay/alipay/tradeAppPay";
-        VolleyContentFast.requestJsonByPost(aliPayUrl, map, new VolleyContentFast.ResponseSuccessListener<ZFBPayDataBean>() {
+        VolleyContentFast.requestJsonByPost(payUrl, map, new VolleyContentFast.ResponseSuccessListener<ZFBPayDataBean>() {
             @Override
             public void onResponse(ZFBPayDataBean jsonBean) {
-                L.d("qwer_AliPay===>>" , "body = " + jsonBean.getBody());
-                toAliPay(jsonBean.getBody());
+
+                L.d("qwer_AliPay===>>" , "body = " + jsonBean.getData().getDataMap().getBody());
+                toAliPay(jsonBean.getData().getDataMap().getBody());
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
@@ -237,7 +243,7 @@ public class MvpBettingOnlinePaymentActivity extends BaseActivity implements MVi
      * 调用微信支付
      * @param payInfo
      */
-    private void toPay(WeiXinPayidDataBean.PayDataWX.PayDataMapWX.PayInfo payInfo){
+    private void toPay(WeiXinPayidDataBean.PayDataWX.PayDataMapWX payInfo){
         //注册appid
         IWXAPI api = WXAPIFactory.createWXAPI(this, APP_ID);// 通过WXAPIFactory工厂，获取IWXAPI的实例
         if (!api.isWXAppInstalled()) {
