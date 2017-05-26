@@ -198,7 +198,8 @@ public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEnt
 
         final TextView frequency=holder.getView(R.id.item_football_frequency);
 
-        if ("1".equals(entity.getStatus()) || "3".equals(entity.getStatus())) {// 显示秒的闪烁
+        if ("1".equals(entity.getStatus()) || "3".equals(entity.getStatus())&&!entity.getKeep().equals("")&&!entity.getKeep().equals("0")) {// 显示秒的闪烁
+            //握手进场时给的时间是0.不显示
             frequency.setText("\'");
             frequency.setVisibility(View.VISIBLE);
 
