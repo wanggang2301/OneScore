@@ -61,7 +61,7 @@ public abstract class BaseFragment extends Fragment {
 		// Restore State Here
 		if (!viewStateRestoredFromArguments()) {
 			// First Time, Initialize something here
-			this.initData();
+			this.initData(0);
 		}
 	}
 
@@ -117,7 +117,7 @@ public abstract class BaseFragment extends Fragment {
 	/**
 	 * Initialize the Activity data
 	 */
-	protected abstract void initData();
+	protected abstract void initData(int type);
 
 	/**
 	 * Initialize the activity Component
