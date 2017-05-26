@@ -17,12 +17,12 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_time"
+            android:id="@+id/tv_addtime"
             android:layout_width="wrap_content"
             android:layout_height="15dp"
             android:layout_gravity="center"
             android:gravity="center_horizontal"
-            android:text="@string/start_dianqiu"
+            android:text="@string/start_addtime"
             android:textSize="@dimen/text_size_13" />
 
     </LinearLayout>

@@ -1038,10 +1038,15 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
             case "18": //点球状态
             case "19":
-
                 mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
 
+                break;
+
+            case "14": //加时赛
+            case "15":
+                mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
+                mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
 
                 break;
 
