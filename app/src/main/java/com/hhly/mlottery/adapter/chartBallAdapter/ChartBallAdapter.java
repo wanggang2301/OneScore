@@ -117,7 +117,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                 }
                 if (!isRn) {
                     if (mData.get(position).getMsgCode() == 2) {
-                        viewHolderMsg.receive_text.setText(Html.fromHtml("<font color='#0090ff'>@" + mData.get(position).getToUser().getUserNick() + ":</font>" + mData.get(position).getMessage()));
+                        viewHolderMsg.receive_text.setText(Html.fromHtml("<font color='#0090ff'>@" + mData.get(position).getToUser().getUserNick() + ":</font>" + (mData.get(position).getMessage() == null ? "" : mData.get(position).getMessage())));
                     } else {
                         viewHolderMsg.receive_text.setText(mData.get(position).getMessage());
                     }
@@ -157,7 +157,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                 }
                 if (!isRn_me) {
                     if (mData.get(position).getMsgCode() == 2) {
-                        viewHolderMe.my_text.setText(Html.fromHtml("<font color='#0090ff'>@" + mData.get(position).getToUser().getUserNick() + ":</font>" + mData.get(position).getMessage()));
+                        viewHolderMe.my_text.setText(Html.fromHtml("<font color='#0090ff'>@" + mData.get(position).getToUser().getUserNick() + ":</font>" + (mData.get(position).getMessage() == null ? "" : mData.get(position).getMessage())));
                     } else {
                         viewHolderMe.my_text.setText(mData.get(position).getMessage());
                     }

@@ -303,6 +303,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private void loadAnim() {
         mWebView = new WebView(getApplicationContext());
         ll_Webview.addView(mWebView);
+        mWebView.setHorizontalScrollBarEnabled(false);
 
         WebSettings webSettings = mWebView.getSettings();
         // 不用缓存

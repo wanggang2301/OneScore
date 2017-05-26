@@ -954,6 +954,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
     // 是否可以点赞
     public void setClickableLikeBtn(boolean clickable) {
+        if(mHomeLike == null || mGuestLike == null) return;
         mHomeLike.setClickable(clickable);
         mGuestLike.setClickable(clickable);
         if (clickable) {
