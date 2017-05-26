@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hhly.mlottery">
-
+    <!--录音权限-->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <!-- 调用系统下载权限 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
