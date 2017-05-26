@@ -395,9 +395,9 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 teamLogoPre = json.getTeamLogoPre();
                 teamLogoSuff = json.getTeamLogoSuff();
 
-                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_RESULT, "").equals(json.getFilterDate())) {
+                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_RESULT, "").equals(json.getFilerDate())) {
                     PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_RESULT);
-                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_RESULT, json.getFilterDate());
+                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_RESULT, json.getFilerDate());
                 }
 
                 /**
@@ -530,7 +530,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
 
     /**
-     * EventBus 帅选完成后接受消息
+     * EventBus 筛选完成后接受消息
      * 接受消息的页面实现
      */
     public void onEventMainThread(ScoresMatchFilterEventBusEntity scoresMatchFilterEventBusEntity) {

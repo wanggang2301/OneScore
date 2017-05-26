@@ -547,7 +547,6 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                 currentMatchData.add(data);
             }
         }
-
         updateAdapter();
     }
 
@@ -1035,9 +1034,9 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                 }
                 if (isExistId) {
                     checkedMatchs.add(matchBean);
-                    localFilterRace.add(matchBean.getLeagueId());
                 }
             }
+            localFilterRace.addAll((List)map.get(BasketFiltrateActivity.CHECKED_CUPS_IDS));
 
             PreferenceUtil.setDataList(FootBallMatchFilterTypeEnum.BASKET_IMMEDIA, localFilterRace);
             if (checkedMatchs.size() != 0) {

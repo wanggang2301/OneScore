@@ -228,10 +228,10 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private FinishMatchLiveTextFragment finishMatchLiveTextFragment;//完场
     private String mThirdId;
 
-    public static LiveFragment newInstance(String thirdId,MatchDetail matchDetail, MathchStatisInfo mathchStatisInfo, List<MatchTimeLiveBean> eventMatchTimeLiveList, List<MatchTextLiveBean> trendChartList, String keepTime) {
+    public static LiveFragment newInstance(String thirdId, MatchDetail matchDetail, MathchStatisInfo mathchStatisInfo, List<MatchTimeLiveBean> eventMatchTimeLiveList, List<MatchTextLiveBean> trendChartList, String keepTime) {
         LiveFragment fragment = new LiveFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("thirdId",thirdId);
+        bundle.putString("thirdId", thirdId);
         bundle.putParcelable("matchDetail", matchDetail);
         bundle.putParcelable("mathchStatisInfo", mathchStatisInfo);
         bundle.putParcelableArrayList("trendChartList", (ArrayList<? extends Parcelable>) trendChartList);
@@ -292,7 +292,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.goChart:
-                ((FootballMatchDetailActivity)mActivity).mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_CHARTBALL);
+                ((FootballMatchDetailActivity) mActivity).mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_CHARTBALL);
                 break;
 
             case R.id.reLoading:
@@ -644,6 +644,8 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
 
 
         computeEventNum(eventType);
+
+        //事件轴Y
         eventAdapter = new EventAdapter(mContext, eventMatchLive);
         recyclerView.setAdapter(eventAdapter);
     }
@@ -721,6 +723,12 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
 
         int statusEqual2 = 0; //计算List里面出现的state=2 code=1多次出现，只需要一个
 
+
+        int penalty = 0; //点球
+
+        int extraTime = 0; //加时
+
+
         Iterator<MatchTimeLiveBean> iterator = eventMatchLive.iterator();
         while (iterator.hasNext()) {
             MatchTimeLiveBean m = iterator.next();
@@ -731,6 +739,31 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
                     statusEqual2++;
                 }
 
+            } else if ("18".equals(m.getCode()) || "19".equals(m.getCode())) {  //处理开始点球重复事件
+                if (penalty == 1) {
+                    iterator.remove();
+                } else {
+                    penalty++;
+                }
+
+            } else if ("14".equals(m.getCode()) || "15".equals(m.getCode())) {  //处理开始加时赛重复事件
+                if (extraTime == 1) {
+                    iterator.remove();
+                } else {
+                    extraTime++;
+                }
+
+                /*5	Stop 1st half of overtime	结束上半场加时赛
+                7	Stop 2nd half of overtime	结束下半场加时赛
+                14	Start 1st half of overtime, kickoff:	开始上半场加时赛，开球：
+                15	Start 1st half of overtime, kickoff:	开始上半场加时赛，开球：
+                16	Start 2nd half of overtime, kickoff:	开始下半场加时赛，开球：
+                 list.add("9");
+                17	Start 2nd half of overtime, kickoff:	开始下半场加时赛，开球：*/
+
+            } else if ("5".equals(m.getCode()) || "7".equals(m.getCode()) || "9".equals(m.getCode()) || "16".equals(m.getCode()) || "17".equals(m.getCode()) || "605".equals(m.getCode())) {
+                //无用重复事件直接remove
+                iterator.remove();
             } else {
                 if (HOME.equals(m.getIsHome())) {
                     if (SCORE.equals(m.getCode())) {

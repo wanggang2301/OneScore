@@ -240,7 +240,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
             public void onClick(View v) {
                 swipeRefreshLayout.setRefreshing(true);
                 networkExceptionLayout.setVisibility(View.GONE);
-                RollBallFragment.this.initData();
+                RollBallFragment.this.initData(0);
             }
         });
 
@@ -248,7 +248,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         subscription = RxBus.getDefault().toObserverable(Match.class).delay(60, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Match>() {
             @Override
             public void call(final Match match) {
-                RollBallFragment.this.initData();
+                RollBallFragment.this.initData(1);
             }
         }, new Action1<Throwable>() {
             @Override
@@ -259,7 +259,10 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     }
 
     @Override
-    protected void initData() {
+    protected void initData(int type) {
+        if(type == 0){
+            apiHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
+        }
         this.requestApi();
     }
 
@@ -311,7 +314,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
     @Override
     public void onRefresh() {
-        this.initData();
+        this.initData(0);
 
         if (isNewFrameWork) {
             ((FootBallScoreFragment) getParentFragment()).reconnectWebSocket();
@@ -398,7 +401,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
     public void feedAdapter() {
         if (apiHandler != null) apiHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-        this.initData();
+        this.initData(0);
     }
 
     private void checkTheLifeCycleIsChanging(boolean resestTheLifeCycle) {
@@ -410,7 +413,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
 
     public void requestApi() {
-        apiHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_Rollball,
                 new VolleyContentFast.ResponseSuccessListener<ImmediateMatchs>() {
                     @Override
@@ -678,7 +680,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                                     @Override
                                     public void run() {
                                         fragment.apiHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-                                        fragment.initData();
+                                        fragment.initData(0);
                                     }
                                 }, DELAY_REQUEST_API);
                                 break;

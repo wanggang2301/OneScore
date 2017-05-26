@@ -11,6 +11,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewAdapter;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.StadiumUtils;
 
 import java.util.List;
@@ -24,6 +25,8 @@ public class EventAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolde
 
     private static final int VIEW_TYPE_DEFAULT = 1;
     private static final int VIEW_TYPE_HALF_FINISH = 2;
+    private static final int VIEW_TYPE_HALF_PENALTY = 3;
+    private static final int VIEW_TYPE_HALF_EXTRA_TIME = 4;
 
     private static final String HOME = "1"; //主队
     private static final String GUEST = "0"; //客队
@@ -62,6 +65,9 @@ public class EventAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolde
      */
     private static final String SECONDTIME = "3";
 
+
+    private static final String DIANQIUTIME = "5";  //code=18
+
     private Context mContext;
 
     private List<MatchTimeLiveBean> matchTimeLiveBeans;
@@ -79,13 +85,18 @@ public class EventAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolde
         switch (itemViewType) {
             case VIEW_TYPE_DEFAULT:
                 BindRecycleViewData(viewHolder, getItemCount() - position - 1);
-
                 break;
             case VIEW_TYPE_HALF_FINISH:
                 BindRecycleViewMatchStatus(viewHolder, getItemCount() - position - 1);
                 break;
+       /*     case VIEW_TYPE_HALF_PENALTY:
+                break;
+            case VIEW_TYPE_HALF_EXTRA_TIME:
+                break;*/
         }
     }
+
+
 
     private void BindRecycleViewMatchStatus(BaseRecyclerViewHolder viewHolder, int position) {
         TextView tv_score = viewHolder.findViewById(R.id.tv_score);
@@ -93,10 +104,14 @@ public class EventAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolde
         MatchTimeLiveBean m = matchTimeLiveBeans.get(position);
 
 
-        if ("2".equals(matchTimeLiveBeans.get(position).getState())) {
+        if ("2".equals(matchTimeLiveBeans.get(position).getState()) && "1".equals(matchTimeLiveBeans.get(position).getCode())) {
+            L.d("ccvvbn", "_______H" + matchTimeLiveBeans.get(position).getState() + "====" + matchTimeLiveBeans.get(position).getCode());
+
             tv_score.setText(m.getIsHome());
             tv_status.setText("H");
-        } else if ("-1".equals(matchTimeLiveBeans.get(position).getState())) {
+        } else if ("-1".equals(matchTimeLiveBeans.get(position).getState()) && "3".equals(matchTimeLiveBeans.get(position).getCode())) {
+
+            L.d("ccvvbn", "_______" + matchTimeLiveBeans.get(position).getState() + "====" + matchTimeLiveBeans.get(position).getCode());
             tv_score.setText(m.getIsHome());
             tv_status.setText("F");
         }
@@ -238,7 +253,7 @@ public class EventAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolde
 
     @Override
     public int[] getItemLayouts() {
-        return new int[]{R.layout.item_event_normal, R.layout.item_event_half_finish};
+        return new int[]{R.layout.item_event_normal, R.layout.item_event_half_finish, R.layout.item_event_dianqiu, R.layout.item_event_jiashi};
     }
 
     @Override
@@ -250,10 +265,15 @@ public class EventAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolde
     public int getRecycleViewItemType(int position) {
         if ("2".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getState()) && "1".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getCode())) {
             return VIEW_TYPE_HALF_FINISH;
-        } else if ("-1".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getState())) {
+        } else if ("-1".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getState()) && "3".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getCode())) {
             return VIEW_TYPE_HALF_FINISH;
+        } else if ("18".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getCode()) || "19".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getCode())) {
+            return VIEW_TYPE_HALF_PENALTY;
+        } else if ("14".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getCode()) || "15".equals(matchTimeLiveBeans.get(getItemCount() - position - 1))) {
+            return VIEW_TYPE_HALF_EXTRA_TIME;
         } else {
             return VIEW_TYPE_DEFAULT;
         }
     }
+
 }

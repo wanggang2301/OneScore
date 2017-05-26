@@ -356,9 +356,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
 
                 teamLogoSuff = json.getTeamLogoSuff();
 
-                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_SCHEDULE, "").equals(json.getFilterDate())) {
+                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_SCHEDULE, "").equals(json.getFilerDate())) {
                     PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_SCHEDULE);
-                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_SCHEDULE, json.getFilterDate());
+                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_SCHEDULE, json.getFilerDate());
                 }
 
                 if (current != null) {

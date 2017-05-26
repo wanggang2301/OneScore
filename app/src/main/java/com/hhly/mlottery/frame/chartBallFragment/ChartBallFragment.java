@@ -31,6 +31,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.chartBallAdapter.ChartBallAdapter;
+import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.BarrageBean;
 import com.hhly.mlottery.bean.chart.ChartReceive;
@@ -67,7 +68,7 @@ import de.greenrobot.event.EventBus;
  * 作者：tangrr_107
  * 时间：2016/12/6
  */
-public class ChartBallFragment extends BaseWebSocketFragment implements View.OnClickListener, ChartBallAdapter.AdapterListener {
+public class ChartBallFragment extends BaseWebSocketFragment implements View.OnClickListener {
 
     private static final Long SHOW_TIME_LONG = 5 * 60000L;    // 显示时分秒(分钟)
     private static final Long SHOW_TIME_LONG_FULL = 8 * 3600000L;// 显示年月日(小时)
@@ -107,7 +108,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     private TextView mEditText;
     private RecyclerView recycler_view;
     private ChartBallAdapter mAdapter;
-    private ChartBallReportDialogFragment dialogFragment;
+    //    private ChartBallReportDialogFragment dialogFragment;
     private ChartReceive mChartReceive;
     private List<ChartReceive.DataBean.ChatHistoryBean> historyBeen = new ArrayList<>();
     private LinearLayout ll_not_chart_image;
@@ -134,9 +135,10 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     private boolean isLoading = false;// 是否已加载过数据
 
     Timer timer = new Timer();
-    private TimerTask mTimerTask;
+    private TimerTask timerTask;
 
-    public ChartBallFragment(){}
+    public ChartBallFragment() {
+    }
 
     public static ChartBallFragment newInstance(int type, String thirdId) {
         ChartBallFragment fragment = new ChartBallFragment();
@@ -266,7 +268,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
             if (!getUserVisibleHint()) {
                 return;
             }
-        }else{
+        } else {
             isLoading = true;
         }
         if (SLIDE_TYPE_MSG_ONE.equals(slideType)) {
@@ -565,7 +567,39 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     }
 
                     mAdapter = new ChartBallAdapter(mContext, historyBeen);
-                    mAdapter.setShowDialogOnClickListener(ChartBallFragment.this);
+                    mAdapter.setShowDialogOnClickListener(new ChartBallAdapter.AdapterListener() {
+                        @Override
+                        public void shwoDialog(String msgId, String toUserId, String toUserNick) {
+                            ChartBallReportDialogFragment dialogFragment = ChartBallReportDialogFragment.newInstance(msgId, AppConstants.register.getData().getUser().getNickName(), toUserId, toUserNick);
+                            if (!dialogFragment.isVisible()) {
+                                dialogFragment.show(getChildFragmentManager(), "chartballDialog");
+                            }
+                        }
+
+                        @Override
+                        public void userLoginBack() {
+                            loginBack();
+                        }
+
+                        @Override
+                        public void againSendMsg(String msg) {
+                            // 重新发送
+                            for (int i = 0, len = historyBeen.size(); i < len; i++) {
+                                if (historyBeen.get(i).getSendStart() == SendMsgEnum.SEND_ERROR && historyBeen.get(i).getFromUser().getUserId().equals(AppConstants.register.getData().getUser().getUserId()) && historyBeen.get(i).getMessage().equals(msg)) {
+                                    if (historyBeen.get(i).getMsgCode() == 2 && !TextUtils.isEmpty(historyBeen.get(i).getToUser().getUserId())) {
+                                        sendMessageToServer(TYPE_MSG_TO_ME, historyBeen.get(i).getMessage(), historyBeen.get(i).getToUser().getUserId());
+                                    } else {
+                                        sendMessageToServer(TYPE_MSG, historyBeen.get(i).getMessage(), null);
+                                    }
+                                    historyBeen.get(i).setSendStart(SendMsgEnum.SEND_LOADING);
+                                    if (mAdapter != null) {
+                                        mAdapter.notifyDataSetChanged();
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    });
                     recycler_view.setAdapter(mAdapter);
 
                     sleepView();
@@ -657,13 +691,13 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
      * 30重连socket一次
      */
     private void socketTimerTask() {
-        mTimerTask = new TimerTask() {
+        timerTask = new TimerTask() {
             @Override
             public void run() {
                 mHandler.sendEmptyMessage(SOCKET_TIMER_TASK);
             }
         };
-        timer.schedule(mTimerTask, 1000 * 1, 1000 * 30);
+        timer.schedule(timerTask, 1000 * 1, 1000 * 30);
     }
 
     @Override
@@ -688,43 +722,13 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
         EventBus.getDefault().unregister(this);
         timer.cancel();
-        mTimerTask.cancel();
-    }
-
-    @Override
-    public void shwoDialog(String msgId, String toUserId, String toUserNick) {
-        dialogFragment = ChartBallReportDialogFragment.newInstance(msgId, AppConstants.register.getData().getUser().getNickName(), toUserId, toUserNick);
-        if (!dialogFragment.isVisible()) {
-            dialogFragment.show(getChildFragmentManager(), "chartballDialog");
-        }
-    }
-
-    @Override
-    public void userLoginBack() {
-        loginBack();
-    }
-
-    @Override
-    public void againSendMsg(String msg) {
-        // 重新发送
-        for (int i = 0, len = historyBeen.size(); i < len; i++) {
-            if (historyBeen.get(i).getSendStart() == SendMsgEnum.SEND_ERROR && historyBeen.get(i).getFromUser().getUserId().equals(AppConstants.register.getData().getUser().getUserId()) && historyBeen.get(i).getMessage().equals(msg)) {
-                if (historyBeen.get(i).getMsgCode() == 2 && !TextUtils.isEmpty(historyBeen.get(i).getToUser().getUserId())) {
-                    sendMessageToServer(TYPE_MSG_TO_ME, historyBeen.get(i).getMessage(), historyBeen.get(i).getToUser().getUserId());
-                } else {
-                    sendMessageToServer(TYPE_MSG, historyBeen.get(i).getMessage(), null);
-                }
-                historyBeen.get(i).setSendStart(SendMsgEnum.SEND_LOADING);
-                if (mAdapter != null) {
-                    mAdapter.notifyDataSetChanged();
-                }
-                break;
-            }
-        }
+        timer = null;
+        timerTask.cancel();
+        timerTask = null;
+        super.onDestroy();
     }
 
     @Override
@@ -951,6 +955,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
     // 是否可以点赞
     public void setClickableLikeBtn(boolean clickable) {
+        if (mHomeLike == null || mGuestLike == null) return;
         mHomeLike.setClickable(clickable);
         mGuestLike.setClickable(clickable);
         if (clickable) {
