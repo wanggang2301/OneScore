@@ -25,9 +25,8 @@ public class EventAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolde
 
     private static final int VIEW_TYPE_DEFAULT = 1;
     private static final int VIEW_TYPE_HALF_FINISH = 2;
-    private static final int VIEW_TYPE_HALF_DIANQIU = 3;
-    private static final int VIEW_TYPE_HALF_JIASHI = 4;
-    // private static final int VIEW_TYPE_HALF_HIDE = 5;
+    private static final int VIEW_TYPE_HALF_PENALTY = 3;
+    private static final int VIEW_TYPE_HALF_EXTRA_TIME = 4;
 
     private static final String HOME = "1"; //主队
     private static final String GUEST = "0"; //客队
@@ -90,25 +89,13 @@ public class EventAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolde
             case VIEW_TYPE_HALF_FINISH:
                 BindRecycleViewMatchStatus(viewHolder, getItemCount() - position - 1);
                 break;
-
-            case VIEW_TYPE_HALF_DIANQIU:
-                BindRecycleViewMatchDianqiu(viewHolder, getItemCount() - position - 1);
+       /*     case VIEW_TYPE_HALF_PENALTY:
                 break;
-            case VIEW_TYPE_HALF_JIASHI:
-                BindRecycleViewMatchJiaShi(viewHolder, getItemCount() - position - 1);
-                break;
+            case VIEW_TYPE_HALF_EXTRA_TIME:
+                break;*/
         }
     }
 
-
-
-    private void BindRecycleViewMatchDianqiu(BaseRecyclerViewHolder viewHolder, int position) {
-
-    }
-
-    private void BindRecycleViewMatchJiaShi(BaseRecyclerViewHolder viewHolder, int position) {
-
-    }
 
 
     private void BindRecycleViewMatchStatus(BaseRecyclerViewHolder viewHolder, int position) {
@@ -281,9 +268,9 @@ public class EventAdapter extends BaseRecyclerViewAdapter<RecyclerView.ViewHolde
         } else if ("-1".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getState()) && "3".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getCode())) {
             return VIEW_TYPE_HALF_FINISH;
         } else if ("18".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getCode()) || "19".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getCode())) {
-            return VIEW_TYPE_HALF_DIANQIU;
+            return VIEW_TYPE_HALF_PENALTY;
         } else if ("14".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getCode()) || "15".equals(matchTimeLiveBeans.get(getItemCount() - position - 1))) {
-            return VIEW_TYPE_HALF_JIASHI;
+            return VIEW_TYPE_HALF_EXTRA_TIME;
         } else {
             return VIEW_TYPE_DEFAULT;
         }
