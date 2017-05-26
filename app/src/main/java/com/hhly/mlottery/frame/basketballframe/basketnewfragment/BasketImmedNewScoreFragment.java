@@ -547,7 +547,11 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                 currentMatchData.add(data);
             }
         }
-
+        StringBuffer sb = new StringBuffer();
+        for (String ss : filiterLeagueIds) {
+            sb.append(ss + "-");
+        }
+        L.d("filiterLeagueIds.size = " , filiterLeagueIds.size() + " -*- " + sb.toString());
         updateAdapter();
     }
 
@@ -1035,9 +1039,9 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                 }
                 if (isExistId) {
                     checkedMatchs.add(matchBean);
-                    localFilterRace.add(matchBean.getLeagueId());
                 }
             }
+            localFilterRace.addAll((List)map.get(BasketFiltrateActivity.CHECKED_CUPS_IDS));
 
             PreferenceUtil.setDataList(FootBallMatchFilterTypeEnum.BASKET_IMMEDIA, localFilterRace);
             if (checkedMatchs.size() != 0) {

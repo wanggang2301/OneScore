@@ -220,7 +220,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     boolean barrage_isFocus = false;
     private RelativeLayout mLayoutScore;
     //动画WebView
-    private WebView mWebView;
+//    private WebView mWebView;
     private LinearLayout ll_Webview;
     private TextView mHalfScore;
     private String url;
@@ -232,7 +232,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 //                .statusBarColor(R.color.colorPrimary)
 //                .init();
         if (getIntent() != null && getIntent().getExtras() != null) {
-            mThirdId = getIntent().getExtras().getString(BUNDLE_PARAM_THIRDID, "1300");
+            mThirdId = getIntent().getExtras().getString(BUNDLE_PARAM_THIRDID, "-1");
             currentFragmentId = getIntent().getExtras().getInt("currentFragmentId");
             current_tab = getIntent().getIntExtra(FootBallDetailTypeEnum.CURRENT_TAB_KEY, FootBallDetailTypeEnum.FOOT_DETAIL_DEFAULT);
         }
@@ -286,7 +286,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         barrage_switch.setOnClickListener(this);
         //动画WebView
 //        tv_nopage = (TextView) findViewById(R.id.tv_nopage);
-        mWebView = (WebView) findViewById(R.id.webview);
+//        mWebView = (WebView) findViewById(R.id.webview);
         ll_Webview = (LinearLayout) findViewById(R.id.ll_webview);
         mHalfScore = (TextView) findViewById(R.id.half_score);
 
@@ -296,10 +296,14 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         barrage_view.setDatas(barrageBean.getUrl(), barrageBean.getMsg().toString());
     }
 
+    WebView mWebView;
     /**
      * 动画直播
      */
     private void loadAnim() {
+        mWebView = new WebView(getApplicationContext());
+        ll_Webview.addView(mWebView);
+
         WebSettings webSettings = mWebView.getSettings();
         // 不用缓存
         webSettings.setAppCacheEnabled(false);
@@ -324,7 +328,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
-                mWebView.setVisibility(View.GONE);
                 ll_Webview.setVisibility(View.GONE);
                 L.e("AAAA", "error?");
             }
@@ -365,11 +368,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     }
 
     private Timer mReloadTimer;
+    private TimerTask reloadTimerTask;
     private boolean isStartTimer = false;
 
     private void startReloadTimer() {
         if (!isStartTimer && !isFinishing()) {//已经开启则不需要再开启
-            TimerTask reloadTimerTask = new TimerTask() {
+            reloadTimerTask = new TimerTask() {
                 @Override
                 public void run() {
                     L.d(TAG, "TimerTask run....");
@@ -879,21 +883,32 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (mWebView != null) {
-            ((ViewGroup) mWebView.getParent()).removeView(mWebView);
+            mWebView.onPause();
             mWebView.destroy();
             mWebView = null;
+
+        }
+        if(ll_Webview != null){
+            ll_Webview.removeAllViews();
         }
 
         if (mReloadTimer != null) {
             mReloadTimer.cancel();
             mReloadTimer.purge();
+            mReloadTimer = null;
+        }
+
+        if(reloadTimerTask != null){
+            reloadTimerTask.cancel();
+            reloadTimerTask = null;
         }
 
         closePollingGifCount();
 
         EventBus.getDefault().unregister(this);
+        System.gc();
+        super.onDestroy();
     }
 
     @Override
@@ -1823,7 +1838,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Exit");
                 eventBusPost();
                 MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
-                finish();
+                this.finish();
                 break;
             case R.id.iv_setting:  //关注、分享
                 popWindow(iv_setting);

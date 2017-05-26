@@ -40,7 +40,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
     Context mContext;
     List<ChartReceive.DataBean.ChatHistoryBean> mData;
     private PopupWindow mPopupWindow;
-    public static AdapterListener mAdapterListener;
+    private AdapterListener mAdapterListener;
 
     public ChartBallAdapter(Context context, List<ChartReceive.DataBean.ChatHistoryBean> data) {
         this.mContext = context;
@@ -316,15 +316,15 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
         void againSendMsg(String msg);
     }
 
-    public static void showDialog(String msgId, String toUserId, String toUserNick) {
+    public void showDialog(String msgId, String toUserId, String toUserNick) {
         mAdapterListener.shwoDialog(msgId, toUserId, toUserNick);
     }
 
-    public static void userLoginBack() {
+    public void userLoginBack() {
         mAdapterListener.userLoginBack();
     }
 
-    public static void againSendMsg(String msg){
+    public void againSendMsg(String msg){
         mAdapterListener.againSendMsg(msg);
     }
 

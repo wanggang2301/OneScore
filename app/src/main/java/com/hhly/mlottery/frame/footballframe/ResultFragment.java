@@ -530,7 +530,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
 
     /**
-     * EventBus 帅选完成后接受消息
+     * EventBus 筛选完成后接受消息
      * 接受消息的页面实现
      */
     public void onEventMainThread(ScoresMatchFilterEventBusEntity scoresMatchFilterEventBusEntity) {

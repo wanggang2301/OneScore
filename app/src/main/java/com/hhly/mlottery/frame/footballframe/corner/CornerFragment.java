@@ -22,6 +22,7 @@ import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.corner.CornerListAdapter;
 import com.hhly.mlottery.bean.corner.CornerListBean;
 import com.hhly.mlottery.callback.FocusMatchClickListener;
+import com.hhly.mlottery.config.FootBallDetailTypeEnum;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.util.HandMatchId;
@@ -180,8 +181,7 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
 
                     Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
                     intent.putExtra(BUNDLE_PARAM_THIRDID, entity.getMatchId() + "");
-//                ToastTools.showQuick(getActivity(),entity.getMatchId()+"");
-                    intent.putExtra("current_ab", 1);
+                    intent.putExtra("current_ab", FootBallDetailTypeEnum.FOOT_DETAIL_LIVE);
                     getActivity().startActivity(intent);
                 }
             }

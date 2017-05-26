@@ -37,6 +37,7 @@ import com.hhly.mlottery.bean.websocket.WebSocketMatchStatus;
 import com.hhly.mlottery.callback.FocusMatchClickListener;
 import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.FootBallDetailTypeEnum;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchSettingEventBusEntity;
@@ -431,7 +432,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                                 String thirdId = data;
                                 Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
                                 intent.putExtra("thirdId", thirdId);
-                                intent.putExtra("currentFragmentId", 4);
+                                intent.putExtra("currentFragmentId", FootBallDetailTypeEnum.FOOT_DETAIL_CHARTBALL);
                                 if (getActivity() != null) {
                                     getActivity().startActivityForResult(intent, REQUEST_DETAIL_CODE);
                                 }
