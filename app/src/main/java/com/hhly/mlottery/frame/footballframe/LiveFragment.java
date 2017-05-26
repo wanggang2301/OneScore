@@ -724,9 +724,9 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         int statusEqual2 = 0; //计算List里面出现的state=2 code=1多次出现，只需要一个
 
 
-        int dianqiu = 0;
+        int penalty = 0; //点球
 
-        int jiashi = 0;
+        int extraTime = 0; //加时
 
 
         Iterator<MatchTimeLiveBean> iterator = eventMatchLive.iterator();
@@ -739,18 +739,18 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
                     statusEqual2++;
                 }
 
-            } else if ("18".equals(m.getCode()) || "19".equals(m.getCode())) {  //处理点球多余
-                if (dianqiu == 1) {
+            } else if ("18".equals(m.getCode()) || "19".equals(m.getCode())) {  //处理开始点球重复事件
+                if (penalty == 1) {
                     iterator.remove();
                 } else {
-                    dianqiu++;
+                    penalty++;
                 }
 
-            } else if ("14".equals(m.getCode()) || "15".equals(m.getCode())) {  //处理加时赛
-                if (jiashi == 1) {
+            } else if ("14".equals(m.getCode()) || "15".equals(m.getCode())) {  //处理开始加时赛重复事件
+                if (extraTime == 1) {
                     iterator.remove();
                 } else {
-                    jiashi++;
+                    extraTime++;
                 }
 
                 /*5	Stop 1st half of overtime	结束上半场加时赛
@@ -758,15 +758,11 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
                 14	Start 1st half of overtime, kickoff:	开始上半场加时赛，开球：
                 15	Start 1st half of overtime, kickoff:	开始上半场加时赛，开球：
                 16	Start 2nd half of overtime, kickoff:	开始下半场加时赛，开球：
-                list.add("605");
-        list.add("14");
-        list.add("5");
-        list.add("17");
-        list.add("7");
-        list.add("9");
+                 list.add("9");
                 17	Start 2nd half of overtime, kickoff:	开始下半场加时赛，开球：*/
 
-            } else if ("9".equals(m.getCode()) || "5".equals(m.getCode()) || "7".equals(m.getCode()) || "16".equals(m.getCode()) || "17".equals(m.getCode()) || "605".equals(m.getCode())) {
+            } else if ("5".equals(m.getCode()) || "7".equals(m.getCode()) || "9".equals(m.getCode()) || "16".equals(m.getCode()) || "17".equals(m.getCode()) || "605".equals(m.getCode())) {
+                //无用重复事件直接remove
                 iterator.remove();
             } else {
                 if (HOME.equals(m.getIsHome())) {
