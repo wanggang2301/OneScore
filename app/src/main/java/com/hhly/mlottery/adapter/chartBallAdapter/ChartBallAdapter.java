@@ -26,6 +26,7 @@ import com.hhly.mlottery.bean.chart.ChartReceive;
 import com.hhly.mlottery.bean.enums.SendMsgEnum;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DeviceInfo;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.view.CircleImageView;
 
 import java.util.List;
@@ -252,6 +253,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
     }
 
     private void showPopup(View v, final int index) {
+        MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));// 关闭输入框
         View popupView = View.inflate(mContext, R.layout.item_chart_ball_fragment_popup, null);
 
         switch (MyApp.isPackageName){
@@ -298,7 +300,6 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
         popupView.findViewById(R.id.tv_popup_jubao).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
                 if (!DeviceInfo.isLogin()) {
                     // 未登录
                     userLoginBack();

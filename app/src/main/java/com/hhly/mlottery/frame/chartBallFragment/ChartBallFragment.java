@@ -31,6 +31,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.chartBallAdapter.ChartBallAdapter;
+import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.BarrageBean;
 import com.hhly.mlottery.bean.chart.ChartReceive;
@@ -107,7 +108,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
     private TextView mEditText;
     private RecyclerView recycler_view;
     private ChartBallAdapter mAdapter;
-    private ChartBallReportDialogFragment dialogFragment;
+    //    private ChartBallReportDialogFragment dialogFragment;
     private ChartReceive mChartReceive;
     private List<ChartReceive.DataBean.ChatHistoryBean> historyBeen = new ArrayList<>();
     private LinearLayout ll_not_chart_image;
@@ -569,7 +570,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     mAdapter.setShowDialogOnClickListener(new ChartBallAdapter.AdapterListener() {
                         @Override
                         public void shwoDialog(String msgId, String toUserId, String toUserNick) {
-                            dialogFragment = ChartBallReportDialogFragment.newInstance(msgId, AppConstants.register.getData().getUser().getNickName(), toUserId, toUserNick);
+                            ChartBallReportDialogFragment dialogFragment = ChartBallReportDialogFragment.newInstance(msgId, AppConstants.register.getData().getUser().getNickName(), toUserId, toUserNick);
                             if (!dialogFragment.isVisible()) {
                                 dialogFragment.show(getChildFragmentManager(), "chartballDialog");
                             }
@@ -721,13 +722,13 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
         EventBus.getDefault().unregister(this);
         timer.cancel();
         timer = null;
         timerTask.cancel();
         timerTask = null;
+        super.onDestroy();
     }
 
     @Override
@@ -954,7 +955,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
     // 是否可以点赞
     public void setClickableLikeBtn(boolean clickable) {
-        if(mHomeLike == null || mGuestLike == null) return;
+        if (mHomeLike == null || mGuestLike == null) return;
         mHomeLike.setClickable(clickable);
         mGuestLike.setClickable(clickable);
         if (clickable) {
