@@ -547,11 +547,6 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                 currentMatchData.add(data);
             }
         }
-        StringBuffer sb = new StringBuffer();
-        for (String ss : filiterLeagueIds) {
-            sb.append(ss + "-");
-        }
-        L.d("filiterLeagueIds.size = " , filiterLeagueIds.size() + " -*- " + sb.toString());
         updateAdapter();
     }
 
