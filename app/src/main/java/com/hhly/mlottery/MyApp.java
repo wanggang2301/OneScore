@@ -13,7 +13,6 @@ import android.util.DisplayMetrics;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.footballframe.bowl.data.DataManager;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.CrashException;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DataBus;
 import com.hhly.mlottery.util.DeviceInfo;
@@ -56,7 +55,7 @@ public class MyApp extends Application {
     public void onCreate() {
         appcontext = this;
 
-        L.d("myapp","kkkkk");
+        L.d("myapp", "kkkkk");
 
         // 子线程中做初始化操作，提升APP打开速度
         new Thread() {
@@ -87,10 +86,10 @@ public class MyApp extends Application {
                 // 根据上次的语言设置，重新设置语言
                 isLanguage = switchLanguage(PreferenceUtil.getString("language", ""));
 
-                // 捕获异常
+               /* // 捕获异常
                 CrashException crashException = CrashException.getInstance();
                 crashException.init(getApplicationContext());
-
+*/
                 // 初始化Vollery
                 VolleyContentFast.init(appcontext);
 
@@ -113,13 +112,13 @@ public class MyApp extends Application {
         super.onCreate();
     }
 
-    private void initDagger() {
 
+    //初始化Dagger注入
+    public void initDagger() {
         DaggerMyAppComponent.builder()
-                .myAppModule(new MyAppModule(this, BaseURLs.URL_MVP_API_HOST, AppConstants.timeZone + "", VolleyContentFast.returenLanguage()))
+                .myAppModule(new MyAppModule(this, BaseURLs.URL_MVP_API_HOST, AppConstants.timeZone + "", getLanguage()))
                 .build()
                 .inject(this);
-
     }
 
 
@@ -349,5 +348,33 @@ public class MyApp extends Application {
         } catch (Exception e) {
             L.d(e.getMessage());
         }
+    }
+
+    /*只返回语言参数*/
+    public static String getLanguage() {
+
+        if (isLanguage.equals("rCN")) {
+            // 如果是中文简体的语言环境
+            return BaseURLs.LANGUAGE_SWITCHING_CN;
+        } else if (isLanguage.equals("rTW")) {
+            // 如果是中文繁体的语言环境
+            return BaseURLs.LANGUAGE_SWITCHING_TW;
+        } else if (isLanguage.equals("rEN")) {
+            // 如果是英文环境
+            return BaseURLs.LANGUAGE_SWITCHING_EN;
+        } else if (isLanguage.equals("rKO")) {
+            // 如果是韩语环境
+            return BaseURLs.LANGUAGE_SWITCHING_KO;
+        } else if (isLanguage.equals("rID")) {
+            // 如果是印尼语
+            return BaseURLs.LANGUAGE_SWITCHING_ID;
+        } else if (isLanguage.equals("rTH")) {
+            // 如果是泰语
+            return BaseURLs.LANGUAGE_SWITCHING_TH;
+        } else if (isLanguage.equals("rVI")) {
+            // 如果是越南语
+            return BaseURLs.LANGUAGE_SWITCHING_VI;
+        }
+        return null;
     }
 }

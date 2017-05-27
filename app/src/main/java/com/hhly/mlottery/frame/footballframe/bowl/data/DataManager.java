@@ -2,7 +2,7 @@ package com.hhly.mlottery.frame.footballframe.bowl.data;
 
 import android.content.Context;
 
-import com.hhly.mlottery.frame.footballframe.bowl.data.repository.BasketIndexReposeitory;
+import com.hhly.mlottery.frame.footballframe.bowl.data.repository.BowlReposeitory;
 
 import javax.inject.Inject;
 
@@ -16,7 +16,7 @@ import javax.inject.Inject;
 public class DataManager {
 
     @Inject
-    public BasketIndexReposeitory basketIndexReposeitory;   //在DataModule中已经被注入，dataManager里面可以直接使用
+    public BowlReposeitory bowlReposeitory;   //在DataModule中已经被注入，dataManager里面可以直接使用
 
     public DataManager(Context context, String apiHostUrl, String timeZone, String lang) {
 

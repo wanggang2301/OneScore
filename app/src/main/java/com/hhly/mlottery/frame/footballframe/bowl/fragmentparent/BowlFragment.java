@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame.footballframe.bowl;
+package com.hhly.mlottery.frame.footballframe.bowl.fragmentparent;
 
 
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import android.widget.RadioGroup;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
-import com.hhly.mlottery.frame.footballframe.bowl.child.BowlChildFragment;
+import com.hhly.mlottery.frame.footballframe.bowl.fragmentchild.BowlChildFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +33,10 @@ public class BowlFragment extends BaseWebSocketFragment {
     private static final int ASIZE = 2;
     private static final int CORNER = 3;
 
-    private static final String OUER_TYPE = "2";
-    private static final String ALET_TYPE = "1";
-    private static final String ASIZE_TYPE = "3";
-    private static final String CORNER_TYPE = "4"; //暂定为四
+    private static final int OUER_TYPE = 2;
+    private static final int ALET_TYPE = 1;
+    private static final int ASIZE_TYPE = 3;
+    private static final int CORNER_TYPE = 4; //暂定为四
 
     @BindView(R.id.bowl_radio_group)
     RadioGroup bowlRadioGroup;
@@ -112,7 +112,7 @@ public class BowlFragment extends BaseWebSocketFragment {
 
 
     private void switchFragment(int position) {
-        fragmentManager = getFragmentManager();
+        fragmentManager = getChildFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.bowl_fl, fragments.get(position));
         fragmentTransaction.commit();

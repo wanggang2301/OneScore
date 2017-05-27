@@ -4,13 +4,7 @@ import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
 import com.hhly.mlottery.frame.cpifrag.basketballtask.data.GetTaskSource;
 import com.hhly.mlottery.frame.cpifrag.basketballtask.data.IGetTaskSource;
 import com.hhly.mlottery.frame.cpifrag.basketballtask.data.OnTaskDataListener;
-import com.hhly.mlottery.frame.footballframe.bowl.data.bean.BasketIndex;
-import com.hhly.mlottery.frame.footballframe.bowl.data.repository.BasketIndexReposeitory;
 import com.hhly.mlottery.mvp.BasePresenter;
-import com.hhly.mlottery.util.L;
-
-import rx.Observable;
-import rx.Subscriber;
 
 /**
  * @author: Wangg
@@ -26,13 +20,8 @@ public class BasketBallOddPresenter extends BasePresenter<BasketBallContract.Odd
 
     private BasketIndexBean basketIndexBean;
 
-    private BasketIndexReposeitory basketIndexReposeitory;
-
-
     public BasketBallOddPresenter(BasketBallContract.OddView view) {
         super(view);
-        basketIndexReposeitory = mDataManager.basketIndexReposeitory;
-
     }
 
 
@@ -66,28 +55,6 @@ public class BasketBallOddPresenter extends BasePresenter<BasketBallContract.Odd
     @Override
     public void showLoad() {
         mView.showLoadView();
-
-        Observable<BasketIndex> observable = basketIndexReposeitory.getIndexList("", "asiaLet", "1");
-
-        addSubscription(observable, new Subscriber<BasketIndex>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(BasketIndex basketIndex) {
-
-                L.d("xxccvvbb", "______" + basketIndex.getData().getAllInfo().get(0).getHomeTeam());
-
-            }
-        });
-
 
     }
 

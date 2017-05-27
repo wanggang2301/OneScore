@@ -4,8 +4,8 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.hhly.mlottery.frame.footballframe.bowl.data.api.BasketIndexApi;
-import com.hhly.mlottery.frame.footballframe.bowl.data.repository.BasketIndexReposeitory;
+import com.hhly.mlottery.frame.footballframe.bowl.data.api.BowlApi;
+import com.hhly.mlottery.frame.footballframe.bowl.data.repository.BowlReposeitory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -81,15 +81,15 @@ public class DataModule {
 
     @Provides
     @Singleton
-    BasketIndexApi provideBasketIndexApi(Retrofit retrofit) {
-        return retrofit.create(BasketIndexApi.class);
+    BowlApi provideBasketIndexApi(Retrofit retrofit) {
+        return retrofit.create(BowlApi.class);
     }
 
 
     @Provides
     @Singleton
-    BasketIndexReposeitory provideBasketIndexReposeitory(BasketIndexApi basketIndexApi) {
-        return new BasketIndexReposeitory(basketIndexApi);
+    BowlReposeitory provideBasketIndexReposeitory(BowlApi basketIndexApi) {
+        return new BowlReposeitory(basketIndexApi);
     }
 
 }

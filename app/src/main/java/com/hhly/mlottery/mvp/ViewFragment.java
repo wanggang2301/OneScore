@@ -19,6 +19,8 @@ public abstract class ViewFragment<P extends IPresenter> extends MvpBaseFragment
         if(mPresenter!=null) mPresenter.detachView();
     }
 
+
+
     /**
      * 此处可以进行一些emptyView的配置。并进行处理
      */
