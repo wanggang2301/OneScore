@@ -9,6 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
@@ -19,6 +22,7 @@ import com.hhly.mlottery.util.L;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,6 +52,20 @@ public class BowlChildFragment extends ViewFragment<IBowlChildContract.IBowlChil
     TextView handicapFirst;
     @BindView(R.id.guest_first)
     TextView guestFirst;
+    @BindView(R.id.fl_loading)
+    FrameLayout flLoading;
+    @BindView(R.id.reLoading)
+    TextView reLoading;
+    @BindView(R.id.fl_networkError)
+    FrameLayout flNetworkError;
+    @BindView(R.id.fl_nodata)
+    FrameLayout flNodata;
+    @BindView(R.id.ll_context)
+    LinearLayout llContext;
+    @BindView(R.id.handle_exception)
+    LinearLayout handleException;
+    @BindView(R.id.score)
+    ImageView score;
 
     private String mThirdId;
     private int oddType;
@@ -173,12 +191,21 @@ public class BowlChildFragment extends ViewFragment<IBowlChildContract.IBowlChil
 
     @Override
     public void loading() { //loading的view
-
+        llContext.setVisibility(View.GONE);
+        handleException.setVisibility(View.VISIBLE);
+        flLoading.setVisibility(View.VISIBLE);
+        flNetworkError.setVisibility(View.GONE);
+        flNodata.setVisibility(View.GONE);
     }
 
 
     @Override
     public void responseData() {
+        llContext.setVisibility(View.VISIBLE);
+        handleException.setVisibility(View.GONE);
+        flLoading.setVisibility(View.GONE);
+        flNetworkError.setVisibility(View.GONE);
+        flNodata.setVisibility(View.GONE);
 
         bowlBean = mPresenter.getBowlBean();
 
@@ -196,10 +223,29 @@ public class BowlChildFragment extends ViewFragment<IBowlChildContract.IBowlChil
 
     @Override
     public void onError() {
+        llContext.setVisibility(View.GONE);
+        handleException.setVisibility(View.VISIBLE);
+        flLoading.setVisibility(View.GONE);
+        flNetworkError.setVisibility(View.VISIBLE);
+        flNodata.setVisibility(View.GONE);
 
+    }
+
+    @Override
+    public void noData() {
+        llContext.setVisibility(View.GONE);
+        handleException.setVisibility(View.VISIBLE);
+        flLoading.setVisibility(View.GONE);
+        flNetworkError.setVisibility(View.GONE);
+        flNodata.setVisibility(View.VISIBLE);
     }
 
     private boolean isNULLOrEmpty(String s) {
         return s == null || "".equals(s);
+    }
+
+    @OnClick(R.id.reLoading)
+    public void onClick() {
+        mPresenter.requestData(mThirdId, String.valueOf(oddType));
     }
 }

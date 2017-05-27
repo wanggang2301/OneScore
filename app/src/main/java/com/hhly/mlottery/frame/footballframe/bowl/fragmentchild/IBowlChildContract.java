@@ -19,6 +19,8 @@ public interface IBowlChildContract {
 
         void responseData();
 
+        void noData();
+
 
     }
 
