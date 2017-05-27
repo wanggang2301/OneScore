@@ -1,29 +1,35 @@
 package com.hhly.mlottery.mvp;
 
+import com.hhly.mlottery.frame.footballframe.bowl.data.DataManager;
+
 /**
  * 描    述：Presenter 基类
  * 作    者：mady@13322.com
  * 时    间：2017/3/16
  */
-public abstract class BasePresenter<V extends IView>implements IPresenter<V> {
+public abstract class BasePresenter<V extends IView> implements IPresenter<V> {
 
-    protected final String TAG=getClass().getSimpleName();
+    protected final String TAG = getClass().getSimpleName();
     protected V mView; //子类presenter可以接调用
 
-    public static String NODATA="1";
-    public static String NETERROR="2";
+    public static String NODATA = "1";
+    public static String NETERROR = "2";
 
-    private BasePresenter(){
+    protected DataManager mDataManager;
+
+    private BasePresenter() {
         // dataManagerr配置
+        //mDataManager  = MyApp.get
     }
-    public BasePresenter(V view){
+
+    public BasePresenter(V view) {
         this();
         attachView(view);
     }
 
     @Override
     public void attachView(V view) {
-        mView=view;
+        mView = view;
     }
 
     @Override

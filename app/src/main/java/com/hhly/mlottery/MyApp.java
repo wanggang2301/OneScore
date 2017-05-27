@@ -10,6 +10,8 @@ import android.content.res.Resources;
 import android.support.multidex.MultiDex;
 import android.util.DisplayMetrics;
 
+import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.frame.footballframe.bowl.data.DataManager;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CrashException;
 import com.hhly.mlottery.util.CyUtils;
@@ -21,6 +23,8 @@ import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.tendcloud.tenddata.TCAgent;
 
 import java.util.Locale;
+
+import javax.inject.Inject;
 
 import cn.finalteam.okhttpfinal.OkHttpFinal;
 import cn.finalteam.okhttpfinal.OkHttpFinalConfiguration;
@@ -45,9 +49,14 @@ public class MyApp extends Application {
     public static int versionCode;// 当前版本Code
     public static String channelNumber;// 当前版本渠道号
 
+    @Inject
+    DataManager mDataManager;
+
     @Override
     public void onCreate() {
         appcontext = this;
+
+        L.d("myapp","kkkkk");
 
         // 子线程中做初始化操作，提升APP打开速度
         new Thread() {
@@ -96,12 +105,36 @@ public class MyApp extends Application {
                 // 获取当前apk版本信息
                 getVersion();
 
+                initDagger();
+
             }
         }.start();
 
         super.onCreate();
     }
 
+    private void initDagger() {
+
+        DaggerMyAppComponent.builder()
+                .myAppModule(new MyAppModule(this, BaseURLs.URL_MVP_API_HOST, AppConstants.timeZone + "", VolleyContentFast.returenLanguage()))
+                .build()
+                .inject(this);
+
+    }
+
+
+    /**
+     * 获取 DataManager
+     *
+     * @return dataManager
+     */
+    public static DataManager getDataManager() {
+        return get().mDataManager;
+    }
+
+    public static MyApp get() {
+        return appcontext;
+    }
 
     /**
      * 设置时区
