@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,6 +18,8 @@ import com.hhly.mlottery.adapter.football.BottomOddsAdapter;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsDetails;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.util.L;
+
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,8 +65,7 @@ public class BowlChildFragment extends ViewFragment<IBowlChildContract.IBowlChil
     LinearLayout llContext;
     @BindView(R.id.handle_exception)
     LinearLayout handleException;
-    @BindView(R.id.score)
-    ImageView score;
+
 
     private String mThirdId;
     private int oddType;
@@ -90,7 +90,6 @@ public class BowlChildFragment extends ViewFragment<IBowlChildContract.IBowlChil
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
             mThirdId = getArguments().getString(THIRDID);
             oddType = getArguments().getInt(ODD_TYPE);
@@ -99,41 +98,27 @@ public class BowlChildFragment extends ViewFragment<IBowlChildContract.IBowlChil
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // mPresenter.requestData(mThirdId, oddType);
-
-
         View view = inflater.inflate(R.layout.fragment_bowl_child, container, false);
         ButterKnife.bind(this, view);
         context = getActivity();
-
         mPresenter = new BowlChildPresenter(this);
-        mPresenter.requestData("3458732", String.valueOf(oddType));
-
-
+        mPresenter.requestData(mThirdId, String.valueOf(oddType));
         return view;
     }
 
     private void initView() {
-
-
         switch (oddType) {
             case OUER_TYPE:
-
                 setTextViewText(getResources().getStringArray(R.array.bowl_eur));
                 break;
-
             case ALET_TYPE:
                 setTextViewText(getResources().getStringArray(R.array.bowl_alet));
-
                 break;
-
             case ASIZE_TYPE:
                 setTextViewText(getResources().getStringArray(R.array.bowl_asize));
-
                 break;
-
             case CORNER_TYPE:
-                //setTextViewText();
+                setTextViewText(getResources().getStringArray(R.array.bowl_corner));
 
                 break;
         }
@@ -178,9 +163,9 @@ public class BowlChildFragment extends ViewFragment<IBowlChildContract.IBowlChil
 
 
     private void setTextViewText(String[] names) {
-        hostFirst.setText("111");
-        handicapFirst.setText("111");
-        guestFirst.setText("111");
+        hostFirst.setText(String.valueOf(new Random().nextInt(20)));
+        handicapFirst.setText(String.valueOf(new Random().nextInt(20)));
+        guestFirst.setText(String.valueOf(new Random().nextInt(20)));
 
         hostTxt.setText(names[0]);
         handicapTxt.setText(names[1]);

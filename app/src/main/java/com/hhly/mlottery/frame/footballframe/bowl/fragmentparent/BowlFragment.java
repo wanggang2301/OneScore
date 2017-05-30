@@ -103,7 +103,7 @@ public class BowlFragment extends BaseWebSocketFragment {
                         break;
                 }
 
-                switchFragment(currenIndex);
+                switchContent(currentFragment, fragments.get(currenIndex));
             }
         });
 
@@ -114,11 +114,23 @@ public class BowlFragment extends BaseWebSocketFragment {
     private void switchFragment(int position) {
         fragmentManager = getChildFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.bowl_fl, fragments.get(position));
+        fragmentTransaction.add(R.id.bowl_fl, fragments.get(position));
         fragmentTransaction.commit();
+        currentFragment = fragments.get(OUER);
+    }
 
-        //fragmentManager = getChildFragmentManager();
-        //currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.bowl_fl, currentFragment, fragments.get(position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, true);
+
+    private void switchContent(Fragment from, Fragment to) {
+        if (currentFragment != to) {
+            currentFragment = to;
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+            if (!to.isAdded()) {    // 先判断是否被add过
+                fragmentTransaction.hide(from).add(R.id.bowl_fl, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+            } else {
+                fragmentTransaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
+            }
+        }
     }
 
     @Override

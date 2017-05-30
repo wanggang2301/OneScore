@@ -63,7 +63,7 @@ public class BottomOddsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         } else {
             hold.item_score.setText(list.get(position).getScore());
-            hold.item_score.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+            hold.item_score.setTextColor(mContext.getResources().getColor(R.color.home_logo_color));
             hold.item_score.setBackgroundResource(R.color.white);
         }
 

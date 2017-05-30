@@ -1761,4 +1761,8 @@
     <string name="start_dianqiu">开始点球大战</string>
     <string name="start_addtime">开始加时赛</string>
 
+    <string name="bow_corner_left">高于</string>
+    <string name="bow_corner_middle">即时盘</string>
+    <string name="bow_corner_right">低于</string>
+
 </resources>

@@ -17,10 +17,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp">
 
             <TextView
                 android:layout_width="0dp"
@@ -28,7 +28,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/chupan"
-                android:textColor="@color/content_txt_black"
+                android:textColor="@color/week"
                 android:textSize="@dimen/text_size_13" />
 
             <LinearLayout
@@ -49,7 +49,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="-"
-                android:textColor="@color/content_txt_black"
+                android:textColor="@color/week"
                 android:textSize="@dimen/text_size_13" />
 
             <LinearLayout
@@ -67,7 +67,7 @@
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:text="-"
-                    android:textColor="@color/content_txt_black"
+                    android:textColor="@color/week"
                     android:textSize="@dimen/text_size_13" />
             </LinearLayout>
 
@@ -78,26 +78,33 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="-"
-                android:textColor="@color/content_txt_black"
+                android:textColor="@color/week"
                 android:textSize="@dimen/text_size_13" />
 
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/bot" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
+            android:background="@color/plate_title_bg"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp">
 
-            <ImageView
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:src="@mipmap/advice_like_red" />
+                android:text="@string/foot_details_time"
+                android:textColor="@color/week"
+                android:textSize="@dimen/text_size_13" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -106,14 +113,16 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <ImageView
+                <TextView
                     android:id="@+id/score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
-                    android:src="@mipmap/corner" />
+                    android:text="@string/foot_details_score"
+                    android:textColor="@color/week"
+                    android:textSize="@dimen/text_size_13" />
             </LinearLayout>
 
 
@@ -124,7 +133,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="高于"
-                android:textColor="@color/content_txt_black"
+
+                android:textColor="@color/week"
                 android:textSize="@dimen/text_size_13" />
 
             <LinearLayout
@@ -142,7 +152,7 @@
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:text="即时盘"
-                    android:textColor="@color/content_txt_black"
+                    android:textColor="@color/week"
                     android:textSize="@dimen/text_size_13" />
             </LinearLayout>
 
@@ -153,9 +163,14 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="低于"
-                android:textColor="@color/content_txt_black"
+                android:textColor="@color/week"
                 android:textSize="@dimen/text_size_13" />
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/bot" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"

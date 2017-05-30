@@ -47,18 +47,18 @@ public class BowlChildPresenter extends BasePresenter<IBowlChildContract.IBowlCh
             @Override
             public void onNext(BottomOddsDetails bowlBean) {
 
-                if (!"200".equals(bowlBean.getResult())) {
+                if (!"200".equals(bowlBean.getResult())) {//请求不为200 error处理
                     mView.onError();
                     return;
                 }
 
-                if (!CollectionUtils.notEmpty(bowlBean.getMatchoddlist())) {
+                if (!CollectionUtils.notEmpty(bowlBean.getMatchoddlist())) { //请求为空 nodata处理
                     mView.noData();
                     return;
                 }
 
                 bowlBeanList = bowlBean;
-                mView.responseData();
+                mView.responseData(); //请求成功处理
 
                 // L.d("xxccvvbb", "______" + basketIndex.getData().getAllInfo().get(0).getHomeTeam());
             }

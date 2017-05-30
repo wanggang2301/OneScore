@@ -200,5 +200,11 @@
         <item>@string/foot_odds_asize_right</item>
     </string-array>
 
+    <string-array name="bowl_corner">
+        <item>@string/bow_corner_left</item>
+        <item>@string/bow_corner_middle</item>
+        <item>@string/bow_corner_right</item>
+    </string-array>
+
 
 </resources>
