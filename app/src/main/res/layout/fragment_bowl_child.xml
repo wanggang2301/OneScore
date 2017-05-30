@@ -80,7 +80,6 @@
                 android:text="-"
                 android:textColor="@color/week"
                 android:textSize="@dimen/text_size_13" />
-
         </LinearLayout>
 
         <View
