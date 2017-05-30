@@ -110,7 +110,6 @@ public class BowlFragment extends BaseWebSocketFragment {
         switchFragment(OUER);
     }
 
-
     private void switchFragment(int position) {
         fragmentManager = getChildFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
