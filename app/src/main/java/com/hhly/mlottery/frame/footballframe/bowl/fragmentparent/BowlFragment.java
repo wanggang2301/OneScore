@@ -46,6 +46,10 @@ public class BowlFragment extends BaseWebSocketFragment {
     private Fragment currentFragment;
     private String mThirId;
 
+    private boolean is_ouer = false;
+    private boolean is_alet = false;
+    private boolean is_asize = false;
+    private boolean is_corner = false;
 
     public static BowlFragment newInstance(String thirdId) {
         BowlFragment bowlFragment = new BowlFragment();
@@ -104,10 +108,29 @@ public class BowlFragment extends BaseWebSocketFragment {
                 }
 
                 switchContent(currentFragment, fragments.get(currenIndex));
+                setIsFragmentInit(currenIndex);
             }
         });
 
         switchFragment(OUER);
+        is_ouer = true;
+    }
+
+    private void setIsFragmentInit(int index) {
+        switch (index) {
+            case OUER:
+                is_ouer = true;
+                break;
+            case ALET:
+                is_alet = true;
+                break;
+            case ASIZE:
+                is_asize = true;
+                break;
+            case CORNER:
+                is_corner = true;
+                break;
+        }
     }
 
     private void switchFragment(int position) {
