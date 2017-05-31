@@ -185,11 +185,8 @@ public class BowlFragment extends BaseWebSocketFragment {
 
             Log.d("bowlurl", "=======赔率推送=====" + ws_json);
 
-
             //更新赔率
-
             updateOdds(webSocketRollballOdd);
-
         }
     };
 
