@@ -17,10 +17,15 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.BottomOddsAdapter;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsDetails;
+import com.hhly.mlottery.bean.footballDetails.BottomOddsDetailsItem;
+import com.hhly.mlottery.bean.footballDetails.BottomOddsItem;
 import com.hhly.mlottery.bean.footballDetails.FirstOdd;
+import com.hhly.mlottery.bean.footballDetails.WebSocketRollballOdd;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.util.HandicapUtils;
 import com.hhly.mlottery.util.L;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,6 +79,8 @@ public class BowlChildFragment extends ViewFragment<IBowlChildContract.IBowlChil
     private BottomOddsAdapter mAdapter;
     private Context context;
     private Activity mActivity;
+
+    private List<BottomOddsDetailsItem> mBottomOddsDetailsItemList;
 
 
     public static BowlChildFragment newInstance(String thirdId, int oddType) {
@@ -152,12 +159,74 @@ public class BowlChildFragment extends ViewFragment<IBowlChildContract.IBowlChil
         flNetworkError.setVisibility(View.GONE);
         flNodata.setVisibility(View.GONE);
         bowlBean = mPresenter.getBowlBean();
+
+        mBottomOddsDetailsItemList = bowlBean.getMatchoddlist();
+
         setFirstOdd(bowlBean.getFirst());
-        mAdapter = new BottomOddsAdapter(context, bowlBean.getMatchoddlist(), oddType);
+        mAdapter = new BottomOddsAdapter(context, mBottomOddsDetailsItemList, oddType);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mAdapter);
 
         L.d("bowl", bowlBean.getResult() + "");
+    }
+
+    public void updateFragmentOddList(WebSocketRollballOdd webSocketRollballOdd) {
+        mBottomOddsDetailsItemList.add(0, setLiveOdds(mBottomOddsDetailsItemList.get(0), webSocketRollballOdd));
+        mAdapter.notifyDataSetChanged();
+    }
+
+
+    private synchronized BottomOddsDetailsItem setLiveOdds(BottomOddsDetailsItem b, WebSocketRollballOdd webodds) {
+
+        BottomOddsDetailsItem destination = new BottomOddsDetailsItem();
+
+        BottomOddsItem bottomOddsItem = new BottomOddsItem();
+
+        if (isNULLOrEmpty(webodds.getLeft()) || isNULLOrEmpty(webodds.getMiddle()) || isNULLOrEmpty(webodds.getRight()) || isNULLOrEmpty(b.getOdd().getLeft()) || isNULLOrEmpty(b.getOdd().getMiddle()) || isNULLOrEmpty(b.getOdd().getRight())) {
+            bottomOddsItem.setLeft(webodds.getLeft());
+            bottomOddsItem.setMiddle(webodds.getMiddle());
+            bottomOddsItem.setRight(webodds.getRight());
+            bottomOddsItem.setLeftUp("0");
+            bottomOddsItem.setMiddleUp("0");
+            bottomOddsItem.setRightUp("0");
+        } else {
+
+            if (Float.parseFloat(b.getOdd().getLeft()) > Float.parseFloat(webodds.getLeft())) {
+                bottomOddsItem.setLeftUp("-1");
+            } else if (Float.parseFloat(b.getOdd().getLeft()) < Float.parseFloat(webodds.getLeft())) {
+                bottomOddsItem.setLeftUp("1");
+            } else {
+                bottomOddsItem.setLeftUp("0");
+            }
+
+            bottomOddsItem.setLeft(webodds.getLeft());
+
+            if (Float.parseFloat(b.getOdd().getMiddle()) > Float.parseFloat(webodds.getMiddle())) {
+                bottomOddsItem.setMiddleUp("-1");  //降
+            } else if (Float.parseFloat(b.getOdd().getMiddle()) < Float.parseFloat(webodds.getMiddle())) {
+                bottomOddsItem.setMiddleUp("1");
+            } else {
+                bottomOddsItem.setMiddleUp("0");
+            }
+
+            bottomOddsItem.setMiddle(webodds.getMiddle());
+
+            if (Float.parseFloat(b.getOdd().getRight()) > Float.parseFloat(webodds.getRight())) {
+                bottomOddsItem.setRightUp("-1");  //降
+            } else if (Float.parseFloat(b.getOdd().getRight()) < Float.parseFloat(webodds.getRight())) {
+                bottomOddsItem.setRightUp("1");
+            } else {
+                bottomOddsItem.setRightUp("0");
+            }
+
+            bottomOddsItem.setRight(webodds.getRight());
+        }
+
+        destination.setTime("90'");
+        destination.setScore("5-4");
+        destination.setOdd(bottomOddsItem);
+
+        return destination;
     }
 
     private void setFirstOdd(FirstOdd firstOdd) {

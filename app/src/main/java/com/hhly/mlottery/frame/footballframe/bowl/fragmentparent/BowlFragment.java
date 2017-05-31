@@ -2,6 +2,8 @@ package com.hhly.mlottery.frame.footballframe.bowl.fragmentparent;
 
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,9 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
+import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
+import com.hhly.mlottery.bean.footballDetails.WebSocketRollballOdd;
 import com.hhly.mlottery.frame.footballframe.bowl.fragmentchild.BowlChildFragment;
+import com.hhly.mlottery.util.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -142,7 +147,6 @@ public class BowlFragment extends BaseWebSocketFragment {
     }
 
 
-
     private void switchContent(Fragment from, Fragment to) {
         if (currentFragment != to) {
             currentFragment = to;
@@ -158,8 +162,63 @@ public class BowlFragment extends BaseWebSocketFragment {
 
     @Override
     protected void onTextResult(String text) {
-
+        Message msg = Message.obtain();
+        msg.obj = text;
+        mSocketHandler.sendMessage(msg);
     }
+
+
+    Handler mSocketHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            //时间推送
+
+            String ws_json = (String) msg.obj;
+            WebSocketRollballOdd webSocketRollballOdd = null;
+            try {
+                webSocketRollballOdd = JSON.parseObject(ws_json, WebSocketRollballOdd.class);
+            } catch (Exception e) {
+                ws_json = ws_json.substring(0, ws_json.length() - 1);
+                webSocketRollballOdd = JSON.parseObject(ws_json, WebSocketRollballOdd.class);
+            }
+
+            L.d(TAG, "=======赔率推送=====" + ws_json);
+            L.d(TAG, "=======赔率推送=====" + webSocketRollballOdd.getLeft() + "==" + webSocketRollballOdd.getOddType());
+
+            //更新赔率
+
+            updateOdds(webSocketRollballOdd);
+
+        }
+    };
+
+
+    private void updateOdds(WebSocketRollballOdd webSocketRollballOdd) {
+        switch (Integer.parseInt(webSocketRollballOdd.getOddType())) {
+            case OUER_TYPE:
+                if (is_ouer) {
+                    ((BowlChildFragment) fragments.get(OUER)).updateFragmentOddList(webSocketRollballOdd);
+                }
+                break;
+            case ALET_TYPE:
+                if (is_alet) {
+                    ((BowlChildFragment) fragments.get(ALET)).updateFragmentOddList(webSocketRollballOdd);
+                }
+                break;
+            case ASIZE_TYPE:
+                if (is_asize) {
+                    ((BowlChildFragment) fragments.get(ASIZE)).updateFragmentOddList(webSocketRollballOdd);
+                }
+                break;
+            case CORNER_TYPE:
+                if (is_corner) {
+                    ((BowlChildFragment) fragments.get(CORNER)).updateFragmentOddList(webSocketRollballOdd);
+                }
+                break;
+        }
+    }
+
 
     @Override
     protected void onConnectFail() {
