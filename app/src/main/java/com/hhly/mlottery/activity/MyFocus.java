@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.frame.footballframe.bowl.fragmentparent.MyFocusFragment;
+import com.hhly.mlottery.frame.footballframe.mvptask.myfocus.MyFocusFragment;
 
 /**
  * @author: Wangg

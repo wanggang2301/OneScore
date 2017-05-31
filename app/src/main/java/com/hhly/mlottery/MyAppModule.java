@@ -1,7 +1,7 @@
 package com.hhly.mlottery;
 
 
-import com.hhly.mlottery.frame.footballframe.bowl.data.DataManager;
+import com.hhly.mlottery.frame.footballframe.mvptask.data.DataManager;
 
 import javax.inject.Singleton;
 

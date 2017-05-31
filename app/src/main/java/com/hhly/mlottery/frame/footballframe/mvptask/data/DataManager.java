@@ -1,8 +1,8 @@
-package com.hhly.mlottery.frame.footballframe.bowl.data;
+package com.hhly.mlottery.frame.footballframe.mvptask.data;
 
 import android.content.Context;
 
-import com.hhly.mlottery.frame.footballframe.bowl.data.repository.BowlReposeitory;
+import com.hhly.mlottery.frame.footballframe.mvptask.data.repository.BowlReposeitory;
 
 import javax.inject.Inject;
 

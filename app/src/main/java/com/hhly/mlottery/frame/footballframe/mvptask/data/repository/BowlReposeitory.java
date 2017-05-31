@@ -1,8 +1,8 @@
-package com.hhly.mlottery.frame.footballframe.bowl.data.repository;
+package com.hhly.mlottery.frame.footballframe.mvptask.data.repository;
 
 
 import com.hhly.mlottery.bean.footballDetails.BottomOddsDetails;
-import com.hhly.mlottery.frame.footballframe.bowl.data.api.BowlApi;
+import com.hhly.mlottery.frame.footballframe.mvptask.data.api.BowlApi;
 
 import rx.Observable;
 

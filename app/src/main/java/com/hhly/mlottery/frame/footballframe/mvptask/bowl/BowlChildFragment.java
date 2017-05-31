@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame.footballframe.bowl.fragmentchild;
+package com.hhly.mlottery.frame.footballframe.mvptask.bowl;
 
 
 import android.app.Activity;

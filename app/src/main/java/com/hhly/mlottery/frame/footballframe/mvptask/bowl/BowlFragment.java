@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame.footballframe.bowl.fragmentparent;
+package com.hhly.mlottery.frame.footballframe.mvptask.bowl;
 
 
 import android.os.Bundle;
@@ -20,7 +20,6 @@ import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.footballDetails.WebSocketRollballOdd;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.BaseUserTopics;
-import com.hhly.mlottery.frame.footballframe.bowl.fragmentchild.BowlChildFragment;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame.footballframe.bowl.data;
+package com.hhly.mlottery.frame.footballframe.mvptask.data;
 
 import javax.inject.Singleton;
 

@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame.footballframe.bowl.data.bean;
+package com.hhly.mlottery.frame.footballframe.mvptask.data.bean;
 
 import java.util.List;
 

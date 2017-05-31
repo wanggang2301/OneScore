@@ -1,7 +1,7 @@
 package com.hhly.mlottery.mvp;
 
 import com.hhly.mlottery.MyApp;
-import com.hhly.mlottery.frame.footballframe.bowl.data.DataManager;
+import com.hhly.mlottery.frame.footballframe.mvptask.data.DataManager;
 
 import rx.Observable;
 import rx.Subscriber;

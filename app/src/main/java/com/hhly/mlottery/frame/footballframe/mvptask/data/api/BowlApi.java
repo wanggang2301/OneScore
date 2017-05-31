@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame.footballframe.bowl.data.api;
+package com.hhly.mlottery.frame.footballframe.mvptask.data.api;
 
 
 import com.hhly.mlottery.bean.footballDetails.BottomOddsDetails;
