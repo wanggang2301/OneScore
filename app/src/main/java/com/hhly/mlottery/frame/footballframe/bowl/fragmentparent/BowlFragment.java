@@ -138,9 +138,7 @@ public class BowlFragment extends BaseWebSocketFragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.bowl_fl, fragments.get(position));
         fragmentTransaction.commit();
-
         currentFragment = fragments.get(OUER);
-
     }
 
 

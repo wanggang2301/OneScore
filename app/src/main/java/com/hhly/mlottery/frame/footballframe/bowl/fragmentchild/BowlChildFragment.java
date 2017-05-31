@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.footballframe.bowl.fragmentchild;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,10 +17,10 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.BottomOddsAdapter;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsDetails;
+import com.hhly.mlottery.bean.footballDetails.FirstOdd;
 import com.hhly.mlottery.mvp.ViewFragment;
+import com.hhly.mlottery.util.HandicapUtils;
 import com.hhly.mlottery.util.L;
-
-import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,6 +73,7 @@ public class BowlChildFragment extends ViewFragment<IBowlChildContract.IBowlChil
     private BottomOddsDetails bowlBean;
     private BottomOddsAdapter mAdapter;
     private Context context;
+    private Activity mActivity;
 
 
     public static BowlChildFragment newInstance(String thirdId, int oddType) {
@@ -100,7 +102,8 @@ public class BowlChildFragment extends ViewFragment<IBowlChildContract.IBowlChil
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bowl_child, container, false);
         ButterKnife.bind(this, view);
-        context = getActivity();
+        context = mActivity;
+        initView();
         mPresenter = new BowlChildPresenter(this);
         mPresenter.requestData(mThirdId, String.valueOf(oddType));
         return view;
@@ -109,68 +112,25 @@ public class BowlChildFragment extends ViewFragment<IBowlChildContract.IBowlChil
     private void initView() {
         switch (oddType) {
             case OUER_TYPE:
-                setTextViewText(getResources().getStringArray(R.array.bowl_eur));
+                setTitleTxt(getResources().getStringArray(R.array.bowl_eur));
                 break;
             case ALET_TYPE:
-                setTextViewText(getResources().getStringArray(R.array.bowl_alet));
+                setTitleTxt(getResources().getStringArray(R.array.bowl_alet));
                 break;
             case ASIZE_TYPE:
-                setTextViewText(getResources().getStringArray(R.array.bowl_asize));
+                setTitleTxt(getResources().getStringArray(R.array.bowl_asize));
                 break;
             case CORNER_TYPE:
-                setTextViewText(getResources().getStringArray(R.array.bowl_corner));
-
+                setTitleTxt(getResources().getStringArray(R.array.bowl_corner));
                 break;
         }
-/*
-        if (mType == ALET) {
-            odd_title.setText(context.getResources().getString(R.string.alet_first));
-            odds_left.setText(context.getResources().getString(R.string.foot_odds_alet_left));
-            odds_middle.setText(context.getResources().getString(R.string.foot_odds_alet_middle));
-            odds_right.setText(context.getResources().getString(R.string.foot_odds_alet_right));
-
-            if (isNULLOrEmpty(mBottomOddsItem.getLeft()) || isNULLOrEmpty(mBottomOddsItem.getMiddle()) || isNULLOrEmpty(mBottomOddsItem.getRight())) {
-                first_odd.setText("");
-            } else {
-                first_odd.setText(" " + mBottomOddsItem.getLeft() + " " + HandicapUtils.changeHandicap(mBottomOddsItem.getMiddle()) + " " + mBottomOddsItem.getRight());
-            }
-
-        } else if (mType == ASIZE) {
-            odd_title.setText(context.getResources().getString(R.string.asize_first));
-            odds_left.setText(context.getResources().getString(R.string.foot_odds_asize_left));
-            odds_middle.setText(context.getResources().getString(R.string.foot_odds_asize_middle));
-            odds_right.setText(context.getResources().getString(R.string.foot_odds_asize_right));
-
-            if (isNULLOrEmpty(mBottomOddsItem.getLeft()) || isNULLOrEmpty(mBottomOddsItem.getMiddle()) || isNULLOrEmpty(mBottomOddsItem.getRight())) {
-                first_odd.setText("");
-            } else {
-                first_odd.setText(" " + mBottomOddsItem.getLeft() + " " + HandicapUtils.changeHandicapByBigLittleBall(mBottomOddsItem.getMiddle()) + " " + mBottomOddsItem.getRight());
-            }
-        } else if (mType == EUR) {
-            odd_title.setText(context.getResources().getString(R.string.eu_first));
-            odds_left.setText(context.getResources().getString(R.string.foot_odds_eu_left));
-            odds_middle.setText(context.getResources().getString(R.string.foot_odds_eu_middle));
-            odds_right.setText(context.getResources().getString(R.string.foot_odds_eu_right));
-
-            if (isNULLOrEmpty(mBottomOddsItem.getLeft()) || isNULLOrEmpty(mBottomOddsItem.getMiddle()) || isNULLOrEmpty(mBottomOddsItem.getRight())) {
-                first_odd.setText("");
-            } else {
-                first_odd.setText(" " + mBottomOddsItem.getLeft() + " " + mBottomOddsItem.getMiddle() + " " + mBottomOddsItem.getRight());
-            }
-        }*/
-
     }
 
 
-    private void setTextViewText(String[] names) {
-        hostFirst.setText(String.valueOf(new Random().nextInt(20)));
-        handicapFirst.setText(String.valueOf(new Random().nextInt(20)));
-        guestFirst.setText(String.valueOf(new Random().nextInt(20)));
-
+    private void setTitleTxt(String[] names) {
         hostTxt.setText(names[0]);
         handicapTxt.setText(names[1]);
         guestTxt.setText(names[2]);
-
     }
 
 
@@ -191,19 +151,41 @@ public class BowlChildFragment extends ViewFragment<IBowlChildContract.IBowlChil
         flLoading.setVisibility(View.GONE);
         flNetworkError.setVisibility(View.GONE);
         flNodata.setVisibility(View.GONE);
-
         bowlBean = mPresenter.getBowlBean();
-
-        initView();
-
-
+        setFirstOdd(bowlBean.getFirst());
         mAdapter = new BottomOddsAdapter(context, bowlBean.getMatchoddlist(), oddType);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mAdapter);
 
         L.d("bowl", bowlBean.getResult() + "");
+    }
 
+    private void setFirstOdd(FirstOdd firstOdd) {
+        //初盘
+        if (isNULLOrEmpty(firstOdd.getLeft()) || isNULLOrEmpty(firstOdd.getMiddle()) || isNULLOrEmpty(firstOdd.getRight())) {
 
+            hostFirst.setText("-");
+            handicapFirst.setText("-");
+            guestFirst.setText("-");
+        } else {
+            hostFirst.setText(firstOdd.getLeft());
+            switch (oddType) {
+                case OUER_TYPE:
+                    handicapFirst.setText(firstOdd.getMiddle());
+                    break;
+                case ALET_TYPE:
+                    handicapFirst.setText(HandicapUtils.changeHandicap(firstOdd.getMiddle()));
+                    break;
+                case ASIZE_TYPE:
+                    handicapFirst.setText(HandicapUtils.changeHandicapByBigLittleBall(firstOdd.getMiddle()));
+                    break;
+                case CORNER_TYPE:
+                    handicapFirst.setText(firstOdd.getMiddle());
+                    break;
+            }
+
+            guestFirst.setText(firstOdd.getRight());
+        }
     }
 
     @Override
@@ -213,7 +195,6 @@ public class BowlChildFragment extends ViewFragment<IBowlChildContract.IBowlChil
         flLoading.setVisibility(View.GONE);
         flNetworkError.setVisibility(View.VISIBLE);
         flNodata.setVisibility(View.GONE);
-
     }
 
     @Override
@@ -232,5 +213,11 @@ public class BowlChildFragment extends ViewFragment<IBowlChildContract.IBowlChil
     @OnClick(R.id.reLoading)
     public void onClick() {
         mPresenter.requestData(mThirdId, String.valueOf(oddType));
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
     }
 }
