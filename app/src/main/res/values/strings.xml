@@ -1761,4 +1761,7 @@
     <string name="start_dianqiu">开始点球大战</string>
     <string name="start_addtime">开始加时赛</string>
 
+    <!--app动画直播-->
+    <string name="football_play_penalty_lose">点球罚失</string>
+
 </resources>

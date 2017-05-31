@@ -82,6 +82,29 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
     private GifImageView gif_home_corner_r;
     private GifImageView gif_home_corner_l;
 
+
+
+    private GifImageView gif_home_offside;
+    private GifImageView gif_guest_offside;
+    private GifImageView gif_home_offside_position;
+    private GifImageView gif_guest_offside_position;
+
+    private GifImageView gif_home_penalty;
+    private GifImageView gif_guest_penalty;
+    private GifImageView gif_home_penalty_lose;
+    private GifImageView gif_guest_penalty_lose;
+    private GifImageView gif_home_penalty_lose_position;
+    private GifImageView gif_guest_penalty_lose_position;
+
+    private GifImageView gif_home_r_or_y_position;
+    private GifImageView gif_guest_r_or_y_position;
+    private TextView tv_home_desc;
+    private TextView tv_guest_desc;
+    private ImageView iv_home_icon;
+    private ImageView iv_guest_icon;
+    private ImageView iv_home_r_or_y;
+    private ImageView iv_guest_r_or_y;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,6 +148,36 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
         gif_home_corner_l_position.setImageResource(R.mipmap.football_home_position_gif);
         gif_home_corner_r.setImageResource(R.mipmap.football_home_corner_right);
         gif_home_corner_l.setImageResource(R.mipmap.football_home_corner_left);
+
+
+        gif_home_offside.setImageResource(R.mipmap.football_home_offside_gif);
+        gif_guest_offside.setImageResource(R.mipmap.football_guest_offside_gif);
+        gif_home_offside_position.setImageResource(R.mipmap.football_home_position_gif);
+        gif_guest_offside_position.setImageResource(R.mipmap.football_guest_position_gif);
+
+        gif_home_penalty.setImageResource(R.mipmap.football_home_penalty_gif);
+        gif_guest_penalty.setImageResource(R.mipmap.football_guest_penalty_gif);
+        gif_home_penalty_lose.setImageResource(R.mipmap.football_home_penalty_lose_gif);
+        gif_guest_penalty_lose.setImageResource(R.mipmap.football_guest_penalty_lose_gif);
+        gif_home_penalty_lose_position.setImageResource(R.mipmap.football_home_position_gif);
+        gif_guest_penalty_lose_position.setImageResource(R.mipmap.football_guest_position_gif);
+
+        gif_home_r_or_y_position.setImageResource(R.mipmap.football_home_position_gif);
+        gif_guest_r_or_y_position.setImageResource(R.mipmap.football_guest_position_gif);
+        tv_home_desc.setText("红牌");
+        tv_guest_desc.setText("黄牌");
+        iv_home_icon.setVisibility(View.VISIBLE);
+        iv_guest_icon.setVisibility(View.VISIBLE);
+
+        iv_home_icon.setImageResource(R.mipmap.football_foul_whistle_left);
+        iv_guest_icon.setImageResource(R.mipmap.football_guest_substitution);
+
+        iv_home_r_or_y.setImageResource(R.mipmap.football_home_r);
+        iv_guest_r_or_y.setImageResource(R.mipmap.football_guest_y);
+
+        iv_home_r_or_y.setVisibility(View.GONE);
+        iv_guest_r_or_y.setVisibility(View.GONE);
+
     }
 
     private void initView() {
@@ -145,17 +198,17 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
         // 伤停补时
         iv_injured_addtime = (ImageView) findViewById(R.id.iv_injured_addtime);
         // 主队后场控球
-//        gif_home_control = (GifImageView) findViewById(R.id.gif_home_control);
-//        // 客队后场控球
-//        gif_guest_control = (GifImageView) findViewById(R.id.gif_guest_control);
-//        // 主队进攻
-//        gif_home_attack = (GifImageView) findViewById(R.id.gif_home_attack);
-//        // 客队进攻
-//        gif_guest_attack = (GifImageView) findViewById(R.id.gif_guest_attack);
-//        // 主队危险进攻
-//        gif_home_attack_danger = (GifImageView) findViewById(R.id.gif_home_attack_danger);
-//        // 客队危险进攻
-//        gif_guest_attack_danger = (GifImageView) findViewById(R.id.gif_guest_attack_danger);
+        gif_home_control = (GifImageView) findViewById(R.id.gif_home_control);
+        // 客队后场控球
+        gif_guest_control = (GifImageView) findViewById(R.id.gif_guest_control);
+        // 主队进攻
+        gif_home_attack = (GifImageView) findViewById(R.id.gif_home_attack);
+        // 客队进攻
+        gif_guest_attack = (GifImageView) findViewById(R.id.gif_guest_attack);
+        // 主队危险进攻
+        gif_home_attack_danger = (GifImageView) findViewById(R.id.gif_home_attack_danger);
+        // 客队危险进攻
+        gif_guest_attack_danger = (GifImageView) findViewById(R.id.gif_guest_attack_danger);
 //        // 主队射偏
 //        rl_home_deviate1 = (RelativeLayout) findViewById(R.id.rl_home_deviate1);
 //        gif_home_ball1 = (GifImageView) findViewById(R.id.gif_home_ball1);
@@ -190,6 +243,31 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
         gif_home_corner_l_position = (GifImageView) findViewById(R.id.gif_home_corner_l_position);
         gif_home_corner_r = (GifImageView) findViewById(R.id.gif_home_corner_r);
         gif_home_corner_l = (GifImageView) findViewById(R.id.gif_home_corner_l);
+
+
+
+        gif_home_offside = (GifImageView) findViewById(R.id.gif_home_offside);
+        gif_guest_offside = (GifImageView) findViewById(R.id.gif_guest_offside);
+        gif_home_offside_position = (GifImageView) findViewById(R.id.gif_home_offside_position);
+        gif_guest_offside_position = (GifImageView) findViewById(R.id.gif_guest_offside_position);
+
+        gif_home_penalty = (GifImageView) findViewById(R.id.gif_home_penalty);
+        gif_guest_penalty = (GifImageView) findViewById(R.id.gif_guest_penalty);
+        gif_home_penalty_lose = (GifImageView) findViewById(R.id.gif_home_penalty_lose);
+        gif_guest_penalty_lose = (GifImageView) findViewById(R.id.gif_guest_penalty_lose);
+        gif_home_penalty_lose_position = (GifImageView) findViewById(R.id.gif_home_penalty_lose_position);
+        gif_guest_penalty_lose_position = (GifImageView) findViewById(R.id.gif_guest_penalty_lose_position);
+
+        gif_home_r_or_y_position = (GifImageView) findViewById(R.id.gif_home_r_or_y_position);
+        gif_guest_r_or_y_position = (GifImageView) findViewById(R.id.gif_guest_r_or_y_position);
+        tv_home_desc = (TextView) findViewById(R.id.tv_home_desc);
+        tv_guest_desc = (TextView) findViewById(R.id.tv_guest_desc);
+        iv_home_icon = (ImageView) findViewById(R.id.iv_home_icon);
+        iv_guest_icon = (ImageView) findViewById(R.id.iv_guest_icon);
+        iv_home_r_or_y = (ImageView) findViewById(R.id.iv_home_r_or_y);
+        iv_guest_r_or_y = (ImageView) findViewById(R.id.iv_guest_r_or_y);
+
+
 
 
         findViewById(R.id.bt_match_start).setOnClickListener(this);
