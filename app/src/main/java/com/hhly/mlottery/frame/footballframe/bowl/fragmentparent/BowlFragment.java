@@ -18,6 +18,8 @@ import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.footballDetails.WebSocketRollballOdd;
+import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.BaseUserTopics;
 import com.hhly.mlottery.frame.footballframe.bowl.fragmentchild.BowlChildFragment;
 
 import java.util.ArrayList;
@@ -25,6 +27,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.hhly.mlottery.activity.BasketDetailsActivityTest.mThirdId;
 
 /**
  * @author wangg
@@ -70,10 +74,13 @@ public class BowlFragment extends BaseWebSocketFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mThirId = getArguments().getString("thirdId");
         }
+        setWebSocketUri(BaseURLs.WS_SERVICE);
+        setTopic(BaseUserTopics.oddsFootballMatch + "." + mThirdId);
+        super.onCreate(savedInstanceState);
+
     }
 
     @Override
