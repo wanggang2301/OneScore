@@ -110,13 +110,12 @@ public class BowlChildFragment extends ViewFragment<IBowlChildContract.IBowlChil
         View view = inflater.inflate(R.layout.fragment_bowl_child, container, false);
         ButterKnife.bind(this, view);
         context = mActivity;
-        initView();
         mPresenter = new BowlChildPresenter(this);
         mPresenter.requestData(mThirdId, String.valueOf(oddType));
         return view;
     }
 
-    private void initView() {
+    private void setOddTypeText() {
         switch (oddType) {
             case OUER_TYPE:
                 setTitleTxt(getResources().getStringArray(R.array.bowl_eur));
@@ -161,8 +160,9 @@ public class BowlChildFragment extends ViewFragment<IBowlChildContract.IBowlChil
         bowlBean = mPresenter.getBowlBean();
 
         mBottomOddsDetailsItemList = bowlBean.getMatchoddlist();
+      //  setFirstOdd(bowlBean.getFirst());
+        setOddTypeText();
 
-        setFirstOdd(bowlBean.getFirst());
         mAdapter = new BottomOddsAdapter(context, mBottomOddsDetailsItemList, oddType);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mAdapter);
