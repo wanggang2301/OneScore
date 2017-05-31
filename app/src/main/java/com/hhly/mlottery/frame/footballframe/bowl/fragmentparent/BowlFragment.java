@@ -8,6 +8,7 @@ import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,6 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.footballDetails.WebSocketRollballOdd;
 import com.hhly.mlottery.frame.footballframe.bowl.fragmentchild.BowlChildFragment;
-import com.hhly.mlottery.util.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -183,8 +183,8 @@ public class BowlFragment extends BaseWebSocketFragment {
                 webSocketRollballOdd = JSON.parseObject(ws_json, WebSocketRollballOdd.class);
             }
 
-            L.d(TAG, "=======赔率推送=====" + ws_json);
-            L.d(TAG, "=======赔率推送=====" + webSocketRollballOdd.getLeft() + "==" + webSocketRollballOdd.getOddType());
+            Log.d("bowlurl", "=======赔率推送=====" + ws_json);
+
 
             //更新赔率
 

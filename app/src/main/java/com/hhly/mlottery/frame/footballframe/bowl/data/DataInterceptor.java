@@ -39,7 +39,7 @@ public class DataInterceptor implements okhttp3.Interceptor {
         Request.Builder requestBuilder = oldRequest.newBuilder()
                 .url(url);
 
-        Log.d("url", url.toString());
+        Log.d("bowlurl", url.toString());
 
         Request request = requestBuilder.build();
         return chain.proceed(request);
