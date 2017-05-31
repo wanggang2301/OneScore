@@ -16,11 +16,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="25dp"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp">
+           >
 
             <TextView
                 android:layout_width="0dp"
@@ -89,12 +88,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="25dp"
             android:background="@color/whitesmoke"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
