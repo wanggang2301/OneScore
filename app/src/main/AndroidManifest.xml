@@ -418,7 +418,7 @@
             android:name=".activity.FootballCornerActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.MyFocus"
+            android:name=".activity.MyFocusActivity"
             android:screenOrientation="portrait" />
     </application>
 

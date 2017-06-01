@@ -188,7 +188,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 if (DeviceInfo.isLogin()) {
                     PreferenceUtil.commitBoolean("custom_red_dot", false);
 //                    mRedDot.setVisibility(View.GONE);
-                    startActivity(new Intent(HomeUserOptionsActivity.this, MyFocus.class));
+                    startActivity(new Intent(HomeUserOptionsActivity.this, CustomActivity.class));
                 } else {
                     Intent intent = new Intent(this, LoginActivity.class);
                     intent.putExtra("custom", true); //传 true  表示我的定制进入登录  完成后直接进入定制界面

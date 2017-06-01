@@ -14,7 +14,7 @@ import com.hhly.mlottery.frame.footballframe.mvptask.myfocus.MyFocusFragment;
  * @created on:2017/5/31  15:55.
  */
 
-public class MyFocus extends BaseActivity {
+public class MyFocusActivity extends BaseActivity {
 
 
     @Override
