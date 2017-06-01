@@ -87,6 +87,8 @@ public class BowlFragment extends BaseWebSocketFragment {
         View view = inflater.inflate(R.layout.fragment_bowl, container, false);
         ButterKnife.bind(this, view);
         initEvent();
+
+        connectWebSocket();
         return view;
     }
 

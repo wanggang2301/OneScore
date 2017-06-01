@@ -160,7 +160,7 @@ public class BowlChildFragment extends ViewFragment<IBowlChildContract.IBowlChil
         bowlBean = mPresenter.getBowlBean();
 
         mBottomOddsDetailsItemList = bowlBean.getMatchoddlist();
-        //  setFirstOdd(bowlBean.getFirst());
+        setFirstOdd(bowlBean.getFirst());
         setOddTypeText();
 
         mAdapter = new BottomOddsAdapter(context, mBottomOddsDetailsItemList, oddType);

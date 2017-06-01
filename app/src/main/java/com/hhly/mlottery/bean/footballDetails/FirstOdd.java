@@ -16,6 +16,7 @@ public class FirstOdd {
     private String middleUp;
     private String rightUp;
 
+
     public String getLeft() {
         return left;
     }

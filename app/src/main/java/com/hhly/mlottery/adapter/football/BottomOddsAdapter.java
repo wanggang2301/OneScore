@@ -50,7 +50,7 @@ public class BottomOddsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         BottomOddsHolder hold = (BottomOddsHolder) holder;
         if (!isNULLOrEmpty(list.get(position).getTime())) {
-            hold.item_time.setText(list.get(position).getTime());
+            hold.item_time.setText(list.get(position).getTime() + "'");
         } else {
             hold.item_time.setText("-");
         }
