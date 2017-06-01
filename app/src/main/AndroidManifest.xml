@@ -44,10 +44,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
-            <!--   <intent-filter>
+            <!--
+               <intent-filter>
                    <action android:name="android.intent.action.MAIN" />
                    <category android:name="android.intent.category.LAUNCHER" />
-               </intent-filter>-->
+               </intent-filter>
+            -->
         </activity>
         <!-- 环境选择 -->
         <activity
@@ -73,6 +75,7 @@
             android:value="BETA" />
         <!-- 内地版的key-end -->
 
+
         <!-- TalkingData key  begin -->
         <meta-data
             android:name="TD_APP_ID"
@@ -93,7 +96,6 @@
         <activity
             android:name=".activity.FiltrateMatchConfigActivity"
             android:screenOrientation="portrait" />
-
 
         <!-- 足球数据内页显示 -->
         <activity
@@ -337,9 +339,9 @@
             android:name=".activity.FootballMatchSearchActivity"
             android:screenOrientation="portrait" />
         <!-- 1.2.3改版后的新首页 -->
-        <!--<activity-->
-        <!--android:name=".activity.IndexActivity"-->
-        <!--android:screenOrientation="portrait" />-->
+        <!-- <activity -->
+        <!-- android:name=".activity.IndexActivity" -->
+        <!-- android:screenOrientation="portrait" /> -->
         <!-- 斯诺克球员信息 -->
         <activity
             android:name=".activity.SnookerPlayerInfoActivity"
@@ -416,10 +418,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.FootballCornerActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MyFocusActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.SubsRecordActivity"></activity>
     </application>
 
 </manifest>
