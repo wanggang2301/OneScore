@@ -52,14 +52,11 @@ import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
 import com.hhly.mlottery.frame.footballframe.AnalyzeParentFragment;
-import com.hhly.mlottery.frame.footballframe.AnalyzeFragment;
 import com.hhly.mlottery.frame.footballframe.BettingIssueFragment;
-import com.hhly.mlottery.frame.footballframe.DetailsRollballFragment;
-import com.hhly.mlottery.frame.footballframe.IntelligenceFragment;
 import com.hhly.mlottery.frame.footballframe.LiveFragment;
 import com.hhly.mlottery.frame.footballframe.OddsFragment;
-import com.hhly.mlottery.frame.footballframe.mvptask.bowl.BowlFragment;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
+import com.hhly.mlottery.frame.footballframe.mvptask.bowl.BowlFragment;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;
@@ -184,6 +181,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     //    private RecommendFragment mRecommendFragment;  //推介
     //private DetailsRollballFragment mDetailsRollballFragment; //滚球
+
+    private BettingIssueFragment mBettingIssueFragment;
     private BowlFragment mBowlFragment;
 
 
@@ -231,7 +230,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private TextView mHalfScore;
     private String url;
     private boolean isAddFragment = false;
-    private BettingIssueFragment mBettingIssueFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -297,34 +295,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         ll_Webview = (LinearLayout) findViewById(R.id.ll_webview);
         mHalfScore = (TextView) findViewById(R.id.half_score);
 
-        //推介
-        mBettingIssueFragment = BettingIssueFragment.newInstance(mThirdId);
-        //滚球
-        mDetailsRollballFragment = DetailsRollballFragment.newInstance(mThirdId);
-        //直播
-        mLiveFragment = LiveFragment.newInstance();
-        //分析
-        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, "", "");
-        //指数
-        mOddsFragment = OddsFragment.newInstance();
-        // 情报
-        mIntelligenceFragment = IntelligenceFragment.newInstance(mThirdId);
-        // 聊球
-        mChartBallFragment = ChartBallFragment.newInstance(0, mThirdId);
-
-
-
-        mTabsAdapter.addFragments(mBettingIssueFragment ,mDetailsRollballFragment, mLiveFragment, mAnalyzeFragment, mIntelligenceFragment, mOddsFragment, mChartBallFragment);
-        mViewPager.setOffscreenPageLimit(6);//设置预加载页面的个数。
-        mViewPager.setAdapter(mTabsAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
-
-        mFootballLiveGotoChart = new FootballLiveGotoChart() {
-            @Override
-            public void onClick() {
-                mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_CHARTBALL, false);
-            }
-        };
     }
 
     public void onEventMainThread(BarrageBean barrageBean) {
@@ -398,7 +368,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 //                    mAnalyzeParentFragment.initData();
                     mOddsFragment.oddPlateRefresh(); // 指数刷新
                     mChartBallFragment.onRefresh();// 聊球
-                    mBettingIssueFragment.initData();//推介
                 }
             }
         }, 500);
@@ -1834,6 +1803,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 //                    mRecommendFragment = RecommendFragment.newInstance();
                         //滚球
                         // mDetailsRollballFragment = DetailsRollballFragment.newInstance(mThirdId);
+                        mBettingIssueFragment = BettingIssueFragment.newInstance(mThirdId);
+
                         mBowlFragment = BowlFragment.newInstance(mThirdId);
 
                         //直播
@@ -1845,8 +1816,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         // 聊球
                         mChartBallFragment = ChartBallFragment.newInstance(0, mThirdId);
 
-                        mTabsAdapter.addFragments(mBowlFragment, mLiveFragment, mOddsFragment, mAnalyzeParentFragment, mChartBallFragment);
-                        mViewPager.setOffscreenPageLimit(4);//设置预加载页面的个数。
+                        mTabsAdapter.addFragments(mBettingIssueFragment, mBowlFragment, mLiveFragment, mOddsFragment, mAnalyzeParentFragment, mChartBallFragment);
+                        mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
                         mViewPager.setAdapter(mTabsAdapter);
                         mTabLayout.setupWithViewPager(mViewPager);
                         isAddFragment = true;
