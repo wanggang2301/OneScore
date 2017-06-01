@@ -1,11 +1,11 @@
-package com.hhly.mlottery.frame.footballframe.mvptask.data;
+package com.hhly.mlottery.mvptask.data;
 
 import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.hhly.mlottery.frame.footballframe.mvptask.data.api.BowlApi;
-import com.hhly.mlottery.frame.footballframe.mvptask.data.repository.BowlReposeitory;
+import com.hhly.mlottery.mvptask.data.api.BowlApi;
+import com.hhly.mlottery.mvptask.data.repository.BowlReposeitory;
 
 import java.util.concurrent.TimeUnit;
 

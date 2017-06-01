@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame.footballframe.mvptask.subsrecord;
+package com.hhly.mlottery.mvptask.subsrecord;
 
 
 import android.os.Bundle;

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.frame.footballframe.mvptask.subsrecord.SubsRecordFragment;
+import com.hhly.mlottery.mvptask.subsrecord.SubsRecordFragment;
 
 
 /**

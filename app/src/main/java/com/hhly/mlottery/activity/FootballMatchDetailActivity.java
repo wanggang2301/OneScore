@@ -56,7 +56,7 @@ import com.hhly.mlottery.frame.footballframe.BettingIssueFragment;
 import com.hhly.mlottery.frame.footballframe.LiveFragment;
 import com.hhly.mlottery.frame.footballframe.OddsFragment;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
-import com.hhly.mlottery.frame.footballframe.mvptask.bowl.BowlFragment;
+import com.hhly.mlottery.mvptask.bowl.BowlFragment;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;

@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame.footballframe.mvptask.myfocus;
+package com.hhly.mlottery.mvptask.myfocus;
 
 
 import android.app.Activity;

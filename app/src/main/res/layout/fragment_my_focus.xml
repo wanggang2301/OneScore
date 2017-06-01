@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.hhly.mlottery.frame.footballframe.mvptask.myfocus.MyFocusFragment">
+    tools:context=".mvptask.myfocus.MyFocusFragment">
 
 
     <LinearLayout

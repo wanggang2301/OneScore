@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame.footballframe.mvptask.data;
+package com.hhly.mlottery.mvptask.data;
 
 import android.util.Log;
 

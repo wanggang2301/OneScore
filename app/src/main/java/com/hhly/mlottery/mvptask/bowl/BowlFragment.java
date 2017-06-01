@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame.footballframe.mvptask.bowl;
+package com.hhly.mlottery.mvptask.bowl;
 
 
 import android.os.Bundle;

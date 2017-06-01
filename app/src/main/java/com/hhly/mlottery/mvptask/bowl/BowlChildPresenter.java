@@ -1,7 +1,7 @@
-package com.hhly.mlottery.frame.footballframe.mvptask.bowl;
+package com.hhly.mlottery.mvptask.bowl;
 
 import com.hhly.mlottery.bean.footballDetails.BottomOddsDetails;
-import com.hhly.mlottery.frame.footballframe.mvptask.data.repository.BowlReposeitory;
+import com.hhly.mlottery.mvptask.data.repository.BowlReposeitory;
 import com.hhly.mlottery.mvp.BasePresenter;
 import com.hhly.mlottery.util.CollectionUtils;
 
