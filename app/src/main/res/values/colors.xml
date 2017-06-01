@@ -711,4 +711,5 @@
     <color name="betting_recommend_to_buy_color">#dfdfdf</color>
     <color name="betting_recommend_confirm_buy_color">#ff5f10</color>
 
+    <color name="betting_recommend_issue_title_color">#333333</color>
 </resources>

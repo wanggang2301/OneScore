@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hhly.mlottery">
-
+    <!--录音权限-->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <!-- 调用系统下载权限 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
@@ -402,20 +403,57 @@
         <activity
             android:name=".activity.ExpertsActivity"
             android:screenOrientation="portrait" />
+        <activity android:name="com.hhly.mlottery.activity.BettingPayDetailsActivity"
 
         <!-- 支付相关 -->
         <activity
             android:name=".activity.BettingRecommendActivity"
             android:screenOrientation="portrait" />
+        <activity android:name="com.hhly.mlottery.activity.BettingRecommendSettingActivity"
         <activity
             android:name=".activity.BettingPayDetailsActivity"
             android:screenOrientation="portrait" />
+
+        <!--专家详情MVP-->
+        <activity android:name="com.hhly.mlottery.activity.bettingmvp.mvpview.MvpBettingRecommendActivity"
         <activity
             android:name=".activity.BettingOnlinePaymentActivity"
             android:screenOrientation="portrait" />
+        <activity android:name="com.hhly.mlottery.activity.bettingmvp.mvpview.MvpBettingPayDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.hhly.mlottery.activity.bettingmvp.mvpview.MvpBettingOnlinePaymentActivity"
         <activity
             android:name=".activity.BettingRecommendSettingActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.hhly.mlottery.activity.BettingOnlinePaymentActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <!-- alipay sdk begin -->
+        <!-- 若手机没有安装支付宝，则调用H5支付页面 -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+             >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            >
+        </activity>
+        <!-- alipay sdk end -->
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            >
+        </activity>
         <activity
             android:name=".activity.FootballCornerActivity"
             android:screenOrientation="portrait" />
@@ -424,5 +462,4 @@
             android:screenOrientation="portrait" />
         <activity android:name=".activity.SubsRecordActivity"></activity>
     </application>
-
 </manifest>

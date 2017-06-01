@@ -1743,4 +1743,8 @@
     <string name="bow_corner_left">高于</string>
     <string name="bow_corner_middle">即时盘</string>
     <string name="bow_corner_right">低于</string>
+    <!--竞彩推荐-->
+    <string name="betting_setting_palying_method">玩法</string>
+    <string name="betting_setting_league">联赛</string>
+    <string name="betting_issue_title">推介</string>
 </resources>

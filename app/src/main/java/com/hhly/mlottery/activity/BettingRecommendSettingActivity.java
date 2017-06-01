@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * Created by：Administrator on 2017/4/24 10:36
- * Use:
+ * Use: 竞彩推荐设置页
  */
 public class BettingRecommendSettingActivity extends BaseActivity implements View.OnClickListener {
 

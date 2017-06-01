@@ -1731,6 +1731,7 @@
     <!--竞彩推荐-->
     <string name="betting_setting_palying_method">玩法</string>
     <string name="betting_setting_league">联赛</string>
+    <string name="betting_issue_title">推介</string>
 
     <string name="roll_desc_txt">胜出</string>
 
