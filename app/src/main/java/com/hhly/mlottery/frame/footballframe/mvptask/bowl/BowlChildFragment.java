@@ -160,7 +160,7 @@ public class BowlChildFragment extends ViewFragment<IBowlChildContract.IBowlChil
         bowlBean = mPresenter.getBowlBean();
 
         mBottomOddsDetailsItemList = bowlBean.getMatchoddlist();
-      //  setFirstOdd(bowlBean.getFirst());
+        //  setFirstOdd(bowlBean.getFirst());
         setOddTypeText();
 
         mAdapter = new BottomOddsAdapter(context, mBottomOddsDetailsItemList, oddType);
@@ -222,8 +222,9 @@ public class BowlChildFragment extends ViewFragment<IBowlChildContract.IBowlChil
             bottomOddsItem.setRight(webodds.getRight());
         }
 
-        destination.setTime("90'");
-        destination.setScore("5-4");
+
+        destination.setTime(webodds.getMatchInTime());
+        destination.setScore(webodds.getScore());
         destination.setOdd(bottomOddsItem);
 
         return destination;
