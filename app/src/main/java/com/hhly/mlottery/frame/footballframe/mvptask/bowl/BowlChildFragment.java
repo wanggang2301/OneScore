@@ -177,9 +177,7 @@ public class BowlChildFragment extends ViewFragment<IBowlChildContract.IBowlChil
 
 
     private synchronized BottomOddsDetailsItem setLiveOdds(BottomOddsDetailsItem b, WebSocketRollballOdd webodds) {
-
         BottomOddsDetailsItem destination = new BottomOddsDetailsItem();
-
         BottomOddsItem bottomOddsItem = new BottomOddsItem();
 
         if (isNULLOrEmpty(webodds.getLeft()) || isNULLOrEmpty(webodds.getMiddle()) || isNULLOrEmpty(webodds.getRight()) || isNULLOrEmpty(b.getOdd().getLeft()) || isNULLOrEmpty(b.getOdd().getMiddle()) || isNULLOrEmpty(b.getOdd().getRight())) {
