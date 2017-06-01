@@ -325,161 +325,264 @@
                         android:layout_height="0dp"
                         android:layout_weight="2.2" />
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
+                        android:layout_weight="1">
 
-                        <View
-                            android:layout_width="0dp"
+                        <!--主队title-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="0.2" />
+                            android:orientation="horizontal"
+                            android:visibility="visible">
 
-                        <!--客队射偏1-->
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1.5">
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1.4" />
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:orientation="horizontal">
+                                android:layout_weight="0.4"
+                                android:orientation="vertical">
 
                                 <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1" />
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="0.6" />
 
-                                <pl.droidsonroids.gif.GifImageView
-                                    android:id="@+id/gif_guest_position1"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    tools:src="@mipmap/football_guest_position_gif" />
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="2.8"
+                                    android:background="@drawable/football_animation_offside_bg"
+                                    android:gravity="center"
+                                    android:paddingRight="10dp"
+                                    android:text="@string/football_play_hit"
+                                    android:textColor="@color/res_name_color"
+                                    android:textSize="@dimen/tennis_score_item" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1.5" />
 
                             </LinearLayout>
 
-                            <!--客队射偏1动画-->
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <View
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:visibility="gone">
+                                android:layout_weight="0.8" />
 
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="0.2" />
+                        </LinearLayout>
 
-                                <pl.droidsonroids.gif.GifImageView
-                                    android:id="@+id/gif_guest_ball1"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    tools:src="@mipmap/football_guest_ball_gif" />
-
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="0.4" />
-
-                            </LinearLayout>
-
-                            <!--客队射正1动画-->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal">
-
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="0.3" />
-
-                                <pl.droidsonroids.gif.GifImageView
-                                    android:id="@+id/gif_guest_hit1"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    tools:src="@mipmap/football_guest_hit1" />
-
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="0.4" />
-
-
-                            </LinearLayout>
-
-
-                        </RelativeLayout>
-
-                        <View
-                            android:layout_width="0dp"
+                        <!--客队title-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="1" />
+                            android:orientation="horizontal"
+                            android:visibility="visible">
 
-
-                        <!--主队射偏1-->
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1.5">
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.8" />
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:orientation="horizontal">
-
-                                <pl.droidsonroids.gif.GifImageView
-                                    android:id="@+id/gif_home_position1"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    tools:src="@mipmap/football_home_position_gif" />
+                                android:layout_weight="0.4"
+                                android:orientation="vertical">
 
                                 <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1.6" />
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="0.6" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="2.8"
+                                    android:background="@drawable/football_animation_offside_bg"
+                                    android:gravity="center"
+                                    android:paddingLeft="10dp"
+                                    android:text="@string/football_play_hit"
+                                    android:textColor="@color/res_name_color"
+                                    android:textSize="@dimen/tennis_score_item" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1.5" />
 
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <View
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:orientation="horizontal">
+                                android:layout_weight="1.4" />
 
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="0.3" />
+                        </LinearLayout>
 
-                                <pl.droidsonroids.gif.GifImageView
-                                    android:id="@+id/gif_home_hit1"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    tools:src="@mipmap/football_home_hit1" />
-
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="0.4" />
-
-                            </LinearLayout>
-
-                        </RelativeLayout>
-
-                        <View
-                            android:layout_width="0dp"
+                        <!--坐标、动画-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="0.1" />
+                            android:orientation="horizontal">
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.2" />
+
+                            <!--客队射偏1-->
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1.5">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1" />
+
+                                    <pl.droidsonroids.gif.GifImageView
+                                        android:id="@+id/gif_guest_position1"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        tools:src="@mipmap/football_guest_position_gif" />
+
+                                </LinearLayout>
+
+                                <!--客队射偏1动画-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
+                                    android:visibility="gone">
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="0.2" />
+
+                                    <pl.droidsonroids.gif.GifImageView
+                                        android:id="@+id/gif_guest_ball1"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        tools:src="@mipmap/football_guest_ball_gif" />
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="0.4" />
+
+                                </LinearLayout>
+
+                                <!--客队射正1动画-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="0.3" />
+
+                                    <pl.droidsonroids.gif.GifImageView
+                                        android:id="@+id/gif_guest_hit1"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        tools:src="@mipmap/football_guest_hit1" />
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="0.4" />
 
 
-                    </LinearLayout>
+                                </LinearLayout>
+
+
+                            </RelativeLayout>
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1" />
+
+                            <!--主队射偏1-->
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1.5">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                    <pl.droidsonroids.gif.GifImageView
+                                        android:id="@+id/gif_home_position1"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        tools:src="@mipmap/football_home_position_gif" />
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1.6" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="0.3" />
+
+                                    <pl.droidsonroids.gif.GifImageView
+                                        android:id="@+id/gif_home_hit1"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        tools:src="@mipmap/football_home_hit1" />
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="0.4" />
+
+                                </LinearLayout>
+
+                            </RelativeLayout>
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.1" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"
@@ -500,188 +603,291 @@
                         android:layout_height="0dp"
                         android:layout_weight="3" />
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
+                        android:layout_weight="1">
 
-                        <View
-                            android:layout_width="0dp"
+                        <!--主队title-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="0.2" />
+                            android:orientation="horizontal"
+                            android:visibility="visible">
 
-                        <!--客队射偏2-->
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1.5">
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1.8" />
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:orientation="horizontal">
+                                android:layout_weight="0.4"
+                                android:orientation="vertical">
 
                                 <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1" />
-
-                                <pl.droidsonroids.gif.GifImageView
-                                    android:id="@+id/gif_guest_position2"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    tools:src="@mipmap/football_guest_position_gif" />
-
-                            </LinearLayout>
-
-                            <!--客队射偏动画2-->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:visibility="gone">
-
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="0.4" />
-
-                                <pl.droidsonroids.gif.GifImageView
-                                    android:id="@+id/gif_guest_ball2"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    tools:src="@mipmap/football_guest_ball2_gif" />
-
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="0.4" />
-
-                            </LinearLayout>
-
-                            <!--客队射正动画2-->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:visibility="visible">
-
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
                                     android:layout_weight="0.6" />
 
-                                <pl.droidsonroids.gif.GifImageView
-                                    android:id="@+id/gif_guest_hit2"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    tools:src="@mipmap/football_guest_hit2" />
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="2.8"
+                                    android:background="@drawable/football_animation_offside_bg"
+                                    android:gravity="center"
+                                    android:paddingRight="10dp"
+                                    android:text="@string/football_play_hit"
+                                    android:textColor="@color/res_name_color"
+                                    android:textSize="@dimen/tennis_score_item" />
 
                                 <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="0.4" />
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1.5" />
 
                             </LinearLayout>
 
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.8" />
 
-                        </RelativeLayout>
+                        </LinearLayout>
 
-                        <View
-                            android:layout_width="0dp"
+                        <!--客队title-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="1.8" />
+                            android:orientation="horizontal"
+                            android:visibility="visible">
 
-
-                        <!--主队射偏2-->
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1.5">
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.8" />
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:orientation="horizontal">
-
-                                <pl.droidsonroids.gif.GifImageView
-                                    android:id="@+id/gif_home_position2"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    tools:src="@mipmap/football_home_position_gif" />
+                                android:layout_weight="0.4"
+                                android:orientation="vertical">
 
                                 <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1.6" />
-
-                            </LinearLayout>
-
-                            <!--主队射偏动画2-->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:visibility="gone">
-
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="0.4" />
-
-                                <pl.droidsonroids.gif.GifImageView
-                                    android:id="@+id/gif_home_ball2"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    tools:src="@mipmap/football_home_ball2_gif" />
-
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
                                     android:layout_weight="0.6" />
 
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="2.8"
+                                    android:background="@drawable/football_animation_offside_bg"
+                                    android:gravity="center"
+                                    android:paddingLeft="10dp"
+                                    android:text="@string/football_play_hit"
+                                    android:textColor="@color/res_name_color"
+                                    android:textSize="@dimen/tennis_score_item" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1.5" />
+
                             </LinearLayout>
 
-                            <!--主队射正动画2-->
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <View
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:visibility="visible">
+                                android:layout_weight="1.8" />
 
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="0.4" />
+                        </LinearLayout>
 
-                                <pl.droidsonroids.gif.GifImageView
-                                    android:id="@+id/gif_home_hit2"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    tools:src="@mipmap/football_home_hit2" />
-
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="0.8" />
-
-                            </LinearLayout>
-                        </RelativeLayout>
-
-                        <View
-                            android:layout_width="0dp"
+                        <!--坐标、动画-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="0.1" />
+                            android:orientation="horizontal">
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.2" />
+
+                            <!--客队射偏2-->
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1.5">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1" />
+
+                                    <pl.droidsonroids.gif.GifImageView
+                                        android:id="@+id/gif_guest_position2"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        tools:src="@mipmap/football_guest_position_gif" />
+
+                                </LinearLayout>
+
+                                <!--客队射偏动画2-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
+                                    android:visibility="gone">
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="0.4" />
+
+                                    <pl.droidsonroids.gif.GifImageView
+                                        android:id="@+id/gif_guest_ball2"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        tools:src="@mipmap/football_guest_ball2_gif" />
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="0.4" />
+
+                                </LinearLayout>
+
+                                <!--客队射正动画2-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
+                                    android:visibility="visible">
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="0.6" />
+
+                                    <pl.droidsonroids.gif.GifImageView
+                                        android:id="@+id/gif_guest_hit2"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        tools:src="@mipmap/football_guest_hit2" />
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="0.4" />
+
+                                </LinearLayout>
 
 
-                    </LinearLayout>
+                            </RelativeLayout>
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1.8" />
+
+                            <!--主队射偏2-->
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1.5">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                    <pl.droidsonroids.gif.GifImageView
+                                        android:id="@+id/gif_home_position2"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        tools:src="@mipmap/football_home_position_gif" />
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1.6" />
+
+                                </LinearLayout>
+
+                                <!--主队射偏动画2-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
+                                    android:visibility="gone">
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="0.4" />
+
+                                    <pl.droidsonroids.gif.GifImageView
+                                        android:id="@+id/gif_home_ball2"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        tools:src="@mipmap/football_home_ball2_gif" />
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="0.6" />
+
+                                </LinearLayout>
+
+                                <!--主队射正动画2-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
+                                    android:visibility="visible">
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="0.4" />
+
+                                    <pl.droidsonroids.gif.GifImageView
+                                        android:id="@+id/gif_home_hit2"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        tools:src="@mipmap/football_home_hit2" />
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="0.8" />
+
+                                </LinearLayout>
+                            </RelativeLayout>
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.1" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"
@@ -715,6 +921,7 @@
                             android:layout_weight="1"
                             android:orientation="horizontal">
 
+                            <!--动画-->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -739,6 +946,56 @@
 
                             </LinearLayout>
 
+                            <!--title-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:visibility="visible">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.75" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.6"
+                                    android:orientation="vertical">
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.6" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="2.8"
+                                        android:background="@drawable/football_animation_offside_bg"
+                                        android:gravity="center"
+                                        android:paddingLeft="10dp"
+                                        android:text="@string/football_play_goal_door"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/tennis_score_item" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1.5" />
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.5" />
+
+                            </LinearLayout>
+
+                            <!--坐标-->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -771,6 +1028,7 @@
                             android:layout_weight="1"
                             android:orientation="horizontal">
 
+                            <!--动画-->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -795,6 +1053,56 @@
 
                             </LinearLayout>
 
+                            <!--title-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:visibility="visible">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.55" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.6"
+                                    android:orientation="vertical">
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.6" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="2.8"
+                                        android:background="@drawable/football_animation_offside_bg"
+                                        android:gravity="center"
+                                        android:paddingRight="10dp"
+                                        android:text="@string/football_play_goal_door"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/tennis_score_item" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1.5" />
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.75" />
+
+                            </LinearLayout>
+
+                            <!--坐标-->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -835,7 +1143,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <View
                         android:layout_width="match_parent"
@@ -977,375 +1285,608 @@
                 </LinearLayout>
 
                 <!--角球-->
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
                     android:visibility="gone">
 
-                    <!--客队角球-->
-                    <RelativeLayout
-                        android:layout_width="0dp"
+                    <!--title-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1">
+                        android:orientation="vertical">
 
-                        <!--客队右边角球-->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1.7" />
+
+                        <!--上侧-->
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="0dp"
+                            android:layout_weight="0.5">
 
+                            <!--客队title-->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="vertical">
+                                android:orientation="horizontal"
+                                android:visibility="visible">
 
                                 <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="4" />
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.55" />
 
                                 <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:orientation="horizontal">
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.3"
+                                    android:orientation="vertical">
 
                                     <View
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="2.2" />
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1.5" />
 
-                                    <pl.droidsonroids.gif.GifImageView
-                                        android:id="@+id/gif_guest_corner_r_position"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        tools:src="@mipmap/football_guest_position_gif" />
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="2.8"
+                                        android:background="@drawable/football_animation_offside_bg"
+                                        android:gravity="center"
+                                        android:paddingLeft="10dp"
+                                        android:text="@string/football_play_corner"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/number_desc" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.6" />
+
                                 </LinearLayout>
 
                                 <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="3.2" />
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1.7" />
 
                             </LinearLayout>
 
+                            <!--主队title-->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="vertical">
+                                android:orientation="horizontal"
+                                android:visibility="visible">
 
                                 <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1.7" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.3"
+                                    android:orientation="vertical">
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1.5" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="2.8"
+                                        android:background="@drawable/football_animation_offside_bg"
+                                        android:gravity="center"
+                                        android:paddingRight="10dp"
+                                        android:text="@string/football_play_corner"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/number_desc" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.6" />
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.55" />
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3" />
+
+                        <!--下侧-->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.6">
+
+                            <!--客队title-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:visibility="visible">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.15" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.3"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="2.8"
+                                        android:background="@drawable/football_animation_offside_bg"
+                                        android:gravity="center"
+                                        android:paddingLeft="10dp"
+                                        android:text="@string/football_play_corner"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/tennis_score_item" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="2" />
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="2" />
+
+                            </LinearLayout>
+
+                            <!--主队title-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:visibility="visible">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
                                     android:layout_weight="2" />
 
                                 <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:orientation="horizontal">
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.3"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="2.8"
+                                        android:background="@drawable/football_animation_offside_bg"
+                                        android:gravity="center"
+                                        android:paddingRight="10dp"
+                                        android:text="@string/football_play_corner"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/tennis_score_item" />
 
                                     <View
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="2" />
-
-                                    <pl.droidsonroids.gif.GifImageView
-                                        android:id="@+id/gif_guest_corner_r"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        tools:src="@mipmap/football_guest_corner_right" />
-
-                                    <View
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="0.5" />
-
-                                </LinearLayout>
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1.1" />
-                            </LinearLayout>
-
-                        </RelativeLayout>
-
-                        <!--客队左边角球-->
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="2.2" />
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:orientation="horizontal">
-
-                                    <View
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="0.3" />
-
-                                    <pl.droidsonroids.gif.GifImageView
-                                        android:id="@+id/gif_guest_corner_l"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        tools:src="@mipmap/football_guest_corner_left" />
-
-                                    <View
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="0.5" />
-
-                                </LinearLayout>
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="0.6" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="3" />
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:orientation="horizontal">
-
-                                    <pl.droidsonroids.gif.GifImageView
-                                        android:id="@+id/gif_guest_corner_l_position"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        tools:src="@mipmap/football_guest_position_gif" />
-
-                                    <View
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
                                         android:layout_weight="2" />
 
                                 </LinearLayout>
 
                                 <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="0.8" />
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.15" />
 
                             </LinearLayout>
 
                         </RelativeLayout>
 
-                    </RelativeLayout>
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2" />
-
-                    <!--主队角球-->
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                        <!--主队左边角球-->
-                        <RelativeLayout
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="0dp"
+                            android:layout_weight="0.65" />
 
-                            <LinearLayout
+                    </LinearLayout>
+
+                    <!--坐标和动画-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:visibility="visible">
+
+                        <!--客队角球-->
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <!--客队右边角球-->
+                            <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="4" />
+                                android:layout_height="match_parent">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:orientation="horizontal">
-
-                                    <pl.droidsonroids.gif.GifImageView
-                                        android:id="@+id/gif_home_corner_l_position"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        tools:src="@mipmap/football_home_position_gif" />
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
 
                                     <View
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="4" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal">
+
+                                        <View
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="2.2" />
+
+                                        <pl.droidsonroids.gif.GifImageView
+                                            android:id="@+id/gif_guest_corner_r_position"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            tools:src="@mipmap/football_guest_position_gif" />
+                                    </LinearLayout>
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="3.2" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="2" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal">
+
+                                        <View
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="2" />
+
+                                        <pl.droidsonroids.gif.GifImageView
+                                            android:id="@+id/gif_guest_corner_r"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            tools:src="@mipmap/football_guest_corner_right" />
+
+                                        <View
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="0.5" />
+
+                                    </LinearLayout>
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1.1" />
+                                </LinearLayout>
+
+                            </RelativeLayout>
+
+                            <!--客队左边角球-->
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
                                         android:layout_weight="2.2" />
 
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal">
+
+                                        <View
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="0.3" />
+
+                                        <pl.droidsonroids.gif.GifImageView
+                                            android:id="@+id/gif_guest_corner_l"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            tools:src="@mipmap/football_guest_corner_left" />
+
+                                        <View
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="0.5" />
+
+                                    </LinearLayout>
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.6" />
+
                                 </LinearLayout>
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="3.2" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="2" />
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:orientation="horizontal">
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
 
                                     <View
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="0.5" />
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="3" />
 
-                                    <pl.droidsonroids.gif.GifImageView
-                                        android:id="@+id/gif_home_corner_l"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
                                         android:layout_weight="1"
-                                        tools:src="@mipmap/football_home_corner_left" />
+                                        android:orientation="horizontal">
+
+                                        <pl.droidsonroids.gif.GifImageView
+                                            android:id="@+id/gif_guest_corner_l_position"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            tools:src="@mipmap/football_guest_position_gif" />
+
+                                        <View
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="2" />
+
+                                    </LinearLayout>
 
                                     <View
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="2" />
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.8" />
 
                                 </LinearLayout>
 
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1.1" />
-                            </LinearLayout>
+                            </RelativeLayout>
 
                         </RelativeLayout>
 
-                        <!--主队右边角球-->
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2" />
+
+                        <!--主队角球-->
                         <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
-                            <LinearLayout
+                            <!--主队左边角球-->
+                            <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="2.2" />
+                                android:layout_height="match_parent">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:orientation="horizontal">
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
 
                                     <View
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="0.5" />
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="4" />
 
-                                    <pl.droidsonroids.gif.GifImageView
-                                        android:id="@+id/gif_home_corner_r"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
                                         android:layout_weight="1"
-                                        tools:src="@mipmap/football_home_corner_right" />
+                                        android:orientation="horizontal">
+
+                                        <pl.droidsonroids.gif.GifImageView
+                                            android:id="@+id/gif_home_corner_l_position"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            tools:src="@mipmap/football_home_position_gif" />
+
+                                        <View
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="2.2" />
+
+                                    </LinearLayout>
 
                                     <View
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="0.3" />
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="3.2" />
 
                                 </LinearLayout>
 
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="0.6" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="3" />
-
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:orientation="horizontal">
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
 
                                     <View
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
                                         android:layout_weight="2" />
 
-                                    <pl.droidsonroids.gif.GifImageView
-                                        android:id="@+id/gif_home_corner_r_position"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
                                         android:layout_weight="1"
-                                        tools:src="@mipmap/football_home_position_gif" />
+                                        android:orientation="horizontal">
+
+                                        <View
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="0.5" />
+
+                                        <pl.droidsonroids.gif.GifImageView
+                                            android:id="@+id/gif_home_corner_l"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            tools:src="@mipmap/football_home_corner_left" />
+
+                                        <View
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="2" />
+
+                                    </LinearLayout>
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1.1" />
+                                </LinearLayout>
+
+                            </RelativeLayout>
+
+                            <!--主队右边角球-->
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="2.2" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal">
+
+                                        <View
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="0.5" />
+
+                                        <pl.droidsonroids.gif.GifImageView
+                                            android:id="@+id/gif_home_corner_r"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            tools:src="@mipmap/football_home_corner_right" />
+
+                                        <View
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="0.3" />
+
+                                    </LinearLayout>
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.6" />
 
                                 </LinearLayout>
 
-                                <View
+                                <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="0.8" />
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
 
-                            </LinearLayout>
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="3" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal">
+
+                                        <View
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="2" />
+
+                                        <pl.droidsonroids.gif.GifImageView
+                                            android:id="@+id/gif_home_corner_r_position"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            tools:src="@mipmap/football_home_position_gif" />
+
+                                    </LinearLayout>
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.8" />
+
+                                </LinearLayout>
+
+                            </RelativeLayout>
 
                         </RelativeLayout>
 
-                    </RelativeLayout>
+                    </LinearLayout>
 
-                </LinearLayout>
+                </RelativeLayout>
 
                 <!--越位-->
                 <RelativeLayout
@@ -2126,17 +2667,17 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="0dp"
                                             android:layout_weight="2.8"
+                                            android:background="@drawable/football_animation_offside_bg"
                                             android:gravity="center_vertical"
-                                            android:orientation="horizontal"
-                                            android:background="@drawable/football_animation_offside_bg">
+                                            android:orientation="horizontal">
 
                                             <ImageView
                                                 android:id="@+id/iv_home_icon"
                                                 android:layout_width="25dp"
-                                                android:paddingLeft="5dp"
                                                 android:layout_height="wrap_content"
+                                                android:paddingLeft="5dp"
                                                 android:visibility="invisible"
-                                                tools:src="@mipmap/football_home_substitution"/>
+                                                tools:src="@mipmap/football_home_substitution" />
 
                                             <TextView
                                                 android:id="@+id/tv_home_desc"
@@ -2203,19 +2744,19 @@
                                             <ImageView
                                                 android:id="@+id/iv_guest_icon"
                                                 android:layout_width="25dp"
-                                                android:paddingRight="5dp"
                                                 android:layout_height="wrap_content"
                                                 android:layout_alignParentRight="true"
+                                                android:paddingRight="5dp"
                                                 android:visibility="invisible"
-                                                tools:src="@mipmap/football_guest_substitution"/>
+                                                tools:src="@mipmap/football_guest_substitution" />
 
                                             <TextView
                                                 android:id="@+id/tv_guest_desc"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
+                                                android:layout_centerVertical="true"
                                                 android:layout_toLeftOf="@id/iv_guest_icon"
                                                 android:paddingRight="5dp"
-                                                android:layout_centerVertical="true"
                                                 android:textColor="@color/res_name_color"
                                                 android:textSize="@dimen/tennis_score_item"
                                                 tools:text="红牌" />
@@ -2376,81 +2917,1325 @@
 
                 </RelativeLayout>
 
-                <!--任意球-->
-                <LinearLayout
+                <!--任意球、fk2、fk4-->
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:visibility="gone">
 
-                    <View
+                    <!--主客坐标-->
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="2.8" />
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1">
-
-                        <!--主客坐标-->
-                        <LinearLayout
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
+                            android:layout_height="0dp"
+                            android:layout_weight="2.8" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
                             android:visibility="visible">
 
-                            <!--主队任意球坐标-->
+                            <!--客队fk4title-->
                             <LinearLayout
-                                android:layout_width="0dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.9" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.7"
+                                    android:orientation="vertical">
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.6" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="2.8"
+                                        android:background="@drawable/football_animation_offside_bg"
+                                        android:gravity="center"
+                                        android:paddingLeft="10dp"
+                                        android:text="@string/football_play_free_kick_danger"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/tennis_score_item" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1.5" />
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1.45" />
+
+                            </LinearLayout>
+
+                            <!--客队fk2title-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1.35" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.7"
+                                    android:orientation="vertical">
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.6" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="2.8"
+                                        android:background="@drawable/football_animation_offside_bg"
+                                        android:gravity="center"
+                                        android:paddingLeft="10dp"
+                                        android:text="@string/football_play_free_kick_danger"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/tennis_score_item" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1.5" />
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1" />
+
+                            </LinearLayout>
+
+                            <!--主队fk2title-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:visibility="visible">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.7"
+                                    android:orientation="vertical">
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.6" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="2.8"
+                                        android:background="@drawable/football_animation_offside_bg"
+                                        android:gravity="center"
+                                        android:paddingRight="10dp"
+                                        android:text="@string/football_play_free_kick_danger"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/tennis_score_item" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1.5" />
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1.35" />
+
+                            </LinearLayout>
+
+                            <!--主队fk4title-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1.45" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.7"
+                                    android:orientation="vertical">
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.6" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="2.8"
+                                        android:background="@drawable/football_animation_offside_bg"
+                                        android:gravity="center"
+                                        android:paddingRight="10dp"
+                                        android:text="@string/football_play_free_kick_danger"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/tennis_score_item" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1.5" />
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.9" />
+
+                            </LinearLayout>
+
+                            <!--主队任意球坐标-->
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <!--主队任意球、fk4坐标-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
+                                    android:visibility="gone">
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1.65" />
+
+                                    <pl.droidsonroids.gif.GifImageView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="0.5"
+                                        tools:src="@mipmap/football_home_position_gif" />
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="0.5" />
+
+                                </LinearLayout>
+
+                                <!--主队任意球fk2坐标-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
+                                    android:visibility="visible">
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="0.8" />
+
+                                    <pl.droidsonroids.gif.GifImageView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="0.5"
+                                        tools:src="@mipmap/football_home_position_gif" />
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="0.55" />
+
+                                </LinearLayout>
+
+                            </RelativeLayout>
+
+                            <!--客队任意球坐标-->
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <!--客队任意、fk4坐标-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
+                                    android:visibility="gone">
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="0.5" />
+
+                                    <pl.droidsonroids.gif.GifImageView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="0.5"
+                                        tools:src="@mipmap/football_guest_position_gif" />
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1.65" />
+
+                                </LinearLayout>
+
+                                <!--客队任意fk2坐标-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
+                                    android:visibility="visible">
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="0.55" />
+
+                                    <pl.droidsonroids.gif.GifImageView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="0.5"
+                                        tools:src="@mipmap/football_guest_position_gif" />
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="0.8" />
+
+                                </LinearLayout>
+
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1.6" />
+
+                    </LinearLayout>
+
+                    <!--任意球bg-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="3.5" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3">
+
+                            <!--主队任意球bg-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1" />
+
+                                <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1.1"
+                                    android:scaleType="fitXY"
+                                    android:src="@mipmap/football_home_free_kick_bg" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.3" />
+
+                            </LinearLayout>
+
+                            <!--主队任意球fk4bg-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="2" />
+
+                                <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:scaleType="fitXY"
+                                    android:src="@mipmap/football_home_free_kick_fk4_bg" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.45" />
+
+                            </LinearLayout>
+
+                            <!--主队任意球fk2bg-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
                                 android:orientation="horizontal">
 
                                 <View
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="1.1" />
+                                    android:layout_weight="2.4" />
 
-                                <pl.droidsonroids.gif.GifImageView
+                                <ImageView
                                     android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:layout_weight="0.5"
-                                    tools:src="@mipmap/football_home_position_gif" />
+                                    android:scaleType="fitXY"
+                                    android:src="@mipmap/football_home_free_kick_fk2_bg" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.43" />
 
                             </LinearLayout>
 
-                            <!--客队任意球坐标-->
+                            <!--客队任意球bg-->
                             <LinearLayout
-                                android:layout_width="0dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.3" />
+
+                                <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1.1"
+                                    android:scaleType="fitXY"
+                                    android:src="@mipmap/football_guest_free_kick_bg" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1" />
+
+                            </LinearLayout>
+
+                            <!--客队任意球fk4bg-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.45" />
+
+                                <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:scaleType="fitXY"
+                                    android:src="@mipmap/football_guest_free_kick_fk4_bg" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="2" />
+
+                            </LinearLayout>
+
+                            <!--客队任意球fk2bg-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
                                 android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.43" />
+
+                                <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.5"
+                                    android:scaleType="fitXY"
+                                    android:src="@mipmap/football_guest_free_kick_fk2_bg" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="2.4" />
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1.6" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <!--任意球fk3-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="3.2" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <!--客队坐标-->
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <!--客队title-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:visibility="visible">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.6" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="2.8"
+                                        android:background="@drawable/football_animation_offside_bg"
+                                        android:gravity="center"
+                                        android:paddingLeft="10dp"
+                                        android:text="@string/football_play_free_kick_danger"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/tennis_score_item" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1.5" />
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.1" />
+
+                            </LinearLayout>
+
+                            <!--坐标-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.8" />
 
                                 <pl.droidsonroids.gif.GifImageView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="0.5"
+                                    android:layout_weight="1"
                                     tools:src="@mipmap/football_guest_position_gif" />
 
                                 <View
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="1.1" />
+                                    android:layout_weight="1" />
+                            </LinearLayout>
+
+                            <!--背景-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="0.7" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1.1" />
+
+                                    <ImageView
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:scaleType="fitXY"
+                                        android:src="@mipmap/football_guest_free_kick_fk3l" />
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="2.3" />
+
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="0.2" />
 
                             </LinearLayout>
 
+                        </RelativeLayout>
 
-                        </LinearLayout>
+                        <!--主队-->
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
-                    </RelativeLayout>
+                            <!--主队title-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:visibility="visible">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.1" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.6" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="2.8"
+                                        android:background="@drawable/football_animation_offside_bg"
+                                        android:gravity="center"
+                                        android:paddingRight="10dp"
+                                        android:text="@string/football_play_free_kick_danger"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/tennis_score_item" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1.5" />
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1" />
+
+                            </LinearLayout>
+
+                            <!--坐标-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1" />
+
+                                <pl.droidsonroids.gif.GifImageView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    tools:src="@mipmap/football_home_position_gif" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.8" />
+
+                            </LinearLayout>
+
+                            <!--背景-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="0.7" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="2.3" />
+
+                                    <ImageView
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:scaleType="fitXY"
+                                        android:src="@mipmap/football_home_free_kick_fk3r_bg" />
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1.1" />
+
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="0.2" />
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1.6" />
+                        android:layout_weight="1.3" />
+
                 </LinearLayout>
 
+                <!--任意球fk3-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
 
+                    <!--坐标-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="2.5" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <!--主队title-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:visibility="visible">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1.2" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.6"
+                                    android:orientation="vertical">
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.6" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="2.8"
+                                        android:background="@drawable/football_animation_offside_bg"
+                                        android:gravity="center"
+                                        android:paddingRight="10dp"
+                                        android:text="@string/football_play_free_kick_danger"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/tennis_score_item" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1.5" />
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.8" />
+
+                            </LinearLayout>
+
+                            <!--客队title-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.8" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.6"
+                                    android:orientation="vertical">
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.6" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="2.8"
+                                        android:background="@drawable/football_animation_offside_bg"
+                                        android:gravity="center"
+                                        android:paddingLeft="10dp"
+                                        android:text="@string/football_play_free_kick_danger"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/tennis_score_item" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1.5" />
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1.2" />
+
+                            </LinearLayout>
+
+
+                            <!--客队坐标-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.55" />
+
+                                <pl.droidsonroids.gif.GifImageView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    tools:src="@mipmap/football_guest_position_gif" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="2" />
+
+                            </LinearLayout>
+
+                            <!--主队-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="2" />
+
+                                <pl.droidsonroids.gif.GifImageView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    tools:src="@mipmap/football_home_position_gif" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.55" />
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1.8" />
+
+                    </LinearLayout>
+
+                    <!--背景-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="3.65" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.4"
+                            android:orientation="horizontal">
+
+                            <!--客队前景-->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.75" />
+
+                                <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:scaleType="fitXY"
+                                    android:src="@mipmap/football_guest_free_kick_fk3r_bg" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1.2" />
+
+                            </LinearLayout>
+
+                            <!--主队前景-->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1.2" />
+
+                                <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:scaleType="fitXY"
+                                    android:src="@mipmap/football_home_free_kick_fk3l_bg" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.75" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1.7" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <!--任意球fk4-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                    <!--坐标-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="2.85" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1">
+
+                            <!--客队title-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:visibility="visible">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.55" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.6"
+                                    android:orientation="vertical">
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.6" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="2.8"
+                                        android:background="@drawable/football_animation_offside_bg"
+                                        android:gravity="center"
+                                        android:paddingLeft="10dp"
+                                        android:text="@string/football_play_free_kick_danger"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/tennis_score_item" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1.5" />
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1.4" />
+
+                            </LinearLayout>
+
+                            <!--主队title-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:visibility="visible">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1.4" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.6"
+                                    android:orientation="vertical">
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.6" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="2.8"
+                                        android:background="@drawable/football_animation_offside_bg"
+                                        android:gravity="center"
+                                        android:paddingRight="10dp"
+                                        android:text="@string/football_play_free_kick_danger"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/tennis_score_item" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1.5" />
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.55" />
+
+                            </LinearLayout>
+
+
+                            <!--客队坐标-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1" />
+
+                                <pl.droidsonroids.gif.GifImageView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    tools:src="@mipmap/football_guest_position_gif" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="5.2" />
+
+                            </LinearLayout>
+
+                            <!--主队坐标-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="5.2" />
+
+                                <pl.droidsonroids.gif.GifImageView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    tools:src="@mipmap/football_home_position_gif" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1" />
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1.45" />
+
+                    </LinearLayout>
+
+                    <!--背景-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="4.1" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.4"
+                            android:orientation="horizontal">
+
+                            <!--客队前景-->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1" />
+
+                                <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.6"
+                                    android:scaleType="fitXY"
+                                    android:src="@mipmap/football_home_free_kick_fk1_bg" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="2.2" />
+
+                            </LinearLayout>
+
+                            <!--主队前景-->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="2.2" />
+
+                                <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.6"
+                                    android:scaleType="fitXY"
+                                    android:src="@mipmap/football_guest_free_kick_fk1_bg" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1.8" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
 
             </FrameLayout>
 
