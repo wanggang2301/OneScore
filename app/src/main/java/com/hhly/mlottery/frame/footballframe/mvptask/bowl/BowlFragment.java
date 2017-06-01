@@ -160,7 +160,6 @@ public class BowlFragment extends BaseWebSocketFragment {
             currentFragment = to;
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             if (!to.isAdded()) {    // 先判断是否被add过
-
                 fragmentTransaction.hide(from).add(R.id.bowl_fl, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
             } else {
                 fragmentTransaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
