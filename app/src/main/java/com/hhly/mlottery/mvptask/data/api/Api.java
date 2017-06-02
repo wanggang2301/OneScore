@@ -23,5 +23,9 @@ public interface Api {
     @GET("")
     Observable<String> getSubsRecord();
 
+    @GET("")
+    Observable<String> getRecommendArticles();
+
+
     // http://m.13322.com/mlottery/core/footballBallList.ballListDetail.do?lang=zh&timeZone=8&oddType=1&thirdId=3458732
 }

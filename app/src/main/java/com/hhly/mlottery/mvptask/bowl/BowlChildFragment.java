@@ -296,4 +296,9 @@ public class BowlChildFragment extends ViewFragment<IContract.IBowlChildPresente
         super.onAttach(context);
         mActivity = (Activity) context;
     }
+
+    @Override
+    public boolean isActive() {
+        return isAdded();
+    }
 }

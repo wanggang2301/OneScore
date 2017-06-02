@@ -46,4 +46,16 @@ public interface IContract {
         String getSubsRecordData();
 
     }
+
+
+    //订阅记录
+    interface IRecommendArticlesPresenter extends IPresenter<IChildView> {
+
+        void requestData();
+
+        //BottomOddsDetails getBowlBean();
+
+        String getRecommendArticlesData();
+
+    }
 }

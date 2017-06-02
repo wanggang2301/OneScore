@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hhly.mlottery">
-    <!--录音权限-->
+
+    <!-- 录音权限 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!-- 调用系统下载权限 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -412,18 +413,17 @@
             android:name=".activity.BettingPayDetailsActivity"
             android:screenOrientation="portrait" />
 
-        <!--专家详情MVP-->
-        <activity android:name="com.hhly.mlottery.activity.bettingmvp.mvpview.MvpBettingRecommendActivity" />
+        <!-- 专家详情MVP -->
+        <activity android:name=".activity.bettingmvp.mvpview.MvpBettingRecommendActivity" />
         <activity
             android:name=".activity.BettingOnlinePaymentActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.hhly.mlottery.activity.bettingmvp.mvpview.MvpBettingPayDetailsActivity" />
+        <activity android:name=".activity.bettingmvp.mvpview.MvpBettingPayDetailsActivity" />
         android:screenOrientation="portrait" />
-        <activity android:name="com.hhly.mlottery.activity.bettingmvp.mvpview.MvpBettingOnlinePaymentActivity" />
+        <activity android:name=".activity.bettingmvp.mvpview.MvpBettingOnlinePaymentActivity" />
         <activity
             android:name=".activity.BettingRecommendSettingActivity"
             android:screenOrientation="portrait" />
-
 
         <!-- alipay sdk begin -->
         <!-- 若手机没有安装支付宝，则调用H5支付页面 -->
@@ -450,5 +450,7 @@
             android:name=".activity.MyFocusActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.SubsRecordActivity" />
+        <activity android:name=".activity.RecommendArticlesActivity"></activity>
     </application>
+
 </manifest>
