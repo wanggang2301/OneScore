@@ -22,6 +22,7 @@ import com.hhly.mlottery.bean.footballDetails.BottomOddsItem;
 import com.hhly.mlottery.bean.footballDetails.FirstOdd;
 import com.hhly.mlottery.bean.footballDetails.WebSocketRollballOdd;
 import com.hhly.mlottery.mvp.ViewFragment;
+import com.hhly.mlottery.mvptask.IContract;
 import com.hhly.mlottery.util.HandicapUtils;
 import com.hhly.mlottery.util.L;
 
@@ -34,7 +35,7 @@ import butterknife.OnClick;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BowlChildFragment extends ViewFragment<IBowlChildContract.IBowlChildPresenter> implements IBowlChildContract.IBowlChildView {
+public class BowlChildFragment extends ViewFragment<IContract.IBowlChildPresenter> implements IContract.IChildView {
 
     private static final int OUER_TYPE = 2;
     private static final int ALET_TYPE = 1;
@@ -110,9 +111,16 @@ public class BowlChildFragment extends ViewFragment<IBowlChildContract.IBowlChil
         View view = inflater.inflate(R.layout.fragment_bowl_child, container, false);
         ButterKnife.bind(this, view);
         context = mActivity;
-        mPresenter = new BowlChildPresenter(this);
+
+        //  mPresenter = new BowlChildPresenter(this);
         mPresenter.requestData(mThirdId, String.valueOf(oddType));
         return view;
+    }
+
+
+    @Override
+    public IContract.IBowlChildPresenter initPresenter() {
+        return new BowlChildPresenter(this);
     }
 
     private void setOddTypeText() {

@@ -33,7 +33,6 @@ public class DebugConfigActivity extends BaseActivity {
     public final static int DIY_INPUT = 8;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,10 +177,10 @@ public class DebugConfigActivity extends BaseActivity {
                 //   public LeagueCup(int type, List<String> thirdId, String racename, String raceId, int count, boolean hot) {
 
 
+                startActivity(new Intent(DebugConfigActivity.this, SubsRecordActivity.class));
+
             }
         });
-
-
 
 
     }

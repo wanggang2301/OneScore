@@ -75,13 +75,14 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
     private static final String FRAGMENT_INDEX = "fragment_index";
 
     private FocusMatchClickListener mFocusClickListener;// 关注点击事件
+
     public CornerFragment() {
         // Required empty public constructor
     }
 
 
-    public static CornerFragment getInstance(String type){
-        CornerFragment cornerFragment=new CornerFragment();
+    public static CornerFragment getInstance(String type) {
+        CornerFragment cornerFragment = new CornerFragment();
         Bundle bundle = new Bundle();
         bundle.putString(FRAGMENT_INDEX, type);
         cornerFragment.setArguments(bundle);
@@ -91,17 +92,16 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter=new CornerPresenter(this);
         if (getArguments() != null) {
-            mType=getArguments().getString(FRAGMENT_INDEX);
+            mType = getArguments().getString(FRAGMENT_INDEX);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mView=inflater.inflate(R.layout.fragment_corner,container,false);
-        ButterKnife.bind(this,mView);
+        mView = inflater.inflate(R.layout.fragment_corner, container, false);
+        ButterKnife.bind(this, mView);
 
 
         return mView;
@@ -122,7 +122,7 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
             }
         });
 
-        mAdapter=new CornerListAdapter(mPresenter.getData(),getActivity());
+        mAdapter = new CornerListAdapter(mPresenter.getData(), getActivity());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
 
@@ -165,7 +165,7 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
 
                     view.setTag(false);
                 }
-                ((FootballCornerActivity)getActivity()).focusCallback();
+                ((FootballCornerActivity) getActivity()).focusCallback();
             }
 
         };
@@ -174,9 +174,9 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
         mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
-                CornerListBean.CornerEntity entity=mPresenter.getData().get(i);
+                CornerListBean.CornerEntity entity = mPresenter.getData().get(i);
 
-                if(HandMatchId.handId(getActivity(), entity.getMatchId()+"")) {
+                if (HandMatchId.handId(getActivity(), entity.getMatchId() + "")) {
 
 
                     Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
@@ -187,11 +187,12 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
             }
         });
 
-        mCdt = new CountDownTimer(10000*1000, 1000*5 ) { //每两秒一次
+        mCdt = new CountDownTimer(10000 * 1000, 1000 * 5) { //每两秒一次
             @Override
             public void onTick(long millisUntilFinished) {
                 mPresenter.refreshData(mType);
             }
+
             @Override
             public void onFinish() {
 
@@ -201,7 +202,14 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
         mCdt.start();
     }
 
-    public void refreshDate(){
+
+    @Override
+    public CornerContract.Presenter initPresenter() {
+        return new CornerPresenter(this);
+
+    }
+
+    public void refreshDate() {
         mPresenter.refreshData(mType);
     }
 
@@ -217,8 +225,8 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
         mNodataLayout.setVisibility(View.GONE);
         mExceptionLayout.setVisibility(View.GONE);
         mProgressBarLayout.setVisibility(View.GONE);
-        if(getActivity()!=null){
-            ((FootballCornerActivity)getActivity()).setRefreshing(false);
+        if (getActivity() != null) {
+            ((FootballCornerActivity) getActivity()).setRefreshing(false);
         }
     }
 
@@ -236,15 +244,15 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
             mProgressBarLayout.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.GONE);
         }
-        if(getActivity()!=null){
-            ((FootballCornerActivity)getActivity()).setRefreshing(false);
+        if (getActivity() != null) {
+            ((FootballCornerActivity) getActivity()).setRefreshing(false);
         }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mCdt!=null){
+        if (mCdt != null) {
             mCdt.cancel();
         }
     }

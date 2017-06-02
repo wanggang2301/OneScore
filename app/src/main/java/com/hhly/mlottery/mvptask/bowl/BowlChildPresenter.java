@@ -1,7 +1,8 @@
 package com.hhly.mlottery.mvptask.bowl;
 
 import com.hhly.mlottery.bean.footballDetails.BottomOddsDetails;
-import com.hhly.mlottery.mvptask.data.repository.BowlReposeitory;
+import com.hhly.mlottery.mvptask.IContract;
+import com.hhly.mlottery.mvptask.data.repository.Repository;
 import com.hhly.mlottery.mvp.BasePresenter;
 import com.hhly.mlottery.util.CollectionUtils;
 
@@ -15,23 +16,27 @@ import rx.Subscriber;
  * @created on:2017/5/27  12:22.
  */
 
-public class BowlChildPresenter extends BasePresenter<IBowlChildContract.IBowlChildView> implements IBowlChildContract.IBowlChildPresenter {
+public class BowlChildPresenter extends BasePresenter<IContract.IChildView> implements IContract.IBowlChildPresenter {
 
-    private BowlReposeitory bowlReposeitory;
+    private Repository repository;
     private BottomOddsDetails bowlBeanList;
 
-    public BowlChildPresenter(IBowlChildContract.IBowlChildView view) {
+    public BowlChildPresenter(IContract.IChildView view) {
         super(view);
-        bowlReposeitory = mDataManager.bowlReposeitory;
+        repository = mDataManager.repository;
     }
 
 
     @Override
     public void requestData(String thirdId, String oddType) {
 
+        if (!mView.isActive()) {
+            return;
+        }
+
         mView.loading();
 
-        Observable<BottomOddsDetails> observable = bowlReposeitory.getBowlList(thirdId, oddType);
+        Observable<BottomOddsDetails> observable = repository.getBowlList(thirdId, oddType);
 
         addSubscription(observable, new Subscriber<BottomOddsDetails>() {
             @Override

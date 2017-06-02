@@ -2,7 +2,7 @@ package com.hhly.mlottery.mvptask.data;
 
 import android.content.Context;
 
-import com.hhly.mlottery.mvptask.data.repository.BowlReposeitory;
+import com.hhly.mlottery.mvptask.data.repository.Repository;
 
 import javax.inject.Inject;
 
@@ -16,7 +16,7 @@ import javax.inject.Inject;
 public class DataManager {
 
     @Inject
-    public BowlReposeitory bowlReposeitory;   //在DataModule中已经被注入，dataManager里面可以直接使用
+    public Repository repository;   //在DataModule中已经被注入，dataManager里面可以直接使用
 
     public DataManager(Context context, String apiHostUrl, String timeZone, String lang) {
 

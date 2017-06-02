@@ -14,11 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.enums.BasketOddsTypeEnum;
 import com.hhly.mlottery.bean.enums.TennisOddsTypeEnum;
-import com.hhly.mlottery.frame.cpifrag.basketballtask.indexdetail.BasketIndexDetailsChildFragment;
-import com.hhly.mlottery.frame.cpifrag.basketballtask.indexdetail.BasketIndexDetailsFragment;
-import com.hhly.mlottery.frame.cpifrag.basketballtask.indexdetail.BasketIndexDetailsFresenter;
 import com.hhly.mlottery.mvp.ViewFragment;
 
 import java.util.ArrayList;
@@ -32,7 +28,7 @@ import butterknife.ButterKnife;
  * 作    者：mady@13322.com
  * 时    间：2017/4/7
  */
-public class TennisIndexDetailsFragment extends ViewFragment<TennisIndexDetailsContract.IndexDetailsPresenter>implements TennisIndexDetailsContract.IndexDetailsView {
+public class TennisIndexDetailsFragment extends ViewFragment<TennisIndexDetailsContract.IndexDetailsPresenter> implements TennisIndexDetailsContract.IndexDetailsView {
     @BindView(R.id.public_img_back)
     ImageView publicImgBack;
     @BindView(R.id.public_txt_left_title)
@@ -79,10 +75,15 @@ public class TennisIndexDetailsFragment extends ViewFragment<TennisIndexDetailsC
     }
 
     @Override
+    public TennisIndexDetailsContract.IndexDetailsPresenter initPresenter() {
+        return new TennisIndexDetailsPresenter(this);
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_tennis_index_details, container, false);
         ButterKnife.bind(this, mView);
-        mPresenter = new TennisIndexDetailsPresenter(this);
         mPresenter.initFg();
         return mView;
     }
