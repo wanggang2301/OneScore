@@ -89,8 +89,13 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
         list.add("ss");
         list.add("ss");
         list.add("ss");
+        list.add("ss");
+        list.add("ss");
+        list.add("ss");
+        list.add("ss");
+        list.add("ss");
 
-        mRecommendArticlesAdapter = new RecommendArticlesAdapter(R.layout.recommend_articles_item, list);
+        mRecommendArticlesAdapter = new RecommendArticlesAdapter( list);
         recyclerView.setAdapter(mRecommendArticlesAdapter);
     }
 

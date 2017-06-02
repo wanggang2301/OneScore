@@ -2,8 +2,10 @@ package com.hhly.mlottery.adapter.custom;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.hhly.mlottery.R;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author: Wangg
@@ -15,12 +17,31 @@ import java.util.List;
 public class RecommendArticlesAdapter extends BaseQuickAdapter<String> {
 
 
-    public RecommendArticlesAdapter(int layoutResId, List<String> data) {
-        super(layoutResId, data);
+    public RecommendArticlesAdapter(List<String> data) {
+        super(R.layout.recommend_articles_item, data);
     }
 
     @Override
     protected void convert(BaseViewHolder baseViewHolder, String s) {
+
+
+        switch (new Random().nextInt(3)) {
+
+            case 0:
+                baseViewHolder.setImageResource(R.id.iv, R.mipmap.jingcai_icon_shi);
+
+                break;
+            case 1:
+                baseViewHolder.setImageResource(R.id.iv, R.mipmap.jingcai_icon_zou);
+
+                break;
+            case 2:
+                baseViewHolder.setImageResource(R.id.iv, R.mipmap.jingcai_icon_zhong);
+
+                break;
+
+
+        }
 
     }
 }

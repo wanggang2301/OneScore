@@ -87,12 +87,22 @@
 
                         <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/betting_home_name"
                                 style="@style/betting_recommend_team_name_style"
                                 android:text="主队XXXX" />
+
+                            <TextView
+                                android:id="@+id/betting_home_add"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="(+1)"
+                                android:textColor="#0085e1"
+                                android:textSize="@dimen/text_size_10" />
+
 
                             <TextView
                                 android:id="@+id/betting_vs"
@@ -137,10 +147,10 @@
                         android:gravity="center">
 
                         <ImageView
-                            android:id="@+id/iv_"
+                            android:id="@+id/iv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@mipmap/jingcai_icon_zhong" />
+                            android:src="@mipmap/jingcai_icon_zhong" />
                     </LinearLayout>
 
                 </RelativeLayout>
