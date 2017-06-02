@@ -76,15 +76,11 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_recommend_articles, container, false);
         moreView = inflater.inflate(R.layout.view_load_more, container, false);
-
         ButterKnife.bind(this, view);
-
         //mPresenter.requestData();
         initEvent();
-
         return view;
     }
 
@@ -92,12 +88,10 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     private void initEvent() {
         loadmoreText = (TextView) moreView.findViewById(R.id.loadmore_text);
         progressBar = (ProgressBar) moreView.findViewById(R.id.progressBar);
-
         refresh.setOnRefreshListener(this);
         refresh.setColorSchemeResources(R.color.bg_header);
         refresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
         recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-
         List<String> list = new ArrayList<>();
 
         list.add("ss");
@@ -114,7 +108,6 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
 
         mRecommendArticlesAdapter = new RecommendArticlesAdapter(list);
         recyclerView.setAdapter(mRecommendArticlesAdapter);
-
         mRecommendArticlesAdapter.openLoadMore(0, true);
         mRecommendArticlesAdapter.setLoadingView(moreView);
 
@@ -162,9 +155,7 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
 
     @Override
     public void onRefresh() {
-
         refresh.setRefreshing(false);
-
     }
 
     @Override
