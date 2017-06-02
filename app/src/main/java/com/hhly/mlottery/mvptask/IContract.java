@@ -21,6 +21,7 @@ public interface IContract {
 
         void noData();
 
+        //返回true代表Activity添加fg成功
         boolean isActive();
 
     }
