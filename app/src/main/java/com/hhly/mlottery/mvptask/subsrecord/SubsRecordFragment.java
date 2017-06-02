@@ -12,8 +12,10 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.custom.SubsRecordAdapter;
 import com.hhly.mlottery.mvp.ViewFragment;
@@ -32,7 +34,7 @@ import butterknife.OnClick;
  * @date 2017 六一儿童节
  */
 
-public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresenter> implements IContract.IChildView {
+public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresenter> implements IContract.IPullLoadMoreDataView {
 
 
     @BindView(R.id.iv_back)
@@ -49,11 +51,15 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
     RecyclerView recyclerView;
     @BindView(R.id.handle_exception)
     LinearLayout handleException;
+    SubsRecordAdapter mSubsRecordAdapter;
 
+    ProgressBar progressBar;
+    TextView loadmoreText;
 
     Activity mActivity;
 
-    SubsRecordAdapter mSubsRecordAdapter;
+    View moreView;
+
 
     public static SubsRecordFragment newInstance() {
         SubsRecordFragment subsRecordFragment = new SubsRecordFragment();
@@ -69,6 +75,8 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_subs_record, container, false);
+        moreView = inflater.inflate(R.layout.view_load_more, container, false);
+
         ButterKnife.bind(this, view);
 
         //mPresenter.requestData();
@@ -79,6 +87,9 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
 
 
     private void initEvent() {
+        loadmoreText = (TextView) moreView.findViewById(R.id.loadmore_text);
+        progressBar = (ProgressBar) moreView.findViewById(R.id.progressBar);
+
 
         recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
 
@@ -92,8 +103,23 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
         list.add("ss");
 
         mSubsRecordAdapter = new SubsRecordAdapter(R.layout.betting_recommend_item, list);
-
         recyclerView.setAdapter(mSubsRecordAdapter);
+
+
+        mSubsRecordAdapter.openLoadMore(0, true);
+        mSubsRecordAdapter.setLoadingView(moreView);
+
+        mSubsRecordAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                recyclerView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPresenter.pullUpLoadMoreData();
+                    }
+                });
+            }
+        });
     }
 
 
@@ -126,6 +152,20 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
 
     }
 
+    @Override
+    public void pullUpLoadMoreDataSuccess() {
+        loadmoreText.setText(mActivity.getResources().getString(R.string.loading_data_txt));
+        progressBar.setVisibility(View.VISIBLE);
+
+        // mList.addAll(foreignInfomationBean.getOverseasInformationList());
+        mSubsRecordAdapter.notifyDataChangedAfterLoadMore(true);
+    }
+
+    @Override
+    public void pullUpLoadMoreDataFail() {
+        loadmoreText.setText(mActivity.getResources().getString(R.string.nodata_txt));
+        progressBar.setVisibility(View.GONE);
+    }
 
     //防止Activity内存泄漏
     @Override

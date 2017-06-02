@@ -37,9 +37,12 @@ public interface IContract {
     }
 
     //订阅记录
-    interface ISubsRecordPresenter extends IPresenter<IChildView> {
+    interface ISubsRecordPresenter extends IPresenter<IPullLoadMoreDataView> {
 
         void requestData();
+
+        void pullUpLoadMoreData();
+
 
         //BottomOddsDetails getBowlBean();
 
@@ -48,10 +51,20 @@ public interface IContract {
     }
 
 
-    //订阅记录
-    interface IRecommendArticlesPresenter extends IPresenter<IChildView> {
+    interface IPullLoadMoreDataView extends IChildView {
+
+        void pullUpLoadMoreDataSuccess();
+
+        void pullUpLoadMoreDataFail();
+    }
+
+
+    //推介文章
+    interface IRecommendArticlesPresenter extends IPresenter<IPullLoadMoreDataView> {
 
         void requestData();
+
+        void pullUpLoadMoreData();
 
         //BottomOddsDetails getBowlBean();
 

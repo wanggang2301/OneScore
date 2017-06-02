@@ -13,11 +13,11 @@ import rx.Subscriber;
  * @created on:2017/6/2  11:19.
  */
 
-public class RecommendArticlesPresenter extends BasePresenter<IContract.IChildView> implements IContract.IRecommendArticlesPresenter {
+public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoadMoreDataView> implements IContract.IRecommendArticlesPresenter {
 
     private Repository repository;
 
-    public RecommendArticlesPresenter(IContract.IChildView view) {
+    public RecommendArticlesPresenter(IContract.IPullLoadMoreDataView view) {
         super(view);
         repository = mDataManager.repository;
     }
@@ -51,6 +51,51 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IChildVi
         });
     }
 
+    @Override
+    public void pullUpLoadMoreData() {
+        addSubscription(repository.getSubsRecord(), new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(String s) {
+
+
+                if (!"".equals("200")) {
+
+                    mView.pullUpLoadMoreDataFail();
+
+                    return;
+                } else {
+
+                    mView.pullUpLoadMoreDataSuccess();
+
+                }
+
+/*
+
+                if (!foreignInfomationBean.getResult().equals("200")) {
+                    loadmore_text.setText(mContext.getResources().getString(R.string.nodata_txt));
+                    progressBar.setVisibility(View.GONE);
+                    return;
+                } else {
+                    loadmore_text.setText(mContext.getResources().getString(R.string.loading_data_txt));
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+                mList.addAll(foreignInfomationBean.getOverseasInformationList());
+                foreignInfomationAdapter.notifyDataChangedAfterLoadMore(true);
+*/
+
+            }
+        });
+    }
 
     @Override
     public String getRecommendArticlesData() {

@@ -13,11 +13,11 @@ import rx.Subscriber;
  * @created on:2017/6/1  19:13.
  */
 
-public class SubsRecordPresenter extends BasePresenter<IContract.IChildView> implements IContract.ISubsRecordPresenter {
+public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDataView> implements IContract.ISubsRecordPresenter {
 
     private Repository repository;
 
-    public SubsRecordPresenter(IContract.IChildView view) {
+    public SubsRecordPresenter(IContract.IPullLoadMoreDataView view) {
         super(view);
         repository = mDataManager.repository;
     }
@@ -51,6 +51,32 @@ public class SubsRecordPresenter extends BasePresenter<IContract.IChildView> imp
         });
     }
 
+
+    @Override
+    public void pullUpLoadMoreData() {
+
+        addSubscription(repository.getSubsRecord(), new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onNext(String s) {
+
+                if (!"".equals("200")) {
+                    mView.pullUpLoadMoreDataFail();
+                    return;
+                } else {
+                    mView.pullUpLoadMoreDataSuccess();
+                }
+            }
+        });
+
+    }
 
     @Override
     public String getSubsRecordData() {

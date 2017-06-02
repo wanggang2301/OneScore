@@ -12,8 +12,10 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.custom.RecommendArticlesAdapter;
 import com.hhly.mlottery.mvp.ViewFragment;
@@ -31,11 +33,9 @@ import butterknife.OnClick;
  * @desc 推介文章
  * @date 2017/06/02
  */
-public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommendArticlesPresenter> implements IContract.IChildView {
+public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommendArticlesPresenter> implements IContract.IPullLoadMoreDataView {
 
 
-    @BindView(R.id.iv_back)
-    ImageView ivBack;
     @BindView(R.id.fl_loading)
     FrameLayout flLoading;
     @BindView(R.id.reLoading)
@@ -48,11 +48,18 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     RecyclerView recyclerView;
     @BindView(R.id.handle_exception)
     LinearLayout handleException;
+    RecommendArticlesAdapter mRecommendArticlesAdapter;
 
+
+    ProgressBar progressBar;
+    TextView loadmoreText;
 
     Activity mActivity;
 
-    RecommendArticlesAdapter mRecommendArticlesAdapter;
+    View moreView;
+
+    @BindView(R.id.iv_back)
+    ImageView ivBack;
 
     public static RecommendArticlesFragment newInstance() {
         RecommendArticlesFragment recommendArticlesFragment = new RecommendArticlesFragment();
@@ -68,6 +75,8 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_recommend_articles, container, false);
+        moreView = inflater.inflate(R.layout.view_load_more, container, false);
+
         ButterKnife.bind(this, view);
 
         //mPresenter.requestData();
@@ -78,6 +87,9 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
 
 
     private void initEvent() {
+        loadmoreText = (TextView) moreView.findViewById(R.id.loadmore_text);
+        progressBar = (ProgressBar) moreView.findViewById(R.id.progressBar);
+
 
         recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
 
@@ -95,8 +107,23 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
         list.add("ss");
         list.add("ss");
 
-        mRecommendArticlesAdapter = new RecommendArticlesAdapter( list);
+        mRecommendArticlesAdapter = new RecommendArticlesAdapter(list);
         recyclerView.setAdapter(mRecommendArticlesAdapter);
+
+        mRecommendArticlesAdapter.openLoadMore(0, true);
+        mRecommendArticlesAdapter.setLoadingView(moreView);
+
+        mRecommendArticlesAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                recyclerView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPresenter.pullUpLoadMoreData();
+                    }
+                });
+            }
+        });
     }
 
 
@@ -112,10 +139,7 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
 
     @Override
     public void responseData() {
-
-
         initEvent();
-
     }
 
 
@@ -129,15 +153,25 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
 
     }
 
+    @Override
+    public void pullUpLoadMoreDataSuccess() {
+        loadmoreText.setText(mActivity.getResources().getString(R.string.loading_data_txt));
+        progressBar.setVisibility(View.VISIBLE);
+
+        // mList.addAll(foreignInfomationBean.getOverseasInformationList());
+        mRecommendArticlesAdapter.notifyDataChangedAfterLoadMore(true);
+    }
+
+    @Override
+    public void pullUpLoadMoreDataFail() {
+        loadmoreText.setText(mActivity.getResources().getString(R.string.nodata_txt));
+        progressBar.setVisibility(View.GONE);
+    }
 
     //防止Activity内存泄漏
     @Override
     public boolean isActive() {
         return isAdded();
-    }
-
-    @OnClick(R.id.reLoading)
-    public void onClick() {
     }
 
 
@@ -146,5 +180,16 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
         super.onAttach(context);
 
         mActivity = (Activity) context;
+    }
+
+
+    @OnClick({R.id.iv_back, R.id.reLoading})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+                break;
+            case R.id.reLoading:
+                break;
+        }
     }
 }
