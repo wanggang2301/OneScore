@@ -89,7 +89,7 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
         list.add("ss");
         list.add("ss");
 
-        mRecommendArticlesAdapter = new RecommendArticlesAdapter(R.layout.betting_recommend_item, list);
+        mRecommendArticlesAdapter = new RecommendArticlesAdapter(R.layout.recommend_articles_item, list);
         recyclerView.setAdapter(mRecommendArticlesAdapter);
     }
 
