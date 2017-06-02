@@ -6,6 +6,13 @@ import android.support.v4.app.FragmentTransaction;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.mvptask.recommendarticles.RecommendArticlesFragment;
 
+
+/**
+ * @author wangg
+ * @desc 推介文章Activity
+ * @date 2017/06/02
+ */
+
 public class RecommendArticlesActivity extends BaseActivity {
 
     @Override

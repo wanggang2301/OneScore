@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author: Wangg
  * @name：xxx
- * @description: xxx
+ * @description: 推介文章Adapter
  * @created on:2017/6/2  11:27.
  */
 
