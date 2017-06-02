@@ -21,17 +21,20 @@ public interface IContract {
 
     }
 
-    //滚球
-    interface IBowlChildPresenter extends IPresenter<IChildView> {
-        void requestData(String thirdId, String oddType);
-        BottomOddsDetails getBowlBean();
-    }
 
     //加载更多数据
     interface IPullLoadMoreDataView extends IChildView {
         void pullUpLoadMoreDataSuccess();
         void pullUpLoadMoreDataFail();
     }
+
+
+    //滚球
+    interface IBowlChildPresenter extends IPresenter<IChildView> {
+        void requestData(String thirdId, String oddType);
+        BottomOddsDetails getBowlBean();
+    }
+
 
 
     //订阅记录
