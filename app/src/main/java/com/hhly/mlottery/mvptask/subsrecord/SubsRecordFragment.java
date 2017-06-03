@@ -112,7 +112,6 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
         mSubsRecordAdapter = new SubsRecordAdapter(R.layout.betting_recommend_item, list);
         recyclerView.setAdapter(mSubsRecordAdapter);
 
-
         mSubsRecordAdapter.openLoadMore(0, true);
         mSubsRecordAdapter.setLoadingView(moreView);
 
