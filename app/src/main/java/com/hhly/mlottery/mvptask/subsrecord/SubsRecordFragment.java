@@ -18,8 +18,11 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.custom.SubsRecordAdapter;
+import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.mvptask.IContract;
+import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +37,7 @@ import butterknife.OnClick;
  * @date 2017 六一儿童节
  */
 
-public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresenter> implements IContract.IPullLoadMoreDataView {
+public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresenter> implements IContract.IPullLoadMoreDataView, ExactSwipeRefreshLayout.OnRefreshListener {
 
 
     @BindView(R.id.iv_back)
@@ -59,6 +62,8 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
     Activity mActivity;
 
     View moreView;
+    @BindView(R.id.refresh)
+    ExactSwipeRefreshLayout refresh;
 
 
     public static SubsRecordFragment newInstance() {
@@ -89,7 +94,9 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
     private void initEvent() {
         loadmoreText = (TextView) moreView.findViewById(R.id.loadmore_text);
         progressBar = (ProgressBar) moreView.findViewById(R.id.progressBar);
-
+        refresh.setOnRefreshListener(this);
+        refresh.setColorSchemeResources(R.color.bg_header);
+        refresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
 
@@ -112,6 +119,13 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
         mSubsRecordAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
+
+
+
+
+
+
+
                 recyclerView.post(new Runnable() {
                     @Override
                     public void run() {
@@ -151,6 +165,12 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
     public void onError() {
 
     }
+
+    @Override
+    public void onRefresh() {
+        refresh.setRefreshing(false);
+    }
+
 
     @Override
     public void pullUpLoadMoreDataSuccess() {

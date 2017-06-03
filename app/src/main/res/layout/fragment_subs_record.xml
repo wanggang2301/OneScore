@@ -38,9 +38,15 @@
 
     <include layout="@layout/handle_exception" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
 
 </LinearLayout>
