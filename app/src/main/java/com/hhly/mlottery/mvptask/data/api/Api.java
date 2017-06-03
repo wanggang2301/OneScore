@@ -2,6 +2,7 @@ package com.hhly.mlottery.mvptask.data.api;
 
 
 import com.hhly.mlottery.bean.footballDetails.BottomOddsDetails;
+import com.hhly.mlottery.mvptask.data.model.SubsRecordBean;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -20,8 +21,10 @@ public interface Api {
     Observable<BottomOddsDetails> getBowlList(@Query("thirdId") String thirdId, @Query("oddType") String oddType);
 
 
-    @GET("")
-    Observable<String> getSubsRecord();
+    //http://192.168.10.242:8091/user/promotion/purchaseRecords?userId=hhly90531&pageNum=2&pageSize=10&lang=zh&timezone=8
+
+    @GET("/user/promotion/purchaseRecords")
+    Observable<SubsRecordBean> getSubsRecord(@Query("userId") String userId, @Query("pageNum") String pageNum, @Query("pageSize") String pageSize);
 
     @GET("")
     Observable<String> getRecommendArticles();

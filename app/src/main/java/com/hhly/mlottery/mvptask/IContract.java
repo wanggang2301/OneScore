@@ -3,6 +3,9 @@ package com.hhly.mlottery.mvptask;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsDetails;
 import com.hhly.mlottery.mvp.IPresenter;
 import com.hhly.mlottery.mvp.IView;
+import com.hhly.mlottery.mvptask.data.model.SubsRecordBean;
+
+import java.util.List;
 
 /**
  * @author: Wangg
@@ -14,8 +17,11 @@ import com.hhly.mlottery.mvp.IView;
 public interface IContract {
     interface IChildView extends IView {
         void loading();
+
         void responseData();
+
         void noData();
+
         //返回true代表Activity添加fg成功
         boolean isActive();
 
@@ -25,6 +31,7 @@ public interface IContract {
     //加载更多数据
     interface IPullLoadMoreDataView extends IChildView {
         void pullUpLoadMoreDataSuccess();
+
         void pullUpLoadMoreDataFail();
     }
 
@@ -32,25 +39,27 @@ public interface IContract {
     //滚球
     interface IBowlChildPresenter extends IPresenter<IChildView> {
         void requestData(String thirdId, String oddType);
+
         BottomOddsDetails getBowlBean();
     }
 
 
-
     //订阅记录
     interface ISubsRecordPresenter extends IPresenter<IPullLoadMoreDataView> {
-        void requestData();
-        void pullUpLoadMoreData();
-        //BottomOddsDetails getBowlBean();
-        String getSubsRecordData();
-    }
+        void requestData(String userId, String pageNum, String pageSize);
 
+        void pullUpLoadMoreData();
+
+        List<SubsRecordBean.PurchaseRecordsBean.ListBean> getSubsRecordData();
+    }
 
 
     //推介文章
     interface IRecommendArticlesPresenter extends IPresenter<IPullLoadMoreDataView> {
         void requestData();
+
         void pullUpLoadMoreData();
+
         //BottomOddsDetails getBowlBean();
         String getRecommendArticlesData();
     }

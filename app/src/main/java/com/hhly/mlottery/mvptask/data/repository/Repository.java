@@ -3,6 +3,7 @@ package com.hhly.mlottery.mvptask.data.repository;
 
 import com.hhly.mlottery.bean.footballDetails.BottomOddsDetails;
 import com.hhly.mlottery.mvptask.data.api.Api;
+import com.hhly.mlottery.mvptask.data.model.SubsRecordBean;
 
 import rx.Observable;
 
@@ -24,7 +25,7 @@ public class Repository {
         return mApi.getBowlList(thirdId, oddType);
     }
 
-    public Observable<String> getSubsRecord() {
-        return mApi.getSubsRecord();
+    public Observable<SubsRecordBean> getSubsRecord(String userId, String pageNum, String pageSize) {
+        return mApi.getSubsRecord(userId, pageNum, pageSize);
     }
 }

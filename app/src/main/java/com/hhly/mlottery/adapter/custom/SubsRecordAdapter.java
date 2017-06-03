@@ -2,6 +2,7 @@ package com.hhly.mlottery.adapter.custom;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.hhly.mlottery.mvptask.data.model.SubsRecordBean;
 
 import java.util.List;
 
@@ -12,15 +13,15 @@ import java.util.List;
  * @created on:2017/6/2  10:59.
  */
 
-public class SubsRecordAdapter extends BaseQuickAdapter<String> {
+public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseRecordsBean.ListBean> {
 
 
-    public SubsRecordAdapter(int layoutResId, List<String> data) {
+    public SubsRecordAdapter(int layoutResId, List<SubsRecordBean.PurchaseRecordsBean.ListBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder baseViewHolder, String s) {
+    protected void convert(BaseViewHolder baseViewHolder, SubsRecordBean.PurchaseRecordsBean.ListBean b) {
 
     }
 

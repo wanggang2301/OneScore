@@ -21,6 +21,7 @@ import com.hhly.mlottery.adapter.custom.SubsRecordAdapter;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.mvptask.IContract;
+import com.hhly.mlottery.mvptask.data.model.SubsRecordBean;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
@@ -39,6 +40,8 @@ import butterknife.OnClick;
 
 public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresenter> implements IContract.IPullLoadMoreDataView, ExactSwipeRefreshLayout.OnRefreshListener {
 
+
+    private static final String PAGE_SIZE = "10";
 
     @BindView(R.id.iv_back)
     ImageView ivBack;
@@ -65,6 +68,8 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
     @BindView(R.id.refresh)
     ExactSwipeRefreshLayout refresh;
 
+    private List<SubsRecordBean.PurchaseRecordsBean.ListBean> listBeanList;
+
 
     public static SubsRecordFragment newInstance() {
         SubsRecordFragment subsRecordFragment = new SubsRecordFragment();
@@ -78,14 +83,12 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_subs_record, container, false);
         moreView = inflater.inflate(R.layout.view_load_more, container, false);
-
         ButterKnife.bind(this, view);
-
-        //mPresenter.requestData();
         initEvent();
+
+        mPresenter.requestData("hhly90531", "1", PAGE_SIZE);
 
         return view;
     }
@@ -97,8 +100,25 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
         refresh.setOnRefreshListener(this);
         refresh.setColorSchemeResources(R.color.bg_header);
         refresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
-
         recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+    }
+
+
+    @Override
+    public IContract.ISubsRecordPresenter initPresenter() {
+        return new SubsRecordPresenter(this);
+    }
+
+    @Override
+    public void loading() {
+
+    }
+
+    @Override
+    public void responseData() {
+
+        listBeanList = mPresenter.getSubsRecordData();
+
 
         List<String> list = new ArrayList<>();
 
@@ -109,7 +129,7 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
         list.add("ss");
         list.add("ss");
 
-        mSubsRecordAdapter = new SubsRecordAdapter(R.layout.betting_recommend_item, list);
+        mSubsRecordAdapter = new SubsRecordAdapter(R.layout.betting_recommend_item, listBeanList);
         recyclerView.setAdapter(mSubsRecordAdapter);
 
         mSubsRecordAdapter.openLoadMore(0, true);
@@ -127,24 +147,7 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
                 });
             }
         });
-    }
 
-
-    @Override
-    public IContract.ISubsRecordPresenter initPresenter() {
-        return new SubsRecordPresenter(this);
-    }
-
-    @Override
-    public void loading() {
-
-    }
-
-    @Override
-    public void responseData() {
-
-
-        initEvent();
 
     }
 
