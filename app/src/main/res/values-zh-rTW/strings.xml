@@ -1737,4 +1737,6 @@
     <string name="bow_corner_left">高於</string>
     <string name="bow_corner_middle">即時盤</string>
     <string name="bow_corner_right">低於</string>
+    <string name="recommendarticle_txt">推介文章</string>
+    <string name="subsrecord_txt">訂閱記錄</string>
 </resources>
