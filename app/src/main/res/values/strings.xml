@@ -1764,10 +1764,12 @@
     <!--app动画直播-->
     <string name="football_play_penalty_lose">点球罚失</string>
     <string name="football_play_free_kick_danger">危险任意球</string>
+    <string name="football_play_free_kick">任意球</string>
     <string name="football_play_corner">角球</string>
     <string name="football_play_goal_door">球门球</string>
     <string name="football_play_hit">射正</string>
     <string name="football_play_deviate">射偏</string>
     <string name="football_play_goal_out">界外球</string>
+    <string name="football_play_whistle">哨子</string>
 
 </resources>
