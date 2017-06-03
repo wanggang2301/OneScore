@@ -50,6 +50,7 @@ public class BettingRecommendSettingActivity extends BaseActivity implements Vie
         findViewById(R.id.public_btn_set).setVisibility(View.INVISIBLE);
 
         mBack = (ImageView) findViewById(R.id.public_img_back);
+        mBack.setOnClickListener(this);
         mSave = (Button) findViewById(R.id.public_btn_save);
         mSave.setVisibility(View.VISIBLE);
         mSave.setTextColor(getResources().getColor(R.color.betting_recommend_zhuanjia_grand_color));
@@ -124,6 +125,10 @@ public class BettingRecommendSettingActivity extends BaseActivity implements Vie
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.public_btn_save: // 保存
+                break;
+            case R.id.public_img_back:
+                finish();
+                overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 break;
         }
     }

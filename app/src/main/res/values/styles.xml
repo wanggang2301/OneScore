@@ -1150,4 +1150,25 @@
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingRight">10dp</item>
     </style>
+    <!-- 竞彩推介发布文字内容 -->
+    <style name="betting_recommend_issue_fabu">
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/betting_issue_check_txt_color</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+    </style>
+    
+    <!--竞彩推介发布详情-->
+    <style name="betting_recommend_issue_fabu_key">
+        <item name="android:textColor">@color/betting_recommend_issue_wanfa_color</item>
+        <item name="android:textSize">@dimen/text_size_13</item>
+    </style>
+    <style name="betting_recommend_issue_fabu_jiage">
+        <item name="android:textColor">@color/betting_recommend_issue_jiage_color</item>
+        <item name="android:textSize">@dimen/text_size_13</item>
+    </style>
 </resources>

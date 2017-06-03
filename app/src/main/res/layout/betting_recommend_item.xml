@@ -211,7 +211,10 @@
                                 android:id="@+id/betting_buy_num"
                                 style="@style/betting_recommend_details_style"
                                 android:paddingLeft="10dp"
-                                android:text="9999已购买" />
+                                android:text="9999" />
+                            <TextView
+                                style="@style/betting_recommend_details_style"
+                                android:text="@string/betting_txt_have_buy" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -231,7 +234,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/betting_recommend_zhuanjia_grand_color"
                             android:textSize="@dimen/text_size_16"
-                            android:text="购买" />
+                            android:text="@string/betting_txt_buy" />
                     </LinearLayout>
 
                 </RelativeLayout>
