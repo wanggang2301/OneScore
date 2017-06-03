@@ -54,8 +54,9 @@ public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDa
 
     @Override
     public void pullUpLoadMoreData() {
+        mView.pullUpLoadMoreDataFail();
 
-        addSubscription(repository.getSubsRecord(), new Subscriber<String>() {
+       /* addSubscription(repository.getSubsRecord(), new Subscriber<String>() {
             @Override
             public void onCompleted() {
             }
@@ -74,7 +75,7 @@ public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDa
                     mView.pullUpLoadMoreDataSuccess();
                 }
             }
-        });
+        });*/
 
     }
 
