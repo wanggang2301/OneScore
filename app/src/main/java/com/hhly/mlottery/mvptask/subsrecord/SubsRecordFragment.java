@@ -120,12 +120,6 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
             @Override
             public void onLoadMoreRequested() {
 
-
-
-
-
-
-
                 recyclerView.post(new Runnable() {
                     @Override
                     public void run() {
