@@ -31,8 +31,9 @@ import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomePagerEntity;
 import com.hhly.mlottery.config.FootBallDetailTypeEnum;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.CommonUtils;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.HandMatchId;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.umeng.analytics.MobclickAgent;
@@ -236,7 +237,7 @@ public class HomePagerAdapter extends PagerAdapter {
                         case 1:// 页面
                         {
                             if (jumpAddr.contains("{loginToken}")) {// 是否需要登录
-                                if (CommonUtils.isLogin()) {// 判断用户是否登录
+                                if (DeviceInfo.isLogin()) {// 判断用户是否登录
                                     Intent intent = new Intent(mContext, WebActivity.class);
                                     intent.putExtra("key", jumpAddr);// 跳转地址
                                     intent.putExtra("infoTypeName", title);
@@ -467,11 +468,14 @@ public class HomePagerAdapter extends PagerAdapter {
                                 switch (split[0]) {
                                     case "18":// 足球
                                     {
-                                        Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
-                                        intent.putExtra("thirdId", split[1]);
-                                        intent.putExtra("currentFragmentId", 0);
-                                        intent.putExtra(FootBallDetailTypeEnum.CURRENT_TAB_KEY, FootBallDetailTypeEnum.FOOT_DETAIL_DEFAULT);
-                                        mContext.startActivity(intent);
+                                        if (HandMatchId.handId(mContext, split[1])) {
+
+                                            Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
+                                            intent.putExtra("thirdId", split[1]);
+                                            intent.putExtra("currentFragmentId", 0);
+                                            intent.putExtra(FootBallDetailTypeEnum.CURRENT_TAB_KEY, FootBallDetailTypeEnum.FOOT_DETAIL_DEFAULT);
+                                            mContext.startActivity(intent);
+                                        }
                                     }
                                     break;
                                     case "26":// 篮球

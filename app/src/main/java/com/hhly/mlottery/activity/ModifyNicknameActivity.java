@@ -17,7 +17,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.CommonUtils;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
@@ -133,7 +133,7 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
                              Intent intent = new Intent(ModifyNicknameActivity.this, LoginActivity.class);
                              startActivity(intent);
                          } else {
-                             CommonUtils.handlerRequestResult(bean.getResult(), bean.getMsg());
+                             DeviceInfo.handlerRequestResult(bean.getResult(), bean.getMsg());
                          }
                      }
                  }, new VolleyContentFast.ResponseErrorListener() {

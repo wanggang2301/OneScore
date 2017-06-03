@@ -1,9 +1,12 @@
 package com.hhly.mlottery.bean.footballDetails;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by asus1 on 2016/1/21.
  */
-public class MathchStatisInfo {
+public class MathchStatisInfo implements Parcelable {
 
     private int home_score = 0;
 
@@ -72,6 +75,53 @@ public class MathchStatisInfo {
     private int home_attack = 0;
 
     private int guest_attack = 0;
+
+    public MathchStatisInfo(){}
+
+    protected MathchStatisInfo(Parcel in) {
+        home_score = in.readInt();
+        home_half_score = in.readInt();
+        home_rc = in.readInt();
+        home_yc = in.readInt();
+        home_corner = in.readInt();
+        home_danger = in.readInt();
+        home_shoot_correct = in.readInt();
+        home_shoot_miss = in.readInt();
+        home_shoot_door = in.readInt();
+        home_rescue = in.readInt();
+        home_away = in.readInt();
+        home_free_kick = in.readInt();
+        home_foul = in.readInt();
+        home_lineOut = in.readInt();
+        guest_score = in.readInt();
+        guest_half_score = in.readInt();
+        guest_rc = in.readInt();
+        guest_yc = in.readInt();
+        guest_corner = in.readInt();
+        guest_danger = in.readInt();
+        guest_shoot_correct = in.readInt();
+        guest_shoot_miss = in.readInt();
+        guest_shoot_door = in.readInt();
+        guest_rescue = in.readInt();
+        guest_away = in.readInt();
+        guest_free_kick = in.readInt();
+        guest_foul = in.readInt();
+        guest_lineOut = in.readInt();
+        home_attack = in.readInt();
+        guest_attack = in.readInt();
+    }
+
+    public static final Creator<MathchStatisInfo> CREATOR = new Creator<MathchStatisInfo>() {
+        @Override
+        public MathchStatisInfo createFromParcel(Parcel in) {
+            return new MathchStatisInfo(in);
+        }
+
+        @Override
+        public MathchStatisInfo[] newArray(int size) {
+            return new MathchStatisInfo[size];
+        }
+    };
 
     public int getHome_attack() {
         return home_attack;
@@ -311,5 +361,44 @@ public class MathchStatisInfo {
 
     public void setGuest_foul(int guest_foul) {
         this.guest_foul = guest_foul;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(home_score);
+        parcel.writeInt(home_half_score);
+        parcel.writeInt(home_rc);
+        parcel.writeInt(home_yc);
+        parcel.writeInt(home_corner);
+        parcel.writeInt(home_danger);
+        parcel.writeInt(home_shoot_correct);
+        parcel.writeInt(home_shoot_miss);
+        parcel.writeInt(home_shoot_door);
+        parcel.writeInt(home_rescue);
+        parcel.writeInt(home_away);
+        parcel.writeInt(home_free_kick);
+        parcel.writeInt(home_foul);
+        parcel.writeInt(home_lineOut);
+        parcel.writeInt(guest_score);
+        parcel.writeInt(guest_half_score);
+        parcel.writeInt(guest_rc);
+        parcel.writeInt(guest_yc);
+        parcel.writeInt(guest_corner);
+        parcel.writeInt(guest_danger);
+        parcel.writeInt(guest_shoot_correct);
+        parcel.writeInt(guest_shoot_miss);
+        parcel.writeInt(guest_shoot_door);
+        parcel.writeInt(guest_rescue);
+        parcel.writeInt(guest_away);
+        parcel.writeInt(guest_free_kick);
+        parcel.writeInt(guest_foul);
+        parcel.writeInt(guest_lineOut);
+        parcel.writeInt(home_attack);
+        parcel.writeInt(guest_attack);
     }
 }

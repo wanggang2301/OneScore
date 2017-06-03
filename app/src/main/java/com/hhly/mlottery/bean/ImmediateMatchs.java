@@ -17,6 +17,16 @@ public class ImmediateMatchs {
 
 	private String teamLogoPre;
 
+	public String getFilerDate() {
+		return filerDate;
+	}
+
+	public void setFilerDate(String filerDate) {
+		this.filerDate = filerDate;
+	}
+
+	private String filerDate;
+
 
 
 	public List<Match> getImmediateMatch() {

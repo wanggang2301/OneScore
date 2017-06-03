@@ -18,15 +18,28 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Looper;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.tbruyelle.rxpermissions.RxPermissions;
+
+import rx.functions.Action1;
+import rx.functions.Func1;
+
+import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 /**
  * @author Tenney
@@ -163,7 +176,7 @@ public class CrashException implements UncaughtExceptionHandler {
      */
     private String saveCatchInfo2File(Throwable ex) {
 
-        StringBuffer sb = new StringBuffer();
+        final StringBuffer sb = new StringBuffer();
         for (Map.Entry<String, String> entry : infos.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
@@ -184,18 +197,61 @@ public class CrashException implements UncaughtExceptionHandler {
         try {
             long timestamp = System.currentTimeMillis();
             String time = formatter.format(new Date());
-            String fileName = "crash-" + time + "-" + timestamp + ".log";
+            final String fileName = "crash-" + time + "-" + timestamp + ".log";
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                String path = "/mnt/sdcard/crash/";
+                final String path = "/mnt/sdcard/crash/";
                 File dir = new File(path);
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
-                FileOutputStream fos = new FileOutputStream(path + fileName);
-                fos.write(sb.toString().getBytes());
-                //发送给开发人员  
-                sendCrashLog2PM(path + fileName);
-                fos.close();
+                if(ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
+                    RxPermissions.getInstance(mContext)
+                            .request(WRITE_EXTERNAL_STORAGE)
+                            .map(new Func1<Boolean, Boolean>() {
+                                @Override
+                                public Boolean call(Boolean granted) {
+                                    if(granted){
+                                        FileOutputStream fos = null;
+                                        try {
+                                            fos = new FileOutputStream(path + fileName);
+                                        } catch (FileNotFoundException e) {
+                                            e.printStackTrace();
+                                        }
+                                        try {
+                                            fos.write(sb.toString().getBytes());
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                        //发送给开发人员
+                                        sendCrashLog2PM(path + fileName);
+                                        try {
+                                            fos.close();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }else{
+
+                                    }
+                                    return granted;
+                                }
+                            }).subscribe(new Action1<Boolean>() {
+                        @Override
+                        public void call(Boolean aBoolean) {
+
+                        }
+                    }, new Action1<Throwable>() {
+                        @Override
+                        public void call(Throwable t) {
+                            t.printStackTrace();
+                        }
+                    });
+                }else{
+                    FileOutputStream fos = new FileOutputStream(path + fileName);
+                    fos.write(sb.toString().getBytes());
+                    //发送给开发人员
+                    sendCrashLog2PM(path + fileName);
+                    fos.close();
+                }
             }
             return fileName;
         } catch (Exception e) {

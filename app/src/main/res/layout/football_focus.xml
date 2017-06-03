@@ -4,23 +4,68 @@
     android:layout_height="match_parent"
     android:background="@color/whitesmoke"
     android:orientation="vertical">
+
     <include layout="@layout/item_header_unconection_view" />
+
+    <LinearLayout
+        android:id="@+id/titleContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/selector_item_clickable"
+        android:orientation="horizontal"
+        android:visibility="invisible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp">
+
+            <TextView
+                style="@style/WW_Width_0dp"
+                android:layout_weight="3.6" />
+
+            <TextView
+                android:id="@+id/tv_handicap_name1"
+                style="@style/WW_Width_0dp"
+                android:layout_weight="0.6"
+                android:gravity="center"
+                android:text="@string/roll_asialet" />
+
+            <TextView
+                android:id="@+id/tv_handicap_name2"
+                style="@style/WW_Width_0dp"
+                android:layout_weight="0.6"
+                android:gravity="center"
+                android:text="@string/roll_asiasize" />
+
+            <TextView
+                style="@style/WW_Width_0dp"
+                android:layout_weight="0.4"
+                android:gravity="center" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
             android:id="@+id/football_immediate_swiperefreshlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone">
-            <android.support.v7.widget.RecyclerView
-                xmlns:android="http://schemas.android.com/apk/res/android"
+
+            <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/recyclerview_focus"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </android.support.v7.widget.RecyclerView>
+                android:layout_height="match_parent" />
+
         </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
+
         <LinearLayout
             android:id="@+id/football_immediate_loading_ll"
             android:layout_width="match_parent"
@@ -28,41 +73,19 @@
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="gone">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/loading_txt"
                 android:textColor="@color/loading_txt_color" />
         </LinearLayout>
-            <!--<LinearLayout-->
-                <!--android:id="@+id/to_football_focus_ll"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="vertical"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:visibility="gone"-->
-                <!--&gt;-->
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:text="@string/no_focus"/>-->
-                <!--<TextView-->
-                    <!--android:id="@+id/to_football_focus"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:paddingTop="10dp"-->
-                    <!--android:textColor="@color/exp_refresh"-->
-                    <!--android:text="@string/to_focus_now"/>-->
-            <!--</LinearLayout>-->
         <!--暂无关注提示-->
         <RelativeLayout
             android:id="@+id/football_unfocus"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/football_image_unfocus"
@@ -77,10 +100,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/football_image_unfocus"
                 android:layout_centerHorizontal="true"
+                android:gravity="center"
                 android:text="@string/unfocus"
                 android:textColor="@color/unfocus_text"
-                android:textSize="14sp"
-                android:gravity="center" />
+                android:textSize="14sp" />
         </RelativeLayout>
         <!--加载中-->
         <LinearLayout
@@ -89,8 +112,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/snooker_loading"
@@ -100,6 +122,6 @@
                 android:textColor="@color/loading_txt_color" />
         </LinearLayout>
 
-        <include layout="@layout/network_exception"/>
+        <include layout="@layout/network_exception" />
     </FrameLayout>
 </LinearLayout>

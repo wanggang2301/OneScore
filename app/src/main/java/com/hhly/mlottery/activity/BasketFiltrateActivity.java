@@ -9,16 +9,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.FiltrateAdapter;
 import com.hhly.mlottery.bean.basket.BasketMatchFilter;
+import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
 import com.hhly.mlottery.frame.footballframe.FiltrateMatchFragment;
 import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreImmedEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreResultEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreScheduleEventBusEntity;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MultipleBasketFilterListEvent;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.view.GrapeGridview;
 import com.umeng.analytics.MobclickAgent;
 
@@ -39,13 +42,8 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
 
     private final static String TAG = "BasketFiltrateActivity";
 
-    //    public final static String ALL_CUPS = "allCups";
-//    public final static String CHECKED_CUPS = "checkedCups";
-//    public final static String CHECKED_DEFUALT = "checkedDefualt";
     public final static String CHECKED_CUPS_IDS = "checkedCupIds";
 
-//    public final static String NET_STATUS = "isNetSuccess";
-//    public final static String LIST_FILTER_DATAS = "mListFilterDatas";
 
     private List<BasketMatchFilter> mAllFilterDatas = new ArrayList<BasketMatchFilter>(); //所有的数据
     private List<BasketMatchFilter> mChickedFilterDatas = new ArrayList<BasketMatchFilter>(); //选中的数据
@@ -54,17 +52,6 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
     private List<String> mCupOther; //其它的id
     private List<String> mCupChicked; //选中的id
 
-
-//    private List<BasketMatchFilter> mChickedDatas = new ArrayList<BasketMatchFilter>(); //所有比赛
-//    public  Parcelable[] mFilter;// = new ArrayList<BasketMatchFilter>();
-//    private Parcelable[] mCups;
-//    private Parcelable[] mCheckedCups;
-//    private boolean isDefualt;
-//    private boolean isNetSuccess ; //判断加载是否成功
-
-//    private RadioGroup mTab;
-//    private RadioButton mMatchTab;
-//    private RadioButton mStatusTab;
 
     private ImageView public_img_back;// 筛选界面返回
 
@@ -84,16 +71,12 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
     private GrapeGridview gview_hot;
     private GrapeGridview givew_other;
 
-
-//    private ListView mLv;
-
     private List<Map<String, Object>> data_list;
 
     private FiltrateAdapter mAdapter1;
     private FiltrateAdapter mAdapter2;
     private int currentId;
 
-//    private boolean aa = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,27 +99,7 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
         }
         return data_list;
     }
-//    public List<Map<String, Object>> getData(){
-//        //cion和iconName的长度是相同的，这里任选其一都可以
-//        for(int i=0;i<icon.length;i++){
-//            Map<String, Object> map = new HashMap<String, Object>();
-//            map.put("image", icon[i]);
-//            map.put("text", iconName[i]);
-//            data_list.add(map);
-//        }
-//        return data_list;
-//    }
-//
-//    public List<Map<String, Object>> getData1(){
-//        //cion和iconName的长度是相同的，这里任选其一都可以
-//        for(int i=0;i<icon.length-2;i++){
-//            Map<String, Object> map = new HashMap<String, Object>();
-//            map.put("image", icon[i]);
-//            map.put("text", iconName[i]);
-//            data_list1.add(map);
-//        }
-//        return data_list1;
-//    }
+
 
     private void initView() {
         TextView public_txt_title = (TextView) findViewById(R.id.public_txt_title);
@@ -174,22 +137,6 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
 
     private void initData() {
 
-//        StringBuffer mIdsHot = new StringBuffer(); //热门联赛Id
-//        StringBuffer mIdsOther = new StringBuffer(); //其它联赛Id
-//
-//        StringBuffer mNamesHot = new StringBuffer(); //热门联赛名
-//        StringBuffer mNamesOther = new StringBuffer();//其它联赛名
-
-//        Bundle bundle=new Bundle();
-//        bundle.setClassLoader(getClass().getClassLoader());
-//        mFilter = bundle.getParcelableArray(LIST_FILTER_DATAS);
-
-//        Intent intent = getIntent();
-//        mFilter = intent.getParcelableArrayExtra(LIST_FILTER_DATAS);
-
-//        Serializable xxx = getIntent().getSerializableExtra("xxx"); //取值
-//        List<BasketMatchFilter> xx = ( List<BasketMatchFilter>)xxx;
-//        xx.get(0).getLeagueName();
 
         Serializable mSerializableAll = getIntent().getSerializableExtra("MatchAllFilterDatas"); //取值 Serializable
         Serializable mSerialIzableChicked = getIntent().getSerializableExtra("MatchChickedFilterDatas"); // 选中的
@@ -206,6 +153,7 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
          */
         List<BasketMatchFilter> hotdatas = new ArrayList<>(); // 已有热门
         List<BasketMatchFilter> otherdatas = new ArrayList<>();//已有其他
+
         for (BasketMatchFilter filter : mAllFilterDatas) {
             String leagueId = filter.getLeagueId();
             if (leagueId.equals("1") || leagueId.equals("5") || leagueId.equals("15") ||
@@ -256,6 +204,7 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
         //遍历选中数据 得到选中id
         for (BasketMatchFilter chickedFilter : mChickedFilterDatas) {
             mCupChicked.add(chickedFilter.getLeagueId());//选中的id
+
             if (!chickedFilter.isChecked()) {
                 chickedFilter.setIsChecked(true);
             }
@@ -268,47 +217,47 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
             String leagueId = filter.getLeagueId();
             /***|| leagueId.equals("8") NCAA (产品要求) 从热门中去除*/
 
-            if (leagueId.equals("1") || leagueId.equals("5") || leagueId.equals("15") ||
-                    leagueId.equals("21") || leagueId.equals("22") || leagueId.equals("57") || leagueId.equals("377")) {
+
+            if (leagueId.equals("1") || leagueId.equals("5") || leagueId.equals("15") || leagueId.equals("21") || leagueId.equals("22") || leagueId.equals("57") || leagueId.equals("377")) {
                 mHotFilterDatas.add(filter); // 热门的数据
-
                 mCupHot.add(filter.getLeagueId());//热门id
-
-//                if ("".equals(mIdsHot.toString())) {
-//                    mIdsHot.append(leagueId);
-//                } else {
-//                    mIdsHot.append("," + leagueId);
-//                }
-//                if ("".equals(mNamesHot.toString())){
-//                    mNamesHot.append(filter.getLeagueName());
-//                }else{
-//                    mNamesHot.append("," + filter.getLeagueName());
-//                }
             } else {
                 mOtherFilterDatas.add(filter); // 其它的数据
                 mCupOther.add(filter.getLeagueId());//其它id
-
-//                if ("".equals(mIdsOther.toString())) {
-//                    mIdsOther.append(leagueId);
-//                } else {
-//                    mIdsOther.append("," + leagueId);
-//                }
-//                if("".equals(mNamesOther.toString())){
-//                    mNamesOther.append(filter.getLeagueName());
-//                }else{
-//                    mNamesOther.append("," + filter.getLeagueName());
-//                }
             }
+
+
             mCupChicked.clear();
             //遍历选中数据 得到选中id
-            for (BasketMatchFilter chickedFilter : mChickedFilterDatas) {
-                //选中的id
-                mCupChicked.add(chickedFilter.getLeagueId());
-                //标记选中
-                if (chickedFilter.getLeagueId().equals(filter.getLeagueId())) {
-                    filter.setIsChecked(true);
+
+            List<String> localSaveIds = getLocalSaveLeagueIds();
+
+            if (localSaveIds.size() > 0) {
+
+
+                for (String chickedFilter : localSaveIds) {
+                    //选中的id
+                    mCupChicked.add(chickedFilter);
+                    //标记选中
+                    if (chickedFilter.equals(filter.getLeagueId())) {
+                        filter.setIsChecked(true);
+                    }
+
+                }
+
+            } else {
+                for (BasketMatchFilter chickedFilter : mChickedFilterDatas) {
+                    //选中的id
+                    mCupChicked.add(chickedFilter.getLeagueId());
+                    //标记选中
+                    if (chickedFilter.getLeagueId().equals(filter.getLeagueId())) {
+                        filter.setIsChecked(true);
+                    }
+
                 }
             }
+
+
         }
 
         FiltrateAdapter.OnCheckListener onCheckListener = new FiltrateAdapter.OnCheckListener() {
@@ -338,30 +287,42 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
             mAdapter2.setOnCheckListener(onCheckListener);
             givew_other.setAdapter(mAdapter2);
         }
-//        mAdapter1.setmChickedListener(mFiltrateClickListener);
-//        mAdapter2.setmChickedListener(mFiltrateClickListener);
-
-        //点击事件处理
-//        mFiltrateClickListener = new FiltrateClickListener() {
-//            @Override
-//            public void filtrateClick(View view, Map<String, Object> mMap, boolean isChicked) {
-//
-//                if (!isChicked) {
-//                    view.setBackgroundResource(R.mipmap.iconfont_guanzhu_hover);
-//                    view.setTag(true);
-//                }else{
-//                    view.setBackgroundResource(R.mipmap.iconfont_guanzhu);
-//                    view.setTag(false);
-//                }
-//            }
-//        };
 
     }
 
-//    // 定义筛选点击监听
-//    public interface FiltrateClickListener {
-//        public void filtrateClick(View view, Map<String, Object> mMap,boolean isChicked);
-//    }
+
+    private final int IMMEDIA_FRAGMENT = 0;
+    private final int RESULT_FRAGMENT = 1;
+    private final int SCHEDULE_FRAGMENT = 2;
+
+
+    private List<String> getLocalSaveLeagueIds() {
+
+        List<String> list = new ArrayList<>();
+        switch (currentId) {
+            case IMMEDIA_FRAGMENT:
+                list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.BASKET_IMMEDIA);
+
+                break;
+
+            case RESULT_FRAGMENT:
+                list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.BASKET_RESULT);
+
+                break;
+            case SCHEDULE_FRAGMENT:
+                list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.BASKET_SCHEDULE);
+
+                break;
+            default:
+                break;
+
+
+        }
+
+        return list;
+
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -383,78 +344,31 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
                 bundle.putCharSequenceArray(CHECKED_CUPS_IDS, checkedCups);
                 intent.putExtras(bundle);
                 setResult(Activity.RESULT_OK, intent);
+                if (mCupChicked.size() <= 0) {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.at_least_one_race), Toast.LENGTH_SHORT).show();
+                } else {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("checkedCupIds", mCupChicked);
 
-                Map<String, Object> map = new HashMap<>();
-                map.put("checkedCupIds", mCupChicked);
+                    if (currentId == 0) {
+                        EventBus.getDefault().post(new BasketScoreImmedEventBusEntity(map));
+                    } else if (currentId == 1) {
+                        EventBus.getDefault().post(new BasketScoreResultEventBusEntity(map));
+                    } else if (currentId == 2) {
+                        EventBus.getDefault().post(new BasketScoreScheduleEventBusEntity(map));
+                    } else if (currentId == 3) {
+                        EventBus.getDefault().post(new MultipleBasketFilterListEvent(map));
+                    }
 
-                if (currentId == 0) {
-                    EventBus.getDefault().post(new BasketScoreImmedEventBusEntity(map));
-                } else if (currentId == 1) {
-                    EventBus.getDefault().post(new BasketScoreResultEventBusEntity(map));
-                } else if (currentId == 2) {
-                    EventBus.getDefault().post(new BasketScoreScheduleEventBusEntity(map));
-                } else if (currentId == 3) {
-                    EventBus.getDefault().post(new MultipleBasketFilterListEvent(map));
+                    L.d("currentId >>>>>>>>>>>", "currentId == >" + currentId);
+                    finish();
+                    overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 }
-
-                L.d("currentId >>>>>>>>>>>", "currentId == >" + currentId);
-                finish();
-                overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 break;
 
             case R.id.filtrate_hot_btn:
                 MobclickAgent.onEvent(mContext, "Basketball_Filter_HotBtn");
-//                Toast.makeText(this,"热门",Toast.LENGTH_SHORT).show();
-//                    chickedCup.getLeagueId().equals("1") || chickedCup.getLeagueId().equals("5") || chickedCup.getLeagueId().equals("8") || chickedCup.getLeagueId().equals("15") ||
-//                    chickedCup.getLeagueId().equals("21") || chickedCup.getLeagueId().equals("22") || chickedCup.getLeagueId().equals("57") || chickedCup.getLeagueId().equals("377")
                 mCupChicked.clear();
-
-//                /**
-//                 * 热门按键（带反选功能）
-//                 */
-//                boolean isHotchecked = false;//其它赛事是否有选中的联赛
-//                boolean ishot = false; //热门赛事 是否有选中的联赛
-//                //其它赛事是否有选中的联赛
-//                for (BasketMatchFilter chickedCup : mAllFilterDatas) {
-//                    if (!chickedCup.isHot() && chickedCup.isChecked()) {
-//                        isHotchecked = true;//其它赛事有选中 -- true;
-//                    }
-//                }
-//                //其它赛事有选中
-//                if (isHotchecked) {
-//                    for (BasketMatchFilter chickedCup : mAllFilterDatas) {
-//                        if (chickedCup.isHot()) { //热门选项
-//                            chickedCup.setIsChecked(true);
-//                            mCupChicked.add(chickedCup.getLeagueId());
-//                        }else{
-//                            chickedCup.setIsChecked(false);
-//                        }
-//                    }
-//                }else{//其它赛事未选中
-//
-//                    //热门赛事是否全部选中
-//                    for (BasketMatchFilter chickedCup : mAllFilterDatas) {
-//                        if (chickedCup.isHot() && !chickedCup.isChecked()) {
-//                            ishot = true; // 热门赛事有未选中的 --（true）
-//                        }
-//                    }
-//                    //热门赛事未全部选中
-//                    if (ishot) {
-//                        for (BasketMatchFilter chickedCup : mAllFilterDatas) {
-//                            if (chickedCup.isHot()) { //热门选项
-//                                chickedCup.setIsChecked(true);
-//                                mCupChicked.add(chickedCup.getLeagueId());
-//                            }else{
-//                                chickedCup.setIsChecked(false);
-//                            }
-//                        }
-//                    }else{
-//                        for (BasketMatchFilter chickedCup : mAllFilterDatas) {
-//                                chickedCup.setIsChecked(false);
-//                                mCupChicked.add(chickedCup.getLeagueId());
-//                        }
-//                    }
-//                }
 
                 /**
                  * 热门按键（不带反选功能）
@@ -493,29 +407,7 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
                 MobclickAgent.onEvent(mContext, "Basketball_Filter_All");
 //                Toast.makeText(this,"全选",Toast.LENGTH_SHORT).show();
                 mCupChicked.clear();
-//                /**
-//                 * (带反选功能)
-//                 */
-//                boolean isAllChecked = true;
-//                for (BasketMatchFilter chickedCup:mAllFilterDatas) {
-//                    if (!chickedCup.isChecked()) {
-//                        isAllChecked = false;
-//                    }
-//                }
-//                if (isAllChecked) {
-//                    for (BasketMatchFilter chickedCup:mAllFilterDatas) {
-//                        chickedCup.setIsChecked(false);
-//                        mCupChicked.add(chickedCup.getLeagueId());
-//                    }
-//                }else{
-//                    for (BasketMatchFilter chickedCup:mAllFilterDatas) {
-//                        chickedCup.setIsChecked(true);
-//                        mCupChicked.add(chickedCup.getLeagueId());
-//                    }
-//                }
-                /**
-                 * 不带反选功能
-                 */
+
                 for (BasketMatchFilter chickedCup : mAllFilterDatas) {
                     chickedCup.setIsChecked(true);
                     mCupChicked.add(chickedCup.getLeagueId());
@@ -544,16 +436,6 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
                     }
                 }
 
-//                    for (BasketMatchFilter chickedCup:mAllFilterDatas) { //所有的跟 进入界面时的id比较
-//                    for (BasketMatchFilter cupid:mChickedFilterDatas) {
-//                        if (!chickedCup.getLeagueId().equals(cupid.getLeagueId())) {
-//                            chickedCup.setIsChecked(true);
-//                            mCupChicked.add(chickedCup.getLeagueId());
-//                        }else{
-//                            chickedCup.setIsChecked(false);
-//                        }
-//                    }
-//                }
                 mAdapter1.notifyDataSetChanged();
                 mAdapter2.notifyDataSetChanged();
 
@@ -578,48 +460,15 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
 
     }
 
-//    @Override
-//    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//        switch(view.getId()){
-//            case R.id.basket_filtrate_details_item_1:
-//
-//                Toast.makeText(this,position+"basket_filtrate_details_item_1",Toast.LENGTH_SHORT).show();
-//                break;
-//            case R.id.basket_filtrate_details_item_2:
-//                Toast.makeText(this,position+"basket_filtrate_details_item_2",Toast.LENGTH_SHORT).show();
-//                break;
-//            case R.id.basket_filtrate_details_item_3:
-//                Toast.makeText(this,position+"basket_filtrate_details_item_3",Toast.LENGTH_SHORT).show();
-//                break;
-//            case R.id.basket_filtrate_details_item_4:
-//                Toast.makeText(this,position+"basket_filtrate_details_item_4",Toast.LENGTH_SHORT).show();
-//                break;
-//
-//        }
-//
-//    }
-
-//    @Override
-//    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//        Toast.makeText(this,"===="+position,Toast.LENGTH_SHORT).show();
-//
-//    }
-
 
     @Override
     protected void onResume() {
         super.onResume();
-//        MobclickAgent.onResume(this);
-//        MobclickAgent.onPageStart("BasketFiltrateActivity");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-//        MobclickAgent.onPause(this);
-//        MobclickAgent.onPageEnd("BasketFiltrateActivity");
     }
 
 

@@ -14,7 +14,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,7 +27,6 @@ import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.ImmediateAdapter;
-import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.Focus;
 import com.hhly.mlottery.bean.Match;
 import com.hhly.mlottery.bean.MatchOdd;
@@ -39,12 +37,14 @@ import com.hhly.mlottery.bean.websocket.WebSocketMatchStatus;
 import com.hhly.mlottery.callback.FocusMatchClickListener;
 import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.FootBallDetailTypeEnum;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchSettingEventBusEntity;
 import com.hhly.mlottery.frame.scorefrag.FootBallScoreFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.HandMatchId;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -80,7 +80,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
      */
     public final static String FOCUS_ISD = "focus_ids";
 
-//    public final static int REQUEST_SET_CODE = 0x42;
+    //    public final static int REQUEST_SET_CODE = 0x42;
     private final int REQUEST_DETAIL_CODE = 0x43;
 
 
@@ -89,7 +89,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
     private TextView mReloadTvBtn;
 
-//    private LinearLayout mLoadingLayout;
+    //    private LinearLayout mLoadingLayout;
     private LinearLayout mErrorLayout;
 
     private ExactSwipeRefreshLayout mSwipeRefreshLayout;
@@ -123,8 +123,11 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
     private Vibrator mVibrator;
     private SoundPool mSoundPool;
-    private HashMap<Integer, Integer> mSoundMap = new HashMap<Integer, Integer>();
+    private HashMap<Integer, Integer> mSoundMap = new HashMap<>();
 
+    private LinearLayout titleContainer;
+    private TextView handicapName1;
+    private TextView handicapName2;
 
     private static final String FRAGMENT_INDEX = "fragment_index";
     private static final String ENTRY_TYPE = "entryType";
@@ -231,6 +234,10 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
         mSwipeRefreshLayout.setRefreshing(true);
         mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+
+        titleContainer = (LinearLayout) mView.findViewById(R.id.titleContainer);
+        handicapName1 = (TextView) mView.findViewById(R.id.tv_handicap_name1);
+        handicapName2 = (TextView) mView.findViewById(R.id.tv_handicap_name2);
     }
 
     /**
@@ -282,13 +289,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         };
     }
 
-//    private final static int VIEW_STATUS_LOADING = 1;
-//    private final static int VIEW_STATUS_NO_ANY_DATA = 2;
-//    private final static int VIEW_STATUS_SUCCESS = 3;
-//    private final static int VIEW_STATUS_NET_ERROR = 4;
-//    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS = 6;
-//    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_FAIL = 7;
-
     /**
      * 设置显示状态
      *
@@ -322,75 +322,11 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         mLoading.setVisibility((status == SHOW_STATUS_REFRESH_ONCLICK) ? View.VISIBLE : View.GONE);
         mErrorLayout.setVisibility(status == SHOW_STATUS_ERROR ? View.VISIBLE : View.GONE);
         mUnFocusLayout.setVisibility(status == SHOW_STATUS_NO_DATA ? View.VISIBLE : View.GONE);
+        if (mUnFocusLayout.getVisibility() == View.VISIBLE) {
+            titleContainer.setVisibility(View.GONE);
+        }
     }
 
-
-//    private Handler mViewHandler = new Handler() {
-//        public void handleMessage(Message msg) {
-//            switch (msg.what) {
-//                case VIEW_STATUS_LOADING:
-//                    //mLoadingLayout.setVisibility(View.VISIBLE);
-//                    mErrorLayout.setVisibility(View.GONE);
-////                    mListView.setVisibility(View.GONE);
-//                    mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-//                    mSwipeRefreshLayout.setRefreshing(true);
-//                    if (!isLoadedData) {
-//                        mLoadingLayout.setVisibility(View.VISIBLE);
-//                    }
-//                    break;
-//                case VIEW_STATUS_NO_ANY_DATA:
-//                    mLoadingLayout.setVisibility(View.GONE);
-////                    mListView.setVisibility(View.GONE);
-//                    mErrorLayout.setVisibility(View.GONE);
-//                    //如果不隐藏mSwipeRefreshLayout，会出现没关注的页面和一条比赛。
-//                    mSwipeRefreshLayout.setVisibility(View.GONE);
-//                    //mUnconectionLayout.setVisibility(View.GONE);
-//                    mSwipeRefreshLayout.setRefreshing(false);
-//                    mUnFocusLayout.setVisibility(View.VISIBLE);
-//                    break;
-//                case VIEW_STATUS_SUCCESS:
-//                    mLoadingLayout.setVisibility(View.GONE);
-////                    mListView.setVisibility(View.VISIBLE);
-//                    mErrorLayout.setVisibility(View.GONE);
-////                    mUnconectionLayout.setVisibility(View.GONE);
-//                    mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-//                    mSwipeRefreshLayout.setRefreshing(false);
-//                    mUnFocusLayout.setVisibility(View.GONE);
-//                    break;
-//                case VIEW_STATUS_NET_ERROR:
-//                    mLoadingLayout.setVisibility(View.GONE);
-////                    mListView.setVisibility(View.GONE);
-////                    mUnconectionLayout.setVisibility(View.GONE);
-//
-//                    mSwipeRefreshLayout.setRefreshing(false);
-//
-//                    if (isLoadedData) {
-////                        if (!isPause && getActivity() != null && !isError) {
-//                        if (getActivity() != null) {
-//                            Toast.makeText(getActivity(), R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
-//                        }
-//                    } else {
-//                        //mSwipeRefreshLayout.setVisibility(View.GONE);
-//                        mLoadingLayout.setVisibility(View.GONE);
-//                        mErrorLayout.setVisibility(View.VISIBLE);
-//                        mUnFocusLayout.setVisibility(View.GONE);
-//                    }
-//                    break;
-////                case VIEW_STATUS_WEBSOCKET_CONNECT_FAIL:
-////                    if (mUnconectionLayout != null) {
-////                        mUnconectionLayout.setVisibility(View.VISIBLE);
-////                    }
-////                    break;
-////                case VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS:
-////                    if (mUnconectionLayout != null) {
-////                        mUnconectionLayout.setVisibility(View.GONE);
-////                    }
-////                    break;
-//                default:
-//                    break;
-//            }
-//        }
-//    };
     /**
      * 子线程 处理数据加载
      */
@@ -404,10 +340,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
     // 初始化数据
     public void initData() {
-
         request("");
-
-
     }
 
     /**
@@ -417,7 +350,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         if (getActivity() == null) {
             return;
         }
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         String deviceId = AppConstants.deviceToken;
         String userId = "";
         if (AppConstants.register != null && AppConstants.register.getData() != null && AppConstants.register.getData().getUser() != null) {
@@ -445,14 +378,14 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                     setStatus(SHOW_STATUS_NO_DATA);
                     return;
                 }
-                mAllMatchs = new ArrayList<Match>();
+                mAllMatchs = new ArrayList<>();
                 mAllMatchs = json.getFocus();
 
                 teamLogoPre = json.getTeamLogoPre();
 
                 teamLogoSuff = json.getTeamLogoSuff();
 
-                mMatchs = new ArrayList<Match>();
+                mMatchs = new ArrayList<>();
 
                 //把请求回来的列表存入本地
                 StringBuffer sb = new StringBuffer("");
@@ -494,12 +427,15 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                     mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
                         @Override
                         public void onItemClick(View view, String data) {
-                            String thirdId = data;
-                            Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
-                            intent.putExtra("thirdId", thirdId);
-                            intent.putExtra("currentFragmentId", 4);
-                            if (getActivity() != null) {
-                                getActivity().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                            if (HandMatchId.handId(getActivity(), data)) {
+
+                                String thirdId = data;
+                                Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
+                                intent.putExtra("thirdId", thirdId);
+                                intent.putExtra("currentFragmentId", FootBallDetailTypeEnum.FOOT_DETAIL_CHARTBALL);
+                                if (getActivity() != null) {
+                                    getActivity().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                                }
                             }
                         }
                     });
@@ -511,10 +447,12 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                     L.d("sdfgh", "else");
                 }
 
+                setStatus(SHOW_STATUS_SUCCESS);
+                titleContainer.setVisibility(PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE);
+                setHandicapName();
 
 //                isLoadedData = true;
 //                mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
-                setStatus(SHOW_STATUS_SUCCESS);
 //                startWebsocket();
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -1092,10 +1030,48 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
             for (Match match : mMatchs) {
                 resetOddColor(match);
             }
+            titleContainer.setVisibility(PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE);
+            setHandicapName();
             updateAdapter();
         }
     }
 
+    /**
+     * 设置盘口显示类型
+     */
+    private void setHandicapName() {
+        boolean alet = PreferenceUtil.getBoolean(MyConstants.RBSECOND, true);
+        boolean asize = PreferenceUtil.getBoolean(MyConstants.rbSizeBall, false);
+        boolean eur = PreferenceUtil.getBoolean(MyConstants.RBOCOMPENSATE, true);
+        // 隐藏赔率name
+        if ((asize && eur) || (asize && alet) || (eur && alet)) {
+            handicapName1.setVisibility(View.VISIBLE);
+            handicapName2.setVisibility(View.VISIBLE);
+        } else {
+            handicapName1.setVisibility(View.VISIBLE);
+            handicapName2.setVisibility(View.GONE);
+        }
+        // 亚盘赔率
+        if (alet) {
+            handicapName1.setText(getResources().getString(R.string.roll_asialet));
+        }
+        // 大小盘赔率
+        if (asize) {
+            if (!alet) {
+                handicapName1.setText(getResources().getString(R.string.roll_asiasize));
+            } else {
+                handicapName2.setText(getResources().getString(R.string.roll_asiasize));
+            }
+        }
+        // 欧盘赔率
+        if (eur) {
+            if (!alet && !asize) {
+                handicapName1.setText(getResources().getString(R.string.roll_euro));
+            } else {
+                handicapName2.setText(getResources().getString(R.string.roll_euro));
+            }
+        }
+    }
 
     /**
      * EventBus 赛场比赛详情返回FootballMatchDetailActivity.关注页面分离出来不需要改

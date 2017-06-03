@@ -36,6 +36,7 @@ import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.websocket.WebSocketCPIResult;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.BaseUserTopics;
+import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.cpifrag.CloseCpiWebSocketEventBus;
 import com.hhly.mlottery.frame.oddfragment.CompanyChooseDialogFragment;
@@ -43,6 +44,7 @@ import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
 import com.hhly.mlottery.frame.scorefrag.ScoreSwitchFg;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.widget.BallChoiceArrayAdapter;
 
 import java.io.Serializable;
@@ -262,6 +264,9 @@ public class FootCpiFragment extends BaseWebSocketFragment {
         if (filterList == null) filterList = new LinkedList<>();
         filterList.clear();
         filterList.addAll(checkedIdList);
+
+        PreferenceUtil.setDataList(FootBallMatchFilterTypeEnum.FOOT_INDEX, filterList);
+
         for (CPIOddsFragment2 fragment : mFragments) {
             fragment.updateFilterData();
         }

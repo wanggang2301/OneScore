@@ -22,8 +22,8 @@ import com.hhly.mlottery.bean.account.BaseBean;
 import com.hhly.mlottery.bean.account.SendSmsCode;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.impl.GetVerifyCodeCallBack;
-import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CountDown;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.cipher.MD5Util;
@@ -170,7 +170,7 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
                 }
                 et_password.setTypeface(Typeface.SANS_SERIF);
                 // 光标移动到结尾
-                CommonUtils.selectionLast(et_password);
+                DeviceInfo.selectionLast(et_password);
                 break;
             case R.id.tv_comfirm:
                 MobclickAgent.onEvent(mContext, "FindPassWordActivity_Reset_Password_Confirm");
@@ -214,7 +214,7 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
                                 finish();
                             }else{
                                 L.e(TAG,"成功请求，重置密码失败");
-                                CommonUtils.handlerRequestResult(reset.getResult() , reset.getMsg());
+                                DeviceInfo.handlerRequestResult(reset.getResult() , reset.getMsg());
                             }
                         }
                     }, new VolleyContentFast.ResponseErrorListener() {
@@ -232,7 +232,7 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
 
     private void getVerifyCode() {
         String phone = et_username.getText().toString();
-        CommonUtils.getVerifyCode(this, phone, OperateType.TYPE_FORGET_PASSWORD ,new GetVerifyCodeCallBack() {
+        DeviceInfo.getVerifyCode(this, phone, OperateType.TYPE_FORGET_PASSWORD ,new GetVerifyCodeCallBack() {
             @Override
             public void beforGet() {
                 //countDown.start();

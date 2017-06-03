@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whitesmoke"
+    android:orientation="vertical">
+
+    <!-- 标题头 -->
+    <include layout="@layout/layout_focus_header" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
+            android:id="@+id/custom_refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.hhly.mlottery.view.LoadMoreRecyclerView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/custom_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.hhly.mlottery.view.LoadMoreRecyclerView>
+
+        </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
+
+        <include layout="@layout/empty_layout"/>
+
+    </FrameLayout>
+</LinearLayout>

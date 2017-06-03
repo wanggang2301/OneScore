@@ -142,7 +142,6 @@ public class HomeLanguageActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-//        Intent it = new Intent(mContext, WelcomeActivity.class);
         switch (v.getId()) {
             case R.id.public_img_back:// 点击返回菜单栏
                 finish();
@@ -298,6 +297,7 @@ public class HomeLanguageActivity extends BaseActivity implements View.OnClickLi
                 intent.setClass(this, IndexActivity.class);
 
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("languageChanger", true);
                 startActivity(intent);// 跳回到首页面
                 break;
             default:

@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.hhly.mlottery.frame.footballframe.AnalyzeParentFragment">
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <RadioButton
+            android:id="@+id/analyze_bigdata"
+            style="@style/odds_radio_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="-0.25dp"
+            android:layout_weight="1"
+            android:background="@drawable/radio_button_left"
+            android:checked="true"
+            android:text="@string/foot_bigdata"
+            android:textColor="@drawable/info_text_color" />
+
+        <RadioButton
+            android:id="@+id/analyze"
+            style="@style/odds_radio_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="-0.25dp"
+            android:layout_weight="1"
+            android:background="@drawable/radio_button_right"
+            android:checked="false"
+            android:text="@string/foot_details_analyze"
+            android:textColor="@drawable/info_text_color" />
+    </RadioGroup>
+
+
+    <FrameLayout
+        android:id="@+id/fl_analyse"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/radio_group" />
+
+</RelativeLayout>

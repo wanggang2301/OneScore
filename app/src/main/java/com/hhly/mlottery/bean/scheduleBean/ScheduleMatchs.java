@@ -22,6 +22,16 @@ public class ScheduleMatchs {
 
 	private String teamLogoSuff;
 
+	private String filerDate;
+
+	public String getFilerDate() {
+		return filerDate;
+	}
+
+	public void setFilerDate(String filerDate) {
+		this.filerDate = filerDate;
+	}
+
 	public String getTeamLogoSuff() {
 		return teamLogoSuff;
 	}

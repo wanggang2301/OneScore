@@ -7,219 +7,138 @@
     android:layout_height="match_parent"
     tools:context="com.hhly.mlottery.activity.FootballMatchDetailActivity">
 
-    <android.support.design.widget.CoordinatorLayout
+    <LinearLayout
         android:id="@+id/coordinator_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appbar"
-            style="@style/isFitsSystemWindows"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:orientation="vertical">
 
-            <android.support.design.widget.CollapsingToolbarLayout
-                android:id="@+id/toolbar_layout"
+            <include layout="@layout/fragment_pre_headinfo" />
+
+            <com.hhly.mlottery.view.BarrageView
+                android:id="@+id/barrage_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:contentScrim="?attr/colorPrimary">
+                android:layout_height="match_parent" />
 
-                <include
-                    layout="@layout/fragment_pre_headinfo" />
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <com.hhly.mlottery.view.BarrageView
-                        android:id="@+id/barrage_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:paddingTop="30dp" />
-
-                </FrameLayout>
-
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    style="@style/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:contentInsetStart="0dp"
-                    app:layout_collapseMode="pin"
-                    app:layout_scrollFlags="scroll|enterAlways"
-                    app:popupTheme="@style/AppTheme.PopupOverlay">
-
-                    <FrameLayout
-                        android:id="@+id/layout_match_header_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:id="@+id/iv_back"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="left"
-                            android:paddingLeft="12dp"
-                            android:paddingRight="12dp"
-                            android:scaleType="centerInside"
-                            android:src="@mipmap/back" />
-
-                        <RelativeLayout
-                            android:id="@+id/layout_match_header_team_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <TextView
-                                android:id="@+id/head_score"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:text="VS"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/text_size_15" />
-
-                            <TextView
-                                android:id="@+id/head_home_name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignBaseline="@id/head_score"
-                                android:layout_marginRight="15dp"
-                                android:layout_toLeftOf="@id/head_score"
-                                android:text="@string/foot_details_home"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/text_size_15" />
-
-                            <TextView
-                                android:id="@+id/head_guest_name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignBaseline="@id/head_score"
-                                android:layout_marginLeft="15dp"
-                                android:layout_toRightOf="@id/head_score"
-                                android:text="@string/foot_details_guest"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/text_size_15" />
-                        </RelativeLayout>
-
-                        <ImageView
-
-                            android:id="@+id/barrage_switch"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="right"
-                            android:layout_marginRight="40dp"
-                            android:src="@mipmap/danmu_open" />
-
-                        <ImageView
-                            android:id="@+id/iv_setting"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:paddingLeft="12dp"
-                            android:paddingRight="12dp"
-                            android:scaleType="centerInside"
-                            android:src="@mipmap/head_details" />
-
-                    </FrameLayout>
-
-
-                </android.support.v7.widget.Toolbar>
-            </android.support.design.widget.CollapsingToolbarLayout>
-
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tab_layout"
+            <FrameLayout
+                android:id="@+id/layout_match_header_layout"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="?attr/colorPrimary"
-                app:tabGravity="center"
-                app:tabIndicatorColor="@color/white"
-                app:tabMode="scrollable"
-                app:tabSelectedTextColor="@color/white"
-                app:tabTextColor="#BBDEFB" />
-        </android.support.design.widget.AppBarLayout>
+                android:layout_marginTop="20dp">
 
-        <android.support.v4.widget.NestedScrollView
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/back" />
+
+                <ImageView
+
+                    android:id="@+id/barrage_switch"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="right|center"
+                    android:layout_marginRight="40dp"
+                    android:src="@mipmap/danmu_open" />
+
+                <ImageView
+                    android:id="@+id/iv_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/head_details" />
+
+            </FrameLayout>
+
+        </FrameLayout>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="?attr/colorPrimary"
+            app:tabGravity="center"
+            app:tabIndicatorColor="@color/white"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="#BBDEFB" />
+
+        <!--内容加载进度条_正在加载中-->
+        <FrameLayout
+            android:id="@+id/fl_odds_loading_details"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="false"
-            android:visibility="visible"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_gravity="center"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </FrameLayout>
+        <!--网络访问失败-->
+        <FrameLayout
+            android:id="@+id/fl_odds_networkError_details"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="50dp"
-                android:layout_marginTop="50dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
                 android:orientation="vertical">
 
-                <!--内容加载进度条_正在加载中-->
-                <FrameLayout
-                    android:id="@+id/fl_odds_loading_details"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:visibility="gone">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/refresh" />
 
-                    <ProgressBar
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/exp_net_status_txt"
+                    android:textColor="@color/version"
+                    android:textSize="@dimen/text_size_14" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dip"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center" />
-                </FrameLayout>
-                <!--网络访问失败-->
-                <FrameLayout
-                    android:id="@+id/fl_odds_networkError_details"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone">
+                        android:layout_marginRight="5dip"
+                        android:text="@string/exp__check_txt"
+                        android:textColor="@color/msg"
+                        android:textSize="@dimen/text_size_14" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/refresh" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="@string/exp_net_status_txt"
-                            android:textColor="@color/version"
-                            android:textSize="@dimen/text_size_14" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="0dip"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="5dip"
-                                android:text="@string/exp__check_txt"
-                                android:textColor="@color/msg"
-                                android:textSize="@dimen/text_size_14" />
-
-                            <TextView
-                                android:id="@+id/reLoading_details"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/exp_refresh_txt"
-                                android:textColor="@color/exp_refresh"
-                                android:textSize="@dimen/text_size_14" />
-                        </LinearLayout>
-                    </LinearLayout>
-                </FrameLayout>
+                    <TextView
+                        android:id="@+id/reLoading_details"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/exp_refresh_txt"
+                        android:textColor="@color/exp_refresh"
+                        android:textSize="@dimen/text_size_14" />
+                </LinearLayout>
             </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
-
+        </FrameLayout>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager"
@@ -232,7 +151,6 @@
             android:id="@+id/rl_gif_notice"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="200dp"
             android:visibility="gone">
 
             <ImageView
@@ -252,26 +170,6 @@
                 android:textColor="@color/white" />
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="bottom|right"
-            android:paddingBottom="112dp"
-            android:paddingRight="10dp"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/tv_addMultiView"
-                android:layout_width="70dp"
-                android:layout_height="24dp"
-                android:alpha="0.75"
-                android:background="@drawable/multi_add_view"
-                android:gravity="center"
-                android:text="@string/multi_add_view_text"
-                android:textColor="#fff"
-                android:textSize="@dimen/text_size_12" />
-        </RelativeLayout>
-
-    </android.support.design.widget.CoordinatorLayout>
+    </LinearLayout>
 
 </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>

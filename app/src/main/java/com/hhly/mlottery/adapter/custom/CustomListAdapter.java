@@ -30,6 +30,8 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
 
     private Context mContext;
     private List mData;
+    private String LEAGUE_SUFFIX = "_A";//联赛标记
+    private String TEAM_SUFFIX = "_B";//球队标记
 
     public CustomListAdapter(Context context, List data) {
         super(R.layout.custom_list_league_item, data);
@@ -55,6 +57,10 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
 
     public void setmFocus(CustomListActivity.CustomFocusClickListener mFocus) {
         this.mFocus = mFocus;
+    }
+    public CustomListActivity.CustomDetailsClickListener mDetails;
+    public void setmDetails(CustomListActivity.CustomDetailsClickListener mDetails){
+        this.mDetails = mDetails;
     }
 
     @Override
@@ -100,6 +106,7 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
         return holder;
     }
 
+    private boolean isAllCheck ;
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int positions) {
 
@@ -112,6 +119,7 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
 
                 final CustomFristBean firstData = (CustomFristBean) mData.get(positions);
 
+                final List<CustomSecondBean> currSecondData = firstData.getTeamConcerns();
 
                 String logoUrl = firstData.getLeagueLogoPre() + firstData.getLeagueId() + firstData.getLeagueLogoSuff();
                 if (mContext != null) {
@@ -147,7 +155,7 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
                 String[] leagueIds = focus_leagueids.split("[,]");
 
                 for (String id : leagueIds) {
-                    if (id.equals(firstData.getLeagueId() + "_A")) {
+                    if (id.equals(firstData.getLeagueId() + LEAGUE_SUFFIX)) {
                         viewHolderLeague.mLeagueStar.setBackgroundResource(R.mipmap.custom_focus);
                         viewHolderLeague.mLeagueStar.setTag(true);
                         firstData.setConcern(true);
@@ -163,7 +171,13 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
                     @Override
                     public void onClick(View v) {
                         /** + "-A" 区分联赛 和球队 id相同的情况*/
-                        mFocus.FocusOnClick(v, firstData.getLeagueId() + "_A", firstData);
+                        mFocus.FocusOnClick(v, firstData.getLeagueId() + LEAGUE_SUFFIX, firstData , currSecondData);
+                    }
+                });
+                viewHolderLeague.mLeagueName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mDetails.DetailsOnClick(v, firstData.getLeagueId() + LEAGUE_SUFFIX, firstData);
                     }
                 });
                 break;
@@ -197,7 +211,7 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
                 String focus_Dateids = PreferenceUtil.getString("custom_team_focus_ids", "");
                 String[] dateids = focus_Dateids.split("[,]");
                 for (String id : dateids) {
-                    if (id.equals(secondData.getTeamId() + "_B")) {
+                    if (id.equals(secondData.getTeamId() + TEAM_SUFFIX)) {
                         viewHolderDate.mTeamStar.setBackgroundResource(R.mipmap.custom_focus);
                         viewHolderDate.mTeamStar.setTag(true);
                         secondData.setConcern(true);
@@ -212,10 +226,15 @@ public class CustomListAdapter extends BaseQuickAdapter<CustomFristBean> {
                     @Override
                     public void onClick(View v) {
                         /** + "-B" 区分联赛 和球队 id相同的情况*/
-                        mFocus.FocusOnClick(v, secondData.getTeamId() + "_B", secondData);
+                        mFocus.FocusOnClick(v, secondData.getTeamId() + TEAM_SUFFIX , secondData);
                     }
                 });
-
+                viewHolderDate.mTeamName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mDetails.DetailsOnClick(v, secondData.getTeamId() + TEAM_SUFFIX , secondData);
+                    }
+                });
                 break;
         }
     }

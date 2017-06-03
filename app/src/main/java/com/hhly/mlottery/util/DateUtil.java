@@ -60,6 +60,7 @@ public class DateUtil {
      * @return Date
      */
     public static Date parseDate(String dateStr) {
+
         return parseDate(dateStr, "yyyy-MM-dd");
     }
 

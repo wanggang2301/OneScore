@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -26,8 +25,8 @@ import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.bean.chart.ChartReceive;
 import com.hhly.mlottery.bean.enums.SendMsgEnum;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.CommonUtils;
-import com.hhly.mlottery.util.ToastTools;
+import com.hhly.mlottery.util.DeviceInfo;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.view.CircleImageView;
 
 import java.util.List;
@@ -42,7 +41,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
     Context mContext;
     List<ChartReceive.DataBean.ChatHistoryBean> mData;
     private PopupWindow mPopupWindow;
-    public static AdapterListener mAdapterListener;
+    private AdapterListener mAdapterListener;
 
     public ChartBallAdapter(Context context, List<ChartReceive.DataBean.ChatHistoryBean> data) {
         this.mContext = context;
@@ -119,7 +118,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                 }
                 if (!isRn) {
                     if (mData.get(position).getMsgCode() == 2) {
-                        viewHolderMsg.receive_text.setText(Html.fromHtml("<font color='#0090ff'>@" + mData.get(position).getToUser().getUserNick() + ":</font>" + mData.get(position).getMessage()));
+                        viewHolderMsg.receive_text.setText(Html.fromHtml("<font color='#0090ff'>@" + mData.get(position).getToUser().getUserNick() + ":</font>" + (mData.get(position).getMessage() == null ? "" : mData.get(position).getMessage())));
                     } else {
                         viewHolderMsg.receive_text.setText(mData.get(position).getMessage());
                     }
@@ -159,7 +158,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
                 }
                 if (!isRn_me) {
                     if (mData.get(position).getMsgCode() == 2) {
-                        viewHolderMe.my_text.setText(Html.fromHtml("<font color='#0090ff'>@" + mData.get(position).getToUser().getUserNick() + ":</font>" + mData.get(position).getMessage()));
+                        viewHolderMe.my_text.setText(Html.fromHtml("<font color='#0090ff'>@" + mData.get(position).getToUser().getUserNick() + ":</font>" + (mData.get(position).getMessage() == null ? "" : mData.get(position).getMessage())));
                     } else {
                         viewHolderMe.my_text.setText(mData.get(position).getMessage());
                     }
@@ -198,7 +197,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
 
     @Override
     public int getRecycleViewItemType(int position) {
-        if (CommonUtils.isLogin()) {
+        if (DeviceInfo.isLogin()) {
             if (mData.get(position).getFromUser().getUserId().equals(AppConstants.register.getData().getUser().getUserId())) {
                 return 1;
             } else {
@@ -254,6 +253,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
     }
 
     private void showPopup(View v, final int index) {
+        MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));// 关闭输入框
         View popupView = View.inflate(mContext, R.layout.item_chart_ball_fragment_popup, null);
 
         switch (MyApp.isPackageName){
@@ -300,8 +300,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
         popupView.findViewById(R.id.tv_popup_jubao).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MyApp.getContext().sendBroadcast(new Intent("CLOSE_INPUT_ACTIVITY"));
-                if (!CommonUtils.isLogin()) {
+                if (!DeviceInfo.isLogin()) {
                     // 未登录
                     userLoginBack();
                 } else {
@@ -318,15 +317,15 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
         void againSendMsg(String msg);
     }
 
-    public static void showDialog(String msgId, String toUserId, String toUserNick) {
+    public void showDialog(String msgId, String toUserId, String toUserNick) {
         mAdapterListener.shwoDialog(msgId, toUserId, toUserNick);
     }
 
-    public static void userLoginBack() {
+    public void userLoginBack() {
         mAdapterListener.userLoginBack();
     }
 
-    public static void againSendMsg(String msg){
+    public void againSendMsg(String msg){
         mAdapterListener.againSendMsg(msg);
     }
 

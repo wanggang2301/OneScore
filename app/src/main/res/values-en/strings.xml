@@ -523,10 +523,10 @@
     <string name="share_uninstall_qq">You have not installed the QQ client-side</string>
     <string name="share_recommend">Recommend</string>
     <string name="share_summary_default">One Score, the professional football score live platform</string>
-  <!--  <string name="symbol_times" translatable="false">×</string>
-    <string name="symbol_plus" translatable="false">+</string>
-    <string name="symbol_equal" translatable="false">=</string>
-    <string name="label_line" translatable="false">-</string>-->
+    <!--  <string name="symbol_times" translatable="false">×</string>
+      <string name="symbol_plus" translatable="false">+</string>
+      <string name="symbol_equal" translatable="false">=</string>
+      <string name="label_line" translatable="false">-</string>-->
 
 
     <!--指数-->
@@ -1617,6 +1617,12 @@
     <string name="home_gender">Gender</string>
     <string name="no_select_head">You have not selected image</string>
     <string name="foot_text">文字</string>
+    <string name="foot_lineup">阵容</string>
+    <string name="foot_statistics">统计</string>
     <string name="nopage">暂无比赛直播</string>
+    <string name="corner_score">角球比分</string>
+    <string name="higher">高于</string>
+    <string name="jishi_pan">即时盘</string>
+    <string name="lower">低于</string>
 
 </resources>

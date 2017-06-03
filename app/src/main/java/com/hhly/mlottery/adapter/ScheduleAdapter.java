@@ -4,17 +4,18 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.scheduleBean.AsiaLet;
-import com.hhly.mlottery.bean.scheduleBean.AsiaSize;
-import com.hhly.mlottery.bean.scheduleBean.Euro;
+import com.hhly.mlottery.bean.Match;
+import com.hhly.mlottery.bean.MatchOdd;
+import com.hhly.mlottery.bean.scheduleBean.OddsBean;
 import com.hhly.mlottery.bean.scheduleBean.ScheduleMatchDto;
 import com.hhly.mlottery.bean.scheduleBean.ScheduleMatchOdd;
 import com.hhly.mlottery.callback.DateOnClickListener;
@@ -24,6 +25,7 @@ import com.hhly.mlottery.frame.footballframe.FocusFragment;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.HandicapUtils;
 import com.hhly.mlottery.util.ImageLoader;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ResultDateUtil;
@@ -48,9 +50,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
      * 比赛Index
      */
     public final static int VIEW_MATCH_INDEX = 1;
-
-
-    private int handicap = 0;
 
 
     private String teamLogoPre;
@@ -154,8 +153,47 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         final ScheduleMatchDto scheduleMatchDto = datas.get(i);
         if (holder instanceof DateViewHolder) {
-            ((DateViewHolder) holder).tv_date.setText(DateUtil.convertDateToNation(scheduleMatchDto.getDate()));
-            ((DateViewHolder) holder).tv_week.setText(ResultDateUtil.getWeekOfDate(DateUtil.parseDate(ResultDateUtil.getDate(0, scheduleMatchDto.getDate()))));
+
+            DateViewHolder dateViewHolder = (DateViewHolder) holder;
+            dateViewHolder.tv_date.setText(DateUtil.convertDateToNation(scheduleMatchDto.getDate()));
+            dateViewHolder.tv_week.setText(ResultDateUtil.getWeekOfDate(DateUtil.parseDate(ResultDateUtil.getDate(0, scheduleMatchDto.getDate()))));
+
+            boolean alet = PreferenceUtil.getBoolean(MyConstants.RBSECOND, true);
+            boolean asize = PreferenceUtil.getBoolean(MyConstants.rbSizeBall, false);
+            boolean eur = PreferenceUtil.getBoolean(MyConstants.RBOCOMPENSATE, true);
+            boolean noshow = PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false);
+            // 隐藏赔率name
+            if (noshow) {
+                dateViewHolder.handicapName1.setVisibility(View.GONE);
+                dateViewHolder.handicapName2.setVisibility(View.GONE);
+            } else if ((asize && eur) || (asize && alet) || (eur && alet)) {
+                dateViewHolder.handicapName1.setVisibility(View.VISIBLE);
+                dateViewHolder.handicapName2.setVisibility(View.VISIBLE);
+            } else {
+                dateViewHolder.handicapName1.setVisibility(View.VISIBLE);
+                dateViewHolder.handicapName2.setVisibility(View.GONE);
+            }
+
+            // 亚盘赔率
+            if (alet) {
+                dateViewHolder.handicapName1.setText(mContext.getResources().getString(R.string.roll_asialet));
+            }
+            // 大小盘赔率
+            if (asize) {
+                if (!alet) {
+                    dateViewHolder.handicapName1.setText(mContext.getResources().getString(R.string.roll_asiasize));
+                } else {
+                    dateViewHolder.handicapName2.setText(mContext.getResources().getString(R.string.roll_asiasize));
+                }
+            }
+            // 欧盘赔率
+            if (eur) {
+                if (!alet && !asize) {
+                    dateViewHolder.handicapName1.setText(mContext.getResources().getString(R.string.roll_euro));
+                } else {
+                    dateViewHolder.handicapName2.setText(mContext.getResources().getString(R.string.roll_euro));
+                }
+            }
 
         } else if (holder instanceof ScheduleViewHolder) {
 
@@ -165,9 +203,14 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                 ScheduleViewHolder scheduleViewHolder = (ScheduleViewHolder) holder;
 
+                // 完场描述
+                scheduleViewHolder.view_line.setVisibility(TextUtils.isEmpty(scheduleMatchDto.getSchmatchs().getTxt()) ? View.GONE : View.VISIBLE);
+                scheduleViewHolder.tv_item_desc.setVisibility(TextUtils.isEmpty(scheduleMatchDto.getSchmatchs().getTxt()) ? View.GONE : View.VISIBLE);
+                String name = scheduleMatchDto.getSchmatchs().getWinner() == scheduleMatchDto.getSchmatchs().getHomeId() ? scheduleMatchDto.getSchmatchs().getHometeam() : scheduleMatchDto.getSchmatchs().getGuestteam();
+                scheduleViewHolder.tv_item_desc.setText(scheduleMatchDto.getSchmatchs().getTxt() + "," + name + mContext.getResources().getString(R.string.roll_desc_txt));
 
                 //主队url
-                final String homelogourl = teamLogoPre + scheduleMatchDto.getSchmatchs().getHomeId().trim() + teamLogoSuff;  //"http://pic.13322.com/basketball/team/135_135/29.png"
+                final String homelogourl = teamLogoPre + scheduleMatchDto.getSchmatchs().getHomeId().trim() + teamLogoSuff;
                 //客队url
                 final String guestlogourl = teamLogoPre + scheduleMatchDto.getSchmatchs().getGuestId().trim().trim() + teamLogoSuff;
 
@@ -182,10 +225,11 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
                 scheduleViewHolder.item_football_time.setText(scheduleMatchDto.getSchmatchs().getTime());
 
-                scheduleViewHolder.rl_score.setVisibility(View.GONE);
+                scheduleViewHolder.ll_half_score.setVisibility(View.INVISIBLE);
+                scheduleViewHolder.ll_all_score.setVisibility(View.INVISIBLE);
 
                 // scheduleViewHolder.item_football_half_score.setVisibility(View.INVISIBLE);
-                scheduleViewHolder.keeptime.setVisibility(View.GONE);
+//                scheduleViewHolder.keeptime.setVisibility(View.GONE);
                 scheduleViewHolder.item_football_frequency.setVisibility(View.GONE);
                 scheduleViewHolder.item_football_home_yc.setVisibility(View.GONE);
                 scheduleViewHolder.item_football_home_rc.setVisibility(View.GONE);
@@ -196,68 +240,52 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 // scheduleViewHolder.item_football_full_score.setText("VS");
                 // scheduleViewHolder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.version));
 
-                scheduleViewHolder.tv_match_type.setVisibility(View.VISIBLE);
-                scheduleViewHolder.tv_match_type.setTextColor(mContext.getResources().getColor(R.color.version));
-
 
                 scheduleViewHolder.item_football_guestteam.setText(scheduleMatchDto.getSchmatchs().getGuestteam());
 
                 ScheduleMatchOdd scheduleMatchOdd = scheduleMatchDto.getSchmatchs().getMatchOdds();
                 if (scheduleMatchOdd != null) {
 
-                    boolean asize = PreferenceUtil.getBoolean(MyConstants.rbSizeBall, false);
-                    boolean eur = PreferenceUtil.getBoolean(MyConstants.RBOCOMPENSATE, false);
                     boolean alet = PreferenceUtil.getBoolean(MyConstants.RBSECOND, true);
+                    boolean asize = PreferenceUtil.getBoolean(MyConstants.rbSizeBall, false);
+                    boolean eur = PreferenceUtil.getBoolean(MyConstants.RBOCOMPENSATE, true);
                     boolean noshow = PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false);
 
-                    // 大小球
-                    if (asize) {
-                        AsiaSize asiaSize = scheduleMatchOdd.getAsiaSize();
-
-                        if (asiaSize != null) {
-                            scheduleViewHolder.item_football_left_odds.setText(asiaSize.getLeftOdds());
-                            scheduleViewHolder.item_football_handicap_value.setText(HandicapUtils.changeHandicapByBigLittleBall(asiaSize.getHandicapValue()));
-                            scheduleViewHolder.item_football_right_odds.setText(asiaSize.getRightOdds());
-                        } else {
-                            scheduleViewHolder.item_football_left_odds.setText("");
-                            scheduleViewHolder.item_football_handicap_value.setText("");
-                            scheduleViewHolder.item_football_right_odds.setText("");
-                        }
-                    }
-
-                    // 欧赔
-                    if (eur) {
-                        Euro euro = scheduleMatchOdd.getEuro();
-                        if (euro != null) {
-                            scheduleViewHolder.item_football_left_odds.setText(euro.getLeftOdds());
-                            scheduleViewHolder.item_football_handicap_value.setText(euro.getMediumOdds());
-                            scheduleViewHolder.item_football_right_odds.setText(euro.getRightOdds());
-                        } else {
-                            scheduleViewHolder.item_football_left_odds.setText("");
-                            scheduleViewHolder.item_football_handicap_value.setText("");
-                            scheduleViewHolder.item_football_right_odds.setText("");
-                        }
-                    }
-
-                    // 亚赔
-                    if (alet) {
-                        AsiaLet asiaLet = scheduleMatchOdd.getAsiaLet();
-                        if (asiaLet != null) {
-                            scheduleViewHolder.item_football_left_odds.setText(asiaLet.getLeftOdds());
-                            scheduleViewHolder.item_football_handicap_value.setText(HandicapUtils.changeHandicap(asiaLet.getHandicapValue()));
-                            scheduleViewHolder.item_football_right_odds.setText(asiaLet.getRightOdds());
-                        } else {
-                            scheduleViewHolder.item_football_left_odds.setText("");
-                            scheduleViewHolder.item_football_handicap_value.setText("");
-                            scheduleViewHolder.item_football_right_odds.setText("");
-                        }
-                    }
-
+                    // 隐藏赔率
                     if (noshow) {
+                        scheduleViewHolder.ll_odds_content1.setVisibility(View.GONE);
+                        scheduleViewHolder.ll_odds_content2.setVisibility(View.GONE);
+                    } else if ((asize && eur) || (asize && alet) || (eur && alet)) {
+                        scheduleViewHolder.ll_odds_content1.setVisibility(View.VISIBLE);
+                        scheduleViewHolder.ll_odds_content2.setVisibility(View.VISIBLE);
+                    } else {
+                        scheduleViewHolder.ll_odds_content1.setVisibility(View.VISIBLE);
+                        scheduleViewHolder.ll_odds_content2.setVisibility(View.GONE);
+                    }
 
-                        scheduleViewHolder.item_football_left_odds.setText("");
-                        scheduleViewHolder.item_football_handicap_value.setText("");
-                        scheduleViewHolder.item_football_right_odds.setText("");
+                    OddsBean asiaLet = scheduleMatchOdd.getAsiaLet();
+                    OddsBean asiaSize = scheduleMatchOdd.getAsiaSize();
+                    OddsBean euro = scheduleMatchOdd.getEuro();
+
+                    // 亚盘赔率
+                    if (alet) {
+                        setOddsData(scheduleViewHolder.oddsTop1, scheduleViewHolder.tv_odds_center1, scheduleViewHolder.tv_odds_bottom1, asiaLet, 1);
+                    }
+                    // 大小盘赔率
+                    if (asize) {
+                        if (!alet) {
+                            setOddsData(scheduleViewHolder.oddsTop1, scheduleViewHolder.tv_odds_center1, scheduleViewHolder.tv_odds_bottom1, asiaSize, 2);
+                        } else {
+                            setOddsData(scheduleViewHolder.oddsTop2, scheduleViewHolder.tv_odds_center2, scheduleViewHolder.tv_odds_bottom2, asiaSize, 2);
+                        }
+                    }
+                    // 欧盘赔率
+                    if (eur) {
+                        if (!alet && !asize) {
+                            setOddsData(scheduleViewHolder.oddsTop1, scheduleViewHolder.tv_odds_center1, scheduleViewHolder.tv_odds_bottom1, euro, 3);
+                        } else {
+                            setOddsData(scheduleViewHolder.oddsTop2, scheduleViewHolder.tv_odds_center2, scheduleViewHolder.tv_odds_bottom2, euro, 3);
+                        }
                     }
                 }
 
@@ -283,9 +311,101 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     }
                 });
 
+                // 比赛状态
+                switch (scheduleMatchDto.getSchmatchs().getStatusOrigin()) {
+                    case "0": // 未开赛
+                        scheduleViewHolder.keeptime.setText(mContext.getResources().getString(R.string.tennis_match_not_start));
+                        scheduleViewHolder.keeptime.setTextColor(mContext.getResources().getColor(R.color.res_pl_color));
+                        break;
+                    case "1": // 上半场进行时间
+                        scheduleViewHolder.keeptime.setText("E");
+                        scheduleViewHolder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
+                        break;
+                    case "2": // 中场
+                        scheduleViewHolder.keeptime.setText(mContext.getString(R.string.immediate_status_midfield));
+                        scheduleViewHolder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
+                        break;
+                    case "3": // 下半场进行时间
+                        scheduleViewHolder.keeptime.setText("E");
+                        scheduleViewHolder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
+                        break;
+                    case "4": // 加时
+                        scheduleViewHolder.keeptime.setText(mContext.getString(R.string.immediate_status_overtime));
+                        scheduleViewHolder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
+                        break;
+                    case "5": // 点球
+                        scheduleViewHolder.keeptime.setText(mContext.getString(R.string.immediate_status_point));
+                        scheduleViewHolder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
+                        break;
+                    case "-1": // 完场
+                        scheduleViewHolder.keeptime.setText(mContext.getResources().getString(R.string.finish_txt));
+                        scheduleViewHolder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
+                        break;
+                    case "-10": // 取消
+                        scheduleViewHolder.keeptime.setText(mContext.getString(R.string.immediate_status_cancel));
+                        scheduleViewHolder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
+                        break;
+                    case "-11": // 待定
+                        scheduleViewHolder.keeptime.setText(mContext.getString(R.string.immediate_status_hold));
+                        scheduleViewHolder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
+                        break;
+                    case "-12": // 腰斩
+                        scheduleViewHolder.keeptime.setText(mContext.getString(R.string.immediate_status_cut));
+                        scheduleViewHolder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
+                        break;
+                    case "-13": // 中断
+                        scheduleViewHolder.keeptime.setText(mContext.getString(R.string.immediate_status_mesomere));
+                        scheduleViewHolder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
+                        break;
+                    case "-14": // 推迟
+                        scheduleViewHolder.keeptime.setText(mContext.getString(R.string.immediate_status_postpone));
+                        scheduleViewHolder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
+                        break;
+                }
+
             }
 
         }
+    }
+
+    /**
+     * 设置盘口数据
+     *
+     * @param topView
+     * @param centerView
+     * @param bottomView
+     * @param odd
+     */
+    private void setOddsData(TextView topView, TextView centerView, TextView bottomView, OddsBean odd, int type) {
+        if (odd == null) {
+            topView.setText("-");
+            centerView.setText("-");
+            bottomView.setText("-");
+            return;
+        }
+        String handicapValue;
+        switch (type) {
+            case 1:
+                handicapValue = HandicapUtils.changeHandicap(odd.getHandicapValue());
+                break;
+            case 2:
+                handicapValue = HandicapUtils.changeHandicapByBigLittleBall(odd.getHandicapValue());
+                break;
+            case 3:
+                handicapValue = odd.getMediumOdds();
+                break;
+            default:
+                handicapValue = "-";
+                break;
+        }
+
+        topView.setText(odd.getLeftOdds() != null ? odd.getLeftOdds() : "-");
+        centerView.setText(handicapValue != null ? handicapValue : "-");
+        bottomView.setText(odd.getRightOdds() != null ? odd.getRightOdds() : "-");
+
+        topView.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
+        bottomView.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
+        centerView.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
     }
 
     @Override
@@ -309,11 +429,15 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         TextView tv_date;
         TextView tv_week;
+        TextView handicapName1;
+        TextView handicapName2;
 
         public DateViewHolder(View itemView) {
             super(itemView);
             tv_date = (TextView) itemView.findViewById(R.id.tv_date);
             tv_week = (TextView) itemView.findViewById(R.id.tv_week);
+            handicapName1 = (TextView) itemView.findViewById(R.id.tv_handicap_name1);
+            handicapName2 = (TextView) itemView.findViewById(R.id.tv_handicap_name2);
         }
     }
 
@@ -337,9 +461,9 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView item_football_hometeam;
         // TextView item_football_full_score;
         TextView item_football_guestteam;
-        TextView item_football_left_odds;
-        TextView item_football_handicap_value;
-        TextView item_football_right_odds;
+        //        TextView item_football_left_odds;
+//        TextView item_football_handicap_value;
+//        TextView item_football_right_odds;
         //关注
         ImageView Iv_guangzhu;
 
@@ -354,10 +478,20 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView item_guest_half_score;
         TextView item_guest_full_score;
 
-        TextView tv_match_type;
+        LinearLayout ll_half_score;
+        LinearLayout ll_all_score;
 
-        RelativeLayout rl_score;
+        LinearLayout ll_odds_content1;
+        LinearLayout ll_odds_content2;
+        TextView oddsTop1;
+        TextView oddsTop2;
+        TextView tv_odds_center1;
+        TextView tv_odds_center2;
+        TextView tv_odds_bottom1;
+        TextView tv_odds_bottom2;
 
+        View view_line;
+        TextView tv_item_desc;
 
         public ScheduleViewHolder(final View itemView) {
             super(itemView);
@@ -373,9 +507,9 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             item_football_guest_yc = (TextView) itemView.findViewById(R.id.item_football_guest_yc);
             item_football_hometeam = (TextView) itemView.findViewById(R.id.item_football_hometeam);
             item_football_guestteam = (TextView) itemView.findViewById(R.id.item_football_guestteam);
-            item_football_left_odds = (TextView) itemView.findViewById(R.id.item_football_left_odds);
-            item_football_handicap_value = (TextView) itemView.findViewById(R.id.item_football_handicap_value);
-            item_football_right_odds = (TextView) itemView.findViewById(R.id.item_football_right_odds);
+//            item_football_left_odds = (TextView) itemView.findViewById(R.id.item_football_left_odds);
+//            item_football_handicap_value = (TextView) itemView.findViewById(R.id.item_football_handicap_value);
+//            item_football_right_odds = (TextView) itemView.findViewById(R.id.item_football_right_odds);
 
 
             item_home_half_score = (TextView) itemView.findViewById(R.id.tv_home_half_score);
@@ -383,14 +517,27 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             item_guest_half_score = (TextView) itemView.findViewById(R.id.tv_guest_half_score);
             item_guest_full_score = (TextView) itemView.findViewById(R.id.tv_guest_full_score);
-            tv_match_type = (TextView) itemView.findViewById(R.id.tv_match_type);
-            rl_score = (RelativeLayout) itemView.findViewById(R.id.rl_score);
 
 
             Iv_guangzhu = (ImageView) itemView.findViewById(R.id.Iv_guangzhu);
 
             home_icon = (ImageView) itemView.findViewById(R.id.home_icon);
             guest_icon = (ImageView) itemView.findViewById(R.id.guest_icon);
+
+            ll_half_score = (LinearLayout) itemView.findViewById(R.id.ll_half_score);
+            ll_all_score = (LinearLayout) itemView.findViewById(R.id.ll_all_score);
+
+            ll_odds_content1 = (LinearLayout) itemView.findViewById(R.id.ll_odds_content1);
+            ll_odds_content2 = (LinearLayout) itemView.findViewById(R.id.ll_odds_content2);
+            oddsTop1 = (TextView) itemView.findViewById(R.id.tv_odds_top1);
+            oddsTop2 = (TextView) itemView.findViewById(R.id.tv_odds_top2);
+            tv_odds_center1 = (TextView) itemView.findViewById(R.id.tv_odds_center1);
+            tv_odds_center2 = (TextView) itemView.findViewById(R.id.tv_odds_center2);
+            tv_odds_bottom1 = (TextView) itemView.findViewById(R.id.tv_odds_bottom1);
+            tv_odds_bottom2 = (TextView) itemView.findViewById(R.id.tv_odds_bottom2);
+
+            view_line = itemView.findViewById(R.id.view_line);
+            tv_item_desc = (TextView) itemView.findViewById(R.id.tv_item_desc);
         }
 
     }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.DateUtil;
+import com.hhly.mlottery.util.UiUtils;
 
 import java.util.List;
 import java.util.Map;

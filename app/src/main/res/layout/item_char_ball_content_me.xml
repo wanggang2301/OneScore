@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:emojicon="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -90,7 +89,7 @@
                     android:gravity="right"
                     android:orientation="vertical">
 
-                    <io.github.rockerhieu.emojicon.EmojiconTextView
+                    <TextView
                         android:id="@+id/my_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -99,7 +98,6 @@
                         android:textSize="14sp"
                         android:visibility="gone"
                         android:padding="10dp"
-                        emojicon:emojiconSize="20sp"
                         tools:text="test" />
 
                     <TextView

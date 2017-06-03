@@ -1,11 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/whitesmoke"
     android:orientation="vertical">
+
     <include layout="@layout/item_header_unconection_view" />
+
+    <LinearLayout
+        android:id="@+id/titleContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/selector_item_clickable"
+        android:orientation="horizontal"
+        android:visibility="invisible">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4.8">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3.6"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@mipmap/football_date" />
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:textColor="#666666"
+                    android:textSize="13dp"
+                    tools:text="2016-25-25" />
+
+                <TextView
+                    android:id="@+id/tv_week"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:text="周四"
+                    android:textColor="#666666"
+                    android:textSize="13dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_odd"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_handicap_name1"
+                    style="@style/WW_Width_0dp"
+                    android:layout_weight="0.6"
+                    android:gravity="center"
+                    android:text="@string/roll_asialet" />
+
+                <TextView
+                    android:id="@+id/tv_handicap_name2"
+                    style="@style/WW_Width_0dp"
+                    android:layout_weight="0.6"
+                    android:gravity="center"
+                    android:text="@string/roll_asiasize" />
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/WW_Width_0dp"
+                android:layout_weight="0.4"
+                android:gravity="center" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -21,14 +101,12 @@
             android:visibility="gone">
 
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/loading_txt"
                 android:textColor="@color/loading_txt_color" />
         </LinearLayout>
-
 
 
         <RelativeLayout
@@ -60,12 +138,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView
-                xmlns:android="http://schemas.android.com/apk/res/android"
+            <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/recyclerview_immedia"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </android.support.v7.widget.RecyclerView>
+                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
         </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
 

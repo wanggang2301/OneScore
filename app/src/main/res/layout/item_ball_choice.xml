@@ -12,6 +12,6 @@
         android:padding="10dp"
         android:text="dd"
         android:textColor="#444444"
-        android:textSize="@dimen/home_pager_title" />
+        android:textSize="@dimen/home_pager_user_title" />
 
 </LinearLayout>

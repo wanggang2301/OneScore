@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -42,14 +43,17 @@ import com.hhly.mlottery.callback.FocusMatchClickListener;
 import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.callback.RequestHostFocusCallBack;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFilterEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchSettingEventBusEntity;
 import com.hhly.mlottery.frame.scorefrag.FootBallScoreFragment;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.FocusUtils;
+import com.hhly.mlottery.util.HandMatchId;
 import com.hhly.mlottery.util.HotFocusUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
@@ -77,8 +81,8 @@ import de.greenrobot.event.EventBus;
  */
 public class ImmediateFragment extends Fragment implements OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    //    private static final String ARG_PARAM1 = "param1";
+//    private static final String ARG_PARAM2 = "param2";
     private static final String TAG = "ImmediateFragment";
 
     public static final int REQUEST_FILTRATE_CODE = 0x10;
@@ -159,16 +163,22 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
     private String teamLogoSuff;
     private boolean isNewFrameWork;
     private int mEntryType; // 标记入口 判断是从哪里进来的 (0:首页入口  1:新导航条入口)
+    private LinearLayout titleContainer;
+    private TextView handicapName1;
+    private TextView handicapName2;
+    private TextView tv_date;
+    private TextView tv_week;
+    private LinearLayout ll_odd;
 
 
-    public static ImmediateFragment newInstance(String param1, String param2) {
-        ImmediateFragment fragment = new ImmediateFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+//    public static ImmediateFragment newInstance(String param1, String param2) {
+//        ImmediateFragment fragment = new ImmediateFragment();
+//        Bundle args = new Bundle();
+//        args.putString(ARG_PARAM1, param1);
+//        args.putString(ARG_PARAM2, param2);
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
 
     public static ImmediateFragment newInstance(int index, boolean isNewFramWork, int entryType) {
@@ -199,6 +209,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 
         initMedia();
         initView();
+
         return mView;
     }
 
@@ -239,6 +250,13 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 
         mLoadingLayout = (LinearLayout) mView.findViewById(R.id.football_immediate_loading_ll);// Loading板块
         mErrorLayout = (LinearLayout) mView.findViewById(R.id.network_exception_layout);// 网络错误板块
+
+        titleContainer = (LinearLayout) mView.findViewById(R.id.titleContainer);
+        handicapName1 = (TextView) mView.findViewById(R.id.tv_handicap_name1);
+        handicapName2 = (TextView) mView.findViewById(R.id.tv_handicap_name2);
+        tv_date = (TextView) mView.findViewById(R.id.tv_date);
+        tv_week = (TextView) mView.findViewById(R.id.tv_week);
+        ll_odd = (LinearLayout) mView.findViewById(R.id.ll_odd);
 
         mFocusClickListener = new FocusMatchClickListener() {// 关注按钮事件
             @Override
@@ -302,8 +320,10 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                     mNoDataLayout.setVisibility(View.VISIBLE);
                     mNoDataTextView.setText(R.string.immediate_no_match);
                     mLoadDataStatus = LOAD_DATA_STATUS_SUCCESS;
+                    titleContainer.setVisibility(View.GONE);
                     break;
                 case VIEW_STATUS_SUCCESS:
+                    setHandicapName();
                     mLoadingLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     //mListView.setVisibility(View.VISIBLE);
@@ -312,6 +332,9 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 //                    mUnconectionLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     mLoadDataStatus = LOAD_DATA_STATUS_SUCCESS;
+                    titleContainer.setVisibility(View.VISIBLE);
+
+                    ll_odd.setVisibility(PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE);
                     break;
                 case VIEW_STATUS_NET_ERROR:
                     //mListView.setVisibility(View.GONE);
@@ -321,6 +344,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                         Toast.makeText(mContext, R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
                     } else {
                         //mSwipeRefreshLayout.setVisibility(View.GONE);
+                        titleContainer.setVisibility(View.GONE);
                         mLoadingLayout.setVisibility(View.GONE);
                         mNoDataLayout.setVisibility(View.GONE);
 
@@ -335,6 +359,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                     mErrorLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     mNoDataTextView.setText(R.string.immediate_no_data);
+                    titleContainer.setVisibility(View.GONE);
 //                    mUnconectionLayout.setVisibility(View.GONE);
                     mNoDataLayout.setVisibility(View.VISIBLE);
                     mLoadDataStatus = LOAD_DATA_STATUS_SUCCESS;
@@ -362,18 +387,28 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
                     return;
                 }
-                mAllMatchs = jsonMatch.getImmediateMatch();// 获取所有赛程
+                mAllMatchs = jsonMatch.getImmediateMatch();// 获取所有比赛
                 mMatchs = new ArrayList<Match>();//
 
                 if (getActivity() == null) {
                     return;
                 }
 
+                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_IMMEDIA, "").equals(jsonMatch.getFilerDate())) {
+                    PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_IMMEDIA);
+                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_IMMEDIA, jsonMatch.getFilerDate());
+                }
 
-                teamLogoPre = jsonMatch.getTeamLogoPre();
+
+                tv_date.setText(jsonMatch.getFilerDate());
+                if (!TextUtils.isEmpty(jsonMatch.getFilerDate()))
+                    tv_week.setText(DateUtil.getWeekOfXinQi(DateUtil.parseDate(jsonMatch.getFilerDate())));
+
+                teamLogoPre = jsonMatch.getTeamLogoPre(); //logo
                 teamLogoSuff = jsonMatch.getTeamLogoSuff();
 
                 HotFocusUtils hotFocusUtils = new HotFocusUtils();
+
                 hotFocusUtils.loadHotFocusData(getActivity(), new RequestHostFocusCallBack() {
 
                     @Override
@@ -384,37 +419,68 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                         if (hotFocusLeagueCup == null) {
                             hotList = new ArrayList<String>();
                         } else {
-                            hotList = hotFocusLeagueCup.getHotLeagueIds();
+                            hotList = hotFocusLeagueCup.getHotLeagueIds();  //热门比赛
                         }
 
                         if (FiltrateCupsMap.immediateCups.length != 0) {// 判断是否已经筛选过
-                            for (Match m : mAllMatchs) {// 已选择的
-                                for (String checkedId : FiltrateCupsMap.immediateCups) {
-                                    if (m.getRaceId().equals(checkedId)) {
-                                        mMatchs.add(m);
-                                        break;
+                            if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_IMMEDIA).size() > 0) {
+                                List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_IMMEDIA);
+
+                                L.d("filter", "即时==" + list.size() + "");
+
+                                for (Match m : mAllMatchs) {// 已选择的   显示筛选的比赛
+                                    for (String checkedId : list) {
+                                        if (m.getRaceId().equals(checkedId)) {
+                                            mMatchs.add(m);       //从筛选的数据中过滤
+                                            break;
+                                        }
+                                    }
+                                }
+                            } else {
+                                for (Match m : mAllMatchs) {// 已选择的   显示筛选的比赛
+                                    for (String checkedId : FiltrateCupsMap.immediateCups) {
+                                        if (m.getRaceId().equals(checkedId)) {
+                                            mMatchs.add(m);       //从筛选的数据中过滤
+                                            break;
+                                        }
                                     }
                                 }
                             }
+
                         } else {// 没有筛选过
-                            for (Match m : mAllMatchs) {// 默认显示热门赛程
-                                for (String hotId : hotList) {
-                                    if (m.getRaceId().equals(hotId)) {
-                                        mMatchs.add(m);
-                                        break;
+
+                            if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_IMMEDIA).size() > 0) {
+                                List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_IMMEDIA);
+                                L.d("filter", "即时没有筛选过==" + list.size() + "");
+
+                                for (Match m : mAllMatchs) {// 默认显示热门赛程 (所以把热门的过滤出来)
+                                    for (String filterId : list) {
+                                        if (m.getRaceId().equals(filterId)) {
+                                            mMatchs.add(m);
+                                            break;
+                                        }
+                                    }
+                                }
+                            } else {
+                                for (Match m : mAllMatchs) {// 默认显示热门赛程 (所以把热门的过滤出来)
+                                    for (String hotId : hotList) {
+                                        if (m.getRaceId().equals(hotId)) {
+                                            mMatchs.add(m);
+                                            break;
+                                        }
                                     }
                                 }
                             }
                         }
-                        mCups = jsonMatch.getAll();
-                        mNoDataTextView.setText(R.string.immediate_no_data);
-                        if (mMatchs.size() == 0) {// 没有热门赛事，显示全部
 
+                        mCups = jsonMatch.getAll();
+
+                        mNoDataTextView.setText(R.string.immediate_no_data);
+
+                        if (mMatchs.size() == 0) {// 没有热门赛事，显示全部
                             mMatchs.addAll(mAllMatchs);
                             mCheckedCups = mCups.toArray(new LeagueCup[mCups.size()]);
                             if (mMatchs.size() == 0) {// 一个赛事都没有，显示“暂无赛事”
-
-
                                 isLoadedData = true;
                                 mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
 //                                startWebsocket();
@@ -452,12 +518,14 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                             mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
                                 @Override
                                 public void onItemClick(View view, String data) {
-                                    String thirdId = data;
-                                    Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
-                                    intent.putExtra("thirdId", thirdId);
-                                    intent.putExtra("currentFragmentId", 1);
-                                    getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                                    if (HandMatchId.handId(getActivity(), data)) {
 
+                                        String thirdId = data;
+                                        Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
+                                        intent.putExtra("thirdId", thirdId);
+                                        intent.putExtra("currentFragmentId", 1);
+                                        getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                                    }
                                 }
                             });
                             mRecyclerView.setAdapter(mAdapter);
@@ -489,7 +557,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
             L.e(TAG, "__handleMessage__");
 
             L.e(TAG, "msg.arg1 = " + msg.arg1);
-            if (msg.arg1 == 1) {
+            if (msg.arg1 == 1) {  //状态为1时  ，推送为比赛的状态
                 String ws_json = (String) msg.obj;
                 L.e(TAG, "ws_json = " + ws_json);
                 WebSocketMatchStatus webSocketMatchStatus = null;
@@ -500,7 +568,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                     webSocketMatchStatus = JSON.parseObject(ws_json, WebSocketMatchStatus.class);
                 }
                 updateListViewItemStatus(webSocketMatchStatus);
-            } else if (msg.arg1 == 2) {
+            } else if (msg.arg1 == 2) {  //为2时，推送为比赛的赔率
                 String ws_json = (String) msg.obj;
                 L.e(TAG, "ws_json = " + ws_json);
                 WebSocketMatchOdd webSocketMatchOdd = null;
@@ -512,7 +580,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                 }
 
                 updateListViewItemOdd(webSocketMatchOdd);
-            } else if (msg.arg1 == 4) {
+            } else if (msg.arg1 == 4) {  //为4时
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -1080,6 +1148,8 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
             String[] checkedIds = (String[]) ((LinkedList) map.get(FiltrateMatchConfigActivity.RESULT_CHECKED_CUPS_IDS)).toArray(new String[]{});
             FiltrateCupsMap.immediateCups = checkedIds;
             mMatchs.clear();
+
+            //筛选比赛
             for (Match match : mAllMatchs) {
                 boolean isExistId = false;
                 for (String checkedId : checkedIds) {
@@ -1094,6 +1164,9 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
             }
             List<LeagueCup> leagueCupList = new ArrayList<LeagueCup>();
 
+            List<String> localFilterRace = new ArrayList<>();
+
+
             for (LeagueCup cup : mCups) {
                 boolean isExistId = false;
                 for (String checkedId : checkedIds) {
@@ -1105,8 +1178,12 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 
                 if (isExistId) {
                     leagueCupList.add(cup);
+                    localFilterRace.add(cup.getRaceId());
                 }
             }
+
+
+            PreferenceUtil.setDataList(FootBallMatchFilterTypeEnum.FOOT_IMMEDIA, localFilterRace);
 
             mCheckedCups = leagueCupList.toArray(new LeagueCup[]{});
             updateAdapter();
@@ -1142,6 +1219,9 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
             for (Match match : mMatchs) {
                 resetOddColor(match);
             }
+
+            ll_odd.setVisibility(PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE);
+            setHandicapName();
             updateAdapter();
         }
     }
@@ -1259,5 +1339,41 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
         L.w(TAG, "immediate fragment destroy view..");
     }
 
+    /**
+     * 设置盘口显示类型
+     */
+    private void setHandicapName() {
+        boolean alet = PreferenceUtil.getBoolean(MyConstants.RBSECOND, true);
+        boolean asize = PreferenceUtil.getBoolean(MyConstants.rbSizeBall, false);
+        boolean eur = PreferenceUtil.getBoolean(MyConstants.RBOCOMPENSATE, true);
+        // 隐藏赔率name
+        if ((asize && eur) || (asize && alet) || (eur && alet)) {
+            handicapName1.setVisibility(View.VISIBLE);
+            handicapName2.setVisibility(View.VISIBLE);
+        } else {
+            handicapName1.setVisibility(View.VISIBLE);
+            handicapName2.setVisibility(View.GONE);
+        }
+        // 亚盘赔率
+        if (alet) {
+            handicapName1.setText(getResources().getString(R.string.roll_asialet));
+        }
+        // 大小盘赔率
+        if (asize) {
+            if (!alet) {
+                handicapName1.setText(getResources().getString(R.string.roll_asiasize));
+            } else {
+                handicapName2.setText(getResources().getString(R.string.roll_asiasize));
+            }
+        }
+        // 欧盘赔率
+        if (eur) {
+            if (!alet && !asize) {
+                handicapName1.setText(getResources().getString(R.string.roll_euro));
+            } else {
+                handicapName2.setText(getResources().getString(R.string.roll_euro));
+            }
+        }
+    }
 
 }

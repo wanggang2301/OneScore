@@ -24,6 +24,7 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.FootBallDetailTypeEnum;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.HandMatchId;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
@@ -146,11 +147,14 @@ public class TeamInfoScoreFragment extends Fragment implements View.OnClickListe
         mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
-                Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
-                intent.putExtra("thirdId", String.valueOf(matchList.get(i).getMatchId()));
-                intent.putExtra("currentFragmentId", 0);
-                intent.putExtra(FootBallDetailTypeEnum.CURRENT_TAB_KEY, FootBallDetailTypeEnum.FOOT_DETAIL_LIVE);
-                mContext.startActivity(intent);
+
+                if (HandMatchId.handId(mContext, String.valueOf(matchList.get(i).getMatchId()))) {
+                    Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
+                    intent.putExtra("thirdId", String.valueOf(matchList.get(i).getMatchId()));
+                    intent.putExtra("currentFragmentId", 0);
+                    intent.putExtra(FootBallDetailTypeEnum.CURRENT_TAB_KEY, FootBallDetailTypeEnum.FOOT_DETAIL_LIVE);
+                    mContext.startActivity(intent);
+                }
             }
         });
     }

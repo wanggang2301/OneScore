@@ -32,35 +32,69 @@
                 android:layout_height="match_parent"
                 android:background="@color/item_match_jingcai" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_width="3dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:paddingLeft="20dp"
+                android:background="@drawable/selector_match_red"
+                android:layout_marginRight="5dp"
+                />
+
+            <TextView
+                android:id="@+id/match_leaguename"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
                 android:text="亚冠杯"
                 android:textColor="@color/content_txt_black" />
 
 
             <TextView
+                android:id="@+id/match_time"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
-                android:text="02:00"
                 android:textColor="@color/res_pl_color"
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/match_status"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
-                android:text="未开场"
+
                 android:textColor="@color/res_pl_color"
                 android:textSize="12sp" />
+            <TextView
+                android:id="@+id/match_socer"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/res_pl_color"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:visibility="gone"
+                android:id="@+id/item_football_frequency"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/match_socer"
+                android:text="'"
+                android:textColor="@color/football_keeptime"
+                android:textSize="@dimen/item_football_frequency" />
+
 
         </LinearLayout>
 
@@ -70,7 +104,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.2"
             android:gravity="center"
-            android:text="主胜"
+            android:text="@string/odd_home_op_txt"
             android:textColor="@color/res_pl_color"
             android:textSize="14sp" />
 
@@ -81,7 +115,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.2"
             android:gravity="center"
-            android:text="平局"
+            android:text="@string/odd_dish_op_txt"
             android:textColor="@color/res_pl_color"
             android:textSize="14sp" />
 
@@ -91,7 +125,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.2"
             android:gravity="center"
-            android:text="客队"
+            android:text="@string/odd_guest_op_txt"
             android:textColor="@color/res_pl_color"
             android:textSize="14sp" />
 
@@ -120,6 +154,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/match_week"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="周三"
@@ -174,6 +209,7 @@
                         android:background="@color/item_match_jingcai" />
 
                     <TextView
+                        android:id="@+id/match_letnumber"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.2"
@@ -190,6 +226,7 @@
                     android:background="@color/item_match_jingcai" />
 
                 <TextView
+                    android:id="@+id/match_letwinodds"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
@@ -204,6 +241,7 @@
                     android:background="@color/item_match_jingcai" />
 
                 <TextView
+                    android:id="@+id/match_letsameodds"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
@@ -218,6 +256,7 @@
                     android:background="@color/item_match_jingcai" />
 
                 <TextView
+                    android:id="@+id/match_letloseodds"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
@@ -258,6 +297,7 @@
                         android:background="@color/item_match_jingcai" />
 
                     <TextView
+                        android:id="@+id/match_number"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.2"
@@ -274,6 +314,7 @@
                     android:background="@color/item_match_jingcai" />
 
                 <TextView
+                    android:id="@+id/winodds"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
@@ -288,6 +329,7 @@
                     android:background="@color/item_match_jingcai" />
 
                 <TextView
+                    android:id="@+id/sameodds"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
@@ -303,6 +345,7 @@
                     android:background="@color/item_match_jingcai" />
 
                 <TextView
+                    android:id="@+id/loseodds"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"

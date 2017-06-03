@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="com.hhly.mlottery.activity.FootballCornerActivity">
+    <include layout="@layout/layout_header"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/football_corner_tabs"
+        style="@style/MyCustomTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="41dp"
+        android:background="@color/colorPrimary"
+        app:tabIndicatorColor="@color/white"
+        app:tabIndicatorHeight="2dp"
+        app:tabSelectedTextColor="@color/white"
+        android:visibility="gone"
+        app:tabTextAppearance="@style/MyTabLayoutTextAppearanceInverse" />
+
+    <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
+        android:id="@+id/corner_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/corner_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
+
+</LinearLayout>

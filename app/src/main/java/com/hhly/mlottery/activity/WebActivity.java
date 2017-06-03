@@ -17,12 +17,10 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.ShareBean;
-import com.hhly.mlottery.frame.ChatFragment;
 import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.CommonUtils;
-import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DeviceInfo;
+import com.hhly.mlottery.util.HandMatchId;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.ProgressWebView;
 import com.umeng.analytics.MobclickAgent;
@@ -80,10 +78,13 @@ public class WebActivity extends BaseActivity implements OnClickListener {
                         }
                         case 2:// 足球
                         {
-                            Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
-                            intent.putExtra("thirdId", mThird);
-                            intent.putExtra("currentFragmentId", -1);
-                            mContext.startActivity(intent);
+                            if (HandMatchId.handId(mContext, mThird)) {
+
+                                Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
+                                intent.putExtra("thirdId", mThird);
+                                intent.putExtra("currentFragmentId", -1);
+                                mContext.startActivity(intent);
+                            }
                             break;
                         }
                     }
@@ -105,7 +106,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         public_btn_set = (ImageView) findViewById(R.id.public_btn_set);
         public_btn_set.setImageResource(R.mipmap.share);
 
-        if (CommonUtils.isZH()) {
+        if (DeviceInfo.isZH()) {
             public_btn_set.setVisibility(View.VISIBLE);
         } else {
             public_btn_set.setVisibility(View.GONE);

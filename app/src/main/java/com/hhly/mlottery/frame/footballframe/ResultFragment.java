@@ -40,6 +40,7 @@ import com.hhly.mlottery.callback.FocusClickListener;
 import com.hhly.mlottery.callback.FocusMatchClickListener;
 import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFilterEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
@@ -48,7 +49,9 @@ import com.hhly.mlottery.frame.scorefrag.FootBallScoreFragment;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FocusUtils;
+import com.hhly.mlottery.util.HandMatchId;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ResultDateUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
@@ -85,7 +88,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
     public static List<LeagueCup> mCups;
     public static LeagueCup[] mCheckedCups; // 联赛筛选
 
-
     private List<ScheduleDate> mDateList; // 日期
 
     private ExactSwipeRefreshLayout mSwipeRefreshLayout;// 下拉刷新 layout
@@ -112,7 +114,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
     private DateOnClickListener mDateOnClickListener;
 
-
     private DateOnClickListener mDateOnClickListener_internation;
 
     private String mCurrentDate;
@@ -129,8 +130,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
     private final static int VIEW_STATUS_SUCCESS = 3;
     private final static int VIEW_STATUS_NET_ERROR = 4;
     private final static int VIEW_STATUS_FLITER_NO_DATA = 5;
-
-    //public static EventBus resultEventBus;
     private static final String FRAGMENT_INDEX = "fragment_index";
     private static final String ENTRY_TYPE = "entryType";
 
@@ -162,12 +161,10 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
         return fragment;
     }
 
-    public static ResultFragment newInstance(int index , int entryType) {
-
-
+    public static ResultFragment newInstance(int index, int entryType) {
         Bundle bundle = new Bundle();
         bundle.putInt(FRAGMENT_INDEX, index);
-        bundle.putInt(ENTRY_TYPE , entryType);
+        bundle.putInt(ENTRY_TYPE, entryType);
         ResultFragment fragment = new ResultFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -180,7 +177,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
             switch (msg.what) {
                 case VIEW_STATUS_LOADING:
                     mErrorLayout.setVisibility(View.GONE);
-                    //mListView.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setRefreshing(true);
                     mNoDataLayout.setVisibility(View.GONE);
@@ -191,15 +187,12 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                     mLoadDataStatus = LOAD_DATA_STATUS_LOADING;
                     break;
                 case VIEW_STATUS_SUCCESS:
-                    //mScreen.setVisibility(View.VISIBLE);
                     mLoadingLayout.setVisibility(View.GONE);
                     mErrorLayout.setVisibility(View.GONE);
                     mNoDataLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-                    //mListView.setVisibility(View.VISIBLE);
                     mLoadDataStatus = LOAD_DATA_STATUS_SUCCESS;
-
                     break;
                 case VIEW_STATUS_NET_ERROR:
                     if (isLoadedData) {
@@ -208,7 +201,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                         }
                     } else {
                         mLoadingLayout.setVisibility(View.GONE);
-                        //mSwipeRefreshLayout.setVisibility(View.GONE);
                         mErrorLayout.setVisibility(View.VISIBLE);
                         mNoDataLayout.setVisibility(View.GONE);
                         mLoadDataStatus = LOAD_DATA_STATUS_ERROR;
@@ -235,10 +227,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        /**注册事件总线*/
-        //  resultEventBus = new EventBus();
-        // resultEventBus.register(this);
         if (getArguments() != null) {
             mEntryType = getArguments().getInt(ENTRY_TYPE);
         }
@@ -304,21 +292,16 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
                     view.setTag(false);
                 }
-//                ((ScoresFragment) getParentFragment()).focusCallback();
                 if (mEntryType == 0) {
-                }else if(mEntryType == 1){
+                } else if (mEntryType == 1) {
                     ((FootBallScoreFragment) getParentFragment()).focusCallback();
                 }
             }
         };
 
-
         mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         new Handler().postDelayed(mLoadingDataThread, 0);
 
-        /**
-         * 国际版判断
-         */
         setDialog();
     }
 
@@ -377,14 +360,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
             return;
         }
 
-        /**
-         * 多点登录的时候。另一台手机登录需要进行请求关注的数据。现在单点登录之后，则在登录的时候请求一次就可以
-         * 因为不存在两台手机同时在关注列表瞎他tm的情况
-         */
-//
-//        if (getParentFragment() != null) {
-////            ((ScoresFragment) getParentFragment()).getFootballUserConcern();
-//        }
 
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_ResultMatchs, new VolleyContentFast.ResponseSuccessListener<ResultMatch>() {
             @Override
@@ -420,6 +395,10 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 teamLogoPre = json.getTeamLogoPre();
                 teamLogoSuff = json.getTeamLogoSuff();
 
+                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_RESULT, "").equals(json.getFilerDate())) {
+                    PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_RESULT);
+                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_RESULT, json.getFilerDate());
+                }
 
                 /**
                  * 标记 Type 1--只加载 current下的 Date数据
@@ -462,10 +441,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                     }
                 }
 
-                L.d("1234", isCheckedDefualt + "");
-
                 if (!isCheckedDefualt) {
-
                     mMatchs.clear();
                     for (ResultMatchDto match : mAllMatchs) {
                         if (match.getType() == ResultMultiAdapter.VIEW_DATE_INDEX) {
@@ -483,25 +459,41 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 } else {
                   /*  *
                      * 默认显示 全部赛事*/
-
-                    mMatchs.addAll(mAllMatchs);
-                    mCheckedCups = mCups.toArray(new LeagueCup[mCups.size()]);
+                    if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_RESULT).size() > 0) {
+                        List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_RESULT);
+                        for (ResultMatchDto match : mAllMatchs) {
+                            if (match.getType() == ResultMultiAdapter.VIEW_DATE_INDEX) {
+                                mMatchs.add(match);
+                                continue;
+                            }
+                            for (String raceId : list) {
+                                if ((match.getType() == ResultMultiAdapter.VIEW_MATCH_INDEX) && raceId.equals(match.getMatchs().getRaceId())) {
+                                    mMatchs.add(match);
+                                    break;
+                                }
+                            }
+                        }
+                    } else {
+                        mMatchs.addAll(mAllMatchs);
+                        mCheckedCups = mCups.toArray(new LeagueCup[mCups.size()]);
+                    }
                 }
 
                 mAdapter = new ResultMultiAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
                 mRecyclerView.setAdapter(mAdapter);
                 mAdapter.setmFocusMatchClickListener(mFocusMatchClickListener);
                 mAdapter.setDateOnClickListener(mDateOnClickListener);
-
-
                 mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
                     @Override
                     public void onItemClick(View view, String data) {
-                        String thirdId = data;
-                        Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
-                        intent.putExtra("thirdId", thirdId);
-                        intent.putExtra("currentFragmentId", 2);
-                        getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                        if(HandMatchId.handId(getActivity(), data)) {
+
+                            String thirdId = data;
+                            Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
+                            intent.putExtra("thirdId", thirdId);
+                            intent.putExtra("currentFragmentId", 2);
+                            getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                        }
                     }
                 });
 
@@ -526,7 +518,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
     @Override
     public void onClick(View v) {
-
         switch (v.getId()) {
             case R.id.network_exception_reload_btn:
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
@@ -539,7 +530,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
 
     /**
-     * EventBus 帅选完成后接受消息
+     * EventBus 筛选完成后接受消息
      * 接受消息的页面实现
      */
     public void onEventMainThread(ScoresMatchFilterEventBusEntity scoresMatchFilterEventBusEntity) {
@@ -548,7 +539,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
             String[] checkedIds = (String[]) ((LinkedList) map.get(FiltrateMatchConfigActivity.RESULT_CHECKED_CUPS_IDS)).toArray(new String[]{});
             mMatchs.clear();
             if (checkedIds.length != 0) {
-
                 for (ResultMatchDto match : mAllMatchs) {
                     if (match.getType() == ResultMultiAdapter.VIEW_DATE_INDEX) {
                         mMatchs.add(match);
@@ -563,6 +553,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                         }
                     }
                 }
+                List<String> localFilterRace = new ArrayList<>();
 
                 List<LeagueCup> leagueCupList = new ArrayList<LeagueCup>();
                 for (LeagueCup cup : mCups) {
@@ -576,8 +567,12 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
                     if (isExistId) {
                         leagueCupList.add(cup);
+                        localFilterRace.add(cup.getRaceId());
+
                     }
                 }
+
+                PreferenceUtil.setDataList(FootBallMatchFilterTypeEnum.FOOT_RESULT, localFilterRace);
 
                 mCheckedCups = leagueCupList.toArray(new LeagueCup[]{});
                 updateAdapter();
@@ -617,9 +612,8 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
         if (scoresMatchFocusEventBusEntity.getFgIndex() == 2) {
             L.d("qazwsx", "赛程关注内页返回EventBus");
             updateAdapter();
-//            ((ScoresFragment) getParentFragment()).focusCallback();
             if (mEntryType == 0) {
-            }else if(mEntryType == 1){
+            } else if (mEntryType == 1) {
                 ((FootBallScoreFragment) getParentFragment()).focusCallback();
             }
         }
@@ -631,16 +625,13 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
      * @param position ：传入所选日期的 Item
      */
     public void historyInitData(final int position) {
-
         // 获得 倒叙日期
         final String mDatas[] = new String[7];
 
         // 获得 递减 日期
         for (int i = 0; i < 7; i++) {
-
             String riqi = ResultDateUtil.getDate(i, mCurrentDate);
             String week = ResultDateUtil.getWeekOfDate(DateUtil.parseDate(ResultDateUtil.getDate(0, riqi)));
-
             mDatas[i] = riqi + "   " + week;
         }
 
@@ -693,8 +684,26 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                     /**
                      * 默认显示 全部赛事
                      */
-                    mMatchs.addAll(mAllMatchs);
-                    mCheckedCups = mCups.toArray(new LeagueCup[mCups.size()]);
+                    if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_RESULT).size() > 0) {
+                        List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_RESULT);
+                        for (ResultMatchDto match : mAllMatchs) {
+                            if (match.getType() == ResultMultiAdapter.VIEW_DATE_INDEX) {
+                                mMatchs.add(match);
+                                continue;
+                            }
+
+                            for (String raceId : list) {
+                                if ((match.getType() == ResultMultiAdapter.VIEW_MATCH_INDEX) && raceId.equals(match.getMatchs().getRaceId())) {
+                                    mMatchs.add(match);
+                                    break;
+                                }
+                            }
+                        }
+
+                    } else {
+                        mMatchs.addAll(mAllMatchs);
+                        mCheckedCups = mCups.toArray(new LeagueCup[mCups.size()]);
+                    }
                 }
 
                 if (mMatchs.size() == 1) {// size == 1

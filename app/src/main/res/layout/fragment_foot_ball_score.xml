@@ -1,35 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <include android:id="@+id/d_heasder"
+
+        <include
+            android:id="@+id/d_heasder"
             layout="@layout/score_layout_header" />
 
 
-        <android.support.design.widget.TabLayout
+        <com.flyco.tablayout.SlidingTabLayout
             android:id="@+id/tabs"
-            android:background="@color/colorPrimary"
-            android:layout_width="match_parent"
-            android:layout_height="41dp"
-            app:tabIndicatorColor="@color/white"
-            app:tabIndicatorHeight="2dp"
             style="@style/MyCustomTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="@color/colorPrimary"
             app:tabTextAppearance="@style/MyTabLayoutTextAppearanceInverse"
-            app:tabSelectedTextColor="@color/white"/>
+            app:tl_indicator_color="@color/white"
+            app:tl_indicator_corner_radius="3dp"
+            app:tl_indicator_height="2dp"
+            app:tl_tab_padding="20dp"
+            app:tl_tab_space_equal="true"
+            app:tl_textSelectColor="@color/white" />
 
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </android.support.v4.view.ViewPager>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </RelativeLayout>

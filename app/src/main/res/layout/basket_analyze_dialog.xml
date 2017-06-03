@@ -10,7 +10,7 @@
         android:id="@+id/screen_titleView"
         android:layout_width="337dp"
         android:layout_height="38dip"
-        android:background="@drawable/basket_screen_title"
+        android:background="@drawable/share_date_top_bg"
         android:gravity="center"
         android:text="@string/basket_analyze_screen"
         android:textColor="@color/white"
@@ -20,11 +20,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/basket_analyze_dialog_site"
-        android:background="@color/black_grounding"
         android:paddingTop="15dp"
         android:paddingLeft="30dp"
         android:paddingBottom="10dp"
-        android:textColor="@color/black_details_textcolor"
+        android:textColor="@color/black_details_ball_textcolor"
+        android:background="@color/black_details_ball_textcolor2"
         />
 
     <RadioGroup
@@ -32,8 +32,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/black_grounding"
         android:paddingLeft="30dp"
+        android:background="@color/black_details_ball_textcolor2"
         >
         <RadioButton
             android:id="@+id/basket_analyze_allsite"
@@ -44,7 +44,7 @@
             android:gravity="center"
             android:checked="true"
             android:textColor="@color/basket_screen_text_color"
-            android:background="@drawable/basket_screen_left_selector"
+            android:background="@drawable/football_screen_left_selector"
             />
         <RadioButton
             android:id="@+id/basket_analyze_samesite"
@@ -55,18 +55,18 @@
             android:button="@null"
             android:gravity="center"
             android:textColor="@color/basket_screen_text_color"
-            android:background="@drawable/basket_screen_right_selector"/>
+            android:background="@drawable/football_screen_right_selector"/>
     </RadioGroup>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/basket_analyze_dialog_num"
-        android:background="@color/black_grounding"
         android:paddingTop="15dp"
         android:paddingLeft="30dp"
         android:paddingBottom="10dp"
-        android:textColor="@color/black_details_textcolor"
+        android:textColor="@color/black_details_ball_textcolor"
+        android:background="@color/black_details_ball_textcolor2"
         />
 
     <RadioGroup
@@ -74,9 +74,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/black_grounding"
         android:paddingLeft="30dp"
         android:paddingBottom="20dp"
+        android:background="@color/black_details_ball_textcolor2"
         >
         <RadioButton
             android:id="@+id/basket_analyze_num_six"
@@ -87,8 +87,12 @@
             android:gravity="center"
             android:textColor="@color/basket_screen_text_color"
             android:checked="true"
-            android:background="@drawable/basket_screen_left_selector"
+            android:background="@drawable/football_screen_left_selector"
             />
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/black_details_ball_textcolor2" />
         <RadioButton
             android:id="@+id/basket_analyze_num_ten"
             android:layout_width="96dp"
@@ -97,9 +101,13 @@
             android:button="@null"
             android:gravity="center"
             android:textColor="@color/basket_screen_text_color"
-            android:background="@drawable/basket_screen_middle_selector"
-            
+            android:background="@drawable/football_screen_middle_selector"
+
             />
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/black_details_ball_textcolor2" />
         <RadioButton
             android:id="@+id/basket_analyze_num_fifteen"
             android:layout_width="96dp"
@@ -108,13 +116,13 @@
             android:button="@null"
             android:gravity="center"
             android:textColor="@color/basket_screen_text_color"
-            android:background="@drawable/basket_screen_right_selector"/>
+            android:background="@drawable/football_screen_right_selector"/>
     </RadioGroup>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/basket_parting_line" />
+        android:background="@color/selected_bg" />
 
     <!--<RadioGroup-->
         <!--android:id="@+id/gendergroup3"-->
@@ -148,7 +156,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/black_grounding"
+        android:background="@color/black_details_ball_textcolor2"
         >
         <Button
             android:id="@+id/basket_analyze_cancle"
@@ -157,8 +165,13 @@
             android:layout_height="40dp"
             android:text="@string/basket_analyze_dialog_cancle"
             android:gravity="center"
-            android:textColor="@color/basket_screen_checked_text_color"
-            android:background="@color/black_grounding"/>
+            android:textColor="@color/football_screen_checked_text_color"
+            android:background="@color/black_details_ball_textcolor2"
+            />
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/selected_bg" />
         <Button
             android:id="@+id/basket_analyze_confirm"
             android:layout_width="0dp"
@@ -166,8 +179,9 @@
             android:layout_height="40dp"
             android:text="@string/basket_analyze_dialog_ok"
             android:gravity="center"
-            android:textColor="@color/basket_screen_checked_text_color"
-            android:background="@color/basket_parting_line"/>
+            android:textColor="@color/football_screen_checked_text_color"
+            android:background="@color/black_details_ball_textcolor2"
+            />
     </LinearLayout>
 
 

@@ -7,88 +7,78 @@
     android:layout_height="match_parent"
     tools:context="com.hhly.mlottery.activity.BasketDetailsActivityTest">
 
-    <android.support.design.widget.CoordinatorLayout
+    <LinearLayout
         android:id="@+id/coordinator_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/basket_details_appbar"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/black"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            android:orientation="vertical">
 
-            <android.support.design.widget.CollapsingToolbarLayout
-                android:id="@+id/toolbar_layout"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:contentScrim="@color/black">
+                android:layout_height="220dp">
 
-                <!--<include layout="@layout/layout_basket_header" />-->
+                <include
+                    layout="@layout/layout_basket_header"/>
 
-                <com.hhly.mlottery.widget.CustomViewpager
-                    android:id="@+id/headviewpager"
-                    style="@style/isFitsSystemWindows"
+                <com.hhly.mlottery.view.BarrageView
+                    android:id="@+id/barrage_view"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp">
+                    android:layout_height="match_parent"
+                    android:paddingTop="30dp" />
 
-                </com.hhly.mlottery.widget.CustomViewpager>
-
-                <FrameLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_marginTop="20dp"
+                    android:layout_height="40dp">
 
+                    <ImageView
+                        android:id="@+id/basket_details_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerInParent="true"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp"
+                        android:src="@mipmap/basketball_back" />
 
-                    <com.hhly.mlottery.view.BarrageView
-                        android:id="@+id/barrage_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:paddingTop="30dp"></com.hhly.mlottery.view.BarrageView>
+                    <ImageView
+                        android:id="@+id/barrage_switch"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_toLeftOf="@+id/basket_details_collect"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@mipmap/danmu_open"
+                        />
+                    <ImageView
+                        android:id="@+id/basket_details_collect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="7.5dp"
+                        android:paddingRight="21dp"
+                        android:src="@mipmap/basketball_collect" />
+                </RelativeLayout>
 
-                </FrameLayout>
+            </RelativeLayout>
+        </LinearLayout>
 
-                <me.relex.circleindicator.CircleIndicator
-                    android:id="@+id/indicator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_gravity="end|bottom"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    app:ci_animator="@animator/indicator_animator"
-                    app:ci_animator_reverse="@animator/indicator_animator_reverse"
-                    app:ci_drawable="@color/white"
-                    app:ci_height="2dp"
-                    app:ci_width="8dp" />
-
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/basket_details_toolbar"
-                    style="@style/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="@color/transparency"
-                    app:contentInsetStart="0dp"
-                    app:layout_collapseMode="pin"
-                    app:layout_scrollFlags="scroll|enterAlways"
-                    app:popupTheme="@style/AppTheme.PopupOverlay">
-
-                    <include layout="@layout/basket_details_header" />
-                </android.support.v7.widget.Toolbar>
-
-            </android.support.design.widget.CollapsingToolbarLayout>
-
-            <android.support.design.widget.TabLayout
-                android:id="@+id/basket_details_tab_layout"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@color/tabtitle"
-                app:tabGravity="center"
-                app:tabIndicatorColor="@color/white"
-                app:tabMode="scrollable"
-                app:tabSelectedTextColor="@color/basket_text_color"
-                app:tabTextColor="@color/unselected_tab_color" />
-        </android.support.design.widget.AppBarLayout>
-
+        <android.support.design.widget.TabLayout
+            android:id="@+id/basket_details_tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/tabtitle"
+            app:tabGravity="center"
+            app:tabIndicatorColor="@color/white"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/basket_text_color"
+            app:tabTextColor="@color/unselected_tab_color" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/basket_details_view_pager"
@@ -100,7 +90,6 @@
             android:id="@+id/rl_gif_notice"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="200dp"
             android:visibility="gone">
 
             <ImageView
@@ -119,27 +108,6 @@
                 android:textColor="@color/white" />
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="bottom|right"
-            android:paddingBottom="112dp"
-            android:paddingRight="10dp"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/tv_addMultiView"
-                android:layout_width="70dp"
-                android:layout_height="24dp"
-                android:alpha="0.75"
-                android:background="@drawable/multi_add_view"
-                android:gravity="center"
-                android:text="@string/multi_add_view_text"
-                android:textColor="#fff"
-                android:textSize="@dimen/text_size_12" />
-        </RelativeLayout>
-
-
-    </android.support.design.widget.CoordinatorLayout>
+    </LinearLayout>
 
 </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>

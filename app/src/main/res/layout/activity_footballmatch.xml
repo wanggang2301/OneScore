@@ -15,7 +15,7 @@
 
         <ImageView
             android:id="@+id/iv_left"
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
@@ -34,9 +34,22 @@
             android:textColor="@color/res_name_color"
             android:textSize="13sp" />
 
-        <ImageView
-            android:id="@+id/iv_right"
+        <TextView
+            android:layout_toRightOf="@+id/tv_data_content"
+            android:id="@+id/tv_data_size"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:clickable="true"
+            android:layout_marginLeft="-3dp"
+            android:text=""
+            android:textColor="@color/res_name_color"
+            android:textSize="13sp" />
+
+        <ImageView
+
+            android:id="@+id/iv_right"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
@@ -47,20 +60,20 @@
     </RelativeLayout>
 
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/match_swiperefreshlayout"
+    <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
+        android:id="@+id/match_swiperefreshlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--情报列表-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <!--情报列表-->
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/number_info_two_bg"
-                android:visibility="visible" />
+            android:layout_height="match_parent"
+            android:background="@color/number_info_two_bg"
+            android:visibility="visible" />
 
-        </android.support.v4.widget.SwipeRefreshLayout>
 
+    </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
 
     <TextView
         android:id="@+id/match_no_data_txt"
@@ -119,5 +132,7 @@
         </LinearLayout>
 
     </LinearLayout>
+
+
 
 </LinearLayout>

@@ -15,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.frame.footballframe.FiltrateMatchFragment;
@@ -101,7 +102,7 @@ public class FiltrateMatchConfigActivity extends BaseActivity implements OnClick
             mSubmitLayout.setVisibility(View.VISIBLE);
         }
 
-        final FiltrateMatchFragment fragmentMatch = FiltrateMatchFragment.newInstance(mCups, mCheckedCups, isDefualt);
+        final FiltrateMatchFragment fragmentMatch = FiltrateMatchFragment.newInstance(currentFragmentId, mCups, mCheckedCups, isDefualt);
         final FiltrateStatusFragment fragmentStatus = new FiltrateStatusFragment();
 
         mTab.check(R.id.filtrate_match_tab);
@@ -138,13 +139,9 @@ public class FiltrateMatchConfigActivity extends BaseActivity implements OnClick
         transaction.commit();
 
         mFragmentMatchId = fragmentMatch.getId();
+
         mSubmit = (Button) findViewById(R.id.filtrate_submit_btn);
         mSubmit.setOnClickListener(this);
-        // mCancel = (Button) findViewById(R.id.filtrate_cancel_btn);
-        // mCancel.setOnClickListener(this);
-
-        // mSubmit.setVisibility(View.GONE);
-        // mCancel.setVisibility(View.GONE);
 
     }
 
@@ -174,8 +171,7 @@ public class FiltrateMatchConfigActivity extends BaseActivity implements OnClick
                 FragmentManager fragmentManager = getSupportFragmentManager();
 
                 if (fragmentManager.findFragmentById(mFragmentMatchId) != null) {
-                    FiltrateMatchFragment filtrateMatchFragment = (FiltrateMatchFragment) fragmentManager.findFragmentById(
-                            mFragmentMatchId);
+                    FiltrateMatchFragment filtrateMatchFragment = (FiltrateMatchFragment) fragmentManager.findFragmentById(mFragmentMatchId);
 
                     Intent intent = new Intent();
                     Bundle bundle = new Bundle();
@@ -192,26 +188,14 @@ public class FiltrateMatchConfigActivity extends BaseActivity implements OnClick
                     map.put("checkedCupIds", list);
                     map.put("checkedDefualt", false);
 
-
-                    EventBus.getDefault().post(new ScoresMatchFilterEventBusEntity(currentFragmentId, map));
-
-                 /*   if (currentFragmentId == 0) {
-                        RollBallFragment.eventBus.post(map);
-                    } else if (currentFragmentId == 1) {
-                        //ImmediateFragment.imEventBus.post(map);
-                    } else if (currentFragmentId == 2) {
-                        // ResultFragment.resultEventBus.post(map);
+                    if (list.size() <= 0) {
+                        Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.at_least_one_race), Toast.LENGTH_SHORT).show();
+                    } else {
                         EventBus.getDefault().post(new ScoresMatchFilterEventBusEntity(currentFragmentId, map));
-                    } else if (currentFragmentId == 3) {
-                        EventBus.getDefault().post(new ScoresMatchFilterEventBusEntity(currentFragmentId, map));
-                    }*/
-
-                    //setResult(Activity.RESULT_OK, intent);
+                        finish();
+                    }
                 }
-
-                finish();
                 break;
-
             default:
                 break;
         }

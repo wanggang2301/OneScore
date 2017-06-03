@@ -10,6 +10,9 @@ public abstract class BasePresenter<V extends IView>implements IPresenter<V> {
     protected final String TAG=getClass().getSimpleName();
     protected V mView; //子类presenter可以接调用
 
+    public static String NODATA="1";
+    public static String NETERROR="2";
+
     private BasePresenter(){
         // dataManagerr配置
     }

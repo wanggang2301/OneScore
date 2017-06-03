@@ -35,6 +35,7 @@ import com.hhly.mlottery.bean.basket.BasketRootBean;
 import com.hhly.mlottery.bean.scheduleBean.ScheduleDate;
 import com.hhly.mlottery.callback.DateOnClickListener;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.footballframe.eventbus.BasketDetailsEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.BasketScoreResultEventBusEntity;
@@ -45,6 +46,7 @@ import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
 
@@ -60,7 +62,7 @@ import de.greenrobot.event.EventBus;
  * 篮球比分fragment
  * Created by yixq on 2017/03/17
  */
-public class BasketResultNewScoreFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener{
+public class BasketResultNewScoreFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "ImmedBasketballFragment";
     private static final String PARAMS = "BASKET_PARAMS";
@@ -130,6 +132,7 @@ public class BasketResultNewScoreFragment extends Fragment implements View.OnCli
 
     private int mEntryType; // 标记入口 判断是从哪里进来的 (0:首页入口  1:新导航条入口)
     private boolean isSuccessLoadData = false; //加载是否成功
+
     /**
      * 切换后更新显示的fragment
      *
@@ -209,6 +212,7 @@ public class BasketResultNewScoreFragment extends Fragment implements View.OnCli
 
     /**
      * 设置显示状态
+     *
      * @param status
      */
     //显示状态
@@ -230,10 +234,10 @@ public class BasketResultNewScoreFragment extends Fragment implements View.OnCli
         } else if (status == SHOW_STATUS_REFRESH_ONCLICK) {
             mSwipeRefreshLayout.setVisibility(View.GONE);
             mSwipeRefreshLayout.setRefreshing(true);
-        } else if(status == SHOW_STATUS_CURRENT_ONDATA){
+        } else if (status == SHOW_STATUS_CURRENT_ONDATA) {
             mSwipeRefreshLayout.setVisibility(View.VISIBLE);
             mSwipeRefreshLayout.setRefreshing(false);
-        }else {
+        } else {
             mSwipeRefreshLayout.setVisibility(View.GONE);
             mSwipeRefreshLayout.setRefreshing(false);
         }
@@ -241,6 +245,7 @@ public class BasketResultNewScoreFragment extends Fragment implements View.OnCli
         mErrorLayout.setVisibility(status == SHOW_STATUS_ERROR ? View.VISIBLE : View.GONE);
         mNoDataLayout.setVisibility(status == SHOW_STATUS_NO_DATA ? View.VISIBLE : View.GONE);
     }
+
     /**
      * 初始化VIEW
      */
@@ -299,6 +304,11 @@ public class BasketResultNewScoreFragment extends Fragment implements View.OnCli
                     return;
                 }
 
+                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.BASKET_CURR_DATE_RESULT, "").equals(json.getFilerDate())) {
+                    PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.BASKET_RESULT);
+                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.BASKET_CURR_DATE_RESULT, json.getFilerDate());
+                }
+
                 mMatchdata = json.getMatchData();
 
                 mMatchFilter = json.getMatchFilter();
@@ -320,7 +330,7 @@ public class BasketResultNewScoreFragment extends Fragment implements View.OnCli
                     mAllDateList.add(mMatchdata.get(i).getDate());//所有日期
                 }
                 if (json.getMatchFilter() != null && json.getMatchFilter().size() != 0) {
-                    for (int i = 0; i < json.getMatchFilter().size() ; i++) {
+                    for (int i = 0; i < json.getMatchFilter().size(); i++) {
                         /**
                          * 获得所有日期的所有联赛
                          */
@@ -374,7 +384,7 @@ public class BasketResultNewScoreFragment extends Fragment implements View.OnCli
                 }
 
                 if (adapter == null) {
-                    adapter = new BasketballScoreListAdapter(mContext , currentMatchData , 1);
+                    adapter = new BasketballScoreListAdapter(mContext, currentMatchData, 1);
                     explistview.setAdapter(adapter);
                     adapter.setmFocus(mFocusClickListener);//设置关注
                     adapter.setDateOnClickListener(mDateOnClickListener);
@@ -420,6 +430,7 @@ public class BasketResultNewScoreFragment extends Fragment implements View.OnCli
     private ListView mDateListView;
     private List<ScheduleDate> mDatelist; // 日期
     private static int currentDatePosition = 0;//记录当前日期选择器中日期的位置
+
     private void choiceDateList() {
         mDateOnClickListener = new DateOnClickListener() {
             @Override
@@ -430,7 +441,7 @@ public class BasketResultNewScoreFragment extends Fragment implements View.OnCli
                 LayoutInflater infla = LayoutInflater.from(getActivity());
                 View alertDialogView = infla.inflate(R.layout.alertdialog, null);
                 mDateListView = (ListView) alertDialogView.findViewById(R.id.listdate);
-                initListResultDateAndWeek(mAllDateList,  currentDatePosition);
+                initListResultDateAndWeek(mAllDateList, currentDatePosition);
                 mDateListView.setAdapter(mDateResultAdapter);
                 mDateListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -439,14 +450,14 @@ public class BasketResultNewScoreFragment extends Fragment implements View.OnCli
                             if (position == currentDatePosition) {
                                 isFilter = true;
                                 updateAdapter();
-                            }else{
+                            } else {
                                 isFilter = false;
                                 switchDate(position);
                             }
                         }
                         if (position == currentDatePosition) {
                             updateAdapter();
-                        }else{
+                        } else {
                             switchDate(position);
                         }
                         currentDatePosition = position;
@@ -495,6 +506,7 @@ public class BasketResultNewScoreFragment extends Fragment implements View.OnCli
      * @param s
      */
     private ScheduleDateAdapter mDateResultAdapter;
+
     private void initListResultDateAndWeek(List<String> s, int position) {
         mDatelist = new ArrayList<ScheduleDate>();
         for (int i = 0; i < s.size(); i++) {
@@ -504,19 +516,34 @@ public class BasketResultNewScoreFragment extends Fragment implements View.OnCli
         mDateResultAdapter = new ScheduleDateAdapter(mDatelist, mContext, position);
     }
 
-    private void switchDate(int index){
+    private void switchDate(int index) {
         currentMatchData.clear();
         BasketMatchBean itemData = new BasketMatchBean();
         itemData.setItemType(TITTLEDATETYPE);
         itemData.setDate(DateUtil.convertDateToNation(mAllMatchdata.get(index).get(0).getDate()));
         currentMatchData.add(itemData);
 
-        for (BasketMatchBean data : mAllMatchdata.get(index)) {
-            data.setItemType(LISTDATATYPE);
-            currentMatchData.add(data);
+        List<String> filiterLeagueIds = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.BASKET_RESULT);
+
+        if (filiterLeagueIds.size() > 0) {
+            for (BasketMatchBean data : mAllMatchdata.get(index)) {
+                for (String id : filiterLeagueIds) {
+                    if (data.getLeagueId().equals(id)) {
+                        data.setItemType(LISTDATATYPE);
+                        currentMatchData.add(data);
+                    }
+                }
+            }
+        } else {
+            for (BasketMatchBean data : mAllMatchdata.get(index)) {
+                data.setItemType(LISTDATATYPE);
+                currentMatchData.add(data);
+            }
         }
+
         updateAdapter();
     }
+
     /**
      * 点击关注事件
      */
@@ -670,11 +697,13 @@ public class BasketResultNewScoreFragment extends Fragment implements View.OnCli
             mLoadingLayout.setVisibility(View.GONE);
         } else {
 
-            L.d("AAAAA-yxq----", "currentMatchData = " + currentMatchData.size());
-//            childrenDataList.clear();
             currentMatchData.clear();
             groupDataList.clear();
             List<BasketMatchBean> checkedMatchs = new ArrayList<>();
+
+            List<String> localFilterRace = new ArrayList<>();
+
+
             for (BasketMatchBean matchBean : mAllMatchdata.get(currentDatePosition)) {//只遍历当前日期里的比赛
                 boolean isExistId = false;
                 for (String checkedId : checkedIds) {
@@ -687,8 +716,10 @@ public class BasketResultNewScoreFragment extends Fragment implements View.OnCli
                     checkedMatchs.add(matchBean);
                 }
             }
-            L.d("AAAAA-yxq----", "checkedMatchs.size = " + checkedMatchs.size());
-            L.d("AAAAA-yxq----", "currentMatchData.size = " + currentMatchData.size());
+            localFilterRace.addAll((List)map.get(BasketFiltrateActivity.CHECKED_CUPS_IDS));
+            PreferenceUtil.setDataList(FootBallMatchFilterTypeEnum.BASKET_RESULT, localFilterRace);
+
+
             if (checkedMatchs.size() != 0) {
                 BasketMatchBean itemData = new BasketMatchBean();
                 itemData.setItemType(TITTLEDATETYPE);

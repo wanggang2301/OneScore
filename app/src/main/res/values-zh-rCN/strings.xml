@@ -47,6 +47,7 @@
     <string name="football_info_oceania">大洋洲</string>
 
     <!--足球内页改版(滚球等)-->
+    <string name="foot_details_recommend">推介</string>
     <string name="foot_details_roolball">滚球</string>
     <string name="foot_details_talkball">聊球</string>
     <string name="foot_details_analyze">分析</string>
@@ -1680,7 +1681,11 @@
     <string name="please_hint_team">请输入球队名称</string>
 
     <string name="foot_text">文字</string>
+    <string name="foot_lineup">阵容</string>
+    <string name="foot_statistics">统计</string>
     <string name="nopage">暂无比赛直播</string>
+    <string name="foot_bigdata">大数据</string>
+
 
     <!--球队信息-->
     <string name="foot_team_info_total">总</string>
@@ -1724,6 +1729,16 @@
     <string name="football_database_details_fumble_score_avg">场均失球 :</string>
 
     <string name="invited_summary">请您一起看比赛，输入邀请码，优惠多多哦。</string>
+    <string name="corner_score">角球比分</string>
+    <string name="higher">高于</string>
+    <string name="jishi_pan">即时盘</string>
+    <string name="lower">低于</string>
+
+    <string name="roll_desc_txt">胜出</string>
+    <string name="data_updating">详情数据更新中...</string>
+    <string name="at_least_one_race">至少选择一场赛事</string>
+    <string name="start_dianqiu">开始点球大战</string>
+    <string name="start_addtime">开始加时赛</string>
 
     <!--竞彩推荐-->
     <string name="betting_setting_palying_method">玩法</string>

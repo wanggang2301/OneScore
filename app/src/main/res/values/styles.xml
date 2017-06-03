@@ -786,7 +786,7 @@
 
     <style name="WW_Width_0dp">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
     </style>
 
     <style name="item_rollball_MeasureSpec_EXACTLY">
@@ -1138,6 +1138,20 @@
         <item name="android:textSize">@dimen/text_size_12</item>
         <item name="android:textColor">@color/betting_recommend_zhuanjia_details_color</item>
     </style>
+    <!--角球列表页赔率字体样式-->
+    <style name="corner_text_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text"></item>
+        <item name="android:textSize">@dimen/text_size_13</item>
+        <item name="android:textColor">@color/mdy_333</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:gravity">center</item>
+
+    </style>
+
     <!-- 竞彩推介发布内容 -->
     <style name="betting_recommend_issue_check">
         <item name="android:layout_weight">1</item>
@@ -1161,7 +1175,7 @@
         <item name="android:paddingLeft">12dp</item>
         <item name="android:paddingRight">12dp</item>
     </style>
-    
+
     <!--竞彩推介发布详情-->
     <style name="betting_recommend_issue_fabu_key">
         <item name="android:textColor">@color/betting_recommend_issue_wanfa_color</item>
