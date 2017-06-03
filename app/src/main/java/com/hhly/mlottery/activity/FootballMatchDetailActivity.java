@@ -181,7 +181,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private String mPreStatus;
     public final static String BUNDLE_PARAM_THIRDID = "thirdId";
 
-    //    private RecommendFragment mRecommendFragment;  //推介
+    private BettingIssueFragment mRecommendFragment;  //推介
     private DetailsRollballFragment mDetailsRollballFragment; //滚球
     private LiveFragment mLiveFragment;  //直播
     private OddsFragment mOddsFragment;         //指数
@@ -1796,7 +1796,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     if (!isAddFragment) {
                         // 传值到直播Fragment
                         //推介
-//                    mRecommendFragment = RecommendFragment.newInstance();
+                        mRecommendFragment = mRecommendFragment.newInstance("");
                         //滚球
                         mDetailsRollballFragment = DetailsRollballFragment.newInstance(mThirdId);
                         //直播
@@ -1808,8 +1808,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         // 聊球
                         mChartBallFragment = ChartBallFragment.newInstance(0, mThirdId);
 
-                        mTabsAdapter.addFragments(mDetailsRollballFragment, mLiveFragment, mOddsFragment, mAnalyzeParentFragment, mChartBallFragment);
-                        mViewPager.setOffscreenPageLimit(4);//设置预加载页面的个数。
+                        mTabsAdapter.addFragments(mRecommendFragment , mDetailsRollballFragment, mLiveFragment, mOddsFragment, mAnalyzeParentFragment, mChartBallFragment);
+                        mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
                         mViewPager.setAdapter(mTabsAdapter);
                         mTabLayout.setupWithViewPager(mViewPager);
                         isAddFragment = true;

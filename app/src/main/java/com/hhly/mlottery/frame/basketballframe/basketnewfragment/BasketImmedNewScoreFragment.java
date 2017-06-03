@@ -272,7 +272,7 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
         mView.findViewById(R.id.testbetting).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mIntent = new Intent(mContext, BettingRecommendActivity.class);
+                Intent mIntent = new Intent(mContext, MvpBettingRecommendActivity.class);
                 startActivity(mIntent);
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
             }
@@ -1049,6 +1049,16 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                     data.setItemType(LISTDATATYPE);
                     currentMatchData.add(data);
                 }
+//                    for (String groupdata : mAllGroupdata) {
+//                        String[] weekdatas = groupdata.split(",");
+//                        String datas = weekdatas[0];
+//                        String currData = DateUtil.convertDateToNation(checkedMatchs.get(0).getDate());//国际化后比较日期
+//                        if (currData.equals(datas)) {
+//                            groupDataList.add(groupdata);
+//                            break;
+//                        }
+//                    }
+//                }
             }
             List<BasketMatchFilter> checkedFilters = new ArrayList<>();
             for (BasketMatchFilter allFilter : mAllFilter) {
@@ -1062,7 +1072,13 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
             mbasket_unfiltrate.setVisibility(View.GONE);
             mSwipeRefreshLayout.setRefreshing(false);
             mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+
+            L.d("AAAAA-yxq---", "childrenDataList >>>> = " + childrenDataList.size());
             updateAdapter();
+            // 设置打开全部日期内容
+//            for (int i = 0; i < groupDataList.size(); i++) {
+//                explistview.expandGroup(i);
+//            }
         }
     }
 
