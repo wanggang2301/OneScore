@@ -145,18 +145,17 @@ public class MoreSettingsActivity extends BaseActivity  implements View.OnClickL
     private void logout() {
 
         progressBar.show();
-
         String url = BaseURLs.URL_LOGOUT;
         Map<String, String> param = new HashMap<>();
-        param.put("loginToken", AppConstants.register.getData().getLoginToken());
-        param.put("deviceToken", AppConstants.deviceToken);
-        param.put("userId", AppConstants.register.getData().getUser().getUserId());
-        VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
+        param.put("userId", AppConstants.register.getUser().getUserId());
+        param.put("loginToken", AppConstants.register.getToken());
+
+        VolleyContentFast.requestJsonByGet("http://192.168.10.242:8091/user/logout", param, new VolleyContentFast.ResponseSuccessListener<Register>() {
             @Override
             public void onResponse(Register register) {
 
                 progressBar.dismiss();
-                if (register.getResult() == AccountResultCode.SUCC || register.getResult() == AccountResultCode.USER_NOT_LOGIN) {
+                if (Integer.parseInt(register.getCode())== AccountResultCode.SUCC || Integer.parseInt(register.getCode()) == AccountResultCode.USER_NOT_LOGIN) {
                     DeviceInfo.saveRegisterInfo(null);
                     UiUtils.toast(MyApp.getInstance(), R.string.logout_succ);
 
@@ -176,7 +175,7 @@ public class MoreSettingsActivity extends BaseActivity  implements View.OnClickL
 //                    getFootballUserFocus(""); //注销时把未登录状态的用户id请求过来 .篮球不需要是因为篮球进行了预加载，会直接请求关注页面。足球没有。
 //
                 } else {
-                    DeviceInfo.handlerRequestResult(register.getResult(), register.getMsg());
+                    DeviceInfo.handlerRequestResult(Integer.parseInt(register.getCode()), "未知错误");
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {

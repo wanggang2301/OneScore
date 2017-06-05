@@ -152,7 +152,7 @@ public class ChartBallReportDialogFragment extends DialogFragment implements Vie
         Map<String, String> params = new HashMap<>();
         params.put("sourceName", "android");
         params.put("msgId", mMsgId);
-        params.put("loginToken", AppConstants.register.getData().getLoginToken());
+        params.put("loginToken", AppConstants.register.getToken());
         params.put("deviceId", AppConstants.deviceToken);
         params.put("toUserId", mToUserId);
         params.put("reportReason", et_input_content.getText().toString());

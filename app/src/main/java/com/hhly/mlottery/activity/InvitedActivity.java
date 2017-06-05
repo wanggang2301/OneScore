@@ -52,9 +52,9 @@ public class InvitedActivity extends BaseActivity implements View.OnClickListene
     private void initData() {
         Map<String, String> param = new HashMap<>();
 
-        param.put("userId", AppConstants.register.getData().getUser().getUserId());
+        param.put("userId", AppConstants.register.getUser().getUserId());
         // param.put("userId", "hhly91757");
-        L.i("yly123", "用户userId===" + AppConstants.register.getData().getUser().getUserId());
+        L.i("yly123", "用户userId===" + AppConstants.register.getUser().getUserId());
         //String url="http://m.1332255.com:81/mlottery/core/androidUserCenter.getInviteCode.do";
 
         VolleyContentFast.requestJsonByGet(BaseURLs.INVITED_RUL, param, new VolleyContentFast.ResponseSuccessListener<InvitedBean>() {
@@ -135,8 +135,8 @@ public class InvitedActivity extends BaseActivity implements View.OnClickListene
                 MobclickAgent.onEvent(this, "InvitedActivity_Save");
                 ShareBean shareBean = new ShareBean();
                 shareBean.setTitle(getApplicationContext().getResources().getString(R.string.please_invited));
-                shareBean.setSummary("【" + AppConstants.register.getData().getUser().getUserId() + "】" + getResources().getString(R.string.invited_summary));
-                shareBean.setTarget_url(BaseURLs.INVITED_ACTIVITY_URL + "?userId=" + AppConstants.register.getData().getUser().getUserId());
+                shareBean.setSummary("【" + AppConstants.register.getUser().getUserId() + "】" + getResources().getString(R.string.invited_summary));
+                shareBean.setTarget_url(BaseURLs.INVITED_ACTIVITY_URL + "?userId=" + AppConstants.register.getUser().getUserId());
                 shareBean.setCopy(shareBean.getTarget_url());
 
                 ShareFragment shareFragment = ShareFragment.newInstance(shareBean);

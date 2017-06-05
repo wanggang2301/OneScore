@@ -21,6 +21,7 @@ import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
+import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
 import com.umeng.analytics.MobclickAgent;
@@ -112,28 +113,30 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
                  progressBar.show();
                  String url = BaseURLs.URL_EDITNICKNAME;
                  Map<String, String> param = new HashMap<>();
-                 param.put("loginToken", AppConstants.register.getData().getLoginToken());
-                 param.put("deviceToken", AppConstants.deviceToken);
+                 param.put("userId", AppConstants.register.getUser().getUserId());
                  param.put("nickname", nickName);
+                 param.put("loginToken",AppConstants.register.getToken());
+                 String sign=DeviceInfo.getSign("/user/updatenickname"+"langzh"+"loginToken"+AppConstants.register.getToken()+"nickname"+nickName+"timeZone8"+"userId"+AppConstants.register.getUser().getUserId());
+                 param.put("sign",sign);
 
-                 VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
+                 VolleyContentFast.requestJsonByPost("http://192.168.10.242:8091/user/updatenickname", param, new VolleyContentFast.ResponseSuccessListener<Register>() {
                      @Override
                      public void onResponse(Register bean) {
 
                          progressBar.dismiss();
 
-                         if (bean.getResult() == AccountResultCode.SUCC) {
+                         if (Integer.parseInt(bean.getCode()) == AccountResultCode.SUCC) {
                              UiUtils.toast(MyApp.getInstance(), R.string.modify_nickname_succ);
-                             AppConstants.register.getData().getUser().setNickName(nickName);
+                             AppConstants.register.getUser().setNickName(nickName);
                             // CommonUtils.saveRegisterInfo(AppConstants.register);
-                             PreferenceUtil.commitString(AppConstants.SPKEY_NICKNAME, bean.getData().getUser().getNickName());
+                            PreferenceUtil.commitString(AppConstants.SPKEY_NICKNAME, nickName);
                              finish();
-                         } else if (bean.getResult() == AccountResultCode.USER_NOT_LOGIN) {
+                         } else if (Integer.parseInt(bean.getCode())  == AccountResultCode.USER_NOT_LOGIN) {
                              UiUtils.toast(getApplicationContext() ,R.string.name_invalid);
                              Intent intent = new Intent(ModifyNicknameActivity.this, LoginActivity.class);
                              startActivity(intent);
                          } else {
-                             DeviceInfo.handlerRequestResult(bean.getResult(), bean.getMsg());
+                             DeviceInfo.handlerRequestResult(Integer.parseInt(bean.getCode()) , "未知错误");
                          }
                      }
                  }, new VolleyContentFast.ResponseErrorListener() {

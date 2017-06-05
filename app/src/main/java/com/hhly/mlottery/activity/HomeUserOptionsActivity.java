@@ -89,10 +89,10 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
                     break;
                 case LOGGED_ON:
-                    mTv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
+                    mTv_nickname.setText(AppConstants.register.getUser().getNickName());
                     // ImageLoader.load(HomeUserOptionsActivity.this,AppConstants.register.getData().getUser().getHeadIcon()).into(mUser_image);
                     Glide.with(getApplicationContext())
-                            .load(AppConstants.register.getData().getUser().getHeadIcon())
+                            .load(AppConstants.register.getUser().getImageSrc())
                             .error(R.mipmap.center_head)
                             .into(mUser_image);
                     mTv_nickname.setEnabled(false);
@@ -148,7 +148,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         if (DeviceInfo.isLogin()) {
             mViewHandler.sendEmptyMessage(LOGGED_ON);
 
-
         } else {
             mTv_nickname.setText(R.string.Login_register);
             mUser_image.setImageResource(R.mipmap.center_head);
@@ -198,12 +197,17 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         //订阅记录
         rl_my_subscribe = (RelativeLayout) findViewById(R.id.rl_my_subscribe);
         rl_my_subscribe.setOnClickListener(this);
+        rl_my_subscribe.setVisibility(View.GONE);
         //推介文章
         rl_my_promotion = (RelativeLayout) findViewById(R.id.rl_my_promotion);
         rl_my_promotion.setOnClickListener(this);
+        rl_my_promotion.setVisibility(View.GONE);
         //申请专家
         rl_my_apply = (RelativeLayout) findViewById(R.id.rl_my_apply);
         rl_my_apply.setOnClickListener(this);
+        rl_my_apply.setVisibility(View.GONE);
+
+        findViewById(R.id.zhongxin).setVisibility(View.GONE);
         //余额
         my_balance = (LinearLayout) findViewById(R.id.my_balance);
         my_balance.setOnClickListener(this);
@@ -309,7 +313,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             case R.id.rl_my_apply:     //申请专家
                 if (DeviceInfo.isLogin()) {
 
-
+                    startActivity(new Intent(HomeUserOptionsActivity.this, ApplicationSpecialistActivity.class));
 
                 } else {
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);
@@ -508,14 +512,15 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 .into(mUser_image);
     }
 
+
     public void onEventMainThread(Register register) {
 
         //ImageLoader.load(HomeUserOptionsActivity.this,register.getData().getUser().getHeadIcon()).into(mUser_image);
         Glide.with(getApplicationContext())
-                .load(register.getData().getUser().getHeadIcon())
+                .load(register.getUser().getImageSrc())
                 .error(R.mipmap.center_head)
                 .into(mUser_image);
-        mTv_nickname.setText(register.getData().getUser().getNickName());
+        mTv_nickname.setText(register.getUser().getNickName());
     }
 
     @Override
@@ -524,7 +529,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         MobclickAgent.onResume(this);
 
         if (DeviceInfo.isLogin()) {
-            mTv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
+
+            mTv_nickname.setText(AppConstants.register.getUser().getNickName());
         } else {
             mTv_nickname.setText(R.string.Login_register);
             mUser_image.setImageResource(R.mipmap.center_head);

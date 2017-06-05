@@ -1050,8 +1050,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
         }
         String deviceId = AppConstants.deviceToken;
         String userId = "";
-        if (AppConstants.register != null && AppConstants.register.getData() != null && AppConstants.register.getData().getUser() != null) {
-            userId = AppConstants.register.getData().getUser().getUserId();
+        if (AppConstants.register != null && AppConstants.register != null && AppConstants.register.getUser() != null) {
+            userId = AppConstants.register.getUser().getUserId();
         }
         //thirdId
         String url = "http://192.168.33.45:8080/mlottery/core/feedback.addFeedBackLikes.do";

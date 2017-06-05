@@ -135,6 +135,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/zhongxin"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/channel_title_front">

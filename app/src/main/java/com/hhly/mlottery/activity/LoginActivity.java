@@ -558,18 +558,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
                 sendUserInfoToServer(register);
                 finish();
-                if (register.getResult() == AccountResultCode.SUCC) {
+                if (Integer.parseInt(register.getCode()) == AccountResultCode.SUCC) {
                     UiUtils.toast(MyApp.getInstance(), R.string.login_succ);
                     DeviceInfo.saveRegisterInfo(register);
                     EventBus.getDefault().post(register);
                     setResult(RESULT_OK);
                     //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
                     sendUserInfoToServer(register);
-                    FocusUtils.getFootballUserFocus(register.getData().getUser().getUserId());
-                    FocusUtils.getBasketballUserConcern(register.getData().getUser().getUserId());
+                    FocusUtils.getFootballUserFocus(register.getUser().getUserId());
+                    FocusUtils.getBasketballUserConcern(register.getUser().getUserId());
                     finish();
                 } else {
-                    DeviceInfo.handlerRequestResult(register.getResult(), register.getMsg());
+                    DeviceInfo.handlerRequestResult(Integer.parseInt(register.getCode()), "未知错误");
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -598,28 +598,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             if (UiUtils.checkPassword_JustLength(this, passWord)) {
                 // 登录
                 progressBar.show();
-                //final String url = BaseURLs.URL_LOGIN;
-                final String url = "http://127.0.0.1:8091/user/login";
+                final String url = BaseURLs.URL_LOGIN;
 
                 Map<String, String> param = new HashMap<>();
                 param.put("phoneNum", userName);
                 param.put("password", MD5Util.getMD5(passWord));
+                String sign=DeviceInfo.getSign("/user/login"+"langzh"+"password"+MD5Util.getMD5(passWord)+"phoneNum"+ userName+"timeZone8");
+                param.put("sign",sign);
                 setResult(RESULT_OK);
-                //param.put("deviceToken", AppConstants.deviceToken);
 
-                //防止用户恶意注册后先添加的字段，versioncode和versionname;
-                int versionCode = DeviceInfo.getVersionCode();
-                //param.put("versionCode", String.valueOf(versionCode));
-
-                String versionName = DeviceInfo.getVersionName();
-                //param.put("versionName", versionName);
-
-                VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
+                VolleyContentFast.requestJsonByPost("http://192.168.10.242:8091/user/login", param, new VolleyContentFast.ResponseSuccessListener<Register>() {
                     @Override
                     public void onResponse(Register register) {
 
                         progressBar.dismiss();
-                        if (register.getResult() == AccountResultCode.SUCC) {
+                        if (Integer.parseInt(register.getCode())== AccountResultCode.SUCC) {
+
 
                             UiUtils.toast(MyApp.getInstance(), R.string.login_succ);
                             DeviceInfo.saveRegisterInfo(register);
@@ -627,20 +621,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             setResult(RESULT_OK);
                             //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
                             sendUserInfoToServer(register);
-                            PreferenceUtil.commitString(AppConstants.SPKEY_LOGINACCOUNT, register.getData().getUser().getLoginAccount());
+                            PreferenceUtil.commitString(AppConstants.SPKEY_LOGINACCOUNT, register.getUser().getPhoneNum());
                             if (isCoustom) {
 //                                 PreferenceUtil.commitBoolean("custom_red_dot" , false);
                                 startActivity(new Intent(LoginActivity.this, CustomActivity.class));
                             }
                             finish();
                             EventBus.getDefault().post(register);
-                            FocusUtils.getFootballUserFocus(register.getData().getUser().getUserId());
-                            FocusUtils.getBasketballUserConcern(register.getData().getUser().getUserId());
+                            FocusUtils.getFootballUserFocus(register.getUser().getUserId());
+                            FocusUtils.getBasketballUserConcern(register.getUser().getUserId());
 
                         } else {
-                            DeviceInfo.handlerRequestResult(register.getResult(), register.getMsg());
+                            DeviceInfo.handlerRequestResult(Integer.parseInt(register.getCode()), "系统错误");
                         }
                     }
+
                 }, new VolleyContentFast.ResponseErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
@@ -650,6 +645,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
 
                     }
+
                 }, Register.class);
             }
 
@@ -661,7 +657,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private void sendUserInfoToServer(Register register) {
         final String url = BaseURLs.USER_ACTION_ANALYSIS_URL;
         final Map<String, String> params = new HashMap<>();
-        params.put("userid", register.getData().getUser().getUserId());
+        params.put("userid", register.getUser().getUserId());
         String CHANNEL_ID;
         try {
             ApplicationInfo appInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);

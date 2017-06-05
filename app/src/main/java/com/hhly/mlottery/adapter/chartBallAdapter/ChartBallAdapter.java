@@ -197,7 +197,7 @@ public class ChartBallAdapter extends BaseRecyclerViewAdapter {
     @Override
     public int getRecycleViewItemType(int position) {
         if (DeviceInfo.isLogin()) {
-            if (mData.get(position).getFromUser().getUserId().equals(AppConstants.register.getData().getUser().getUserId())) {
+            if (mData.get(position).getFromUser().getUserId().equals(AppConstants.register.getUser().getUserId())) {
                 return 1;
             } else {
                 return 0;
