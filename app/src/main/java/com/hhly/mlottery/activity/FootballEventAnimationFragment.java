@@ -1128,12 +1128,12 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 tv_guest_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick_danger));
                 showGifAnimation(-9999);
                 break;
-            case R.id.bt_home_goal://主队进球
+            case R.id.bt_home_goal://主队进球  1029   1030:取消
                 ToastTools.showQuick(this, "主队进球");
 
 
                 break;
-            case R.id.bt_guest_goal://客队进球
+            case R.id.bt_guest_goal://客队进球  2053  2054:取消
                 ToastTools.showQuick(this, "客队进球");
 
 
