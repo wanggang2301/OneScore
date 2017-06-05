@@ -32,7 +32,7 @@ Potentially Missing Dependency:
 -------------------------------
 When we replaced the following .jar files with a Gradle dependency, we
 inferred the dependency version number from the filename. This
-specific version may not actually be available from the repository.
+specific version may not actually be available from the data.repository.
 If you get a build error stating that the dependency is missing, edit
 the version number to for example "+" to pick up the latest version
 instead. (This may require you to update your code if the library APIs

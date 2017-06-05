@@ -2,9 +2,8 @@ package com.hhly.mlottery.mvptask.recommendarticles;
 
 import com.hhly.mlottery.mvp.BasePresenter;
 import com.hhly.mlottery.mvptask.IContract;
-import com.hhly.mlottery.mvptask.data.repository.Repository;
 
-import rx.Subscriber;
+import data.repository.Repository;
 
 /**
  * @author: Wangg
@@ -32,7 +31,7 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
 
         mView.loading();
 
-      /*  addSubscription(repository.getSubsRecord("","",""), new Subscriber<String>() {
+      /*  addSubscription(data.repository.getSubsRecord("","",""), new Subscriber<String>() {
             @Override
             public void onCompleted() {
 
@@ -53,7 +52,7 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
 
     @Override
     public void pullUpLoadMoreData() {
-//        addSubscription(repository.getSubsRecord(), new Subscriber<String>() {
+//        addSubscription(data.repository.getSubsRecord(), new Subscriber<String>() {
 //            @Override
 //            public void onCompleted() {
 //

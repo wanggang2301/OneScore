@@ -132,7 +132,7 @@ public class LiveTextFragment extends Fragment {
     private void initView() {
         //  close_image = (ImageView) mView.findViewById(R.id.close_image);
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.timerecyclerView);
-        bottomview = mView.findViewById(R.id.bottomview);
+        // bottomview = mView.findViewById(R.id.bottomview);
 
     }
 
