@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hhly.mlottery.widget.PullToEnlargeCoorDinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/account_detail_coordinator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    tools:context="com.hhly.mlottery.frame.accountdetail.AccountDetailFragment">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/account_detail_appbarlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/basket_score"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/account_detail_collaspsing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            <!--头部-->
+           <include
+               android:id="@+id/account_detail_header_layout"
+               layout="@layout/account_detail_header"/>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/account_detail_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@color/transparency"
+                app:contentInsetStart="0dp"
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+                <LinearLayout
+                    android:id="@+id/basket_database_details_header_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/account_detaiL_back"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerInParent="true"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="8dp"
+                            android:src="@mipmap/basketball_back" />
+                        <TextView
+                            android:id="@+id/account_detail_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:textColor="@color/home_default_icon_coloer"
+                            android:layout_centerInParent="true"
+                            android:textSize="20sp"
+                            android:text="账户明细"/>
+
+                    </RelativeLayout>
+                </LinearLayout>
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.CollapsingToolbarLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:background="@color/account_tab_color"
+
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="账户明细"
+                android:layout_marginLeft="40dp"
+                android:textColor="@color/home_logo_color"
+                android:textSize="@dimen/text_size_14"
+                />
+        </LinearLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/account_detail_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+    </android.support.v7.widget.RecyclerView>
+</com.hhly.mlottery.widget.PullToEnlargeCoorDinatorLayout>
