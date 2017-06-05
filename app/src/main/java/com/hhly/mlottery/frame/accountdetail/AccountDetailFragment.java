@@ -80,7 +80,11 @@ public class AccountDetailFragment extends Fragment implements AppBarLayout.OnOf
     @BindView(R.id.available_balance)
     TextView mAvailableBalance;
 
+    @BindView(R.id.frozen_balance)
     TextView mFrozenBalance;
+
+    @BindView(R.id.total_balance)
+    TextView mTotalBalance;
 
     public AccountDetailFragment() {
     }
