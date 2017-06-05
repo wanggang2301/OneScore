@@ -219,8 +219,7 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
                     @Override
                     public void run() {
                         mPresenter.refreshDataByPage(mType,currentDatePosition+1,false);
-                        mTextDate.setText(DateUtil.convertDateToNation(mDatelist.get(currentDatePosition).getDate()));
-                        mTextWeek.setText(mDatelist.get(currentDatePosition).getWeek());
+
                     }
                 },1000);
 
@@ -383,6 +382,8 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
     @Override
     public void showNextPage(List<CornerListBean.CornerEntity> cornerListBean) {
         mAdapter.notifyDataChangedAfterLoadMore(cornerListBean,true);
+        mTextDate.setText(DateUtil.convertDateToNation(mDatelist.get(currentDatePosition).getDate()));
+        mTextWeek.setText(mDatelist.get(currentDatePosition).getWeek());
     }
 
     @Override
