@@ -1,4 +1,4 @@
-package com.hhly.mlottery.mvptask.data.model;
+package data.model;
 
 import java.util.List;
 

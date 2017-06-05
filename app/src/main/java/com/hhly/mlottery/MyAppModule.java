@@ -1,12 +1,11 @@
 package com.hhly.mlottery;
 
 
-import com.hhly.mlottery.mvptask.data.DataManager;
-
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import data.DataManager;
 
 /**
  * @author: Wangg

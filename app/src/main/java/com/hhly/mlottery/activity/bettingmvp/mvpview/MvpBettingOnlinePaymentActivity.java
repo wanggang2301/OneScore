@@ -45,7 +45,7 @@ public class MvpBettingOnlinePaymentActivity extends BaseActivity implements MVi
     //AppId,官网申请的合法id
     private static final String APP_ID = "wx2a5538052969956e";
     // IWXAPI 是第三方app和微信通信的openapi接口
-//    private IWXAPI api;
+//    private IWXAPI data.api;
 
     /**
      * 支付方式  支付宝(默认) 0 ；微信 1 ；余额 2
@@ -164,7 +164,7 @@ public class MvpBettingOnlinePaymentActivity extends BaseActivity implements MVi
         params.put("body", "测试购买商品");//商品描述
         params.put("totalFee", "1");//总金额 (分)
 
-        String url = "http://192.168.31.15:8083/sunon-web-api/pay/unifiedTradePay";
+        String url = "http://192.168.31.15:8083/sunon-web-data.api/pay/unifiedTradePay";
         VolleyContentFast.requestJsonByPost(url,params , new VolleyContentFast.ResponseSuccessListener<WeiFuTongPayidDataBean>() {
             @Override
             public void onResponse(WeiFuTongPayidDataBean jsondata) {
@@ -189,7 +189,7 @@ public class MvpBettingOnlinePaymentActivity extends BaseActivity implements MVi
         params.put("totalFee", "1");//总金额 (分)
         params.put("appId", APP_ID);//appid
 
-        String url = "http://192.168.31.15:8083/sunon-web-api/pay/unifiedTradePay";
+        String url = "http://192.168.31.15:8083/sunon-web-data.api/pay/unifiedTradePay";
         VolleyContentFast.requestJsonByPost(url,params , new VolleyContentFast.ResponseSuccessListener<WeiXinPayidDataBean>() {
             @Override
             public void onResponse(WeiXinPayidDataBean jsondata) {

@@ -135,4 +135,5 @@ dependencies {
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
     compile files('libs/alipaySingle-20161222.jar')
+    compile project(':data')
 }

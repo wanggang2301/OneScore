@@ -2,9 +2,10 @@ package com.hhly.mlottery.adapter.custom;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.hhly.mlottery.mvptask.data.model.SubsRecordBean;
 
 import java.util.List;
+
+import data.model.SubsRecordBean;
 
 /**
  * @author: Wangg

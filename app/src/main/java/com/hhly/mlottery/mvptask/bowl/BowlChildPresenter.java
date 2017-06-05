@@ -1,11 +1,11 @@
 package com.hhly.mlottery.mvptask.bowl;
 
-import com.hhly.mlottery.bean.footballDetails.BottomOddsDetails;
-import com.hhly.mlottery.mvptask.IContract;
-import com.hhly.mlottery.mvptask.data.repository.Repository;
 import com.hhly.mlottery.mvp.BasePresenter;
+import com.hhly.mlottery.mvptask.IContract;
 import com.hhly.mlottery.util.CollectionUtils;
 
+import data.model.BottomOddsDetails;
+import data.repository.Repository;
 import rx.Observable;
 import rx.Subscriber;
 

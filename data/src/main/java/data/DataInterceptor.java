@@ -1,4 +1,4 @@
-package com.hhly.mlottery.mvptask.data;
+package data;
 
 import android.util.Log;
 
