@@ -56,10 +56,10 @@ public interface IContract {
 
 
     //推介文章
-    interface IRecommendArticlesPresenter extends IPresenter<IChildView> {
+    interface IRecommendArticlesPresenter extends IPresenter<IPullLoadMoreDataView> {
         void requestData(String userId, String pageNum, String pageSize, String loginToken, String sign);
 
-      //  void pullUpLoadMoreData(String userId, String pageNum, String pageSize, String loginToken, String sign);
+        void pullUpLoadMoreData(String userId, String pageNum, String pageSize, String loginToken, String sign);
 
         //BottomOddsDetails getBowlBean();
         List<RecommendArticlesBean.PublishPromotionsBean.ListBean> getRecommendArticlesData();

@@ -31,6 +31,4 @@ public interface Api {
     @POST("user/promotion/publishPromotions")
     Observable<RecommendArticlesBean> getRecommendArticles(@Query("userId") String userId, @Query("pageNum") String pageNum, @Query("pageSize") String pageSize, @Query("loginToken") String loginToken, @Query("sign") String sign);
 
-
-    // http://m.13322.com/mlottery/core/footballBallList.ballListDetail.do?lang=zh&timeZone=8&oddType=1&thirdId=3458732
 }

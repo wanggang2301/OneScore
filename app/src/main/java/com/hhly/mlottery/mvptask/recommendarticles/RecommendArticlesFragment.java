@@ -12,8 +12,10 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.custom.RecommendArticlesAdapter;
 import com.hhly.mlottery.config.StaticValues;
@@ -34,7 +36,7 @@ import butterknife.OnClick;
  * @desc 推介文章
  * @date 2017/06/02
  */
-public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommendArticlesPresenter> implements IContract.IChildView, ExactSwipeRefreshLayout.OnRefreshListener {
+public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommendArticlesPresenter> implements IContract.IPullLoadMoreDataView, ExactSwipeRefreshLayout.OnRefreshListener {
 
     private static final String PAGE_SIZE = "10";
 
@@ -52,9 +54,9 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     LinearLayout handleException;
     RecommendArticlesAdapter mRecommendArticlesAdapter;
 
-    /*
-        ProgressBar progressBar;
-        TextView loadmoreText;*/
+
+    ProgressBar progressBar;
+    TextView loadmoreText;
     Activity mActivity;
     View moreView;
 
@@ -87,18 +89,19 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recommend_articles, container, false);
-        // moreView = inflater.inflate(R.layout.view_load_more, container, false);
+        moreView = inflater.inflate(R.layout.view_load_more, container, false);
         ButterKnife.bind(this, view);
         initEvent();
 
+        // mPresenter.requestData(userId, "1", PAGE_SIZE, loginToken, sign);
         mPresenter.requestData(userId, "1", PAGE_SIZE, loginToken, sign);
         return view;
     }
 
 
     private void initEvent() {
-        /*loadmoreText = (TextView) moreView.findViewById(R.id.loadmore_text);
-        progressBar = (ProgressBar) moreView.findViewById(R.id.progressBar);*/
+        loadmoreText = (TextView) moreView.findViewById(R.id.loadmore_text);
+        progressBar = (ProgressBar) moreView.findViewById(R.id.progressBar);
         refresh.setOnRefreshListener(this);
         refresh.setColorSchemeResources(R.color.bg_header);
         refresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
@@ -122,6 +125,22 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
         listBeanList = mPresenter.getRecommendArticlesData();
         mRecommendArticlesAdapter = new RecommendArticlesAdapter(listBeanList);
         recyclerView.setAdapter(mRecommendArticlesAdapter);
+
+        mRecommendArticlesAdapter.openLoadMore(0, true);
+        mRecommendArticlesAdapter.setLoadingView(moreView);
+
+        mRecommendArticlesAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                recyclerView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        // mPresenter.pullUpLoadMoreData();
+
+                    }
+                });
+            }
+        });
     }
 
 
@@ -140,6 +159,21 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
         refresh.setRefreshing(false);
     }
 
+
+    @Override
+    public void pullUpLoadMoreDataSuccess() {
+        loadmoreText.setText(mActivity.getResources().getString(R.string.loading_data_txt));
+        progressBar.setVisibility(View.VISIBLE);
+
+        listBeanList.addAll(mPresenter.getRecommendArticlesData());
+        mRecommendArticlesAdapter.notifyDataChangedAfterLoadMore(true);
+    }
+
+    @Override
+    public void pullUpLoadMoreDataFail() {
+        loadmoreText.setText(mActivity.getResources().getString(R.string.nodata_txt));
+        progressBar.setVisibility(View.GONE);
+    }
 
     //防止Activity内存泄漏
     @Override
