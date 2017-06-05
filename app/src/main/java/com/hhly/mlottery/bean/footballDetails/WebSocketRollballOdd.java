@@ -12,6 +12,8 @@ public class WebSocketRollballOdd {
     private String left;
     private String middle;
     private String right;
+    private String matchInTime;
+    private String score;
 
     public String getThirdId() {
         return thirdId;
@@ -51,5 +53,21 @@ public class WebSocketRollballOdd {
 
     public void setRight(String right) {
         this.right = right;
+    }
+
+    public String getMatchInTime() {
+        return matchInTime;
+    }
+
+    public void setMatchInTime(String matchInTime) {
+        this.matchInTime = matchInTime;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
     }
 }

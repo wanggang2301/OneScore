@@ -127,6 +127,7 @@ dependencies {
 
     //带消息提醒的tablayout
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
     apt 'com.google.dagger:dagger-compiler:2.4'

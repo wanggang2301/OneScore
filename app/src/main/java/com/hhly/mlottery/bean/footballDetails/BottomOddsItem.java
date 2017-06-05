@@ -20,6 +20,15 @@ public class BottomOddsItem implements Parcelable {
 
     private String rightUp;
 
+    public BottomOddsItem(String left, String middle, String right, String leftUp, String middleUp, String rightUp) {
+        this.left = left;
+        this.middle = middle;
+        this.right = right;
+        this.leftUp = leftUp;
+        this.middleUp = middleUp;
+        this.rightUp = rightUp;
+    }
+
 
     public String getMiddle() {
         return middle;
