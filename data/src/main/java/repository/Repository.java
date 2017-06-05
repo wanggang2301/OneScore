@@ -1,10 +1,9 @@
-package com.hhly.mlottery.mvptask.data.repository;
+package repository;
 
 
-import com.hhly.mlottery.bean.footballDetails.BottomOddsDetails;
-import com.hhly.mlottery.mvptask.data.api.Api;
-import com.hhly.mlottery.mvptask.data.model.SubsRecordBean;
-
+import api.Api;
+import model.BottomOddsDetails;
+import model.SubsRecordBean;
 import rx.Observable;
 
 /**

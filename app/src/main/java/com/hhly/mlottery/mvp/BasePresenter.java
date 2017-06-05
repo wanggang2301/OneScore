@@ -1,7 +1,6 @@
 package com.hhly.mlottery.mvp;
 
 import com.hhly.mlottery.MyApp;
-import com.hhly.mlottery.mvptask.data.DataManager;
 
 import rx.Observable;
 import rx.Subscriber;

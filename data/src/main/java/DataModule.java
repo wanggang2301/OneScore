@@ -1,19 +1,17 @@
-package com.hhly.mlottery.mvptask.data;
-
 import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.hhly.mlottery.mvptask.data.api.Api;
-import com.hhly.mlottery.mvptask.data.repository.Repository;
 
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
+import api.Api;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
+import repository.Repository;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;

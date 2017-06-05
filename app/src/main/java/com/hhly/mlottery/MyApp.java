@@ -11,7 +11,6 @@ import android.support.multidex.MultiDex;
 import android.util.DisplayMetrics;
 
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.mvptask.data.DataManager;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CrashException;
 import com.hhly.mlottery.util.CyUtils;

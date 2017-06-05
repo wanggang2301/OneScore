@@ -1,9 +1,8 @@
-package com.hhly.mlottery.mvptask.data.api;
+package api;
 
 
-import com.hhly.mlottery.bean.footballDetails.BottomOddsDetails;
-import com.hhly.mlottery.mvptask.data.model.SubsRecordBean;
-
+import model.BottomOddsDetails;
+import model.SubsRecordBean;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;

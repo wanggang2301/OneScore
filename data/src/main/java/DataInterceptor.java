@@ -1,5 +1,3 @@
-package com.hhly.mlottery.mvptask.data;
-
 import android.util.Log;
 
 import java.io.IOException;

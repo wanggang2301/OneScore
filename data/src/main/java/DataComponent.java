@@ -1,5 +1,3 @@
-package com.hhly.mlottery.mvptask.data;
-
 import javax.inject.Singleton;
 
 import dagger.Component;
