@@ -6,6 +6,7 @@ import com.hhly.mlottery.mvp.IView;
 import java.util.List;
 
 import data.model.BottomOddsDetails;
+import data.model.RecommendArticlesBean;
 import data.model.SubsRecordBean;
 
 /**

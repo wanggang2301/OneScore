@@ -6,10 +6,11 @@ import android.text.TextUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.mvptask.data.model.RecommendArticlesBean;
 
 import java.util.List;
 import java.util.Random;
+
+import data.model.RecommendArticlesBean;
 
 /**
  * @author: Wangg

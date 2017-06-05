@@ -2,8 +2,13 @@ package com.hhly.mlottery.mvptask.recommendarticles;
 
 import com.hhly.mlottery.mvp.BasePresenter;
 import com.hhly.mlottery.mvptask.IContract;
+import com.hhly.mlottery.util.L;
 
+import java.util.List;
+
+import data.model.RecommendArticlesBean;
 import data.repository.Repository;
+import rx.Subscriber;
 
 /**
  * @author: Wangg
@@ -52,7 +57,7 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
                     return;
                 }
 
-                L.d("recommend","成功");
+                L.d("recommend", "成功");
                 list = r.getPublishPromotions().getList();
                 mView.responseData();
             }
@@ -87,7 +92,6 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
             }
         });
     }
-
 
 
     @Override

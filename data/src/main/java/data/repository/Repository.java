@@ -3,6 +3,7 @@ package data.repository;
 
 import data.api.Api;
 import data.model.BottomOddsDetails;
+import data.model.RecommendArticlesBean;
 import data.model.SubsRecordBean;
 import rx.Observable;
 
