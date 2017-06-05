@@ -326,7 +326,10 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
     @Override
     public void recyclerNotify() {
         mRecyclerView.setVisibility(View.VISIBLE);
-        mAdapter.notifyDataSetChanged();
+        mAdapter.setNewData(mPresenter.getData()); //点进去看下
+        mAdapter.setLoadingView(mOnloadingView);
+        mAdapter.openLoadMore(mPresenter.getData().size()==0?12:mPresenter.getData().size(),true);
+
         mNodataLayout.setVisibility(View.GONE);
         mExceptionLayout.setVisibility(View.GONE);
         mProgressBarLayout.setVisibility(View.GONE);
