@@ -86,13 +86,18 @@
         </LinearLayout>
 
     </android.support.design.widget.AppBarLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/account_detail_recyclerview"
+    <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/account_detail_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            />
+    </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
 
-    </android.support.v7.widget.RecyclerView>
+
 </com.hhly.mlottery.widget.PullToEnlargeCoorDinatorLayout>
