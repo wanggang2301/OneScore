@@ -67,12 +67,11 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
     @BindView(R.id.refresh)
     ExactSwipeRefreshLayout refresh;
 
-    String userId = "HHLY00000136";
+    String userId = "";
 
-    String loginToken = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJqd3QiLCJpYXQiOjE0OTY0ODU2MDAsInN1YiI6IntcImlkXCI6XCJISExZMDAwMDAxMzZcI\n" +
-            "ixcInBob25lTnVtXCI6XCIxNTAxMzY5NzEwMVwifSJ9.l4jsTaz5tJM5Q4P3s_UK8US-S3HRfN-lfJZJ67XUS98";
+    String loginToken = "";
 
-    String sign = "70db4a00262f0a351a320c668437493612";
+    String sign = "";
 
     private List<SubsRecordBean.PurchaseRecordsBean.ListBean> listBeanList;
 
@@ -126,8 +125,7 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
         listBeanList = mPresenter.getSubsRecordData();
 
 
-
-        mSubsRecordAdapter = new SubsRecordAdapter( listBeanList);
+        mSubsRecordAdapter = new SubsRecordAdapter(mActivity,listBeanList);
         recyclerView.setAdapter(mSubsRecordAdapter);
 
         mSubsRecordAdapter.openLoadMore(0, true);

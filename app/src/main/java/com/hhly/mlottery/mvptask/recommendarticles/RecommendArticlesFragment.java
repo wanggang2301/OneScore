@@ -66,12 +66,11 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     ExactSwipeRefreshLayout refresh;
 
 
-    String userId = "HHLY00000136";
+    String userId = "";
 
-    String loginToken = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJqd3QiLCJpYXQiOjE0OTY0ODU2MDAsInN1YiI6IntcImlkXCI6XCJISExZMDAwMDAxMzZcI" +
-            "ixcInBob25lTnVtXCI6XCIxNTAxMzY5NzEwMVwifSJ9.l4jsTaz5tJM5Q4P3s_UK8US-S3HRfN-lfJZJ67XUS98";
+    String loginToken = "";
 
-    String sign = "70db4a00262f0a351a320c668437493612";
+    String sign = "";
 
     private List<RecommendArticlesBean.PublishPromotionsBean.ListBean> listBeanList;
 

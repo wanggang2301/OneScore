@@ -55,6 +55,7 @@ public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDa
 
                 listBeanList = subsRecordBean.getPurchaseRecords().getList();
 
+                mView.responseData();
 
             }
         });

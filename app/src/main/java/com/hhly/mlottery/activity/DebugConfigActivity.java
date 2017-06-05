@@ -177,7 +177,7 @@ public class DebugConfigActivity extends BaseActivity {
                 //   public LeagueCup(int type, List<String> thirdId, String racename, String raceId, int count, boolean hot) {
 
 
-                startActivity(new Intent(DebugConfigActivity.this, RecommendArticlesActivity.class));
+                startActivity(new Intent(DebugConfigActivity.this, SubsRecordActivity.class));
 
             }
         });
