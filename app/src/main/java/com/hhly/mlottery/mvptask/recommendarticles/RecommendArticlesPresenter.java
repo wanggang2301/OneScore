@@ -32,7 +32,7 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
 
         mView.loading();
 
-        addSubscription(repository.getSubsRecord(), new Subscriber<String>() {
+      /*  addSubscription(repository.getSubsRecord("","",""), new Subscriber<String>() {
             @Override
             public void onCompleted() {
 
@@ -48,53 +48,53 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
             public void onNext(String s) {
 
             }
-        });
+        });*/
     }
 
     @Override
     public void pullUpLoadMoreData() {
-        addSubscription(repository.getSubsRecord(), new Subscriber<String>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(String s) {
-
-
-                if (!"".equals("200")) {
-
-                    mView.pullUpLoadMoreDataFail();
-
-                    return;
-                } else {
-
-                    mView.pullUpLoadMoreDataSuccess();
-
-                }
-
-/*
-
-                if (!foreignInfomationBean.getResult().equals("200")) {
-                    loadmore_text.setText(mContext.getResources().getString(R.string.nodata_txt));
-                    progressBar.setVisibility(View.GONE);
-                    return;
-                } else {
-                    loadmore_text.setText(mContext.getResources().getString(R.string.loading_data_txt));
-                    progressBar.setVisibility(View.VISIBLE);
-                }
-                mList.addAll(foreignInfomationBean.getOverseasInformationList());
-                foreignInfomationAdapter.notifyDataChangedAfterLoadMore(true);
-*/
-
-            }
-        });
+//        addSubscription(repository.getSubsRecord(), new Subscriber<String>() {
+//            @Override
+//            public void onCompleted() {
+//
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onNext(String s) {
+//
+//
+//                if (!"".equals("200")) {
+//
+//                    mView.pullUpLoadMoreDataFail();
+//
+//                    return;
+//                } else {
+//
+//                    mView.pullUpLoadMoreDataSuccess();
+//
+//                }
+//
+///*
+//
+//                if (!foreignInfomationBean.getResult().equals("200")) {
+//                    loadmore_text.setText(mContext.getResources().getString(R.string.nodata_txt));
+//                    progressBar.setVisibility(View.GONE);
+//                    return;
+//                } else {
+//                    loadmore_text.setText(mContext.getResources().getString(R.string.loading_data_txt));
+//                    progressBar.setVisibility(View.VISIBLE);
+//                }
+//                mList.addAll(foreignInfomationBean.getOverseasInformationList());
+//                foreignInfomationAdapter.notifyDataChangedAfterLoadMore(true);
+//*/
+//
+//            }
+//        });
     }
 
     @Override

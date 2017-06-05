@@ -132,7 +132,7 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter=new CornerPresenter(this);
+
         if (getArguments() != null) {
             mType=getArguments().getString(FRAGMENT_INDEX);
         }
@@ -388,5 +388,10 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
 //        if(mCdt!=null){
 //            mCdt.cancel();
 //        }
+    }
+
+    @Override
+    public CornerContract.Presenter initPresenter() {
+        return  new CornerPresenter(this);
     }
 }
