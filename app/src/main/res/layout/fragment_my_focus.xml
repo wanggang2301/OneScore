@@ -1,0 +1,84 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".mvptask.myfocus.MyFocusFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_height"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/status_bar_offset">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/focus_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingLeft="10dp"
+                android:src="@mipmap/back" />
+
+
+            <RadioGroup
+                android:id="@+id/focus_radio_group"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <RadioButton
+                    android:id="@+id/focus_football"
+                    style="@style/odds_radio_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="-0.25dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/myfocus_left"
+                    android:checked="true"
+                    android:text="@string/football_txt"
+                    android:textColor="@drawable/myfocus_textcolor" />
+
+
+                <RadioButton
+                    android:id="@+id/focus_basket"
+                    style="@style/odds_radio_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="-0.25dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/myfocus_right"
+                    android:checked="false"
+                    android:text="@string/basketball_txt"
+                    android:textColor="@drawable/myfocus_textcolor" />
+            </RadioGroup>
+
+            <ImageView
+                android:id="@+id/focus_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingRight="20dp"
+                android:src="@mipmap/info_search" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/myfocus_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

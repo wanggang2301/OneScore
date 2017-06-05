@@ -1731,6 +1731,7 @@
     <!--竞彩推荐-->
     <string name="betting_setting_palying_method">玩法</string>
     <string name="betting_setting_league">联赛</string>
+    <string name="betting_issue_title">推介</string>
 
     <string name="roll_desc_txt">胜出</string>
 
@@ -1764,5 +1765,12 @@
     <string name="frozen_balance">冻结余额(元)</string>
     <string name="total_balance">总余额(元)</string>
     <string name="account_detail">账户明细</string>
+
+    <string name="bow_corner_left">高于</string>
+    <string name="bow_corner_middle">即时盘</string>
+    <string name="bow_corner_right">低于</string>
+
+    <string name="recommendarticle_txt">推介文章</string>
+    <string name="subsrecord_txt">订阅记录</string>
 
 </resources>

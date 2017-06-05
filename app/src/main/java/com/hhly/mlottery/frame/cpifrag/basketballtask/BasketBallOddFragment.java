@@ -107,6 +107,11 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     }
 
     @Override
+    public BasketBallContract.OddPresenter initPresenter() {
+        return new BasketBallOddPresenter(this);
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -115,9 +120,6 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         sourceDataList = new ArrayList<>();
 
         destinationDataList = new ArrayList<>();
-
-        mPresenter = new BasketBallOddPresenter(this);
-
 
         mPresenter.showLoad();
         mPresenter.showRequestData("", type);

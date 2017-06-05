@@ -110,9 +110,13 @@ public class BasketIndexDetailsChildFragment extends ViewFragment<BasketIndexDet
     }
 
     @Override
+    public BasketIndexDetailsContract.IndexDetailsChildPresenter initPresenter() {
+        return new BasketIndexDetailsChildPresenter(this);
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter = new BasketIndexDetailsChildPresenter(this);
 
         //loading
         mPresenter.showLoad();

@@ -4,29 +4,41 @@ package com.hhly.mlottery.frame.footballframe.corner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballCornerActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
+import com.hhly.mlottery.adapter.ScheduleDateAdapter;
 import com.hhly.mlottery.adapter.corner.CornerListAdapter;
 import com.hhly.mlottery.bean.corner.CornerListBean;
+import com.hhly.mlottery.bean.scheduleBean.ScheduleDate;
 import com.hhly.mlottery.callback.FocusMatchClickListener;
 import com.hhly.mlottery.config.FootBallDetailTypeEnum;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.ViewFragment;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.HandMatchId;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
+import com.hhly.mlottery.util.ToastTools;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,6 +77,35 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
     @BindView(R.id.corner_list_recycler)
     RecyclerView mRecyclerView;
 
+    /**
+     *日期选择
+     */
+    @BindView(R.id.corner_date_layout)
+    LinearLayout mDateLayout;
+
+    @BindView(R.id.corner_tv_date)
+    TextView mTextDate;
+
+    @BindView(R.id.corner_tv_week)
+    TextView mTextWeek;
+
+    private View mNoLoadingView; //没有更多
+    private View mOnloadingView; //加载更多
+
+    private ListView mDateListView;
+
+    private ScheduleDateAdapter mDateAdapter;
+
+    private List<ScheduleDate> mDatelist; // 日期
+
+    private String mCurrentDate;
+    private String mTitleDate;
+    private static final int DATETOTAL = 7;
+
+    private  int currentDatePosition = 1;
+
+//    private boolean mFirst
+
 //    @BindView(R.id.corner_refresh_layout)
 //    ExactSwipeRefreshLayout mRefreshLayout;
 
@@ -91,7 +132,7 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter=new CornerPresenter(this);
+
         if (getArguments() != null) {
             mType=getArguments().getString(FRAGMENT_INDEX);
         }
@@ -110,6 +151,16 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mCurrentDate=DateUtil.getMomentDate();
+        mTitleDate=DateUtil.getMomentDate();
+
+        mPresenter.refreshData(mType,currentDatePosition,false);
+
+        mTextDate.setText(DateUtil.convertDateToNation(mTitleDate));
+        mTextWeek.setText(DateUtil.getWeekOfXinQi(DateUtil.parseDate(mTitleDate)));
+        initListDateAndWeek(mCurrentDate,currentDatePosition);
+
         mNodataLayout.setVisibility(View.GONE);
         mExceptionLayout.setVisibility(View.GONE);
         mProgressBarLayout.setVisibility(View.GONE);
@@ -118,15 +169,64 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
             public void onClick(View v) {
                 mExceptionLayout.setVisibility(View.GONE);
                 mProgressBarLayout.setVisibility(View.VISIBLE);
-                mPresenter.refreshData(mType);
+                mPresenter.refreshData(mType,currentDatePosition ,false);
             }
         });
 
-        mAdapter=new CornerListAdapter(mPresenter.getData(),getActivity());
+        mDateLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(),R.style.AlertDialog);
+
+                final AlertDialog alertDialog=builder.create();
+
+                LayoutInflater inflater = LayoutInflater.from(getActivity());
+                View alertDialogView = inflater.inflate(R.layout.alertdialog, null);
+                mDateListView = (ListView) alertDialogView.findViewById(R.id.listdate);
+                initListDateAndWeek(mCurrentDate,currentDatePosition);
+
+                mDateListView.setAdapter(mDateAdapter);
+                mDateListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                        mPresenter.refreshData(mType,position,true);
+                        alertDialog.dismiss();
+                        mTextDate.setText(DateUtil.convertDateToNation(mDatelist.get(position).getDate()));
+                        mTextWeek.setText(mDatelist.get(position).getWeek());
+                        mTitleDate=mDatelist.get(position).getDate();
+                    }
+                });
+
+                alertDialog.show();
+                alertDialog.getWindow().setContentView(alertDialogView);
+                alertDialog.setCanceledOnTouchOutside(true);
+            }
+        });
+        if(mAdapter==null){
+            mAdapter=new CornerListAdapter(mPresenter.getData(),getActivity());
+        }
+        mOnloadingView=getActivity().getLayoutInflater().inflate(R.layout.onloading, (ViewGroup) mRecyclerView.getParent(),false);
+        mAdapter.setLoadingView(mOnloadingView);
+        mAdapter.openLoadMore(mPresenter.getData().size()==0?12:mPresenter.getData().size(),true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
 
-        mPresenter.refreshData(mType);
+        //上拉加载更多
+        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPresenter.refreshDataByPage(mType,currentDatePosition+1,false);
+                        mTextDate.setText(DateUtil.convertDateToNation(mDatelist.get(currentDatePosition).getDate()));
+                        mTextWeek.setText(mDatelist.get(currentDatePosition).getWeek());
+                    }
+                },1000);
+
+            }
+        });
+
 
         mFocusClickListener = new FocusMatchClickListener() { // 关注按钮事件
             @Override
@@ -187,22 +287,35 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
             }
         });
 
-        mCdt = new CountDownTimer(10000*1000, 1000*5 ) { //每两秒一次
-            @Override
-            public void onTick(long millisUntilFinished) {
-                mPresenter.refreshData(mType);
-            }
-            @Override
-            public void onFinish() {
+//        mCdt = new CountDownTimer(10000*1000, 1000*5 ) { //每两秒一次
+//            @Override
+//            public void onTick(long millisUntilFinished) {
+//                mPresenter.refreshData(mType,currentDatePosition);
+//            }
+//            @Override
+//            public void onFinish() {
+//
+//            }
+//        };
+//
+//        mCdt.start();
+    }
 
-            }
-        };
-
-        mCdt.start();
+    /**
+     * 初始化7天的日期
+     *
+     * @param s
+     */
+    private void initListDateAndWeek(String s, int position) {
+        mDatelist = new ArrayList<ScheduleDate>();
+        for (int i = 1; i >- 7; i--) {
+            mDatelist.add(new ScheduleDate(DateUtil.getDate(i, s), DateUtil.getWeekOfXinQi(DateUtil.parseDate(DateUtil.getDate(i, s)))));
+        }
+        mDateAdapter = new ScheduleDateAdapter(mDatelist, getActivity(), position);
     }
 
     public void refreshDate(){
-        mPresenter.refreshData(mType);
+        mPresenter.refreshData(mType,currentDatePosition,false);
     }
 
     @Override
@@ -213,7 +326,10 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
     @Override
     public void recyclerNotify() {
         mRecyclerView.setVisibility(View.VISIBLE);
-        mAdapter.notifyDataSetChanged();
+        mAdapter.setNewData(mPresenter.getData()); //点进去看下
+        mAdapter.setLoadingView(mOnloadingView);
+        mAdapter.openLoadMore(mPresenter.getData().size()==0?12:mPresenter.getData().size(),true);
+
         mNodataLayout.setVisibility(View.GONE);
         mExceptionLayout.setVisibility(View.GONE);
         mProgressBarLayout.setVisibility(View.GONE);
@@ -242,10 +358,43 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
     }
 
     @Override
+    public void setDateListPosition(int position) {
+        currentDatePosition=position;
+        L.e("AAA",currentDatePosition+"");
+    }
+
+    @Override
+    public void refreshShow(boolean refresh) {
+        if(getActivity()!=null){
+            ((FootballCornerActivity)getActivity()).setRefreshing(refresh);
+        }
+    }
+
+    @Override
+    public void showNoMoreData() {
+        if(mNoLoadingView==null){
+            mNoLoadingView=getActivity().getLayoutInflater().inflate(R.layout.nomoredata, (ViewGroup) mRecyclerView.getParent(),false);
+        }
+        mAdapter.notifyDataChangedAfterLoadMore(false);
+        mAdapter.addFooterView(mNoLoadingView);
+
+    }
+
+    @Override
+    public void showNextPage(List<CornerListBean.CornerEntity> cornerListBean) {
+        mAdapter.notifyDataChangedAfterLoadMore(cornerListBean,true);
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mCdt!=null){
-            mCdt.cancel();
-        }
+//        if(mCdt!=null){
+//            mCdt.cancel();
+//        }
+    }
+
+    @Override
+    public CornerContract.Presenter initPresenter() {
+        return  new CornerPresenter(this);
     }
 }

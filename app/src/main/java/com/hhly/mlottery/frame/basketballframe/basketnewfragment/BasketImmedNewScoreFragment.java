@@ -27,7 +27,7 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
-import com.hhly.mlottery.activity.BettingRecommendActivity;
+import com.hhly.mlottery.activity.bettingmvp.mvpview.MvpBettingRecommendActivity;
 import com.hhly.mlottery.adapter.ScheduleDateAdapter;
 import com.hhly.mlottery.adapter.basketball.BasketballScoreListAdapter;
 import com.hhly.mlottery.bean.basket.BasketAllOddBean;
@@ -272,7 +272,12 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
         mView.findViewById(R.id.testbetting).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mIntent = new Intent(mContext, BettingRecommendActivity.class);
+//                Bundle bundleset = new Bundle();
+//                bundleset.putInt("currentfragment", RESULT_FRAGMENT);
+//                mIntent.putExtras(bundleset);
+
+//                Intent mIntent = new Intent(mContext , BettingRecommendActivity.class);
+                Intent mIntent = new Intent(mContext , MvpBettingRecommendActivity.class);
                 startActivity(mIntent);
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
             }
@@ -328,9 +333,11 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_NEW_IMMEDIATE, params, new VolleyContentFast.ResponseSuccessListener<BasketNewRootBean>() {
             @Override
             public void onResponse(BasketNewRootBean json) {
+
                 if (getActivity() == null) {
                     return;
                 }
+
                 isLoad = 1;
                 if (json == null || json.getMatchData() == null || json.getMatchData().size() == 0) {
                     setStatus(SHOW_STATUS_NO_DATA);
