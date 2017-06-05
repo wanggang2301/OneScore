@@ -116,11 +116,11 @@ public class MyApp extends Application {
     //初始化Dagger注入
     public void initDagger() {
         DaggerMyAppComponent.builder()
-                .myAppModule(new MyAppModule(this, BaseURLs.URL_MVP_API_HOST, AppConstants.timeZone + "", getLanguage()))
+                //.myAppModule(new MyAppModule(this, BaseURLs.URL_MVP_API_HOST, AppConstants.timeZone + "", getLanguage()))
+                .myAppModule(new MyAppModule(this, "http://192.168.10.242:8091/", AppConstants.timeZone + "", getLanguage()))
                 .build()
                 .inject(this);
     }
-
 
     /**
      * 获取 DataManager

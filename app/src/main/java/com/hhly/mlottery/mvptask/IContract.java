@@ -3,6 +3,7 @@ package com.hhly.mlottery.mvptask;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsDetails;
 import com.hhly.mlottery.mvp.IPresenter;
 import com.hhly.mlottery.mvp.IView;
+import com.hhly.mlottery.mvptask.data.model.RecommendArticlesBean;
 import com.hhly.mlottery.mvptask.data.model.SubsRecordBean;
 
 import java.util.List;
@@ -46,7 +47,7 @@ public interface IContract {
 
     //订阅记录
     interface ISubsRecordPresenter extends IPresenter<IPullLoadMoreDataView> {
-        void requestData(String userId, String pageNum, String pageSize);
+        void requestData(String userId, String pageNum, String pageSize, String loginToken, String sign);
 
         void pullUpLoadMoreData();
 
@@ -55,12 +56,12 @@ public interface IContract {
 
 
     //推介文章
-    interface IRecommendArticlesPresenter extends IPresenter<IPullLoadMoreDataView> {
-        void requestData();
+    interface IRecommendArticlesPresenter extends IPresenter<IChildView> {
+        void requestData(String userId, String pageNum, String pageSize, String loginToken, String sign);
 
-        void pullUpLoadMoreData();
+      //  void pullUpLoadMoreData(String userId, String pageNum, String pageSize, String loginToken, String sign);
 
         //BottomOddsDetails getBowlBean();
-        String getRecommendArticlesData();
+        List<RecommendArticlesBean.PublishPromotionsBean.ListBean> getRecommendArticlesData();
     }
 }

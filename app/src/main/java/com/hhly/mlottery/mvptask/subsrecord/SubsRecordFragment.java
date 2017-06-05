@@ -25,7 +25,6 @@ import com.hhly.mlottery.mvptask.data.model.SubsRecordBean;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -68,6 +67,13 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
     @BindView(R.id.refresh)
     ExactSwipeRefreshLayout refresh;
 
+    String userId = "HHLY00000136";
+
+    String loginToken = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJqd3QiLCJpYXQiOjE0OTY0ODU2MDAsInN1YiI6IntcImlkXCI6XCJISExZMDAwMDAxMzZcI\n" +
+            "ixcInBob25lTnVtXCI6XCIxNTAxMzY5NzEwMVwifSJ9.l4jsTaz5tJM5Q4P3s_UK8US-S3HRfN-lfJZJ67XUS98";
+
+    String sign = "70db4a00262f0a351a320c668437493612";
+
     private List<SubsRecordBean.PurchaseRecordsBean.ListBean> listBeanList;
 
 
@@ -88,7 +94,7 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
         ButterKnife.bind(this, view);
         initEvent();
 
-        mPresenter.requestData("hhly90531", "1", PAGE_SIZE);
+        mPresenter.requestData(userId, "1", PAGE_SIZE, loginToken, sign);
 
         return view;
     }
@@ -120,16 +126,8 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
         listBeanList = mPresenter.getSubsRecordData();
 
 
-        List<String> list = new ArrayList<>();
 
-        list.add("ss");
-        list.add("ss");
-        list.add("ss");
-        list.add("ss");
-        list.add("ss");
-        list.add("ss");
-
-        mSubsRecordAdapter = new SubsRecordAdapter(R.layout.betting_recommend_item, listBeanList);
+        mSubsRecordAdapter = new SubsRecordAdapter( listBeanList);
         recyclerView.setAdapter(mSubsRecordAdapter);
 
         mSubsRecordAdapter.openLoadMore(0, true);

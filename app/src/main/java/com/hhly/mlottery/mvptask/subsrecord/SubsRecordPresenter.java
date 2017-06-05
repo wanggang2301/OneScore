@@ -28,15 +28,14 @@ public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDa
 
 
     @Override
-    public void requestData(String userId, String pageNum, String pageSize) {
-
+    public void requestData(String userId, String pageNum, String pageSize, String loginToken, String sign) {
         if (!mView.isActive()) {
             return;
         }
 
         mView.loading();
 
-        addSubscription(repository.getSubsRecord(userId, pageNum, pageSize), new Subscriber<SubsRecordBean>() {
+        addSubscription(repository.getSubsRecord(userId, pageNum, pageSize, loginToken, sign), new Subscriber<SubsRecordBean>() {
             @Override
             public void onCompleted() {
 
@@ -50,9 +49,7 @@ public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDa
 
             @Override
             public void onNext(SubsRecordBean subsRecordBean) {
-
                 if (!"200".equals(subsRecordBean.getCode())) {
-
                     return;
                 }
 

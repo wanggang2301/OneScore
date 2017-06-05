@@ -2,7 +2,10 @@ package com.hhly.mlottery.mvptask.recommendarticles;
 
 import com.hhly.mlottery.mvp.BasePresenter;
 import com.hhly.mlottery.mvptask.IContract;
+import com.hhly.mlottery.mvptask.data.model.RecommendArticlesBean;
 import com.hhly.mlottery.mvptask.data.repository.Repository;
+
+import java.util.List;
 
 import rx.Subscriber;
 
@@ -13,18 +16,21 @@ import rx.Subscriber;
  * @created on:2017/6/2  11:19.
  */
 
-public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoadMoreDataView> implements IContract.IRecommendArticlesPresenter {
+public class RecommendArticlesPresenter extends BasePresenter<IContract.IChildView> implements IContract.IRecommendArticlesPresenter {
 
     private Repository repository;
 
-    public RecommendArticlesPresenter(IContract.IPullLoadMoreDataView view) {
+    private List<RecommendArticlesBean.PublishPromotionsBean.ListBean> list;
+
+
+    public RecommendArticlesPresenter(IContract.IChildView view) {
         super(view);
         repository = mDataManager.repository;
     }
 
 
     @Override
-    public void requestData() {
+    public void requestData(String userId, String pageNum, String pageSize, String loginToken, String sign) {
 
         if (!mView.isActive()) {
             return;
@@ -32,7 +38,7 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
 
         mView.loading();
 
-        addSubscription(repository.getSubsRecord(), new Subscriber<String>() {
+        addSubscription(repository.getRecommendArtices(userId, pageNum, pageSize, loginToken, sign), new Subscriber<RecommendArticlesBean>() {
             @Override
             public void onCompleted() {
 
@@ -45,60 +51,19 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
             }
 
             @Override
-            public void onNext(String s) {
+            public void onNext(RecommendArticlesBean r) {
+                if (!"200".equals(r.getCode())) {
+                    return;
+                }
 
+                list = r.getPublishPromotions().getList();
             }
         });
     }
 
-    @Override
-    public void pullUpLoadMoreData() {
-        addSubscription(repository.getSubsRecord(), new Subscriber<String>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(String s) {
-
-
-                if (!"".equals("200")) {
-
-                    mView.pullUpLoadMoreDataFail();
-
-                    return;
-                } else {
-
-                    mView.pullUpLoadMoreDataSuccess();
-
-                }
-
-/*
-
-                if (!foreignInfomationBean.getResult().equals("200")) {
-                    loadmore_text.setText(mContext.getResources().getString(R.string.nodata_txt));
-                    progressBar.setVisibility(View.GONE);
-                    return;
-                } else {
-                    loadmore_text.setText(mContext.getResources().getString(R.string.loading_data_txt));
-                    progressBar.setVisibility(View.VISIBLE);
-                }
-                mList.addAll(foreignInfomationBean.getOverseasInformationList());
-                foreignInfomationAdapter.notifyDataChangedAfterLoadMore(true);
-*/
-
-            }
-        });
-    }
 
     @Override
-    public String getRecommendArticlesData() {
-        return null;
+    public List<RecommendArticlesBean.PublishPromotionsBean.ListBean> getRecommendArticlesData() {
+        return list;
     }
 }

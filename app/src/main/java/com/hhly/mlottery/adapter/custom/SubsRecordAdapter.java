@@ -2,6 +2,7 @@ package com.hhly.mlottery.adapter.custom;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.hhly.mlottery.R;
 import com.hhly.mlottery.mvptask.data.model.SubsRecordBean;
 
 import java.util.List;
@@ -16,12 +17,14 @@ import java.util.List;
 public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseRecordsBean.ListBean> {
 
 
-    public SubsRecordAdapter(int layoutResId, List<SubsRecordBean.PurchaseRecordsBean.ListBean> data) {
-        super(layoutResId, data);
+    public SubsRecordAdapter(List<SubsRecordBean.PurchaseRecordsBean.ListBean> data) {
+        super(R.layout.betting_recommend_item, data);
     }
 
     @Override
     protected void convert(BaseViewHolder baseViewHolder, SubsRecordBean.PurchaseRecordsBean.ListBean b) {
+
+        baseViewHolder.setText(R.id.betting_home_name, b.getHomeName());
 
     }
 
