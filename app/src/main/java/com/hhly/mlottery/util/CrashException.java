@@ -129,7 +129,7 @@ public class CrashException implements UncaughtExceptionHandler {
 //            }
 //        }.start();
         //保存日志文件       
-      //  saveCatchInfo2File(ex);
+        saveCatchInfo2File(ex);
         return true;
     }
 
