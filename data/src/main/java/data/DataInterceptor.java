@@ -41,7 +41,7 @@ public class DataInterceptor implements okhttp3.Interceptor {
                 .build();
 
         //Request.Builder requestBuilder = oldRequest.newBuilder().url(url);
-        Request.Builder requestBuilder = new Request.Builder().url(dingyueUrl);
+        Request.Builder requestBuilder = new Request.Builder().url(url);
 
         Log.d("bowlurl", dingyueUrl);
 
