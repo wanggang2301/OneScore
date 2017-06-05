@@ -15,12 +15,15 @@
         >
         <TextView
             style="@style/account_detail_balance"
+            android:text="@string/available_balance"
             />
         <TextView
             style="@style/account_detail_balance"
+            android:text="@string/frozen_balance"
             />
         <TextView
             style="@style/account_detail_balance"
+            android:text="@string/total_balance"
             />
     </LinearLayout>
 
@@ -32,16 +35,19 @@
         android:layout_marginTop="40dp"
         >
         <TextView
+            android:id="@+id/available_balance"
             style="@style/account_detail_balance"
-            android:text="2100/00"
+            android:text="0.00"
             />
         <TextView
+            android:id="@+id/frozen_balance"
             style="@style/account_detail_balance"
-            android:text="2100/00"
+            android:text="0.00"
             />
         <TextView
+            android:id="@+id/total_balance"
             style="@style/account_detail_balance"
-            android:text="2100/00"
+            android:text="0.00"
             />
     </LinearLayout>
     

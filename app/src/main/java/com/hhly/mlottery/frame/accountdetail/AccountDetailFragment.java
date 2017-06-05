@@ -11,11 +11,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MDStatusBarCompat;
+import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 import com.hhly.mlottery.widget.PullToEnlargeCoorDinatorLayout;
 
 import butterknife.BindView;
@@ -36,7 +39,7 @@ public class AccountDetailFragment extends Fragment implements AppBarLayout.OnOf
 
     private View mView;
     @BindView(R.id.account_detail_coordinator)
-    PullToEnlargeCoorDinatorLayout mCoordinatorLayout;
+    CoordinatorLayout mCoordinatorLayout;
 
     @BindView(R.id.account_detail_collaspsing)
     CollapsingToolbarLayout mCollapsingToolbarLayout;
@@ -50,11 +53,37 @@ public class AccountDetailFragment extends Fragment implements AppBarLayout.OnOf
     @BindView(R.id.account_detail_header_layout)
     LinearLayout mLayoutHeader;
 
+    @BindView(R.id.account_detail_refresh)
+    ExactSwipeRefreshLayout mRefreshLayout;
+
+    /**
+     * 异常界面
+     */
+    @BindView(R.id.basket_odds_net_error)
+    LinearLayout mExceptionLayout;
+    /**
+     * 无数据的界面
+     */
+    @BindView(R.id.nodata)
+    TextView mNodataLayout;
+    /**
+     * 点击刷新
+     */
+    @BindView(R.id.network_exception_reload_btn)
+    TextView mBtnRefresh;
+    /**
+     * 加载中
+     */
+    @BindView(R.id.basket_player_progressbar)
+    FrameLayout mProgressBarLayout;
+
+    @BindView(R.id.available_balance)
+    TextView mAvailableBalance;
+
+    TextView mFrozenBalance;
+
     public AccountDetailFragment() {
     }
-
-
-
     public static AccountDetailFragment newInstance(String param1, String param2) {
         AccountDetailFragment fragment = new AccountDetailFragment();
         Bundle args = new Bundle();
@@ -87,7 +116,7 @@ public class AccountDetailFragment extends Fragment implements AppBarLayout.OnOf
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mAppBarLayout.addOnOffsetChangedListener(this);
-        mCoordinatorLayout.setZoomView(mLayoutHeader);
+//        mCoordinatorLayout.setZoomView(mLayoutHeader);
         MDStatusBarCompat.setCollapsingToolbar(getActivity(), mCoordinatorLayout, mAppBarLayout, mLayoutHeader, mToolbar);
     }
 
@@ -100,7 +129,13 @@ public class AccountDetailFragment extends Fragment implements AppBarLayout.OnOf
         if(-verticalOffset<85){
            mLayoutHeader.setAlpha(1);
         }
-        mCoordinatorLayout.setOffSet(verticalOffset);
+
+        if (mCollapsingToolbarLayout.getHeight() + verticalOffset < mLayoutHeader.getHeight()) {
+            mRefreshLayout.setEnabled(false);
+        } else {
+            mRefreshLayout.setEnabled(true);
+        }
+//        mCoordinatorLayout.setOffSet(verticalOffset);
 
 //        L.e( "verticalOffset-----"+verticalOffset+"");
 //        L.e("mccc-----"+mCollapsingToolbarLayout.getHeight());
