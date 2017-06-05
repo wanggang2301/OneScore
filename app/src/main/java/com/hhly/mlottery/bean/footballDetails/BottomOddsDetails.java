@@ -13,6 +13,17 @@ public class BottomOddsDetails {
 
     private List<BottomOddsDetailsItem> matchoddlist;
 
+    private FirstOdd first;
+
+    public FirstOdd getFirst() {
+        return first;
+    }
+
+    public void setFirst(FirstOdd first) {
+        this.first = first;
+    }
+
+
     public String getResult() {
         return result;
     }

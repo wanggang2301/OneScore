@@ -1719,6 +1719,7 @@
     <!--竞彩推荐-->
     <string name="betting_setting_palying_method">玩法</string>
     <string name="betting_setting_league">聯賽</string>
+    <string name="betting_issue_title">推介</string>
     <string name="corner_score">角球比分</string>
     <string name="higher">高於</string>
     <string name="jishi_pan">即時盤</string>
@@ -1733,4 +1734,9 @@
     <string name="start_dianqiu">開始點球大戰</string>
     <string name="start_addtime">開始加時賽</string>
 
+    <string name="bow_corner_left">高於</string>
+    <string name="bow_corner_middle">即時盤</string>
+    <string name="bow_corner_right">低於</string>
+    <string name="recommendarticle_txt">推介文章</string>
+    <string name="subsrecord_txt">訂閱記錄</string>
 </resources>

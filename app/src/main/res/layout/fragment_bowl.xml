@@ -1,0 +1,74 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".mvptask.bowl.BowlFragment">
+
+
+    <RadioGroup
+        android:id="@+id/bowl_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="6">
+
+        <RadioButton
+            android:id="@+id/bowl_ouer"
+            style="@style/odds_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="-0.25dp"
+            android:background="@drawable/radio_button_left"
+            android:checked="true"
+            android:text="@string/league_statistics_today_tab1"
+            android:textColor="@drawable/info_text_color" />
+
+
+        <RadioButton
+            android:id="@+id/bowl_alet"
+            style="@style/odds_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="-0.25dp"
+            android:layout_marginRight="-0.25dp"
+            android:background="@drawable/radio_button_center"
+            android:checked="false"
+            android:text="@string/foot_details_ball"
+            android:textColor="@drawable/info_text_color" />
+
+
+        <RadioButton
+            android:id="@+id/bowl_asize"
+            style="@style/odds_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="-0.25dp"
+            android:layout_marginRight="-0.25dp"
+            android:background="@drawable/radio_button_center"
+            android:checked="false"
+            android:text="@string/foot_team_odds_size_ball"
+            android:textColor="@drawable/info_text_color" />
+
+        <RadioButton
+            android:id="@+id/bowl_corner"
+            style="@style/odds_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="-0.25dp"
+            android:background="@drawable/radio_button_right"
+            android:checked="false"
+            android:text="@string/foot_event_corner"
+            android:textColor="@drawable/info_text_color" />
+    </RadioGroup>
+
+
+    <FrameLayout
+        android:id="@+id/bowl_fl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bowl_radio_group" />
+</RelativeLayout>

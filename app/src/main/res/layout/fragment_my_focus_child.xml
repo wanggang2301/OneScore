@@ -2,12 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hhly.mlottery.frame.footballframe.RecommendFragment">
+    tools:context=".mvptask.myfocus.MyFocusChildFragment">
 
+    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="足球内页推介功能" />
+        android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>

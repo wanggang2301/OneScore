@@ -126,7 +126,7 @@
 -keep class org.apache.commons.logging.** { *; }
 -keep class android.net.compatibility.** { *; }
 -keep class android.net.http.** { *; }
-
+-keep class org.apache.http.{*;}
 ########################## 友盟推送 End
 
 # License
@@ -255,3 +255,17 @@ public void *(***);
 -keep class dice.** {*; }
 -dontwarn dice.**
 ##-----TalkingData统计 end-----
+
+##-----支付宝 begin-----
+-libraryjars libs/alipaySingle-20161222.jar
+
+-keep class com.alipay.android.app.IAlixPay{*;}
+-keep class com.alipay.android.app.IAlixPay$Stub{*;}
+-keep class com.alipay.android.app.IRemoteServiceCallback{*;}
+-keep class com.alipay.android.app.IRemoteServiceCallback$Stub{*;}
+-keep class com.alipay.sdk.app.PayTask{ public *;}
+-keep class com.alipay.sdk.app.AuthTask{ public *;}
+
+-dontwarn android.net.**
+-keep class android.net.SSLCertificateSocketFactory{*;}
+##-----支付宝 end-----

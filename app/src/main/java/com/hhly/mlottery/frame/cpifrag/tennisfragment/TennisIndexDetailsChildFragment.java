@@ -1,6 +1,5 @@
 package com.hhly.mlottery.frame.cpifrag.tennisfragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,14 +15,9 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.OddDetailsLeftAdapter;
-import com.hhly.mlottery.adapter.basketball.BasketIndexDetailsChildAdapter;
 import com.hhly.mlottery.adapter.tennisball.TennisIndexDetailsAdapter;
-import com.hhly.mlottery.bean.basket.index.BasketIndexDetailsBean;
-import com.hhly.mlottery.bean.enums.BasketOddsTypeEnum;
 import com.hhly.mlottery.bean.enums.TennisOddsTypeEnum;
 import com.hhly.mlottery.bean.tennisball.tennisindex.TennisIndexDetailsBean;
-import com.hhly.mlottery.frame.cpifrag.basketballtask.indexdetail.BasketIndexDetailsChildFragment;
-import com.hhly.mlottery.frame.cpifrag.basketballtask.indexdetail.BasketIndexDetailsChildPresenter;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.util.L;
 
@@ -104,6 +98,12 @@ public class TennisIndexDetailsChildFragment extends ViewFragment<TennisIndexDet
 
     }
 
+
+    @Override
+    public TennisIndexDetailsContract.IndexDetailsChildPresenter initPresenter() {
+        return new TennisIndexDetailsChildPresenter(this);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_tennis_index_details_child, container, false);
@@ -115,7 +115,6 @@ public class TennisIndexDetailsChildFragment extends ViewFragment<TennisIndexDet
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter = new TennisIndexDetailsChildPresenter(this);
 
         //loading
         mPresenter.showLoad();

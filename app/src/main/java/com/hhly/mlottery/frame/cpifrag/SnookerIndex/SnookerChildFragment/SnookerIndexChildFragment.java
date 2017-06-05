@@ -100,6 +100,11 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
     }
 
     @Override
+    public SnookerIndexChildContract.Presenter initPresenter() {
+        return new SnookerIndexChildPresenter(this);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -107,7 +112,6 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
             mBallType = getArguments().getInt(ARG_PARAM2);
         }
         //改成dagger
-        mPresenter = new SnookerIndexChildPresenter(this);
 
     }
 
@@ -262,7 +266,7 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
     public void updateScore(SnookerScoreSocketBean mScoreData) {
         SnookerScoreSocketBean.SnookerScoreDataBean scoreData = mScoreData.getData();
         synchronized (this) {
-            if(mPresenter != null && mPresenter.getData() != null){
+            if (mPresenter != null && mPresenter.getData() != null) {
                 for (SnookerIndexBean.AllInfoEntity match : mPresenter.getData()) {
                     if (match.getMatchInfo().getMatchId().equals(mScoreData.getThirdId())) {
                         if (match.getMatchInfo() != null) {
@@ -341,11 +345,11 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
     private void updateItemData(SnookerIndexBean.AllInfoEntity.MatchInfoEntity matchData, SnookerScoreSocketBean.SnookerScoreDataBean data) {
         String oneWin = "";
         String towWin = "";
-        String total="";
+        String total = "";
         oneWin = data.getPlayerOnewin() == null ? "0" : data.getPlayerOnewin();
         towWin = data.getPlayerTwowin() == null ? "0" : data.getPlayerTwowin();
-        total = data.getTotalGames()==null?"0":data.getTotalGames();
-        matchData.setMatchResult(oneWin + "("+total+")" + towWin);
+        total = data.getTotalGames() == null ? "0" : data.getTotalGames();
+        matchData.setMatchResult(oneWin + "(" + total + ")" + towWin);
 
         if (data.getStatus() != null) {
             matchData.setMatchState(data.getStatus());
@@ -359,7 +363,7 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
      */
     public void updateOdds(SnookerSocketOddsBean mOddsData) {
         synchronized (this) {
-            if(mPresenter != null && mPresenter.getData() != null){
+            if (mPresenter != null && mPresenter.getData() != null) {
                 for (SnookerIndexBean.AllInfoEntity match : mPresenter.getData()) {
 
                     if (match.getMatchInfo().getMatchId().equals(mOddsData.getThirdId())) {
@@ -392,7 +396,7 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
      */
     public void updateTennisOdds(TennisSocketOddsBean mOddsData) {
         synchronized (this) {
-            if(mPresenter != null && mPresenter.getData() != null){
+            if (mPresenter != null && mPresenter.getData() != null) {
                 for (SnookerIndexBean.AllInfoEntity match : mPresenter.getData()) {
 
                     if (match.getMatchInfo().getMatchId().equals(mOddsData.getDataObj().getMatchId())) {
