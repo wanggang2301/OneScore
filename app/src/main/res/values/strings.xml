@@ -1768,5 +1768,16 @@
 
     <string name="recommendarticle_txt">推介文章</string>
     <string name="subsrecord_txt">订阅记录</string>
+    <string name="jingcaidanguan_txt">竞彩单关</string>
+    <string name="yapan_txt">亚盘</string>
+    <string name="daxiaoqiu_txt">大小球</string>
+    <string name="yigoumai_txt">人已购买</string>
+    <string name="chakan_txt">查看</string>
+    <string name="tuijianliyou_txt">推荐理由:</string>
+    <string name="baiyin_txt">白银专家</string>
+    <string name="huangjin_txt">黄金专家</string>
+    <string name="baijin_txt">白金专家</string>
+    <string name="zuanshi_txt">钻石专家</string>
+    <string name="zhong_txt">中</string>
 
 </resources>

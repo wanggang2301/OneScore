@@ -123,8 +123,6 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
     public void responseData() {
 
         listBeanList = mPresenter.getSubsRecordData();
-
-
         mSubsRecordAdapter = new SubsRecordAdapter(mActivity,listBeanList);
         recyclerView.setAdapter(mSubsRecordAdapter);
 
@@ -143,7 +141,6 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
                 });
             }
         });
-
 
     }
 

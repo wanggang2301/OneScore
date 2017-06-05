@@ -16,7 +16,7 @@ import java.util.Random;
 /**
  * @author: Wangg
  * @name：xxx
- * @description: xxx
+ * @description: 订阅记录Adapter
  * @created on:2017/6/2  10:59.
  */
 
@@ -48,19 +48,19 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
         baseViewHolder.setText(R.id.betting_date, b.getMatchDate());
         baseViewHolder.setText(R.id.betting_week, b.getMatchTime());
         if (0 == b.getType()) {
-            baseViewHolder.setText(R.id.betting_concede_points_spf, "竞彩单关");
+            baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.jingcaidanguan_txt));
         } else if (1 == b.getType()) {
-            baseViewHolder.setText(R.id.betting_concede_points_spf, "亚盘");
+            baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.yapan_txt));
         } else if (2 == b.getType()) {
-            baseViewHolder.setText(R.id.betting_concede_points_spf, "大小球");
+            baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.daxiaoqiu_txt));
         }
 
         baseViewHolder.setText(R.id.betting_home_name, b.getHomeName());
         baseViewHolder.setText(R.id.betting_guest_name, b.getGuestName());
         baseViewHolder.setText(R.id.betting_price, String.valueOf("￥ " + b.getPrice() + ".00"));
-        baseViewHolder.setText(R.id.betting_buy_num, String.valueOf(getBuyNum(b.getCount())) + "人已购买");
-        baseViewHolder.setText(R.id.textView11, "查看");
-        baseViewHolder.setText(R.id.betting_recommended_reason, "推荐理由:" + (TextUtils.isEmpty(b.getContext()) ? "" : b.getContext()));
+        baseViewHolder.setText(R.id.betting_buy_num, String.valueOf(getBuyNum(b.getCount())) + mContext.getResources().getString(R.string.yigoumai_txt));
+        baseViewHolder.setText(R.id.textView11, mContext.getResources().getString(R.string.chakan_txt));
+        baseViewHolder.setText(R.id.betting_recommended_reason, mContext.getResources().getString(R.string.tuijianliyou_txt) + (TextUtils.isEmpty(b.getContext()) ? "" : b.getContext()));
 
     }
 
@@ -70,22 +70,22 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
             return "白银专家";
         }
 
-        String levelGrade = "白银专家";
+        String levelGrade = mContext.getResources().getString(R.string.baiyin_txt);
 
         switch (level) {
             case "1":
-                levelGrade = "白银专家";
+                levelGrade = mContext.getResources().getString(R.string.baiyin_txt);
                 break;
             case "2":
-                levelGrade = "黄金专家";
+                levelGrade = mContext.getResources().getString(R.string.huangjin_txt);
 
                 break;
             case "3":
-                levelGrade = "白金专家";
+                levelGrade = mContext.getResources().getString(R.string.baijin_txt);
 
                 break;
             case "4":
-                levelGrade = "钻石专家";
+                levelGrade = mContext.getResources().getString(R.string.zuanshi_txt);
 
                 break;
         }
@@ -94,7 +94,7 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
 
 
     private String getLastAccuracy(int win, int err) {
-        return "近" + (win + err) + "中" + win;
+        return mContext.getResources().getString(R.string.zhuduijin) + (win + err) + mContext.getResources().getString(R.string.zhong_txt) + win;
     }
 
 

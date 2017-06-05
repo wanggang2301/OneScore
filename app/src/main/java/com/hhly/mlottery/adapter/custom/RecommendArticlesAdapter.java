@@ -1,5 +1,6 @@
 package com.hhly.mlottery.adapter.custom;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -20,9 +21,11 @@ import java.util.Random;
 public class RecommendArticlesAdapter extends BaseQuickAdapter<RecommendArticlesBean.PublishPromotionsBean.ListBean> {
     //private List<RecommendArticlesBean.PublishPromotionsBean.ListBean> listBeanList;
 
+    private Context mContext;
 
-    public RecommendArticlesAdapter(List<RecommendArticlesBean.PublishPromotionsBean.ListBean> data) {
+    public RecommendArticlesAdapter(Context context, List<RecommendArticlesBean.PublishPromotionsBean.ListBean> data) {
         super(R.layout.recommend_articles_item, data);
+        mContext = context;
     }
 
     @Override
@@ -34,16 +37,15 @@ public class RecommendArticlesAdapter extends BaseQuickAdapter<RecommendArticles
         baseViewHolder.setText(R.id.betting_home_name, r.getHomeName());
         baseViewHolder.setText(R.id.betting_guest_name, r.getGuestName());
         baseViewHolder.setText(R.id.betting_price, String.valueOf("￥ " + r.getPrice() + ".00"));
-        baseViewHolder.setText(R.id.betting_buy_num, String.valueOf(getBuyNum(r.getCount())) + "人已购买");
+        baseViewHolder.setText(R.id.betting_buy_num, String.valueOf(getBuyNum(r.getCount())) + mContext.getResources().getString(R.string.yigoumai_txt));
 
         if (0 == r.getType()) {
-            baseViewHolder.setText(R.id.betting_concede_points_spf, "竞彩单关");
+            baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.jingcaidanguan_txt));
         } else if (1 == r.getType()) {
-            baseViewHolder.setText(R.id.betting_concede_points_spf, "亚盘");
+            baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.yapan_txt));
         } else if (2 == r.getType()) {
-            baseViewHolder.setText(R.id.betting_concede_points_spf, "大小球");
+            baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.daxiaoqiu_txt));
         }
-
         switch (r.getStatus()) {
             case 1:
                 baseViewHolder.setImageResource(R.id.iv, R.mipmap.jingcai_icon_zhong);
@@ -58,7 +60,7 @@ public class RecommendArticlesAdapter extends BaseQuickAdapter<RecommendArticles
                 break;
 
         }
-        baseViewHolder.setText(R.id.betting_recommended_reason, "推荐理由:" + (TextUtils.isEmpty(r.getContext()) ? "" : r.getContext()));
+        baseViewHolder.setText(R.id.betting_recommended_reason, mContext.getResources().getString(R.string.tuijianliyou_txt) + (TextUtils.isEmpty(r.getContext()) ? "" : r.getContext()));
     }
 
     int nums[] = {3, 5, 10};

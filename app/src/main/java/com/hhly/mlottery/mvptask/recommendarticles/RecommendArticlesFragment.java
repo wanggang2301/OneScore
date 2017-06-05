@@ -122,7 +122,7 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     @Override
     public void responseData() {
         listBeanList = mPresenter.getRecommendArticlesData();
-        mRecommendArticlesAdapter = new RecommendArticlesAdapter(listBeanList);
+        mRecommendArticlesAdapter = new RecommendArticlesAdapter(mActivity, listBeanList);
         recyclerView.setAdapter(mRecommendArticlesAdapter);
 
         mRecommendArticlesAdapter.openLoadMore(0, true);
