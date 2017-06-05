@@ -105,9 +105,7 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
         refresh.setColorSchemeResources(R.color.bg_header);
         refresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
         recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-
     }
-
 
     @Override
     public IContract.IRecommendArticlesPresenter initPresenter() {
@@ -124,10 +122,8 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
         listBeanList = mPresenter.getRecommendArticlesData();
         mRecommendArticlesAdapter = new RecommendArticlesAdapter(mActivity, listBeanList);
         recyclerView.setAdapter(mRecommendArticlesAdapter);
-
         mRecommendArticlesAdapter.openLoadMore(0, true);
         mRecommendArticlesAdapter.setLoadingView(moreView);
-
         mRecommendArticlesAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
@@ -163,7 +159,6 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     public void pullUpLoadMoreDataSuccess() {
         loadmoreText.setText(mActivity.getResources().getString(R.string.loading_data_txt));
         progressBar.setVisibility(View.VISIBLE);
-
         listBeanList.addAll(mPresenter.getRecommendArticlesData());
         mRecommendArticlesAdapter.notifyDataChangedAfterLoadMore(true);
     }
@@ -184,7 +179,6 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         mActivity = (Activity) context;
     }
 
@@ -193,6 +187,7 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
+                mActivity.finish();
                 break;
             case R.id.reLoading:
                 break;

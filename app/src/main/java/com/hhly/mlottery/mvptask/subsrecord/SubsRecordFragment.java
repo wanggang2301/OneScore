@@ -123,7 +123,7 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
     public void responseData() {
 
         listBeanList = mPresenter.getSubsRecordData();
-        mSubsRecordAdapter = new SubsRecordAdapter(mActivity,listBeanList);
+        mSubsRecordAdapter = new SubsRecordAdapter(mActivity, listBeanList);
         recyclerView.setAdapter(mSubsRecordAdapter);
 
         mSubsRecordAdapter.openLoadMore(0, true);
@@ -182,15 +182,21 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
         return isAdded();
     }
 
-    @OnClick(R.id.reLoading)
-    public void onClick() {
-    }
-
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         mActivity = (Activity) context;
+    }
+
+    @OnClick({R.id.iv_back, R.id.reLoading})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+                mActivity.finish();
+                break;
+            case R.id.reLoading:
+                break;
+        }
     }
 }
