@@ -11,14 +11,16 @@ import android.support.multidex.MultiDex;
 import android.util.DisplayMetrics;
 
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.mvptask.data.DataManager;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.CrashException;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DataBus;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 import com.tendcloud.tenddata.TCAgent;
 
 import java.util.Locale;
@@ -27,6 +29,7 @@ import javax.inject.Inject;
 
 import cn.finalteam.okhttpfinal.OkHttpFinal;
 import cn.finalteam.okhttpfinal.OkHttpFinalConfiguration;
+import data.DataManager;
 
 /**
  * @author Tenney
@@ -51,17 +54,18 @@ public class MyApp extends Application {
     @Inject
     DataManager mDataManager;
 
+    private static RefWatcher mRefWatcher;
+
     @Override
     public void onCreate() {
         appcontext = this;
-
-        L.d("myapp", "kkkkk");
 
         // 子线程中做初始化操作，提升APP打开速度
         new Thread() {
             @Override
             public void run() {
 
+                initLeakCanary();
                 // 初始化TalkingData统计
                 TCAgent.LOG_ON = true;
                 TCAgent.init(appcontext, DeviceInfo.getAppMetaData(appcontext, "TD_APP_ID"), DeviceInfo.getAppMetaData(appcontext, "TD_CHANNEL_ID"));
@@ -86,10 +90,10 @@ public class MyApp extends Application {
                 // 根据上次的语言设置，重新设置语言
                 isLanguage = switchLanguage(PreferenceUtil.getString("language", ""));
 
-               /* // 捕获异常
+                // 捕获异常
                 CrashException crashException = CrashException.getInstance();
                 crashException.init(getApplicationContext());
-*/
+
                 // 初始化Vollery
                 VolleyContentFast.init(appcontext);
 
@@ -112,6 +116,24 @@ public class MyApp extends Application {
         super.onCreate();
     }
 
+    /**
+     * 获取了LeakCanary
+     * @return
+     */
+    public static RefWatcher getRefWatcher() {
+        return mRefWatcher;
+    }
+    /**
+     * 初始化 LeakCanary
+     */
+    private void initLeakCanary() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        mRefWatcher = LeakCanary.install(this);
+    }
 
     //初始化Dagger注入
     public void initDagger() {
@@ -122,7 +144,7 @@ public class MyApp extends Application {
     }
 
     /**
-     * 获取 DataManager
+     * 获取 data.DataManager
      *
      * @return dataManager
      */

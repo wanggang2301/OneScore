@@ -73,11 +73,11 @@
     </string-array>
 
     <string-array name="foot_details_tabs">
-        <item>@string/betting_issue_title</item>
+        <!--<item>@string/betting_issue_title</item>-->
         <item>@string/foot_details_roolball</item>
-        <item>@string/foot_details_analyze</item>
-        <item>@string/foot_details_info</item>
+        <item>@string/foot_details_statistics</item>
         <item>@string/foot_details_odds</item>
+        <item>@string/foot_details_analyze</item>
         <item>@string/foot_details_talkball</item>
     </string-array>
 

@@ -21,7 +21,6 @@ import com.hhly.mlottery.adapter.custom.SubsRecordAdapter;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.mvptask.IContract;
-import com.hhly.mlottery.mvptask.data.model.SubsRecordBean;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
@@ -30,6 +29,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import data.model.SubsRecordBean;
 
 /**
  * @author wangg

@@ -1,17 +1,12 @@
 package com.hhly.mlottery.adapter.custom;
 
-import android.content.Context;
-import android.text.TextUtils;
-
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.hhly.mlottery.R;
-import com.hhly.mlottery.mvptask.data.model.SubsRecordBean;
-import com.hhly.mlottery.view.CircleImageView;
 
 import java.util.List;
 import java.util.Random;
+
+import data.model.SubsRecordBean;
 
 /**
  * @author: Wangg

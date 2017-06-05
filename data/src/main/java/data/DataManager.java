@@ -1,16 +1,16 @@
-package com.hhly.mlottery.mvptask.data;
+package data;
 
 import android.content.Context;
 
-import com.hhly.mlottery.mvptask.data.repository.Repository;
-
 import javax.inject.Inject;
+
+import data.repository.Repository;
 
 /**
  * @author: Wangg
  * @name：xxx
  * @description: xxx
- * @created on:2017/4/8  14:26.
+ * @created on:2017/6/5  17:24.
  */
 
 public class DataManager {

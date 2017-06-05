@@ -182,7 +182,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     //    private RecommendFragment mRecommendFragment;  //推介
     //private DetailsRollballFragment mDetailsRollballFragment; //滚球
 
-    private BettingIssueFragment mBettingIssueFragment;
+//    private BettingIssueFragment mBettingIssueFragment;
     private BowlFragment mBowlFragment;
 
 
@@ -1805,7 +1805,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 //                    mRecommendFragment = RecommendFragment.newInstance();
                         //滚球
                         // mDetailsRollballFragment = DetailsRollballFragment.newInstance(mThirdId);
-                        mBettingIssueFragment = BettingIssueFragment.newInstance(mThirdId);
+//                        mBettingIssueFragment = BettingIssueFragment.newInstance(mThirdId);
 
                         mBowlFragment = BowlFragment.newInstance(mThirdId);
 
@@ -1818,7 +1818,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         // 聊球
                         mChartBallFragment = ChartBallFragment.newInstance(0, mThirdId);
 
-                        mTabsAdapter.addFragments(mBettingIssueFragment, mBowlFragment, mLiveFragment, mOddsFragment, mAnalyzeParentFragment, mChartBallFragment);
+                        mTabsAdapter.addFragments(mBowlFragment, mLiveFragment, mOddsFragment, mAnalyzeParentFragment, mChartBallFragment);
                         mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
                         mViewPager.setAdapter(mTabsAdapter);
                         mTabLayout.setupWithViewPager(mViewPager);

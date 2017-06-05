@@ -16,10 +16,6 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.BottomOddsAdapter;
-import com.hhly.mlottery.bean.footballDetails.BottomOddsDetails;
-import com.hhly.mlottery.bean.footballDetails.BottomOddsDetailsItem;
-import com.hhly.mlottery.bean.footballDetails.BottomOddsItem;
-import com.hhly.mlottery.bean.footballDetails.FirstOdd;
 import com.hhly.mlottery.bean.footballDetails.WebSocketRollballOdd;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.mvptask.IContract;
@@ -31,6 +27,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import data.model.BottomOddsDetails;
+import data.model.BottomOddsDetailsItem;
+import data.model.BottomOddsItem;
+import data.model.FirstOdd;
 
 /**
  * A simple {@link Fragment} subclass.

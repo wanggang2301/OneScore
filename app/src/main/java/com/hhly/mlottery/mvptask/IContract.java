@@ -1,12 +1,12 @@
 package com.hhly.mlottery.mvptask;
 
-import com.hhly.mlottery.bean.footballDetails.BottomOddsDetails;
 import com.hhly.mlottery.mvp.IPresenter;
 import com.hhly.mlottery.mvp.IView;
-import com.hhly.mlottery.mvptask.data.model.RecommendArticlesBean;
-import com.hhly.mlottery.mvptask.data.model.SubsRecordBean;
 
 import java.util.List;
+
+import data.model.BottomOddsDetails;
+import data.model.SubsRecordBean;
 
 /**
  * @author: Wangg

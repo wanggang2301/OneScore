@@ -2,13 +2,8 @@ package com.hhly.mlottery.mvptask.recommendarticles;
 
 import com.hhly.mlottery.mvp.BasePresenter;
 import com.hhly.mlottery.mvptask.IContract;
-import com.hhly.mlottery.mvptask.data.model.RecommendArticlesBean;
-import com.hhly.mlottery.mvptask.data.repository.Repository;
-import com.hhly.mlottery.util.L;
 
-import java.util.List;
-
-import rx.Subscriber;
+import data.repository.Repository;
 
 /**
  * @author: Wangg

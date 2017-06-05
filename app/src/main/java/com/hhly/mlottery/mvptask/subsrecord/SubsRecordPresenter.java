@@ -2,11 +2,11 @@ package com.hhly.mlottery.mvptask.subsrecord;
 
 import com.hhly.mlottery.mvp.BasePresenter;
 import com.hhly.mlottery.mvptask.IContract;
-import com.hhly.mlottery.mvptask.data.model.SubsRecordBean;
-import com.hhly.mlottery.mvptask.data.repository.Repository;
 
 import java.util.List;
 
+import data.model.SubsRecordBean;
+import data.repository.Repository;
 import rx.Subscriber;
 
 /**
@@ -62,7 +62,7 @@ public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDa
     public void pullUpLoadMoreData() {
         mView.pullUpLoadMoreDataFail();
 
-       /* addSubscription(repository.getSubsRecord(), new Subscriber<String>() {
+       /* addSubscription(data.repository.getSubsRecord(), new Subscriber<String>() {
             @Override
             public void onCompleted() {
             }

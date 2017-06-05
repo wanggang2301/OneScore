@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hhly.mlottery">
 
-    <!-- 录音权限 -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!-- 调用系统下载权限 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
@@ -46,12 +44,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
-            <!--
-               <intent-filter>
-                   <action android:name="android.intent.action.MAIN" />
-                   <category android:name="android.intent.category.LAUNCHER" />
-               </intent-filter>
-            -->
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
         </activity>
         <!-- 环境选择 -->
         <activity
@@ -66,25 +62,14 @@
         </activity>
 
         <!-- 内地版的key-begin -->
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="5625a606e0f55aad6700244f" />
-        <meta-data
-            android:name="UMENG_MESSAGE_SECRET"
-            android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="BETA" />
+        <meta-data android:name="UMENG_APPKEY" android:value="5625a606e0f55aad6700244f" />
+        <meta-data android:name="UMENG_MESSAGE_SECRET" android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
+        <meta-data android:name="UMENG_CHANNEL" android:value="BETA" />
         <!-- 内地版的key-end -->
 
-
         <!-- TalkingData key  begin -->
-        <meta-data
-            android:name="TD_APP_ID"
-            android:value="28673E18FAF2475F8C42D20D4A140B27" />
-        <meta-data
-            android:name="TD_CHANNEL_ID"
-            android:value="BETA" />
+        <meta-data android:name="TD_APP_ID" android:value="28673E18FAF2475F8C42D20D4A140B27" />
+        <meta-data android:name="TD_CHANNEL_ID" android:value="BETA" />
 
         <service
             android:name="com.talkingdata.sdk.TDAntiCheatingService"
@@ -98,6 +83,7 @@
         <activity
             android:name=".activity.FiltrateMatchConfigActivity"
             android:screenOrientation="portrait" />
+
 
         <!-- 足球数据内页显示 -->
         <activity
@@ -341,9 +327,9 @@
             android:name=".activity.FootballMatchSearchActivity"
             android:screenOrientation="portrait" />
         <!-- 1.2.3改版后的新首页 -->
-        <!-- <activity -->
-        <!-- android:name=".activity.IndexActivity" -->
-        <!-- android:screenOrientation="portrait" /> -->
+        <!--<activity-->
+            <!--android:name=".activity.IndexActivity"-->
+            <!--android:screenOrientation="portrait" />-->
         <!-- 斯诺克球员信息 -->
         <activity
             android:name=".activity.SnookerPlayerInfoActivity"
@@ -412,45 +398,16 @@
         <activity
             android:name=".activity.BettingPayDetailsActivity"
             android:screenOrientation="portrait" />
-
-        <!-- 专家详情MVP -->
-        <activity android:name=".activity.bettingmvp.mvpview.MvpBettingRecommendActivity" />
         <activity
             android:name=".activity.BettingOnlinePaymentActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.bettingmvp.mvpview.MvpBettingPayDetailsActivity" />
-        android:screenOrientation="portrait" />
-        <activity android:name=".activity.bettingmvp.mvpview.MvpBettingOnlinePaymentActivity" />
         <activity
             android:name=".activity.BettingRecommendSettingActivity"
             android:screenOrientation="portrait" />
-
-        <!-- alipay sdk begin -->
-        <!-- 若手机没有安装支付宝，则调用H5支付页面 -->
-        <activity
-            android:name="com.alipay.sdk.app.H5PayActivity"
-            android:configChanges="orientation|keyboardHidden|navigation"
-            android:exported="false"
-            android:screenOrientation="behind" />
-        <activity
-            android:name="com.alipay.sdk.app.H5AuthActivity"
-            android:configChanges="orientation|keyboardHidden|navigation"
-            android:exported="false"
-            android:screenOrientation="behind" />
-        <!-- alipay sdk end -->
-        <activity
-            android:name="com.alipay.sdk.auth.AuthActivity"
-            android:configChanges="orientation|keyboardHidden|navigation"
-            android:exported="false"
-            android:screenOrientation="behind" />
-        <activity
-            android:name=".activity.FootballCornerActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.MyFocusActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".activity.SubsRecordActivity" />
-        <activity android:name=".activity.RecommendArticlesActivity"></activity>
+        <activity android:name=".activity.FootballCornerActivity"
+            android:screenOrientation="portrait"
+            >
+        </activity>
     </application>
 
 </manifest>

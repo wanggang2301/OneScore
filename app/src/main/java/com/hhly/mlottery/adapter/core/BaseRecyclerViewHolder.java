@@ -23,7 +23,7 @@ public class BaseRecyclerViewHolder extends RecyclerView.ViewHolder {
 	/**
 	 * Due to the findViewById performance too low
 	 * The findViewById view will be cached, provide the findViewById next time the same view
-	 * ViewHolder model for the View
+	 * ViewHolder data.model for the View
 	 * 由于findViewById性能过低
 	 * findViewById过的view会被缓存下来，以供下次find相同view的时候
 	 * ViewHolder模式 查找子View
