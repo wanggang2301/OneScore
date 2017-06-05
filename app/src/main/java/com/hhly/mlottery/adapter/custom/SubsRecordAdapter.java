@@ -32,23 +32,16 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
     @Override
     protected void convert(BaseViewHolder baseViewHolder, SubsRecordBean.PurchaseRecordsBean.ListBean b) {
         Glide.with(mContext).load(b.getHeadImg()).into((CircleImageView) baseViewHolder.getView(R.id.betting_portrait_img));
-
         baseViewHolder.setText(R.id.betting_specialist_name, b.getNickName());
-
-
         baseViewHolder.setText(R.id.betting_specialist_grade, getSpecialistGrade(b.getLevels()));
-
         baseViewHolder.setVisible(R.id.betting_lainzhong, false);
 
         if (b.getWinpointThreeDays() == 0) {
             baseViewHolder.setVisible(R.id.betting_lately_accuracy, false);
         } else {
             baseViewHolder.setVisible(R.id.betting_lately_accuracy, true);
-
             baseViewHolder.setText(R.id.betting_lately_accuracy, getLastAccuracy(b.getWinpointThreeDays(), b.getErrpointThreeDays()));
-
         }
-
 
         baseViewHolder.setText(R.id.betting_league_name, b.getLeagueName());
         baseViewHolder.setVisible(R.id.betting_round, false);
@@ -61,7 +54,6 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
         } else if (2 == b.getType()) {
             baseViewHolder.setText(R.id.betting_concede_points_spf, "大小球");
         }
-
 
         baseViewHolder.setText(R.id.betting_home_name, b.getHomeName());
         baseViewHolder.setText(R.id.betting_guest_name, b.getGuestName());
@@ -97,9 +89,7 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
 
                 break;
         }
-
         return levelGrade;
-
     }
 
 
@@ -114,7 +104,6 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
         if (TextUtils.isEmpty(bugNum)) {
             return nums[new Random().nextInt(3)];
         }
-
         if (Integer.parseInt(bugNum) == 0) {
             return nums[new Random().nextInt(3)];
         } else if (Integer.parseInt(bugNum) < 10 && Integer.parseInt(bugNum) > 0) {
@@ -123,6 +112,4 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
             return Integer.parseInt(bugNum);
         }
     }
-
-
 }
