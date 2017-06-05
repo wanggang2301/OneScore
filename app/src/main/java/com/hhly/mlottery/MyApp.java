@@ -29,6 +29,7 @@ import javax.inject.Inject;
 
 import cn.finalteam.okhttpfinal.OkHttpFinal;
 import cn.finalteam.okhttpfinal.OkHttpFinalConfiguration;
+import data.DataManager;
 
 /**
  * @author Tenney
@@ -144,7 +145,7 @@ public class MyApp extends Application {
 
 
     /**
-     * 获取 DataManager
+     * 获取 data.DataManager
      *
      * @return dataManager
      */

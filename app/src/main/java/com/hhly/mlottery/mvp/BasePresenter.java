@@ -2,6 +2,7 @@ package com.hhly.mlottery.mvp;
 
 import com.hhly.mlottery.MyApp;
 
+import data.DataManager;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -22,7 +23,9 @@ public abstract class BasePresenter<V extends IView> implements IPresenter<V> {
     public static String NODATA = "1";
     public static String NETERROR = "2";
 
-    protected DataManager mDataManager;
+    public DataManager mDataManager;
+
+
     CompositeSubscription mCompositeSubscription;
 
     private BasePresenter() {

@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import data.DataManager;
 
 /**
  * @author: Wangg

@@ -1,8 +1,8 @@
-package api;
+package data.api;
 
 
-import model.BottomOddsDetails;
-import model.SubsRecordBean;
+import data.model.BottomOddsDetails;
+import data.model.SubsRecordBean;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;

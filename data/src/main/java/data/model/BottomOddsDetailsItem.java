@@ -1,4 +1,4 @@
-package com.hhly.mlottery.bean.footballDetails;
+package data.model;
 
 /**
  * @author wang gang

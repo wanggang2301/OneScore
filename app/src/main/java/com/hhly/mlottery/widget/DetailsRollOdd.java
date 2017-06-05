@@ -7,10 +7,11 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.footballDetails.BottomOddsItem;
 import com.hhly.mlottery.util.HandicapUtils;
 
 import java.util.List;
+
+import data.model.BottomOddsItem;
 
 /**
  * @author wang gang

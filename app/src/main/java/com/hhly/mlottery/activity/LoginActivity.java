@@ -380,7 +380,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
       */
     public void getAccessTokenFromWeiXin() {
 
-        String requestUrlAppId = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + ShareConstants.WE_CHAT_APP_ID;
+        String requestUrlAppId = "https://data.api.weixin.qq.com/sns/oauth2/access_token?appid=" + ShareConstants.WE_CHAT_APP_ID;
         String requestUrlAppSecret = "&secret=" + ShareConstants.KEY_WEIXIN_APP_SECRET;
         String requestUrlCode = "&code=" + mWeixincode;
         String requestUrlLast = "&grant_type=authorization_code";

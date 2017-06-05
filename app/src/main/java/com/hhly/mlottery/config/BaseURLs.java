@@ -756,11 +756,11 @@ public class BaseURLs {
     /**
      * 保存umeng渠道号，提交渠道号
      */
-    public final static String UMENG_CHANNEL_URL = "http://kj.13322.com/traffic/api";// 体彩正式环境
+    public final static String UMENG_CHANNEL_URL = "http://kj.13322.com/traffic/data.api";// 体彩正式环境
 //    public final static String UMENG_CHANNEL_URL = "http://183.61.172.88:8343/traffic/api";// 体彩测试环境
 
     //用户留存率分析
-    public final static String USER_ACTION_ANALYSIS_URL = "http://union.13322.com/traffic/api/appRetention";// 体彩正式环境
+    public final static String USER_ACTION_ANALYSIS_URL = "http://union.13322.com/traffic/data.api/appRetention";// 体彩正式环境
 //    public final static String USER_ACTION_ANALYSIS_URL = "http://183.61.172.88:8343/traffic/api/appRetention";// 体彩测试环境
 
     //指数详情

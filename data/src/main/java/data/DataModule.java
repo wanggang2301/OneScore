@@ -1,3 +1,5 @@
+package data;
+
 import android.content.Context;
 
 import com.google.gson.Gson;
@@ -7,11 +9,11 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
-import api.Api;
+import data.api.Api;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
-import repository.Repository;
+import data.repository.Repository;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;

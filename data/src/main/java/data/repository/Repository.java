@@ -1,9 +1,9 @@
-package repository;
+package data.repository;
 
 
-import api.Api;
-import model.BottomOddsDetails;
-import model.SubsRecordBean;
+import data.api.Api;
+import data.model.BottomOddsDetails;
+import data.model.SubsRecordBean;
 import rx.Observable;
 
 /**

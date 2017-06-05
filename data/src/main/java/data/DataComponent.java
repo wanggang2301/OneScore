@@ -1,3 +1,5 @@
+package data;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
