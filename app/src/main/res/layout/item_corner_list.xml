@@ -270,7 +270,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text=""
+                        android:text="0"
                         android:layout_centerVertical="true"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/item_football_half_score" />
@@ -283,7 +283,7 @@
                         android:layout_gravity="center"
                         android:layout_marginLeft="30dp"
                         android:gravity="center"
-                        android:text=""
+                        android:text="0"
                         android:textColor="@color/red"
                         android:textSize="@dimen/item_football_full_score" />
 
@@ -304,7 +304,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text=""
+                        android:text="0"
                         android:layout_centerVertical="true"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/item_football_half_score" />
@@ -314,7 +314,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
-                        android:text=""
+                        android:text="0"
                         android:textColor="@color/red"
                         android:textSize="@dimen/item_football_full_score" />
 
