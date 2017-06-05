@@ -39,8 +39,7 @@ import butterknife.OnClick;
 
 public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresenter> implements IContract.IPullLoadMoreDataView, ExactSwipeRefreshLayout.OnRefreshListener {
 
-
-    private static final String PAGE_SIZE = "10";
+    private static final String PAGE_SIZE = "10"; //每页10条记录
 
     @BindView(R.id.iv_back)
     ImageView ivBack;
@@ -56,16 +55,17 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
     RecyclerView recyclerView;
     @BindView(R.id.handle_exception)
     LinearLayout handleException;
-    SubsRecordAdapter mSubsRecordAdapter;
 
+    @BindView(R.id.refresh)
+    ExactSwipeRefreshLayout refresh;
+
+    SubsRecordAdapter mSubsRecordAdapter;
     ProgressBar progressBar;
     TextView loadmoreText;
 
     Activity mActivity;
 
     View moreView;
-    @BindView(R.id.refresh)
-    ExactSwipeRefreshLayout refresh;
 
     String userId = "";
 
@@ -75,15 +75,12 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
 
     private List<SubsRecordBean.PurchaseRecordsBean.ListBean> listBeanList;
 
-
     public static SubsRecordFragment newInstance() {
         SubsRecordFragment subsRecordFragment = new SubsRecordFragment();
         return subsRecordFragment;
     }
 
-
-    public SubsRecordFragment() {
-    }
+    public SubsRecordFragment() {}
 
 
     @Override
@@ -94,7 +91,6 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
         initEvent();
 
         mPresenter.requestData(userId, "1", PAGE_SIZE, loginToken, sign);
-
         return view;
     }
 
@@ -121,18 +117,14 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
 
     @Override
     public void responseData() {
-
         listBeanList = mPresenter.getSubsRecordData();
         mSubsRecordAdapter = new SubsRecordAdapter(mActivity, listBeanList);
         recyclerView.setAdapter(mSubsRecordAdapter);
-
         mSubsRecordAdapter.openLoadMore(0, true);
         mSubsRecordAdapter.setLoadingView(moreView);
-
         mSubsRecordAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-
                 recyclerView.post(new Runnable() {
                     @Override
                     public void run() {

@@ -44,7 +44,6 @@ public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDa
             @Override
             public void onError(Throwable e) {
                 mView.onError();
-
             }
 
             @Override
@@ -52,11 +51,8 @@ public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDa
                 if (!"200".equals(subsRecordBean.getCode())) {
                     return;
                 }
-
                 listBeanList = subsRecordBean.getPurchaseRecords().getList();
-
                 mView.responseData();
-
             }
         });
     }
