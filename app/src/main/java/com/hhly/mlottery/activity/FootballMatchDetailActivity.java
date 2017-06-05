@@ -356,6 +356,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     L.d(TAG, "下拉刷新未开赛和正在比赛的");
                     loadData(1);
 
+                    mBowlFragment.onRefresh();
+
                     //走势图
                     mLiveFragment.initChartData(mMatchDetail.getLiveStatus());
                     //统计图

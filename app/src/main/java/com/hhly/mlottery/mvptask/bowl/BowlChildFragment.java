@@ -140,6 +140,10 @@ public class BowlChildFragment extends ViewFragment<IContract.IBowlChildPresente
         }
     }
 
+    public void onRefresh() {
+        mPresenter.requestData(mThirdId, String.valueOf(oddType));
+    }
+
 
     private void setTitleTxt(String[] names) {
         hostTxt.setText(names[0]);

@@ -224,6 +224,22 @@ public class BowlFragment extends BaseWebSocketFragment {
     }
 
 
+    public void onRefresh() {
+        if (is_ouer) {
+            ((BowlChildFragment) fragments.get(OUER)).onRefresh();
+        }
+        if (is_alet) {
+            ((BowlChildFragment) fragments.get(ALET)).onRefresh();
+        }
+        if (is_asize) {
+            ((BowlChildFragment) fragments.get(ASIZE)).onRefresh();
+        }
+        if (is_corner) {
+            ((BowlChildFragment) fragments.get(CORNER)).onRefresh();
+        }
+    }
+
+
     @Override
     protected void onConnectFail() {
 
