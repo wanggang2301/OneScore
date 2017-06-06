@@ -7,7 +7,7 @@ import com.hhly.mlottery.util.CollectionUtils;
 import java.util.List;
 
 import data.model.RecommendArticlesBean;
-import data.repository.Repository;
+import data.repository.UserCenterRepository;
 import rx.Subscriber;
 
 /**
@@ -19,7 +19,7 @@ import rx.Subscriber;
 
 public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoadMoreDataView> implements IContract.IRecommendArticlesPresenter {
 
-    private Repository repository;
+    private UserCenterRepository userCenterRepository;
 
     private List<RecommendArticlesBean.PublishPromotionsBean.ListBean> list;
     private boolean isHasNextPage = false;
@@ -27,7 +27,7 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
 
     public RecommendArticlesPresenter(IContract.IPullLoadMoreDataView view) {
         super(view);
-        repository = mDataManager.repository;
+        userCenterRepository = mDataManager.userCenterRepository;
     }
 
 
@@ -40,7 +40,7 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
 
         mView.loading();
 
-        addSubscription(repository.getRecommendArtices(userId, pageNum, pageSize, loginToken, sign), new Subscriber<RecommendArticlesBean>() {
+        addSubscription(userCenterRepository.getRecommendArtices(userId, pageNum, pageSize, loginToken, sign), new Subscriber<RecommendArticlesBean>() {
             @Override
             public void onCompleted() {
 
@@ -83,7 +83,7 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
 
         mView.pullUploadingView();
 
-        addSubscription(repository.getRecommendArtices(userId, pageNum, pageSize, loginToken, sign), new Subscriber<RecommendArticlesBean>() {
+        addSubscription(userCenterRepository.getRecommendArtices(userId, pageNum, pageSize, loginToken, sign), new Subscriber<RecommendArticlesBean>() {
             @Override
             public void onCompleted() {
 

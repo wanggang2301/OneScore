@@ -15,7 +15,7 @@ import rx.Observable;
  * @created on:2017/4/6  17:34.
  */
 
-public interface Api {
+public interface UserCenterApiService {
     //滚球
     @GET("mlottery/core/footballBallList.ballListDetail.do")
     Observable<BottomOddsDetails> getBowlList(@Query("thirdId") String thirdId, @Query("oddType") String oddType);

@@ -18,5 +18,5 @@
 
 
 ##篮球指数
--keep class data.api.Api{ *; }
+-keep class data.api.UserCenterApiService{ *; }
 

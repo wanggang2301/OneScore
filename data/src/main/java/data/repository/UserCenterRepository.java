@@ -1,7 +1,7 @@
 package data.repository;
 
 
-import data.api.Api;
+import data.api.UserCenterApiService;
 import data.model.BottomOddsDetails;
 import data.model.RecommendArticlesBean;
 import data.model.SubsRecordBean;
@@ -14,24 +14,24 @@ import rx.Observable;
  * @created on:2017/4/8  14:16.
  */
 
-public class Repository {
-    Api mApi;
+public class UserCenterRepository {
+    UserCenterApiService mUserCenterApiService;
 
-    public Repository(Api mApi) {
-        this.mApi = mApi;
+    public UserCenterRepository(UserCenterApiService mUserCenterApiService) {
+        this.mUserCenterApiService = mUserCenterApiService;
     }
 
     public Observable<BottomOddsDetails> getBowlList(String thirdId, String oddType) {
-        return mApi.getBowlList(thirdId, oddType);
+        return mUserCenterApiService.getBowlList(thirdId, oddType);
     }
 
     public Observable<SubsRecordBean> getSubsRecord(String userId, String pageNum, String pageSize, String loginToken, String sign) {
-        return mApi.getSubsRecord(userId, pageNum, pageSize, loginToken, sign);
+        return mUserCenterApiService.getSubsRecord(userId, pageNum, pageSize, loginToken, sign);
     }
 
 
     public Observable<RecommendArticlesBean> getRecommendArtices(String userId, String pageNum, String pageSize, String loginToken, String sign) {
-        return mApi.getRecommendArticles(userId, pageNum, pageSize, loginToken, sign);
+        return mUserCenterApiService.getRecommendArticles(userId, pageNum, pageSize, loginToken, sign);
     }
 
 
