@@ -51,6 +51,11 @@ public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDa
             @Override
             public void onNext(SubsRecordBean subsRecordBean) {
 
+                if (true) {
+                    mView.noData();
+                    return;
+                }
+
                 if (!"200".equals(subsRecordBean.getCode())) {
                     mView.onError();
                     return;

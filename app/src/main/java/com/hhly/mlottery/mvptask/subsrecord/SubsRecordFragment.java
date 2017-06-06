@@ -224,7 +224,7 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
         mActivity = (Activity) context;
     }
 
-    @OnClick({R.id.iv_back, R.id.reLoading})
+    @OnClick({R.id.iv_back, R.id.reLoading, R.id.btn_confirm})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -233,6 +233,10 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
             case R.id.reLoading:
                 pageNum = 1;
                 mPresenter.requestData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
+                break;
+
+            case R.id.btn_confirm:
+
                 break;
         }
     }
