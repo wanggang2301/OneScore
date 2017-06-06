@@ -1773,4 +1773,6 @@
     <string name="baijin_txt">白金專家</string>
     <string name="zuanshi_txt">鑽石專家</string>
     <string name="zhong_txt">中</string>
+    <string name="tuijie_nodata_txt">大師,您很懶哦！\n 快去發佈推介吧！</string>
+
 </resources>

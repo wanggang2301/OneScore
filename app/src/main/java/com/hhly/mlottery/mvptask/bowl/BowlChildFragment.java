@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
@@ -67,7 +68,7 @@ public class BowlChildFragment extends ViewFragment<IContract.IBowlChildPresente
     @BindView(R.id.fl_networkError)
     FrameLayout flNetworkError;
     @BindView(R.id.fl_nodata)
-    FrameLayout flNodata;
+    RelativeLayout flNodata;
     @BindView(R.id.ll_context)
     LinearLayout llContext;
     @BindView(R.id.handle_exception)
