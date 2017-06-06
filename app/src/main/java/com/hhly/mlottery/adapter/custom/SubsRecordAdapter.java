@@ -35,7 +35,7 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
     @Override
     protected void convert(BaseViewHolder baseViewHolder, final SubsRecordBean.PurchaseRecordsBean.ListBean b) {
         Glide.with(mContext).load(b.getHeadImg()).into((CircleImageView) baseViewHolder.getView(R.id.betting_portrait_img));
-        baseViewHolder.setText(R.id.betting_specialist_name, b.getNickName() + "__" + getViewHolderPosition(baseViewHolder));
+        baseViewHolder.setText(R.id.betting_specialist_name, b.getNickName());
         baseViewHolder.setText(R.id.betting_specialist_grade, getSpecialistGrade(b.getLevels()));
         baseViewHolder.setVisible(R.id.betting_lainzhong, false);
 
