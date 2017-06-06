@@ -6,7 +6,7 @@ import com.hhly.mlottery.util.CollectionUtils;
 
 import java.util.List;
 
-import data.model.SubsRecordBean;
+import data.bean.SubsRecordBean;
 import data.repository.UserCenterRepository;
 import rx.Subscriber;
 

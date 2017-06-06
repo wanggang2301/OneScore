@@ -13,7 +13,7 @@ import com.hhly.mlottery.view.CircleImageView;
 import java.util.List;
 import java.util.Random;
 
-import data.model.SubsRecordBean;
+import data.bean.SubsRecordBean;
 
 /**
  * @author: Wangg
