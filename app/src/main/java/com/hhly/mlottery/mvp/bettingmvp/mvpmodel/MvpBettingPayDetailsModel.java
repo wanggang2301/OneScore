@@ -20,7 +20,7 @@ public class MvpBettingPayDetailsModel implements MModel {
     }
 
     @Override
-    public void loadData(String url) {
+    public void loadData(String url , Map<String ,String> parametMap) {
         Map<String ,String> map = new HashMap<>();
         map.put("leagueId" , "1");
         VolleyContentFast.requestJsonByGet(url,map , new VolleyContentFast.ResponseSuccessListener<BasketDatabaseBean>() {

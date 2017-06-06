@@ -94,25 +94,9 @@ public class PayMentUtils {
                     PayResult mResult = new PayResult((Map<String, String>) msg.obj);
                     String result = mResult.getResult();
                     String resultStatus = mResult.getResultStatus();
-
-//                    mPayResult = resultStatus; //赋值返回码
-//                    L.d("qwer_asd ", result + " == " + resultStatus);
-//                    if (TextUtils.equals(resultStatus, "9000")) {
-//                        Toast.makeText(mContext, "支付成功 > " + resultStatus, Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        if (TextUtils.equals(resultStatus, "8000")) {
-//                            Toast.makeText(mContext, "结果确认中 > " + resultStatus, Toast.LENGTH_SHORT).show();
-//                        } else if (TextUtils.equals(resultStatus, "6001")) {
-//                            Toast.makeText(mContext, "支付取消 > " + resultStatus, Toast.LENGTH_SHORT).show();
-//                        } else if (TextUtils.equals(resultStatus, "6002")) {
-//                            Toast.makeText(mContext, "网络异常 > " + resultStatus, Toast.LENGTH_SHORT).show();
-//                        } else if (TextUtils.equals(resultStatus, "5000")) {
-//                            Toast.makeText(mContext, "重复请求 > " + resultStatus, Toast.LENGTH_SHORT).show();
-//                        } else {
-//                            Toast.makeText(mContext, "支付失败 > " + resultStatus, Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-
+                    /**
+                     * eventbus 返回支付结果参数 post给当前页面
+                     */
                     EventBus.getDefault().post(new PayMentZFBResultEventBusEntity(resultStatus));
                 }
                 break;
@@ -121,11 +105,6 @@ public class PayMentUtils {
             }
         }
     };
-
-    private static String mPayResult = "";
-    public static String getPayResult(){
-        return mPayResult;
-    }
 
     /**
      * 判断是否安装有支付宝客户端

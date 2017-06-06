@@ -20,4 +20,11 @@ public class ConstantPool {
     public final static Integer PAY_ZFB = 0; //ZFB支付
     public final static Integer PAY_WEIXIN = 1;//weixin支付
     public final static Integer PAY_YU_E = 2;// 余额支付
+
+    /*竞彩推荐列表设置页面*/
+    public final static String ALL_LEAGUE = "allLrague";//所有的联赛
+    public final static String CURR_LEAGUE = "currLrague";// 当前(选中)的联赛
+    public final static String CURR_PALY_TYPE = "currPlayType";// 当前(选中)的玩法
+
+
 }

@@ -94,7 +94,7 @@ public class MvpBettingOnlinePaymentActivity extends BaseActivity implements MVi
     }
 
     private void initData(){
-        paymentPresenter.loadData("http://m.13322.com/mlottery/core/basketballData.findLeagueHeader.do");
+        paymentPresenter.loadData("http://m.13322.com/mlottery/core/basketballData.findLeagueHeader.do" , null);
     }
     @Override
     public void onClick(View v) {

@@ -5,6 +5,8 @@ import com.hhly.mlottery.mvp.bettingmvp.MPresenter;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
 import com.hhly.mlottery.mvp.bettingmvp.mvpmodel.MvpBettingPayDetailsModel;
 
+import java.util.Map;
+
 /**
  * Created by：XQyi on 2017/5/22 11:09
  * Use:竞彩单关页面[MVP_presenter 逻辑处理 分配]
@@ -21,8 +23,8 @@ public class MvpBettingPayDetailsPresenter implements MPresenter<Object> {
 
 
     @Override
-    public void loadData(String url) {
-        mModel.loadData(url);
+    public void loadData(String url , Map<String ,String> parametMap) {
+        mModel.loadData(url , parametMap);
     }
 
     @Override
