@@ -54,7 +54,6 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
 
             @Override
             public void onNext(RecommendArticlesBean r) {
-
                 if (!"200".equals(r.getCode())) {
                     mView.onError();
                     return;
@@ -98,16 +97,11 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
 
             @Override
             public void onNext(RecommendArticlesBean r) {
-
-                if (!"".equals("200")) {
-                    mView.pullUpLoadMoreDataFail();
-                    return;
-                }
-
                 if (!"200".equals(r.getCode())) {
                     mView.pullUpLoadMoreDataFail();
                     return;
                 }
+
                 isHasNextPage = r.getPublishPromotions().isHasNextPage();
                 list = r.getPublishPromotions().getList();
                 mView.pullUpLoadMoreDataSuccess();

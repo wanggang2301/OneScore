@@ -165,7 +165,8 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
 
     @Override
     public void onRefresh() {
-        refresh.setRefreshing(false);
+        refresh.setRefreshing(true);
+        mPresenter.requestData(userId, "1", PAGE_SIZE, loginToken, sign);
     }
 
 
