@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.cipher.MD5Util;
@@ -163,6 +164,7 @@ public abstract class BaseWebSocketActivity extends AppCompatActivity {
                 }
             }
         }).start();
+        MyApp.getRefWatcher().watch(this);
     }
 
     public WebSocketState getSocketState() {

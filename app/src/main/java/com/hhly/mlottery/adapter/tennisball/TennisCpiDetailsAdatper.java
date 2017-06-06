@@ -138,15 +138,15 @@ public class TennisCpiDetailsAdatper extends BaseExpandableListAdapter implement
             selectColor(model, holder);
         } else if ("three".equals(stKey)) {//欧赔
             holder.odds_details_dish_layout.setVisibility(View.GONE);
-//            if ("green".equals(model.getDishColor())) {
+//            if ("green".equals(data.model.getDishColor())) {
 //                holder.odds_details_dish_child_txt.setTextColor(ContextCompat.getColor(mContext, R.color.fall_color));
-//            } else if ("red".equals(model.getDishColor())) {
+//            } else if ("red".equals(data.model.getDishColor())) {
 //                holder.odds_details_dish_child_txt.setTextColor(ContextCompat.getColor(mContext, R.color.analyze_left));
-//            } else if ("black".equals(model.getDishColor())) {
+//            } else if ("black".equals(data.model.getDishColor())) {
 //                holder.odds_details_dish_child_txt.setTextColor(ContextCompat.getColor(mContext, R.color.content_txt_dark_grad));
 //            }
 //            //不用变
-//            holder.odds_details_dish_child_txt.setText(String.format("%.2f", model.getHand()));
+//            holder.odds_details_dish_child_txt.setText(String.format("%.2f", data.model.getHand()));
 
         } else if ("two".equals(stKey)) {//大小球
             holder.odds_details_dish_layout.setVisibility(View.VISIBLE);

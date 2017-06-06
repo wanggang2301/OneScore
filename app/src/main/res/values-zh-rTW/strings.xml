@@ -1140,12 +1140,30 @@
     <string name="immediate_status_end">完</string>
     <string name="foot_rollball_txt">滚球</string>
     <string name="only_five_eachday">同壹個手機號每天只能發送5次短信</string>
-    <string name="login_username">請輸入賬號或者註冊手機號</string>
+    <string name="login_username">點擊輸入手機號登陸</string>
     <string name="forty_five_plus">45+</string>
     <string name="ninety_plus">90+</string>
     <string name="server_busy">系统繁忙</string>
     <string name="at_least_one_company">至少選擇壹家公司</string>
     <string name="invited_number_noon">邀請碼不存在</string>
+
+
+    <string name="phone_already_nexist">手機號未被注冊</string>
+    <string name="no_logon_user">禁止登陸用戶</string>
+    <string name="unknown_error">未知錯誤</string>
+    <string name="token_null">令牌(token)爲空</string>
+    <string name="phone_mismatching">用戶名和手機號不匹配</string>
+    <string name="token_invalid">令牌(token)失效</string>
+    <string name="signature_empty">簽名爲空</string>
+    <string name="signature_mismatching">簽名不匹配</string>
+    <string name="token_mismatchin">令牌(token)與個人信息不匹配</string>
+
+    <string name="revise_profile_successfully">修改專家簡介信息成功</string>
+    <string name="number_format_is_wrong">身份證驗證號碼錯誤</string>
+    <string name="expert_certification_audit">專家認證審核中</string>
+    <string name="user_already_expert">用戶已經是專家</string>
+    <string name="user_not_null">用戶id不能為空</string>
+
 
     <string name="home_win_rate">主勝率</string>
     <string name="home_lose_rate">主負率</string>
@@ -1767,4 +1785,21 @@
     <string name="start_dianqiu">開始點球大戰</string>
     <string name="start_addtime">開始加時賽</string>
 
+    <string name="bow_corner_left">高於</string>
+    <string name="bow_corner_middle">即時盤</string>
+    <string name="bow_corner_right">低於</string>
+    <string name="recommendarticle_txt">推介文章</string>
+    <string name="subsrecord_txt">訂閱記錄</string>
+
+    <string name="jingcaidanguan_txt">競彩單關</string>
+    <string name="yapan_txt">亞盤</string>
+    <string name="daxiaoqiu_txt">大小球</string>
+    <string name="yigoumai_txt">人已購買</string>
+    <string name="chakan_txt">查看</string>
+    <string name="tuijianliyou_txt">推薦理由:</string>
+    <string name="baiyin_txt">白銀專家</string>
+    <string name="huangjin_txt">黃金專家</string>
+    <string name="baijin_txt">白金專家</string>
+    <string name="zuanshi_txt">鑽石專家</string>
+    <string name="zhong_txt">中</string>
 </resources>

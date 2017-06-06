@@ -622,6 +622,10 @@
     <style name="new_loginbtn_new_blue" parent="new_login_item_bg">
         <item name="android:background">@drawable/selector_loginbtn_new_blue</item>
     </style>
+    <style name="new_new_loginbtn_new_blue" parent="new_login_item_bg">
+        <item name="android:background">@drawable/selector_loginbtn_white</item>
+    </style>
+
 
     <style name="new_loginbtn_blue" parent="new_login_item_bg">
         <item name="android:background">@drawable/selector_loginbtn_new_white</item>
@@ -716,7 +720,7 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="login_edittext_loginbtn_newblue" parent="new_loginbtn_new_blue">
+    <style name="login_edittext_loginbtn_newblue" parent="new_new_loginbtn_new_blue">
         <item name="android:layout_height">44dp</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/white</item>
@@ -1166,6 +1170,9 @@
     </style>
     <!-- 竞彩推介发布文字内容 -->
     <style name="betting_recommend_issue_fabu">
+    <!--角球列表页赔率字体样式-->
+    <style name="corner_text_style">
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/betting_issue_check_txt_color</item>

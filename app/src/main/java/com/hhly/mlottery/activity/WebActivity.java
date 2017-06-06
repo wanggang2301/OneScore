@@ -196,7 +196,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 //            } else {
 //                findViewById(R.id.comment).setVisibility(View.VISIBLE);
 //            }
-            token = AppConstants.register.getData().getLoginToken();
+            token = AppConstants.register.getToken();
             String deviceId = AppConstants.deviceToken;
             reqMethod = intent.getStringExtra("reqMethod");
             mPublic_txt_title.setText(infoTypeName);
@@ -321,7 +321,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 
         @JavascriptInterface
         public String getLoginToken() {
-            return AppConstants.register.getData().getLoginToken();
+            return AppConstants.register.getToken();
         }
 
         @JavascriptInterface
@@ -331,7 +331,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 
         @JavascriptInterface
         public String getLoginUserId() {
-            return AppConstants.register.getData().getUser().getUserId();
+            return AppConstants.register.getUser().getUserId();
         }
 
     }

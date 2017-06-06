@@ -15,7 +15,6 @@ import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -56,9 +55,11 @@ import com.hhly.mlottery.frame.footballframe.AnalyzeFragment;
 import com.hhly.mlottery.frame.footballframe.BettingIssueFragment;
 import com.hhly.mlottery.frame.footballframe.AnalyzeParentFragment;
 import com.hhly.mlottery.frame.footballframe.DetailsRollballFragment;
+import com.hhly.mlottery.frame.footballframe.BettingIssueFragment;
 import com.hhly.mlottery.frame.footballframe.LiveFragment;
 import com.hhly.mlottery.frame.footballframe.OddsFragment;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
+import com.hhly.mlottery.mvptask.bowl.BowlFragment;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;
@@ -299,6 +300,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     }
 
     WebView mWebView;
+
     /**
      * 动画直播
      */
@@ -351,6 +353,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 if (mMatchDetail != null) {
                     L.d(TAG, "下拉刷新未开赛和正在比赛的");
                     loadData(1);
+
+                    mBowlFragment.onRefresh();
 
                     //走势图
                     mLiveFragment.initChartData(mMatchDetail.getLiveStatus());
@@ -892,7 +896,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             mWebView = null;
 
         }
-        if(ll_Webview != null){
+        if (ll_Webview != null) {
             ll_Webview.removeAllViews();
         }
 
@@ -902,7 +906,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             mReloadTimer = null;
         }
 
-        if(reloadTimerTask != null){
+        if (reloadTimerTask != null) {
             reloadTimerTask.cancel();
             reloadTimerTask = null;
         }
@@ -1798,7 +1802,11 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         //推介
                         mRecommendFragment = mRecommendFragment.newInstance("");
                         //滚球
-                        mDetailsRollballFragment = DetailsRollballFragment.newInstance(mThirdId);
+                        // mDetailsRollballFragment = DetailsRollballFragment.newInstance(mThirdId);
+//                        mBettingIssueFragment = BettingIssueFragment.newInstance(mThirdId);
+
+                        mBowlFragment = BowlFragment.newInstance(mThirdId);
+
                         //直播
                         mLiveFragment = LiveFragment.newInstance(mThirdId, mMatchDetail, mathchStatisInfo, eventMatchTimeLiveList, trendChartList, mKeepTime);
                         //指数
@@ -1809,6 +1817,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         mChartBallFragment = ChartBallFragment.newInstance(0, mThirdId);
 
                         mTabsAdapter.addFragments(mRecommendFragment , mDetailsRollballFragment, mLiveFragment, mOddsFragment, mAnalyzeParentFragment, mChartBallFragment);
+                        mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
+                        mTabsAdapter.addFragments(mBowlFragment, mLiveFragment, mOddsFragment, mAnalyzeParentFragment, mChartBallFragment);
                         mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
                         mViewPager.setAdapter(mTabsAdapter);
                         mTabLayout.setupWithViewPager(mViewPager);

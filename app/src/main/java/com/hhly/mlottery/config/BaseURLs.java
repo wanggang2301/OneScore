@@ -187,6 +187,9 @@ public class BaseURLs {
 
 
     public final static String WS_SERVICE = WS + WS_HOST;
+    /*用户中心新URL*/
+
+    public final static String P_URL_API_HOST = HTTP + HOST + URL_SPLITTER ;
 
     public final static String URL_API_HOST = HTTP + HOST + URL_SPLITTER + "mlottery/core/";
     /*新搜索特制url*/
@@ -756,11 +759,11 @@ public class BaseURLs {
     /**
      * 保存umeng渠道号，提交渠道号
      */
-    public final static String UMENG_CHANNEL_URL = "http://kj.13322.com/traffic/api";// 体彩正式环境
+    public final static String UMENG_CHANNEL_URL = "http://kj.13322.com/traffic/data.api";// 体彩正式环境
 //    public final static String UMENG_CHANNEL_URL = "http://183.61.172.88:8343/traffic/api";// 体彩测试环境
 
     //用户留存率分析
-    public final static String USER_ACTION_ANALYSIS_URL = "http://union.13322.com/traffic/api/appRetention";// 体彩正式环境
+    public final static String USER_ACTION_ANALYSIS_URL = "http://union.13322.com/traffic/data.api/appRetention";// 体彩正式环境
 //    public final static String USER_ACTION_ANALYSIS_URL = "http://183.61.172.88:8343/traffic/api/appRetention";// 体彩测试环境
 
     //指数详情
@@ -913,19 +916,24 @@ public class BaseURLs {
     /**
      * 发送验证码
      */
-    public final static String URL_SENDSMSCODE = URL_API_HOST + "androidUserCenter.sendSmsCode.do";
+    public final static String URL_SENDSMSCODE = P_URL_API_HOST + "user/getsms/phoneNum/type";
+    public final static String SENDSMSCODE = "/user/getsms";
     /**
      * 注册
      */
-    public final static String URL_REGISTER = URL_API_HOST + "androidUserCenter.register.do";
+    public final static String URL_REGISTER = P_URL_API_HOST + "user/register";
     /**
      * 登录
      */
-    public final static String URL_LOGIN = URL_API_HOST + "androidUserCenter.login.do";
+    public final static String URL_LOGIN = P_URL_API_HOST + "user/login";
     /**
      * 登出
      */
-    public final static String URL_LOGOUT = URL_API_HOST + "androidUserCenter.logout.do";
+    public final static String URL_LOGOUT = P_URL_API_HOST + "user/logout";
+    /**
+     * 修改图片
+     */
+    public final static String MODIFY_PICTURE = P_URL_API_HOST + "user/updateavator";
     /**
      * 重置密码
      */
@@ -933,11 +941,13 @@ public class BaseURLs {
     /**
      * 修改昵称
      */
-    public final static String URL_EDITNICKNAME = URL_API_HOST + "androidUserCenter.editNickname.do";
+    public final static String URL_EDITNICKNAME = P_URL_API_HOST + "user/updatenickname";
     /**
      * 修改密码
      */
-    public final static String URL_CHANGEPASSWORD = URL_API_HOST + "androidUserCenter.changePassword.do";
+    public final static String URL_CHANGEPASSWORD = P_URL_API_HOST + "user/updatepassword";
+    //上传头像
+    public final static String PUT_PHOTO_URL=P_URL_API_HOST+"user/updateavatorbyurl";
 
     /**
      * 资讯Id查询

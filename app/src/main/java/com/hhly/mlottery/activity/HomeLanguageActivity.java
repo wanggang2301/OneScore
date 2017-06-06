@@ -292,6 +292,10 @@ public class HomeLanguageActivity extends BaseActivity implements View.OnClickLi
                 }
                 MyApp.isLanguage = PreferenceUtil.getString("language", "");
                 MyApp.mResources.updateConfiguration(MyApp.mConfiguration, MyApp.mDm);
+
+                //重新注入请求参数
+                MyApp.get().initDagger();
+
                 this.finish();
                 Intent intent = new Intent();
                 intent.setClass(this, IndexActivity.class);

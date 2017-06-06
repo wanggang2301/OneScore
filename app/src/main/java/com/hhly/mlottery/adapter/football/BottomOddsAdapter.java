@@ -8,10 +8,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.footballDetails.BottomOddsDetailsItem;
 import com.hhly.mlottery.util.HandicapUtils;
 
 import java.util.List;
+
+import data.model.BottomOddsDetailsItem;
 
 /**
  * @author wang gang
@@ -27,9 +28,10 @@ public class BottomOddsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private static final int EU = 2;*/
 
     //亚盘
-    private static final int ALET = 1;
-    private static final int EUR = 2;
-    private static final int ASIZE = 3;  //大小球
+    private static final int OUER_TYPE = 2;
+    private static final int ALET_TYPE = 1;
+    private static final int ASIZE_TYPE = 3;
+    private static final int CORNER_TYPE = 4; //暂定为四
 
     private List<BottomOddsDetailsItem> list;
     private Context mContext;
@@ -63,21 +65,25 @@ public class BottomOddsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         } else {
             hold.item_score.setText(list.get(position).getScore());
-            hold.item_score.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+            hold.item_score.setTextColor(mContext.getResources().getColor(R.color.home_logo_color));
             hold.item_score.setBackgroundResource(R.color.white);
         }
 
 
         if ("-".equals(list.get(position).getOdd().getLeft()) || "-".equals(list.get(position).getOdd().getMiddle()) || "-".equals(list.get(position).getOdd().getRight())) {
 
-            hold.item_home.setText("");
+            hold.item_home.setText("-");
+            hold.item_home.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+            hold.item_home.setBackgroundResource(R.color.white);
 
             hold.item_handicap.setText(mContext.getResources().getString(R.string.fragme_home_fengpan_text));
             hold.item_handicap.setTextColor(mContext.getResources().getColor(R.color.white));
             hold.item_handicap.setBackgroundResource(R.color.analyze_left);
 
-            hold.item_guest.setText("");
 
+            hold.item_guest.setText("-");
+            hold.item_guest.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+            hold.item_guest.setBackgroundResource(R.color.white);
 
         } else if (isNULLOrEmpty(list.get(position).getOdd().getLeft()) || isNULLOrEmpty(list.get(position).getOdd().getMiddle()) || isNULLOrEmpty(list.get(position).getOdd().getRight())) {
             hold.item_home.setText("-");
@@ -96,13 +102,16 @@ public class BottomOddsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         } else {
             hold.item_home.setText(list.get(position).getOdd().getLeft());
             setTextViewColor(hold.item_home, 0, list.get(position).getOdd().getLeftUp());
-            if (mType == ALET) {
+            if (mType == ALET_TYPE) {
                 hold.item_handicap.setText(HandicapUtils.changeHandicap(list.get(position).getOdd().getMiddle()));
                 setTextViewColor(hold.item_handicap, 1, list.get(position).getOdd().getMiddleUp());
-            } else if (mType == ASIZE) {//大小球
+            } else if (mType == ASIZE_TYPE) {//大小球
                 hold.item_handicap.setText(HandicapUtils.changeHandicapByBigLittleBall(list.get(position).getOdd().getMiddle()));
                 setTextViewColor(hold.item_handicap, 1, list.get(position).getOdd().getMiddleUp());
-            } else if (mType == EUR) {  //欧赔
+            } else if (mType == OUER_TYPE) {  //欧赔
+                hold.item_handicap.setText(list.get(position).getOdd().getMiddle());
+                setTextViewColor(hold.item_handicap, 0, list.get(position).getOdd().getMiddleUp());
+            }else if (mType == CORNER_TYPE){
                 hold.item_handicap.setText(list.get(position).getOdd().getMiddle());
                 setTextViewColor(hold.item_handicap, 0, list.get(position).getOdd().getMiddleUp());
             }

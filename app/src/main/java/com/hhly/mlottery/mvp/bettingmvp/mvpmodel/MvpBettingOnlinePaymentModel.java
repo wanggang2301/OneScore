@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  * Created by：XQyi on 2017/5/22 14:34
- * Use:支付页面（选择支付方式 [MVP-model 数据请求处理]）
+ * Use:支付页面（选择支付方式 [MVP-data.model 数据请求处理]）
  */
 public class MvpBettingOnlinePaymentModel implements MModel {
 
