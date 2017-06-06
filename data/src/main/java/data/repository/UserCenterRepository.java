@@ -2,9 +2,9 @@ package data.repository;
 
 
 import data.api.UserCenterApiService;
-import data.model.BottomOddsDetails;
+import data.bean.BottomOddsDetails;
+import data.bean.SubsRecordBean;
 import data.model.RecommendArticlesBean;
-import data.model.SubsRecordBean;
 import rx.Observable;
 
 /**

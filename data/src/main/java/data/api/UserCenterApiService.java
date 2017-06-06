@@ -1,9 +1,9 @@
 package data.api;
 
 
-import data.model.BottomOddsDetails;
+import data.bean.BottomOddsDetails;
+import data.bean.SubsRecordBean;
 import data.model.RecommendArticlesBean;
-import data.model.SubsRecordBean;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;
