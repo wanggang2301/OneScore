@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -49,7 +50,7 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     @BindView(R.id.fl_networkError)
     FrameLayout flNetworkError;
     @BindView(R.id.fl_nodata)
-    FrameLayout flNodata;
+    RelativeLayout flNodata;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.handle_exception)
