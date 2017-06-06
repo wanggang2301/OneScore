@@ -112,7 +112,9 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
 
     @Override
     public void loading() {
-
+        handleException.setVisibility(View.GONE);
+        refresh.setVisibility(View.VISIBLE);
+        refresh.setRefreshing(true);
     }
 
     @Override
@@ -128,7 +130,7 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
                 recyclerView.post(new Runnable() {
                     @Override
                     public void run() {
-                        mPresenter.pullUpLoadMoreData();
+                       // mPresenter.pullUpLoadMoreData();
                     }
                 });
             }
@@ -144,7 +146,10 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
 
     @Override
     public void onError() {
-
+        handleException.setVisibility(View.VISIBLE);
+        flNetworkError.setVisibility(View.VISIBLE);
+        flNodata.setVisibility(View.GONE);
+        refresh.setVisibility(View.GONE);
     }
 
     @Override

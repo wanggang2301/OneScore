@@ -43,12 +43,13 @@ public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDa
 
             @Override
             public void onError(Throwable e) {
-                mView.onError();
+                mView.loading();
             }
 
             @Override
             public void onNext(SubsRecordBean subsRecordBean) {
                 if (!"200".equals(subsRecordBean.getCode())) {
+                    mView.loading();
                     return;
                 }
                 listBeanList = subsRecordBean.getPurchaseRecords().getList();
@@ -59,29 +60,7 @@ public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDa
 
 
     @Override
-    public void pullUpLoadMoreData() {
-        mView.pullUpLoadMoreDataFail();
-
-       /* addSubscription(data.repository.getSubsRecord(), new Subscriber<String>() {
-            @Override
-            public void onCompleted() {
-            }
-
-            @Override
-            public void onError(Throwable e) {
-            }
-
-            @Override
-            public void onNext(String s) {
-
-                if (!"".equals("200")) {
-                    mView.pullUpLoadMoreDataFail();
-                    return;
-                } else {
-                    mView.pullUpLoadMoreDataSuccess();
-                }
-            }
-        });*/
+    public void pullUpLoadMoreData(String userId, String pageNum, String pageSize, String loginToken, String sign) {
 
     }
 

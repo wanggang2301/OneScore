@@ -40,8 +40,8 @@ public class DataInterceptor implements okhttp3.Interceptor {
                 .addQueryParameter("timeZone", timeZone)
                 .build();
 
-        //Request.Builder requestBuilder = oldRequest.newBuilder().url(url);
-        Request.Builder requestBuilder = new Request.Builder().url(url);
+     //  Request.Builder requestBuilder = oldRequest.newBuilder().url(url);
+        Request.Builder requestBuilder = new Request.Builder().url(dingyueUrl);
 
         Log.d("bowlurl", dingyueUrl);
 

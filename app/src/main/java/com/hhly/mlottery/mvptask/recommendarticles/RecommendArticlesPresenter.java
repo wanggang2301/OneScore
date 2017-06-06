@@ -54,6 +54,7 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
             @Override
             public void onNext(RecommendArticlesBean r) {
                 if (!"200".equals(r.getCode())) {
+                    mView.onError();
                     return;
                 }
 

@@ -50,7 +50,7 @@ public interface IContract {
     interface ISubsRecordPresenter extends IPresenter<IPullLoadMoreDataView> {
         void requestData(String userId, String pageNum, String pageSize, String loginToken, String sign);
 
-        void pullUpLoadMoreData();
+        void pullUpLoadMoreData(String userId, String pageNum, String pageSize, String loginToken, String sign);
 
         List<SubsRecordBean.PurchaseRecordsBean.ListBean> getSubsRecordData();
     }

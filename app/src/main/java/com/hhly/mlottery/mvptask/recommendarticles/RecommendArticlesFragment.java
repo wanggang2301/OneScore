@@ -114,7 +114,9 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
 
     @Override
     public void loading() {
-
+        handleException.setVisibility(View.GONE);
+        refresh.setVisibility(View.VISIBLE);
+        refresh.setRefreshing(true);
     }
 
     @Override
@@ -146,7 +148,10 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
 
     @Override
     public void onError() {
-
+        handleException.setVisibility(View.VISIBLE);
+        flNetworkError.setVisibility(View.VISIBLE);
+        flNodata.setVisibility(View.GONE);
+        refresh.setVisibility(View.GONE);
     }
 
     @Override
