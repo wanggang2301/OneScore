@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <TextView
+            android:id="@+id/account_trade_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="竞猜推介"
+            android:textColor="@color/account_trade_name"
+            android:textSize="@dimen/text_size_15" />
+
+        <TextView
+            android:id="@+id/account_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="2017-05-20"
+            android:textColor="@color/account_trade_name"
+            android:textSize="@dimen/text_size_15" />
+
+        <TextView
+            android:id="@+id/account_recharge_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/account_trade_name"
+            android:layout_marginTop="10dp"
+            android:text="消费dfsdkhfsdkhfd"
+            android:textColor="@color/account_trade_name"
+            android:textSize="@dimen/text_size_15" />
+
+        <TextView
+            android:id="@+id/account_trade_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="16dp"
+            android:text="+80dfsfdsfsdfd"
+            android:textColor="@color/account_trade_name"
+            android:textSize="@dimen/text_size_15"
+            android:layout_below="@id/account_trade_name"
+            android:layout_toRightOf="@id/account_recharge_name"
+             />
+        <TextView
+            android:id="@+id/account_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20:30"
+            android:textColor="@color/account_trade_name"
+            android:textSize="@dimen/text_size_15"
+            android:layout_alignBaseline="@+id/account_recharge_name"
+            android:layout_alignBottom="@+id/account_recharge_name"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+</LinearLayout>

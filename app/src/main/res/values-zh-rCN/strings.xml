@@ -1757,6 +1757,10 @@
     <string name="at_least_one_race">至少选择一场赛事</string>
     <string name="start_dianqiu">开始点球大战</string>
     <string name="start_addtime">开始加时赛</string>
+    <string name="available_balance">可用余额(元)</string>
+    <string name="frozen_balance">冻结余额(元)</string>
+    <string name="total_balance">总余额(元)</string>
+    <string name="account_detail">账户明细</string>
 
     <string name="bow_corner_left">高于</string>
     <string name="bow_corner_middle">即时盘</string>

@@ -9,9 +9,11 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
+import data.api.AccountDetailApi;
 import data.api.UserCenterApiService;
 import dagger.Module;
 import dagger.Provides;
+import data.repository.AccountDetailRepository;
 import data.repository.UserCenterRepository;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -103,4 +105,15 @@ public class DataModule {
     }
 
 
+    @Provides
+    @Singleton
+    AccountDetailApi provideAccountApi(Retrofit retrofit){
+        return retrofit.create(AccountDetailApi.class);
+    }
+
+    @Provides
+    @Singleton
+    AccountDetailRepository provideAccountRepository(AccountDetailApi accountDetailApi){
+        return new AccountDetailRepository(accountDetailApi);
+    }
 }

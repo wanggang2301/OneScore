@@ -1751,6 +1751,10 @@
     <string name="at_least_one_race">至少選擇一場賽事</string>
     <string name="start_dianqiu">開始點球大戰</string>
     <string name="start_addtime">開始加時賽</string>
+    <string name="available_balance">可用餘額(元)</string>
+    <string name="frozen_balance">凍結餘額(元)</string>
+    <string name="total_balance">總餘額(元)</string>
+    <string name="account_detail">賬戶明細</string>
 
     <string name="bow_corner_left">高於</string>
     <string name="bow_corner_middle">即時盤</string>
