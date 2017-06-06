@@ -3,12 +3,12 @@ package com.hhly.mlottery.adapter.custom;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
 import com.hhly.mlottery.view.CircleImageView;
 
 import java.util.List;
@@ -69,7 +69,9 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
             @Override
             public void onClick(View v) { //跳转到记录详情
 
-                BettingListDataBean.PromotionData.BettingListData bettingListData = new BettingListDataBean.PromotionData.BettingListData();
+                Toast.makeText(mContext, "敬請期待", Toast.LENGTH_SHORT).show();
+
+                //   BettingListDataBean.PromotionData.BettingListData bettingListData = new BettingListDataBean.PromotionData.BettingListData();
 
 /*
                 String imgUrl = itemData.getPhotoUrl();
