@@ -16,7 +16,7 @@ public class AccountDetailRepository {
         this.mAccountApi = mAccountApi;
     }
 
-    Observable<AccountDetailBean> getAccountData( String userId,String loginToken,String sign){
-        return mAccountApi.getAccountData(userId, loginToken, sign);
+    public Observable<AccountDetailBean> getAccountData( String userId,String loginToken,String sign ,String pageNumber){
+        return mAccountApi.getAccountData(userId, loginToken, sign ,pageNumber);
     }
 }

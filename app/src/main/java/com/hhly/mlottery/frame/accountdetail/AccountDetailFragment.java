@@ -2,11 +2,14 @@ package com.hhly.mlottery.frame.accountdetail;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -16,15 +19,22 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.adapter.account.AccountDetailAdapter;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MDStatusBarCompat;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 import com.hhly.mlottery.widget.PullToEnlargeCoorDinatorLayout;
 
+import org.w3c.dom.Text;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import data.bean.AccountDetailBean;
 
 /**
  * 个人中心账户详情
@@ -86,10 +96,15 @@ public class AccountDetailFragment extends ViewFragment<AccountDetailContract.Pr
     TextView mFrozenBalance;
 
     @BindView(R.id.total_balance)
-    TextView mTotalBalance;
+    TextView  mTotalBalance;
 
     @BindView(R.id.account_detail_recyclerview)
     RecyclerView mRecyclerView;
+
+    private View mNoLoadingView; //没有更多
+    private View mOnloadingView; //加载更多
+
+    private AccountDetailAdapter mAdapter;
 
     public AccountDetailFragment() {
     }
@@ -142,18 +157,91 @@ public class AccountDetailFragment extends ViewFragment<AccountDetailContract.Pr
                 mProgressBarLayout.setVisibility(View.VISIBLE);
             }
         });
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                mRefreshLayout.setRefreshing(true);
+            }
+        });
+
+        mPresenter.refreshData(); //请求数据
+
+        if(mAdapter==null){
+            mAdapter=new AccountDetailAdapter(mPresenter.getListData(),getActivity());
+        }
+        mOnloadingView=getActivity().getLayoutInflater().inflate(R.layout.onloading, (ViewGroup) mRecyclerView.getParent(),false);
+        mAdapter.setLoadingView(mOnloadingView);
+//        mAdapter.setPageSize(PAGE_SIZE);
+        mAdapter.openLoadMore(mPresenter.getPage().size,true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setAdapter(mAdapter);
+
+        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                mPresenter.refreshDataByPage();
+            }
+        });
+
+        mRefreshLayout.setColorSchemeResources(R.color.bg_header);
+
+
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRefreshLayout.setRefreshing(false);
+                        mPresenter.refreshData();
+                    }
+                }, 1000);
+            }
+        });
+
+        mAvailableBalance.setText(mPresenter.getBalanceData().getAvailableBalance());
+        mFrozenBalance.setText(mPresenter.getBalanceData().getBlockedBalance());
+        mTotalBalance.setText(mPresenter.getBalanceData().getCashBalance());
 
     }
 
 
     @Override
     public void recyclerNotify() {
-
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mAdapter.setNewData(mPresenter.getListData()); //点进去看下
+        mAdapter.setLoadingView(mOnloadingView);
+        mAdapter.openLoadMore(mPresenter.getPage().size,true);
+        mNodataLayout.setVisibility(View.GONE);
+        mExceptionLayout.setVisibility(View.GONE);
+        mProgressBarLayout.setVisibility(View.GONE);
     }
 
     @Override
-    public void showNoData(String hasData) {
+    public void showNoData() {
+        mNodataLayout.setVisibility(View.VISIBLE);
+        mExceptionLayout.setVisibility(View.GONE);
+        mProgressBarLayout.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.GONE);
+    }
 
+    @Override
+    public void setRefresh(boolean refresh) {
+        mRefreshLayout.setRefreshing(refresh);
+    }
+
+    @Override
+    public void showNoMoreData() {
+        if(mNoLoadingView==null){
+            mNoLoadingView=getActivity().getLayoutInflater().inflate(R.layout.nomoredata, (ViewGroup) mRecyclerView.getParent(),false);
+        }
+        mAdapter.notifyDataChangedAfterLoadMore(false);
+        mAdapter.addFooterView(mNoLoadingView);
+    }
+
+    @Override
+    public void showNextPage(List<AccountDetailBean.DataEntity.RecordEntity> recordEntity) {
+        mAdapter.notifyDataChangedAfterLoadMore(recordEntity,true);
     }
 
 
@@ -177,7 +265,10 @@ public class AccountDetailFragment extends ViewFragment<AccountDetailContract.Pr
 
     @Override
     public void onError() {
-
+        mNodataLayout.setVisibility(View.GONE);
+        mExceptionLayout.setVisibility(View.VISIBLE);
+        mProgressBarLayout.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.GONE);
     }
 
 }

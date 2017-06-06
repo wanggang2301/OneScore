@@ -1,5 +1,7 @@
 package com.hhly.mlottery.adapter.account;
 
+import android.content.Context;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
@@ -15,8 +17,10 @@ import data.bean.AccountDetailBean;
  */
 public class AccountDetailAdapter extends BaseQuickAdapter<AccountDetailBean.DataEntity.RecordEntity> {
 
-    public AccountDetailAdapter( List<AccountDetailBean.DataEntity.RecordEntity> data) {
+    private Context mContext;
+    public AccountDetailAdapter( List<AccountDetailBean.DataEntity.RecordEntity> data ,Context context) {
         super(R.layout.item_account_detail, data);
+        this.mContext=context;
     }
 
     @Override

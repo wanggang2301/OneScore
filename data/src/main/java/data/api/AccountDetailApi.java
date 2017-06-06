@@ -12,7 +12,7 @@ import rx.Observable;
  */
 public interface AccountDetailApi {
 
-    @POST("pay/balancerecord")
+    @POST("user/pay/balancerecord")
     Observable<AccountDetailBean> getAccountData(@Query("userId") String userId,
                                                  @Query("loginToken") String loginToken,
                                                  @Query("sign") String sign,
