@@ -9,10 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -30,7 +32,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import data.model.RecommendArticlesBean;
+import data.bean.RecommendArticlesBean;
 
 /**
  * @author wangg
@@ -49,7 +51,7 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     @BindView(R.id.fl_networkError)
     FrameLayout flNetworkError;
     @BindView(R.id.fl_nodata)
-    FrameLayout flNodata;
+    RelativeLayout flNodata;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.handle_exception)
@@ -71,6 +73,10 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     String loginToken = "";
 
     int pageNum = 1;
+    @BindView(R.id.tv_nodata)
+    TextView tvNodata;
+    @BindView(R.id.btn_confirm)
+    Button btnConfirm;
 
     private List<RecommendArticlesBean.PublishPromotionsBean.ListBean> listBeanList;
 
@@ -99,6 +105,9 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     private void initEvent() {
         loadmoreText = (TextView) moreView.findViewById(R.id.loadmore_text);
         progressBar = (ProgressBar) moreView.findViewById(R.id.progressBar);
+        btnConfirm.setVisibility(View.VISIBLE);
+        tvNodata.setText(mActivity.getResources().getString(R.string.tuijie_nodata_txt));
+
         refresh.setOnRefreshListener(this);
         refresh.setColorSchemeResources(R.color.bg_header);
         refresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
@@ -210,7 +219,7 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     }
 
 
-    @OnClick({R.id.iv_back, R.id.reLoading})
+    @OnClick({R.id.iv_back, R.id.reLoading, R.id.btn_confirm})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -219,6 +228,10 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
             case R.id.reLoading:
                 pageNum = 1;
                 mPresenter.requestData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
+                break;
+
+            case R.id.btn_confirm:
+
                 break;
         }
     }

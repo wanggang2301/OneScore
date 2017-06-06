@@ -1,4 +1,4 @@
-package data.model;
+package data.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;

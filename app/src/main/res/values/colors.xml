@@ -140,6 +140,7 @@
     <color name="home_item_lottery_title_des">#9b9b9b</color>
 
     <color name="home_default_icon_coloer">#f5f5f5</color>
+    <color name="account_tab_color">#E5F2FC</color>
 
     <!-- 关于 -->
     <color name="text_about_color">#0090ff</color>
@@ -723,4 +724,5 @@
     <color name="betting_recommend_issue_balance_color">#fb001a</color>
     <color name="betting_recommend_issue_payment_bg">#f7f7f8</color>
 
+    <color name="account_trade_name">#4a494a</color>
 </resources>

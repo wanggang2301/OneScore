@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
@@ -27,10 +28,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import data.model.BottomOddsDetails;
-import data.model.BottomOddsDetailsItem;
-import data.model.BottomOddsItem;
-import data.model.FirstOdd;
+import data.bean.BottomOddsDetails;
+import data.bean.BottomOddsDetailsItem;
+import data.bean.BottomOddsItem;
+import data.bean.FirstOdd;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,7 +68,7 @@ public class BowlChildFragment extends ViewFragment<IContract.IBowlChildPresente
     @BindView(R.id.fl_networkError)
     FrameLayout flNetworkError;
     @BindView(R.id.fl_nodata)
-    FrameLayout flNodata;
+    RelativeLayout flNodata;
     @BindView(R.id.ll_context)
     LinearLayout llContext;
     @BindView(R.id.handle_exception)
