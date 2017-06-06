@@ -6,6 +6,8 @@ import com.hhly.mlottery.mvp.bettingmvp.MView;
 import com.hhly.mlottery.mvp.bettingmvp.mvpmodel.MvpBettingOnlinePaymentModel;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBean;
 
+import java.util.Map;
+
 /**
  * Created by：XQyi on 2017/5/22 14:35
  * Use:支付页面（选择支付方式 [MVP-presenter 业务分配 逻辑处理]）
@@ -21,8 +23,8 @@ public class MvpBettingOnlinePaymentPresenter implements MPresenter<BasketDataba
     }
 
     @Override
-    public void loadData(String url) {
-        mModel.loadData(url);
+    public void loadData(String url , Map<String ,String> parametMap) {
+        mModel.loadData(url , parametMap);
     }
 
     @Override

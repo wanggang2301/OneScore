@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BaseActivity;
+import com.hhly.mlottery.bean.bettingbean.BettingOrderDataBean;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.PayMentZFBResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.mvppresenter.MvpBettingOnlinePaymentPresenter;
@@ -20,6 +21,7 @@ import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PayMentUtils;
+import com.hhly.mlottery.util.net.SignUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +33,7 @@ import de.greenrobot.event.EventBus;
  * Use:支付页面（选择支付方式 [MVP-view 页面展示]）
  */
 
-public class MvpBettingOnlinePaymentActivity extends BaseActivity implements MView<BasketDatabaseBean>, View.OnClickListener {
+public class MvpBettingOnlinePaymentActivity extends BaseActivity implements MView<BettingOrderDataBean>, View.OnClickListener {
 
     // IWXAPI 是第三方app和微信通信的openapi接口
 //    private IWXAPI api;
@@ -94,7 +96,37 @@ public class MvpBettingOnlinePaymentActivity extends BaseActivity implements MVi
     }
 
     private void initData(){
-        paymentPresenter.loadData("http://m.13322.com/mlottery/core/basketballData.findLeagueHeader.do");
+
+        String promId = getIntent().getStringExtra(ConstantPool.PROMOTION_ID);
+
+
+        //http://192.168.10.242:8092/promotion/order/create?
+        // userId=hhly90531&promotionId=642&sign=59891f91c988198909c527399031d7f111&channel=1&token=eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJqd3QiLCJpYXQiOjE0OTYzNzY2NjIsInN1YiI6IntcImlkXCI6XCJoaGx5OTA1MzFcIixcInBob25lTnVtXCI6XCIxMzI2Njc1MjM4NlwifSJ9.2hmsToL-ex9LXRbWI44cuDhqKqZva_qBPG1pKB_IVfU
+
+        String url = "http://192.168.10.242:8092/promotion/order/create";
+        String userid = AppConstants.register.getData().getUser().getUserId();
+        String token = AppConstants.register.getData().getLoginToken();
+
+        Map<String ,String> mapPrament = new HashMap<>();
+
+        mapPrament.put("userId" , userid);//用户id
+        mapPrament.put("promotionId" , promId); //推荐ID
+        mapPrament.put("channel" , "1"); //0：PC 1：安卓 2:IOS 3:H5
+        mapPrament.put("logintoken" , token); //logintoken
+        mapPrament.put("lang" , "zh");
+        mapPrament.put("timeZone" , "8");
+        String signs = SignUtils.getSign("/promotion/order/create" , mapPrament);
+
+        Map<String ,String> map = new HashMap<>();
+        map.put("userId" , userid);//用户id
+        map.put("promotionId" , promId); //推荐ID
+        map.put("channel" , "1"); //0：PC 1：安卓 2:IOS 3:H5
+        map.put("logintoken" , token); //logintoken
+        map.put("sign" , signs);
+
+        L.d("qwer== >> " + signs);
+
+        paymentPresenter.loadData(url , map);
     }
     @Override
     public void onClick(View v) {
@@ -164,8 +196,9 @@ public class MvpBettingOnlinePaymentActivity extends BaseActivity implements MVi
         return map;
     }
     @Override
-    public void loadSuccessView(BasketDatabaseBean basketDatabaseBean) {
-        mBalance.setText(basketDatabaseBean.getLeagueId() + " K");
+    public void loadSuccessView(BettingOrderDataBean orderDataBean) {
+
+        mBalance.setText(orderDataBean.getData().getAmount() + " F");
     }
 
     @Override

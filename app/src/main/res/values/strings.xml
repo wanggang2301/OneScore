@@ -1761,6 +1761,9 @@
     <string name="betting_txt_amount_fifty">50元</string>
     <string name="betting_txt_amount_one_hundred">100元</string>
     <string name="betting_txt_recharge">充值</string>
+    <string name="betting_plays_asialet">亚盘</string>
+    <string name="betting_plays_asize">大小球</string>
+    <string name="betting_plays_allcheck">全部</string>
 
 
     <string name="roll_desc_txt">胜出</string>

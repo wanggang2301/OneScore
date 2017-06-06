@@ -1749,6 +1749,9 @@
     <string name="betting_txt_amount_fifty">50元</string>
     <string name="betting_txt_amount_one_hundred">100元</string>
     <string name="betting_txt_recharge">充值</string>
+    <string name="betting_plays_asialet">亞盤</string>
+    <string name="betting_plays_asize">大小球</string>
+    <string name="betting_plays_allcheck">全部</string>
 
     <string name="corner_score">角球比分</string>
     <string name="higher">高於</string>

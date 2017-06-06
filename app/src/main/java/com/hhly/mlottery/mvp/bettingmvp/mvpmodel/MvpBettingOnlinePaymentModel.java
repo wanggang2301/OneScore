@@ -1,5 +1,6 @@
 package com.hhly.mlottery.mvp.bettingmvp.mvpmodel;
 
+import com.hhly.mlottery.bean.bettingbean.BettingOrderDataBean;
 import com.hhly.mlottery.mvp.bettingmvp.MModel;
 import com.hhly.mlottery.mvp.bettingmvp.MPresenter;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBean;
@@ -21,14 +22,12 @@ public class MvpBettingOnlinePaymentModel implements MModel {
         this.mPresenter = presenter;
     }
     @Override
-    public void loadData(String url) {
+    public void loadData(String url , Map<String ,String> parametMap) {
 
-        Map<String , String> map = new HashMap<>();
-        map.put("leagueId" , "1");
-        VolleyContentFast.requestJsonByGet(url, map, new VolleyContentFast.ResponseSuccessListener<BasketDatabaseBean>() {
+        VolleyContentFast.requestJsonByGet(url, parametMap, new VolleyContentFast.ResponseSuccessListener<BettingOrderDataBean>() {
             @Override
-            public void onResponse(BasketDatabaseBean jsonObject) {
-                if (jsonObject == null) {
+            public void onResponse(BettingOrderDataBean jsonObject) {
+                if (jsonObject == null || jsonObject.getCode() != 3000) {
                     mPresenter.noData();
                 }else{
                     mPresenter.loadSuccess(jsonObject);
@@ -39,6 +38,6 @@ public class MvpBettingOnlinePaymentModel implements MModel {
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                     mPresenter.loadFail();
             }
-        },BasketDatabaseBean.class);
+        },BettingOrderDataBean.class);
     }
 }
