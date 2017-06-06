@@ -50,6 +50,7 @@ public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDa
 
             @Override
             public void onNext(SubsRecordBean subsRecordBean) {
+
                 if (!"200".equals(subsRecordBean.getCode())) {
                     mView.onError();
                     return;
@@ -77,7 +78,7 @@ public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDa
             return;
         }
 
-        mView.pullUploadongView();
+        mView.pullUploadingView();
 
         addSubscription(repository.getSubsRecord(userId, pageNum, pageSize, loginToken, sign), new Subscriber<SubsRecordBean>() {
             @Override

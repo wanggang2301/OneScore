@@ -2,7 +2,7 @@ package com.hhly.mlottery.mvptask.recommendarticles;
 
 import com.hhly.mlottery.mvp.BasePresenter;
 import com.hhly.mlottery.mvptask.IContract;
-import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.CollectionUtils;
 
 import java.util.List;
 
@@ -22,6 +22,7 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
     private Repository repository;
 
     private List<RecommendArticlesBean.PublishPromotionsBean.ListBean> list;
+    private boolean isHasNextPage = false;
 
 
     public RecommendArticlesPresenter(IContract.IPullLoadMoreDataView view) {
@@ -53,12 +54,18 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
 
             @Override
             public void onNext(RecommendArticlesBean r) {
+
                 if (!"200".equals(r.getCode())) {
                     mView.onError();
                     return;
                 }
 
-                L.d("recommend", "成功");
+                if (!CollectionUtils.notEmpty(r.getPublishPromotions().getList())) {
+                    mView.noData();
+                    return;
+                }
+
+                isHasNextPage = r.getPublishPromotions().isHasNextPage();
                 list = r.getPublishPromotions().getList();
                 mView.responseData();
             }
@@ -67,6 +74,16 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
 
     @Override
     public void pullUpLoadMoreData(String userId, String pageNum, String pageSize, String loginToken, String sign) {
+
+
+        //if (!isHasNextPage) {
+        if (false) {
+            mView.pullUpLoadMoreDataFail();
+            return;
+        }
+
+        mView.pullUploadingView();
+
         addSubscription(repository.getRecommendArtices(userId, pageNum, pageSize, loginToken, sign), new Subscriber<RecommendArticlesBean>() {
             @Override
             public void onCompleted() {
@@ -75,20 +92,25 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
 
             @Override
             public void onError(Throwable e) {
+                mView.pullUpLoadMoreDataFail();
 
             }
 
             @Override
-            public void onNext(RecommendArticlesBean s) {
+            public void onNext(RecommendArticlesBean r) {
 
                 if (!"".equals("200")) {
-
                     mView.pullUpLoadMoreDataFail();
                     return;
-                } else {
-
-                    mView.pullUpLoadMoreDataSuccess();
                 }
+
+                if (!"200".equals(r.getCode())) {
+                    mView.pullUpLoadMoreDataFail();
+                    return;
+                }
+                isHasNextPage = r.getPublishPromotions().isHasNextPage();
+                list = r.getPublishPromotions().getList();
+                mView.pullUpLoadMoreDataSuccess();
             }
         });
     }

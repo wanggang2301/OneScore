@@ -24,6 +24,7 @@ import com.hhly.mlottery.mvptask.IContract;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -54,7 +55,6 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     LinearLayout handleException;
     RecommendArticlesAdapter mRecommendArticlesAdapter;
 
-
     ProgressBar progressBar;
     TextView loadmoreText;
     Activity mActivity;
@@ -65,7 +65,6 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     @BindView(R.id.refresh)
     ExactSwipeRefreshLayout refresh;
 
-
     String userId = "";
 
     String loginToken = "";
@@ -73,7 +72,6 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     String sign = "";
 
     private List<RecommendArticlesBean.PublishPromotionsBean.ListBean> listBeanList;
-
 
     public static RecommendArticlesFragment newInstance() {
         RecommendArticlesFragment recommendArticlesFragment = new RecommendArticlesFragment();
@@ -92,7 +90,6 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
         ButterKnife.bind(this, view);
         initEvent();
 
-        // mPresenter.requestData(userId, "1", PAGE_SIZE, loginToken, sign);
         mPresenter.requestData(userId, "1", PAGE_SIZE, loginToken, sign);
         return view;
     }
@@ -121,7 +118,16 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
 
     @Override
     public void responseData() {
-        listBeanList = mPresenter.getRecommendArticlesData();
+
+        handleException.setVisibility(View.GONE);
+        flNetworkError.setVisibility(View.GONE);
+        flNodata.setVisibility(View.GONE);
+        refresh.setVisibility(View.VISIBLE);
+        refresh.setRefreshing(false);
+
+        listBeanList = new ArrayList<>();
+        listBeanList.addAll(mPresenter.getRecommendArticlesData());
+
         mRecommendArticlesAdapter = new RecommendArticlesAdapter(mActivity, listBeanList);
         recyclerView.setAdapter(mRecommendArticlesAdapter);
         mRecommendArticlesAdapter.openLoadMore(0, true);
@@ -132,7 +138,7 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
                 recyclerView.post(new Runnable() {
                     @Override
                     public void run() {
-                        // mPresenter.pullUpLoadMoreData();
+                        mPresenter.pullUpLoadMoreData(userId, "1", PAGE_SIZE, loginToken, sign);
 
                     }
                 });
@@ -143,7 +149,10 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
 
     @Override
     public void noData() {
-
+        handleException.setVisibility(View.VISIBLE);
+        flNetworkError.setVisibility(View.GONE);
+        flNodata.setVisibility(View.VISIBLE);
+        refresh.setVisibility(View.GONE);
     }
 
     @Override
@@ -162,14 +171,13 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
 
     @Override
     public void pullUpLoadMoreDataSuccess() {
-
         listBeanList.addAll(mPresenter.getRecommendArticlesData());
         mRecommendArticlesAdapter.notifyDataChangedAfterLoadMore(true);
     }
 
 
     @Override
-    public void pullUploadongView() {
+    public void pullUploadingView() {
         loadmoreText.setText(mActivity.getResources().getString(R.string.loading_data_txt));
         progressBar.setVisibility(View.VISIBLE);
     }
@@ -201,6 +209,7 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
                 mActivity.finish();
                 break;
             case R.id.reLoading:
+                mPresenter.requestData(userId, "1", PAGE_SIZE, loginToken, sign);
                 break;
         }
     }

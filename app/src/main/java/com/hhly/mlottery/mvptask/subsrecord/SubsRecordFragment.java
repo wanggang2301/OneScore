@@ -169,13 +169,13 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
 
     @Override
     public void onRefresh() {
-        refresh.setRefreshing(false);
+        refresh.setRefreshing(true);
         mPresenter.requestData(userId, "1", PAGE_SIZE, loginToken, sign);
     }
 
 
     @Override
-    public void pullUploadongView() {
+    public void pullUploadingView() {
         loadmoreText.setText(mActivity.getResources().getString(R.string.loading_data_txt));
         progressBar.setVisibility(View.VISIBLE);
 
@@ -213,6 +213,7 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
                 mActivity.finish();
                 break;
             case R.id.reLoading:
+                mPresenter.requestData(userId, "1", PAGE_SIZE, loginToken, sign);
                 break;
         }
     }

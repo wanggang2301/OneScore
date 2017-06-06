@@ -36,7 +36,7 @@ public interface IContract {
 
         void pullUpLoadMoreDataFail();
 
-        void pullUploadongView();
+        void pullUploadingView();
     }
 
 
