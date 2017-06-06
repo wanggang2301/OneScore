@@ -1,7 +1,5 @@
 package data;
 
-import android.util.Log;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,7 +49,7 @@ public class SignInterceptor implements okhttp3.Interceptor {
             url = oldUrl.newBuilder().build();
         }
 
-        Log.d("signurl", "____" + url);
+      //  Log.d("signurl", "____" + url);
 
 
         Request.Builder requestBuilder = oldRequest.newBuilder().url(url);
