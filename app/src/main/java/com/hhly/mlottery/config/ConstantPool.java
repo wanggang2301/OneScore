@@ -25,6 +25,8 @@ public class ConstantPool {
     public final static String ALL_LEAGUE = "allLrague";//所有的联赛
     public final static String CURR_LEAGUE = "currLrague";// 当前(选中)的联赛
     public final static String CURR_PALY_TYPE = "currPlayType";// 当前(选中)的玩法
+    public final static String PROMOTION_ID = "promotionId";// 推介的id
+    public final static String BETTING_ITEM_DATA = "bettingItemData";// 单条推介数据
 
 
 }

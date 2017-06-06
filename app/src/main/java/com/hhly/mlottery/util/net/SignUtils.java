@@ -23,6 +23,7 @@ public class SignUtils {
         String  mapParamentData = getStringKeyValue(paixuKey(getMapKey(paramentMap)) , paramentMap);
         String singKeyMD5 = encodeByMD5(signKey).toLowerCase();
         String allParament = signUrl + mapParamentData + singKeyMD5;
+        L.d("加密前的sign==>> " , allParament);
         String paramentMD5 = encodeByMD5(allParament) + ranDomNum();//小写
 
         return paramentMD5.toLowerCase();

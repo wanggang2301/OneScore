@@ -17,7 +17,7 @@ public class BettingListDataBean {
     private int code;
 
 
-    public class PromotionData{
+    public static class PromotionData{
 
 //        pageNum: 1,
 //        pageSize: 2,
@@ -65,7 +65,7 @@ public class BettingListDataBean {
         private String navigatePages;
         private List<Integer> navigatepageNums;
 
-        public class BettingListData {
+        public static class BettingListData implements Serializable{
 //            id: "645",
 //            enable: null,
 //            remark: null,

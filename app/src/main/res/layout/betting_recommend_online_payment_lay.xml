@@ -151,7 +151,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="(￥999.00)"
+                    android:text="--"
                     android:textColor="@color/betting_recommend_confirm_buy_color"
                     android:textSize="@dimen/text_size_12"/>
             </LinearLayout>
@@ -185,6 +185,6 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/betting_recommend_zhuanjia_grand_color"
                 android:textSize="@dimen/text_size_16"
-                android:text="￥ 8.00"/>
+                android:text="￥ --"/>
     </LinearLayout>
 </RelativeLayout>

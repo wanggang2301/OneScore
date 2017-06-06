@@ -182,8 +182,6 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
         mapPrament.put("type" , type);
         mapPrament.put("lang" , "zh");
         mapPrament.put("timeZone" , "8");
-//        mapPrament.put("lang" , "zh");
-//        mapPrament.put("timeZone" , "8");
         String signs = SignUtils.getSign("/promotion/info/list" , mapPrament);
 
         Map<String ,String> map = new HashMap<>();
@@ -326,7 +324,6 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 break;
             case R.id.public_btn_set:
-                //TODO=====================
                 Intent mIntent = new Intent(mContext , BettingRecommendSettingActivity.class);
                 mIntent.putExtra(ConstantPool.ALL_LEAGUE, (Serializable)allLeague);//所有的
                 mIntent.putExtra(ConstantPool.CURR_LEAGUE , (Serializable)currLeague);//选中的
@@ -339,7 +336,6 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
 
     @Override
     public void onRefresh() {
-        //TODO=====================
         setStatus(SHOW_STATUS_LOADING);
         mLoadHandler.postDelayed(mRun, 0);
     }
@@ -347,7 +343,7 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
     private BettingBuyClickListener mBettingBuyClickListener;
     // 购买(查看)的点击监听
     public interface BettingBuyClickListener {
-        void BuyOnClick(View view , String s);
+        void BuyOnClick(View view , BettingListDataBean.PromotionData.BettingListData s);
     }
 
     private BettingSpecialistClickListener mBettingSpecialistClickListener;
@@ -367,14 +363,15 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
     public void buyClicked(){
         mBettingBuyClickListener = new BettingBuyClickListener() {
             @Override
-            public void BuyOnClick(View view, String s) {
-//                Toast.makeText(mContext, "点击了购买** " + s, Toast.LENGTH_SHORT).show();
-                L.d("yxq-0418=== " , "点击了*购买** " + s);
+            public void BuyOnClick(View view, BettingListDataBean.PromotionData.BettingListData listData) {
+                //                Toast.makeText(mContext, "点击了购买** " + s, Toast.LENGTH_SHORT).show();
+                L.d("yxq-0418=== " , "点击了*购买** " + listData.getId());
                 Intent mIntent = new Intent(mContext , MvpBettingPayDetailsActivity.class);
+                mIntent.putExtra(ConstantPool.BETTING_ITEM_DATA , listData);//选中的
                 startActivity(mIntent);
                 overridePendingTransition(R.anim.push_left_in , R.anim.push_fix_out);
             }
-        };
+       };
     }
     /**
      * 专家详情点击事件
