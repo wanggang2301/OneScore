@@ -1,6 +1,7 @@
 package com.hhly.mlottery.activity;
 
 import android.app.Activity;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -31,7 +32,6 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
     private TextView tv_start, tv_half_txt;
     // 信号中断、喝水、受伤、伤停补时
     private ImageView iv_signal_off, iv_drink_water, iv_injured, iv_injured_addtime;
-
     // 后场控球、进攻、危险进攻
     private LinearLayout ll_control_content;
     // 后场控球
@@ -43,90 +43,82 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
     // 危险进攻
     private RelativeLayout rl_attack_danger;
     private GifImageView gif_home_attack_danger, gif_guest_attack_danger;
-
     // 射正、射偏1
     private LinearLayout ll_offside_content1;
     private RelativeLayout rl_home_offside1, rl_guest_offside1;
     private TextView tv_home_title1, tv_guest_title1;
     private GifImageView gif_home_position1, gif_guest_position1;
     private GifImageView gif_home_ball1, gif_guest_ball1, gif_home_hit1, gif_guest_hit1;
-
     // 射正、射偏2
     private LinearLayout ll_offside_content2;
     private RelativeLayout rl_home_offside2, rl_guest_offside2;
     private TextView tv_home_title2, tv_guest_title2;
     private GifImageView gif_home_position2, gif_guest_position2;
     private GifImageView gif_home_ball2, gif_guest_ball2, gif_guest_hit2, gif_home_hit2;
-
     // 球门球
     private LinearLayout ll_goal_door_content;
     private RelativeLayout rl_home_goal_door, rl_guest_goal_door;
     private GifImageView gif_home_goal_door_position, gif_guest_goal_door_position;
     private GifImageView gfi_home_goal_door, gfi_guest_goal_door;
-
     // 界外球
     private LinearLayout ll_goal_out_content;
     private RelativeLayout rl_home_goal_out, rl_guest_goal_out;
     private GifImageView gif_home_goal_out_position, gif_guest_goal_out_position;
     private GifImageView gif_home_goal_out, gif_guest_goal_out;
-
     // 角球
     private RelativeLayout rl_corner_content;
     private RelativeLayout rl_home_corner, rl_guest_corner;
     private LinearLayout ll_home_title_l, ll_home_title_r, ll_guest_title_l, ll_guest_title_r;
     private GifImageView gif_guest_corner_r_position, gif_guest_corner_l_position, gif_home_corner_r_position, gif_home_corner_l_position;
     private GifImageView gif_guest_corner_r, gif_guest_corner_l, gif_home_corner_r, gif_home_corner_l;
-
     // 越位
     private RelativeLayout rl_offside_content;
     private LinearLayout ll_home_offside_title, ll_guest_offside_title;
     private RelativeLayout rl_home_offside_bg, rl_guest_offside_bg;
     private GifImageView gif_home_offside, gif_guest_offside;
     private GifImageView gif_home_offside_position, gif_guest_offside_position;
-
     // 点球
     private LinearLayout ll_penalty_content;
     private GifImageView gif_home_penalty, gif_guest_penalty;
-
     // 点球罚失
     private RelativeLayout rl_penalty_lose_content;
     private LinearLayout ll_home_penalty_lose_title, ll_guest_penalty_lose_title;
     private GifImageView gif_home_penalty_lose, gif_guest_penalty_lose;
     private GifImageView gif_home_penalty_lose_position, gif_guest_penalty_lose_position;
-
     // 红黄牌
     private RelativeLayout rl_r_or_y_content;
     private LinearLayout ll_home_r_or_y_title, ll_guest_r_or_y_title;
     private GifImageView gif_home_r_or_y_position, gif_guest_r_or_y_position;
     private TextView tv_home_desc, tv_guest_desc;
     private ImageView iv_home_icon, iv_guest_icon, iv_home_r_or_y, iv_guest_r_or_y;
-
     // 任意球fk2、fk4
     private RelativeLayout fl_free_kick_fk2_fk4_content;
     private LinearLayout ll_home_free_kick_bg, ll_guest_free_kick_bg, ll_home_free_kick_fk4_bg, ll_guest_free_kick_fk4_bg, ll_home_free_kick_fk2_bg, ll_guest_free_kick_fk2_bg;
     private TextView tv_home_free_kick_fk4_title, tv_guest_free_kick_fk4_title, tv_home_free_kick_fk2_title, tv_guest_free_kick_fk2_title;
     private GifImageView gif_home_free_kick_fk2_position, gif_guest_free_kick_fk2_position, gif_home_free_kick_fk4_position, gif_guest_free_kick_fk4_position;
-
-
     // 任意球fk3 1
     private LinearLayout fl_free_kick_fk3_content1;
     private RelativeLayout rl_home_free_kick_fk3_1, rl_guest_free_kick_fk3_1;
     private GifImageView gif_home_free_kick_fk3_position, gif_guest_free_kick_fk3_position;
-
-
     // 任意球fk3 2
     private RelativeLayout fl_free_kick_fk3_content2;
-    private LinearLayout ll_home_free_kick_fk3_bg_2,ll_guest_free_kick_fk3_bg_2;
-    private LinearLayout ll_home_free_kick_fk3_title_2,ll_guest_free_kick_fk3_title_2;
-    private GifImageView gif_home_free_kick_fk3_position_2,gif_guest_free_kick_fk3_position_2;
-
-
+    private LinearLayout ll_home_free_kick_fk3_bg_2, ll_guest_free_kick_fk3_bg_2;
+    private LinearLayout ll_home_free_kick_fk3_title_2, ll_guest_free_kick_fk3_title_2;
+    private GifImageView gif_home_free_kick_fk3_position_2, gif_guest_free_kick_fk3_position_2;
     // 任意球fk1
     private RelativeLayout fl_free_kick_fk1_content;
-    private LinearLayout ll_home_free_kick_fk1_bg,ll_guest_free_kick_fk1_bg;
-    private LinearLayout ll_home_free_kick_fk1_title,ll_guest_free_kick_fk1_title;
-    private GifImageView gif_home_free_kick_fk1_position,gif_guest_free_kick_fk1_position;
+    private LinearLayout ll_home_free_kick_fk1_bg, ll_guest_free_kick_fk1_bg;
+    private LinearLayout ll_home_free_kick_fk1_title, ll_guest_free_kick_fk1_title;
+    private GifImageView gif_home_free_kick_fk1_position, gif_guest_free_kick_fk1_position;
 
+    // 进球
+    private LinearLayout ll_goal_content;
+    private ImageView iv_home_goal,iv_guest_goal;
+    private GifImageView gif_home_goal_cancel,gif_guest_goal_cancel;
+
+    // 欢呼
+    private LinearLayout ll_cheer_content;
+    private GifImageView gif_cheer;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -302,6 +294,29 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
         gif_home_free_kick_fk1_position = (GifImageView) findViewById(R.id.gif_home_free_kick_fk1_position);
         gif_guest_free_kick_fk1_position = (GifImageView) findViewById(R.id.gif_guest_free_kick_fk1_position);
 
+        // 进球
+        ll_goal_content = (LinearLayout) findViewById(R.id.ll_goal_content);
+        iv_home_goal = (ImageView) findViewById(R.id.iv_home_goal);
+        iv_guest_goal = (ImageView) findViewById(R.id.iv_guest_goal);
+        gif_home_goal_cancel = (GifImageView) findViewById(R.id.gif_home_goal_cancel);
+        gif_guest_goal_cancel = (GifImageView) findViewById(R.id.gif_guest_goal_cancel);
+
+        // 欢呼
+        ll_cheer_content = (LinearLayout) findViewById(R.id.ll_cheer_content);
+        gif_cheer = (GifImageView) findViewById(R.id.gif_cheer);
+
+        gif_cheer.setImageResource(R.mipmap.football_cheer);// 欢呼动画
+        iv_home_goal.setImageResource(R.drawable.football_goal_animation);// 主队进球动画
+        homeAnima = (AnimationDrawable) iv_home_goal.getDrawable();
+
+
+        iv_guest_goal.setImageResource(R.drawable.football_goal_animation);// 客队进球动画
+        guestAnima = (AnimationDrawable) iv_guest_goal.getDrawable();
+        gif_home_goal_cancel.setImageResource(R.mipmap.football_cancel_goal);// 取消进球
+        gif_guest_goal_cancel.setImageResource(R.mipmap.football_cancel_goal);// 取消进球
+
+
+
         findViewById(R.id.bt_match_start).setOnClickListener(this);
         findViewById(R.id.bt_halftime).setOnClickListener(this);
         findViewById(R.id.bt_match_stop).setOnClickListener(this);
@@ -361,7 +376,8 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
         findViewById(R.id.bt_guest_free_kick_danger_fk4).setOnClickListener(this);
         findViewById(R.id.bt_home_goal).setOnClickListener(this);
         findViewById(R.id.bt_guest_goal).setOnClickListener(this);
-        findViewById(R.id.bt_cheer).setOnClickListener(this);
+        findViewById(R.id.bt_home_goal_cancel).setOnClickListener(this);
+        findViewById(R.id.bt_guest_goal_cancel).setOnClickListener(this);
     }
 
     private void initEvent() {
@@ -531,15 +547,15 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
             case R.id.bt_home_deviate1://主队射偏1  1040
                 ToastTools.showQuick(this, "主队射偏1");
                 rl_home_offside1.setVisibility(View.VISIBLE);
-                rl_guest_offside1.setVisibility(View.GONE);
+                rl_guest_offside1.setVisibility(View.INVISIBLE);
                 gif_home_position1.setVisibility(View.VISIBLE);
-                gif_guest_position1.setVisibility(View.GONE);
+                gif_guest_position1.setVisibility(View.INVISIBLE);
                 tv_home_title1.setVisibility(View.VISIBLE);
-                tv_guest_title1.setVisibility(View.GONE);
+                tv_guest_title1.setVisibility(View.INVISIBLE);
                 gif_home_ball1.setVisibility(View.VISIBLE);
-                gif_guest_ball1.setVisibility(View.GONE);
-                gif_home_hit1.setVisibility(View.GONE);
-                gif_guest_hit1.setVisibility(View.GONE);
+                gif_guest_ball1.setVisibility(View.INVISIBLE);
+                gif_home_hit1.setVisibility(View.INVISIBLE);
+                gif_guest_hit1.setVisibility(View.INVISIBLE);
                 tv_home_title1.setText(getString(R.string.football_play_deviate));
                 gif_home_ball1.setImageResource(R.mipmap.football_home_ball_gif);
                 gif_home_position1.setImageResource(R.mipmap.football_home_position_gif);
@@ -547,16 +563,16 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 break;
             case R.id.bt_guest_deviate1://客队射偏1  2064
                 ToastTools.showQuick(this, "客队射偏1");
-                rl_home_offside1.setVisibility(View.GONE);
+                rl_home_offside1.setVisibility(View.INVISIBLE);
                 rl_guest_offside1.setVisibility(View.VISIBLE);
-                gif_home_position1.setVisibility(View.GONE);
+                gif_home_position1.setVisibility(View.INVISIBLE);
                 gif_guest_position1.setVisibility(View.VISIBLE);
-                tv_home_title1.setVisibility(View.GONE);
+                tv_home_title1.setVisibility(View.INVISIBLE);
                 tv_guest_title1.setVisibility(View.VISIBLE);
-                gif_home_ball1.setVisibility(View.GONE);
+                gif_home_ball1.setVisibility(View.INVISIBLE);
                 gif_guest_ball1.setVisibility(View.VISIBLE);
-                gif_home_hit1.setVisibility(View.GONE);
-                gif_guest_hit1.setVisibility(View.GONE);
+                gif_home_hit1.setVisibility(View.INVISIBLE);
+                gif_guest_hit1.setVisibility(View.INVISIBLE);
                 tv_guest_title1.setText(getString(R.string.football_play_deviate));
                 gif_guest_ball1.setImageResource(R.mipmap.football_guest_ball_gif);
                 gif_guest_position1.setImageResource(R.mipmap.football_guest_position_gif);
@@ -565,15 +581,15 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
             case R.id.bt_home_deviate2://主队射偏2  1041
                 ToastTools.showQuick(this, "主队射偏2");
                 rl_home_offside2.setVisibility(View.VISIBLE);
-                rl_guest_offside2.setVisibility(View.GONE);
+                rl_guest_offside2.setVisibility(View.INVISIBLE);
                 gif_home_position2.setVisibility(View.VISIBLE);
-                gif_guest_position2.setVisibility(View.GONE);
+                gif_guest_position2.setVisibility(View.INVISIBLE);
                 tv_home_title2.setVisibility(View.VISIBLE);
-                tv_guest_title2.setVisibility(View.GONE);
+                tv_guest_title2.setVisibility(View.INVISIBLE);
                 gif_home_ball2.setVisibility(View.VISIBLE);
-                gif_guest_ball2.setVisibility(View.GONE);
-                gif_home_hit2.setVisibility(View.GONE);
-                gif_guest_hit2.setVisibility(View.GONE);
+                gif_guest_ball2.setVisibility(View.INVISIBLE);
+                gif_home_hit2.setVisibility(View.INVISIBLE);
+                gif_guest_hit2.setVisibility(View.INVISIBLE);
                 tv_home_title2.setText(getString(R.string.football_play_deviate));
                 gif_home_ball2.setImageResource(R.mipmap.football_home_ball2_gif);
                 gif_home_position2.setImageResource(R.mipmap.football_home_position_gif);
@@ -581,16 +597,16 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 break;
             case R.id.bt_guest_deviate2://客队射偏2  2065
                 ToastTools.showQuick(this, "客队射偏2");
-                rl_home_offside2.setVisibility(View.GONE);
+                rl_home_offside2.setVisibility(View.INVISIBLE);
                 rl_guest_offside2.setVisibility(View.VISIBLE);
-                gif_home_position2.setVisibility(View.GONE);
+                gif_home_position2.setVisibility(View.INVISIBLE);
                 gif_guest_position2.setVisibility(View.VISIBLE);
-                tv_home_title2.setVisibility(View.GONE);
+                tv_home_title2.setVisibility(View.INVISIBLE);
                 tv_guest_title2.setVisibility(View.VISIBLE);
-                gif_home_ball2.setVisibility(View.GONE);
+                gif_home_ball2.setVisibility(View.INVISIBLE);
                 gif_guest_ball2.setVisibility(View.VISIBLE);
-                gif_home_hit2.setVisibility(View.GONE);
-                gif_guest_hit2.setVisibility(View.GONE);
+                gif_home_hit2.setVisibility(View.INVISIBLE);
+                gif_guest_hit2.setVisibility(View.INVISIBLE);
                 tv_guest_title2.setText(getString(R.string.football_play_deviate));
                 gif_guest_ball2.setImageResource(R.mipmap.football_guest_ball2_gif);
                 gif_guest_position2.setImageResource(R.mipmap.football_guest_position_gif);
@@ -599,15 +615,15 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
             case R.id.bt_home_hit1://主队射正1  1039
                 ToastTools.showQuick(this, "主队射正1");
                 rl_home_offside1.setVisibility(View.VISIBLE);
-                rl_guest_offside1.setVisibility(View.GONE);
+                rl_guest_offside1.setVisibility(View.INVISIBLE);
                 gif_home_position1.setVisibility(View.VISIBLE);
-                gif_guest_position1.setVisibility(View.GONE);
+                gif_guest_position1.setVisibility(View.INVISIBLE);
                 tv_home_title1.setVisibility(View.VISIBLE);
-                tv_guest_title1.setVisibility(View.GONE);
-                gif_home_ball1.setVisibility(View.GONE);
-                gif_guest_ball1.setVisibility(View.GONE);
+                tv_guest_title1.setVisibility(View.INVISIBLE);
+                gif_home_ball1.setVisibility(View.INVISIBLE);
+                gif_guest_ball1.setVisibility(View.INVISIBLE);
                 gif_home_hit1.setVisibility(View.VISIBLE);
-                gif_guest_hit1.setVisibility(View.GONE);
+                gif_guest_hit1.setVisibility(View.INVISIBLE);
                 tv_home_title1.setText(getString(R.string.football_play_hit));
                 gif_home_hit1.setImageResource(R.mipmap.football_home_hit1);
                 gif_home_position1.setImageResource(R.mipmap.football_home_position_gif);
@@ -615,15 +631,15 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 break;
             case R.id.bt_guest_hit1://客队射正1  2063
                 ToastTools.showQuick(this, "客队射正1");
-                rl_home_offside1.setVisibility(View.GONE);
+                rl_home_offside1.setVisibility(View.INVISIBLE);
                 rl_guest_offside1.setVisibility(View.VISIBLE);
-                gif_home_position1.setVisibility(View.GONE);
+                gif_home_position1.setVisibility(View.INVISIBLE);
                 gif_guest_position1.setVisibility(View.VISIBLE);
-                tv_home_title1.setVisibility(View.GONE);
+                tv_home_title1.setVisibility(View.INVISIBLE);
                 tv_guest_title1.setVisibility(View.VISIBLE);
-                gif_home_ball1.setVisibility(View.GONE);
-                gif_guest_ball1.setVisibility(View.GONE);
-                gif_home_hit1.setVisibility(View.GONE);
+                gif_home_ball1.setVisibility(View.INVISIBLE);
+                gif_guest_ball1.setVisibility(View.INVISIBLE);
+                gif_home_hit1.setVisibility(View.INVISIBLE);
                 gif_guest_hit1.setVisibility(View.VISIBLE);
                 tv_guest_title1.setText(getString(R.string.football_play_hit));
                 gif_guest_hit1.setImageResource(R.mipmap.football_guest_hit1);
@@ -633,15 +649,15 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
             case R.id.bt_home_hit2://主队射正2  1039
                 ToastTools.showQuick(this, "主队射正2");
                 rl_home_offside2.setVisibility(View.VISIBLE);
-                rl_guest_offside2.setVisibility(View.GONE);
+                rl_guest_offside2.setVisibility(View.INVISIBLE);
                 gif_home_position2.setVisibility(View.VISIBLE);
-                gif_guest_position2.setVisibility(View.GONE);
+                gif_guest_position2.setVisibility(View.INVISIBLE);
                 tv_home_title2.setVisibility(View.VISIBLE);
-                tv_guest_title2.setVisibility(View.GONE);
-                gif_home_ball2.setVisibility(View.GONE);
-                gif_guest_ball2.setVisibility(View.GONE);
+                tv_guest_title2.setVisibility(View.INVISIBLE);
+                gif_home_ball2.setVisibility(View.INVISIBLE);
+                gif_guest_ball2.setVisibility(View.INVISIBLE);
                 gif_home_hit2.setVisibility(View.VISIBLE);
-                gif_guest_hit2.setVisibility(View.GONE);
+                gif_guest_hit2.setVisibility(View.INVISIBLE);
                 tv_home_title2.setText(getString(R.string.football_play_hit));
                 gif_home_hit2.setImageResource(R.mipmap.football_home_hit2);
                 gif_home_position2.setImageResource(R.mipmap.football_home_position_gif);
@@ -649,15 +665,15 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 break;
             case R.id.bt_guest_hit2://客队射正2  2063
                 ToastTools.showQuick(this, "客队射正2");
-                rl_home_offside2.setVisibility(View.GONE);
+                rl_home_offside2.setVisibility(View.INVISIBLE);
                 rl_guest_offside2.setVisibility(View.VISIBLE);
-                gif_home_position2.setVisibility(View.GONE);
+                gif_home_position2.setVisibility(View.INVISIBLE);
                 gif_guest_position2.setVisibility(View.VISIBLE);
-                tv_home_title2.setVisibility(View.GONE);
+                tv_home_title2.setVisibility(View.INVISIBLE);
                 tv_guest_title2.setVisibility(View.VISIBLE);
-                gif_home_ball2.setVisibility(View.GONE);
-                gif_guest_ball2.setVisibility(View.GONE);
-                gif_home_hit2.setVisibility(View.GONE);
+                gif_home_ball2.setVisibility(View.INVISIBLE);
+                gif_guest_ball2.setVisibility(View.INVISIBLE);
+                gif_home_hit2.setVisibility(View.INVISIBLE);
                 gif_guest_hit2.setVisibility(View.VISIBLE);
                 tv_guest_title2.setText(getString(R.string.football_play_hit));
                 gif_guest_hit2.setImageResource(R.mipmap.football_guest_hit2);
@@ -667,14 +683,14 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
             case R.id.bt_home_goal_door://主队球门球
                 ToastTools.showQuick(this, "主队球门球");
                 rl_home_goal_door.setVisibility(View.VISIBLE);
-                rl_guest_goal_door.setVisibility(View.GONE);
+                rl_guest_goal_door.setVisibility(View.INVISIBLE);
                 gif_home_goal_door_position.setImageResource(R.mipmap.football_home_position_gif);
                 gfi_home_goal_door.setImageResource(R.mipmap.football_home_goal_door);
                 showGifAnimation(1053);
                 break;
             case R.id.bt_guest_goal_door://客队球门球
                 ToastTools.showQuick(this, "客队球门球");
-                rl_home_goal_door.setVisibility(View.GONE);
+                rl_home_goal_door.setVisibility(View.INVISIBLE);
                 rl_guest_goal_door.setVisibility(View.VISIBLE);
                 gif_guest_goal_door_position.setImageResource(R.mipmap.football_guest_position_gif);
                 gfi_guest_goal_door.setImageResource(R.mipmap.football_guest_goal_door);
@@ -1130,23 +1146,45 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 break;
             case R.id.bt_home_goal://主队进球  1029   1030:取消
                 ToastTools.showQuick(this, "主队进球");
-
-
+                iv_home_goal.setVisibility(View.VISIBLE);
+                iv_guest_goal.setVisibility(View.GONE);
+                gif_home_goal_cancel.setVisibility(View.GONE);
+                gif_guest_goal_cancel.setVisibility(View.GONE);
+                homeAnima.start();
+                guestAnima.stop();
+                showGifAnimation(1029);
                 break;
             case R.id.bt_guest_goal://客队进球  2053  2054:取消
                 ToastTools.showQuick(this, "客队进球");
-
-
+                iv_home_goal.setVisibility(View.GONE);
+                iv_guest_goal.setVisibility(View.VISIBLE);
+                gif_home_goal_cancel.setVisibility(View.GONE);
+                gif_guest_goal_cancel.setVisibility(View.GONE);
+                guestAnima.start();
+                homeAnima.stop();
+                showGifAnimation(2053);
                 break;
-            case R.id.bt_cheer://欢呼
-                ToastTools.showQuick(this, "欢呼");
-
-
+            case R.id.bt_home_goal_cancel:// 主队取消进球
+                iv_home_goal.setVisibility(View.GONE);
+                iv_guest_goal.setVisibility(View.GONE);
+                gif_home_goal_cancel.setVisibility(View.VISIBLE);
+                gif_guest_goal_cancel.setVisibility(View.GONE);
+                showGifAnimation(-1111);
+                break;
+            case R.id.bt_guest_goal_cancel:// 客队取消进球
+                iv_home_goal.setVisibility(View.GONE);
+                iv_guest_goal.setVisibility(View.GONE);
+                gif_home_goal_cancel.setVisibility(View.GONE);
+                gif_guest_goal_cancel.setVisibility(View.VISIBLE);
+                showGifAnimation(-1111);
                 break;
             default:
                 break;
         }
     }
+
+    AnimationDrawable homeAnima;
+    AnimationDrawable guestAnima;
 
     private void showGifAnimation(int type) {
 
@@ -1213,5 +1251,11 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
 
         // 任意球fk1
         fl_free_kick_fk1_content.setVisibility(6666 == type ? View.VISIBLE : View.GONE);
+
+        // 进球
+        ll_goal_content.setVisibility((1029 == type || 2053 == type || -1111 == type) ? View.VISIBLE : View.GONE);
+
+        // 欢呼
+        ll_cheer_content.setVisibility((1029 == type || 2053 == type) ? View.VISIBLE : View.GONE);
     }
 }

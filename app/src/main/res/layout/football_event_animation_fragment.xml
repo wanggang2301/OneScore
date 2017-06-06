@@ -327,7 +327,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <View
                         android:layout_width="match_parent"
@@ -372,7 +372,6 @@
                                     android:paddingRight="10dp"
                                     android:text="@string/football_play_hit"
                                     android:textColor="@color/res_name_color"
-                                    android:visibility="gone"
                                     android:textSize="@dimen/tennis_score_item" />
 
                                 <View
@@ -420,7 +419,6 @@
                                     android:background="@drawable/football_animation_offside_bg"
                                     android:gravity="center"
                                     android:paddingLeft="10dp"
-                                    android:visibility="gone"
                                     android:text="@string/football_play_hit"
                                     android:textColor="@color/res_name_color"
                                     android:textSize="@dimen/tennis_score_item" />
@@ -455,8 +453,8 @@
                                 android:id="@+id/rl_guest_offside1"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:visibility="visible"
-                                android:layout_weight="1.5">
+                                android:layout_weight="1.5"
+                                android:visibility="visible">
 
                                 <!--坐标-->
                                 <LinearLayout
@@ -474,7 +472,6 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:visibility="gone"
                                         tools:src="@mipmap/football_guest_position_gif" />
 
                                 </LinearLayout>
@@ -495,7 +492,6 @@
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:visibility="gone"
                                         tools:src="@mipmap/football_guest_ball_gif" />
 
                                     <View
@@ -521,7 +517,6 @@
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:visibility="gone"
                                         tools:src="@mipmap/football_guest_hit1" />
 
                                     <View
@@ -557,7 +552,6 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:visibility="gone"
                                         tools:src="@mipmap/football_home_position_gif" />
 
                                     <View
@@ -583,7 +577,6 @@
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:visibility="gone"
                                         tools:src="@mipmap/football_home_ball_gif" />
 
                                     <View
@@ -609,7 +602,6 @@
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
-                                        android:visibility="gone"
                                         tools:src="@mipmap/football_home_hit1" />
 
                                     <View
@@ -643,7 +635,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <View
                         android:layout_width="match_parent"
@@ -687,9 +679,9 @@
                                     android:gravity="center"
                                     android:paddingRight="10dp"
                                     android:text="@string/football_play_hit"
-                                    android:visibility="gone"
                                     android:textColor="@color/res_name_color"
-                                    android:textSize="@dimen/tennis_score_item" />
+                                    android:textSize="@dimen/tennis_score_item"
+                                    android:visibility="gone" />
 
                                 <View
                                     android:layout_width="match_parent"
@@ -737,9 +729,9 @@
                                     android:gravity="center"
                                     android:paddingLeft="10dp"
                                     android:text="@string/football_play_hit"
-                                    android:visibility="gone"
                                     android:textColor="@color/res_name_color"
-                                    android:textSize="@dimen/tennis_score_item" />
+                                    android:textSize="@dimen/tennis_score_item"
+                                    android:visibility="gone" />
 
                                 <View
                                     android:layout_width="match_parent"
@@ -4440,6 +4432,170 @@
 
                 </RelativeLayout>
 
+                <!--进球、取消进球-->
+                <LinearLayout
+                    android:id="@+id/ll_goal_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2.5" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <!--客队-->
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <!--客队进球-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.2" />
+
+                                <ImageView
+                                    android:id="@+id/iv_guest_goal"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    tools:src="@drawable/football_goal_animation" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="2" />
+
+                            </LinearLayout>
+
+                            <!--客队取消进球-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.5" />
+
+                                <pl.droidsonroids.gif.GifImageView
+                                    android:id="@+id/gif_guest_goal_cancel"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    tools:src="@mipmap/football_cancel_goal" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="2" />
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                        <!--主队-->
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <!--主队进球-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="2" />
+
+                                <ImageView
+                                    android:id="@+id/iv_home_goal"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:scaleX="-1"
+                                    tools:src="@drawable/football_goal_animation" />
+
+                            </LinearLayout>
+
+                            <!--主队取消进球-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="2" />
+
+                                <pl.droidsonroids.gif.GifImageView
+                                    android:id="@+id/gif_home_goal_cancel"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:scaleX="-1"
+                                    tools:src="@mipmap/football_cancel_goal" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.5" />
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+
+                <!--欢呼-->
+                <LinearLayout
+                    android:id="@+id/ll_cheer_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="6" />
+
+                    <pl.droidsonroids.gif.GifImageView
+                        android:id="@+id/gif_cheer"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        tools:src="@mipmap/football_cheer" />
+
+                </LinearLayout>
+
             </FrameLayout>
 
         </FrameLayout>
@@ -4970,11 +5126,18 @@
                         android:text="客队进球" />
 
                     <Button
-                        android:id="@+id/bt_cheer"
+                        android:id="@+id/bt_home_goal_cancel"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="欢呼" />
+                        android:text="主队取消进球" />
+
+                    <Button
+                        android:id="@+id/bt_guest_goal_cancel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="客队取消进球" />
 
                 </LinearLayout>
 
