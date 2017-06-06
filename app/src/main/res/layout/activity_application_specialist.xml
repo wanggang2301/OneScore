@@ -139,10 +139,27 @@
 
                 </LinearLayout>
 
-                <RelativeLayout
-
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
+
+
+                    <com.hhly.mlottery.view.GrapeGridview
+                        android:id="@+id/gridview"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:columnWidth="0dp"
+                        android:gravity="center"
+                        android:horizontalSpacing="7.5dp"
+                        android:numColumns="3"
+                        android:scrollbars="none"
+                        android:stretchMode="columnWidth"
+                        android:verticalSpacing="9dp"/>
 
                     <TextView
                         android:id="@+id/tv_comfirm"
@@ -158,12 +175,12 @@
                         android:textColor="@color/white"
                         android:textSize="12sp" />
 
-                </RelativeLayout>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="162dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal">
@@ -174,7 +191,7 @@
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:gravity="center"
+
                         android:text="专家简介" />
 
                     <RelativeLayout

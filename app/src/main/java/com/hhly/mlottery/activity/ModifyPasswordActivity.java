@@ -145,7 +145,7 @@ public class ModifyPasswordActivity extends BaseActivity implements View.OnClick
                         param.put("sign",sign);
 
 
-                        VolleyContentFast.requestJsonByPost("http://192.168.10.242:8091/user/updatepassword", param, new VolleyContentFast.ResponseSuccessListener<Register>() {
+                        VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
                             @Override
                             public void onResponse(Register reset) {
                                 progressBar.dismiss();

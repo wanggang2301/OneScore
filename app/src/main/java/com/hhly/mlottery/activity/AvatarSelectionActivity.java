@@ -267,6 +267,7 @@ public class AvatarSelectionActivity extends Activity implements View.OnClickLis
         progressBar.show();
         Map<String, String> param = new HashMap<>();
 
+
         param.put("userId", AppConstants.register.getUser().getUserId());
 
         param.put("avatorURL",headerUrl);
@@ -274,7 +275,7 @@ public class AvatarSelectionActivity extends Activity implements View.OnClickLis
 
         String sign=DeviceInfo.getSign("/user/updateavatorbyurl"+"avatorURL"+headerUrl+"langzh"+"loginToken"+AppConstants.register.getToken()+"timeZone8"+"userId"+AppConstants.register.getUser().getUserId());
         param.put("sign",sign);
-        VolleyContentFast.requestJsonByPost("http://192.168.10.242:8091/user/updateavatorbyurl", param, new VolleyContentFast.ResponseSuccessListener<Register>() {
+        VolleyContentFast.requestJsonByPost(BaseURLs.PUT_PHOTO_URL, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
             @Override
             public void onResponse(Register register) {
                 //  progressBar.dismiss();

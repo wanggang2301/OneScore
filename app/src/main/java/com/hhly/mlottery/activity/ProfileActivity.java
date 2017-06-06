@@ -697,7 +697,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
             //BaseURLs.MODIFY_PICTURE
 
             Request request = new Request.Builder()//建立请求
-                    .url("http://192.168.10.242:8091/user/updateavator")//请求的地址
+                    .url(BaseURLs.MODIFY_PICTURE)//请求的地址
                     .post(requestBody)//请求的内容（上面建立的requestBody）
                     .build();
 

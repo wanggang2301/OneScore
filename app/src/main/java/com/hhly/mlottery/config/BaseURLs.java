@@ -946,6 +946,8 @@ public class BaseURLs {
      * 修改密码
      */
     public final static String URL_CHANGEPASSWORD = P_URL_API_HOST + "user/updatepassword";
+    //上传头像
+    public final static String PUT_PHOTO_URL=P_URL_API_HOST+"user/updateavatorbyurl";
 
     /**
      * 资讯Id查询

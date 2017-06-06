@@ -44,12 +44,12 @@
 
             <ImageView
                 android:id="@+id/rl_setting_frame"
-                android:paddingTop="25dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:paddingRight="15dp"
+                android:paddingTop="25dp"
                 android:src="@mipmap/personal_setup" />
 
         </RelativeLayout>
@@ -76,7 +76,6 @@
 
     </LinearLayout>
     <!--分割线-->
-
 
 
     <!--我的关注-->

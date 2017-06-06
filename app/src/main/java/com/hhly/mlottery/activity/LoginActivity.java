@@ -607,7 +607,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 param.put("sign",sign);
                 setResult(RESULT_OK);
 
-                VolleyContentFast.requestJsonByPost("http://192.168.10.242:8091/user/login", param, new VolleyContentFast.ResponseSuccessListener<Register>() {
+                VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
                     @Override
                     public void onResponse(Register register) {
 

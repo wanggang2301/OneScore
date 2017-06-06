@@ -8,16 +8,21 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.adapter.ChoseLeagueAdapter;
 import com.hhly.mlottery.util.UiUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -40,6 +45,9 @@ public class ApplicationSpecialistActivity  extends  BaseActivity implements Vie
     private LinearLayout error_prompt;
     private EditText good_league;
     private TextView tv_comfirm;
+    private GridView gridview;
+    private ChoseLeagueAdapter choseLeagueAdapter;
+    private List<String> datas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +70,12 @@ public class ApplicationSpecialistActivity  extends  BaseActivity implements Vie
         findViewById(R.id.public_img_back).setOnClickListener(this);
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
+
+
+
+
+
+        gridview = (GridView) findViewById(R.id.gridview);
 
         set_rd_alet = (ImageView) findViewById(R.id.set_rd_alet);
         set_rd_alet.setOnClickListener(this);
@@ -168,13 +182,24 @@ public class ApplicationSpecialistActivity  extends  BaseActivity implements Vie
     }
 
     private void SplitString(String text) {
+        datas = new ArrayList<>();
 
         String[] str = text.split("，");
+
         for (int i = 0; i < str.length; i++) {
-            System.out.println(str[i]);
+            datas.add(str[i]);
+            //System.out.println(str[i]);
         }
 
-
+        choseLeagueAdapter = new ChoseLeagueAdapter(this, datas, R.layout.choseleauge_item);
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                datas.remove(i);
+                choseLeagueAdapter.notifyDataSetChanged();
+            }
+        });
+        gridview.setAdapter(choseLeagueAdapter);
     }
 
     @Override
@@ -192,6 +217,5 @@ public class ApplicationSpecialistActivity  extends  BaseActivity implements Vie
             }
 
         }, 300);
-
     }
 }

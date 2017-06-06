@@ -150,7 +150,7 @@ public class MoreSettingsActivity extends BaseActivity  implements View.OnClickL
         param.put("userId", AppConstants.register.getUser().getUserId());
         param.put("loginToken", AppConstants.register.getToken());
 
-        VolleyContentFast.requestJsonByGet("http://192.168.10.242:8091/user/logout", param, new VolleyContentFast.ResponseSuccessListener<Register>() {
+        VolleyContentFast.requestJsonByGet(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
             @Override
             public void onResponse(Register register) {
 

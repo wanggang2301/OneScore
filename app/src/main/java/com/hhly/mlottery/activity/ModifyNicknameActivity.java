@@ -119,7 +119,7 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
                  String sign=DeviceInfo.getSign("/user/updatenickname"+"langzh"+"loginToken"+AppConstants.register.getToken()+"nickname"+nickName+"timeZone8"+"userId"+AppConstants.register.getUser().getUserId());
                  param.put("sign",sign);
 
-                 VolleyContentFast.requestJsonByPost("http://192.168.10.242:8091/user/updatenickname", param, new VolleyContentFast.ResponseSuccessListener<Register>() {
+                 VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
                      @Override
                      public void onResponse(Register bean) {
 
