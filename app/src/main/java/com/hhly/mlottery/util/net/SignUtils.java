@@ -1,7 +1,5 @@
 package com.hhly.mlottery.util.net;
 
-import com.hhly.mlottery.util.L;
-
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -117,7 +115,5 @@ public class SignUtils {
         int d2 = n % 16;
         return hexDigits[d1] + hexDigits[d2];
     }
-
-
 
 }
