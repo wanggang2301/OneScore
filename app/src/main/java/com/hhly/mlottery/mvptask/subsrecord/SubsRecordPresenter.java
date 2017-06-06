@@ -13,7 +13,7 @@ import rx.Subscriber;
 /**
  * @author: Wangg
  * @name：xxx
- * @description: xxx
+ * @description: 订阅记录的presenter
  * @created on:2017/6/1  19:13.
  */
 
