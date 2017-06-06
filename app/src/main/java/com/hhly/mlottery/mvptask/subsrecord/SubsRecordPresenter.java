@@ -2,6 +2,7 @@ package com.hhly.mlottery.mvptask.subsrecord;
 
 import com.hhly.mlottery.mvp.BasePresenter;
 import com.hhly.mlottery.mvptask.IContract;
+import com.hhly.mlottery.util.CollectionUtils;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDa
 
     private Repository repository;
     private List<SubsRecordBean.PurchaseRecordsBean.ListBean> listBeanList;
+    private boolean isHasNextPage = false;
 
     public SubsRecordPresenter(IContract.IPullLoadMoreDataView view) {
         super(view);
@@ -43,15 +45,22 @@ public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDa
 
             @Override
             public void onError(Throwable e) {
-                mView.loading();
+                mView.onError();
             }
 
             @Override
             public void onNext(SubsRecordBean subsRecordBean) {
                 if (!"200".equals(subsRecordBean.getCode())) {
-                    mView.loading();
+                    mView.onError();
                     return;
                 }
+
+                if (!CollectionUtils.notEmpty(subsRecordBean.getPurchaseRecords().getList())) {
+                    mView.noData();
+                    return;
+                }
+
+                isHasNextPage = subsRecordBean.getPurchaseRecords().isHasNextPage();
                 listBeanList = subsRecordBean.getPurchaseRecords().getList();
                 mView.responseData();
             }
@@ -61,6 +70,37 @@ public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDa
 
     @Override
     public void pullUpLoadMoreData(String userId, String pageNum, String pageSize, String loginToken, String sign) {
+
+        //if (!isHasNextPage) {
+        if (false) {
+            mView.pullUpLoadMoreDataFail();
+            return;
+        }
+
+        mView.pullUploadongView();
+
+        addSubscription(repository.getSubsRecord(userId, pageNum, pageSize, loginToken, sign), new Subscriber<SubsRecordBean>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mView.pullUpLoadMoreDataFail();
+            }
+
+            @Override
+            public void onNext(SubsRecordBean subsRecordBean) {
+                if (!"200".equals(subsRecordBean.getCode())) {
+                    mView.pullUpLoadMoreDataFail();
+                    return;
+                }
+                isHasNextPage = subsRecordBean.getPurchaseRecords().isHasNextPage();
+                listBeanList = subsRecordBean.getPurchaseRecords().getList();
+                mView.pullUpLoadMoreDataSuccess();
+            }
+        });
+
 
     }
 

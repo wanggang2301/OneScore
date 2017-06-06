@@ -24,6 +24,7 @@ import com.hhly.mlottery.mvptask.IContract;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -80,7 +81,8 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
         return subsRecordFragment;
     }
 
-    public SubsRecordFragment() {}
+    public SubsRecordFragment() {
+    }
 
 
     @Override
@@ -119,7 +121,17 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
 
     @Override
     public void responseData() {
-        listBeanList = mPresenter.getSubsRecordData();
+
+        handleException.setVisibility(View.GONE);
+        flNetworkError.setVisibility(View.GONE);
+        flNodata.setVisibility(View.GONE);
+        refresh.setVisibility(View.VISIBLE);
+        refresh.setRefreshing(false);
+
+        listBeanList = new ArrayList<>();
+
+        listBeanList.addAll(mPresenter.getSubsRecordData());
+
         mSubsRecordAdapter = new SubsRecordAdapter(mActivity, listBeanList);
         recyclerView.setAdapter(mSubsRecordAdapter);
         mSubsRecordAdapter.openLoadMore(0, true);
@@ -130,7 +142,7 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
                 recyclerView.post(new Runnable() {
                     @Override
                     public void run() {
-                       // mPresenter.pullUpLoadMoreData();
+                        mPresenter.pullUpLoadMoreData(userId, "1", PAGE_SIZE, loginToken, sign);
                     }
                 });
             }
@@ -141,7 +153,10 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
 
     @Override
     public void noData() {
-
+        handleException.setVisibility(View.VISIBLE);
+        flNetworkError.setVisibility(View.GONE);
+        flNodata.setVisibility(View.VISIBLE);
+        refresh.setVisibility(View.GONE);
     }
 
     @Override
@@ -155,15 +170,20 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
     @Override
     public void onRefresh() {
         refresh.setRefreshing(false);
+        mPresenter.requestData(userId, "1", PAGE_SIZE, loginToken, sign);
     }
 
 
     @Override
-    public void pullUpLoadMoreDataSuccess() {
+    public void pullUploadongView() {
         loadmoreText.setText(mActivity.getResources().getString(R.string.loading_data_txt));
         progressBar.setVisibility(View.VISIBLE);
 
-        // mList.addAll(foreignInfomationBean.getOverseasInformationList());
+    }
+
+    @Override
+    public void pullUpLoadMoreDataSuccess() {
+        listBeanList.addAll(mPresenter.getSubsRecordData());
         mSubsRecordAdapter.notifyDataChangedAfterLoadMore(true);
     }
 

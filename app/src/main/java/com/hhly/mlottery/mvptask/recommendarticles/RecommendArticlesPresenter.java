@@ -84,7 +84,6 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
                 if (!"".equals("200")) {
 
                     mView.pullUpLoadMoreDataFail();
-
                     return;
                 } else {
 

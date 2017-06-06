@@ -162,10 +162,16 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
 
     @Override
     public void pullUpLoadMoreDataSuccess() {
-        loadmoreText.setText(mActivity.getResources().getString(R.string.loading_data_txt));
-        progressBar.setVisibility(View.VISIBLE);
+
         listBeanList.addAll(mPresenter.getRecommendArticlesData());
         mRecommendArticlesAdapter.notifyDataChangedAfterLoadMore(true);
+    }
+
+
+    @Override
+    public void pullUploadongView() {
+        loadmoreText.setText(mActivity.getResources().getString(R.string.loading_data_txt));
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
