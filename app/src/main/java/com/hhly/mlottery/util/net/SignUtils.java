@@ -32,7 +32,7 @@ public class SignUtils {
         return paramentMD5.toLowerCase();
     }
 
-    public static List<String> getMapKey(Map<String , String> paraMap){
+    private static List<String> getMapKey(Map<String , String> paraMap){
 
         List<String> mapKeyList = new ArrayList<>();
 
@@ -43,7 +43,7 @@ public class SignUtils {
         return mapKeyList;
     }
 
-     public static List<String> paixuKey(List<String> keyList){
+    private static List<String> paixuKey(List<String> keyList){
          List<String> mapSortList = new ArrayList<>();
          Collections.sort(keyList, String.CASE_INSENSITIVE_ORDER);
          for (String key : keyList) {
@@ -52,7 +52,7 @@ public class SignUtils {
          return mapSortList;
      }
 
-     public static String getStringKeyValue(List<String> sortList , Map<String , String> paraMap){
+    private static String getStringKeyValue(List<String> sortList , Map<String , String> paraMap){
 
          StringBuffer sb = new StringBuffer();
          for (String keyList : sortList) {
@@ -63,7 +63,7 @@ public class SignUtils {
      }
 
      //获得随机两位 hexDigits[] 中
-     public static String ranDomNum(){
+     private static String ranDomNum(){
          Random rand = new Random();
          int i = rand.nextInt(15);
          int j = rand.nextInt(15);
