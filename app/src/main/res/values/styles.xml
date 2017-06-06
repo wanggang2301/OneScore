@@ -1169,19 +1169,7 @@
         <item name="android:paddingRight">10dp</item>
     </style>
     <!-- 竞彩推介发布文字内容 -->
-    <style name="betting_recommend_issue_fabu">
-    <!--角球列表页赔率字体样式-->
-    <style name="corner_text_style">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/betting_issue_check_txt_color</item>
-        <item name="android:textSize">@dimen/text_size_12</item>
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingBottom">8dp</item>
-        <item name="android:paddingLeft">12dp</item>
-        <item name="android:paddingRight">12dp</item>
-    </style>
+    <style name="betting_recommend_issue_fabu"/>
 
     <!--竞彩推介发布详情-->
     <style name="betting_recommend_issue_fabu_key">

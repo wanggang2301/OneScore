@@ -104,15 +104,15 @@ public class MvpBettingOnlinePaymentActivity extends BaseActivity implements MVi
         // userId=hhly90531&promotionId=642&sign=59891f91c988198909c527399031d7f111&channel=1&token=eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJqd3QiLCJpYXQiOjE0OTYzNzY2NjIsInN1YiI6IntcImlkXCI6XCJoaGx5OTA1MzFcIixcInBob25lTnVtXCI6XCIxMzI2Njc1MjM4NlwifSJ9.2hmsToL-ex9LXRbWI44cuDhqKqZva_qBPG1pKB_IVfU
 
         String url = "http://192.168.10.242:8092/promotion/order/create";
-        String userid = AppConstants.register.getData().getUser().getUserId();
-        String token = AppConstants.register.getData().getLoginToken();
+        String userid = AppConstants.register.getUser().getUserId();
+        String token = AppConstants.register.getToken();
 
         Map<String ,String> mapPrament = new HashMap<>();
 
         mapPrament.put("userId" , userid);//用户id
         mapPrament.put("promotionId" , promId); //推荐ID
         mapPrament.put("channel" , "1"); //0：PC 1：安卓 2:IOS 3:H5
-        mapPrament.put("logintoken" , token); //logintoken
+        mapPrament.put("loginToken" , token); //logintoken
         mapPrament.put("lang" , "zh");
         mapPrament.put("timeZone" , "8");
         String signs = SignUtils.getSign("/promotion/order/create" , mapPrament);
@@ -121,7 +121,7 @@ public class MvpBettingOnlinePaymentActivity extends BaseActivity implements MVi
         map.put("userId" , userid);//用户id
         map.put("promotionId" , promId); //推荐ID
         map.put("channel" , "1"); //0：PC 1：安卓 2:IOS 3:H5
-        map.put("logintoken" , token); //logintoken
+        map.put("loginToken" , token); //logintoken
         map.put("sign" , signs);
 
         L.d("qwer== >> " + signs);
@@ -183,7 +183,7 @@ public class MvpBettingOnlinePaymentActivity extends BaseActivity implements MVi
      */
     private Map<String, String> getDataMap(String service){
         Map<String, String> map = new HashMap<String, String>();
-        String userid = AppConstants.register.getData().getUser().getUserId();
+        String userid = AppConstants.register.getUser().getUserId();
         String token = AppConstants.deviceToken;
         String sign = AppConstants.SIGN_KEY;
 

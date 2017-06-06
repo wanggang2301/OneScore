@@ -406,7 +406,9 @@
 
         <!--专家详情MVP-->
         <activity android:name=".mvp.bettingmvp.mvpview.MvpBettingRecommendActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+
+        </activity>
         <activity android:name=".mvp.bettingmvp.mvpview.MvpBettingPayDetailsActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".mvp.bettingmvp.mvpview.MvpBettingOnlinePaymentActivity"

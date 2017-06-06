@@ -167,7 +167,7 @@ public class MvpBettingPayDetailsActivity extends BaseActivity implements MView<
         //http://192.168.10.242:8092/promotion/info/detail?
         // userId=hhly90662&promotionId=643&sign=007ec32c4f7279cfd49260c408528c0412
         String url = "http://192.168.10.242:8092/promotion/info/detail";
-        String userid = AppConstants.register.getData().getUser().getUserId();
+        String userid = AppConstants.register.getUser().getUserId();
         Map<String ,String> mapPrament = new HashMap<>();
 
         mapPrament.put("userId" , userid);//用户id
