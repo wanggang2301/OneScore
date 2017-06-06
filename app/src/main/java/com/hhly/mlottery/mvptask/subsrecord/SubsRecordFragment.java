@@ -3,6 +3,7 @@ package com.hhly.mlottery.mvptask.subsrecord;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.custom.SubsRecordAdapter;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.ViewFragment;
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingRecommendActivity;
 import com.hhly.mlottery.mvptask.IContract;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
@@ -236,8 +238,8 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
                 break;
 
             case R.id.btn_confirm:
-
-
+                startActivity(new Intent(mActivity, MvpBettingRecommendActivity.class));
+                // MvpBettingRecommendActivity
 
                 break;
         }

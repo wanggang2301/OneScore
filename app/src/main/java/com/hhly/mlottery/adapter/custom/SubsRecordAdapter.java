@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
 import com.hhly.mlottery.view.CircleImageView;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
     }
 
     @Override
-    protected void convert(BaseViewHolder baseViewHolder, SubsRecordBean.PurchaseRecordsBean.ListBean b) {
+    protected void convert(BaseViewHolder baseViewHolder, final SubsRecordBean.PurchaseRecordsBean.ListBean b) {
         Glide.with(mContext).load(b.getHeadImg()).into((CircleImageView) baseViewHolder.getView(R.id.betting_portrait_img));
         baseViewHolder.setText(R.id.betting_specialist_name, b.getNickName() + "__" + getViewHolderPosition(baseViewHolder));
         baseViewHolder.setText(R.id.betting_specialist_grade, getSpecialistGrade(b.getLevels()));
@@ -68,6 +69,33 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
             @Override
             public void onClick(View v) { //跳转到记录详情
 
+                BettingListDataBean.PromotionData.BettingListData bettingListData = new BettingListDataBean.PromotionData.BettingListData();
+
+/*
+                String imgUrl = itemData.getPhotoUrl();
+                ImageLoader.load(mContext,imgUrl,R.mipmap.football_analyze_default).into(portraitImg);
+                detailsHomeName.setText(filtraNull(itemData.getHomeName()));
+                detailsGuestName.setText(filtraNull(itemData.getGuestName()));
+                detailsWeek.setText(filtraNull(itemData.getSerNum()));
+                detailsLuague.setText(filtraNull(itemData.getLeagueName()));
+                detailsDate.setText(filtraNull(itemData.getReleaseDate()));
+                */
+            /*
+                bettingListData.setId(b.getId());
+                bettingListData.setHomeName(b.getHomeName());
+                bettingListData.setGuestName(b.getGuestName());
+                bettingListData.setPrice(String.valueOf(b.getPrice()));
+
+                bettingListData.setPhotoUrl(b.getHeadImg());
+                bettingListData.setLeagueName(b.getLeagueName());
+
+
+
+
+                Intent intent = new Intent(mContext, MvpBettingPayDetailsActivity.class);*/
+
+
+                //MvpBettingPayDetailsActivity
             }
         });
 

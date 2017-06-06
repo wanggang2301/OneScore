@@ -172,7 +172,7 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
 
     private void initData(String type , String key){
         String url = "http://192.168.10.242:8092/promotion/info/list";
-        String userid = AppConstants.register.getData().getUser().getUserId();
+        String userid = AppConstants.register.getUser().getUserId();
         Map<String ,String> mapPrament = new HashMap<>();
 
         mapPrament.put("pageSize" , "10"); //每页条数
@@ -205,7 +205,7 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
         L.d("上拉加载、、、");
         String url = "http://192.168.10.242:8092/promotion/info/list";
         Map<String ,String> map = new HashMap<>();
-        String userid = AppConstants.register.getData().getUser().getUserId();
+        String userid = AppConstants.register.getUser().getUserId();
         String sign = AppConstants.SIGN_KEY;
         map.put("pageSize" , "10"); //每页条数
         map.put("pageNo" , "1");//页码

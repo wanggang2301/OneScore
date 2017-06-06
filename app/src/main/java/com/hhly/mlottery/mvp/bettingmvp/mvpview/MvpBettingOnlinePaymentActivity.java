@@ -13,11 +13,10 @@ import android.widget.Toast;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BaseActivity;
 import com.hhly.mlottery.bean.bettingbean.BettingOrderDataBean;
+import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.PayMentZFBResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.mvppresenter.MvpBettingOnlinePaymentPresenter;
-import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBean;
-import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PayMentUtils;
@@ -104,8 +103,8 @@ public class MvpBettingOnlinePaymentActivity extends BaseActivity implements MVi
         // userId=hhly90531&promotionId=642&sign=59891f91c988198909c527399031d7f111&channel=1&token=eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJqd3QiLCJpYXQiOjE0OTYzNzY2NjIsInN1YiI6IntcImlkXCI6XCJoaGx5OTA1MzFcIixcInBob25lTnVtXCI6XCIxMzI2Njc1MjM4NlwifSJ9.2hmsToL-ex9LXRbWI44cuDhqKqZva_qBPG1pKB_IVfU
 
         String url = "http://192.168.10.242:8092/promotion/order/create";
-        String userid = AppConstants.register.getData().getUser().getUserId();
-        String token = AppConstants.register.getData().getLoginToken();
+        String userid = AppConstants.register.getUser().getUserId();
+        String token = AppConstants.register.getToken();
 
         Map<String ,String> mapPrament = new HashMap<>();
 
@@ -183,7 +182,7 @@ public class MvpBettingOnlinePaymentActivity extends BaseActivity implements MVi
      */
     private Map<String, String> getDataMap(String service){
         Map<String, String> map = new HashMap<String, String>();
-        String userid = AppConstants.register.getData().getUser().getUserId();
+        String userid = AppConstants.register.getUser().getUserId();
         String token = AppConstants.deviceToken;
         String sign = AppConstants.SIGN_KEY;
 

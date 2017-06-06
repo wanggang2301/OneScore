@@ -17,7 +17,6 @@ import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
 import com.hhly.mlottery.mvp.bettingmvp.mvppresenter.MvpBettingPayDetailsPresenter;
-import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBean;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.ImageLoader;
@@ -167,7 +166,7 @@ public class MvpBettingPayDetailsActivity extends BaseActivity implements MView<
         //http://192.168.10.242:8092/promotion/info/detail?
         // userId=hhly90662&promotionId=643&sign=007ec32c4f7279cfd49260c408528c0412
         String url = "http://192.168.10.242:8092/promotion/info/detail";
-        String userid = AppConstants.register.getData().getUser().getUserId();
+        String userid = AppConstants.register.getUser().getUserId();
         Map<String ,String> mapPrament = new HashMap<>();
 
         mapPrament.put("userId" , userid);//用户id
