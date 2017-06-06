@@ -415,6 +415,9 @@
             android:name=".activity.BettingRecommendSettingActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.ApplicationSpecialistActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.FootballCornerActivity"
             android:screenOrientation="portrait" />
         <activity

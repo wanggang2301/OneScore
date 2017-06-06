@@ -3,7 +3,6 @@ package data.repository;
 
 import data.api.UserCenterApiService;
 import data.model.BottomOddsDetails;
-import data.model.RecommendArticlesBean;
 import data.model.SubsRecordBean;
 import rx.Observable;
 
@@ -25,14 +24,7 @@ public class UserCenterRepository {
         return mUserCenterApiService.getBowlList(thirdId, oddType);
     }
 
-    public Observable<SubsRecordBean> getSubsRecord(String userId, String pageNum, String pageSize, String loginToken, String sign) {
-        return mUserCenterApiService.getSubsRecord(userId, pageNum, pageSize, loginToken, sign);
+    public Observable<SubsRecordBean> getSubsRecord(String userId, String pageNum, String pageSize) {
+        return mUserCenterApiService.getSubsRecord(userId, pageNum, pageSize);
     }
-
-
-    public Observable<RecommendArticlesBean> getRecommendArtices(String userId, String pageNum, String pageSize, String loginToken, String sign) {
-        return mUserCenterApiService.getRecommendArticles(userId, pageNum, pageSize, loginToken, sign);
-    }
-
-
 }

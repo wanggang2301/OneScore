@@ -6,6 +6,10 @@ package com.hhly.mlottery.util.net.account;
  */
 public interface OperateType {
 
+    String FORGET="forget";
+
+    String REGISTER="register";
+
     String TYPE_REGISTER = "1";
 
     String TYPE_BINDPHONE = "2";

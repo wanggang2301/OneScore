@@ -41,6 +41,17 @@
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
+
+            <ImageView
+                android:id="@+id/rl_setting_frame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingRight="15dp"
+                android:paddingTop="25dp"
+                android:src="@mipmap/personal_setup" />
+
         </RelativeLayout>
 
         <com.hhly.mlottery.view.CircleImageView
@@ -65,20 +76,18 @@
 
     </LinearLayout>
     <!--分割线-->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/linecolor" />
+
+
     <!--我的关注-->
     <RelativeLayout
-        android:visibility="gone"
+
         android:id="@+id/rl_my_focus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/channel_title_front"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/focus_img"
@@ -123,6 +132,180 @@
             android:paddingRight="15dp"
             android:src="@mipmap/unconection_next" />
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/zhongxin"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/channel_title_front">
+
+        <LinearLayout
+            android:id="@+id/my_balance"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@mipmap/withdraw" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="余额"
+                android:textSize="@dimen/text_size_13" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/my_income"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@mipmap/income" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="收入"
+                android:textSize="@dimen/text_size_13" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <!--分割线-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/channel_title_front"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="10dp"
+            android:background="@color/linecolor" />
+    </LinearLayout>
+    <!--我的定制-->
+    <RelativeLayout
+
+        android:id="@+id/rl_custom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/channel_title_front"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/custom_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/center_icon_guanzhu" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/custom_img"
+            android:padding="15dp">
+
+            <TextView
+                android:id="@+id/custom_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/my_focus"
+                android:textColor="@color/res_name_color"
+                android:textSize="@dimen/home_pager_user_title" />
+            <!--<View-->
+            <!--android:id="@+id/custom_red_dot_view"-->
+            <!--android:layout_width="8dp"-->
+            <!--android:layout_height="8dp"-->
+            <!--android:background="@drawable/shape_red_dot"-->
+            <!--android:layout_toRightOf="@id/custom_txt"-->
+            <!--/>-->
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="15dp"
+            android:src="@mipmap/unconection_next" />
+    </RelativeLayout>
+    <!--分割线-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/channel_title_front"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="10dp"
+            android:background="@color/linecolor" />
+    </LinearLayout>
+    <!--订阅记录-->
+    <RelativeLayout
+        android:id="@+id/rl_my_subscribe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/channel_title_front"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/subscribe_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/personal_sub" />
+
+        <RelativeLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/subscribe_img"
+            android:padding="15dp">
+
+
+            <TextView
+                android:id="@+id/subscribe_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="订阅记录"
+                android:textColor="@color/res_name_color"
+                android:textSize="@dimen/home_pager_user_title" />
+        </RelativeLayout>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="15dp"
+            android:src="@mipmap/unconection_next" />
+    </RelativeLayout>
     <!--分割线-->
     <LinearLayout
         android:layout_width="match_parent"
@@ -137,43 +320,113 @@
             android:background="@color/linecolor" />
     </LinearLayout>
 
+    <!--分割线-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/channel_title_front"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="10dp"
+            android:background="@color/linecolor" />
+    </LinearLayout>
+    <!--申请专家-->
     <RelativeLayout
-        android:id="@+id/rl_custom"
+        android:id="@+id/rl_my_apply"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/channel_title_front"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        android:visibility="visible">
 
         <ImageView
-            android:id="@+id/custom_img"
+            android:id="@+id/apply_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:src="@mipmap/custom_logo" />
+            android:src="@mipmap/personal_expert" />
+
+        <RelativeLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/apply_img"
+            android:padding="15dp">
+
+
+            <TextView
+                android:id="@+id/apply_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="申请专家"
+                android:textColor="@color/res_name_color"
+                android:textSize="@dimen/home_pager_user_title" />
+        </RelativeLayout>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="15dp"
+            android:src="@mipmap/unconection_next" />
+    </RelativeLayout>
+    <!--分割线-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/channel_title_front"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="10dp"
+            android:background="@color/linecolor" />
+    </LinearLayout>
+    <!--推介文章-->
+    <RelativeLayout
+        android:id="@+id/rl_my_promotion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/channel_title_front"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/promotion_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/personal_promotion" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/custom_img"
+            android:layout_toRightOf="@+id/promotion_img"
             android:padding="15dp">
 
             <TextView
-                android:id="@+id/custom_txt"
+                android:id="@+id/promotion_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="@string/custom_mine_cus"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="推介文章"
                 android:textColor="@color/res_name_color"
                 android:textSize="@dimen/home_pager_user_title" />
-            <!--<View-->
-            <!--android:id="@+id/custom_red_dot_view"-->
-            <!--android:layout_width="8dp"-->
-            <!--android:layout_height="8dp"-->
-            <!--android:background="@drawable/shape_red_dot"-->
-            <!--android:layout_toRightOf="@id/custom_txt"-->
-            <!--/>-->
         </RelativeLayout>
 
 
@@ -203,6 +456,7 @@
         android:id="@+id/rl_language_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:background="@color/channel_title_front"
         android:clickable="true"
         android:focusable="true">
@@ -251,6 +505,7 @@
         android:id="@+id/rl_user_feedback"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:background="@color/channel_title_front"
         android:clickable="true"
         android:focusable="true"
@@ -281,6 +536,7 @@
             android:paddingRight="15dp"
             android:src="@mipmap/unconection_next" />
     </RelativeLayout>
+
     <!--分割线-->
     <LinearLayout
         android:layout_width="match_parent"
@@ -293,12 +549,84 @@
             android:layout_height="0.5dp"
             android:background="@color/linecolor" />
     </LinearLayout>
+    <!--推介文章-->
+    <RelativeLayout
+        android:id="@+id/rl_my_join"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/channel_title_front"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/join_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/personal_qqun" />
+
+        <RelativeLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/join_img"
+            android:layout_toRightOf="@+id/join_img"
+            android:padding="15dp">
+
+
+            <TextView
+                android:id="@+id/join_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="加入QQ粉丝群"
+                android:textColor="@color/res_name_color"
+                android:textSize="@dimen/home_pager_user_title" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/back"
+            android:text="332434723"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="15dp"
+            android:src="@mipmap/unconection_next" />
+    </RelativeLayout>
+    <!--分割线-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/channel_title_front"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="10dp"
+            android:background="@color/linecolor" />
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_marginTop="13dp"
-        android:background="@color/linecolor" />
+        android:background="@color/linecolor"
+        android:visibility="gone" />
 
     <!-- <RelativeLayout
          android:id="@+id/rl_about_frame"
@@ -347,14 +675,14 @@
      </LinearLayout>-->
 
     <!---->
-    <!--<RelativeLayout
-        android:visibility="gone"
+    <RelativeLayout
         android:id="@+id/rl_setting_invited"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/channel_title_front"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/invited_prize"
@@ -400,27 +728,17 @@
 
         </RelativeLayout>
 
-    </RelativeLayout>-->
-    <!--分割线-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/channel_title_front"
-        android:orientation="vertical">
+    </RelativeLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/linecolor" />
-    </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/rl_setting_frame"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/channel_title_front"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/center_setting"
@@ -447,18 +765,7 @@
             android:paddingRight="15dp"
             android:src="@mipmap/unconection_next" />
     </RelativeLayout>
-    <!--分割线-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/channel_title_front"
-        android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/linecolor" />
-    </LinearLayout>
 
     <!--
 

@@ -129,8 +129,8 @@ public class FocusUtils {
         String uMengDeviceToken = PreferenceUtil.getString(AppConstants.uMengDeviceToken, "");
         Log.e("AAA", uMengDeviceToken + "???");
         String userId = "";
-        if (AppConstants.register != null && AppConstants.register.getData() != null && AppConstants.register.getData().getUser() != null) {
-            userId = AppConstants.register.getData().getUser().getUserId();
+        if (AppConstants.register != null && AppConstants.register != null && AppConstants.register.getUser() != null) {
+            userId = AppConstants.register.getUser().getUserId();
         }
         //thirdId
         String url = "http://192.168.31.73:8080/mlottery/core/pushSetting.followMatch.do";
@@ -185,8 +185,8 @@ public class FocusUtils {
         String deviceId = AppConstants.deviceToken;
         String uMengDeviceToken = PreferenceUtil.getString(AppConstants.uMengDeviceToken, "");
         String userId = "";
-        if (AppConstants.register != null && AppConstants.register.getData() != null && AppConstants.register.getData().getUser() != null) {
-            userId = AppConstants.register.getData().getUser().getUserId();
+        if (AppConstants.register != null && AppConstants.register != null && AppConstants.register.getUser() != null) {
+            userId = AppConstants.register.getUser().getUserId();
         }
         //thirdId
         String url = "http://192.168.31.73:8080/mlottery/core/pushSetting.followMatch.do";
@@ -255,8 +255,8 @@ public class FocusUtils {
         String deviceId = AppConstants.deviceToken;
         String uMengDeviceToken = PreferenceUtil.getString(AppConstants.uMengDeviceToken, "");
         String userId = "";
-        if (AppConstants.register != null && AppConstants.register.getData() != null && AppConstants.register.getData().getUser() != null) {
-            userId = AppConstants.register.getData().getUser().getUserId();
+        if (AppConstants.register != null && AppConstants.register != null && AppConstants.register.getUser() != null) {
+            userId = AppConstants.register.getUser().getUserId();
         }
         String isPushFocus = PreferenceUtil.getBoolean(MyConstants.BASKETBALL_PUSH_FOCUS, true) == true ? "true" : "false";
         //thirdId
@@ -311,8 +311,8 @@ public class FocusUtils {
 
         String deviceId = AppConstants.deviceToken;
         String userId = "";
-        if (AppConstants.register != null && AppConstants.register.getData() != null && AppConstants.register.getData().getUser() != null) {
-            userId = AppConstants.register.getData().getUser().getUserId();
+        if (AppConstants.register != null && AppConstants.register!= null && AppConstants.register.getUser() != null) {
+            userId = AppConstants.register.getUser().getUserId();
         }
         //请求后台
         Map<String, String> params = new HashMap<>();
