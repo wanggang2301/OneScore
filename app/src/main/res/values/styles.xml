@@ -1168,9 +1168,7 @@
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingRight">10dp</item>
     </style>
-    <!--角球列表页赔率字体样式-->
-    <style name="corner_text_style">
-        <item name="android:layout_width">0dp</item>
+
     <!-- 竞彩推介发布文字内容 -->
     <style name="betting_recommend_issue_fabu">
         <item name="android:layout_weight">1</item>
