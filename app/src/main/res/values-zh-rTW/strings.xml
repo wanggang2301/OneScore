@@ -1738,6 +1738,39 @@
     <string name="betting_setting_palying_method">玩法</string>
     <string name="betting_setting_league">聯賽</string>
     <string name="betting_issue_title">推介</string>
+
+    <string name="betting_title_list">競彩推薦</string>
+    <string name="betting_title_details">競彩單關</string>
+    <string name="betting_title_onlinepay">在線支付</string>
+    <string name="betting_txt_buy">購買</string>
+    <string name="betting_txt_check">查看</string>
+    <string name="betting_txt_have_buy">人已購買</string>
+    <string name="betting_txt_zhusheng">主勝</string>
+    <string name="betting_txt_pingju">平局</string>
+    <string name="betting_txt_kesheng">客勝</string>
+    <string name="betting_txt_reason">推薦理由</string>
+    <string name="betting_txt_pay_check_result">支付後查看推薦內容和結果</string>
+    <string name="betting_txt_unpaid">待支付</string>
+    <string name="betting_txt_to_paid">去支付</string>
+    <string name="betting_txt_check_payment">選擇支付方式</string>
+    <string name="betting_txt_check_zfb">支付寶支付</string>
+    <string name="betting_txt_check_weixin">微信支付</string>
+    <string name="betting_txt_check_balance">余額支付</string>
+    <string name="betting_txt_confirm_pay">確定支付</string>
+
+    <string name="betting_txt_recharge_amount">充值金額</string>
+    <string name="betting_txt_balance_account">賬戶余額:</string>
+    <string name="betting_txt_recharge_integer">充值金額需為整數</string>
+    <string name="betting_txt_recharge_quota">1-10000￥</string>
+    <string name="betting_txt_amount_ten">10元</string>
+    <string name="betting_txt_amount_twenty">20元</string>
+    <string name="betting_txt_amount_fifty">50元</string>
+    <string name="betting_txt_amount_one_hundred">100元</string>
+    <string name="betting_txt_recharge">充值</string>
+    <string name="betting_plays_asialet">亞盤</string>
+    <string name="betting_plays_asize">大小球</string>
+    <string name="betting_plays_allcheck">全部</string>
+
     <string name="corner_score">角球比分</string>
     <string name="higher">高於</string>
     <string name="jishi_pan">即時盤</string>

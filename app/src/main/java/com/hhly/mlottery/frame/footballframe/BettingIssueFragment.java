@@ -7,7 +7,6 @@ import android.media.AudioRecord;
 import android.media.AudioTrack;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.IdRes;
@@ -25,7 +24,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.bettingmvp.mvpview.MvpBettingPayDetailsActivity;
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingIssueDetailsActivity;
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingPayDetailsActivity;
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpChargeMoneyActivity;
 import com.hhly.mlottery.adapter.bettingadapter.BettingIssueAdapter;
 import com.hhly.mlottery.bean.bettingbean.BettingIssueBean;
 import com.hhly.mlottery.config.BlurPopWin;
@@ -133,11 +134,13 @@ public class BettingIssueFragment extends Fragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.football_betting_yuyin_img:
-                Toast.makeText(getActivity(), "发布语音", Toast.LENGTH_SHORT).show();
-                setPopupWindow();
+                Toast.makeText(getActivity(), "充值页", Toast.LENGTH_SHORT).show();
+//                setPopupWindow();
+                startActivity(new Intent(getContext() , MvpChargeMoneyActivity.class));
                 break;
             case R.id.football_betting_text_img:
                 Toast.makeText(getActivity(), "发布文字", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext() , MvpBettingIssueDetailsActivity.class));
                 break;
             case R.id.football_betting_fabuorquxiao_img:
                 if (isFabu) {
