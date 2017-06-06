@@ -4,7 +4,7 @@ import com.hhly.mlottery.mvp.BasePresenter;
 import com.hhly.mlottery.mvptask.IContract;
 import com.hhly.mlottery.util.CollectionUtils;
 
-import data.model.BottomOddsDetails;
+import data.bean.BottomOddsDetails;
 import data.repository.Repository;
 import rx.Observable;
 import rx.Subscriber;

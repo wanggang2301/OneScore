@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MDStatusBarCompat;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
@@ -29,7 +30,7 @@ import butterknife.ButterKnife;
  * 个人中心账户详情
  * created by mdy155 on 2017/6/3
  */
-public class AccountDetailFragment extends Fragment implements AppBarLayout.OnOffsetChangedListener {
+public class AccountDetailFragment extends ViewFragment<AccountDetailContract.Presenter> implements AccountDetailContract.View,AppBarLayout.OnOffsetChangedListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -112,6 +113,11 @@ public class AccountDetailFragment extends Fragment implements AppBarLayout.OnOf
     }
 
     @Override
+    public AccountDetailContract.Presenter initPresenter() {
+        return new AccountDetailPresenter(this);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mView=inflater.inflate(R.layout.fragment_account_detail, container, false);
@@ -124,18 +130,41 @@ public class AccountDetailFragment extends Fragment implements AppBarLayout.OnOf
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mAppBarLayout.addOnOffsetChangedListener(this);
-//        mCoordinatorLayout.setZoomView(mLayoutHeader);
         MDStatusBarCompat.setCollapsingToolbar(getActivity(), mCoordinatorLayout, mAppBarLayout, mLayoutHeader, mToolbar);
+
+        mNodataLayout.setVisibility(View.GONE);
+        mExceptionLayout.setVisibility(View.GONE);
+        mProgressBarLayout.setVisibility(View.GONE);
+        mBtnRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mExceptionLayout.setVisibility(View.GONE);
+                mProgressBarLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
+    }
+
+
+    @Override
+    public void recyclerNotify() {
+
     }
 
     @Override
+    public void showNoData(String hasData) {
+
+    }
+
+
+    @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-//        int mTouchTitleDistance=mCollapsingToolbarLayout.getHeight()/6; //触碰到
+
         if(-verticalOffset<100&&-verticalOffset>85){
             mLayoutHeader.setAlpha((100-(-verticalOffset))/100f);
         }
         if(-verticalOffset<85){
-           mLayoutHeader.setAlpha(1);
+            mLayoutHeader.setAlpha(1);
         }
 
         if (mCollapsingToolbarLayout.getHeight() + verticalOffset < mLayoutHeader.getHeight()) {
@@ -143,11 +172,12 @@ public class AccountDetailFragment extends Fragment implements AppBarLayout.OnOf
         } else {
             mRefreshLayout.setEnabled(true);
         }
-//        mCoordinatorLayout.setOffSet(verticalOffset);
 
-//        L.e( "verticalOffset-----"+verticalOffset+"");
-//        L.e("mccc-----"+mCollapsingToolbarLayout.getHeight());
-//        L.e("mapp====="+mAppBarLayout.getHeight());
-//        L.e("header====="+mLayoutHeader.getMeasuredHeight());
     }
+
+    @Override
+    public void onError() {
+
+    }
+
 }

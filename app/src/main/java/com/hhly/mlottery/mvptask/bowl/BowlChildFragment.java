@@ -27,10 +27,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import data.model.BottomOddsDetails;
-import data.model.BottomOddsDetailsItem;
-import data.model.BottomOddsItem;
-import data.model.FirstOdd;
+import data.bean.BottomOddsDetails;
+import data.bean.BottomOddsDetailsItem;
+import data.bean.BottomOddsItem;
+import data.bean.FirstOdd;
 
 /**
  * A simple {@link Fragment} subclass.

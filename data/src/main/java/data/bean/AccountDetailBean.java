@@ -1,4 +1,4 @@
-package com.hhly.mlottery.bean.accountdetail;
+package data.bean;
 
 import java.util.List;
 

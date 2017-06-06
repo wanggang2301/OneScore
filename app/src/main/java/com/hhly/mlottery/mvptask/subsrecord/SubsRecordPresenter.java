@@ -5,7 +5,7 @@ import com.hhly.mlottery.mvptask.IContract;
 
 import java.util.List;
 
-import data.model.SubsRecordBean;
+import data.bean.SubsRecordBean;
 import data.repository.Repository;
 import rx.Subscriber;
 

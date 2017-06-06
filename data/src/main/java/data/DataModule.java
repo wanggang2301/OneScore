@@ -9,9 +9,11 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
+import data.api.AccountDetailApi;
 import data.api.Api;
 import dagger.Module;
 import dagger.Provides;
+import data.repository.AccountDetailRepository;
 import okhttp3.OkHttpClient;
 import data.repository.Repository;
 import retrofit2.Retrofit;
@@ -78,7 +80,6 @@ public class DataModule {
                 .baseUrl(mApiHostUrl)
                 .build();
     }
-
     @Provides
     @Singleton
     Api provideBasketIndexApi(Retrofit retrofit) {
@@ -92,7 +93,15 @@ public class DataModule {
         return new Repository(basketIndexApi);
     }
 
+    @Provides
+    @Singleton
+    AccountDetailApi providesAccountApi(Retrofit retrofit){
+        return retrofit.create(AccountDetailApi.class);
+    }
 
-
-
+    @Provides
+    @Singleton
+    AccountDetailRepository provideAccountRespository(AccountDetailApi accountDetailApi){
+        return new AccountDetailRepository(accountDetailApi);
+    }
 }

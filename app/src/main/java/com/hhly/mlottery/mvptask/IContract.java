@@ -5,8 +5,8 @@ import com.hhly.mlottery.mvp.IView;
 
 import java.util.List;
 
-import data.model.BottomOddsDetails;
-import data.model.SubsRecordBean;
+import data.bean.BottomOddsDetails;
+import data.bean.SubsRecordBean;
 
 /**
  * @author: Wangg

@@ -5,7 +5,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
-import data.model.SubsRecordBean;
+import data.bean.SubsRecordBean;
 
 /**
  * @author: Wangg
