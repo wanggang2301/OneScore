@@ -4,7 +4,7 @@ package data.repository;
 import data.api.UserCenterApiService;
 import data.bean.BottomOddsDetails;
 import data.bean.SubsRecordBean;
-import data.model.RecommendArticlesBean;
+import data.bean.RecommendArticlesBean;
 import rx.Observable;
 
 /**

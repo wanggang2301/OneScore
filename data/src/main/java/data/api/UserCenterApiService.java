@@ -3,7 +3,7 @@ package data.api;
 
 import data.bean.BottomOddsDetails;
 import data.bean.SubsRecordBean;
-import data.model.RecommendArticlesBean;
+import data.bean.RecommendArticlesBean;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;

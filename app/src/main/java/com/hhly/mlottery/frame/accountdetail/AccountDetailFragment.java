@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -35,6 +36,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import data.bean.AccountDetailBean;
+import data.bean.RechargeBean;
 
 /**
  * 个人中心账户详情
@@ -101,6 +103,8 @@ public class AccountDetailFragment extends ViewFragment<AccountDetailContract.Pr
     @BindView(R.id.account_detail_recyclerview)
     RecyclerView mRecyclerView;
 
+    @BindView(R.id.account_detaiL_back)
+    ImageView mBack;
     private View mNoLoadingView; //没有更多
     private View mOnloadingView; //加载更多
 
@@ -155,6 +159,15 @@ public class AccountDetailFragment extends ViewFragment<AccountDetailContract.Pr
             public void onClick(View v) {
                 mExceptionLayout.setVisibility(View.GONE);
                 mProgressBarLayout.setVisibility(View.VISIBLE);
+                mPresenter.refreshData();
+            }
+        });
+        mBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(getActivity()!=null){
+                    getActivity().finish();
+                }
             }
         });
         mRecyclerView.post(new Runnable() {
@@ -199,9 +212,7 @@ public class AccountDetailFragment extends ViewFragment<AccountDetailContract.Pr
             }
         });
 
-        mAvailableBalance.setText(mPresenter.getBalanceData().getAvailableBalance());
-        mFrozenBalance.setText(mPresenter.getBalanceData().getBlockedBalance());
-        mTotalBalance.setText(mPresenter.getBalanceData().getCashBalance());
+
 
     }
 
@@ -240,8 +251,15 @@ public class AccountDetailFragment extends ViewFragment<AccountDetailContract.Pr
     }
 
     @Override
-    public void showNextPage(List<AccountDetailBean.DataEntity.RecordEntity> recordEntity) {
+    public void showNextPage(List<RechargeBean> recordEntity) {
         mAdapter.notifyDataChangedAfterLoadMore(recordEntity,true);
+    }
+
+    @Override
+    public void showBalance() {
+        mAvailableBalance.setText(mPresenter.getBalanceData().getAvailableBalance()+"");
+        mFrozenBalance.setText(mPresenter.getBalanceData().getBlockedBalance()+"");
+        mTotalBalance.setText(mPresenter.getBalanceData().getCashBalance()+"");
     }
 
 
@@ -269,6 +287,7 @@ public class AccountDetailFragment extends ViewFragment<AccountDetailContract.Pr
         mExceptionLayout.setVisibility(View.VISIBLE);
         mProgressBarLayout.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.GONE);
+        mRefreshLayout.setRefreshing(false);
     }
 
 }

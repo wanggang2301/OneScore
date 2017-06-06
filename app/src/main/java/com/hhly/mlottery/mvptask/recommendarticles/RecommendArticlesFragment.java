@@ -30,7 +30,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import data.model.RecommendArticlesBean;
+import data.bean.RecommendArticlesBean;
 
 /**
  * @author wangg

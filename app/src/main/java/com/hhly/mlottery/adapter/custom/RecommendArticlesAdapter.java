@@ -10,7 +10,7 @@ import com.hhly.mlottery.R;
 import java.util.List;
 import java.util.Random;
 
-import data.model.RecommendArticlesBean;
+import data.bean.RecommendArticlesBean;
 
 /**
  * @author: Wangg

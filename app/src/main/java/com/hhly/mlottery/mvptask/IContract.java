@@ -7,7 +7,7 @@ import java.util.List;
 
 import data.bean.BottomOddsDetails;
 import data.bean.SubsRecordBean;
-import data.model.RecommendArticlesBean;
+import data.bean.RecommendArticlesBean;
 
 /**
  * @author: Wangg

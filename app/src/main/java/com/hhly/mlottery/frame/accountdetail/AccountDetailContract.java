@@ -6,7 +6,9 @@ import com.hhly.mlottery.mvp.IView;
 import java.util.List;
 
 import data.bean.AccountDetailBean;
+import data.bean.AccountPageBean;
 import data.bean.Page;
+import data.bean.RechargeBean;
 
 /**
  * 描    述：账户详情契约类
@@ -20,14 +22,15 @@ public class AccountDetailContract {
         void showNoData();
         void setRefresh(boolean refresh);
         void showNoMoreData();
-        void showNextPage(List<AccountDetailBean.DataEntity.RecordEntity> recordEntity);
+        void showNextPage(List<RechargeBean > recordEntity);
+        void showBalance();
     }
 
     interface Presenter extends IPresenter<View> {
         Page getPage();
         void refreshData();
         void refreshDataByPage();
-        List<AccountDetailBean.DataEntity.RecordEntity> getListData();
+        List<RechargeBean> getListData();
         AccountDetailBean.DataEntity.BalanceEntity getBalanceData();
 
     }
