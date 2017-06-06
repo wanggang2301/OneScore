@@ -30,7 +30,6 @@ public class DataInterceptor implements okhttp3.Interceptor {
         Request oldRequest = chain.request();
         HttpUrl oldUrl = oldRequest.url();
 
-
         HttpUrl url = oldUrl.newBuilder()
                 .addQueryParameter("lang", lang)
                 .addQueryParameter("timeZone", timeZone)

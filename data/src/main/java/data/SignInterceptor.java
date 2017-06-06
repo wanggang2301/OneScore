@@ -15,7 +15,7 @@ import okhttp3.Response;
 /**
  * @author: Wangg
  * @name：xxx
- * @description: xxx
+ * @description: 签名的Interceptor
  * @created on:2017/6/6  15:15.
  */
 
