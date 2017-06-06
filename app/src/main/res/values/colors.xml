@@ -711,6 +711,9 @@
     <color name="betting_recommend_to_buy_line_color">#dcdcdc</color>
     <color name="betting_recommend_to_buy_color">#dfdfdf</color>
     <color name="betting_recommend_confirm_buy_color">#ff5f10</color>
+    <color name="application_specialist_color">#feffd8</color>
+    <color name="application_specialist_text_color">#4a494a</color>
+    _
 
     <color name="betting_recommend_issue_title_color">#333333</color>
     <color name="account_trade_name">#4a494a</color>

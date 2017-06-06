@@ -271,8 +271,8 @@ public class BasketballFocusNewFragment extends Fragment implements View.OnClick
         Map<String, String> params = new HashMap<>();
         String deviceId = AppConstants.deviceToken;
         String userId = "";
-        if (AppConstants.register != null && AppConstants.register.getData() != null && AppConstants.register.getData().getUser() != null) {
-            userId = AppConstants.register.getData().getUser().getUserId();
+        if (AppConstants.register != null && AppConstants.register != null && AppConstants.register.getUser() != null) {
+            userId = AppConstants.register.getUser().getUserId();
         }
         params.put("userId", userId);
         params.put("deviceId", deviceId);

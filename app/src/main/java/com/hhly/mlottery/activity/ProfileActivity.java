@@ -43,13 +43,7 @@ import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.MultipartBuilder;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
+
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.umeng.analytics.MobclickAgent;
 
@@ -64,6 +58,14 @@ import java.util.List;
 import java.util.Map;
 
 import de.greenrobot.event.EventBus;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
@@ -106,9 +108,6 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     private final int REQUEST_IMAGE_CAPTURE = 20;
 
     private final int REQUESTCODE_CHOSE = 100;
-
-    /*图片上传url*/
-    String PUT_URL = "http://file.13322.com/upload/uploadImage.do";
 
     /**
      * 图片裁剪宽度
@@ -184,8 +183,9 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
-        tv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
-        if (AppConstants.register.getData().getUser().getSex() != null) {
+        tv_nickname.setText(AppConstants.register.getUser().getNickName());
+        /*性别入口关闭*/
+ /*       if (AppConstants.register.getData().getUser().getSex() != null) {
             if (AppConstants.register.getData().getUser().getSex().equals("1")) {
                 sexChange(R.color.home_logo_color, R.mipmap.man_sex, R.color.res_pl_color, R.mipmap.default_noon_sex, R.color.res_pl_color, R.mipmap.default_woman_sex);
             } else if (AppConstants.register.getData().getUser().getSex().equals("2")) {
@@ -194,7 +194,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 sexChange(R.color.res_pl_color, R.mipmap.default_man_sex, R.color.noon_sex, R.mipmap.noon_sex, R.color.res_pl_color, R.mipmap.default_woman_sex);
             }
         }
-
+*/
     }
 
     private void initView() {
@@ -210,7 +210,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
         if (DeviceInfo.isLogin()) {
             //ImageLoader.load(ProfileActivity.this,AppConstants.register.getData().getUser().getHeadIcon(),R.mipmap.center_head).into(mHead_portrait);
             Glide.with(getApplicationContext())
-                    .load(AppConstants.register.getData().getUser().getHeadIcon())
+                    .load(AppConstants.register.getUser().getImageSrc())
                     .error(R.mipmap.center_head)
                     .into(mHead_portrait);
         }
@@ -366,21 +366,21 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
         String url = BaseURLs.UPDATEUSERINFO;
         Map<String, String> param = new HashMap<>();
         param.put("account", PreferenceUtil.getString(AppConstants.SPKEY_LOGINACCOUNT, ""));
-        param.put("loginToken", AppConstants.register.getData().getLoginToken());
+        param.put("loginToken", AppConstants.register.getToken());
         param.put("deviceToken", AppConstants.deviceToken);
         param.put("sex", sexDatas.get(0));
 
         VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
             @Override
             public void onResponse(Register register) {
-                if (register.getResult() == AccountResultCode.SUCC) {
+                if (Integer.parseInt(register.getCode()) == AccountResultCode.SUCC) {
                     //
                     // CommonUtils.saveRegisterInfo(register);
-                    AppConstants.register.getData().getUser().setSex(sexDatas.get(0));
-                    PreferenceUtil.commitString(AppConstants.SEX, register.getData().getUser().getSex());
+                    //AppConstants.register.getData().getUser().setSex(sexDatas.get(0));
+                   // PreferenceUtil.commitString(AppConstants.SEX, register.getData().getUser().getSex());
                     progressBar.dismiss();
                     finish();
-                } else if (register.getResult() == AccountResultCode.USER_NOT_LOGIN) {
+                } else if (Integer.parseInt(register.getCode()) == AccountResultCode.USER_NOT_LOGIN) {
                     progressBar.dismiss();
                     UiUtils.toast(getApplicationContext(), R.string.name_invalid);
                     Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
@@ -388,7 +388,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
 
                 } else {
                     progressBar.dismiss();
-                    DeviceInfo.handlerRequestResult(register.getResult(), register.getMsg());
+                    DeviceInfo.handlerRequestResult(Integer.parseInt(register.getCode()),"未知错误");
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -650,7 +650,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                                         100, fos);// 把数据写入文件
                                 if (flag) {
                                     mHead_portrait.setImageBitmap(photo);
-                                    doPostSycn(PUT_URL, outFile);//上传图片
+                                    doPostSycn(outFile);//上传图片
 
                                 } else {
                                     UiUtils.toast(MyApp.getInstance(), R.string.picture_save_failed);
@@ -685,42 +685,56 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
 
     /*图片上传*/
     //异步上传图片并且携带其他参数
-    public void doPostSycn(String url, File file) {
+    public void doPostSycn(File file) {
         progressBar.show();
         try {
-            RequestBody requestBody = new MultipartBuilder() //建立请求的内容
-
-                    .type(MultipartBuilder.FORM)//表单形式
-                    .addFormDataPart("imageFile", "imageFile", RequestBody.create(MEDIA_TYPE_PNG, file))
+            RequestBody requestBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("image", file.getName(), RequestBody.create(MediaType.parse("image/png"), file))
+                    .addFormDataPart("userId",AppConstants.register.getUser().getUserId())
+                    .addFormDataPart("token",AppConstants.register.getToken())
                     .build();
+            //BaseURLs.MODIFY_PICTURE
 
             Request request = new Request.Builder()//建立请求
-                    .url(url)//请求的地址
+                    .url(BaseURLs.MODIFY_PICTURE)//请求的地址
                     .post(requestBody)//请求的内容（上面建立的requestBody）
                     .build();
 
             //发送异步请求，同步会报错，Android4.0以后禁止在主线程中进行耗时操作
             client.newCall(request).enqueue(new Callback() {
                 @Override
-                public void onFailure(Request request, IOException e) {
+                public void onFailure(Call call, IOException e) {
                     // UiUtils.toast(MyApp.getInstance(), R.string.picture_put_failed);
                     mViewHandler.sendEmptyMessage(Put_FAIL_PHOTO);
                     progressBar.dismiss();
                 }
 
                 @Override
-                public void onResponse(Response response) throws IOException {
+                public void onResponse(Call call, Response response) throws IOException {
 
+                    progressBar.dismiss();
                     String jsonString = response.body().string();
                     JSONObject jo = JSON.parseObject(jsonString);
-                    //UiUtils.toast(MyApp.getInstance(), jo.toString());
-                    String headerUrl = jo.getString("url");
+                    // UiUtils.toast(MyApp.getInstance(), jo.toString());
+                    if (response!=null){
+                        if (jo.getString("code").equals("200")){
+                            String headerUrl = jo.getString("avatorURL");
+                            EventBus.getDefault().post(new ChoseHeadStartBean(headerUrl));
+                            AppConstants.register.getUser().setImageSrc(headerUrl);
+                            // CommonUtils.saveRegisterInfo(AppConstants.register);
+                            //PreferenceUtil.commitString(AppConstants.SPKEY_TOKEN, headerUrl);
+                        }
+                    }
+
+                    /*String headerUrl = jo.getString("url");
                     if (!headerUrl.isEmpty()) {
                         putPhotoUrl(headerUrl);
                     } else {
                         UiUtils.toast(MyApp.getInstance(), R.string.picture_put_failed);
-                    }
+                    }*/
                 }
+
             });
 
         } catch (Exception e) {
@@ -750,7 +764,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
             @Override
             public void onResponse(Register register) {
                 progressBar.dismiss();
-                if (register.getResult() == AccountResultCode.SUCC) {
+                if (Integer.parseInt(register.getCode()) == AccountResultCode.SUCC) {
                     UiUtils.toast(MyApp.getInstance(), R.string.picture_put_success);
                     // register.getData().getUser().setLoginAccount(AppConstants.register.getData().getLoginToken());
                     DeviceInfo.saveRegisterInfo(register);
@@ -759,14 +773,14 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
 //                    Log.i("aasd", "dasd" + register.getData().getUser().getLoginAccount());
                     EventBus.getDefault().post(register);
                     Glide.with(getApplicationContext())
-                            .load(register.getData().getUser().getHeadIcon())
+                            .load(register.getUser().getImageSrc())
                             .error(R.mipmap.center_head)
                             .into(mHead_portrait);
 
                     //ImageLoader.load(ProfileActivity.this,register.getData().getUser().getHeadIcon(),R.mipmap.center_head).into(mHead_portrait);
 
                 } else {
-                    DeviceInfo.handlerRequestResult(register.getResult(), register.getMsg());
+                    DeviceInfo.handlerRequestResult(Integer.parseInt(register.getCode()), "未知错误");
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
