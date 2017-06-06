@@ -53,9 +53,11 @@ public class DataModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient(DataInterceptor dataInterceptor) {
+    OkHttpClient provideOkHttpClient(DataInterceptor dataInterceptor, SignInterceptor signInterceptor) {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient().newBuilder()
-                .addInterceptor(dataInterceptor);
+                .addInterceptor(dataInterceptor)
+                .addInterceptor(signInterceptor);
+
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         return httpClientBuilder.build();
     }
@@ -66,6 +68,14 @@ public class DataModule {
     DataInterceptor provideDataInterceptor() {
         DataInterceptor dataInterceptor = new DataInterceptor(timeZone, lang);
         return dataInterceptor;
+    }
+
+
+    @Provides
+    @Singleton
+    SignInterceptor provideSignInterceptor() {
+        SignInterceptor signInterceptor = new SignInterceptor();
+        return signInterceptor;
     }
 
     @Provides
@@ -81,18 +91,16 @@ public class DataModule {
 
     @Provides
     @Singleton
-    UserCenterApiService provideBasketIndexApi(Retrofit retrofit) {
+    UserCenterApiService provideUserCenterApiService(Retrofit retrofit) {
         return retrofit.create(UserCenterApiService.class);
     }
 
 
     @Provides
     @Singleton
-    UserCenterRepository provideBasketIndexReposeitory(UserCenterApiService basketIndexUserCenterApiService) {
-        return new UserCenterRepository(basketIndexUserCenterApiService);
+    UserCenterRepository provideUserCenterReposeitory(UserCenterApiService userCenterApiService) {
+        return new UserCenterRepository(userCenterApiService);
     }
-
-
 
 
 }

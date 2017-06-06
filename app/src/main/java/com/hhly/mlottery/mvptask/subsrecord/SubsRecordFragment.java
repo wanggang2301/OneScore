@@ -41,6 +41,7 @@ import data.model.SubsRecordBean;
 public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresenter> implements IContract.IPullLoadMoreDataView, ExactSwipeRefreshLayout.OnRefreshListener {
 
     private static final String PAGE_SIZE = "10"; //每页10条记录
+    private static final String SIGN_FLAG = "sign"; //每页10条记录
 
     @BindView(R.id.iv_back)
     ImageView ivBack;
@@ -68,11 +69,11 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
 
     View moreView;
 
-    String userId = "";
+    String userId = "HHLY00000136";
 
-    String loginToken = "";
+    String loginToken = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJqd3QiLCJpYXQiOjE0OTY0ODU2MDAsInN1YiI6IntcImlkXCI6XCJISExZMDAwMDAxMzZcIixcInBob25lTnVtXCI6XCIxNTAxMzY5NzEwMVwifSJ9.l4jsTaz5tJM5Q4P3s_UK8US-S3HRfN-lfJZJ67XUS98";
 
-    String sign = "";
+    int pageNum = 1;
 
     private List<SubsRecordBean.PurchaseRecordsBean.ListBean> listBeanList;
 
@@ -92,7 +93,7 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
         ButterKnife.bind(this, view);
         initEvent();
 
-        mPresenter.requestData(userId, "1", PAGE_SIZE, loginToken, sign);
+        mPresenter.requestData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
         return view;
     }
 
@@ -142,7 +143,9 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
                 recyclerView.post(new Runnable() {
                     @Override
                     public void run() {
-                        mPresenter.pullUpLoadMoreData(userId, "1", PAGE_SIZE, loginToken, sign);
+
+                        pageNum = pageNum + 1;
+                        mPresenter.pullUpLoadMoreData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
                     }
                 });
             }
@@ -157,6 +160,8 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
         flNetworkError.setVisibility(View.GONE);
         flNodata.setVisibility(View.VISIBLE);
         refresh.setVisibility(View.GONE);
+        refresh.setRefreshing(false);
+
     }
 
     @Override
@@ -165,12 +170,14 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
         flNetworkError.setVisibility(View.VISIBLE);
         flNodata.setVisibility(View.GONE);
         refresh.setVisibility(View.GONE);
+        refresh.setRefreshing(false);
     }
 
     @Override
     public void onRefresh() {
         refresh.setRefreshing(true);
-        mPresenter.requestData(userId, "1", PAGE_SIZE, loginToken, sign);
+        pageNum = 1;
+        mPresenter.requestData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
     }
 
 
@@ -213,7 +220,8 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
                 mActivity.finish();
                 break;
             case R.id.reLoading:
-                mPresenter.requestData(userId, "1", PAGE_SIZE, loginToken, sign);
+                pageNum = 1;
+                mPresenter.requestData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
                 break;
         }
     }

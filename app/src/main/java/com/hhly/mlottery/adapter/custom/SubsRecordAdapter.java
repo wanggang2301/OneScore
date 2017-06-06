@@ -2,6 +2,7 @@ package com.hhly.mlottery.adapter.custom;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -33,7 +34,7 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
     @Override
     protected void convert(BaseViewHolder baseViewHolder, SubsRecordBean.PurchaseRecordsBean.ListBean b) {
         Glide.with(mContext).load(b.getHeadImg()).into((CircleImageView) baseViewHolder.getView(R.id.betting_portrait_img));
-        baseViewHolder.setText(R.id.betting_specialist_name, b.getNickName()+"__"+getViewHolderPosition(baseViewHolder));
+        baseViewHolder.setText(R.id.betting_specialist_name, b.getNickName() + "__" + getViewHolderPosition(baseViewHolder));
         baseViewHolder.setText(R.id.betting_specialist_grade, getSpecialistGrade(b.getLevels()));
         baseViewHolder.setVisible(R.id.betting_lainzhong, false);
 
@@ -62,6 +63,14 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
         baseViewHolder.setText(R.id.betting_buy_num, String.valueOf(getBuyNum(b.getCount())) + mContext.getResources().getString(R.string.yigoumai_txt));
         baseViewHolder.setText(R.id.textView11, mContext.getResources().getString(R.string.chakan_txt));
         baseViewHolder.setText(R.id.betting_recommended_reason, mContext.getResources().getString(R.string.tuijianliyou_txt) + (TextUtils.isEmpty(b.getContext()) ? "" : b.getContext()));
+
+        baseViewHolder.getView(R.id.textView11).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { //跳转到记录详情
+
+            }
+        });
+
 
     }
 

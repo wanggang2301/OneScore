@@ -10,7 +10,7 @@ import rx.Observable;
 /**
  * @author: Wangg
  * @name：xxx
- * @description: 足球内页滚球reposeitory
+ * @description: 订阅 推介reposeitory
  * @created on:2017/4/8  14:16.
  */
 
@@ -21,18 +21,19 @@ public class UserCenterRepository {
         this.mUserCenterApiService = mUserCenterApiService;
     }
 
+
+    //足球内页滚球
     public Observable<BottomOddsDetails> getBowlList(String thirdId, String oddType) {
         return mUserCenterApiService.getBowlList(thirdId, oddType);
     }
 
+    //订阅记录
     public Observable<SubsRecordBean> getSubsRecord(String userId, String pageNum, String pageSize, String loginToken, String sign) {
         return mUserCenterApiService.getSubsRecord(userId, pageNum, pageSize, loginToken, sign);
     }
 
-
+    //文章推介
     public Observable<RecommendArticlesBean> getRecommendArtices(String userId, String pageNum, String pageSize, String loginToken, String sign) {
         return mUserCenterApiService.getRecommendArticles(userId, pageNum, pageSize, loginToken, sign);
     }
-
-
 }
