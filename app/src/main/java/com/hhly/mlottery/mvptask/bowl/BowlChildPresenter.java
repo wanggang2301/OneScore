@@ -5,7 +5,7 @@ import com.hhly.mlottery.mvptask.IContract;
 import com.hhly.mlottery.util.CollectionUtils;
 
 import data.model.BottomOddsDetails;
-import data.repository.Repository;
+import data.repository.UserCenterRepository;
 import rx.Observable;
 import rx.Subscriber;
 
@@ -18,12 +18,12 @@ import rx.Subscriber;
 
 public class BowlChildPresenter extends BasePresenter<IContract.IChildView> implements IContract.IBowlChildPresenter {
 
-    private Repository repository;
+    private UserCenterRepository userCenterRepository;
     private BottomOddsDetails bowlBeanList;
 
     public BowlChildPresenter(IContract.IChildView view) {
         super(view);
-        repository = mDataManager.repository;
+        userCenterRepository = mDataManager.userCenterRepository;
     }
 
 
@@ -36,7 +36,7 @@ public class BowlChildPresenter extends BasePresenter<IContract.IChildView> impl
 
         mView.loading();
 
-        Observable<BottomOddsDetails> observable = repository.getBowlList(thirdId, oddType);
+        Observable<BottomOddsDetails> observable = userCenterRepository.getBowlList(thirdId, oddType);
 
         addSubscription(observable, new Subscriber<BottomOddsDetails>() {
             @Override

@@ -6,7 +6,7 @@ import com.hhly.mlottery.mvptask.IContract;
 import java.util.List;
 
 import data.model.SubsRecordBean;
-import data.repository.Repository;
+import data.repository.UserCenterRepository;
 import rx.Subscriber;
 
 /**
@@ -18,12 +18,12 @@ import rx.Subscriber;
 
 public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDataView> implements IContract.ISubsRecordPresenter {
 
-    private Repository repository;
+    private UserCenterRepository userCenterRepository;
     private List<SubsRecordBean.PurchaseRecordsBean.ListBean> listBeanList;
 
     public SubsRecordPresenter(IContract.IPullLoadMoreDataView view) {
         super(view);
-        repository = mDataManager.repository;
+        userCenterRepository = mDataManager.userCenterRepository;
     }
 
 
@@ -36,7 +36,7 @@ public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDa
 
         mView.loading();
 
-        addSubscription(repository.getSubsRecord(userId, pageNum, pageSize), new Subscriber<SubsRecordBean>() {
+        addSubscription(userCenterRepository.getSubsRecord(userId, pageNum, pageSize), new Subscriber<SubsRecordBean>() {
             @Override
             public void onCompleted() {
 
@@ -68,7 +68,7 @@ public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDa
     public void pullUpLoadMoreData() {
         mView.pullUpLoadMoreDataFail();
 
-       /* addSubscription(data.repository.getSubsRecord(), new Subscriber<String>() {
+       /* addSubscription(data.userCenterRepository.getSubsRecord(), new Subscriber<String>() {
             @Override
             public void onCompleted() {
             }
