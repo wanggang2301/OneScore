@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!--头部条目标题-->
+    <include layout="@layout/layout_header" />
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/specalist_error_tv"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:background="@color/application_specialist_color"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="提示：请准确填写一下信息！"
+                    android:textColor="@color/application_specialist_text_color"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:src="@mipmap/identification" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="真实姓名"
+                        android:textColor="@color/snooker"
+                        android:textSize="13sp" />
+
+                    <EditText
+                        android:id="@+id/real_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/selector_loginbtn"
+                        android:gravity="center_vertical"
+                        android:hint="请输入真实姓名"
+                        android:paddingLeft="10dp"
+                        android:textColorHint="@color/snooker_line"
+                        android:textSize="@dimen/text_size_11" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/snooker"
+                        android:textSize="13sp"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="身份证号码 " />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/selector_loginbtn"
+                        android:digits="@string/password_digits"
+                        android:gravity="center_vertical"
+                        android:hint="请填写正确的身份证号码，用于结算和认证"
+                        android:paddingLeft="10dp"
+                        android:textColorHint="@color/snooker_line"
+                        android:textSize="@dimen/text_size_11" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/snooker"
+                        android:textSize="13sp"
+                        android:text="擅长联赛" />
+
+                    <EditText
+                        android:id="@+id/good_league"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/selector_loginbtn"
+                        android:gravity="center_vertical"
+                        android:hint="请输入联赛名称，多余联赛用逗号分开"
+                        android:paddingLeft="10dp"
+                        android:textColorHint="@color/snooker_line"
+                        android:textSize="@dimen/text_size_11" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+
+                    <com.hhly.mlottery.view.GrapeGridview
+                        android:id="@+id/gridview"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:columnWidth="0dp"
+                        android:gravity="center"
+                        android:horizontalSpacing="7.5dp"
+                        android:numColumns="3"
+                        android:scrollbars="none"
+                        android:stretchMode="columnWidth"
+                        android:verticalSpacing="9dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_comfirm"
+                        android:layout_width="49dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/specialist_buton_blue"
+                        android:gravity="center"
+                        android:text="@string/about_confirm"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="162dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:textColor="@color/snooker"
+                        android:textSize="13sp"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+
+                        android:text="专家简介" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/specalist_edittext"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top"
+                            android:background="@drawable/selector_loginbtn"
+                            android:gravity="top"
+                            android:hint="最多输入1000个字符"
+                            android:inputType="textMultiLine"
+                            android:minLines="12"
+                            android:paddingLeft="26dp"
+                            android:paddingTop="10dp"
+                            android:scrollbars="vertical"
+                            android:textColorHint="@color/snooker_line"
+                            android:textSize="@dimen/text_size_11" />
+
+                        <ImageView
+                            android:id="@+id/specialist_pen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:paddingLeft="5dp"
+                            android:paddingTop="8dp"
+                            android:src="@mipmap/edit" />
+
+                        <TextView
+                            android:id="@+id/specalist_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true" />
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/error_prompt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center" />
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="你输入的字数已经超过了限制!"
+                        android:textColor="@color/red" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:background="#FFFFFFFF"
+                    android:gravity="center">
+
+
+                    <ImageView
+                        android:id="@+id/set_rd_alet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:src="@mipmap/chose" />
+
+                    <TextView
+                        android:id="@+id/specialist_tv1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="我已经阅读并同意 "
+                        android:textColor="#333333"
+                        android:textSize="@dimen/text_size_11" />
+
+                    <TextView
+                        android:id="@+id/specialist_tv2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="《认真付费推荐协议》"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/text_size_11" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/immediate_authentication"
+                    style="@style/login_edittext_loginbtn_newblue"
+                    android:background="#2D63c4eb"
+
+                    android:text="立即认证"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/text_size_13" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="*"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="17点前的申请，当日内处理;17点后的申请;次日处理,"
+                        android:textColor="#4b4b4b"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:paddingBottom="50dp"
+                    android:text="节假日时间顺延。你可在个人中心查看审核状态。"
+                    android:textColor="#4b4b4b"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

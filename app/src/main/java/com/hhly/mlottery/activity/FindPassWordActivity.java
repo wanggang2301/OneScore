@@ -19,9 +19,11 @@ import android.widget.TextView;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.BaseBean;
+import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.bean.account.SendSmsCode;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.impl.GetVerifyCodeCallBack;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
@@ -195,26 +197,28 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
                 if (UiUtils.checkPassword(this , pwd)){
                     progressBar.show();
 
-                    String url = BaseURLs.URL_RESETPASSWORD;
+                    //String url = BaseURLs.URL_RESETPASSWORD;
+                    String url ="http://192.168.10.242:8091/user/resetpassword";
                     Map<String, String> param = new HashMap<>();
-                    param.put("phone" , phone);
-                    param.put("accountType" , AccountType.TYPE_PHONE);
-                    param.put("newPassword" , MD5Util.getMD5(pwd));
-                    param.put("smsCode" , verifyCode);
+                    param.put("phoneNum" , phone);
+                    param.put("password" , MD5Util.getMD5(pwd));
+                    param.put("sms" , verifyCode);
+                    String sign=DeviceInfo.getSign("/user/resetpassword"+"langzh"+"password"+MD5Util.getMD5(pwd)+"phoneNum"+phone+"sms"+verifyCode+"timeZone8");
+                    param.put("sign",sign);
 
-                    VolleyContentFast.requestJsonByPost(url,param, new VolleyContentFast.ResponseSuccessListener<BaseBean>() {
+                    VolleyContentFast.requestJsonByPost(url,param, new VolleyContentFast.ResponseSuccessListener<Register>() {
                         @Override
-                        public void onResponse(BaseBean reset) {
+                        public void onResponse(Register reset) {
                             progressBar.dismiss();
 
-                            if (reset != null&& reset.getResult() == AccountResultCode.SUCC){
+                            if (reset != null&& Integer.parseInt(reset.getCode()) == AccountResultCode.SUCC){
                                 UiUtils.toast(MyApp.getInstance(), R.string.reset_password_succ);
                                 L.d(TAG,"重置密码成功");
                                 setResult(RESULT_OK);
                                 finish();
                             }else{
                                 L.e(TAG,"成功请求，重置密码失败");
-                                DeviceInfo.handlerRequestResult(reset.getResult() , reset.getMsg());
+                                DeviceInfo.handlerRequestResult(Integer.parseInt(reset.getCode()),"未知错误");
                             }
                         }
                     }, new VolleyContentFast.ResponseErrorListener() {
@@ -224,7 +228,7 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
                             L.e(TAG,"重置密码失败");
                             UiUtils.toast(FindPassWordActivity.this , R.string.immediate_unconection);
                         }
-                    } , BaseBean.class);
+                    } , Register.class);
                 }
             }
         }
@@ -232,7 +236,7 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
 
     private void getVerifyCode() {
         String phone = et_username.getText().toString();
-        DeviceInfo.getVerifyCode(this, phone, OperateType.TYPE_FORGET_PASSWORD ,new GetVerifyCodeCallBack() {
+        DeviceInfo.getVerifyCode(this, phone, OperateType.FORGET ,new GetVerifyCodeCallBack() {
             @Override
             public void beforGet() {
                 //countDown.start();
@@ -248,12 +252,12 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
                 mProgressBar.setVisibility(View.GONE);
                 countDown.start();
                 // 正常情况下要1min后才能重新发验证码，但是遇到下面几种情况可以点击重发
-                if (code.getResult() == AccountResultCode.SUCC) {
+                if (Integer.parseInt(code.getCode()) == AccountResultCode.SUCC) {
                     UiUtils.toast(MyApp.getInstance(), R.string.send_register_succ);
-                } else if(code.getResult() == AccountResultCode.PHONE_FORMAT_ERROR
-                        || code.getResult() == AccountResultCode.MESSAGE_SEND_FAIL
-                        ||code.getResult()==AccountResultCode.ONLY_FIVE_EACHDAY
-                        ||code.getResult()==AccountResultCode.USER_NOT_EXIST
+                } else if(Integer.parseInt(code.getCode()) == AccountResultCode.PHONE_FORMAT_ERROR
+                        || Integer.parseInt(code.getCode()) == AccountResultCode.MESSAGE_SEND_FAIL
+                        ||Integer.parseInt(code.getCode())==AccountResultCode.ONLY_FIVE_EACHDAY
+                        ||Integer.parseInt(code.getCode())==AccountResultCode.USER_NOT_EXIST
                         ){
                     resetCountDown();
                 }

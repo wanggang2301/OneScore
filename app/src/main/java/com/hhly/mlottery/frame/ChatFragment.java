@@ -102,7 +102,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
         }
 //        单点登录   nickname可以相同  用户id不能相同
         if (DeviceInfo.isLogin()) {
-            CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
+            CyUtils.loginSso(AppConstants.register.getUser().getUserId(), AppConstants.register.getUser().getNickName(), sdk);
         }
         model = DeviceInfo.getModel().replace(" ", "");
     }
@@ -361,7 +361,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
                             }
                         } else {//未登录
                             ToastTools.showQuickCenter(mContext, getResources().getString(R.string.warn_submitfail));
-                            CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
+                            CyUtils.loginSso(AppConstants.register.getUser().getUserId(), AppConstants.register.getUser().getNickName(), sdk);
                         }
                         CyUtils.hideKeyBoard(getActivity());
                         mEditText.clearFocus();
@@ -476,7 +476,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
         if (requestCode == 3) {
             if (resultCode == CyUtils.RESULT_OK) {
                 if (DeviceInfo.isLogin()) {
-                    CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
+                    CyUtils.loginSso(AppConstants.register.getUser().getUserId(), AppConstants.register.getUser().getNickName(), sdk);
                 }
             }
         }

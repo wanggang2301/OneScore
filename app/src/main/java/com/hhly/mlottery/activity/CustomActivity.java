@@ -211,7 +211,7 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
         String url = BaseURLs.CUSTOM_MINE_CUS_URL;
 
         Map<String, String> map = new HashMap<>();
-        String userid = AppConstants.register.getData().getUser().getUserId();
+        String userid = AppConstants.register.getUser().getUserId();
         String deviceid = AppConstants.deviceToken;
         map.put("userId", userid);
         map.put("deviceId", deviceid);
@@ -420,8 +420,8 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
     public void getBasketballUserConcern() {
         //请求后台，及时更新关注赛事内容
         String userId = "";
-        if (AppConstants.register != null && AppConstants.register.getData() != null && AppConstants.register.getData().getUser() != null) {
-            userId = AppConstants.register.getData().getUser().getUserId();
+        if (AppConstants.register != null && AppConstants.register != null && AppConstants.register.getUser() != null) {
+            userId = AppConstants.register.getUser().getUserId();
         }
         if (userId != null && userId != "") {
             String url = " http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.findConcernVsThirdIds.do";
@@ -875,7 +875,7 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
 
         L.d("yxq123456 ", customListEvent.getmLeagueMsg() + " **** " + customListEvent.getmTeamMsg());
         sendUrl = BaseURLs.CUSTOM_SENDID_CUS_URL;
-        String userids = AppConstants.register.getData().getUser().getUserId();
+        String userids = AppConstants.register.getUser().getUserId();
         String deviceid = AppConstants.deviceToken;
         String devicetoken = PreferenceUtil.getString(AppConstants.uMengDeviceToken, "");
 

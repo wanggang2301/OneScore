@@ -75,8 +75,8 @@ public class LocalFragment extends Fragment {
                 for (Map.Entry<String, Integer> entry : AppConstants.localMap.entrySet()) {
                     if (entry.getValue().equals(mData.get(i))) {
                         // 向会话列表发送输入内容
-                        EventBus.getDefault().post(new ChartReceive.DataBean.ChatHistoryBean(null, 1, entry.getKey(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getData().getUser().getUserId()
-                                , AppConstants.register.getData().getUser().getHeadIcon(), AppConstants.register.getData().getUser().getNickName()), new ChartReceive.DataBean.ChatHistoryBean.ToUser(), null));
+                        EventBus.getDefault().post(new ChartReceive.DataBean.ChatHistoryBean(null, 1, entry.getKey(), new ChartReceive.DataBean.ChatHistoryBean.FromUserBean(AppConstants.register.getUser().getUserId()
+                                , AppConstants.register.getUser().getImageSrc(), AppConstants.register.getUser().getNickName()), new ChartReceive.DataBean.ChatHistoryBean.ToUser(), null));
 
                         ((ChartballActivity) mContext).hideKeyOrGallery();
                         return;
