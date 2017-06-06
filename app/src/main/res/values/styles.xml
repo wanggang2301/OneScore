@@ -622,6 +622,7 @@
     <style name="new_loginbtn_new_blue" parent="new_login_item_bg">
         <item name="android:background">@drawable/selector_loginbtn_new_blue</item>
     </style>
+
     <style name="new_new_loginbtn_new_blue" parent="new_login_item_bg">
         <item name="android:background">@drawable/selector_loginbtn_white</item>
     </style>
@@ -1115,14 +1116,15 @@
 
     <!--竞彩推荐页-->
     <style name="betting_recommend_style">
-            <item name="android:layout_width">wrap_content</item>
-            <item name="android:layout_height">wrap_content</item>
-            <item name="android:paddingTop">3dp</item>
-            <item name="android:paddingBottom">3dp</item>
-            <item name="android:paddingLeft">10dp</item>
-            <item name="android:paddingRight">10dp</item>
-            <item name="android:textSize">@dimen/text_size_11</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:textSize">@dimen/text_size_11</item>
     </style>
+
     <style name="betting_recommend_details_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -1130,12 +1132,14 @@
         <item name="android:textSize">@dimen/text_size_12</item>
         <item name="android:textColor">@color/betting_recommend_zhuanjia_details_color</item>
     </style>
+
     <style name="betting_recommend_team_name_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/text_size_16</item>
         <item name="android:textColor">@color/betting_recommend_name_color</item>
     </style>
+
     <style name="betting_recommend_buy_text_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -1168,9 +1172,7 @@
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingRight">10dp</item>
     </style>
-    <!--角球列表页赔率字体样式-->
-    <style name="corner_text_style">
-        <item name="android:layout_width">0dp</item>
+
     <!-- 竞彩推介发布文字内容 -->
     <style name="betting_recommend_issue_fabu">
         <item name="android:layout_weight">1</item>
@@ -1198,6 +1200,7 @@
         <item name="android:textColor">@color/betting_recommend_issue_wanfa_color</item>
         <item name="android:textSize">@dimen/text_size_13</item>
     </style>
+
     <style name="betting_recommend_issue_fabu_jiage">
         <item name="android:textColor">@color/betting_recommend_issue_jiage_color</item>
         <item name="android:textSize">@dimen/text_size_13</item>
