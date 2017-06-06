@@ -11,7 +11,7 @@ import com.hhly.mlottery.util.HandicapUtils;
 
 import java.util.List;
 
-import data.model.BottomOddsItem;
+import data.bean.BottomOddsItem;
 
 /**
  * @author wang gang
