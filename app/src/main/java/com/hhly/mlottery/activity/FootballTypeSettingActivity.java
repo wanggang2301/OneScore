@@ -359,7 +359,7 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
      */
     private void requestServer(String isPush) {
         String deviceId = AppConstants.deviceToken;
-        String userId = AppConstants.register.getData().getUser().getUserId();
+        String userId = AppConstants.register.getUser().getUserId();
         String uMengDeviceToken = PreferenceUtil.getString(AppConstants.uMengDeviceToken, "");
         Map<String, String> params = new HashMap<>();
         params.put("deviceId", deviceId);

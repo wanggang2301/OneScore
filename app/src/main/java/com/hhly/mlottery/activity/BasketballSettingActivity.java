@@ -276,7 +276,7 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
      */
     private void requestServer(String isPush) {
         String deviceId = AppConstants.deviceToken;
-        String userId = AppConstants.register.getData().getUser().getUserId();
+        String userId = AppConstants.register.getUser().getUserId();
         Map<String, String> params = new HashMap<>();
         params.put("deviceId", deviceId);
         params.put("userId", userId);

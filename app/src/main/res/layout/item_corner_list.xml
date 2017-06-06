@@ -90,7 +90,7 @@
 
                 <TextView
                     android:id="@+id/match_state_started_half"
-                    android:layout_width="wrap_content"
+                    android:layout_width="20dp"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text=""
@@ -104,7 +104,7 @@
                     android:layout_centerInParent="true"
                     android:text=""
                     android:layout_toRightOf="@id/match_state_started_half"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginLeft="10dp"
                     android:visibility="visible"
                     android:textColor="@color/version"
                     android:textSize="@dimen/item_football_left_odds" />
@@ -267,10 +267,11 @@
 
                     <TextView
                         android:id="@+id/tv_home_half_score"
-                        android:layout_width="wrap_content"
+                        android:layout_width="15dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:text="0"
+                        android:gravity="center"
                         android:layout_centerVertical="true"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/item_football_half_score" />
@@ -278,7 +279,7 @@
 
                     <TextView
                         android:id="@+id/tv_home_full_score"
-                        android:layout_width="wrap_content"
+                        android:layout_width="25dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="30dp"
@@ -301,19 +302,21 @@
 
                     <TextView
                         android:id="@+id/tv_guest_half_score"
-                        android:layout_width="wrap_content"
+                        android:layout_width="15dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:text="0"
+                        android:gravity="center"
                         android:layout_centerVertical="true"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/item_football_half_score" />
 
                     <TextView
                         android:id="@+id/tv_guest_full_score"
-                        android:layout_width="wrap_content"
+                        android:layout_width="25dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
+                        android:gravity="center"
                         android:text="0"
                         android:textColor="@color/red"
                         android:textSize="@dimen/item_football_full_score" />

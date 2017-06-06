@@ -194,7 +194,7 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
         String url = BaseURLs.CUSTOM_LIST_CUS_URL;
 
         final Map<String, String> map = new HashMap();
-        String userid = AppConstants.register.getData().getUser().getUserId();
+        String userid = AppConstants.register.getUser().getUserId();
         String deviceid = AppConstants.deviceToken;
         map.put("userId", userid);
         map.put("deviceId", deviceid);

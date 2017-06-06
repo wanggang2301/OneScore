@@ -1157,6 +1157,24 @@
     <string name="invited_number_noon">邀请码不存在</string>
 
 
+    <string name="phone_already_nexist">手机号未被注册</string>
+    <string name="no_logon_user">禁止登录用户</string>
+    <string name="unknown_error">未知错误</string>
+    <string name="token_null">令牌(token)为空</string>
+    <string name="phone_mismatching">用户名与手机号不匹配</string>
+    <string name="token_invalid">令牌(token)失效</string>
+    <string name="signature_empty">签名为空</string>
+    <string name="signature_mismatching">签名不匹配</string>
+    <string name="token_mismatchin">令牌(token)与个人信息不匹配</string>
+
+    <string name="revise_profile_successfully">修改专家简介信息成功</string>
+    <string name="number_format_is_wrong">身份证号码格式错误</string>
+    <string name="expert_certification_audit">专家认证审核中</string>
+    <string name="user_already_expert">用户已经是专家</string>
+    <string name="user_not_null">用户id不能为空</string>
+
+
+
     <string name="home_win_rate">主胜率</string>
     <string name="home_lose_rate">主负率</string>
     <string name="size_win_rate">大球率</string>

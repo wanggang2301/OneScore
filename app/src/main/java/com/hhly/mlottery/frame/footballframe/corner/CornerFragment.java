@@ -207,10 +207,12 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
         }
         mOnloadingView=getActivity().getLayoutInflater().inflate(R.layout.onloading, (ViewGroup) mRecyclerView.getParent(),false);
         mAdapter.setLoadingView(mOnloadingView);
-        mAdapter.openLoadMore(mPresenter.getData().size()==0?12:mPresenter.getData().size(),true);
+        mAdapter.openLoadMore(mPresenter.getData().size()<=3?3:mPresenter.getData().size(),true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
-
+//        if(mPresenter.getData().size()<3){
+//            mAdapter.setOn
+//        }
         //上拉加载更多
         mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
@@ -219,8 +221,7 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
                     @Override
                     public void run() {
                         mPresenter.refreshDataByPage(mType,currentDatePosition+1,false);
-                        mTextDate.setText(DateUtil.convertDateToNation(mDatelist.get(currentDatePosition).getDate()));
-                        mTextWeek.setText(mDatelist.get(currentDatePosition).getWeek());
+
                     }
                 },1000);
 
@@ -328,7 +329,7 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
         mRecyclerView.setVisibility(View.VISIBLE);
         mAdapter.setNewData(mPresenter.getData()); //点进去看下
         mAdapter.setLoadingView(mOnloadingView);
-        mAdapter.openLoadMore(mPresenter.getData().size()==0?12:mPresenter.getData().size(),true);
+        mAdapter.openLoadMore(mPresenter.getData().size()<3?12:mPresenter.getData().size(),true);
 
         mNodataLayout.setVisibility(View.GONE);
         mExceptionLayout.setVisibility(View.GONE);
@@ -383,6 +384,8 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
     @Override
     public void showNextPage(List<CornerListBean.CornerEntity> cornerListBean) {
         mAdapter.notifyDataChangedAfterLoadMore(cornerListBean,true);
+        mTextDate.setText(DateUtil.convertDateToNation(mDatelist.get(currentDatePosition).getDate()));
+        mTextWeek.setText(mDatelist.get(currentDatePosition).getWeek());
     }
 
     @Override
