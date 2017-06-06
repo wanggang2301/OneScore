@@ -237,6 +237,8 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
 
             case R.id.btn_confirm:
 
+
+
                 break;
         }
     }
