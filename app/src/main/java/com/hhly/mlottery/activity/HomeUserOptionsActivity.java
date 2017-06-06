@@ -281,15 +281,15 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 }
 
                 break;
-            case R.id.rl_setting_invited:
-                MobclickAgent.onEvent(this, "InvitedActivity");
-                PreferenceUtil.commitBoolean(INVITED_SHOW_RED, false);
-                invited_red_dot_view.setVisibility(View.GONE);
-                if (DeviceInfo.isLogin()) {
-                    startActivity(new Intent(HomeUserOptionsActivity.this, InvitedActivity.class));
-                } else {
-                    UiUtils.toast(getApplicationContext(), R.string.please_login_first);
-                }
+//            case R.id.rl_setting_invited:
+//                MobclickAgent.onEvent(this, "InvitedActivity");
+//                PreferenceUtil.commitBoolean(INVITED_SHOW_RED, false);
+//                invited_red_dot_view.setVisibility(View.GONE);
+//                if (DeviceInfo.isLogin()) {
+//                    startActivity(new Intent(HomeUserOptionsActivity.this, InvitedActivity.class));
+//                } else {
+//                    UiUtils.toast(getApplicationContext(), R.string.please_login_first);
+//                }
             case R.id.rl_my_subscribe: //订阅记录
                 if (DeviceInfo.isLogin()) {
 
