@@ -180,6 +180,8 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
         mapPrament.put("userId" , userid);//用户id
         mapPrament.put("key" , key);//联赛key
         mapPrament.put("type" , type);
+        mapPrament.put("lang" , "zh");
+        mapPrament.put("timeZone" , "8");
 //        mapPrament.put("lang" , "zh");
 //        mapPrament.put("timeZone" , "8");
         String signs = SignUtils.getSign("/promotion/info/list" , mapPrament);
