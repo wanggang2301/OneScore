@@ -30,6 +30,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import data.model.RecommendArticlesBean;
 
 /**
  * @author wangg
@@ -38,6 +39,8 @@ import butterknife.OnClick;
  */
 public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommendArticlesPresenter> implements IContract.IPullLoadMoreDataView, ExactSwipeRefreshLayout.OnRefreshListener {
 
+    private static final String PAGE_SIZE = "10";
+    private static final String SIGN_FLAG = "sign";
 
     @BindView(R.id.fl_loading)
     FrameLayout flLoading;
@@ -53,7 +56,6 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     LinearLayout handleException;
     RecommendArticlesAdapter mRecommendArticlesAdapter;
 
-
     ProgressBar progressBar;
     TextView loadmoreText;
     Activity mActivity;
@@ -63,6 +65,14 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     ImageView ivBack;
     @BindView(R.id.refresh)
     ExactSwipeRefreshLayout refresh;
+
+    String userId = "";
+
+    String loginToken = "";
+
+    int pageNum = 1;
+
+    private List<RecommendArticlesBean.PublishPromotionsBean.ListBean> listBeanList;
 
     public static RecommendArticlesFragment newInstance() {
         RecommendArticlesFragment recommendArticlesFragment = new RecommendArticlesFragment();
@@ -79,8 +89,9 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
         View view = inflater.inflate(R.layout.fragment_recommend_articles, container, false);
         moreView = inflater.inflate(R.layout.view_load_more, container, false);
         ButterKnife.bind(this, view);
-        //mPresenter.requestData();
         initEvent();
+
+        mPresenter.requestData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
         return view;
     }
 
@@ -92,40 +103,7 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
         refresh.setColorSchemeResources(R.color.bg_header);
         refresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
         recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        List<String> list = new ArrayList<>();
-
-        list.add("ss");
-        list.add("ss");
-        list.add("ss");
-        list.add("ss");
-        list.add("ss");
-        list.add("ss");
-        list.add("ss");
-        list.add("ss");
-        list.add("ss");
-        list.add("ss");
-        list.add("ss");
-
-        mRecommendArticlesAdapter = new RecommendArticlesAdapter(list);
-        recyclerView.setAdapter(mRecommendArticlesAdapter);
-        mRecommendArticlesAdapter.openLoadMore(0, true);
-        mRecommendArticlesAdapter.setLoadingView(moreView);
-
-        mRecommendArticlesAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                recyclerView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                       // mPresenter.pullUpLoadMoreData();
-
-                        pullUpLoadMoreDataFail();
-                    }
-                });
-            }
-        });
     }
-
 
     @Override
     public IContract.IRecommendArticlesPresenter initPresenter() {
@@ -134,37 +112,82 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
 
     @Override
     public void loading() {
-
+        handleException.setVisibility(View.GONE);
+        refresh.setVisibility(View.VISIBLE);
+        refresh.setRefreshing(true);
     }
 
     @Override
     public void responseData() {
-        initEvent();
+
+        handleException.setVisibility(View.GONE);
+        flNetworkError.setVisibility(View.GONE);
+        flNodata.setVisibility(View.GONE);
+        refresh.setVisibility(View.VISIBLE);
+        refresh.setRefreshing(false);
+
+        listBeanList = new ArrayList<>();
+        listBeanList.addAll(mPresenter.getRecommendArticlesData());
+
+        mRecommendArticlesAdapter = new RecommendArticlesAdapter(mActivity, listBeanList);
+        recyclerView.setAdapter(mRecommendArticlesAdapter);
+        mRecommendArticlesAdapter.openLoadMore(0, true);
+        mRecommendArticlesAdapter.setLoadingView(moreView);
+        mRecommendArticlesAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                recyclerView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        pageNum += 1;
+                        mPresenter.pullUpLoadMoreData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
+
+                    }
+                });
+            }
+        });
     }
 
 
     @Override
     public void noData() {
+        handleException.setVisibility(View.VISIBLE);
+        flNetworkError.setVisibility(View.GONE);
+        flNodata.setVisibility(View.VISIBLE);
+        refresh.setVisibility(View.GONE);
+        refresh.setRefreshing(false);
 
     }
 
     @Override
     public void onError() {
+        handleException.setVisibility(View.VISIBLE);
+        flNetworkError.setVisibility(View.VISIBLE);
+        flNodata.setVisibility(View.GONE);
+        refresh.setVisibility(View.GONE);
+        refresh.setRefreshing(false);
 
     }
 
     @Override
     public void onRefresh() {
-        refresh.setRefreshing(false);
+        refresh.setRefreshing(true);
+        pageNum = 1;
+        mPresenter.requestData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
     }
+
 
     @Override
     public void pullUpLoadMoreDataSuccess() {
+        listBeanList.addAll(mPresenter.getRecommendArticlesData());
+        mRecommendArticlesAdapter.notifyDataChangedAfterLoadMore(true);
+    }
+
+
+    @Override
+    public void pullUploadingView() {
         loadmoreText.setText(mActivity.getResources().getString(R.string.loading_data_txt));
         progressBar.setVisibility(View.VISIBLE);
-
-        // mList.addAll(foreignInfomationBean.getOverseasInformationList());
-        mRecommendArticlesAdapter.notifyDataChangedAfterLoadMore(true);
     }
 
     @Override
@@ -172,7 +195,6 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
         loadmoreText.setText(mActivity.getResources().getString(R.string.nodata_txt));
         progressBar.setVisibility(View.GONE);
     }
-
 
     //防止Activity内存泄漏
     @Override
@@ -184,7 +206,6 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         mActivity = (Activity) context;
     }
 
@@ -193,8 +214,11 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
+                mActivity.finish();
                 break;
             case R.id.reLoading:
+                pageNum = 1;
+                mPresenter.requestData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
                 break;
         }
     }

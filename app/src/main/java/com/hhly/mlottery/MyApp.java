@@ -143,7 +143,6 @@ public class MyApp extends Application {
                 .inject(this);
     }
 
-
     /**
      * 获取 data.DataManager
      *

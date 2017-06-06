@@ -40,8 +40,8 @@ import data.bean.SubsRecordBean;
 
 public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresenter> implements IContract.IPullLoadMoreDataView, ExactSwipeRefreshLayout.OnRefreshListener {
 
-
-    private static final String PAGE_SIZE = "10";
+    private static final String PAGE_SIZE = "10"; //每页10条记录
+    private static final String SIGN_FLAG = "sign"; //每页10条记录
 
     @BindView(R.id.iv_back)
     ImageView ivBack;
@@ -57,25 +57,30 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
     RecyclerView recyclerView;
     @BindView(R.id.handle_exception)
     LinearLayout handleException;
-    SubsRecordAdapter mSubsRecordAdapter;
 
+    @BindView(R.id.refresh)
+    ExactSwipeRefreshLayout refresh;
+
+    SubsRecordAdapter mSubsRecordAdapter;
     ProgressBar progressBar;
     TextView loadmoreText;
 
     Activity mActivity;
 
     View moreView;
-    @BindView(R.id.refresh)
-    ExactSwipeRefreshLayout refresh;
+
+    String userId = "HHLY00000136";
+
+    String loginToken = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJqd3QiLCJpYXQiOjE0OTY0ODU2MDAsInN1YiI6IntcImlkXCI6XCJISExZMDAwMDAxMzZcIixcInBob25lTnVtXCI6XCIxNTAxMzY5NzEwMVwifSJ9.l4jsTaz5tJM5Q4P3s_UK8US-S3HRfN-lfJZJ67XUS98";
+
+    int pageNum = 1;
 
     private List<SubsRecordBean.PurchaseRecordsBean.ListBean> listBeanList;
-
 
     public static SubsRecordFragment newInstance() {
         SubsRecordFragment subsRecordFragment = new SubsRecordFragment();
         return subsRecordFragment;
     }
-
 
     public SubsRecordFragment() {
     }
@@ -88,8 +93,7 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
         ButterKnife.bind(this, view);
         initEvent();
 
-        mPresenter.requestData("hhly90531", "1", PAGE_SIZE);
-
+        mPresenter.requestData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
         return view;
     }
 
@@ -111,69 +115,82 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
 
     @Override
     public void loading() {
-
+        handleException.setVisibility(View.GONE);
+        refresh.setVisibility(View.VISIBLE);
+        refresh.setRefreshing(true);
     }
 
     @Override
     public void responseData() {
 
-        listBeanList = mPresenter.getSubsRecordData();
+        handleException.setVisibility(View.GONE);
+        flNetworkError.setVisibility(View.GONE);
+        flNodata.setVisibility(View.GONE);
+        refresh.setVisibility(View.VISIBLE);
+        refresh.setRefreshing(false);
 
+        listBeanList = new ArrayList<>();
 
-        List<String> list = new ArrayList<>();
+        listBeanList.addAll(mPresenter.getSubsRecordData());
 
-        list.add("ss");
-        list.add("ss");
-        list.add("ss");
-        list.add("ss");
-        list.add("ss");
-        list.add("ss");
-
-        mSubsRecordAdapter = new SubsRecordAdapter(R.layout.betting_recommend_item, listBeanList);
+        mSubsRecordAdapter = new SubsRecordAdapter(mActivity, listBeanList);
         recyclerView.setAdapter(mSubsRecordAdapter);
-
         mSubsRecordAdapter.openLoadMore(0, true);
         mSubsRecordAdapter.setLoadingView(moreView);
-
         mSubsRecordAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-
                 recyclerView.post(new Runnable() {
                     @Override
                     public void run() {
-                        mPresenter.pullUpLoadMoreData();
+
+                        pageNum = pageNum + 1;
+                        mPresenter.pullUpLoadMoreData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
                     }
                 });
             }
         });
-
 
     }
 
 
     @Override
     public void noData() {
+        handleException.setVisibility(View.VISIBLE);
+        flNetworkError.setVisibility(View.GONE);
+        flNodata.setVisibility(View.VISIBLE);
+        refresh.setVisibility(View.GONE);
+        refresh.setRefreshing(false);
 
     }
 
     @Override
     public void onError() {
-
+        handleException.setVisibility(View.VISIBLE);
+        flNetworkError.setVisibility(View.VISIBLE);
+        flNodata.setVisibility(View.GONE);
+        refresh.setVisibility(View.GONE);
+        refresh.setRefreshing(false);
     }
 
     @Override
     public void onRefresh() {
-        refresh.setRefreshing(false);
+        refresh.setRefreshing(true);
+        pageNum = 1;
+        mPresenter.requestData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
     }
 
 
     @Override
-    public void pullUpLoadMoreDataSuccess() {
+    public void pullUploadingView() {
         loadmoreText.setText(mActivity.getResources().getString(R.string.loading_data_txt));
         progressBar.setVisibility(View.VISIBLE);
 
-        // mList.addAll(foreignInfomationBean.getOverseasInformationList());
+    }
+
+    @Override
+    public void pullUpLoadMoreDataSuccess() {
+        listBeanList.addAll(mPresenter.getSubsRecordData());
         mSubsRecordAdapter.notifyDataChangedAfterLoadMore(true);
     }
 
@@ -189,15 +206,23 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
         return isAdded();
     }
 
-    @OnClick(R.id.reLoading)
-    public void onClick() {
-    }
-
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         mActivity = (Activity) context;
+    }
+
+    @OnClick({R.id.iv_back, R.id.reLoading})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+                mActivity.finish();
+                break;
+            case R.id.reLoading:
+                pageNum = 1;
+                mPresenter.requestData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
+                break;
+        }
     }
 }

@@ -5,8 +5,9 @@ import com.hhly.mlottery.mvp.IView;
 
 import java.util.List;
 
-import data.bean.BottomOddsDetails;
-import data.bean.SubsRecordBean;
+import data.model.BottomOddsDetails;
+import data.model.RecommendArticlesBean;
+import data.model.SubsRecordBean;
 
 /**
  * @author: Wangg
@@ -34,6 +35,8 @@ public interface IContract {
         void pullUpLoadMoreDataSuccess();
 
         void pullUpLoadMoreDataFail();
+
+        void pullUploadingView();
     }
 
 
@@ -47,9 +50,9 @@ public interface IContract {
 
     //订阅记录
     interface ISubsRecordPresenter extends IPresenter<IPullLoadMoreDataView> {
-        void requestData(String userId, String pageNum, String pageSize);
+        void requestData(String userId, String pageNum, String pageSize, String loginToken, String sign);
 
-        void pullUpLoadMoreData();
+        void pullUpLoadMoreData(String userId, String pageNum, String pageSize, String loginToken, String sign);
 
         List<SubsRecordBean.PurchaseRecordsBean.ListBean> getSubsRecordData();
     }
@@ -57,11 +60,11 @@ public interface IContract {
 
     //推介文章
     interface IRecommendArticlesPresenter extends IPresenter<IPullLoadMoreDataView> {
-        void requestData();
+        void requestData(String userId, String pageNum, String pageSize, String loginToken, String sign);
 
-        void pullUpLoadMoreData();
+        void pullUpLoadMoreData(String userId, String pageNum, String pageSize, String loginToken, String sign);
 
         //BottomOddsDetails getBowlBean();
-        String getRecommendArticlesData();
+        List<RecommendArticlesBean.PublishPromotionsBean.ListBean> getRecommendArticlesData();
     }
 }

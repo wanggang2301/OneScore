@@ -2,28 +2,37 @@ package com.hhly.mlottery.mvptask.recommendarticles;
 
 import com.hhly.mlottery.mvp.BasePresenter;
 import com.hhly.mlottery.mvptask.IContract;
+import com.hhly.mlottery.util.CollectionUtils;
 
-import data.repository.Repository;
+import java.util.List;
+
+import data.model.RecommendArticlesBean;
+import data.repository.UserCenterRepository;
+import rx.Subscriber;
 
 /**
  * @author: Wangg
  * @name：xxx
- * @description: xxx
+ * @description: 推介文章presenter
  * @created on:2017/6/2  11:19.
  */
 
 public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoadMoreDataView> implements IContract.IRecommendArticlesPresenter {
 
-    private Repository repository;
+    private UserCenterRepository userCenterRepository;
+
+    private List<RecommendArticlesBean.PublishPromotionsBean.ListBean> list;
+    private boolean isHasNextPage = false;
+
 
     public RecommendArticlesPresenter(IContract.IPullLoadMoreDataView view) {
         super(view);
-        repository = mDataManager.repository;
+        userCenterRepository = mDataManager.userCenterRepository;
     }
 
 
     @Override
-    public void requestData() {
+    public void requestData(String userId, String pageNum, String pageSize, String loginToken, String sign) {
 
         if (!mView.isActive()) {
             return;
@@ -31,7 +40,7 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
 
         mView.loading();
 
-      /*  addSubscription(data.repository.getSubsRecord("","",""), new Subscriber<String>() {
+        addSubscription(userCenterRepository.getRecommendArtices(userId, pageNum, pageSize, loginToken, sign), new Subscriber<RecommendArticlesBean>() {
             @Override
             public void onCompleted() {
 
@@ -44,60 +53,65 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
             }
 
             @Override
-            public void onNext(String s) {
+            public void onNext(RecommendArticlesBean r) {
+                if (!"200".equals(r.getCode())) {
+                    mView.onError();
+                    return;
+                }
+
+                if (!CollectionUtils.notEmpty(r.getPublishPromotions().getList())) {
+                    mView.noData();
+                    return;
+                }
+
+                isHasNextPage = r.getPublishPromotions().isHasNextPage();
+                list = r.getPublishPromotions().getList();
+                mView.responseData();
+            }
+        });
+    }
+
+    @Override
+    public void pullUpLoadMoreData(String userId, String pageNum, String pageSize, String loginToken, String sign) {
+
+
+        //if (!isHasNextPage) {
+        if (false) {
+            mView.pullUpLoadMoreDataFail();
+            return;
+        }
+
+        mView.pullUploadingView();
+
+        addSubscription(userCenterRepository.getRecommendArtices(userId, pageNum, pageSize, loginToken, sign), new Subscriber<RecommendArticlesBean>() {
+            @Override
+            public void onCompleted() {
 
             }
-        });*/
+
+            @Override
+            public void onError(Throwable e) {
+                mView.pullUpLoadMoreDataFail();
+
+            }
+
+            @Override
+            public void onNext(RecommendArticlesBean r) {
+                if (!"200".equals(r.getCode())) {
+                    mView.pullUpLoadMoreDataFail();
+                    return;
+                }
+
+                isHasNextPage = r.getPublishPromotions().isHasNextPage();
+                list = r.getPublishPromotions().getList();
+                mView.pullUpLoadMoreDataSuccess();
+            }
+        });
     }
 
-    @Override
-    public void pullUpLoadMoreData() {
-//        addSubscription(data.repository.getSubsRecord(), new Subscriber<String>() {
-//            @Override
-//            public void onCompleted() {
-//
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//
-//            }
-//
-//            @Override
-//            public void onNext(String s) {
-//
-//
-//                if (!"".equals("200")) {
-//
-//                    mView.pullUpLoadMoreDataFail();
-//
-//                    return;
-//                } else {
-//
-//                    mView.pullUpLoadMoreDataSuccess();
-//
-//                }
-//
-///*
-//
-//                if (!foreignInfomationBean.getResult().equals("200")) {
-//                    loadmore_text.setText(mContext.getResources().getString(R.string.nodata_txt));
-//                    progressBar.setVisibility(View.GONE);
-//                    return;
-//                } else {
-//                    loadmore_text.setText(mContext.getResources().getString(R.string.loading_data_txt));
-//                    progressBar.setVisibility(View.VISIBLE);
-//                }
-//                mList.addAll(foreignInfomationBean.getOverseasInformationList());
-//                foreignInfomationAdapter.notifyDataChangedAfterLoadMore(true);
-//*/
-//
-//            }
-//        });
-    }
 
     @Override
-    public String getRecommendArticlesData() {
-        return null;
+    public List<RecommendArticlesBean.PublishPromotionsBean.ListBean> getRecommendArticlesData() {
+        return list;
     }
 }

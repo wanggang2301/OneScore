@@ -2,41 +2,42 @@ package com.hhly.mlottery.mvptask.subsrecord;
 
 import com.hhly.mlottery.mvp.BasePresenter;
 import com.hhly.mlottery.mvptask.IContract;
+import com.hhly.mlottery.util.CollectionUtils;
 
 import java.util.List;
 
-import data.bean.SubsRecordBean;
-import data.repository.Repository;
+import data.model.SubsRecordBean;
+import data.repository.UserCenterRepository;
 import rx.Subscriber;
 
 /**
  * @author: Wangg
  * @name：xxx
- * @description: xxx
+ * @description: 订阅记录的presenter
  * @created on:2017/6/1  19:13.
  */
 
 public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDataView> implements IContract.ISubsRecordPresenter {
 
-    private Repository repository;
+    private UserCenterRepository userCenterRepository;
     private List<SubsRecordBean.PurchaseRecordsBean.ListBean> listBeanList;
+    private boolean isHasNextPage = false;
 
     public SubsRecordPresenter(IContract.IPullLoadMoreDataView view) {
         super(view);
-        repository = mDataManager.repository;
+        userCenterRepository = mDataManager.userCenterRepository;
     }
 
 
     @Override
-    public void requestData(String userId, String pageNum, String pageSize) {
-
+    public void requestData(String userId, String pageNum, String pageSize, String loginToken, String sign) {
         if (!mView.isActive()) {
             return;
         }
 
         mView.loading();
 
-        addSubscription(repository.getSubsRecord(userId, pageNum, pageSize), new Subscriber<SubsRecordBean>() {
+        addSubscription(userCenterRepository.getSubsRecord(userId, pageNum, pageSize, loginToken, sign), new Subscriber<SubsRecordBean>() {
             @Override
             public void onCompleted() {
 
@@ -45,49 +46,62 @@ public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDa
             @Override
             public void onError(Throwable e) {
                 mView.onError();
-
             }
 
             @Override
             public void onNext(SubsRecordBean subsRecordBean) {
 
                 if (!"200".equals(subsRecordBean.getCode())) {
-
+                    mView.onError();
                     return;
                 }
 
+                if (!CollectionUtils.notEmpty(subsRecordBean.getPurchaseRecords().getList())) {
+                    mView.noData();
+                    return;
+                }
+
+                isHasNextPage = subsRecordBean.getPurchaseRecords().isHasNextPage();
                 listBeanList = subsRecordBean.getPurchaseRecords().getList();
-
-
+                mView.responseData();
             }
         });
     }
 
 
     @Override
-    public void pullUpLoadMoreData() {
-        mView.pullUpLoadMoreDataFail();
+    public void pullUpLoadMoreData(String userId, String pageNum, String pageSize, String loginToken, String sign) {
 
-       /* addSubscription(data.repository.getSubsRecord(), new Subscriber<String>() {
+        //if (!isHasNextPage) {
+        if (false) {
+            mView.pullUpLoadMoreDataFail();
+            return;
+        }
+
+        mView.pullUploadingView();
+
+        addSubscription(userCenterRepository.getSubsRecord(userId, pageNum, pageSize, loginToken, sign), new Subscriber<SubsRecordBean>() {
             @Override
             public void onCompleted() {
             }
 
             @Override
             public void onError(Throwable e) {
+                mView.pullUpLoadMoreDataFail();
             }
 
             @Override
-            public void onNext(String s) {
-
-                if (!"".equals("200")) {
+            public void onNext(SubsRecordBean subsRecordBean) {
+                if (!"200".equals(subsRecordBean.getCode())) {
                     mView.pullUpLoadMoreDataFail();
                     return;
-                } else {
-                    mView.pullUpLoadMoreDataSuccess();
                 }
+                isHasNextPage = subsRecordBean.getPurchaseRecords().isHasNextPage();
+                listBeanList = subsRecordBean.getPurchaseRecords().getList();
+                mView.pullUpLoadMoreDataSuccess();
             }
-        });*/
+        });
+
 
     }
 

@@ -1,7 +1,5 @@
 package data;
 
-import android.util.Log;
-
 import java.io.IOException;
 
 import okhttp3.HttpUrl;
@@ -31,15 +29,13 @@ public class DataInterceptor implements okhttp3.Interceptor {
 
         Request oldRequest = chain.request();
         HttpUrl oldUrl = oldRequest.url();
+
         HttpUrl url = oldUrl.newBuilder()
                 .addQueryParameter("lang", lang)
                 .addQueryParameter("timeZone", timeZone)
                 .build();
 
-        Request.Builder requestBuilder = oldRequest.newBuilder()
-                .url(url);
-
-        Log.d("bowlurl", url.toString());
+        Request.Builder requestBuilder = oldRequest.newBuilder().url(url);
 
         Request request = requestBuilder.build();
         return chain.proceed(request);

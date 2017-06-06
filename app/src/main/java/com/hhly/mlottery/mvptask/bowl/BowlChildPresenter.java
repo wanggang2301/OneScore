@@ -4,8 +4,8 @@ import com.hhly.mlottery.mvp.BasePresenter;
 import com.hhly.mlottery.mvptask.IContract;
 import com.hhly.mlottery.util.CollectionUtils;
 
-import data.bean.BottomOddsDetails;
-import data.repository.Repository;
+import data.model.BottomOddsDetails;
+import data.repository.UserCenterRepository;
 import rx.Observable;
 import rx.Subscriber;
 
@@ -18,12 +18,12 @@ import rx.Subscriber;
 
 public class BowlChildPresenter extends BasePresenter<IContract.IChildView> implements IContract.IBowlChildPresenter {
 
-    private Repository repository;
+    private UserCenterRepository repository;
     private BottomOddsDetails bowlBeanList;
 
     public BowlChildPresenter(IContract.IChildView view) {
         super(view);
-        repository = mDataManager.repository;
+        repository = mDataManager.userCenterRepository;
     }
 
 

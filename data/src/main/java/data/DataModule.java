@@ -9,13 +9,11 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
-import data.api.AccountDetailApi;
-import data.api.Api;
+import data.api.UserCenterApiService;
 import dagger.Module;
 import dagger.Provides;
-import data.repository.AccountDetailRepository;
+import data.repository.UserCenterRepository;
 import okhttp3.OkHttpClient;
-import data.repository.Repository;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -55,9 +53,11 @@ public class DataModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient(DataInterceptor dataInterceptor) {
+    OkHttpClient provideOkHttpClient(DataInterceptor dataInterceptor, SignInterceptor signInterceptor) {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient().newBuilder()
-                .addInterceptor(dataInterceptor);
+                .addInterceptor(dataInterceptor)
+                .addInterceptor(signInterceptor);
+
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         return httpClientBuilder.build();
     }
@@ -70,6 +70,14 @@ public class DataModule {
         return dataInterceptor;
     }
 
+
+    @Provides
+    @Singleton
+    SignInterceptor provideSignInterceptor() {
+        SignInterceptor signInterceptor = new SignInterceptor();
+        return signInterceptor;
+    }
+
     @Provides
     @Singleton
     Retrofit provideRetrofit(OkHttpClient okHttpClient, Gson gson) {
@@ -80,28 +88,19 @@ public class DataModule {
                 .baseUrl(mApiHostUrl)
                 .build();
     }
+
     @Provides
     @Singleton
-    Api provideBasketIndexApi(Retrofit retrofit) {
-        return retrofit.create(Api.class);
+    UserCenterApiService provideUserCenterApiService(Retrofit retrofit) {
+        return retrofit.create(UserCenterApiService.class);
     }
 
 
     @Provides
     @Singleton
-    Repository provideBasketIndexReposeitory(Api basketIndexApi) {
-        return new Repository(basketIndexApi);
+    UserCenterRepository provideUserCenterReposeitory(UserCenterApiService userCenterApiService) {
+        return new UserCenterRepository(userCenterApiService);
     }
 
-    @Provides
-    @Singleton
-    AccountDetailApi providesAccountApi(Retrofit retrofit){
-        return retrofit.create(AccountDetailApi.class);
-    }
 
-    @Provides
-    @Singleton
-    AccountDetailRepository provideAccountRespository(AccountDetailApi accountDetailApi){
-        return new AccountDetailRepository(accountDetailApi);
-    }
 }

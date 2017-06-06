@@ -1,5 +1,18 @@
 package com.hhly.mlottery.util;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.Build;
+import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.tbruyelle.rxpermissions.RxPermissions;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,27 +31,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
-import android.os.Looper;
-import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.tbruyelle.rxpermissions.RxPermissions;
-
 import rx.functions.Action1;
 import rx.functions.Func1;
 
-import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 /**

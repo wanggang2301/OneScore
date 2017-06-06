@@ -4,8 +4,7 @@ import android.content.Context;
 
 import javax.inject.Inject;
 
-import data.repository.AccountDetailRepository;
-import data.repository.Repository;
+import data.repository.UserCenterRepository;
 
 /**
  * @author: Wangg
@@ -17,9 +16,7 @@ import data.repository.Repository;
 public class DataManager {
 
     @Inject
-    public Repository repository;   //在DataModule中已经被注入，dataManager里面可以直接使用
-    @Inject
-    public AccountDetailRepository mAccountRepository;
+    public UserCenterRepository userCenterRepository;   //在DataModule中已经被注入，dataManager里面可以直接使用
 
     public DataManager(Context context, String apiHostUrl, String timeZone, String lang) {
 

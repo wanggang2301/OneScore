@@ -96,15 +96,6 @@
                                 android:text="主队XXXX" />
 
                             <TextView
-                                android:id="@+id/betting_home_add"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="(+1)"
-                                android:textColor="#0085e1"
-                                android:textSize="@dimen/text_size_10" />
-
-
-                            <TextView
                                 android:id="@+id/betting_vs"
                                 style="@style/betting_recommend_team_name_style"
                                 android:paddingLeft="10dp"
