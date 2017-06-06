@@ -202,7 +202,7 @@ public class MvpChargeMoneyActivity extends BaseActivity implements View.OnClick
      */
     private Map<String, String> getDataMap(String service){
         Map<String, String> map = new HashMap<String, String>();
-        String userid = AppConstants.register.getData().getUser().getUserId();
+        String userid = AppConstants.register.getUser().getUserId();
         String token = AppConstants.deviceToken;
         String sign = AppConstants.SIGN_KEY;
 
