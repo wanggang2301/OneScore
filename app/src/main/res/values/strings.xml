@@ -1799,5 +1799,7 @@
     <string name="zuanshi_txt">钻石专家</string>
     <string name="zhong_txt">中</string>
     <string name="tuijie_nodata_txt">大师,您很懒哦！\n 快去发布推介吧！</string>
+    <string name="dingyue_nodata_txt">您还未购买推介,\n去看看专家们怎么说….</string>
+    <string name="go_txt">前往</string>
 
 </resources>
