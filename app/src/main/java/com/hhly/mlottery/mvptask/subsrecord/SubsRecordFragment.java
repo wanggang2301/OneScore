@@ -20,10 +20,10 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.NotRecommendExpertActivity;
 import com.hhly.mlottery.adapter.custom.SubsRecordAdapter;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.ViewFragment;
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingRecommendActivity;
 import com.hhly.mlottery.mvptask.IContract;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -248,11 +248,7 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
                 break;
 
             case R.id.btn_confirm:
-                startActivity(new Intent(mActivity, NotRecommendExpertActivity.class));
-                // MvpBettingRecommendActivity
-//１：没有购买记录的时候可跳转到推介列表
-
-//２：已购买的可以点击进入到推介查看详情
+                startActivity(new Intent(mActivity, MvpBettingRecommendActivity.class));
                 break;
         }
     }

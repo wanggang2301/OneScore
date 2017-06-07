@@ -1,5 +1,6 @@
 package com.hhly.mlottery.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -33,8 +34,8 @@ public class NotRecommendExpertActivity extends BaseActivity {
                 break;
             case R.id.btn_confirm:
                 //进入跳转到申请成为专家页面
-
-
+                startActivity(new Intent(this, ApplicationSpecialistActivity.class));
+                finish();
                 break;
         }
     }

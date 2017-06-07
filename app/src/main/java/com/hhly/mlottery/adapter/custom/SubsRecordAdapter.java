@@ -1,6 +1,7 @@
 package com.hhly.mlottery.adapter.custom;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
@@ -9,6 +10,9 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
+import com.hhly.mlottery.config.ConstantPool;
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingPayDetailsActivity;
 import com.hhly.mlottery.view.CircleImageView;
 
 import java.util.List;
@@ -69,6 +73,8 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
         baseViewHolder.getView(R.id.rl_specialist_detail).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Toast.makeText(mContext, "专家详情敬请期待", Toast.LENGTH_SHORT).show();
                 //专家详情
             }
         });
@@ -77,36 +83,24 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
             @Override
             public void onClick(View v) { //跳转到记录详情
 
-                Toast.makeText(mContext, "敬請期待", Toast.LENGTH_SHORT).show();
 
+                BettingListDataBean.PromotionData.BettingListData bettingListData = new BettingListDataBean.PromotionData.BettingListData();
 
-                //   BettingListDataBean.PromotionData.BettingListData bettingListData = new BettingListDataBean.PromotionData.BettingListData();
-
-/*
-                String imgUrl = itemData.getPhotoUrl();
-                ImageLoader.load(mContext,imgUrl,R.mipmap.football_analyze_default).into(portraitImg);
-                detailsHomeName.setText(filtraNull(itemData.getHomeName()));
-                detailsGuestName.setText(filtraNull(itemData.getGuestName()));
-                detailsWeek.setText(filtraNull(itemData.getSerNum()));
-                detailsLuague.setText(filtraNull(itemData.getLeagueName()));
-                detailsDate.setText(filtraNull(itemData.getReleaseDate()));
-                */
-            /*
                 bettingListData.setId(b.getId());
                 bettingListData.setHomeName(b.getHomeName());
                 bettingListData.setGuestName(b.getGuestName());
                 bettingListData.setPrice(String.valueOf(b.getPrice()));
-
+                bettingListData.setReleaseDate(b.getMatchDate());
+                bettingListData.setSerNum(b.getScreening());
                 bettingListData.setPhotoUrl(b.getHeadImg());
                 bettingListData.setLeagueName(b.getLeagueName());
 
+                //Serializable allLeague = getIntent().getSerializableExtra(ConstantPool.BETTING_ITEM_DATA);
 
+                Intent intent = new Intent(mContext, MvpBettingPayDetailsActivity.class);
+                intent.putExtra(ConstantPool.BETTING_ITEM_DATA, bettingListData);
+                mContext.startActivity(intent);
 
-
-                Intent intent = new Intent(mContext, MvpBettingPayDetailsActivity.class);*/
-
-
-                //MvpBettingPayDetailsActivity
             }
         });
     }
@@ -114,7 +108,7 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
 
     private String getSpecialistGrade(String level) {
         if (TextUtils.isEmpty(level)) {
-            return "白银专家";
+            return mContext.getResources().getString(R.string.baiyin_txt);
         }
 
         String levelGrade = mContext.getResources().getString(R.string.baiyin_txt);
