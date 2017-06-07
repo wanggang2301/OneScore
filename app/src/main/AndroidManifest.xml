@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hhly.mlottery">
     <!--录音权限-->
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!-- 调用系统下载权限 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
@@ -401,6 +401,7 @@
         <activity
             android:name=".activity.ExpertsActivity"
             android:screenOrientation="portrait" />
+<<<<<<< Temporary merge branch 1
         <activity android:name="com.hhly.mlottery.activity.BettingRecommendSettingActivity"
             android:screenOrientation="portrait" />
 
@@ -465,7 +466,20 @@
             android:screenOrientation="behind"
             >
         </activity>
+            android:screenOrientation="behind" />
 
+        <activity
+            android:name=".activity.SubsRecordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.RecommendArticlesActivity"
+            android:screenOrientation="portrait" />
+        <!--账户详情-->
+        <activity android:name=".activity.AccountDetailActivity"
+            android:screenOrientation="portrait" />
+        <!--角球比分-->
+        <activity android:name=".activity.FootballCornerActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name="com.hhly.mlottery.activity.AccountDetailActivity"
             android:screenOrientation="portrait" />
     </application>

@@ -40,7 +40,7 @@ public class AccountDetailBean {
          */
 
         private BalanceEntity balance;
-        private List<RecordEntity> record;
+        private List<RechargeBean> record;
 
         public BalanceEntity getBalance() {
             return balance;
@@ -50,11 +50,11 @@ public class AccountDetailBean {
             this.balance = balance;
         }
 
-        public List<RecordEntity> getRecord() {
+        public List<RechargeBean> getRecord() {
             return record;
         }
 
-        public void setRecord(List<RecordEntity> record) {
+        public void setRecord(List<RechargeBean> record) {
             this.record = record;
         }
 
@@ -94,110 +94,6 @@ public class AccountDetailBean {
             }
         }
 
-        public static class RecordEntity {
-            /**
-             * tradeType : 4
-             * tradeName : 收入
-             * payType : null
-             * tradeAmount : 0.5
-             * status : 0
-             * finishTime : 2017-06-03 16:07:32
-             * rechargeType : 1
-             * rechargeName : 竞彩推介
-             * transactionId : null
-             * payResult : null
-             */
 
-            private int tradeType;
-            private String tradeName;
-            private Object payType;
-            private double tradeAmount;
-            private int status;
-            private String finishTime;
-            private int rechargeType;
-            private String rechargeName;
-            private Object transactionId;
-            private Object payResult;
-
-            public int getTradeType() {
-                return tradeType;
-            }
-
-            public void setTradeType(int tradeType) {
-                this.tradeType = tradeType;
-            }
-
-            public String getTradeName() {
-                return tradeName;
-            }
-
-            public void setTradeName(String tradeName) {
-                this.tradeName = tradeName;
-            }
-
-            public Object getPayType() {
-                return payType;
-            }
-
-            public void setPayType(Object payType) {
-                this.payType = payType;
-            }
-
-            public double getTradeAmount() {
-                return tradeAmount;
-            }
-
-            public void setTradeAmount(double tradeAmount) {
-                this.tradeAmount = tradeAmount;
-            }
-
-            public int getStatus() {
-                return status;
-            }
-
-            public void setStatus(int status) {
-                this.status = status;
-            }
-
-            public String getFinishTime() {
-                return finishTime;
-            }
-
-            public void setFinishTime(String finishTime) {
-                this.finishTime = finishTime;
-            }
-
-            public int getRechargeType() {
-                return rechargeType;
-            }
-
-            public void setRechargeType(int rechargeType) {
-                this.rechargeType = rechargeType;
-            }
-
-            public String getRechargeName() {
-                return rechargeName;
-            }
-
-            public void setRechargeName(String rechargeName) {
-                this.rechargeName = rechargeName;
-            }
-
-            public Object getTransactionId() {
-                return transactionId;
-            }
-
-            public void setTransactionId(Object transactionId) {
-                this.transactionId = transactionId;
-            }
-
-            public Object getPayResult() {
-                return payResult;
-            }
-
-            public void setPayResult(Object payResult) {
-                this.payResult = payResult;
-            }
-        }
     }
 }

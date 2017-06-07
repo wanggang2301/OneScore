@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 云标签子布局 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="4dp"
+        android:background="@drawable/symptom_selected_round_backgroud">
+        <!-- 症状名称  -->
+        <TextView
+            android:id="@+id/tv_symptom_selected_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingRight="15dp"
+            android:paddingLeft="5dp"
+            android:textColor="@color/white"
+            android:text="感冒"/>
+        <TextView
+            android:layout_marginLeft="-8dp"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="x"/>
+    </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

@@ -71,6 +71,7 @@ public class AvatarSelectionActivity extends Activity implements View.OnClickLis
     private ChoseFailStartWomanAdapter choseFailStartWomanAdapter;
     private LinearLayout text_times_title1;
     private ImageView ib_operate_more;
+    private String language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -273,7 +274,17 @@ public class AvatarSelectionActivity extends Activity implements View.OnClickLis
         param.put("avatorURL",headerUrl);
         param.put("loginToken",AppConstants.register.getToken());
 
-        String sign=DeviceInfo.getSign("/user/updateavatorbyurl"+"avatorURL"+headerUrl+"langzh"+"loginToken"+AppConstants.register.getToken()+"timeZone8"+"userId"+AppConstants.register.getUser().getUserId());
+
+        if (MyApp.isLanguage.equals("rCN")) {
+            // 如果是中文简体的语言环境
+            language = "langzh";
+        } else if (MyApp.isLanguage.equals("rTW")) {
+            // 如果是中文繁体的语言环境
+            language="langzh-TW";
+        }
+
+
+        String sign=DeviceInfo.getSign("/user/updateavatorbyurl"+"avatorURL"+headerUrl+language+"loginToken"+AppConstants.register.getToken()+"timeZone8"+"userId"+AppConstants.register.getUser().getUserId());
         param.put("sign",sign);
         VolleyContentFast.requestJsonByPost(BaseURLs.PUT_PHOTO_URL, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
             @Override

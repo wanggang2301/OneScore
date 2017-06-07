@@ -88,8 +88,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
             android:paddingTop="200dp"
-            android:text="@string/nodata" />
+            android:text="@string/nodata"
+            android:textSize="@dimen/text_size_13" />
 
         <Button
             android:id="@+id/btn_confirm"

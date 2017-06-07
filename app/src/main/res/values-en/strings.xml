@@ -265,11 +265,12 @@
     <string name="immediate_status_end">End</string>
     <string name="foot_rollball_txt">Running</string>
     <string name="only_five_eachday">A phone number can send only 5 short messages per day.</string>
-    <string name="login_username">Enter account or register via a phone number</string>
+    <string name="login_username">Please enter your cell phone number</string>
     <string name="server_busy">System busy</string>
     <string name="forty_five_plus">45+</string>
     <string name="ninety_plus">90+</string>
     <string name="at_least_one_company">Select one company at least</string>
+    <string name="login_one_score">Log in one score</string>
 
     <string name="home_win_rate">Home Win Probability</string>
     <string name="home_lose_rate">Home Lose Probability</string>

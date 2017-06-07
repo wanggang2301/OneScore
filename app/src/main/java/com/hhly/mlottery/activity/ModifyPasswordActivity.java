@@ -36,6 +36,7 @@ public class ModifyPasswordActivity extends BaseActivity implements View.OnClick
     private EditText et_password_old, et_password_new, et_password_confirm;
     private ProgressDialog progressBar;
     private ImageView mIv_eye;
+    private String language;
 
 
     @Override
@@ -141,7 +142,15 @@ public class ModifyPasswordActivity extends BaseActivity implements View.OnClick
                         param.put("oldPassword", MD5Util.getMD5(pwOld));
                         param.put("newPassword", MD5Util.getMD5(pwNew));
                         param.put("loginToken",AppConstants.register.getToken());
-                        String sign=DeviceInfo.getSign("/user/updatepassword"+"langzh"+"loginToken"+AppConstants.register.getToken()+"newPassword"+MD5Util.getMD5(pwNew)+"oldPassword"+MD5Util.getMD5(pwOld)+"timeZone8"+"userId"+AppConstants.register.getUser().getUserId());
+                        if (MyApp.isLanguage.equals("rCN")) {
+                            // 如果是中文简体的语言环境
+                            language = "langzh";
+                        } else if (MyApp.isLanguage.equals("rTW")) {
+                            // 如果是中文繁体的语言环境
+                            language="langzh-TW";
+                        }
+
+                        String sign=DeviceInfo.getSign("/user/updatepassword"+language+"loginToken"+AppConstants.register.getToken()+"newPassword"+MD5Util.getMD5(pwNew)+"oldPassword"+MD5Util.getMD5(pwOld)+"timeZone8"+"userId"+AppConstants.register.getUser().getUserId());
                         param.put("sign",sign);
 
 

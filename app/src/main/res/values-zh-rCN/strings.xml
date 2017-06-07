@@ -1149,16 +1149,17 @@
     <string name="immediate_status_end">完</string>
     <string name="foot_rollball_txt">滚球</string>
     <string name="only_five_eachday">同一个手机号每天只能发送5次短信</string>
-    <string name="login_username">请输入账号或者注册手机号</string>
+    <string name="login_username">请输入手机号</string>
     <string name="server_busy">系统繁忙</string>
     <string name="forty_five_plus">45+</string>
     <string name="ninety_plus">90+</string>
     <string name="at_least_one_company">至少选择一家公司</string>
     <string name="invited_number_noon">邀请码不存在</string>
+    <string name="login_one_score">登录一比分</string>
 
 
     <string name="phone_already_nexist">手机号未被注册</string>
-    <string name="no_logon_user">禁止登录用户</string>
+    <string name="no_logon_user">失败次数过多，请3分钟后再试！或通过忘记密码重设密码!</string>
     <string name="unknown_error">未知错误</string>
     <string name="token_null">令牌(token)为空</string>
     <string name="phone_mismatching">用户名与手机号不匹配</string>
@@ -1816,5 +1817,7 @@
     <string name="zuanshi_txt">钻石专家</string>
     <string name="zhong_txt">中</string>
     <string name="tuijie_nodata_txt">大师,您很懒哦！\n 快去发布推介吧！</string>
+    <string name="dingyue_nodata_txt">您还未购买推介,\n去看看专家们怎么说….</string>
+    <string name="go_txt">前往</string>
 
 </resources>

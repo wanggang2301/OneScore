@@ -232,6 +232,8 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
 
             case R.id.btn_confirm:
 
+                //MvpBettingIssueDetailsActivity
+
                 break;
         }
     }

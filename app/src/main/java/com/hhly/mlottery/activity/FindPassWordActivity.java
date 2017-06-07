@@ -62,6 +62,7 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
     private CountDown countDown;
     public static final int TIMEOUT = 59699;
     public static final int TIMEOUT_INTERVEL = 1000;
+    private String language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,13 +198,19 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
                 if (UiUtils.checkPassword(this , pwd)){
                     progressBar.show();
 
-                    //String url = BaseURLs.URL_RESETPASSWORD;
-                    String url ="http://192.168.10.242:8091/user/resetpassword";
+                    String url = BaseURLs.URL_RESETPASSWORD;
                     Map<String, String> param = new HashMap<>();
                     param.put("phoneNum" , phone);
-                    param.put("password" , MD5Util.getMD5(pwd));
+                    param.put("password" , MD5Util.getMD5(pwd).toUpperCase());
                     param.put("sms" , verifyCode);
-                    String sign=DeviceInfo.getSign("/user/resetpassword"+"langzh"+"password"+MD5Util.getMD5(pwd)+"phoneNum"+phone+"sms"+verifyCode+"timeZone8");
+                    if (MyApp.isLanguage.equals("rCN")) {
+                        // 如果是中文简体的语言环境
+                        language = "langzh";
+                    } else if (MyApp.isLanguage.equals("rTW")) {
+                        // 如果是中文繁体的语言环境
+                        language="langzh-TW";
+                    }
+                    String sign=DeviceInfo.getSign("/user/resetpassword"+language+"password"+MD5Util.getMD5(pwd)+"phoneNum"+phone+"sms"+verifyCode+"timeZone8");
                     param.put("sign",sign);
 
                     VolleyContentFast.requestJsonByPost(url,param, new VolleyContentFast.ResponseSuccessListener<Register>() {

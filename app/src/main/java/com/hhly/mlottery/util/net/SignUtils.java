@@ -115,6 +115,4 @@ public class SignUtils {
         return hexDigits[d1] + hexDigits[d2];
     }
 
-
-
 }

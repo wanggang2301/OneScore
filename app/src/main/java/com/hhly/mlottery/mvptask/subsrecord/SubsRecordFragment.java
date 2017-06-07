@@ -3,12 +3,14 @@ package com.hhly.mlottery.mvptask.subsrecord;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,6 +23,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.custom.SubsRecordAdapter;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.ViewFragment;
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingRecommendActivity;
 import com.hhly.mlottery.mvptask.IContract;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
@@ -75,6 +78,10 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
     String loginToken = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJqd3QiLCJpYXQiOjE0OTY0ODU2MDAsInN1YiI6IntcImlkXCI6XCJISExZMDAwMDAxMzZcIixcInBob25lTnVtXCI6XCIxNTAxMzY5NzEwMVwifSJ9.l4jsTaz5tJM5Q4P3s_UK8US-S3HRfN-lfJZJ67XUS98";
 
     int pageNum = 1;
+    @BindView(R.id.tv_nodata)
+    TextView tvNodata;
+    @BindView(R.id.btn_confirm)
+    Button btnConfirm;
 
     private List<SubsRecordBean.PurchaseRecordsBean.ListBean> listBeanList;
 
@@ -102,6 +109,11 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
     private void initEvent() {
         loadmoreText = (TextView) moreView.findViewById(R.id.loadmore_text);
         progressBar = (ProgressBar) moreView.findViewById(R.id.progressBar);
+
+        tvNodata.setText(mActivity.getResources().getString(R.string.dingyue_nodata_txt));
+        btnConfirm.setVisibility(View.VISIBLE);
+        btnConfirm.setText(mActivity.getResources().getString(R.string.go_txt));
+
         refresh.setOnRefreshListener(this);
         refresh.setColorSchemeResources(R.color.bg_header);
         refresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
@@ -214,7 +226,7 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
         mActivity = (Activity) context;
     }
 
-    @OnClick({R.id.iv_back, R.id.reLoading})
+    @OnClick({R.id.iv_back, R.id.reLoading, R.id.btn_confirm})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -223,6 +235,12 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
             case R.id.reLoading:
                 pageNum = 1;
                 mPresenter.requestData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
+                break;
+
+            case R.id.btn_confirm:
+                startActivity(new Intent(mActivity, MvpBettingRecommendActivity.class));
+                // MvpBettingRecommendActivity
+
                 break;
         }
     }
