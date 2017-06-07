@@ -45,7 +45,7 @@ import data.bean.RecommendArticlesBean;
 public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommendArticlesPresenter> implements IContract.IPullLoadMoreDataView, ExactSwipeRefreshLayout.OnRefreshListener {
 
     private static final String PAGE_SIZE = "10";
-    private static final String SIGN_FLAG = "sign";
+    private static final String SIGN_FLAG = "sign"; //是否需要签名标记
 
     @BindView(R.id.fl_loading)
     FrameLayout flLoading;

@@ -46,7 +46,7 @@ import data.bean.SubsRecordBean;
 public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresenter> implements IContract.IPullLoadMoreDataView, ExactSwipeRefreshLayout.OnRefreshListener {
 
     private static final String PAGE_SIZE = "10"; //每页10条记录
-    private static final String SIGN_FLAG = "sign"; //每页10条记录
+    private static final String SIGN_FLAG = "sign"; //是否需要签名标记
 
     @BindView(R.id.iv_back)
     ImageView ivBack;
