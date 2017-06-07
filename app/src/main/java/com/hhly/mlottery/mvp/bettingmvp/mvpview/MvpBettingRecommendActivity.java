@@ -7,9 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,21 +15,19 @@ import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.BaseActivity;
 import com.hhly.mlottery.activity.BettingRecommendSettingActivity;
 import com.hhly.mlottery.activity.LoginActivity;
+import com.hhly.mlottery.adapter.bettingadapter.BettingRecommendMvpAdapter;
 import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
 import com.hhly.mlottery.config.ConstantPool;
+import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingSettingResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.mvppresenter.MvpBettingRecommendPresenter;
-import com.hhly.mlottery.adapter.bettingadapter.BettingRecommendMvpAdapter;
-import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.SignUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.LoadMoreRecyclerView;
@@ -160,6 +156,8 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
         mLinearLayoutManager = new LinearLayoutManager(this);
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecycleView.setLayoutManager(mLinearLayoutManager);
+
+
 
 //        mOnLoadingView = getLayoutInflater().inflate(R.layout.onloading, (ViewGroup) mRecycleView.getParent(),false);
 //        mNoLoadingView = getLayoutInflater().inflate(R.layout.nomoredata, (ViewGroup) mRecycleView.getParent(),false);
@@ -299,6 +297,8 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
         if (mAdapter == null) {
             mAdapter = new BettingRecommendMvpAdapter(mContext , listData);
             mRecycleView.setAdapter(mAdapter);
+
+
             mAdapter.setmBuyClick(mBettingBuyClickListener);
             mAdapter.setmSpecialistClick(mBettingSpecialistClickListener);
             mAdapter.setmGameDetailsClick(mBettingGameDetailsClickListener);

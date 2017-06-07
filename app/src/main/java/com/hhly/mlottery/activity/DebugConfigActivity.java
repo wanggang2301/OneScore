@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingRecommendActivity;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -165,15 +166,20 @@ public class DebugConfigActivity extends BaseActivity {
                     return;
 
                 }
+
                 PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, DIY_INPUT);
                 PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, DIY_INPUT);
 
+
+                L.d("huanjing", str);
 
                 PreferenceUtil.commitString("DIY_INPUT", str);*/
 
                 //System.exit(0);
                 //   public LeagueCup(int type, List<String> thirdId, String racename, String raceId, int count, boolean hot) {
 
+
+                startActivity(new Intent(DebugConfigActivity.this, MvpBettingRecommendActivity.class));
 
             }
         });
