@@ -15,10 +15,14 @@
 
         <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-            <include layout="@layout/fragment_pre_headinfo" />
+            <include
+                layout="@layout/fragment_pre_headinfo"
+                android:visibility="gone"/>
+
+            <include layout="@layout/football_hean_event_animation_fragment" />
 
             <com.hhly.mlottery.view.BarrageView
                 android:id="@+id/barrage_view"
@@ -47,7 +51,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="right|center"
-                    android:layout_marginRight="40dp"
+                    android:layout_marginRight="25dp"
                     android:src="@mipmap/danmu_open" />
 
                 <ImageView
@@ -64,112 +68,119 @@
 
         </FrameLayout>
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_layout"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="?attr/colorPrimary"
-            app:tabGravity="center"
-            app:tabIndicatorColor="@color/white"
-            app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/white"
-            app:tabTextColor="#BBDEFB" />
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="vertical">
 
-        <!--内容加载进度条_正在加载中-->
-        <FrameLayout
-            android:id="@+id/fl_odds_loading_details"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:visibility="gone">
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="?attr/colorPrimary"
+                app:tabGravity="center"
+                app:tabIndicatorColor="@color/white"
+                app:tabMode="scrollable"
+                app:tabSelectedTextColor="@color/white"
+                app:tabTextColor="#BBDEFB" />
 
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
-        </FrameLayout>
-        <!--网络访问失败-->
-        <FrameLayout
-            android:id="@+id/fl_odds_networkError_details"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
-
-            <LinearLayout
+            <!--内容加载进度条_正在加载中-->
+            <FrameLayout
+                android:id="@+id/fl_odds_loading_details"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_gravity="center"
+                android:visibility="gone">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+            </FrameLayout>
+            <!--网络访问失败-->
+            <FrameLayout
+                android:id="@+id/fl_odds_networkError_details"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/refresh" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/exp_net_status_txt"
+                        android:textColor="@color/version"
+                        android:textSize="@dimen/text_size_14" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dip"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dip"
+                            android:text="@string/exp__check_txt"
+                            android:textColor="@color/msg"
+                            android:textSize="@dimen/text_size_14" />
+
+                        <TextView
+                            android:id="@+id/reLoading_details"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/exp_refresh_txt"
+                            android:textColor="@color/exp_refresh"
+                            android:textSize="@dimen/text_size_14" />
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+            <RelativeLayout
+                android:id="@+id/rl_gif_notice"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/refresh" />
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/gif_notice" />
+
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/exp_net_status_txt"
-                    android:textColor="@color/version"
-                    android:textSize="@dimen/text_size_14" />
+                    android:layout_centerInParent="true"
+                    android:alpha="0.8"
+                    android:paddingTop="60dp"
+                    android:text="@string/video_high_notice"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dip"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="5dip"
-                        android:text="@string/exp__check_txt"
-                        android:textColor="@color/msg"
-                        android:textSize="@dimen/text_size_14" />
-
-                    <TextView
-                        android:id="@+id/reLoading_details"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/exp_refresh_txt"
-                        android:textColor="@color/exp_refresh"
-                        android:textSize="@dimen/text_size_14" />
-                </LinearLayout>
-            </LinearLayout>
-        </FrameLayout>
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-        <RelativeLayout
-            android:id="@+id/rl_gif_notice"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@mipmap/gif_notice" />
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:alpha="0.8"
-                android:paddingTop="60dp"
-                android:text="@string/video_high_notice"
-                android:textColor="@color/white" />
-        </RelativeLayout>
-
+        </LinearLayout>
     </LinearLayout>
 
 </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
