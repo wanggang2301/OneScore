@@ -300,6 +300,9 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
             case R.id.rl_my_promotion:     //推介文章
                 if (DeviceInfo.isLogin()) {
+
+
+
                     startActivity(new Intent(this, RecommendArticlesActivity.class));
                 } else {
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);

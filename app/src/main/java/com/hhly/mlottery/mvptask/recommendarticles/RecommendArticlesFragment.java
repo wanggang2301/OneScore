@@ -23,6 +23,7 @@ import com.hhly.mlottery.adapter.custom.RecommendArticlesAdapter;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.mvptask.IContract;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
@@ -68,9 +69,9 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     @BindView(R.id.refresh)
     ExactSwipeRefreshLayout refresh;
 
-    String userId = "";
+    String userId;
 
-    String loginToken = "";
+    String loginToken;
 
     int pageNum = 1;
     @BindView(R.id.tv_nodata)
@@ -96,6 +97,8 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
         moreView = inflater.inflate(R.layout.view_load_more, container, false);
         ButterKnife.bind(this, view);
         initEvent();
+        userId = AppConstants.register.getUser().getUserId();
+        loginToken = AppConstants.register.getToken();
 
         mPresenter.requestData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
         return view;

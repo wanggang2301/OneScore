@@ -25,6 +25,7 @@ import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingRecommendActivity;
 import com.hhly.mlottery.mvptask.IContract;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
@@ -72,10 +73,15 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
     Activity mActivity;
 
     View moreView;
+/*
 
     String userId = "HHLY00000136";
-
     String loginToken = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJqd3QiLCJpYXQiOjE0OTY0ODU2MDAsInN1YiI6IntcImlkXCI6XCJISExZMDAwMDAxMzZcIixcInBob25lTnVtXCI6XCIxNTAxMzY5NzEwMVwifSJ9.l4jsTaz5tJM5Q4P3s_UK8US-S3HRfN-lfJZJ67XUS98";
+*/
+
+
+    String userId;
+    String loginToken;
 
     int pageNum = 1;
     @BindView(R.id.tv_nodata)
@@ -84,6 +90,7 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
     Button btnConfirm;
 
     private List<SubsRecordBean.PurchaseRecordsBean.ListBean> listBeanList;
+
 
     public static SubsRecordFragment newInstance() {
         SubsRecordFragment subsRecordFragment = new SubsRecordFragment();
@@ -100,6 +107,9 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
         moreView = inflater.inflate(R.layout.view_load_more, container, false);
         ButterKnife.bind(this, view);
         initEvent();
+
+        userId = AppConstants.register.getUser().getUserId();
+        loginToken = AppConstants.register.getToken();
 
         mPresenter.requestData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
         return view;
