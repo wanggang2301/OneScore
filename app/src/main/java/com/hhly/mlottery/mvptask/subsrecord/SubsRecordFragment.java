@@ -155,7 +155,6 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
                 recyclerView.post(new Runnable() {
                     @Override
                     public void run() {
-
                         pageNum = pageNum + 1;
                         mPresenter.pullUpLoadMoreData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
                     }
