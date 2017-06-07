@@ -322,8 +322,8 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
 
             mRecycleView.setAdapter(mAdapter);
             mAdapter.setmBuyClick(mBettingBuyClickListener);
-            mAdapter.setmSpecialistClick(mBettingSpecialistClickListener);
             mAdapter.setmGameDetailsClick(mBettingGameDetailsClickListener);
+            mAdapter.setmSpecialistClick(mBettingSpecialistClickListener);
         }else{
             upDataAdapter();
         }
