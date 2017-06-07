@@ -160,29 +160,19 @@ public class DebugConfigActivity extends BaseActivity {
              /*   EditText ed = (EditText) findViewById(R.id.et_input);
                 String str = ed.getText().toString();
 
-
-
-
-
-
-
                 if (TextUtils.isEmpty(str)) {
                     Toast.makeText(DebugConfigActivity.this, "不能为空！", Toast.LENGTH_SHORT).show();
                     return;
 
                 }
-
                 PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, DIY_INPUT);
                 PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, DIY_INPUT);
 
-
-                L.d("huanjing", str);
 
                 PreferenceUtil.commitString("DIY_INPUT", str);*/
 
                 //System.exit(0);
                 //   public LeagueCup(int type, List<String> thirdId, String racename, String raceId, int count, boolean hot) {
-
 
 
             }
