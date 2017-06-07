@@ -107,7 +107,6 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
         progressBar = (ProgressBar) moreView.findViewById(R.id.progressBar);
         btnConfirm.setVisibility(View.VISIBLE);
         tvNodata.setText(mActivity.getResources().getString(R.string.tuijie_nodata_txt));
-
         refresh.setOnRefreshListener(this);
         refresh.setColorSchemeResources(R.color.bg_header);
         refresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
@@ -119,6 +118,7 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
         return new RecommendArticlesPresenter(this);
     }
 
+    //请求load
     @Override
     public void loading() {
         handleException.setVisibility(View.GONE);
@@ -126,9 +126,9 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
         refresh.setRefreshing(true);
     }
 
+    //请求成功返回数据
     @Override
     public void responseData() {
-
         handleException.setVisibility(View.GONE);
         flNetworkError.setVisibility(View.GONE);
         flNodata.setVisibility(View.GONE);
@@ -157,7 +157,7 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
         });
     }
 
-
+    //请求没有数据处理
     @Override
     public void noData() {
         handleException.setVisibility(View.VISIBLE);
@@ -168,6 +168,7 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
 
     }
 
+    //请求错误处理
     @Override
     public void onError() {
         handleException.setVisibility(View.VISIBLE);
@@ -178,6 +179,7 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
 
     }
 
+    //下拉刷新处理
     @Override
     public void onRefresh() {
         refresh.setRefreshing(true);
@@ -185,20 +187,21 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
         mPresenter.requestData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
     }
 
-
-    @Override
-    public void pullUpLoadMoreDataSuccess() {
-        listBeanList.addAll(mPresenter.getRecommendArticlesData());
-        mRecommendArticlesAdapter.notifyDataChangedAfterLoadMore(true);
-    }
-
-
+    //下拉记载load
     @Override
     public void pullUploadingView() {
         loadmoreText.setText(mActivity.getResources().getString(R.string.loading_data_txt));
         progressBar.setVisibility(View.VISIBLE);
     }
 
+    //下拉加载成功
+    @Override
+    public void pullUpLoadMoreDataSuccess() {
+        listBeanList.addAll(mPresenter.getRecommendArticlesData());
+        mRecommendArticlesAdapter.notifyDataChangedAfterLoadMore(true);
+    }
+
+    //下拉加载失败
     @Override
     public void pullUpLoadMoreDataFail() {
         loadmoreText.setText(mActivity.getResources().getString(R.string.nodata_txt));
@@ -229,7 +232,6 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
                 pageNum = 1;
                 mPresenter.requestData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
                 break;
-
             case R.id.btn_confirm:
                 startActivity(new Intent(mActivity, MvpBettingIssueDetailsActivity.class));
                 mActivity.finish();
