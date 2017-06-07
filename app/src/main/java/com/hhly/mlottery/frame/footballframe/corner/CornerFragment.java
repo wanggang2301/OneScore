@@ -2,10 +2,12 @@ package com.hhly.mlottery.frame.footballframe.corner;
 
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,6 +29,7 @@ import com.hhly.mlottery.adapter.ScheduleDateAdapter;
 import com.hhly.mlottery.adapter.corner.CornerListAdapter;
 import com.hhly.mlottery.bean.corner.CornerListBean;
 import com.hhly.mlottery.bean.scheduleBean.ScheduleDate;
+import com.hhly.mlottery.callback.CornerDateListerner;
 import com.hhly.mlottery.callback.FocusMatchClickListener;
 import com.hhly.mlottery.config.FootBallDetailTypeEnum;
 import com.hhly.mlottery.config.StaticValues;
@@ -35,7 +38,6 @@ import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.HandMatchId;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
-import com.hhly.mlottery.util.ToastTools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +52,7 @@ import static com.hhly.mlottery.activity.FootballMatchDetailActivity.BUNDLE_PARA
  * 足球角球页面
  * date:2017/05/18
  */
-public class CornerFragment extends ViewFragment<CornerContract.Presenter> implements CornerContract.View {
+public class CornerFragment extends ViewFragment<CornerContract.Presenter> implements CornerContract.View  {
 
     View mView;
     /**
@@ -144,7 +146,6 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
         mView=inflater.inflate(R.layout.fragment_corner,container,false);
         ButterKnife.bind(this,mView);
 
-
         return mView;
     }
 
@@ -170,6 +171,22 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
                 mExceptionLayout.setVisibility(View.GONE);
                 mProgressBarLayout.setVisibility(View.VISIBLE);
                 mPresenter.refreshData(mType,currentDatePosition ,false);
+            }
+        });
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(newState==RecyclerView.SCROLL_STATE_DRAGGING){
+                    mAdapter.setCurrentDate(currentDatePosition,true);
+                }
+
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
             }
         });
 
@@ -203,7 +220,7 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
             }
         });
         if(mAdapter==null){
-            mAdapter=new CornerListAdapter(mPresenter.getData(),getActivity());
+            mAdapter=new CornerListAdapter(mPresenter.getData(),getActivity(),mDatelist);
         }
         mOnloadingView=getActivity().getLayoutInflater().inflate(R.layout.onloading, (ViewGroup) mRecyclerView.getParent(),false);
         mAdapter.setLoadingView(mOnloadingView);
@@ -227,6 +244,7 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
 
             }
         });
+
 
 
         mFocusClickListener = new FocusMatchClickListener() { // 关注按钮事件
@@ -285,6 +303,15 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
                     intent.putExtra("current_ab", FootBallDetailTypeEnum.FOOT_DETAIL_LIVE);
                     getActivity().startActivity(intent);
                 }
+            }
+        });
+
+        mAdapter.setDateListener(new CornerDateListerner() {
+            @Override
+            public void setDate(String date ,int position) {
+                mTextDate.setText(DateUtil.convertDateToNation(mDatelist.get(position).getDate()));
+                mTextWeek.setText(mDatelist.get(position).getWeek());
+                currentDatePosition=position;
             }
         });
 
@@ -379,6 +406,7 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
         mAdapter.notifyDataChangedAfterLoadMore(false);
         mAdapter.addFooterView(mNoLoadingView);
 
+
     }
 
     @Override
@@ -386,6 +414,7 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
         mAdapter.notifyDataChangedAfterLoadMore(cornerListBean,true);
         mTextDate.setText(DateUtil.convertDateToNation(mDatelist.get(currentDatePosition).getDate()));
         mTextWeek.setText(mDatelist.get(currentDatePosition).getWeek());
+        mAdapter.setCurrentDate(currentDatePosition,false);
     }
 
     @Override
@@ -396,8 +425,11 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
 //        }
     }
 
+
     @Override
     public CornerContract.Presenter initPresenter() {
         return  new CornerPresenter(this);
     }
+
+
 }

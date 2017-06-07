@@ -1,7 +1,6 @@
 package com.hhly.mlottery.adapter.corner;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -12,24 +11,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.github.mikephil.charting.formatter.ColorFormatter;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.FootballCornerActivity;
-import com.hhly.mlottery.activity.FootballMatchDetailActivity;
+import com.hhly.mlottery.adapter.ScheduleDateAdapter;
 import com.hhly.mlottery.bean.corner.CornerListBean;
+import com.hhly.mlottery.bean.scheduleBean.ScheduleDate;
+import com.hhly.mlottery.callback.CornerDateListerner;
 import com.hhly.mlottery.callback.FocusMatchClickListener;
-import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.PreferenceUtil;
-import com.hhly.mlottery.util.ToastTools;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import static com.hhly.mlottery.activity.FootballMatchDetailActivity.BUNDLE_PARAM_THIRDID;
 
 /**
  * 描    述：角球列表适配器
@@ -39,6 +35,11 @@ import static com.hhly.mlottery.activity.FootballMatchDetailActivity.BUNDLE_PARA
 public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEntity> {
 
     Context mContext;
+    private int mCurruntDatePosition;
+    private CornerDateListerner mDateListerner;
+    private boolean mChange=true;
+
+    List<ScheduleDate> mDatelist = new ArrayList<>();
     /**
      * 关注比赛
      */
@@ -49,13 +50,44 @@ public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEnt
     }
 
 
-    public CornerListAdapter(List<CornerListBean.CornerEntity> data, Context contxt) {
+    public CornerListAdapter(List<CornerListBean.CornerEntity> data, Context contxt ,List<ScheduleDate> mDateList) {
         super(R.layout.item_corner_list, data);
         this.mContext=contxt;
+        this.mDatelist=mDateList;
     }
+
+    public void setDateListener(CornerDateListerner listener){
+        this.mDateListerner=listener;
+    }
+    /**
+     * 通知Adapter当前分页页数
+     */
+    public void setCurrentDate(int mCurrentDatePosition ,boolean changeDate){
+        this.mCurruntDatePosition=mCurrentDatePosition;
+        mChange=changeDate;
+    }
+
 
     @Override
     protected void convert(final BaseViewHolder holder, final CornerListBean.CornerEntity bean) {
+
+
+        bean.setDateTag(bean.getCornerMatchInfo().getDate());
+        String date[]=bean.getCornerMatchInfo().getTime().split(":");
+
+        if(Integer.parseInt(date[0])<10){ //12点之前。日期减1
+            bean.setDateTag(DateUtil.getDate(-1,bean.getCornerMatchInfo().getDate())); //12点之前日期减1
+        }
+        if(!bean.getDateTag().equals(mDatelist.get(mCurruntDatePosition).getDate())&&mChange){ //item日期跟头部日期不一样，切不是刚分页。则把现在的日期传回去设置
+            //并且把当前日期所在list的position传回去。不然的话。在下拉刷新的时候。还是最末页的加载数据。跟头部日期不符了就
+//            ToastTools.showQuick(mContext,bean.getDateTag());
+
+            for(int i=0;i<mDatelist.size();i++){
+                if(mDatelist.get(i).getDate().equals(bean.getDateTag())){
+                    mDateListerner.setDate(bean.getDateTag(),i);
+                }
+            }
+        }
 
         CornerListBean.CornerEntity.CornerMatchInfoEntity entity=bean.getCornerMatchInfo();
         TextView match_type=holder.getView(R.id.tv_match_type);
@@ -277,6 +309,7 @@ public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEnt
 
 
     }
+
 
 
 
