@@ -605,8 +605,8 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         switch (v.getId()) {
             case R.id.iv_home_pic:
                 MobclickAgent.onEvent(mContext, "HomePager_User_Info_Start");
-//                startActivityForResult(new Intent(mContext, HomeUserOptionsActivity.class), REQUESTCODE_LOGIN);
-                startActivity(new Intent(mContext, AccountDetailActivity.class));
+                startActivityForResult(new Intent(mContext, HomeUserOptionsActivity.class), REQUESTCODE_LOGIN);
+//                startActivity(new Intent(mContext, AccountDetailActivity.class));
                 break;
             default:
                 break;
