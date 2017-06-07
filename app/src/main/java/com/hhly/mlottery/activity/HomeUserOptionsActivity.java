@@ -308,6 +308,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                     //不是专家  跳NotRecommendExpertActivity
 
 
+                    //是专家这样跳
                     startActivity(new Intent(this, RecommendArticlesActivity.class));
                 } else {
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);

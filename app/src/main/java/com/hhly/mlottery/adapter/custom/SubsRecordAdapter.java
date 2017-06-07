@@ -79,6 +79,7 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
 
                 Toast.makeText(mContext, "敬請期待", Toast.LENGTH_SHORT).show();
 
+
                 //   BettingListDataBean.PromotionData.BettingListData bettingListData = new BettingListDataBean.PromotionData.BettingListData();
 
 /*
