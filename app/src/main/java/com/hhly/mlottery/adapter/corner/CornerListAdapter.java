@@ -71,20 +71,21 @@ public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEnt
     @Override
     protected void convert(final BaseViewHolder holder, final CornerListBean.CornerEntity bean) {
 
+        if(bean.getCornerMatchInfo().getDate()!=null&&bean.getCornerMatchInfo().getTime()!=null){
+            bean.setDateTag(bean.getCornerMatchInfo().getDate());
+            String date[]=bean.getCornerMatchInfo().getTime().split(":");
 
-        bean.setDateTag(bean.getCornerMatchInfo().getDate());
-        String date[]=bean.getCornerMatchInfo().getTime().split(":");
-
-        if(Integer.parseInt(date[0])<10){ //12点之前。日期减1
-            bean.setDateTag(DateUtil.getDate(-1,bean.getCornerMatchInfo().getDate())); //12点之前日期减1
-        }
-        if(!bean.getDateTag().equals(mDatelist.get(mCurruntDatePosition).getDate())&&mChange){ //item日期跟头部日期不一样，切不是刚分页。则把现在的日期传回去设置
-            //并且把当前日期所在list的position传回去。不然的话。在下拉刷新的时候。还是最末页的加载数据。跟头部日期不符了就
+            if(Integer.parseInt(date[0])<10){ //12点之前。日期减1
+                bean.setDateTag(DateUtil.getDate(-1,bean.getCornerMatchInfo().getDate())); //12点之前日期减1
+            }
+            if(!bean.getDateTag().equals(mDatelist.get(mCurruntDatePosition).getDate())&&mChange){ //item日期跟头部日期不一样，切不是刚分页。则把现在的日期传回去设置
+                //并且把当前日期所在list的position传回去。不然的话。在下拉刷新的时候。还是最末页的加载数据。跟头部日期不符了就
 //            ToastTools.showQuick(mContext,bean.getDateTag());
 
-            for(int i=0;i<mDatelist.size();i++){
-                if(mDatelist.get(i).getDate().equals(bean.getDateTag())){
-                    mDateListerner.setDate(bean.getDateTag(),i);
+                for(int i=0;i<mDatelist.size();i++){
+                    if(mDatelist.get(i).getDate().equals(bean.getDateTag())){
+                        mDateListerner.setDate(bean.getDateTag(),i);
+                    }
                 }
             }
         }
