@@ -16,6 +16,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BaseActivity;
 import com.hhly.mlottery.bean.bettingbean.BettingOrderDataBean;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingBuyResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.PayMentZFBResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.mvppresenter.MvpBettingOnlinePaymentPresenter;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBean;
@@ -43,8 +44,8 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
 
     //订单接口
 //    String payUrl = "http://192.168.31.15:8081/sunon-web-api/pay/unifiedTradePay";
-//    String payUrl = "http://192.168.31.207:8092/user/pay/recharge";
-    String payUrl = "http://m.1332255.com:81/user/pay/recharge";
+    String payUrl = "http://192.168.31.207:8099/user/pay/recharge";
+//    String payUrl = "http://m.1332255.com:81/user/pay/recharge";
     private Context mContext;
     /**
      * 支付方式  支付宝(默认) 0 ；微信 1 ；余额 2
@@ -183,6 +184,7 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
                             break;
                         case 2:
                             L.d("支付方式 = ","余额支付");
+                            orderPay();// 充值成功调余额支付接口
                             break;
 
                     }
@@ -271,7 +273,7 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
         if (TextUtils.equals(resultStatus, "9000")) {
             Toast.makeText(mContext, "支付成功 > " + resultStatus, Toast.LENGTH_SHORT).show();
             //TODO=====  充值成功调起余额接口
-            orderPay();// 充值成功调余额支付接口
+//            orderPay();// 充值成功调余额支付接口
         } else {
             if (TextUtils.equals(resultStatus, "8000")) {
                 Toast.makeText(mContext, "结果确认中 > " + resultStatus, Toast.LENGTH_SHORT).show();
@@ -286,10 +288,15 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
             }
         }
     }
+    public void onEventMainThread(BettingBuyResultEventBusEntity buyResultEventBusEntity){
+        if (buyResultEventBusEntity.isSuccessBuy()) {
+            orderPay();
+        }
+    }
     /**
         订单支付（余额扣款）
      */
-    public static void orderPay(){
+    public void orderPay(){
 
         //http://192.168.10.242:8092/promotion/order/pay?
         // userId=hhly90531&promotionId=643&sign=982f065d9f9c942d3e5466d93a417d73aa&channel=1&token=eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJqd3QiLCJpYXQiOjE0OTYzNzY2NjIsInN1YiI6IntcImlkXCI6XCJoaGx5OTA1MzFcIixcInBob25lTnVtXCI6XCIxMzI2Njc1MjM4NlwifSJ9.2hmsToL-ex9LXRbWI44cuDhqKqZva_qBPG1pKB_IVfU&payType=3
@@ -325,6 +332,8 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
             public void onResponse(BettingOrderDataBean jsonObject) {
                 if (jsonObject == null || jsonObject.getCode() == 3000) {
                     L.d("qweradf==> " , "余额扣款成功");
+                    EventBus.getDefault().post(new BettingBuyResultEventBusEntity(true));
+                    finish();
                     return;
                 }else{
                     L.d("qweradf==> " , "扣款失败" + jsonObject.getCode());

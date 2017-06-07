@@ -60,8 +60,8 @@ public class BettingListDataBean {
         private String isFirstPage;
         private String isLastPage;
 
-        private String hasPreviousPage;
-        private String hasNextPage;
+        private boolean hasPreviousPage;
+        private boolean hasNextPage;
         private String navigatePages;
         private List<Integer> navigatepageNums;
 
@@ -591,19 +591,19 @@ public class BettingListDataBean {
             this.isLastPage = isLastPage;
         }
 
-        public String getHasPreviousPage() {
+        public boolean isHasPreviousPage() {
             return hasPreviousPage;
         }
 
-        public void setHasPreviousPage(String hasPreviousPage) {
+        public void setHasPreviousPage(boolean hasPreviousPage) {
             this.hasPreviousPage = hasPreviousPage;
         }
 
-        public String getHasNextPage() {
+        public boolean isHasNextPage() {
             return hasNextPage;
         }
 
-        public void setHasNextPage(String hasNextPage) {
+        public void setHasNextPage(boolean hasNextPage) {
             this.hasNextPage = hasNextPage;
         }
 

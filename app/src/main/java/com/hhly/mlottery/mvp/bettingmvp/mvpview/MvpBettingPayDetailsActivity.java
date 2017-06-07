@@ -18,6 +18,7 @@ import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
 import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingBuyResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.mvppresenter.MvpBettingPayDetailsPresenter;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -30,6 +31,8 @@ import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by：XQyi on 2017/4/18 11:12
@@ -68,12 +71,15 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
     private BettingListDataBean.PromotionData.BettingListData itemData;
     private LinearLayout toPayll;
 
+    private boolean mayPay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.betting_recommend_details);
+
+        EventBus.getDefault().register(this);
 
         mContext = this;
         mvpBettingPayDetailsPresenter = new MvpBettingPayDetailsPresenter(this);
@@ -82,6 +88,13 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
         setStatus(SHOW_STATUS_LOADING);
         initData();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
     /**
      * 设置显示状态
      *
@@ -213,11 +226,14 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 break;
             case R.id.betting_topay_ll:
+
                 Intent mIntent = new Intent(mContext , MvpBettingOnlinePaymentActivity.class);
                 mIntent.putExtra(ConstantPool.PROMOTION_ID , itemData.getId());//选中的
                 startActivity(mIntent);
                 overridePendingTransition(R.anim.push_left_in , R.anim.push_fix_out);
                 break;
+
+
         }
     }
 
@@ -300,6 +316,16 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
     public void onRefresh() {
         setStatus(SHOW_STATUS_LOADING);
         initData();
+    }
+
+    //购买完成后的返回
+    public void onEventMainThread(BettingBuyResultEventBusEntity buyResultEventBusEntity){
+
+        if (buyResultEventBusEntity.isSuccessBuy()) {
+            mayPay = false; //购买的返回 不可二次点击
+            setStatus(SHOW_STATUS_REFRESH_ONCLICK);
+            initData();
+        }
     }
 
     private String filtraNull(String str){
