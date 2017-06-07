@@ -82,8 +82,6 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
         baseViewHolder.getView(R.id.textView11).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { //跳转到记录详情
-
-
                 BettingListDataBean.PromotionData.BettingListData bettingListData = new BettingListDataBean.PromotionData.BettingListData();
 
                 bettingListData.setId(b.getId());
@@ -95,12 +93,9 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
                 bettingListData.setPhotoUrl(b.getHeadImg());
                 bettingListData.setLeagueName(b.getLeagueName());
 
-                //Serializable allLeague = getIntent().getSerializableExtra(ConstantPool.BETTING_ITEM_DATA);
-
                 Intent intent = new Intent(mContext, MvpBettingPayDetailsActivity.class);
                 intent.putExtra(ConstantPool.BETTING_ITEM_DATA, bettingListData);
                 mContext.startActivity(intent);
-
             }
         });
     }
