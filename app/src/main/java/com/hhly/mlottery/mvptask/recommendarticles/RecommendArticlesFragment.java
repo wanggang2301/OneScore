@@ -59,28 +59,25 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     RecyclerView recyclerView;
     @BindView(R.id.handle_exception)
     LinearLayout handleException;
-    RecommendArticlesAdapter mRecommendArticlesAdapter;
-
-    ProgressBar progressBar;
-    TextView loadmoreText;
-    Activity mActivity;
-    View moreView;
-
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.refresh)
     ExactSwipeRefreshLayout refresh;
-
-    String userId;
-
-    String loginToken;
-
-    int pageNum = 1;
     @BindView(R.id.tv_nodata)
     TextView tvNodata;
     @BindView(R.id.btn_confirm)
     Button btnConfirm;
 
+
+    RecommendArticlesAdapter mRecommendArticlesAdapter;
+    ProgressBar progressBar;
+    TextView loadmoreText;
+    Activity mActivity;
+    View moreView;
+
+    String userId;
+    String loginToken;
+    int pageNum = 1;
     private List<RecommendArticlesBean.PublishPromotionsBean.ListBean> listBeanList;
 
     public static RecommendArticlesFragment newInstance() {
@@ -88,10 +85,8 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
         return recommendArticlesFragment;
     }
 
-
     public RecommendArticlesFragment() {
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
