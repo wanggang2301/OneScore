@@ -468,6 +468,9 @@
         <!--账户详情-->
         <activity android:name=".activity.AccountDetailActivity"
             android:screenOrientation="portrait" />
+        <!--角球比分-->
+        <activity android:name=".activity.FootballCornerActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
