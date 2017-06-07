@@ -73,22 +73,73 @@
                 </LinearLayout>
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.CollapsingToolbarLayout>
+        <!--tab-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:background="@color/account_tab_color"
-
+            android:layout_height="30dp"
+            android:orientation="horizontal"
             >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/account_detail"
-                android:layout_marginLeft="40dp"
-                android:textColor="@color/home_logo_color"
-                android:textSize="@dimen/text_size_14"
-                />
+            <LinearLayout
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    >
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/whitesmoke"
+                    >
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:background="@drawable/account_corner_shape"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/account_detail"
+                    android:layout_marginLeft="40dp"
+                    android:textColor="@color/home_logo_color"
+                    android:textSize="@dimen/text_size_14"
+                    />
+                </LinearLayout>
+            <LinearLayout
+                android:layout_width="20dp"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="3"
+                        >
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="@color/whitesmoke"
+                        >
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
         </LinearLayout>
+
 
     </android.support.design.widget.AppBarLayout>
 
@@ -96,39 +147,53 @@
             android:id="@+id/account_detail_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="13dp"
+            android:background="@color/whitesmoke"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             />
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/account_error_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/whitesmoke"
             >
 
-        <FrameLayout
-            android:id="@+id/basket_player_progressbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="50dp"
-            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="13dp"
+                android:gravity="bottom"
+                android:background="@color/account_tab_color"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                >
 
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="80dp"
-                android:layout_gravity="center" />
-        </FrameLayout>
+            </LinearLayout>
 
             <include layout="@layout/layout_nodata"
                 />
             <include layout="@layout/basket_odds_new_error"
 
                 />
+
+            <FrameLayout
+                android:id="@+id/basket_player_progressbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="50dp">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="80dp" />
+            </FrameLayout>
         </FrameLayout>
     </android.support.v4.widget.NestedScrollView>
 

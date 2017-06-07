@@ -21,14 +21,14 @@ public class RechargeBean {
 
     private int tradeType;
     private String tradeName;
-    private Object payType;
-    private int tradeAmount;
+    private String payType;
+    private double tradeAmount;
     private int status;
     private String finishTime;
     private int rechargeType;
     private String rechargeName;
-    private Object transactionId;
-    private Object payResult;
+    private String transactionId;
+    private String payResult;
 
     public int getTradeType() {
         return tradeType;
@@ -46,15 +46,15 @@ public class RechargeBean {
         this.tradeName = tradeName;
     }
 
-    public Object getPayType() {
+    public String getPayType() {
         return payType;
     }
 
-    public void setPayType(Object payType) {
+    public void setPayType(String payType) {
         this.payType = payType;
     }
 
-    public int getTradeAmount() {
+    public double getTradeAmount() {
         return tradeAmount;
     }
 
@@ -94,19 +94,19 @@ public class RechargeBean {
         this.rechargeName = rechargeName;
     }
 
-    public Object getTransactionId() {
+    public String getTransactionId() {
         return transactionId;
     }
 
-    public void setTransactionId(Object transactionId) {
+    public void setTransactionId(String transactionId) {
         this.transactionId = transactionId;
     }
 
-    public Object getPayResult() {
+    public String getPayResult() {
         return payResult;
     }
 
-    public void setPayResult(Object payResult) {
+    public void setPayResult(String payResult) {
         this.payResult = payResult;
     }
 }
