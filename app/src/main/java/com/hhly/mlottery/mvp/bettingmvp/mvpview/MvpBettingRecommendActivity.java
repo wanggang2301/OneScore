@@ -92,7 +92,6 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
         mvpBettingRecommendPresenter = new MvpBettingRecommendPresenter(this);
         initView();
 //        initData();
-        setListener();
         setStatus(SHOW_STATUS_LOADING);
         mLoadHandler.postDelayed(mRun, 0);
     }
@@ -168,10 +167,6 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
 
         mOnLoadingView = getLayoutInflater().inflate(R.layout.onloading, (ViewGroup) mRecycleView.getParent(),false);
         mNoLoadingView = getLayoutInflater().inflate(R.layout.nomoredata, (ViewGroup) mRecycleView.getParent(),false);
-
-        mAdapter = new BettingRecommendMvpAdapter(mContext , listData);
-        mAdapter.setLoadingView(mOnLoadingView);
-        mAdapter.openLoadMore(PAGE_SIZE,true);
 
         //异常状态
         //网络不给力
@@ -319,21 +314,19 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
         gameDetailsClick();
 
         L.d("listData >> " + listData.size());
-        mAdapter.setNewData(listData);
-        mAdapter.notifyDataSetChanged();
-//        if (mAdapter == null) {
-//            mAdapter = new BettingRecommendMvpAdapter(mContext , listData);
-//            setListener();
-//            mAdapter.setLoadingView(mOnLoadingView);
-//            mAdapter.openLoadMore(pageSize,true);
-//
-//            mRecycleView.setAdapter(mAdapter);
-//            mAdapter.setmBuyClick(mBettingBuyClickListener);
-//            mAdapter.setmSpecialistClick(mBettingSpecialistClickListener);
-//            mAdapter.setmGameDetailsClick(mBettingGameDetailsClickListener);
-//        }else{
-//            upDataAdapter();
-//        }
+        if (mAdapter == null) {
+            mAdapter = new BettingRecommendMvpAdapter(mContext , listData);
+            setListener();
+            mAdapter.setLoadingView(mOnLoadingView);
+            mAdapter.openLoadMore(pageSize,true);
+
+            mRecycleView.setAdapter(mAdapter);
+            mAdapter.setmBuyClick(mBettingBuyClickListener);
+            mAdapter.setmSpecialistClick(mBettingSpecialistClickListener);
+            mAdapter.setmGameDetailsClick(mBettingGameDetailsClickListener);
+        }else{
+            upDataAdapter();
+        }
     }
 
     @Override
@@ -445,17 +438,8 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
     }
 
     private void setListener(){
-
-        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-
-                Toast.makeText(mContext, "852852", Toast.LENGTH_SHORT).show();
-
-            }
-        });
         //上拉加载更多
-/*        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
                 new Handler().postDelayed(new Runnable() {
@@ -470,7 +454,7 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
                     }
                 },1000);
             }
-        });*/
+        });
     }
 
     //设置返回
