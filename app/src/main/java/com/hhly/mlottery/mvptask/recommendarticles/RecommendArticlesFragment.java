@@ -3,6 +3,7 @@ package com.hhly.mlottery.mvptask.recommendarticles;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.DebugConfigActivity;
 import com.hhly.mlottery.adapter.custom.RecommendArticlesAdapter;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.ViewFragment;
@@ -234,6 +236,9 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
                 break;
 
             case R.id.btn_confirm:
+
+
+                startActivity(new Intent(mActivity, DebugConfigActivity.class));
 
                 //MvpBettingIssueDetailsActivity
 
