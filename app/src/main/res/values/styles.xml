@@ -1156,16 +1156,6 @@
         <item name="android:gravity">center</item>
 
     </style>
-    <!--账户明细余额字体样式-->
-    <style name="account_detail_balance">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:text">可用余额(元)</item>
-        <item name="android:textSize">@dimen/text_size_14</item>
-    </style>
 
     <!-- 竞彩推介发布内容 -->
     <style name="betting_recommend_issue_check">
@@ -1201,7 +1191,6 @@
         <item name="android:text">可用余额(元)</item>
         <item name="android:textSize">@dimen/text_size_15</item>
     </style>
-    <style name="betting_recommend_issue_fabu"/>
 
     <!--竞彩推介发布详情-->
     <style name="betting_recommend_issue_fabu_key">

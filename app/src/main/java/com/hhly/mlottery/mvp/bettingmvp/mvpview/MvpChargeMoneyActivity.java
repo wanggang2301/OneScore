@@ -1,5 +1,7 @@
 package com.hhly.mlottery.mvp.bettingmvp.mvpview;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MotionEvent;
@@ -27,8 +29,9 @@ import de.greenrobot.event.EventBus;
  * Created by：XQyi on 2017/6/1 16:08
  * Use:充值页面(view)
  */
-public class MvpChargeMoneyActivity extends BaseActivity implements View.OnClickListener {
+public class MvpChargeMoneyActivity extends Activity implements View.OnClickListener {
 
+    private Context mContext;
     private RadioButton priceCardA;
     private RadioButton priceCardB;
     private RadioButton priceCardC;
@@ -55,6 +58,7 @@ public class MvpChargeMoneyActivity extends BaseActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chongzhi_activity);
+        mContext = this;
         EventBus.getDefault().register(this);
         initView();
     }

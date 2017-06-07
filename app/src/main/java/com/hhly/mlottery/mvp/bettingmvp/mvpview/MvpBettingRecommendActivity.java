@@ -1,5 +1,7 @@
 package com.hhly.mlottery.mvp.bettingmvp.mvpview;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -47,7 +49,7 @@ import de.greenrobot.event.EventBus;
  * Created by：XQyi on 2017/5/2 10:56
  * Use:竞彩推荐列表（MVP-View 页面展示）
  */
-public class MvpBettingRecommendActivity extends BaseActivity implements MView<BettingListDataBean>, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class MvpBettingRecommendActivity extends Activity implements MView<BettingListDataBean>, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private MvpBettingRecommendPresenter mvpBettingRecommendPresenter;
     private BettingRecommendMvpAdapter mAdapter;
@@ -62,6 +64,7 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
     private TextView mRefreshTxt;
     private LinearLayout mLoadingLayout;
     private TextView mNoDataLayout;
+    private Context mContext;
 
     List<BettingListDataBean.LeagueNameData> allLeague;// 所有的联赛
     List<BettingListDataBean.LeagueNameData> currLeague;//选中的联赛

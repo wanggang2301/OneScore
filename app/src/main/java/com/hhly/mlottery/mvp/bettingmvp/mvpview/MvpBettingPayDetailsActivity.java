@@ -1,5 +1,7 @@
 package com.hhly.mlottery.mvp.bettingmvp.mvpview;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -34,8 +36,9 @@ import java.util.Map;
  * Use:竞彩单关页面[MVP_view  页面展示]
  */
 
-public class MvpBettingPayDetailsActivity extends BaseActivity implements MView<BettingDetailsBean>, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class MvpBettingPayDetailsActivity extends Activity implements MView<BettingDetailsBean>, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
+    private Context mContext;
     private ImageView mBack;
     private LinearLayout mToPay;
     private MvpBettingPayDetailsPresenter mvpBettingPayDetailsPresenter;
@@ -64,6 +67,7 @@ public class MvpBettingPayDetailsActivity extends BaseActivity implements MView<
     private TextView mNoDataLayout;
     private BettingListDataBean.PromotionData.BettingListData itemData;
     private LinearLayout toPayll;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

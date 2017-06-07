@@ -1,5 +1,7 @@
 package com.hhly.mlottery.mvp.bettingmvp.mvpview;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -34,7 +36,7 @@ import de.greenrobot.event.EventBus;
  * Use:支付页面（选择支付方式 [MVP-view 页面展示]）
  */
 
-public class MvpBettingOnlinePaymentActivity extends BaseActivity implements MView<BettingOrderDataBean>, View.OnClickListener {
+public class MvpBettingOnlinePaymentActivity extends Activity implements MView<BettingOrderDataBean>, View.OnClickListener {
 
     // IWXAPI 是第三方app和微信通信的openapi接口
 //    private IWXAPI api;
@@ -43,7 +45,7 @@ public class MvpBettingOnlinePaymentActivity extends BaseActivity implements MVi
 //    String payUrl = "http://192.168.31.15:8081/sunon-web-api/pay/unifiedTradePay";
 //    String payUrl = "http://192.168.31.207:8092/user/pay/recharge";
     String payUrl = "http://m.1332255.com:81/user/pay/recharge";
-
+    private Context mContext;
     /**
      * 支付方式  支付宝(默认) 0 ；微信 1 ；余额 2
      */
@@ -67,6 +69,7 @@ public class MvpBettingOnlinePaymentActivity extends BaseActivity implements MVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.betting_recommend_online_payment_lay);
+        mContext = this;
         EventBus.getDefault().register(this);
         paymentPresenter = new MvpBettingOnlinePaymentPresenter(this);
         initView();

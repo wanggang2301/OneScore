@@ -212,11 +212,6 @@
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
-        <!-- 微信支付 -->
-        <activity
-            android:name=".wxapi.WXPayEntryActivity"
-            android:exported="true"
-            android:launchMode="singleTop" />
         <!-- QQ分享 -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -401,7 +396,6 @@
         <activity
             android:name=".activity.ExpertsActivity"
             android:screenOrientation="portrait" />
-<<<<<<< Temporary merge branch 1
         <activity android:name="com.hhly.mlottery.activity.BettingRecommendSettingActivity"
             android:screenOrientation="portrait" />
 
@@ -480,8 +474,6 @@
         <!--角球比分-->
         <activity android:name=".activity.FootballCornerActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name="com.hhly.mlottery.activity.AccountDetailActivity"
-            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
