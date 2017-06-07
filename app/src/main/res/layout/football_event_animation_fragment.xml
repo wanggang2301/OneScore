@@ -4457,6 +4457,43 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1">
 
+                            <!--title-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1.3"
+                                    android:layout_marginBottom="5dp"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/tv_guest_goal_title"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:background="@drawable/football_animation_offside_bg"
+                                        android:gravity="center"
+                                        android:paddingBottom="2dp"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="5dp"
+                                        android:paddingTop="2dp"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/tennis_score_item"
+                                        tools:text="@string/foot_event_goal" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
                             <!--客队进球-->
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -4514,6 +4551,44 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1">
+
+                            <!--title-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_weight="1.3">
+
+                                    <TextView
+                                        android:id="@+id/tv_home_goal_title"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_centerInParent="true"
+                                        android:background="@drawable/football_animation_offside_bg"
+                                        android:gravity="center"
+                                        android:paddingBottom="2dp"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="5dp"
+                                        android:paddingTop="2dp"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/tennis_score_item"
+                                        tools:text="@string/foot_event_goal" />
+
+                                </RelativeLayout>
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1" />
+
+                            </LinearLayout>
 
                             <!--主队进球-->
                             <LinearLayout

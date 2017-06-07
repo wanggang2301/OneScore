@@ -115,6 +115,7 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
     private LinearLayout ll_goal_content;
     private ImageView iv_home_goal,iv_guest_goal;
     private GifImageView gif_home_goal_cancel,gif_guest_goal_cancel;
+    private TextView tv_home_goal_title,tv_guest_goal_title;
 
     // 欢呼
     private LinearLayout ll_cheer_content;
@@ -300,6 +301,8 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
         iv_guest_goal = (ImageView) findViewById(R.id.iv_guest_goal);
         gif_home_goal_cancel = (GifImageView) findViewById(R.id.gif_home_goal_cancel);
         gif_guest_goal_cancel = (GifImageView) findViewById(R.id.gif_guest_goal_cancel);
+        tv_home_goal_title = (TextView) findViewById(R.id.tv_home_goal_title);
+        tv_guest_goal_title = (TextView) findViewById(R.id.tv_guest_goal_title);
 
         // 欢呼
         ll_cheer_content = (LinearLayout) findViewById(R.id.ll_cheer_content);
@@ -1144,39 +1147,53 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 tv_guest_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick_danger));
                 showGifAnimation(-9999);
                 break;
-            case R.id.bt_home_goal://主队进球  1029   1030:取消
+            case R.id.bt_home_goal://主队进球  1029
                 ToastTools.showQuick(this, "主队进球");
                 iv_home_goal.setVisibility(View.VISIBLE);
                 iv_guest_goal.setVisibility(View.GONE);
                 gif_home_goal_cancel.setVisibility(View.GONE);
                 gif_guest_goal_cancel.setVisibility(View.GONE);
+                tv_home_goal_title.setVisibility(View.VISIBLE);
+                tv_guest_goal_title.setVisibility(View.GONE);
+                tv_home_goal_title.setText("进球");
+                homeAnima.stop();
                 homeAnima.start();
                 guestAnima.stop();
                 showGifAnimation(1029);
                 break;
-            case R.id.bt_guest_goal://客队进球  2053  2054:取消
+            case R.id.bt_guest_goal://客队进球  2053
                 ToastTools.showQuick(this, "客队进球");
                 iv_home_goal.setVisibility(View.GONE);
                 iv_guest_goal.setVisibility(View.VISIBLE);
                 gif_home_goal_cancel.setVisibility(View.GONE);
                 gif_guest_goal_cancel.setVisibility(View.GONE);
+                tv_home_goal_title.setVisibility(View.GONE);
+                tv_guest_goal_title.setVisibility(View.VISIBLE);
+                tv_guest_goal_title.setText("进球");
+                guestAnima.stop();
                 guestAnima.start();
                 homeAnima.stop();
                 showGifAnimation(2053);
                 break;
-            case R.id.bt_home_goal_cancel:// 主队取消进球
+            case R.id.bt_home_goal_cancel:// 主队取消进球  1030
                 iv_home_goal.setVisibility(View.GONE);
                 iv_guest_goal.setVisibility(View.GONE);
                 gif_home_goal_cancel.setVisibility(View.VISIBLE);
                 gif_guest_goal_cancel.setVisibility(View.GONE);
-                showGifAnimation(-1111);
+                tv_home_goal_title.setVisibility(View.VISIBLE);
+                tv_guest_goal_title.setVisibility(View.GONE);
+                tv_home_goal_title.setText("取消进球");
+                showGifAnimation(1030);
                 break;
             case R.id.bt_guest_goal_cancel:// 客队取消进球
                 iv_home_goal.setVisibility(View.GONE);
                 iv_guest_goal.setVisibility(View.GONE);
                 gif_home_goal_cancel.setVisibility(View.GONE);
                 gif_guest_goal_cancel.setVisibility(View.VISIBLE);
-                showGifAnimation(-1111);
+                tv_home_goal_title.setVisibility(View.GONE);
+                tv_guest_goal_title.setVisibility(View.VISIBLE);
+                tv_guest_goal_title.setText("取消进球");
+                showGifAnimation(2054);
                 break;
             default:
                 break;
@@ -1253,7 +1270,7 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
         fl_free_kick_fk1_content.setVisibility(6666 == type ? View.VISIBLE : View.GONE);
 
         // 进球
-        ll_goal_content.setVisibility((1029 == type || 2053 == type || -1111 == type) ? View.VISIBLE : View.GONE);
+        ll_goal_content.setVisibility((1029 == type || 2053 == type || 1030 == type || 2054 == type) ? View.VISIBLE : View.GONE);
 
         // 欢呼
         ll_cheer_content.setVisibility((1029 == type || 2053 == type) ? View.VISIBLE : View.GONE);
