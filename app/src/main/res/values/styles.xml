@@ -1192,7 +1192,7 @@
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:text">可用余额(元)</item>
-        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textSize">@dimen/text_size_15</item>
     </style>
 
     <!--竞彩推介发布详情-->
