@@ -109,8 +109,6 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
                 //MvpBettingPayDetailsActivity
             }
         });
-
-
     }
 
 
