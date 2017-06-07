@@ -10,6 +10,7 @@ import android.content.res.Resources;
 import android.support.multidex.MultiDex;
 import android.util.DisplayMetrics;
 
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CrashException;
 import com.hhly.mlottery.util.CyUtils;
@@ -18,12 +19,17 @@ import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 import com.tendcloud.tenddata.TCAgent;
 
 import java.util.Locale;
 
+import javax.inject.Inject;
+
 import cn.finalteam.okhttpfinal.OkHttpFinal;
 import cn.finalteam.okhttpfinal.OkHttpFinalConfiguration;
+import data.DataManager;
 
 /**
  * @author Tenney
@@ -45,6 +51,11 @@ public class MyApp extends Application {
     public static int versionCode;// 当前版本Code
     public static String channelNumber;// 当前版本渠道号
 
+    @Inject
+    DataManager mDataManager;
+
+    private static RefWatcher mRefWatcher;
+
     @Override
     public void onCreate() {
         appcontext = this;
@@ -54,6 +65,7 @@ public class MyApp extends Application {
             @Override
             public void run() {
 
+                initLeakCanary();
                 // 初始化TalkingData统计
                 TCAgent.LOG_ON = true;
                 TCAgent.init(appcontext, DeviceInfo.getAppMetaData(appcontext, "TD_APP_ID"), DeviceInfo.getAppMetaData(appcontext, "TD_CHANNEL_ID"));
@@ -96,12 +108,53 @@ public class MyApp extends Application {
                 // 获取当前apk版本信息
                 getVersion();
 
+                initDagger();
+
             }
         }.start();
 
         super.onCreate();
     }
 
+    /**
+     * 获取了LeakCanary
+     * @return
+     */
+    public static RefWatcher getRefWatcher() {
+        return mRefWatcher;
+    }
+    /**
+     * 初始化 LeakCanary
+     */
+    private void initLeakCanary() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        mRefWatcher = LeakCanary.install(this);
+    }
+
+    //初始化Dagger注入
+    public void initDagger() {
+        DaggerMyAppComponent.builder()
+                .myAppModule(new MyAppModule(this, BaseURLs.URL_MVP_API_HOST, AppConstants.timeZone + "", getLanguage()))
+                .build()
+                .inject(this);
+    }
+
+    /**
+     * 获取 data.DataManager
+     *
+     * @return dataManager
+     */
+    public static DataManager getDataManager() {
+        return get().mDataManager;
+    }
+
+    public static MyApp get() {
+        return appcontext;
+    }
 
     /**
      * 设置时区
@@ -316,5 +369,33 @@ public class MyApp extends Application {
         } catch (Exception e) {
             L.d(e.getMessage());
         }
+    }
+
+    /*只返回语言参数*/
+    public static String getLanguage() {
+
+        if (isLanguage.equals("rCN")) {
+            // 如果是中文简体的语言环境
+            return BaseURLs.LANGUAGE_SWITCHING_CN;
+        } else if (isLanguage.equals("rTW")) {
+            // 如果是中文繁体的语言环境
+            return BaseURLs.LANGUAGE_SWITCHING_TW;
+        } else if (isLanguage.equals("rEN")) {
+            // 如果是英文环境
+            return BaseURLs.LANGUAGE_SWITCHING_EN;
+        } else if (isLanguage.equals("rKO")) {
+            // 如果是韩语环境
+            return BaseURLs.LANGUAGE_SWITCHING_KO;
+        } else if (isLanguage.equals("rID")) {
+            // 如果是印尼语
+            return BaseURLs.LANGUAGE_SWITCHING_ID;
+        } else if (isLanguage.equals("rTH")) {
+            // 如果是泰语
+            return BaseURLs.LANGUAGE_SWITCHING_TH;
+        } else if (isLanguage.equals("rVI")) {
+            // 如果是越南语
+            return BaseURLs.LANGUAGE_SWITCHING_VI;
+        }
+        return null;
     }
 }

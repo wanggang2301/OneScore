@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.percent.PercentRelativeLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +34,7 @@ import com.hhly.mlottery.bean.websocket.WebSocketMatchChange;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchEvent;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchOdd;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchStatus;
+import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.callback.RequestHostFocusCallBack;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
@@ -42,8 +42,10 @@ import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFilterEventBusE
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchSettingEventBusEntity;
 import com.hhly.mlottery.frame.scorefrag.FootBallScoreFragment;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
+import com.hhly.mlottery.util.HandMatchId;
 import com.hhly.mlottery.util.HotFocusUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
@@ -63,6 +65,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -104,6 +107,12 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     TextView handicapName1;
     @BindView(R.id.tv_handicap_name2)
     TextView handicapName2;
+    @BindView(R.id.tv_date)
+    TextView tvDate;
+    @BindView(R.id.tv_week)
+    TextView tvWeek;
+    @BindView(R.id.ll_odd)
+    LinearLayout llOdd;
 
     private ApiHandler apiHandler = new ApiHandler(this);
     private RollBallAdapter adapter;
@@ -151,7 +160,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     /**
      * 设置盘口显示类型
      */
-    private void setHandicapName(){
+    private void setHandicapName() {
         boolean alet = PreferenceUtil.getBoolean(MyConstants.RBSECOND, true);
         boolean asize = PreferenceUtil.getBoolean(MyConstants.rbSizeBall, false);
         boolean eur = PreferenceUtil.getBoolean(MyConstants.RBOCOMPENSATE, true);
@@ -231,7 +240,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
             public void onClick(View v) {
                 swipeRefreshLayout.setRefreshing(true);
                 networkExceptionLayout.setVisibility(View.GONE);
-                RollBallFragment.this.initData();
+                RollBallFragment.this.initData(0);
             }
         });
 
@@ -239,7 +248,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         subscription = RxBus.getDefault().toObserverable(Match.class).delay(60, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Match>() {
             @Override
             public void call(final Match match) {
-                RollBallFragment.this.initData();
+                RollBallFragment.this.initData(1);
             }
         }, new Action1<Throwable>() {
             @Override
@@ -250,7 +259,10 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     }
 
     @Override
-    protected void initData() {
+    protected void initData(int type) {
+        if(type == 0){
+            apiHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
+        }
         this.requestApi();
     }
 
@@ -283,12 +295,17 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
     @Override
     public void onItemClick(View convertView, int position) {
+
+
         Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
         List<Match> topLists = adapter.getTopLists();
         if (null == topLists) topLists = feedAdapterLists;
-        intent.putExtra("thirdId", topLists.get(position).getThirdId());
-        intent.putExtra("currentFragmentId", 0);
-        getParentFragment().startActivity(intent);
+
+        if (HandMatchId.handId(getActivity(), topLists.get(position).getThirdId())) {
+            intent.putExtra("thirdId", topLists.get(position).getThirdId());
+            intent.putExtra("currentFragmentId", 0);
+            getParentFragment().startActivity(intent);
+        }
     }
 
     @Override
@@ -297,7 +314,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
     @Override
     public void onRefresh() {
-        this.initData();
+        this.initData(0);
 
         if (isNewFrameWork) {
             ((FootBallScoreFragment) getParentFragment()).reconnectWebSocket();
@@ -358,8 +375,19 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         if (null == adapter) {
             adapter = new RollBallAdapter(getActivity());
             recyclerView.setAdapter(adapter);
-            adapter.setOnItemClickListener(this);
-            adapter.setOnItemLongClickListener(this);
+            adapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
+                @Override
+                public void onItemClick(View view, String data) {
+                    if (HandMatchId.handId(getActivity(), data)) {
+
+                        String thirdId = data;
+                        Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
+                        intent.putExtra("thirdId", thirdId);
+                        intent.putExtra("currentFragmentId", 0);
+                        getParentFragment().startActivityForResult(intent, 0x12);
+                    }
+                }
+            });
         }
     }
 
@@ -373,7 +401,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
     public void feedAdapter() {
         if (apiHandler != null) apiHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-        this.initData();
+        this.initData(0);
     }
 
     private void checkTheLifeCycleIsChanging(boolean resestTheLifeCycle) {
@@ -385,11 +413,10 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
 
     public void requestApi() {
-        apiHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_Rollball,
                 new VolleyContentFast.ResponseSuccessListener<ImmediateMatchs>() {
                     @Override
-                    public void onResponse(ImmediateMatchs jsonObject) {
+                    public void onResponse(final ImmediateMatchs jsonObject) {
                         if (null == jsonObject || null == jsonObject.getImmediateMatch()) {
                             apiHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
                             return;
@@ -398,10 +425,22 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                         leagueCupLists = jsonObject.getAll();
                         feedAdapterLists = new ArrayList<>();
 
-                        if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, "").equals(jsonObject.getFilterDate())) {
+                        L.d("ddddeee", "刷新前==" + PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL).size() + "");
+                        L.d("ddddeee", "日期==" + PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_ROLL, ""));
+                        L.d("ddddeee", "请求==" + jsonObject.getFilerDate());
+
+
+                        if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_ROLL, "").equals(jsonObject.getFilerDate())) {
+                            L.d("ddddeee", "删除");
+
                             PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_ROLL);
-                            PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, jsonObject.getFilterDate());
+                            PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_ROLL, jsonObject.getFilerDate());
+                            L.d("ddddeee", "保存日期==" + PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_ROLL, ""));
+
                         }
+
+                        L.d("ddddeee", "刷新后==" + PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL).size() + "");
+
 
                         HotFocusUtils hotFocusUtils = new HotFocusUtils();
                         hotFocusUtils.loadHotFocusData(getActivity(), new RequestHostFocusCallBack() {
@@ -438,7 +477,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                                 } else {// 没有筛选过
 
                                     if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL).size() > 0) {
-
 
                                         List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL);
 
@@ -496,6 +534,12 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                                     }
                                     checkedLeagueCup = tempHotCups.toArray(new LeagueCup[tempHotCups.size()]);
                                 }
+
+                                tvDate.setText(jsonObject.getFilerDate());
+
+                                if (!TextUtils.isEmpty(jsonObject.getFilerDate()))
+                                    tvWeek.setText(DateUtil.getWeekOfXinQi(DateUtil.parseDate(jsonObject.getFilerDate())));
+
                                 RollBallFragment.this.feedAdapter(feedAdapterLists);
                                 apiHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                                 isLoadedData = true;
@@ -590,6 +634,14 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         return checkedLeagueCup;
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
     private class ApiHandler extends Handler {
         private WeakReference<RollBallFragment> weakReference;
 
@@ -628,7 +680,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                                     @Override
                                     public void run() {
                                         fragment.apiHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-                                        fragment.initData();
+                                        fragment.initData(0);
                                     }
                                 }, DELAY_REQUEST_API);
                                 break;
@@ -655,7 +707,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                         fragment.titleContainer.setVisibility(View.GONE);
                         break;
                     case VIEW_STATUS_SUCCESS:
-                        fragment.titleContainer.setVisibility(PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE);
+                        fragment.titleContainer.setVisibility(View.VISIBLE);
+                        fragment.llOdd.setVisibility(PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE);
                         fragment.swipeRefreshLayout.setRefreshing(false);
                         fragment.networkExceptionLayout.setVisibility(View.GONE);
                         fragment.footballImmediateUnfocusLl.setVisibility(View.GONE);
@@ -706,7 +759,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
      * 接受消息的页面实现
      */
     public void onEventMainThread(ScoresMatchSettingEventBusEntity scoresMatchSettingEventBusEntity) {
-        titleContainer.setVisibility(PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE);
+        llOdd.setVisibility(PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE);
         setHandicapName();
         adapter.notifyDataSetChanged();
     }

@@ -7,6 +7,16 @@ import java.util.List;
  */
 public class BasketNewRootBean {
 
+    private String filerDate;
+
+    public String getFilerDate() {
+        return filerDate;
+    }
+
+    public void setFilerDate(String filerDate) {
+        this.filerDate = filerDate;
+    }
+
     private List<BasketRootBean> matchData;
     private List<BasketNewFilterBean> matchFilter;
 

@@ -136,7 +136,7 @@ public class MDStatusBarCompat {
             lp.height = (int) (getStatusBarHeight(activity) +
                     activity.getResources().getDimension(R.dimen.abc_action_bar_default_height_material));
             toolbar.setLayoutParams(lp);
-            setKKStatusBar(activity, R.color.black);
+            setKKStatusBar(activity, R.color.colorPrimary);
             setCollapsingToolbarStatus(appBarLayout);
         }
     }
@@ -158,6 +158,11 @@ public class MDStatusBarCompat {
         });
     }
 
+    /**
+     * 设置收缩时statusbar颜色
+     * @param activity
+     * @param colorRes
+     */
     private static void setKKStatusBar(Activity activity, @ColorRes int colorRes) {
         ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
         mStatusBarView = contentView.getChildAt(0);

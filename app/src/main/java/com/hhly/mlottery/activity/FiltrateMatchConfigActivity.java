@@ -15,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.frame.footballframe.FiltrateMatchFragment;
@@ -170,8 +171,7 @@ public class FiltrateMatchConfigActivity extends BaseActivity implements OnClick
                 FragmentManager fragmentManager = getSupportFragmentManager();
 
                 if (fragmentManager.findFragmentById(mFragmentMatchId) != null) {
-                    FiltrateMatchFragment filtrateMatchFragment = (FiltrateMatchFragment) fragmentManager.findFragmentById(
-                            mFragmentMatchId);
+                    FiltrateMatchFragment filtrateMatchFragment = (FiltrateMatchFragment) fragmentManager.findFragmentById(mFragmentMatchId);
 
                     Intent intent = new Intent();
                     Bundle bundle = new Bundle();
@@ -188,14 +188,14 @@ public class FiltrateMatchConfigActivity extends BaseActivity implements OnClick
                     map.put("checkedCupIds", list);
                     map.put("checkedDefualt", false);
 
-
-                    EventBus.getDefault().post(new ScoresMatchFilterEventBusEntity(currentFragmentId, map));
-
+                    if (list.size() <= 0) {
+                        Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.at_least_one_race), Toast.LENGTH_SHORT).show();
+                    } else {
+                        EventBus.getDefault().post(new ScoresMatchFilterEventBusEntity(currentFragmentId, map));
+                        finish();
+                    }
                 }
-
-                finish();
                 break;
-
             default:
                 break;
         }

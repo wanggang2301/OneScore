@@ -330,8 +330,8 @@ public class ChartballActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         unregisterReceiver(mBroadcastReceiver);
+        super.onDestroy();
     }
 
     @Override

@@ -8,17 +8,23 @@ import android.widget.ImageView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.bettingadapter.BettingRecommendSettingAdapter;
+import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
 import com.hhly.mlottery.bean.bettingbean.BettingSettingItenDataBean;
+import com.hhly.mlottery.config.ConstantPool;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingSettingResultEventBusEntity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.GrapeGridView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by：Administrator on 2017/4/24 10:36
- * Use:
+ * Use: 竞彩推荐设置页
  */
 public class BettingRecommendSettingActivity extends BaseActivity implements View.OnClickListener {
 
@@ -30,9 +36,16 @@ public class BettingRecommendSettingActivity extends BaseActivity implements Vie
     private BettingRecommendSettingAdapter playAdapter;
     private BettingRecommendSettingAdapter leagueAdapter;
 
+    List<BettingListDataBean.LeagueNameData> playList = new ArrayList<>();//玩法所有
     private List<String> mPlayChecked = new ArrayList<>();//选中玩法的id
-    private List<String> mLeagueChecked = new ArrayList<>();//选中联赛的id
+
+    private List<BettingListDataBean.LeagueNameData> mAllLeague = new ArrayList<>();//所有的联赛
+    private List<BettingListDataBean.LeagueNameData> mCurrLeague = new ArrayList<>();//选中的联赛
+    private List<String> mKeyChecked = new ArrayList<>();//选中联赛的 Key（选中的key从选中的联赛中提取）
+
     private BettingRecommendSettingAdapter.BettingClickChangeListener clickChangeListener;
+    private String palyType;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +63,7 @@ public class BettingRecommendSettingActivity extends BaseActivity implements Vie
         findViewById(R.id.public_btn_set).setVisibility(View.INVISIBLE);
 
         mBack = (ImageView) findViewById(R.id.public_img_back);
+        mBack.setOnClickListener(this);
         mSave = (Button) findViewById(R.id.public_btn_save);
         mSave.setVisibility(View.VISIBLE);
         mSave.setTextColor(getResources().getColor(R.color.betting_recommend_zhuanjia_grand_color));
@@ -68,31 +82,42 @@ public class BettingRecommendSettingActivity extends BaseActivity implements Vie
 
 
     }
-    List<BettingSettingItenDataBean> playList = new ArrayList<>();
-    List<BettingSettingItenDataBean> leagueList = new ArrayList<>();
+
     private void initData(){
 
-        for (int i = 0; i < 10; i++) {
-            BettingSettingItenDataBean dataBean = new BettingSettingItenDataBean();
-            dataBean.setName("玩法[" + i +"]");
-            dataBean.setId(i+"");
-            playList.add(dataBean);
+        Serializable allLeague = getIntent().getSerializableExtra(ConstantPool.ALL_LEAGUE);
+        Serializable currLeague = getIntent().getSerializableExtra(ConstantPool.CURR_LEAGUE);
+        mAllLeague = (List<BettingListDataBean.LeagueNameData>)allLeague;
+        mCurrLeague = (List<BettingListDataBean.LeagueNameData>)currLeague;
+        palyType = getIntent().getStringExtra(ConstantPool.CURR_PALY_TYPE);
+
+
+        BettingListDataBean.LeagueNameData dataBean1 = new BettingListDataBean.LeagueNameData();
+        dataBean1.setLeagueName(getApplicationContext().getString(R.string.betting_title_details));
+        dataBean1.setKey("0");
+        playList.add(dataBean1);
+        BettingListDataBean.LeagueNameData dataBean2 = new BettingListDataBean.LeagueNameData();
+        dataBean2.setLeagueName(getApplicationContext().getString(R.string.betting_plays_asialet));
+        dataBean2.setKey("1");
+        playList.add(dataBean2);
+        BettingListDataBean.LeagueNameData dataBean3 = new BettingListDataBean.LeagueNameData();
+        dataBean3.setLeagueName(getApplicationContext().getString(R.string.betting_plays_asize));
+        dataBean3.setKey("2");
+        playList.add(dataBean3);
+
+        BettingListDataBean.LeagueNameData dataBean4 = new BettingListDataBean.LeagueNameData();
+        dataBean4.setLeagueName(getApplicationContext().getString(R.string.betting_plays_allcheck));
+        dataBean4.setKey("-1");
+        playList.add(dataBean4);
+
+        mPlayChecked.add(palyType);//默认选中全部
+
+
+
+        for (BettingListDataBean.LeagueNameData currId : mCurrLeague) {
+//            mKeyChecked.add(currId.getLeagueId());
+            mKeyChecked.add(currId.getKey());
         }
-
-        for (int i = 0; i < 10; i++) {
-            BettingSettingItenDataBean dataBean = new BettingSettingItenDataBean();
-            dataBean.setName("联赛[" + i +"]");
-            dataBean.setId(i+"");
-            leagueList.add(dataBean);
-        }
-
-        mPlayChecked.add("0");
-        mPlayChecked.add("6");
-        mPlayChecked.add("2");
-
-        mLeagueChecked.add("1");
-        mLeagueChecked.add("3");
-        mLeagueChecked.add("7");
 
         clickChangeListener = new BettingRecommendSettingAdapter.BettingClickChangeListener(){
 
@@ -105,10 +130,10 @@ public class BettingRecommendSettingActivity extends BaseActivity implements Vie
 
     private void setData(){
 
-        playAdapter = new BettingRecommendSettingAdapter(this ,mPlayChecked, playList , R.layout.betting_set_grid_item);
+        playAdapter = new BettingRecommendSettingAdapter(this ,mPlayChecked, playList , R.layout.betting_set_grid_item , true);
         playAdapter.setClickChangeListener(clickChangeListener);
         mPlayingGrid.setAdapter(playAdapter);
-        leagueAdapter = new BettingRecommendSettingAdapter(this ,mLeagueChecked, leagueList , R.layout.betting_set_grid_item);
+        leagueAdapter = new BettingRecommendSettingAdapter(this ,mKeyChecked, mAllLeague , R.layout.betting_set_grid_item , false);
         leagueAdapter.setClickChangeListener(clickChangeListener);
         mLeagueGrid.setAdapter(leagueAdapter);
 
@@ -118,12 +143,19 @@ public class BettingRecommendSettingActivity extends BaseActivity implements Vie
         playAdapter.notifyDataSetChanged();
         leagueAdapter.notifyDataSetChanged();
         L.d("qwer==play==>> " , mPlayChecked.size()+"");
-        L.d("qwer==league==>> " , mLeagueChecked.size()+"");
+        L.d("qwer==league==>> " , mKeyChecked.size()+"");
     }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.public_btn_save: // 保存
+                EventBus.getDefault().post(new BettingSettingResultEventBusEntity(mPlayChecked , mKeyChecked));
+                finish();
+                overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
+                break;
+            case R.id.public_img_back:
+                finish();
+                overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 break;
         }
     }

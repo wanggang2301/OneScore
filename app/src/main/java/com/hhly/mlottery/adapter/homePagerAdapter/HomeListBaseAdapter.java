@@ -20,7 +20,6 @@ import com.bumptech.glide.Glide;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
-import com.hhly.mlottery.activity.CounselActivity;
 import com.hhly.mlottery.activity.ExpertsActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.activity.IndexActivity;
@@ -40,6 +39,7 @@ import com.hhly.mlottery.frame.HomeMuenFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.HandMatchId;
 import com.hhly.mlottery.util.HomeNumbersSplit;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
@@ -203,10 +203,13 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                                 case 2:// 内页
                                                 {
                                                     if ("13".equals(jumpAddr)) {// 足球内页13
-                                                        Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
-                                                        intent.putExtra("thirdId", thirdId);
-                                                        intent.putExtra("currentFragmentId", -1);
-                                                        mContext.startActivity(intent);
+
+                                                        if (HandMatchId.handId(mContext, thirdId)) {
+                                                            Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
+                                                            intent.putExtra("thirdId", thirdId);
+                                                            intent.putExtra("currentFragmentId", -1);
+                                                            mContext.startActivity(intent);
+                                                        }
                                                     } else if ("20".equals(jumpAddr)) {// 篮球内页20
                                                         Intent intent = new Intent(mContext, BasketDetailsActivityTest.class);
                                                         intent.putExtra("thirdId", thirdId);

@@ -1,9 +1,8 @@
 package com.hhly.mlottery.mvp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
-
-import com.hhly.mlottery.activity.BaseActivity;
 
 /**
  * 描    述：mvp的fragment基类
@@ -12,12 +11,12 @@ import com.hhly.mlottery.activity.BaseActivity;
  */
 public abstract class MvpBaseFragment extends Fragment{
     protected final String TAG = getClass().getSimpleName();
-    protected BaseActivity mActivity; //子类可直接使用
+    protected Activity mActivity; //子类可直接使用
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity= (BaseActivity) getActivity();
+        mActivity= (Activity) getActivity();
     }
 
     @Override

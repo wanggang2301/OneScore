@@ -4,10 +4,11 @@ package com.hhly.mlottery.frame.scorefrag;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.flyco.tablayout.SlidingTabLayout;
+import com.flyco.tablayout.widget.MsgView;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
@@ -31,6 +34,7 @@ import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.LeagueCup;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.BaseUserTopics;
+import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
 import com.hhly.mlottery.frame.BallType;
 import com.hhly.mlottery.frame.footballframe.FocusFragment;
 import com.hhly.mlottery.frame.footballframe.ImmediateFragment;
@@ -66,7 +70,6 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     private final int FOCUS_FRAGMENT = 4;
 
     private final static String TAG = "ScoresFragment";
-    public static List<String> titles;
 
     private View view;
     private Context mContext;
@@ -88,7 +91,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     private int currentFragmentId = 0;
 
     private ViewPager mViewPager;
-    private TabLayout mTabLayout;
+    private SlidingTabLayout mTabLayout;
     private PureViewPagerAdapter pureViewPagerAdapter;
     private List<Fragment> fragments;
 
@@ -101,6 +104,8 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     private ImageView iv_match;
     private ImageView public_search_filter;
 
+    private FragmentPagerAdapter fragmentPagerAdapter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setWebSocketUri(BaseURLs.WS_SERVICE);
@@ -112,9 +117,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mContext = getActivity();
         view = View.inflate(mContext, R.layout.fragment_foot_ball_score, null);
         initView();
@@ -153,9 +156,9 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         String[] arrayId = focusIds.split("[,]");
         if (getActivity() != null) {
             if ("".equals(focusIds) || arrayId.length == 0) {
-                mTabLayout.getTabAt(FOCUS_FRAGMENT).setText(getActivity().getResources().getString(R.string.foot_guanzhu_txt));
+                mTabLayout.hideMsg(FOCUS_FRAGMENT);
             } else {
-                mTabLayout.getTabAt(FOCUS_FRAGMENT).setText(getActivity().getResources().getString(R.string.foot_guanzhu_txt) + "(" + arrayId.length + ")");
+                mTabLayout.showMsg(FOCUS_FRAGMENT, arrayId.length);
             }
         }
     }
@@ -219,13 +222,10 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
 
 
     private void setupViewPager() {
-        mTabLayout = (TabLayout) view.findViewById(R.id.tabs);
-        titles = new ArrayList<>();
-        titles.add(getString(R.string.foot_rollball_txt));
-        titles.add(getString(R.string.foot_jishi_txt));
-        titles.add(getString(R.string.foot_saiguo_txt));
-        titles.add(getString(R.string.foot_saicheng_txt));
-        titles.add(getString(R.string.foot_guanzhu_txt));
+        mTabLayout = (SlidingTabLayout) view.findViewById(R.id.tabs);
+
+        String[] tabNames = {getString(R.string.foot_rollball_txt), getString(R.string.foot_jishi_txt), getString(R.string.foot_saiguo_txt), getString(R.string.foot_saicheng_txt), getString(R.string.foot_guanzhu_txt)};
+
 
         fragments = new ArrayList<>();
         rollBallFragment = RollBallFragment.newInstance(ROLLBALL_FRAGMENT, isNewFrameWork, entryType);
@@ -235,7 +235,19 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         fragments.add(ScheduleFragment.newInstance(SCHEDULE_FRAGMENT, entryType));
         fragments.add(FocusFragment.newInstance(FOCUS_FRAGMENT, entryType));
 
-        pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
+
+        fragmentPagerAdapter = new FragmentPagerAdapter(getChildFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                return fragments.get(position);
+            }
+
+            @Override
+            public int getCount() {
+                return fragments.size();
+            }
+        };
+
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -275,16 +287,27 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
             public void onPageScrollStateChanged(int state) {
             }
         });
-        mViewPager.setAdapter(pureViewPagerAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
+        mViewPager.setAdapter(fragmentPagerAdapter);
+        mViewPager.setOffscreenPageLimit(tabNames.length);
 
-        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
-            mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        } else {
-            mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        mTabLayout.setViewPager(mViewPager, tabNames);
+        mTabLayout.showDot(FOCUS_FRAGMENT);
+        mTabLayout.showMsg(FOCUS_FRAGMENT, 0);
+        mTabLayout.setMsgMargin(FOCUS_FRAGMENT, 2, 7);
+        mTabLayout.hideMsg(FOCUS_FRAGMENT);
+        MsgView msgView = mTabLayout.getMsgView(FOCUS_FRAGMENT);
+        if (msgView != null) {
+            msgView.setBackgroundColor(Color.parseColor("#ffde00"));
+            msgView.setTextColor(Color.parseColor("#0085e1"));
+            msgView.setTextSize(mContext.getResources().getDimension(R.dimen.text_size_5));
         }
 
-        mViewPager.setOffscreenPageLimit(titles.size());
+
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
+            mTabLayout.setTabSpaceEqual(true);
+        } else {
+            mTabLayout.setTabSpaceEqual(false);
+        }
     }
 
 
@@ -297,11 +320,17 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
             }
         });
         mFilterImgBtn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 MobclickAgent.onEvent(mContext, "Football_Filtrate");
                 currentFragmentId = mViewPager.getCurrentItem();
                 if (currentFragmentId == ROLLBALL_FRAGMENT) {
+
+
+                    L.d("ddddeee", "bendi==" + PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_ROLL).size() + "");
+
+
                     Intent intent = new Intent(getActivity(), FiltrateMatchConfigActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS, true);
@@ -442,7 +471,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
                     bundle.putInt("currentFragmentId", FOCUS_FRAGMENT);
                     intent.putExtras(bundle);
                     startActivity(intent);
-                }else if (currentFragmentId == ROLLBALL_FRAGMENT) {
+                } else if (currentFragmentId == ROLLBALL_FRAGMENT) {
                     Intent intent = new Intent(getActivity(), FootballTypeSettingActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putInt("currentFragmentId", ROLLBALL_FRAGMENT);

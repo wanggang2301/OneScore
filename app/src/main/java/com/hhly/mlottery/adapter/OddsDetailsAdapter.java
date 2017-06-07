@@ -141,7 +141,7 @@ public class OddsDetailsAdapter extends BaseExpandableListAdapter implements Pin
         }
 
         //盘口
-//        holder.odds_details_dish_child_txt.setText(model.getHand() + "");
+//        holder.odds_details_dish_child_txt.setText(data.model.getHand() + "");
         if ("one".equals(stKey)) {//亚盘
             //转换盘口
             holder.odds_details_dish_child_txt.setText(HandicapUtils.changeHandicap(String.format("%.2f",model.getHand()) ));

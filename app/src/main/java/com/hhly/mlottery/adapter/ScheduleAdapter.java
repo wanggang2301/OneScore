@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.bean.Match;
+import com.hhly.mlottery.bean.MatchOdd;
 import com.hhly.mlottery.bean.scheduleBean.OddsBean;
 import com.hhly.mlottery.bean.scheduleBean.ScheduleMatchDto;
 import com.hhly.mlottery.bean.scheduleBean.ScheduleMatchOdd;
@@ -223,8 +225,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
                 scheduleViewHolder.item_football_time.setText(scheduleMatchDto.getSchmatchs().getTime());
 
-                scheduleViewHolder.ll_half_score.setVisibility(View.GONE);
-                scheduleViewHolder.ll_all_score.setVisibility(View.GONE);
+                scheduleViewHolder.ll_half_score.setVisibility(View.INVISIBLE);
+                scheduleViewHolder.ll_all_score.setVisibility(View.INVISIBLE);
 
                 // scheduleViewHolder.item_football_half_score.setVisibility(View.INVISIBLE);
 //                scheduleViewHolder.keeptime.setVisibility(View.GONE);
@@ -266,33 +268,23 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     OddsBean euro = scheduleMatchOdd.getEuro();
 
                     // 亚盘赔率
-                    if (alet && asiaLet != null) {
-                        scheduleViewHolder.oddsTop1.setText(asiaLet.getLeftOdds() != null ? asiaLet.getLeftOdds() : "-");
-                        scheduleViewHolder.tv_odds_center1.setText(asiaLet.getHandicapValue() != null ? HandicapUtils.changeHandicap(asiaLet.getHandicapValue()) : "-");
-                        scheduleViewHolder.tv_odds_bottom1.setText(asiaLet.getRightOdds() != null ? asiaLet.getRightOdds() : "-");
+                    if (alet) {
+                        setOddsData(scheduleViewHolder.oddsTop1, scheduleViewHolder.tv_odds_center1, scheduleViewHolder.tv_odds_bottom1, asiaLet, 1);
                     }
                     // 大小盘赔率
-                    if (asize && asiaSize != null) {
+                    if (asize) {
                         if (!alet) {
-                            scheduleViewHolder.oddsTop1.setText(asiaSize.getLeftOdds() != null ? asiaSize.getLeftOdds() : "-");
-                            scheduleViewHolder.tv_odds_center1.setText(asiaSize.getHandicapValue() != null ? HandicapUtils.changeHandicap(asiaSize.getHandicapValue()) : "-");
-                            scheduleViewHolder.tv_odds_bottom1.setText(asiaSize.getRightOdds() != null ? asiaSize.getRightOdds() : "-");
+                            setOddsData(scheduleViewHolder.oddsTop1, scheduleViewHolder.tv_odds_center1, scheduleViewHolder.tv_odds_bottom1, asiaSize, 2);
                         } else {
-                            scheduleViewHolder.oddsTop2.setText(asiaSize.getLeftOdds() != null ? asiaSize.getLeftOdds() : "-");
-                            scheduleViewHolder.tv_odds_center2.setText(asiaSize.getHandicapValue() != null ? HandicapUtils.changeHandicap(asiaSize.getHandicapValue()) : "-");
-                            scheduleViewHolder.tv_odds_bottom2.setText(asiaSize.getRightOdds() != null ? asiaSize.getRightOdds() : "-");
+                            setOddsData(scheduleViewHolder.oddsTop2, scheduleViewHolder.tv_odds_center2, scheduleViewHolder.tv_odds_bottom2, asiaSize, 2);
                         }
                     }
                     // 欧盘赔率
-                    if (eur && euro != null) {
+                    if (eur) {
                         if (!alet && !asize) {
-                            scheduleViewHolder.oddsTop1.setText(euro.getLeftOdds() != null ? euro.getLeftOdds() : "-");
-                            scheduleViewHolder.tv_odds_center1.setText(euro.getMediumOdds() != null ? euro.getMediumOdds() : "-");
-                            scheduleViewHolder.tv_odds_bottom1.setText(euro.getRightOdds() != null ? euro.getRightOdds() : "-");
+                            setOddsData(scheduleViewHolder.oddsTop1, scheduleViewHolder.tv_odds_center1, scheduleViewHolder.tv_odds_bottom1, euro, 3);
                         } else {
-                            scheduleViewHolder.oddsTop2.setText(euro.getLeftOdds() != null ? euro.getLeftOdds() : "-");
-                            scheduleViewHolder.tv_odds_center2.setText(euro.getMediumOdds() != null ? euro.getMediumOdds() : "-");
-                            scheduleViewHolder.tv_odds_bottom2.setText(euro.getRightOdds() != null ? euro.getRightOdds() : "-");
+                            setOddsData(scheduleViewHolder.oddsTop2, scheduleViewHolder.tv_odds_center2, scheduleViewHolder.tv_odds_bottom2, euro, 3);
                         }
                     }
                 }
@@ -374,6 +366,46 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
 
         }
+    }
+
+    /**
+     * 设置盘口数据
+     *
+     * @param topView
+     * @param centerView
+     * @param bottomView
+     * @param odd
+     */
+    private void setOddsData(TextView topView, TextView centerView, TextView bottomView, OddsBean odd, int type) {
+        if (odd == null) {
+            topView.setText("-");
+            centerView.setText("-");
+            bottomView.setText("-");
+            return;
+        }
+        String handicapValue;
+        switch (type) {
+            case 1:
+                handicapValue = HandicapUtils.changeHandicap(odd.getHandicapValue());
+                break;
+            case 2:
+                handicapValue = HandicapUtils.changeHandicapByBigLittleBall(odd.getHandicapValue());
+                break;
+            case 3:
+                handicapValue = odd.getMediumOdds();
+                break;
+            default:
+                handicapValue = "-";
+                break;
+        }
+
+        topView.setText(odd.getLeftOdds() != null ? odd.getLeftOdds() : "-");
+        centerView.setText(handicapValue != null ? handicapValue : "-");
+        bottomView.setText(odd.getRightOdds() != null ? odd.getRightOdds() : "-");
+
+        topView.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
+        bottomView.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
+        centerView.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
     }
 
     @Override

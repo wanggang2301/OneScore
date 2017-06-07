@@ -3,6 +3,7 @@ package com.hhly.mlottery.adapter.corner;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -59,14 +60,24 @@ public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEnt
         CornerListBean.CornerEntity.CornerMatchInfoEntity entity=bean.getCornerMatchInfo();
         TextView match_type=holder.getView(R.id.tv_match_type);
         RelativeLayout rl_score=holder.getView(R.id.rl_score);
-        TextView match_state_started=holder.getView(R.id.match_state_started);
+        TextView match_state_started_half=holder.getView(R.id.match_state_started_half);
+        TextView match_state_started_full=holder.getView(R.id.match_state_started_full);
 
 
         holder.setText(R.id.item_football_racename,entity.getRname());
         holder.setTextColor(R.id.item_football_racename, Color.parseColor(entity.getRc()==null?"#669900":entity.getRc()));
         holder.setText(R.id.item_football_date,entity.getDate()==null?"":entity.getDate().substring(5,10));
         holder.setText(R.id.item_football_time,entity.getTime());
-        holder.setText(R.id.keeptime,entity.getKeep());
+        holder.setText(R.id.keeptime,entity.getKeep()==null?"":entity.getKeep().equals("0")?"":entity.getKeep());
+        if(entity.getStatus().equals("2")){ //中场
+            holder.setText(R.id.keeptime,mContext.getString(R.string.fragme_home_zhongchang_text));
+        }
+        if(entity.getStatus().equals("1")&&entity.getKeep()!=null&&Integer.parseInt(entity.getKeep())>45){ //上半场大于45
+            holder.setText(R.id.keeptime,"45+");
+        }
+        if(entity.getStatus().equals("3")&&entity.getKeep()!=null&&Integer.parseInt(entity.getKeep())>90){ //上半场大于45
+            holder.setText(R.id.keeptime,"90+");
+        }
         //图标
         ImageView homeIcon=holder.getView(R.id.home_icon);
         ImageView guestIcon=holder.getView(R.id.guest_icon);
@@ -77,79 +88,118 @@ public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEnt
         holder.setText(R.id.item_football_guestteam,entity.getGtn());
         //红黄牌
         if(entity.getHr()!=0){
+            holder.getView(R.id.item_football_home_rc).setVisibility(View.VISIBLE);
             holder.setText(R.id.item_football_home_rc,entity.getHr()+"");
         }else {
             holder.getView(R.id.item_football_home_rc).setVisibility(View.GONE);
         }
         if(entity.getHy()!=0){
+            holder.getView(R.id.item_football_home_yc).setVisibility(View.VISIBLE);
             holder.setText(R.id.item_football_home_yc,entity.getHy()+"");
         }else {
             holder.getView(R.id.item_football_home_yc).setVisibility(View.GONE);
         }
         if(entity.getGr()!=0){
+            holder.getView(R.id.item_football_guest_rc).setVisibility(View.VISIBLE);
             holder.setText(R.id.item_football_guest_rc,entity.getGr()+"");
         }else {
             holder.getView(R.id.item_football_guest_rc).setVisibility(View.GONE);
         }
         if(entity.getGy()!=0){
+            holder.getView(R.id.item_football_guest_yc).setVisibility(View.VISIBLE);
             holder.setText(R.id.item_football_guest_yc,entity.getGy()+"");
         }else {
             holder.getView(R.id.item_football_guest_yc).setVisibility(View.GONE);
         }
 
         //比分
-        holder.setText(R.id.tv_home_half_score,entity.getHhc()+"");
+
         holder.setText(R.id.tv_home_full_score,entity.getHc()+"");
-        holder.setText(R.id.tv_guest_half_score,entity.getGhc()+"");
         holder.setText(R.id.tv_guest_full_score,entity.getGc()+"");
+        if(entity.getStatus().equals("1")){ //不显示半场角球
+            holder.getView(R.id.tv_home_half_score).setVisibility(View.GONE);
+            holder.getView(R.id.tv_guest_half_score).setVisibility(View.GONE);
+        }else if(entity.getStatus().equals("2")||entity.getStatus().equals("3")||entity.getStatus().equals("-1")){
+            holder.setText(R.id.tv_home_half_score,entity.getHhc()+"");
+            holder.setText(R.id.tv_guest_half_score,entity.getGhc()+"");
+            holder.getView(R.id.tv_home_half_score).setVisibility(View.VISIBLE);
+            holder.getView(R.id.tv_guest_half_score).setVisibility(View.VISIBLE);
+        }
+
+        TextView mTv_immediate=holder.getView(R.id.corner_immediate_odd);
+        TextView mTv_higher=holder.getView(R.id.corner_higher);
+        TextView mTv_lower=holder.getView(R.id.corner_lower);
+
+
+
+        holder.setText(R.id.corner_first_odd,bean.getOd().getCpOdd()+"");
+        holder.setText(R.id.corner_immediate_odd,bean.getOd().getJsOdd()+"");
+        holder.setText(R.id.corner_higher,bean.getOd().getHigher()+"");
+        holder.setText(R.id.corner_lower,bean.getOd().getBelow()+"");
+
+        String immediate=mTv_immediate.getText().toString();
+        String higher=mTv_higher.getText().toString();
+        String lower=mTv_lower.getText().toString();
+
+        if(bean.getOd().getHigher()>Double.parseDouble(higher)){ //高于
+            mTv_higher.setTextColor(ContextCompat.getColor(mContext,R.color.analyze_left));
+        } else if(bean.getOd().getHigher()<Double.parseDouble(higher)){
+            mTv_higher.setTextColor(ContextCompat.getColor(mContext,R.color.fall_color));
+        } else {
+            mTv_higher.setTextColor(ContextCompat.getColor(mContext,R.color.mdy_333));
+        }
+
+        if(bean.getOd().getJsOdd()>Double.parseDouble(immediate)){ //红升绿降
+            mTv_immediate.setTextColor(ContextCompat.getColor(mContext,R.color.analyze_left));
+        } else if(bean.getOd().getJsOdd()<Double.parseDouble(immediate)){
+            mTv_immediate.setTextColor(ContextCompat.getColor(mContext,R.color.fall_color));
+        } else {
+            mTv_immediate.setTextColor(ContextCompat.getColor(mContext,R.color.mdy_333));
+        }
+
+
+        if(bean.getOd().getBelow()>Double.parseDouble(lower)){ //低于
+            mTv_lower.setTextColor(ContextCompat.getColor(mContext,R.color.analyze_left));
+        } else if(bean.getOd().getBelow()<Double.parseDouble(lower)){
+            mTv_lower.setTextColor(ContextCompat.getColor(mContext,R.color.fall_color));
+        } else {
+            mTv_lower.setTextColor(ContextCompat.getColor(mContext,R.color.mdy_333));
+        }
+
 
         if(entity.getStatus().equals("0")){ //未开
             rl_score.setVisibility(View.GONE);
             match_type.setVisibility(View.VISIBLE);
-            match_state_started.setVisibility(View.GONE);
+            match_state_started_half.setVisibility(View.GONE);
+            match_state_started_full.setVisibility(View.GONE);
 
-        }else if(entity.getStatus().equals(1)){ //上半场
+        }else if(entity.getStatus().equals("-1")){ //完场
             rl_score.setVisibility(View.VISIBLE);
             match_type.setVisibility(View.GONE);
-            match_state_started.setVisibility(View.VISIBLE);
-            match_state_started.setText(MyApp.getContext().getString(R.string.fragme_home_shangbanchang_text));
-            holder.setText(R.id.corner_first_odd,bean.getOd().getCpOdd()+"");
-            holder.setText(R.id.corner_immediate_odd,bean.getOd().getJsOdd()+"");
-            holder.setText(R.id.corner_higher,bean.getOd().getHigher()+"");
-            holder.setText(R.id.corner_lower,bean.getOd().getBelow()+"");
-
-        }else if(entity.getStatus().equals("2")){ //中场
+            match_state_started_half.setVisibility(View.VISIBLE);
+            match_state_started_full.setVisibility(View.VISIBLE);
+            match_state_started_half.setText(MyApp.getContext().getString(R.string.number_info_half)); //半
+            match_state_started_full.setText(MyApp.getContext().getString(R.string.number_info_full)); //全
+            holder.setTextColor(R.id.tv_home_full_score, ContextCompat.getColor(mContext,R.color.red));
+            holder.setTextColor(R.id.tv_guest_full_score,ContextCompat.getColor(mContext,R.color.red));
+        }else { //半场
             rl_score.setVisibility(View.VISIBLE);
             match_type.setVisibility(View.GONE);
-            match_state_started.setVisibility(View.VISIBLE);
-            match_state_started.setText(MyApp.getContext().getString(R.string.fragme_home_zhongchang_text));
-            holder.setText(R.id.corner_first_odd,bean.getOd().getCpOdd()+"");
-            holder.setText(R.id.corner_immediate_odd,bean.getOd().getJsOdd()+"");
-            holder.setText(R.id.corner_higher,bean.getOd().getHigher()+"");
-            holder.setText(R.id.corner_lower,bean.getOd().getBelow()+"");
-        }else if(entity.getStatus().equals("3")){ //下半场
-            rl_score.setVisibility(View.VISIBLE);
-            match_type.setVisibility(View.GONE);
-            match_state_started.setVisibility(View.VISIBLE);
-            match_state_started.setText(MyApp.getContext().getString(R.string.fragme_home_xiabanchang_text));
-            holder.setText(R.id.corner_first_odd,bean.getHod().getCpOdd()+"");
-            holder.setText(R.id.corner_immediate_odd,bean.getHod().getJsOdd()+"");
-            holder.setText(R.id.corner_higher,bean.getHod().getHigher()+"");
-            holder.setText(R.id.corner_lower,bean.getHod().getBelow()+"");
-        }else { //完场之类的
-            rl_score.setVisibility(View.VISIBLE);
-            match_type.setVisibility(View.GONE);
-            match_state_started.setVisibility(View.VISIBLE);
-            match_state_started.setText(MyApp.getContext().getString(R.string.fragme_home_wanchang_text));
-            holder.setText(R.id.corner_first_odd,bean.getHod().getCpOdd()+"");
-            holder.setText(R.id.corner_immediate_odd,bean.getHod().getJsOdd()+"");
-            holder.setText(R.id.corner_higher,bean.getHod().getHigher()+"");
-            holder.setText(R.id.corner_lower,bean.getHod().getBelow()+"");
-
+            if(entity.getStatus().equals("1")){
+                match_state_started_half.setVisibility(View.GONE);
+            }else{
+                match_state_started_half.setVisibility(View.VISIBLE);
+            }
+            match_state_started_full.setVisibility(View.GONE);
+            match_state_started_half.setText(MyApp.getContext().getString(R.string.number_info_half));
+            holder.setTextColor(R.id.tv_home_full_score, ContextCompat.getColor(mContext,R.color.colorPrimary));
+            holder.setTextColor(R.id.tv_guest_full_score,ContextCompat.getColor(mContext,R.color.colorPrimary));
         }
+
         final TextView frequency=holder.getView(R.id.item_football_frequency);
 
-        if ("1".equals(entity.getStatus()) || "3".equals(entity.getStatus())) {// 显示秒的闪烁
+        if ("1".equals(entity.getStatus()) || "3".equals(entity.getStatus())&&!entity.getKeep().equals("")&&!entity.getKeep().equals("0")) {// 显示秒的闪烁
+            //握手进场时给的时间是0.不显示
             frequency.setText("\'");
             frequency.setVisibility(View.VISIBLE);
 

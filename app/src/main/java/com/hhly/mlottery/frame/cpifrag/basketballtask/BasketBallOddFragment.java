@@ -25,9 +25,11 @@ import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
 import com.hhly.mlottery.bean.enums.BasketOddsTypeEnum;
 import com.hhly.mlottery.bean.websocket.WebBasketMatch;
 import com.hhly.mlottery.bean.websocket.WebBasketOdds5;
+import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.StringUtils;
 
 import java.util.ArrayList;
@@ -105,6 +107,11 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
     }
 
     @Override
+    public BasketBallContract.OddPresenter initPresenter() {
+        return new BasketBallOddPresenter(this);
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -113,9 +120,6 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         sourceDataList = new ArrayList<>();
 
         destinationDataList = new ArrayList<>();
-
-        mPresenter = new BasketBallOddPresenter(this);
-
 
         mPresenter.showLoad();
         mPresenter.showRequestData("", type);
@@ -166,13 +170,10 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
     @Override
     public void showLoadView() {
-
-
         mHandler.sendEmptyMessage(0);
         L.d(TAG, "加载中_____________");
 
     }
-
 
     @Override
     public void showResponseDataView() {
@@ -180,6 +181,9 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
 
         BasketIndexBean b = mPresenter.getRequestData();
+
+
+        saveCurrentDate(b.getData().getFilerDate());
 
         //获取筛选的list
         fileterMatchTypeList.clear();
@@ -200,6 +204,14 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
         mHandler.sendEmptyMessage(1);
 
     }
+
+    private void saveCurrentDate(String date) {
+        if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.BASKET_INDEX_DATE, "").equals(date)) {
+            PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.BASKET_INDEX);
+            PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.BASKET_INDEX_DATE, date);
+        }
+    }
+
 
     private Handler mHandler = new Handler() {
         @Override
@@ -268,7 +280,7 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
         L.d(TAG, "没有数据_____________");
         fileterMatchTypeList.clear();
-        if (!StringUtils.isEmpty(date)){
+        if (!StringUtils.isEmpty(date)) {
             refreshDateView(date);
             parentFragment.showRightButton();
         }
@@ -332,6 +344,9 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
         //第一次请求
         if (filterLeagueList != null) {
+
+            L.d("saveId",   "第二次筛选");
+
             for (BasketIndexBean.DataBean.AllInfoBean allInfo : sourceDataList) {
 
                 if (filterLeagueList.indexOf(allInfo.getLeagueId()) >= 0) {
@@ -339,11 +354,30 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
                 }
             }
         } else {
-            for (BasketIndexBean.DataBean.AllInfoBean allInfo : sourceDataList) {  //每一场赛事
-                if (allInfo.isHot()) {
-                    filterAllInfo(allInfo);   //默认显示热门的比赛
+
+            if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.BASKET_INDEX).size() > 0) {
+                List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.BASKET_INDEX);
+                for (BasketIndexBean.DataBean.AllInfoBean allInfo : sourceDataList) {
+                    for (String id : list) {
+                        if (allInfo.getLeagueId().equals(id)) {
+                            filterAllInfo(allInfo);
+                        }
+                    }
+                }
+
+                L.d("saveId",   "取本地存储");
+
+            } else {
+                L.d("saveId",   "没有本地存储");
+
+                for (BasketIndexBean.DataBean.AllInfoBean allInfo : sourceDataList) {  //每一场赛事
+                    if (allInfo.isHot()) {
+                        filterAllInfo(allInfo);   //默认显示热门的比赛
+                    }
                 }
             }
+
+
         }
 
         mBasketIndexAdapter.notifyDataSetChanged();

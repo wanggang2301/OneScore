@@ -186,7 +186,9 @@ public class ChartBallReportDialogFragment extends DialogFragment implements Vie
                     ToastTools.showQuick(mContext, mContext.getResources().getString(R.string.warn_submitfail));
                 }
                 progressBar.dismiss();
-                getDialog().dismiss();
+                if(getDialog() != null){
+                    getDialog().dismiss();
+                }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override

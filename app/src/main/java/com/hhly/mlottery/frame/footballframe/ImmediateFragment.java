@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -48,9 +49,11 @@ import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFilterEventBusE
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchSettingEventBusEntity;
 import com.hhly.mlottery.frame.scorefrag.FootBallScoreFragment;
+import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.FocusUtils;
+import com.hhly.mlottery.util.HandMatchId;
 import com.hhly.mlottery.util.HotFocusUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
@@ -78,7 +81,7 @@ import de.greenrobot.event.EventBus;
  */
 public class ImmediateFragment extends Fragment implements OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
-//    private static final String ARG_PARAM1 = "param1";
+    //    private static final String ARG_PARAM1 = "param1";
 //    private static final String ARG_PARAM2 = "param2";
     private static final String TAG = "ImmediateFragment";
 
@@ -163,6 +166,9 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
     private LinearLayout titleContainer;
     private TextView handicapName1;
     private TextView handicapName2;
+    private TextView tv_date;
+    private TextView tv_week;
+    private LinearLayout ll_odd;
 
 
 //    public static ImmediateFragment newInstance(String param1, String param2) {
@@ -248,6 +254,9 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
         titleContainer = (LinearLayout) mView.findViewById(R.id.titleContainer);
         handicapName1 = (TextView) mView.findViewById(R.id.tv_handicap_name1);
         handicapName2 = (TextView) mView.findViewById(R.id.tv_handicap_name2);
+        tv_date = (TextView) mView.findViewById(R.id.tv_date);
+        tv_week = (TextView) mView.findViewById(R.id.tv_week);
+        ll_odd = (LinearLayout) mView.findViewById(R.id.ll_odd);
 
         mFocusClickListener = new FocusMatchClickListener() {// 关注按钮事件
             @Override
@@ -323,7 +332,9 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 //                    mUnconectionLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     mLoadDataStatus = LOAD_DATA_STATUS_SUCCESS;
-                    titleContainer.setVisibility(PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE);
+                    titleContainer.setVisibility(View.VISIBLE);
+
+                    ll_odd.setVisibility(PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE);
                     break;
                 case VIEW_STATUS_NET_ERROR:
                     //mListView.setVisibility(View.GONE);
@@ -383,11 +394,15 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                     return;
                 }
 
-                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, "").equals(jsonMatch.getFilterDate())) {
+                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_IMMEDIA, "").equals(jsonMatch.getFilerDate())) {
                     PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_IMMEDIA);
-                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, jsonMatch.getFilterDate());
+                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_IMMEDIA, jsonMatch.getFilerDate());
                 }
 
+
+                tv_date.setText(jsonMatch.getFilerDate());
+                if (!TextUtils.isEmpty(jsonMatch.getFilerDate()))
+                    tv_week.setText(DateUtil.getWeekOfXinQi(DateUtil.parseDate(jsonMatch.getFilerDate())));
 
                 teamLogoPre = jsonMatch.getTeamLogoPre(); //logo
                 teamLogoSuff = jsonMatch.getTeamLogoSuff();
@@ -503,12 +518,14 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                             mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
                                 @Override
                                 public void onItemClick(View view, String data) {
-                                    String thirdId = data;
-                                    Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
-                                    intent.putExtra("thirdId", thirdId);
-                                    intent.putExtra("currentFragmentId", 1);
-                                    getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                                    if (HandMatchId.handId(getActivity(), data)) {
 
+                                        String thirdId = data;
+                                        Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
+                                        intent.putExtra("thirdId", thirdId);
+                                        intent.putExtra("currentFragmentId", 1);
+                                        getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                                    }
                                 }
                             });
                             mRecyclerView.setAdapter(mAdapter);
@@ -1202,7 +1219,8 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
             for (Match match : mMatchs) {
                 resetOddColor(match);
             }
-            titleContainer.setVisibility(PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE);
+
+            ll_odd.setVisibility(PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE);
             setHandicapName();
             updateAdapter();
         }
@@ -1324,7 +1342,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
     /**
      * 设置盘口显示类型
      */
-    private void setHandicapName(){
+    private void setHandicapName() {
         boolean alet = PreferenceUtil.getBoolean(MyConstants.RBSECOND, true);
         boolean asize = PreferenceUtil.getBoolean(MyConstants.rbSizeBall, false);
         boolean eur = PreferenceUtil.getBoolean(MyConstants.RBOCOMPENSATE, true);

@@ -304,6 +304,11 @@ public class BasketScheduleNewScoreFragment extends Fragment implements View.OnC
                     return;
                 }
 
+                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.BASKET_CURR_DATE_SCHEDULE, "").equals(json.getFilerDate())) {
+                    PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.BASKET_SCHEDULE);
+                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.BASKET_CURR_DATE_SCHEDULE, json.getFilerDate());
+                }
+
                 mMatchdata = json.getMatchData();
 
                 mMatchFilter = json.getMatchFilter();
@@ -709,11 +714,9 @@ public class BasketScheduleNewScoreFragment extends Fragment implements View.OnC
                 }
                 if (isExistId) {
                     checkedMatchs.add(matchBean);
-                    localFilterRace.add(matchBean.getLeagueId());
-
                 }
             }
-
+            localFilterRace.addAll((List)map.get(BasketFiltrateActivity.CHECKED_CUPS_IDS));
             PreferenceUtil.setDataList(FootBallMatchFilterTypeEnum.BASKET_SCHEDULE, localFilterRace);
 
 

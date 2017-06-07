@@ -15,16 +15,21 @@
             layout="@layout/score_layout_header" />
         <!--android:background="@color/colorPrimary"-->
 
-        <android.support.design.widget.TabLayout
+
+        <com.flyco.tablayout.SlidingTabLayout
             android:id="@+id/sliding_tabs"
             style="@style/MyCustomTabLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="42dp"
             android:background="@color/colorPrimary"
-            app:tabIndicatorColor="@color/white"
-            app:tabIndicatorHeight="2dp"
-            app:tabSelectedTextColor="@color/white"
-            app:tabTextAppearance="@style/MyTabLayoutTextAppearanceInverse" />
+            app:tabTextAppearance="@style/MyTabLayoutTextAppearanceInverse"
+            app:tl_indicator_color="@color/white"
+            app:tl_indicator_corner_radius="3dp"
+            app:tl_indicator_height="2dp"
+            app:tl_tab_padding="20dp"
+            app:tl_tab_space_equal="true"
+            app:tl_textSelectColor="@color/white" />
+
 
         <!--<FrameLayout-->
         <!--android:id="@+id/pager_wrapper"-->

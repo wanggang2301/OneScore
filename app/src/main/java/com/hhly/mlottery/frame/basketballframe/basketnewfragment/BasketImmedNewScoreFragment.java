@@ -27,7 +27,7 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
-import com.hhly.mlottery.activity.BettingRecommendActivity;
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingRecommendActivity;
 import com.hhly.mlottery.adapter.ScheduleDateAdapter;
 import com.hhly.mlottery.adapter.basketball.BasketballScoreListAdapter;
 import com.hhly.mlottery.bean.basket.BasketAllOddBean;
@@ -272,7 +272,7 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
         mView.findViewById(R.id.testbetting).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mIntent = new Intent(mContext, BettingRecommendActivity.class);
+                Intent mIntent = new Intent(mContext, MvpBettingRecommendActivity.class);
                 startActivity(mIntent);
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
             }
@@ -328,13 +328,20 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_NEW_IMMEDIATE, params, new VolleyContentFast.ResponseSuccessListener<BasketNewRootBean>() {
             @Override
             public void onResponse(BasketNewRootBean json) {
+
                 if (getActivity() == null) {
                     return;
                 }
+
                 isLoad = 1;
                 if (json == null || json.getMatchData() == null || json.getMatchData().size() == 0) {
                     setStatus(SHOW_STATUS_NO_DATA);
                     return;
+                }
+
+                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.BASKET_CURR_DATE_IMMEDIA, "").equals(json.getFilerDate())) {
+                    PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.BASKET_IMMEDIA);
+                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.BASKET_CURR_DATE_IMMEDIA, json.getFilerDate());
                 }
 
                 mMatchdata = json.getMatchData();
@@ -542,7 +549,6 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                 currentMatchData.add(data);
             }
         }
-
         updateAdapter();
     }
 
@@ -1030,9 +1036,9 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                 }
                 if (isExistId) {
                     checkedMatchs.add(matchBean);
-                    localFilterRace.add(matchBean.getLeagueId());
                 }
             }
+            localFilterRace.addAll((List)map.get(BasketFiltrateActivity.CHECKED_CUPS_IDS));
 
             PreferenceUtil.setDataList(FootBallMatchFilterTypeEnum.BASKET_IMMEDIA, localFilterRace);
             if (checkedMatchs.size() != 0) {
@@ -1045,6 +1051,16 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
                     data.setItemType(LISTDATATYPE);
                     currentMatchData.add(data);
                 }
+//                    for (String groupdata : mAllGroupdata) {
+//                        String[] weekdatas = groupdata.split(",");
+//                        String datas = weekdatas[0];
+//                        String currData = DateUtil.convertDateToNation(checkedMatchs.get(0).getDate());//国际化后比较日期
+//                        if (currData.equals(datas)) {
+//                            groupDataList.add(groupdata);
+//                            break;
+//                        }
+//                    }
+//                }
             }
             List<BasketMatchFilter> checkedFilters = new ArrayList<>();
             for (BasketMatchFilter allFilter : mAllFilter) {
@@ -1058,7 +1074,13 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
             mbasket_unfiltrate.setVisibility(View.GONE);
             mSwipeRefreshLayout.setRefreshing(false);
             mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+
+            L.d("AAAAA-yxq---", "childrenDataList >>>> = " + childrenDataList.size());
             updateAdapter();
+            // 设置打开全部日期内容
+//            for (int i = 0; i < groupDataList.size(); i++) {
+//                explistview.expandGroup(i);
+//            }
         }
     }
 

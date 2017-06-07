@@ -2,6 +2,8 @@ package com.hhly.mlottery.bean.footballDetails;
 
 import java.util.List;
 
+import data.bean.BottomOddsItem;
+
 /**
  * @author wang gang
  * @date 2016/6/7 11:54

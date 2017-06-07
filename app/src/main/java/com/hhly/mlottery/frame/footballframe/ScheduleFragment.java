@@ -47,6 +47,7 @@ import com.hhly.mlottery.frame.scorefrag.FootBallScoreFragment;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FocusUtils;
+import com.hhly.mlottery.util.HandMatchId;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -355,9 +356,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
 
                 teamLogoSuff = json.getTeamLogoSuff();
 
-                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, "").equals(json.getFilterDate())) {
+                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_SCHEDULE, "").equals(json.getFilerDate())) {
                     PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_SCHEDULE);
-                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, json.getFilterDate());
+                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_SCHEDULE, json.getFilerDate());
                 }
 
                 if (current != null) {
@@ -429,10 +430,12 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                         @Override
                         public void onItemClick(View view, String data) {
                             String thirdId = data;
-                            Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
-                            intent.putExtra("thirdId", thirdId);
-                            intent.putExtra("currentFragmentId", 3);
-                            getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                            if (HandMatchId.handId(getActivity(), thirdId)) {
+                                Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
+                                intent.putExtra("thirdId", thirdId);
+                                intent.putExtra("currentFragmentId", 3);
+                                getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                            }
                         }
                     });
 

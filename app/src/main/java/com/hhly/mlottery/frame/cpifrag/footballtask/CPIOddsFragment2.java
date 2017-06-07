@@ -22,6 +22,9 @@ import com.hhly.mlottery.bean.enums.StatusEnum;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.websocket.WebSocketCPIResult;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
+import com.hhly.mlottery.util.HandMatchId;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.EmptyView;
 
@@ -118,9 +121,14 @@ public class CPIOddsFragment2 extends Fragment {
         mAdapter.setOnItemClickListener(new CPIRecyclerListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(NewOddsInfo.AllInfoBean item) {
-                Intent intent = new Intent(getContext(), FootballMatchDetailActivity.class);
-                intent.putExtra("thirdId", item.getMatchInfo().getMatchId());
-                getContext().startActivity(intent);
+
+                if (HandMatchId.handId(getContext(), item.getMatchInfo().getMatchId())) {
+
+
+                    Intent intent = new Intent(getContext(), FootballMatchDetailActivity.class);
+                    intent.putExtra("thirdId", item.getMatchInfo().getMatchId());
+                    getContext().startActivity(intent);
+                }
             }
         });
         // 每个 Item 内部一条赔率的单击
@@ -177,6 +185,10 @@ public class CPIOddsFragment2 extends Fragment {
                             refreshOver();
                             return;
                         }
+
+                        //本地存储当天日期
+                        saveCurrentDate(jsonObject.getFilerDate());
+
                         List<NewOddsInfo.AllInfoBean> allInfo = jsonObject.getAllInfo();
 
                         // 公司数据
@@ -206,6 +218,25 @@ public class CPIOddsFragment2 extends Fragment {
                 }, NewOddsInfo.class);
     }
 
+    private void saveCurrentDate(String date) {
+        if (OddsTypeEnum.PLATE.equals(type)) {
+            if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_INDEX_DATE_PLATE, "").equals(date)) {
+                PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_INDEX);
+                PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_INDEX_DATE_PLATE, date);
+            }
+        } else if (OddsTypeEnum.BIG.equals(type)) {
+            if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_INDEX_DATE_BIG, "").equals(date)) {
+                PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_INDEX);
+                PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_INDEX_DATE_BIG, date);
+            }
+        } else if (OddsTypeEnum.OP.equals(type)) {
+            if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_INDEX_DATE_OP, "").equals(date)) {
+                PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_INDEX);
+                PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_INDEX_DATE_OP, date);
+            }
+        }
+    }
+
     /**
      * 更新过滤数据源（注意要过滤公司赔率信息）
      */
@@ -220,9 +251,20 @@ public class CPIOddsFragment2 extends Fragment {
                 }
             }
         } else {
-            for (NewOddsInfo.AllInfoBean allInfo : defaultData) {
-                if (allInfo.isHot()) {
-                    filterAllInfo(allInfo);
+            if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_INDEX).size() > 0) {
+                List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_INDEX);
+                for (NewOddsInfo.AllInfoBean allInfo : defaultData) {
+                    for (String id : list) {
+                        if (allInfo.getLeagueId().equals(id)) {
+                            filterAllInfo(allInfo);
+                        }
+                    }
+                }
+            } else {
+                for (NewOddsInfo.AllInfoBean allInfo : defaultData) {
+                    if (allInfo.isHot()) {
+                        filterAllInfo(allInfo);
+                    }
                 }
             }
         }

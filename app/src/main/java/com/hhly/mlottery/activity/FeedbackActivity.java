@@ -208,7 +208,7 @@ public class FeedbackActivity extends BaseActivity implements View.OnClickListen
                     String systemVersion = DeviceInfo.getOSVersion();
                     L.d(TAG, "id = " + id);
                     L.d(TAG, "facturer = " + facturer);
-                    L.d(TAG, "model = " + model);
+                    L.d(TAG, "data.model = " + model);
                     L.d(TAG, "systemVersion = " + systemVersion);
                     String versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
                     L.d(TAG, "versionName = " + versionName);

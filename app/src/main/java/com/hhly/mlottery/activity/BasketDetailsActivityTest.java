@@ -873,7 +873,11 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 break;
         }
     }
+    public void onEventMainThread(BarrageBean barrageBean) {
 
+        barrage_view.setDatas(barrageBean.getUrl(), barrageBean.getMsg().toString());
+
+    }
     public void onEventMainThread(BasketDetailsEventBusEntity event) {
 
     }

@@ -16,11 +16,16 @@ public class CornerContract {
     interface View extends IView{
         void recyclerNotify();
         void showNoData(String hasData);
+        void setDateListPosition(int position);
+        void refreshShow(boolean refresh);
+        void showNoMoreData();
+        void showNextPage(List<CornerListBean.CornerEntity> cornerListBean);
     }
 
     interface Presenter extends IPresenter<View>{
 
         List<CornerListBean.CornerEntity> getData();
-        void refreshData(String type);
+        void refreshData(String type ,int position , boolean refresh);
+        void refreshDataByPage(String type,int position, boolean refresh);
     }
 }

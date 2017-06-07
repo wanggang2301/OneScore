@@ -33,7 +33,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
 //        setContentView(R.layout.entry);TODO*********
 
         // 通过WXAPIFactory工厂，获取IWXAPI的实例
-//        api = WXAPIFactory.createWXAPI(this, Constants.APP_ID, false);
+//        data.api = WXAPIFactory.createWXAPI(this, Constants.APP_ID, false);
         api = WXAPIFactory.createWXAPI(this, "wx2a5538052969956e");
         api.handleIntent(getIntent(), this);
         L.d("微信支付..." , "onCreate()");
@@ -43,7 +43,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
 //            @Override
 //            public void onClick(View v) {
 //                // 将该app注册到微信
-//                api.registerApp(Constants.APP_ID);
+//                data.api.registerApp(Constants.APP_ID);
 //            }
 //        });
 //
@@ -62,7 +62,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
 //
 //            @Override
 //            public void onClick(View v) {
-//                Toast.makeText(WXPayEntryActivity.this, "launch result = " + api.openWXApp(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(WXPayEntryActivity.this, "launch result = " + data.api.openWXApp(), Toast.LENGTH_LONG).show();
 //            }
 //        });
 //
@@ -71,7 +71,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
 //
 //            @Override
 //            public void onClick(View v) {
-//                int wxSdkVersion = api.getWXAppSupportAPI();
+//                int wxSdkVersion = data.api.getWXAppSupportAPI();
 //                if (wxSdkVersion >= TIMELINE_SUPPORTED_VERSION) {
 //                    Toast.makeText(WXPayEntryActivity.this, "wxSdkVersion = " + Integer.toHexString(wxSdkVersion) + "\ntimeline supported", Toast.LENGTH_LONG).show();
 //                } else {
@@ -94,7 +94,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
 //        //第三方开发者如果使用透明界面来实现WXPayEntryActivity，需要判断handleIntent的返回值，如果返回值为false，
 //        // 则说明入参不合法未被SDK处理，应finish当前透明界面，避免外部通过传递非法参数的Intent导致停留在透明界面，引起用户的疑惑
 //        try {
-//            api.handleIntent(getIntent(), this);
+//            data.api.handleIntent(getIntent(), this);
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }

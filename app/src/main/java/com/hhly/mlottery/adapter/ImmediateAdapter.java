@@ -12,7 +12,6 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
@@ -24,7 +23,6 @@ import com.hhly.mlottery.frame.footballframe.FocusFragment;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.HandicapUtils;
 import com.hhly.mlottery.util.ImageLoader;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 
@@ -39,7 +37,6 @@ public class ImmediateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     List<Match> datas;
     private Context mContext;
-    private int handicap = 0;
 
     private String teamLogoPre;
     private String teamLogoSuff;
@@ -237,8 +234,8 @@ public class ImmediateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         switch (match.getStatusOrigin()) {
             case "0":// 未开
-                holder.ll_half_score.setVisibility(View.GONE);
-                holder.ll_all_score.setVisibility(View.GONE);
+                holder.ll_half_score.setVisibility(View.INVISIBLE);
+                holder.ll_all_score.setVisibility(View.INVISIBLE);
 
                 holder.keeptime.setText(mContext.getResources().getString(R.string.tennis_match_not_start));
                 holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.res_pl_color));
@@ -322,14 +319,14 @@ public class ImmediateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 holder.item_guest_half_score.setText(match.getGuestHalfScore());
                 break;
             case "-10":// 取消
-                holder.ll_half_score.setVisibility(View.GONE);
-                holder.ll_all_score.setVisibility(View.GONE);
+                holder.ll_half_score.setVisibility(View.INVISIBLE);
+                holder.ll_all_score.setVisibility(View.INVISIBLE);
                 holder.keeptime.setText(mContext.getString(R.string.immediate_status_cancel));
                 holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
                 break;
             case "-11":// 待定
-                holder.ll_half_score.setVisibility(View.GONE);
-                holder.ll_all_score.setVisibility(View.GONE);
+                holder.ll_half_score.setVisibility(View.INVISIBLE);
+                holder.ll_all_score.setVisibility(View.INVISIBLE);
                 holder.keeptime.setText(mContext.getString(R.string.immediate_status_hold));
                 holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
                 break;
@@ -356,8 +353,8 @@ public class ImmediateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             case "-14":// 推迟
                 holder.keeptime.setText(mContext.getString(R.string.immediate_status_postpone));
                 holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
-                holder.ll_half_score.setVisibility(View.GONE);
-                holder.ll_all_score.setVisibility(View.GONE);
+                holder.ll_half_score.setVisibility(View.INVISIBLE);
+                holder.ll_all_score.setVisibility(View.INVISIBLE);
                 break;
             default:
                 break;
@@ -520,22 +517,22 @@ public class ImmediateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         // 亚盘赔率
         if (alet) {
-            setOddsData(holder.tv_odds_top1, holder.tv_odds_center1, holder.tv_odds_bottom1, asiaLet, match, false);
+            setOddsData(holder.tv_odds_top1, holder.tv_odds_center1, holder.tv_odds_bottom1, asiaLet, match, 1);
         }
         // 大小盘赔率
         if (asize) {
             if (!alet) {
-                setOddsData(holder.tv_odds_top1, holder.tv_odds_center1, holder.tv_odds_bottom1, asiaSize, match, false);
+                setOddsData(holder.tv_odds_top1, holder.tv_odds_center1, holder.tv_odds_bottom1, asiaSize, match, 2);
             } else {
-                setOddsData(holder.tv_odds_top2, holder.tv_odds_center2, holder.tv_odds_bottom2, asiaSize, match, false);
+                setOddsData(holder.tv_odds_top2, holder.tv_odds_center2, holder.tv_odds_bottom2, asiaSize, match, 2);
             }
         }
         // 欧盘赔率
         if (eur) {
             if (!alet && !asize) {
-                setOddsData(holder.tv_odds_top1, holder.tv_odds_center1, holder.tv_odds_bottom1, euro, match, true);
+                setOddsData(holder.tv_odds_top1, holder.tv_odds_center1, holder.tv_odds_bottom1, euro, match, 3);
             } else {
-                setOddsData(holder.tv_odds_top1, holder.tv_odds_center1, holder.tv_odds_bottom1, euro, match, true);
+                setOddsData(holder.tv_odds_top2, holder.tv_odds_center2, holder.tv_odds_bottom2, euro, match, 3);
             }
         }
 
@@ -572,90 +569,43 @@ public class ImmediateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
      * @param bottomView
      * @param odd
      */
-    private void setOddsData(TextView topView, TextView centerView, TextView bottomView, MatchOdd odd, Match match, boolean isEour) {
+    private void setOddsData(TextView topView, TextView centerView, TextView bottomView, MatchOdd odd, Match match, int type) {
         if (odd == null) {
-            topView.setVisibility(View.GONE);
-            centerView.setVisibility(View.GONE);
-            bottomView.setVisibility(View.GONE);
+            topView.setText("-");
+            centerView.setText("-");
+            bottomView.setText("-");
             return;
         }
-        String handicapValue = isEour ? odd.getLeftOdds() : odd.getHandicapValue();
+        String handicapValue;
+        switch (type) {
+            case 1:
+                handicapValue = HandicapUtils.changeHandicap(odd.getHandicapValue());
+                break;
+            case 2:
+                handicapValue = HandicapUtils.changeHandicapByBigLittleBall(odd.getHandicapValue());
+                break;
+            case 3:
+                handicapValue = odd.getMediumOdds();
+                break;
+            default:
+                handicapValue = "-";
+                break;
+        }
         int keeptime = 0;
         if (match.getKeepTime() != null) {
             keeptime = Integer.parseInt(match.getKeepTime());
         }
         if ((!"-1".equals(match.getStatusOrigin()) && keeptime >= 89) || "-".equals(handicapValue) || "|".equals(handicapValue)) {// 封盘,完场不会有封盘的情况
-            topView.setVisibility(View.GONE);
-            centerView.setVisibility(View.GONE);
-            bottomView.setText(mContext.getString(R.string.immediate_status_entertained));
+            topView.setText(mContext.getString(R.string.immediate_status_entertained));
+            centerView.setText("-");
+            bottomView.setText("-");
         } else {
-            topView.setVisibility(View.VISIBLE);
-            centerView.setVisibility(View.VISIBLE);
-            bottomView.setVisibility(View.VISIBLE);
-            centerView.setText(isEour ? odd.getMediumOdds() : HandicapUtils.changeHandicap(handicapValue));
+            centerView.setText(handicapValue);
             topView.setText(odd.getLeftOdds());
             bottomView.setText(odd.getRightOdds());
-            if (match.getLeftOddTextColorId() != 0) {
-                topView.setTextColor(mContext.getResources().getColor(match.getLeftOddTextColorId()));
-            }
-            if (match.getRightOddTextColorId() != 0) {
-                bottomView.setTextColor(mContext.getResources().getColor(match.getRightOddTextColorId()));
-            }
-            if (match.getMidOddTextColorId() != 0) {
-                centerView.setTextColor(mContext.getResources().getColor(match.getMidOddTextColorId()));
-            }
-        }
-
-        if ("-1".equals(match.getStatusOrigin())) {// 完场不会有封盘的情况
-            try {
-                float homeScore = Float.parseFloat(match.getHomeScore());
-                float guestScore = Float.parseFloat(match.getGuestScore());
-                float handicapValueF = Float.parseFloat(handicapValue);
-                float re = homeScore - guestScore - handicapValueF;
-                if (re > 0) {// 注意这是亚盘的
-                    topView.setTextColor(mContext.getResources().getColor(R.color.white));
-                    topView.setBackgroundResource(R.color.resultcol);
-                    centerView.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
-                    centerView.setBackgroundResource(R.color.transparent);
-                    bottomView.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
-                    bottomView.setBackgroundResource(R.color.transparent);
-                } else if (re < 0) {
-                    topView.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
-                    topView.setBackgroundResource(R.color.transparent);
-                    centerView.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
-                    centerView.setBackgroundResource(R.color.transparent);
-                    bottomView.setTextColor(mContext.getResources().getColor(R.color.white));
-                    bottomView.setBackgroundResource(R.color.resultcol);
-                } else {
-                    topView.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
-                    topView.setBackgroundResource(R.color.transparent);
-                    centerView.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
-                    centerView.setBackgroundResource(R.color.transparent);
-                    bottomView.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
-                    bottomView.setBackgroundResource(R.color.transparent);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            if (match.getLeftOddTextColorId() == 0) {
-                topView.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
-            } else {
-                topView.setTextColor(mContext.getResources().getColor(match.getLeftOddTextColorId()));
-            }
-            if (match.getRightOddTextColorId() == 0) {
-                centerView.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
-            } else {
-                centerView.setTextColor(mContext.getResources().getColor(match.getMidOddTextColorId()));
-            }
-            if (match.getMidOddTextColorId() == 0) {
-                bottomView.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
-            } else {
-                bottomView.setTextColor(mContext.getResources().getColor(match.getRightOddTextColorId()));
-            }
-            topView.setBackgroundResource(R.color.transparent);
-            centerView.setBackgroundResource(R.color.transparent);
-            bottomView.setBackgroundResource(R.color.transparent);
+            topView.setTextColor(match.getLeftOddTextColorId() != 0 ? mContext.getResources().getColor(match.getLeftOddTextColorId()) : mContext.getResources().getColor(R.color.content_txt_light_grad));
+            bottomView.setTextColor(match.getRightOddTextColorId() != 0 ? mContext.getResources().getColor(match.getRightOddTextColorId()) : mContext.getResources().getColor(R.color.content_txt_light_grad));
+            centerView.setTextColor(match.getMidOddTextColorId() != 0 ? mContext.getResources().getColor(match.getMidOddTextColorId()) : mContext.getResources().getColor(R.color.content_txt_black));
         }
     }
 }

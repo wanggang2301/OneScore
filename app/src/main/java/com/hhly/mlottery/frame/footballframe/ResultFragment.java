@@ -49,6 +49,7 @@ import com.hhly.mlottery.frame.scorefrag.FootBallScoreFragment;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FocusUtils;
+import com.hhly.mlottery.util.HandMatchId;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ResultDateUtil;
@@ -394,9 +395,9 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 teamLogoPre = json.getTeamLogoPre();
                 teamLogoSuff = json.getTeamLogoSuff();
 
-                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, "").equals(json.getFilterDate())) {
+                if (!PreferenceUtil.getString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_RESULT, "").equals(json.getFilerDate())) {
                     PreferenceUtil.removeKey(FootBallMatchFilterTypeEnum.FOOT_RESULT);
-                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE, json.getFilterDate());
+                    PreferenceUtil.commitString(FootBallMatchFilterTypeEnum.FOOT_CURR_DATE_RESULT, json.getFilerDate());
                 }
 
                 /**
@@ -485,11 +486,14 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
                     @Override
                     public void onItemClick(View view, String data) {
-                        String thirdId = data;
-                        Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
-                        intent.putExtra("thirdId", thirdId);
-                        intent.putExtra("currentFragmentId", 2);
-                        getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                        if(HandMatchId.handId(getActivity(), data)) {
+
+                            String thirdId = data;
+                            Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
+                            intent.putExtra("thirdId", thirdId);
+                            intent.putExtra("currentFragmentId", 2);
+                            getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                        }
                     }
                 });
 
@@ -526,7 +530,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
 
     /**
-     * EventBus 帅选完成后接受消息
+     * EventBus 筛选完成后接受消息
      * 接受消息的页面实现
      */
     public void onEventMainThread(ScoresMatchFilterEventBusEntity scoresMatchFilterEventBusEntity) {
