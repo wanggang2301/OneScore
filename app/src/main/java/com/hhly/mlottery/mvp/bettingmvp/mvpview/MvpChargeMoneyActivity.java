@@ -48,7 +48,8 @@ public class MvpChargeMoneyActivity extends BaseActivity implements View.OnClick
     /**
      * pay 参数的URL
      */
-    String payUrl = "http://192.168.31.207:8092/pay/recharge";
+//    String payUrl = "http://192.168.31.207:8092/pay/recharge";
+    String payUrl = "http://m.1332255.com:81/user/pay/recharge";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

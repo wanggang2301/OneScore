@@ -465,6 +465,9 @@
             android:screenOrientation="behind"
             >
         </activity>
+
+        <activity android:name="com.hhly.mlottery.activity.AccountDetailActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

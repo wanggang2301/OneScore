@@ -64,6 +64,7 @@ public class MvpBettingPayDetailsActivity extends BaseActivity implements MView<
     private LinearLayout mLoadingLayout;
     private TextView mNoDataLayout;
     private BettingListDataBean.PromotionData.BettingListData itemData;
+    private LinearLayout toPayll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +120,8 @@ public class MvpBettingPayDetailsActivity extends BaseActivity implements MView<
         mToPay = (LinearLayout)findViewById(R.id.betting_topay_ll);
         mToPay.setOnClickListener(this);
 
+        toPayll = (LinearLayout)findViewById(R.id.betting_topay_all);
+
         //下拉控件
         mRefresh = (ExactSwipeRefreshLayout) findViewById(R.id.betting_refresh_layout);
         mRefresh.setColorSchemeResources(R.color.bg_header);
@@ -162,6 +165,15 @@ public class MvpBettingPayDetailsActivity extends BaseActivity implements MView<
 
         Serializable allLeague = getIntent().getSerializableExtra(ConstantPool.BETTING_ITEM_DATA);
         itemData = (BettingListDataBean.PromotionData.BettingListData)allLeague;
+
+        if (itemData.getLookStatus().equals("2")) {
+            toPayll.setVisibility(View.VISIBLE);
+            detailsContextBg.setVisibility(View.VISIBLE);
+        }else{
+            toPayll.setVisibility(View.GONE);
+            detailsContextBg.setVisibility(View.GONE);
+        }
+
 
         L.d("qwertyui===>>> " , itemData.getId());
         //http://192.168.10.242:8092/promotion/info/detail?
@@ -229,7 +241,11 @@ public class MvpBettingPayDetailsActivity extends BaseActivity implements MView<
             detailsHomeWinOdds.setText(filtraNull(basebean.getDetail().getLeftOdds()));
             detailsDrawOdds.setText(filtraNull(basebean.getDetail().getMidOdds()));
             detailsGuestWinOdds.setText(filtraNull(basebean.getDetail().getRightOdds()));
-            detailsContext.setText(filtraNull(basebean.getDetail().getContext()));
+            if (itemData.getLookStatus().equals("2")) {
+                detailsContext.setText(getApplicationContext().getResources().getText(R.string.betting_txt_pay_check_result));
+            }else{
+                detailsContext.setText(filtraNull(basebean.getDetail().getContext()));
+            }
 
             detailsPrice.setText("￥ " + filtraNull(itemData.getPrice()));
 
