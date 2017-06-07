@@ -62,35 +62,24 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
     RecyclerView recyclerView;
     @BindView(R.id.handle_exception)
     LinearLayout handleException;
-
     @BindView(R.id.refresh)
     ExactSwipeRefreshLayout refresh;
-
-    SubsRecordAdapter mSubsRecordAdapter;
-    ProgressBar progressBar;
-    TextView loadmoreText;
-
-    Activity mActivity;
-
-    View moreView;
-/*
-
-    String userId = "HHLY00000136";
-    String loginToken = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJqd3QiLCJpYXQiOjE0OTY0ODU2MDAsInN1YiI6IntcImlkXCI6XCJISExZMDAwMDAxMzZcIixcInBob25lTnVtXCI6XCIxNTAxMzY5NzEwMVwifSJ9.l4jsTaz5tJM5Q4P3s_UK8US-S3HRfN-lfJZJ67XUS98";
-*/
-
-
-    String userId;
-    String loginToken;
-
-    int pageNum = 1;
     @BindView(R.id.tv_nodata)
     TextView tvNodata;
     @BindView(R.id.btn_confirm)
     Button btnConfirm;
 
-    private List<SubsRecordBean.PurchaseRecordsBean.ListBean> listBeanList;
 
+    SubsRecordAdapter mSubsRecordAdapter;
+    ProgressBar progressBar;
+    TextView loadmoreText;
+    Activity mActivity;
+    View moreView;
+    String userId;
+    String loginToken;
+    int pageNum = 1;
+
+    private List<SubsRecordBean.PurchaseRecordsBean.ListBean> listBeanList;
 
     public static SubsRecordFragment newInstance() {
         SubsRecordFragment subsRecordFragment = new SubsRecordFragment();
@@ -246,7 +235,6 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
                 pageNum = 1;
                 mPresenter.requestData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
                 break;
-
             case R.id.btn_confirm:
                 startActivity(new Intent(mActivity, MvpBettingRecommendActivity.class));
                 mActivity.finish();
