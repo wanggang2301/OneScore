@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingOnlinePaymentActivity;
 import com.hhly.mlottery.util.L;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
@@ -143,6 +144,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
             switch (resp.errCode){
                 case BaseResp.ErrCode.ERR_OK:
                     L.d("完成回调..." , "支付成功");
+                    MvpBettingOnlinePaymentActivity.orderPay(); // 充值成功调用余额扣款接口
                     finish();
                     break;
                 case BaseResp.ErrCode.ERR_COMM:

@@ -51,6 +51,8 @@ import com.hhly.mlottery.config.FootBallDetailTypeEnum;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
+import com.hhly.mlottery.frame.footballframe.AnalyzeFragment;
+import com.hhly.mlottery.frame.footballframe.BettingIssueFragment;
 import com.hhly.mlottery.frame.footballframe.AnalyzeParentFragment;
 import com.hhly.mlottery.frame.footballframe.BettingIssueFragment;
 import com.hhly.mlottery.frame.footballframe.LiveFragment;
@@ -180,9 +182,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     public final static String BUNDLE_PARAM_THIRDID = "thirdId";
 
     private BettingIssueFragment mRecommendFragment;  //推介
-    private BowlFragment mBowlFragment;
-
-
     private LiveFragment mLiveFragment;  //直播
     private OddsFragment mOddsFragment;         //指数
     private AnalyzeParentFragment mAnalyzeParentFragment;
@@ -365,7 +364,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 //                    mAnalyzeParentFragment.initData();
                     mOddsFragment.oddPlateRefresh(); // 指数刷新
                     mChartBallFragment.onRefresh();// 聊球
-                    //mBettingIssueFragment.initData();//推介
                 }
             }
         }, 500);
@@ -1798,9 +1796,11 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     if (!isAddFragment) {
                         // 传值到直播Fragment
                         //推介
-//                    mRecommendFragment = RecommendFragment.newInstance();
+                        mRecommendFragment = mRecommendFragment.newInstance("");
                         //滚球
-                        mBowlFragment = BowlFragment.newInstance(mThirdId);
+//                         mDetailsRollballFragment = DetailsRollballFragment.newInstance(mThirdId);
+//                        mBettingIssueFragment = BettingIssueFragment.newInstance(mThirdId);
+
                         //直播
                         mLiveFragment = LiveFragment.newInstance(mThirdId, mMatchDetail, mathchStatisInfo, eventMatchTimeLiveList, trendChartList, mKeepTime);
                         //指数
@@ -1810,9 +1810,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         // 聊球
                         mChartBallFragment = ChartBallFragment.newInstance(0, mThirdId);
 
-                        mTabsAdapter.addFragments(mBowlFragment, mLiveFragment, mOddsFragment, mAnalyzeParentFragment, mChartBallFragment);
-                        mViewPager.setOffscreenPageLimit(4);//设置预加载页面的个数。
-                        //设置预加载页面的个数。
+                        mTabsAdapter.addFragments(mRecommendFragment , mLiveFragment, mOddsFragment, mAnalyzeParentFragment, mChartBallFragment);
+                        mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
                         mViewPager.setAdapter(mTabsAdapter);
                         mTabLayout.setupWithViewPager(mViewPager);
                         isAddFragment = true;
