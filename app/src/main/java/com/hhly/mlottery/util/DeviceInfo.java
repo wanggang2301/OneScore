@@ -46,6 +46,8 @@ public class DeviceInfo {
 	private static String deviceToken ;
 	private static final java.lang.String TAG = "CommonUtils";
 	private static  String KEY="ybfmobile";
+	private static String language;
+
 	/**
 	 * 获取设备imei
  	 */
@@ -500,17 +502,20 @@ public class DeviceInfo {
 	public static void getVerifyCode(Context ctx, String phone, String oprateType, final GetVerifyCodeCallBack callBack) {
 		if (UiUtils.isMobileNO(ctx, phone)) {
 			callBack.beforGet();
-			//String url = BaseURLs.URL_SENDSMSCODE;
-
-
-
-			String url = "http://192.168.10.242:8091/user/getsms";
+			String url = BaseURLs.URL_SENDSMSCODE;
 
 			Map<String, String> param = new HashMap<>();
 			param.put("phoneNum", phone);
 			param.put("type", oprateType);
+			if (MyApp.isLanguage.equals("rCN")) {
+				// 如果是中文简体的语言环境
+				language = "langzh";
+			} else if (MyApp.isLanguage.equals("rTW")) {
+				// 如果是中文繁体的语言环境
+				language="langzh-TW";
+			}
 			//添加签名
-			String sign = DeviceInfo.getSign(BaseURLs.SENDSMSCODE+"langzh"+"phoneNum"+phone+"timeZone8"+"type"+oprateType);
+			String sign = DeviceInfo.getSign(BaseURLs.SENDSMSCODE+language+"phoneNum"+phone+"timeZone8"+"type"+oprateType);
 			param.put("sign", sign);
 /*
 			int versioncode = DeviceInfo.getVersionCode();

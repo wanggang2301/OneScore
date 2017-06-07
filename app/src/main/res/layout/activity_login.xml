@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="登录一比分"
+            android:text="@string/login_one_score"
             android:textColor="@color/white" />
 
     </RelativeLayout>
@@ -121,6 +121,15 @@
         android:layout_weight="0.001"
         android:background="@color/white" />
 
+    <TextView
+        android:id="@+id/login_more"
+        android:visibility="gone"
+        android:layout_marginLeft="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="登录失败超过6次,账户将会被锁定!"
+        android:textColor="@color/red"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -128,10 +137,10 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_gravity="center"
             android:id="@+id/tv_login"
-            android:layout_width="270dp"
             style="@style/login_edittext_loginbtn_newblue"
+            android:layout_width="270dp"
+            android:layout_gravity="center"
             android:layout_marginTop="15dp"
             android:text="@string/login"
             android:textColor="#333333"

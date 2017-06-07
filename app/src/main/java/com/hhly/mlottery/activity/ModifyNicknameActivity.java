@@ -40,6 +40,7 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
     private Button public_btn_save;
     private ProgressDialog progressBar;
     private String mNickname;//传递过来的昵称
+    private String language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +117,15 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
                  param.put("userId", AppConstants.register.getUser().getUserId());
                  param.put("nickname", nickName);
                  param.put("loginToken",AppConstants.register.getToken());
-                 String sign=DeviceInfo.getSign("/user/updatenickname"+"langzh"+"loginToken"+AppConstants.register.getToken()+"nickname"+nickName+"timeZone8"+"userId"+AppConstants.register.getUser().getUserId());
+                 if (MyApp.isLanguage.equals("rCN")) {
+                     // 如果是中文简体的语言环境
+                     language = "langzh";
+                 } else if (MyApp.isLanguage.equals("rTW")) {
+                     // 如果是中文繁体的语言环境
+                     language="langzh-TW";
+                 }
+
+                 String sign=DeviceInfo.getSign("/user/updatenickname"+language+"loginToken"+AppConstants.register.getToken()+"nickname"+nickName+"timeZone8"+"userId"+AppConstants.register.getUser().getUserId());
                  param.put("sign",sign);
 
                  VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {

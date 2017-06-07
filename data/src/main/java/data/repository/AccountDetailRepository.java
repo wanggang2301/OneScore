@@ -2,6 +2,8 @@ package data.repository;
 
 import data.api.AccountDetailApi;
 import data.bean.AccountDetailBean;
+import data.bean.AccountPageBean;
+import data.bean.RechargeBean;
 import rx.Observable;
 
 /**
@@ -16,7 +18,11 @@ public class AccountDetailRepository {
         this.mAccountApi = mAccountApi;
     }
 
-    public Observable<AccountDetailBean> getAccountData( String userId,String loginToken,String sign ,String pageNumber){
-        return mAccountApi.getAccountData(userId, loginToken, sign ,pageNumber);
+    public Observable<AccountPageBean> getAccountDataByPage(String userId, String loginToken, String sign , String pageNumber){
+        return mAccountApi.getAccountDataByPage(userId, loginToken, sign ,pageNumber);
+    }
+
+    public Observable<AccountDetailBean> getAccountData( String userId,String loginToken,String sign){
+        return mAccountApi.getAccountData(userId, loginToken, sign );
     }
 }
