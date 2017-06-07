@@ -916,7 +916,7 @@ public class BaseURLs {
     /**
      * 发送验证码
      */
-    public final static String URL_SENDSMSCODE = P_URL_API_HOST + "user/getsms/phoneNum/type";
+    public final static String URL_SENDSMSCODE = P_URL_API_HOST + "user/getsms";
     public final static String SENDSMSCODE = "/user/getsms";
     /**
      * 注册
@@ -937,7 +937,7 @@ public class BaseURLs {
     /**
      * 重置密码
      */
-    public final static String URL_RESETPASSWORD = URL_API_HOST + "androidUserCenter.resetPassword.do";
+    public final static String URL_RESETPASSWORD = P_URL_API_HOST + "user/resetpassword";
     /**
      * 修改昵称
      */

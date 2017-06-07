@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <!--头部条目标题-->
     <include layout="@layout/layout_header" />
 
@@ -58,9 +60,9 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_marginLeft="5dp"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
                         android:text="真实姓名"
                         android:textColor="@color/snooker"
                         android:textSize="13sp" />
@@ -88,14 +90,15 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_marginLeft="5dp"
-                        android:textColor="@color/snooker"
-                        android:textSize="13sp"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
-                        android:text="身份证号码 " />
+                        android:layout_marginLeft="5dp"
+                        android:text="身份证号码 "
+                        android:textColor="@color/snooker"
+                        android:textSize="13sp" />
 
                     <EditText
+                        android:id="@+id/id_datas"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:layout_marginRight="20dp"
@@ -118,62 +121,59 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_marginLeft="5dp"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="擅长联赛"
                         android:textColor="@color/snooker"
-                        android:textSize="13sp"
-                        android:text="擅长联赛" />
+                        android:textSize="13sp" />
 
-                    <EditText
-                        android:id="@+id/good_league"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginRight="20dp"
-                        android:background="@drawable/selector_loginbtn"
-                        android:gravity="center_vertical"
-                        android:hint="请输入联赛名称，多余联赛用逗号分开"
-                        android:paddingLeft="10dp"
-                        android:textColorHint="@color/snooker_line"
-                        android:textSize="@dimen/text_size_11" />
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/good_league"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/selector_loginbtn"
+                            android:gravity="center_vertical"
+                            android:hint="请输入联赛名称，多余联赛用逗号分开"
+                            android:paddingLeft="10dp"
+                            android:textColorHint="@color/snooker_line"
+                            android:textSize="@dimen/text_size_11" />
+
+
+                        <TextView
+                            android:id="@+id/tv_comfirm"
+                            android:layout_width="49dp"
+                            android:layout_height="25dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerInParent="true"
+                            android:layout_marginRight="22dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/specialist_buton_white"
+                            android:gravity="center"
+                            android:text="添加"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="85dp"
+                    android:layout_marginRight="20dp">
 
-
-
-                    <com.hhly.mlottery.view.GrapeGridview
-                        android:id="@+id/gridview"
-                        android:layout_width="0dp"
+                    <com.hhly.mlottery.view.FlowLayout
+                        android:id="@+id/fly_symptom_one"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:columnWidth="0dp"
-                        android:gravity="center"
-                        android:horizontalSpacing="7.5dp"
-                        android:numColumns="3"
-                        android:scrollbars="none"
-                        android:stretchMode="columnWidth"
-                        android:verticalSpacing="9dp"/>
-
-                    <TextView
-                        android:id="@+id/tv_comfirm"
-                        android:layout_width="49dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerInParent="true"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/specialist_buton_blue"
-                        android:gravity="center"
-                        android:text="@string/about_confirm"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        app:width_space="3dp" />
 
                 </LinearLayout>
 
@@ -186,13 +186,13 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:textColor="@color/snooker"
-                        android:textSize="13sp"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:text="专家简介"
+                        android:textColor="@color/snooker"
 
-                        android:text="专家简介" />
+                        android:textSize="13sp" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -295,7 +295,6 @@
                     android:id="@+id/immediate_authentication"
                     style="@style/login_edittext_loginbtn_newblue"
                     android:background="#2D63c4eb"
-
                     android:text="立即认证"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/text_size_13" />

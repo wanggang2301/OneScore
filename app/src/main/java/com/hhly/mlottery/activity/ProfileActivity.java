@@ -112,12 +112,12 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     /**
      * 图片裁剪宽度
      */
-    private int width = 300;
+    private int width = 500;
 
     /**
      * 图片裁剪高度
      */
-    private int height = 300;
+    private int height = 500;
 
 
     private ProgressDialog progressBar;
@@ -692,7 +692,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("image", file.getName(), RequestBody.create(MediaType.parse("image/png"), file))
                     .addFormDataPart("userId",AppConstants.register.getUser().getUserId())
-                    .addFormDataPart("token",AppConstants.register.getToken())
+                    .addFormDataPart("loginToken",AppConstants.register.getToken())
                     .build();
             //BaseURLs.MODIFY_PICTURE
 

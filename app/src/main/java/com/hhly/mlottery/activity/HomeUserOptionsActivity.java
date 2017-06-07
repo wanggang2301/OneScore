@@ -197,17 +197,15 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         //订阅记录
         rl_my_subscribe = (RelativeLayout) findViewById(R.id.rl_my_subscribe);
         rl_my_subscribe.setOnClickListener(this);
-        rl_my_subscribe.setVisibility(View.GONE);
+
         //推介文章
         rl_my_promotion = (RelativeLayout) findViewById(R.id.rl_my_promotion);
         rl_my_promotion.setOnClickListener(this);
-        rl_my_promotion.setVisibility(View.GONE);
+
         //申请专家
         rl_my_apply = (RelativeLayout) findViewById(R.id.rl_my_apply);
         rl_my_apply.setOnClickListener(this);
-        rl_my_apply.setVisibility(View.GONE);
 
-        findViewById(R.id.zhongxin).setVisibility(View.GONE);
         //余额
         my_balance = (LinearLayout) findViewById(R.id.my_balance);
         my_balance.setOnClickListener(this);
@@ -263,8 +261,10 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 break;
             case R.id.tv_nickname:// 登录
                 MobclickAgent.onEvent(HomeUserOptionsActivity.this, "LoginActivity_Start");
+                if (!DeviceInfo.isLogin()) {
+                    goToLoginActivity();
+                }
 
-                goToLoginActivity();
 
                 break;
           /*  case R.id.tv_logout: // 退出登录
@@ -303,7 +303,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 if (DeviceInfo.isLogin()) {
 
 
-
                 } else {
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);
                 }
@@ -323,14 +322,12 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 if (DeviceInfo.isLogin()) {
 
 
-
                 } else {
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);
                 }
                 break;
             case R.id.my_income:    //收入
                 if (DeviceInfo.isLogin()) {
-
 
 
                 } else {

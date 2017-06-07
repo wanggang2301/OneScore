@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -67,6 +68,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     //新需求，点击获取验证码的时候显示一个progressbar,服务器返回结果后再开始倒计时。
     private ProgressBar mProgressBar;
     private EditText invited_number;
+    private LinearLayout invited;
+    private String language;
 
 
     @Override
@@ -148,6 +151,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         //获取邀请码
         invited_number = (EditText) findViewById(R.id.invited_number);
 
+        invited = (LinearLayout) findViewById(R.id.invited);
+        invited.setVisibility(View.GONE);
     }
 
     private void initData() {
@@ -279,16 +284,18 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             Map<String, String> param = new HashMap<>();
             param.put("phoneNum", userName);
             param.put("password", MD5Util.getMD5(passWord));
-            if(AppConstants.isGOKeyboard){
-                param.put("registerType", RegisterType.USERNAME);
-            }else {
-                //邀请码
-                param.put("inviteCode", invited_number.getText().toString());
-                param.put("registerType", RegisterType.PHONE);
-            }
             param.put("sms", verifyCode);
+            if (MyApp.isLanguage.equals("rCN")) {
+                // 如果是中文简体的语言环境
+                language = "langzh";
+            } else if (MyApp.isLanguage.equals("rTW")) {
+                // 如果是中文繁体的语言环境
+                language="langzh-TW";
+            }
+            String sign=DeviceInfo.getSign("/user/register"+language+"password"+MD5Util.getMD5(passWord)+"phoneNum"+userName+"sms"+verifyCode+"timeZone8");
+            param.put("sign",sign);
 
-            VolleyContentFast.requestJsonByGet(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
+            VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
                 @Override
                 public void onResponse(Register register) {
 
@@ -296,20 +303,20 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     progressBar.dismiss();
 
                     if (register != null && Integer.parseInt(register.getCode())== AccountResultCode.SUCC) {
-                        DeviceInfo.saveRegisterInfo(register);
+                       // DeviceInfo.saveRegisterInfo(register);
                         UiUtils.toast(MyApp.getInstance(), R.string.register_succ);
-                        EventBus.getDefault().post(register);
+                       // EventBus.getDefault().post(register);
                         //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
-                        sendUserInfoToServer(register);
+                        //sendUserInfoToServer(register);
 
                         L.d(TAG, "注册成功");
                         setResult(RESULT_OK);
                         finish();
                     } else {
                         countDown.cancel();
-
                         L.e(TAG, "成功请求，注册失败");
                         DeviceInfo.handlerRequestResult(Integer.parseInt(register.getCode()), "未知错误");
+                        enableVeryCode();
                     }
                 }
             }, new VolleyContentFast.ResponseErrorListener() {
