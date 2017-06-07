@@ -249,6 +249,7 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
 
             case R.id.btn_confirm:
                 startActivity(new Intent(mActivity, MvpBettingRecommendActivity.class));
+                mActivity.finish();
                 break;
         }
     }

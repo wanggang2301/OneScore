@@ -237,7 +237,7 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
 
             case R.id.btn_confirm:
                 startActivity(new Intent(mActivity, MvpBettingIssueDetailsActivity.class));
-
+                mActivity.finish();
                 break;
         }
     }
