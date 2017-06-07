@@ -305,6 +305,9 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                     //还需要判断是否是专家
                     // 必须为专家，不是专家提示用户“您还不是推介专家，快去认证专家吧！”点击确定跳转到申请成为专家页面
 
+                    //不是专家  跳NotRecommendExpertActivity
+
+
                     startActivity(new Intent(this, RecommendArticlesActivity.class));
                 } else {
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);

@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.DebugConfigActivity;
+import com.hhly.mlottery.activity.NotRecommendExpertActivity;
 import com.hhly.mlottery.adapter.custom.SubsRecordAdapter;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.ViewFragment;
@@ -248,7 +248,7 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
                 break;
 
             case R.id.btn_confirm:
-                startActivity(new Intent(mActivity, DebugConfigActivity.class));
+                startActivity(new Intent(mActivity, NotRecommendExpertActivity.class));
                 // MvpBettingRecommendActivity
 //１：没有购买记录的时候可跳转到推介列表
 

@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,6 +12,7 @@
         android:paddingRight="15dp">
 
         <RelativeLayout
+            android:id="@+id/rl_specialist_detail"
             android:layout_width="match_parent"
             android:layout_height="74dp">
 
@@ -98,7 +98,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
-                android:gravity="center">
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -153,8 +155,7 @@
                             style="@style/betting_recommend_details_style"
                             android:paddingLeft="10dp"
                             android:text="12:18"
-                            android:visibility="gone"
-                            />
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -264,8 +265,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="@color/betting_recommend_details_bg_color">
+                    android:background="@color/betting_recommend_details_bg_color"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -275,6 +276,7 @@
                         android:text="推荐理由:"
                         android:textColor="@color/betting_recommend_details_color"
                         android:textSize="@dimen/text_size_15" />
+
                     <TextView
                         android:id="@+id/betting_recommended_reason"
                         android:layout_width="match_parent"
@@ -293,11 +295,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            android:background="@color/betting_recommend_details_bg_color"
-            />
+            android:background="@color/betting_recommend_details_bg_color" />
     </LinearLayout>
 
 </LinearLayout>

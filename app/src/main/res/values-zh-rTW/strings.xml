@@ -1809,6 +1809,8 @@
     <string name="zhong_txt">中</string>
     <string name="tuijie_nodata_txt">大師,您很懶哦！\n 快去發佈推介吧！</string>
     <string name="dingyue_nodata_txt">您還未購買推介,\n去看看專家們怎麼說….</string>
+    <string name="not_expert_txt">您還不是推介專家，\n快去認證專家吧！</string>
+
     <string name="go_txt">前往</string>
 
 </resources>

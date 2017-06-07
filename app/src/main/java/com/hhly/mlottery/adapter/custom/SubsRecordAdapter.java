@@ -65,6 +65,14 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
         baseViewHolder.setText(R.id.textView11, mContext.getResources().getString(R.string.chakan_txt));
         baseViewHolder.setText(R.id.betting_recommended_reason, mContext.getResources().getString(R.string.tuijianliyou_txt) + (TextUtils.isEmpty(b.getContext()) ? "" : b.getContext()));
 
+
+        baseViewHolder.getView(R.id.rl_specialist_detail).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //专家详情
+            }
+        });
+
         baseViewHolder.getView(R.id.textView11).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { //跳转到记录详情

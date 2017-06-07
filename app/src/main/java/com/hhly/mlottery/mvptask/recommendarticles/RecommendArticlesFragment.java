@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.DebugConfigActivity;
+import com.hhly.mlottery.activity.NotRecommendExpertActivity;
 import com.hhly.mlottery.adapter.custom.RecommendArticlesAdapter;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.ViewFragment;
@@ -238,7 +238,7 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
             case R.id.btn_confirm:
 
 
-                startActivity(new Intent(mActivity, DebugConfigActivity.class));
+                startActivity(new Intent(mActivity, NotRecommendExpertActivity.class));
 
                 //MvpBettingIssueDetailsActivity
 
