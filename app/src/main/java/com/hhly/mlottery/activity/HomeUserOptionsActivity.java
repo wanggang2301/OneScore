@@ -292,8 +292,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 //                }
             case R.id.rl_my_subscribe: //订阅记录
                 if (DeviceInfo.isLogin()) {
-
-
+                    startActivity(new Intent(this, SubsRecordActivity.class));
                 } else {
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);
                 }
@@ -301,9 +300,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
             case R.id.rl_my_promotion:     //推介文章
                 if (DeviceInfo.isLogin()) {
-
-
-
+                    startActivity(new Intent(this, RecommendArticlesActivity.class));
                 } else {
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);
                 }
@@ -323,14 +320,12 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 if (DeviceInfo.isLogin()) {
 
 
-
                 } else {
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);
                 }
                 break;
             case R.id.my_income:    //收入
                 if (DeviceInfo.isLogin()) {
-
 
 
                 } else {
