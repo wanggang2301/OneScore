@@ -12,6 +12,16 @@ public class Register {
      */
 
     private String token;
+
+    public String getFailureAmount() {
+        return failureAmount;
+    }
+
+    public void setFailureAmount(String failureAmount) {
+        this.failureAmount = failureAmount;
+    }
+
+    private String failureAmount;
     private String code;
     private UserBean user;
 

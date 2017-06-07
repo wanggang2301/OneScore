@@ -142,6 +142,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private ImageView mLogin_weixin;
     private boolean isCoustom;
     private TextView tv_forgetpw;
+    private String language;
+    private TextView login_more;
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
@@ -250,6 +252,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         et_password = (EditText) findViewById(R.id.et_password);
         et_password.setTypeface(Typeface.SANS_SERIF);
         findViewById(R.id.tv_register).setOnClickListener(this);
+
+        login_more = (TextView) findViewById(R.id.login_more);
 
         //第三方qq登录
         mLogin_qq = (ImageView) findViewById(R.id.login_qq);
@@ -603,8 +607,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 Map<String, String> param = new HashMap<>();
                 param.put("phoneNum", userName);
                 param.put("password", MD5Util.getMD5(passWord));
-                String sign=DeviceInfo.getSign("/user/login"+"langzh"+"password"+MD5Util.getMD5(passWord)+"phoneNum"+ userName+"timeZone8");
-                param.put("sign",sign);
+
+                if (MyApp.isLanguage.equals("rCN")) {
+                    // 如果是中文简体的语言环境
+                    language = "langzh";
+                } else if (MyApp.isLanguage.equals("rTW")) {
+                    // 如果是中文繁体的语言环境
+                    language = "langzh-TW";
+                }
+
+                String sign = DeviceInfo.getSign("/user/login" + language + "password" + MD5Util.getMD5(passWord) + "phoneNum" + userName + "timeZone8");
+                param.put("sign", sign);
                 setResult(RESULT_OK);
 
                 VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
@@ -612,8 +625,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     public void onResponse(Register register) {
 
                         progressBar.dismiss();
-                        if (Integer.parseInt(register.getCode())== AccountResultCode.SUCC) {
-
+                        if (Integer.parseInt(register.getCode()) == AccountResultCode.SUCC) {
+                            login_more.setVisibility(View.GONE);
 
                             UiUtils.toast(MyApp.getInstance(), R.string.login_succ);
                             DeviceInfo.saveRegisterInfo(register);
@@ -631,8 +644,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             FocusUtils.getFootballUserFocus(register.getUser().getUserId());
                             FocusUtils.getBasketballUserConcern(register.getUser().getUserId());
 
+                        } else if (Integer.parseInt(register.getCode()) == AccountResultCode.USERNAME_PASS_ERROR) {
+
+                            if (Integer.parseInt(register.getFailureAmount()) == 3) {
+
+                                login_more.setVisibility(View.VISIBLE);
+                            }
+                            UiUtils.toast(MyApp.getInstance(), R.string.username_pass_error);
+
                         } else {
                             DeviceInfo.handlerRequestResult(Integer.parseInt(register.getCode()), "系统错误");
+                            login_more.setVisibility(View.GONE);
                         }
                     }
 
@@ -642,7 +664,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                         progressBar.dismiss();
                         L.e(TAG, " 登录失败");
                         UiUtils.toast(LoginActivity.this, R.string.foot_neterror);
-
+                        login_more.setVisibility(View.GONE);
 
                     }
 
