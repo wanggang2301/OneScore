@@ -92,7 +92,10 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
     TextView mTextWeek;
 
     private View mNoLoadingView; //没有更多
-    private View mOnloadingView; //加载更多
+    private View mOnloadingView; //正在加载更多
+    private LinearLayout mIsLoading; //加载中
+    private LinearLayout mLoadingError; //加载失败
+    private TextView mReLoad; //点击重试
 
     private ListView mDateListView;
 
@@ -223,6 +226,16 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
             mAdapter=new CornerListAdapter(mPresenter.getData(),getActivity(),mDatelist);
         }
         mOnloadingView=getActivity().getLayoutInflater().inflate(R.layout.onloading, (ViewGroup) mRecyclerView.getParent(),false);
+        mIsLoading= (LinearLayout) mOnloadingView.findViewById(R.id.is_loading_more);
+        mLoadingError= (LinearLayout) mOnloadingView.findViewById(R.id.re_load);
+        mLoadingError.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mLoadingError.setVisibility(View.GONE);
+                mIsLoading.setVisibility(View.VISIBLE);
+                mPresenter.refreshDataByPage(mType,currentDatePosition+1,false);
+            }
+        });
         mAdapter.setLoadingView(mOnloadingView);
         mAdapter.openLoadMore(mPresenter.getData().size()<=3?3:mPresenter.getData().size(),true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -415,6 +428,12 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
         mTextDate.setText(DateUtil.convertDateToNation(mDatelist.get(currentDatePosition).getDate()));
         mTextWeek.setText(mDatelist.get(currentDatePosition).getWeek());
         mAdapter.setCurrentDate(currentDatePosition,false);
+    }
+
+    @Override
+    public void showNextPageError() {
+        mIsLoading.setVisibility(View.GONE);
+        mLoadingError.setVisibility(View.VISIBLE);
     }
 
     @Override

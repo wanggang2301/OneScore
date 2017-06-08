@@ -1836,5 +1836,6 @@
     <string name="dingyue_nodata_txt">您还未购买推介,\n去看看专家们怎么说….</string>
     <string name="not_expert_txt">您还不是推介专家，\n快去认证专家吧！</string>
     <string name="go_txt">前往</string>
+    <string name="click_to_reload">点击重试</string>
 
 </resources>

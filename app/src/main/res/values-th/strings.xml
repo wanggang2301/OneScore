@@ -1656,5 +1656,6 @@
     <string name="frozen_balance">冻结余额(元)</string>
     <string name="total_balance">总余额(元)</string>
     <string name="account_detail">账户明细</string>
+    <string name="click_to_reload">点击重试</string>
 
 </resources>

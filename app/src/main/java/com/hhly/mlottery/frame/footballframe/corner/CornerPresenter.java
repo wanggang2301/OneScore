@@ -34,7 +34,7 @@ public class CornerPresenter extends BasePresenter<CornerContract.View> implemen
     }
 
     @Override
-    public void refreshDataByPage(String type, int position, boolean refresh) {
+    public void refreshDataByPage(String type, final int position, boolean refresh) {
 
         if(position>7){
             mView.showNoMoreData();
@@ -59,7 +59,9 @@ public class CornerPresenter extends BasePresenter<CornerContract.View> implemen
             @Override
             public void onResponse(CornerListBean jsonObject) {
                 if(jsonObject.getResult()==200&&jsonObject.getCorner().size()!=0){
+                    mView.setDateListPosition(position);
                     mView.showNextPage(jsonObject.getCorner());
+
                 }else {
                     mView.showNoMoreData();
                 }
@@ -68,11 +70,11 @@ public class CornerPresenter extends BasePresenter<CornerContract.View> implemen
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                mView.showNoData(NETERROR);
+                mView.showNextPageError();
             }
         },CornerListBean.class);
 
-        mView.setDateListPosition(position);
+
 
     }
 
