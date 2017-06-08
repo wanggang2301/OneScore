@@ -485,6 +485,9 @@
         <activity
             android:name=".activity.FootballCornerActivity"
             android:screenOrientation="portrait" />
+        <!--账户详情-->
+        <activity android:name=".activity.ApplicationSpecialistActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

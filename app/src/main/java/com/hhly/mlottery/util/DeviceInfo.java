@@ -244,6 +244,11 @@ public class DeviceInfo {
 	public static void saveRegisterInfo(Register register) {
 
 		if (register==null) {
+			PreferenceUtil.commitString(AppConstants.AVAILABLEBALANCE, "");
+			PreferenceUtil.commitString(AppConstants.CASHBALANCE, "");
+			PreferenceUtil.commitString(AppConstants.BUYCOUNT, "");
+			PreferenceUtil.commitString(AppConstants.PUSHCOUNT, "");
+			PreferenceUtil.commitInt(AppConstants.ISEXPERT, 5);
 			PreferenceUtil.commitString(AppConstants.SPKEY_USERID, "");
 			PreferenceUtil.commitString(AppConstants.SPKEY_NICKNAME, "");
 			PreferenceUtil.commitString(AppConstants.SPKEY_TOKEN, "");
@@ -254,6 +259,11 @@ public class DeviceInfo {
 			AppConstants.register = new Register();
 
 		} else {
+			PreferenceUtil.commitString(AppConstants.AVAILABLEBALANCE, register.getUser().getAvailableBalance());
+			PreferenceUtil.commitString(AppConstants.CASHBALANCE, register.getUser().getCashBalance());
+			PreferenceUtil.commitString(AppConstants.BUYCOUNT, register.getUser().getBuyCount());
+			PreferenceUtil.commitString(AppConstants.PUSHCOUNT, register.getUser().getPushCount());
+			PreferenceUtil.commitInt(AppConstants.ISEXPERT, register.getUser().getIsExpert());
 			PreferenceUtil.commitString(AppConstants.SPKEY_USERID, register.getUser().getUserId());
 			PreferenceUtil.commitString(AppConstants.SPKEY_NICKNAME, register.getUser().getNickName());
 			if (register.getUser().getPhoneNum() !=null) {
@@ -299,6 +309,11 @@ public class DeviceInfo {
 	 */
 	public static void initRegisterInfo() {
 		Register.UserBean userBean = new Register.UserBean();
+		userBean.setAvailableBalance(PreferenceUtil.getString(AppConstants.AVAILABLEBALANCE, ""));
+		userBean.setCashBalance(PreferenceUtil.getString(AppConstants.CASHBALANCE, ""));
+		userBean.setBuyCount(PreferenceUtil.getString(AppConstants.BUYCOUNT, ""));
+		userBean.setPushCount(PreferenceUtil.getString(AppConstants.PUSHCOUNT, ""));
+		userBean.setIsExpert(PreferenceUtil.getInt(AppConstants.ISEXPERT, 5));
 		userBean.setUserId(PreferenceUtil.getString(AppConstants.SPKEY_USERID, ""));
 		userBean.setNickName(PreferenceUtil.getString(AppConstants.SPKEY_NICKNAME, ""));
 		userBean.setPhoneNum(PreferenceUtil.getString(AppConstants.SPKEY_LOGINACCOUNT, ""));
@@ -479,7 +494,12 @@ public class DeviceInfo {
 			case AccountResultCode.USER_NOT_NULL:
 				UiUtils.toast(MyApp.getInstance(), R.string.user_not_null);
 				break;
-
+			case AccountResultCode.NOT_SUBMIT_EXPERT_AUTHENTICATION:
+				UiUtils.toast(MyApp.getInstance(), "用户未提交专家认证信息");
+				break;
+			case AccountResultCode.LANGUAGE_PARAMETER_ERROR:
+				UiUtils.toast(MyApp.getInstance(), "语言参数错误");
+				break;
 			default:
 				L.e(TAG, "未定义错误码 : rescode = " + rescode + " , defaultMessage = " + defaultMessage);
 				if (!TextUtils.isEmpty(defaultMessage)) {
