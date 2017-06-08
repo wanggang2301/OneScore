@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,7 +29,7 @@ import de.greenrobot.event.EventBus;
 /**
  * @ClassName: OneScoreGit
  * @author:Administrator luyao
- * @Description:  个人中心首页
+ * @Description: 个人中心首页
  * @data: 2016/4/8 15:04
  */
 public class HomeUserOptionsActivity extends Activity implements View.OnClickListener {
@@ -38,16 +39,27 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     /**我的关注*/
 //    private RelativeLayout rl_focus;
 //    private  View mFocus_RedDot; //关注红点
-    /**我的关注红点*/
+    /**
+     * 我的关注红点
+     */
 //    boolean mShowRedDot=false;
+    boolean mInvitedShowRedDot = true;
     /*邀请码红点*/
-    /**我的定制*/
+    /**
+     * 我的定制
+     */
     private RelativeLayout rl_custom;
-    /**语言切换**/
+    /**
+     * 语言切换
+     **/
     private RelativeLayout rl_language_frame;
-    /**更多设置**/
+    /**
+     * 更多设置
+     **/
     private RelativeLayout rl_setting_frame;
-    /**反馈**/
+    /**
+     * 反馈
+     **/
     private RelativeLayout rl_user_feedback;
     private ProgressDialog progressBar;
 
@@ -61,12 +73,14 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     public static final int LOGGED_ON = 44;
     /**我的关注的红点*/
 //    public static final String SHOW_RED="show_focus_red_dot";
-    /**我的关注的红点*/
-    private final String INVITED_SHOW_RED="show_invited_red_dot";
+    /**
+     * 我的关注的红点
+     */
+    private final String INVITED_SHOW_RED = "show_invited_red_dot";
 
     private TextView mTv_nickname;
     private ImageView mUser_image;
-//    private View mRedDot;
+    //    private View mRedDot;
 //    private TextView mTv_logout;
     private Handler mViewHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -75,10 +89,10 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
                     break;
                 case LOGGED_ON:
-                    mTv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
-                   // ImageLoader.load(HomeUserOptionsActivity.this,AppConstants.register.getData().getUser().getHeadIcon()).into(mUser_image);
+                    mTv_nickname.setText(AppConstants.register.getUser().getNickName());
+                    // ImageLoader.load(HomeUserOptionsActivity.this,AppConstants.register.getData().getUser().getHeadIcon()).into(mUser_image);
                     Glide.with(getApplicationContext())
-                            .load(AppConstants.register.getData().getUser().getHeadIcon())
+                            .load(AppConstants.register.getUser().getImageSrc())
                             .error(R.mipmap.center_head)
                             .into(mUser_image);
                     mTv_nickname.setEnabled(false);
@@ -88,6 +102,14 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             }
         }
     };
+    private RelativeLayout rl_setting_invited;
+    private View invited_red_dot_view;
+    private RelativeLayout rl_my_subscribe;
+    private RelativeLayout rl_my_apply;
+    private RelativeLayout rl_my_promotion;
+    private LinearLayout my_balance;
+    private LinearLayout my_income;
+    private ImageView rl_setting_frame1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +118,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         initView();
 
     }
+
     /**
      * 初始化控件
      */
@@ -118,17 +141,19 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         mUser_image = (ImageView) findViewById(R.id.user_info_image);
         mUser_image.setOnClickListener(this);
 
+        rl_setting_invited = (RelativeLayout) findViewById(R.id.rl_setting_invited);
+        rl_setting_invited.setOnClickListener(this);
+
              /*判断登录状态*/
         if (DeviceInfo.isLogin()) {
             mViewHandler.sendEmptyMessage(LOGGED_ON);
-
 
         } else {
             mTv_nickname.setText(R.string.Login_register);
             mUser_image.setImageResource(R.mipmap.center_head);
         }
 
-        rl_custom = (RelativeLayout)findViewById(R.id.rl_custom);
+        rl_custom = (RelativeLayout) findViewById(R.id.rl_custom);
         rl_custom.setOnClickListener(this);
         //我的关注
 //        rl_focus= (RelativeLayout) findViewById(R.id.rl_my_focus);
@@ -136,10 +161,10 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
         rl_language_frame = (RelativeLayout) findViewById(R.id.rl_language_frame);
         rl_language_frame.setOnClickListener(this);
-        rl_setting_frame = (RelativeLayout) findViewById(R.id.rl_setting_frame);
-        rl_setting_frame.setOnClickListener(this);
-
-
+    /*    rl_setting_frame = (RelativeLayout) findViewById(R.id.rl_setting_frame);
+        rl_setting_frame.setOnClickListener(this);*/
+        rl_setting_frame1 = (ImageView) findViewById(R.id.rl_setting_frame);
+        rl_setting_frame1.setOnClickListener(this);
         rl_user_feedback = (RelativeLayout) findViewById(R.id.rl_user_feedback);
         rl_user_feedback.setOnClickListener(this);
 
@@ -161,6 +186,32 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 //        }
         /*邀请码红点*/
 
+        invited_red_dot_view = findViewById(R.id.invited_red_dot_view);
+        mInvitedShowRedDot = PreferenceUtil.getBoolean(INVITED_SHOW_RED, true);
+        if (mInvitedShowRedDot) {
+            invited_red_dot_view.setVisibility(View.GONE);
+        } else {
+            invited_red_dot_view.setVisibility(View.GONE);
+        }
+
+        //订阅记录
+        rl_my_subscribe = (RelativeLayout) findViewById(R.id.rl_my_subscribe);
+        rl_my_subscribe.setOnClickListener(this);
+
+        //推介文章
+        rl_my_promotion = (RelativeLayout) findViewById(R.id.rl_my_promotion);
+        rl_my_promotion.setOnClickListener(this);
+
+        //申请专家
+        rl_my_apply = (RelativeLayout) findViewById(R.id.rl_my_apply);
+        rl_my_apply.setOnClickListener(this);
+
+        //余额
+        my_balance = (LinearLayout) findViewById(R.id.my_balance);
+        my_balance.setOnClickListener(this);
+        //收入
+        my_income = (LinearLayout) findViewById(R.id.my_income);
+        my_income.setOnClickListener(this);
     }
 
 
@@ -176,12 +227,12 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 //                break;
             case R.id.rl_custom:
                 if (DeviceInfo.isLogin()) {
-                    PreferenceUtil.commitBoolean("custom_red_dot" , false);
+                    PreferenceUtil.commitBoolean("custom_red_dot", false);
 //                    mRedDot.setVisibility(View.GONE);
                     startActivity(new Intent(HomeUserOptionsActivity.this, CustomActivity.class));
-                }else{
+                } else {
                     Intent intent = new Intent(this, LoginActivity.class);
-                    intent.putExtra("custom",true); //传 true  表示我的定制进入登录  完成后直接进入定制界面
+                    intent.putExtra("custom", true); //传 true  表示我的定制进入登录  完成后直接进入定制界面
                     startActivity(intent);
                 }
                 break;
@@ -210,8 +261,10 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 break;
             case R.id.tv_nickname:// 登录
                 MobclickAgent.onEvent(HomeUserOptionsActivity.this, "LoginActivity_Start");
+                if (!DeviceInfo.isLogin()) {
+                    goToLoginActivity();
+                }
 
-                goToLoginActivity();
 
                 break;
           /*  case R.id.tv_logout: // 退出登录
@@ -230,15 +283,60 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 break;
 //            case R.id.rl_setting_invited:
 //                MobclickAgent.onEvent(this, "InvitedActivity");
-//                PreferenceUtil.commitBoolean(INVITED_SHOW_RED,false);
-//                if (DeviceInfo.isLogin()){
+//                PreferenceUtil.commitBoolean(INVITED_SHOW_RED, false);
+//                invited_red_dot_view.setVisibility(View.GONE);
+//                if (DeviceInfo.isLogin()) {
 //                    startActivity(new Intent(HomeUserOptionsActivity.this, InvitedActivity.class));
-//                }else{
-//                    UiUtils.toast(getApplicationContext(),R.string.please_login_first);
+//                } else {
+//                    UiUtils.toast(getApplicationContext(), R.string.please_login_first);
 //                }
-//
-//
-//                break;
+            case R.id.rl_my_subscribe: //订阅记录
+                if (DeviceInfo.isLogin()) {
+
+
+                } else {
+                    UiUtils.toast(getApplicationContext(), R.string.please_login_first);
+                }
+                break;
+
+            case R.id.rl_my_promotion:     //推介文章
+                if (DeviceInfo.isLogin()) {
+
+
+                } else {
+                    UiUtils.toast(getApplicationContext(), R.string.please_login_first);
+                }
+
+                break;
+
+            case R.id.rl_my_apply:     //申请专家
+                if (DeviceInfo.isLogin()) {
+
+                    startActivity(new Intent(HomeUserOptionsActivity.this, ApplicationSpecialistActivity.class));
+
+                } else {
+                    UiUtils.toast(getApplicationContext(), R.string.please_login_first);
+                }
+                break;
+            case R.id.my_balance:      //余额
+                if (DeviceInfo.isLogin()) {
+
+
+                } else {
+                    UiUtils.toast(getApplicationContext(), R.string.please_login_first);
+                }
+                break;
+            case R.id.my_income:    //收入
+                if (DeviceInfo.isLogin()) {
+
+
+                } else {
+                    UiUtils.toast(getApplicationContext(), R.string.please_login_first);
+                }
+                break;
+
+            default:
+                break;
         }
     }
 
@@ -269,7 +367,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 //        android.support.v7.app.AlertDialog alertDialog = builder.create();
 //        alertDialog.show();
 //    }
-
 
 
     /**
@@ -393,6 +490,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
     /**
      * 定制页面返回
+     *
      * @param event
      */
     public void onEventMainThread(CustomEvent event) {
@@ -402,30 +500,35 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 //            mRedDot.setVisibility(View.GONE);
 //        }
     }
-    public void onEventMainThread(ChoseHeadStartBean choseHeadStartBean){
+
+    public void onEventMainThread(ChoseHeadStartBean choseHeadStartBean) {
         //ImageLoader.load(HomeUserOptionsActivity.this,choseHeadStartBean.startUrl,R.mipmap.center_head).into(mUser_image);
         Glide.with(getApplicationContext())
                 .load(choseHeadStartBean.startUrl)
                 .error(R.mipmap.center_head)
                 .into(mUser_image);
     }
-    public void onEventMainThread(Register register){
+
+
+    public void onEventMainThread(Register register) {
 
         //ImageLoader.load(HomeUserOptionsActivity.this,register.getData().getUser().getHeadIcon()).into(mUser_image);
-      Glide.with(getApplicationContext())
-              .load(register.getData().getUser().getHeadIcon())
-              .error(R.mipmap.center_head)
-              .into(mUser_image);
-       mTv_nickname.setText(register.getData().getUser().getNickName());
+        Glide.with(getApplicationContext())
+                .load(register.getUser().getImageSrc())
+                .error(R.mipmap.center_head)
+                .into(mUser_image);
+        mTv_nickname.setText(register.getUser().getNickName());
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
 
-        if(DeviceInfo.isLogin()){
-            mTv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
-        }else {
+        if (DeviceInfo.isLogin()) {
+
+            mTv_nickname.setText(AppConstants.register.getUser().getNickName());
+        } else {
             mTv_nickname.setText(R.string.Login_register);
             mUser_image.setImageResource(R.mipmap.center_head);
         }
@@ -442,6 +545,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         super.onPause();
         MobclickAgent.onPause(this);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

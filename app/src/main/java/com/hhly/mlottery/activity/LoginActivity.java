@@ -142,6 +142,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private ImageView mLogin_weixin;
     private boolean isCoustom;
     private TextView tv_forgetpw;
+    private String language;
+    private TextView login_more;
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
@@ -250,6 +252,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         et_password = (EditText) findViewById(R.id.et_password);
         et_password.setTypeface(Typeface.SANS_SERIF);
         findViewById(R.id.tv_register).setOnClickListener(this);
+
+        login_more = (TextView) findViewById(R.id.login_more);
 
         //第三方qq登录
         mLogin_qq = (ImageView) findViewById(R.id.login_qq);
@@ -380,7 +384,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
       */
     public void getAccessTokenFromWeiXin() {
 
-        String requestUrlAppId = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + ShareConstants.WE_CHAT_APP_ID;
+        String requestUrlAppId = "https://data.api.weixin.qq.com/sns/oauth2/access_token?appid=" + ShareConstants.WE_CHAT_APP_ID;
         String requestUrlAppSecret = "&secret=" + ShareConstants.KEY_WEIXIN_APP_SECRET;
         String requestUrlCode = "&code=" + mWeixincode;
         String requestUrlLast = "&grant_type=authorization_code";
@@ -558,18 +562,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
                 sendUserInfoToServer(register);
                 finish();
-                if (register.getResult() == AccountResultCode.SUCC) {
+                if (Integer.parseInt(register.getCode()) == AccountResultCode.SUCC) {
                     UiUtils.toast(MyApp.getInstance(), R.string.login_succ);
                     DeviceInfo.saveRegisterInfo(register);
                     EventBus.getDefault().post(register);
                     setResult(RESULT_OK);
                     //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
                     sendUserInfoToServer(register);
-                    FocusUtils.getFootballUserFocus(register.getData().getUser().getUserId());
-                    FocusUtils.getBasketballUserConcern(register.getData().getUser().getUserId());
+                    FocusUtils.getFootballUserFocus(register.getUser().getUserId());
+                    FocusUtils.getBasketballUserConcern(register.getUser().getUserId());
                     finish();
                 } else {
-                    DeviceInfo.handlerRequestResult(register.getResult(), register.getMsg());
+                    DeviceInfo.handlerRequestResult(Integer.parseInt(register.getCode()), "未知错误");
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -599,25 +603,30 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 // 登录
                 progressBar.show();
                 final String url = BaseURLs.URL_LOGIN;
+
                 Map<String, String> param = new HashMap<>();
-                param.put("account", userName);
+                param.put("phoneNum", userName);
                 param.put("password", MD5Util.getMD5(passWord));
+
+                if (MyApp.isLanguage.equals("rCN")) {
+                    // 如果是中文简体的语言环境
+                    language = "langzh";
+                } else if (MyApp.isLanguage.equals("rTW")) {
+                    // 如果是中文繁体的语言环境
+                    language = "langzh-TW";
+                }
+
+                String sign = DeviceInfo.getSign("/user/login" + language + "password" + MD5Util.getMD5(passWord) + "phoneNum" + userName + "timeZone8");
+                param.put("sign", sign);
                 setResult(RESULT_OK);
-                param.put("deviceToken", AppConstants.deviceToken);
-
-                //防止用户恶意注册后先添加的字段，versioncode和versionname;
-                int versionCode = DeviceInfo.getVersionCode();
-                param.put("versionCode", String.valueOf(versionCode));
-
-                String versionName = DeviceInfo.getVersionName();
-                param.put("versionName", versionName);
 
                 VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
                     @Override
                     public void onResponse(Register register) {
 
                         progressBar.dismiss();
-                        if (register.getResult() == AccountResultCode.SUCC) {
+                        if (Integer.parseInt(register.getCode()) == AccountResultCode.SUCC) {
+                            login_more.setVisibility(View.GONE);
 
                             UiUtils.toast(MyApp.getInstance(), R.string.login_succ);
                             DeviceInfo.saveRegisterInfo(register);
@@ -625,29 +634,40 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             setResult(RESULT_OK);
                             //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
                             sendUserInfoToServer(register);
-                            PreferenceUtil.commitString(AppConstants.SPKEY_LOGINACCOUNT, register.getData().getUser().getLoginAccount());
+                            PreferenceUtil.commitString(AppConstants.SPKEY_LOGINACCOUNT, register.getUser().getPhoneNum());
                             if (isCoustom) {
 //                                 PreferenceUtil.commitBoolean("custom_red_dot" , false);
                                 startActivity(new Intent(LoginActivity.this, CustomActivity.class));
                             }
                             finish();
                             EventBus.getDefault().post(register);
-                            FocusUtils.getFootballUserFocus(register.getData().getUser().getUserId());
-                            FocusUtils.getBasketballUserConcern(register.getData().getUser().getUserId());
+                            FocusUtils.getFootballUserFocus(register.getUser().getUserId());
+                            FocusUtils.getBasketballUserConcern(register.getUser().getUserId());
+
+                        } else if (Integer.parseInt(register.getCode()) == AccountResultCode.USERNAME_PASS_ERROR) {
+
+                            if (Integer.parseInt(register.getFailureAmount()) == 3) {
+
+                                login_more.setVisibility(View.VISIBLE);
+                            }
+                            UiUtils.toast(MyApp.getInstance(), R.string.username_pass_error);
 
                         } else {
-                            DeviceInfo.handlerRequestResult(register.getResult(), register.getMsg());
+                            DeviceInfo.handlerRequestResult(Integer.parseInt(register.getCode()), "系统错误");
+                            login_more.setVisibility(View.GONE);
                         }
                     }
+
                 }, new VolleyContentFast.ResponseErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                         progressBar.dismiss();
                         L.e(TAG, " 登录失败");
                         UiUtils.toast(LoginActivity.this, R.string.foot_neterror);
-
+                        login_more.setVisibility(View.GONE);
 
                     }
+
                 }, Register.class);
             }
 
@@ -659,7 +679,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private void sendUserInfoToServer(Register register) {
         final String url = BaseURLs.USER_ACTION_ANALYSIS_URL;
         final Map<String, String> params = new HashMap<>();
-        params.put("userid", register.getData().getUser().getUserId());
+        params.put("userid", register.getUser().getUserId());
         String CHANNEL_ID;
         try {
             ApplicationInfo appInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);

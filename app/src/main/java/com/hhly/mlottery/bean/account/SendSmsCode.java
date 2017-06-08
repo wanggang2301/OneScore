@@ -6,38 +6,16 @@ package com.hhly.mlottery.bean.account;
 public class SendSmsCode {
 
     /**
-     * result : 200
-     * msg : SMS_SEND_SUCCESS
-     * data : {}
+     * code : 1005
      */
-    private int result;
-    private String msg;
-    private DataBean data;
 
-    public int getResult() {
-        return result;
+    private String code;
+
+    public String getCode() {
+        return code;
     }
 
-    public void setResult(int result) {
-        this.result = result;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public DataBean getData() {
-        return data;
-    }
-
-    public void setData(DataBean data) {
-        this.data = data;
-    }
-
-    public static class DataBean {
+    public void setCode(String code) {
+        this.code = code;
     }
 }

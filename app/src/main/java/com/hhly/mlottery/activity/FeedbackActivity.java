@@ -208,7 +208,7 @@ public class FeedbackActivity extends BaseActivity implements View.OnClickListen
                     String systemVersion = DeviceInfo.getOSVersion();
                     L.d(TAG, "id = " + id);
                     L.d(TAG, "facturer = " + facturer);
-                    L.d(TAG, "model = " + model);
+                    L.d(TAG, "data.model = " + model);
                     L.d(TAG, "systemVersion = " + systemVersion);
                     String versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
                     L.d(TAG, "versionName = " + versionName);
@@ -232,9 +232,9 @@ public class FeedbackActivity extends BaseActivity implements View.OnClickListen
                     params.put("deviceToken", id);
                     params.put("appVersion", versionName);
                     params.put("userId", PreferenceUtil.getString(AppConstants.SPKEY_USERID, ""));
-                    if(AppConstants.register != null && AppConstants.register.getData() != null && AppConstants.register.getData().getUser() != null){
-                        params.put("nickName",AppConstants.register.getData().getUser().getNickName());
-                        params.put("userImg",AppConstants.register.getData().getUser().getHeadIcon());
+                    if(AppConstants.register != null && AppConstants.register != null && AppConstants.register.getUser() != null){
+                        params.put("nickName",AppConstants.register.getUser().getNickName());
+                        params.put("userImg",AppConstants.register.getUser().getImageSrc());
                     }
 
                     VolleyContentFast.requestStringByPost(BaseURLs.URL_FEEDBACK_ADD, params, new VolleyContentFast.ResponseSuccessListener<String>() {

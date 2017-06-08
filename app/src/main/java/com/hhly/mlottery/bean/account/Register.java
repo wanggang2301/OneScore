@@ -5,20 +5,159 @@ package com.hhly.mlottery.bean.account;
  * 注册返回bean （完整内容）
  */
 public class Register {
-
-
     /**
+     * token : eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJqd3QiLCJpYXQiOjE0OTU3ODgwODgsInN1YiI6IntcImlkXCI6XCJoaGx5OTA1NTNcIixcInBob25lTnVtXCI6XCIxMzY0NTY3OTc5N1wiLFwibmlja25hbWVcIjpcIuiAgeayueadoVwifSIsImV4cCI6MTQ5NTg3NDQ4OH0.3Fy-gg-f38xMdSbpP83Z9SDfr_hOTJOOkie5sbTre9w
+     * code : 200
+     * user : {"userId":"hhly90553","isExpert":null,"phoneNum":13645679797,"nickName":"老油条","indiProfile":null,"goodLeague":null,"amount":null,"income":null,"imageSrc":null}
+     */
+
+    private String token;
+
+    public String getFailureAmount() {
+        return failureAmount;
+    }
+
+    public void setFailureAmount(String failureAmount) {
+        this.failureAmount = failureAmount;
+    }
+
+    private String failureAmount;
+    private String code;
+    private UserBean user;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public UserBean getUser() {
+        return user;
+    }
+
+    public void setUser(UserBean user) {
+        this.user = user;
+    }
+
+    public static class UserBean {
+        /**
+         * userId : hhly90553
+         * isExpert : null
+         * phoneNum : 13645679797
+         * nickName : 老油条
+         * indiProfile : null
+         * goodLeague : null
+         * amount : null
+         * income : null
+         * imageSrc : null
+         */
+
+        private String userId;
+        private String isExpert;
+        private String phoneNum;
+        private String nickName;
+        private String indiProfile;
+        private String goodLeague;
+        private String amount;
+        private String income;
+        private String imageSrc;
+
+        public String getUserId() {
+            return userId;
+        }
+
+        public void setUserId(String userId) {
+            this.userId = userId;
+        }
+
+        public String getIsExpert() {
+            return isExpert;
+        }
+
+        public void setIsExpert(String isExpert) {
+            this.isExpert = isExpert;
+        }
+
+        public String getPhoneNum() {
+            return phoneNum;
+        }
+
+        public void setPhoneNum(String phoneNum) {
+            this.phoneNum = phoneNum;
+        }
+
+        public String getNickName() {
+            return nickName;
+        }
+
+        public void setNickName(String nickName) {
+            this.nickName = nickName;
+        }
+
+        public String getIndiProfile() {
+            return indiProfile;
+        }
+
+        public void setIndiProfile(String indiProfile) {
+            this.indiProfile = indiProfile;
+        }
+
+        public String getGoodLeague() {
+            return goodLeague;
+        }
+
+        public void setGoodLeague(String goodLeague) {
+            this.goodLeague = goodLeague;
+        }
+
+        public String getAmount() {
+            return amount;
+        }
+
+        public void setAmount(String amount) {
+            this.amount = amount;
+        }
+
+        public String getIncome() {
+            return income;
+        }
+
+        public void setIncome(String income) {
+            this.income = income;
+        }
+
+        public String getImageSrc() {
+            return imageSrc;
+        }
+
+        public void setImageSrc(String imageSrc) {
+            this.imageSrc = imageSrc;
+        }
+    }
+
+
+  /*  *//**
      * result : 0
      * msg : 成功
      * data : {"loginToken":"92a47bc9b7364481ab5fb622e5bbc996","user":{"nickName":"hhly90203","userId":"hhly90203"}}
-     */
+     *//*
 
     private int result;
     private String msg;
-    /**
+    *//**
      * loginToken : 92a47bc9b7364481ab5fb622e5bbc996
      * user : {"nickName":"hhly90203","userId":"hhly90203"}
-     */
+     *//*
 
     private DataBean data;
 
@@ -57,10 +196,10 @@ public class Register {
 
     public static class DataBean {
         private String loginToken;
-        /**
+        *//**
          * nickName : hhly90203
          * userId : hhly90203
-         */
+         *//*
 
         private UserBean user;
 
@@ -152,5 +291,5 @@ public class Register {
                 ", msg='" + msg + '\'' +
                 ", data=" + data +
                 '}';
-    }
+    }*/
 }

@@ -1,140 +1,150 @@
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@mipmap/login_background"
-              android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/login_background"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:layout_marginTop="30dp">
 
         <ImageView
             android:id="@+id/public_img_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="25dp"
             android:padding="10dp"
-            android:src="@mipmap/back"/>
+            android:src="@mipmap/back" />
 
-        <ImageView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="10dp"
-            android:src="@mipmap/logo"
-            android:id="@+id/imageView5" />
+            android:layout_centerInParent="true"
+            android:text="@string/login_one_score"
+            android:textColor="@color/white" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.11"
+        android:layout_weight="0.2"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:orientation="horizontal">
 
-
-        <EditText
-            android:layout_marginBottom="5dp"
-            android:gravity="bottom"
-            android:id="@+id/et_username"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="25dp"
-            android:layout_weight="1"
-            android:background="#00000000"
-            android:hint="@string/login_username"
-            android:maxLength="11"
-            android:textColor="@color/white"
-            android:textColorHint="@color/login_et_color"
-            android:textCursorDrawable="@null"
-            android:singleLine="true"
-            android:textSize="15sp"/>
-
         <ImageView
-            android:paddingTop="28dp"
             android:id="@+id/iv_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingRight="44dp"
-            android:src="@mipmap/new_login_delete"/>
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="50dp"
+            android:src="@mipmap/phone" />
+
+        <EditText
+            android:id="@+id/et_username"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:gravity="bottom"
+            android:hint="@string/login_username"
+            android:maxLength="11"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textColorHint="@color/login_et_color"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp" />
+
 
     </LinearLayout>
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_weight="0.002"
-        android:background="#CCCCCC"/>
+        android:layout_marginLeft="53dp"
+        android:layout_marginRight="53dp"
+        android:layout_weight="0.001"
+        android:background="@color/white" />
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.11"
+        android:layout_marginTop="2dp"
+        android:layout_weight="0.15"
         android:orientation="horizontal">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="50dp"
+            android:src="@mipmap/password" />
 
         <EditText
-            android:layout_marginBottom="5dp"
-            android:gravity="bottom"
             android:id="@+id/et_password"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="25dp"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:background="#00000000"
+            android:gravity="bottom"
             android:hint="@string/pwd_empty"
             android:inputType="textPassword"
             android:textColor="@color/white"
             android:textColorHint="@color/login_et_color"
             android:textCursorDrawable="@null"
-            android:textSize="15sp"/>
+            android:textSize="14sp" />
 
 
         <ImageView
-            android:layout_marginTop="12dp"
             android:id="@+id/iv_eye"
-            style="@style/login_item_image_right"
-            android:layout_width="20dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="40dp"
-            android:paddingLeft="0dp"
-            android:paddingRight="0dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/new_close_eye"/>
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginRight="30dp"
+            android:layout_weight="0.45"
+            android:src="@mipmap/new_close_eye" />
 
     </LinearLayout>
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_weight="0.002"
-        android:background="#CCCCCC"/>
+        android:layout_marginLeft="53dp"
+        android:layout_marginRight="53dp"
+        android:layout_weight="0.001"
+        android:background="@color/white" />
+
+    <TextView
+        android:id="@+id/login_more"
+        android:visibility="gone"
+        android:layout_marginLeft="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="登录失败超过6次,账户将会被锁定!"
+        android:textColor="@color/red"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.35"
+        android:layout_weight="0.25"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_login"
             style="@style/login_edittext_loginbtn_newblue"
+            android:layout_width="270dp"
+            android:layout_gravity="center"
             android:layout_marginTop="15dp"
             android:text="@string/login"
-            />
+            android:textColor="#333333"
+            android:textSize="17sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -143,7 +153,8 @@
 
 
             <TextView
-                android:id="@+id/tv_forgetpw"
+                android:id="@+id/tv_register"
+
                 style="@style/login_textview_forget_pw"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -151,11 +162,12 @@
                 android:layout_weight="1"
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"
-                android:text="@string/forget_pwd"
-                />
+                android:text="@string/register"
+                android:textColor="@color/white"
+                android:textSize="@dimen/home_pager_user_title" />
 
             <TextView
-                android:id="@+id/tv_register"
+                android:id="@+id/tv_forgetpw"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="20dp"
@@ -163,10 +175,9 @@
                 android:gravity="right"
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"
-                android:text="@string/register"
+                android:text="@string/forget_pwd"
                 android:textColor="@color/white"
-                android:textSize="@dimen/home_pager_user_title"
-                />
+                android:textSize="@dimen/home_pager_user_title" />
 
 
         </LinearLayout>
@@ -176,12 +187,12 @@
 
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/login_display"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.08"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <View
             android:layout_width="0dp"
@@ -190,7 +201,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="15dp"
             android:layout_weight="0.6"
-            android:background="@color/content_txt_light_grad"/>
+            android:background="@color/content_txt_light_grad" />
 
         <TextView
             android:layout_width="0dp"
@@ -201,7 +212,7 @@
             android:padding="3dp"
             android:text="@string/social_account_login"
             android:textColor="@color/content_txt_light_grad"
-            android:textSize="@dimen/home_pager_title"/>
+            android:textSize="@dimen/home_pager_title" />
 
         <View
             android:layout_width="0dp"
@@ -210,7 +221,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="15dp"
             android:layout_weight="0.6"
-            android:background="@color/content_txt_light_grad"/>
+            android:background="@color/content_txt_light_grad" />
 
     </LinearLayout>
 
@@ -220,35 +231,32 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="17dp"
-        android:layout_weight="0.4"
+        android:layout_weight="0.2"
         android:orientation="horizontal">
 
         <ImageView
-            android:visibility="gone"
             android:id="@+id/login_qq"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@mipmap/login_qq"
-            />
+            android:visibility="gone" />
 
         <ImageView
-            android:visibility="gone"
             android:id="@+id/login_sina"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@mipmap/login_sina"
-            />
+            android:visibility="gone" />
 
         <ImageView
-            android:visibility="gone"
             android:id="@+id/login_weixin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@mipmap/login_weixin"
-            />
+            android:visibility="gone" />
     </LinearLayout>
 
 </LinearLayout>

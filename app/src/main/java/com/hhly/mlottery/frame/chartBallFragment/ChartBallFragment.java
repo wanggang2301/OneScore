@@ -379,7 +379,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
         params.put("message", str);
         params.put("thirdId", mThirdId);
         params.put("msgCode", msgCode);
-        params.put("loginToken", AppConstants.register.getData().getLoginToken());
+        params.put("loginToken", AppConstants.register.getToken());
         params.put("toUserId", toUserId);
         params.put("deviceId", AppConstants.deviceToken);
         params.put("msgId", UUID.randomUUID().toString());
@@ -479,11 +479,11 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
             if (sendStart == SendMsgEnum.SEND_SUCCESS) {
                 if (chatHistoryBean.getMsgCode() == 1) {
                     // 普通消息
-                    EventBus.getDefault().post(new BarrageBean(AppConstants.register.getData().getUser().getHeadIcon(), chatHistoryBean.getMessage()));
+                    EventBus.getDefault().post(new BarrageBean(AppConstants.register.getUser().getImageSrc(), chatHistoryBean.getMessage()));
                 } else if (chatHistoryBean.getMsgCode() == 2) {
                     // @消息
                     String msg = "@" + chatHistoryBean.getToUser().getUserNick() + ":" + chatHistoryBean.getMessage();
-                    EventBus.getDefault().post(new BarrageBean(AppConstants.register.getData().getUser().getHeadIcon(), msg));
+                    EventBus.getDefault().post(new BarrageBean(AppConstants.register.getUser().getImageSrc(), msg));
                 }
             }
         }
@@ -570,7 +570,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                     mAdapter.setShowDialogOnClickListener(new ChartBallAdapter.AdapterListener() {
                         @Override
                         public void shwoDialog(String msgId, String toUserId, String toUserNick) {
-                            ChartBallReportDialogFragment dialogFragment = ChartBallReportDialogFragment.newInstance(msgId, AppConstants.register.getData().getUser().getNickName(), toUserId, toUserNick);
+                            ChartBallReportDialogFragment dialogFragment = ChartBallReportDialogFragment.newInstance(msgId, AppConstants.register.getUser().getNickName(), toUserId, toUserNick);
                             if (!dialogFragment.isVisible()) {
                                 dialogFragment.show(getChildFragmentManager(), "chartballDialog");
                             }
@@ -585,7 +585,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                         public void againSendMsg(String msg) {
                             // 重新发送
                             for (int i = 0, len = historyBeen.size(); i < len; i++) {
-                                if (historyBeen.get(i).getSendStart() == SendMsgEnum.SEND_ERROR && historyBeen.get(i).getFromUser().getUserId().equals(AppConstants.register.getData().getUser().getUserId()) && historyBeen.get(i).getMessage().equals(msg)) {
+                                if (historyBeen.get(i).getSendStart() == SendMsgEnum.SEND_ERROR && historyBeen.get(i).getFromUser().getUserId().equals(AppConstants.register.getUser().getUserId()) && historyBeen.get(i).getMessage().equals(msg)) {
                                     if (historyBeen.get(i).getMsgCode() == 2 && !TextUtils.isEmpty(historyBeen.get(i).getToUser().getUserId())) {
                                         sendMessageToServer(TYPE_MSG_TO_ME, historyBeen.get(i).getMessage(), historyBeen.get(i).getToUser().getUserId());
                                     } else {
@@ -761,7 +761,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                             // 发送数据并更新
                             String userId = " ";
                             try {
-                                userId = AppConstants.register.getData().getUser().getUserId();
+                                userId = AppConstants.register.getUser().getUserId();
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -788,7 +788,7 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                                 msg.what = MSG_UPDATA_LIST;
                                 msg.arg1 = chartRoom.getData().getMsgCode();
                                 msg.obj = chartbean;
-                                if (chartRoom.getData().getMsgCode() == 2 && AppConstants.register.getData().getUser().getUserId().equals(chartRoom.getData().getToUser().getUserId())) {
+                                if (chartRoom.getData().getMsgCode() == 2 && AppConstants.register.getUser().getUserId().equals(chartRoom.getData().getToUser().getUserId())) {
                                     msg.arg2 = 2;
                                     mMsgId = chartRoom.getData().getMsgId();
                                 }

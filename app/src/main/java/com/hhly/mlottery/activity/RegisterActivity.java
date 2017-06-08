@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -67,6 +68,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     //新需求，点击获取验证码的时候显示一个progressbar,服务器返回结果后再开始倒计时。
     private ProgressBar mProgressBar;
     private EditText invited_number;
+    private LinearLayout invited;
+    private String language;
 
 
     @Override
@@ -148,6 +151,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         //获取邀请码
         invited_number = (EditText) findViewById(R.id.invited_number);
 
+        invited = (LinearLayout) findViewById(R.id.invited);
+        invited.setVisibility(View.GONE);
     }
 
     private void initData() {
@@ -212,16 +217,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         }
                     }
                 }
-/*
-                if (UiUtils.isMobileNO(this, userName)) {
-                    if (UiUtils.checkVerifyCode(this, verifyCode)) {
-                        if (UiUtils.checkPassword(this, passWord)) {
-                            // 登录
-//                            UiUtils.toast(this,"register");
-                            register(userName, verifyCode, passWord);
-                        }
-                    }
-                }*/
+
                 break;
             case R.id.iv_delete: // EditText 删除
                 MobclickAgent.onEvent(mContext, "RegisterActivity_UserName_Delete");
@@ -286,30 +282,18 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
             String url = BaseURLs.URL_REGISTER;
             Map<String, String> param = new HashMap<>();
-            param.put("account", userName);
+            param.put("phoneNum", userName);
             param.put("password", MD5Util.getMD5(passWord));
-            if(AppConstants.isGOKeyboard){
-                param.put("registerType", RegisterType.USERNAME);
-            }else {
-                //邀请码
-                param.put("inviteCode", invited_number.getText().toString());
-                param.put("registerType", RegisterType.PHONE);
+            param.put("sms", verifyCode);
+            if (MyApp.isLanguage.equals("rCN")) {
+                // 如果是中文简体的语言环境
+                language = "langzh";
+            } else if (MyApp.isLanguage.equals("rTW")) {
+                // 如果是中文繁体的语言环境
+                language="langzh-TW";
             }
-           // param.put("registerType", RegisterType.USERNAME);
-            param.put("smsCode", verifyCode);
-
-            param.put("deviceToken", AppConstants.deviceToken);
-
-            //以下添加的参数为修复恶意注册的bug所加。
-            String sign = DeviceInfo.getSign(userName, AppConstants.deviceToken, AppConstants.SIGN_KEY);
+            String sign=DeviceInfo.getSign("/user/register"+language+"password"+MD5Util.getMD5(passWord)+"phoneNum"+userName+"sms"+verifyCode+"timeZone8");
             param.put("sign",sign);
-
-            int versioncode = DeviceInfo.getVersionCode();
-            param.put("versionCode",String.valueOf(versioncode));
-
-            String versionName= DeviceInfo.getVersionName();
-            param.put("versionName",versionName);
-
 
             VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
                 @Override
@@ -318,21 +302,21 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     tv_register.setClickable(true);
                     progressBar.dismiss();
 
-                    if (register != null && register.getResult() == AccountResultCode.SUCC) {
-                        DeviceInfo.saveRegisterInfo(register);
+                    if (register != null && Integer.parseInt(register.getCode())== AccountResultCode.SUCC) {
+                       // DeviceInfo.saveRegisterInfo(register);
                         UiUtils.toast(MyApp.getInstance(), R.string.register_succ);
-                        EventBus.getDefault().post(register);
+                       // EventBus.getDefault().post(register);
                         //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
-                        sendUserInfoToServer(register);
+                        //sendUserInfoToServer(register);
 
                         L.d(TAG, "注册成功");
                         setResult(RESULT_OK);
                         finish();
                     } else {
                         countDown.cancel();
-
                         L.e(TAG, "成功请求，注册失败");
-                        DeviceInfo.handlerRequestResult(register.getResult(), register.getMsg());
+                        DeviceInfo.handlerRequestResult(Integer.parseInt(register.getCode()), "未知错误");
+                        enableVeryCode();
                     }
                 }
             }, new VolleyContentFast.ResponseErrorListener() {
@@ -360,7 +344,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         String url = BaseURLs.USER_ACTION_ANALYSIS_URL;
         Map<String,String> pramas = new HashMap<>();
         pramas.put("appType","appRegist");
-        pramas.put("userid",register.getData().getUser().getUserId());
+        pramas.put("userid",register.getUser().getUserId());
         String CHANNEL_ID;
         try {
             ApplicationInfo appInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
@@ -395,7 +379,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
 
         String phone = et_username.getText().toString();
-        DeviceInfo.getVerifyCode(this, phone, OperateType.TYPE_REGISTER, new GetVerifyCodeCallBack() {
+        DeviceInfo.getVerifyCode(this, phone, OperateType.REGISTER, new GetVerifyCodeCallBack() {
             @Override
             public void beforGet() {
                 //countDown.start();
@@ -403,24 +387,23 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
                 InputMethodManager inputManager = (InputMethodManager) et_username.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputManager.hideSoftInputFromWindow(et_username.getWindowToken(), 0);
-
                 mProgressBar.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onGetResponce(SendSmsCode code) {
-                L.e(TAG, "code>>>>>>>>>>>" + code.getResult());
+               // L.e(TAG, "code>>>>>>>>>>>" + code.getResult());
                 mProgressBar.setVisibility(View.GONE);
                 countDown.start();
 //              // 正常情况下要1min后才能重新发验证码，但是遇到下面几种情况可以点击重发
-                if (code.getResult() == AccountResultCode.SUCC) {
+                if (Integer.parseInt(code.getCode()) == AccountResultCode.SUCC) {
 
                     UiUtils.toast(MyApp.getInstance(), R.string.send_register_succ);
-                } else if (code.getResult() == AccountResultCode.PHONE_ALREADY_EXIST
-                        || code.getResult() == AccountResultCode.PHONE_FORMAT_ERROR
-                        || code.getResult() == AccountResultCode.MESSAGE_SEND_FAIL
-                        ||code.getResult()==AccountResultCode.ONLY_FIVE_EACHDAY
-                        ||code.getResult()==AccountResultCode.USERNAME_EXIST) {
+                } else if (Integer.parseInt(code.getCode())  == AccountResultCode.PHONE_ALREADY_EXIST
+                        || Integer.parseInt(code.getCode())  == AccountResultCode.PHONE_FORMAT_ERROR
+                        || Integer.parseInt(code.getCode())  == AccountResultCode.MESSAGE_SEND_FAIL
+                        ||Integer.parseInt(code.getCode()) ==AccountResultCode.ONLY_FIVE_EACHDAY
+                        ||Integer.parseInt(code.getCode()) ==AccountResultCode.USERNAME_EXIST) {
                     countDown.cancel();
                     //tv_verycode.setText(R.string.resend);
                     //tv_verycode.setClickable(true);

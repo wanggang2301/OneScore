@@ -36,6 +36,7 @@ import com.alibaba.fastjson.JSON;
 import com.android.volley.DefaultRetryPolicy;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.AccountDetailActivity;
 import com.hhly.mlottery.activity.DebugConfigActivity;
 import com.hhly.mlottery.activity.FootballEventAnimationFragment;
 import com.hhly.mlottery.activity.HomeUserOptionsActivity;

@@ -45,6 +45,9 @@ public class DeviceInfo {
 
 	private static String deviceToken ;
 	private static final java.lang.String TAG = "CommonUtils";
+	private static  String KEY="ybfmobile";
+	private static String language;
+
 	/**
 	 * 获取设备imei
  	 */
@@ -240,31 +243,31 @@ public class DeviceInfo {
 	 */
 	public static void saveRegisterInfo(Register register) {
 
-		if (register == null) {
+		if (register==null) {
 			PreferenceUtil.commitString(AppConstants.SPKEY_USERID, "");
 			PreferenceUtil.commitString(AppConstants.SPKEY_NICKNAME, "");
 			PreferenceUtil.commitString(AppConstants.SPKEY_TOKEN, "");
 			PreferenceUtil.commitString(AppConstants.SPKEY_LOGINACCOUNT, "");
 			PreferenceUtil.commitString(AppConstants.HEADICON, "");
-			PreferenceUtil.commitString(AppConstants.SEX, "");
+			//PreferenceUtil.commitString(AppConstants.SEX, "");
 			//PreferenceUtil.commitInt(AppConstants.SEX,0);
 			AppConstants.register = new Register();
 
-
 		} else {
-			PreferenceUtil.commitString(AppConstants.SPKEY_USERID, register.getData().getUser().getUserId());
-			PreferenceUtil.commitString(AppConstants.SPKEY_NICKNAME, register.getData().getUser().getNickName());
-			if (register.getData().getUser().getLoginAccount() != null) {
-				PreferenceUtil.commitString(AppConstants.SPKEY_LOGINACCOUNT, register.getData().getUser().getLoginAccount());
+			PreferenceUtil.commitString(AppConstants.SPKEY_USERID, register.getUser().getUserId());
+			PreferenceUtil.commitString(AppConstants.SPKEY_NICKNAME, register.getUser().getNickName());
+			if (register.getUser().getPhoneNum() !=null) {
+				PreferenceUtil.commitString(AppConstants.SPKEY_LOGINACCOUNT, register.getUser().getPhoneNum());
 			}
-			PreferenceUtil.commitString(AppConstants.HEADICON, register.getData().getUser().getHeadIcon());
-			PreferenceUtil.commitString(AppConstants.SEX, register.getData().getUser().getSex());
-			String token = register.getData().getLoginToken();
+			PreferenceUtil.commitString(AppConstants.HEADICON, register.getUser().getImageSrc());
+			String token = register.getToken();
 			L.d(TAG, " saveRegisterInfo   token = " + token);
 			PreferenceUtil.commitString(AppConstants.SPKEY_TOKEN, token);
 
 			AppConstants.register = register;
-		}
+
+
+        }
 
 	}
 
@@ -295,20 +298,20 @@ public class DeviceInfo {
 	 * 初始化注册信息（与登录信息一样）
 	 */
 	public static void initRegisterInfo() {
-		Register.DataBean.UserBean userBean = new Register.DataBean.UserBean();
+		Register.UserBean userBean = new Register.UserBean();
 		userBean.setUserId(PreferenceUtil.getString(AppConstants.SPKEY_USERID, ""));
 		userBean.setNickName(PreferenceUtil.getString(AppConstants.SPKEY_NICKNAME, ""));
-		userBean.setLoginAccount(PreferenceUtil.getString(AppConstants.SPKEY_LOGINACCOUNT, ""));
-		userBean.setHeadIcon(PreferenceUtil.getString(AppConstants.HEADICON, ""));
-		userBean.setSex(PreferenceUtil.getString(AppConstants.SEX, ""));
-		Register.DataBean dataBean = new Register.DataBean();
+		userBean.setPhoneNum(PreferenceUtil.getString(AppConstants.SPKEY_LOGINACCOUNT, ""));
+		userBean.setImageSrc(PreferenceUtil.getString(AppConstants.HEADICON, ""));
+		//userBean.setSex(PreferenceUtil.getString(AppConstants.SEX, ""));
+		Register dataBean = new Register();
 
 		String token = PreferenceUtil.getString(AppConstants.SPKEY_TOKEN, "");
 		L.e(TAG, " initRegisterInfo   token = " + token);
-		dataBean.setLoginToken(token);
+		dataBean.setToken(token);
 		dataBean.setUser(userBean);
 
-		AppConstants.register = new Register(dataBean);
+		AppConstants.register = dataBean;
 		L.d(TAG, "init regsterinfo = " + AppConstants.register.toString());
 
 		AppConstants.deviceToken = DeviceInfo.getDeviceId(MyApp.getContext());
@@ -322,8 +325,8 @@ public class DeviceInfo {
 	 */
 	public static boolean isLogin() {
 		boolean isLogin = false;
-		if (!(TextUtils.isEmpty(AppConstants.register.getData().getLoginToken()))
-				&& !(TextUtils.isEmpty(AppConstants.register.getData().getUser().getUserId()))) {
+ 		if (!(TextUtils.isEmpty(AppConstants.register.getToken()))
+				&& !(TextUtils.isEmpty(AppConstants.register.getUser().getUserId()))) {
 			isLogin = true;
 		}
 		L.d(TAG, " 是否登录 = " + isLogin);
@@ -433,9 +436,50 @@ public class DeviceInfo {
 			case AccountResultCode.ONLY_FIVE_EACHDAY:
 				UiUtils.toast(MyApp.getInstance(), R.string.only_five_eachday);
 				break;
-			case AccountResultCode.INVITED_NUMBER_NOON:
-				UiUtils.toast(MyApp.getInstance(), R.string.invited_number_noon);
+			case AccountResultCode.PHONE_ALREADY_NEXIST:
+				UiUtils.toast(MyApp.getInstance(), R.string.phone_already_nexist);
+
 				break;
+			case AccountResultCode.NO_LOGON_USER:
+				UiUtils.toast(MyApp.getInstance(), R.string.no_logon_user);
+				break;
+			case AccountResultCode.UNKNOWN_ERROR:
+				UiUtils.toast(MyApp.getInstance(),R.string.unknown_error);
+				break;
+			case AccountResultCode.TOKEN_NULL:
+				UiUtils.toast(MyApp.getInstance(), R.string.token_null);
+				break;
+			case AccountResultCode.PHONE_MISMATCHING:
+				UiUtils.toast(MyApp.getInstance(), R.string.phone_mismatching);
+				break;
+			case AccountResultCode.TOKEN_INVALID:
+				UiUtils.toast(MyApp.getInstance(), R.string.token_invalid);
+				break;
+			case AccountResultCode.SIGNATURE_EMPTY:
+				UiUtils.toast(MyApp.getInstance(), R.string.signature_empty);
+				break;
+			case AccountResultCode.SIGNATURE_MISMATCHING:
+				UiUtils.toast(MyApp.getInstance(), R.string.signature_mismatching);
+				break;
+			case AccountResultCode.TOKEN_MISMATCHING:
+				UiUtils.toast(MyApp.getInstance(), R.string.token_mismatchin);
+				break;
+			case AccountResultCode.REVISE_PROFILE_SUCCESSFULLY:
+				UiUtils.toast(MyApp.getInstance(), R.string.revise_profile_successfully);
+				break;
+			case AccountResultCode.NUMBER_FORMAT_IS_WRONG:
+				UiUtils.toast(MyApp.getInstance(), R.string.number_format_is_wrong);
+				break;
+			case AccountResultCode.EXPERT_CERTIFICATION_AUDIT:
+				UiUtils.toast(MyApp.getInstance(), R.string.expert_certification_audit);
+				break;
+			case AccountResultCode.USER_ALREADY_EXPERT:
+				UiUtils.toast(MyApp.getInstance(), R.string.user_already_expert);
+				break;
+			case AccountResultCode.USER_NOT_NULL:
+				UiUtils.toast(MyApp.getInstance(), R.string.user_not_null);
+				break;
+
 			default:
 				L.e(TAG, "未定义错误码 : rescode = " + rescode + " , defaultMessage = " + defaultMessage);
 				if (!TextUtils.isEmpty(defaultMessage)) {
@@ -459,27 +503,33 @@ public class DeviceInfo {
 		if (UiUtils.isMobileNO(ctx, phone)) {
 			callBack.beforGet();
 			String url = BaseURLs.URL_SENDSMSCODE;
+
 			Map<String, String> param = new HashMap<>();
-			param.put("phone", phone);
-			param.put("operateType", oprateType);
-
-			Log.d(TAG, phone + "...............................");
-
-			//以下添加的参数为修复恶意注册的bug所加。
-			String sign = DeviceInfo.getSign(phone, AppConstants.deviceToken, AppConstants.SIGN_KEY);
+			param.put("phoneNum", phone);
+			param.put("type", oprateType);
+			if (MyApp.isLanguage.equals("rCN")) {
+				// 如果是中文简体的语言环境
+				language = "langzh";
+			} else if (MyApp.isLanguage.equals("rTW")) {
+				// 如果是中文繁体的语言环境
+				language="langzh-TW";
+			}
+			//添加签名
+			String sign = DeviceInfo.getSign(BaseURLs.SENDSMSCODE+language+"phoneNum"+phone+"timeZone8"+"type"+oprateType);
 			param.put("sign", sign);
-
+/*
 			int versioncode = DeviceInfo.getVersionCode();
 			param.put("versionCode", String.valueOf(versioncode));
 
 			param.put("deviceToken", AppConstants.deviceToken);
+*/
 
 
-			VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<SendSmsCode>() {
+			VolleyContentFast.requestJsonByGet(url,param,new VolleyContentFast.ResponseSuccessListener<SendSmsCode>() {
 				@Override
 				public void onResponse(SendSmsCode jsonObject) {
 					callBack.onGetResponce(jsonObject);
-					handlerRequestResult(jsonObject.getResult(), jsonObject.getMsg());
+					handlerRequestResult(Integer.parseInt(jsonObject.getCode()), "未知错误");
 				}
 			}, new VolleyContentFast.ResponseErrorListener() {
 				@Override
@@ -545,14 +595,32 @@ public class DeviceInfo {
 
 
 	/**
+	 * 这个方法是用来生成签名，mosaicString是所有参数拼接而成 记住passWord要MD5
+	 * 加密，再拼接约定的KEY再加上两位随机数字或者字母经过MD5加密，作为参数
+	 * 发送给服务器。
+	 *
+	 * @param mosaicString   签名拼接的字符串
+	 * @return
+	 */
+	public static String getSign(String mosaicString) {
+
+		String appendString = mosaicString + MD5Util.getMD5(KEY).toLowerCase();
+		String beforeTwo = getRandom16String(2);
+
+		String newMd5String = (MD5Util.getMD5(appendString)).toLowerCase()+ beforeTwo;//转换小写格式
+
+		return newMd5String;
+	}
+	/**
 	 * 这个方法是用来生成防止用户恶意注册，由这三个参数拼接的字符串进行MD5加密之后，再加上两位字母，作为参数
 	 * 发送给服务器。
 	 *
-	 * @param userName
-	 * @param deviceToken
-	 * @param signKey
+	 * @param
+	 * @param
+	 * @param
 	 * @return
 	 */
+/*
 	public static String getSign(String userName, String deviceToken, String signKey) {
 
 		String appendString = userName + deviceToken + signKey;
@@ -565,11 +633,23 @@ public class DeviceInfo {
 
 		return newMd5String;
 	}
+*/
 
 
 	//生成大写的字符和数字的字符串。
 	public static String getRandomString(int length) { //length表示生成字符串的长度
 		String base = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		Random random = new Random();
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < length; i++) {
+			int number = random.nextInt(base.length());
+			sb.append(base.charAt(number));
+		}
+		return sb.toString();
+	}
+	//生成大写的字符和数字的字符串。
+	public static String getRandom16String(int length) { //length表示生成字符串的长度
+		String base = "abcdef0123456789";
 		Random random = new Random();
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < length; i++) {

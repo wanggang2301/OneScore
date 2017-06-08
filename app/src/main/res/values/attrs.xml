@@ -73,12 +73,11 @@
     </string-array>
 
     <string-array name="foot_details_tabs">
-        <!--<item>@string/foot_details_recommend</item>-->
+        <!-- <item>@string/betting_issue_title</item>-->
         <item>@string/foot_details_roolball</item>
         <item>@string/foot_details_statistics</item>
         <item>@string/foot_details_odds</item>
         <item>@string/foot_details_analyze</item>
-       <!-- <item>@string/foot_details_info</item>-->
         <item>@string/foot_details_talkball</item>
     </string-array>
 
@@ -180,4 +179,37 @@
         <attr name="civ_border_overlay" format="boolean" />
         <attr name="civ_fill_color" format="color" />
     </declare-styleable>
+
+    <string-array name="bowl_eur">
+        <item>@string/foot_odds_eu_left</item>
+        <item>@string/foot_odds_eu_middle</item>
+        <item>@string/foot_odds_eu_right</item>
+    </string-array>
+
+    <string-array name="bowl_alet">
+        <item>@string/foot_odds_alet_left</item>
+        <item>@string/foot_odds_alet_middle</item>
+        <item>@string/foot_odds_alet_right</item>
+    </string-array>
+
+
+    <string-array name="bowl_asize">
+        <item>@string/foot_odds_asize_left</item>
+        <item>@string/foot_odds_asize_middle</item>
+        <item>@string/foot_odds_asize_right</item>
+    </string-array>
+
+    <string-array name="bowl_corner">
+        <item>@string/bow_corner_left</item>
+        <item>@string/bow_corner_middle</item>
+        <item>@string/bow_corner_right</item>
+    </string-array>
+
+
+
+    <declare-styleable name="FlowLayout">
+        <attr name="width_space" format="dimension" />
+        <attr name="height_space" format="dimension" />
+    </declare-styleable>
+
 </resources>

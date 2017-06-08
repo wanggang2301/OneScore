@@ -81,11 +81,14 @@ public class BasketIndexDetailsFragment extends ViewFragment<BasketIndexDetailsC
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_basket_index_details, container, false);
         ButterKnife.bind(this, mView);
-        mPresenter = new BasketIndexDetailsFresenter(this);
         mPresenter.initFg();
         return mView;
     }
 
+    @Override
+    public BasketIndexDetailsContract.IndexDetailsPresenter initPresenter() {
+        return new BasketIndexDetailsFresenter(this);
+    }
 
     @Override
     public void initFgView() {

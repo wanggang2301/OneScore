@@ -140,6 +140,7 @@
     <color name="home_item_lottery_title_des">#9b9b9b</color>
 
     <color name="home_default_icon_coloer">#f5f5f5</color>
+    <color name="account_tab_color">#E5F2FC</color>
 
     <!-- 关于 -->
     <color name="text_about_color">#0090ff</color>
@@ -713,5 +714,18 @@
     <color name="betting_recommend_to_buy_line_color">#dcdcdc</color>
     <color name="betting_recommend_to_buy_color">#dfdfdf</color>
     <color name="betting_recommend_confirm_buy_color">#ff5f10</color>
+    <color name="application_specialist_color">#feffd8</color>
+    <color name="application_specialist_text_color">#4a494a</color>
+    _
 
+    <color name="betting_recommend_issue_title_color">#333333</color>
+    <color name="betting_recommend_issue_leaguename_color">#f0951c</color>
+    <color name="betting_recommend_issue_wanfa_color">#4a494a</color>
+    <color name="betting_recommend_issue_fangan_color">#9b9a9b</color>
+    <color name="betting_recommend_issue_jiage_color">#82899a</color>
+    <color name="betting_recommend_issue_mianfei_color">#ff2221</color>
+    <color name="betting_recommend_issue_balance_color">#fb001a</color>
+    <color name="betting_recommend_issue_payment_bg">#f7f7f8</color>
+
+    <color name="account_trade_name">#4a494a</color>
 </resources>

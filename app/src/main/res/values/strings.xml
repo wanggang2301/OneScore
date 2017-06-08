@@ -1147,13 +1147,29 @@
     <string name="immediate_status_end">完</string>
     <string name="foot_rollball_txt">滚球</string>
     <string name="only_five_eachday">同一个手机号每天只能发送5次短信</string>
-    <string name="login_username">请输入账号或者注册手机号</string>
+    <string name="login_username">请输入手机号</string>
     <string name="server_busy">系统繁忙</string>
     <string name="forty_five_plus">45+</string>
     <string name="ninety_plus">90+</string>
     <string name="at_least_one_company">至少选择一家公司</string>
     <string name="invited_number_noon">邀请码不存在</string>
+    <string name="login_one_score">登录一比分</string>
 
+    <string name="phone_already_nexist">手机号未被注册</string>
+    <string name="no_logon_user">失败次数过多，请3分钟后再试！或通过忘记密码重设密码!</string>
+    <string name="unknown_error">未知错误</string>
+    <string name="token_null">令牌(token)为空</string>
+    <string name="phone_mismatching">用户名与手机号不匹配</string>
+    <string name="token_invalid">令牌(token)失效</string>
+    <string name="signature_empty">签名为空</string>
+    <string name="signature_mismatching">签名不匹配</string>
+    <string name="token_mismatchin">令牌(token)与个人信息不匹配</string>
+
+    <string name="revise_profile_successfully">修改专家简介信息成功</string>
+    <string name="number_format_is_wrong">身份证号码格式错误</string>
+    <string name="expert_certification_audit">专家认证审核中</string>
+    <string name="user_already_expert">用户已经是专家</string>
+    <string name="user_not_null">用户id不能为空</string>
 
     <string name="home_win_rate">主胜率</string>
     <string name="home_lose_rate">主负率</string>
@@ -1731,6 +1747,40 @@
     <!--竞彩推荐-->
     <string name="betting_setting_palying_method">玩法</string>
     <string name="betting_setting_league">联赛</string>
+    <string name="betting_issue_title">推介</string>
+
+    <string name="betting_title_list">竞彩推荐</string>
+    <string name="betting_title_details">竞彩单关</string>
+    <string name="betting_title_onlinepay">在线支付</string>
+    <string name="betting_txt_buy">购买</string>
+    <string name="betting_txt_check">查看</string>
+    <string name="betting_txt_have_buy">人已购买</string>
+    <string name="betting_txt_zhusheng">主胜</string>
+    <string name="betting_txt_pingju">平局</string>
+    <string name="betting_txt_kesheng">客胜</string>
+    <string name="betting_txt_reason">推荐理由</string>
+    <string name="betting_txt_pay_check_result">支付后查看推荐内容和结果</string>
+    <string name="betting_txt_unpaid">待支付</string>
+    <string name="betting_txt_to_paid">去支付</string>
+    <string name="betting_txt_check_payment">选择支付方式</string>
+    <string name="betting_txt_check_zfb">支付宝支付</string>
+    <string name="betting_txt_check_weixin">微信支付</string>
+    <string name="betting_txt_check_balance">余额支付</string>
+    <string name="betting_txt_confirm_pay">确定支付</string>
+
+    <string name="betting_txt_recharge_amount">充值金额</string>
+    <string name="betting_txt_balance_account">账户余额:</string>
+    <string name="betting_txt_recharge_integer">充值金额需为整数</string>
+    <string name="betting_txt_recharge_quota">1-10000￥</string>
+    <string name="betting_txt_amount_ten">10元</string>
+    <string name="betting_txt_amount_twenty">20元</string>
+    <string name="betting_txt_amount_fifty">50元</string>
+    <string name="betting_txt_amount_one_hundred">100元</string>
+    <string name="betting_txt_recharge">充值</string>
+    <string name="betting_plays_asialet">亚盘</string>
+    <string name="betting_plays_asize">大小球</string>
+    <string name="betting_plays_allcheck">全部</string>
+
 
     <string name="roll_desc_txt">胜出</string>
 
@@ -1739,7 +1789,7 @@
     <string name="odds_average">""</string>
     <string name="odd_dish_txt2">""</string>
     <string name="odd_back">""</string>
-    <string name="no_select_head">""</string>
+    <string name="no_select_head">您还未选择头像</string>
     <string name="information_integral_match">""</string>
     <string name="information_customer_service">""</string>
     <string name="football_analyze_points">""</string>
@@ -1760,6 +1810,31 @@
     <string name="at_least_one_race">至少选择一场赛事</string>
     <string name="start_dianqiu">开始点球大战</string>
     <string name="start_addtime">开始加时赛</string>
+    <string name="available_balance">可用余额(元)</string>
+    <string name="frozen_balance">冻结余额(元)</string>
+    <string name="total_balance">总余额(元)</string>
+    <string name="account_detail">账户明细</string>
+
+    <string name="bow_corner_left">高于</string>
+    <string name="bow_corner_middle">即时盘</string>
+    <string name="bow_corner_right">低于</string>
+
+    <string name="recommendarticle_txt">推介文章</string>
+    <string name="subsrecord_txt">订阅记录</string>
+    <string name="jingcaidanguan_txt">竞彩单关</string>
+    <string name="yapan_txt">亚盘</string>
+    <string name="daxiaoqiu_txt">大小球</string>
+    <string name="yigoumai_txt">人已购买</string>
+    <string name="chakan_txt">查看</string>
+    <string name="tuijianliyou_txt">推荐理由:</string>
+    <string name="baiyin_txt">白银专家</string>
+    <string name="huangjin_txt">黄金专家</string>
+    <string name="baijin_txt">白金专家</string>
+    <string name="zuanshi_txt">钻石专家</string>
+    <string name="zhong_txt">中</string>
+    <string name="tuijie_nodata_txt">大师,您很懒哦！\n 快去发布推介吧！</string>
+    <string name="dingyue_nodata_txt">您还未购买推介,\n去看看专家们怎么说….</string>
+    <string name="go_txt">前往</string>
 
     <!--app动画直播-->
     <string name="football_play_penalty_lose">点球罚失</string>

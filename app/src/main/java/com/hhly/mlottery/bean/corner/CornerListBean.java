@@ -40,6 +40,15 @@ public class CornerListBean {
          * hod : {"cpOdd":4.75,"jsOdd":3.5,"higher":1.25,"below":0.6,"modify_time":null}
          * cornerMatchInfo : {"rname":"墨西联","rId":"140","rc":"#669900","date":"2017-05-12","time":"10:30","htn":"阿特拿斯","gtn":"瓜达拉","keep":null,"status":"-1","hId":1266,"hr":0,"gr":0,"hy":3,"gy":2,"gId":1267,"hc":0,"gc":8,"hhc":0,"ghc":3}
          */
+        private String dateTag;
+
+        public String getDateTag() {
+            return dateTag;
+        }
+
+        public void setDateTag(String dateTag) {
+            this.dateTag = dateTag;
+        }
 
         private int matchId;
         private OdEntity od;

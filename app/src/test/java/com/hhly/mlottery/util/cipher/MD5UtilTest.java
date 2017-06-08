@@ -21,8 +21,8 @@ public class MD5UtilTest extends TestCase {
 
     @Test
     public void testGetSign(){
-        System.out.println(DeviceInfo.getSign("15079785931","868666021469647","B2A7748BF1FCAF6326979E1B86DC0C60"));
-        System.out.println(DeviceInfo.getSign("haha","hehe","hehe").length());
+       // System.out.println(DeviceInfo.getSign("15079785931","868666021469647","B2A7748BF1FCAF6326979E1B86DC0C60"));
+       // System.out.println(DeviceInfo.getSign("haha","hehe","hehe").length());
     }
 
     @Test

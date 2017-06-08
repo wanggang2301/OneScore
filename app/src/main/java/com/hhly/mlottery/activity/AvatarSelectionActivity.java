@@ -3,6 +3,7 @@ package com.hhly.mlottery.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -24,6 +25,7 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
+import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
 import com.umeng.analytics.MobclickAgent;
@@ -38,6 +40,7 @@ import de.greenrobot.event.EventBus;
 
 /**
  * Created by yuely198 on 2016/11/14.
+ * 选择球头像
  */
 
 public class AvatarSelectionActivity extends Activity implements View.OnClickListener {
@@ -68,15 +71,14 @@ public class AvatarSelectionActivity extends Activity implements View.OnClickLis
     private ChoseFailStartWomanAdapter choseFailStartWomanAdapter;
     private LinearLayout text_times_title1;
     private ImageView ib_operate_more;
+    private String language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         initView();
         loadData();
-
 
     }
 
@@ -116,7 +118,6 @@ public class AvatarSelectionActivity extends Activity implements View.OnClickLis
                                 CupChicked = mMaleDatas.get(position).getHeadIcon();
                             }
                         });
-                        //   choseStartManAdapter.setOnCheckListener(onCheckmanListener);
                         male_gridview.setAdapter(choseStartManAdapter);
                     }
 
@@ -246,7 +247,10 @@ public class AvatarSelectionActivity extends Activity implements View.OnClickLis
             case R.id.text_times_title1:
                 //请求后台进行账户绑定
                 if (CupChicked != null) {
+                    EventBus.getDefault().post(new ChoseHeadStartBean(CupChicked));
+                    AppConstants.register.getUser().setImageSrc(CupChicked);
                     putPhotoUrl(CupChicked);
+                    finish();
                 } else {
                     UiUtils.toast(getApplicationContext(), R.string.no_select_head);
                 }
@@ -264,28 +268,40 @@ public class AvatarSelectionActivity extends Activity implements View.OnClickLis
         progressBar.show();
         Map<String, String> param = new HashMap<>();
 
-        param.put("deviceToken", AppConstants.deviceToken);
 
-        param.put("loginToken", PreferenceUtil.getString(AppConstants.SPKEY_TOKEN, ""));
+        param.put("userId", AppConstants.register.getUser().getUserId());
 
-        param.put("imgUrl", headerUrl);
-        VolleyContentFast.requestJsonByPost(BaseURLs.UPDATEHEADICON, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
+        param.put("avatorURL",headerUrl);
+        param.put("loginToken",AppConstants.register.getToken());
+
+
+        if (MyApp.isLanguage.equals("rCN")) {
+            // 如果是中文简体的语言环境
+            language = "langzh";
+        } else if (MyApp.isLanguage.equals("rTW")) {
+            // 如果是中文繁体的语言环境
+            language="langzh-TW";
+        }
+
+
+        String sign=DeviceInfo.getSign("/user/updateavatorbyurl"+"avatorURL"+headerUrl+language+"loginToken"+AppConstants.register.getToken()+"timeZone8"+"userId"+AppConstants.register.getUser().getUserId());
+        param.put("sign",sign);
+        VolleyContentFast.requestJsonByPost(BaseURLs.PUT_PHOTO_URL, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
             @Override
             public void onResponse(Register register) {
                 //  progressBar.dismiss();
 
-                if (register.getResult() == AccountResultCode.SUCC) {
+                if (Integer.parseInt(register.getCode()) == AccountResultCode.SUCC) {
                     UiUtils.toast(MyApp.getInstance(), R.string.picture_put_success);
-                    register.getData().getUser().setLoginAccount(PreferenceUtil.getString(AppConstants.SPKEY_LOGINACCOUNT, "aa"));
-                    DeviceInfo.saveRegisterInfo(register);
-                    AppConstants.register.getData().getUser().setHeadIcon(headerUrl);
-                    if (register.getData().getUser().getHeadIcon() != null) {
-                        EventBus.getDefault().post(new ChoseHeadStartBean(headerUrl));
-                    }
+                   // register.getUser().setPhoneNum(PreferenceUtil.getString(AppConstants.SPKEY_LOGINACCOUNT, "aa"));
+                   // DeviceInfo.saveRegisterInfo(register);
+                    AppConstants.register.getUser().setImageSrc(headerUrl);
+                    PreferenceUtil.commitString(AppConstants.HEADICON,headerUrl);
+                    EventBus.getDefault().post(new ChoseHeadStartBean(headerUrl));
                     progressBar.dismiss();
                     finish();
                 } else {
-                    DeviceInfo.handlerRequestResult(register.getResult(), register.getMsg());
+                    DeviceInfo.handlerRequestResult(Integer.parseInt(register.getCode()),"未知错误");
                     progressBar.dismiss();
                 }
             }
