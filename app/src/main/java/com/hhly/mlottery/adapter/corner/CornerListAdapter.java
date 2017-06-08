@@ -75,7 +75,7 @@ public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEnt
             bean.setDateTag(bean.getCornerMatchInfo().getDate());
             String date[]=bean.getCornerMatchInfo().getTime().split(":");
 
-            if(Integer.parseInt(date[0])<10){ //12点之前。日期减1
+            if(Integer.parseInt(date[0])<=10){ //12点之前。日期减1
                 bean.setDateTag(DateUtil.getDate(-1,bean.getCornerMatchInfo().getDate())); //12点之前日期减1
             }
             if(!bean.getDateTag().equals(mDatelist.get(mCurruntDatePosition).getDate())&&mChange){ //item日期跟头部日期不一样，切不是刚分页。则把现在的日期传回去设置
