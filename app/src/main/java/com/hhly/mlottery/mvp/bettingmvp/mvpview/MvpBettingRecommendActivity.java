@@ -278,13 +278,13 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
     @Override
     public void loadFailView() {
         setStatus(SHOW_STATUS_ERROR);
-        Toast.makeText(mContext, "网络请求失败~！！", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mContext, "网络请求失败~！！", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void loadNoData() {
         setStatus(SHOW_STATUS_NO_DATA);
-        Toast.makeText(mContext, "暂无数据~！！", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mContext, "暂无数据~！！", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -384,14 +384,12 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
                         if (hasNextPage) {
                             loadMoreData(playType , leagueKeys);
                         }else{
-                            Toast.makeText(mContext, "没有更多数据...", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, mContext.getResources().getText(R.string.nodata_txt), Toast.LENGTH_SHORT).show();
 //                            mOnloadingView.findViewById(R.id.loading_text)
                             mAdapter.addFooterView(mNoLoadingView);
                         }
                     }
                 },1000);
-
-                Toast.makeText(mContext, "852852", Toast.LENGTH_SHORT).show();
             }
         });
     }

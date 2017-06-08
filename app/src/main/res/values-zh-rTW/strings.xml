@@ -1773,6 +1773,11 @@
     <string name="betting_plays_allcheck">全部</string>
     <string name="betting_item_jin">近</string>
     <string name="betting_item_zhong">中</string>
+    <string name="betting_max_recharge">單次最大充值金額為10000元</string>
+    <string name="betting_payment_success">支付成功</string>
+    <string name="betting_payment_cancle">支付取消</string>
+    <string name="betting_not_sufficient_funds">帳護余額不足,請選擇其它支付方式</string>
+    <string name="betting_network_anomaly">網絡異常,請重試</string>
 
     <string name="corner_score">角球比分</string>
     <string name="higher">高於</string>

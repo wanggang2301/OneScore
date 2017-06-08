@@ -329,13 +329,13 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
     @Override
     public void loadFailView() {
         setStatus(SHOW_STATUS_ERROR);
-        Toast.makeText(mContext, "网络请求失败~！！", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mContext, "网络请求失败~！！", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void loadNoData() {
         setStatus(SHOW_STATUS_NO_DATA);
-        Toast.makeText(mContext, "暂无数据~！！", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mContext, "暂无数据~！！", Toast.LENGTH_SHORT).show();
     }
 
     @Override
