@@ -269,16 +269,6 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
      * 初始化VIEW
      */
     private void initView() {
-        mView.findViewById(R.id.testbetting).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent mIntent = new Intent(mContext, MvpBettingRecommendActivity.class);
-                startActivity(mIntent);
-                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
-            }
-        });
-
-
         //暂无关注
         mbasketball_unfocus = (RelativeLayout) mView.findViewById(R.id.basketball_immediate_unfocus_pinned);
 
