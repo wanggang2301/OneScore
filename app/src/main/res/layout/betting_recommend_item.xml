@@ -30,7 +30,7 @@
                         android:id="@+id/betting_portrait_img"
                         android:layout_width="44dp"
                         android:layout_height="44dp"
-                        android:src="@mipmap/car_no1" />
+                        android:src="@mipmap/specialist_default" />
                 </LinearLayout>
 
                 <LinearLayout
