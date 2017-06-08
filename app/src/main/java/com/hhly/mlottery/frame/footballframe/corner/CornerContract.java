@@ -20,6 +20,7 @@ public class CornerContract {
         void refreshShow(boolean refresh);
         void showNoMoreData();
         void showNextPage(List<CornerListBean.CornerEntity> cornerListBean);
+        void showNextPageError();
     }
 
     interface Presenter extends IPresenter<View>{
