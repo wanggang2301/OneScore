@@ -199,7 +199,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private int mReloadPeriod = PERIOD_20;
     private String matchStartTime;
     private ChartBallFragment mChartBallFragment;
-//    private LinearLayout mMatchTypeLayout;
+    //    private LinearLayout mMatchTypeLayout;
 //    private TextView mMatchType1;
 //    private TextView mMatchType2;
 //    private FrameLayout fl_head;
@@ -213,7 +213,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private CountDown countDown;
     private ImageView barrage_switch;
     boolean barrage_isFocus = false;
-//    private RelativeLayout mLayoutScore;
+    //    private RelativeLayout mLayoutScore;
     //动画WebView
 //    private WebView mWebView;
 //    private LinearLayout ll_Webview;
@@ -231,7 +231,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private GifImageView gif_match_start;
     private TextView tv_start, tv_half_txt;
     // 信号中断、喝水、受伤、伤停补时
-    private ImageView iv_signal_off, iv_drink_water, iv_injured, iv_injured_addtime;
+    private RelativeLayout rl_signal_off, rl_drink_water, rl_injured, rl_injured_addtime;
     // 后场控球、进攻、危险进攻
     private LinearLayout ll_control_content;
     // 后场控球
@@ -328,7 +328,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private boolean isGuestFreeKick = false; // 客队是危险任意球
 
     //头部
-    private LinearLayout ll_score_content,ll_over_score_content;
+    private LinearLayout ll_score_content, ll_over_score_content;
     private ImageView iv_home_icon;
     private ImageView iv_guest_icon;
     private TextView tv_homename;
@@ -607,6 +607,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                                 }
                             }
 
+                            matchTimeStart(mKeepTime, state);
+
                             if ("0".equals(mPreStatus) && "1".equals(matchDetail.getLiveStatus()) && !isFinishing()) {
                                 if (mReloadTimer != null) {
                                     mReloadTimer.cancel();
@@ -676,7 +678,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             try {
                 String[] split = matchDetail.getMatchInfo().getStartTime().split(" ");
                 tv_head_data_or_score.setText(split[0]);
-                if(split.length == 2){
+                if (split.length == 2) {
                     tv_head_time.setText(split[1] + " " + DateUtil.getWeekOfDate(DateUtil.parseDate(split[0])));
                 }
             } catch (Exception e) {
@@ -734,6 +736,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             } else if (ONLIVE.equals(mMatchDetail.getLiveStatus())) { //未完场头部
                 ll_score_content.setVisibility(View.VISIBLE);
                 ll_over_score_content.setVisibility(View.GONE);
+
 //                mLayoutScore.setVisibility(View.GONE);
                 //place  1主队 2客队
                 initMatchSatisInfo();
@@ -755,6 +758,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         mKeepTime = 45 * 60 * 1000 + "";//时间继续赋值为45分钟
                     }
                 }
+
+                matchTimeStart(mKeepTime, state);
             }
         }
 
@@ -1161,10 +1166,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 rl_match_txt_content.setVisibility(View.VISIBLE);
                 gif_match_start.setVisibility(View.VISIBLE);
                 tv_half_txt.setVisibility(View.VISIBLE);
-                iv_signal_off.setVisibility(View.GONE);
-                iv_drink_water.setVisibility(View.GONE);
-                iv_injured.setVisibility(View.GONE);
-                iv_injured_addtime.setVisibility(View.GONE);
+                rl_signal_off.setVisibility(View.GONE);
+                rl_drink_water.setVisibility(View.GONE);
+                rl_injured.setVisibility(View.GONE);
+                rl_injured_addtime.setVisibility(View.GONE);
                 tv_half_txt.setText(getString(R.string.fragme_home_shangbanchang_text));
                 showGifAnimation(11);
                 break;
@@ -1179,10 +1184,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 rl_match_txt_content.setVisibility(View.VISIBLE);
                 gif_match_start.setVisibility(View.GONE);
                 tv_half_txt.setVisibility(View.GONE);
-                iv_signal_off.setVisibility(View.GONE);
-                iv_drink_water.setVisibility(View.GONE);
-                iv_injured.setVisibility(View.GONE);
-                iv_injured_addtime.setVisibility(View.GONE);
+                rl_signal_off.setVisibility(View.GONE);
+                rl_drink_water.setVisibility(View.GONE);
+                rl_injured.setVisibility(View.GONE);
+                rl_injured_addtime.setVisibility(View.GONE);
                 showGifAnimation(1);
                 break;
             case "12":
@@ -1192,10 +1197,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 rl_match_txt_content.setVisibility(View.VISIBLE);
                 gif_match_start.setVisibility(View.VISIBLE);
                 tv_half_txt.setVisibility(View.VISIBLE);
-                iv_signal_off.setVisibility(View.GONE);
-                iv_drink_water.setVisibility(View.GONE);
-                iv_injured.setVisibility(View.GONE);
-                iv_injured_addtime.setVisibility(View.GONE);
+                rl_signal_off.setVisibility(View.GONE);
+                rl_drink_water.setVisibility(View.GONE);
+                rl_injured.setVisibility(View.GONE);
+                rl_injured_addtime.setVisibility(View.GONE);
                 tv_half_txt.setText(getString(R.string.fragme_home_xiabanchang_text));
                 showGifAnimation(12);
                 break;
@@ -1218,10 +1223,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 rl_match_txt_content.setVisibility(View.VISIBLE);
                 gif_match_start.setVisibility(View.GONE);
                 tv_half_txt.setVisibility(View.GONE);
-                iv_signal_off.setVisibility(View.GONE);
-                iv_drink_water.setVisibility(View.GONE);
-                iv_injured.setVisibility(View.GONE);
-                iv_injured_addtime.setVisibility(View.GONE);
+                rl_signal_off.setVisibility(View.GONE);
+                rl_drink_water.setVisibility(View.GONE);
+                rl_injured.setVisibility(View.GONE);
+                rl_injured_addtime.setVisibility(View.GONE);
 
                 closeWebSocket();
 
@@ -2201,10 +2206,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 rl_match_txt_content.setVisibility(View.VISIBLE);
                 gif_match_start.setVisibility(View.GONE);
                 tv_half_txt.setVisibility(View.GONE);
-                iv_signal_off.setVisibility(View.GONE);
-                iv_drink_water.setVisibility(View.GONE);
-                iv_injured.setVisibility(View.GONE);
-                iv_injured_addtime.setVisibility(View.GONE);
+                rl_signal_off.setVisibility(View.GONE);
+                rl_drink_water.setVisibility(View.GONE);
+                rl_injured.setVisibility(View.GONE);
+                rl_injured_addtime.setVisibility(View.GONE);
                 showGifAnimation(532);
                 break;
             case "517":
@@ -2213,43 +2218,43 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 rl_match_txt_content.setVisibility(View.VISIBLE);
                 gif_match_start.setVisibility(View.GONE);
                 tv_half_txt.setVisibility(View.GONE);
-                iv_signal_off.setVisibility(View.GONE);
-                iv_drink_water.setVisibility(View.GONE);
-                iv_injured.setVisibility(View.GONE);
-                iv_injured_addtime.setVisibility(View.GONE);
+                rl_signal_off.setVisibility(View.GONE);
+                rl_drink_water.setVisibility(View.GONE);
+                rl_injured.setVisibility(View.GONE);
+                rl_injured_addtime.setVisibility(View.GONE);
                 showGifAnimation(517);
                 break;
             case "515":
             case "516"://比赛直播信号中断
                 rl_match_txt_content.setVisibility(View.GONE);
-                iv_signal_off.setVisibility(View.VISIBLE);
-                iv_drink_water.setVisibility(View.GONE);
-                iv_injured.setVisibility(View.GONE);
-                iv_injured_addtime.setVisibility(View.GONE);
+                rl_signal_off.setVisibility(View.VISIBLE);
+                rl_drink_water.setVisibility(View.GONE);
+                rl_injured.setVisibility(View.GONE);
+                rl_injured_addtime.setVisibility(View.GONE);
                 showGifAnimation(515);
                 break;
             case "311"://喝水
                 rl_match_txt_content.setVisibility(View.GONE);
-                iv_signal_off.setVisibility(View.GONE);
-                iv_drink_water.setVisibility(View.VISIBLE);
-                iv_injured.setVisibility(View.GONE);
-                iv_injured_addtime.setVisibility(View.GONE);
+                rl_signal_off.setVisibility(View.GONE);
+                rl_drink_water.setVisibility(View.VISIBLE);
+                rl_injured.setVisibility(View.GONE);
+                rl_injured_addtime.setVisibility(View.GONE);
                 showGifAnimation(311);
                 break;
             case "132"://受伤
                 rl_match_txt_content.setVisibility(View.GONE);
-                iv_signal_off.setVisibility(View.GONE);
-                iv_drink_water.setVisibility(View.GONE);
-                iv_injured.setVisibility(View.VISIBLE);
-                iv_injured_addtime.setVisibility(View.GONE);
+                rl_signal_off.setVisibility(View.GONE);
+                rl_drink_water.setVisibility(View.GONE);
+                rl_injured.setVisibility(View.VISIBLE);
+                rl_injured_addtime.setVisibility(View.GONE);
                 showGifAnimation(132);
                 break;
             case "260"://伤停补时
                 rl_match_txt_content.setVisibility(View.GONE);
-                iv_signal_off.setVisibility(View.GONE);
-                iv_drink_water.setVisibility(View.GONE);
-                iv_injured.setVisibility(View.GONE);
-                iv_injured_addtime.setVisibility(View.VISIBLE);
+                rl_signal_off.setVisibility(View.GONE);
+                rl_drink_water.setVisibility(View.GONE);
+                rl_injured.setVisibility(View.GONE);
+                rl_injured_addtime.setVisibility(View.VISIBLE);
                 showGifAnimation(260);
                 break;
             case "1051"://主队后场控球
@@ -2310,7 +2315,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 final String playInfo = matchTextLiveBean.getPlayInfo();
                 mHandler.postDelayed(new Runnable() {
                     public void run() {
-                        L.d("wwwww","主队任意球  isHomeFreeKick: " + isHomeFreeKick);
+                        L.d("wwwww", "主队任意球  isHomeFreeKick: " + isHomeFreeKick);
                         if (isHomeFreeKick) {
                             if (!TextUtils.isEmpty(playInfo)) {
                                 switch (playInfo) {
@@ -2446,7 +2451,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        L.d("wwwww","客队任意球  isGuestFreeKick: " + isGuestFreeKick);
+                        L.d("wwwww", "客队任意球  isGuestFreeKick: " + isGuestFreeKick);
                         if (isGuestFreeKick) {
                             if (!TextUtils.isEmpty(guestPlayInfo)) {
                                 switch (guestPlayInfo) {
@@ -2706,7 +2711,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         mLiveFragment.showTimeView(mKeepTime); //刷新时间轴
 
-        matchTimeStart(mKeepTime,state);
+        matchTimeStart(mKeepTime, state);
     }
 
 
@@ -3149,10 +3154,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         gif_match_start = (GifImageView) findViewById(R.id.gif_match_start);
         tv_start = (TextView) findViewById(R.id.tv_start);
         tv_half_txt = (TextView) findViewById(R.id.tv_half_txt);
-        iv_signal_off = (ImageView) findViewById(R.id.iv_signal_off);
-        iv_drink_water = (ImageView) findViewById(R.id.iv_drink_water);
-        iv_injured = (ImageView) findViewById(R.id.iv_injured);
-        iv_injured_addtime = (ImageView) findViewById(R.id.iv_injured_addtime);
+        rl_signal_off = (RelativeLayout) findViewById(R.id.rl_signal_off);
+        rl_drink_water = (RelativeLayout) findViewById(R.id.rl_drink_water);
+        rl_injured = (RelativeLayout) findViewById(R.id.rl_injured);
+        rl_injured_addtime = (RelativeLayout) findViewById(R.id.rl_injured_addtime);
 
         // 后场控球、进攻、危险进攻
         ll_control_content = (LinearLayout) findViewById(R.id.ll_control_content);
@@ -3333,8 +3338,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private void initPreData(MatchDetail mMatchDetail) {
         // if (flag) {
-        int random = new Random().nextInt(20);
-        String url = baseUrl + random + ".png";
+//        int random = new Random().nextInt(20);
+//        String url = baseUrl + random + ".png";
 //        ImageLoader.load(mContext, url, R.color.colorPrimary).into(iv_bg);
 
         loadImage(mMatchDetail.getHomeTeamInfo().getUrl(), iv_home_icon);
@@ -3346,15 +3351,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         tv_guestname.setText(mMatchDetail.getGuestTeamInfo().getName());
         tv_head_guest_name.setText(mMatchDetail.getGuestTeamInfo().getName());
         tv_head_match_name.setText(mMatchDetail.getMatchType1() + " " + mMatchDetail.getMatchType2());
-
-        try {
-            MatchTextLiveBean matchTextLiveBean  = mMatchDetail.getMatchInfo().getMatchLive().get(0);
-            if(matchTextLiveBean != null){
-                matchTimeStart(matchTextLiveBean.getTime(),matchTextLiveBean.getState());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         //赛事类型
 
@@ -3568,11 +3564,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     /**
      * 时间显示
+     *
      * @param time
      * @param state
      */
-    private void matchTimeStart(String time,String state){
-        if(TextUtils.isEmpty(time) || TextUtils.isEmpty(state)) return;
+    private void matchTimeStart(String time, String state) {
+        if (TextUtils.isEmpty(time) || TextUtils.isEmpty(state)) return;
 
         tv_hean_srcoe_aop.setText("\'");
         final AlphaAnimation anim1 = new AlphaAnimation(1, 1);
@@ -3618,12 +3615,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         switch (state) {
             case "0":// 未开
-                date.setVisibility(View.VISIBLE);
-                tv_hean_srcoe_aop.setVisibility(View.INVISIBLE);
-                score.setVisibility(View.INVISIBLE);
-
-                date.setText(mContext.getResources().getString(R.string.tennis_match_not_start));
-                date.setTextColor(mContext.getResources().getColor(R.color.res_pl_color));
                 break;
             case "1":// 上半场
                 date.setVisibility(View.VISIBLE);
@@ -3669,12 +3660,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 date.setText(mContext.getString(R.string.immediate_status_point));
                 break;
             case "-1":// 完场
-                date.setText(mContext.getResources().getString(R.string.finish_txt));
-                date.setTextColor(mContext.getResources().getColor(R.color.red));
-                date.setVisibility(View.VISIBLE);
-                tv_hean_srcoe_aop.setVisibility(View.INVISIBLE);
-               score.setVisibility(View.VISIBLE);
-               score.setText("(1-1)");
                 break;
             case "-10":// 取消
                 date.setVisibility(View.VISIBLE);
