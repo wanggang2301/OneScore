@@ -74,7 +74,7 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(mContext, "专家详情敬请期待", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, mContext.getResources().getString(R.string.developing), Toast.LENGTH_SHORT).show();
                 //专家详情
             }
         });
