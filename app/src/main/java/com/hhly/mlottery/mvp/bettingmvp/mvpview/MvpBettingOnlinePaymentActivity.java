@@ -16,6 +16,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.bettingbean.BettingOrderDataBean;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingBuyResultEventBusEntity;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingPaymentResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.PayMentZFBResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.mvppresenter.MvpBettingOnlinePaymentPresenter;
 import com.hhly.mlottery.config.ConstantPool;
@@ -189,7 +190,7 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
                             break;
                         case 2:
                             L.d("支付方式 = ","余额支付");
-                            orderPay();// 充值成功调余额支付接口
+                            orderPay();// 调余额支付接口
                             break;
 
                     }
@@ -249,7 +250,7 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
 
             moneyIn = orderDataBean.getData().getPayPrice();//付款金额
 
-            mBalance.setText(UnitsUtil.fenToYuan(orderDataBean.getData().getAmount()));
+            mBalance.setText(UnitsUtil.fenToYuan(orderDataBean.getData().getAmount()) + "￥");
             mPayPrice.setText("￥ " + orderDataBean.getData().getPayPrice());
 
             if (blance >= price) { //余额大于单价
@@ -359,7 +360,7 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
             public void onResponse(BettingOrderDataBean jsonObject) {
                 if (jsonObject.getCode() == 3000) {
                     L.d("qweradf==> " , "余额扣款成功");
-                    EventBus.getDefault().post(new BettingBuyResultEventBusEntity(true));
+                    EventBus.getDefault().post(new BettingPaymentResultEventBusEntity(true));
                     finish();
                     return;
                 }else{

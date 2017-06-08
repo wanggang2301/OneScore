@@ -20,6 +20,8 @@ import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingBuyResultEventBusEntity;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingDetailsResuleEventBusEntity;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingPaymentResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.LoadingResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.mvppresenter.MvpBettingPayDetailsPresenter;
 import com.hhly.mlottery.util.AppConstants;
@@ -233,6 +235,9 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
                 initData();
                 break;
             case R.id.public_img_back:
+
+                EventBus.getDefault().post(new BettingDetailsResuleEventBusEntity(true));
+
                 finish();
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 break;
@@ -277,7 +282,7 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
                         case "0":
                             detailsDrawImg.setBackgroundResource(R.mipmap.jingcai_icon_sel);
                             break;
-                        case "":
+                        case "-1":
                             detailsGuestImg.setBackgroundResource(R.mipmap.jingcai_icon_sel);
                             break;
                     }
@@ -291,7 +296,7 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
                         case "0":
                             detailsDrawImg.setBackgroundResource(R.mipmap.jingcai_icon_sel);
                             break;
-                        case "":
+                        case "-1":
                             detailsGuestImg.setBackgroundResource(R.mipmap.jingcai_icon_sel);
                             break;
                     }
@@ -345,9 +350,9 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
     }
 
     //购买完成后的返回
-    public void onEventMainThread(BettingBuyResultEventBusEntity buyResultEventBusEntity){
+    public void onEventMainThread(BettingPaymentResultEventBusEntity paymentResultEventBusEntity){
 
-        if (buyResultEventBusEntity.isSuccessBuy()) {
+        if (paymentResultEventBusEntity.isPayMentResult()) {
             mayPay = false; //购买的返回 不可二次点击
             setStatus(SHOW_STATUS_REFRESH_ONCLICK);
             initData();

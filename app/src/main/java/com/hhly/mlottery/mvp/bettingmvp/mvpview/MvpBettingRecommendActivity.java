@@ -24,6 +24,7 @@ import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
 import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingDetailsResuleEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingSettingResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.mvppresenter.MvpBettingRecommendPresenter;
 import com.hhly.mlottery.adapter.bettingadapter.BettingRecommendMvpAdapter;
@@ -423,6 +424,17 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
         listData.clear();
         initData(playType , leagueKeys , pageNum , pageSize);
 
+    }
+
+    /**
+     * 详情页面返回
+     * @param detailsResuleEventBusEntity
+     */
+    public void onEventMainThread(BettingDetailsResuleEventBusEntity detailsResuleEventBusEntity){
+        if (detailsResuleEventBusEntity.isResultDetail()) {
+            setStatus(SHOW_STATUS_LOADING);
+            mLoadHandler.postDelayed(mRun, 0);
+        }
     }
 
     /**
