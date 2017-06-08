@@ -1741,7 +1741,7 @@
     <string name="betting_issue_title">推介</string>
 
     <string name="betting_title_list">競彩推薦</string>
-    <string name="betting_title_details">競彩單關</string>
+    <string name="betting_title_details">推薦詳情</string>
     <string name="betting_title_onlinepay">在線支付</string>
     <string name="betting_txt_buy">購買</string>
     <string name="betting_txt_check">查看</string>
@@ -1771,6 +1771,8 @@
     <string name="betting_plays_asialet">亞盤</string>
     <string name="betting_plays_asize">大小球</string>
     <string name="betting_plays_allcheck">全部</string>
+    <string name="betting_item_jin">近</string>
+    <string name="betting_item_zhong">中</string>
 
     <string name="corner_score">角球比分</string>
     <string name="higher">高於</string>

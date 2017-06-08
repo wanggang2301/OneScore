@@ -60,8 +60,8 @@ public class BettingListDataBean {
         private String isFirstPage;
         private String isLastPage;
 
-        private String hasPreviousPage;
-        private String hasNextPage;
+        private boolean hasPreviousPage;
+        private boolean hasNextPage;
         private String navigatePages;
         private List<Integer> navigatepageNums;
 
@@ -106,6 +106,7 @@ public class BettingListDataBean {
 //            typeStr: "竞彩单关",
 //            lookStatus: 2,
 //            detailUrl: "http://tj.1332255.com/tjDetail/totjDetail?id=645"
+
             private String id;
             private String enable;
             private String remark;
@@ -149,6 +150,7 @@ public class BettingListDataBean {
             private String typeStr;
             private String lookStatus;
             private String detailUrl;
+            private String countOrder;
 
             public String getId() {
                 return id;
@@ -469,6 +471,14 @@ public class BettingListDataBean {
             public void setDetailUrl(String detailUrl) {
                 this.detailUrl = detailUrl;
             }
+
+            public String getCountOrder() {
+                return countOrder;
+            }
+
+            public void setCountOrder(String countOrder) {
+                this.countOrder = countOrder;
+            }
         }
 
         public String getPageNum() {
@@ -591,19 +601,19 @@ public class BettingListDataBean {
             this.isLastPage = isLastPage;
         }
 
-        public String getHasPreviousPage() {
+        public boolean isHasPreviousPage() {
             return hasPreviousPage;
         }
 
-        public void setHasPreviousPage(String hasPreviousPage) {
+        public void setHasPreviousPage(boolean hasPreviousPage) {
             this.hasPreviousPage = hasPreviousPage;
         }
 
-        public String getHasNextPage() {
+        public boolean isHasNextPage() {
             return hasNextPage;
         }
 
-        public void setHasNextPage(String hasNextPage) {
+        public void setHasNextPage(boolean hasNextPage) {
             this.hasNextPage = hasNextPage;
         }
 

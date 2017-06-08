@@ -13,18 +13,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.BaseActivity;
 import com.hhly.mlottery.bean.bettingbean.BettingOrderDataBean;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingBuyResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.PayMentZFBResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.mvppresenter.MvpBettingOnlinePaymentPresenter;
-import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBean;
 import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PayMentUtils;
 import com.hhly.mlottery.util.net.SignUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.util.net.UnitsUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +43,7 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
 
     //订单接口
 //    String payUrl = "http://192.168.31.15:8081/sunon-web-api/pay/unifiedTradePay";
-//    String payUrl = "http://192.168.31.207:8092/user/pay/recharge";
+//    String payUrl = "http://192.168.31.207:8099/user/pay/recharge";
     String payUrl = "http://m.1332255.com:81/user/pay/recharge";
     private Context mContext;
     /**
@@ -64,6 +64,8 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
     private boolean orderCreate = false;// 订单是否创建成功
     private TextView mPayPrice;
     private static String promId;
+
+    private String moneyIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +116,8 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
         //http://192.168.10.242:8092/promotion/order/create?
         // userId=hhly90531&promotionId=642&sign=59891f91c988198909c527399031d7f111&channel=1&token=eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJqd3QiLCJpYXQiOjE0OTYzNzY2NjIsInN1YiI6IntcImlkXCI6XCJoaGx5OTA1MzFcIixcInBob25lTnVtXCI6XCIxMzI2Njc1MjM4NlwifSJ9.2hmsToL-ex9LXRbWI44cuDhqKqZva_qBPG1pKB_IVfU
 
-        String url = "http://192.168.10.242:8092/promotion/order/create";
+//        String url = "http://192.168.10.242:8092/promotion/order/create";
+        String url = "http://m.1332255.com:81/promotion/order/create";
         String userid = AppConstants.register.getUser().getUserId();
         String token = AppConstants.register.getToken();
 
@@ -172,17 +175,21 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
                 break;
             case R.id.betting_confirm_pay:
                 if (orderCreate) {
+
+                    String moneyIns =  UnitsUtil.yuanToFen(moneyIn);//获取充值金额 元==>分
+
                     switch (MODE_PAYMENT){
                         case 0:
                             L.d("支付方式 = ","支付宝");
-                            PayMentUtils.ALiPayData(mContext , MvpBettingOnlinePaymentActivity.this , payUrl , getDataMap("4"));
+                            PayMentUtils.ALiPayData(mContext , MvpBettingOnlinePaymentActivity.this , payUrl , getDataMap("4" , moneyIns));
                             break;
                         case 1:
                             L.d("支付方式 = ","微信");
-                            PayMentUtils.WeiXinPayData(mContext , payUrl , getDataMap("3"));
+                            PayMentUtils.WeiXinPayData(mContext , payUrl , getDataMap("3" , moneyIns));
                             break;
                         case 2:
                             L.d("支付方式 = ","余额支付");
+                            orderPay();// 充值成功调余额支付接口
                             break;
 
                     }
@@ -196,7 +203,7 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
      * @param service
      * @return 用于post请求的参数
      */
-    private Map<String, String> getDataMap(String service){
+    private Map<String, String> getDataMap(String service , String money){
 
         String userid = AppConstants.register.getUser().getUserId();
         String token = AppConstants.register.getToken();
@@ -205,7 +212,7 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
 
         mapPrament.put("userId" , userid);//用户ID
         mapPrament.put("service" , service);//3 微信 4 支付宝
-        mapPrament.put("tradeAmount" , "1");//金额 分
+        mapPrament.put("tradeAmount" , money);//金额 分
         mapPrament.put("loginToken" , token);//登陆的token
         mapPrament.put("lang" , "zh");
         mapPrament.put("timeZone" , "8");
@@ -214,7 +221,7 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
         Map<String ,String> map = new HashMap<>();
         map.put("userId" , userid);//用户ID
         map.put("service" , service);//3 微信 4 支付宝
-        map.put("tradeAmount" , "1");//金额 分
+        map.put("tradeAmount" , money);//金额 分
         map.put("loginToken" , token);//登陆的token
         map.put("sign" , signs);//签名 和 登陆的时候签名一样
 
@@ -236,7 +243,9 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
                 e.printStackTrace();
             }
 
-            mBalance.setText(orderDataBean.getData().getAmount() + " F");
+            moneyIn = orderDataBean.getData().getPayPrice();//付款金额
+
+            mBalance.setText(UnitsUtil.fenToYuan(orderDataBean.getData().getAmount()));
             mPayPrice.setText("￥ " + orderDataBean.getData().getPayPrice());
 
             if (blance >= price) { //余额大于单价
@@ -264,6 +273,10 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
         EventBus.getDefault().unregister(this);
     }
 
+    /**
+     * 支付宝付款返回
+     * @param result
+     */
     public void onEventMainThread(PayMentZFBResultEventBusEntity result){
 
         String resultStatus = result.getResult();
@@ -271,7 +284,7 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
         if (TextUtils.equals(resultStatus, "9000")) {
             Toast.makeText(mContext, "支付成功 > " + resultStatus, Toast.LENGTH_SHORT).show();
             //TODO=====  充值成功调起余额接口
-            orderPay();// 充值成功调余额支付接口
+//            orderPay();// 充值成功调余额支付接口
         } else {
             if (TextUtils.equals(resultStatus, "8000")) {
                 Toast.makeText(mContext, "结果确认中 > " + resultStatus, Toast.LENGTH_SHORT).show();
@@ -286,15 +299,26 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
             }
         }
     }
+
+    /**
+     * 微信支付的返回
+     * @param buyResultEventBusEntity
+     */
+    public void onEventMainThread(BettingBuyResultEventBusEntity buyResultEventBusEntity){
+        if (buyResultEventBusEntity.isSuccessBuy()) {
+            orderPay();
+        }
+    }
     /**
         订单支付（余额扣款）
      */
-    public static void orderPay(){
+    public void orderPay(){
 
         //http://192.168.10.242:8092/promotion/order/pay?
         // userId=hhly90531&promotionId=643&sign=982f065d9f9c942d3e5466d93a417d73aa&channel=1&token=eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJqd3QiLCJpYXQiOjE0OTYzNzY2NjIsInN1YiI6IntcImlkXCI6XCJoaGx5OTA1MzFcIixcInBob25lTnVtXCI6XCIxMzI2Njc1MjM4NlwifSJ9.2hmsToL-ex9LXRbWI44cuDhqKqZva_qBPG1pKB_IVfU&payType=3
 
-        String orderPayUrl = "http://192.168.10.242:8092/promotion/order/pay";
+//        String orderPayUrl = "http://192.168.10.242:8092/promotion/order/pay";
+        String orderPayUrl = "http://m.1332255.com:81/promotion/order/pay";
 
         String userid = AppConstants.register.getUser().getUserId();
         String token = AppConstants.register.getToken();
@@ -323,8 +347,10 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
         VolleyContentFast.requestJsonByGet(orderPayUrl, map, new VolleyContentFast.ResponseSuccessListener<BettingOrderDataBean>() {
             @Override
             public void onResponse(BettingOrderDataBean jsonObject) {
-                if (jsonObject == null || jsonObject.getCode() == 3000) {
+                if (jsonObject.getCode() == 3000) {
                     L.d("qweradf==> " , "余额扣款成功");
+                    EventBus.getDefault().post(new BettingBuyResultEventBusEntity(true));
+                    finish();
                     return;
                 }else{
                     L.d("qweradf==> " , "扣款失败" + jsonObject.getCode());

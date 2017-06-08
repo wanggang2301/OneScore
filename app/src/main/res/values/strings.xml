@@ -1750,7 +1750,7 @@
     <string name="betting_issue_title">推介</string>
 
     <string name="betting_title_list">竞彩推荐</string>
-    <string name="betting_title_details">竞彩单关</string>
+    <string name="betting_title_details">推荐详情</string>
     <string name="betting_title_onlinepay">在线支付</string>
     <string name="betting_txt_buy">购买</string>
     <string name="betting_txt_check">查看</string>
@@ -1780,6 +1780,8 @@
     <string name="betting_plays_asialet">亚盘</string>
     <string name="betting_plays_asize">大小球</string>
     <string name="betting_plays_allcheck">全部</string>
+    <string name="betting_item_jin">近</string>
+    <string name="betting_item_zhong">中</string>
 
 
     <string name="roll_desc_txt">胜出</string>
