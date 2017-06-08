@@ -174,6 +174,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         final int jumpType = bodys.get(j).getJumpType();// 跳转类型
                         final String jumpAddr = bodys.get(j).getJumpAddr();// 跳转地址
                         final String thirdId = bodys.get(j).getThirdId();// 赛事ID
+                        final String leagueId = bodys.get(j).getLeagueId();
 //                        final String isRelateMatch = bodys.get(j).getRelateMatch();// 是否有关联赛事
                         final int type = bodys.get(j).getType();// 关联赛事类型
                         final int matchType = bodys.get(j).getMatchType();// 关联赛事类型-->专家专栏的
@@ -213,6 +214,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                                     } else if ("20".equals(jumpAddr)) {// 篮球内页20
                                                         Intent intent = new Intent(mContext, BasketDetailsActivityTest.class);
                                                         intent.putExtra("thirdId", thirdId);
+                                                        intent.putExtra("leagueId", leagueId);
                                                         mContext.startActivity(intent);
                                                     }
                                                     break;
