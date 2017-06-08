@@ -43,8 +43,8 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@mipmap/football_animation_score_info_bg"
-                    android:scaleType="fitXY"/>
+                    android:background="@mipmap/football_animation_score_info_bg"
+                    android:scaleType="fitXY" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -54,7 +54,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="0.6"
+                        android:layout_weight="0.8"
                         android:orientation="horizontal"
                         android:paddingTop="5dp">
 
@@ -69,13 +69,14 @@
                             <ImageView
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
+                                android:layout_gravity="center"
                                 android:src="@mipmap/football_animation_guest_icon" />
 
                             <TextView
                                 android:id="@+id/tv_home_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:lines="1"
+                                android:paddingLeft="5dp"
                                 android:textColor="@color/linecolor"
                                 android:textSize="@dimen/number_desc"
                                 tools:text="主队name" />
@@ -86,31 +87,37 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tv_hean_srcoe_time"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/linecolor"
+                                    android:textSize="@dimen/number_desc"
+                                    tools:text="10" />
+
+                                <TextView
+                                    android:id="@+id/tv_hean_srcoe_aop"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/linecolor"
+                                    android:textSize="@dimen/number_desc"
+                                    tools:text="'" />
+                            </LinearLayout>
 
                             <TextView
-                                android:id="@+id/tv_hean_srcoe_time"
+                                android:id="@+id/tv_hean_srcoe"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/linecolor"
                                 android:textSize="@dimen/number_desc"
-                                tools:text="10" />
-
-                            <TextView
-                                android:id="@+id/tv_hean_srcoe_aop"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/linecolor"
-                                android:textSize="@dimen/number_desc"
-                                tools:text="'" />
-
-                            <TextView
-                                android:id="@+id/tv_hean_srcoe_desc"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/linecolor"
-                                android:textSize="@dimen/number_desc"
-                                tools:text="上半场" />
+                                tools:text="(1-0)" />
 
                         </LinearLayout>
 
@@ -118,13 +125,13 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="center_vertical"
                             android:paddingLeft="5dp">
 
                             <ImageView
                                 android:id="@+id/iv_guest_head_icon"
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
+                                android:layout_centerVertical="true"
                                 android:layout_alignParentRight="true"
                                 android:layout_marginRight="5dp"
                                 android:src="@mipmap/football_animation_home_icon" />
@@ -134,8 +141,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_toLeftOf="@id/iv_guest_head_icon"
-                                android:lines="1"
+                                android:paddingRight="5dp"
                                 android:textColor="@color/linecolor"
+                                android:layout_centerVertical="true"
                                 android:textSize="@dimen/number_desc"
                                 tools:text="客队name" />
 
@@ -164,7 +172,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:textColor="@color/linecolor"
-                            android:textSize="@dimen/snooker_header"
+                            android:textSize="30sp"
                             tools:text="0 : 0" />
 
                         <ImageView
@@ -194,7 +202,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2" />
+            android:layout_weight="1.8" />
 
     </LinearLayout>
 
@@ -3090,7 +3098,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
-                                        android:layout_toLeftOf="@id/iv_guest_icon"
+                                        android:layout_toLeftOf="@id/iv_guest_img"
                                         android:paddingRight="5dp"
                                         android:textColor="@color/res_name_color"
                                         android:textSize="@dimen/tennis_score_item"
@@ -4853,9 +4861,8 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="3dp"
         android:layout_gravity="center_horizontal|bottom"
-        >
+        android:paddingTop="3dp">
 
         <RelativeLayout
             android:id="@+id/ll_left"
@@ -4934,9 +4941,9 @@
             android:id="@+id/btn_showGif"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:background="@drawable/video_gif_bg"
             android:orientation="horizontal"
-            android:layout_centerInParent="true"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
             android:visibility="gone">
@@ -4956,11 +4963,13 @@
                 android:textColor="#FFFFFF"
                 android:textSize="@dimen/text_size_13" />
         </LinearLayout>
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/tv_guest_yc"
                 android:layout_width="wrap_content"

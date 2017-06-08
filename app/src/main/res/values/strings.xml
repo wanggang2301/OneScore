@@ -1770,6 +1770,7 @@
     <string name="football_play_hit">射正</string>
     <string name="football_play_deviate">射偏</string>
     <string name="football_play_goal_out">界外球</string>
-    <string name="football_play_whistle">哨子</string>
+    <string name="football_play_whistle">犯规</string>
+    <string name="football_play_goal_qx">取消进球</string>
 
 </resources>
