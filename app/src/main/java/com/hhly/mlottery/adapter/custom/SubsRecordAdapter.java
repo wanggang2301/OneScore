@@ -10,7 +10,6 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
 import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingPayDetailsActivity;
 import com.hhly.mlottery.view.CircleImageView;
@@ -82,19 +81,9 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
         baseViewHolder.getView(R.id.textView11).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { //跳转到记录详情
-                BettingListDataBean.PromotionData.BettingListData bettingListData = new BettingListDataBean.PromotionData.BettingListData();
-
-                bettingListData.setId(b.getId());
-                bettingListData.setHomeName(b.getHomeName());
-                bettingListData.setGuestName(b.getGuestName());
-                bettingListData.setPrice(String.valueOf(b.getPrice()));
-                bettingListData.setReleaseDate(b.getMatchDate());
-                bettingListData.setSerNum(b.getScreening());
-                bettingListData.setPhotoUrl(b.getHeadImg());
-                bettingListData.setLeagueName(b.getLeagueName());
 
                 Intent intent = new Intent(mContext, MvpBettingPayDetailsActivity.class);
-                intent.putExtra(ConstantPool.BETTING_ITEM_DATA, bettingListData);
+                intent.putExtra(ConstantPool.TO_DETAILS_PROMOTION_ID, b.getId());
                 mContext.startActivity(intent);
             }
         });
