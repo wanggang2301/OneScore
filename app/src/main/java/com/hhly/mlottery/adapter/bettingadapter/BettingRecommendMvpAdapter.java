@@ -63,12 +63,12 @@ public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListData
     @Override
     public int getItemViewType(int position) {return super.getItemViewType(position);}
 
-    @Override
-    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View  view = LayoutInflater.from(mContext).inflate(R.layout.betting_recommend_item, parent, false);
-        BaseViewHolder holder = new ViewHolderData(view);
-        return holder;
-    }
+//    @Override
+//    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+//        View  view = LayoutInflater.from(mContext).inflate(R.layout.betting_recommend_item, parent, false);
+//        BaseViewHolder holder = new ViewHolderData(view);
+//        return holder;
+//    }
 
 //    @Override
 //    public void onBindViewHolder(RecyclerView.ViewHolder holder, int positions) {
@@ -144,15 +144,29 @@ public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListData
             ImageLoader.load(mContext,imgUrl,R.mipmap.football_analyze_default).into(icon);
         }
 
-        holder.setText(R.id.betting_specialist_name , data.getUserid() + "");
-        holder.setText(R.id.betting_specialist_grade , data.getExpert() + "");
-        holder.setText(R.id.betting_league_name , data.getLeagueName() + "");
-        holder.setText(R.id.betting_date , data.getReleaseDate() + "");
-        holder.setText(R.id.betting_concede_points_spf , data.getTypeStr() + "");
-        holder.setText(R.id.betting_home_name , data.getHomeName() + "");
-        holder.setText(R.id.betting_guest_name , data.getGuestName() + "");
-        holder.setText(R.id.betting_price , "￥ " + data.getPrice());
-        holder.setText(R.id.betting_recommended_reason , data.getContext() + "");
+        holder.setText(R.id.betting_specialist_name , filtraNull(data.getUserid()));
+        holder.setText(R.id.betting_specialist_grade , filtraNull(data.getExpert()));
+        holder.setText(R.id.betting_league_name , filtraNull(data.getLeagueName()));
+        holder.setText(R.id.betting_date , filtraNull(data.getReleaseDate()));
+        holder.setText(R.id.betting_concede_points_spf , filtraNull(data.getTypeStr()));
+        holder.setText(R.id.betting_home_name , filtraNull(data.getHomeName()));
+        holder.setText(R.id.betting_guest_name , filtraNull(data.getGuestName()));
+        holder.setText(R.id.betting_price , "￥ " + filtraNull(data.getPrice()));
+        holder.setText(R.id.betting_recommended_reason , filtraNull(data.getContext()));
+        holder.setText(R.id.betting_buy_num , filtraNull(data.getCountOrder()));
+
+        int winPoint = 0;//胜场
+        int errPoint = 0;//负场
+
+        try {
+            winPoint = Integer.parseInt(data.getWinPoint());
+            errPoint = Integer.parseInt(data.getErrPoint());
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+        }
+        int allPoint = winPoint + errPoint;
+
+        holder.setText(R.id.betting_lately_accuracy , mContext.getResources().getString(R.string.betting_item_jin) + allPoint + mContext.getResources().getString(R.string.betting_item_zhong) + winPoint);
 
         boolean lookStatus;
         if (data.getLookStatus() == null) {
@@ -217,50 +231,59 @@ public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListData
         });
     }
 
-    class ViewHolderData extends BaseViewHolder{
+    private String filtraNull(String str){
 
-        private final CircleImageView mBettingPortrait;
-        private final TextView mSpecialistName;
-        private final TextView mSpecialistGrade;
-        private final TextView mLianzhong;
-        private final TextView mLatelyAccuracy;
-        private final TextView mLeagueName;
-        private final TextView mBettingRound;
-        private final TextView mBettingDate;
-        private final TextView mBettingWeek;
-        private final TextView mBettingSPF;
-        private final TextView mHomeName;
-        private final TextView mVS;
-        private final TextView mGuestName;
-        private final TextView mPrice;
-        private final TextView mBuyNum;
-        private final LinearLayout mBuyOrCheck;
-        private final TextView mRecommendedReason;
-        private final LinearLayout mSpecialistLay;
-        private final LinearLayout mGameDetailsLay;
-
-        public ViewHolderData(View itemView) {
-            super(itemView);
-            mBettingPortrait = (CircleImageView)itemView.findViewById(R.id.betting_portrait_img);
-            mSpecialistName = (TextView) itemView.findViewById(R.id.betting_specialist_name);
-            mSpecialistGrade = (TextView) itemView.findViewById(R.id.betting_specialist_grade);
-            mLianzhong = (TextView) itemView.findViewById(R.id.betting_lainzhong);
-            mLatelyAccuracy = (TextView) itemView.findViewById(R.id.betting_lately_accuracy);
-            mLeagueName = (TextView) itemView.findViewById(R.id.betting_league_name);
-            mBettingRound = (TextView) itemView.findViewById(R.id.betting_round);
-            mBettingDate = (TextView) itemView.findViewById(R.id.betting_date);
-            mBettingWeek = (TextView) itemView.findViewById(R.id.betting_week);
-            mBettingSPF = (TextView) itemView.findViewById(R.id.betting_concede_points_spf);
-            mHomeName = (TextView) itemView.findViewById(R.id.betting_home_name);
-            mVS = (TextView) itemView.findViewById(R.id.betting_vs);
-            mGuestName = (TextView) itemView.findViewById(R.id.betting_guest_name);
-            mPrice = (TextView) itemView.findViewById(R.id.betting_price);
-            mBuyNum = (TextView) itemView.findViewById(R.id.betting_buy_num);
-            mBuyOrCheck = (LinearLayout) itemView.findViewById(R.id.betting_tobuy_or_check);
-            mRecommendedReason = (TextView) itemView.findViewById(R.id.betting_recommended_reason);
-            mSpecialistLay = (LinearLayout) itemView.findViewById(R.id.betting_specialist_lay);
-            mGameDetailsLay = (LinearLayout) itemView.findViewById(R.id.betting_game_details_lay);
-
+        if (str == null) {
+            return "--";
+        }else{
+            return str;
         }
     }
+
+//    class ViewHolderData extends BaseViewHolder{
+//
+//        private final CircleImageView mBettingPortrait;
+//        private final TextView mSpecialistName;
+//        private final TextView mSpecialistGrade;
+//        private final TextView mLianzhong;
+//        private final TextView mLatelyAccuracy;
+//        private final TextView mLeagueName;
+//        private final TextView mBettingRound;
+//        private final TextView mBettingDate;
+//        private final TextView mBettingWeek;
+//        private final TextView mBettingSPF;
+//        private final TextView mHomeName;
+//        private final TextView mVS;
+//        private final TextView mGuestName;
+//        private final TextView mPrice;
+//        private final TextView mBuyNum;
+//        private final LinearLayout mBuyOrCheck;
+//        private final TextView mRecommendedReason;
+//        private final LinearLayout mSpecialistLay;
+//        private final LinearLayout mGameDetailsLay;
+//
+//        public ViewHolderData(View itemView) {
+//            super(itemView);
+//            mBettingPortrait = (CircleImageView)itemView.findViewById(R.id.betting_portrait_img);
+//            mSpecialistName = (TextView) itemView.findViewById(R.id.betting_specialist_name);
+//            mSpecialistGrade = (TextView) itemView.findViewById(R.id.betting_specialist_grade);
+//            mLianzhong = (TextView) itemView.findViewById(R.id.betting_lainzhong);
+//            mLatelyAccuracy = (TextView) itemView.findViewById(R.id.betting_lately_accuracy);
+//            mLeagueName = (TextView) itemView.findViewById(R.id.betting_league_name);
+//            mBettingRound = (TextView) itemView.findViewById(R.id.betting_round);
+//            mBettingDate = (TextView) itemView.findViewById(R.id.betting_date);
+//            mBettingWeek = (TextView) itemView.findViewById(R.id.betting_week);
+//            mBettingSPF = (TextView) itemView.findViewById(R.id.betting_concede_points_spf);
+//            mHomeName = (TextView) itemView.findViewById(R.id.betting_home_name);
+//            mVS = (TextView) itemView.findViewById(R.id.betting_vs);
+//            mGuestName = (TextView) itemView.findViewById(R.id.betting_guest_name);
+//            mPrice = (TextView) itemView.findViewById(R.id.betting_price);
+//            mBuyNum = (TextView) itemView.findViewById(R.id.betting_buy_num);
+//            mBuyOrCheck = (LinearLayout) itemView.findViewById(R.id.betting_tobuy_or_check);
+//            mRecommendedReason = (TextView) itemView.findViewById(R.id.betting_recommended_reason);
+//            mSpecialistLay = (LinearLayout) itemView.findViewById(R.id.betting_specialist_lay);
+//            mGameDetailsLay = (LinearLayout) itemView.findViewById(R.id.betting_game_details_lay);
+//
+//        }
+//    }
 }

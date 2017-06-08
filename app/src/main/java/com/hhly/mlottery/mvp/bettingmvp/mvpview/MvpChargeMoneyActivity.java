@@ -11,14 +11,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.BaseActivity;
+import com.hhly.mlottery.bean.bettingbean.BalanceDataBean;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingBuyResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.PayMentZFBResultEventBusEntity;
 import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PayMentUtils;
+import com.hhly.mlottery.util.net.SignUtils;
+import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.util.net.UnitsUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,6 +59,14 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
      */
 //    String payUrl = "http://192.168.31.207:8092/pay/recharge";
     String payUrl = "http://m.1332255.com:81/user/pay/recharge";
+//      String payUrl = "http://192.168.10.242:8092/user/pay/recharge";
+
+    /**
+     * 余额查询的接口
+     */
+//    String balanceUrl = "http://192.168.10.242:8099/user/pay/balance";
+    String balanceUrl = "http://m.1332255.com:81/user/pay/balance";
+    private TextView balance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +75,14 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
         mContext = this;
         EventBus.getDefault().register(this);
         initView();
+        initData();
     }
 
     private void initView(){
         ImageView mBack = (ImageView) findViewById(R.id.back);
         mBack.setOnClickListener(this);
 
+        balance = (TextView) findViewById(R.id.balance_txt);
         paymentMoney = (EditText) findViewById(R.id.payment_money_edit);
 
         priceCardA = (RadioButton) findViewById(R.id.price_card_a);
@@ -111,6 +127,47 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
             }
         });
 
+    }
+
+    private void initData(){
+        String userid = AppConstants.register.getUser().getUserId();
+        String token = AppConstants.register.getToken();
+
+        Map<String ,String> mapPrament = new HashMap<>();
+
+        mapPrament.put("userId" , userid);//用户ID
+        mapPrament.put("loginToken" , token);//登陆的token
+        mapPrament.put("lang" , "zh");
+        mapPrament.put("timeZone" , "8");
+        String signs = SignUtils.getSign("/user/pay/balance" , mapPrament);
+
+        Map<String ,String> map = new HashMap<>();
+        map.put("userId" , userid);//用户ID
+        map.put("loginToken" , token);//登陆的token
+        map.put("sign" , signs);//签名 和 登陆的时候签名一样
+
+        L.d("qwer== >> " + signs);
+
+        VolleyContentFast.requestJsonByPost(balanceUrl, map, new VolleyContentFast.ResponseSuccessListener<BalanceDataBean>() {
+            @Override
+            public void onResponse(BalanceDataBean jsonObject) {
+                if (jsonObject == null || jsonObject.getCode() != 200) {
+                    L.d("balance == >>>" , "余额接口无数据返回");
+                    return;
+                }else{
+                    if (jsonObject.getData() != null) {
+                        L.d("balance == >>>" , "返回成功");
+                        String balancess = UnitsUtil.fenToYuan(jsonObject.getData().getBalance().getAvailableBalance()); //元转分
+                        balance.setText(jsonObject.getData().getBalance() == null ? "--" : filtraNull(balancess));
+                    }
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                L.d("balance == >>>" , "后台接口访问失败");
+            }
+        },BalanceDataBean.class);
     }
 
     @Override
@@ -166,36 +223,33 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
                 break;
             case R.id.payment_money_ll:
                 //充值
-                switch (PAYMENT_MONEY){
-                    case 0:
-//                        ALiPayData();
-                        PayMentUtils.ALiPayData(mContext , MvpChargeMoneyActivity.this ,payUrl ,getDataMap("4"));
-//                        String result = PayMentUtils.getPayResult();
-//                        if (result == null) {
-//                            L.d("result0602 = " , " n u l l ");
-//                        }else{
-//                            L.d("result0602 = " , result);
-//                            switch (result){
-//                                case "9000":
-//
-//                                    break;
-//                                case "8000":
-//                                    break;
-//                                case "6001":
-//                                    break;
-//                                case "6002":
-//                                    break;
-//                                case "5000":
-//                                    break;
-//                            }
-//                        }
-//                        Toast.makeText(mContext, result + " !", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 1:
-//                        WeiXinPayData();
-                        PayMentUtils.WeiXinPayData(mContext , payUrl , getDataMap("3"));
-                        break;
+                
+                int money = 0;//金额
+                try {
+                    money = Integer.parseInt(paymentMoney.getText().toString()); //获取充值金额
+                }catch (NumberFormatException e){
+                    e.printStackTrace();
                 }
+
+                L.d("输入的金额 ：" , money + "");
+
+                if (money > 10000) {
+                    Toast.makeText(mContext, "单次充值金额最大为10000元", Toast.LENGTH_SHORT).show();
+                }else{
+                    String moneyIn =  UnitsUtil.yuanToFen(paymentMoney.getText().toString());//获取充值金额 元==>分
+
+                    L.d("充值的金额 ：" , moneyIn);
+                    switch (PAYMENT_MONEY){
+                        case 0:
+                            PayMentUtils.ALiPayData(mContext , MvpChargeMoneyActivity.this ,payUrl ,getDataMap("4" , moneyIn));
+                            break;
+                        case 1:
+                            PayMentUtils.WeiXinPayData(mContext , payUrl , getDataMap("3" , moneyIn));
+                            break;
+                    }
+                }
+                
+
                 break;
         }
     }
@@ -205,17 +259,39 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
      * @param service
      * @return 用于post请求的参数
      */
-    private Map<String, String> getDataMap(String service){
-        Map<String, String> map = new HashMap<String, String>();
-        String userid = AppConstants.register.getUser().getUserId();
-        String token = AppConstants.deviceToken;
-        String sign = AppConstants.SIGN_KEY;
+    private Map<String, String> getDataMap(String service , String money){
+//        Map<String, String> map = new HashMap<String, String>();
+//        String userid = AppConstants.register.getUser().getUserId();
+//        String token = AppConstants.deviceToken;
+//        String sign = AppConstants.SIGN_KEY;
+//
+//        map.put("userId" , userid);//用户ID
+//        map.put("service" , service);//3 微信 4 支付宝
+//        map.put("tradeAmount" , "1");//金额 分
+//        map.put("loginToken" , token);//登陆的token
+//        map.put("sign" , sign);//签名 和 登陆的时候签名一样
 
+        String userid = AppConstants.register.getUser().getUserId();
+        String token = AppConstants.register.getToken();
+
+        Map<String ,String> mapPrament = new HashMap<>();
+
+        mapPrament.put("userId" , userid);//用户ID
+        mapPrament.put("service" , service);//3 微信 4 支付宝
+        mapPrament.put("tradeAmount" , money);//金额 分
+        mapPrament.put("loginToken" , token);//登陆的token
+        mapPrament.put("lang" , "zh");
+        mapPrament.put("timeZone" , "8");
+        String signs = SignUtils.getSign("/user/pay/recharge" , mapPrament);
+
+        Map<String ,String> map = new HashMap<>();
         map.put("userId" , userid);//用户ID
         map.put("service" , service);//3 微信 4 支付宝
-        map.put("tradeAmount" , "1");//金额 分
+        map.put("tradeAmount" , money);//金额 分
         map.put("loginToken" , token);//登陆的token
-        map.put("sign" , sign);//签名 和 登陆的时候签名一样
+        map.put("sign" , signs);//签名 和 登陆的时候签名一样
+
+        L.d("qwer== >> " + signs);
 
         return map;
     }
@@ -226,12 +302,18 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
         EventBus.getDefault().unregister(this);
     }
 
+    /**
+     * 支付宝支付的返回码处理
+     * @param result
+     */
     public void onEventMainThread(PayMentZFBResultEventBusEntity result){
 
         String resultStatus = result.getResult();
 
         if (TextUtils.equals(resultStatus, "9000")) {
             Toast.makeText(mContext, "支付成功 > " + resultStatus, Toast.LENGTH_SHORT).show();
+            /** 支付成功后回到当前页刷新余额接口*/
+            initData();
         } else {
             if (TextUtils.equals(resultStatus, "8000")) {
                 Toast.makeText(mContext, "结果确认中 > " + resultStatus, Toast.LENGTH_SHORT).show();
@@ -244,6 +326,25 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
             } else {
                 Toast.makeText(mContext, "支付失败 > " + resultStatus, Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+    /**
+     * 微信支付的返回
+     * @param buyResultEventBusEntity
+     */
+    public void onEventMainThread(BettingBuyResultEventBusEntity buyResultEventBusEntity){
+        if (buyResultEventBusEntity.isSuccessBuy()) {
+            /** 支付成功后回到当前页刷新余额接口*/
+            initData();
+        }
+    }
+
+    private String filtraNull(String str){
+
+        if (str == null) {
+            return "--";
+        }else{
+            return str;
         }
     }
 

@@ -67,6 +67,7 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:visibility="gone"
                             android:paddingLeft="10dp">
 
                             <TextView
@@ -139,6 +140,7 @@
                         <TextView
                             android:id="@+id/betting_round"
                             style="@style/betting_recommend_details_style"
+                            android:visibility="gone"
                             android:paddingLeft="10dp"
                             android:text="轮次" />
 

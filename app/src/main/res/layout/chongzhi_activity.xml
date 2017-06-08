@@ -106,12 +106,13 @@
                             android:text="@string/betting_txt_balance_account" />
 
                         <TextView
+                            android:id="@+id/balance_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="5dp"
                             android:textSize="@dimen/text_size_14"
                             android:textColor="@color/betting_recommend_issue_balance_color"
-                            android:text="1000,00￥" />
+                            android:text="--" />
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -130,6 +131,7 @@
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:textColor="#d7d7d7"
+                        android:maxLength="5"
                         android:textSize="@dimen/text_size_11" />
 
                     <TextView

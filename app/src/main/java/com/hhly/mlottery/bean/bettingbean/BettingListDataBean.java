@@ -106,6 +106,7 @@ public class BettingListDataBean {
 //            typeStr: "竞彩单关",
 //            lookStatus: 2,
 //            detailUrl: "http://tj.1332255.com/tjDetail/totjDetail?id=645"
+
             private String id;
             private String enable;
             private String remark;
@@ -149,6 +150,7 @@ public class BettingListDataBean {
             private String typeStr;
             private String lookStatus;
             private String detailUrl;
+            private String countOrder;
 
             public String getId() {
                 return id;
@@ -468,6 +470,14 @@ public class BettingListDataBean {
 
             public void setDetailUrl(String detailUrl) {
                 this.detailUrl = detailUrl;
+            }
+
+            public String getCountOrder() {
+                return countOrder;
+            }
+
+            public void setCountOrder(String countOrder) {
+                this.countOrder = countOrder;
             }
         }
 

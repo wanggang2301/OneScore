@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingRecommendActivity;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -178,7 +179,8 @@ public class DebugConfigActivity extends BaseActivity {
 
 
 
-                startActivity(new Intent(DebugConfigActivity.this, SubsRecordActivity.class));
+//                startActivity(new Intent(DebugConfigActivity.this, SubsRecordActivity.class));
+                startActivity(new Intent(DebugConfigActivity.this, MvpBettingRecommendActivity.class));
 
             }
         });

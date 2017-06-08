@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BaseActivity;
+import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.bean.bettingbean.BettingDetailsBean;
 import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
 import com.hhly.mlottery.config.ConstantPool;
@@ -21,6 +22,7 @@ import com.hhly.mlottery.mvp.bettingmvp.MView;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingBuyResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.mvppresenter.MvpBettingPayDetailsPresenter;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
@@ -68,10 +70,12 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
     private TextView mRefreshTxt;
     private LinearLayout mLoadingLayout;
     private TextView mNoDataLayout;
-    private BettingListDataBean.PromotionData.BettingListData itemData;
+//    private BettingListDataBean.PromotionData.BettingListData itemData;
     private LinearLayout toPayll;
 
     private boolean mayPay;
+    private String promotionId;
+    private TextView detailsHandicp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,6 +165,7 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
         detailsNum = (TextView) findViewById(R.id.betting_details_num);
         detailsLuague = (TextView) findViewById(R.id.betting_details_league);
         detailsHomeName = (TextView) findViewById(R.id.betting_details_home_name);
+        detailsHandicp = (TextView) findViewById(R.id.betting_details_handicap);
         detailsGuestName = (TextView) findViewById(R.id.betting_details_guest_name);
         detailsDate = (TextView) findViewById(R.id.betting_details_date);
         detailsTime = (TextView) findViewById(R.id.betting_details_time);
@@ -174,39 +179,44 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
         detailsContextBg = (ImageView) findViewById(R.id.betting_details_txt_bg);
         detailsPrice = (TextView) findViewById(R.id.detting_details_price);
 
-
+        //默认隐藏
+        toPayll.setVisibility(View.GONE);
+        detailsContextBg.setVisibility(View.GONE);
     }
 
     private void initData(){
 
-        Serializable allLeague = getIntent().getSerializableExtra(ConstantPool.BETTING_ITEM_DATA);
-        itemData = (BettingListDataBean.PromotionData.BettingListData)allLeague;
+//        Serializable allLeague = getIntent().getSerializableExtra(ConstantPool.BETTING_ITEM_DATA);
+//        itemData = (BettingListDataBean.PromotionData.BettingListData)allLeague;
 
-        if (itemData.getLookStatus().equals("2")) {
-            toPayll.setVisibility(View.VISIBLE);
-            detailsContextBg.setVisibility(View.VISIBLE);
-        }else{
-            toPayll.setVisibility(View.GONE);
-            detailsContextBg.setVisibility(View.GONE);
-        }
+        promotionId = getIntent().getStringExtra(ConstantPool.TO_DETAILS_PROMOTION_ID);
+
+//        if (itemData.getLookStatus().equals("2")) {
+//            toPayll.setVisibility(View.VISIBLE);
+//            detailsContextBg.setVisibility(View.VISIBLE);
+//        }else{
+//            toPayll.setVisibility(View.GONE);
+//            detailsContextBg.setVisibility(View.GONE);
+//        }
 
 
-        L.d("qwertyui===>>> " , itemData.getId());
+        L.d("qwertyui===>>> " , promotionId);
         //http://192.168.10.242:8092/promotion/info/detail?
         // userId=hhly90662&promotionId=643&sign=007ec32c4f7279cfd49260c408528c0412
-        String url = "http://192.168.10.242:8092/promotion/info/detail";
+//        String url = "http://192.168.10.242:8092/promotion/info/detail";
+        String url = "http://m.1332255.com:81/promotion/info/detail";
         String userid = AppConstants.register.getUser().getUserId();
         Map<String ,String> mapPrament = new HashMap<>();
 
         mapPrament.put("userId" , userid);//用户id
-        mapPrament.put("promotionId" , itemData.getId()); //推荐ID
+        mapPrament.put("promotionId" , promotionId); //推荐ID
         mapPrament.put("lang" , "zh");
         mapPrament.put("timeZone" , "8");
         String signs = SignUtils.getSign("/promotion/info/detail" , mapPrament);
 
         Map<String ,String> map = new HashMap<>();
         map.put("userId" , userid);//用户id
-        map.put("promotionId" , itemData.getId()); //推荐ID
+        map.put("promotionId" , promotionId); //推荐ID
         map.put("sign" , signs);
 
         L.d("qwer== >> " + signs);
@@ -227,10 +237,15 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
                 break;
             case R.id.betting_topay_ll:
 
-                Intent mIntent = new Intent(mContext , MvpBettingOnlinePaymentActivity.class);
-                mIntent.putExtra(ConstantPool.PROMOTION_ID , itemData.getId());//选中的
-                startActivity(mIntent);
-                overridePendingTransition(R.anim.push_left_in , R.anim.push_fix_out);
+                if (DeviceInfo.isLogin()) {
+                    Intent mIntent = new Intent(mContext , MvpBettingOnlinePaymentActivity.class);
+                    mIntent.putExtra(ConstantPool.PROMOTION_ID , promotionId);
+                    startActivity(mIntent);
+                    overridePendingTransition(R.anim.push_left_in , R.anim.push_fix_out);
+                } else {
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    startActivity(intent);
+                }
                 break;
 
 
@@ -239,63 +254,72 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
 
     @Override
     public void loadSuccessView(BettingDetailsBean basebean) {
-        if (basebean.getDetail() == null) {
-            setStatus(SHOW_STATUS_NO_DATA);
-            return;
+
+        BettingDetailsBean.DetailsBeanData detailsData = basebean.getDetail();
+        BettingDetailsBean.MatchInfoBeanData matchInfoData = basebean.getMatchInfo();
+        setStatus(SHOW_STATUS_SUCCESS);
+        if (detailsData != null) {
+
+                detailsWeek.setText(filtraNull(detailsData.getSerNum()));
+                detailsHomeWinOdds.setText(filtraNull(detailsData.getLeftOdds()));
+                detailsDrawOdds.setText(filtraNull(detailsData.getMidOdds()));
+                detailsGuestWinOdds.setText(filtraNull(detailsData.getRightOdds()));
+                detailsHandicp.setText("(" + filtraNull(detailsData.getHandicap()) + ")");
+                detailsPrice.setText("￥ " + filtraNull(detailsData.getPrice()));
+
+                if (detailsData.getChoose() != null) {
+                    switch (detailsData.getChoose()){
+                        case "1":
+                            detailsHomeWinImg.setBackgroundResource(R.mipmap.jingcai_icon_sel);
+                            break;
+                        case "0":
+                            detailsDrawImg.setBackgroundResource(R.mipmap.jingcai_icon_sel);
+                            break;
+                        case "":
+                            detailsGuestImg.setBackgroundResource(R.mipmap.jingcai_icon_sel);
+                            break;
+                    }
+
+                }
+                if (detailsData.getChoose1() != null) {
+                    switch (detailsData.getChoose1()){
+                        case "1":
+                            detailsHomeWinImg.setBackgroundResource(R.mipmap.jingcai_icon_sel);
+                            break;
+                        case "0":
+                            detailsDrawImg.setBackgroundResource(R.mipmap.jingcai_icon_sel);
+                            break;
+                        case "":
+                            detailsGuestImg.setBackgroundResource(R.mipmap.jingcai_icon_sel);
+                            break;
+                    }
+                }
         }
+        if (matchInfoData != null) {
 
-        if (itemData != null) {
+            if (matchInfoData.getLookStatus().equals("2")) {
+                toPayll.setVisibility(View.VISIBLE);
+                detailsContextBg.setVisibility(View.VISIBLE);
+            }else{
+                toPayll.setVisibility(View.GONE);
+                detailsContextBg.setVisibility(View.GONE);
+            }
 
-            setStatus(SHOW_STATUS_SUCCESS);
-            mSecialistName.setText(basebean.getDetail().getUserId());
-
-            String imgUrl = itemData.getPhotoUrl();
+            String imgUrl = matchInfoData.getPhotoUrl();
             ImageLoader.load(mContext,imgUrl,R.mipmap.football_analyze_default).into(portraitImg);
-            detailsHomeName.setText(filtraNull(itemData.getHomeName()));
-            detailsGuestName.setText(filtraNull(itemData.getGuestName()));
-            detailsWeek.setText(filtraNull(itemData.getSerNum()));
-            detailsLuague.setText(filtraNull(itemData.getLeagueName()));
-            detailsDate.setText(filtraNull(itemData.getReleaseDate()));
+            detailsHomeName.setText(filtraNull(matchInfoData.getHomeName()));
+            detailsGuestName.setText(filtraNull(matchInfoData.getGuestName()));
+            detailsLuague.setText(filtraNull(matchInfoData.getLeagueName()));
+            mSecialistName.setText(filtraNull(matchInfoData.getNickname()));
+            detailsDate.setText(filtraNull(matchInfoData.getMatchDateTime()));
 
-            detailsHomeWinOdds.setText(filtraNull(basebean.getDetail().getLeftOdds()));
-            detailsDrawOdds.setText(filtraNull(basebean.getDetail().getMidOdds()));
-            detailsGuestWinOdds.setText(filtraNull(basebean.getDetail().getRightOdds()));
-            if (itemData.getLookStatus().equals("2")) {
+            if (matchInfoData.getLookStatus().equals("2")) {
                 detailsContext.setText(getApplicationContext().getResources().getText(R.string.betting_txt_pay_check_result));
             }else{
                 detailsContext.setText(filtraNull(basebean.getDetail().getContext()));
             }
-
-            detailsPrice.setText("￥ " + filtraNull(itemData.getPrice()));
-
-            if (basebean.getDetail().getChoose() != null) {
-                switch (basebean.getDetail().getChoose()){
-                    case "1":
-                        detailsHomeWinImg.setBackgroundResource(R.mipmap.jingcai_icon_sel);
-                        break;
-                    case "0":
-                        detailsDrawImg.setBackgroundResource(R.mipmap.jingcai_icon_sel);
-                        break;
-                    case "":
-                        detailsGuestImg.setBackgroundResource(R.mipmap.jingcai_icon_sel);
-                        break;
-                }
-
-            }
-            if (basebean.getDetail().getChoose1() != null) {
-                switch (basebean.getDetail().getChoose1()){
-                    case "1":
-                        detailsHomeWinImg.setBackgroundResource(R.mipmap.jingcai_icon_sel);
-                        break;
-                    case "0":
-                        detailsDrawImg.setBackgroundResource(R.mipmap.jingcai_icon_sel);
-                        break;
-                    case "":
-                        detailsGuestImg.setBackgroundResource(R.mipmap.jingcai_icon_sel);
-                        break;
-                }
-            }
         }
+
 
 
     }
