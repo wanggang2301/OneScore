@@ -228,6 +228,7 @@ public class AccountDetailFragment extends ViewFragment<AccountDetailContract.Pr
 
     @Override
     public void recyclerNotify() {
+        mScrollView.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
         mAdapter.setNewData(mPresenter.getListData()); //点进去看下
         mAdapter.setLoadingView(mOnloadingView);
@@ -239,6 +240,7 @@ public class AccountDetailFragment extends ViewFragment<AccountDetailContract.Pr
 
     @Override
     public void showNoData() {
+        mScrollView.setVisibility(View.VISIBLE);
         mNodataLayout.setVisibility(View.VISIBLE);
         mExceptionLayout.setVisibility(View.GONE);
         mProgressBarLayout.setVisibility(View.GONE);
@@ -292,6 +294,7 @@ public class AccountDetailFragment extends ViewFragment<AccountDetailContract.Pr
 
     @Override
     public void onError() {
+        mScrollView.setVisibility(View.VISIBLE);
         mNodataLayout.setVisibility(View.GONE);
         mExceptionLayout.setVisibility(View.VISIBLE);
         mProgressBarLayout.setVisibility(View.GONE);
