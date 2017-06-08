@@ -297,9 +297,9 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
                 mLoadHandler.postDelayed(mRun, 0);
                 break;
             case R.id.public_img_back:
-//                finish();
-//                overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
-                startActivity(new Intent(mContext , MvpChargeMoneyActivity.class));
+                finish();
+                overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
+//                startActivity(new Intent(mContext , MvpChargeMoneyActivity.class));
                 break;
             case R.id.public_btn_set:
                 Intent mIntent = new Intent(mContext , BettingRecommendSettingActivity.class);
