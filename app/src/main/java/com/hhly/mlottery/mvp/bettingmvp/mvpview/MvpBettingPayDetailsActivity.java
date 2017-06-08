@@ -20,6 +20,7 @@ import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingBuyResultEventBusEntity;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.LoadingResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.mvppresenter.MvpBettingPayDetailsPresenter;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DeviceInfo;
@@ -244,6 +245,7 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
                     overridePendingTransition(R.anim.push_left_in , R.anim.push_fix_out);
                 } else {
                     Intent intent = new Intent(mContext, LoginActivity.class);
+                    intent.putExtra(ConstantPool.BETTING_LOAD , true);
                     startActivity(intent);
                 }
                 break;
@@ -306,7 +308,7 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
             }
 
             String imgUrl = matchInfoData.getPhotoUrl();
-            ImageLoader.load(mContext,imgUrl,R.mipmap.football_analyze_default).into(portraitImg);
+            ImageLoader.load(mContext,imgUrl,R.mipmap.center_head).into(portraitImg);
             detailsHomeName.setText(filtraNull(matchInfoData.getHomeName()));
             detailsGuestName.setText(filtraNull(matchInfoData.getGuestName()));
             detailsLuague.setText(filtraNull(matchInfoData.getLeagueName()));
@@ -347,6 +349,13 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
 
         if (buyResultEventBusEntity.isSuccessBuy()) {
             mayPay = false; //购买的返回 不可二次点击
+            setStatus(SHOW_STATUS_REFRESH_ONCLICK);
+            initData();
+        }
+    }
+    //登录完成后的返回（刷新 得到新的lookstart状态）
+    public void onEventMainThread(LoadingResultEventBusEntity loadingResultEventBusEntity){
+        if (loadingResultEventBusEntity.isLoadResult()) {
             setStatus(SHOW_STATUS_REFRESH_ONCLICK);
             initData();
         }

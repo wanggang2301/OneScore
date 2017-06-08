@@ -1,5 +1,6 @@
 package com.hhly.mlottery.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +27,7 @@ import de.greenrobot.event.EventBus;
  * Created by：Administrator on 2017/4/24 10:36
  * Use: 竞彩推荐设置页
  */
-public class BettingRecommendSettingActivity extends BaseActivity implements View.OnClickListener {
+public class BettingRecommendSettingActivity extends Activity implements View.OnClickListener {
 
     private ImageView mBack;
     private Button mSave;

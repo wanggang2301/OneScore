@@ -262,8 +262,6 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
         if (mAdapter == null) {
             mAdapter = new BettingRecommendMvpAdapter(mContext , listData);
 
-//            View headerView=getLayoutInflater().inflate(R.layout.onloading, null);
-//            headerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
             mAdapter.setLoadingView(mOnloadingView);
             mRecycleView.setAdapter(mAdapter);
             mAdapter.openLoadMore(0 , true);
@@ -342,23 +340,11 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
         mBettingBuyClickListener = new BettingBuyClickListener() {
             @Override
             public void BuyOnClick(View view, BettingListDataBean.PromotionData.BettingListData listData) {
-                //                Toast.makeText(mContext, "点击了购买** " + s, Toast.LENGTH_SHORT).show();
-//                if (DeviceInfo.isLogin()) {
-//                    L.d("yxq-0418=== " , "点击了*购买** " + listData.getId());
-//                } else {
-//                    Intent intent = new Intent(mContext, LoginActivity.class);
-//                    startActivity(intent);
-//                }
                 Intent mIntent = new Intent(mContext , MvpBettingPayDetailsActivity.class);
 //                    mIntent.putExtra(ConstantPool.BETTING_ITEM_DATA , listData);//选中的
                 mIntent.putExtra(ConstantPool.TO_DETAILS_PROMOTION_ID , listData.getId());//选中的
                 startActivity(mIntent);
                 overridePendingTransition(R.anim.push_left_in , R.anim.push_fix_out);
-//                L.d("yxq-0418=== " , "点击了*购买** " + listData.getId());
-//                Intent mIntent = new Intent(mContext , MvpBettingPayDetailsActivity.class);
-//                mIntent.putExtra(ConstantPool.BETTING_ITEM_DATA , listData);//选中的
-//                startActivity(mIntent);
-//                overridePendingTransition(R.anim.push_left_in , R.anim.push_fix_out);
             }
        };
     }
