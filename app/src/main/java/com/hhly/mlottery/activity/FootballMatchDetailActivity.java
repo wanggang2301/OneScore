@@ -6,20 +6,20 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -42,7 +42,6 @@ import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MathchStatisInfo;
 import com.hhly.mlottery.bean.footballDetails.PreLiveText;
-import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumKeepTime;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumLiveTextEvent;
 import com.hhly.mlottery.config.BaseURLs;
@@ -90,6 +89,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import de.greenrobot.event.EventBus;
+import pl.droidsonroids.gif.GifImageView;
 
 import static com.hhly.mlottery.config.FootBallTypeEnum.ATTACK;
 import static com.hhly.mlottery.config.FootBallTypeEnum.ATTACK1;
@@ -199,17 +199,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private int mReloadPeriod = PERIOD_20;
     private String matchStartTime;
     private ChartBallFragment mChartBallFragment;
-    //头部
-    private ImageView iv_home_icon;
-    private ImageView iv_guest_icon;
-    private TextView tv_homename;
-    private TextView tv_guestname;
-    private TextView score;
-    private TextView date;
-    private LinearLayout mMatchTypeLayout;
-    private TextView mMatchType1;
-    private TextView mMatchType2;
-    private FrameLayout fl_head;
+//    private LinearLayout mMatchTypeLayout;
+//    private TextView mMatchType1;
+//    private TextView mMatchType2;
+//    private FrameLayout fl_head;
     private LinearLayout btn_showGif;
     private BarrageView barrage_view;
     private Timer gifTimer;
@@ -220,13 +213,138 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private CountDown countDown;
     private ImageView barrage_switch;
     boolean barrage_isFocus = false;
-    private RelativeLayout mLayoutScore;
+//    private RelativeLayout mLayoutScore;
     //动画WebView
 //    private WebView mWebView;
-    private LinearLayout ll_Webview;
-    private TextView mHalfScore;
+//    private LinearLayout ll_Webview;
     private String url;
     private boolean isAddFragment = false;
+
+    /**
+     * 动画直播控件
+     */
+    private TextView tv_hean_srcoe_aop;
+    // 比赛开始、信号中断、喝水、受伤、伤停补时 LinearLayout
+    private LinearLayout ll_match_start_content;
+    // 比赛状态显示控件
+    private RelativeLayout rl_match_txt_content;
+    private GifImageView gif_match_start;
+    private TextView tv_start, tv_half_txt;
+    // 信号中断、喝水、受伤、伤停补时
+    private ImageView iv_signal_off, iv_drink_water, iv_injured, iv_injured_addtime;
+    // 后场控球、进攻、危险进攻
+    private LinearLayout ll_control_content;
+    // 后场控球
+    private LinearLayout ll_control;
+    private GifImageView gif_home_control, gif_guest_control;
+    // 进攻
+    private RelativeLayout rl_attack;
+    private GifImageView gif_home_attack, gif_guest_attack;
+    // 危险进攻
+    private RelativeLayout rl_attack_danger;
+    private GifImageView gif_home_attack_danger, gif_guest_attack_danger;
+    // 射正、射偏1
+    private LinearLayout ll_offside_content1;
+    private RelativeLayout rl_home_offside1, rl_guest_offside1;
+    private TextView tv_home_title1, tv_guest_title1;
+    private GifImageView gif_home_position1, gif_guest_position1;
+    private GifImageView gif_home_ball1, gif_guest_ball1, gif_home_hit1, gif_guest_hit1;
+    // 射正、射偏2
+    private LinearLayout ll_offside_content2;
+    private RelativeLayout rl_home_offside2, rl_guest_offside2;
+    private TextView tv_home_title2, tv_guest_title2;
+    private GifImageView gif_home_position2, gif_guest_position2;
+    private GifImageView gif_home_ball2, gif_guest_ball2, gif_guest_hit2, gif_home_hit2;
+    // 球门球
+    private LinearLayout ll_goal_door_content;
+    private RelativeLayout rl_home_goal_door, rl_guest_goal_door;
+    private GifImageView gif_home_goal_door_position, gif_guest_goal_door_position;
+    private GifImageView gfi_home_goal_door, gfi_guest_goal_door;
+    // 界外球
+    private LinearLayout ll_goal_out_content;
+    private RelativeLayout rl_home_goal_out, rl_guest_goal_out;
+    private GifImageView gif_home_goal_out_position, gif_guest_goal_out_position;
+    private GifImageView gif_home_goal_out, gif_guest_goal_out;
+    // 角球
+    private RelativeLayout rl_corner_content;
+    private RelativeLayout rl_home_corner, rl_guest_corner;
+    private LinearLayout ll_home_title_l, ll_home_title_r, ll_guest_title_l, ll_guest_title_r;
+    private GifImageView gif_guest_corner_r_position, gif_guest_corner_l_position, gif_home_corner_r_position, gif_home_corner_l_position;
+    private GifImageView gif_guest_corner_r, gif_guest_corner_l, gif_home_corner_r, gif_home_corner_l;
+    // 越位
+    private RelativeLayout rl_offside_content;
+    private LinearLayout ll_home_offside_title, ll_guest_offside_title;
+    private RelativeLayout rl_home_offside_bg, rl_guest_offside_bg;
+    private GifImageView gif_home_offside, gif_guest_offside;
+    private GifImageView gif_home_offside_position, gif_guest_offside_position;
+    // 点球
+    private LinearLayout ll_penalty_content;
+    private GifImageView gif_home_penalty, gif_guest_penalty;
+    // 点球罚失
+    private RelativeLayout rl_penalty_lose_content;
+    private LinearLayout ll_home_penalty_lose_title, ll_guest_penalty_lose_title;
+    private GifImageView gif_home_penalty_lose, gif_guest_penalty_lose;
+    private GifImageView gif_home_penalty_lose_position, gif_guest_penalty_lose_position;
+    // 红黄牌
+    private RelativeLayout rl_r_or_y_content;
+    private LinearLayout ll_home_r_or_y_title, ll_guest_r_or_y_title;
+    private GifImageView gif_home_r_or_y_position, gif_guest_r_or_y_position;
+    private TextView tv_home_desc, tv_guest_desc;
+    private ImageView iv_home_img, iv_guest_img, iv_home_r_or_y, iv_guest_r_or_y;
+    // 任意球fk2、fk4
+    private RelativeLayout fl_free_kick_fk2_fk4_content;
+    private LinearLayout ll_home_free_kick_bg, ll_guest_free_kick_bg, ll_home_free_kick_fk4_bg, ll_guest_free_kick_fk4_bg, ll_home_free_kick_fk2_bg, ll_guest_free_kick_fk2_bg;
+    private TextView tv_home_free_kick_fk4_title, tv_guest_free_kick_fk4_title, tv_home_free_kick_fk2_title, tv_guest_free_kick_fk2_title;
+    private GifImageView gif_home_free_kick_fk2_position, gif_guest_free_kick_fk2_position, gif_home_free_kick_fk4_position, gif_guest_free_kick_fk4_position;
+    // 任意球fk3 1
+    private LinearLayout fl_free_kick_fk3_content1;
+    private RelativeLayout rl_home_free_kick_fk3_1, rl_guest_free_kick_fk3_1;
+    private GifImageView gif_home_free_kick_fk3_position, gif_guest_free_kick_fk3_position;
+    // 任意球fk3 2
+    private RelativeLayout fl_free_kick_fk3_content2;
+    private LinearLayout ll_home_free_kick_fk3_bg_2, ll_guest_free_kick_fk3_bg_2;
+    private LinearLayout ll_home_free_kick_fk3_title_2, ll_guest_free_kick_fk3_title_2;
+    private GifImageView gif_home_free_kick_fk3_position_2, gif_guest_free_kick_fk3_position_2;
+    // 任意球fk1
+    private RelativeLayout fl_free_kick_fk1_content;
+    private LinearLayout ll_home_free_kick_fk1_bg, ll_guest_free_kick_fk1_bg;
+    private LinearLayout ll_home_free_kick_fk1_title, ll_guest_free_kick_fk1_title;
+    private GifImageView gif_home_free_kick_fk1_position, gif_guest_free_kick_fk1_position;
+
+    // 进球
+    private LinearLayout ll_goal_content;
+    private ImageView iv_home_goal, iv_guest_goal;
+    private GifImageView gif_home_goal_cancel, gif_guest_goal_cancel;
+    private TextView tv_home_goal_title, tv_guest_goal_title;
+
+    // 欢呼
+    private LinearLayout ll_cheer_content;
+    private GifImageView gif_cheer;
+
+    private AnimationDrawable homeAnima;// 主队进球动画
+    private AnimationDrawable guestAnima;// 客队进球动画
+
+    private boolean isHomeFreeKick = false; // 主队是危险任意球
+    private boolean isGuestFreeKick = false; // 客队是危险任意球
+
+    //头部
+    private LinearLayout ll_score_content,ll_over_score_content;
+    private ImageView iv_home_icon;
+    private ImageView iv_guest_icon;
+    private TextView tv_homename;
+    private TextView tv_guestname;
+    private TextView score;
+    private TextView date;
+    private TextView mHalfScore;
+
+    private TextView tv_head_match_name;
+    private TextView tv_head_home_name;
+    private TextView tv_head_guest_name;
+    private TextView tv_head_data_or_score;
+    private TextView tv_head_time;
+    private TextView tv_head_over_score;
+    private ImageView iv_head_home_icon;
+    private ImageView iv_head_guest_icon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -253,7 +371,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         initView();
         loadData(0);
         initEvent();
-        loadAnim();
     }
 
 
@@ -278,7 +395,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         iv_back = (ImageView) findViewById(R.id.iv_back);
         iv_setting = (ImageView) findViewById(R.id.iv_setting);
-        mLayoutScore = (RelativeLayout) findViewById(R.id.ll_football_score);
+//        mLayoutScore = (RelativeLayout) findViewById(R.id.ll_football_score);
 
         iv_back.setOnClickListener(this);
         iv_setting.setOnClickListener(this);
@@ -289,8 +406,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         //动画WebView
 //        tv_nopage = (TextView) findViewById(R.id.tv_nopage);
 //        mWebView = (WebView) findViewById(R.id.webview);
-        ll_Webview = (LinearLayout) findViewById(R.id.ll_webview);
-        mHalfScore = (TextView) findViewById(R.id.half_score);
+//        ll_Webview = (LinearLayout) findViewById(R.id.ll_webview);
 
     }
 
@@ -298,47 +414,47 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         barrage_view.setDatas(barrageBean.getUrl(), barrageBean.getMsg().toString());
     }
 
-    WebView mWebView;
+//    WebView mWebView;
 
-    /**
-     * 动画直播
-     */
-    private void loadAnim() {
-        mWebView = new WebView(getApplicationContext());
-        ll_Webview.addView(mWebView);
-        mWebView.setHorizontalScrollBarEnabled(false);
-
-        WebSettings webSettings = mWebView.getSettings();
-        // 不用缓存
-        webSettings.setAppCacheEnabled(false);
-        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        webSettings.setLoadWithOverviewMode(true);
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-        webSettings.setDomStorageEnabled(true);
-        webSettings.setDatabaseEnabled(true);
-        webSettings.setUseWideViewPort(true);
-        webSettings.setBuiltInZoomControls(false);
-        mWebView.setBackgroundColor(Color.parseColor("#00000000"));//去掉webView白条
-
-        mWebView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-
-            @Override
-            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                super.onReceivedError(view, request, error);
-                ll_Webview.setVisibility(View.GONE);
-                L.e("AAAA", "error?");
-            }
-        });
-
-        mWebView.loadUrl(url);
-    }
+//    /**
+//     * 动画直播
+//     */
+//    private void loadAnim() {
+//        mWebView = new WebView(getApplicationContext());
+//        ll_Webview.addView(mWebView);
+//        mWebView.setHorizontalScrollBarEnabled(false);
+//
+//        WebSettings webSettings = mWebView.getSettings();
+//        // 不用缓存
+//        webSettings.setAppCacheEnabled(false);
+//        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+//        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+//        webSettings.setLoadWithOverviewMode(true);
+//        webSettings.setJavaScriptEnabled(true);
+//        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+//        webSettings.setDomStorageEnabled(true);
+//        webSettings.setDatabaseEnabled(true);
+//        webSettings.setUseWideViewPort(true);
+//        webSettings.setBuiltInZoomControls(false);
+//        mWebView.setBackgroundColor(Color.parseColor("#00000000"));//去掉webView白条
+//
+//        mWebView.setWebViewClient(new WebViewClient() {
+//            @Override
+//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//                view.loadUrl(url);
+//                return true;
+//            }
+//
+//            @Override
+//            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+//                super.onReceivedError(view, request, error);
+//                ll_Webview.setVisibility(View.GONE);
+//                L.e("AAAA", "error?");
+//            }
+//        });
+//
+//        mWebView.loadUrl(url);
+//    }
 
 
     @Override
@@ -428,6 +544,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     //下拉刷新
                     if (BEFOURLIVE.equals(mPreStatus) && BEFOURLIVE.equals(matchDetail.getLiveStatus()) && !isFinishing()) { //赛前
 
+                        ll_score_content.setVisibility(View.GONE);
+                        ll_over_score_content.setVisibility(View.VISIBLE);
+
                         initPreData(matchDetail);
                         setScoreText("VS");
 
@@ -440,6 +559,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                         //完场
                         if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
+                            ll_score_content.setVisibility(View.GONE);
+                            ll_over_score_content.setVisibility(View.VISIBLE);
 
                             String halfScore = mMatchDetail.getHomeTeamInfo().getHalfScore() + " : " + mMatchDetail.getGuestTeamInfo().getHalfScore();
                             String finishScore = mMatchDetail.getHomeTeamInfo().getScore() + " : " + mMatchDetail.getGuestTeamInfo().getScore();
@@ -468,7 +589,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                             }
                         } else if (ONLIVE.equals(mMatchDetail.getLiveStatus())) {//未完场头部
-
+                            ll_score_content.setVisibility(View.VISIBLE);
+                            ll_over_score_content.setVisibility(View.GONE);
 
                             L.d(TAG, "未完场" + mMatchDetail.getLiveStatus());
 
@@ -539,13 +661,28 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private void initViewPager(MatchDetail matchDetail) {
         if (BEFOURLIVE.equals(matchDetail.getLiveStatus())) { //赛前
-            mLayoutScore.setVisibility(View.VISIBLE);
+//            mLayoutScore.setVisibility(View.VISIBLE);
+            ll_score_content.setVisibility(View.GONE);
+            tv_head_over_score.setVisibility(View.GONE);
+            tv_head_time.setVisibility(View.VISIBLE);
+            ll_over_score_content.setVisibility(View.VISIBLE);
 
             setCurrentShowTab(matchDetail.getLiveStatus());
 
             matchStartTime = matchDetail.getMatchInfo().getStartTime();
             initPreData(matchDetail);
             setScoreText("VS");
+
+            try {
+                String[] split = matchDetail.getMatchInfo().getStartTime().split(" ");
+                tv_head_data_or_score.setText(split[0]);
+                if(split.length == 2){
+                    tv_head_time.setText(split[1] + " " + DateUtil.getWeekOfDate(DateUtil.parseDate(split[0])));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
 
         } else {
 
@@ -558,10 +695,16 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
             //完场
             if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
+                ll_score_content.setVisibility(View.GONE);
+                tv_head_time.setVisibility(View.GONE);
+                tv_head_over_score.setVisibility(View.VISIBLE);
+                ll_over_score_content.setVisibility(View.VISIBLE);
+
                 if (matchDetail.getHomeTeamInfo() != null && matchDetail.getGuestTeamInfo() != null) {
                     mHalfScore.setText("(" + matchDetail.getHomeTeamInfo().getHalfScore() + ":" + matchDetail.getGuestTeamInfo().getHalfScore() + ")");
+                    tv_head_data_or_score.setText("(" + matchDetail.getHomeTeamInfo().getHalfScore() + ":" + matchDetail.getGuestTeamInfo().getHalfScore() + ")");
                 }
-                mLayoutScore.setVisibility(View.VISIBLE);
+//                mLayoutScore.setVisibility(View.VISIBLE);
                 String halfScore = mMatchDetail.getHomeTeamInfo().getHalfScore() + " : " + mMatchDetail.getGuestTeamInfo().getHalfScore();
                 String finishScore = mMatchDetail.getHomeTeamInfo().getScore() + " : " + mMatchDetail.getGuestTeamInfo().getScore();
 
@@ -589,7 +732,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 getOverMatchCollectionCount();
 
             } else if (ONLIVE.equals(mMatchDetail.getLiveStatus())) { //未完场头部
-                mLayoutScore.setVisibility(View.GONE);
+                ll_score_content.setVisibility(View.VISIBLE);
+                ll_over_score_content.setVisibility(View.GONE);
+//                mLayoutScore.setVisibility(View.GONE);
                 //place  1主队 2客队
                 initMatchSatisInfo();
 
@@ -888,15 +1033,15 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     @Override
     protected void onDestroy() {
-        if (mWebView != null) {
-            mWebView.onPause();
-            mWebView.destroy();
-            mWebView = null;
-
-        }
-        if (ll_Webview != null) {
-            ll_Webview.removeAllViews();
-        }
+//        if (mWebView != null) {
+//            mWebView.onPause();
+//            mWebView.destroy();
+//            mWebView = null;
+//
+//        }
+//        if (ll_Webview != null) {
+//            ll_Webview.removeAllViews();
+//        }
 
         if (mReloadTimer != null) {
             mReloadTimer.cancel();
@@ -1009,7 +1154,19 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             case "0":
             case "10":
             case "11":  //开始上半场，开球：
-                mLayoutScore.setVisibility(View.GONE);
+//                mLayoutScore.setVisibility(View.GONE);
+
+                gif_match_start.setImageResource(R.mipmap.football_match_start_gif);
+                tv_start.setBackgroundResource(R.mipmap.football_match_start_txt);
+                rl_match_txt_content.setVisibility(View.VISIBLE);
+                gif_match_start.setVisibility(View.VISIBLE);
+                tv_half_txt.setVisibility(View.VISIBLE);
+                iv_signal_off.setVisibility(View.GONE);
+                iv_drink_water.setVisibility(View.GONE);
+                iv_injured.setVisibility(View.GONE);
+                iv_injured_addtime.setVisibility(View.GONE);
+                tv_half_txt.setText(getString(R.string.fragme_home_shangbanchang_text));
+                showGifAnimation(11);
                 break;
             case "1"://上半场结束
                 mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
@@ -1018,15 +1175,35 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mLiveFragment.setMathchStatisInfo(mathchStatisInfo);
                 mLiveFragment.initLiveStatics(mMatchDetail.getLiveStatus());// 刷新统计
 
+                tv_start.setBackgroundResource(R.mipmap.football_halftime_bg);
+                rl_match_txt_content.setVisibility(View.VISIBLE);
+                gif_match_start.setVisibility(View.GONE);
+                tv_half_txt.setVisibility(View.GONE);
+                iv_signal_off.setVisibility(View.GONE);
+                iv_drink_water.setVisibility(View.GONE);
+                iv_injured.setVisibility(View.GONE);
+                iv_injured_addtime.setVisibility(View.GONE);
+                showGifAnimation(1);
                 break;
             case "12":
             case "13":  //下半场开始
+                gif_match_start.setImageResource(R.mipmap.football_match_start_gif);
+                tv_start.setBackgroundResource(R.mipmap.football_match_start_txt);
+                rl_match_txt_content.setVisibility(View.VISIBLE);
+                gif_match_start.setVisibility(View.VISIBLE);
+                tv_half_txt.setVisibility(View.VISIBLE);
+                iv_signal_off.setVisibility(View.GONE);
+                iv_drink_water.setVisibility(View.GONE);
+                iv_injured.setVisibility(View.GONE);
+                iv_injured_addtime.setVisibility(View.GONE);
+                tv_half_txt.setText(getString(R.string.fragme_home_xiabanchang_text));
+                showGifAnimation(12);
                 break;
             case "3": //结束下半场
-                mLayoutScore.setVisibility(View.VISIBLE);
-
-                mHalfScore.setText("(" + mathchStatisInfo.getHome_half_score() + ":" + mathchStatisInfo.getGuest_half_score()
-                        + ")");
+//                mLayoutScore.setVisibility(View.VISIBLE);
+//
+//                mHalfScore.setText("(" + mathchStatisInfo.getHome_half_score() + ":" + mathchStatisInfo.getGuest_half_score()
+//                        + ")");
                 //socket关闭
                 // 获取上半场的走势图数据
                 setScoreClolor(getApplicationContext().getResources().getColor(R.color.score));
@@ -1036,6 +1213,15 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                 mLiveFragment.setMathchStatisInfo(mathchStatisInfo);
                 mLiveFragment.initLiveStatics("-1");// 刷新统计
+
+                tv_start.setBackgroundResource(R.mipmap.football_match_over_txt);
+                rl_match_txt_content.setVisibility(View.VISIBLE);
+                gif_match_start.setVisibility(View.GONE);
+                tv_half_txt.setVisibility(View.GONE);
+                iv_signal_off.setVisibility(View.GONE);
+                iv_drink_water.setVisibility(View.GONE);
+                iv_injured.setVisibility(View.GONE);
+                iv_injured_addtime.setVisibility(View.GONE);
 
                 closeWebSocket();
 
@@ -1082,6 +1268,17 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                 mLiveFragment.addTrendChartEvent(matchTextLiveBean);
 
+                iv_home_goal.setVisibility(View.VISIBLE);
+                iv_guest_goal.setVisibility(View.GONE);
+                gif_home_goal_cancel.setVisibility(View.GONE);
+                gif_guest_goal_cancel.setVisibility(View.GONE);
+                tv_home_goal_title.setVisibility(View.VISIBLE);
+                tv_guest_goal_title.setVisibility(View.GONE);
+                tv_home_goal_title.setText(getString(R.string.push_type_goal));
+                homeAnima.stop();
+                homeAnima.start();
+                guestAnima.stop();
+                showGifAnimation(1029);
                 break;
             case "1030"://取消主队进球
 
@@ -1111,6 +1308,14 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                 mLiveFragment.cancelTrendChartEvent(matchTextLiveBean);
 
+                iv_home_goal.setVisibility(View.GONE);
+                iv_guest_goal.setVisibility(View.GONE);
+                gif_home_goal_cancel.setVisibility(View.VISIBLE);
+                gif_guest_goal_cancel.setVisibility(View.GONE);
+                tv_home_goal_title.setVisibility(View.VISIBLE);
+                tv_guest_goal_title.setVisibility(View.GONE);
+                tv_home_goal_title.setText(getString(R.string.football_play_goal_qx));
+                showGifAnimation(1030);
                 break;
             case "2053"://客队进球
 
@@ -1140,6 +1345,17 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                 mLiveFragment.addTrendChartEvent(matchTextLiveBean);
 
+                iv_home_goal.setVisibility(View.GONE);
+                iv_guest_goal.setVisibility(View.VISIBLE);
+                gif_home_goal_cancel.setVisibility(View.GONE);
+                gif_guest_goal_cancel.setVisibility(View.GONE);
+                tv_home_goal_title.setVisibility(View.GONE);
+                tv_guest_goal_title.setVisibility(View.VISIBLE);
+                tv_guest_goal_title.setText(getString(R.string.push_type_goal));
+                guestAnima.stop();
+                guestAnima.start();
+                homeAnima.stop();
+                showGifAnimation(2053);
                 break;
 
             case "2054"://取消客队进球
@@ -1169,6 +1385,14 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mLiveFragment.initLiveStatics(mMatchDetail.getLiveStatus());// 刷新统计
                 mLiveFragment.cancelTrendChartEvent(matchTextLiveBean);
 
+                iv_home_goal.setVisibility(View.GONE);
+                iv_guest_goal.setVisibility(View.GONE);
+                gif_home_goal_cancel.setVisibility(View.GONE);
+                gif_guest_goal_cancel.setVisibility(View.VISIBLE);
+                tv_home_goal_title.setVisibility(View.GONE);
+                tv_guest_goal_title.setVisibility(View.VISIBLE);
+                tv_guest_goal_title.setText(getString(R.string.football_play_goal_qx));
+                showGifAnimation(2054);
                 break;
 
             case "1025": //主队角球
@@ -1189,6 +1413,42 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                 mLiveFragment.addTrendChartEvent(matchTextLiveBean);
 
+                if (Integer.parseInt(mThirdId) / 2 == 0) {
+                    rl_home_corner.setVisibility(View.VISIBLE);
+                    rl_guest_corner.setVisibility(View.INVISIBLE);
+                    ll_home_title_l.setVisibility(View.VISIBLE);
+                    ll_home_title_r.setVisibility(View.GONE);
+                    ll_guest_title_l.setVisibility(View.GONE);
+                    ll_guest_title_r.setVisibility(View.GONE);
+                    gif_guest_corner_r_position.setVisibility(View.GONE);
+                    gif_guest_corner_l_position.setVisibility(View.GONE);
+                    gif_home_corner_r_position.setVisibility(View.GONE);
+                    gif_home_corner_l_position.setVisibility(View.VISIBLE);
+                    gif_guest_corner_r.setVisibility(View.GONE);
+                    gif_guest_corner_l.setVisibility(View.GONE);
+                    gif_home_corner_r.setVisibility(View.GONE);
+                    gif_home_corner_l.setVisibility(View.VISIBLE);
+                    gif_home_corner_l_position.setImageResource(R.mipmap.football_home_position_gif);
+                    gif_home_corner_l.setImageResource(R.mipmap.football_home_corner_left);
+                } else {
+                    rl_home_corner.setVisibility(View.VISIBLE);
+                    rl_guest_corner.setVisibility(View.INVISIBLE);
+                    ll_home_title_l.setVisibility(View.GONE);
+                    ll_home_title_r.setVisibility(View.VISIBLE);
+                    ll_guest_title_l.setVisibility(View.GONE);
+                    ll_guest_title_r.setVisibility(View.GONE);
+                    gif_guest_corner_r_position.setVisibility(View.GONE);
+                    gif_guest_corner_l_position.setVisibility(View.GONE);
+                    gif_home_corner_r_position.setVisibility(View.VISIBLE);
+                    gif_home_corner_l_position.setVisibility(View.GONE);
+                    gif_guest_corner_r.setVisibility(View.GONE);
+                    gif_guest_corner_l.setVisibility(View.GONE);
+                    gif_home_corner_r.setVisibility(View.VISIBLE);
+                    gif_home_corner_l.setVisibility(View.GONE);
+                    gif_home_corner_r_position.setImageResource(R.mipmap.football_home_position_gif);
+                    gif_home_corner_r.setImageResource(R.mipmap.football_home_corner_right);
+                }
+                showGifAnimation(3333);
                 break;
 
             case "1050": //取消主队角球
@@ -1223,6 +1483,42 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
                 mLiveFragment.addTrendChartEvent(matchTextLiveBean);
 
+                if (Integer.parseInt(mThirdId) / 2 == 0) {
+                    rl_home_corner.setVisibility(View.INVISIBLE);
+                    rl_guest_corner.setVisibility(View.VISIBLE);
+                    ll_home_title_l.setVisibility(View.GONE);
+                    ll_home_title_r.setVisibility(View.GONE);
+                    ll_guest_title_l.setVisibility(View.VISIBLE);
+                    ll_guest_title_r.setVisibility(View.GONE);
+                    gif_guest_corner_r_position.setVisibility(View.GONE);
+                    gif_guest_corner_l_position.setVisibility(View.VISIBLE);
+                    gif_home_corner_r_position.setVisibility(View.GONE);
+                    gif_home_corner_l_position.setVisibility(View.GONE);
+                    gif_guest_corner_r.setVisibility(View.GONE);
+                    gif_guest_corner_l.setVisibility(View.VISIBLE);
+                    gif_home_corner_r.setVisibility(View.GONE);
+                    gif_home_corner_l.setVisibility(View.GONE);
+                    gif_guest_corner_l_position.setImageResource(R.mipmap.football_guest_position_gif);
+                    gif_guest_corner_l.setImageResource(R.mipmap.football_guest_corner_left);
+                } else {
+                    rl_home_corner.setVisibility(View.INVISIBLE);
+                    rl_guest_corner.setVisibility(View.VISIBLE);
+                    ll_home_title_l.setVisibility(View.GONE);
+                    ll_home_title_r.setVisibility(View.GONE);
+                    ll_guest_title_l.setVisibility(View.GONE);
+                    ll_guest_title_r.setVisibility(View.VISIBLE);
+                    gif_guest_corner_r_position.setVisibility(View.VISIBLE);
+                    gif_guest_corner_l_position.setVisibility(View.GONE);
+                    gif_home_corner_r_position.setVisibility(View.GONE);
+                    gif_home_corner_l_position.setVisibility(View.GONE);
+                    gif_guest_corner_r.setVisibility(View.VISIBLE);
+                    gif_guest_corner_l.setVisibility(View.GONE);
+                    gif_home_corner_r.setVisibility(View.GONE);
+                    gif_home_corner_l.setVisibility(View.GONE);
+                    gif_guest_corner_r_position.setImageResource(R.mipmap.football_guest_position_gif);
+                    gif_guest_corner_r.setImageResource(R.mipmap.football_guest_corner_right);
+                }
+                showGifAnimation(4444);
                 break;
 
             case "2074": //取消客队角球
@@ -1243,11 +1539,21 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             case "1031"://主队点球
                 mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
+
+                gif_home_penalty.setVisibility(View.VISIBLE);
+                gif_guest_penalty.setVisibility(View.GONE);
+                gif_home_penalty.setImageResource(R.mipmap.football_home_penalty_gif);
+                showGifAnimation(1031);
                 break;
 
             case "2055"://客队点球
                 mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
+
+                gif_home_penalty.setVisibility(View.GONE);
+                gif_guest_penalty.setVisibility(View.VISIBLE);
+                gif_guest_penalty.setImageResource(R.mipmap.football_guest_penalty_gif);
+                showGifAnimation(2055);
                 break;
 
             case "1034":   //主队黄牌
@@ -1262,6 +1568,18 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                 mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
+
+                ll_home_r_or_y_title.setVisibility(View.VISIBLE);
+                ll_guest_r_or_y_title.setVisibility(View.GONE);
+                gif_home_r_or_y_position.setVisibility(View.VISIBLE);
+                gif_guest_r_or_y_position.setVisibility(View.INVISIBLE);
+                iv_home_img.setVisibility(View.INVISIBLE);
+                iv_home_r_or_y.setVisibility(View.VISIBLE);
+                iv_guest_r_or_y.setVisibility(View.GONE);
+                gif_home_r_or_y_position.setImageResource(R.mipmap.football_home_position_gif);
+                tv_home_desc.setText(getString(R.string.foot_event_yc));
+                iv_home_r_or_y.setImageResource(R.mipmap.football_home_y);
+                showGifAnimation(1034);
                 break;
 
             case "1048": //取消 主队黄牌
@@ -1322,6 +1640,18 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                 mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
+
+                ll_home_r_or_y_title.setVisibility(View.GONE);
+                ll_guest_r_or_y_title.setVisibility(View.VISIBLE);
+                gif_home_r_or_y_position.setVisibility(View.INVISIBLE);
+                gif_guest_r_or_y_position.setVisibility(View.VISIBLE);
+                iv_guest_img.setVisibility(View.INVISIBLE);
+                iv_home_r_or_y.setVisibility(View.GONE);
+                iv_guest_r_or_y.setVisibility(View.VISIBLE);
+                gif_guest_r_or_y_position.setImageResource(R.mipmap.football_guest_position_gif);
+                tv_guest_desc.setText(getString(R.string.foot_event_yc));
+                iv_guest_r_or_y.setImageResource(R.mipmap.football_guest_y);
+                showGifAnimation(2058);
                 break;
 
             case "2072":  //取消客队黄牌
@@ -1374,6 +1704,18 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mLiveFragment.addFootballEvent(matchTextLiveBean);
                 //事件放入并展示
                 mLiveFragment.showFootballEventByState();
+
+                ll_home_r_or_y_title.setVisibility(View.VISIBLE);
+                ll_guest_r_or_y_title.setVisibility(View.GONE);
+                gif_home_r_or_y_position.setVisibility(View.VISIBLE);
+                gif_guest_r_or_y_position.setVisibility(View.INVISIBLE);
+                iv_home_img.setVisibility(View.INVISIBLE);
+                iv_home_r_or_y.setVisibility(View.VISIBLE);
+                iv_guest_r_or_y.setVisibility(View.GONE);
+                gif_home_r_or_y_position.setImageResource(R.mipmap.football_home_position_gif);
+                tv_home_desc.setText(getString(R.string.foot_event_rc));
+                iv_home_r_or_y.setImageResource(R.mipmap.football_home_r);
+                showGifAnimation(1032);
                 break;
             case "1047": //取消主队红牌
                 if (mathchStatisInfo.getHome_rc() > 0) {
@@ -1399,6 +1741,18 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                 mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
+
+                ll_home_r_or_y_title.setVisibility(View.GONE);
+                ll_guest_r_or_y_title.setVisibility(View.VISIBLE);
+                gif_home_r_or_y_position.setVisibility(View.INVISIBLE);
+                gif_guest_r_or_y_position.setVisibility(View.VISIBLE);
+                iv_guest_img.setVisibility(View.INVISIBLE);
+                iv_home_r_or_y.setVisibility(View.GONE);
+                iv_guest_r_or_y.setVisibility(View.VISIBLE);
+                gif_guest_r_or_y_position.setImageResource(R.mipmap.football_guest_position_gif);
+                tv_guest_desc.setText(getString(R.string.foot_event_rc));
+                iv_guest_r_or_y.setImageResource(R.mipmap.football_guest_r);
+                showGifAnimation(2056);
                 break;
 
             case "2071":  //取消客队红牌
@@ -1419,6 +1773,13 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                 mLiveFragment.addTrendChartEvent(matchTextLiveBean);
 
+                gif_home_attack_danger.setImageResource(R.mipmap.football_home_attack_danger_gif);
+                ll_control.setVisibility(View.GONE);
+                rl_attack.setVisibility(View.GONE);
+                rl_attack_danger.setVisibility(View.VISIBLE);
+                gif_home_attack_danger.setVisibility(View.VISIBLE);
+                gif_guest_attack_danger.setVisibility(View.INVISIBLE);
+                showGifAnimation(1026);
                 break;
 
             case "2050":  //客队危进攻
@@ -1427,6 +1788,13 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                 mLiveFragment.addTrendChartEvent(matchTextLiveBean);
 
+                gif_guest_attack_danger.setImageResource(R.mipmap.football_guest_attack_danger_gif);
+                ll_control.setVisibility(View.GONE);
+                rl_attack.setVisibility(View.GONE);
+                rl_attack_danger.setVisibility(View.VISIBLE);
+                gif_home_attack_danger.setVisibility(View.INVISIBLE);
+                gif_guest_attack_danger.setVisibility(View.VISIBLE);
+                showGifAnimation(2050);
                 break;
 
             case "1039":    //主队射正球门
@@ -1442,12 +1810,52 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mLiveFragment.setMathchStatisInfo(mathchStatisInfo);
                 mLiveFragment.initLiveStatics(mMatchDetail.getLiveStatus());// 刷新统计
                 mLiveFragment.addTrendChartEvent(matchTextLiveBean);
+
+                if (Integer.parseInt(mThirdId) / 2 == 0) {
+                    rl_home_offside1.setVisibility(View.VISIBLE);
+                    rl_guest_offside1.setVisibility(View.INVISIBLE);
+                    gif_home_position1.setVisibility(View.VISIBLE);
+                    gif_guest_position1.setVisibility(View.INVISIBLE);
+                    tv_home_title1.setVisibility(View.VISIBLE);
+                    tv_guest_title1.setVisibility(View.INVISIBLE);
+                    gif_home_ball1.setVisibility(View.INVISIBLE);
+                    gif_guest_ball1.setVisibility(View.INVISIBLE);
+                    gif_home_hit1.setVisibility(View.VISIBLE);
+                    gif_guest_hit1.setVisibility(View.INVISIBLE);
+                    tv_home_title1.setText(getString(R.string.football_play_hit));
+                    gif_home_hit1.setImageResource(R.mipmap.football_home_hit1);
+                    gif_home_position1.setImageResource(R.mipmap.football_home_position_gif);
+                    showGifAnimation(1111);
+                } else {
+                    rl_home_offside2.setVisibility(View.VISIBLE);
+                    rl_guest_offside2.setVisibility(View.INVISIBLE);
+                    gif_home_position2.setVisibility(View.VISIBLE);
+                    gif_guest_position2.setVisibility(View.INVISIBLE);
+                    tv_home_title2.setVisibility(View.VISIBLE);
+                    tv_guest_title2.setVisibility(View.INVISIBLE);
+                    gif_home_ball2.setVisibility(View.INVISIBLE);
+                    gif_guest_ball2.setVisibility(View.INVISIBLE);
+                    gif_home_hit2.setVisibility(View.VISIBLE);
+                    gif_guest_hit2.setVisibility(View.INVISIBLE);
+                    tv_home_title2.setText(getString(R.string.football_play_hit));
+                    gif_home_hit2.setImageResource(R.mipmap.football_home_hit2);
+                    gif_home_position2.setImageResource(R.mipmap.football_home_position_gif);
+                    showGifAnimation(2222);
+                }
                 break;
             case "1024": //主队进攻
                 mathchStatisInfo.setHome_attack(mathchStatisInfo.getHome_attack() + 1);
                 initMatchNowData(mathchStatisInfo);
 
                 mLiveFragment.addTrendChartEvent(matchTextLiveBean);
+
+                gif_home_attack.setImageResource(R.mipmap.football_home_attack_gif);
+                ll_control.setVisibility(View.GONE);
+                rl_attack.setVisibility(View.VISIBLE);
+                rl_attack_danger.setVisibility(View.GONE);
+                gif_home_attack.setVisibility(View.VISIBLE);
+                gif_guest_attack.setVisibility(View.INVISIBLE);
+                showGifAnimation(1024);
                 break;
             case "2048": //客队进攻
                 mathchStatisInfo.setGuest_attack(mathchStatisInfo.getGuest_attack() + 1);
@@ -1455,6 +1863,13 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                 mLiveFragment.addTrendChartEvent(matchTextLiveBean);
 
+                gif_guest_attack.setImageResource(R.mipmap.football_guest_attack_gif);
+                ll_control.setVisibility(View.GONE);
+                rl_attack.setVisibility(View.VISIBLE);
+                rl_attack_danger.setVisibility(View.GONE);
+                gif_home_attack.setVisibility(View.INVISIBLE);
+                gif_guest_attack.setVisibility(View.VISIBLE);
+                showGifAnimation(2048);
                 break;
 
             case "2063":  //客队射正球门
@@ -1466,6 +1881,37 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mLiveFragment.initLiveStatics(mMatchDetail.getLiveStatus());// 刷新统计
                 mLiveFragment.addTrendChartEvent(matchTextLiveBean);
 
+                if (Integer.parseInt(mThirdId) / 2 == 0) {
+                    rl_home_offside1.setVisibility(View.INVISIBLE);
+                    rl_guest_offside1.setVisibility(View.VISIBLE);
+                    gif_home_position1.setVisibility(View.INVISIBLE);
+                    gif_guest_position1.setVisibility(View.VISIBLE);
+                    tv_home_title1.setVisibility(View.INVISIBLE);
+                    tv_guest_title1.setVisibility(View.VISIBLE);
+                    gif_home_ball1.setVisibility(View.INVISIBLE);
+                    gif_guest_ball1.setVisibility(View.INVISIBLE);
+                    gif_home_hit1.setVisibility(View.INVISIBLE);
+                    gif_guest_hit1.setVisibility(View.VISIBLE);
+                    tv_guest_title1.setText(getString(R.string.football_play_hit));
+                    gif_guest_hit1.setImageResource(R.mipmap.football_guest_hit1);
+                    gif_guest_position1.setImageResource(R.mipmap.football_guest_position_gif);
+                    showGifAnimation(1111);
+                } else {
+                    rl_home_offside2.setVisibility(View.INVISIBLE);
+                    rl_guest_offside2.setVisibility(View.VISIBLE);
+                    gif_home_position2.setVisibility(View.INVISIBLE);
+                    gif_guest_position2.setVisibility(View.VISIBLE);
+                    tv_home_title2.setVisibility(View.INVISIBLE);
+                    tv_guest_title2.setVisibility(View.VISIBLE);
+                    gif_home_ball2.setVisibility(View.INVISIBLE);
+                    gif_guest_ball2.setVisibility(View.INVISIBLE);
+                    gif_home_hit2.setVisibility(View.INVISIBLE);
+                    gif_guest_hit2.setVisibility(View.VISIBLE);
+                    tv_guest_title2.setText(getString(R.string.football_play_hit));
+                    gif_guest_hit2.setImageResource(R.mipmap.football_guest_hit2);
+                    gif_guest_position2.setImageResource(R.mipmap.football_guest_position_gif);
+                    showGifAnimation(2222);
+                }
                 break;
 
             case "1040":    //主队射偏球门
@@ -1477,7 +1923,20 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mLiveFragment.initLiveStatics(mMatchDetail.getLiveStatus());// 刷新统计
                 mLiveFragment.addTrendChartEvent(matchTextLiveBean);
 
-                //如果有变动就刷新统计数据
+                rl_home_offside1.setVisibility(View.VISIBLE);
+                rl_guest_offside1.setVisibility(View.INVISIBLE);
+                gif_home_position1.setVisibility(View.VISIBLE);
+                gif_guest_position1.setVisibility(View.INVISIBLE);
+                tv_home_title1.setVisibility(View.VISIBLE);
+                tv_guest_title1.setVisibility(View.INVISIBLE);
+                gif_home_ball1.setVisibility(View.VISIBLE);
+                gif_guest_ball1.setVisibility(View.INVISIBLE);
+                gif_home_hit1.setVisibility(View.INVISIBLE);
+                gif_guest_hit1.setVisibility(View.INVISIBLE);
+                tv_home_title1.setText(getString(R.string.football_play_deviate));
+                gif_home_ball1.setImageResource(R.mipmap.football_home_ball_gif);
+                gif_home_position1.setImageResource(R.mipmap.football_home_position_gif);
+                showGifAnimation(1111);
                 break;
             case "1041":    //主队射偏球门
                 mathchStatisInfo.setHome_shoot_miss(mathchStatisInfo.getHome_shoot_miss() + 1);
@@ -1488,7 +1947,22 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mLiveFragment.initLiveStatics(mMatchDetail.getLiveStatus());// 刷新统计
 
                 mLiveFragment.addTrendChartEvent(matchTextLiveBean);
-                //如果有变动就刷新统计数据
+
+
+                rl_home_offside2.setVisibility(View.VISIBLE);
+                rl_guest_offside2.setVisibility(View.INVISIBLE);
+                gif_home_position2.setVisibility(View.VISIBLE);
+                gif_guest_position2.setVisibility(View.INVISIBLE);
+                tv_home_title2.setVisibility(View.VISIBLE);
+                tv_guest_title2.setVisibility(View.INVISIBLE);
+                gif_home_ball2.setVisibility(View.VISIBLE);
+                gif_guest_ball2.setVisibility(View.INVISIBLE);
+                gif_home_hit2.setVisibility(View.INVISIBLE);
+                gif_guest_hit2.setVisibility(View.INVISIBLE);
+                tv_home_title2.setText(getString(R.string.football_play_deviate));
+                gif_home_ball2.setImageResource(R.mipmap.football_home_ball2_gif);
+                gif_home_position2.setImageResource(R.mipmap.football_home_position_gif);
+                showGifAnimation(2222);
                 break;
 
 
@@ -1503,7 +1977,20 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                 mLiveFragment.addTrendChartEvent(matchTextLiveBean);
 
-
+                rl_home_offside1.setVisibility(View.INVISIBLE);
+                rl_guest_offside1.setVisibility(View.VISIBLE);
+                gif_home_position1.setVisibility(View.INVISIBLE);
+                gif_guest_position1.setVisibility(View.VISIBLE);
+                tv_home_title1.setVisibility(View.INVISIBLE);
+                tv_guest_title1.setVisibility(View.VISIBLE);
+                gif_home_ball1.setVisibility(View.INVISIBLE);
+                gif_guest_ball1.setVisibility(View.VISIBLE);
+                gif_home_hit1.setVisibility(View.INVISIBLE);
+                gif_guest_hit1.setVisibility(View.INVISIBLE);
+                tv_guest_title1.setText(getString(R.string.football_play_deviate));
+                gif_guest_ball1.setImageResource(R.mipmap.football_guest_ball_gif);
+                gif_guest_position1.setImageResource(R.mipmap.football_guest_position_gif);
+                showGifAnimation(1111);
                 //如果有变动就刷新统计数据
                 break;
             case "2065":  //客队门框
@@ -1515,6 +2002,21 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mLiveFragment.initLiveStatics(mMatchDetail.getLiveStatus());// 刷新统计
 
                 mLiveFragment.addTrendChartEvent(matchTextLiveBean);
+
+                rl_home_offside2.setVisibility(View.INVISIBLE);
+                rl_guest_offside2.setVisibility(View.VISIBLE);
+                gif_home_position2.setVisibility(View.INVISIBLE);
+                gif_guest_position2.setVisibility(View.VISIBLE);
+                tv_home_title2.setVisibility(View.INVISIBLE);
+                tv_guest_title2.setVisibility(View.VISIBLE);
+                gif_home_ball2.setVisibility(View.INVISIBLE);
+                gif_guest_ball2.setVisibility(View.VISIBLE);
+                gif_home_hit2.setVisibility(View.INVISIBLE);
+                gif_guest_hit2.setVisibility(View.INVISIBLE);
+                tv_guest_title2.setText(getString(R.string.football_play_deviate));
+                gif_guest_ball2.setImageResource(R.mipmap.football_guest_ball2_gif);
+                gif_guest_position2.setImageResource(R.mipmap.football_guest_position_gif);
+                showGifAnimation(2222);
                 //如果有变动就刷新统计数据
                 break;
 
@@ -1526,6 +2028,18 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mLiveFragment.showFootballEventByState();
                 mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
+
+                ll_home_r_or_y_title.setVisibility(View.VISIBLE);
+                ll_guest_r_or_y_title.setVisibility(View.GONE);
+                gif_home_r_or_y_position.setVisibility(View.VISIBLE);
+                gif_guest_r_or_y_position.setVisibility(View.INVISIBLE);
+                iv_home_img.setVisibility(View.VISIBLE);
+                iv_home_r_or_y.setVisibility(View.GONE);
+                iv_guest_r_or_y.setVisibility(View.GONE);
+                gif_home_r_or_y_position.setImageResource(R.mipmap.football_home_position_gif);
+                tv_home_desc.setText(getString(R.string.foot_event_player));
+                iv_home_img.setImageResource(R.mipmap.football_home_substitution);
+                showGifAnimation(1055);
                 break;
 
             case "2079": //客队换人
@@ -1535,11 +2049,33 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mLiveFragment.showFootballEventByState();
                 mLiveFragment.addVerticalFootBallEvent(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
+
+                ll_home_r_or_y_title.setVisibility(View.GONE);
+                ll_guest_r_or_y_title.setVisibility(View.VISIBLE);
+                gif_home_r_or_y_position.setVisibility(View.INVISIBLE);
+                gif_guest_r_or_y_position.setVisibility(View.VISIBLE);
+                iv_guest_img.setVisibility(View.VISIBLE);
+                iv_home_r_or_y.setVisibility(View.GONE);
+                iv_guest_r_or_y.setVisibility(View.GONE);
+                gif_guest_r_or_y_position.setImageResource(R.mipmap.football_guest_position_gif);
+                tv_guest_desc.setText(getString(R.string.foot_event_player));
+                iv_guest_img.setImageResource(R.mipmap.football_guest_substitution);
+                showGifAnimation(2079);
                 break;
             case "1043"://主队越位
                 mathchStatisInfo.setHome_away(mathchStatisInfo.getHome_away() + 1);
                 mLiveFragment.setMathchStatisInfo(mathchStatisInfo);
                 mLiveFragment.initLiveStatics(mMatchDetail.getLiveStatus());// 刷新统计
+
+                rl_home_offside_bg.setVisibility(View.VISIBLE);
+                rl_guest_offside_bg.setVisibility(View.GONE);
+                ll_home_offside_title.setVisibility(View.VISIBLE);
+                ll_guest_offside_title.setVisibility(View.GONE);
+                gif_home_offside_position.setVisibility(View.VISIBLE);
+                gif_guest_offside_position.setVisibility(View.INVISIBLE);
+                gif_home_offside.setImageResource(R.mipmap.football_home_offside_gif);
+                gif_home_offside_position.setImageResource(R.mipmap.football_home_position_gif);
+                showGifAnimation(1043);
                 //如果有变动就刷新统计数据
                 break;
 
@@ -1548,6 +2084,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mLiveFragment.setMathchStatisInfo(mathchStatisInfo);
                 mLiveFragment.initLiveStatics(mMatchDetail.getLiveStatus());// 刷新统计
 
+                isHomeFreeKick = true;
                 //如果有变动就刷新统计数据
                 break;
 
@@ -1556,6 +2093,15 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mLiveFragment.setMathchStatisInfo(mathchStatisInfo);
                 mLiveFragment.initLiveStatics(mMatchDetail.getLiveStatus());// 刷新统计
 
+                rl_home_offside_bg.setVisibility(View.GONE);
+                rl_guest_offside_bg.setVisibility(View.VISIBLE);
+                ll_home_offside_title.setVisibility(View.GONE);
+                ll_guest_offside_title.setVisibility(View.VISIBLE);
+                gif_home_offside_position.setVisibility(View.INVISIBLE);
+                gif_guest_offside_position.setVisibility(View.VISIBLE);
+                gif_guest_offside.setImageResource(R.mipmap.football_guest_offside_gif);
+                gif_guest_offside_position.setImageResource(R.mipmap.football_guest_position_gif);
+                showGifAnimation(2067);
                 //如果有变动就刷新统计数据
                 break;
             case "2051"://客队任意球
@@ -1563,6 +2109,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mLiveFragment.setMathchStatisInfo(mathchStatisInfo);
                 mLiveFragment.initLiveStatics(mMatchDetail.getLiveStatus());// 刷新统计
 
+                isGuestFreeKick = true;
                 break;
 
             case "1042"://主队犯规
@@ -1570,24 +2117,56 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mLiveFragment.setMathchStatisInfo(mathchStatisInfo);
                 mLiveFragment.initLiveStatics(mMatchDetail.getLiveStatus());// 刷新统计
 
+                ll_home_r_or_y_title.setVisibility(View.VISIBLE);
+                ll_guest_r_or_y_title.setVisibility(View.GONE);
+                gif_home_r_or_y_position.setVisibility(View.VISIBLE);
+                gif_guest_r_or_y_position.setVisibility(View.INVISIBLE);
+                iv_home_img.setVisibility(View.VISIBLE);
+                iv_home_r_or_y.setVisibility(View.GONE);
+                iv_guest_r_or_y.setVisibility(View.GONE);
+                gif_home_r_or_y_position.setImageResource(R.mipmap.football_home_position_gif);
+                tv_home_desc.setText(getString(R.string.football_play_whistle));
+                iv_home_img.setImageResource(R.mipmap.football_foul_whistle_left);
+                showGifAnimation(1042);
                 break;
             case "1054"://主队界外球
                 mathchStatisInfo.setHome_lineOut(mathchStatisInfo.getHome_lineOut() + 1);
                 mLiveFragment.setMathchStatisInfo(mathchStatisInfo);
                 mLiveFragment.initLiveStatics(mMatchDetail.getLiveStatus());// 刷新统计
 
+                rl_home_goal_out.setVisibility(View.VISIBLE);
+                rl_guest_goal_out.setVisibility(View.INVISIBLE);
+                gif_home_goal_out_position.setImageResource(R.mipmap.football_home_position_gif);
+                gif_home_goal_out.setImageResource(R.mipmap.football_home_goal_out);
+                showGifAnimation(1054);
                 break;
             case "2066"://客队犯规
                 mathchStatisInfo.setGuest_foul(mathchStatisInfo.getGuest_foul() + 1);
                 mLiveFragment.setMathchStatisInfo(mathchStatisInfo);
                 mLiveFragment.initLiveStatics(mMatchDetail.getLiveStatus());// 刷新统计
 
+                ll_home_r_or_y_title.setVisibility(View.GONE);
+                ll_guest_r_or_y_title.setVisibility(View.VISIBLE);
+                gif_home_r_or_y_position.setVisibility(View.INVISIBLE);
+                gif_guest_r_or_y_position.setVisibility(View.VISIBLE);
+                iv_guest_img.setVisibility(View.VISIBLE);
+                iv_home_r_or_y.setVisibility(View.GONE);
+                iv_guest_r_or_y.setVisibility(View.GONE);
+                gif_guest_r_or_y_position.setImageResource(R.mipmap.football_guest_position_gif);
+                tv_guest_desc.setText(getString(R.string.football_play_whistle));
+                iv_guest_img.setImageResource(R.mipmap.football_foul_whistle_right);
+                showGifAnimation(2066);
                 break;
             case "2078"://客队界外球
                 mathchStatisInfo.setGuest_lineOut(mathchStatisInfo.getGuest_lineOut() + 1);
                 mLiveFragment.setMathchStatisInfo(mathchStatisInfo);
                 mLiveFragment.initLiveStatics(mMatchDetail.getLiveStatus());// 刷新统计
 
+                rl_home_goal_out.setVisibility(View.INVISIBLE);
+                rl_guest_goal_out.setVisibility(View.VISIBLE);
+                gif_guest_goal_out_position.setImageResource(R.mipmap.football_guest_position_gif);
+                gif_guest_goal_out.setImageResource(R.mipmap.football_guest_goal_out);
+                showGifAnimation(2078);
                 break;
             case "256": //取消（不显示，指定消息取消）
             case "257"://清除（多个指定消息不显示）
@@ -1613,6 +2192,390 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mLiveFragment.setPlayInfo(matchTextLiveBean);
                 mLiveFragment.updateRecycleView(matchTextLiveBean.getState());
                 break;
+            case "302":
+            case "317":
+            case "532":
+            case "518":
+            case "149":// 比赛暂停
+                tv_start.setBackgroundResource(R.mipmap.football_match_stop_txt);
+                rl_match_txt_content.setVisibility(View.VISIBLE);
+                gif_match_start.setVisibility(View.GONE);
+                tv_half_txt.setVisibility(View.GONE);
+                iv_signal_off.setVisibility(View.GONE);
+                iv_drink_water.setVisibility(View.GONE);
+                iv_injured.setVisibility(View.GONE);
+                iv_injured_addtime.setVisibility(View.GONE);
+                showGifAnimation(532);
+                break;
+            case "517":
+            case "148"://比赛恢复
+                tv_start.setBackgroundResource(R.mipmap.football_match_recovery_txt);
+                rl_match_txt_content.setVisibility(View.VISIBLE);
+                gif_match_start.setVisibility(View.GONE);
+                tv_half_txt.setVisibility(View.GONE);
+                iv_signal_off.setVisibility(View.GONE);
+                iv_drink_water.setVisibility(View.GONE);
+                iv_injured.setVisibility(View.GONE);
+                iv_injured_addtime.setVisibility(View.GONE);
+                showGifAnimation(517);
+                break;
+            case "515":
+            case "516"://比赛直播信号中断
+                rl_match_txt_content.setVisibility(View.GONE);
+                iv_signal_off.setVisibility(View.VISIBLE);
+                iv_drink_water.setVisibility(View.GONE);
+                iv_injured.setVisibility(View.GONE);
+                iv_injured_addtime.setVisibility(View.GONE);
+                showGifAnimation(515);
+                break;
+            case "311"://喝水
+                rl_match_txt_content.setVisibility(View.GONE);
+                iv_signal_off.setVisibility(View.GONE);
+                iv_drink_water.setVisibility(View.VISIBLE);
+                iv_injured.setVisibility(View.GONE);
+                iv_injured_addtime.setVisibility(View.GONE);
+                showGifAnimation(311);
+                break;
+            case "132"://受伤
+                rl_match_txt_content.setVisibility(View.GONE);
+                iv_signal_off.setVisibility(View.GONE);
+                iv_drink_water.setVisibility(View.GONE);
+                iv_injured.setVisibility(View.VISIBLE);
+                iv_injured_addtime.setVisibility(View.GONE);
+                showGifAnimation(132);
+                break;
+            case "260"://伤停补时
+                rl_match_txt_content.setVisibility(View.GONE);
+                iv_signal_off.setVisibility(View.GONE);
+                iv_drink_water.setVisibility(View.GONE);
+                iv_injured.setVisibility(View.GONE);
+                iv_injured_addtime.setVisibility(View.VISIBLE);
+                showGifAnimation(260);
+                break;
+            case "1051"://主队后场控球
+                gif_home_control.setImageResource(R.mipmap.football_home_control);
+                ll_control.setVisibility(View.VISIBLE);
+                rl_attack.setVisibility(View.GONE);
+                rl_attack_danger.setVisibility(View.GONE);
+                gif_home_control.setVisibility(View.VISIBLE);
+                gif_guest_control.setVisibility(View.INVISIBLE);
+                showGifAnimation(1051);
+                break;
+            case "2075"://客队后场控球
+                gif_guest_control.setImageResource(R.mipmap.football_guest_control);
+                ll_control.setVisibility(View.VISIBLE);
+                rl_attack.setVisibility(View.GONE);
+                rl_attack_danger.setVisibility(View.GONE);
+                gif_home_control.setVisibility(View.INVISIBLE);
+                gif_guest_control.setVisibility(View.VISIBLE);
+                showGifAnimation(2075);
+                break;
+            case "1053"://主队球门球
+                rl_home_goal_door.setVisibility(View.VISIBLE);
+                rl_guest_goal_door.setVisibility(View.INVISIBLE);
+                gif_home_goal_door_position.setImageResource(R.mipmap.football_home_position_gif);
+                gfi_home_goal_door.setImageResource(R.mipmap.football_home_goal_door);
+                showGifAnimation(1053);
+                break;
+            case "2077"://客队球门球
+                rl_home_goal_door.setVisibility(View.INVISIBLE);
+                rl_guest_goal_door.setVisibility(View.VISIBLE);
+                gif_guest_goal_door_position.setImageResource(R.mipmap.football_guest_position_gif);
+                gfi_guest_goal_door.setImageResource(R.mipmap.football_guest_goal_door);
+                showGifAnimation(2077);
+                break;
+            case "1060"://主队点球罚失
+                ll_home_penalty_lose_title.setVisibility(View.VISIBLE);
+                ll_guest_penalty_lose_title.setVisibility(View.GONE);
+                gif_home_penalty_lose.setVisibility(View.VISIBLE);
+                gif_guest_penalty_lose.setVisibility(View.GONE);
+                gif_home_penalty_lose_position.setVisibility(View.VISIBLE);
+                gif_guest_penalty_lose_position.setVisibility(View.INVISIBLE);
+                gif_home_penalty_lose.setImageResource(R.mipmap.football_home_penalty_lose_gif);
+                gif_home_penalty_lose_position.setImageResource(R.mipmap.football_home_position_gif);
+                showGifAnimation(1060);
+                break;
+            case "2084"://客队点球罚失 
+                ll_home_penalty_lose_title.setVisibility(View.GONE);
+                ll_guest_penalty_lose_title.setVisibility(View.VISIBLE);
+                gif_home_penalty_lose.setVisibility(View.GONE);
+                gif_guest_penalty_lose.setVisibility(View.VISIBLE);
+                gif_home_penalty_lose_position.setVisibility(View.INVISIBLE);
+                gif_guest_penalty_lose_position.setVisibility(View.VISIBLE);
+                gif_guest_penalty_lose.setImageResource(R.mipmap.football_guest_penalty_lose_gif);
+                gif_guest_penalty_lose_position.setImageResource(R.mipmap.football_guest_position_gif);
+                showGifAnimation(2084);
+                break;
+            case "1028"://主队任意球
+                final String playInfo = matchTextLiveBean.getPlayInfo();
+                mHandler.postDelayed(new Runnable() {
+                    public void run() {
+                        L.d("wwwww","主队任意球  isHomeFreeKick: " + isHomeFreeKick);
+                        if (isHomeFreeKick) {
+                            if (!TextUtils.isEmpty(playInfo)) {
+                                switch (playInfo) {
+                                    case "FK1":
+                                        ll_home_free_kick_fk1_bg.setVisibility(View.VISIBLE);
+                                        ll_guest_free_kick_fk1_bg.setVisibility(View.INVISIBLE);
+                                        ll_home_free_kick_fk1_title.setVisibility(View.VISIBLE);
+                                        ll_guest_free_kick_fk1_title.setVisibility(View.GONE);
+                                        gif_home_free_kick_fk1_position.setVisibility(View.VISIBLE);
+                                        gif_guest_free_kick_fk1_position.setVisibility(View.GONE);
+                                        gif_home_free_kick_fk1_position.setImageResource(R.mipmap.football_home_position_gif);
+                                        showGifAnimation(6666);
+                                        break;
+                                    case "FK2":
+                                        ll_home_free_kick_bg.setVisibility(View.GONE);
+                                        ll_guest_free_kick_bg.setVisibility(View.GONE);
+                                        ll_home_free_kick_fk4_bg.setVisibility(View.GONE);
+                                        ll_guest_free_kick_fk4_bg.setVisibility(View.GONE);
+                                        ll_home_free_kick_fk2_bg.setVisibility(View.VISIBLE);
+                                        ll_guest_free_kick_fk2_bg.setVisibility(View.GONE);
+                                        gif_home_free_kick_fk2_position.setVisibility(View.GONE);
+                                        gif_home_free_kick_fk4_position.setVisibility(View.VISIBLE);
+                                        gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
+                                        gif_guest_free_kick_fk2_position.setVisibility(View.GONE);
+                                        gif_home_free_kick_fk4_position.setImageResource(R.mipmap.football_home_position_gif);
+                                        tv_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                                        tv_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                                        tv_home_free_kick_fk4_title.setVisibility(View.VISIBLE);
+                                        tv_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                                        tv_home_free_kick_fk4_title.setText(getString(R.string.football_play_free_kick_danger));
+                                        showGifAnimation(7777);
+                                        break;
+                                    case "FK3L":
+                                        ll_home_free_kick_fk3_bg_2.setVisibility(View.VISIBLE);
+                                        ll_guest_free_kick_fk3_bg_2.setVisibility(View.INVISIBLE);
+                                        ll_home_free_kick_fk3_title_2.setVisibility(View.VISIBLE);
+                                        ll_guest_free_kick_fk3_title_2.setVisibility(View.INVISIBLE);
+                                        gif_home_free_kick_fk3_position_2.setVisibility(View.VISIBLE);
+                                        gif_guest_free_kick_fk3_position_2.setVisibility(View.INVISIBLE);
+                                        gif_home_free_kick_fk3_position_2.setImageResource(R.mipmap.football_home_position_gif);
+                                        showGifAnimation(8888);
+                                        break;
+                                    case "FK3R":
+                                        rl_home_free_kick_fk3_1.setVisibility(View.VISIBLE);
+                                        rl_guest_free_kick_fk3_1.setVisibility(View.INVISIBLE);
+                                        gif_home_free_kick_fk3_position.setImageResource(R.mipmap.football_home_position_gif);
+                                        showGifAnimation(9999);
+                                        break;
+                                    case "FK4":
+                                        ll_home_free_kick_bg.setVisibility(View.GONE);
+                                        ll_guest_free_kick_bg.setVisibility(View.GONE);
+                                        ll_home_free_kick_fk4_bg.setVisibility(View.VISIBLE);
+                                        ll_guest_free_kick_fk4_bg.setVisibility(View.GONE);
+                                        ll_home_free_kick_fk2_bg.setVisibility(View.GONE);
+                                        ll_guest_free_kick_fk2_bg.setVisibility(View.GONE);
+                                        gif_home_free_kick_fk2_position.setVisibility(View.VISIBLE);
+                                        gif_home_free_kick_fk4_position.setVisibility(View.GONE);
+                                        gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
+                                        gif_guest_free_kick_fk2_position.setVisibility(View.GONE);
+                                        gif_home_free_kick_fk2_position.setImageResource(R.mipmap.football_home_position_gif);
+                                        tv_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                                        tv_home_free_kick_fk2_title.setVisibility(View.VISIBLE);
+                                        tv_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                                        tv_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                                        tv_home_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick_danger));
+                                        showGifAnimation(-9999);
+                                        break;
+                                    default:// kf4
+                                        ll_home_free_kick_bg.setVisibility(View.GONE);
+                                        ll_guest_free_kick_bg.setVisibility(View.GONE);
+                                        ll_home_free_kick_fk4_bg.setVisibility(View.VISIBLE);
+                                        ll_guest_free_kick_fk4_bg.setVisibility(View.GONE);
+                                        ll_home_free_kick_fk2_bg.setVisibility(View.GONE);
+                                        ll_guest_free_kick_fk2_bg.setVisibility(View.GONE);
+                                        gif_home_free_kick_fk2_position.setVisibility(View.VISIBLE);
+                                        gif_home_free_kick_fk4_position.setVisibility(View.GONE);
+                                        gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
+                                        gif_guest_free_kick_fk2_position.setVisibility(View.GONE);
+                                        gif_home_free_kick_fk2_position.setImageResource(R.mipmap.football_home_position_gif);
+                                        tv_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                                        tv_home_free_kick_fk2_title.setVisibility(View.VISIBLE);
+                                        tv_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                                        tv_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                                        tv_home_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick_danger));
+                                        showGifAnimation(-9999);
+                                        break;
+                                }
+                            } else {
+                                ll_home_free_kick_bg.setVisibility(View.GONE);
+                                ll_guest_free_kick_bg.setVisibility(View.GONE);
+                                ll_home_free_kick_fk4_bg.setVisibility(View.VISIBLE);
+                                ll_guest_free_kick_fk4_bg.setVisibility(View.GONE);
+                                ll_home_free_kick_fk2_bg.setVisibility(View.GONE);
+                                ll_guest_free_kick_fk2_bg.setVisibility(View.GONE);
+                                gif_home_free_kick_fk2_position.setVisibility(View.VISIBLE);
+                                gif_home_free_kick_fk4_position.setVisibility(View.GONE);
+                                gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
+                                gif_guest_free_kick_fk2_position.setVisibility(View.GONE);
+                                gif_home_free_kick_fk2_position.setImageResource(R.mipmap.football_home_position_gif);
+                                tv_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                                tv_home_free_kick_fk2_title.setVisibility(View.VISIBLE);
+                                tv_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                                tv_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                                tv_home_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick_danger));
+                                showGifAnimation(-9999);
+                            }
+                        } else {
+                            // 普通任意球
+                            ll_home_free_kick_bg.setVisibility(View.VISIBLE);
+                            ll_guest_free_kick_bg.setVisibility(View.GONE);
+                            ll_home_free_kick_fk4_bg.setVisibility(View.GONE);
+                            ll_guest_free_kick_fk4_bg.setVisibility(View.GONE);
+                            ll_home_free_kick_fk2_bg.setVisibility(View.GONE);
+                            ll_guest_free_kick_fk2_bg.setVisibility(View.GONE);
+                            gif_home_free_kick_fk2_position.setVisibility(View.GONE);
+                            gif_home_free_kick_fk4_position.setVisibility(View.GONE);
+                            gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
+                            gif_guest_free_kick_fk2_position.setVisibility(View.VISIBLE);
+                            gif_guest_free_kick_fk2_position.setImageResource(R.mipmap.football_home_position_gif);
+                            tv_guest_free_kick_fk2_title.setVisibility(View.VISIBLE);
+                            tv_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                            tv_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                            tv_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                            tv_guest_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick));
+                            showGifAnimation(5555);
+                        }
+                        isHomeFreeKick = false;
+                    }
+                }, 2000);
+                break;
+            case "2052"://客队任意球
+                final String guestPlayInfo = matchTextLiveBean.getPlayInfo();
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        L.d("wwwww","客队任意球  isGuestFreeKick: " + isGuestFreeKick);
+                        if (isGuestFreeKick) {
+                            if (!TextUtils.isEmpty(guestPlayInfo)) {
+                                switch (guestPlayInfo) {
+                                    case "FK1":
+                                        ll_home_free_kick_fk1_bg.setVisibility(View.INVISIBLE);
+                                        ll_guest_free_kick_fk1_bg.setVisibility(View.VISIBLE);
+                                        ll_home_free_kick_fk1_title.setVisibility(View.GONE);
+                                        ll_guest_free_kick_fk1_title.setVisibility(View.VISIBLE);
+                                        gif_home_free_kick_fk1_position.setVisibility(View.GONE);
+                                        gif_guest_free_kick_fk1_position.setVisibility(View.VISIBLE);
+                                        gif_guest_free_kick_fk1_position.setImageResource(R.mipmap.football_guest_position_gif);
+                                        showGifAnimation(6666);
+                                        break;
+                                    case "FK2":
+                                        ll_home_free_kick_bg.setVisibility(View.GONE);
+                                        ll_guest_free_kick_bg.setVisibility(View.GONE);
+                                        ll_home_free_kick_fk4_bg.setVisibility(View.GONE);
+                                        ll_guest_free_kick_fk4_bg.setVisibility(View.GONE);
+                                        ll_home_free_kick_fk2_bg.setVisibility(View.GONE);
+                                        ll_guest_free_kick_fk2_bg.setVisibility(View.VISIBLE);
+                                        gif_home_free_kick_fk2_position.setVisibility(View.GONE);
+                                        gif_home_free_kick_fk4_position.setVisibility(View.GONE);
+                                        gif_guest_free_kick_fk4_position.setVisibility(View.VISIBLE);
+                                        gif_guest_free_kick_fk2_position.setVisibility(View.GONE);
+                                        gif_guest_free_kick_fk4_position.setImageResource(R.mipmap.football_guest_position_gif);
+                                        tv_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                                        tv_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                                        tv_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                                        tv_guest_free_kick_fk4_title.setVisibility(View.VISIBLE);
+                                        tv_guest_free_kick_fk4_title.setText(getString(R.string.football_play_free_kick_danger));
+                                        showGifAnimation(7777);
+                                        break;
+                                    case "FK3L":
+                                        rl_home_free_kick_fk3_1.setVisibility(View.INVISIBLE);
+                                        rl_guest_free_kick_fk3_1.setVisibility(View.VISIBLE);
+                                        gif_guest_free_kick_fk3_position.setImageResource(R.mipmap.football_guest_position_gif);
+                                        showGifAnimation(9999);
+                                        break;
+                                    case "FK3R":
+                                        ll_home_free_kick_fk3_bg_2.setVisibility(View.INVISIBLE);
+                                        ll_guest_free_kick_fk3_bg_2.setVisibility(View.VISIBLE);
+                                        ll_home_free_kick_fk3_title_2.setVisibility(View.INVISIBLE);
+                                        ll_guest_free_kick_fk3_title_2.setVisibility(View.VISIBLE);
+                                        gif_home_free_kick_fk3_position_2.setVisibility(View.INVISIBLE);
+                                        gif_guest_free_kick_fk3_position_2.setVisibility(View.VISIBLE);
+                                        gif_guest_free_kick_fk3_position_2.setImageResource(R.mipmap.football_guest_position_gif);
+                                        showGifAnimation(8888);
+                                        break;
+                                    case "FK4":
+                                        ll_home_free_kick_bg.setVisibility(View.GONE);
+                                        ll_guest_free_kick_bg.setVisibility(View.GONE);
+                                        ll_home_free_kick_fk4_bg.setVisibility(View.GONE);
+                                        ll_guest_free_kick_fk4_bg.setVisibility(View.VISIBLE);
+                                        ll_home_free_kick_fk2_bg.setVisibility(View.GONE);
+                                        ll_guest_free_kick_fk2_bg.setVisibility(View.GONE);
+                                        gif_home_free_kick_fk2_position.setVisibility(View.GONE);
+                                        gif_home_free_kick_fk4_position.setVisibility(View.GONE);
+                                        gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
+                                        gif_guest_free_kick_fk2_position.setVisibility(View.VISIBLE);
+                                        gif_guest_free_kick_fk2_position.setImageResource(R.mipmap.football_guest_position_gif);
+                                        tv_guest_free_kick_fk2_title.setVisibility(View.VISIBLE);
+                                        tv_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                                        tv_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                                        tv_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                                        tv_guest_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick_danger));
+                                        showGifAnimation(-9999);
+                                        break;
+                                    default:// kf4
+                                        ll_home_free_kick_bg.setVisibility(View.GONE);
+                                        ll_guest_free_kick_bg.setVisibility(View.GONE);
+                                        ll_home_free_kick_fk4_bg.setVisibility(View.GONE);
+                                        ll_guest_free_kick_fk4_bg.setVisibility(View.VISIBLE);
+                                        ll_home_free_kick_fk2_bg.setVisibility(View.GONE);
+                                        ll_guest_free_kick_fk2_bg.setVisibility(View.GONE);
+                                        gif_home_free_kick_fk2_position.setVisibility(View.GONE);
+                                        gif_home_free_kick_fk4_position.setVisibility(View.GONE);
+                                        gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
+                                        gif_guest_free_kick_fk2_position.setVisibility(View.VISIBLE);
+                                        gif_guest_free_kick_fk2_position.setImageResource(R.mipmap.football_guest_position_gif);
+                                        tv_guest_free_kick_fk2_title.setVisibility(View.VISIBLE);
+                                        tv_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                                        tv_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                                        tv_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                                        tv_guest_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick_danger));
+                                        showGifAnimation(-9999);
+                                        break;
+                                }
+                            } else {
+                                ll_home_free_kick_bg.setVisibility(View.GONE);
+                                ll_guest_free_kick_bg.setVisibility(View.GONE);
+                                ll_home_free_kick_fk4_bg.setVisibility(View.GONE);
+                                ll_guest_free_kick_fk4_bg.setVisibility(View.VISIBLE);
+                                ll_home_free_kick_fk2_bg.setVisibility(View.GONE);
+                                ll_guest_free_kick_fk2_bg.setVisibility(View.GONE);
+                                gif_home_free_kick_fk2_position.setVisibility(View.GONE);
+                                gif_home_free_kick_fk4_position.setVisibility(View.GONE);
+                                gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
+                                gif_guest_free_kick_fk2_position.setVisibility(View.VISIBLE);
+                                gif_guest_free_kick_fk2_position.setImageResource(R.mipmap.football_guest_position_gif);
+                                tv_guest_free_kick_fk2_title.setVisibility(View.VISIBLE);
+                                tv_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                                tv_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                                tv_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                                tv_guest_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick_danger));
+                                showGifAnimation(-9999);
+                            }
+                        } else {
+                            ll_home_free_kick_bg.setVisibility(View.GONE);
+                            ll_guest_free_kick_bg.setVisibility(View.VISIBLE);
+                            ll_home_free_kick_fk4_bg.setVisibility(View.GONE);
+                            ll_guest_free_kick_fk4_bg.setVisibility(View.GONE);
+                            ll_home_free_kick_fk2_bg.setVisibility(View.GONE);
+                            ll_guest_free_kick_fk2_bg.setVisibility(View.GONE);
+                            gif_home_free_kick_fk2_position.setVisibility(View.VISIBLE);
+                            gif_home_free_kick_fk4_position.setVisibility(View.GONE);
+                            gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
+                            gif_guest_free_kick_fk2_position.setVisibility(View.GONE);
+                            gif_home_free_kick_fk2_position.setImageResource(R.mipmap.football_guest_position_gif);
+                            tv_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                            tv_home_free_kick_fk2_title.setVisibility(View.VISIBLE);
+                            tv_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                            tv_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                            tv_home_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick));
+                            showGifAnimation(5555);
+                        }
+                        isGuestFreeKick = false;
+                    }
+                }, 2000);
+                break;
             default:
                 break;
         }
@@ -1628,6 +2591,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         if (MATCHFINISH.equals(matchTextLiveBean.getState()) || "20".equals(matchTextLiveBean.getCode())) {
             matchLive.add(0, new MatchTextLiveBean("", "", "0", "0", "4", "99999999", mContext.getResources().getString(R.string.matchFinished_txt), "", "", "0", "", "", "", ""));
             mLiveFragment.setLiveTextDetails(matchLive);
+            showGifAnimation(-1);
         }
     }
 
@@ -1742,6 +2706,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         mLiveFragment.showTimeView(mKeepTime); //刷新时间轴
 
+        matchTimeStart(mKeepTime,state);
     }
 
 
@@ -1885,6 +2850,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 }
                 break;
             case R.id.iv_home_icon:// 主队logo
+            case R.id.iv_head_home_icon:// 主队logo
                 if (mMatchDetail.getHomeTeamInfo().getId() != null) {
                     Intent homeIntent = new Intent(this, FootballTeamInfoActivity.class);
                     homeIntent.putExtra("TEAM_ID", mMatchDetail.getHomeTeamInfo().getId());
@@ -1893,6 +2859,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 }
                 break;
             case R.id.iv_guest_icon:// 客队logo
+            case R.id.iv_head_guest_icon:// 客队logo
                 if (mMatchDetail.getGuestTeamInfo().getId() != null) {
                     Intent guestIntent = new Intent(this, FootballTeamInfoActivity.class);
                     guestIntent.putExtra("TEAM_ID", mMatchDetail.getGuestTeamInfo().getId());
@@ -2106,7 +3073,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
-        mWebView.onResume();
+//        mWebView.onResume();
         ImmersionBar.with(this).transparentStatusBar().init();
     }
 
@@ -2114,12 +3081,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
-        mWebView.onPause();
+//        mWebView.onPause();
     }
 
     private void initHeadView() {
 
-        fl_head = (FrameLayout) findViewById(R.id.fl_head);
+//        fl_head = (FrameLayout) findViewById(R.id.fl_head);
 
         iv_home_icon = (ImageView) findViewById(R.id.iv_home_icon);
         iv_guest_icon = (ImageView) findViewById(R.id.iv_guest_icon);
@@ -2128,14 +3095,15 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         iv_home_icon.setOnClickListener(this);
         iv_guest_icon.setOnClickListener(this);
 
-
+        mHalfScore = (TextView) findViewById(R.id.tv_hean_srcoe);
         tv_homename = (TextView) findViewById(R.id.tv_home_name);
         tv_guestname = (TextView) findViewById(R.id.tv_guest_name);
         score = (TextView) findViewById(R.id.score);
-        date = (TextView) findViewById(R.id.date);
-        mMatchTypeLayout = (LinearLayout) findViewById(R.id.matchType);
-        mMatchType1 = (TextView) findViewById(R.id.football_match_detail_matchtype1);
-        mMatchType2 = (TextView) findViewById(R.id.football_match_detail_matchtype2);
+        date = (TextView) findViewById(R.id.tv_hean_srcoe_time);
+        tv_hean_srcoe_aop = (TextView) findViewById(R.id.tv_hean_srcoe_aop);
+//        mMatchTypeLayout = (LinearLayout) findViewById(R.id.matchType);
+//        mMatchType1 = (TextView) findViewById(R.id.football_match_detail_matchtype1);
+//        mMatchType2 = (TextView) findViewById(R.id.football_match_detail_matchtype2);
         btn_showGif = (LinearLayout) findViewById(R.id.btn_showGif);
         btn_showGif.setOnClickListener(this);
 
@@ -2149,17 +3117,218 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         tv_guest_rc = (TextView) findViewById(R.id.tv_guest_rc);
         tv_guest_yc = (TextView) findViewById(R.id.tv_guest_yc);
         //跳转到足球资料库内页
-        mMatchTypeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(FootballMatchDetailActivity.this, FootballDatabaseDetailsActivity.class);
-                if (mMatchDetail != null) {
-                    intent.putExtra("league", new DataBaseBean(mMatchDetail.getLeagueType() + "", mMatchDetail.getLeagueId() + "", "", ""));
-                }
-                intent.putExtra("isIntegral", false);
-                startActivity(intent);
-            }
-        });
+//        mMatchTypeLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(FootballMatchDetailActivity.this, FootballDatabaseDetailsActivity.class);
+//                if (mMatchDetail != null) {
+//                    intent.putExtra("league", new DataBaseBean(mMatchDetail.getLeagueType() + "", mMatchDetail.getLeagueId() + "", "", ""));
+//                }
+//                intent.putExtra("isIntegral", false);
+//                startActivity(intent);
+//            }
+//        });
+        // 比赛进行中
+        ll_score_content = (LinearLayout) findViewById(R.id.ll_score_content);
+        // 比赛未进行中
+        ll_over_score_content = (LinearLayout) findViewById(R.id.ll_over_score_content);
+        tv_head_match_name = (TextView) findViewById(R.id.tv_head_match_name);
+        tv_head_home_name = (TextView) findViewById(R.id.tv_head_home_name);
+        tv_head_guest_name = (TextView) findViewById(R.id.tv_head_guest_name);
+        tv_head_data_or_score = (TextView) findViewById(R.id.tv_head_data_or_score);
+        tv_head_time = (TextView) findViewById(R.id.tv_head_time);
+        tv_head_over_score = (TextView) findViewById(R.id.tv_head_over_score);
+        iv_head_home_icon = (ImageView) findViewById(R.id.iv_head_home_icon);
+        iv_head_home_icon.setOnClickListener(this);
+        iv_head_guest_icon = (ImageView) findViewById(R.id.iv_head_guest_icon);
+        iv_head_guest_icon.setOnClickListener(this);
+
+        // 比赛开始、信号中断、喝水、受伤、伤停补时 LinearLayout
+        ll_match_start_content = (LinearLayout) findViewById(R.id.ll_match_start_content);
+        rl_match_txt_content = (RelativeLayout) findViewById(R.id.rl_match_txt_content);
+        gif_match_start = (GifImageView) findViewById(R.id.gif_match_start);
+        tv_start = (TextView) findViewById(R.id.tv_start);
+        tv_half_txt = (TextView) findViewById(R.id.tv_half_txt);
+        iv_signal_off = (ImageView) findViewById(R.id.iv_signal_off);
+        iv_drink_water = (ImageView) findViewById(R.id.iv_drink_water);
+        iv_injured = (ImageView) findViewById(R.id.iv_injured);
+        iv_injured_addtime = (ImageView) findViewById(R.id.iv_injured_addtime);
+
+        // 后场控球、进攻、危险进攻
+        ll_control_content = (LinearLayout) findViewById(R.id.ll_control_content);
+        ll_control = (LinearLayout) findViewById(R.id.ll_control);
+        gif_home_control = (GifImageView) findViewById(R.id.gif_home_control);
+        gif_guest_control = (GifImageView) findViewById(R.id.gif_guest_control);
+        rl_attack = (RelativeLayout) findViewById(R.id.rl_attack);
+        gif_home_attack = (GifImageView) findViewById(R.id.gif_home_attack);
+        gif_guest_attack = (GifImageView) findViewById(R.id.gif_guest_attack);
+        rl_attack_danger = (RelativeLayout) findViewById(R.id.rl_attack_danger);
+        gif_home_attack_danger = (GifImageView) findViewById(R.id.gif_home_attack_danger);
+        gif_guest_attack_danger = (GifImageView) findViewById(R.id.gif_guest_attack_danger);
+
+        // 射正、射偏1
+        ll_offside_content1 = (LinearLayout) findViewById(R.id.ll_offside_content1);
+        rl_home_offside1 = (RelativeLayout) findViewById(R.id.rl_home_offside1);
+        rl_guest_offside1 = (RelativeLayout) findViewById(R.id.rl_guest_offside1);
+        tv_home_title1 = (TextView) findViewById(R.id.tv_home_title1);
+        tv_guest_title1 = (TextView) findViewById(R.id.tv_guest_title1);
+        gif_home_position1 = (GifImageView) findViewById(R.id.gif_home_position1);
+        gif_guest_position1 = (GifImageView) findViewById(R.id.gif_guest_position1);
+        gif_home_ball1 = (GifImageView) findViewById(R.id.gif_home_ball1);
+        gif_guest_ball1 = (GifImageView) findViewById(R.id.gif_guest_ball1);
+        gif_home_hit1 = (GifImageView) findViewById(R.id.gif_home_hit1);
+        gif_guest_hit1 = (GifImageView) findViewById(R.id.gif_guest_hit1);
+
+        // 射正、射偏2
+        ll_offside_content2 = (LinearLayout) findViewById(R.id.ll_offside_content2);
+        rl_home_offside2 = (RelativeLayout) findViewById(R.id.rl_home_offside2);
+        rl_guest_offside2 = (RelativeLayout) findViewById(R.id.rl_guest_offside2);
+        tv_home_title2 = (TextView) findViewById(R.id.tv_home_title2);
+        tv_guest_title2 = (TextView) findViewById(R.id.tv_guest_title2);
+        gif_home_position2 = (GifImageView) findViewById(R.id.gif_home_position2);
+        gif_guest_position2 = (GifImageView) findViewById(R.id.gif_guest_position2);
+        gif_home_ball2 = (GifImageView) findViewById(R.id.gif_home_ball2);
+        gif_guest_ball2 = (GifImageView) findViewById(R.id.gif_guest_ball2);
+        gif_home_hit2 = (GifImageView) findViewById(R.id.gif_home_hit2);
+        gif_guest_hit2 = (GifImageView) findViewById(R.id.gif_guest_hit2);
+
+        // 球门球
+        ll_goal_door_content = (LinearLayout) findViewById(R.id.ll_goal_door_content);
+        rl_home_goal_door = (RelativeLayout) findViewById(R.id.rl_home_goal_door);
+        rl_guest_goal_door = (RelativeLayout) findViewById(R.id.rl_guest_goal_door);
+        gif_home_goal_door_position = (GifImageView) findViewById(R.id.gif_home_goal_door_position);
+        gif_guest_goal_door_position = (GifImageView) findViewById(R.id.gif_guest_goal_door_position);
+        gfi_home_goal_door = (GifImageView) findViewById(R.id.gfi_home_goal_door);
+        gfi_guest_goal_door = (GifImageView) findViewById(R.id.gfi_guest_goal_door);
+
+        // 界外球
+        ll_goal_out_content = (LinearLayout) findViewById(R.id.ll_goal_out_content);
+        rl_home_goal_out = (RelativeLayout) findViewById(R.id.rl_home_goal_out);
+        rl_guest_goal_out = (RelativeLayout) findViewById(R.id.rl_guest_goal_out);
+        gif_home_goal_out_position = (GifImageView) findViewById(R.id.gif_home_goal_out_position);
+        gif_guest_goal_out_position = (GifImageView) findViewById(R.id.gif_guest_goal_out_position);
+        gif_home_goal_out = (GifImageView) findViewById(R.id.gif_home_goal_out);
+        gif_guest_goal_out = (GifImageView) findViewById(R.id.gif_guest_goal_out);
+
+        // 角球
+        rl_corner_content = (RelativeLayout) findViewById(R.id.rl_corner_content);
+        rl_home_corner = (RelativeLayout) findViewById(R.id.rl_home_corner);
+        rl_guest_corner = (RelativeLayout) findViewById(R.id.rl_guest_corner);
+        ll_home_title_l = (LinearLayout) findViewById(R.id.ll_home_title_l);
+        ll_guest_title_l = (LinearLayout) findViewById(R.id.ll_guest_title_l);
+        ll_home_title_r = (LinearLayout) findViewById(R.id.ll_home_title_r);
+        ll_guest_title_r = (LinearLayout) findViewById(R.id.ll_guest_title_r);
+        gif_guest_corner_r_position = (GifImageView) findViewById(R.id.gif_guest_corner_r_position);
+        gif_home_corner_r_position = (GifImageView) findViewById(R.id.gif_home_corner_r_position);
+        gif_guest_corner_l_position = (GifImageView) findViewById(R.id.gif_guest_corner_l_position);
+        gif_home_corner_l_position = (GifImageView) findViewById(R.id.gif_home_corner_l_position);
+        gif_guest_corner_r = (GifImageView) findViewById(R.id.gif_guest_corner_r);
+        gif_home_corner_r = (GifImageView) findViewById(R.id.gif_home_corner_r);
+        gif_guest_corner_l = (GifImageView) findViewById(R.id.gif_guest_corner_l);
+        gif_home_corner_l = (GifImageView) findViewById(R.id.gif_home_corner_l);
+
+        // 越位
+        rl_offside_content = (RelativeLayout) findViewById(R.id.rl_offside_content);
+        rl_home_offside_bg = (RelativeLayout) findViewById(R.id.rl_home_offside_bg);
+        rl_guest_offside_bg = (RelativeLayout) findViewById(R.id.rl_guest_offside_bg);
+        ll_home_offside_title = (LinearLayout) findViewById(R.id.ll_home_offside_title);
+        ll_guest_offside_title = (LinearLayout) findViewById(R.id.ll_guest_offside_title);
+        gif_home_offside = (GifImageView) findViewById(R.id.gif_home_offside);
+        gif_guest_offside = (GifImageView) findViewById(R.id.gif_guest_offside);
+        gif_home_offside_position = (GifImageView) findViewById(R.id.gif_home_offside_position);
+        gif_guest_offside_position = (GifImageView) findViewById(R.id.gif_guest_offside_position);
+
+        // 点球
+        ll_penalty_content = (LinearLayout) findViewById(R.id.ll_penalty_content);
+        gif_home_penalty = (GifImageView) findViewById(R.id.gif_home_penalty);
+        gif_guest_penalty = (GifImageView) findViewById(R.id.gif_guest_penalty);
+
+        // 点球罚失
+        rl_penalty_lose_content = (RelativeLayout) findViewById(R.id.rl_penalty_lose_content);
+        ll_home_penalty_lose_title = (LinearLayout) findViewById(R.id.ll_home_penalty_lose_title);
+        ll_guest_penalty_lose_title = (LinearLayout) findViewById(R.id.ll_guest_penalty_lose_title);
+        gif_home_penalty_lose = (GifImageView) findViewById(R.id.gif_home_penalty_lose);
+        gif_guest_penalty_lose = (GifImageView) findViewById(R.id.gif_guest_penalty_lose);
+        gif_home_penalty_lose_position = (GifImageView) findViewById(R.id.gif_home_penalty_lose_position);
+        gif_guest_penalty_lose_position = (GifImageView) findViewById(R.id.gif_guest_penalty_lose_position);
+
+        // 红黄牌
+        rl_r_or_y_content = (RelativeLayout) findViewById(R.id.rl_r_or_y_content);
+        ll_home_r_or_y_title = (LinearLayout) findViewById(R.id.ll_home_r_or_y_title);
+        ll_guest_r_or_y_title = (LinearLayout) findViewById(R.id.ll_guest_r_or_y_title);
+        gif_home_r_or_y_position = (GifImageView) findViewById(R.id.gif_home_r_or_y_position);
+        gif_guest_r_or_y_position = (GifImageView) findViewById(R.id.gif_guest_r_or_y_position);
+        tv_home_desc = (TextView) findViewById(R.id.tv_home_desc);
+        tv_guest_desc = (TextView) findViewById(R.id.tv_guest_desc);
+        iv_home_img = (ImageView) findViewById(R.id.iv_home_img);
+        iv_guest_img = (ImageView) findViewById(R.id.iv_guest_img);
+        iv_home_r_or_y = (ImageView) findViewById(R.id.iv_home_r_or_y);
+        iv_guest_r_or_y = (ImageView) findViewById(R.id.iv_guest_r_or_y);
+
+        // 任意球fk2、fk4
+        fl_free_kick_fk2_fk4_content = (RelativeLayout) findViewById(R.id.fl_free_kick_fk2_fk4_content);
+        ll_home_free_kick_bg = (LinearLayout) findViewById(R.id.ll_home_free_kick_bg);
+        ll_guest_free_kick_bg = (LinearLayout) findViewById(R.id.ll_guest_free_kick_bg);
+        ll_home_free_kick_fk4_bg = (LinearLayout) findViewById(R.id.ll_home_free_kick_fk4_bg);
+        ll_guest_free_kick_fk4_bg = (LinearLayout) findViewById(R.id.ll_guest_free_kick_fk4_bg);
+        ll_home_free_kick_fk2_bg = (LinearLayout) findViewById(R.id.ll_home_free_kick_fk2_bg);
+        ll_guest_free_kick_fk2_bg = (LinearLayout) findViewById(R.id.ll_guest_free_kick_fk2_bg);
+        tv_home_free_kick_fk4_title = (TextView) findViewById(R.id.tv_home_free_kick_fk4_title);
+        tv_guest_free_kick_fk4_title = (TextView) findViewById(R.id.tv_guest_free_kick_fk4_title);
+        tv_home_free_kick_fk2_title = (TextView) findViewById(R.id.tv_home_free_kick_fk2_title);
+        tv_guest_free_kick_fk2_title = (TextView) findViewById(R.id.tv_guest_free_kick_fk2_title);
+        gif_home_free_kick_fk2_position = (GifImageView) findViewById(R.id.gif_home_free_kick_fk2_position);
+        gif_guest_free_kick_fk2_position = (GifImageView) findViewById(R.id.gif_guest_free_kick_fk2_position);
+        gif_home_free_kick_fk4_position = (GifImageView) findViewById(R.id.gif_home_free_kick_fk4_position);
+        gif_guest_free_kick_fk4_position = (GifImageView) findViewById(R.id.gif_guest_free_kick_fk4_position);
+
+        // 任意球fk3 1
+        fl_free_kick_fk3_content1 = (LinearLayout) findViewById(R.id.fl_free_kick_fk3_content1);
+        rl_home_free_kick_fk3_1 = (RelativeLayout) findViewById(R.id.rl_home_free_kick_fk3_1);
+        rl_guest_free_kick_fk3_1 = (RelativeLayout) findViewById(R.id.rl_guest_free_kick_fk3_1);
+        gif_home_free_kick_fk3_position = (GifImageView) findViewById(R.id.gif_home_free_kick_fk3_position);
+        gif_guest_free_kick_fk3_position = (GifImageView) findViewById(R.id.gif_guest_free_kick_fk3_position);
+
+        // 任意球fk3 2
+        fl_free_kick_fk3_content2 = (RelativeLayout) findViewById(R.id.fl_free_kick_fk3_content2);
+        ll_home_free_kick_fk3_bg_2 = (LinearLayout) findViewById(R.id.ll_home_free_kick_fk3_bg_2);
+        ll_guest_free_kick_fk3_bg_2 = (LinearLayout) findViewById(R.id.ll_guest_free_kick_fk3_bg_2);
+        ll_home_free_kick_fk3_title_2 = (LinearLayout) findViewById(R.id.ll_home_free_kick_fk3_title_2);
+        ll_guest_free_kick_fk3_title_2 = (LinearLayout) findViewById(R.id.ll_guest_free_kick_fk3_title_2);
+        gif_home_free_kick_fk3_position_2 = (GifImageView) findViewById(R.id.gif_home_free_kick_fk3_position_2);
+        gif_guest_free_kick_fk3_position_2 = (GifImageView) findViewById(R.id.gif_guest_free_kick_fk3_position_2);
+
+        // 任意球fk1
+        fl_free_kick_fk1_content = (RelativeLayout) findViewById(R.id.fl_free_kick_fk1_content);
+        ll_home_free_kick_fk1_bg = (LinearLayout) findViewById(R.id.ll_home_free_kick_fk1_bg);
+        ll_guest_free_kick_fk1_bg = (LinearLayout) findViewById(R.id.ll_guest_free_kick_fk1_bg);
+        ll_home_free_kick_fk1_title = (LinearLayout) findViewById(R.id.ll_home_free_kick_fk1_title);
+        ll_guest_free_kick_fk1_title = (LinearLayout) findViewById(R.id.ll_guest_free_kick_fk1_title);
+        gif_home_free_kick_fk1_position = (GifImageView) findViewById(R.id.gif_home_free_kick_fk1_position);
+        gif_guest_free_kick_fk1_position = (GifImageView) findViewById(R.id.gif_guest_free_kick_fk1_position);
+
+        // 进球
+        ll_goal_content = (LinearLayout) findViewById(R.id.ll_goal_content);
+        iv_home_goal = (ImageView) findViewById(R.id.iv_home_goal);
+        iv_guest_goal = (ImageView) findViewById(R.id.iv_guest_goal);
+        gif_home_goal_cancel = (GifImageView) findViewById(R.id.gif_home_goal_cancel);
+        gif_guest_goal_cancel = (GifImageView) findViewById(R.id.gif_guest_goal_cancel);
+        tv_home_goal_title = (TextView) findViewById(R.id.tv_home_goal_title);
+        tv_guest_goal_title = (TextView) findViewById(R.id.tv_guest_goal_title);
+
+        // 欢呼
+        ll_cheer_content = (LinearLayout) findViewById(R.id.ll_cheer_content);
+        gif_cheer = (GifImageView) findViewById(R.id.gif_cheer);
+
+        gif_cheer.setImageResource(R.mipmap.football_cheer);// 欢呼动画
+        iv_home_goal.setImageResource(R.drawable.football_goal_animation);// 主队进球动画
+        homeAnima = (AnimationDrawable) iv_home_goal.getDrawable();
+
+
+        iv_guest_goal.setImageResource(R.drawable.football_goal_animation);// 客队进球动画
+        guestAnima = (AnimationDrawable) iv_guest_goal.getDrawable();
+        gif_home_goal_cancel.setImageResource(R.mipmap.football_cancel_goal);// 取消进球
+        gif_guest_goal_cancel.setImageResource(R.mipmap.football_cancel_goal);// 取消进球
     }
 
     private void initPreData(MatchDetail mMatchDetail) {
@@ -2170,27 +3339,40 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         loadImage(mMatchDetail.getHomeTeamInfo().getUrl(), iv_home_icon);
         loadImage(mMatchDetail.getGuestTeamInfo().getUrl(), iv_guest_icon);
+        loadImage(mMatchDetail.getHomeTeamInfo().getUrl(), iv_head_home_icon);
+        loadImage(mMatchDetail.getGuestTeamInfo().getUrl(), iv_head_guest_icon);
         tv_homename.setText(mMatchDetail.getHomeTeamInfo().getName());
+        tv_head_home_name.setText(mMatchDetail.getHomeTeamInfo().getName());
         tv_guestname.setText(mMatchDetail.getGuestTeamInfo().getName());
+        tv_head_guest_name.setText(mMatchDetail.getGuestTeamInfo().getName());
+        tv_head_match_name.setText(mMatchDetail.getMatchType1() + " " + mMatchDetail.getMatchType2());
 
+        try {
+            MatchTextLiveBean matchTextLiveBean  = mMatchDetail.getMatchInfo().getMatchLive().get(0);
+            if(matchTextLiveBean != null){
+                matchTimeStart(matchTextLiveBean.getTime(),matchTextLiveBean.getState());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //赛事类型
 
-        if (mMatchDetail.getMatchType1() == null && mMatchDetail.getMatchType2() == null) {
-            mMatchTypeLayout.setVisibility(View.INVISIBLE);
-        } else {
-
-            if (StringUtils.isEmpty(mMatchDetail.getMatchType1())) {
-                mMatchType1.setVisibility(View.INVISIBLE);
-            }
-
-            if (StringUtils.isEmpty(mMatchDetail.getMatchType2())) {
-                mMatchType2.setVisibility(View.INVISIBLE);
-            }
-            mMatchType1.setText(StringUtils.nullStrToEmpty(mMatchDetail.getMatchType1()));
-            mMatchType2.setText(StringUtils.nullStrToEmpty(mMatchDetail.getMatchType2()));
-            mMatchTypeLayout.setVisibility(View.VISIBLE);
-        }
+//        if (mMatchDetail.getMatchType1() == null && mMatchDetail.getMatchType2() == null) {
+//            mMatchTypeLayout.setVisibility(View.INVISIBLE);
+//        } else {
+//
+//            if (StringUtils.isEmpty(mMatchDetail.getMatchType1())) {
+//                mMatchType1.setVisibility(View.INVISIBLE);
+//            }
+//
+//            if (StringUtils.isEmpty(mMatchDetail.getMatchType2())) {
+//                mMatchType2.setVisibility(View.INVISIBLE);
+//            }
+//            mMatchType1.setText(StringUtils.nullStrToEmpty(mMatchDetail.getMatchType1()));
+//            mMatchType2.setText(StringUtils.nullStrToEmpty(mMatchDetail.getMatchType2()));
+//            mMatchTypeLayout.setVisibility(View.VISIBLE);
+//        }
 
         if (mMatchDetail.getMatchInfo().getStartTime() != null) {
             String startTime = mMatchDetail.getMatchInfo().getStartTime();
@@ -2229,10 +3411,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private void setScoreText(String msg) {
         score.setText(msg);
+        tv_head_over_score.setText(msg);
     }
 
     private void setScoreClolor(int id) {
         score.setTextColor(id);
+        tv_head_over_score.setTextColor(id);
     }
 
 
@@ -2382,4 +3566,236 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         tv_guest_yc.setText(String.valueOf(mathchStatisInfo.getGuest_yc()));
     }
 
+    /**
+     * 时间显示
+     * @param time
+     * @param state
+     */
+    private void matchTimeStart(String time,String state){
+        if(TextUtils.isEmpty(time) || TextUtils.isEmpty(state)) return;
+
+        tv_hean_srcoe_aop.setText("\'");
+        final AlphaAnimation anim1 = new AlphaAnimation(1, 1);
+        anim1.setDuration(500);
+        final AlphaAnimation anim2 = new AlphaAnimation(0, 0);
+        anim2.setDuration(500);
+        anim1.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                tv_hean_srcoe_aop.startAnimation(anim2);
+            }
+        });
+
+        anim2.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                tv_hean_srcoe_aop.startAnimation(anim1);
+
+            }
+        });
+        tv_hean_srcoe_aop.startAnimation(anim1);
+
+        switch (state) {
+            case "0":// 未开
+                date.setVisibility(View.VISIBLE);
+                tv_hean_srcoe_aop.setVisibility(View.INVISIBLE);
+                score.setVisibility(View.INVISIBLE);
+
+                date.setText(mContext.getResources().getString(R.string.tennis_match_not_start));
+                date.setTextColor(mContext.getResources().getColor(R.color.res_pl_color));
+                break;
+            case "1":// 上半场
+                date.setVisibility(View.VISIBLE);
+                tv_hean_srcoe_aop.setVisibility(View.VISIBLE);
+                score.setVisibility(View.INVISIBLE);
+                tv_hean_srcoe_aop.setText("'");
+                try {
+                    int keeptime = Integer.parseInt(time);// 设置时间
+                    date.setText(keeptime > 45 ? "45+" : String.valueOf(keeptime));
+                } catch (Exception e) {
+                    date.setText("E");
+                }
+                break;
+            case "2":// 中场
+                date.setText(mContext.getString(R.string.immediate_status_midfield));
+                tv_hean_srcoe_aop.setVisibility(View.INVISIBLE);
+                score.setVisibility(View.INVISIBLE);
+                break;
+            case "3":// 下半场
+                date.setVisibility(View.VISIBLE);
+                tv_hean_srcoe_aop.setVisibility(View.VISIBLE);
+                score.setVisibility(View.VISIBLE);
+                score.setText("(1-1)");
+                try {
+                    int keeptime = Integer.parseInt(time);
+                    date.setText(keeptime > 90 ? "90+" : String.valueOf(keeptime));
+                } catch (Exception e) {
+                    date.setText("E");
+                }
+                break;
+            case "4":// 加时
+                date.setVisibility(View.VISIBLE);
+                tv_hean_srcoe_aop.setVisibility(View.INVISIBLE);
+                score.setVisibility(View.VISIBLE);
+                score.setText("(1-1)");
+                date.setText(mContext.getString(R.string.immediate_status_overtime));
+                break;
+            case "5":// 点球
+                date.setVisibility(View.VISIBLE);
+                tv_hean_srcoe_aop.setVisibility(View.INVISIBLE);
+                score.setVisibility(View.VISIBLE);
+                score.setText("(1-1)");
+                date.setText(mContext.getString(R.string.immediate_status_point));
+                break;
+            case "-1":// 完场
+                date.setText(mContext.getResources().getString(R.string.finish_txt));
+                date.setTextColor(mContext.getResources().getColor(R.color.red));
+                date.setVisibility(View.VISIBLE);
+                tv_hean_srcoe_aop.setVisibility(View.INVISIBLE);
+               score.setVisibility(View.VISIBLE);
+               score.setText("(1-1)");
+                break;
+            case "-10":// 取消
+                date.setVisibility(View.VISIBLE);
+                tv_hean_srcoe_aop.setVisibility(View.INVISIBLE);
+                score.setVisibility(View.VISIBLE);
+                score.setText("(1-1)");
+                date.setText(mContext.getString(R.string.immediate_status_cancel));
+                date.setTextColor(mContext.getResources().getColor(R.color.red));
+                break;
+            case "-11":// 待定
+                date.setVisibility(View.VISIBLE);
+                tv_hean_srcoe_aop.setVisibility(View.INVISIBLE);
+                score.setVisibility(View.VISIBLE);
+                score.setText("(1-1)");
+                date.setText(mContext.getString(R.string.immediate_status_hold));
+                date.setTextColor(mContext.getResources().getColor(R.color.red));
+                break;
+            case "-12":// 腰斩
+                date.setVisibility(View.VISIBLE);
+                tv_hean_srcoe_aop.setVisibility(View.INVISIBLE);
+                score.setVisibility(View.VISIBLE);
+                score.setText("(1-1)");
+                date.setText(mContext.getString(R.string.immediate_status_cut));
+                date.setTextColor(mContext.getResources().getColor(R.color.red));
+                break;
+            case "-13":// 中断
+                date.setVisibility(View.VISIBLE);
+                tv_hean_srcoe_aop.setVisibility(View.INVISIBLE);
+                score.setVisibility(View.VISIBLE);
+                score.setText("(1-1)");
+                date.setText(mContext.getString(R.string.immediate_status_mesomere));
+                date.setTextColor(mContext.getResources().getColor(R.color.red));
+                break;
+            case "-14":// 推迟
+                date.setVisibility(View.VISIBLE);
+                tv_hean_srcoe_aop.setVisibility(View.INVISIBLE);
+                score.setVisibility(View.VISIBLE);
+                score.setText("(1-1)");
+                date.setText(mContext.getString(R.string.immediate_status_postpone));
+                date.setTextColor(mContext.getResources().getColor(R.color.red));
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * 处理直播动画处理
+     *
+     * @param type
+     */
+    private void showGifAnimation(int type) {
+
+        // 比赛开始、信号中断、喝水、受伤、伤停补时
+        ll_match_start_content.setVisibility((11 == type || 12 == type || 13 == type || // 比赛开始
+                1 == type || //中场休息
+                (type >= 302 && type <= 317) || type == 532 || type == 518 || type == 149 || //比赛暂停
+                517 == type || 148 == type || // 比赛恢复
+                -1 == type ||// 比赛结束
+                515 == type || 516 == type || // 信号中断
+                311 == type || // 喝水
+                132 == type || // 受伤
+                260 == type // 伤停补时
+        ) ? View.VISIBLE : View.GONE);
+
+        // 后场控球、进攻、危险进攻
+        ll_control_content.setVisibility((1051 == type || // 主队后场控球
+                2075 == type || // 客队后场控球
+                1024 == type || //主队进攻
+                2048 == type || //客队进攻
+                1026 == type || //主队危险进攻
+                2050 == type //客队危险进攻
+        ) ? View.VISIBLE : View.GONE);
+
+        // 射正、射偏1
+        ll_offside_content1.setVisibility(1111 == type ? View.VISIBLE : View.GONE);
+
+        // 射正、射偏2
+        ll_offside_content2.setVisibility(2222 == type ? View.VISIBLE : View.GONE);
+
+        // 球门球
+        ll_goal_door_content.setVisibility((1053 == type || 2077 == type) ? View.VISIBLE : View.GONE);
+
+        // 界外球
+        ll_goal_out_content.setVisibility((1054 == type || 2078 == type) ? View.VISIBLE : View.GONE);
+
+        // 角球
+        rl_corner_content.setVisibility((3333 == type || 4444 == type) ? View.VISIBLE : View.GONE);
+
+        // 越位
+        rl_offside_content.setVisibility((1043 == type || 2067 == type) ? View.VISIBLE : View.GONE);
+
+        // 点球
+        ll_penalty_content.setVisibility((1031 == type || 2055 == type) ? View.VISIBLE : View.GONE);
+
+        // 点球罚失
+        rl_penalty_lose_content.setVisibility((1060 == type || 2084 == type) ? View.VISIBLE : View.GONE);
+
+        // 红黄牌
+        rl_r_or_y_content.setVisibility((1042 == type || 2066 == type || // 犯规
+                1032 == type || 2056 == type || // 红牌
+                1034 == type || 2058 == type || // 黄牌
+                1055 == type || 2079 == type // 换人
+        ) ? View.VISIBLE : View.GONE);
+
+        // 任意球fk2、fk4
+        fl_free_kick_fk2_fk4_content.setVisibility((5555 == type || 7777 == type || -9999 == type) ? View.VISIBLE : View.GONE);
+
+        // 任意球fk3 1
+        fl_free_kick_fk3_content1.setVisibility(9999 == type ? View.VISIBLE : View.GONE);
+
+        // 任意球fk3 2
+        fl_free_kick_fk3_content2.setVisibility(8888 == type ? View.VISIBLE : View.GONE);
+
+        // 任意球fk1
+        fl_free_kick_fk1_content.setVisibility(6666 == type ? View.VISIBLE : View.GONE);
+
+        // 进球
+        ll_goal_content.setVisibility((1029 == type || 2053 == type || 1030 == type || 2054 == type) ? View.VISIBLE : View.GONE);
+
+        // 欢呼
+        ll_cheer_content.setVisibility((1029 == type || 2053 == type) ? View.VISIBLE : View.GONE);
+    }
 }

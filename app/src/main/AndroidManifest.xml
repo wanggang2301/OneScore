@@ -328,8 +328,8 @@
             android:screenOrientation="portrait" />
         <!-- 1.2.3改版后的新首页 -->
         <!--<activity-->
-            <!--android:name=".activity.IndexActivity"-->
-            <!--android:screenOrientation="portrait" />-->
+        <!--android:name=".activity.IndexActivity"-->
+        <!--android:screenOrientation="portrait" />-->
         <!-- 斯诺克球员信息 -->
         <activity
             android:name=".activity.SnookerPlayerInfoActivity"
@@ -392,9 +392,9 @@
             android:screenOrientation="portrait" />
 
         <!-- 支付相关 -->
-        <activity
-            android:name=".activity.BettingRecommendActivity"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+        <!--android:name=".activity.BettingRecommendActivity"-->
+        <!--android:screenOrientation="portrait" />-->
 
         <!--专家详情MVP-->
         <activity
@@ -406,13 +406,16 @@
         <activity
             android:name=".activity.BettingRecommendSettingActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.FootballCornerActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.FootballCornerActivity"
+            android:screenOrientation="portrait" />
 
         <!--足球动画直播Test-->
-        <activity android:name=".activity.FootballEventAnimationFragment"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.FootballEventAnimationFragment"
+            android:screenOrientation="portrait" />
 
+        <activity
             android:name=".mvp.bettingmvp.mvpview.MvpBettingOnlinePaymentActivity"
             android:exported="true"
             android:launchMode="singleTop"
@@ -442,35 +445,37 @@
 
         <!-- alipay sdk begin -->
         <!-- 若手机没有安装支付宝，则调用H5支付页面 -->
-    <activity
-        android:name="com.alipay.sdk.app.H5PayActivity"
-        android:configChanges="orientation|keyboardHidden|navigation"
-        android:exported="false"
-        android:screenOrientation="behind" />
-    <activity
-        android:name="com.alipay.sdk.app.H5AuthActivity"
-        android:configChanges="orientation|keyboardHidden|navigation"
-        android:exported="false"
-        android:screenOrientation="behind" />
-    <!-- alipay sdk end -->
-    <activity
-        android:name="com.alipay.sdk.auth.AuthActivity"
-        android:configChanges="orientation|keyboardHidden|navigation"
-        android:exported="false"
-        android:screenOrientation="behind" />
+        <!--<activity-->
+            <!--android:name="com.alipay.sdk.app.H5PayActivity"-->
+            <!--android:configChanges="orientation|keyboardHidden|navigation"-->
+            <!--android:exported="false"-->
+            <!--android:screenOrientation="behind" />-->
+        <!--<activity-->
+            <!--android:name="com.alipay.sdk.app.H5AuthActivity"-->
+            <!--android:configChanges="orientation|keyboardHidden|navigation"-->
+            <!--android:exported="false"-->
+            <!--android:screenOrientation="behind" />-->
+        <!--&lt;!&ndash; alipay sdk end &ndash;&gt;-->
+        <!--<activity-->
+            <!--android:name="com.alipay.sdk.auth.AuthActivity"-->
+            <!--android:configChanges="orientation|keyboardHidden|navigation"-->
+            <!--android:exported="false"-->
+            <!--android:screenOrientation="behind" />-->
 
-    <activity
-        android:name=".activity.SubsRecordActivity"
-        android:screenOrientation="portrait" />
-    <activity
-        android:name=".activity.RecommendArticlesActivity"
-        android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SubsRecordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.RecommendArticlesActivity"
+            android:screenOrientation="portrait" />
         <!--账户详情-->
-        <activity android:name=".activity.AccountDetailActivity"
+        <activity
+            android:name=".activity.AccountDetailActivity"
             android:screenOrientation="portrait" />
         <!--角球比分-->
-        <activity android:name=".activity.FootballCornerActivity"
-            android:screenOrientation="portrait"/>
+        <!--<activity-->
+            <!--android:name=".activity.FootballCornerActivity"-->
+            <!--android:screenOrientation="portrait" />-->
     </application>
 
 </manifest>
