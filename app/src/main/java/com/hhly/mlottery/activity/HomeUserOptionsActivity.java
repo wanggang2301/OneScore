@@ -292,8 +292,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 //                }
             case R.id.rl_my_subscribe: //订阅记录
                 if (DeviceInfo.isLogin()) {
-
-
+                    startActivity(new Intent(this, SubsRecordActivity.class));
                 } else {
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);
                 }
@@ -301,7 +300,12 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
             case R.id.rl_my_promotion:     //推介文章
                 if (DeviceInfo.isLogin()) {
-
+                    //0 未审核  1.审核通过  2.审核中  3.审核不通过
+                    if ("1".equals(AppConstants.register.getUser().getIsExpert())) {
+                        startActivity(new Intent(this, RecommendArticlesActivity.class));
+                    } else {
+                        startActivity(new Intent(this, NotRecommendExpertActivity.class));
+                    }
 
                 } else {
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);

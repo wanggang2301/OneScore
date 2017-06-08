@@ -1,5 +1,6 @@
 package com.hhly.mlottery.mvp.bettingmvp.mvpview;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -16,7 +17,7 @@ import com.hhly.mlottery.activity.BaseActivity;
  * Created by：XQyi on 2017/5/31 16:08
  * Use: 推介发布页面（view）
  */
-public class MvpBettingIssueDetailsActivity extends BaseActivity implements View.OnClickListener {
+public class MvpBettingIssueDetailsActivity extends Activity implements View.OnClickListener {
 
     private ImageView mBack;
     private ImageView inputImg;

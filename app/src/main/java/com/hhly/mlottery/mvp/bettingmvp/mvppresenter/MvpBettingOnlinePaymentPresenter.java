@@ -1,5 +1,6 @@
 package com.hhly.mlottery.mvp.bettingmvp.mvppresenter;
 
+import com.hhly.mlottery.bean.bettingbean.BettingOrderDataBean;
 import com.hhly.mlottery.mvp.bettingmvp.MModel;
 import com.hhly.mlottery.mvp.bettingmvp.MPresenter;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
@@ -12,7 +13,7 @@ import java.util.Map;
  * Created by：XQyi on 2017/5/22 14:35
  * Use:支付页面（选择支付方式 [MVP-presenter 业务分配 逻辑处理]）
  */
-public class MvpBettingOnlinePaymentPresenter implements MPresenter<BasketDatabaseBean> {
+public class MvpBettingOnlinePaymentPresenter implements MPresenter<BettingOrderDataBean> {
 
     private MModel mModel;
     private MView mView;
@@ -28,8 +29,8 @@ public class MvpBettingOnlinePaymentPresenter implements MPresenter<BasketDataba
     }
 
     @Override
-    public void loadSuccess(BasketDatabaseBean basketDatabaseBean) {
-        mView.loadSuccessView(basketDatabaseBean);
+    public void loadSuccess(BettingOrderDataBean orderDataBean) {
+        mView.loadSuccessView(orderDataBean);
     }
 
     @Override
