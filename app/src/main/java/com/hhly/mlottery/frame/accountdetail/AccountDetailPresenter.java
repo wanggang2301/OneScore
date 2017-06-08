@@ -88,7 +88,7 @@ public class AccountDetailPresenter extends BasePresenter<AccountDetailContract.
     public void refreshDataByPage() {
         String userId=AppConstants.register.getUser().getUserId();
         String token=AppConstants.register.getToken();
-//
+////
 //        String userId="HHLY00000136";
 //        String token="eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJqd3QiLCJpYXQiOjE0OTY3MTY2NTEsInN1YiI6IntcImlkXCI6XCJISExZMDAwMDAxMzZcIixcInBob25lTnVtXCI6XCIxNTAxMzY5NzEwMVwifSJ9.DnxIwOrkdG--8mxn4-j8sGJ85ouF7hCiyPmCIdR8XYg";
 
