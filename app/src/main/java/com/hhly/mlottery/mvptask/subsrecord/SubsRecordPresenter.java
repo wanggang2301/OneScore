@@ -72,8 +72,7 @@ public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDa
     @Override
     public void pullUpLoadMoreData(String userId, String pageNum, String pageSize, String loginToken, String sign) {
 
-        //if (!isHasNextPage) {
-        if (false) {
+        if (!isHasNextPage) {
             mView.pullUpLoadMoreDataFail();
             return;
         }

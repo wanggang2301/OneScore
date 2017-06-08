@@ -181,6 +181,7 @@
                 android:textSize="@dimen/text_size_16"
                 android:text="@string/betting_txt_confirm_pay"/>
             <TextView
+                android:id="@+id/betting_pay_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/betting_recommend_zhuanjia_grand_color"

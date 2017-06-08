@@ -12,12 +12,19 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
+            <com.hhly.mlottery.view.LoadMoreRecyclerView
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/betting_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            </android.support.v7.widget.RecyclerView>
+            </com.hhly.mlottery.view.LoadMoreRecyclerView>
+            
+            <!--<android.support.v7.widget.RecyclerView-->
+                <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+                <!--android:id="@+id/betting_recyclerview"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
+            <!--</android.support.v7.widget.RecyclerView>-->
 
         </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
 

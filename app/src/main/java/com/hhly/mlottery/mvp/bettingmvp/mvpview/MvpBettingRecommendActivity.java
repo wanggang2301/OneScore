@@ -1,13 +1,13 @@
 package com.hhly.mlottery.mvp.bettingmvp.mvpview;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,20 +15,22 @@ import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.BaseActivity;
 import com.hhly.mlottery.activity.BettingRecommendSettingActivity;
+import com.hhly.mlottery.activity.LoginActivity;
+import com.hhly.mlottery.adapter.bettingadapter.BettingRecommendMvpAdapter;
 import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
 import com.hhly.mlottery.config.ConstantPool;
+import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingSettingResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.mvppresenter.MvpBettingRecommendPresenter;
-import com.hhly.mlottery.adapter.bettingadapter.BettingRecommendMvpAdapter;
-import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.SignUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.view.LoadMoreRecyclerView;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
 import java.io.Serializable;
@@ -43,7 +45,7 @@ import de.greenrobot.event.EventBus;
  * Created by：XQyi on 2017/5/2 10:56
  * Use:竞彩推荐列表（MVP-View 页面展示）
  */
-public class MvpBettingRecommendActivity extends BaseActivity implements MView<BettingListDataBean>, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class MvpBettingRecommendActivity extends Activity implements MView<BettingListDataBean>, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private MvpBettingRecommendPresenter mvpBettingRecommendPresenter;
     private BettingRecommendMvpAdapter mAdapter;
@@ -51,13 +53,14 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
     private ImageView mBack;
     private ImageView mSetting;
     private ExactSwipeRefreshLayout mRefresh;
-    private RecyclerView mRecycleView;
+    private LoadMoreRecyclerView mRecycleView;
     private LinearLayoutManager mLinearLayoutManager;
     private List<BettingListDataBean.PromotionData.BettingListData>  listData = new ArrayList<>();
     private LinearLayout mErrorLayout;
     private TextView mRefreshTxt;
     private LinearLayout mLoadingLayout;
     private TextView mNoDataLayout;
+    private Context mContext;
 
     List<BettingListDataBean.LeagueNameData> allLeague;// 所有的联赛
     List<BettingListDataBean.LeagueNameData> currLeague;//选中的联赛
@@ -149,13 +152,15 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
         mRefresh.setOnRefreshListener(this);
         mRefresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getApplicationContext(), StaticValues.REFRASH_OFFSET_END));
 
-        mRecycleView = (RecyclerView)findViewById(R.id.betting_recyclerview);
+        mRecycleView = (LoadMoreRecyclerView)findViewById(R.id.betting_recyclerview);
         mLinearLayoutManager = new LinearLayoutManager(this);
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecycleView.setLayoutManager(mLinearLayoutManager);
 
-        mOnLoadingView = getLayoutInflater().inflate(R.layout.onloading, (ViewGroup) mRecycleView.getParent(),false);
-        mNoLoadingView = getLayoutInflater().inflate(R.layout.nomoredata, (ViewGroup) mRecycleView.getParent(),false);
+
+
+//        mOnLoadingView = getLayoutInflater().inflate(R.layout.onloading, (ViewGroup) mRecycleView.getParent(),false);
+//        mNoLoadingView = getLayoutInflater().inflate(R.layout.nomoredata, (ViewGroup) mRecycleView.getParent(),false);
 
         //异常状态
         //网络不给力
@@ -175,7 +180,7 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
         String userid = AppConstants.register.getUser().getUserId();
         Map<String ,String> mapPrament = new HashMap<>();
 
-        mapPrament.put("pageSize" , "10"); //每页条数
+        mapPrament.put("pageSize" , "20"); //每页条数
         mapPrament.put("pageNo" , "1");//页码
         mapPrament.put("userId" , userid);//用户id
         mapPrament.put("key" , key);//联赛key
@@ -185,7 +190,7 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
         String signs = SignUtils.getSign("/promotion/info/list" , mapPrament);
 
         Map<String ,String> map = new HashMap<>();
-        map.put("pageSize" , "10"); //每页条数
+        map.put("pageSize" , "20"); //每页条数
         map.put("pageNo" , "1");//页码
         map.put("userId" , userid);//用户id
         map.put("key" , key);//联赛key
@@ -292,6 +297,8 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
         if (mAdapter == null) {
             mAdapter = new BettingRecommendMvpAdapter(mContext , listData);
             mRecycleView.setAdapter(mAdapter);
+
+
             mAdapter.setmBuyClick(mBettingBuyClickListener);
             mAdapter.setmSpecialistClick(mBettingSpecialistClickListener);
             mAdapter.setmGameDetailsClick(mBettingGameDetailsClickListener);
@@ -365,11 +372,21 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
             @Override
             public void BuyOnClick(View view, BettingListDataBean.PromotionData.BettingListData listData) {
                 //                Toast.makeText(mContext, "点击了购买** " + s, Toast.LENGTH_SHORT).show();
-                L.d("yxq-0418=== " , "点击了*购买** " + listData.getId());
-                Intent mIntent = new Intent(mContext , MvpBettingPayDetailsActivity.class);
-                mIntent.putExtra(ConstantPool.BETTING_ITEM_DATA , listData);//选中的
-                startActivity(mIntent);
-                overridePendingTransition(R.anim.push_left_in , R.anim.push_fix_out);
+                if (DeviceInfo.isLogin()) {
+                    L.d("yxq-0418=== " , "点击了*购买** " + listData.getId());
+                    Intent mIntent = new Intent(mContext , MvpBettingPayDetailsActivity.class);
+                    mIntent.putExtra(ConstantPool.BETTING_ITEM_DATA , listData);//选中的
+                    startActivity(mIntent);
+                    overridePendingTransition(R.anim.push_left_in , R.anim.push_fix_out);
+                } else {
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    startActivity(intent);
+                }
+//                L.d("yxq-0418=== " , "点击了*购买** " + listData.getId());
+//                Intent mIntent = new Intent(mContext , MvpBettingPayDetailsActivity.class);
+//                mIntent.putExtra(ConstantPool.BETTING_ITEM_DATA , listData);//选中的
+//                startActivity(mIntent);
+//                overridePendingTransition(R.anim.push_left_in , R.anim.push_fix_out);
             }
        };
     }

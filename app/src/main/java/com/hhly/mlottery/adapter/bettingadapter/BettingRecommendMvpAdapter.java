@@ -154,6 +154,19 @@ public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListData
         holder.setText(R.id.betting_price , "￥ " + data.getPrice());
         holder.setText(R.id.betting_recommended_reason , data.getContext() + "");
 
+        boolean lookStatus;
+        if (data.getLookStatus() == null) {
+            lookStatus = false;
+            holder.setText(R.id.textView11 , "--");
+        }else{
+            lookStatus = true;
+            if (data.getLookStatus().equals("2")) {
+                holder.setText(R.id.textView11 , mContext.getResources().getString(R.string.betting_txt_buy));
+            }else{
+                holder.setText(R.id.textView11 , mContext.getResources().getString(R.string.betting_txt_check));
+            }
+        }
+
 //        viewHolderData.mSpecialistName.setText(data.getUserid() + "");
 //        viewHolderData.mSpecialistGrade.setText(data.getExpert() + "");
 //        viewHolderData.mLeagueName.setText(data.getLeagueName() + "");
@@ -172,14 +185,17 @@ public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListData
          * 购买（查看）点击
          */
 
-        mBuyOrCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mBuyClick != null){
-                    mBuyClick.BuyOnClick(v , data);
+        if (lookStatus) {
+            mBuyOrCheck.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mBuyClick != null){
+                        mBuyClick.BuyOnClick(v , data);
+                    }
                 }
-            }
-        });
+            });
+        }
+
         /**
          * 专家点击
          */
