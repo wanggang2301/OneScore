@@ -1,5 +1,6 @@
 package com.hhly.mlottery.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -52,7 +53,7 @@ import de.greenrobot.event.EventBus;
  * 申请专家页面
  */
 
-public class ApplicationSpecialistActivity extends BaseActivity implements View.OnClickListener {
+public class ApplicationSpecialistActivity extends Activity implements View.OnClickListener {
 
 
     private TextView public_txt_title;
@@ -195,23 +196,24 @@ public class ApplicationSpecialistActivity extends BaseActivity implements View.
         agreement = (LinearLayout) findViewById(R.id.agreement);
 
         scrollview = (ScrollView) findViewById(R.id.scrollview);
-        if (expert.equals("1")) {//审核通过
 
-            expertrequest();
+            if (expert.equals("1")) {//审核通过
 
-        } else if (expert.equals("0")) {//未审核
-            to_examine.setVisibility(View.GONE);
-            scrollview.setVisibility(View.VISIBLE);
-            success_image.setVisibility(View.GONE);
-            good_league_rl.setVisibility(View.VISIBLE);
-            shen_good_legue.setVisibility(View.GONE);
-        } else if (expert.equals("2")) {  //审核中
-            to_examine.setVisibility(View.VISIBLE);
-            scrollview.setVisibility(View.GONE);
-        } else if (expert.equals("3")) {   //审核失败
+                expertrequest();
 
-            expertrequest();
-        }
+            } else if (expert.equals("0")) {//未审核
+                to_examine.setVisibility(View.GONE);
+                scrollview.setVisibility(View.VISIBLE);
+                success_image.setVisibility(View.GONE);
+                good_league_rl.setVisibility(View.VISIBLE);
+                shen_good_legue.setVisibility(View.GONE);
+            } else if (expert.equals("2")) {  //审核中
+                to_examine.setVisibility(View.VISIBLE);
+                scrollview.setVisibility(View.GONE);
+            } else if (expert.equals("3")) {   //审核失败
+
+                expertrequest();
+            }
 
         //付费协议
 
@@ -386,37 +388,44 @@ public class ApplicationSpecialistActivity extends BaseActivity implements View.
 
                 if (requestBean != null && requestBean.getCode().equals("200")) {
 
-                    if (requestBean.getUserInfo().getIsExpert()==3) {
-                        specalist_error_tv.setVisibility(View.VISIBLE);
-                        specalist_error_text.setText(requestBean.getUserInfo().getApproveIdea());
-                        success_image.setVisibility(View.GONE);
-                    }else{
-                        success_image.setVisibility(View.VISIBLE);
-                    }
 
                     to_examine.setVisibility(View.GONE);
                     scrollview.setVisibility(View.VISIBLE);
 
-                    good_league_rl.setVisibility(View.GONE);
+
                     real_name.setText(requestBean.getUserInfo().getRealName());
                     id_datas.setText(requestBean.getUserInfo().getIdCard());
                     specalist_edittext.setText(requestBean.getUserInfo().getIntroduce());
-                    SplitString1(requestBean.getUserInfo().getSkillfulLeague());
 
-                    real_name.setKeyListener(null);
-                    id_datas.setKeyListener(null);
-                    specalist_edittext.setKeyListener(null);
-                    good_league.setKeyListener(null);
-                    agreement.setVisibility(View.GONE);
-                    immediate_authentication.setVisibility(View.GONE);
-                    findViewById(R.id.tv_2).setVisibility(View.GONE);
-                    findViewById(R.id.tv_1).setVisibility(View.GONE);
-                    shen_good_legue.setVisibility(View.VISIBLE);
-                    symptomSelectedNameTv.setKeyListener(null);
+                    if (requestBean.getUserInfo().getIsExpert()==3) {
+                        specalist_error_tv.setVisibility(View.VISIBLE);
+                        specalist_error_text.setText(requestBean.getUserInfo().getApproveIdea());
+                        success_image.setVisibility(View.GONE);
+                        good_league_rl.setVisibility(View.VISIBLE);
+                        SplitString(requestBean.getUserInfo().getSkillfulLeague());
+                        agreement.setVisibility(View.VISIBLE);
+                        immediate_authentication.setVisibility(View.VISIBLE);
+                        findViewById(R.id.tv_2).setVisibility(View.VISIBLE);
+                        findViewById(R.id.tv_1).setVisibility(View.VISIBLE);
+                        shen_good_legue.setVisibility(View.INVISIBLE);
+                    }else{
+                        success_image.setVisibility(View.VISIBLE);
+                        good_league_rl.setVisibility(View.GONE);
+                        SplitString1(requestBean.getUserInfo().getSkillfulLeague());
+                        real_name.setKeyListener(null);
+                        id_datas.setKeyListener(null);
+                        specalist_edittext.setKeyListener(null);
+                        good_league.setKeyListener(null);
+                        agreement.setVisibility(View.GONE);
+                        immediate_authentication.setVisibility(View.GONE);
+                        findViewById(R.id.tv_2).setVisibility(View.GONE);
+                        findViewById(R.id.tv_1).setVisibility(View.GONE);
+                        shen_good_legue.setVisibility(View.VISIBLE);
+                    }
+
 
                 } else {
 
-                    L.e(TAG, "成功请求，注册失败");
                     DeviceInfo.handlerRequestResult(Integer.parseInt(requestBean.getCode()), "未知错误");
                 }
             }
@@ -460,7 +469,6 @@ public class ApplicationSpecialistActivity extends BaseActivity implements View.
                 } else {
                     scrollview.setVisibility(View.VISIBLE);
                     to_examine.setVisibility(View.GONE);
-                    L.e(TAG, "成功请求，注册失败");
                     DeviceInfo.handlerRequestResult(Integer.parseInt(register.getCode()), "未知错误");
                 }
             }

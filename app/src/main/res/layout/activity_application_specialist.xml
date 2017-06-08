@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
                 android:background="@color/application_specialist_color"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <TextView
 
@@ -43,7 +43,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
-                    android:text="请准确填写一下信"
+                    android:text=""
                     android:textColor="@color/red"
                     android:textSize="12sp" />
             </LinearLayout>
