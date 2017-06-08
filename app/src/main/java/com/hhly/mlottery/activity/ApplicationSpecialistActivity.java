@@ -85,6 +85,7 @@ public class ApplicationSpecialistActivity extends BaseActivity implements View.
     private TextView shen_good_legue;
     private TextView symptomSelectedNameTv;
     private String language;
+    private TextView specalist_error_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +127,7 @@ public class ApplicationSpecialistActivity extends BaseActivity implements View.
         tv_comfirm.setOnClickListener(this);
         //错误信息
         specalist_error_tv = (LinearLayout) findViewById(R.id.specalist_error_tv);
+        specalist_error_text = (TextView) findViewById(R.id.specalist_error_text);
         //超出限制提示
         error_prompt = (LinearLayout) findViewById(R.id.error_prompt);
 
@@ -207,9 +209,8 @@ public class ApplicationSpecialistActivity extends BaseActivity implements View.
             to_examine.setVisibility(View.VISIBLE);
             scrollview.setVisibility(View.GONE);
         } else if (expert.equals("3")) {   //审核失败
-            good_league_rl.setVisibility(View.VISIBLE);
-            success_image.setVisibility(View.GONE);
-            shen_good_legue.setVisibility(View.GONE);
+
+            expertrequest();
         }
 
         //付费协议
@@ -385,6 +386,14 @@ public class ApplicationSpecialistActivity extends BaseActivity implements View.
 
                 if (requestBean != null && requestBean.getCode().equals("200")) {
 
+                    if (requestBean.getUserInfo().getIsExpert()==3) {
+                        specalist_error_tv.setVisibility(View.VISIBLE);
+                        specalist_error_text.setText(requestBean.getUserInfo().getApproveIdea());
+                        success_image.setVisibility(View.GONE);
+                    }else{
+                        success_image.setVisibility(View.VISIBLE);
+                    }
+
                     to_examine.setVisibility(View.GONE);
                     scrollview.setVisibility(View.VISIBLE);
 
@@ -402,11 +411,9 @@ public class ApplicationSpecialistActivity extends BaseActivity implements View.
                     immediate_authentication.setVisibility(View.GONE);
                     findViewById(R.id.tv_2).setVisibility(View.GONE);
                     findViewById(R.id.tv_1).setVisibility(View.GONE);
-                    success_image.setVisibility(View.VISIBLE);
                     shen_good_legue.setVisibility(View.VISIBLE);
                     symptomSelectedNameTv.setKeyListener(null);
-                    findViewById(R.id.fly_symptom_rl).setClickable(false);
-                    findViewById(R.id.fly_symptom_rl).setOnKeyListener(null);
+
                 } else {
 
                     L.e(TAG, "成功请求，注册失败");

@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
                 android:background="@color/application_specialist_color"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
 
@@ -34,10 +34,18 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
-                    android:text="提示：请准确填写一下信息！"
-                    android:textColor="@color/application_specialist_text_color"
+                    android:text="提示："
+                    android:textColor="@color/red"
                     android:textSize="12sp" />
-
+                <TextView
+                    android:id="@+id/specalist_error_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="请准确填写一下信"
+                    android:textColor="@color/red"
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -174,15 +182,15 @@
                     android:layout_marginRight="20dp">
 
                     <TextView
-                        android:layout_gravity="center"
                         android:id="@+id/shen_good_legue"
                         android:layout_width="80dp"
                         android:layout_height="match_parent"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:text="擅长联赛"
                         android:textColor="@color/snooker"
                         android:textSize="13sp"
-                        android:visibility="gone" />
+                        android:visibility="invisible" />
 
                     <com.hhly.mlottery.view.FlowLayout
                         android:id="@+id/fly_symptom_one"
@@ -276,11 +284,11 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_marginTop="30dp"
                     android:id="@+id/success_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="30dp"
                     android:src="@mipmap/success"
                     android:visibility="gone" />
 
