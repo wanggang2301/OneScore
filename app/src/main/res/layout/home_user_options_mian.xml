@@ -146,17 +146,70 @@
             android:layout_weight="1"
             android:gravity="center">
 
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@mipmap/withdraw" />
-
-            <TextView
+            <LinearLayout
+                android:id="@+id/available_balance_rl"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="余额"
-                android:textSize="@dimen/text_size_13" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="可用余额"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:id="@+id/available_balance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="2000.00元"
+                        android:textColor="#F4AD47"
+                        android:textSize="11sp" />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/recharge_bt"
+                    android:layout_width="42dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/specialist_buton_white"
+                    android:gravity="center"
+                    android:text="充值" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/not_login_balance"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@mipmap/withdraw"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="余额"
+                    android:textSize="@dimen/text_size_13"
+                    android:visibility="visible" />
+            </LinearLayout>
+
 
         </LinearLayout>
 
@@ -167,17 +220,68 @@
             android:layout_weight="1"
             android:gravity="center">
 
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@mipmap/income" />
-
-            <TextView
+            <LinearLayout
+                android:id="@+id/cash_balance_payable_rl"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="收入"
-                android:textSize="@dimen/text_size_13" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="可提现余额"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:id="@+id/cash_balance_payable"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="2000.00元"
+                        android:textColor="#F45858"
+                        android:textSize="11sp" />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="42dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/specialist_buton_white"
+                    android:gravity="center"
+                    android:text="提现" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/not_login_payable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@mipmap/income"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="收入"
+                    android:textSize="@dimen/text_size_13"
+                    android:visibility="visible" />
+            </LinearLayout>
 
 
         </LinearLayout>
@@ -188,6 +292,68 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:background="@color/channel_title_front"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="10dp"
+            android:background="@color/linecolor" />
+    </LinearLayout>
+
+    <RelativeLayout
+
+        android:id="@+id/account_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/channel_title_front"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/account_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/personal_details" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/account_img"
+            android:padding="15dp">
+
+            <TextView
+                android:id="@+id/account_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="账户明细"
+                android:textColor="@color/res_name_color"
+                android:textSize="@dimen/home_pager_user_title" />
+            <!--<View-->
+            <!--android:id="@+id/custom_red_dot_view"-->
+            <!--android:layout_width="8dp"-->
+            <!--android:layout_height="8dp"-->
+            <!--android:background="@drawable/shape_red_dot"-->
+            <!--android:layout_toRightOf="@id/custom_txt"-->
+            <!--/>-->
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="15dp"
+            android:src="@mipmap/unconection_next" />
+    </RelativeLayout>
+    <!--分割线-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/channel_title_front"
         android:orientation="vertical">
 
@@ -297,8 +463,16 @@
                 android:textSize="@dimen/home_pager_user_title" />
         </RelativeLayout>
 
-
+        <TextView
+            android:id="@+id/subscribe_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/subscribe_t"
+            android:text="" />
         <ImageView
+            android:id="@+id/subscribe_t"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -371,8 +545,17 @@
                 android:textSize="@dimen/home_pager_user_title" />
         </RelativeLayout>
 
+        <TextView
+            android:id="@+id/in_audit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/unconection_image_1"
+            android:text="" />
 
         <ImageView
+            android:id="@+id/unconection_image_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -430,7 +613,16 @@
         </RelativeLayout>
 
 
+        <TextView
+            android:id="@+id/promotion_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/promotion_im"
+            android:text="" />
         <ImageView
+            android:id="@+id/promotion_im"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

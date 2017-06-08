@@ -303,9 +303,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     progressBar.dismiss();
 
                     if (register != null && Integer.parseInt(register.getCode())== AccountResultCode.SUCC) {
-                       // DeviceInfo.saveRegisterInfo(register);
+                       DeviceInfo.saveRegisterInfo(register);
                         UiUtils.toast(MyApp.getInstance(), R.string.register_succ);
-                       // EventBus.getDefault().post(register);
+                        EventBus.getDefault().post(register);
                         //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
                         //sendUserInfoToServer(register);
 
@@ -323,7 +323,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 @Override
                 public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                     countDown.cancel();
-
                     progressBar.dismiss();
                     tv_register.setClickable(true);
                     L.e(TAG, "注册失败");

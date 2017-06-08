@@ -192,7 +192,32 @@ public class AppConstants {
     /**
      * 保存userId的key
      */
+    public static final String AVAILABLEBALANCE = "availableBalance";
+    /**
+     *   /**
+     * 可用余额
+     */
+    public static final String CASHBALANCE = "cashBalance";
+    /**
+     *   /**
+     * 订阅
+     */
+    public static final String BUYCOUNT = "buyCount";
+    /**
+     *   /**
+     * 推荐文章
+     */
+    public static final String PUSHCOUNT = "pushCount";
+    /**
+     *   /**
+     *可提现余额
+     */
     public static final String SPKEY_USERID = "userId";
+    /**
+     * 保存用户专家
+     */
+    public static final String ISEXPERT = "isExpert";
+
     /**
      * 保存token的key
      */

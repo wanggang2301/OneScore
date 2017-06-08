@@ -63,7 +63,7 @@ public class Register {
          */
 
         private String userId;
-        private String isExpert;
+        private int isExpert;
         private String phoneNum;
         private String nickName;
         private String indiProfile;
@@ -71,6 +71,45 @@ public class Register {
         private String amount;
         private String income;
         private String imageSrc;
+        private String availableBalance;
+        private String cashBalance;
+        private String buyCount;
+
+        public String getAvailableBalance() {
+            return availableBalance;
+        }
+
+        public void setAvailableBalance(String availableBalance) {
+            this.availableBalance = availableBalance;
+        }
+
+        public String getCashBalance() {
+            return cashBalance;
+        }
+
+        public void setCashBalance(String cashBalance) {
+            this.cashBalance = cashBalance;
+        }
+
+        public String getBuyCount() {
+            return buyCount;
+        }
+
+        public void setBuyCount(String buyCount) {
+            this.buyCount = buyCount;
+        }
+
+        public String getPushCount() {
+            return pushCount;
+        }
+
+        public void setPushCount(String pushCount) {
+            this.pushCount = pushCount;
+        }
+
+        private String pushCount;
+
+
 
         public String getUserId() {
             return userId;
@@ -80,11 +119,11 @@ public class Register {
             this.userId = userId;
         }
 
-        public String getIsExpert() {
+        public int getIsExpert() {
             return isExpert;
         }
 
-        public void setIsExpert(String isExpert) {
+        public void setIsExpert(int isExpert) {
             this.isExpert = isExpert;
         }
 

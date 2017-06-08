@@ -468,6 +468,9 @@
         <!--账户详情-->
         <activity android:name=".activity.AccountDetailActivity"
             android:screenOrientation="portrait" />
+        <!--账户详情-->
+        <activity android:name=".activity.ApplicationSpecialistActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

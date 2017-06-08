@@ -12,7 +12,8 @@
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        android:visibility="visible">
 
 
         <LinearLayout
@@ -28,6 +29,7 @@
                 android:visibility="gone">
 
                 <TextView
+
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
@@ -113,6 +115,8 @@
                 </LinearLayout>
 
                 <LinearLayout
+
+                    android:id="@+id/good_league_rl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -164,10 +168,21 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/fly_symptom_rl"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="85dp"
+                    android:layout_height="match_parent"
                     android:layout_marginRight="20dp">
+
+                    <TextView
+                        android:layout_gravity="center"
+                        android:id="@+id/shen_good_legue"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:text="擅长联赛"
+                        android:textColor="@color/snooker"
+                        android:textSize="13sp"
+                        android:visibility="gone" />
 
                     <com.hhly.mlottery.view.FlowLayout
                         android:id="@+id/fly_symptom_one"
@@ -260,7 +275,17 @@
 
                 </LinearLayout>
 
+                <ImageView
+                    android:layout_marginTop="30dp"
+                    android:id="@+id/success_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/success"
+                    android:visibility="gone" />
+
                 <LinearLayout
+                    android:id="@+id/agreement"
                     android:layout_width="fill_parent"
                     android:layout_height="50dp"
                     android:background="#FFFFFFFF"
@@ -300,6 +325,7 @@
                     android:textSize="@dimen/text_size_13" />
 
                 <LinearLayout
+                    android:id="@+id/tv_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -323,6 +349,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tv_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -337,6 +364,52 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/to_examine"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/bluebg"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:src="@mipmap/oval" />
+
+            <ImageView
+                android:id="@+id/fill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:src="@mipmap/fill" />
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="实名认证审核中..."
+            android:textColor="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="请耐心等待..."
+            android:textColor="@color/white" />
+    </LinearLayout>
 
 
 </LinearLayout>
