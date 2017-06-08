@@ -45,8 +45,8 @@ public class AccountDetailPresenter extends BasePresenter<AccountDetailContract.
     public void refreshData() { //第一次请求
         mPage.index=1;
         String userId=AppConstants.register.getUser().getUserId();
-//        String userId="HHLY00000136";
         String token=AppConstants.register.getToken();
+//        String userId="HHLY00000136";
 //        String token="eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJqd3QiLCJpYXQiOjE0OTY4MDM3OTcsInN1YiI6IntcImlkXCI6XCJISExZMDAwMDAxMzZcIixcInBob25lTnVtXCI6XCIxNTAxMzY5NzEwMVwiLFwiaW1hZ2VTcmNcIjpcImh0dHA6Ly90cC4xMzMyMjU1LmNvbS9pbWcvMjAxNy0wNS0xNi9hZjJkMTAzMi1iOWUyLTQ5YjYtODc5MS1iZDgyODMzNjQxOWEuanBnXCIsXCJuaWNrTmFtZVwiOlwi5biV5bCU5qKF5ouJ5pav5L2c5a6iMTox5oiY5bmz5Zyf5bqT5pu856ue5oqAXCJ9In0.NWOL8XGDWDehovknsPSs_zUCBddsPdBRBH-7y7QIqdI";
 
         Observable<AccountDetailBean> observable=mRepository.getAccountData(userId,token,"");
@@ -71,7 +71,7 @@ public class AccountDetailPresenter extends BasePresenter<AccountDetailContract.
                     mListData.addAll(accountDetailBean.getData().getRecord());
                     mView.recyclerNotify();
                     mPage.index++;
-                    ToastTools.showQuick(MyApp.get(),"sign"+accountDetailBean.getData().getBalance().getAvailableBalance()+"");
+//                    ToastTools.showQuick(MyApp.get(),"sign"+accountDetailBean.getData().getBalance().getAvailableBalance()+"");
                 }else{
                     mView.showNoData();
                 }

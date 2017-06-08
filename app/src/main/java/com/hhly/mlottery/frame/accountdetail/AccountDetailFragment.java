@@ -90,7 +90,7 @@ public class AccountDetailFragment extends ViewFragment<AccountDetailContract.Pr
      * 加载中
      */
     @BindView(R.id.basket_player_progressbar)
-    FrameLayout mProgressBarLayout;
+    LinearLayout mProgressBarLayout;
 
     @BindView(R.id.available_balance)
     TextView mAvailableBalance;

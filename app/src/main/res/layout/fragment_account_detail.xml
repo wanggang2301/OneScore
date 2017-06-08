@@ -5,6 +5,7 @@
     android:id="@+id/account_detail_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/whitesmoke"
     tools:context="com.hhly.mlottery.frame.accountdetail.AccountDetailFragment">
 
     <android.support.design.widget.CoordinatorLayout
@@ -174,26 +175,34 @@
                 >
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/nodata"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="100dp"
+                    android:gravity="center"
+                    android:text="@string/nodata"/>
 
-            <include layout="@layout/layout_nodata"
-                />
-            <include layout="@layout/basket_odds_new_error"
+            </LinearLayout>
 
-                />
+            <include layout="@layout/basket_odds_new_error"/>
 
-            <FrameLayout
+            <LinearLayout
                 android:id="@+id/basket_player_progressbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="50dp">
-
+                android:layout_height="match_parent"
+                android:gravity="center"
+                >
                 <ProgressBar
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="80dp" />
-            </FrameLayout>
+                    android:layout_marginTop="20dp" />
+            </LinearLayout>
         </FrameLayout>
     </android.support.v4.widget.NestedScrollView>
 
