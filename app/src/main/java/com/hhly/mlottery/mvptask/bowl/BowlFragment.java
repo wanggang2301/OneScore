@@ -27,7 +27,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.hhly.mlottery.activity.BasketDetailsActivityTest.mThirdId;
 
 /**
  * @author wangg
@@ -77,7 +76,7 @@ public class BowlFragment extends BaseWebSocketFragment {
             mThirId = getArguments().getString("thirdId");
         }
         setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic(BaseUserTopics.oddsFootballMatch + "." + mThirdId);
+        setTopic(BaseUserTopics.oddsFootballMatch + "." + mThirId);
         super.onCreate(savedInstanceState);
 
     }

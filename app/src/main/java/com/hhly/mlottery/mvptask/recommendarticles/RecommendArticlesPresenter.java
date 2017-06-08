@@ -74,9 +74,7 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
     @Override
     public void pullUpLoadMoreData(String userId, String pageNum, String pageSize, String loginToken, String sign) {
 
-
-        //if (!isHasNextPage) {
-        if (false) {
+        if (!isHasNextPage) {
             mView.pullUpLoadMoreDataFail();
             return;
         }

@@ -8,6 +8,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -108,6 +109,9 @@ public class AccountDetailFragment extends ViewFragment<AccountDetailContract.Pr
     private View mNoLoadingView; //没有更多
     private View mOnloadingView; //加载更多
 
+    @BindView(R.id.account_error_layout)
+    NestedScrollView mScrollView;
+
     private AccountDetailAdapter mAdapter;
 
     public AccountDetailFragment() {
@@ -192,7 +196,12 @@ public class AccountDetailFragment extends ViewFragment<AccountDetailContract.Pr
         mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                mPresenter.refreshDataByPage();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPresenter.refreshDataByPage();
+                    }
+                },1000);
             }
         });
 

@@ -212,11 +212,6 @@
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
-        <!-- 微信支付 -->
-        <activity
-            android:name=".wxapi.WXPayEntryActivity"
-            android:exported="true"
-            android:launchMode="singleTop" />
         <!-- QQ分享 -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -402,15 +397,16 @@
             android:name=".activity.ExpertsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.hhly.mlottery.activity.BettingRecommendSettingActivity"
+            android:name=".activity.BettingRecommendSettingActivity"
             android:screenOrientation="portrait" />
 
-        <!--专家详情MVP-->
-        <activity
-            android:name=".mvp.bettingmvp.mvpview.MvpBettingRecommendActivity"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".mvp.bettingmvp.mvpview.MvpBettingPayDetailsActivity"
+            android:screenOrientation="portrait" />
+        <!-- 专家详情MVP -->
+        <activity
+            android:name=".mvp.bettingmvp.mvpview.MvpBettingRecommendActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".mvp.bettingmvp.mvpview.MvpBettingOnlinePaymentActivity"
@@ -421,9 +417,13 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="wx7ef1da85d0f485e1" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="wx7ef1da85d0f485e1" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".mvp.bettingmvp.mvpview.MvpBettingIssueDetailsActivity"
             android:screenOrientation="portrait"
@@ -436,9 +436,18 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="wx7ef1da85d0f485e1" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="wx7ef1da85d0f485e1" />
             </intent-filter>
         </activity>
-
+        <!--微信支付-->
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
 
         <!-- alipay sdk begin -->
         <!-- 若手机没有安装支付宝，则调用H5支付页面 -->
@@ -458,15 +467,23 @@
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind" />
-
+        android:screenOrientation="behind" />
         <activity
             android:name=".activity.SubsRecordActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.RecommendArticlesActivity"
             android:screenOrientation="portrait" />
-        <!--账户详情-->
-        <activity android:name=".activity.AccountDetailActivity"
+        <!-- 账户详情 -->
+        <activity
+            android:name=".activity.AccountDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NotRecommendExpertActivity"
+            android:screenOrientation="portrait" />
+        <!--角球比分-->
+        <activity
+            android:name=".activity.FootballCornerActivity"
             android:screenOrientation="portrait" />
         <!--账户详情-->
         <activity android:name=".activity.ApplicationSpecialistActivity"
