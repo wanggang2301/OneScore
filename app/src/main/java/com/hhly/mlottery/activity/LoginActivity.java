@@ -648,6 +648,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             }
                             finish();
                             EventBus.getDefault().post(register);
+                            PreferenceUtil.commitString(AppConstants.HEADICON,register.getUser().getImageSrc());
                             FocusUtils.getFootballUserFocus(register.getUser().getUserId());
                             FocusUtils.getBasketballUserConcern(register.getUser().getUserId());
 

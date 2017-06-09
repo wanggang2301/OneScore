@@ -145,14 +145,14 @@ public class ProfileActivity extends PictureSelectActivity implements View.OnCli
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-       // EventBus.getDefault().register(this);
+        EventBus.getDefault().register(this);
         initView();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
     }
 
     /*   @Override
@@ -166,16 +166,6 @@ public class ProfileActivity extends PictureSelectActivity implements View.OnCli
         super.onResume();
         MobclickAgent.onResume(this);
         tv_nickname.setText(AppConstants.register.getUser().getNickName());
-
-        Glide.with(getApplicationContext())
-                .load(PreferenceUtil.getString(AppConstants.HEADICON,""))
-                .error(R.mipmap.center_head)
-                .into(mHead_portrait);
-
-
-        Log.i("register","HEADICON===="+PreferenceUtil.getString(AppConstants.HEADICON,""));
-
-
         /*性别入口关闭*/
  /*       if (AppConstants.register.getData().getUser().getSex() != null) {
             if (AppConstants.register.getData().getUser().getSex().equals("1")) {
@@ -202,7 +192,7 @@ public class ProfileActivity extends PictureSelectActivity implements View.OnCli
         if (DeviceInfo.isLogin()) {
             //ImageLoader.load(ProfileActivity.this,AppConstants.register.getData().getUser().getHeadIcon(),R.mipmap.center_head).into(mHead_portrait);
             Glide.with(getApplicationContext())
-                    .load(AppConstants.register.getUser().getImageSrc())
+                    .load(    PreferenceUtil.getString(AppConstants.HEADICON,""))
                     .error(R.mipmap.center_head)
                     .into(mHead_portrait);
         }
@@ -238,7 +228,13 @@ public class ProfileActivity extends PictureSelectActivity implements View.OnCli
         this.setOnPictureSelectedListener(new OnPictureSelectedListener() {
             @Override
             public void onPictureSelected(Uri fileUri, Bitmap bitmap) {
-                //mHead_portrait.setImageBitmap(bitmap);
+                mHead_portrait.setImageBitmap(bitmap);
+/*
+                Glide.with(getApplicationContext())
+                        .load(PreferenceUtil.getString(AppConstants.HEADICON,""))
+                        .error(R.mipmap.center_head)
+                        .into(mHead_portrait);*/
+
 
                 String filePath = fileUri.getEncodedPath();
                 String imagePath = Uri.decode(filePath);
@@ -389,7 +385,6 @@ public class ProfileActivity extends PictureSelectActivity implements View.OnCli
         text_woman.setTextColor(getResources().getColor(res_pl_color1));
         woman_sex.setImageResource(default_woman_sex1);
     }
-/*
 
     public void onEventMainThread(ChoseHeadStartBean choseHeadStartBean) {
 
@@ -399,7 +394,6 @@ public class ProfileActivity extends PictureSelectActivity implements View.OnCli
                 .error(R.mipmap.center_head)
                 .into(mHead_portrait);
     }
-*/
 
 
     /*图片上传*/
@@ -441,9 +435,9 @@ public class ProfileActivity extends PictureSelectActivity implements View.OnCli
                     if (response != null) {
                         if (jo.getString("code").equals("200")) {
                             String headerUrl = jo.getString("avatorURL");
-                           // EventBus.getDefault().post(new ChoseHeadStartBean(headerUrl));
-                            //AppConstants.register.getUser().setImageSrc(headerUrl);
-                            Log.i("register","onResponse===="+headerUrl);
+                            EventBus.getDefault().post(new ChoseHeadStartBean(headerUrl));
+                            AppConstants.register.getUser().setImageSrc(headerUrl);
+                            //Log.i("register","onResponse===="+headerUrl);
                             PreferenceUtil.commitString(AppConstants.HEADICON,headerUrl);
 
                         }

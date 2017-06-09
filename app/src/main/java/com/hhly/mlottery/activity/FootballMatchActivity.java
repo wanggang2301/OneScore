@@ -318,12 +318,15 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
     private void updateListViewItemStatus(FootBallKeepBean footBallKeepBean) {
 
         Map<String, String> data = footBallKeepBean.getData();
-        for (int i = 0; i < bettingList.size(); i++) {
+        if (bettingList != null) {
+            for (int i = 0; i < bettingList.size(); i++) {
 
-            if ((bettingList.get(i).getMatchId() + "").equals(footBallKeepBean.getThirdId())) {  //找到对应比赛对象
-                updateMatchStatus(i, data);
+                if ((bettingList.get(i).getMatchId() + "").equals(footBallKeepBean.getThirdId())) {  //找到对应比赛对象
+                    updateMatchStatus(i, data);
+                }
             }
         }
+
     }
 
     private void updateMatchStatus(int i, Map<String, String> data) {
@@ -495,7 +498,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
         iv_right = (ImageView) findViewById(R.id.iv_right);
         tv_data_size = (TextView) findViewById(R.id.tv_data_size);
 
-        rl_top.setOnClickListener(this);
+        // rl_top.setOnClickListener(this);
         mTitleTextView.setOnClickListener(this);
         iv_left.setOnClickListener(this);
         iv_right.setOnClickListener(this);
@@ -548,6 +551,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                             findViewById(R.id.iv_left).setVisibility(View.GONE);
                             findViewById(R.id.iv_right).setVisibility(View.VISIBLE);
                         } else if (currentIndexDate >= dateList.size() - 1) {
+
                             findViewById(R.id.iv_right).setVisibility(View.GONE);
                             findViewById(R.id.iv_left).setVisibility(View.VISIBLE);
                         } else {

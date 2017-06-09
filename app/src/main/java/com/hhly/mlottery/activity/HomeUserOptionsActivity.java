@@ -30,6 +30,7 @@ import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
+import com.hhly.mlottery.util.net.UnitsUtil;
 import com.hhly.mlottery.util.net.account.CustomEvent;
 import com.umeng.analytics.MobclickAgent;
 
@@ -437,6 +438,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 .error(R.mipmap.center_head)
                 .into(mUser_image);
 
+        //Log.i("register","onResume=="+PreferenceUtil.getString(AppConstants.HEADICON,""));
     }
 
 
@@ -446,9 +448,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 .load(register.getUser().getImageSrc())
                 .error(R.mipmap.center_head)
                 .into(mUser_image);
-
-
-        Log.i("register","Register=="+register.getUser().getImageSrc());
         mTv_nickname.setText(register.getUser().getNickName());
     }
 
@@ -475,21 +474,15 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
             available_balance_rl.setVisibility(View.VISIBLE);
             cash_balance_payable_rl.setVisibility(View.VISIBLE);
-            available_balance.setText(AppConstants.register.getUser().getAvailableBalance());
-            cash_balance_payable.setText(AppConstants.register.getUser().getCashBalance() );
+            available_balance.setText(UnitsUtil.fenToYuan(AppConstants.register.getUser().getAvailableBalance()));
+            cash_balance_payable.setText(UnitsUtil.fenToYuan(AppConstants.register.getUser().getCashBalance()));
             subscribe_tv.setText(AppConstants.register.getUser().getBuyCount());
             promotion_tv.setText(AppConstants.register.getUser().getPushCount());
             not_login_balance.setVisibility(View.GONE);
             not_login_payable.setVisibility(View.GONE);
             mTv_nickname.setText(AppConstants.register.getUser().getNickName());
 
-            mUser_image.refreshDrawableState();
-            Glide.with(getApplicationContext())
-                    .load(PreferenceUtil.getString(AppConstants.HEADICON,""))
-                    .error(R.mipmap.center_head)
-                    .into(mUser_image);
 
-            Log.i("register","onResume=="+PreferenceUtil.getString(AppConstants.HEADICON,""));
         } else {
             in_audit.setText("");
             available_balance_rl.setVisibility(View.GONE);
