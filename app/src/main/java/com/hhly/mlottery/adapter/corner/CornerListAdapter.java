@@ -75,8 +75,11 @@ public class CornerListAdapter extends BaseQuickAdapter<CornerListBean.CornerEnt
             bean.setDateTag(bean.getCornerMatchInfo().getDate());
             String date[]=bean.getCornerMatchInfo().getTime().split(":");
 
-            if(Integer.parseInt(date[0])<=10){ //12点之前。日期减1
-                bean.setDateTag(DateUtil.getDate(-1,bean.getCornerMatchInfo().getDate())); //12点之前日期减1
+            if(Integer.parseInt(date[0])<10){ //10点之前。日期减1
+                bean.setDateTag(DateUtil.getDate(-1,bean.getCornerMatchInfo().getDate())); //10点之前日期减1
+            }
+            if(date[0].equals("10")&&date[1].equals("00")){ //10点整的属于前一天
+                bean.setDateTag(DateUtil.getDate(-1,bean.getCornerMatchInfo().getDate()));
             }
             if(!bean.getDateTag().equals(mDatelist.get(mCurruntDatePosition).getDate())&&mChange){ //item日期跟头部日期不一样，切不是刚分页。则把现在的日期传回去设置
                 //并且把当前日期所在list的position传回去。不然的话。在下拉刷新的时候。还是最末页的加载数据。跟头部日期不符了就
