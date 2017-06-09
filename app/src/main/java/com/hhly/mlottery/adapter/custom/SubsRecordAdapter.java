@@ -52,6 +52,7 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
         baseViewHolder.setText(R.id.betting_league_name, b.getLeagueName());
         baseViewHolder.setVisible(R.id.betting_round, false);
         baseViewHolder.setText(R.id.betting_date, b.getMatchDate());
+        baseViewHolder.setVisible(R.id.betting_week, true);
         baseViewHolder.setText(R.id.betting_week, b.getMatchTime());
         if (0 == b.getType()) {
             baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.jingcaidanguan_txt));
