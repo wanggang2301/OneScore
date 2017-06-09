@@ -21,6 +21,7 @@ import java.util.List;
 
 /**
  * Created by Administrator on 2017/4/18.
+ * 推介列表是数据添加
  */
 
 public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListDataBean.PromotionData.BettingListData> {

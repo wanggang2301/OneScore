@@ -158,7 +158,7 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
                     if (jsonObject.getData() != null) {
                         L.d("balance == >>>" , "返回成功");
                         String balancess = UnitsUtil.fenToYuan(jsonObject.getData().getBalance().getAvailableBalance()); //元转分
-                        balance.setText(jsonObject.getData().getBalance() == null ? "--" : filtraNull(balancess));
+                        balance.setText(jsonObject.getData().getBalance() == null ? "--" : (filtraNull(balancess) + "￥"));
                     }
                 }
             }
@@ -235,6 +235,8 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
 
                 if (money > 10000) {
                     Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_max_recharge), Toast.LENGTH_SHORT).show();
+                }else if (money == 0){
+                    Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_payment_no_zero), Toast.LENGTH_SHORT).show();
                 }else{
                     String moneyIn =  UnitsUtil.yuanToFen(paymentMoney.getText().toString());//获取充值金额 元==>分
 

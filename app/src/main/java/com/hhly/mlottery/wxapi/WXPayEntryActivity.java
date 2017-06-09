@@ -140,7 +140,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
     public void onResp(BaseResp resp) {
         L.d("微信支付...onReq()" , "微信回调成功...resp.errCode= " + resp.errCode);
 
-        Toast.makeText(this, "resp.errCode = " + resp.errCode , Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "resp.errCode = " + resp.errCode , Toast.LENGTH_SHORT).show();
 
         if(resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX){//支付成功的回调码
 
