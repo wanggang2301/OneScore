@@ -923,6 +923,14 @@ public class BaseURLs {
      */
     public final static String URL_REGISTER = P_URL_API_HOST + "user/register";
     /**
+     * 专家认证
+     */
+    public final static String EXPERTAUTH = P_URL_API_HOST + "user/expertAuth";
+    /**
+     * 专家详细信息
+     */
+    public final static String EXPERTINFO = P_URL_API_HOST + "user/expertInfo";
+    /**
      * 登录
      */
     public final static String URL_LOGIN = P_URL_API_HOST + "user/login";

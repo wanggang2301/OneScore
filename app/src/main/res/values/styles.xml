@@ -1202,4 +1202,11 @@
         <item name="android:textColor">@color/betting_recommend_issue_jiage_color</item>
         <item name="android:textSize">@dimen/text_size_13</item>
     </style>
+    <!-- 状态栏 -->
+    <style name="MyToolBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">?colorPrimary</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="colorControlActivated">@android:color/white</item>
+    </style>
 </resources>

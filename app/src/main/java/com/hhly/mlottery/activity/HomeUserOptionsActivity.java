@@ -2,7 +2,9 @@ package com.hhly.mlottery.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +16,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.ChoseHeadStartBean;
 import com.hhly.mlottery.bean.SpecialistBean;
@@ -21,6 +26,7 @@ import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpChargeMoneyActivity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DeviceInfo;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
@@ -102,6 +108,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                             .load(AppConstants.register.getUser().getImageSrc())
                             .error(R.mipmap.center_head)
                             .into(mUser_image);
+
+                    Log.i("register","isLogin"+AppConstants.register.getUser().getImageSrc());
                     mTv_nickname.setEnabled(false);
                     break;
                 default:
@@ -128,11 +136,13 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     private TextView subscribe_tv;
     private TextView promotion_tv;
     private TextView recharge_bt;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
+        context = this;
         initView();
 
     }
@@ -338,7 +348,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             case R.id.rl_my_apply:     //申请专家
                 if (DeviceInfo.isLogin()) {
                     Intent intent1 = new Intent(HomeUserOptionsActivity.this, ApplicationSpecialistActivity.class);
-                    intent1.putExtra("expert", AppConstants.register.getUser().getIsExpert()+"");
                     startActivity(intent1);
 
                 } else {
@@ -394,8 +403,18 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
      * @param
      */
     public void onEventMainThread(SpecialistBean bean) {
-            in_audit.setVisibility(View.VISIBLE);
+        // 0 未审核  1.审核通过  2.审核中  3.审核不通过
+        in_audit.setVisibility(View.VISIBLE);
+        if (bean.getCode() == 1) {
+            in_audit.setText("审核通过");
+        } else if (bean.getCode() == 2) {
             in_audit.setText("审核中");
+        } else if (bean.getCode() == 3) {
+            in_audit.setText("审核不通过");
+        } else if (bean.getCode() == 0) {
+            in_audit.setText("未审核");
+        }
+        PreferenceUtil.commitInt(AppConstants.ISEXPERT,bean.getCode());
     }
 
     /**
@@ -417,49 +436,60 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 .load(choseHeadStartBean.startUrl)
                 .error(R.mipmap.center_head)
                 .into(mUser_image);
+
     }
 
 
     public void onEventMainThread(Register register) {
 
-        //ImageLoader.load(HomeUserOptionsActivity.this,register.getData().getUser().getHeadIcon()).into(mUser_image);
-        Glide.with(getApplicationContext())
+        Glide.with(context)
                 .load(register.getUser().getImageSrc())
                 .error(R.mipmap.center_head)
                 .into(mUser_image);
+
+
+        Log.i("register","Register=="+register.getUser().getImageSrc());
         mTv_nickname.setText(register.getUser().getNickName());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        MobclickAgent.onResume(this);
 
+        MobclickAgent.onResume(this);
 
         if (DeviceInfo.isLogin()) {
             // 0 未审核  1.审核通过  2.审核中  3.审核不通过
 
-            if (AppConstants.register.getUser().getIsExpert()==0) {
+            if (AppConstants.register.getUser().getIsExpert() == 0) {
                 in_audit.setText("未审核");
-            } else if (AppConstants.register.getUser().getIsExpert()==1) {
+            } else if (AppConstants.register.getUser().getIsExpert() == 1) {
                 in_audit.setText("审核通过");
-            } else if (AppConstants.register.getUser().getIsExpert()==2) {
+            } else if (AppConstants.register.getUser().getIsExpert() == 2) {
                 in_audit.setText("审核中");
-            } else if (AppConstants.register.getUser().getIsExpert()==3) {
+            } else if (AppConstants.register.getUser().getIsExpert() == 3) {
                 in_audit.setText("审核不通过");
-            }else{
+            } else {
                 in_audit.setText("");
             }
 
             available_balance_rl.setVisibility(View.VISIBLE);
             cash_balance_payable_rl.setVisibility(View.VISIBLE);
-            available_balance.setText(AppConstants.register.getUser().getAvailableBalance()+"元");
-            cash_balance_payable.setText(AppConstants.register.getUser().getCashBalance()+"元");
+            available_balance.setText(AppConstants.register.getUser().getAvailableBalance());
+            cash_balance_payable.setText(AppConstants.register.getUser().getCashBalance() );
             subscribe_tv.setText(AppConstants.register.getUser().getBuyCount());
             promotion_tv.setText(AppConstants.register.getUser().getPushCount());
             not_login_balance.setVisibility(View.GONE);
             not_login_payable.setVisibility(View.GONE);
             mTv_nickname.setText(AppConstants.register.getUser().getNickName());
+
+            mUser_image.refreshDrawableState();
+            Glide.with(getApplicationContext())
+                    .load(PreferenceUtil.getString(AppConstants.HEADICON,""))
+                    .error(R.mipmap.center_head)
+                    .into(mUser_image);
+
+            Log.i("register","onResume=="+PreferenceUtil.getString(AppConstants.HEADICON,""));
         } else {
             in_audit.setText("");
             available_balance_rl.setVisibility(View.GONE);

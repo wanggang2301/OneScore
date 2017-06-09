@@ -488,6 +488,12 @@
         <!--账户详情-->
         <activity android:name=".activity.ApplicationSpecialistActivity"
             android:screenOrientation="portrait" />
+        <!--拍照-->
+        <activity android:name=".activity.PictureSelectActivity"
+        android:screenOrientation="portrait" />
+        <activity android:name=".util.imagecrop.CropActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

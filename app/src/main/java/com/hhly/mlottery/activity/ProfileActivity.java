@@ -17,6 +17,7 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -26,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -37,20 +39,15 @@ import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DeviceInfo;
-import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
 
-import com.tbruyelle.rxpermissions.RxPermissions;
 import com.umeng.analytics.MobclickAgent;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,10 +63,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import rx.functions.Action1;
-import rx.functions.Func1;
-
-import static android.Manifest.permission.CAMERA;
 
 /**
  * @ClassName: OneScoreGit
@@ -77,7 +70,7 @@ import static android.Manifest.permission.CAMERA;
  * @Description: 个人中心
  * @data: 2016/7/11 17:53
  */
-public class ProfileActivity extends Activity implements View.OnClickListener {
+public class ProfileActivity extends PictureSelectActivity implements View.OnClickListener {
 
     private String TAG = "ProfileActivity";
     /*昵称*/
@@ -109,15 +102,6 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
 
     private final int REQUESTCODE_CHOSE = 100;
 
-    /**
-     * 图片裁剪宽度
-     */
-    private int width = 500;
-
-    /**
-     * 图片裁剪高度
-     */
-    private int height = 500;
 
 
     private ProgressDialog progressBar;
@@ -127,14 +111,12 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     private final OkHttpClient client = new OkHttpClient();
 
     //    private final String IMAGE_STORAGGEID = "/headview/image.png";
-    private final String IMAGE = "image.png";
-    private final String STORAGGEID = "/headview";
+
     private List<String> sexDatas = new ArrayList<>();
 
     private AlertDialog alertDialog;
 
     private PopupWindow mPopupWindow;
-    private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("application/octet-stream");
 
 
     private Handler mViewHandler = new Handler() {
@@ -163,27 +145,37 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        EventBus.getDefault().register(this);
+       // EventBus.getDefault().register(this);
         initView();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        //EventBus.getDefault().unregister(this);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
-
+    /*   @Override
+       protected void onPause() {
+           super.onPause();
+           MobclickAgent.onPause(this);
+       }
+   */
     @Override
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
         tv_nickname.setText(AppConstants.register.getUser().getNickName());
+
+        Glide.with(getApplicationContext())
+                .load(PreferenceUtil.getString(AppConstants.HEADICON,""))
+                .error(R.mipmap.center_head)
+                .into(mHead_portrait);
+
+
+        Log.i("register","HEADICON===="+PreferenceUtil.getString(AppConstants.HEADICON,""));
+
+
         /*性别入口关闭*/
  /*       if (AppConstants.register.getData().getUser().getSex() != null) {
             if (AppConstants.register.getData().getUser().getSex().equals("1")) {
@@ -214,15 +206,6 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                     .error(R.mipmap.center_head)
                     .into(mHead_portrait);
         }
-        //universalImageLoader.displayImage(AppConstants.register.getData().getUser().getHeadIcon(), mHead_portrait, options);
-
-      /*  if (Environment
-                .getExternalStoragePublicDirectory(IMAGE_STORAGGEID).exists()) {
-            Bitmap bm = BitmapFactory.decodeFile(Environment.getExternalStoragePublicDirectory(IMAGE_STORAGGEID).toString());
-            mHead_portrait.setImageBitmap(bm);
-        } else {
-            universalImageLoader.displayImage(AppConstants.register.getData().getUser().getHeadIcon(), mHead_portrait, options);
-        }*/
         ((TextView) findViewById(R.id.public_txt_title)).setText(R.string.profile);
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
@@ -249,7 +232,23 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
 
         tv_nickname = ((TextView) findViewById(R.id.tv_nickname));
         ((TextView) findViewById(R.id.tv_account_real)).setText(PreferenceUtil.getString(AppConstants.SPKEY_LOGINACCOUNT, ""));
+
+
+        // 设置裁剪图片结果监听
+        this.setOnPictureSelectedListener(new OnPictureSelectedListener() {
+            @Override
+            public void onPictureSelected(Uri fileUri, Bitmap bitmap) {
+                //mHead_portrait.setImageBitmap(bitmap);
+
+                String filePath = fileUri.getEncodedPath();
+                String imagePath = Uri.decode(filePath);
+                File file = new File(imagePath);
+                doPostSycn(file);
+                // Toast.makeText(mContext, "图片已经保存到:" + imagePath, Toast.LENGTH_LONG).show();
+            }
+        });
     }
+
 
     /*提示保存性别修改信息*/
     private void showDialog() {
@@ -301,21 +300,15 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 MobclickAgent.onEvent(ProfileActivity.this, "ModifyPasswordActivity_Start");
                 startActivity(new Intent(this, ModifyPasswordActivity.class));
                 break;
-            case R.id.head_portrait:///显示全图
- /*                Intent intent2 = new Intent(ProfileActivity.this, EnlargePhotoActivity.class);
-                 startActivity(intent2);
-//                Intent intent2 = new Intent(ProfileActivity.this, PicturePreviewActivity.class);
-//                 intent2.putExtra("url", PreferenceUtil.getString(AppConstants.HEADICON, ""));
-//                 startActivity(intent2);*/
-                backgroundAlpha(0.5f);
-                setHeadView(v);
-                break;
+
             case R.id.modify_avatar: //修改头像
-                backgroundAlpha(0.5f);
-                setHeadView(v);
+                ///backgroundAlpha(0.5f);
+                selectPicture();
+                // startActivity(new Intent(this, PictureSelectActivity.class));
+                //setHeadView(v);
                 break;
             case R.id.tv_photograph:  //拍照
-                doTakePhoto();
+                //doTakePhoto();
                /* Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 camera.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.
                         getExternalStorageDirectory(), "temp.jpg")));
@@ -323,21 +316,6 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
 
                 break;
 
-            case R.id.tv_chosephoto:  //相册中选取
-                doPickPhotoFromGallery();
-           /*     Intent picture = new Intent(Intent.ACTION_PICK, null);
-                picture.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_UNSPECIFIED);
-                startActivityForResult(picture, ALBUM_REQUEST_CODE);*/
-                break;
-            case R.id.tv_chose_start_photo:
-                Intent intent3 = new Intent(ProfileActivity.this, AvatarSelectionActivity.class);
-                startActivityForResult(intent3, REQUESTCODE_CHOSE);
-                mPopupWindow.dismiss();
-                break;
-            case R.id.tv_cancel:  //取消
-
-                mPopupWindow.dismiss();
-                break;
             case R.id.text_man:
 
                 // man_sex.setImageResource(R.mipmap.man_sex);
@@ -377,7 +355,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                     //
                     // CommonUtils.saveRegisterInfo(register);
                     //AppConstants.register.getData().getUser().setSex(sexDatas.get(0));
-                   // PreferenceUtil.commitString(AppConstants.SEX, register.getData().getUser().getSex());
+                    // PreferenceUtil.commitString(AppConstants.SEX, register.getData().getUser().getSex());
                     progressBar.dismiss();
                     finish();
                 } else if (Integer.parseInt(register.getCode()) == AccountResultCode.USER_NOT_LOGIN) {
@@ -388,7 +366,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
 
                 } else {
                     progressBar.dismiss();
-                    DeviceInfo.handlerRequestResult(Integer.parseInt(register.getCode()),"未知错误");
+                    DeviceInfo.handlerRequestResult(Integer.parseInt(register.getCode()), "未知错误");
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -411,73 +389,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
         text_woman.setTextColor(getResources().getColor(res_pl_color1));
         woman_sex.setImageResource(default_woman_sex1);
     }
-    //性别选择状态改变
-
-    /**
-     * 开启拍照功能
-     */
-    private void doTakePhoto() {
-        if(ActivityCompat.checkSelfPermission(this,Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
-
-            RxPermissions.getInstance(this)
-                    .request(CAMERA)
-                    .map(new Func1<Boolean, Boolean>() {
-                        @Override
-                        public Boolean call(Boolean granted) {
-                            if(granted){ //拍照
-                                Intent captrueIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE, null);
-                                File picFile = getPicFile();
-                                if (picFile != null) {
-                                    captrueIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(picFile));
-                                    startActivityForResult(captrueIntent, REQUEST_IMAGE_CAPTURE);
-                                    mCamerUri = Uri.fromFile(picFile);
-                                }
-                            }else{
-                                //可进行提示。国际化啥的贼麻烦。先算了。再点还会继续谈授权提醒反正
-                            }
-                            return granted;
-                        }
-                    }).subscribe(new Action1<Boolean>() {
-                @Override
-                public void call(Boolean aBoolean) {
-
-                }
-            }, new Action1<Throwable>() {
-                @Override
-                public void call(Throwable t) {
-                    t.printStackTrace();
-                }
-            });
-        }else{
-            Intent captrueIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE, null);
-            File picFile = getPicFile();
-            if (picFile != null) {
-                captrueIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(picFile));
-                startActivityForResult(captrueIntent, REQUEST_IMAGE_CAPTURE);
-                mCamerUri = Uri.fromFile(picFile);
-            }
-        }
-
-    }
-
-    /**
-     * 获得图片缓存文件
-     */
-    private File getPicFile() {
-        File photoFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
-        if (!photoFile.exists()) {
-            UiUtils.toast(MyApp.getInstance(), R.string.sd_card_not_exist);
-        }
-        File file = new File(photoFile.getAbsolutePath() + "/dcim" + System.currentTimeMillis() + ".jpg");
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return file;
-    }
+/*
 
     public void onEventMainThread(ChoseHeadStartBean choseHeadStartBean) {
 
@@ -487,201 +399,8 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 .error(R.mipmap.center_head)
                 .into(mHead_portrait);
     }
+*/
 
-    /**
-     * 开启从相册获得图片功能
-     */
-    private void doPickPhotoFromGallery() {
-        try {
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            intent.setType("image/*"); // 设置文件类型
-            startActivityForResult(intent, REQUEST_IMAGE_CHOICE);// 转到图库
-        } catch (Exception e) {
-            UiUtils.toast(MyApp.getInstance(), R.string.install_the_gallery);
-        }
-    }
-
-    /*
-    * 设置头像
-    */
-    private void setHeadView(View v) {
-        /// 找到布局文件
-        LinearLayout layout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.avatar_selection, null);
-        layout.findViewById(R.id.tv_photograph).setOnClickListener(this);
-        layout.findViewById(R.id.tv_chosephoto).setOnClickListener(this);
-        layout.findViewById(R.id.tv_chose_start_photo).setOnClickListener(this);
-        layout.findViewById(R.id.tv_cancel).setOnClickListener(this);
-        // 实例化一个PopuWindow对象
-        mPopupWindow = new PopupWindow(v);
-        // 设置弹框的宽度为布局文件的宽
-        mPopupWindow.setWidth(DisplayUtil.getScreenWidth(ProfileActivity.this));
-        // 高度随着内容变化
-        mPopupWindow.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
-        // 设置一个透明的背景，不然无法实现点击弹框外，弹框消失
-        mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-        // 设置背景颜色变暗
-        lp1 = getWindow().getAttributes();
-        lp1.alpha = 0.5f;
-        // 设置点击弹框外部，弹框消失
-        mPopupWindow.setOutsideTouchable(true);
-        mPopupWindow.setOnDismissListener(new poponDismissListener());
-        // 设置焦点
-        mPopupWindow.setFocusable(true);
-        // 设置所在布局
-        mPopupWindow.setContentView(layout);
-        // 设置弹框出现的位置，在v的正下方横轴偏移textview的宽度，为了对齐~纵轴不偏移
-        // popupWindow.showAsDropDown(mTxt_title1);
-        mPopupWindow.showAtLocation(ProfileActivity.this.findViewById(R.id.profile_main),
-                Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
-        layout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // UiUtils.toast(getApplicationContext(),":我被点击了");
-                return true;
-            }
-        });
-
-    }
-
-    class poponDismissListener implements PopupWindow.OnDismissListener {
-        @Override
-        public void onDismiss() {
-            backgroundAlpha(1f);
-        }
-    }
-
-    /**
-     * 设置添加屏幕的背景透明度
-     *
-     * @param bgAlpha
-     */
-    public void backgroundAlpha(float bgAlpha) {
-        WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.alpha = bgAlpha; //0.0-1.0
-        getWindow().setAttributes(lp);
-    }
-
-
-    File outFile = null;
-    //    Bitmap bitmap = null;
-    File outDir = null;
-
-    /**
-     * 1取出拍照的结果存储到手机内存则指定的文件夹， 再从文件加下取出展示到界面
-     * 2从相册中取出图片，压缩，展示到界面 。
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-
-            case REQUEST_IMAGE_CHOICE:
-                Uri uri = null;
-                if (data != null) {
-                    uri = data.getData();
-                }
-                if (uri == null) {
-                    return;
-                }
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(ProfileActivity.this.getContentResolver(), uri);
-                    if (bitmap.getWidth() < width || bitmap.getHeight() < height) {
-                        UiUtils.toast(MyApp.getInstance(), R.string.see_your_face);
-                        bitmap.recycle();
-                        System.gc();
-                        //successNull();
-                        return;
-                    }
-                } catch (Exception e) {
-                    //error(e);
-                    return;
-                }
-                doZoomImage(uri, width, height);
-                break;
-            case REQUEST_IMAGE_CAPTURE:
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(ProfileActivity.this.getContentResolver(), mCamerUri);
-                    if (bitmap.getWidth() < width || bitmap.getHeight() < height) {
-                        // successNull();
-                        UiUtils.toast(MyApp.getInstance(), R.string.see_your_face);
-                        bitmap.recycle();
-                        System.gc();
-                        return;
-                    }
-                } catch (Exception e) {
-                    // error(e);
-                    return;
-                }
-                doZoomImage(mCamerUri, width, height);
-                break;
-            case REQUEST_IMAGE_CROP:
-
-                if (data == null) {
-                    // 显示之前额图片,或者显示默认的图片
-                    return;
-                }
-                Bundle extras = data.getExtras();
-                if (extras != null) {
-                    Bitmap photo = extras.getParcelable("data");
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    if (photo != null)
-
-                    {
-                        photo.compress(Bitmap.CompressFormat.PNG, 75, stream);// (0-100)压缩文件
-
-                        //此处可以把Bitmap保存到sd卡中，具体请看：http://www.cnblogs.com/linjiqin/archive/2011/12/28/2304940.html
-                        try {
-
-                            String state = Environment.getExternalStorageState();
-                            if (state.equals(Environment.MEDIA_MOUNTED)) {
-                                // 这个路径，在手机内存下创建一个定制的文件夹，把图片存在其中。
-                                outDir = Environment.getExternalStoragePublicDirectory(STORAGGEID);
-                            } else {
-                                outDir = this.getFilesDir();
-                            }
-                            if (!outDir.exists()) {
-                                outDir.mkdirs();
-                            }
-                            // 保存图片
-                            try {
-                                outFile = new File(outDir, IMAGE);
-                                FileOutputStream fos = new FileOutputStream(outFile);
-                                //PreferenceUtil.commitString("image_url", outFile.toString());
-                                boolean flag = photo.compress(Bitmap.CompressFormat.JPEG,
-                                        100, fos);// 把数据写入文件
-                                if (flag) {
-                                    mHead_portrait.setImageBitmap(photo);
-                                    doPostSycn(outFile);//上传图片
-
-                                } else {
-                                    UiUtils.toast(MyApp.getInstance(), R.string.picture_save_failed);
-                                }
-                            } catch (FileNotFoundException e) {
-                                UiUtils.toast(MyApp.getInstance(), R.string.save_file_not_found);
-                                throw new RuntimeException(e);
-                            }
-
-
-                        } catch (Exception e) {
-                            UiUtils.toast(MyApp.getInstance(), R.string.save_file_not_found);
-                            e.printStackTrace();
-                        }
-                        // mPopupWindow. dismiss();
-                        mHead_portrait.setImageBitmap(photo); //把图片显示在ImageView控件上
-                        photo.recycle();
-                        System.gc();
-                    }
-                }
-                try {
-                    mPopupWindow.dismiss();
-                } catch (Exception e) {
-
-                }
-
-                break;
-            default:
-                break;
-        }
-    }
 
     /*图片上传*/
     //异步上传图片并且携带其他参数
@@ -691,8 +410,8 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
             RequestBody requestBody = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("image", file.getName(), RequestBody.create(MediaType.parse("image/png"), file))
-                    .addFormDataPart("userId",AppConstants.register.getUser().getUserId())
-                    .addFormDataPart("loginToken",AppConstants.register.getToken())
+                    .addFormDataPart("userId", AppConstants.register.getUser().getUserId())
+                    .addFormDataPart("loginToken", AppConstants.register.getToken())
                     .build();
             //BaseURLs.MODIFY_PICTURE
 
@@ -708,6 +427,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                     // UiUtils.toast(MyApp.getInstance(), R.string.picture_put_failed);
                     mViewHandler.sendEmptyMessage(Put_FAIL_PHOTO);
                     progressBar.dismiss();
+                    L.e(TAG, "上传erre="+e.toString());
                 }
 
                 @Override
@@ -717,22 +437,18 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                     String jsonString = response.body().string();
                     JSONObject jo = JSON.parseObject(jsonString);
                     // UiUtils.toast(MyApp.getInstance(), jo.toString());
-                    if (response!=null){
-                        if (jo.getString("code").equals("200")){
+                    Log.i("register","onResponse===="+jo);
+                    if (response != null) {
+                        if (jo.getString("code").equals("200")) {
                             String headerUrl = jo.getString("avatorURL");
-                            EventBus.getDefault().post(new ChoseHeadStartBean(headerUrl));
-                            AppConstants.register.getUser().setImageSrc(headerUrl);
-                            // CommonUtils.saveRegisterInfo(AppConstants.register);
-                            //PreferenceUtil.commitString(AppConstants.SPKEY_TOKEN, headerUrl);
+                           // EventBus.getDefault().post(new ChoseHeadStartBean(headerUrl));
+                            //AppConstants.register.getUser().setImageSrc(headerUrl);
+                            Log.i("register","onResponse===="+headerUrl);
+                            PreferenceUtil.commitString(AppConstants.HEADICON,headerUrl);
+
                         }
                     }
 
-                    /*String headerUrl = jo.getString("url");
-                    if (!headerUrl.isEmpty()) {
-                        putPhotoUrl(headerUrl);
-                    } else {
-                        UiUtils.toast(MyApp.getInstance(), R.string.picture_put_failed);
-                    }*/
                 }
 
             });
@@ -745,101 +461,6 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
 
     }
 
-    /*上传图片url  后台绑定*/
-
-    private void putPhotoUrl(String headerUrl) {
-        //  mPopupWindow. dismiss();
-        //final String url = BaseURLs.UPDATEHEADICON;
-
-        Map<String, String> param = new HashMap<>();
-
-        param.put("deviceToken", AppConstants.deviceToken);
-
-        param.put("loginToken", PreferenceUtil.getString(AppConstants.SPKEY_TOKEN, ""));
-
-        param.put("imgUrl", headerUrl);
 
 
-        VolleyContentFast.requestJsonByPost(BaseURLs.UPDATEHEADICON, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
-            @Override
-            public void onResponse(Register register) {
-                progressBar.dismiss();
-                if (Integer.parseInt(register.getCode()) == AccountResultCode.SUCC) {
-                    UiUtils.toast(MyApp.getInstance(), R.string.picture_put_success);
-                    // register.getData().getUser().setLoginAccount(AppConstants.register.getData().getLoginToken());
-                    DeviceInfo.saveRegisterInfo(register);
-
-                    // PreferenceUtil.commitString(AppConstants.HEADICON, register.getData().getUser().getHeadIcon().toString());
-//                    Log.i("aasd", "dasd" + register.getData().getUser().getLoginAccount());
-                    EventBus.getDefault().post(register);
-                    Glide.with(getApplicationContext())
-                            .load(register.getUser().getImageSrc())
-                            .error(R.mipmap.center_head)
-                            .into(mHead_portrait);
-
-                    //ImageLoader.load(ProfileActivity.this,register.getData().getUser().getHeadIcon(),R.mipmap.center_head).into(mHead_portrait);
-
-                } else {
-                    DeviceInfo.handlerRequestResult(Integer.parseInt(register.getCode()), "未知错误");
-                }
-            }
-        }, new VolleyContentFast.ResponseErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                progressBar.dismiss();
-                L.e(TAG, "图片上传失败");
-                UiUtils.toast(ProfileActivity.this, R.string.picture_put_failed);
-            }
-        }, Register.class);
-
-    }
-
-    private Uri fileUri;
-
-    /**
-     * 开启图片裁剪功能
-     */
-    public void doZoomImage(Uri uri, int width, int height) {
-        try {
-            Intent intent = new Intent("com.android.camera.action.CROP");
-            if (Build.VERSION.SDK_INT >= 23) {
-                Bitmap bmp ;
-                String str = "";
-                try {
-                    bmp = MediaStore.Images.Media.getBitmap(ProfileActivity.this.getContentResolver(), uri);
-                    str = MediaStore.Images.Media.insertImage(ProfileActivity.this.getContentResolver(), bmp, "", "");
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-                fileUri = Uri.parse(str);
-                intent.setDataAndType(fileUri, "image/*");
-            } else {
-                intent.setDataAndType(uri, "image/*");
-            }
-
-            // 设置裁剪
-            intent.putExtra("crop", "true");
-            intent.putExtra("outputX", width);
-            intent.putExtra("outputY", height);
-            // aspectX aspectY 是宽高的比例
-            intent.putExtra("aspectX", width);
-            intent.putExtra("aspectY", height);
-//            intent.putExtra("aspectX", 1);
-//            intent.putExtra("aspectY", 1);
-            intent.putExtra("return-data", true);
-            startActivityForResult(intent, REQUEST_IMAGE_CROP);
-        } catch (Exception e) {
-            UiUtils.toast(MyApp.getInstance(), R.string.install_the_gallery);
-        }
-    }
-
-
-    /**
-     * 压缩图片
-     */
-//    private Bitmap createThumbnail(String filepath, int i) {
-//        BitmapFactory.Options options = new BitmapFactory.Options();
-//        options.inSampleSize = i;
-//        return BitmapFactory.decodeFile(filepath, options);
-//    }
 }
