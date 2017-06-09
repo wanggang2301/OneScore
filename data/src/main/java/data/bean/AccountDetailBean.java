@@ -69,6 +69,15 @@ public class AccountDetailBean {
             private int availableBalance;
             private int blockedBalance;
             private int cashBalance;
+            private int totalAmount;
+
+            public int getTotalAmount() {
+                return totalAmount;
+            }
+
+            public void setTotalAmount(int totalAmount) {
+                this.totalAmount = totalAmount;
+            }
 
             public int getAvailableBalance() {
                 return availableBalance;

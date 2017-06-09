@@ -271,7 +271,7 @@ public class AccountDetailFragment extends ViewFragment<AccountDetailContract.Pr
     public void showBalance() {
         mAvailableBalance.setText(UnitsUtil.fenToYuan(mPresenter.getBalanceData().getAvailableBalance()));
         mFrozenBalance.setText(UnitsUtil.fenToYuan(mPresenter.getBalanceData().getBlockedBalance()));
-        mTotalBalance.setText(UnitsUtil.fenToYuan(mPresenter.getBalanceData().getCashBalance()));
+        mTotalBalance.setText(UnitsUtil.fenToYuan(mPresenter.getBalanceData().getTotalAmount()));
     }
 
 
