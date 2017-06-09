@@ -11,6 +11,7 @@ import java.util.List;
 
 import data.bean.AccountDetailBean;
 import data.bean.RechargeBean;
+import data.utils.L;
 
 /**
  * 描    述：账户详情
@@ -41,6 +42,6 @@ public class AccountDetailAdapter extends BaseQuickAdapter<RechargeBean> {
         }else{
             tradeType ="-";
         }
-        holder.setText(R.id.account_trade_amount, tradeType+UnitsUtil.fenToYuan(recordEntity.getTradeAmount()));
+        holder.setText(R.id.account_trade_amount, tradeType+UnitsUtil.fenToYuan(recordEntity.getTradeAmount()+""));
     }
 }
