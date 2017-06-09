@@ -3900,17 +3900,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 tv_hean_srcoe_aop.setVisibility(View.GONE);
                 mHalfScore.setVisibility(View.VISIBLE);
                 break;
-            case "3":// 结束下半场
+            case "3":// 下半场
                 date.setVisibility(View.VISIBLE);
-                tv_hean_srcoe_aop.setVisibility(View.GONE);
+                tv_hean_srcoe_aop.setVisibility(View.VISIBLE);
                 score.setVisibility(View.VISIBLE);
-                date.setText(mContext.getString(R.string.snooker_state_over_game));
                 mHalfScore.setVisibility(View.VISIBLE);
-                // 显示完场比分板
-                ll_score_content.setVisibility(View.GONE);
-                tv_head_time.setVisibility(View.GONE);
-                tv_head_over_score.setVisibility(View.VISIBLE);
-                ll_over_score_content.setVisibility(View.VISIBLE);
+                date.setText(String.valueOf(keepTime));
                 break;
             case "4":// 加时
                 date.setVisibility(View.VISIBLE);
@@ -3933,12 +3928,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 mHalfScore.setVisibility(View.GONE);
                 date.setText(mContext.getString(R.string.snooker_state_over_game));
                 date.setTextColor(mContext.getResources().getColor(R.color.red));
-
-                // 显示完场比分板
-                ll_score_content.setVisibility(View.GONE);
-                tv_head_time.setVisibility(View.GONE);
-                tv_head_over_score.setVisibility(View.VISIBLE);
-                ll_over_score_content.setVisibility(View.VISIBLE);
                 break;
             case "-10":// 取消
                 date.setVisibility(View.VISIBLE);
