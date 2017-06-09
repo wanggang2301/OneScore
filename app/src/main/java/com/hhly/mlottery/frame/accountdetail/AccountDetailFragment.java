@@ -27,6 +27,7 @@ import com.hhly.mlottery.adapter.account.AccountDetailAdapter;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MDStatusBarCompat;
+import com.hhly.mlottery.util.net.UnitsUtil;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 import com.hhly.mlottery.widget.PullToEnlargeCoorDinatorLayout;
 
@@ -268,9 +269,9 @@ public class AccountDetailFragment extends ViewFragment<AccountDetailContract.Pr
 
     @Override
     public void showBalance() {
-        mAvailableBalance.setText(mPresenter.getBalanceData().getAvailableBalance()+"");
-        mFrozenBalance.setText(mPresenter.getBalanceData().getBlockedBalance()+"");
-        mTotalBalance.setText(mPresenter.getBalanceData().getCashBalance()+"");
+        mAvailableBalance.setText(UnitsUtil.fenToYuan(mPresenter.getBalanceData().getAvailableBalance()));
+        mFrozenBalance.setText(UnitsUtil.fenToYuan(mPresenter.getBalanceData().getBlockedBalance()));
+        mTotalBalance.setText(UnitsUtil.fenToYuan(mPresenter.getBalanceData().getCashBalance()));
     }
 
 
