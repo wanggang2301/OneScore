@@ -25,9 +25,11 @@
 
             <!--比分板-->
             <LinearLayout
+                android:id="@+id/ll_score_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="visible">
 
                 <View
                     android:layout_width="match_parent"
@@ -46,143 +48,162 @@
                         android:layout_weight="0.2" />
 
                     <!--头部比分-->
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@mipmap/football_animation_score_info_bg"
-                        android:orientation="vertical">
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@mipmap/football_animation_score_info_bg"
+                            android:scaleType="fitXY" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="0.6"
-                            android:orientation="horizontal"
-                            android:paddingTop="5dp">
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
                             <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.8"
                                 android:orientation="horizontal"
-                                android:paddingLeft="5dp">
+                                android:paddingTop="5dp">
 
-                                <ImageView
-                                    android:layout_width="15dp"
-                                    android:layout_height="15dp"
-                                    android:src="@mipmap/football_animation_guest_icon" />
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:paddingLeft="5dp">
 
-                                <TextView
-                                    android:id="@+id/tv_hean_home_name"
+                                    <ImageView
+                                        android:layout_width="15dp"
+                                        android:layout_height="15dp"
+                                        android:layout_gravity="center"
+                                        android:src="@mipmap/football_animation_guest_icon" />
+
+                                    <TextView
+                                        android:id="@+id/tv_home_name"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:paddingLeft="5dp"
+                                        android:textColor="@color/linecolor"
+                                        android:textSize="@dimen/number_desc"
+                                        tools:text="主队name" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:lines="1"
-                                    android:textColor="@color/linecolor"
-                                    android:textSize="@dimen/number_desc"
-                                    tools:text="主队name" />
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
 
-                            </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:orientation="horizontal">
+                                        <TextView
+                                            android:id="@+id/tv_hean_srcoe_time"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textColor="@color/linecolor"
+                                            android:textSize="@dimen/number_desc"
+                                            tools:text="10" />
 
-                                <TextView
-                                    android:id="@+id/tv_hean_srcoe_time"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="@color/linecolor"
-                                    android:textSize="@dimen/number_desc"
-                                    tools:text="10" />
+                                        <TextView
+                                            android:id="@+id/tv_hean_srcoe_aop"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textColor="@color/linecolor"
+                                            android:textSize="@dimen/number_desc"
+                                            tools:text="'" />
+                                    </LinearLayout>
 
-                                <TextView
-                                    android:id="@+id/tv_hean_srcoe_aop"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="@color/linecolor"
-                                    android:textSize="@dimen/number_desc"
-                                    tools:text="'" />
+                                    <TextView
+                                        android:id="@+id/tv_hean_srcoe"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/linecolor"
+                                        android:textSize="@dimen/number_desc"
+                                        tools:text="(1-0)" />
 
-                                <TextView
-                                    android:id="@+id/tv_hean_srcoe_desc"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="@color/linecolor"
-                                    android:textSize="@dimen/number_desc"
-                                    tools:text="上半场" />
+                                </LinearLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:paddingLeft="5dp">
+
+                                    <ImageView
+                                        android:id="@+id/iv_guest_head_icon"
+                                        android:layout_width="15dp"
+                                        android:layout_height="15dp"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginRight="5dp"
+                                        android:src="@mipmap/football_animation_home_icon" />
+
+                                    <TextView
+                                        android:id="@+id/tv_guest_name"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_toLeftOf="@id/iv_guest_head_icon"
+                                        android:paddingRight="5dp"
+                                        android:textColor="@color/linecolor"
+                                        android:textSize="@dimen/number_desc"
+                                        tools:text="客队name" />
+
+                                </RelativeLayout>
 
                             </LinearLayout>
 
                             <RelativeLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:paddingLeft="5dp">
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1">
 
                                 <ImageView
-                                    android:id="@+id/iv_guest_head_icon"
-                                    android:layout_width="15dp"
-                                    android:layout_height="15dp"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_marginRight="5dp"
-                                    android:src="@mipmap/football_animation_home_icon" />
+                                    android:id="@+id/iv_home_icon"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="20dp"
+                                    android:background="@mipmap/football_animation_logo_bg"
+                                    android:padding="2dp"
+                                    android:src="@mipmap/score_default" />
 
                                 <TextView
-                                    android:id="@+id/tv_hean_guest_name"
+                                    android:id="@+id/score"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_toLeftOf="@id/iv_guest_head_icon"
-                                    android:lines="1"
+                                    android:layout_centerInParent="true"
                                     android:textColor="@color/linecolor"
-                                    android:textSize="@dimen/number_desc"
-                                    tools:text="客队name" />
+                                    android:textSize="30sp"
+                                    tools:text="0 : 0" />
+
+                                <ImageView
+                                    android:id="@+id/iv_guest_icon"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginRight="20dp"
+                                    android:background="@mipmap/football_animation_logo_bg"
+                                    android:padding="2dp"
+                                    android:src="@mipmap/score_default" />
 
                             </RelativeLayout>
 
                         </LinearLayout>
 
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1">
-
-                            <ImageView
-                                android:id="@+id/iv_hean_home_logo"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_centerVertical="true"
-                                android:layout_marginLeft="20dp"
-                                android:background="@mipmap/football_animation_logo_bg"
-                                android:padding="2dp"
-                                android:src="@mipmap/score_default" />
-
-                            <TextView
-                                android:id="@+id/tv_hean_score"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:textColor="@color/linecolor"
-                                android:textSize="@dimen/snooker_header"
-                                tools:text="0 : 0" />
-
-                            <ImageView
-                                android:id="@+id/iv_hean_guest_logo"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerVertical="true"
-                                android:layout_marginRight="20dp"
-                                android:background="@mipmap/football_animation_logo_bg"
-                                android:padding="2dp"
-                                android:src="@mipmap/score_default" />
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
+                    </RelativeLayout>
 
                     <View
                         android:layout_width="0dp"
@@ -194,7 +215,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="2" />
+                    android:layout_weight="1.8" />
 
             </LinearLayout>
 
@@ -263,44 +284,132 @@
                         </RelativeLayout>
 
                         <!--信号中断-->
-                        <ImageView
-                            android:id="@+id/iv_signal_off"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:paddingBottom="10dp"
-                            android:src="@mipmap/football_signal_off_icon"
-                            android:visibility="gone" />
+                        <RelativeLayout
+                            android:id="@+id/rl_signal_off"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:id="@+id/iv_signal_off"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_centerInParent="true"
+                                android:paddingBottom="10dp"
+                                android:src="@mipmap/football_signal_off_icon" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:layout_toRightOf="@id/iv_signal_off"
+                                android:background="@drawable/football_animation_offside_bg"
+                                android:gravity="center"
+                                android:paddingBottom="5dp"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:paddingTop="5dp"
+                                android:text="@string/football_play_404"
+                                android:textColor="@color/res_name_color"
+                                android:textSize="@dimen/tennis_score_item" />
+
+                        </RelativeLayout>
 
                         <!--喝水-->
-                        <ImageView
-                            android:id="@+id/iv_drink_water"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:paddingBottom="10dp"
-                            android:src="@mipmap/football_drink_water_icon"
-                            android:visibility="gone" />
+                        <RelativeLayout
+                            android:id="@+id/rl_drink_water"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:id="@+id/iv_drink_water"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_centerInParent="true"
+                                android:paddingBottom="10dp"
+                                android:src="@mipmap/football_drink_water_icon" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:layout_toRightOf="@id/iv_drink_water"
+                                android:background="@drawable/football_animation_offside_bg"
+                                android:gravity="center"
+                                android:paddingBottom="5dp"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:paddingTop="5dp"
+                                android:text="@string/football_play_drink_water"
+                                android:textColor="@color/res_name_color"
+                                android:textSize="@dimen/tennis_score_item" />
+
+                        </RelativeLayout>
 
                         <!--受伤-->
-                        <ImageView
-                            android:id="@+id/iv_injured"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:paddingBottom="10dp"
-                            android:src="@mipmap/football_injured_icon"
-                            android:visibility="gone" />
+                        <RelativeLayout
+                            android:id="@+id/rl_injured"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:id="@+id/iv_injured"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:paddingBottom="10dp"
+                                android:src="@mipmap/football_injured_icon" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:layout_toRightOf="@id/iv_injured"
+                                android:background="@drawable/football_animation_offside_bg"
+                                android:gravity="center"
+                                android:paddingBottom="5dp"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:paddingTop="5dp"
+                                android:text="@string/football_play_injured"
+                                android:textColor="@color/res_name_color"
+                                android:textSize="@dimen/tennis_score_item" />
+
+                        </RelativeLayout>
 
                         <!--伤停补时-->
-                        <ImageView
-                            android:id="@+id/iv_injured_addtime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:paddingBottom="10dp"
-                            android:src="@mipmap/football_injured_addtime_icon"
-                            android:visibility="gone" />
+                        <RelativeLayout
+                            android:id="@+id/rl_injured_addtime"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:id="@+id/iv_injured_addtime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:paddingBottom="10dp"
+                                android:src="@mipmap/football_injured_addtime_icon" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:layout_toRightOf="@id/iv_injured_addtime"
+                                android:background="@drawable/football_animation_offside_bg"
+                                android:gravity="center"
+                                android:paddingBottom="5dp"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:paddingTop="5dp"
+                                android:text="@string/football_play_injured_addtime"
+                                android:textColor="@color/res_name_color"
+                                android:textSize="@dimen/tennis_score_item" />
+
+                        </RelativeLayout>
 
                     </RelativeLayout>
 
@@ -519,7 +628,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:visibility="visible">
 
                             <View
                                 android:layout_width="0dp"
@@ -529,7 +639,7 @@
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_weight="0.4"
+                                android:layout_weight="0.6"
                                 android:orientation="vertical">
 
                                 <View
@@ -537,18 +647,36 @@
                                     android:layout_height="0dp"
                                     android:layout_weight="0.6" />
 
-                                <TextView
-                                    android:id="@+id/tv_home_title1"
+                                <RelativeLayout
+                                    android:id="@+id/rl_home_offside_title1"
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
-                                    android:layout_gravity="center"
                                     android:layout_weight="2.8"
                                     android:background="@drawable/football_animation_offside_bg"
-                                    android:gravity="center"
-                                    android:paddingRight="10dp"
-                                    android:text="@string/football_play_hit"
-                                    android:textColor="@color/res_name_color"
-                                    android:textSize="@dimen/tennis_score_item" />
+                                    android:paddingRight="10dp">
+
+                                    <TextView
+                                        android:id="@+id/tv_home_title1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+                                        android:text="@string/football_play_hit"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/tennis_score_item" />
+
+                                    <TextView
+                                        android:id="@+id/tv_home_title1_time"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_centerInParent="true"
+                                        android:layout_toLeftOf="@id/tv_home_title1"
+                                        android:background="@mipmap/number_bg_red"
+                                        android:gravity="center"
+                                        android:textColor="@color/linecolor"
+                                        android:textSize="@dimen/item_football_card"
+                                        tools:text="31'" />
+
+                                </RelativeLayout>
 
                                 <View
                                     android:layout_width="match_parent"
@@ -568,17 +696,18 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:visibility="visible">
 
                             <View
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_weight="0.8" />
+                                android:layout_weight="0.9" />
 
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_weight="0.4"
+                                android:layout_weight="0.6"
                                 android:orientation="vertical">
 
                                 <View
@@ -586,18 +715,36 @@
                                     android:layout_height="0dp"
                                     android:layout_weight="0.6" />
 
-                                <TextView
-                                    android:id="@+id/tv_guest_title1"
+                                <RelativeLayout
+                                    android:id="@+id/rl_guest_offside_title1"
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
-                                    android:layout_gravity="center"
                                     android:layout_weight="2.8"
                                     android:background="@drawable/football_animation_offside_bg"
-                                    android:gravity="center"
-                                    android:paddingLeft="10dp"
-                                    android:text="@string/football_play_hit"
-                                    android:textColor="@color/res_name_color"
-                                    android:textSize="@dimen/tennis_score_item" />
+                                    android:paddingLeft="10dp">
+
+                                    <TextView
+                                        android:id="@+id/tv_guest_title1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+                                        android:text="@string/football_play_hit"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/tennis_score_item" />
+
+                                    <TextView
+                                        android:id="@+id/tv_guest_title1_time"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_centerInParent="true"
+                                        android:layout_toRightOf="@id/tv_guest_title1"
+                                        android:background="@mipmap/number_bg_blue"
+                                        android:gravity="center"
+                                        android:textColor="@color/linecolor"
+                                        android:textSize="@dimen/item_football_card"
+                                        tools:text="31'" />
+
+                                </RelativeLayout>
 
                                 <View
                                     android:layout_width="match_parent"
@@ -656,7 +803,8 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:orientation="horizontal">
+                                    android:orientation="horizontal"
+                                    android:visibility="visible">
 
                                     <View
                                         android:layout_width="0dp"
@@ -681,7 +829,8 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:orientation="horizontal">
+                                    android:orientation="horizontal"
+                                    android:visibility="visible">
 
                                     <View
                                         android:layout_width="0dp"
@@ -721,7 +870,8 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:orientation="horizontal">
+                                    android:orientation="horizontal"
+                                    android:visibility="visible">
 
                                     <pl.droidsonroids.gif.GifImageView
                                         android:id="@+id/gif_home_position1"
@@ -741,7 +891,8 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:orientation="horizontal">
+                                    android:orientation="horizontal"
+                                    android:visibility="visible">
 
                                     <View
                                         android:layout_width="0dp"
@@ -766,7 +917,8 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:orientation="horizontal">
+                                    android:orientation="horizontal"
+                                    android:visibility="visible">
 
                                     <View
                                         android:layout_width="0dp"
@@ -837,7 +989,7 @@
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_weight="0.4"
+                                android:layout_weight="0.6"
                                 android:orientation="vertical">
 
                                 <View
@@ -845,19 +997,36 @@
                                     android:layout_height="0dp"
                                     android:layout_weight="0.6" />
 
-                                <TextView
-                                    android:id="@+id/tv_home_title2"
+                                <RelativeLayout
+                                    android:id="@+id/rl_home_offside_title2"
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
-                                    android:layout_gravity="center"
                                     android:layout_weight="2.8"
                                     android:background="@drawable/football_animation_offside_bg"
-                                    android:gravity="center"
-                                    android:paddingRight="10dp"
-                                    android:text="@string/football_play_hit"
-                                    android:textColor="@color/res_name_color"
-                                    android:textSize="@dimen/tennis_score_item"
-                                    android:visibility="gone" />
+                                    android:paddingRight="10dp">
+
+                                    <TextView
+                                        android:id="@+id/tv_home_title2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+                                        android:text="@string/football_play_hit"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/tennis_score_item" />
+
+                                    <TextView
+                                        android:id="@+id/tv_home_title2_time"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_centerInParent="true"
+                                        android:layout_toLeftOf="@id/tv_home_title2"
+                                        android:background="@mipmap/number_bg_red"
+                                        android:gravity="center"
+                                        android:textColor="@color/linecolor"
+                                        android:textSize="@dimen/item_football_card"
+                                        tools:text="31'" />
+
+                                </RelativeLayout>
 
                                 <View
                                     android:layout_width="match_parent"
@@ -887,7 +1056,7 @@
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_weight="0.4"
+                                android:layout_weight="0.6"
                                 android:orientation="vertical">
 
                                 <View
@@ -895,19 +1064,36 @@
                                     android:layout_height="0dp"
                                     android:layout_weight="0.6" />
 
-                                <TextView
-                                    android:id="@+id/tv_guest_title2"
+                                <RelativeLayout
+                                    android:id="@+id/rl_guest_offside_title2"
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
-                                    android:layout_gravity="center"
                                     android:layout_weight="2.8"
                                     android:background="@drawable/football_animation_offside_bg"
-                                    android:gravity="center"
-                                    android:paddingLeft="10dp"
-                                    android:text="@string/football_play_hit"
-                                    android:textColor="@color/res_name_color"
-                                    android:textSize="@dimen/tennis_score_item"
-                                    android:visibility="gone" />
+                                    android:paddingLeft="10dp">
+
+                                    <TextView
+                                        android:id="@+id/tv_guest_title2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+                                        android:text="@string/football_play_hit"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/tennis_score_item" />
+
+                                    <TextView
+                                        android:id="@+id/tv_guest_title2_time"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_centerInParent="true"
+                                        android:layout_toRightOf="@id/tv_guest_title2"
+                                        android:background="@mipmap/number_bg_blue"
+                                        android:gravity="center"
+                                        android:textColor="@color/linecolor"
+                                        android:textSize="@dimen/item_football_card"
+                                        tools:text="31'" />
+
+                                </RelativeLayout>
 
                                 <View
                                     android:layout_width="match_parent"
@@ -956,7 +1142,6 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:visibility="gone"
                                         tools:src="@mipmap/football_guest_position_gif" />
 
                                 </LinearLayout>
@@ -1038,7 +1223,6 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:visibility="gone"
                                         tools:src="@mipmap/football_home_position_gif" />
 
                                     <View
@@ -1178,12 +1362,12 @@
                                 <View
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.75" />
+                                    android:layout_weight="1" />
 
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.6"
+                                    android:layout_weight="1.2"
                                     android:orientation="vertical">
 
                                     <View
@@ -1191,17 +1375,35 @@
                                         android:layout_height="0dp"
                                         android:layout_weight="0.6" />
 
-                                    <TextView
+                                    <RelativeLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
-                                        android:layout_gravity="center"
                                         android:layout_weight="2.8"
                                         android:background="@drawable/football_animation_offside_bg"
-                                        android:gravity="center"
-                                        android:paddingLeft="10dp"
-                                        android:text="@string/football_play_goal_door"
-                                        android:textColor="@color/res_name_color"
-                                        android:textSize="@dimen/tennis_score_item" />
+                                        android:paddingLeft="10dp">
+
+                                        <TextView
+                                            android:id="@+id/tv_home_goal_door_title"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_centerInParent="true"
+                                            android:text="@string/football_play_goal_door"
+                                            android:textColor="@color/res_name_color"
+                                            android:textSize="@dimen/tennis_score_item" />
+
+                                        <TextView
+                                            android:id="@+id/tv_home_goal_door_title_time"
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:layout_centerInParent="true"
+                                            android:layout_toRightOf="@id/tv_home_goal_door_title"
+                                            android:background="@mipmap/number_bg_red"
+                                            android:gravity="center"
+                                            android:textColor="@color/linecolor"
+                                            android:textSize="@dimen/item_football_card"
+                                            tools:text="31'" />
+
+                                    </RelativeLayout>
 
                                     <View
                                         android:layout_width="match_parent"
@@ -1290,7 +1492,7 @@
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.6"
+                                    android:layout_weight="1.2"
                                     android:orientation="vertical">
 
                                     <View
@@ -1298,17 +1500,35 @@
                                         android:layout_height="0dp"
                                         android:layout_weight="0.6" />
 
-                                    <TextView
+                                    <RelativeLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
-                                        android:layout_gravity="center"
                                         android:layout_weight="2.8"
                                         android:background="@drawable/football_animation_offside_bg"
-                                        android:gravity="center"
-                                        android:paddingRight="10dp"
-                                        android:text="@string/football_play_goal_door"
-                                        android:textColor="@color/res_name_color"
-                                        android:textSize="@dimen/tennis_score_item" />
+                                        android:paddingRight="10dp">
+
+                                        <TextView
+                                            android:id="@+id/tv_guest_goal_door_title"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_centerInParent="true"
+                                            android:text="@string/football_play_goal_door"
+                                            android:textColor="@color/res_name_color"
+                                            android:textSize="@dimen/tennis_score_item" />
+
+                                        <TextView
+                                            android:id="@+id/tv_guest_goal_door_title_time"
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:layout_centerInParent="true"
+                                            android:layout_toLeftOf="@id/tv_guest_goal_door_title"
+                                            android:background="@mipmap/number_bg_blue"
+                                            android:gravity="center"
+                                            android:textColor="@color/linecolor"
+                                            android:textSize="@dimen/item_football_card"
+                                            tools:text="31'" />
+
+                                    </RelativeLayout>
 
                                     <View
                                         android:layout_width="match_parent"
@@ -1320,7 +1540,7 @@
                                 <View
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.75" />
+                                    android:layout_weight="1" />
 
                             </LinearLayout>
 
@@ -1390,7 +1610,7 @@
                             <View
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1.25" />
+                                android:layout_weight="1.5" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -1402,18 +1622,36 @@
                                     android:layout_height="0dp"
                                     android:layout_weight="0.6" />
 
-                                <TextView
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="0dp"
-                                    android:layout_gravity="center"
                                     android:layout_weight="2.8"
                                     android:background="@drawable/football_animation_offside_bg"
                                     android:gravity="center"
+                                    android:orientation="horizontal"
                                     android:paddingLeft="15dp"
-                                    android:paddingRight="5dp"
-                                    android:text="@string/football_play_goal_out"
-                                    android:textColor="@color/res_name_color"
-                                    android:textSize="@dimen/number_desc" />
+                                    android:paddingRight="5dp">
+
+                                    <TextView
+                                        android:id="@+id/tv_guest_goal_out_title"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/football_play_goal_out"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/number_desc" />
+
+                                    <TextView
+                                        android:id="@+id/tv_guest_goal_out_title_time"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:background="@mipmap/number_bg_blue"
+                                        android:gravity="center"
+                                        android:textColor="@color/linecolor"
+                                        android:textSize="@dimen/item_football_card"
+                                        tools:text="31'" />
+
+                                </LinearLayout>
+
 
                                 <View
                                     android:layout_width="match_parent"
@@ -1506,7 +1744,7 @@
                             <View
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1" />
+                                android:layout_weight="0.9" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -1518,18 +1756,34 @@
                                     android:layout_height="0dp"
                                     android:layout_weight="0.6" />
 
-                                <TextView
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="0dp"
-                                    android:layout_gravity="center"
                                     android:layout_weight="2.8"
                                     android:background="@drawable/football_animation_offside_bg"
                                     android:gravity="center"
+                                    android:orientation="horizontal"
                                     android:paddingLeft="5dp"
-                                    android:paddingRight="15dp"
-                                    android:text="@string/football_play_goal_out"
-                                    android:textColor="@color/res_name_color"
-                                    android:textSize="@dimen/number_desc" />
+                                    android:paddingRight="15dp">
+
+                                    <TextView
+                                        android:id="@+id/tv_home_goal_out_title_time"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:background="@mipmap/number_bg_red"
+                                        android:gravity="center"
+                                        android:textColor="@color/linecolor"
+                                        android:textSize="@dimen/item_football_card"
+                                        tools:text="31'" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/football_play_goal_out"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/number_desc" />
+
+                                </LinearLayout>
 
                                 <View
                                     android:layout_width="match_parent"
@@ -1541,7 +1795,7 @@
                             <View
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1.2" />
+                                android:layout_weight="1.3" />
 
                         </LinearLayout>
 
@@ -1632,7 +1886,7 @@
                                 <View
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.55" />
+                                    android:layout_weight="0.6" />
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -1644,18 +1898,34 @@
                                         android:layout_height="0dp"
                                         android:layout_weight="1.5" />
 
-                                    <TextView
+                                    <LinearLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="0dp"
-                                        android:layout_gravity="center"
-                                        android:layout_weight="2.8"
+                                        android:layout_weight="3"
                                         android:background="@drawable/football_animation_offside_bg"
                                         android:gravity="center"
+                                        android:orientation="horizontal"
                                         android:paddingLeft="15dp"
-                                        android:paddingRight="5dp"
-                                        android:text="@string/football_play_corner"
-                                        android:textColor="@color/res_name_color"
-                                        android:textSize="@dimen/number_desc" />
+                                        android:paddingRight="5dp">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/football_play_corner"
+                                            android:textColor="@color/res_name_color"
+                                            android:textSize="@dimen/number_desc" />
+
+                                        <TextView
+                                            android:id="@+id/tv_guest_corner_title_r_time"
+                                            android:layout_width="17dp"
+                                            android:layout_height="17dp"
+                                            android:background="@mipmap/number_bg_blue"
+                                            android:gravity="center"
+                                            android:textColor="@color/linecolor"
+                                            android:textSize="@dimen/item_football_card"
+                                            tools:text="31'" />
+
+                                    </LinearLayout>
 
                                     <View
                                         android:layout_width="match_parent"
@@ -1682,7 +1952,7 @@
                                 <View
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="2.1" />
+                                    android:layout_weight="2.5" />
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -1695,18 +1965,34 @@
                                         android:layout_height="0dp"
                                         android:layout_weight="1.5" />
 
-                                    <TextView
+                                    <LinearLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="0dp"
-                                        android:layout_gravity="center"
-                                        android:layout_weight="2.8"
+                                        android:layout_weight="3"
                                         android:background="@drawable/football_animation_offside_bg"
                                         android:gravity="center"
+                                        android:orientation="horizontal"
                                         android:paddingLeft="5dp"
-                                        android:paddingRight="15dp"
-                                        android:text="@string/football_play_corner"
-                                        android:textColor="@color/res_name_color"
-                                        android:textSize="@dimen/number_desc" />
+                                        android:paddingRight="15dp">
+
+                                        <TextView
+                                            android:id="@+id/tv_home_corner_title_l_time"
+                                            android:layout_width="17dp"
+                                            android:layout_height="17dp"
+                                            android:background="@mipmap/number_bg_red"
+                                            android:gravity="center"
+                                            android:textColor="@color/linecolor"
+                                            android:textSize="@dimen/item_football_card"
+                                            tools:text="31'" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/football_play_corner"
+                                            android:textColor="@color/res_name_color"
+                                            android:textSize="@dimen/number_desc" />
+
+                                    </LinearLayout>
 
                                     <View
                                         android:layout_width="match_parent"
@@ -1746,7 +2032,7 @@
                                 <View
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.1" />
+                                    android:layout_weight="0.25" />
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -1754,18 +2040,34 @@
                                     android:layout_weight="0.3"
                                     android:orientation="vertical">
 
-                                    <TextView
+                                    <LinearLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="0dp"
-                                        android:layout_gravity="center"
                                         android:layout_weight="2.8"
                                         android:background="@drawable/football_animation_offside_bg"
                                         android:gravity="center"
+                                        android:orientation="horizontal"
                                         android:paddingLeft="15dp"
-                                        android:paddingRight="5dp"
-                                        android:text="@string/football_play_corner"
-                                        android:textColor="@color/res_name_color"
-                                        android:textSize="@dimen/tennis_score_item" />
+                                        android:paddingRight="5dp">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/football_play_corner"
+                                            android:textColor="@color/res_name_color"
+                                            android:textSize="@dimen/tennis_score_item" />
+
+                                        <TextView
+                                            android:id="@+id/tv_guest_corner_title_l_time"
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:background="@mipmap/number_bg_blue"
+                                            android:gravity="center"
+                                            android:textColor="@color/linecolor"
+                                            android:textSize="@dimen/item_football_card"
+                                            tools:text="31'" />
+
+                                    </LinearLayout>
 
                                     <View
                                         android:layout_width="match_parent"
@@ -1777,7 +2079,7 @@
                                 <View
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="3" />
+                                    android:layout_weight="2.9" />
 
                             </LinearLayout>
 
@@ -1792,26 +2094,42 @@
                                 <View
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="3.7" />
+                                    android:layout_weight="4" />
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.3"
+                                    android:layout_weight="0.35"
                                     android:orientation="vertical">
 
-                                    <TextView
+                                    <LinearLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="0dp"
-                                        android:layout_gravity="center"
                                         android:layout_weight="2.8"
                                         android:background="@drawable/football_animation_offside_bg"
                                         android:gravity="center"
+                                        android:orientation="horizontal"
                                         android:paddingLeft="5dp"
-                                        android:paddingRight="15dp"
-                                        android:text="@string/football_play_corner"
-                                        android:textColor="@color/res_name_color"
-                                        android:textSize="@dimen/tennis_score_item" />
+                                        android:paddingRight="15dp">
+
+                                        <TextView
+                                            android:id="@+id/tv_home_corner_title_r_time"
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:background="@mipmap/number_bg_red"
+                                            android:gravity="center"
+                                            android:textColor="@color/linecolor"
+                                            android:textSize="@dimen/item_football_card"
+                                            tools:text="31'" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/football_play_corner"
+                                            android:textColor="@color/res_name_color"
+                                            android:textSize="@dimen/tennis_score_item" />
+
+                                    </LinearLayout>
 
                                     <View
                                         android:layout_width="match_parent"
@@ -1819,11 +2137,6 @@
                                         android:layout_weight="2" />
 
                                 </LinearLayout>
-
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="0.15" />
 
                             </LinearLayout>
 
@@ -3006,7 +3319,7 @@
                                             android:orientation="horizontal">
 
                                             <ImageView
-                                                android:id="@+id/iv_home_icon"
+                                                android:id="@+id/iv_home_img"
                                                 android:layout_width="25dp"
                                                 android:layout_height="wrap_content"
                                                 android:paddingLeft="5dp"
@@ -3077,7 +3390,7 @@
                                             android:background="@drawable/football_animation_offside_bg">
 
                                             <ImageView
-                                                android:id="@+id/iv_guest_icon"
+                                                android:id="@+id/iv_guest_img"
                                                 android:layout_width="25dp"
                                                 android:layout_height="wrap_content"
                                                 android:layout_alignParentRight="true"
@@ -3090,7 +3403,7 @@
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:layout_centerVertical="true"
-                                                android:layout_toLeftOf="@id/iv_guest_icon"
+                                                android:layout_toLeftOf="@id/iv_guest_img"
                                                 android:paddingRight="5dp"
                                                 android:textColor="@color/res_name_color"
                                                 android:textSize="@dimen/tennis_score_item"
@@ -3286,12 +3599,12 @@
                                 <View
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.9" />
+                                    android:layout_weight="1.05" />
 
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.7"
+                                    android:layout_weight="1"
                                     android:orientation="vertical">
 
                                     <View
@@ -3299,18 +3612,36 @@
                                         android:layout_height="0dp"
                                         android:layout_weight="0.6" />
 
-                                    <TextView
-                                        android:id="@+id/tv_guest_free_kick_fk4_title"
+                                    <LinearLayout
+                                        android:id="@+id/ll_guest_free_kick_fk4_title"
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
-                                        android:layout_gravity="center"
                                         android:layout_weight="2.8"
                                         android:background="@drawable/football_animation_offside_bg"
                                         android:gravity="center"
-                                        android:paddingLeft="10dp"
-                                        android:text="@string/football_play_free_kick_danger"
-                                        android:textColor="@color/res_name_color"
-                                        android:textSize="@dimen/tennis_score_item" />
+                                        android:orientation="horizontal"
+                                        android:paddingLeft="15dp"
+                                        android:paddingRight="5dp">
+
+                                        <TextView
+                                            android:id="@+id/tv_guest_free_kick_fk4_title"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/football_play_free_kick_danger"
+                                            android:textColor="@color/res_name_color"
+                                            android:textSize="@dimen/tennis_score_item" />
+
+                                        <TextView
+                                            android:id="@+id/tv_guest_free_kick_fk4_title_time"
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:background="@mipmap/number_bg_blue"
+                                            android:gravity="center"
+                                            android:textColor="@color/linecolor"
+                                            android:textSize="@dimen/item_football_card"
+                                            tools:text="31'" />
+
+                                    </LinearLayout>
 
                                     <View
                                         android:layout_width="match_parent"
@@ -3336,12 +3667,12 @@
                                 <View
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="1.35" />
+                                    android:layout_weight="1.6" />
 
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.7"
+                                    android:layout_weight="1"
                                     android:orientation="vertical">
 
                                     <View
@@ -3349,18 +3680,36 @@
                                         android:layout_height="0dp"
                                         android:layout_weight="0.6" />
 
-                                    <TextView
-                                        android:id="@+id/tv_guest_free_kick_fk2_title"
+                                    <LinearLayout
+                                        android:id="@+id/ll_guest_free_kick_fk2_title"
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
-                                        android:layout_gravity="center"
                                         android:layout_weight="2.8"
                                         android:background="@drawable/football_animation_offside_bg"
                                         android:gravity="center"
-                                        android:paddingLeft="10dp"
-                                        android:text="@string/football_play_free_kick_danger"
-                                        android:textColor="@color/res_name_color"
-                                        android:textSize="@dimen/tennis_score_item" />
+                                        android:orientation="horizontal"
+                                        android:paddingLeft="15dp"
+                                        android:paddingRight="5dp">
+
+                                        <TextView
+                                            android:id="@+id/tv_guest_free_kick_fk2_title"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/football_play_free_kick_danger"
+                                            android:textColor="@color/res_name_color"
+                                            android:textSize="@dimen/tennis_score_item" />
+
+                                        <TextView
+                                            android:id="@+id/tv_guest_free_kick_fk2_title_time"
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:background="@mipmap/number_bg_blue"
+                                            android:gravity="center"
+                                            android:textColor="@color/linecolor"
+                                            android:textSize="@dimen/item_football_card"
+                                            tools:text="31'" />
+
+                                    </LinearLayout>
 
                                     <View
                                         android:layout_width="match_parent"
@@ -3372,7 +3721,7 @@
                                 <View
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="1" />
+                                    android:layout_weight="0.95" />
 
                             </LinearLayout>
 
@@ -3391,7 +3740,7 @@
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.7"
+                                    android:layout_weight="1"
                                     android:orientation="vertical">
 
                                     <View
@@ -3399,18 +3748,37 @@
                                         android:layout_height="0dp"
                                         android:layout_weight="0.6" />
 
-                                    <TextView
-                                        android:id="@+id/tv_home_free_kick_fk2_title"
+                                    <LinearLayout
+                                        android:id="@+id/ll_home_free_kick_fk2_title"
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
-                                        android:layout_gravity="center"
                                         android:layout_weight="2.8"
                                         android:background="@drawable/football_animation_offside_bg"
                                         android:gravity="center"
-                                        android:paddingRight="10dp"
-                                        android:text="@string/football_play_free_kick_danger"
-                                        android:textColor="@color/res_name_color"
-                                        android:textSize="@dimen/tennis_score_item" />
+                                        android:orientation="horizontal"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="15dp">
+
+                                        <TextView
+                                            android:id="@+id/tv_home_free_kick_fk2_title_time"
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:background="@mipmap/number_bg_red"
+                                            android:gravity="center"
+                                            android:textColor="@color/linecolor"
+                                            android:textSize="@dimen/item_football_card"
+                                            tools:text="31'" />
+
+                                        <TextView
+                                            android:id="@+id/tv_home_free_kick_fk2_title"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/football_play_free_kick_danger"
+                                            android:textColor="@color/res_name_color"
+                                            android:textSize="@dimen/tennis_score_item" />
+
+
+                                    </LinearLayout>
 
                                     <View
                                         android:layout_width="match_parent"
@@ -3422,7 +3790,7 @@
                                 <View
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="1.35" />
+                                    android:layout_weight="1.6" />
 
                             </LinearLayout>
 
@@ -3441,7 +3809,7 @@
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.7"
+                                    android:layout_weight="1"
                                     android:orientation="vertical">
 
                                     <View
@@ -3449,18 +3817,36 @@
                                         android:layout_height="0dp"
                                         android:layout_weight="0.6" />
 
-                                    <TextView
-                                        android:id="@+id/tv_home_free_kick_fk4_title"
+                                    <LinearLayout
+                                        android:id="@+id/ll_home_free_kick_fk4_title"
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
-                                        android:layout_gravity="center"
                                         android:layout_weight="2.8"
                                         android:background="@drawable/football_animation_offside_bg"
                                         android:gravity="center"
-                                        android:paddingRight="10dp"
-                                        android:text="@string/football_play_free_kick_danger"
-                                        android:textColor="@color/res_name_color"
-                                        android:textSize="@dimen/tennis_score_item" />
+                                        android:orientation="horizontal"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="15dp">
+
+                                        <TextView
+                                            android:id="@+id/tv_home_free_kick_fk4_title_time"
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:background="@mipmap/number_bg_red"
+                                            android:gravity="center"
+                                            android:textColor="@color/linecolor"
+                                            android:textSize="@dimen/item_football_card"
+                                            tools:text="31'" />
+
+                                        <TextView
+                                            android:id="@+id/tv_home_free_kick_fk4_title"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/football_play_free_kick_danger"
+                                            android:textColor="@color/res_name_color"
+                                            android:textSize="@dimen/tennis_score_item" />
+
+                                    </LinearLayout>
 
                                     <View
                                         android:layout_width="match_parent"
@@ -3472,7 +3858,7 @@
                                 <View
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.9" />
+                                    android:layout_weight="1" />
 
                             </LinearLayout>
 
@@ -3805,268 +4191,312 @@
                         android:layout_height="0dp"
                         android:layout_weight="3.2" />
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
+                        android:layout_weight="1">
 
-                        <!--客队坐标-->
-                        <RelativeLayout
-                            android:id="@+id/rl_guest_free_kick_fk3_1"
-                            android:layout_width="0dp"
+                        <!--客队title-->
+                        <LinearLayout
+                            android:id="@+id/ll_guest_free_kick_fk3_title"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="1">
+                            android:orientation="horizontal"
+                            android:visibility="visible">
 
-                            <!--客队title-->
-                            <LinearLayout
-                                android:id="@+id/ll_guest_free_kick_fk3_title"
-                                android:layout_width="match_parent"
+                            <View
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:visibility="visible">
+                                android:layout_weight="0.35" />
 
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1" />
-
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical">
-
-                                    <View
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_weight="0.6" />
-
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_gravity="center"
-                                        android:layout_weight="2.8"
-                                        android:background="@drawable/football_animation_offside_bg"
-                                        android:gravity="center"
-                                        android:paddingLeft="10dp"
-                                        android:text="@string/football_play_free_kick_danger"
-                                        android:textColor="@color/res_name_color"
-                                        android:textSize="@dimen/tennis_score_item" />
-
-                                    <View
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_weight="1.5" />
-
-                                </LinearLayout>
-
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="0.1" />
-
-                            </LinearLayout>
-
-                            <!--坐标-->
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:orientation="horizontal">
-
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="0.8" />
-
-                                <pl.droidsonroids.gif.GifImageView
-                                    android:id="@+id/gif_guest_free_kick_fk3_position"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    tools:src="@mipmap/football_guest_position_gif" />
-
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1" />
-                            </LinearLayout>
-
-                            <!--背景-->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_weight="0.4"
                                 android:orientation="vertical">
 
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
-                                    android:layout_weight="0.7" />
+                                    android:layout_weight="0.6" />
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:orientation="horizontal">
-
-                                    <View
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1.1" />
-
-                                    <ImageView
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:scaleType="fitXY"
-                                        android:src="@mipmap/football_guest_free_kick_fk3l" />
-
-                                    <View
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="2.3" />
-
-
-                                </LinearLayout>
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="0.2" />
-
-                            </LinearLayout>
-
-                        </RelativeLayout>
-
-                        <!--主队-->
-                        <RelativeLayout
-                            android:id="@+id/rl_home_free_kick_fk3_1"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-                            <!--主队title-->
-                            <LinearLayout
-                                android:id="@+id/ll_home_free_kick_fk3_title"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:visibility="visible">
-
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="0.1" />
-
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical">
-
-                                    <View
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_weight="0.6" />
+                                    android:layout_weight="2.8"
+                                    android:background="@drawable/football_animation_offside_bg"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:paddingLeft="15dp"
+                                    android:paddingRight="5dp">
 
                                     <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_gravity="center"
-                                        android:layout_weight="2.8"
-                                        android:background="@drawable/football_animation_offside_bg"
-                                        android:gravity="center"
-                                        android:paddingRight="10dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
                                         android:text="@string/football_play_free_kick_danger"
                                         android:textColor="@color/res_name_color"
                                         android:textSize="@dimen/tennis_score_item" />
 
-                                    <View
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_weight="1.5" />
+                                    <TextView
+                                        android:id="@+id/ll_guest_free_kick_fk3_title_time"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:background="@mipmap/number_bg_blue"
+                                        android:gravity="center"
+                                        android:textColor="@color/linecolor"
+                                        android:textSize="@dimen/item_football_card"
+                                        tools:text="31'" />
 
                                 </LinearLayout>
 
                                 <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1" />
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1.5" />
 
                             </LinearLayout>
 
-                            <!--坐标-->
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <View
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:orientation="horizontal">
+                                android:layout_weight="0.65" />
 
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1" />
+                        </LinearLayout>
 
-                                <pl.droidsonroids.gif.GifImageView
-                                    android:id="@+id/gif_home_free_kick_fk3_position"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    tools:src="@mipmap/football_home_position_gif" />
+                        <!--主队title-->
+                        <LinearLayout
+                            android:id="@+id/ll_home_free_kick_fk3_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:visibility="visible">
 
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="0.8" />
-
-                            </LinearLayout>
-
-                            <!--背景-->
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <View
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
+                                android:layout_weight="1.5" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.9"
                                 android:orientation="vertical">
 
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
-                                    android:layout_weight="0.7" />
+                                    android:layout_weight="0.6" />
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:orientation="horizontal">
+                                    android:layout_weight="2.8"
+                                    android:background="@drawable/football_animation_offside_bg"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="15dp">
 
-                                    <View
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="2.3" />
+                                    <TextView
+                                        android:id="@+id/ll_home_free_kick_fk3_title_time"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:background="@mipmap/number_bg_red"
+                                        android:gravity="center"
+                                        android:textColor="@color/linecolor"
+                                        android:textSize="@dimen/item_football_card"
+                                        tools:text="31'" />
 
-                                    <ImageView
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:scaleType="fitXY"
-                                        android:src="@mipmap/football_home_free_kick_fk3r_bg" />
-
-                                    <View
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1.1" />
-
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/football_play_free_kick_danger"
+                                        android:textColor="@color/res_name_color"
+                                        android:textSize="@dimen/tennis_score_item" />
 
                                 </LinearLayout>
 
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
-                                    android:layout_weight="0.2" />
+                                    android:layout_weight="1.5" />
 
                             </LinearLayout>
 
-                        </RelativeLayout>
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.8" />
 
-                    </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <!--客队坐标-->
+                            <RelativeLayout
+                                android:id="@+id/rl_guest_free_kick_fk3_1"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:visibility="visible">
+
+                                <!--坐标-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="0.8" />
+
+                                    <pl.droidsonroids.gif.GifImageView
+                                        android:id="@+id/gif_guest_free_kick_fk3_position"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        tools:src="@mipmap/football_guest_position_gif" />
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1" />
+                                </LinearLayout>
+
+                                <!--背景-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.7" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal">
+
+                                        <View
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1.1" />
+
+                                        <ImageView
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:scaleType="fitXY"
+                                            android:src="@mipmap/football_guest_free_kick_fk3l" />
+
+                                        <View
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="2.3" />
+
+
+                                    </LinearLayout>
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.2" />
+
+                                </LinearLayout>
+
+                            </RelativeLayout>
+
+                            <!--主队坐标-->
+                            <RelativeLayout
+                                android:id="@+id/rl_home_free_kick_fk3_1"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                                <!--坐标-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
+                                    android:visibility="visible">
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1" />
+
+                                    <pl.droidsonroids.gif.GifImageView
+                                        android:id="@+id/gif_home_free_kick_fk3_position"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        tools:src="@mipmap/football_home_position_gif" />
+
+                                    <View
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="0.8" />
+
+                                </LinearLayout>
+
+                                <!--背景-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.7" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal">
+
+                                        <View
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="2.3" />
+
+                                        <ImageView
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:scaleType="fitXY"
+                                            android:src="@mipmap/football_home_free_kick_fk3r_bg" />
+
+                                        <View
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1.1" />
+
+
+                                    </LinearLayout>
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.2" />
+
+                                </LinearLayout>
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+
 
                     <View
                         android:layout_width="match_parent"
@@ -4116,7 +4546,7 @@
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.6"
+                                    android:layout_weight="0.9"
                                     android:orientation="vertical">
 
                                     <View
@@ -4124,17 +4554,35 @@
                                         android:layout_height="0dp"
                                         android:layout_weight="0.6" />
 
-                                    <TextView
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
-                                        android:layout_gravity="center"
                                         android:layout_weight="2.8"
                                         android:background="@drawable/football_animation_offside_bg"
                                         android:gravity="center"
-                                        android:paddingRight="10dp"
-                                        android:text="@string/football_play_free_kick_danger"
-                                        android:textColor="@color/res_name_color"
-                                        android:textSize="@dimen/tennis_score_item" />
+                                        android:orientation="horizontal"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="15dp">
+
+                                        <TextView
+                                            android:id="@+id/ll_home_free_kick_fk3_title_2_time"
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:background="@mipmap/number_bg_red"
+                                            android:gravity="center"
+                                            android:textColor="@color/linecolor"
+                                            android:textSize="@dimen/item_football_card"
+                                            tools:text="31'" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/football_play_free_kick_danger"
+                                            android:textColor="@color/res_name_color"
+                                            android:textSize="@dimen/tennis_score_item" />
+
+
+                                    </LinearLayout>
 
                                     <View
                                         android:layout_width="match_parent"
@@ -4146,7 +4594,7 @@
                                 <View
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.8" />
+                                    android:layout_weight="0.9" />
 
                             </LinearLayout>
 
@@ -4161,12 +4609,12 @@
                                 <View
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.8" />
+                                    android:layout_weight="0.9" />
 
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.6"
+                                    android:layout_weight="0.9"
                                     android:orientation="vertical">
 
                                     <View
@@ -4174,17 +4622,34 @@
                                         android:layout_height="0dp"
                                         android:layout_weight="0.6" />
 
-                                    <TextView
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
-                                        android:layout_gravity="center"
                                         android:layout_weight="2.8"
                                         android:background="@drawable/football_animation_offside_bg"
                                         android:gravity="center"
-                                        android:paddingLeft="10dp"
-                                        android:text="@string/football_play_free_kick_danger"
-                                        android:textColor="@color/res_name_color"
-                                        android:textSize="@dimen/tennis_score_item" />
+                                        android:orientation="horizontal"
+                                        android:paddingLeft="15dp"
+                                        android:paddingRight="5dp">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/football_play_free_kick_danger"
+                                            android:textColor="@color/res_name_color"
+                                            android:textSize="@dimen/tennis_score_item" />
+
+                                        <TextView
+                                            android:id="@+id/ll_guest_free_kick_fk3_title_2_time"
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:background="@mipmap/number_bg_blue"
+                                            android:gravity="center"
+                                            android:textColor="@color/linecolor"
+                                            android:textSize="@dimen/item_football_card"
+                                            tools:text="31'" />
+
+                                    </LinearLayout>
 
                                     <View
                                         android:layout_width="match_parent"
@@ -4377,12 +4842,12 @@
                                 <View
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.55" />
+                                    android:layout_weight="0.6" />
 
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.6"
+                                    android:layout_weight="0.8"
                                     android:orientation="vertical">
 
                                     <View
@@ -4390,17 +4855,34 @@
                                         android:layout_height="0dp"
                                         android:layout_weight="0.6" />
 
-                                    <TextView
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
-                                        android:layout_gravity="center"
                                         android:layout_weight="2.8"
                                         android:background="@drawable/football_animation_offside_bg"
                                         android:gravity="center"
-                                        android:paddingLeft="10dp"
-                                        android:text="@string/football_play_free_kick_danger"
-                                        android:textColor="@color/res_name_color"
-                                        android:textSize="@dimen/tennis_score_item" />
+                                        android:orientation="horizontal"
+                                        android:paddingLeft="15dp"
+                                        android:paddingRight="5dp">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/football_play_free_kick_danger"
+                                            android:textColor="@color/res_name_color"
+                                            android:textSize="@dimen/tennis_score_item" />
+
+                                        <TextView
+                                            android:id="@+id/ll_guest_free_kick_fk1_title_time"
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:background="@mipmap/number_bg_blue"
+                                            android:gravity="center"
+                                            android:textColor="@color/linecolor"
+                                            android:textSize="@dimen/item_football_card"
+                                            tools:text="31'" />
+
+                                    </LinearLayout>
 
                                     <View
                                         android:layout_width="match_parent"
@@ -4432,7 +4914,7 @@
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.6"
+                                    android:layout_weight="0.8"
                                     android:orientation="vertical">
 
                                     <View
@@ -4440,17 +4922,34 @@
                                         android:layout_height="0dp"
                                         android:layout_weight="0.6" />
 
-                                    <TextView
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
-                                        android:layout_gravity="center"
                                         android:layout_weight="2.8"
                                         android:background="@drawable/football_animation_offside_bg"
                                         android:gravity="center"
-                                        android:paddingRight="10dp"
-                                        android:text="@string/football_play_free_kick_danger"
-                                        android:textColor="@color/res_name_color"
-                                        android:textSize="@dimen/tennis_score_item" />
+                                        android:orientation="horizontal"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="15dp">
+
+                                        <TextView
+                                            android:id="@+id/ll_home_free_kick_fk1_title_time"
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:background="@mipmap/number_bg_red"
+                                            android:gravity="center"
+                                            android:textColor="@color/linecolor"
+                                            android:textSize="@dimen/item_football_card"
+                                            tools:text="31'" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/football_play_free_kick_danger"
+                                            android:textColor="@color/res_name_color"
+                                            android:textSize="@dimen/tennis_score_item" />
+
+                                    </LinearLayout>
 
                                     <View
                                         android:layout_width="match_parent"
@@ -4462,7 +4961,7 @@
                                 <View
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.55" />
+                                    android:layout_weight="0.6" />
 
                             </LinearLayout>
 
@@ -4848,6 +5347,7 @@
                 </LinearLayout>
 
             </FrameLayout>
+
 
         </FrameLayout>
 

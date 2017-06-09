@@ -17,6 +17,8 @@ import com.hhly.mlottery.util.ToastTools;
 
 import pl.droidsonroids.gif.GifImageView;
 
+import static com.hhly.mlottery.R.id.ll_guest_free_kick_fk3_title_2_time;
+
 /**
  * desc:足球事件动画直播
  * Created by 107_tangrr on 2017/5/29 0029.
@@ -45,14 +47,14 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
     private GifImageView gif_home_attack_danger, gif_guest_attack_danger;
     // 射正、射偏1
     private LinearLayout ll_offside_content1;
-    private RelativeLayout rl_home_offside1, rl_guest_offside1;
-    private TextView tv_home_title1, tv_guest_title1;
+    private RelativeLayout rl_home_offside1, rl_guest_offside1,rl_home_offside_title1,rl_guest_offside_title1;
+    private TextView tv_home_title1, tv_guest_title1,tv_home_title1_time,tv_guest_title1_time;
     private GifImageView gif_home_position1, gif_guest_position1;
     private GifImageView gif_home_ball1, gif_guest_ball1, gif_home_hit1, gif_guest_hit1;
     // 射正、射偏2
     private LinearLayout ll_offside_content2;
-    private RelativeLayout rl_home_offside2, rl_guest_offside2;
-    private TextView tv_home_title2, tv_guest_title2;
+    private RelativeLayout rl_home_offside2, rl_guest_offside2,rl_home_offside_title2,rl_guest_offside_title2;
+    private TextView tv_home_title2, tv_guest_title2,tv_home_title2_time,tv_guest_title2_time;
     private GifImageView gif_home_position2, gif_guest_position2;
     private GifImageView gif_home_ball2, gif_guest_ball2, gif_guest_hit2, gif_home_hit2;
     // 球门球
@@ -60,17 +62,20 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
     private RelativeLayout rl_home_goal_door, rl_guest_goal_door;
     private GifImageView gif_home_goal_door_position, gif_guest_goal_door_position;
     private GifImageView gfi_home_goal_door, gfi_guest_goal_door;
+    private TextView tv_home_goal_door_title_time,tv_guest_goal_door_title_time;
     // 界外球
     private LinearLayout ll_goal_out_content;
     private RelativeLayout rl_home_goal_out, rl_guest_goal_out;
     private GifImageView gif_home_goal_out_position, gif_guest_goal_out_position;
     private GifImageView gif_home_goal_out, gif_guest_goal_out;
+    private TextView tv_home_goal_out_title_time,tv_guest_goal_out_title_time;
     // 角球
     private RelativeLayout rl_corner_content;
     private RelativeLayout rl_home_corner, rl_guest_corner;
     private LinearLayout ll_home_title_l, ll_home_title_r, ll_guest_title_l, ll_guest_title_r;
     private GifImageView gif_guest_corner_r_position, gif_guest_corner_l_position, gif_home_corner_r_position, gif_home_corner_l_position;
     private GifImageView gif_guest_corner_r, gif_guest_corner_l, gif_home_corner_r, gif_home_corner_l;
+    private TextView tv_home_corner_title_l_time,tv_guest_corner_title_l_time,tv_home_corner_title_r_time,tv_guest_corner_title_r_time;
     // 越位
     private RelativeLayout rl_offside_content;
     private LinearLayout ll_home_offside_title, ll_guest_offside_title;
@@ -94,11 +99,14 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
     // 任意球fk2、fk4
     private RelativeLayout fl_free_kick_fk2_fk4_content;
     private LinearLayout ll_home_free_kick_bg, ll_guest_free_kick_bg, ll_home_free_kick_fk4_bg, ll_guest_free_kick_fk4_bg, ll_home_free_kick_fk2_bg, ll_guest_free_kick_fk2_bg;
+    private LinearLayout ll_guest_free_kick_fk2_title,ll_home_free_kick_fk2_title,ll_home_free_kick_fk4_title,ll_guest_free_kick_fk4_title;
     private TextView tv_home_free_kick_fk4_title, tv_guest_free_kick_fk4_title, tv_home_free_kick_fk2_title, tv_guest_free_kick_fk2_title;
+    private TextView tv_guest_free_kick_fk2_title_time,tv_home_free_kick_fk2_title_time,tv_home_free_kick_fk4_title_time,tv_guest_free_kick_fk4_title_time;
     private GifImageView gif_home_free_kick_fk2_position, gif_guest_free_kick_fk2_position, gif_home_free_kick_fk4_position, gif_guest_free_kick_fk4_position;
     // 任意球fk3 1
     private LinearLayout fl_free_kick_fk3_content1;
     private RelativeLayout rl_home_free_kick_fk3_1, rl_guest_free_kick_fk3_1;
+    private LinearLayout ll_home_free_kick_fk3_title,ll_guest_free_kick_fk3_title;
     private GifImageView gif_home_free_kick_fk3_position, gif_guest_free_kick_fk3_position;
     // 任意球fk3 2
     private RelativeLayout fl_free_kick_fk3_content2;
@@ -109,6 +117,7 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
     private RelativeLayout fl_free_kick_fk1_content;
     private LinearLayout ll_home_free_kick_fk1_bg, ll_guest_free_kick_fk1_bg;
     private LinearLayout ll_home_free_kick_fk1_title, ll_guest_free_kick_fk1_title;
+    private TextView ll_home_free_kick_fk1_title_time, ll_guest_free_kick_fk1_title_time;
     private GifImageView gif_home_free_kick_fk1_position, gif_guest_free_kick_fk1_position;
 
     // 进球
@@ -158,6 +167,8 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
         ll_offside_content1 = (LinearLayout) findViewById(R.id.ll_offside_content1);
         rl_home_offside1 = (RelativeLayout) findViewById(R.id.rl_home_offside1);
         rl_guest_offside1 = (RelativeLayout) findViewById(R.id.rl_guest_offside1);
+        rl_home_offside_title1 = (RelativeLayout) findViewById(R.id.rl_home_offside_title1);
+        rl_guest_offside_title1 = (RelativeLayout) findViewById(R.id.rl_guest_offside_title1);
         tv_home_title1 = (TextView) findViewById(R.id.tv_home_title1);
         tv_guest_title1 = (TextView) findViewById(R.id.tv_guest_title1);
         gif_home_position1 = (GifImageView) findViewById(R.id.gif_home_position1);
@@ -166,13 +177,19 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
         gif_guest_ball1 = (GifImageView) findViewById(R.id.gif_guest_ball1);
         gif_home_hit1 = (GifImageView) findViewById(R.id.gif_home_hit1);
         gif_guest_hit1 = (GifImageView) findViewById(R.id.gif_guest_hit1);
+        tv_home_title1_time = (TextView) findViewById(R.id.tv_home_title1_time);
+        tv_guest_title1_time = (TextView) findViewById(R.id.tv_guest_title1_time);
 
         // 射正、射偏2
         ll_offside_content2 = (LinearLayout) findViewById(R.id.ll_offside_content2);
         rl_home_offside2 = (RelativeLayout) findViewById(R.id.rl_home_offside2);
         rl_guest_offside2 = (RelativeLayout) findViewById(R.id.rl_guest_offside2);
+        rl_home_offside_title2 = (RelativeLayout) findViewById(R.id.rl_home_offside_title2);
+        rl_guest_offside_title2 = (RelativeLayout) findViewById(R.id.rl_guest_offside_title2);
         tv_home_title2 = (TextView) findViewById(R.id.tv_home_title2);
         tv_guest_title2 = (TextView) findViewById(R.id.tv_guest_title2);
+        tv_home_title2_time = (TextView) findViewById(R.id.tv_home_title2_time);
+        tv_guest_title2_time = (TextView) findViewById(R.id.tv_guest_title2_time);
         gif_home_position2 = (GifImageView) findViewById(R.id.gif_home_position2);
         gif_guest_position2 = (GifImageView) findViewById(R.id.gif_guest_position2);
         gif_home_ball2 = (GifImageView) findViewById(R.id.gif_home_ball2);
@@ -188,6 +205,8 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
         gif_guest_goal_door_position = (GifImageView) findViewById(R.id.gif_guest_goal_door_position);
         gfi_home_goal_door = (GifImageView) findViewById(R.id.gfi_home_goal_door);
         gfi_guest_goal_door = (GifImageView) findViewById(R.id.gfi_guest_goal_door);
+        tv_home_goal_door_title_time = (TextView) findViewById(R.id.tv_home_goal_door_title_time);
+        tv_guest_goal_door_title_time = (TextView) findViewById(R.id.tv_guest_goal_door_title_time);
 
         // 界外球
         ll_goal_out_content = (LinearLayout) findViewById(R.id.ll_goal_out_content);
@@ -197,6 +216,8 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
         gif_guest_goal_out_position = (GifImageView) findViewById(R.id.gif_guest_goal_out_position);
         gif_home_goal_out = (GifImageView) findViewById(R.id.gif_home_goal_out);
         gif_guest_goal_out = (GifImageView) findViewById(R.id.gif_guest_goal_out);
+        tv_home_goal_out_title_time = (TextView) findViewById(R.id.tv_home_goal_out_title_time);
+        tv_guest_goal_out_title_time = (TextView) findViewById(R.id.tv_guest_goal_out_title_time);
 
         // 角球
         rl_corner_content = (RelativeLayout) findViewById(R.id.rl_corner_content);
@@ -214,6 +235,10 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
         gif_home_corner_r = (GifImageView) findViewById(R.id.gif_home_corner_r);
         gif_guest_corner_l = (GifImageView) findViewById(R.id.gif_guest_corner_l);
         gif_home_corner_l = (GifImageView) findViewById(R.id.gif_home_corner_l);
+        tv_home_corner_title_l_time = (TextView) findViewById(R.id.tv_home_corner_title_l_time);
+        tv_guest_corner_title_l_time = (TextView) findViewById(R.id.tv_guest_corner_title_l_time);
+        tv_home_corner_title_r_time = (TextView) findViewById(R.id.tv_home_corner_title_r_time);
+        tv_guest_corner_title_r_time = (TextView) findViewById(R.id.tv_guest_corner_title_r_time);
 
         // 越位
         rl_offside_content = (RelativeLayout) findViewById(R.id.rl_offside_content);
@@ -261,10 +286,18 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
         ll_guest_free_kick_fk4_bg = (LinearLayout) findViewById(R.id.ll_guest_free_kick_fk4_bg);
         ll_home_free_kick_fk2_bg = (LinearLayout) findViewById(R.id.ll_home_free_kick_fk2_bg);
         ll_guest_free_kick_fk2_bg = (LinearLayout) findViewById(R.id.ll_guest_free_kick_fk2_bg);
+        ll_guest_free_kick_fk2_title = (LinearLayout) findViewById(R.id.ll_guest_free_kick_fk2_title);
+        ll_home_free_kick_fk2_title = (LinearLayout) findViewById(R.id.ll_home_free_kick_fk2_title);
+        ll_home_free_kick_fk4_title = (LinearLayout) findViewById(R.id.ll_home_free_kick_fk4_title);
+        ll_guest_free_kick_fk4_title = (LinearLayout) findViewById(R.id.ll_guest_free_kick_fk4_title);
         tv_home_free_kick_fk4_title = (TextView) findViewById(R.id.tv_home_free_kick_fk4_title);
         tv_guest_free_kick_fk4_title = (TextView) findViewById(R.id.tv_guest_free_kick_fk4_title);
         tv_home_free_kick_fk2_title = (TextView) findViewById(R.id.tv_home_free_kick_fk2_title);
         tv_guest_free_kick_fk2_title = (TextView) findViewById(R.id.tv_guest_free_kick_fk2_title);
+        tv_guest_free_kick_fk2_title_time = (TextView) findViewById(R.id.tv_guest_free_kick_fk2_title_time);
+        tv_home_free_kick_fk2_title_time = (TextView) findViewById(R.id.tv_home_free_kick_fk2_title_time);
+        tv_home_free_kick_fk4_title_time = (TextView) findViewById(R.id.tv_home_free_kick_fk4_title_time);
+        tv_guest_free_kick_fk4_title_time = (TextView) findViewById(R.id.tv_guest_free_kick_fk4_title_time);
         gif_home_free_kick_fk2_position = (GifImageView) findViewById(R.id.gif_home_free_kick_fk2_position);
         gif_guest_free_kick_fk2_position = (GifImageView) findViewById(R.id.gif_guest_free_kick_fk2_position);
         gif_home_free_kick_fk4_position = (GifImageView) findViewById(R.id.gif_home_free_kick_fk4_position);
@@ -272,6 +305,8 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
 
         // 任意球fk3 1
         fl_free_kick_fk3_content1 = (LinearLayout) findViewById(R.id.fl_free_kick_fk3_content1);
+        ll_home_free_kick_fk3_title = (LinearLayout) findViewById(R.id.ll_home_free_kick_fk3_title);
+        ll_guest_free_kick_fk3_title = (LinearLayout) findViewById(R.id.ll_guest_free_kick_fk3_title);
         rl_home_free_kick_fk3_1 = (RelativeLayout) findViewById(R.id.rl_home_free_kick_fk3_1);
         rl_guest_free_kick_fk3_1 = (RelativeLayout) findViewById(R.id.rl_guest_free_kick_fk3_1);
         gif_home_free_kick_fk3_position = (GifImageView) findViewById(R.id.gif_home_free_kick_fk3_position);
@@ -294,6 +329,8 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
         ll_guest_free_kick_fk1_title = (LinearLayout) findViewById(R.id.ll_guest_free_kick_fk1_title);
         gif_home_free_kick_fk1_position = (GifImageView) findViewById(R.id.gif_home_free_kick_fk1_position);
         gif_guest_free_kick_fk1_position = (GifImageView) findViewById(R.id.gif_guest_free_kick_fk1_position);
+        ll_home_free_kick_fk1_title_time = (TextView) findViewById(R.id.ll_home_free_kick_fk1_title_time);
+        ll_guest_free_kick_fk1_title_time = (TextView) findViewById(R.id.ll_guest_free_kick_fk1_title_time);
 
         // 进球
         ll_goal_content = (LinearLayout) findViewById(R.id.ll_goal_content);
@@ -553,8 +590,8 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 rl_guest_offside1.setVisibility(View.INVISIBLE);
                 gif_home_position1.setVisibility(View.VISIBLE);
                 gif_guest_position1.setVisibility(View.INVISIBLE);
-                tv_home_title1.setVisibility(View.VISIBLE);
-                tv_guest_title1.setVisibility(View.INVISIBLE);
+                rl_home_offside_title1.setVisibility(View.VISIBLE);
+                rl_guest_offside_title1.setVisibility(View.INVISIBLE);
                 gif_home_ball1.setVisibility(View.VISIBLE);
                 gif_guest_ball1.setVisibility(View.INVISIBLE);
                 gif_home_hit1.setVisibility(View.INVISIBLE);
@@ -562,6 +599,7 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 tv_home_title1.setText(getString(R.string.football_play_deviate));
                 gif_home_ball1.setImageResource(R.mipmap.football_home_ball_gif);
                 gif_home_position1.setImageResource(R.mipmap.football_home_position_gif);
+                tv_home_title1_time.setText("10'");
                 showGifAnimation(1111);
                 break;
             case R.id.bt_guest_deviate1://客队射偏1  2064
@@ -570,13 +608,14 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 rl_guest_offside1.setVisibility(View.VISIBLE);
                 gif_home_position1.setVisibility(View.INVISIBLE);
                 gif_guest_position1.setVisibility(View.VISIBLE);
-                tv_home_title1.setVisibility(View.INVISIBLE);
-                tv_guest_title1.setVisibility(View.VISIBLE);
+                rl_home_offside_title1.setVisibility(View.INVISIBLE);
+                rl_guest_offside_title1.setVisibility(View.VISIBLE);
                 gif_home_ball1.setVisibility(View.INVISIBLE);
                 gif_guest_ball1.setVisibility(View.VISIBLE);
                 gif_home_hit1.setVisibility(View.INVISIBLE);
                 gif_guest_hit1.setVisibility(View.INVISIBLE);
                 tv_guest_title1.setText(getString(R.string.football_play_deviate));
+                tv_guest_title1_time.setText("10'");
                 gif_guest_ball1.setImageResource(R.mipmap.football_guest_ball_gif);
                 gif_guest_position1.setImageResource(R.mipmap.football_guest_position_gif);
                 showGifAnimation(1111);
@@ -587,13 +626,14 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 rl_guest_offside2.setVisibility(View.INVISIBLE);
                 gif_home_position2.setVisibility(View.VISIBLE);
                 gif_guest_position2.setVisibility(View.INVISIBLE);
-                tv_home_title2.setVisibility(View.VISIBLE);
-                tv_guest_title2.setVisibility(View.INVISIBLE);
+                rl_home_offside_title2.setVisibility(View.VISIBLE);
+                rl_guest_offside_title2.setVisibility(View.INVISIBLE);
                 gif_home_ball2.setVisibility(View.VISIBLE);
                 gif_guest_ball2.setVisibility(View.INVISIBLE);
                 gif_home_hit2.setVisibility(View.INVISIBLE);
                 gif_guest_hit2.setVisibility(View.INVISIBLE);
                 tv_home_title2.setText(getString(R.string.football_play_deviate));
+                tv_home_title2_time.setText("10'");
                 gif_home_ball2.setImageResource(R.mipmap.football_home_ball2_gif);
                 gif_home_position2.setImageResource(R.mipmap.football_home_position_gif);
                 showGifAnimation(2222);
@@ -604,13 +644,14 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 rl_guest_offside2.setVisibility(View.VISIBLE);
                 gif_home_position2.setVisibility(View.INVISIBLE);
                 gif_guest_position2.setVisibility(View.VISIBLE);
-                tv_home_title2.setVisibility(View.INVISIBLE);
-                tv_guest_title2.setVisibility(View.VISIBLE);
+                rl_home_offside_title2.setVisibility(View.INVISIBLE);
+                rl_guest_offside_title2.setVisibility(View.VISIBLE);
                 gif_home_ball2.setVisibility(View.INVISIBLE);
                 gif_guest_ball2.setVisibility(View.VISIBLE);
                 gif_home_hit2.setVisibility(View.INVISIBLE);
                 gif_guest_hit2.setVisibility(View.INVISIBLE);
                 tv_guest_title2.setText(getString(R.string.football_play_deviate));
+                tv_guest_title2_time.setText("10'");
                 gif_guest_ball2.setImageResource(R.mipmap.football_guest_ball2_gif);
                 gif_guest_position2.setImageResource(R.mipmap.football_guest_position_gif);
                 showGifAnimation(2222);
@@ -621,13 +662,14 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 rl_guest_offside1.setVisibility(View.INVISIBLE);
                 gif_home_position1.setVisibility(View.VISIBLE);
                 gif_guest_position1.setVisibility(View.INVISIBLE);
-                tv_home_title1.setVisibility(View.VISIBLE);
-                tv_guest_title1.setVisibility(View.INVISIBLE);
+                rl_home_offside_title1.setVisibility(View.VISIBLE);
+                rl_guest_offside_title1.setVisibility(View.INVISIBLE);
                 gif_home_ball1.setVisibility(View.INVISIBLE);
                 gif_guest_ball1.setVisibility(View.INVISIBLE);
                 gif_home_hit1.setVisibility(View.VISIBLE);
                 gif_guest_hit1.setVisibility(View.INVISIBLE);
                 tv_home_title1.setText(getString(R.string.football_play_hit));
+                tv_home_title1_time.setText("10'");
                 gif_home_hit1.setImageResource(R.mipmap.football_home_hit1);
                 gif_home_position1.setImageResource(R.mipmap.football_home_position_gif);
                 showGifAnimation(1111);
@@ -638,13 +680,14 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 rl_guest_offside1.setVisibility(View.VISIBLE);
                 gif_home_position1.setVisibility(View.INVISIBLE);
                 gif_guest_position1.setVisibility(View.VISIBLE);
-                tv_home_title1.setVisibility(View.INVISIBLE);
-                tv_guest_title1.setVisibility(View.VISIBLE);
+                rl_home_offside_title1.setVisibility(View.INVISIBLE);
+                rl_guest_offside_title1.setVisibility(View.VISIBLE);
                 gif_home_ball1.setVisibility(View.INVISIBLE);
                 gif_guest_ball1.setVisibility(View.INVISIBLE);
                 gif_home_hit1.setVisibility(View.INVISIBLE);
                 gif_guest_hit1.setVisibility(View.VISIBLE);
                 tv_guest_title1.setText(getString(R.string.football_play_hit));
+                tv_guest_title1_time.setText("10'");
                 gif_guest_hit1.setImageResource(R.mipmap.football_guest_hit1);
                 gif_guest_position1.setImageResource(R.mipmap.football_guest_position_gif);
                 showGifAnimation(1111);
@@ -655,13 +698,14 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 rl_guest_offside2.setVisibility(View.INVISIBLE);
                 gif_home_position2.setVisibility(View.VISIBLE);
                 gif_guest_position2.setVisibility(View.INVISIBLE);
-                tv_home_title2.setVisibility(View.VISIBLE);
-                tv_guest_title2.setVisibility(View.INVISIBLE);
+                rl_home_offside_title2.setVisibility(View.VISIBLE);
+                rl_guest_offside_title2.setVisibility(View.INVISIBLE);
                 gif_home_ball2.setVisibility(View.INVISIBLE);
                 gif_guest_ball2.setVisibility(View.INVISIBLE);
                 gif_home_hit2.setVisibility(View.VISIBLE);
                 gif_guest_hit2.setVisibility(View.INVISIBLE);
                 tv_home_title2.setText(getString(R.string.football_play_hit));
+                tv_home_title2_time.setText("10'");
                 gif_home_hit2.setImageResource(R.mipmap.football_home_hit2);
                 gif_home_position2.setImageResource(R.mipmap.football_home_position_gif);
                 showGifAnimation(2222);
@@ -672,13 +716,14 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 rl_guest_offside2.setVisibility(View.VISIBLE);
                 gif_home_position2.setVisibility(View.INVISIBLE);
                 gif_guest_position2.setVisibility(View.VISIBLE);
-                tv_home_title2.setVisibility(View.INVISIBLE);
-                tv_guest_title2.setVisibility(View.VISIBLE);
+                rl_home_offside_title2.setVisibility(View.INVISIBLE);
+                rl_guest_offside_title2.setVisibility(View.VISIBLE);
                 gif_home_ball2.setVisibility(View.INVISIBLE);
                 gif_guest_ball2.setVisibility(View.INVISIBLE);
                 gif_home_hit2.setVisibility(View.INVISIBLE);
                 gif_guest_hit2.setVisibility(View.VISIBLE);
                 tv_guest_title2.setText(getString(R.string.football_play_hit));
+                tv_guest_title2_time.setText("10'");
                 gif_guest_hit2.setImageResource(R.mipmap.football_guest_hit2);
                 gif_guest_position2.setImageResource(R.mipmap.football_guest_position_gif);
                 showGifAnimation(2222);
@@ -686,33 +731,45 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
             case R.id.bt_home_goal_door://主队球门球
                 ToastTools.showQuick(this, "主队球门球");
                 rl_home_goal_door.setVisibility(View.VISIBLE);
+                tv_home_goal_door_title_time.setVisibility(View.VISIBLE);
                 rl_guest_goal_door.setVisibility(View.INVISIBLE);
+                tv_guest_goal_door_title_time.setVisibility(View.INVISIBLE);
                 gif_home_goal_door_position.setImageResource(R.mipmap.football_home_position_gif);
                 gfi_home_goal_door.setImageResource(R.mipmap.football_home_goal_door);
+                tv_home_goal_door_title_time.setText("10'");
                 showGifAnimation(1053);
                 break;
             case R.id.bt_guest_goal_door://客队球门球
                 ToastTools.showQuick(this, "客队球门球");
                 rl_home_goal_door.setVisibility(View.INVISIBLE);
+                tv_home_goal_door_title_time.setVisibility(View.INVISIBLE);
                 rl_guest_goal_door.setVisibility(View.VISIBLE);
+                tv_guest_goal_door_title_time.setVisibility(View.VISIBLE);
                 gif_guest_goal_door_position.setImageResource(R.mipmap.football_guest_position_gif);
                 gfi_guest_goal_door.setImageResource(R.mipmap.football_guest_goal_door);
+                tv_guest_goal_door_title_time.setText("10'");
                 showGifAnimation(2077);
                 break;
             case R.id.bt_home_goal_out://主队界外球
                 ToastTools.showQuick(this, "主队界外球");
                 rl_home_goal_out.setVisibility(View.VISIBLE);
+                tv_home_goal_out_title_time.setVisibility(View.VISIBLE);
                 rl_guest_goal_out.setVisibility(View.INVISIBLE);
+                tv_guest_goal_out_title_time.setVisibility(View.INVISIBLE);
                 gif_home_goal_out_position.setImageResource(R.mipmap.football_home_position_gif);
                 gif_home_goal_out.setImageResource(R.mipmap.football_home_goal_out);
+                tv_home_goal_out_title_time.setText("10'");
                 showGifAnimation(1054);
                 break;
             case R.id.bt_guest_goal_out://客队界外球
                 ToastTools.showQuick(this, "客队界外球");
                 rl_home_goal_out.setVisibility(View.INVISIBLE);
+                tv_home_goal_out_title_time.setVisibility(View.INVISIBLE);
                 rl_guest_goal_out.setVisibility(View.VISIBLE);
+                tv_guest_goal_out_title_time.setVisibility(View.VISIBLE);
                 gif_guest_goal_out_position.setImageResource(R.mipmap.football_guest_position_gif);
                 gif_guest_goal_out.setImageResource(R.mipmap.football_guest_goal_out);
+                tv_guest_goal_out_title_time.setText("10'");
                 showGifAnimation(2078);
                 break;
             case R.id.bt_home_corner_left://主队角球左侧  1025
@@ -733,6 +790,7 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 gif_home_corner_l.setVisibility(View.VISIBLE);
                 gif_home_corner_l_position.setImageResource(R.mipmap.football_home_position_gif);
                 gif_home_corner_l.setImageResource(R.mipmap.football_home_corner_left);
+                tv_home_corner_title_l_time.setText("10'");
                 showGifAnimation(3333);
                 break;
             case R.id.bt_guest_corner_left://客队角球左侧  2049
@@ -753,6 +811,7 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 gif_home_corner_l.setVisibility(View.GONE);
                 gif_guest_corner_l_position.setImageResource(R.mipmap.football_guest_position_gif);
                 gif_guest_corner_l.setImageResource(R.mipmap.football_guest_corner_left);
+                tv_guest_corner_title_l_time.setText("10'");
                 showGifAnimation(4444);
                 break;
             case R.id.bt_home_corner_right://主队角球右侧  1025
@@ -773,6 +832,7 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 gif_home_corner_l.setVisibility(View.GONE);
                 gif_home_corner_r_position.setImageResource(R.mipmap.football_home_position_gif);
                 gif_home_corner_r.setImageResource(R.mipmap.football_home_corner_right);
+                tv_home_corner_title_r_time.setText("10'");
                 showGifAnimation(3333);
                 break;
             case R.id.bt_guest_corner_right://客队角球右侧  2049
@@ -793,6 +853,7 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 gif_home_corner_l.setVisibility(View.GONE);
                 gif_guest_corner_r_position.setImageResource(R.mipmap.football_guest_position_gif);
                 gif_guest_corner_r.setImageResource(R.mipmap.football_guest_corner_right);
+                tv_guest_corner_title_r_time.setText("10'");
                 showGifAnimation(4444);
                 break;
             case R.id.bt_home_offside://主队越位
@@ -982,11 +1043,12 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
                 gif_guest_free_kick_fk2_position.setVisibility(View.VISIBLE);
                 gif_guest_free_kick_fk2_position.setImageResource(R.mipmap.football_home_position_gif);
-                tv_guest_free_kick_fk2_title.setVisibility(View.VISIBLE);
-                tv_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
-                tv_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-                tv_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                ll_guest_free_kick_fk2_title.setVisibility(View.VISIBLE);
+                ll_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                ll_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                ll_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
                 tv_guest_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick));
+                tv_guest_free_kick_fk2_title_time.setText("10'");
                 showGifAnimation(5555);
                 break;
             case R.id.bt_guest_free_kick://客队任意球  2052
@@ -1002,11 +1064,12 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
                 gif_guest_free_kick_fk2_position.setVisibility(View.GONE);
                 gif_home_free_kick_fk2_position.setImageResource(R.mipmap.football_guest_position_gif);
-                tv_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
-                tv_home_free_kick_fk2_title.setVisibility(View.VISIBLE);
-                tv_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-                tv_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                ll_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                ll_home_free_kick_fk2_title.setVisibility(View.VISIBLE);
+                ll_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                ll_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
                 tv_home_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick));
+                tv_home_free_kick_fk2_title_time.setText("10'");
                 showGifAnimation(5555);
                 break;
             case R.id.bt_home_free_kick_danger_fk1://主队任危险任意球FK1  1027
@@ -1014,10 +1077,13 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 ll_home_free_kick_fk1_bg.setVisibility(View.VISIBLE);
                 ll_guest_free_kick_fk1_bg.setVisibility(View.INVISIBLE);
                 ll_home_free_kick_fk1_title.setVisibility(View.VISIBLE);
+                ll_home_free_kick_fk1_title_time.setVisibility(View.VISIBLE);
                 ll_guest_free_kick_fk1_title.setVisibility(View.GONE);
+                ll_guest_free_kick_fk1_title_time.setVisibility(View.GONE);
                 gif_home_free_kick_fk1_position.setVisibility(View.VISIBLE);
                 gif_guest_free_kick_fk1_position.setVisibility(View.GONE);
                 gif_home_free_kick_fk1_position.setImageResource(R.mipmap.football_home_position_gif);
+                ll_home_free_kick_fk1_title_time.setText("10'");
                 showGifAnimation(6666);
                 break;
             case R.id.bt_guest_free_kick_danger_fk1://客队危险任意球FK1  2051
@@ -1025,10 +1091,13 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 ll_home_free_kick_fk1_bg.setVisibility(View.INVISIBLE);
                 ll_guest_free_kick_fk1_bg.setVisibility(View.VISIBLE);
                 ll_home_free_kick_fk1_title.setVisibility(View.GONE);
+                ll_home_free_kick_fk1_title_time.setVisibility(View.GONE);
                 ll_guest_free_kick_fk1_title.setVisibility(View.VISIBLE);
+                ll_guest_free_kick_fk1_title_time.setVisibility(View.VISIBLE);
                 gif_home_free_kick_fk1_position.setVisibility(View.GONE);
                 gif_guest_free_kick_fk1_position.setVisibility(View.VISIBLE);
                 gif_guest_free_kick_fk1_position.setImageResource(R.mipmap.football_guest_position_gif);
+                ll_guest_free_kick_fk1_title_time.setText("10'");
                 showGifAnimation(6666);
                 break;
             case R.id.bt_home_free_kick_danger_fk2://主队任危险任意球FK2
@@ -1044,10 +1113,11 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
                 gif_guest_free_kick_fk2_position.setVisibility(View.GONE);
                 gif_home_free_kick_fk4_position.setImageResource(R.mipmap.football_home_position_gif);
-                tv_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
-                tv_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
-                tv_home_free_kick_fk4_title.setVisibility(View.VISIBLE);
-                tv_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                ll_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                ll_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                ll_home_free_kick_fk4_title.setVisibility(View.VISIBLE);
+                ll_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                tv_home_free_kick_fk4_title_time.setText("10'");
                 tv_home_free_kick_fk4_title.setText(getString(R.string.football_play_free_kick_danger));
                 showGifAnimation(7777);
                 break;
@@ -1064,10 +1134,11 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 gif_guest_free_kick_fk4_position.setVisibility(View.VISIBLE);
                 gif_guest_free_kick_fk2_position.setVisibility(View.GONE);
                 gif_guest_free_kick_fk4_position.setImageResource(R.mipmap.football_guest_position_gif);
-                tv_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
-                tv_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
-                tv_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-                tv_guest_free_kick_fk4_title.setVisibility(View.VISIBLE);
+                ll_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                ll_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                ll_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                ll_guest_free_kick_fk4_title.setVisibility(View.VISIBLE);
+                tv_guest_free_kick_fk4_title_time.setText("10'");
                 tv_guest_free_kick_fk4_title.setText(getString(R.string.football_play_free_kick_danger));
                 showGifAnimation(7777);
                 break;
@@ -1080,20 +1151,27 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 gif_home_free_kick_fk3_position_2.setVisibility(View.VISIBLE);
                 gif_guest_free_kick_fk3_position_2.setVisibility(View.INVISIBLE);
                 gif_home_free_kick_fk3_position_2.setImageResource(R.mipmap.football_home_position_gif);
+                ll_home_free_kick_fk3_title_2_time.setText("10'");
                 showGifAnimation(8888);
                 break;
             case R.id.bt_guest_free_kick_danger_fk3l://客队危险任意球FK3L
                 ToastTools.showQuick(this, "客队危险任意球FK3L");
                 rl_home_free_kick_fk3_1.setVisibility(View.INVISIBLE);
+                ll_home_free_kick_fk3_title.setVisibility(View.INVISIBLE);
                 rl_guest_free_kick_fk3_1.setVisibility(View.VISIBLE);
+                ll_guest_free_kick_fk3_title.setVisibility(View.VISIBLE);
                 gif_guest_free_kick_fk3_position.setImageResource(R.mipmap.football_guest_position_gif);
+                ll_guest_free_kick_fk3_title_time.setText("10'");
                 showGifAnimation(9999);
                 break;
             case R.id.bt_home_free_kick_danger_fk3r://主队任危险任意球FK3R
                 ToastTools.showQuick(this, "主队任危险任意球FK3R");
                 rl_home_free_kick_fk3_1.setVisibility(View.VISIBLE);
+                ll_home_free_kick_fk3_title.setVisibility(View.VISIBLE);
                 rl_guest_free_kick_fk3_1.setVisibility(View.INVISIBLE);
+                ll_guest_free_kick_fk3_title.setVisibility(View.INVISIBLE);
                 gif_home_free_kick_fk3_position.setImageResource(R.mipmap.football_home_position_gif);
+                ll_home_free_kick_fk3_title_time.setText("10'");
                 showGifAnimation(9999);
                 break;
             case R.id.bt_guest_free_kick_danger_fk3r://客队危险任意球FK3R
@@ -1105,6 +1183,7 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 gif_home_free_kick_fk3_position_2.setVisibility(View.INVISIBLE);
                 gif_guest_free_kick_fk3_position_2.setVisibility(View.VISIBLE);
                 gif_guest_free_kick_fk3_position_2.setImageResource(R.mipmap.football_guest_position_gif);
+                ll_guest_free_kick_fk3_title_2_time.setText("10'");
                 showGifAnimation(8888);
                 break;
             case R.id.bt_home_free_kick_danger_fk4://主队任危险任意球FK4
@@ -1120,11 +1199,12 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
                 gif_guest_free_kick_fk2_position.setVisibility(View.GONE);
                 gif_home_free_kick_fk2_position.setImageResource(R.mipmap.football_home_position_gif);
-                tv_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
-                tv_home_free_kick_fk2_title.setVisibility(View.VISIBLE);
-                tv_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-                tv_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                ll_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                ll_home_free_kick_fk2_title.setVisibility(View.VISIBLE);
+                ll_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                ll_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
                 tv_home_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick_danger));
+                tv_home_free_kick_fk2_title_time.setText("10'");
                 showGifAnimation(-9999);
                 break;
             case R.id.bt_guest_free_kick_danger_fk4://客队危险任意球FK4
@@ -1140,11 +1220,12 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
                 gif_guest_free_kick_fk2_position.setVisibility(View.VISIBLE);
                 gif_guest_free_kick_fk2_position.setImageResource(R.mipmap.football_guest_position_gif);
-                tv_guest_free_kick_fk2_title.setVisibility(View.VISIBLE);
-                tv_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
-                tv_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-                tv_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                ll_guest_free_kick_fk2_title.setVisibility(View.VISIBLE);
+                ll_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                ll_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                ll_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
                 tv_guest_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick_danger));
+                tv_guest_free_kick_fk2_title_time.setText("10'");
                 showGifAnimation(-9999);
                 break;
             case R.id.bt_home_goal://主队进球  1029
